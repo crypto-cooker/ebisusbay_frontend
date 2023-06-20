@@ -17,10 +17,12 @@ import {
   Stack,
   Text,
   VStack,
+  useMediaQuery 
 } from "@chakra-ui/react"
 import {Spinner} from 'react-bootstrap';
 import {useFormik} from 'formik';
 import {deleteFaction, editFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {shortAddress} from "@src/utils";
 
 import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
@@ -184,7 +186,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
         }
       }
     }
- }
+  }
 
   function AddAddress() {
     setShowAlert(false)
@@ -242,6 +244,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   function showDeleteWarning() {
     setShowDeleteAlert(true)
   }
+
   useEffect(() => {
     // console.log("faction change faction change"+faction.name)
     setAddresses(faction.addresses)
@@ -251,6 +254,8 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   useEffect(() => {
     factionType === 'COLLECTION' ? setFactionIndex(0) : setFactionIndex(1)
   }, [factionType]);
+
+  const [isMobile] = useMediaQuery("(max-width: 768px)") 
 
   useEffect(() => {
     if(addresses !== undefined) {
@@ -264,7 +269,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
             marginTop={'auto'}
             marginBottom={'auto'}
             marginLeft={'2'}
-            >{address}</Text>
+            >{ isMobile ? shortAddress(address) : address}</Text>
           <Button 
           h='30px'
           w='30px'
@@ -280,18 +285,6 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   }
   }, [addresses]);
 
-  // const onClickSave = () => {
-  //   if (editorRef) {
-  //     // This returns a HTMLCanvasElement, it can be made into a data URL or a blob,
-  //     // drawn on another canvas, or added to the DOM.
-  //     // const canvas = editorRef.current?.getImage()
-
-  //     // If you want the image resized to the canvas size (also a HTMLCanvasElement)
-  //     const canvasScaled = editorRef.current?.getImageScaledToCanvas()
-  //     console.log(canvasScaled);
-  //     setEditFactionIcon(false);
-  //   }
-  // }
   return (
     <RdModal
       isOpen={isOpen}
@@ -327,7 +320,6 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                   scale={1.2}
                   rotate={0}
                 />
-                {/* <Button onClick={onClickSave}>Save</Button> */}
                 </>)
               }
                   <HStack justifyContent='space-between' w='full'>

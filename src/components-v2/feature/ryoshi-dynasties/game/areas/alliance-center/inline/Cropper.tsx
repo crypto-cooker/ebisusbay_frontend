@@ -1,4 +1,4 @@
-import {Input, Box, Modal, ModalContent, ModalOverlay, Text, VStack, Stack, Slider, Button, useDisclosure, Center, Image, SliderTrack, SliderFilledTrack, SliderThumb} from "@chakra-ui/react";
+import {useMediaQuery, Input, Box, Modal, ModalContent, ModalOverlay, Text, VStack, Stack, Slider, Button, useDisclosure, Center, Image, SliderTrack, SliderFilledTrack, SliderThumb, Flex} from "@chakra-ui/react";
 import { RdModal } from "@src/components-v2/feature/ryoshi-dynasties/components";
 import { useRef, useState, useContext } from "react";
 import AvatarEditor from "react-avatar-editor";
@@ -169,7 +169,6 @@ const Cropper = () => {
     setSrc(URL.createObjectURL(e.target.files[0]));
     onOpen();
   };
-
   return (
     <>
         <CropperModal
@@ -179,7 +178,7 @@ const Cropper = () => {
           setPreview={setPreview}
         //   setModalOpen={setModalOpen}
         />
-        
+        <VStack>
         <Center>
         <div className="img-container">
           <Image
@@ -190,13 +189,11 @@ const Cropper = () => {
           />
         </div>
         </Center>
-
+        <Flex maxW={{base: '300', sm: '100%'}} justifyContent='center'>
         <Center>
-        {/* <a href="/" onClick={handleInputClick}> */}
-          {/* <FcAddImage className="add-icon" /> */}
-        {/* </a> */}
-        <input
+        <Input
           // variant='filled' 
+          variant='ghost'
           type="file"
           // accept="image/*"
           ref={inputRef}
@@ -204,6 +201,8 @@ const Cropper = () => {
           placeholder="Upload Image"
         />
         </Center>
+        </Flex>
+        </VStack>
     </>
   );
 };
