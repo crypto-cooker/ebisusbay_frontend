@@ -21,7 +21,9 @@ import {ApiService} from "@src/core/services/api-service";
 import {ethers} from "ethers";
 import {siPrefixedNumber} from "@src/utils";
 import NextApiService from "@src/core/services/api-service/next";
+import {appConfig} from "@src/Config";
 
+const config = appConfig();
 
 interface BattleMapHUDProps {
   onBack: () => void;
@@ -46,11 +48,12 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     try {
       setIsLoading(true);
       let nfts = await NextApiService.getWallet(user!.address!, {
-        collection: ['0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5'],
+        collection: config.contracts.resources,
       });
-      const fortuneAndMitama = await ApiService.withoutKey().ryoshiDynasties.getErc20Account(user!.address!)
-      if (nfts.data.length > 0) {
-        setKoban(siPrefixedNumber(nfts.data[0].balance));
+      // const fortuneAndMitama = await ApiService.withoutKey().ryoshiDynasties.getErc20Account(user!.address!);
+      const kobanToken = nfts.data.find((token) => token.nftId === '1');
+      if (kobanToken) {
+        setKoban(siPrefixedNumber(kobanToken.balance));
       }
     } catch (error) {
       console.log(error);
@@ -137,7 +140,15 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
       getResources();
     }
   }, [user.address])
-
+  const [accordionIndex, setAccordionIndex] = useState(-1);
+  useEffect(() => {
+    if(isNotMobile){
+      setAccordionIndex(0);
+    }else{
+      setAccordionIndex(-1);
+    }
+    console.log('isNotMobile', isNotMobile)
+}, [isNotMobile]); 
   return (
     <Box position='absolute' top={0} left={0}  w='100%' pointerEvents='none' >
       <Flex direction='row' justify='space-between' >
@@ -158,9 +169,10 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
         rounded='md' w={{base: '200px', sm: '200px'}}>
 
 
-      <Accordion defaultIndex={isNotMobile ? [0] : null} allowToggle paddingRight={0} justifyContent='right'
+      {/* <Accordion defaultIndex={[0]} allowToggle paddingRight={0} justifyContent='right' */}
+      <Accordion defaultIndex={[0]} allowToggle paddingRight={0} justifyContent='right'
       >
-            <AccordionItem border='none'justify="right" align="right">
+            <AccordionItem border='none'>
               <AccordionButton pointerEvents='auto'>
                 {!isLoading ? (
                   <>
