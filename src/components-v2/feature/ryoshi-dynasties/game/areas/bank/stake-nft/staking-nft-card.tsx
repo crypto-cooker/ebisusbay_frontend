@@ -53,7 +53,8 @@ const StakingNftCard = ({
   };
 
   const navigateTo = (link: string) => {
-    if (isInCart()) {
+    const count = cartCount();
+    if (count > 0 && count >= (nft.balance ?? 1)) {
       onRemove();
     } else {
       onAdd();
@@ -62,8 +63,9 @@ const StakingNftCard = ({
 
   const getOptions = () => {
     const options = [];
+    const count = cartCount();
 
-    if (isInCart()) {
+    if (count > 0 && count >= (nft.balance ?? 1)) {
       options.push({
         icon: faMinus,
         label: 'Unstake',
@@ -92,16 +94,16 @@ const StakingNftCard = ({
     return options;
   };
 
-  const isInCart = () => {
-    return bankStakeNftContext.some((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress));
+  const cartCount = () => {
+    return bankStakeNftContext.filter((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress)).length;
   };
 
   return (
     <Box
       className="card eb-nft__card h-100 shadow"
       data-group
-      borderColor={isInCart() ? '#F48F0C' : 'inherit'}
-      borderWidth={isInCart() ? '3px' : '1px'}
+      borderColor={cartCount() > 0 ? '#F48F0C' : 'inherit'}
+      borderWidth={cartCount() > 0 ? '3px' : '1px'}
       _hover={{
         borderColor:'#F48F0C',
       }}
@@ -119,7 +121,7 @@ const StakingNftCard = ({
         <Flex direction="column" height="100%">
           <div className="card-img-container position-relative">
             <>
-              {isInCart() ? (
+              {cartCount() > 0 ? (
                 <Box
                   top={0}
                   right={0}
@@ -129,7 +131,22 @@ const StakingNftCard = ({
                   cursor="pointer"
                   onClick={onRemove}
                 >
-                  <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
+                  {nft.balance && nft.balance > 1 ? (
+                    <Box
+                      rounded='full'
+                      bg='dodgerblue'
+                      border='2px solid white'
+                      w={6}
+                      h={6}
+                      textAlign='center'
+                      fontWeight='bold'
+                      fontSize='sm'
+                    >
+                      {cartCount()}
+                    </Box>
+                  ) : (
+                    <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
+                  )}
                 </Box>
               ) : (
                 <Box

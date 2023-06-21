@@ -68,7 +68,7 @@ const DataTable = ({data, onSort}: ResponsiveTableProps) => {
             <Th onClick={() => onSort('rank')} cursor='pointer'>Rank</Th>
             <Th onClick={() => onSort('price')} cursor='pointer'>Price</Th>
             <Th>To</Th>
-            <Th onClick={() => onSort('listingTime')} cursor='pointer'>Sale Time</Th>
+            <Th onClick={() => onSort('saleTime')} cursor='pointer'>Sale Time</Th>
           </Tr>
         </Thead>
         <Tbody>

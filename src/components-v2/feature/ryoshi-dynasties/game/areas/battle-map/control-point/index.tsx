@@ -1,13 +1,6 @@
-import React, { useState, useEffect, useCallback } from "react";
-import {
-  Flex,
-  Center,
-  Box,
-  Text,
-
-} from "@chakra-ui/react"
-import { Spinner } from 'react-bootstrap';
-import localFont from "next/font/local";
+import React, {useCallback, useContext, useEffect, useState} from "react";
+import {Box, Center, Flex, Text,} from "@chakra-ui/react"
+import {Spinner} from 'react-bootstrap';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 
 import {AttackTap} from "@src/Components/BattleBay/Areas/battleMap/components";
@@ -17,7 +10,11 @@ import {useAppSelector} from "@src/Store/hooks";
 import DeployTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/deploy";
 import InfoTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/info";
 import HelpTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/help";
-import {RdControlPoint} from "@src/core/services/api-service/types";
+import {RdGameState} from "@src/core/services/api-service/types";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 
 const tabs = {
@@ -38,7 +35,8 @@ interface ControlPointFormProps {
 }
 
 const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint, skirmishPrice, conquestPrice, regionName}: ControlPointFormProps) => {
-  // console.log("factionForm controlPoint: " + controlPoint.name);
+  const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState([]);
@@ -83,6 +81,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
     setTitle(controlPoint.name + ' : ' + controlPoint.points+' points');
     getRegionScore();
     setIsLoading(false);
+    setBattleEnabled(rdGameContext?.state === RdGameState.IN_PROGRESS);
   }, [controlPoint]);
 
   return (

@@ -162,7 +162,7 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
          marginBottom='8'
          >
           <p>
-          The faction with the highest troop count on {weekEndDate} will recieve a reward of RewardID: {controlPoint.rewardId}
+          The faction with the highest troop count on {weekEndDate} will recieve rewards!
        </p>
         </Flex>
       </Flex>
