@@ -145,7 +145,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
           const adder = stakeConfig!.adders
             .sort((a: any, b: any) => a.percentile - b.percentile)
             .find((m: any) => percentile <= m.percentile)?.value || 0;
-          const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nftId)?.bonus || 0;
+          const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nft.nftId)?.bonus || 0;
 
           nfts.push({
             nftAddress: token.contractAddress,
