@@ -603,8 +603,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     }
 
     if (area === 'barracks') {
-      // OpenBarracks();
-      onOpenBlockingModal();
+      OpenBarracks();
+      // onOpenBlockingModal();
       return;
     }
 
