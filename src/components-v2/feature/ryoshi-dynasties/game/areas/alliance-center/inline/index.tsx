@@ -157,7 +157,7 @@ const CurrentFaction = () => {
   const { isOpen: isOpenDelegate, onOpen: onOpenDelegate, onClose: onCloseDelegate } = useDisclosure();
 
   const [isExecutingRegister, setIsExecutingRegister] = useState(false);
-  const [totalTroops, setTotalTroops] = useState(rdContext.user?.season.troops.undeployed ?? 0);
+  // const [totalTroops, setTotalTroops] = useState(rdContext.user?.season.troops.undeployed ?? 0);
   const {data: allFactions, status, error} = useQuery({
     queryKey: ['GetAllFactions'],
     queryFn: () => ApiService.withoutKey().ryoshiDynasties.getFactions(),
@@ -267,6 +267,20 @@ const CurrentFaction = () => {
     rdContext.refreshUser();
   }
 
+  const[availableTroops, setAvailableTroops] = useState(0);
+  const[totalTroops, setTotalTroops] = useState(0);
+
+  useEffect(() => {
+    console.log('rdContext', rdContext)
+    if(rdContext.user?.season?.troops?.undeployed !== undefined){
+      setAvailableTroops(rdContext.user?.season?.troops?.undeployed);
+    }
+    if(rdContext.user?.season?.troops?.deployed !== undefined && 
+       rdContext.user?.season?.troops?.undeployed !== undefined){
+      setTotalTroops(rdContext.user?.season?.troops?.deployed + rdContext.user?.season?.troops?.undeployed);
+    }
+}, [rdContext]); 
+
   const {
     values,
     errors,
@@ -369,7 +383,7 @@ const CurrentFaction = () => {
                 <VStack align='start' spacing={0} my='auto'>
                   <Text fontSize='sm'>Available Troops</Text>
                   <HStack>
-                    <Text fontSize='lg' fontWeight='bold'>{totalTroops}</Text>
+                    <Text fontSize='lg' fontWeight='bold'>{availableTroops}</Text>
                     {isLocalEnv() && (
                       <IconButton
                         aria-label='Add Troops'
@@ -382,7 +396,7 @@ const CurrentFaction = () => {
                     )}
                   </HStack>
                   <Text fontSize='sm' pt={4}>Faction Troops</Text>
-                  <Text fontSize='lg' fontWeight='bold'>{rdContext.user.season.troops.deployed}</Text>
+                  <Text fontSize='lg' fontWeight='bold'>{totalTroops}</Text>
                 </VStack>
                 {/*{!!rdContext.user.season.troops.undeployed && !rdContext.user.season.faction && (*/}
                 {/*  <RdButton hoverIcon={false} onClick={onOpenDelegate} maxH='50px'>*/}
