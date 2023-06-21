@@ -22,8 +22,9 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import localFont from "next/font/local";
 
-const config = appConfig();
+const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Black.woff2' })
 
 interface BattleMapProps {
   onChange: () => void;
@@ -471,7 +472,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
                 </map>
                 <Flex position="absolute" zIndex="0" width="100%" height="100%">
                 {flags} {explosion}
-                <div >
+                <div className={gothamCondBlack.className}>
                   <div className={styles.water}></div>
                   <div id='beach' className={[styles.buccaneer_beach, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Buccaneer Beach")}>
                     <div className={[styles.worldmap_label, styles.buccaneer_beach_label].filter(e => !!e).join(' ')}>Buccaneer Beach</div> </div>

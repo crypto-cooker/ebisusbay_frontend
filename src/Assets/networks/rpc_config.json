@@ -19500,7 +19500,7 @@
       "multiToken": false,
       "address": "0xE0eF98948B187c5Cd23CDE3339B78dDdEFe44f92",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Aliens in Disguise",
         "avatar": "/img/collections/peepz/avatar.webp",
@@ -21217,6 +21217,37 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "ICY ARMY",
+      "slug": "icy-army",
+      "true": false,
+      "address": "0xbEa2F7082ad9B5e1138D5e94E00fbc63d7EC8612",
+      "tokens": [
+        {
+          "id": 1
+        }
+      ],
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The ICY ARMY collection represents all IcyCRO's collections in the Ryoshi Dynasties. Join the armies of ICY to protect the Ice Shrine and fight for the Glory, Fortune and Cold Beverages!",
+        "avatar": "/img/collections/icy/avatar.webp",
+        "card": "/img/collections/icy/card.webp",
+        "banner": "/img/collections/icy/banner.webp",
+        "website": "https://www.icycro.org/",
+        "twitter": "https://twitter.com/IcyCro",
+        "medium": "https://medium.com/@IcyCRO",
+        "telegram": "https://t.co/BDFTTGErlZ",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
