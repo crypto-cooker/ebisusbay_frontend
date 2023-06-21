@@ -1,4 +1,11 @@
-import {Box, Flex, Spacer, Text, Progress, HStack, Tag, Image, SimpleGrid, Center} from "@chakra-ui/react";
+import {Box, Flex, Spacer, Text, Progress, HStack, Tag, Image, SimpleGrid, Center,
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  useMediaQuery 
+} from "@chakra-ui/react";
 import {useAppSelector} from "@src/Store/hooks";
 import React, {useState, useEffect, useRef, useContext} from "react";
 import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
@@ -30,6 +37,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const[koban, setKoban] = useState<number | string>(0);
   const[isLoading, setIsLoading] = useState(false);
+  const [isNotMobile] = useMediaQuery("(max-width: 768px)") 
 
   const[availableTroops, setAvailableTroops] = useState(0);
   const[totalTroops, setTotalTroops] = useState(0);
@@ -109,6 +117,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   useEffect(() => {
       getSeasonEndTime();
       // getTroopCooldown();
+      // console.log('isMobile', isNotMobile)
   }, []); 
 
   useEffect(() => {
@@ -130,92 +139,97 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   }, [user.address])
 
   return (
-    <Box position='absolute' top={0} left={0} p={4} w='100%' pointerEvents='none' >
+    <Box position='absolute' top={0} left={0}  w='100%' pointerEvents='none' >
       <Flex direction='row' justify='space-between' >
-        {/* <Box mb={4} bg='#272523EE' p={2} rounded='md' w={{base: '345px', sm: '200px'}}> */}
-        <ReturnToVillageButton onBack={onBack} />
-          <Spacer />
-          <Box mb={4} bg='#272523EE' p={2} rounded='md' 
-          w={{base: '200px', sm: '200px'}}
+      <ReturnToVillageButton onBack={onBack} />
+      <Spacer />
+{/* 
+      <Box mb={4} bg='#272523EE' p={2} rounded='md' 
+          w={{base: '200px', sm: '280px'}}
+          // w={{base: '200px', sm: '280px'}}
           h={{base: '135px', sm: '135px'}}
+          // h={{base: '135px', sm: '135px'}}
           >
-          {/* <RdButton h='30px' w='210px' position='absolute' right='10px' top='10px' ></RdButton> */}
-          <Box
-           h='30px' w='210px' right='13px' top='0px'
-            as='button'
-            borderColor='#292626'
-            color='#FFF !important'
-            fontSize='2xl'
-            borderRadius='2px'
-            position='relative'
-            borderWidth='6px 0px 6px 0px'
-            data-group
-            px={1}
-            _active={{
-              borderColor: '#FFFFFF'
-            }}
-            bgColor='transparent !important'
-          >
-            <Box
-        px={0}
-        py={1}
-        bg='linear-gradient(to left, #564D4A, #564D4A)'
-        _groupHover={{ bg: 'linear-gradient(to left, #564D4A, #564D4A)' }}
-        // ps={props.stickyIcon ? '40px' : '0px'}
-        // pe={props.stickyIcon ? '6px' : '0px'}
-        h='full'
-        // className={gothamMedium.className}
-      >
-        <Box px={3}>
-          {/* {props.children} */}
-        </Box>
-      </Box>
-          </Box>
+           */}
 
-          <div className="App">
-              <HStack justifyContent='center' marginTop='-7'>
-                <Text fontSize='xs' color="#aaa" zIndex='9'>Game End:</Text>
-                <Text fontWeight='bold' zIndex='9'> {timer}</Text>
-              </HStack>
-            <Spacer h='2' />
-           <Center>
-            <Tag  variant='outline'>
-              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()}
-                      alt="troopsIcon" boxSize={4}/>
-              <Box ms={1}>
-              {!isLoading ? (<>
-                {koban}
-              </>
+      <Box mb={4} mt={6} mr={2}
+ justifyContent='right'
+        bg={user.theme === 'dark' ? '#272523EE' : '#272523EE'}
+        rounded='md' w={{base: '200px', sm: '200px'}}>
+
+
+      <Accordion defaultIndex={isNotMobile ? [0] : null} allowToggle paddingRight={0} justifyContent='right'
+      >
+            <AccordionItem border='none'justify="right" align="right">
+              <AccordionButton pointerEvents='auto'>
+                {!isLoading ? (
+                  <>
+                    {!!user.address ? (
+                      <>
+                      <Flex justify="right" align="right">
+                      <HStack justifyContent='right' marginTop='0'>
+                        <Text fontSize='xs' color="#aaa" zIndex='9'>Game End:</Text>
+                        <Text fontWeight='bold' zIndex='9'> {timer}</Text>
+                        <AccordionIcon 
+                          color='#ffffff'/>
+                      </HStack>
+                      </Flex>
+                      </>
+                    ) : (
+                      <Text align='center'>Connect wallet for stats</Text>
+                    )}
+                    {/* <Spacer /> */}
+                    
+                  </>
                 ) : (
                   <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>
                 )}
-              </Box>
-            </Tag>
-           </Center>
+              </AccordionButton>
+            
+              <AccordionPanel pb={4} alignItems={'right'}>
 
-            {/* <Tag  variant='outline'>
-              <Box ms={1}>
-               
-              </Box>
-            </Tag> */}
-
-          <SimpleGrid columns={2} my={4} px={1}>
-            <Box color="#aaa">Available:</Box>
-            <Flex textAlign='end' fontWeight='bold' alignContent='space-between'>
-              <HStack textAlign='end'>
-                <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
-                <Text>{availableTroops}</Text>
-              </HStack>
+              <Center>
+                <Tag  variant='outline'>
+                  <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()}
+                          alt="troopsIcon" boxSize={4}/>
+                  <Box ms={1}>
+                  {!isLoading ? (<>
+                    {koban}
+                  </>
+                    ) : (
+                      <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>
+                    )}
+                  </Box>
+                </Tag>
+              </Center>
+              <Flex justify="right" align="right">
+              <SimpleGrid columns={2} my={4} px={1}>
+                <Box color="#aaa">Available:</Box>
+                <Flex textAlign='end' fontWeight='bold' alignContent='space-between'>
+                  <HStack textAlign='end'>
+                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
+                    <Text>{availableTroops}</Text>
+                  </HStack>
+                  </Flex>
+                <Box color="#aaa">Total:</Box>
+                <Box textAlign='end' fontWeight='bold'>
+                  <HStack textAlign='end'>
+                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
+                    <Text>{totalTroops}</Text>
+                  </HStack>
+                  </Box>
+              </SimpleGrid>
               </Flex>
-            <Box color="#aaa">Total:</Box>
-            <Box textAlign='end' fontWeight='bold'>
-              <HStack textAlign='end'>
-                <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
-                <Text>{totalTroops}</Text>
-              </HStack>
-              </Box>
-          </SimpleGrid>
-        </div>
+
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+
+
+        
+          
+
+          
         {troopTimer !== '' && (
             <Box mt={-3} bg='#cc2828' p={2} rounded='md' 
               
