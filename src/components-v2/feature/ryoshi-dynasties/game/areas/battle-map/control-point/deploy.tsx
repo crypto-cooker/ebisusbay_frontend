@@ -310,11 +310,11 @@ useEffect(() => {
             onClick={() => setCurrentTab(tabs.deploy)}
           > Deploy
           </RdTabButton>
-          <RdTabButton
+          {/* <RdTabButton
             isActive={currentTab === tabs.recall}
             onClick={() => setCurrentTab(tabs.recall)}
           > Recall
-          </RdTabButton>
+          </RdTabButton> */}
         </Flex>
       </Center>
 
