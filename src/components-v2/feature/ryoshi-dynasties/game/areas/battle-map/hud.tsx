@@ -169,7 +169,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
       {/* <Accordion defaultIndex={[0]} allowToggle paddingRight={0} justifyContent='right' */}
       <Accordion defaultIndex={[0]} allowToggle paddingRight={0} justifyContent='right'
       >
-            <AccordionItem border='none'align="right">
+            <AccordionItem border='none'>
               <AccordionButton pointerEvents='auto'>
                 {!isLoading ? (
                   <>
