@@ -31,6 +31,9 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   const[koban, setKoban] = useState<number | string>(0);
   const[isLoading, setIsLoading] = useState(false);
 
+  const[availableTroops, setAvailableTroops] = useState(0);
+  const[totalTroops, setTotalTroops] = useState(0);
+
   const getResources = async () => {
     try {
       setIsLoading(true);
@@ -106,8 +109,18 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   useEffect(() => {
       getSeasonEndTime();
       // getTroopCooldown();
-      console.log('rdContext', rdContext)
   }, []); 
+
+  useEffect(() => {
+    console.log('rdContext', rdContext)
+    if(rdContext.user?.season?.troops?.undeployed !== undefined){
+      setAvailableTroops(rdContext.user?.season?.troops?.undeployed);
+    }
+    if(rdContext.user?.season?.troops?.deployed !== undefined && 
+       rdContext.user?.season?.troops?.undeployed !== undefined){
+      setTotalTroops(rdContext.user?.season?.troops?.deployed + rdContext.user?.season?.troops?.undeployed);
+    }
+}, [rdContext]); 
 
   useEffect(() => {
     // get all resources
@@ -191,14 +204,14 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
             <Flex textAlign='end' fontWeight='bold' alignContent='space-between'>
               <HStack textAlign='end'>
                 <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
-                <Text>{rdContext.user?.faction?.troops}</Text>
+                <Text>{availableTroops}</Text>
               </HStack>
               </Flex>
             <Box color="#aaa">Total:</Box>
             <Box textAlign='end' fontWeight='bold'>
               <HStack textAlign='end'>
                 <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
-                <Text>{rdContext.user?.season?.troops.deployed}</Text>
+                <Text>{totalTroops}</Text>
               </HStack>
               </Box>
           </SimpleGrid>
