@@ -144,7 +144,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
                 <>Stake $Fortune </>
               )}
             </RdButton>
-            <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={onOpenBlockingModal}>
+            <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => onOpenBlockingModal()}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faImage} />
               ) : (
