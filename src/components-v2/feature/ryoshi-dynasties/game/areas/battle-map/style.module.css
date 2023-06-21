@@ -42,7 +42,7 @@
 }
 .buccaneer_beach{
 	position: absolute;
-	width: 296;
+	width: 296px;
 	height: 295px;
 	top: 590px;
 	left: 320px;
@@ -381,7 +381,7 @@
 	top: 170px;
 	left: 0px;
 	color: #fff2f2;
-	text-shadow:  0px 4px .2em ##bf0505 ;
+	text-shadow:  0px 4px .2em #bf0505 ;
 	-webkit-text-stroke: 1px #510303 ;
 	text-stroke: 1px #510303 ;
 }
