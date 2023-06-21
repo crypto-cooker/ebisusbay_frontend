@@ -8,7 +8,7 @@ class RyoshiPresale {
 
   constructor() {
     this.apollo = new ApolloClient({
-      uri: `${config.urls.subgraph}ryoshi-presale-2`,
+      uri: `${config.urls.subgraph}ryoshi-presale`,
       cache: new InMemoryCache()
     });
   }
