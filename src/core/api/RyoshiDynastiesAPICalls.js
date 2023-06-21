@@ -234,10 +234,10 @@ export const delegateTroops = async (address, signature, troops, factionId) => {
   }
 }
 //deploys troops from a faction to a control point
-export const deployTroops = async (address, signature, troops, controlPointId, factionId) => {
+export const deployTroops = async (address, signature, gameId, troops, controlPointId, factionId) => {
   try{
 
-    var gameId = await getWeeklyGameId();
+    // var gameId = await getWeeklyGameId();
     // console.log("Troops: "+troops);
     // troops = Number(troops);
     // console.log("ControlPointID: "+controlPointId);

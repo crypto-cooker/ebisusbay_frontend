@@ -70,9 +70,10 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
   const handleQuantityChange = (stringValue: string, numValue: number) => setSelectedQuantity(numValue)
   const [allFactions, setAllFactions] = useState<RdControlPointLeaderBoard[]>([]);
 
-  const [troopsAvailable, setTroopsAvailable] = useState(0);
   const [playerFaction, setPlayerFaction] = useState<RdFaction>();
   const [hasFaction, setHasFaction] = useState(false);
+
+  const [troopsAvailable, setTroopsAvailable] = useState(0);
   const[troopsDeployed, setTroopsDeployed] = useState(0);
 
   const onChangeInputsFaction = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -96,6 +97,7 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
       }
     }
   }
+
   const GetPlayerTroops = async () => {
     if (!user.address) return;
 
@@ -112,20 +114,37 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
         {
           setHasFaction(true)
           setPlayerFaction(data.data.data)
-          const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
-          setTroopsAvailable(factionTroopsData)
+          // const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
+          // setTroopsAvailable(factionTroopsData)
         }
         else
         {
           setHasFaction(false)
-          const troops = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
-          setTroopsAvailable(troops)
+          // const troops = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
+          // setTroopsAvailable(troops)
         }
       } catch (error) {
         console.log(error)
       }
     }
   }
+
+  useEffect(() => {
+    console.log('rdContext', rdContext)
+    if(rdContext.user?.season?.troops?.undeployed !== undefined){
+      setTroopsAvailable(rdContext.user?.season?.troops?.undeployed);
+    }
+    // if(rdContext.user?.season?.troops?.deployed !== undefined && 
+    //    rdContext.user?.season?.troops?.undeployed !== undefined){
+    //   setTroopsAvailable(rdContext.user?.season?.troops?.deployed + rdContext.user?.season?.troops?.undeployed);
+    // }
+}, [rdContext]); 
+
+useEffect(() => {
+  console.log('yo')
+  rdContext.refreshUser();
+}, []); 
+
   const DeployOrRecallTroops = async () => {
     if (!user.address) return;
 
@@ -170,15 +189,14 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
     if (signatureInStorage) {
       try {
         setIsExecuting(true);
-        
-
+        console.log("deploying troops")
         var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
-        console.log("factionId", factionId)
-        console.log("selectedQuantity", selectedQuantity)
-        console.log("controlPoint.id", controlPoint.id)
+        // console.log("factionId", factionId)
+        // console.log("selectedQuantity", selectedQuantity)
+        // console.log("controlPoint.id", controlPoint.id)
 
         var data = await deployTroops(user.address?.toLowerCase(), signatureInStorage,
-          selectedQuantity, controlPoint.id, factionId)
+            rdContext?.game?.game.id, selectedQuantity, controlPoint.id, factionId)
 
         await GetPlayerTroops();
         setSelectedQuantity(0);
@@ -204,14 +222,14 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
     if (signatureInStorage) {
       try {
           setIsExecuting(true);
-
+          console.log("recalling troops")
           // console.log("rdContext", rdContext?.game?.game.id)
           var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
-          console.log("user.address", user.address?.toLowerCase())
-          console.log("signatureInStorage", signatureInStorage)
-          console.log("factionId", factionId)
-          console.log("selectedQuantity", selectedQuantity)
-          console.log("controlPoint.id", controlPoint.id)
+          // console.log("user.address", user.address?.toLowerCase())
+          // console.log("signatureInStorage", signatureInStorage)
+          // console.log("factionId", factionId)
+          // console.log("selectedQuantity", selectedQuantity)
+          // console.log("controlPoint.id", controlPoint.id)
 
           var data = await recallTroops(user.address?.toLowerCase(), signatureInStorage, 
             rdContext?.game?.game.id, selectedQuantity, controlPoint.id, factionId)
