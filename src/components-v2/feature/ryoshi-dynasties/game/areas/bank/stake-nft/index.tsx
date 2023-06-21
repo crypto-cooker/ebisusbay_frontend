@@ -1,4 +1,17 @@
-import {Box, Center, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Text, VStack} from "@chakra-ui/react"
+import {
+  Box,
+  Center,
+  Flex,
+  HStack,
+  Icon,
+  IconButton,
+  Image,
+  Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger,
+  SimpleGrid,
+  Spinner,
+  Text,
+  VStack
+} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
@@ -7,7 +20,6 @@ import {useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
 import nextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Spinner} from "react-bootstrap";
 import StakingNftCard from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/staking-nft-card";
 import {appConfig} from "@src/Config";
 import {caseInsensitiveCompare} from "@src/utils";
@@ -341,44 +353,53 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                 </Box>
               ) : (
                 <Box position='relative'>
-                  <Box
-                    p={2}
-                    rounded='xl'
-                    cursor='pointer'
-                  >
-                    <Box
-                      width={100}
-                      height={100}
-                      bgColor='#716A67'
-                      rounded='xl'
-                      position='relative'
-                    >
-                      <ShrineIcon boxSize='100%' fill='#B1ADAC'/>
-                      {index > 0 && (
-                        <Flex
-                          position='absolute'
-                          top={0}
-                          left={0}
-                          w={100}
-                          h={100}
-                          fontSize='sm'
-                          bg='#333333DD'
+                  <Popover>
+                    <PopoverTrigger>
+                      <Box
+                        p={2}
+                        rounded='xl'
+                        cursor='pointer'
+                      >
+                        <Box
+                          width={100}
+                          height={100}
+                          bgColor='#716A67'
                           rounded='xl'
-                          justify='center'
-                          fontWeight='semibold'
-                          textAlign='center'
+                          position='relative'
                         >
-                          <Center>
-                            <Image
-                              src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
-                              alt="lockIcon"
-                              boxSize={12}
-                            />
-                          </Center>
-                        </Flex>
-                      )}
-                    </Box>
-                  </Box>
+                          <ShrineIcon boxSize='100%' fill='#B1ADAC'/>
+                          {index > 0 && (
+                            <Flex
+                              position='absolute'
+                              top={0}
+                              left={0}
+                              w={100}
+                              h={100}
+                              fontSize='sm'
+                              bg='#333333DD'
+                              rounded='xl'
+                              justify='center'
+                              fontWeight='semibold'
+                              textAlign='center'
+                            >
+                              <Center>
+                                <Image
+                                  src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
+                                  alt="lockIcon"
+                                  boxSize={12}
+                                />
+                              </Center>
+                            </Flex>
+                          )}
+                        </Box>
+                      </Box>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <PopoverBody>Additional slots coming soon!</PopoverBody>
+                    </PopoverContent>
+                  </Popover>
                 </Box>
               )}
             </Box>
@@ -435,21 +456,15 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
         hasMore={hasNextPage ?? false}
         style={{ overflow: 'hidden' }}
         loader={
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          </div>
+          <Center>
+            <Spinner />
+          </Center>
         }
       >
         {status === "loading" ? (
-          <div className="col-lg-12 text-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </div>
+          <Center>
+            <Spinner />
+          </Center>
         ) : status === "error" ? (
           <p>Error: {(error as any).message}</p>
         ) : data?.pages.map((page) => page.data).flat().length > 0 ? (

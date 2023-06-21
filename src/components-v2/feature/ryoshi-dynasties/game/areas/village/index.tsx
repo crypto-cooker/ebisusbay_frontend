@@ -34,9 +34,9 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {RdGameState} from "@src/core/services/api-service/types";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import { RdGameState } from "@src/core/services/api-service/types";
 
 interface VillageProps {
   onChange: (value: string) => void;
@@ -603,8 +603,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     }
 
     if (area === 'barracks') {
-      onOpenBlockingModal();
       // OpenBarracks();
+      onOpenBlockingModal();
       return;
     }
 

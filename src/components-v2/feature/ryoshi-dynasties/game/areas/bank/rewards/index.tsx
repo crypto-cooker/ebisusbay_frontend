@@ -1,4 +1,4 @@
-import {Box, Flex, Text} from "@chakra-ui/react"
+import {Box, Center, Flex, Image, Text, VStack} from "@chakra-ui/react"
 import React, {ReactElement, useCallback, useState} from "react";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
@@ -13,6 +13,7 @@ import FortuneRewardsTab from "./fortune";
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/rewards/faq-page";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import ImageService from "@src/core/services/image";
 
 const tabs = {
   fortune: 'fortune',
@@ -91,13 +92,29 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
               <Box>
                 {currentTab === tabs.fortune && (
                   // <FortuneRewardsTab />
-
-                  <RdModalBox textAlign='center'>
-                    Coming Soon
+                  <RdModalBox>
+                    <VStack>
+                      <Image
+                        src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
+                        alt="lockIcon"
+                        boxSize={12}
+                      />
+                      <Text>Coming Soon</Text>
+                    </VStack>
                   </RdModalBox>
                 )}
                 {currentTab === tabs.resources && (
-                  <ResourcesTab />
+                  // <ResourcesTab />
+                  <RdModalBox>
+                    <VStack>
+                      <Image
+                        src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
+                        alt="lockIcon"
+                        boxSize={12}
+                      />
+                      <Text>Coming Soon</Text>
+                    </VStack>
+                  </RdModalBox>
                 )}
                 {currentTab === tabs.presale && (
                   <PresaleVaultTab />
