@@ -141,7 +141,7 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const GetNftImages = async () => {
     if(!nftImages) return;
 
-    let data = await api.get("fullcollections?address=0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5");
+    let data = await api.get("fullcollections?address="+config.contracts.resources);
     setNftImages(data.data.nfts);
   }
 
