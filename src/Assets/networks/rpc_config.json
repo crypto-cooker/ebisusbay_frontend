@@ -19500,7 +19500,7 @@
       "multiToken": false,
       "address": "0xE0eF98948B187c5Cd23CDE3339B78dDdEFe44f92",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Aliens in Disguise",
         "avatar": "/img/collections/peepz/avatar.webp",
