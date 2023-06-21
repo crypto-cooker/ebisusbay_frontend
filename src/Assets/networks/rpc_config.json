@@ -21222,7 +21222,7 @@
     {
       "name": "ICY ARMY",
       "slug": "icy-army",
-      "true": false,
+      "multiToken": true,
       "address": "0xbEa2F7082ad9B5e1138D5e94E00fbc63d7EC8612",
       "tokens": [
         {
