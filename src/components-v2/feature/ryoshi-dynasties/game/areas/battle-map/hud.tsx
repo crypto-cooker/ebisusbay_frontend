@@ -137,7 +137,15 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
       getResources();
     }
   }, [user.address])
-
+  const [accordionIndex, setAccordionIndex] = useState(-1);
+  useEffect(() => {
+    if(isNotMobile){
+      setAccordionIndex(0);
+    }else{
+      setAccordionIndex(-1);
+    }
+    console.log('isNotMobile', isNotMobile)
+}, [isNotMobile]); 
   return (
     <Box position='absolute' top={0} left={0}  w='100%' pointerEvents='none' >
       <Flex direction='row' justify='space-between' >
@@ -158,9 +166,10 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
         rounded='md' w={{base: '200px', sm: '200px'}}>
 
 
-      <Accordion defaultIndex={isNotMobile ? [0] : null} allowToggle paddingRight={0} justifyContent='right'
+      {/* <Accordion defaultIndex={[0]} allowToggle paddingRight={0} justifyContent='right' */}
+      <Accordion defaultIndex={[0]} allowToggle paddingRight={0} justifyContent='right'
       >
-            <AccordionItem border='none'justify="right" align="right">
+            <AccordionItem border='none'align="right">
               <AccordionButton pointerEvents='auto'>
                 {!isLoading ? (
                   <>
