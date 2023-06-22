@@ -1,4 +1,4 @@
-import {Box, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Spacer, Text, Wrap, WrapItem} from "@chakra-ui/react"
+import {Box, Center, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Spacer, Text, Wrap, WrapItem} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
@@ -40,6 +40,11 @@ interface StakeNftsProps {
   onClose: () => void;
   battleRewards: any;
 }
+// interface NftImage {
+//   id: number;
+//   name: string;
+//   image: string;
+// }
 
 const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const user = useAppSelector((state) => state.user);
@@ -129,9 +134,20 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const GetTokenImage = (tokenId: number) => {
     //itterate through nftImages and find the one with the matching tokenId
     // console.log('===nftImages', nftImages);
-    let nftImage = nftImages.find((nftImage) => Number(nftImage.id) === tokenId);
-    if(!nftImage) return ('');
+    // console.log('===tokenId', tokenId);
 
+    // //itterate through nftImages and find the one with the matching tokenId
+    // nftImages.map((nft: NftImage) => {
+    //   // console.log('===nft', nft);
+
+    //   if(Number(nft.id) === tokenId) {
+    //     console.log('===nftImage.image', nft);
+    //     return nft.image;
+    //   }
+    // });
+    // // console.log('===nftImage', nftImage);
+    let nftImage = nftImages.find((nftImage) => nftImage.id === tokenId);
+    if(!nftImage) return ('');
     return nftImage.image;
   }
   const GetTokenName= (tokenId: number) => {
@@ -144,10 +160,10 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   }
 
   const GetNftImages = async () => {
-    if(!nftImages) return;
+    // if(!nftImages) return;
 
     let data = await api.get("fullcollections?address="+config.contracts.resources);
-    console.log('===data', data);
+    // console.log('===data', data.data.nfts);
     setNftImages(data.data.nfts);
   }
 
@@ -157,9 +173,6 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
     GetNftImages();
   }, [battleRewards])
 
-  // useEffect(() => {
-  //   console.log('===nftImages', nftImages);
-  // }, [nftImages])
 
   return (
     <>
@@ -171,7 +184,15 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
       isCentered={false}
     >
     { !battleRewards || battleRewards.length ===0 || nftImages.length ===0 ? (<>
-        <Text fontSize='sm' color='gray.400'>No rewards to claim</Text>
+        <Box minH={'200px'}>
+          <Center>
+            <Text
+              fontSize='sm' 
+              color='gray.400'
+                margin='100'
+              > No rewards to claim </Text>
+          </Center>
+        </Box>
     </>) :(<>
     <Flex direction={{base: 'column', md: 'row'}} my={6} px={4}>
     <Wrap>
