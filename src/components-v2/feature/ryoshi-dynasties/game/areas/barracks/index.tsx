@@ -98,7 +98,10 @@ const Barracks = ({onBack}: BarracksProps) => {
         </Box>
         <Box textAlign='end' ms={2}>
           <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} fontWeight='bold'>Barracks</Text>
-          <Text textColor='#ffffffeb' fontSize='sm' fontStyle='italic'>Stake Ryoshi NFTs to receive bonus troops</Text>
+          <Text textColor='#ffffffeb' fontSize='sm' fontStyle='italic'>
+            {/* Stake Ryoshi NFTs to receive bonus troops */}
+            Claim rewards from your battles
+            </Text>
         </Box>
       </Flex>
       <Box>
@@ -118,7 +121,7 @@ const Barracks = ({onBack}: BarracksProps) => {
           align='stretch'
         >
         <Spacer h='20'/>
-          <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
+          {/* <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton> */}
           {(!!battleRewards && !battleRewardsClaimed) &&  (
             <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
           )}

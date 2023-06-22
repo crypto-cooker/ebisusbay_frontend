@@ -184,7 +184,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   // }
 
   const buildings ={ "allianceCenter" : {height:438, width:554, top:'7%', left:'55%'},
-    "townhall" : {height:607, width:707, top:'13%', left:'36%'},
+    "townhall" : {height:607, width:707, top:'13.25%', left:'36.25%'},
     "academy" : {height: 792, width: 744, top: '4%', left: '74%'},
     "tavern" : {height: 573, width: 725, top: '3%', left: '14%'},
     "tavernSpin" : {height: 573, width: 725, top: '3%', left: '14%'},
@@ -608,8 +608,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     }
 
     if (area === 'barracks') {
-      // OpenBarracks();
-      onOpenBlockingModal();
+      OpenBarracks();
+      // onOpenBlockingModal();
       return;
     }
 

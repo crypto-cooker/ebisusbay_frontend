@@ -44,6 +44,8 @@ import FactionPfp from '../../../../../../../Components/BattleBay/Areas/FactionI
 import {BigNumber, Contract, ethers} from "ethers";
 import Fortune from "@src/Contracts/Fortune.json";
 import {ApiService} from "@src/core/services/api-service";
+import { commify } from "ethers/lib/utils";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
@@ -242,14 +244,7 @@ const CurrentFaction = () => {
         }
       } catch (error: any) {
         console.log(error);
-        // if (error.message) {
-        //   toast.error(error.message);
-        // } else 
-        if (error.data) {
-          toast.error(error.data.message);
-        } else  {
-          toast.error('Already processed a registration for this season ');
-        }
+        parseErrorMessage(error);
       } finally {
         setIsExecutingRegister(false);
       }
@@ -357,7 +352,7 @@ const CurrentFaction = () => {
                 </SimpleGrid>
                 {!rdContext.user.season.faction && (
                   <Box textAlign='start' mt={2} fontSize='sm'>
-                    <Text>Regular Cost: {rdContext.config.factions.registration.cost}</Text>
+                    <Text>Regular Cost: {commify(rdContext.config.factions.registration.cost)} Fortune + {rdContext.config.factions.registration.troopsCost} Troops</Text>
                     <Text >Presale Users: Free for first season</Text>
                   </Box>
                 )}
