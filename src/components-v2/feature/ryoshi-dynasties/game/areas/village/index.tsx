@@ -534,6 +534,11 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     }
   }, []);
 
+  useEffect(() => {
+    if(!transformComponentRef?.current) return;
+    setElementToZoomTo('fancyMenu'); 
+  }, [transformComponentRef?.current]);
+
   const SetUpButtons = async () => {
     setPins(buttonsNames.map((button, i) =>
       (<Button style={{ marginTop: '4px', marginLeft: '4px' }}
