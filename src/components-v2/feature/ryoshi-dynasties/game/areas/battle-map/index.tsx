@@ -369,41 +369,41 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
   //socket stuff
   const [isSocketConnected, setIsSocketConnected] = useState(false);
-  useEffect(() => {
-    if (!user.address) return;
-
-    console.log('connecting to socket...');
-    const socket = io(`${config.urls.cmsSocket}ryoshi-dynasties/battles?walletAddress=${user.address.toLowerCase()}`);
-
-    function onConnect() {
-      setIsSocketConnected(true);
-      console.log('connected')
-    }
-
-    function onDisconnect() {
-      setIsSocketConnected(false);
-      console.log('disconnected')
-    }
-
-    function onBattleFinishedEvent(data: any) {
-      console.log('BATTLE_FINISHED', data)
-      const parsedAtack = JSON.parse(data);
-      // console.log('parsedAtack', parsedAtack)
-      // console.log('parsedAtack.controlPointId', parsedAtack.controlPointId)
-      // PlayExplosion(parsedAtack.controlPointId);
-      setExplosionOnPoint(parsedAtack.controlPointId);
-    }
-
-    socket.on('connect', onConnect);
-    socket.on('disconnect', onDisconnect);
-    socket.on('BATTLE_FINISHED', onBattleFinishedEvent);
-
-    return () => {
-      socket.off('connect', onConnect);
-      socket.off('disconnect', onDisconnect);
-      socket.off('BATTLE_FINISHED', onBattleFinishedEvent);
-    };
-  }, [!!user.address]);
+  // useEffect(() => {
+  //   if (!user.address) return;
+  //
+  //   console.log('connecting to socket...');
+  //   const socket = io(`${config.urls.cmsSocket}ryoshi-dynasties/battles?walletAddress=${user.address.toLowerCase()}`);
+  //
+  //   function onConnect() {
+  //     setIsSocketConnected(true);
+  //     console.log('connected')
+  //   }
+  //
+  //   function onDisconnect() {
+  //     setIsSocketConnected(false);
+  //     console.log('disconnected')
+  //   }
+  //
+  //   function onBattleFinishedEvent(data: any) {
+  //     console.log('BATTLE_FINISHED', data)
+  //     const parsedAtack = JSON.parse(data);
+  //     // console.log('parsedAtack', parsedAtack)
+  //     // console.log('parsedAtack.controlPointId', parsedAtack.controlPointId)
+  //     // PlayExplosion(parsedAtack.controlPointId);
+  //     setExplosionOnPoint(parsedAtack.controlPointId);
+  //   }
+  //
+  //   socket.on('connect', onConnect);
+  //   socket.on('disconnect', onDisconnect);
+  //   socket.on('BATTLE_FINISHED', onBattleFinishedEvent);
+  //
+  //   return () => {
+  //     socket.off('connect', onConnect);
+  //     socket.off('disconnect', onDisconnect);
+  //     socket.off('BATTLE_FINISHED', onBattleFinishedEvent);
+  //   };
+  // }, [!!user.address]);
 
   const SelectControlPoint = (id: any, regionName: string) => {
     setRegionName(regionName);
