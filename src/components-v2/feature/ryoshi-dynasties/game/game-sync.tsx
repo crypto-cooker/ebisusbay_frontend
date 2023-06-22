@@ -153,36 +153,36 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
 
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [isInMaintenanceMode, setIsInMaintenanceMode] = useState(false);
-  useEffect(() => {
-    if (!user.address) return;
-
-    // console.log('connecting to socket...');
-    const socket = io(`${config.urls.cmsSocket}ryoshi-dynasties/games?walletAddress=${user.address}`);
-
-    function onConnect() {
-      setIsSocketConnected(true);
-      console.log('connected')
-    }
-
-    function onDisconnect() {
-      setIsSocketConnected(false);
-      console.log('disconnected')
-    }
-
-    function onGameStatusEvent(data: { gameId: number, newStatus: string }) {
-      console.log('GAME_STATUS', data);
-    }
-
-    socket.on('connect', onConnect);
-    socket.on('disconnect', onDisconnect);
-    socket.on('GAME_STATUS', onGameStatusEvent);
-
-    return () => {
-      socket.off('connect', onConnect);
-      socket.off('disconnect', onDisconnect);
-      socket.off('GAME_STATUS', onGameStatusEvent);
-    };
-  }, []);
+  // useEffect(() => {
+  //   if (!user.address) return;
+  //
+  //   // console.log('connecting to socket...');
+  //   const socket = io(`${config.urls.cmsSocket}ryoshi-dynasties/games?walletAddress=${user.address}`);
+  //
+  //   function onConnect() {
+  //     setIsSocketConnected(true);
+  //     console.log('connected')
+  //   }
+  //
+  //   function onDisconnect() {
+  //     setIsSocketConnected(false);
+  //     console.log('disconnected')
+  //   }
+  //
+  //   function onGameStatusEvent(data: { gameId: number, newStatus: string }) {
+  //     console.log('GAME_STATUS', data);
+  //   }
+  //
+  //   socket.on('connect', onConnect);
+  //   socket.on('disconnect', onDisconnect);
+  //   socket.on('GAME_STATUS', onGameStatusEvent);
+  //
+  //   return () => {
+  //     socket.off('connect', onConnect);
+  //     socket.off('disconnect', onDisconnect);
+  //     socket.off('GAME_STATUS', onGameStatusEvent);
+  //   };
+  // }, []);
 
   return (
     <>
