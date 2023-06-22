@@ -60,7 +60,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
   const [executingLabel, setExecutingLabel] = useState('Staking...');
   const [isRetrievingFortune, setIsRetrievingFortune] = useState(false);
 
-  const [fortuneToStake, setFortuneToStake] = useState(1000);
+  const [fortuneToStake, setFortuneToStake] = useState(1250);
   const [daysToStake, setDaysToStake] = useState(rdConfig.bank.staking.fortune.termLength)
   const [userFortune, setUserFortune] = useState(0)
 
@@ -182,7 +182,10 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
     const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
     setNewApr(availableAprs[aprKey] ?? availableAprs[1]);
 
-    setNewTroops(Math.floor(((fortuneToStake * daysToStake) / 1080) / 10));
+    const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
+    let newTroops = Math.floor(((fortuneToStake * daysToStake) / 1080) / mitamaTroopsRatio);
+    if (newTroops < 1 && fortuneToStake > 0) newTroops = 1;
+    setNewTroops(newTroops);
   }, [daysToStake, fortuneToStake]);
 
 

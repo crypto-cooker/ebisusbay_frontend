@@ -7,6 +7,9 @@ export const parseErrorMessage = (error: any) => {
     if (error.response?.data?.error?.metadata?.message) {
       return error.response.data.error.metadata.message;
     }
+    if (error.response?.data?.error?.metadata?.metadata) {
+      return error.response?.data.error.metadata.metadata;
+    }
   }
 
   if (!error.data) {

@@ -201,6 +201,14 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
     setTotalApr(baseApr + bonusApr);
   }, [vault, rdConfig, rdUser, baseApr]);
 
+  const [troops, setTroops] = useState(0);
+  useEffect(() => {
+    const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
+    let newTroops = Math.floor(((balance * daysToAdd) / 1080) / mitamaTroopsRatio);
+    if (newTroops < 1 && balance > 0) newTroops = 1;
+    setTroops(newTroops);
+  }, [balance, daysToAdd, rdConfig]);
+
   return (
     <Box>
         <AccordionItem bgColor='#292626' rounded='md'>
@@ -226,7 +234,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
                         <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}
                                alt="troopsIcon" boxSize={4}/>
                         <Box ms={1}>
-                          {commify(Math.floor((((balance * daysToAdd) / 1080) / 10)))}
+                          {commify(troops)}
                         </Box>
                       </Tag>
                     </Flex>
@@ -248,7 +256,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
                 </VStack>
               </Box>
               <Box>Troops</Box>
-              <Box textAlign='end' fontWeight='bold'>{commify(Math.floor((((balance * daysToAdd) / 1080) / 10)))}</Box>
+              <Box textAlign='end' fontWeight='bold'>{commify(troops)}</Box>
               <Box>End Date</Box>
               <Box textAlign='end' fontWeight='bold'>{endDate}</Box>
             </SimpleGrid>

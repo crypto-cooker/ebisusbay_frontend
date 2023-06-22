@@ -19,6 +19,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 
@@ -65,8 +66,9 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
           rdContext.refreshUser();
           forceRefresh();
         }
-      } catch (error) {
-        console.log(error)
+      } catch (error: any) {
+        console.log(error);
+        toast.error(parseErrorMessage(error));
       } finally {
         setExecutingClaim(false);
       }

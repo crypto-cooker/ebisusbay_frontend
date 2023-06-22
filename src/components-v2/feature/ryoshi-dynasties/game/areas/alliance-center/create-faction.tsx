@@ -30,6 +30,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 interface FactionRegistrationFormProps {
   isOpen: boolean;
@@ -574,8 +575,9 @@ const CreateFactionForm = ({ isOpen, onClose, handleClose}: FactionRegistrationF
         handleClose();
         onClose();
       }
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
     } finally {
       setIsExecuting(false);
     }
