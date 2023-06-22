@@ -27,11 +27,9 @@ import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSig
 import { toast } from "react-toastify";
 import {
   getTroopsOnControlPoint,
-  getProfileTroops,
   getFactionOwned,
   deployTroops, 
   recallTroops, 
-  getFactionUndeployedArmies
 } from "@src/core/api/RyoshiDynastiesAPICalls";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";

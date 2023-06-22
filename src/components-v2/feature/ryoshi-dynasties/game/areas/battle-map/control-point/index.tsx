@@ -16,7 +16,6 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
-
 const tabs = {
   info: 'info',
   deploy: 'deploy',
@@ -38,8 +37,8 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
 
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
-  const [info, setInfo] = useState([]);
-  const [rewardID, setRewardID] = useState(0);
+  // const [info, setInfo] = useState([]);
+  // const [rewardID, setRewardID] = useState(0);
   const user = useAppSelector((state) => state.user);
   const [regionBonus, setRegionBonus] = useState(0);
 

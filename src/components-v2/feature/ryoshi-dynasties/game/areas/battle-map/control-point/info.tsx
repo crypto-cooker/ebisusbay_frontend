@@ -1,6 +1,5 @@
 import { Center, Flex } from "@chakra-ui/react";
-import React, {ReactElement, useEffect, useState, useRef} from 'react';
-
+import React, {ReactElement, useEffect, useState, useRef, useContext} from 'react';
 import {
   Table,
   Thead,
@@ -14,9 +13,11 @@ import {
   TableContainer,
   Text
 } from '@chakra-ui/react';
-import {getWeekEndDate} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {RdControlPoint} from "@src/core/services/api-service/types";
-
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 interface InfoTabProps {
   controlPoint: RdControlPoint;
   refreshControlPoint: () => void;
@@ -25,11 +26,13 @@ interface InfoTabProps {
 const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
   
   const [area, setAreas] = useState<ReactElement>();
+  const {game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [weekEndDate, setWeekEndDate] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
   const ImageRef1 = useRef(null);
   const GetWeekEndDate = async () => {
-    const timestamp = await getWeekEndDate();
+    if(!rdGameContext) return;
+    const timestamp = rdGameContext?.game?.endAt;
     setWeekEndDate(formatDate(timestamp));
   }
   const formatDate = (dateString: string) => {

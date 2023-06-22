@@ -24,7 +24,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import {useQuery} from "@tanstack/react-query";
-import {addTroops, getAllFactions,getRegistrationCost } from "@src/core/api/RyoshiDynastiesAPICalls";
+import {addTroops, getRegistrationCost } from "@src/core/api/RyoshiDynastiesAPICalls";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdFaction} from "@src/core/services/api-service/types";

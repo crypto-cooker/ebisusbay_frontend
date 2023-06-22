@@ -22,8 +22,8 @@ import {ethers} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
 import {round, siPrefixedNumber} from "@src/utils";
 import ImageService from "@src/core/services/image";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
-import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
+// import {getAuthSignerInStorage} from "@src/helpers/storage";
+// import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {appConfig} from "@src/Config";
 import {

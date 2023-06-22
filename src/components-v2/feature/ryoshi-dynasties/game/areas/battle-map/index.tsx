@@ -1,13 +1,12 @@
 import React, {ReactElement, useEffect, useRef, useState, useContext } from 'react';
 import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex, Image } from '@chakra-ui/react'
 // import { resizeBattleMap, setUpMapZooming } from '@src/Components/BattleBay/Areas/mapFunctions.js'
+// import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
-import { getMap } from "@src/core/api/RyoshiDynastiesAPICalls";
-import { getControlPoint } from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getControlPoint} from "@src/core/api/RyoshiDynastiesAPICalls";
 import ControlPointModal from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point';
-import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import ImageService from '@src/core/services/image';
 import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/hud";
 import {io} from "socket.io-client";
@@ -40,23 +39,19 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [controlPoint, setControlPoint] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [zoomState, setZoomState] = useState({
     offsetX: 0,
     offsetY: 0,
     scale: 1,
   });
 
-  const imageRef1 = useRef();
-  const imageRef2 = useRef();
-  const imageRef3 = useRef();
-  const imageRef4 = useRef();
+  const [skirmishPrice, setSkirmishPrice] = useState(0);
+  const [conquestPrice, setConquestPrice] = useState(0);
 
   const [area, setAreas] = useState([]);
   const [flags, setFlags] = useState([]);
 
   const [selectedControlPoint, setSelectedControlPoint] = useState(0);
-  // const [pins, setPins] = useState([]);
   const [explosion, setExplosion] = useState<ReactElement>();
 
   useEffect(() => {
@@ -64,19 +59,8 @@ const BattleMap = ({onChange}: BattleMapProps) => {
       const { zoomToElement } = transformComponentRef.current as any;
       zoomToElement(elementToZoomTo);
     }
-    // console.log("current state " + transformComponentRef?.current?.state);
-    // console.log("current state " + transformComponentRef?.current);
-    // console.log("current state " + transformComponentRef);
-    // transformComponentRef.current.state;
   }, [elementToZoomTo]);
 
-  function getWindowDimensions() {
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-      width,
-      height
-    };
-  }
   const changeCanvasState = (ReactZoomPanPinchRef: any, event: any) => {
     setZoomState({
       offsetX: ReactZoomPanPinchRef.state.positionX,
@@ -85,33 +69,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     });
     console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
-  // function useWindowDimensions() {
-  //   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
-  //   useEffect(() => {
-  //     function handleResize() {
-  //       setWindowDimensions(getWindowDimensions());
-  //     }
-
-  //     window.addEventListener('resize', handleResize);
-  //     return () => window.removeEventListener('resize', handleResize);
-  //   }, []);
-
-  //   return windowDimensions;
-  // }
-  // const GetControlPointImage = async (id: any) => 
-  // {
-  //   var data = await getControlPoint(id)
-  //   console.log(data.leaderBoard[0].image);
-  //   return data.leaderBoard[0].image;
-  // }
-  // function wait(ms: any){
-  //   var start = new Date().getTime();
-  //   var end = start;
-  //   while(end < start + ms) {
-  //     end = new Date().getTime();
-  //  }
-  // }
   const randomlyPlayExplosion = async () => {
 
     // if(area.length === 0) return;
@@ -181,7 +139,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
     setExplosion(
       <Image
-       position="relative"
+        position="relative"
         src='/img/battle-bay/explosion.png' 
         width={250*5}
         height={207*5}
@@ -211,12 +169,12 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     GetControlPointInfo(x);
   }
   const GetControlPointInfo = async (x: any) => {
-    getControlPoint(x).then((data) => {
+    getControlPoint(x, rdGameContext?.game.id).then((data) => {
       setControlPoint(data);
   }); 
   }
   const RefreshControlPoint = async () => {
-    getControlPoint(selectedControlPoint).then((data) => {
+    getControlPoint(selectedControlPoint, rdGameContext?.game.id).then((data) => {
       setControlPoint(data);
   });
   }
@@ -243,70 +201,31 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
   useEffect(() => {
     if(!transformComponentRef?.current) return;
-    // console.log('transformComponentRef', transformComponentRef);
     setElementToZoomTo('fancyMenu'); 
   }, [transformComponentRef?.current]);
 
   //Temporarily turning off to use new process with opperator's new images
   const SetUpMap = async () => {
-    getMap().then((data) => {
-      // console.log(data);
-      // resizeBattleMap(7580, 5320);
-      setAreas(data.data.data.map.regions.map((region: any) =>
-        region.controlPoints.map((controlPoint: any, i: any) => (
-          <area 
-            onClick={() => {
-              console.log('controlPoint.id', controlPoint.id),
-              setSelectedControlPoint(controlPoint.id); 
-              selectRegion(controlPoint.id); 
-              onOpen();
-            }}
-            coords={controlPoint.name=="Classy Keep" ? "1471,1106,211" :controlPoint.coordinates} 
-            shape="circle" 
-            alt= {controlPoint.id}
-            className='cursor-pointer'
-            title={controlPoint.name}
-            />
-          ))))
-          console.log(area);
-      // map height and width, may need to be changed in the future
-
-    }); 
-    // const data = area.filter((area: any) => area.props.title === "Classy Keep");
+    if(!rdGameContext) return;
+    // getMap(rdGameContext?.season.id).then((data) => {
+    // setAreas(rdGameContext?.game.parent.map.regions.map((region:any) =>
+    //   region.controlPoints.map((controlPoint: any, i: any) => (
+    //     <area 
+    //       onClick={() => {
+    //         console.log('controlPoint.id', controlPoint.id),
+    //         setSelectedControlPoint(controlPoint.id); 
+    //         selectRegion(controlPoint.id); 
+    //         onOpen();
+    //       }}
+    //       coords={controlPoint.name=="Classy Keep" ? "1471,1106,211" :controlPoint.coordinates} 
+    //       shape="circle" 
+    //       alt= {controlPoint.id}
+    //       className='cursor-pointer'
+    //       title={controlPoint.name}
+    //       />
+    //     ))))
+    // console.log(area);
   }
-
-  const getImageRef = (id: any) => {
-    if(id === 1)
-      return imageRef1;
-    else if(id === 2)
-      return imageRef2;
-    else if(id === 3)
-      return imageRef3;
-    else if(id === 4)
-      return imageRef4;
-  }
-  // const SetUpPins = async () => {
-  //     setPins(controlPoints.map((controlPoint, i) => 
-  //       (<div id={controlPoint.pinName} title={controlPoint.title}
-  //             style={{position:"absolute", marginTop: controlPoint.marginTop, marginLeft: 
-  //             controlPoint.marginLeft, zIndex:"9", pointerEvents:"none"}}>
-  //       <img width={flagSize} height={flagSize} ref={getImageRef(controlPoint.id)} className={controlPoint.id}/>
-  //       <div className= "pinText">
-  //         <h3 className="head">{controlPoint.title}</h3>
-  //       </div>
-  //     </div>
-  //       )))
-  //     if(imageRef1.current != null)
-  //     {
-  //       imageRef1.current.src = await GetControlPointImage(1);
-  //       imageRef2.current.src = await GetControlPointImage(2);
-  //       imageRef3.current.src = await GetControlPointImage(3);
-  //       imageRef4.current.src = await GetControlPointImage(4);
-  //     }
-
-  // }
-  const [skirmishPrice, setSkirmishPrice] = useState(0);
-  const [conquestPrice, setConquestPrice] = useState(0);
 
   const GetAttackPrices = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -314,10 +233,9 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     const skirmish = await resourceContract.skirmishPrice();
     const conquest = await resourceContract.conquestPrice();
 
+    // console.log('skirmish', skirmish, 'conquest', conquest);
     setSkirmishPrice(Number(ethers.utils.hexValue(BigNumber.from(skirmish))));
     setConquestPrice(Number(ethers.utils.hexValue(BigNumber.from(conquest))));
-
-    // console.log('skirmish', skirmish, 'conquest', conquest);
   }
 
   const [mapInitialized, setMapInitialized] = useState(false);
