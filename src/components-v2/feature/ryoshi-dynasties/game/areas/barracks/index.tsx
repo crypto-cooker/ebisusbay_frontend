@@ -54,8 +54,8 @@ const Barracks = ({onBack}: BarracksProps) => {
       refetchOnWindowFocus: false,
     }
   );
-
-  console.log('BATTLE', battleRewards);
+  //
+  // console.log('BATTLE', battleRewards);
 
   return (
     <Flex
@@ -121,7 +121,7 @@ const Barracks = ({onBack}: BarracksProps) => {
           align='stretch'
         >
         <Spacer h='20'/>
-          {/* <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton> */}
+           <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
           {(!!battleRewards && !battleRewardsClaimed) &&  (
             <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
           )}

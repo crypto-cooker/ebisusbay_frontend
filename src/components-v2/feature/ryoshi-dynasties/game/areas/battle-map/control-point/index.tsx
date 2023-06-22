@@ -9,7 +9,7 @@ import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/
 import {useAppSelector} from "@src/Store/hooks";
 import DeployTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/deploy";
 import InfoTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/info";
-import HelpTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/help";
+import HelpPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/help";
 import {RdGameState} from "@src/core/services/api-service/types";
 import {
   RyoshiDynastiesContext,
@@ -20,8 +20,7 @@ import {
 const tabs = {
   info: 'info',
   deploy: 'deploy',
-  attack: 'attack',
-  help: 'help'
+  attack: 'attack'
 };
 
 interface ControlPointFormProps {
@@ -46,6 +45,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
 
   const [currentTab, setCurrentTab] = useState(tabs.info);
   const [battleEnabled, setBattleEnabled] = useState(false);
+  const [page, setPage] = useState<string>();
 
   const handleClose = useCallback(() => {
     setCurrentTab(tabs.info);
@@ -77,6 +77,14 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
     }
   }
 
+  const handleBack = () => {
+    if (!!page) {
+      setPage(undefined);
+    } else {
+      setPage('faq');
+    }
+  };
+
   useEffect(() => {
     setTitle(controlPoint.name + ' : ' + controlPoint.points+' points');
     getRegionScore();
@@ -90,101 +98,104 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
       onClose={handleClose}
       title={title}
       isCentered={false}
-      utilBtnTitle={currentTab === tabs.help ? <ArrowBackIcon /> : <>?</>}
-      onUtilBtnClick={() => setCurrentTab(currentTab === tabs.help ? tabs.attack : tabs.help)}
+      utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
+      onUtilBtnClick={handleBack}
     >
-      <Center>
-        <Text 
-        as='i'
-        marginBottom='2'
-        > Region: {regionName}, Total Control Bonus: {regionBonus} </Text>
-      </Center>
-
-      {!isLoading ? (
+      {page === 'faq' ? (
+        <HelpPage />
+      ) : (
         <>
-          <div className="row mt-2 mt-sm-2">
-            <div className="">
-              <Center>
-                <Flex direction='row' justify='center' mb={2}>
-                <RdTabButton
-                  isActive={currentTab === tabs.info}
-                  onClick={() => setCurrentTab(tabs.info)}
-                  fontSize={{base: '12', sm: '14'}}
-                  padding={{base: '0 10px', sm: '0 20px'}}
-                  margin={{base: '0 5px', sm: '0 10px'}}
-                >
-                  Leaderboard
-                </RdTabButton>
-                <RdTabButton
-                  isActive={currentTab === tabs.deploy}
-                  onClick={() => setCurrentTab(tabs.deploy)}
-                  fontSize={{base: '12', sm: '14'}}
-                  padding={{base: '0 10px', sm: '0 20px'}}
-                  margin={{base: '0 5px', sm: '0 10px'}}
-                >
-                  Dispatch Troops
-                </RdTabButton>
-                <RdTabButton
-                  isActive={currentTab === tabs.attack}
-                  onClick={() => setCurrentTab(tabs.attack)}
-                  fontSize={{base: '12', sm: '14'}}
-                  padding={{base: '0 10px', sm: '0 20px'}}
-                  margin={{base: '0 5px', sm: '0 10px'}}
-                >
-                  Attack
-                </RdTabButton>
-                </Flex>
-              </Center>
+          <Center>
+            <Text
+              as='i'
+              marginBottom='2'
+            > Region: {regionName}, Total Control Bonus: {regionBonus} </Text>
+          </Center>
 
-              <div className="de_tab_content">
-                {currentTab === tabs.info && (
-                  <InfoTab controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
-                )}
-                {currentTab === tabs.deploy && (
-                  battleEnabled ? (
-                  <DeployTab 
-                    controlPoint={controlPoint} 
-                    refreshControlPoint={refreshControlPoint}
-                  />) : (
-                    <Box minH={'200px'}>
-                      <Center>
-                        <Text
-                          margin='100'
-                          > No game currently active </Text>
-                      </Center>
-                    </Box>
-                  )
-                )}
-                {currentTab === tabs.attack && (
-                  battleEnabled ? (
-                  <AttackTap 
-                    // onClose={handleClose} 
-                    controlPoint={controlPoint} 
-                    refreshControlPoint={refreshControlPoint} 
-                    skirmishPrice={skirmishPrice}
-                    conquestPrice={conquestPrice}
-                  />) : (
-                    <Box minH={'200px'}>
-                      <Center>
-                        <Text
-                          margin='100'
-                          > No game currently active </Text>
-                      </Center>
-                    </Box>
-                  )
-                )}
-                {currentTab === tabs.help && (
-                  <HelpTab />
-                )}
+          {!isLoading ? (
+            <>
+              <div className="row mt-2 mt-sm-2">
+                <div className="">
+                  <Center>
+                    <Flex direction='row' justify='center' mb={2}>
+                      <RdTabButton
+                        isActive={currentTab === tabs.info}
+                        onClick={() => setCurrentTab(tabs.info)}
+                        fontSize={{base: '12', sm: '14'}}
+                        padding={{base: '0 10px', sm: '0 20px'}}
+                        margin={{base: '0 5px', sm: '0 10px'}}
+                      >
+                        Leaderboard
+                      </RdTabButton>
+                      <RdTabButton
+                        isActive={currentTab === tabs.deploy}
+                        onClick={() => setCurrentTab(tabs.deploy)}
+                        fontSize={{base: '12', sm: '14'}}
+                        padding={{base: '0 10px', sm: '0 20px'}}
+                        margin={{base: '0 5px', sm: '0 10px'}}
+                      >
+                        Dispatch Troops
+                      </RdTabButton>
+                      <RdTabButton
+                        isActive={currentTab === tabs.attack}
+                        onClick={() => setCurrentTab(tabs.attack)}
+                        fontSize={{base: '12', sm: '14'}}
+                        padding={{base: '0 10px', sm: '0 20px'}}
+                        margin={{base: '0 5px', sm: '0 10px'}}
+                      >
+                        Attack
+                      </RdTabButton>
+                    </Flex>
+                  </Center>
+
+                  <Box mt={4}>
+                    {currentTab === tabs.info && (
+                      <InfoTab controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
+                    )}
+                    {currentTab === tabs.deploy && (
+                      battleEnabled ? (
+                        <DeployTab
+                          controlPoint={controlPoint}
+                          refreshControlPoint={refreshControlPoint}
+                        />) : (
+                        <Box minH={'200px'}>
+                          <Center>
+                            <Text
+                              margin='100'
+                            > No game currently active </Text>
+                          </Center>
+                        </Box>
+                      )
+                    )}
+                    {currentTab === tabs.attack && (
+                      battleEnabled ? (
+                        <AttackTap
+                          // onClose={handleClose}
+                          controlPoint={controlPoint}
+                          refreshControlPoint={refreshControlPoint}
+                          skirmishPrice={skirmishPrice}
+                          conquestPrice={conquestPrice}
+                        />) : (
+                        <Box minH={'200px'}>
+                          <Center>
+                            <Text
+                              margin='100'
+                            > No game currently active </Text>
+                          </Center>
+                        </Box>
+                      )
+                    )}
+                  </Box>
+                </div>
               </div>
-            </div>
-          </div>
+            </>
+          ) : (
+            <Spinner animation="border" role="status" size="sm" className="ms-1">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          )}
         </>
-        ) : (
-          <Spinner animation="border" role="status" size="sm" className="ms-1">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        )}
+      )}
     </RdModal>
   )
 }

@@ -95,4 +95,5 @@ interface RyoshiConfigFactions {
 
 interface RyoshiConfigFactionsRegistration {
   cost: number;
+  troopsCost: number;
 }
