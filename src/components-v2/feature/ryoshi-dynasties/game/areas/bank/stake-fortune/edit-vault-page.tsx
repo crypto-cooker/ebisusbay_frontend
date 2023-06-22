@@ -213,7 +213,10 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
       totalFortune += fortuneToStake;
     }
     const daysForTroops = canUseDuration ? totalDays : depositLength;
-    setNewTroops(Math.floor(((totalFortune * daysForTroops) / 1080) / 10));
+    const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
+    let newTroops = Math.floor(((fortuneToStake * daysToStake) / 1080) / mitamaTroopsRatio);
+    if (newTroops < 1 && fortuneToStake > 0) newTroops = 1;
+    setNewTroops(newTroops);
 
     setNewWithdrawDate((Number(vault.endTime) + (daysToStake * 86400))*1000);
   }, [daysToStake, fortuneToStake]);
@@ -227,7 +230,10 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
     const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
     setCurrentApr(availableAprs[aprKey] ?? availableAprs[1]);
 
-    setCurrentTroops(Math.floor(((vaultFortune * vaultDays) / 1080) / 10));
+    const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
+    let newTroops = Math.floor(((fortuneToStake * daysToStake) / 1080) / mitamaTroopsRatio);
+    if (newTroops < 1 && fortuneToStake > 0) newTroops = 1;
+    setNewTroops(newTroops);
   }, [vault]);
 
   // Check for fortune on load
