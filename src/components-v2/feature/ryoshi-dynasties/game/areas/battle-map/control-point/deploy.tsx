@@ -40,6 +40,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {parseErrorMessage} from "@src/helpers/validator";
 const tabs = {
   recall: 'recall',
   deploy: 'deploy',
@@ -130,7 +131,6 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
   }
 
   useEffect(() => {
-    console.log('rdContext', rdContext)
     if(rdContext.user?.season?.troops?.undeployed !== undefined){
       setTroopsAvailable(rdContext.user?.season?.troops?.undeployed);
     }
@@ -138,12 +138,11 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
     //    rdContext.user?.season?.troops?.undeployed !== undefined){
     //   setTroopsAvailable(rdContext.user?.season?.troops?.deployed + rdContext.user?.season?.troops?.undeployed);
     // }
-}, [rdContext]); 
+  }, [rdContext]);
 
-useEffect(() => {
-  console.log('yo')
-  rdContext.refreshUser();
-}, []); 
+  useEffect(() => {
+    rdContext.refreshUser();
+  }, []);
 
   const DeployOrRecallTroops = async () => {
     if (!user.address) return;
@@ -205,8 +204,8 @@ useEffect(() => {
         toast.success("You deployed "+ selectedQuantity+ " troops to on behalf of " + selectedFaction)
 
       } catch (error: any) {
-        console.log(error)
-        toast.error(error.response.data.error.metadata.message)
+        console.log(error);
+        toast.error(parseErrorMessage(error));
       }
       finally {
         setIsExecuting(false);

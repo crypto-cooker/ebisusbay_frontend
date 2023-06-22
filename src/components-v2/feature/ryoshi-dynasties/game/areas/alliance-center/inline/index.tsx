@@ -244,7 +244,7 @@ const CurrentFaction = () => {
         }
       } catch (error: any) {
         console.log(error);
-        parseErrorMessage(error);
+        toast.error(parseErrorMessage(error));
       } finally {
         setIsExecutingRegister(false);
       }
