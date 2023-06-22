@@ -128,13 +128,18 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   }
   const GetTokenImage = (tokenId: number) => {
     //itterate through nftImages and find the one with the matching tokenId
+    // console.log('===nftImages', nftImages);
     let nftImage = nftImages.find((nftImage) => Number(nftImage.id) === tokenId);
+    if(!nftImage) return ('');
+
     return nftImage.image;
   }
   const GetTokenName= (tokenId: number) => {
     //itterate through nftImages and find the one with the matching tokenId
     let nftName = nftImages.find((nftImage) => Number(nftImage.id) === tokenId);
-    console.log('===nftName', nftName.name);
+    // console.log('===nftName', nftName);
+    if(!nftName) return ('');
+
     return nftName.name;
   }
 
@@ -142,6 +147,7 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
     if(!nftImages) return;
 
     let data = await api.get("fullcollections?address="+config.contracts.resources);
+    console.log('===data', data);
     setNftImages(data.data.nfts);
   }
 
@@ -150,6 +156,10 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
 
     GetNftImages();
   }, [battleRewards])
+
+  // useEffect(() => {
+  //   console.log('===nftImages', nftImages);
+  // }, [nftImages])
 
   return (
     <>
