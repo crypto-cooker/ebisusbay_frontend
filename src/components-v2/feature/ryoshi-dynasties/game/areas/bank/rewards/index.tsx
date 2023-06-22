@@ -91,17 +91,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
               </Flex>
               <Box>
                 {currentTab === tabs.fortune && (
-                  // <FortuneRewardsTab />
-                  <RdModalBox>
-                    <VStack>
-                      <Image
-                        src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
-                        alt="lockIcon"
-                        boxSize={12}
-                      />
-                      <Text>Coming Soon</Text>
-                    </VStack>
-                  </RdModalBox>
+                  <FortuneRewardsTab />
                 )}
                 {currentTab === tabs.resources && (
                   // <ResourcesTab />
