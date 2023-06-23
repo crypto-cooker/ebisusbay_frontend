@@ -9,7 +9,6 @@ import {Box, Flex, Spacer, Text, Progress, HStack, Tag, Image, SimpleGrid, Cente
 import {useAppSelector} from "@src/Store/hooks";
 import React, {useState, useEffect, useRef, useContext} from "react";
 import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
-import {getGameEndTime} from "@src/core/api/RyoshiDynastiesAPICalls";
 import ImageService from "@src/core/services/image";
 import {
   RyoshiDynastiesContext,
@@ -37,6 +36,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   const [timer, setTimer] = useState('00:00:00');
   const [troopTimer, setTroopTimer] = useState('');
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const {game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const[koban, setKoban] = useState<number | string>(0);
   const[isLoading, setIsLoading] = useState(false);
   const [isNotMobile] = useMediaQuery("(max-width: 768px)") 
@@ -108,8 +108,9 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   }
  
   const getSeasonEndTime = async () => {
-      const currentGame = await getGameEndTime();
-      clearTimer(currentGame);
+      if(!rdGameContext) return;
+      const timestamp = rdGameContext?.game?.endAt;
+      clearTimer(timestamp);
   } 
   const getTroopCooldown = async () => {
     let deadline = new Date();
@@ -120,7 +121,6 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   useEffect(() => {
       getSeasonEndTime();
       // getTroopCooldown();
-      // console.log('isMobile', isNotMobile)
   }, []); 
 
   useEffect(() => {
@@ -147,7 +147,6 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     }else{
       setAccordionIndex(-1);
     }
-    console.log('isNotMobile', isNotMobile)
 }, [isNotMobile]); 
   return (
     <Box position='absolute' top={0} left={0}  w='100%' pointerEvents='none' >

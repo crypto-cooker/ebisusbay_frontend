@@ -30,15 +30,15 @@ export const getSeason = async (seasonOffset) => {
   }
 }
 
-export const getGameEndTime = async () => {
-  try{
-    var currentGame = await api.get("ryoshi-dynasties/games/0");
-    return currentGame.data.data.endAt;
-  }
-  catch(error){
-    throw error;
-  }
-}
+// export const getGameEndTime = async () => {
+//   try{
+//     var currentGame = await api.get("ryoshi-dynasties/games/0");
+//     return currentGame.data.data.endAt;
+//   }
+//   catch(error){
+//     throw error;
+//   }
+// }
 export const getSeasonGameId = async () => {
   try{
     var data = await api.get("ryoshi-dynasties/games/0");
@@ -48,20 +48,19 @@ export const getSeasonGameId = async () => {
     throw error;
   }
 }
-export const getWeekEndDate = async () => {
-  try{
-    var data = await api.get("ryoshi-dynasties/games/0");
-    return data.data.data.endAt;
-  }
-  catch(error){
-    throw error;
-  }
-}
+// export const getWeekEndDate = async () => {
+//   try{
+//     var data = await api.get("ryoshi-dynasties/games/0");
+//     return data.data.data.endAt;
+//   }
+//   catch(error){
+//     throw error;
+//   }
+// }
 //gets the map for the game
-export const getMap = async (_gameNumber) => {
+export const getMap = async (seasonNumber) => {
   try{
-    var data = await getSeasonGameId();
-    return await api.get("ryoshi-dynasties/games/"+data);
+    return await api.get("ryoshi-dynasties/games/"+seasonNumber);
   }
   catch(error){
     throw error;
@@ -289,17 +288,17 @@ export const getProfileId = async (_address, _signature) => {
     throw error;
   }
 }
-export const getAllFactions = async () => {
-  try{
-    var gameID = await api.get("ryoshi-dynasties/games/0");
-    var data = await api.get("ryoshi-dynasties/control-points/"+gameID.data.data.parent.map.regions[0].controlPoints[0].id,
-      {params: {gameId: gameID.data.data.id}});
-    return data.data.data.leaderBoard;
-  }
-  catch(error){
-    throw error;
-  }
-}
+// export const getAllFactions = async () => {
+//   try{
+//     var gameID = await api.get("ryoshi-dynasties/games/0");
+//     var data = await api.get("ryoshi-dynasties/control-points/"+gameID.data.data.parent.map.regions[0].controlPoints[0].id,
+//       {params: {gameId: gameID.data.data.id}});
+//     return data.data.data.leaderBoard;
+//   }
+//   catch(error){
+//     throw error;
+//   }
+// }
 export const addTroops = async (address, signature, troops) => {
   try{
     return await api.post("ryoshi-dynasties/armies?", 
@@ -310,46 +309,43 @@ export const addTroops = async (address, signature, troops) => {
     throw error;
   }
 }
-export const getRegions= async () => {
-  try{
-    var gameID = await api.get("ryoshi-dynasties/games/0");
-    let controlPoints = [];
-    gameID.data.data.parent.map.regions.forEach((region) => {
-      region.controlPoints.forEach((controlPoint) => {
-      controlPoints.push(controlPoint);
-      });
-    });
-    // console.log(controlPoints)
-    return controlPoints;
-  }
-  catch(error){
-    throw error;
-  }
-}
-export const getControlPoints= async (regionNumber) => {
-  try{
-    var gameID = await api.get("ryoshi-dynasties/games/0");
-    var regions = gameID.data.data.parent.map.regions;
-    //get all control points under regions
-    var controlPoints = [];
-    regions[regionNumber].controlPoints.forEach((controlPoint) => {
-      controlPoints.push(controlPoint.id);
-    });
-    return controlPoints;
-  }
-  catch(error){
-    throw error;
-  }
-}
+// export const getRegions= async () => {
+//   try{
+//     // var gameID = await api.get("ryoshi-dynasties/games/0");
+//     let controlPoints = [];
+//     map.regions.forEach((region) => {
+//       region.controlPoints.forEach((controlPoint) => {
+//       controlPoints.push(controlPoint);
+//       });
+//     });
+//     // console.log(controlPoints)
+//     return controlPoints;
+//   }
+//   catch(error){
+//     throw error;
+//   }
+// }
+// export const getControlPoints= async (regionNumber) => {
+//   try{
+//     var gameID = await api.get("ryoshi-dynasties/games/0");
+//     var regions = gameID.data.data.parent.map.regions;
+//     //get all control points under regions
+//     var controlPoints = [];
+//     regions[regionNumber].controlPoints.forEach((controlPoint) => {
+//       controlPoints.push(controlPoint.id);
+//     });
+//     return controlPoints;
+//   }
+//   catch(error){
+//     throw error;
+//   }
+// }
 
 export const getLeaderBoard = async (controlPointId, gameId) => {
   try{
-    var gameID = await api.get("ryoshi-dynasties/games/0");
-    // console.log(gameID.data.data);
+    console.log("getLeaderBoard", gameId)
     var data = await api.get("ryoshi-dynasties/control-points/"+controlPointId,
-      {params: {gameId: Number(gameID.data.data.id)}});
-      // {params: {gameId: Number(gameID.data.data.id-1)}});
-    // console.log(data);
+      {params: {gameId}});
     return data.data.data.leaderBoard;
   }
   catch(error){
@@ -357,12 +353,10 @@ export const getLeaderBoard = async (controlPointId, gameId) => {
   }
 }
 //gets a specific control point
-export const getControlPoint = async (controlPointId) => {
+export const getControlPoint = async (controlPointId, gameId) => {
   try{
-    var gameID = await api.get("ryoshi-dynasties/games/0");
     var data = await api.get("ryoshi-dynasties/control-points/"+controlPointId,
-      {params: {gameId: gameID.data.data.id}});
-    // console.log(data);
+      {params: {gameId}});
     return data.data.data;
   }
   catch(error){
@@ -371,12 +365,13 @@ export const getControlPoint = async (controlPointId) => {
 }
 export const attack = async (address, signature, troops, controlPointId, factionId, defendingFactionId, battleType) => {
   try{
+    //cant remove yet as attacktap is still a js file
     var gameID = await api.get("ryoshi-dynasties/games/0");
     var gameId = gameID.data.data.id;
 
     return await api.post("ryoshi-dynasties/battle-transactions?", 
       {troops, controlPointId, gameId, factionId, defendingFactionId, battleType},
-      {params: {address, signature}}
+      {params: {address, signature, gameId}}
       );
   }
   catch(error){

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, ReactElement} from 'react';
+import React, {useEffect, useContext, useState, ReactElement} from 'react';
 import {
   Center,
   Flex,
@@ -24,12 +24,15 @@ import {
 } from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
-import {getLeaderBoard, getSeason, getRegions} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getLeaderBoard, getSeason} from "@src/core/api/RyoshiDynastiesAPICalls";
 import moment from 'moment';
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import { log } from 'console';
-
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
 interface leaderBoardProps {
@@ -51,6 +54,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     enabled: !!user.address,
   });
  
+  const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [regionSelected, setRegionSelected] = useState(false);
   const [controlPoints, setControlPoints] = useState<controlpoint[]>([]);
   const [isRetrievingLeaderboard, setIsRetrievingLeaderboard] = useState(false);
@@ -73,20 +77,6 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
       setRegionSelected(true);
     } else {
       setRegionSelected(false);
-    }
-  }
-
-
-  const LoadControlPoints = async () => {
-    try{
-      setIsRetrievingLeaderboard(true);
-      const controlPoints = await getRegions();
-      setControlPoints(controlPoints)
-      setIsRetrievingLeaderboard(false);
-      setNoGameActive(false);
-    }
-    catch(error){
-      console.log(error)
     }
   }
 
@@ -133,7 +123,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     //get controlpoint id from regions by matching name
     const x = controlPoints.find((point:any) => point.name === e);
     console.log(x);
-    const allFactionsOnPoint = await getLeaderBoard(x?.id);
+    const allFactionsOnPoint = await getLeaderBoard(x?.id, rdGameContext?.game?.id);
     // console.log(allFactionsOnPoint.slice(0, 5))
     setLeaderBoard(
         allFactionsOnPoint.slice(0, 5).map((faction:any, index:any) => (
