@@ -240,7 +240,8 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
   const [allFactions, setAllFactions] = useState<any>([]);
   const GetFactions = async () => {
-    const factions = await getAllFactions();
+    const factions = await getAllFactions(rdGameContext?.game.id);
+    // console.log('factions', factions);
     setAllFactions(factions);
   }
 
@@ -289,8 +290,12 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   useEffect(() => {
     setMapInitialized(true);
     GetAttackPrices();
-    GetFactions();
   }, []);
+
+  useEffect(() => {
+    if(!rdGameContext) return;
+    GetFactions();
+  }, [rdGameContext]);
 
   //socket stuff
   const [isSocketConnected, setIsSocketConnected] = useState(false);

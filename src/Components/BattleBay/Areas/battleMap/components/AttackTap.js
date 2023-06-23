@@ -43,7 +43,7 @@ import ImageService from "@src/core/services/image";
 
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
-const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conquestPrice}) => {
+const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conquestPrice, allFactions}) => {
 
   const config = appConfig();
   const user = useSelector((state) => state.user);
@@ -67,7 +67,8 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   const [defenderOptions, setDefenderOptions] = useState([]);
   const [defenderImage, setDefenderImage] = useState('');
 
-  const [allFactions, setAllFactions] = useState([]);
+  // const [allFactions, setAllFactions] = useState([]);
+  const[factionsOnPoint, setFactionsOnPoint] = useState([]);
   const [factionsLoaded, setFactionsLoaded] = useState(false);
   const [playerArmies, setPlayerArmies] = useState([]);
   const [combinedArmies, setCombinedArmies] = useState([]);
@@ -274,7 +275,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
         const attackContract = new Contract(config.contracts.battleField, Battlefield, user.provider.getSigner());
         const tx = await attackContract.attackFaction(attackTuple, sig);
         const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        // toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         // ShowAttackConclusion();
         // console.log("receipt", receipt);
 
@@ -287,7 +288,6 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
           toast.error(error);
         }
       }
-    setIsExecuting(false);
   }
   }
   const CheckForBattleRewards = async () => {
@@ -459,34 +459,25 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   }
 
   useEffect(() => {
-    // console.log("controlPoint changed")
-    if(controlPoint.leaderBoard !== undefined) {
-      
-      setAllFactions(controlPoint.leaderBoard);
-      setDefenderOptions(controlPoint.leaderBoard.map((faction, index) => (
-        faction.totalTroops > 0 ?
-        <option style={{ background: '#272523' }} value={faction.name} key={index}>{faction.name}</option>
-        : null)))
-    }
+    if(!controlPoint) return;
+
+    setDefenderOptions(controlPoint.leaderBoard.map((faction, index) => (
+      faction.totalTroops > 0 ?
+      <option style={{ background: '#272523' }} value={faction.name} key={index}>{faction.name}</option> : null)))
   }, [controlPoint])
 
-  // useEffect(() => {
-  //   // console.log("attackTypeEnum: ", attackTypeEnum[attackType])
-  // }, [attackType])
-
   useEffect(() => {
-      if(dataForm.defendersFaction!=null) {
-        setShowAlert(false)
-        getDefenderTroopsInRegion()
-      }
+    if(!dataForm.defendersFaction) return;
+
+    setShowAlert(false)
+    getDefenderTroopsInRegion()
   }, [dataForm.defendersFaction])
 
   useEffect(() => {
-    if(dataForm.attackersFaction!="") {
-        // console.log("dataForm.attackersFaction", dataForm.attackersFaction)
-        getAttackerTroopsInRegion()
-        CheckIfAttackerFactionIsOwnedByPlayer()
-      }
+    if(dataForm.attackersFaction==="") return;
+
+    getAttackerTroopsInRegion()
+    CheckIfAttackerFactionIsOwnedByPlayer()
   }, [dataForm.attackersFaction])
   
   useEffect(() => {
@@ -593,36 +584,32 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
 
       <Center>
           <VStack justifyContent='space-between'>
-          {/* <Text textAlign='left' fontSize={'16px'}>Select a Faction to attack with:</Text> */}
             <Select 
               name='attackersFaction'
               backgroundColor='#292626'
               w='90%' 
-              me={2} 
-              // placeholder='Select Attacker'
               value={dataForm.attackersFaction} 
               onChange={onChangeInputsAttacker}>
                 <option selected hidden disabled value="">Select Attacker</option>
               {attackerOptions}
             </Select>
 
+            <Select 
+              name='defendersFaction'
+              backgroundColor='#292626'
+              w='90%' 
+              value={dataForm.defendersFaction} 
+              onChange={onChangeInputsDefender}>
+                  <option selected hidden disabled value="">Select Defender</option>
+              {defenderOptions}
+            </Select>
 
-            {/* <Text textAlign='center' fontSize={'16px'}>Select a Faction to Attack:</Text> */}
-          <Select 
-            name='defendersFaction'
-            // placeholder='Select Defender'
-            backgroundColor='#292626'
-            w='90%' 
-            me={2} 
-            value={dataForm.defendersFaction} 
-            onChange={onChangeInputsDefender}>
-                <option selected hidden disabled value="">Select Defender</option>
-            {defenderOptions}
-          </Select>
+            { 
+              dataForm.attackersFaction !== ''  ? <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
+              : <></>
+            }
+            
 
-          <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
-
-          {/* <Text textAlign='right' fontSize={'16px'}>Attack Strength (1-3):</Text> */}
             <NumberInput 
               align='right'
               defaultValue={1} 

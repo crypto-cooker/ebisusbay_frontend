@@ -36,7 +36,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   const [timer, setTimer] = useState('00:00:00');
   const [troopTimer, setTroopTimer] = useState('');
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const {game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const {game: rdGameContext, user:rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const[koban, setKoban] = useState<number | string>(0);
   const[isLoading, setIsLoading] = useState(false);
   const [isNotMobile] = useMediaQuery("(max-width: 768px)") 
@@ -112,18 +112,23 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
       const timestamp = rdGameContext?.game?.endAt;
       clearTimer(timestamp);
   } 
-  const getTroopCooldown = async () => {
+  const getTroopCooldown = () => {
+    if(!rdUser) return;
+
+    const redeploymentDelay = rdUser?.armies.redeploymentDelay;
+    console.log('redeploymentDelay', redeploymentDelay)
     let deadline = new Date();
-    deadline.setSeconds(deadline.getSeconds() + 10);
+    deadline.setSeconds(deadline.getSeconds() + redeploymentDelay);
     clearTroopTimer(deadline);
 }
 
   useEffect(() => {
       getSeasonEndTime();
-      // getTroopCooldown();
   }, []); 
 
   useEffect(() => {
+    if(!rdContext) return;
+
     console.log('rdContext', rdContext)
     if(rdContext.user?.season?.troops?.undeployed !== undefined){
       setAvailableTroops(rdContext.user?.season?.troops?.undeployed);
@@ -132,6 +137,9 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
        rdContext.user?.season?.troops?.undeployed !== undefined){
       setTotalTroops(rdContext.user?.season?.troops?.deployed + rdContext.user?.season?.troops?.undeployed);
     }
+    getTroopCooldown();
+
+
 }, [rdContext]); 
 
   useEffect(() => {
@@ -235,14 +243,9 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
-
-
-        
-          
-
           
         {troopTimer !== '' && (
-            <Box mt={-3} bg='#cc2828' p={2} rounded='md' 
+            <Box mt={-3} bg='#cc2828' p={2} roundedBottom='md' 
               
                w={{base: '182px', sm: '182px'}}
                h={{base: '35px', sm: '35px'}}

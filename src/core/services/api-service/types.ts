@@ -134,6 +134,9 @@ export interface RdArmy {
 export interface RdUserContext {
     faction: RdFaction;
     season: RdUserContextSeason;
+    armies:{
+        redeploymentDelay: number;
+    },
     bank: {
         nfts: any[];
         bonus: {
