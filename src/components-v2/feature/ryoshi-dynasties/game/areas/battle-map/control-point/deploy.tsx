@@ -46,9 +46,10 @@ const tabs = {
 interface DeployTabProps {
   controlPoint: RdControlPoint;
   refreshControlPoint: () => void;
+  allFactions: any[];
 }
 
-const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
+const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabProps) => {
 
   const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
@@ -67,7 +68,7 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [selectedFaction, setSelectedFaction] = useState<string>(dataForm.faction);
   const handleQuantityChange = (stringValue: string, numValue: number) => setSelectedQuantity(numValue)
-  const [allFactions, setAllFactions] = useState<RdControlPointLeaderBoard[]>([]);
+  // const [allFactions, setAllFactions] = useState<RdControlPointLeaderBoard[]>([]);
 
   const [playerFaction, setPlayerFaction] = useState<RdFaction>();
   const [hasFaction, setHasFaction] = useState(false);
@@ -271,11 +272,11 @@ const DeployTab = ({controlPoint, refreshControlPoint}: DeployTabProps) => {
     }
   }
 
-  useEffect(() => {
-    if(controlPoint.leaderBoard !== undefined) {
-      setAllFactions(controlPoint.leaderBoard);
-    }
-  }, [controlPoint])
+  // useEffect(() => {
+  //   if(controlPoint.leaderBoard !== undefined) {
+  //     setAllFactions(controlPoint.leaderBoard);
+  //   }
+  // }, [controlPoint])
 
   useEffect(() => {
     ShowAvailableFactions();
