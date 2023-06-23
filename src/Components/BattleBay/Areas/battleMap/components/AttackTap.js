@@ -43,7 +43,7 @@ import ImageService from "@src/core/services/image";
 
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
-const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conquestPrice}) => {
+const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conquestPrice, allFactions}) => {
 
   const config = appConfig();
   const user = useSelector((state) => state.user);
@@ -67,7 +67,7 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
   const [defenderOptions, setDefenderOptions] = useState([]);
   const [defenderImage, setDefenderImage] = useState('');
 
-  const [allFactions, setAllFactions] = useState([]);
+  // const [allFactions, setAllFactions] = useState([]);
   const [factionsLoaded, setFactionsLoaded] = useState(false);
   const [playerArmies, setPlayerArmies] = useState([]);
   const [combinedArmies, setCombinedArmies] = useState([]);
@@ -460,10 +460,11 @@ const AttackTap = ({ controlPoint = [], refreshControlPoint, skirmishPrice, conq
 
   useEffect(() => {
     // console.log("controlPoint changed")
-    if(controlPoint.leaderBoard !== undefined) {
+    if(allFactions !== undefined) {
+      console.log("allFactions", allFactions)
       
-      setAllFactions(controlPoint.leaderBoard);
-      setDefenderOptions(controlPoint.leaderBoard.map((faction, index) => (
+      // setAllFactions(controlPoint.leaderBoard);
+      setDefenderOptions(allFactions.map((faction, index) => (
         faction.totalTroops > 0 ?
         <option style={{ background: '#272523' }} value={faction.name} key={index}>{faction.name}</option>
         : null)))
