@@ -12,7 +12,7 @@ export const parseErrorMessage = (error: any) => {
     }
   }
 
-  if (!error.data) {
+  if (!!error.data) {
     return error.data.message;
   }
 
