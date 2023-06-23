@@ -288,11 +288,11 @@ export const getProfileId = async (_address, _signature) => {
     throw error;
   }
 }
-export const getAllFactions = async () => {
+export const getAllFactions = async (gameId) => {
   try{
-    var gameID = await api.get("ryoshi-dynasties/games/0");
     var data = await api.get("ryoshi-dynasties/factions/all",
-      {params: {gameId: gameID.data.data.id}});
+      {params: {gameId}});
+    console.log(data)
     return data.data.data;
   }
   catch(error){

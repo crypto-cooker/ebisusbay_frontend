@@ -177,6 +177,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
                           refreshControlPoint={refreshControlPoint}
                           skirmishPrice={skirmishPrice}
                           conquestPrice={conquestPrice}
+                          allFactions={allFactions}
                         />) : (
                         <Box minH={'200px'}>
                           <Center>

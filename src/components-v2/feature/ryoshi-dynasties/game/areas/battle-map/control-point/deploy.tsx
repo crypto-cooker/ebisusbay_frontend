@@ -192,6 +192,10 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
         // console.log("factionId", factionId)
         // console.log("selectedQuantity", selectedQuantity)
         // console.log("controlPoint.id", controlPoint.id)
+        // console.log("user.address", user.address?.toLowerCase())
+        // console.log("signatureInStorage", signatureInStorage)
+        // console.log("rdContext?.game?.game.id", rdContext?.game?.game.id)
+
 
         var data = await deployTroops(user.address?.toLowerCase(), signatureInStorage,
             rdContext?.game?.game.id, selectedQuantity, controlPoint.id, factionId)
