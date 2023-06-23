@@ -604,7 +604,6 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
             
 
             <NumberInput 
-              align='right'
               defaultValue={1} 
               min={1} 
               max={attackTypeEnum[attackType].maxTroops}
@@ -745,7 +744,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       </div>
 
       <div ref={attackConclusion} style={{ display: 'none'}}>
-        <div class="container">
+        <div>
           <VStack spacing='2'>
             <Text 
               fontSize={{base: '28px', sm: '28px'}}
@@ -832,8 +831,8 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
             </Center>
             <Center>
               <HStack w='90%' justify='space-between'>
-                <Text class = "basicText" ref={attackerOutcome}>This is the attacker outcome</Text>
-                <Text class = "basicText" ref={defenderOutcome}> This is the defender outcome</Text>
+                <Text ref={attackerOutcome}>This is the attacker outcome</Text>
+                <Text ref={defenderOutcome}> This is the defender outcome</Text>
               </HStack>
             </Center>
 
