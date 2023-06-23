@@ -57,15 +57,13 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [regionSelected, setRegionSelected] = useState(false);
   const [controlPoints, setControlPoints] = useState<controlpoint[]>([]);
-  const [isRetrievingLeaderboard, setIsRetrievingLeaderboard] = useState(false);
   const [previousSeasonTime, setPreviousSeasonTime] = useState('');
   const [currentSeasonTime, setCurrentSeasonTime] = useState('');
   const [leaderBoard, setLeaderBoard] = useState<ReactElement[]>([]);
   const [showCurrentGame, setShowCurrentGame] = useState(true);
   const [noGameActive, setNoGameActive] = useState(false);
-  const [gameActive, setGameActive] = useState(false);
 
-  const [attackerOptions, setAttackerOptions] = useState<ReactElement[]>([]);
+  const [attackerOptions, setLeaderboardDropDown] = useState<ReactElement[]>([]);
   const [dataForm, setDataForm] = useState({
     attackersFaction: "" ?? null,
   })
@@ -76,16 +74,17 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
       LoadControlPointLeaderBoard(e.target.value);
       setRegionSelected(true);
     } else {
+      console.log('no region selected')
       setRegionSelected(false);
     }
   }
 
   useEffect(() => {
     if(status === 'success' && allFactions !== undefined) {
-      console.log('getting regions')
+      console.log('allFactions: ', allFactions)
       if(allFactions.game !== null) {
         //locking for week start
-        setNoGameActive(true)
+        setNoGameActive(false)
         // LoadControlPoints();
       }
       else {
@@ -116,14 +115,24 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
       console.log(error)
     }
   }
-  
 
+  const getControlPointId = (e : any) => {
+    if(!rdGameContext) return;
+
+    let x = 0;
+    rdGameContext.game.parent.map.regions.map((region: any) =>
+      region.controlPoints.map((controlPoint: any, i: any) => {
+        if(controlPoint.name === e){
+          x = controlPoint.id;
+        }
+      }
+    ))
+    return x;
+  }
 
   const LoadControlPointLeaderBoard = async (e : controlpoint) => {
-    //get controlpoint id from regions by matching name
-    const x = controlPoints.find((point:any) => point.name === e);
-    console.log(x);
-    const allFactionsOnPoint = await getLeaderBoard(x?.id, rdGameContext?.game?.id);
+    if(!rdGameContext) return;
+    const allFactionsOnPoint = await getLeaderBoard(getControlPointId(e), rdGameContext?.game?.id);
     // console.log(allFactionsOnPoint.slice(0, 5))
     setLeaderBoard(
         allFactionsOnPoint.slice(0, 5).map((faction:any, index:any) => (
@@ -136,18 +145,19 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   }
 
   useEffect(() => {
-    if(!isRetrievingLeaderboard)
-    {
-      GetGameDates();
-      if(controlPoints !== undefined) {
-        setAttackerOptions(controlPoints.map((point:any, index:any) => (
-          <option 
-            value={point.name}
-            key={index}>
-            {point.name}</option>)
-      ))}
-    }
-  }, [controlPoints]);
+    if(!rdGameContext) return;
+    
+    setLeaderboardDropDown(rdGameContext.game.parent.map.regions.map((region: any) =>
+      region.controlPoints.map((controlPoint: any, i: any) => (
+        <>
+        console.log(controlPoint.name)
+        <option 
+          value={controlPoint.name}
+          key={controlPoint.id}>
+          {controlPoint.name}</option>
+        </>
+    ))))
+  }, [rdGameContext]);
 
   return (
     <>
@@ -190,7 +200,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
           backgroundColor='#292626'
           w='90%' 
           me={2} 
-          placeholder='Select Region'
+          placeholder='Select a Control Point'
           marginTop={2}
           value={dataForm.attackersFaction} 
           onChange={onChangeInputsAttacker}>
@@ -199,7 +209,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
         </Center>
 
         <Flex>
-        {isRetrievingLeaderboard ? <Spinner size='sm'/> : <></>}
+        {!rdGameContext ? <Spinner size='sm'/> : <></>}
         </Flex>
       </Tabs>
         <Text>
@@ -225,9 +235,16 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
           </Tbody>
         </Table>
       </TableContainer>
-      </>) : (<Text> Select a region</Text>)}
+      </>) : (
+      <Box minH={'200px'}>
+      <Center>
+        <Text
+        margin='100'
+        > </Text>
+      </Center>
+    </Box>
+      )}
       </> ) : (<Text> No previous game data</Text>)}
-
       </Center>
     </Stack>
     </>)}

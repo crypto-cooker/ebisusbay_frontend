@@ -343,7 +343,6 @@ export const addTroops = async (address, signature, troops) => {
 
 export const getLeaderBoard = async (controlPointId, gameId) => {
   try{
-    console.log("getLeaderBoard", gameId)
     var data = await api.get("ryoshi-dynasties/control-points/"+controlPointId,
       {params: {gameId}});
     return data.data.data.leaderBoard;

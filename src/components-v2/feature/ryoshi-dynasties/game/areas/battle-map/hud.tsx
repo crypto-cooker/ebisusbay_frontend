@@ -243,14 +243,9 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
-
-
-        
-          
-
           
         {troopTimer !== '' && (
-            <Box mt={-3} bg='#cc2828' p={2} rounded='md' 
+            <Box mt={-3} bg='#cc2828' p={2} roundedBottom='md' 
               
                w={{base: '182px', sm: '182px'}}
                h={{base: '35px', sm: '35px'}}
