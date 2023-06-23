@@ -153,7 +153,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
     setFactionError('');
 
     if(currentTab === tabs.deploy) {
-      if(selectedQuantity > troopsAvailable) {
+      if(selectedQuantity > troopsAvailable || selectedQuantity <= 0) {
         setTroopsError(`You cant deploy more troops than you have available`);
         return;
       }
@@ -165,7 +165,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
       Deploy()
     }
     else if(currentTab === tabs.recall) {
-      if(selectedQuantity > troopsDeployed) {
+      if(selectedQuantity > troopsDeployed || selectedQuantity <= 0) {
         setTroopsError(`You can't recall more troops than you have deployed`);
         return;
       }
@@ -253,10 +253,10 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
   }
   const GetMaxTroops = () => {
     if(currentTab === tabs.deploy) {
-      return troopsAvailable
+      return troopsAvailable > 0 ? troopsAvailable : 0;
     }
     else if(currentTab === tabs.recall) {
-      return troopsDeployed
+      return troopsDeployed > 0 ? troopsDeployed : 0;
     }
     return 0;
   }
