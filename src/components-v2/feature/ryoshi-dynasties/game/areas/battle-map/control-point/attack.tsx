@@ -762,6 +762,8 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
         </Center>
       </div>
 
+      {/* <Attack */}
+
       <div ref={attackConclusion} style={{ display: 'none'}}>
         <div>
           <VStack spacing='2'>
@@ -893,7 +895,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
           </Center>
           
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
-      <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards} removeBattleRewards={CheckForBattleRewards}/>
+      <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards}/>
 
         <Spacer m='4' />
 
