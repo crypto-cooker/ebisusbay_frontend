@@ -241,7 +241,6 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   const [allFactions, setAllFactions] = useState<any>([]);
   const GetFactions = async () => {
     const factions = await getAllFactions();
-    console.log('sdasdfgsdgf', factions)
     setAllFactions(factions);
   }
 
