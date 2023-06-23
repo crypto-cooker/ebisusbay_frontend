@@ -448,7 +448,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
     const tx = await resourceContract.balanceOf(user.address?.toLowerCase(), 1);
     setKoban(Number(ethers.utils.hexValue(BigNumber.from(tx))));
   }
-  
+
   const GetMaxTroops=()=>{
     const troops = attackTypeEnum.find((attackType: any) => attackType.name === attackType)?.maxTroops;
     return troops;
@@ -457,6 +457,9 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   const GetDescription = () => {
     const desc = attackTypeEnum.find((attackType: any) => attackType.name === attackType)?.desc;
     return desc;
+  }
+  const forceRefresh = () => {
+    // console.log("force refresh")
   }
 
   useEffect(() => {
@@ -889,7 +892,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
             </HStack>
           </Center>
           
-      <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin}/>
+      <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
       <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards} removeBattleRewards={CheckForBattleRewards}/>
 
         <Spacer m='4' />
@@ -897,8 +900,8 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
         <div ref={battleLog} style={{display: 'none', overflowY:'scroll', height:'300px'}}>
           <Flex direction='row' justify='space-between' justifyContent='center'>
             <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
-              <form class="form-container" >
-                <Heading class = "basicText" id="">Results:</Heading>
+              <form  >
+                <Heading id="">Results:</Heading>
                 <p ref={battleLogText}></p>
               </form>
             </Box>
