@@ -15,6 +15,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {getAllFactions} from "@src/core/api/RyoshiDynastiesAPICalls";
 
 const tabs = {
   info: 'info',
@@ -30,9 +31,10 @@ interface ControlPointFormProps {
   skirmishPrice: number;
   conquestPrice: number;
   regionName: string;
+  allFactions: any[]
 }
 
-const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint, skirmishPrice, conquestPrice, regionName}: ControlPointFormProps) => {
+const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint, skirmishPrice, conquestPrice, regionName, allFactions}: ControlPointFormProps) => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const [isLoading, setIsLoading] = useState(true);
@@ -156,6 +158,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
                         <DeployTab
                           controlPoint={controlPoint}
                           refreshControlPoint={refreshControlPoint}
+                          allFactions={allFactions}
                         />) : (
                         <Box minH={'200px'}>
                           <Center>

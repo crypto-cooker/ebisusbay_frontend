@@ -5,7 +5,7 @@ import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex, Imag
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
-import {getControlPoint} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getAllFactions, getControlPoint} from "@src/core/api/RyoshiDynastiesAPICalls";
 import ControlPointModal from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point';
 import ImageService from '@src/core/services/image';
 import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/hud";
@@ -238,6 +238,12 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     setConquestPrice(Number(ethers.utils.hexValue(BigNumber.from(conquest))));
   }
 
+  const [allFactions, setAllFactions] = useState<any>([]);
+  const GetFactions = async () => {
+    const factions = await getAllFactions();
+    setAllFactions(factions);
+  }
+
   const [mapInitialized, setMapInitialized] = useState(false);
 
   const mapProps = useBreakpointValue<MapProps>(
@@ -283,6 +289,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   useEffect(() => {
     setMapInitialized(true);
     GetAttackPrices();
+    GetFactions();
   }, []);
 
   //socket stuff
@@ -350,6 +357,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
         skirmishPrice={skirmishPrice}
         conquestPrice={conquestPrice}
         regionName={regionName}
+        allFactions={allFactions}
         />
       <Box
         position='relative' h='calc(100vh - 74px)'

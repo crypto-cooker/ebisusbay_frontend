@@ -288,17 +288,17 @@ export const getProfileId = async (_address, _signature) => {
     throw error;
   }
 }
-// export const getAllFactions = async () => {
-//   try{
-//     var gameID = await api.get("ryoshi-dynasties/games/0");
-//     var data = await api.get("ryoshi-dynasties/control-points/"+gameID.data.data.parent.map.regions[0].controlPoints[0].id,
-//       {params: {gameId: gameID.data.data.id}});
-//     return data.data.data.leaderBoard;
-//   }
-//   catch(error){
-//     throw error;
-//   }
-// }
+export const getAllFactions = async () => {
+  try{
+    var gameID = await api.get("ryoshi-dynasties/games/0");
+    var data = await api.get("ryoshi-dynasties/factions/all",
+      {params: {gameId: gameID.data.data.id}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
 export const addTroops = async (address, signature, troops) => {
   try{
     return await api.post("ryoshi-dynasties/armies?", 
