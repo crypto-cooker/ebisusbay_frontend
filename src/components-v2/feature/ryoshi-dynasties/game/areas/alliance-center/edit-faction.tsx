@@ -34,7 +34,6 @@ import {toast} from "react-toastify";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {useAppSelector} from "@src/Store/hooks";
 
 import {
@@ -66,7 +65,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   const [addressToAdd, setAddressesToAdd] = useState('')
   const factionNameInput = useRef(null);
   const [factionType, setFactionType] = useState("")
-  const [factionIndex, setFactionIndex] = useState(0)
+  // const [factionIndex, setFactionIndex] = useState(0)
   const [addressDisplay, setAddressDisplay] = useState<ReactElement[]>([])
 
   //alerts
@@ -251,9 +250,9 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     setFactionType(faction.type)
   }, [faction]);
 
-  useEffect(() => {
-    factionType === 'COLLECTION' ? setFactionIndex(0) : setFactionIndex(1)
-  }, [factionType]);
+  // useEffect(() => {
+  //   factionType === 'COLLECTION' ? setFactionIndex(0) : setFactionIndex(1)
+  // }, [factionType]);
 
   const [isMobile] = useMediaQuery("(max-width: 768px)") 
 
@@ -305,56 +304,67 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                     w='full'
                     h='full'
                     p={2}
-                    // rounded='xl'
                     bg='#272523'
-                  >
-                  <Cropper />
-              {editFactionIcon && ( <>
-                  <AvatarEditor
-                  ref={editorRef}
-                  image={rdContext.user?.faction.image!}
-                  width={200}
-                  height={200}
-                  border={50}
-                  color={[255, 255, 255, 0.6]} // RGBA
-                  scale={1.2}
-                  rotate={0}
-                />
-                </>)
-              }
-                  <HStack justifyContent='space-between' w='full'>
+                    >
+                    <Cropper />
+                    {editFactionIcon && ( <>
+                        <AvatarEditor
+                        ref={editorRef}
+                        image={rdContext.user?.faction.image!}
+                        width={200}
+                        height={200}
+                        border={50}
+                        color={[255, 255, 255, 0.6]} // RGBA
+                        scale={1.2}
+                        rotate={0}
+                      /> </>) 
+                    }
 
-                    <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
-                      Current Status: {isRegistered === true ? "Registered" : "Not Registered"}
-                    </Text>
+                    <Flex w='95%' direction='row' justify='space-between' mt={2} mb={2}>
+                      <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
+                        Current Status: 
+                      </Text>
+                      <Text as='i' color='#aaa' fontSize={{base: '12', sm: '14'}}>
+                        {isRegistered === true ? "Registered" : "Not Registered"}
+                      </Text>
+                    </Flex>
+
+                    <Flex w='95%' direction='row' justify='space-between' mt={2} mb={2}>
+                      <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}> 
+                        Faction Type:
+                      </Text>
+                      <Text as='i' color='#aaa' fontSize={{base: '12', sm: '14'}}>
+                        {factionType}
+                      </Text>
+                    </Flex>
+
                     {showDeleteAlert ? (
-                  <Alert status='error'>
-                    <VStack>
-                      <HStack>
-                        <AlertIcon />
-                        <AlertTitle>Warning! If you disband a registered faction you will be unable to register another faction this season.</AlertTitle>
-                      </HStack>
-                      <HStack>
-                      <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
-                        onClick={DeleteFaction} variant='outline'colorScheme='red'
-                        >Confirm Disband</Button>
-                      <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
-                          onClick={() => setShowDeleteAlert(false)} variant='outline' colorScheme='white'
-                        >Cancel</Button>
-                      </HStack>
-                    </VStack>
-                  </Alert>
-                ) : (
-                  // <Button type="submit"
-                  //   onClick={showDeleteWarning}  
-                  //   colorScheme='red'
-                  //   fontSize={{base: '12', sm: '14'}}
-                  //   variant={"outline"}
-                  //   >x Disband Faction</Button>
+                    <Alert status='error'>
+                      <VStack>
+                        <HStack>
+                          <AlertIcon />
+                          <AlertTitle>Warning! If you disband a registered faction you will be unable to register another faction this season.</AlertTitle>
+                        </HStack>
+                        <HStack>
+                        <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
+                          onClick={DeleteFaction} variant='outline'colorScheme='red'
+                          >Confirm Disband</Button>
+                        <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
+                            onClick={() => setShowDeleteAlert(false)} variant='outline' colorScheme='white'
+                          >Cancel</Button>
+                        </HStack>
+                      </VStack>
+                    </Alert>
+                    ) : (
+                      // <Button type="submit"
+                      //   onClick={showDeleteWarning}  
+                      //   colorScheme='red'
+                      //   fontSize={{base: '12', sm: '14'}}
+                      //   variant={"outline"}
+                      //   >x Disband Faction</Button>
                       <></>
-                )}
-                  </HStack>
-                  </VStack>
+                    )}
+                    </VStack>
                   <Spacer />
                 </Flex>
               </Box>
@@ -385,36 +395,6 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
 
             <Divider />
 
-            <Flex direction='row' justify='space-between' mt={2} mb={2}>
-              <Box w='40%' margin='auto'>
-                <Text > 
-                  Faction Type:
-                </Text>
-              </Box>
-              <Box w='60%'>
-                <VStack>
-                <HStack alignContent='right'>
-                <RdTabButton 
-                  onClick={() => setFactionType("COLLECTION")}
-                  isActive={factionType === "COLLECTION"}
-                  fontSize={{base: '12', sm: '14'}}
-                >Collection</RdTabButton>
-                <RdTabButton 
-                  onClick={() => setFactionType("WALLET")}
-                  isActive={factionType === "WALLET"}
-                  fontSize={{base: '12', sm: '14'}}
-                >Wallet</RdTabButton>
-                </HStack>
-
-                <Text as='i' color='#aaa' fontSize={{base: '12', sm: '14'}}>
-                  {factionType === "COLLECTION" ? ("Add up to 3 collection addresses") 
-                  : ("Add up to 15  individual wallet addresses")}
-                </Text>
-                </VStack>
-              </Box>
-            </Flex>
-
-              <Divider />
 
               <Flex direction='row' justify='space-between' mb={2}>
                 <FormLabel style={{ display: 'flex', marginTop: '24px' }}>Addresses of 
