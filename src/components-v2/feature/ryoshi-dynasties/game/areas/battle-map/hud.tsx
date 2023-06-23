@@ -116,7 +116,6 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     if(!rdUser) return;
 
     const redeploymentDelay = rdUser?.armies.redeploymentDelay;
-    console.log('redeploymentDelay', redeploymentDelay)
     let deadline = new Date();
     deadline.setSeconds(deadline.getSeconds() + redeploymentDelay);
     clearTroopTimer(deadline);

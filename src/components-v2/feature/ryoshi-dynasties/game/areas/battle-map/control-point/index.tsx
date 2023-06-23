@@ -2,20 +2,20 @@ import React, {useCallback, useContext, useEffect, useState} from "react";
 import {Box, Center, Flex, Text,} from "@chakra-ui/react"
 import {Spinner} from 'react-bootstrap';
 import {ArrowBackIcon} from "@chakra-ui/icons";
-
-import {AttackTap} from "@src/Components/BattleBay/Areas/battleMap/components";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {useAppSelector} from "@src/Store/hooks";
+import {RdGameState} from "@src/core/services/api-service/types";
+
 import DeployTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/deploy";
 import InfoTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/info";
+import AttackTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/attack";
 import HelpPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/help";
-import {RdGameState} from "@src/core/services/api-service/types";
+
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {getAllFactions} from "@src/core/api/RyoshiDynastiesAPICalls";
 
 const tabs = {
   info: 'info',
@@ -54,7 +54,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
   }, []);
 
   const getRegionScore = () => {
-    console.log("regionName: " + regionName);
+    // console.log("regionName: " + regionName);
     if(regionName === 'Kagutsuma'){
       setRegionBonus(3);
     }
@@ -171,7 +171,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
                     )}
                     {currentTab === tabs.attack && (
                       battleEnabled ? (
-                        <AttackTap
+                        <AttackTab
                           // onClose={handleClose}
                           controlPoint={controlPoint}
                           refreshControlPoint={refreshControlPoint}

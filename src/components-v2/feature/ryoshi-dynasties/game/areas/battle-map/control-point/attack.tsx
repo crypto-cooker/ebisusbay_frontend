@@ -1,4 +1,4 @@
-import {use, useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState, useContext} from 'react';
 import {
   Alert,
   AlertIcon,
@@ -21,7 +21,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import {getAuthSignerInStorage} from '@src/helpers/storage';
-import {useSelector} from "react-redux";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {attack, getBattleRewards, getFactionOwned, getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {createSuccessfulTransactionToastContent} from '@src/utils';
@@ -29,6 +28,7 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
 import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
+import {useAppSelector} from "@src/Store/hooks";
 
 //contracts
 import {BigNumber, Contract, ethers} from "ethers";
@@ -40,46 +40,58 @@ import {io} from "socket.io-client";
 
 import localFont from 'next/font/local';
 import ImageService from "@src/core/services/image";
+import {RdControlPoint} from "@src/core/services/api-service/types";
+import {parseErrorMessage} from "@src/helpers/validator";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
-const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
-const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conquestPrice, allFactions}) => {
+interface AttackTabProps {
+  controlPoint: RdControlPoint;
+  refreshControlPoint: () => void;
+  skirmishPrice: number;
+  conquestPrice: number;
+  allFactions: any[];
+}
+
+const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPrice, allFactions}: AttackTabProps) => {
 
   const config = appConfig();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
+  const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
-  const attackSetUp = useRef();
-  const attackConclusion = useRef();
-  const battleLog = useRef();
-  const battleOutcome = useRef();
-  const battleContext = useRef();
-  const attackerOutcome = useRef();
-  const defenderOutcome = useRef();
-  const battleLogText = useRef();
+  const attackSetUp = useRef<any>();
+  const attackConclusion = useRef<any>();
+  const battleLog = useRef<any>();
+  const battleOutcome = useRef<any>();
+  const battleContext = useRef<any>();
+  const attackerOutcome = useRef<any>();
+  const defenderOutcome = useRef<any>();
+  const battleLogText = useRef<any>();
 
   const [attackerTroops, setAttackerTroops] = useState(0);
   const [attackerTroopsAvailable, setAttackerTroopsAvailable] = useState(1);
-  const [attackerOptions, setAttackerOptions] = useState([]);
+  const [attackerOptions, setAttackerOptions] = useState<any>([]);
   const [attackerImage, setAttackerImage] = useState('');
 
   const [defenderTroops, setDefenderTroops] = useState(0);
-  const [defenderOptions, setDefenderOptions] = useState([]);
+  const [defenderOptions, setDefenderOptions] = useState<any>([]);
   const [defenderImage, setDefenderImage] = useState('');
 
   // const [allFactions, setAllFactions] = useState([]);
-  const[factionsOnPoint, setFactionsOnPoint] = useState([]);
+  const[factionsOnPoint, setFactionsOnPoint] = useState<any>([]);
   const [factionsLoaded, setFactionsLoaded] = useState(false);
-  const [playerArmies, setPlayerArmies] = useState([]);
-  const [combinedArmies, setCombinedArmies] = useState([]);
+  const [playerArmies, setPlayerArmies] = useState<any>([]);
+  const [combinedArmies, setCombinedArmies] = useState<any>([]);
   const [isOwnerOfFaction, setIsOwnerOfFaction] = useState(false);
-  const [playerFaction, setPlayerFaction] = useState();
+  const [playerFaction, setPlayerFaction] = useState<any>();
   const [factionTroops, setFactionTroops] = useState(0);
-  const handleChange = (value) => setAttackerTroops(value)
+  const handleChange = (value: any) => setAttackerTroops(value)
 
-  //dice
-  const [att, setAtt] = useState([])
-  const [def, setDef] = useState([])
 
   //alerts
   const [showAlert, setShowAlert] = useState(false)
@@ -89,7 +101,7 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
   const [koban, setKoban] = useState(0);
   const [isExecuting, setIsExecuting] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('Attacking...');
-  const [battleAttack, setBattleAttack] = useState([]);
+  const [battleAttack, setBattleAttack] = useState<any>([]);
 
   const [attackerFilter, setAttackerFilter] = useState('brightness(1)');
   const [defenderFilter, setDefenderFilter] = useState('brightness(1)');
@@ -119,15 +131,15 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
     // quantity: 0,
     defendersFaction: "" ?? null,
   })
-  const onChangeInputsAttacker = (e) => {
+  const onChangeInputsAttacker = (e : any) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     if(e.target.value !== ''){
-      setAttackerTroopsAvailable(combinedArmies.filter(faction => faction.name === e.target.value)[0].troops);
+      setAttackerTroopsAvailable(combinedArmies.filter((faction:any)=> faction?.name === e.target.value)[0].troops);
     } else {
       setAttackerTroopsAvailable(0);
     }
   }
-  const onChangeInputsDefender = (e) => {
+  const onChangeInputsDefender = (e : any) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     if(e.target.value !== ''){
       setDefenderTroops(controlPoint.leaderBoard.filter(faction => faction.name === e.target.value)[0].totalTroops);
@@ -140,31 +152,7 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
     onCloseClaimRewards();
     console.log("claimedRewards")
   }
-  function setupDice(attackerDice, defenderDice) {
-    attackerDice.length = Math.min(attackerDice.length, 3);
-    defenderDice.length = Math.min(defenderDice.length, 3);
-    
-    // var diceRolls = [5,6,2]
-    setAtt(
-      attackerDice.map((i) => (<Image
-          borderRadius='full'
-          align={'center'}
-          objectFit='cover'
-          boxSize='200px'
-          src = {'img/battle-bay/dice/dice_'+i+'.gif'}
-        />))
-      )
-    // diceRolls = [3,1]
-    setDef(
-      defenderDice.map((i) => (<Image
-        borderRadius='full'
-        align={'center'}
-        objectFit='cover'
-        boxSize='200px'
-        src = {'img/battle-bay/dice/dice_'+i+'.gif'}
-      />))
-    )
-  }
+
   const CheckIfAttackerFactionIsOwnedByPlayer = async () => {
       setIsOwnerOfFaction(dataForm.attackersFaction == playerFaction?.name);
   }
@@ -176,9 +164,9 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
     }
     if (signatureInStorage) {
       try {
-        const data = await getProfileArmies(user.address.toLowerCase(), signatureInStorage);
+        const data = await getProfileArmies(user.address?.toLowerCase(), signatureInStorage);
         setPlayerArmies(
-          data.data.data.filter(army => army.controlPointId == controlPoint.id)
+          data.data.data.filter((army:any) => army.controlPointId == controlPoint.id)
         );
       } catch (error) {
         console.log(error)
@@ -193,7 +181,7 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
     }
     if (signatureInStorage) {
       try {
-        const data = await getFactionOwned(user.address.toLowerCase(), signatureInStorage);
+        const data = await getFactionOwned(user.address?.toLowerCase(), signatureInStorage);
         setPlayerFaction(data.data.data);
         // console.log('data.data.data', data.data.data);
         setFactionTroops(data.data.data.troops);
@@ -205,7 +193,7 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
   const CheckForApproval = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const resourceContract = new Contract(config.contracts.resources, Resources, readProvider);
-    const tx = await resourceContract.isApprovedForAll(user.address.toLowerCase(), config.contracts.battleField);
+    const tx = await resourceContract.isApprovedForAll(user.address?.toLowerCase(), config.contracts.battleField);
     return tx;
   }
   const RealAttack = async () => {
@@ -247,7 +235,7 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
         // console.log("signatureInStorage", signatureInStorage);
         setExecutingLabel('Attacking...');
         const data = await attack(
-          user.address.toLowerCase(), 
+          user.address?.toLowerCase(), 
           signatureInStorage, 
           Number(attackerTroops), 
           controlPointId, 
@@ -274,19 +262,14 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
 
         const attackContract = new Contract(config.contracts.battleField, Battlefield, user.provider.getSigner());
         const tx = await attackContract.attackFaction(attackTuple, sig);
-        const receipt = await tx.wait();
+        // const receipt = await tx.wait();
         // toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         // ShowAttackConclusion();
         // console.log("receipt", receipt);
 
-      } catch (error) {
-        if(error.response !== undefined) {
-          console.log(error)
-          toast.error(error.response.data.error.metadata.message)
-        }
-        else {
-          toast.error(error);
-        }
+      } catch (error: any) {
+        console.log(error);
+        toast.error(parseErrorMessage(error));
       }
   }
   }
@@ -298,7 +281,7 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
     }
     if (signatureInStorage) {
       try {
-        const data = await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
+        const data = await getBattleRewards(user.address?.toLowerCase(), signatureInStorage);
         setBattleRewards(data);
       } catch (error) {
         console.log(error)
@@ -361,12 +344,14 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
     attackerOutcome.current.textContent = "lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
     defenderOutcome.current.textContent = "lost "+defendersSlain+"/"+defenderTroops+" troops";
     
-    setupDice(attackerDice, defenderDice);
+    //dice removed
+    // setupDice(attackerDice, defenderDice);
 
 
     attackSetUp.current.style.display = "none"
     attackConclusion.current.style.display = "block"
     setIsExecuting(false);
+    CheckForKoban();
 
     if(defendersSlain>0) CheckForBattleRewards();
   }
@@ -451,10 +436,9 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
     battleLog.current.style.display = battleLog.current.style.display === "block" ? "none" : "block";
   }
   const CheckForKoban = async () => {
-    // console.log("CheckForKoban")
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const resourceContract = new Contract(config.contracts.resources, Resources, readProvider);
-    const tx = await resourceContract.balanceOf(user.address.toLowerCase(), 1);
+    const tx = await resourceContract.balanceOf(user.address?.toLowerCase(), 1);
     setKoban(Number(ethers.utils.hexValue(BigNumber.from(tx))));
   }
 
@@ -482,23 +466,29 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
   
   useEffect(() => {
     refreshControlPoint();
+    CheckForKoban();
     GetPlayerOwnedFaction();
     GetPlayerArmies();
     CheckForBattleRewards();
   }, [])
 
   // useEffect(() => {
-  //   CheckForKoban();
-  // }, [rdconte])
+  //   console.log("Koban changed", koban)
+  // }, [koban])
+
+  useEffect(() => {
+    if(!rdUser) return;
+
+  }, [rdUser])
 
   useEffect(() => {
     // console.log("playerArmies.length ", playerArmies.length )
     if(playerArmies.length > 0 && allFactions.length > 0 && !factionsLoaded) {
       // console.log("playerArmies changed", playerArmies)
-      var combinedArmiesLocal = [];
+      var combinedArmiesLocal: any[] = []
 
       //we need to combine the playerArmies by factionId
-      playerArmies.forEach((army, index) => {
+      playerArmies.forEach((army:any) => {
         var found = combinedArmiesLocal.find(f => f.factionId === army.factionId);
         if(found === undefined) {
           combinedArmiesLocal.push({name: allFactions.find(f => f.id === army.factionId).name, 
@@ -516,7 +506,7 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
   useEffect(() => {
     // console.log("combinedArmies changed", combinedArmies)
     if(combinedArmies.length > 0 && !factionsLoaded) {
-      setAttackerOptions(combinedArmies.map((faction, index) => (
+      setAttackerOptions(combinedArmies.map((faction:any, index:number) => (
         <option 
           style={{ background: '#272523' }}
           value={faction.name}
@@ -544,7 +534,7 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
       console.log('disconnected')
     }
 
-    function onBattleAttackEvent(data) {
+    function onBattleAttackEvent(data:any) {
       console.log('BATTLE_ATTACK', data)
       const parsedAtack = JSON.parse(data);
       // console.log('parsedAtack', parsedAtack)
@@ -905,4 +895,4 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
   )
 }
 
-export default AttackTap;
+export default AttackTab;
