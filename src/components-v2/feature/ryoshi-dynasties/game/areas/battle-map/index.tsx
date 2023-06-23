@@ -241,7 +241,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   const [allFactions, setAllFactions] = useState<any>([]);
   const GetFactions = async () => {
     const factions = await getAllFactions(rdGameContext?.game.id);
-    console.log('factions', factions);
+    // console.log('factions', factions);
     setAllFactions(factions);
   }
 

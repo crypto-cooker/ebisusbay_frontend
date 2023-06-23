@@ -292,7 +292,6 @@ export const getAllFactions = async (gameId) => {
   try{
     var data = await api.get("ryoshi-dynasties/factions/all",
       {params: {gameId}});
-    console.log(data)
     return data.data.data;
   }
   catch(error){

@@ -68,6 +68,7 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
   const [defenderImage, setDefenderImage] = useState('');
 
   // const [allFactions, setAllFactions] = useState([]);
+  const[factionsOnPoint, setFactionsOnPoint] = useState([]);
   const [factionsLoaded, setFactionsLoaded] = useState(false);
   const [playerArmies, setPlayerArmies] = useState([]);
   const [combinedArmies, setCombinedArmies] = useState([]);
@@ -459,35 +460,25 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
   }
 
   useEffect(() => {
-    // console.log("controlPoint changed")
-    if(allFactions !== undefined) {
-      console.log("allFactions", allFactions)
-      
-      // setAllFactions(controlPoint.leaderBoard);
-      setDefenderOptions(allFactions.map((faction, index) => (
-        faction.totalTroops > 0 ?
-        <option style={{ background: '#272523' }} value={faction.name} key={index}>{faction.name}</option>
-        : null)))
-    }
+    if(!controlPoint) return;
+
+    setDefenderOptions(controlPoint.leaderBoard.map((faction, index) => (
+      faction.totalTroops > 0 ?
+      <option style={{ background: '#272523' }} value={faction.name} key={index}>{faction.name}</option> : null)))
   }, [controlPoint])
 
-  // useEffect(() => {
-  //   // console.log("attackTypeEnum: ", attackTypeEnum[attackType])
-  // }, [attackType])
-
   useEffect(() => {
-      if(dataForm.defendersFaction!=null) {
-        setShowAlert(false)
-        getDefenderTroopsInRegion()
-      }
+    if(!dataForm.defendersFaction) return;
+
+    setShowAlert(false)
+    getDefenderTroopsInRegion()
   }, [dataForm.defendersFaction])
 
   useEffect(() => {
-    if(dataForm.attackersFaction!="") {
-        // console.log("dataForm.attackersFaction", dataForm.attackersFaction)
-        getAttackerTroopsInRegion()
-        CheckIfAttackerFactionIsOwnedByPlayer()
-      }
+    if(dataForm.attackersFaction==="") return;
+
+    getAttackerTroopsInRegion()
+    CheckIfAttackerFactionIsOwnedByPlayer()
   }, [dataForm.attackersFaction])
   
   useEffect(() => {
@@ -594,36 +585,32 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
 
       <Center>
           <VStack justifyContent='space-between'>
-          {/* <Text textAlign='left' fontSize={'16px'}>Select a Faction to attack with:</Text> */}
             <Select 
               name='attackersFaction'
               backgroundColor='#292626'
               w='90%' 
-              me={2} 
-              // placeholder='Select Attacker'
               value={dataForm.attackersFaction} 
               onChange={onChangeInputsAttacker}>
                 <option selected hidden disabled value="">Select Attacker</option>
               {attackerOptions}
             </Select>
 
+            <Select 
+              name='defendersFaction'
+              backgroundColor='#292626'
+              w='90%' 
+              value={dataForm.defendersFaction} 
+              onChange={onChangeInputsDefender}>
+                  <option selected hidden disabled value="">Select Defender</option>
+              {defenderOptions}
+            </Select>
 
-            {/* <Text textAlign='center' fontSize={'16px'}>Select a Faction to Attack:</Text> */}
-          <Select 
-            name='defendersFaction'
-            // placeholder='Select Defender'
-            backgroundColor='#292626'
-            w='90%' 
-            me={2} 
-            value={dataForm.defendersFaction} 
-            onChange={onChangeInputsDefender}>
-                <option selected hidden disabled value="">Select Defender</option>
-            {defenderOptions}
-          </Select>
+            { 
+              dataForm.attackersFaction !== ''  ? <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
+              : <></>
+            }
+            
 
-          <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
-
-          {/* <Text textAlign='right' fontSize={'16px'}>Attack Strength (1-3):</Text> */}
             <NumberInput 
               align='right'
               defaultValue={1} 
