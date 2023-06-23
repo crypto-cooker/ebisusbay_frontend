@@ -108,10 +108,17 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   const [attackerStyle, setAttackerStyle] = useState({});
   const [defenderStyle, setDefenderStyle] = useState({});
 
-  const attackTypeEnum = {
-    1: {name:"Conquest", maxTroops:3, desc: "Launch a relentless assault, battling until all troops are eliminated or the opposing faction is defeated"},
-    2: {name:"Skirmish", maxTroops:Infinity, desc: "Engage in a single attack using the number of troops you wager"}
+  interface attackTypeInterface {
+    name: string;
+    maxTroops: number;
+    desc: string;
   }
+
+  const attackTypeEnum: Array<attackTypeInterface> = [
+    {name:"Conquest", maxTroops:3, desc: "Launch a relentless assault, battling until all troops are eliminated or the opposing faction is defeated"},
+    {name:"Skirmish", maxTroops:Infinity, desc: "Engage in a single attack using the number of troops you wager"}
+  ];
+
   const [attackType, setAttackType] = useState(1);
   function getAttackCost(){
     return attackType == 2 ? skirmishPrice : conquestPrice
@@ -441,6 +448,16 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
     const tx = await resourceContract.balanceOf(user.address?.toLowerCase(), 1);
     setKoban(Number(ethers.utils.hexValue(BigNumber.from(tx))));
   }
+  
+  const GetMaxTroops=()=>{
+    const troops = attackTypeEnum.find((attackType: any) => attackType.name === attackType)?.maxTroops;
+    return troops;
+  }
+
+  const GetDescription = () => {
+    const desc = attackTypeEnum.find((attackType: any) => attackType.name === attackType)?.desc;
+    return desc;
+  }
 
   useEffect(() => {
     if(!controlPoint) return;
@@ -606,12 +623,11 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
             <NumberInput 
               defaultValue={1} 
               min={1} 
-              max={attackTypeEnum[attackType].maxTroops}
+              max={GetMaxTroops()}
               name="quantity" 
               w='80%'
               onChange={handleChange}
               value={attackerTroops} 
-              type ='number'
               bgColor='#292626'
               borderRadius='10px'
               >
@@ -627,18 +643,18 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
                   isActive={attackType === 1}
                   onClick={() => setAttackType(1)}
                 >
-                  {attackTypeEnum[1].name}
+                  Conquest
                 </RdTabButton>
                 <RdTabButton
                   isActive={attackType === 2}
                   onClick={() => setAttackType(2)}
                 >
-                  {attackTypeEnum[2].name}
+                  Skirmish
                 </RdTabButton>
               </Flex>
             </Center>
             <Text
-              as='i'>{attackTypeEnum[attackType].desc}
+              as='i'>{GetDescription()}
             </Text>
           </VStack>
       </Center>
