@@ -275,7 +275,7 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
         const attackContract = new Contract(config.contracts.battleField, Battlefield, user.provider.getSigner());
         const tx = await attackContract.attackFaction(attackTuple, sig);
         const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        // toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         // ShowAttackConclusion();
         // console.log("receipt", receipt);
 
@@ -288,7 +288,6 @@ const AttackTap = ({controlPoint = [], refreshControlPoint, skirmishPrice, conqu
           toast.error(error);
         }
       }
-    setIsExecuting(false);
   }
   }
   const CheckForBattleRewards = async () => {
