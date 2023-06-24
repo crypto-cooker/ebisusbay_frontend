@@ -389,15 +389,16 @@ const BattleMap = ({onChange}: BattleMapProps) => {
               <React.Fragment>
 
             <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
-              <MapFrame gridHeight={'50px 1fr 50px'} gridWidth={'50px 1fr 50px'}>
-              <Box 
+              <MapFrame gridHeight={'50px 1fr 50px'} gridWidth={'50px 1fr 50px'} w='2930px' h='2061px'>
+                <Box
                   as='img'
                   //  src={'/img/battle-bay/imgs/world_map_background.jpg'}
                    src={ImageService.translate('/img/ryoshi-dynasties/battle/world-map-background.jpg').custom({width: 2880, height: 2021})}
                    maxW='none'
                    useMap="#imageMap" 
                    className={`${styles0.mapImageArea}`} 
-                   id="fancyMenu"/>
+                   id="fancyMenu"
+                />
                 <map name="imageMap" > 
                   {area} 
                 </map>
