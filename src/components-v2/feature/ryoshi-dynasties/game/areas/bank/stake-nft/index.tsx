@@ -196,18 +196,20 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         />
         <Box p={4}>
           <Flex direction='row' justify='center' mb={2}>
-            <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
-              VIP
-            </RdTabButton>
-            <RdTabButton isActive={currentTab === tabs.fortuneGuards} onClick={handleBtnClick(tabs.fortuneGuards)}>
-              Guards
-            </RdTabButton>
-            <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
-              Halloween
-            </RdTabButton>
-            <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
-              Christmas
-            </RdTabButton>
+            <SimpleGrid columns={{base: 2, sm: 4}}>
+              <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
+                VIP
+              </RdTabButton>
+              <RdTabButton isActive={currentTab === tabs.fortuneGuards} onClick={handleBtnClick(tabs.fortuneGuards)}>
+                Guards
+              </RdTabButton>
+              <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
+                Halloween
+              </RdTabButton>
+              <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
+                Christmas
+              </RdTabButton>
+            </SimpleGrid>
           </Flex>
           <Box>
             <UnstakedNfts
