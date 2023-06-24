@@ -730,7 +730,7 @@ const CreateFactionForm = ({ isOpen, onClose, handleClose}: FactionRegistrationF
                 as='i'
                 fontSize={{base: '14', md: '14'}}
                 textColor={'#cfcfcf'}
-              > Wallets that participated in the fortune presale will have their season 1 fee waved</Text>
+              > Wallets that participated in the fortune presale will have their season 1 fee waived</Text>
       
               <Spacer my={8} />
               <Text>
@@ -834,7 +834,7 @@ const CreateFactionForm = ({ isOpen, onClose, handleClose}: FactionRegistrationF
 
               <ul id="addresseslist"></ul>
       
-                <Box >
+                <Box mt={4}>
                   <VStack>
                     <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm'>
                         <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
