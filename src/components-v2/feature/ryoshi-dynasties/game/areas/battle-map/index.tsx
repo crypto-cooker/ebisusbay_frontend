@@ -438,7 +438,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
                     <div className={[styles.worldmap_label, styles.ancestors_final_rest_label].filter(e => !!e).join(' ')}>Ancestor's Final Rest</div></div>
                   <div className={[styles.dragon_roost, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Dragons Roost")}>
                     <div className={[styles.worldmap_label, styles.dragon_roost_label].filter(e => !!e).join(' ')}>Dragon Roost</div></div>	
-                  <div className={[styles.nyar_spire, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Insect Race")}>
+                  <div className={[styles.nyar_spire, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("N'yar Spire")}>
                     <div className={[styles.worldmap_label, styles.nyar_spire_label].filter(e => !!e).join(' ')}>N'yar Spire</div></div>		
                   <div className={[styles.iron_bastion, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Iron Bastion")}>
                     <div className={[styles.worldmap_label, styles.iron_bastion_label].filter(e => !!e).join(' ')}>Iron Bastion</div></div>
