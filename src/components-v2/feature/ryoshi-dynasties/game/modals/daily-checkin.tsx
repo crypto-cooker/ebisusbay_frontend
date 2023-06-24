@@ -34,6 +34,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const user = useAppSelector(state => state.user);
   const [_, getSigner] = useCreateSigner();
   const [streak, setStreak] = useState(0);
+  const [streakIndex, setStreakIndex] = useState(0);
   const [nextClaim, setNextClaim] = useState("");
 
   const [canClaim, setCanClaim] = useState(false);
@@ -95,6 +96,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
 
       const claimData = rdContext.user.dailyRewards;
       setStreak(claimData.streak);
+      setStreakIndex(claimData.streak % rdContext.config.rewards.daily.length);
       if(!claimData.nextClaim) {
         setCanClaim(true);
       } else if(Date.parse(claimData.nextClaim) <= Date.now()) {
@@ -122,7 +124,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
           <>
             <SimpleGrid columns={{base: 4, sm: rdContext.config.rewards.daily.length}} gap={1} padding={2} my={4}>
               {rdContext.config.rewards.daily.map((reward, index) => (
-                <Box key={index} w='100%' h='55' rounded="lg" color={'#FFD700'}  border={streak == index + 1 ? '2px' : ''}>
+                <Box key={index} w='100%' h='55' rounded="lg" color={'#FFD700'}  border={streakIndex == index + 1 ? '2px' : ''}>
                   <Text fontSize={16} color='#aaa' textAlign={'center'}>Day {index + 1}</Text>
                   <HStack justifyContent={'center'} spacing={0.5}>
                     <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >{reward}</Text>
@@ -136,7 +138,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
               <Text as='span'>Your current streak is <strong>{streak} {pluralize(streak, 'day')}</strong>. </Text>
               {canClaim ? (
                 <Text as='span'>
-                  Claim now to increase your streak and earn {rdContext.config.rewards.daily[streak]} Koban
+                  Claim now to increase your streak and earn {rdContext.config.rewards.daily[streakIndex]} Koban
                 </Text>
               ) : (
                 <Text as='span'>
