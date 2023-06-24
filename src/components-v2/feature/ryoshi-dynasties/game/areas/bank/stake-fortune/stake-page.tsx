@@ -28,7 +28,7 @@ import {Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import Bank from "@src/Contracts/Bank.json";
-import {createSuccessfulTransactionToastContent, round} from '@src/utils';
+import {createSuccessfulTransactionToastContent, findNextLowestNumber, round} from '@src/utils';
 import {useAppSelector} from "@src/Store/hooks";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
@@ -94,7 +94,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault}: StakePageProps
                   {!!account && account.vaults.length > 0 && (
                     <Accordion defaultIndex={[0]} allowToggle>
                       {account.vaults.map((vault, index) => (
-                        <Box mt={2}>
+                        <Box key={vault.vaultId} mt={2}>
                           <Vault
                             vault={vault}
                             index={index}
@@ -157,7 +157,8 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
   const daysToAdd = Number(vault.length / (86400));
   const numTerms = Math.floor(daysToAdd / rdConfig.bank.staking.fortune.termLength);
   const availableAprs = rdConfig.bank.staking.fortune.apr as any;
-  const baseApr = (availableAprs[numTerms] ?? availableAprs[1]) * 100;
+  const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
+  const baseApr = (availableAprs[aprKey] ?? availableAprs[1]) * 100;
   const endDate = moment(vault.endTime * 1000).format("MMM D yyyy");
 
   const [isExecutingClose, setIsExecutingClose] = useState(false);
