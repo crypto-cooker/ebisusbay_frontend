@@ -79,7 +79,7 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
   const [newWithdrawDate, setNewWithdrawDate] = useState(vault.endTime);
 
   const handleChangeFortuneAmount = (valueAsString: string, valueAsNumber: number) => {
-    setFortuneToStake(!isNaN(valueAsNumber) ? valueAsNumber : 0);
+    setFortuneToStake(!isNaN(valueAsNumber) ? Math.floor(valueAsNumber) : 0);
   }
 
   const handleChangeDays = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -164,7 +164,7 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       } else {
         const totalApproved = await checkForApproval();
-        const desiredFortuneAmount = ethers.utils.parseEther(fortuneToStake.toString());
+        const desiredFortuneAmount = ethers.utils.parseEther(Math.floor(fortuneToStake).toString());
 
         if(totalApproved.lt(desiredFortuneAmount)){
           const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
@@ -287,8 +287,8 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
                   <Box fontSize='sm' fontWeight='bold'>Deposit Amount</Box>
                   <FormControl maxW='200px' isInvalid={!!inputError}>
                     <NumberInput
-                      defaultValue={1000}
-                      min={rdConfig.bank.staking.fortune.minimum}
+                      defaultValue={1250}
+                      min={1}
                       name="quantity"
                       onChange={handleChangeFortuneAmount}
                       value={fortuneToStake}
