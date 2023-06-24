@@ -9,9 +9,9 @@ import * as Sentry from '@sentry/react';
 
 const message = (address: string) => {
   return "Welcome to Ebisu's Bay!\n\n" +
-    "Click to sign in and accept the Ebisu's Bay Terms of Service: https://cdn.ebisusbay.com/terms-of-service.html\n\n" +
+    "Click to sign in and accept the Ebisu's Bay Terms of Service: https://app.ebisusbay.com/terms-of-service.html\n\n" +
     "This request will not trigger a blockchain transaction or cost any gas fees.\n\n" +
-    `Wallet address:\n${address}`
+    `Wallet address:\n${address.toLowerCase()}`
 }
 
 type SignerProps = {

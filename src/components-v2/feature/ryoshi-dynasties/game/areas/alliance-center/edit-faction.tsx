@@ -43,6 +43,7 @@ import {
 import AvatarEditor from 'react-avatar-editor'
 import Cropper from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline/Cropper';
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/search";
+import {parseErrorMessage} from "@src/helpers/validator";
 const config = appConfig();
 
 interface EditFactionProps {
@@ -152,11 +153,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
         toast.success("Changes Saved");
       } catch (error:any) {
         console.log(error)
-        if (error.response !== undefined) {
-          toast.error(error.response.data.error.metadata.message)
-        } else {
-          toast.error(error);
-        }
+        toast.error(parseErrorMessage(error));
       }
     }
   }
@@ -176,13 +173,8 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
         onClose();
         toast.success("Faction disbanded");
       } catch (error: any) {
-        console.log(error)
-        if(error.response !== undefined) {
-          toast.error(error.response.data.error.metadata.message)
-        }
-        else {
-          toast.error(error);
-        }
+        console.log(error);
+        toast.error(parseErrorMessage(error));
       }
     }
   }
