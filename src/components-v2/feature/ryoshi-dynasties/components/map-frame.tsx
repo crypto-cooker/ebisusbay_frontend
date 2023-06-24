@@ -1,15 +1,16 @@
-import {Box, Grid, GridItem, Image} from "@chakra-ui/react";
+import {Box, BoxProps, Grid, GridItem, GridProps, Image} from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import styles from "@src/Components/BattleBay/Areas/BattleBay.module.scss";
 import React, {ReactElement} from "react";
 import {useAppSelector} from "@src/Store/hooks";
 
-interface MapOutlineProps {
+interface MapOutlineProps extends GridProps {
   children: ReactElement[] | ReactElement;
   gridHeight ?: string;
   gridWidth ?: string;
 }
-const MapFrame = ({children, gridHeight, gridWidth}: MapOutlineProps) => {
+
+const MapFrame = ({children, gridHeight, gridWidth, ...props}: MapOutlineProps) => {
   const user = useAppSelector((state) => state.user);
   return (
     <Grid
@@ -21,6 +22,7 @@ const MapFrame = ({children, gridHeight, gridWidth}: MapOutlineProps) => {
       gridTemplateRows={gridHeight}
       gridTemplateColumns={gridWidth}
       gap={0}
+      {...props}
     >
       <GridItem area={'left'}>
         <Image

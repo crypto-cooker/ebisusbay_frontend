@@ -365,7 +365,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                   </Box>
                 </Box>
               ) : (
-                <Box position='relative'>
+                <Box position='relative' overflow='hidden'>
                   <Popover>
                     <PopoverTrigger>
                       <Box

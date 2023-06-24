@@ -6,7 +6,12 @@ import {
   Icon,
   IconButton,
   Image,
-  Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverTrigger,
   SimpleGrid,
   Spinner,
   Text,
@@ -27,7 +32,7 @@ import WalletNft from "@src/core/models/wallet-nft";
 import ImageService from "@src/core/services/image";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
 import ShrineIcon from "@src/components-v2/shared/icons/shrine";
-import {CloseIcon} from "@chakra-ui/icons";
+import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
@@ -42,6 +47,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/faq-page";
 
 const config = appConfig();
 
@@ -66,6 +72,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const [currentCollection, setCurrentCollection] = useState<any>();
   const [stakedNfts, setStakedNfts] = useState<StakedToken[]>([]);
   const [pendingNfts, setPendingNfts] = useState<PendingNft[]>([]);
+  const [page, setPage] = useState<string>();
 
   const addressForTab = config.collections.find((c: any) => c.slug === currentTab)?.address;
 
@@ -135,6 +142,14 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
     onClose();
   }
 
+  const handleBack = () => {
+    if (!!page) {
+      setPage(undefined);
+    } else {
+      setPage('faq');
+    }
+  };
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -185,41 +200,49 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       title='Stake NFTs'
       size='5xl'
       isCentered={false}
+      utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
+      onUtilBtnClick={handleBack}
     >
-      <BankStakeNftContext.Provider value={pendingNfts}>
-        <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to boost rewards for staked $Fortune. Receive larger boosts by staking higher ranked NFTs.</Text>
-        <StakingBlock
-          pendingNfts={pendingNfts}
-          stakedNfts={stakedNfts}
-          onRemove={handleRemoveNft}
-          onStaked={handleStakeSuccess}
-        />
-        <Box p={4}>
-          <Flex direction='row' justify='center' mb={2}>
-            <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
-              VIP
-            </RdTabButton>
-            <RdTabButton isActive={currentTab === tabs.fortuneGuards} onClick={handleBtnClick(tabs.fortuneGuards)}>
-              Guards
-            </RdTabButton>
-            <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
-              Halloween
-            </RdTabButton>
-            <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
-              Christmas
-            </RdTabButton>
-          </Flex>
-          <Box>
-            <UnstakedNfts
-              isReady={isOpen}
-              collection={currentCollection}
-              address={user.address ?? undefined}
-              onAdd={handleAddNft}
-              onRemove={handleRemoveNft}
-            />
+      {page === 'faq' ? (
+        <FaqPage />
+      ) : (
+        <BankStakeNftContext.Provider value={pendingNfts}>
+          <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to boost rewards for staked $Fortune. Receive larger boosts by staking higher ranked NFTs.</Text>
+          <StakingBlock
+            pendingNfts={pendingNfts}
+            stakedNfts={stakedNfts}
+            onRemove={handleRemoveNft}
+            onStaked={handleStakeSuccess}
+          />
+          <Box p={4}>
+            <Flex direction='row' justify='center' mb={2}>
+              <SimpleGrid columns={{base: 2, sm: 4}}>
+                <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
+                  VIP
+                </RdTabButton>
+                <RdTabButton isActive={currentTab === tabs.fortuneGuards} onClick={handleBtnClick(tabs.fortuneGuards)}>
+                  Guards
+                </RdTabButton>
+                <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
+                  Halloween
+                </RdTabButton>
+                <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
+                  Christmas
+                </RdTabButton>
+              </SimpleGrid>
+            </Flex>
+            <Box>
+              <UnstakedNfts
+                isReady={isOpen}
+                collection={currentCollection}
+                address={user.address ?? undefined}
+                onAdd={handleAddNft}
+                onRemove={handleRemoveNft}
+              />
+            </Box>
           </Box>
-        </Box>
-      </BankStakeNftContext.Provider>
+        </BankStakeNftContext.Provider>
+      )}
     </RdModal>
   )
 }
@@ -352,7 +375,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                   </Box>
                 </Box>
               ) : (
-                <Box position='relative'>
+                <Box position='relative' overflow='hidden'>
                   <Popover>
                     <PopoverTrigger>
                       <Box
