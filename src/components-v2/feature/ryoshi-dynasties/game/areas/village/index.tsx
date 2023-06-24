@@ -80,7 +80,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const [forceRefreshBool, setForceRefreshBool] = useState(false);
 
   const forceRefresh = () => {
-    console.log("force refresh")
+    // console.log("force refresh")
     setForceRefreshBool(!forceRefreshBool);
   }
 
@@ -99,7 +99,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       offsetY: ReactZoomPanPinchRef.state.positionY,
       scale: ReactZoomPanPinchRef.state.scale,
     });
-    console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
+    // console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
 
   // const GetGameTokens = async () => {

@@ -67,7 +67,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
       offsetY: ReactZoomPanPinchRef.state.positionY,
       scale: ReactZoomPanPinchRef.state.scale,
     });
-    console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
+    // console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
 
   const randomlyPlayExplosion = async () => {
