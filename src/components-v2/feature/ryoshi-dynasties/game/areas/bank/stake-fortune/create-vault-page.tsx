@@ -72,7 +72,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
 
 
   const handleChangeFortuneAmount = (valueAsString: string, valueAsNumber: number) => {
-    setFortuneToStake(!isNaN(valueAsNumber) ? valueAsNumber : 0);
+    setFortuneToStake(!isNaN(valueAsNumber) ? Math.floor(valueAsNumber) : 0);
   }
 
   const handleChangeDays = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -144,7 +144,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
       setExecutingLabel('Approving');
       //check for approval
       const totalApproved = await checkForApproval();
-      const desiredFortuneAmount = ethers.utils.parseEther(fortuneToStake.toString());
+      const desiredFortuneAmount = ethers.utils.parseEther(Math.floor(fortuneToStake).toString());
 
       if(totalApproved.lt(desiredFortuneAmount)){
         const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
@@ -239,7 +239,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
                     <FormErrorMessage>{inputError}</FormErrorMessage>
                   </FormControl>
                   <Flex>
-                    <Button textColor='#e2e8f0' variant='link' fontSize='sm' onClick={() => setFortuneToStake(userFortune)}>Stake all</Button>
+                    <Button textColor='#e2e8f0' variant='link' fontSize='sm' onClick={() => setFortuneToStake(Math.floor(userFortune))}>Stake all</Button>
                   </Flex>
                 </VStack>
 
