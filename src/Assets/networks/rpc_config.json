@@ -21299,6 +21299,31 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Skully-X",
+      "slug": "skully-x",
+      "multiToken": false,
+      "address": "0x167cd9C1Fb15610A3736d4a05D2811256E8e58a2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Skully-X are assembling their forces \uD83D\uDC80  Will they win the war, or will their DNA get stolen by the Cr00ts labs.. \uD83E\uDDEC\uD83E\uDDEA | Royalties | GameFi access | IP rights | and more",
+        "avatar": "/img/collections/skully-x/avatar.webp",
+        "card": "/img/collections/skully-x/card.webp",
+        "banner": "/img/collections/skully-x/banner.webp",
+        "website": "https://cr00tsnft.ca/",
+        "twitter": "https://twitter.com/cr00tsnft",
+        "discord": "https://discord.gg/Xb5xv84mS2",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
