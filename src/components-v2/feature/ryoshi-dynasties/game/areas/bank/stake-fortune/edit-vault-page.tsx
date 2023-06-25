@@ -120,8 +120,8 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
       return;
     }
 
-    if(!isAddingDuration && fortuneToStake < rdConfig.bank.staking.fortune.minimum){
-      setInputError(`At least ${rdConfig.bank.staking.fortune.minimum} required`);
+    if(!isAddingDuration && fortuneToStake < 1){
+      setInputError(`At least 1 Fortune required`);
       return false;
     }
     setInputError('');
