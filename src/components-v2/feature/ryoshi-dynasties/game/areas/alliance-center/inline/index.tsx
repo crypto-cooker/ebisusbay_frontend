@@ -266,7 +266,6 @@ const CurrentFaction = () => {
   const[totalTroops, setTotalTroops] = useState(0);
 
   useEffect(() => {
-    console.log('rdContext', rdContext)
     if(rdContext.user?.season?.troops?.undeployed !== undefined){
       setAvailableTroops(rdContext.user?.season?.troops?.undeployed);
     }

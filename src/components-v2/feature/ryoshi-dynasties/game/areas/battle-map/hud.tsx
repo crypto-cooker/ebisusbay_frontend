@@ -128,7 +128,6 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   useEffect(() => {
     if(!rdContext) return;
 
-    console.log('rdContext', rdContext)
     if(rdContext.user?.season?.troops?.undeployed !== undefined){
       setAvailableTroops(rdContext.user?.season?.troops?.undeployed);
     }

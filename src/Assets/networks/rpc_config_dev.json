@@ -20471,7 +20471,7 @@
       "multiToken": false,
       "address": "0x55c8f67e6D3f037297Daf94AD2bCC67CC477BEa9",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The main purpose of this collection is to act as a Booster NFT for different percentage yields depending on which tier you hold. A MAX of 2 troops can be staked under a 102 Time Machine, 101 Time Machine, or Tata’s Guardian to increase payout yields by up to 10%. From our own ecosystems tokens.",
         "avatar": "/img/collections/time-troops/avatar.webp",
