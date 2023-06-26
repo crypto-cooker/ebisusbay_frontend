@@ -39,7 +39,6 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {useFormik} from 'formik';
-import FactionPfp from '../../../../../../../Components/BattleBay/Areas/FactionIconUpload';
 
 import {BigNumber, Contract, ethers} from "ethers";
 import Fortune from "@src/Contracts/Fortune.json";

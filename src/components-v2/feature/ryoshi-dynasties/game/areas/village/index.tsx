@@ -13,7 +13,6 @@ import {
 } from "@chakra-ui/react"
 
 import React, {ReactElement, useCallback, useContext, useEffect, useRef, useState} from 'react';
-// import { resizeMap, resizeNewMap } from './mapFunctions.js'
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
@@ -44,7 +43,7 @@ interface VillageProps {
   onFirstRun: () => void;
 }
 const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
-  const { config: rdConfig, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, game: rdGameContext, user: rdUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
   const config = appConfig();
 
@@ -533,6 +532,10 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       onFirstRun();
     }
   }, []);
+  // useEffect(() => {
+  //   if (!rdConfig) return;
+  //     console.log('rdUser', rdGameContext);
+  // }, [rdConfig]);
 
   useEffect(() => {
     if(!transformComponentRef?.current) return;

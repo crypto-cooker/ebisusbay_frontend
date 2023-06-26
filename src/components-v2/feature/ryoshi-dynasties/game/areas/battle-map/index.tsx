@@ -1,7 +1,5 @@
 import React, {ReactElement, useEffect, useRef, useState, useContext } from 'react';
 import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex, Image } from '@chakra-ui/react'
-// import { resizeBattleMap, setUpMapZooming } from '@src/Components/BattleBay/Areas/mapFunctions.js'
-// import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 

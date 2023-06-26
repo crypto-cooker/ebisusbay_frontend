@@ -4,8 +4,8 @@ import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bar
 import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
 import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 // import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
-import Academy from "@src/Components/BattleBay/Areas/Academy";
-import UserPage from "@src/Components/BattleBay/Areas/UserPage";
+import Academy from "@src/components-v2/feature/ryoshi-dynasties/game/areas/academy";
+// import UserPage from "@src/Components/BattleBay/Areas/UserPage";
 import Bank from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank";
 import Village from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village";
 import {useAppSelector} from "@src/Store/hooks";
@@ -48,8 +48,6 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
           <Academy onBack={returnToPreviousPage} />
           // ): currentPage === 'announcementBoard' ? (
           // <AnnouncementBoard onBack={returnToPreviousPage} />
-        ) : currentPage === 'userPage' ? (
-          <UserPage onBack={returnToPreviousPage} />
         ) : (!currentPage || currentPage === 'village') && (
           <Village onChange={navigate} firstRun={firstRun} onFirstRun={() => setFirstRun(true)}/>
           // <BattleMap onChange={navigate} />

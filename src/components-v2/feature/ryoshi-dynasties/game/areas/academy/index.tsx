@@ -2,91 +2,16 @@ import {
   Heading,
   Grid,
   GridItem,
-  Button,
   Flex,
   Image,
-  Box,
-  VStack,
 } from '@chakra-ui/react';
-import { getProfileTroops, getWeeklyGameId, getReward, getProfileId, getFactionOwned, subscribeFaction, getSeasonGameId } from "@src/core/api/RyoshiDynastiesAPICalls";
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-import {useSelector} from "react-redux";
-import { useState, useEffect } from "react";
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 
-const Academy = ({onBack}) => {
+interface AcademySceneProps {
+  onBack: () => void;
+}
 
-  const user = useSelector((state) => state.user);
-  const [isLoading, getSigner] = useCreateSigner();
-  const {address, theme, profile} = useSelector((state) => state.user);
-
-  const GetGameId = async () => {
-    const res = await getWeeklyGameId();
-    console.log(res)
-  }
-  const GetReward = async () => {
-    const res = await getReward(1);
-    console.log(res)
-  }
-  const GetProfileTroops = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
-      }
-      if (signatureInStorage) {
-        try {
-          const res = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
-          console.log("Total Troops: "+res.data.data[0].troops)
-        } catch (error) {
-          console.log(error)
-        }
-      }
-  }
-  const GetFactions = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
-      }
-      if (signatureInStorage) {
-        try {
-    
-          // const res = await getProfileId(user.address.toLowerCase(), signatureInStorage);
-          // console.log("Profile Id: "+res.data.data[0].profileId)
-          const data = await getFactionOwned(user.address.toLowerCase(), signatureInStorage);
-          console.log(data.data.data)
-
-        } catch (error) {
-          console.log(error)
-        }
-      }
-  }
-  const SubscribeFaction = async (factionId) => {
-    factionId = 4;
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
-      }
-      if (signatureInStorage) {
-        try {
-          const gameID = await getSeasonGameId();
-          const res = await subscribeFaction(
-            user.address.toLowerCase(), 
-            signatureInStorage,
-            gameID,
-            factionId);
-
-          console.log(res)
-
-        } catch (error) {
-          console.log(error)
-        }
-      }
-  }
-
+const Academy = ({onBack}:AcademySceneProps) => {
   return (
     <section className="gl-legacy container">
       <ReturnToVillageButton onBack={onBack} />
@@ -195,14 +120,6 @@ const Academy = ({onBack}) => {
       </GridItem>
 
       </Grid>
-    {/* <VStack spacing={4} align="stretch">
-    <Button onClick={GetGameId}>Get Game ID: </Button>
-    <Button onClick={GetProfileTroops}>Get ProfileTroops: </Button>
-    <Button onClick={GetReward}>Get Reward: 1</Button>
-    <Button onClick={GetFactions}>Get Factions owned</Button>
-    <Button onClick={SubscribeFaction}>Subscribe Faction: </Button>
-    </VStack> */}
-
     </section>
   )
 };
