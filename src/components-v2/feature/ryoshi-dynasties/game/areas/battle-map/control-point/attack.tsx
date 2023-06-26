@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Alert,
   AlertIcon,
@@ -6,7 +6,6 @@ import {
   Box,
   Center,
   Flex,
-  Heading,
   HStack,
   Image,
   NumberDecrementStepper,
@@ -22,12 +21,13 @@ import {
 } from "@chakra-ui/react";
 import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {attack, getBattleRewards, getFactionOwned, getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {attack, getFactionOwned, getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {createSuccessfulTransactionToastContent} from '@src/utils';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {useAppSelector} from "@src/Store/hooks";
-import BattleConclusion from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/battle-conclusion';
+import BattleConclusion
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/battle-conclusion';
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
 
 //contracts
@@ -46,6 +46,9 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import MetaMaskOnboarding from "@metamask/onboarding";
+import {chainConnect, connectAccount} from "@src/GlobalState/User";
+import {useDispatch} from "react-redux";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -58,7 +61,7 @@ interface AttackTabProps {
 }
 
 const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPrice, allFactions}: AttackTabProps) => {
-
+  const dispatch = useDispatch();
   const config = appConfig();
   const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
@@ -114,6 +117,20 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
     // quantity: 0,
     defendersFaction: "" ?? null,
   })
+
+  const handleConnect = async () => {
+    if (!user.address) {
+      if (user.needsOnboard) {
+        const onboarding = new MetaMaskOnboarding();
+        onboarding.startOnboarding();
+      } else if (!user.address) {
+        dispatch(connectAccount());
+      } else if (!user.correctChain) {
+        dispatch(chainConnect());
+      }
+    }
+  }
+
   const onChangeInputsAttacker = (e : any) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     if(e.target.value !== ''){
@@ -459,193 +476,210 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
 
   return (
     <Flex flexDirection='column' textAlign='center' justifyContent='space-around' >
-      {displayConclusion ?
-        <BattleConclusion 
-        attackerTroops={attackerTroops} 
-        defenderTroops={defenderTroops} 
-        battleAttack={battleAttack}
-        displayConclusionCallback={displayConclusionCallback}
-        CheckForKoban={CheckForKoban}
-        attackerImage={attackerImage}
-        defenderImage={defenderImage}
-        attackersFaction={dataForm.attackersFaction}
-        defendersFaction={dataForm.defendersFaction}
-      /> : <> 
-      <div>
+      {!!user.address ? (
+        <>
+          {displayConclusion ? (
+            <BattleConclusion
+              attackerTroops={attackerTroops}
+              defenderTroops={defenderTroops}
+              battleAttack={battleAttack}
+              displayConclusionCallback={displayConclusionCallback}
+              CheckForKoban={CheckForKoban}
+              attackerImage={attackerImage}
+              defenderImage={defenderImage}
+              attackersFaction={dataForm.attackersFaction}
+              defendersFaction={dataForm.defendersFaction}
+            />
+          ) : (
+            <div>
+              <Center>
+                <Flex justifyContent='center' w='90%' >
+                  <Text textAlign='center' fontSize={'14px'}>Faction owners can use deployed troops to attack other factions</Text>
+                </Flex>
+              </Center>
 
-      <Center>
-        <Flex justifyContent='center' w='90%' >
-          <Text textAlign='center' fontSize={'14px'}>Faction owners can use deployed troops to attack other factions</Text>
-        </Flex>
-      </Center>
+              <Spacer m='4' />
 
-      <Spacer m='4' />
+              <Center>
+                <VStack justifyContent='space-between'>
+                  <Select
+                    name='attackersFaction'
+                    backgroundColor='#292626'
+                    w='90%'
+                    value={dataForm.attackersFaction}
+                    onChange={onChangeInputsAttacker}>
+                    <option selected hidden disabled value="">Select Attacker</option>
+                    {attackerOptions}
+                  </Select>
 
-      <Center>
-          <VStack justifyContent='space-between'>
-            <Select 
-              name='attackersFaction'
-              backgroundColor='#292626'
-              w='90%' 
-              value={dataForm.attackersFaction} 
-              onChange={onChangeInputsAttacker}>
-                <option selected hidden disabled value="">Select Attacker</option>
-              {attackerOptions}
-            </Select>
+                  <Select
+                    name='defendersFaction'
+                    backgroundColor='#292626'
+                    w='90%'
+                    value={dataForm.defendersFaction}
+                    onChange={onChangeInputsDefender}>
+                    <option selected hidden disabled value="">Select Defender</option>
+                    {defenderOptions}
+                  </Select>
 
-            <Select 
-              name='defendersFaction'
-              backgroundColor='#292626'
-              w='90%' 
-              value={dataForm.defendersFaction} 
-              onChange={onChangeInputsDefender}>
-                  <option selected hidden disabled value="">Select Defender</option>
-              {defenderOptions}
-            </Select>
+                  {
+                    dataForm.attackersFaction !== ''  ? <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
+                      : <></>
+                  }
 
-            { 
-              dataForm.attackersFaction !== ''  ? <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
-              : <></>
-            }
-            
 
-            <NumberInput 
-              defaultValue={1} 
-              min={1} 
-              max={GetMaxTroops()}
-              name="quantity" 
-              w='80%'
-              onChange={handleChange}
-              value={attackerTroops} 
-              bgColor='#292626'
-              borderRadius='10px'
-              >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper color='#ffffff' />
-                <NumberDecrementStepper color='#ffffff' />
-              </NumberInputStepper>
-            </NumberInput>
-            <Center>
-              <Flex direction='row' justify='center' mb={2}>
-                <RdTabButton
-                  isActive={attackType === 1}
-                  onClick={() => setAttackType(1)}
-                >
-                  Conquest
-                </RdTabButton>
-                <RdTabButton
-                  isActive={attackType === 2}
-                  onClick={() => setAttackType(2)}
-                >
-                  Skirmish
-                </RdTabButton>
+                  <NumberInput
+                    defaultValue={1}
+                    min={1}
+                    max={GetMaxTroops()}
+                    name="quantity"
+                    w='80%'
+                    onChange={handleChange}
+                    value={attackerTroops}
+                    bgColor='#292626'
+                    borderRadius='10px'
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper color='#ffffff' />
+                      <NumberDecrementStepper color='#ffffff' />
+                    </NumberInputStepper>
+                  </NumberInput>
+                  <Center>
+                    <Flex direction='row' justify='center' mb={2}>
+                      <RdTabButton
+                        isActive={attackType === 1}
+                        onClick={() => setAttackType(1)}
+                      >
+                        Conquest
+                      </RdTabButton>
+                      <RdTabButton
+                        isActive={attackType === 2}
+                        onClick={() => setAttackType(2)}
+                      >
+                        Skirmish
+                      </RdTabButton>
+                    </Flex>
+                  </Center>
+                  <Text
+                    as='i'>{GetDescription()}
+                  </Text>
+                </VStack>
+              </Center>
+              <Spacer m='4' />
+
+
+              <Spacer m='4' />
+
+              <Flex direction='row' justify='space-between' justifyContent='center'>
+                <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
+                  <HStack justify='space-between'>
+                    <Box w='45'>
+                      <VStack>
+                        {attackerImage !== '' ?
+                          <Image
+                            boxSize={{base: '50px', sm: '100px'}}
+                            objectFit="cover"
+                            src={ImageService.translate(attackerImage).fixedWidth(100, 100)}
+                          /> : <></>
+                        }
+                        <Text textAlign='left'
+                              fontSize={{base: '16px', sm: '24px'}}
+                        >{dataForm.attackersFaction}</Text>
+                        <Text textAlign='left'
+                              fontSize={{base: '12px', sm: '16px'}}
+                        >Attack Strength: {attackerTroops}</Text>
+                        {/* {isOwnerOfFaction
+            ? <Text textAlign='left' fontSize={'16px'}>Troops Delegated: {factionTroops}</Text> : ""} */}
+                      </VStack>
+                    </Box>
+                    <Box  w='10'>
+                      <Text textAlign='left'
+                            fontSize={{base: '12px', sm: '16px'}}
+                      >VS</Text>
+                    </Box>
+
+                    <Box  w='45'>
+                      <VStack>
+                        {defenderImage !== '' ?
+                          <Image
+                            boxSize={{base: '50px', sm: '100px'}}
+                            objectFit="cover"
+                            src={ImageService.translate(defenderImage).fixedWidth(100, 100)}
+                          /> : <></>
+                        }
+                        <Text textAlign='right'
+                              fontSize={{base: '16px', sm: '24px'}}
+                        >{dataForm.defendersFaction}</Text>
+                        <Text textAlign='right'
+                              fontSize={{base: '12px', sm: '16px'}}
+                        >Troops stationed: {defenderTroops}</Text>
+                      </VStack>
+                    </Box>
+                  </HStack>
+                </Box>
               </Flex>
-            </Center>
-            <Text
-              as='i'>{GetDescription()}
-            </Text>
-          </VStack>
-      </Center>
-      <Spacer m='4' />
+              {/* </Center> */}
 
-     
-      <Spacer m='4' />
+              {/* Alert */}
+              <Flex justify={"center"} align={"center"} >
+                <Box p='1'>
+                  {showAlert && (
+                    <Alert status='error'>
+                      <AlertIcon />
+                      <AlertTitle>{alertMessage}</AlertTitle>
+                    </Alert>)}
+                </Box>
+              </Flex>
+              <Center>
+                <HStack>
+                  <Text fontSize={'14px'}>Costs</Text>
+                  <Text cursor='pointer' fontSize={'14px'} onClick={() => onOpenDailyCheckin()}>{getAttackCost()} $Koban</Text>
+                  <Text fontSize={'14px'}>per troop you attack with ({getAttackCost()*attackerTroops})</Text>
+                </HStack>
+              </Center>
+              <Flex alignContent={'center'} justifyContent={'center'}>
+                <Box
+                  ps='20px'>
+                  <RdButton
+                    minW='200px'
+                    size={{base: 'md', sm: 'lg'}}
+                    stickyIcon={true}
+                    onClick={() => PreBattleChecks()}
+                    isLoading={isExecuting}
+                    disabled={isExecuting}
+                    marginTop='2'
+                    marginBottom='2'
+                    loadingText={executingLabel}
+                  >
+                    {user.address ? 'Attack' : 'Connect'}
+                  </RdButton>
+                </Box>
+              </Flex>
 
-      <Flex direction='row' justify='space-between' justifyContent='center'>
-        <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
-          <HStack justify='space-between'>
-            <Box w='45'>
-              <VStack>
-              {attackerImage !== '' ?
-              <Image
-                  boxSize={{base: '50px', sm: '100px'}}
-                  objectFit="cover"
-                  src={ImageService.translate(attackerImage).fixedWidth(100, 100)}
-                  /> : <></>
-              }
-              <Text textAlign='left' 
-              fontSize={{base: '16px', sm: '24px'}}
-              >{dataForm.attackersFaction}</Text>
-              <Text textAlign='left' 
-              fontSize={{base: '12px', sm: '16px'}}
-              >Attack Strength: {attackerTroops}</Text>
-              {/* {isOwnerOfFaction 
-              ? <Text textAlign='left' fontSize={'16px'}>Troops Delegated: {factionTroops}</Text> : ""} */}
-              </VStack>
-            </Box>
-            <Box  w='10'>
-              <Text textAlign='left' 
-              fontSize={{base: '12px', sm: '16px'}}
-              >VS</Text>
-            </Box>
-
-            <Box  w='45'>
-              <VStack>
-              {defenderImage !== '' ?
-                <Image
-                  boxSize={{base: '50px', sm: '100px'}}
-                  objectFit="cover"
-                  src={ImageService.translate(defenderImage).fixedWidth(100, 100)}
-                  /> : <></>
-              }
-              <Text textAlign='right' 
-              fontSize={{base: '16px', sm: '24px'}}
-              >{dataForm.defendersFaction}</Text>
-              <Text textAlign='right' 
-              fontSize={{base: '12px', sm: '16px'}}
-              >Troops stationed: {defenderTroops}</Text>
-              </VStack>
-            </Box>
-          </HStack>
+              <Center>
+                <Flex justifyContent='space-between' w='90%' >
+                  <Text fontSize={'12px'}>Your $Koban: {koban}</Text>
+                </Flex>
+              </Center>
+            </div>
+          )}
+        </>
+      ) : (
+        <Box textAlign='center' pt={8} pb={4} px={2}>
+          <Box ps='20px'>
+            <RdButton
+              w='250px'
+              fontSize={{base: 'xl', sm: '2xl'}}
+              stickyIcon={true}
+              onClick={handleConnect}
+            >
+              Connect
+            </RdButton>
           </Box>
-        </Flex>
-      {/* </Center> */}
+        </Box>
+      )}
 
-        {/* Alert */}
-        <Flex justify={"center"} align={"center"} >
-          <Box p='1'>
-            {showAlert && (
-            <Alert status='error'>
-              <AlertIcon />
-              <AlertTitle>{alertMessage}</AlertTitle>
-            </Alert>)}
-          </Box>
-        </Flex>
-        <Center>
-        <HStack>
-          <Text fontSize={'14px'}>Costs</Text>
-          <Text cursor='pointer' fontSize={'14px'} onClick={() => onOpenDailyCheckin()}>{getAttackCost()} $Koban</Text>
-          <Text fontSize={'14px'}>per troop you attack with ({getAttackCost()*attackerTroops})</Text>
-        </HStack>
-        </Center>
-        <Flex alignContent={'center'} justifyContent={'center'}>
-        <Box
-              ps='20px'>
-              <RdButton
-                minW='200px'
-                size={{base: 'md', sm: 'lg'}}
-                stickyIcon={true}
-                onClick={() => PreBattleChecks()}
-                isLoading={isExecuting}
-                disabled={isExecuting}
-                marginTop='2'
-                marginBottom='2'
-                loadingText={executingLabel}
-              >
-                {user.address ? 'Attack' : 'Connect'}
-              </RdButton>
-            </Box>
-        </Flex>
-
-        <Center>
-          <Flex justifyContent='space-between' w='90%' >
-            <Text fontSize={'12px'}>Your $Koban: {koban}</Text>
-          </Flex>
-        </Center>
-      </div>
-      </>
-      }
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
     </Flex>
   )
