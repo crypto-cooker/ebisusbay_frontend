@@ -13,7 +13,7 @@ const BattleBay = ({rdConfig}: {rdConfig: RyoshiConfig | null}) => {
         title="Ryoshi Dynasties"
         description="Ryoshi Dynasties - A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards."
         url={`/ryoshi`}
-        image={ImageService.translate('/img/ryoshi-dynasties/banner.png').convert()}
+        image={ImageService.translate('/img/ryoshi-dynasties/banner.webp').convert()}
       />
       <RyoshiDynasties initialRdConfig={rdConfig}/>
     </>
