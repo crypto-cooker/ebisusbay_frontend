@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Alert,
   AlertIcon,
@@ -6,7 +6,6 @@ import {
   Box,
   Center,
   Flex,
-  Heading,
   HStack,
   Image,
   NumberDecrementStepper,
@@ -22,13 +21,14 @@ import {
 } from "@chakra-ui/react";
 import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {attack, getBattleRewards, getFactionOwned, getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {attack, getFactionOwned, getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {createSuccessfulTransactionToastContent} from '@src/utils';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
-import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
 import {useAppSelector} from "@src/Store/hooks";
+import BattleConclusion
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/battle-conclusion';
+import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
 
 //contracts
 import {BigNumber, Contract, ethers} from "ethers";
@@ -46,6 +46,9 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import MetaMaskOnboarding from "@metamask/onboarding";
+import {chainConnect, connectAccount} from "@src/GlobalState/User";
+import {useDispatch} from "react-redux";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -58,20 +61,13 @@ interface AttackTabProps {
 }
 
 const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPrice, allFactions}: AttackTabProps) => {
-
+  const dispatch = useDispatch();
   const config = appConfig();
   const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
   const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-
-  const attackSetUp = useRef<any>();
-  const attackConclusion = useRef<any>();
-  const battleLog = useRef<any>();
-  const battleOutcome = useRef<any>();
-  const battleContext = useRef<any>();
-  const attackerOutcome = useRef<any>();
-  const defenderOutcome = useRef<any>();
-  const battleLogText = useRef<any>();
+  const [displayConclusion, setDisplayConclusion] = useState(false);
+  const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
 
   const [attackerTroops, setAttackerTroops] = useState(0);
   const [attackerTroopsAvailable, setAttackerTroopsAvailable] = useState(1);
@@ -91,7 +87,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   const [playerFaction, setPlayerFaction] = useState<any>();
   const [factionTroops, setFactionTroops] = useState(0);
   const handleChange = (value: any) => setAttackerTroops(value)
-
+  const [attackType, setAttackType] = useState(1);
 
   //alerts
   const [showAlert, setShowAlert] = useState(false)
@@ -103,46 +99,43 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   const [executingLabel, setExecutingLabel] = useState('Attacking...');
   const [battleAttack, setBattleAttack] = useState<any>([]);
 
-  const [attackerFilter, setAttackerFilter] = useState('brightness(1)');
-  const [defenderFilter, setDefenderFilter] = useState('brightness(1)');
-  const [attackerStyle, setAttackerStyle] = useState({});
-  const [defenderStyle, setDefenderStyle] = useState({});
-
   interface attackTypeInterface {
+    id: number;
     name: string;
     maxTroops: number;
     desc: string;
   }
-
   const attackTypeEnum: Array<attackTypeInterface> = [
-    {name:"Conquest", maxTroops:3, desc: "Launch a relentless assault, battling until all troops are eliminated or the opposing faction is defeated"},
-    {name:"Skirmish", maxTroops:Infinity, desc: "Engage in a single attack using the number of troops you wager"}
+    {id:1, name:"Conquest", maxTroops:3, desc: "Launch a relentless assault, battling until all troops are eliminated or the opposing faction is defeated"},
+    {id:2, name:"Skirmish", maxTroops:Infinity, desc: "Engage in a single attack using the number of troops you wager"}
   ];
-
-  const [attackType, setAttackType] = useState(1);
   function getAttackCost(){
     return attackType == 2 ? skirmishPrice : conquestPrice
   }
-
-  const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
-  const { isOpen: isOpenClaimRewards, onOpen: onOpenClaimRewards, onClose: onCloseClaimRewards} = useDisclosure();
-  const [battleRewards, setBattleRewards] = useState([]);
-  const [battleRewardsClaimed, setBattleRewardsClaimed] = useState(false);
-
-  //current attackID
-  // const [attackId, setAttackId] = useState(0);
-  
-  //dataforms for attacker and defender
   const [dataForm, setDataForm] = useState({
     attackersFaction: "" ?? null,
     // quantity: 0,
     defendersFaction: "" ?? null,
   })
+
+  const handleConnect = async () => {
+    if (!user.address) {
+      if (user.needsOnboard) {
+        const onboarding = new MetaMaskOnboarding();
+        onboarding.startOnboarding();
+      } else if (!user.address) {
+        dispatch(connectAccount());
+      } else if (!user.correctChain) {
+        dispatch(chainConnect());
+      }
+    }
+  }
+
   const onChangeInputsAttacker = (e : any) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     if(e.target.value !== ''){
       setAttackerTroopsAvailable(combinedArmies.filter((faction:any)=> faction?.name === e.target.value)[0].troops);
-    } else {
+    } else { 
       setAttackerTroopsAvailable(0);
     }
   }
@@ -154,12 +147,6 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       setDefenderTroops(0);
     }
   }
-  const claimedRewards = () => {
-    setBattleRewardsClaimed(true);
-    onCloseClaimRewards();
-    console.log("claimedRewards")
-  }
-
   const CheckIfAttackerFactionIsOwnedByPlayer = async () => {
       setIsOwnerOfFaction(dataForm.attackersFaction == playerFaction?.name);
   }
@@ -280,88 +267,6 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       }
   }
   }
-  const CheckForBattleRewards = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getBattleRewards(user.address?.toLowerCase(), signatureInStorage);
-        setBattleRewards(data);
-      } catch (error) {
-        console.log(error)
-      }
-  }
-  }
-  function ShowAttackConclusion(){
-    var attackersAlive = Number(attackerTroops);
-    var attackersSlain = 0;
-    var defendersSlain = 0;
-    var outcomeLog = ""
-    const attackerDice = battleAttack[0].diceScores1;
-    const defenderDice = battleAttack[0].diceScores2;
-
-    for(var i = 0; i < attackerDice.length; i++)
-    {
-      if(attackerDice[i] <= defenderDice[i])
-      {
-        attackersAlive--;
-        attackersSlain++;
-        // console.log("attacker dies")
-      }
-      else
-      {
-        defendersSlain++;
-      }
-
-      outcomeLog += "Attacker: " + attackerDice[i] + " Defender: " + defenderDice[i]+"<br>";
-    }
-
-    battleLogText.current.innerHTML = outcomeLog;
-
-    if(attackersSlain < defendersSlain) {
-      battleOutcome.current.textContent = "Victory!";
-      battleContext.current.textContent = "You slew more defenders than you lost";
-      setAttackerFilter('brightness(1)');
-      setDefenderFilter('brightness(0.4)');
-      setAttackerStyle({position: "relative", background: "whitesmoke", display: "flex", justifyContent: "center",
-                        padding: "5px", boxSize: "border-box", boxShadow: "0 20px 50px rgba(255, 255, 255, 0.8)"});
-      setDefenderStyle({boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)"});
-    }
-    else if(attackersSlain > defendersSlain) {
-      battleOutcome.current.textContent = "Defeat!";
-      battleContext.current.textContent = "The defenders slew more of your troops than you slew of theirs";
-      setAttackerFilter('brightness(0.4)');
-      setDefenderFilter('brightness(1');
-      setDefenderStyle({position: "relative", background: "whitesmoke", display: "flex", justifyContent: "center",
-                        padding: "5px", boxSize: "border-box", boxShadow: "0 20px 50px rgba(255, 255, 255, 0.8)"});
-      setAttackerStyle({boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)"});
-    }
-    else if(attackersSlain == defendersSlain) {
-      battleOutcome.current.textContent = "Draw";
-      battleContext.current.textContent = "Neither side was able to gain an advantage over the other";
-      setAttackerFilter('brightness(1)');
-      setDefenderFilter('brightness(1)');
-      setAttackerStyle({});
-      setDefenderStyle({});
-    }
-
-    attackerOutcome.current.textContent = "lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
-    defenderOutcome.current.textContent = "lost "+defendersSlain+"/"+defenderTroops+" troops";
-    
-    //dice removed
-    // setupDice(attackerDice, defenderDice);
-
-
-    attackSetUp.current.style.display = "none"
-    attackConclusion.current.style.display = "block"
-    setIsExecuting(false);
-    CheckForKoban();
-
-    if(defendersSlain>0) CheckForBattleRewards();
-  }
   function PreBattleChecks()
   {
     setShowAlert(false)
@@ -418,12 +323,6 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
 
     RealAttack();
   }
-  function Reset()
-  {
-    refreshControlPoint();
-    attackSetUp.current.style.display = "block"
-    attackConclusion.current.style.display = "none"
-  }
   function getDefenderTroopsInRegion(){
     controlPoint.leaderBoard.forEach(faction => {
       if(faction.name === dataForm.defendersFaction){
@@ -439,27 +338,26 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
         setAttackerImage(faction.image);
       }});
   }
-  function showDetailedResults(){
-    battleLog.current.style.display = battleLog.current.style.display === "block" ? "none" : "block";
-  }
   const CheckForKoban = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const resourceContract = new Contract(config.contracts.resources, Resources, readProvider);
     const tx = await resourceContract.balanceOf(user.address?.toLowerCase(), 1);
     setKoban(Number(ethers.utils.hexValue(BigNumber.from(tx))));
   }
-
   const GetMaxTroops=()=>{
-    const troops = attackTypeEnum.find((attackType: any) => attackType.name === attackType)?.maxTroops;
+    const troops = attackTypeEnum.find((attackTypeEnum: any) => attackTypeEnum.id === attackType)?.maxTroops;
     return troops;
   }
-
   const GetDescription = () => {
-    const desc = attackTypeEnum.find((attackType: any) => attackType.name === attackType)?.desc;
+    const desc = attackTypeEnum.find((attackTypeEnum: any) => attackTypeEnum.id === attackType)?.desc;
     return desc;
   }
   const forceRefresh = () => {
     // console.log("force refresh")
+  }
+  const displayConclusionCallback = () => {
+    setDisplayConclusion(!displayConclusion);
+    console.log("displayConclusion", displayConclusion)
   }
 
   useEffect(() => {
@@ -489,12 +387,8 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
     CheckForKoban();
     GetPlayerOwnedFaction();
     GetPlayerArmies();
-    CheckForBattleRewards();
+    // CheckForBattleRewards();
   }, [])
-
-  // useEffect(() => {
-  //   console.log("Koban changed", koban)
-  // }, [koban])
 
   useEffect(() => {
     if(!rdUser) return;
@@ -536,6 +430,13 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       setFactionsLoaded(true);
     }
   }, [combinedArmies]);
+  
+  useEffect(() => {
+    if (battleAttack.length !== 0) {
+      setIsExecuting(false);
+    return;
+    } 
+  }, [battleAttack]);  
 
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   useEffect(() => {
@@ -558,6 +459,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       console.log('BATTLE_ATTACK', data)
       const parsedAtack = JSON.parse(data);
       // console.log('parsedAtack', parsedAtack)
+      displayConclusionCallback();
       setBattleAttack(parsedAtack);
     }
 
@@ -572,345 +474,213 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
     };
   }, [!!user.address]);
 
-  useEffect(() => {
-    if (battleAttack.length !== 0)
-    {
-      ShowAttackConclusion();
-      setIsExecuting(false);
-      // setBattleAttack([{"id":33,"armyId1":288,"armyId2":289,"diceScores1":[4,4],"diceScores2":[6,4]}])
-      // console.log('battleAttack', battleAttack[0].diceScores1);
-    return;
-    } 
-  }, [battleAttack]);  
-
   return (
     <Flex flexDirection='column' textAlign='center' justifyContent='space-around' >
-      <div ref={attackSetUp}>
+      {!!user.address ? (
+        <>
+          {displayConclusion ? (
+            <BattleConclusion
+              attackerTroops={attackerTroops}
+              defenderTroops={defenderTroops}
+              battleAttack={battleAttack}
+              displayConclusionCallback={displayConclusionCallback}
+              CheckForKoban={CheckForKoban}
+              attackerImage={attackerImage}
+              defenderImage={defenderImage}
+              attackersFaction={dataForm.attackersFaction}
+              defendersFaction={dataForm.defendersFaction}
+            />
+          ) : (
+            <div>
+              <Center>
+                <Flex justifyContent='center' w='90%' >
+                  <Text textAlign='center' fontSize={'14px'}>Faction owners can use deployed troops to attack other factions</Text>
+                </Flex>
+              </Center>
 
-      <Center>
-        <Flex justifyContent='center' w='90%' >
-          <Text textAlign='center' fontSize={'14px'}>Faction owners can use deployed troops to attack other factions</Text>
-        </Flex>
-      </Center>
+              <Spacer m='4' />
 
-      <Spacer m='4' />
+              <Center>
+                <VStack justifyContent='space-between'>
+                  <Select
+                    name='attackersFaction'
+                    backgroundColor='#292626'
+                    w='90%'
+                    value={dataForm.attackersFaction}
+                    onChange={onChangeInputsAttacker}>
+                    <option selected hidden disabled value="">Select Attacker</option>
+                    {attackerOptions}
+                  </Select>
 
-      <Center>
-          <VStack justifyContent='space-between'>
-            <Select 
-              name='attackersFaction'
-              backgroundColor='#292626'
-              w='90%' 
-              value={dataForm.attackersFaction} 
-              onChange={onChangeInputsAttacker}>
-                <option selected hidden disabled value="">Select Attacker</option>
-              {attackerOptions}
-            </Select>
+                  <Select
+                    name='defendersFaction'
+                    backgroundColor='#292626'
+                    w='90%'
+                    value={dataForm.defendersFaction}
+                    onChange={onChangeInputsDefender}>
+                    <option selected hidden disabled value="">Select Defender</option>
+                    {defenderOptions}
+                  </Select>
 
-            <Select 
-              name='defendersFaction'
-              backgroundColor='#292626'
-              w='90%' 
-              value={dataForm.defendersFaction} 
-              onChange={onChangeInputsDefender}>
-                  <option selected hidden disabled value="">Select Defender</option>
-              {defenderOptions}
-            </Select>
+                  {
+                    dataForm.attackersFaction !== ''  ? <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
+                      : <></>
+                  }
 
-            { 
-              dataForm.attackersFaction !== ''  ? <Text textAlign='left' fontSize={'16px'}>Troops You Deployed: {attackerTroopsAvailable}</Text>
-              : <></>
-            }
-            
 
-            <NumberInput 
-              defaultValue={1} 
-              min={1} 
-              max={GetMaxTroops()}
-              name="quantity" 
-              w='80%'
-              onChange={handleChange}
-              value={attackerTroops} 
-              bgColor='#292626'
-              borderRadius='10px'
-              >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper color='#ffffff' />
-                <NumberDecrementStepper color='#ffffff' />
-              </NumberInputStepper>
-            </NumberInput>
-            <Center>
-              <Flex direction='row' justify='center' mb={2}>
-                <RdTabButton
-                  isActive={attackType === 1}
-                  onClick={() => setAttackType(1)}
-                >
-                  Conquest
-                </RdTabButton>
-                <RdTabButton
-                  isActive={attackType === 2}
-                  onClick={() => setAttackType(2)}
-                >
-                  Skirmish
-                </RdTabButton>
+                  <NumberInput
+                    defaultValue={1}
+                    min={1}
+                    max={GetMaxTroops()}
+                    name="quantity"
+                    w='80%'
+                    onChange={handleChange}
+                    value={attackerTroops}
+                    bgColor='#292626'
+                    borderRadius='10px'
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper color='#ffffff' />
+                      <NumberDecrementStepper color='#ffffff' />
+                    </NumberInputStepper>
+                  </NumberInput>
+                  <Center>
+                    <Flex direction='row' justify='center' mb={2}>
+                      <RdTabButton
+                        isActive={attackType === 1}
+                        onClick={() => setAttackType(1)}
+                      >
+                        Conquest
+                      </RdTabButton>
+                      <RdTabButton
+                        isActive={attackType === 2}
+                        onClick={() => setAttackType(2)}
+                      >
+                        Skirmish
+                      </RdTabButton>
+                    </Flex>
+                  </Center>
+                  <Text
+                    as='i'>{GetDescription()}
+                  </Text>
+                </VStack>
+              </Center>
+              <Spacer m='4' />
+
+
+              <Spacer m='4' />
+
+              <Flex direction='row' justify='space-between' justifyContent='center'>
+                <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
+                  <HStack justify='space-between'>
+                    <Box w='45'>
+                      <VStack>
+                        {attackerImage !== '' ?
+                          <Image
+                            boxSize={{base: '50px', sm: '100px'}}
+                            objectFit="cover"
+                            src={ImageService.translate(attackerImage).fixedWidth(100, 100)}
+                          /> : <></>
+                        }
+                        <Text textAlign='left'
+                              fontSize={{base: '16px', sm: '24px'}}
+                        >{dataForm.attackersFaction}</Text>
+                        <Text textAlign='left'
+                              fontSize={{base: '12px', sm: '16px'}}
+                        >Attack Strength: {attackerTroops}</Text>
+                        {/* {isOwnerOfFaction
+            ? <Text textAlign='left' fontSize={'16px'}>Troops Delegated: {factionTroops}</Text> : ""} */}
+                      </VStack>
+                    </Box>
+                    <Box  w='10'>
+                      <Text textAlign='left'
+                            fontSize={{base: '12px', sm: '16px'}}
+                      >VS</Text>
+                    </Box>
+
+                    <Box  w='45'>
+                      <VStack>
+                        {defenderImage !== '' ?
+                          <Image
+                            boxSize={{base: '50px', sm: '100px'}}
+                            objectFit="cover"
+                            src={ImageService.translate(defenderImage).fixedWidth(100, 100)}
+                          /> : <></>
+                        }
+                        <Text textAlign='right'
+                              fontSize={{base: '16px', sm: '24px'}}
+                        >{dataForm.defendersFaction}</Text>
+                        <Text textAlign='right'
+                              fontSize={{base: '12px', sm: '16px'}}
+                        >Troops stationed: {defenderTroops}</Text>
+                      </VStack>
+                    </Box>
+                  </HStack>
+                </Box>
               </Flex>
-            </Center>
-            <Text
-              as='i'>{GetDescription()}
-            </Text>
-          </VStack>
-      </Center>
-      <Spacer m='4' />
+              {/* </Center> */}
 
-     
-      <Spacer m='4' />
+              {/* Alert */}
+              <Flex justify={"center"} align={"center"} >
+                <Box p='1'>
+                  {showAlert && (
+                    <Alert status='error'>
+                      <AlertIcon />
+                      <AlertTitle>{alertMessage}</AlertTitle>
+                    </Alert>)}
+                </Box>
+              </Flex>
+              <Center>
+                <HStack>
+                  <Text fontSize={'14px'}>Costs</Text>
+                  <Text cursor='pointer' fontSize={'14px'} onClick={() => onOpenDailyCheckin()}>{getAttackCost()} $Koban</Text>
+                  <Text fontSize={'14px'}>per troop you attack with ({getAttackCost()*attackerTroops})</Text>
+                </HStack>
+              </Center>
+              <Flex alignContent={'center'} justifyContent={'center'}>
+                <Box
+                  ps='20px'>
+                  <RdButton
+                    minW='200px'
+                    size={{base: 'md', sm: 'lg'}}
+                    stickyIcon={true}
+                    onClick={() => PreBattleChecks()}
+                    isLoading={isExecuting}
+                    disabled={isExecuting}
+                    marginTop='2'
+                    marginBottom='2'
+                    loadingText={executingLabel}
+                  >
+                    {user.address ? 'Attack' : 'Connect'}
+                  </RdButton>
+                </Box>
+              </Flex>
 
-      {/* VS */}
-      {/* <Center> */}
-      <Flex direction='row' justify='space-between' justifyContent='center'>
-        <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
-          <HStack justify='space-between'>
-            <Box w='45'>
-              <VStack>
-              {attackerImage !== '' ?
-              <div style={attackerStyle}>
-              <Image
-                  boxSize={{base: '50px', sm: '100px'}}
-                  objectFit="cover"
-                  src={ImageService.translate(attackerImage).fixedWidth(100, 100)}
-                  /> </div>: <></>
-              }
-              <Text textAlign='left' 
-              fontSize={{base: '16px', sm: '24px'}}
-              >{dataForm.attackersFaction}</Text>
-              <Text textAlign='left' 
-              fontSize={{base: '12px', sm: '16px'}}
-              >Attack Strength: {attackerTroops}</Text>
-              {/* {isOwnerOfFaction 
-              ? <Text textAlign='left' fontSize={'16px'}>Troops Delegated: {factionTroops}</Text> : ""} */}
-              </VStack>
-            </Box>
-            <Box  w='10'>
-              <Text textAlign='left' 
-              fontSize={{base: '12px', sm: '16px'}}
-              >VS</Text>
-            </Box>
-
-            <Box  w='45'>
-              <VStack>
-              {defenderImage !== '' ?
-                <Image
-                  boxSize={{base: '50px', sm: '100px'}}
-                  objectFit="cover"
-                  src={ImageService.translate(defenderImage).fixedWidth(100, 100)}
-                  /> : <></>
-              }
-              <Text textAlign='right' 
-              fontSize={{base: '16px', sm: '24px'}}
-              >{dataForm.defendersFaction}</Text>
-              <Text textAlign='right' 
-              fontSize={{base: '12px', sm: '16px'}}
-              >Troops stationed: {defenderTroops}</Text>
-              </VStack>
-            </Box>
-          </HStack>
+              <Center>
+                <Flex justifyContent='space-between' w='90%' >
+                  <Text fontSize={'12px'}>Your $Koban: {koban}</Text>
+                </Flex>
+              </Center>
+            </div>
+          )}
+        </>
+      ) : (
+        <Box textAlign='center' pt={8} pb={4} px={2}>
+          <Box ps='20px'>
+            <RdButton
+              w='250px'
+              fontSize={{base: 'xl', sm: '2xl'}}
+              stickyIcon={true}
+              onClick={handleConnect}
+            >
+              Connect
+            </RdButton>
           </Box>
-        </Flex>
-      {/* </Center> */}
+        </Box>
+      )}
 
-        {/* Alert */}
-        <Flex justify={"center"} align={"center"} >
-          <Box p='1'>
-            {showAlert && (
-            <Alert status='error'>
-              <AlertIcon />
-              <AlertTitle>{alertMessage}</AlertTitle>
-            </Alert>)}
-          </Box>
-        </Flex>
-        <Center>
-        <HStack>
-          <Text fontSize={'14px'}>Costs</Text>
-          <Text cursor='pointer' fontSize={'14px'} onClick={() => onOpenDailyCheckin()}>{getAttackCost()} $Koban</Text>
-          <Text fontSize={'14px'}>per troop you attack with ({getAttackCost()*attackerTroops})</Text>
-        </HStack>
-        </Center>
-        <Flex alignContent={'center'} justifyContent={'center'}>
-        <Box
-              ps='20px'>
-              <RdButton
-                minW='200px'
-                size={{base: 'md', sm: 'lg'}}
-                stickyIcon={true}
-                onClick={() => PreBattleChecks()}
-                isLoading={isExecuting}
-                disabled={isExecuting}
-                marginTop='2'
-                marginBottom='2'
-                loadingText={executingLabel}
-              >
-                {user.address ? 'Attack' : 'Connect'}
-              </RdButton>
-            </Box>
-        </Flex>
-
-        <Center>
-          <Flex justifyContent='space-between' w='90%' >
-            <Text fontSize={'12px'}>Your $Koban: {koban}</Text>
-          </Flex>
-        </Center>
-      </div>
-
-      {/* <Attack */}
-
-      <div ref={attackConclusion} style={{ display: 'none'}}>
-        <div>
-          <VStack spacing='2'>
-            <Text 
-              fontSize={{base: '28px', sm: '28px'}}
-              className={gothamBook.className}
-              ref={battleOutcome}
-              as='b'
-              >Victory!</Text>
-            <Text 
-              fontSize={{base: '14px', sm: '14px'}}
-              className={gothamBook.className}
-              ref={battleContext} 
-              as='i'
-              >The defenders slew more of your troops than you slew of theirs</Text>
-          </VStack>
-          {/* <Grid
-            templateAreas={`"att def"`}
-            gridTemplateColumns={'1fr 1fr'}
-            h='200px'
-            gap='1'
-            color='blackAlpha.700'
-            fontWeight='bold'
-          > */}
-        {/* <GridItem pl='2'  area={'att'}>
-          <VStack spacing='-180px'>{att}</VStack>
-        </GridItem>
-        <GridItem pl='2'  area={'def'}>
-        <VStack spacing='-180px'>{def}</VStack>
-        </GridItem> */}
-      {/* </Grid> */}
-
-      <Flex direction='row' justify='space-between' justifyContent='center'>
-        <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
-          <HStack justify='space-between'>
-            <Box w='45'>
-              <VStack>
-              {attackerImage !== '' ?
-               <div style={attackerStyle}>
-                <Image
-                  boxSize={{base: '50px', sm: '100px'}}
-                  objectFit="cover"
-                  src={ImageService.translate(attackerImage).fixedWidth(100, 100)}
-                  filter={attackerFilter}
-                  /> 
-                  </div>: <></>
-              }
-              <Text textAlign='left' 
-              fontSize={{base: '16px', sm: '24px'}}
-              >{dataForm.attackersFaction}</Text>
-              </VStack>
-            </Box>
-            <Box  w='10'>
-              <Text textAlign='left' 
-              fontSize={{base: '12px', sm: '16px'}}
-              >VS</Text>
-            </Box>
-
-            <Box  w='45'>
-              <VStack>
-              {defenderImage !== '' ?
-              <div style={defenderStyle}>
-                <Image
-                  boxSize={{base: '50px', sm: '100px'}}
-                  objectFit="cover"
-                  src={ImageService.translate(defenderImage).fixedWidth(100, 100)}
-                  filter={defenderFilter}
-                  /> </div>: <></>
-              }
-              <Text textAlign='right' 
-              fontSize={{base: '16px', sm: '24px'}}
-              >{dataForm.defendersFaction}</Text>
-              </VStack>
-            </Box>
-          </HStack>
-          </Box>
-        </Flex>
-
-          <Flex direction='row' justify='space-between' justifyContent='center'>
-            <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
-            <Center>
-              <HStack w='90%' justify='space-between'>
-                <Text style={{textAlign:'left'}}>Attackers {dataForm.attackersFaction}</Text>
-                <Text style={{textAlign:'left'}}>Defenders {dataForm.defendersFaction}</Text>
-              </HStack>
-            </Center>
-            <Center>
-              <HStack w='90%' justify='space-between'>
-                <Text ref={attackerOutcome}>This is the attacker outcome</Text>
-                <Text ref={defenderOutcome}> This is the defender outcome</Text>
-              </HStack>
-            </Center>
-
-            </Box>
-          </Flex>
-          </div>
-
-          <Center>
-            <HStack w='90%' justify='space-between'>
-              <RdButton
-                onClick={Reset}
-                w='200px'
-                fontSize={{base: 'sm', sm: 'md'}}
-                hoverIcon={false}
-                isLoading={isExecuting}
-                disabled={isExecuting}
-                marginTop='2'
-                marginBottom='2'>
-                Attack Again
-              </RdButton>
-              <RdButton 
-                onClick={showDetailedResults}
-                w='250px'
-                fontSize={{base: 'sm', sm: 'md'}}
-                hoverIcon={false}
-                isLoading={isExecuting}
-                disabled={isExecuting}
-                marginTop='2'
-                marginBottom='2'>
-                Detailed Results
-              </RdButton>
-              {!battleRewards || battleRewards.length ===0 ||battleRewardsClaimed ? (<></>) : (
-              <RdButton 
-                onClick={() => onOpenClaimRewards()}
-                fontSize={{base: 'sm', sm: 'md'}}
-                >Claim Rewards</RdButton>
-            )}
-            </HStack>
-          </Center>
-          
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
-      <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards}/>
-
-        <Spacer m='4' />
-
-        <div ref={battleLog} style={{display: 'none', overflowY:'scroll', height:'300px'}}>
-          <Flex direction='row' justify='space-between' justifyContent='center'>
-            <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
-              <form  >
-                <Heading id="">Results:</Heading>
-                <p ref={battleLogText}></p>
-              </form>
-            </Box>
-          </Flex>
-        </div>
-
-      </div>
     </Flex>
   )
 }

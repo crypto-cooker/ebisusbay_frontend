@@ -1,7 +1,5 @@
 import React, {ReactElement, useEffect, useRef, useState, useContext } from 'react';
 import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex, Image } from '@chakra-ui/react'
-// import { resizeBattleMap, setUpMapZooming } from '@src/Components/BattleBay/Areas/mapFunctions.js'
-// import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
@@ -21,6 +19,10 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {
+  RyoshiDynastiesPreloaderContext,
+  RyoshiDynastiesPreloaderProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/preloader-context";
 import localFont from "next/font/local";
 
 const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Black.woff2' })
@@ -30,6 +32,7 @@ interface BattleMapProps {
 }
 
 const BattleMap = ({onChange}: BattleMapProps) => {
+  const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
 
   const user = useAppSelector(state => state.user);
   const config = appConfig();
@@ -393,7 +396,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
                 <Box
                   as='img'
                   //  src={'/img/battle-bay/imgs/world_map_background.jpg'}
-                   src={ImageService.translate('/img/ryoshi-dynasties/battle/world-map-background.jpg').custom({width: 2880, height: 2021})}
+                   src={getPreloadedImage(ImageService.translate('/img/ryoshi-dynasties/battle/world-map-background.jpg').custom({width: 2880, height: 2021}))}
                    maxW='none'
                    useMap="#imageMap" 
                    className={`${styles0.mapImageArea}`} 

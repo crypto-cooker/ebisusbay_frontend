@@ -1,44 +1,44 @@
-import { 
-  Box, 
-  Flex, 
-  FormControl, 
-  FormLabel, 
-  Input, 
-  Select,
-  NumberInput, 
-  NumberInputField,
-  NumberInputStepper, 
-  NumberIncrementStepper, 
-  NumberDecrementStepper, 
-  Radio, RadioGroup,
-  VStack,
-  HStack,
+import {
+  Box,
   Center,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  HStack,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Select,
   Spacer,
-  Text,
-  Button,
-  FormErrorMessage
- } from "@chakra-ui/react";
+  Text
+} from "@chakra-ui/react";
 
-import {useState, useEffect, useContext, ChangeEvent, ReactElement, use} from "react";
-import { getAuthSignerInStorage } from '@src/helpers/storage';
+import React, {ChangeEvent, ReactElement, useContext, useEffect, useState} from "react";
+import {getAuthSignerInStorage} from '@src/helpers/storage';
 import {useAppSelector} from "@src/Store/hooks";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import {
-  getTroopsOnControlPoint,
+  deployTroops,
   getFactionOwned,
-  deployTroops, 
-  recallTroops, 
+  getTroopsOnControlPoint,
+  recallTroops,
 } from "@src/core/api/RyoshiDynastiesAPICalls";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {RdControlPoint, RdControlPointLeaderBoard, RdFaction} from "@src/core/services/api-service/types";
+import {RdControlPoint, RdFaction} from "@src/core/services/api-service/types";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {parseErrorMessage} from "@src/helpers/validator";
+import MetaMaskOnboarding from "@metamask/onboarding";
+import {chainConnect, connectAccount} from "@src/GlobalState/User";
+import {useDispatch} from "react-redux";
+
 const tabs = {
   recall: 'recall',
   deploy: 'deploy',
@@ -50,6 +50,7 @@ interface DeployTabProps {
 }
 
 const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabProps) => {
+  const dispatch = useDispatch();
 
   const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
@@ -75,6 +76,19 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
 
   const [troopsAvailable, setTroopsAvailable] = useState(0);
   const[troopsDeployed, setTroopsDeployed] = useState(0);
+
+  const handleConnect = async () => {
+    if (!user.address) {
+      if (user.needsOnboard) {
+        const onboarding = new MetaMaskOnboarding();
+        onboarding.startOnboarding();
+      } else if (!user.address) {
+        dispatch(connectAccount());
+      } else if (!user.correctChain) {
+        dispatch(chainConnect());
+      }
+    }
+  }
 
   const onChangeInputsFaction = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedFaction(e.target.value)
@@ -261,135 +275,127 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
     return 0;
   }
 
-  const ShowAvailableFactions = async () => {
-    if(hasFaction) {
-      setFactionOption(
-        <option style={{ background: '#272523' }}
-        value={playerFaction!.name} key={0}>{playerFaction!.name}</option>
-      )
-    }
-    else {
-      setFactionOption(allFactions.map((faction, index) => (
-        <option style={{ background: '#272523' }}
-        value={faction.name} key={index}>{faction.name}</option>
-      )))
-    }
-  }
-
-  // useEffect(() => {
-  //   if(controlPoint.leaderBoard !== undefined) {
-  //     setAllFactions(controlPoint.leaderBoard);
-  //   }
-  // }, [controlPoint])
-
-  useEffect(() => {
-    ShowAvailableFactions();
-  }, [allFactions, playerFaction])
-
   useEffect(() => {
     GetTroopsOnPoint();
   }, [selectedFaction])
 
   useEffect(() => {
     GetPlayerTroops();
-  }, [])
-
-  useEffect(() => {
-    setSelectedQuantity(0);
-  }, [currentTab])
+  }, [user.address])
 
   return (
     <Flex flexDirection='column' textAlign='center'justifyContent='space-around'>
+      {!!user.address ? (
+        <Flex direction='row' justify='space-between' justifyContent='center'>
+          <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
 
-      <Flex direction='row' justify='space-between' justifyContent='center'>
-        <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
+            <Center>
+              <Flex direction='row' justify='center' mb={2}>
+                <RdTabButton
+                  isActive={currentTab === tabs.deploy}
+                  onClick={() => setCurrentTab(tabs.deploy)}
+                > Deploy
+                </RdTabButton>
+                <RdTabButton
+                  isActive={currentTab === tabs.recall}
+                  onClick={() => setCurrentTab(tabs.recall)}
+                > Recall
+                </RdTabButton>
+              </Flex>
+            </Center>
 
+            <FormControl
+              isInvalid={!!factionError}
+              mb={'24px'}
+              bg='none'>
+              <FormLabel>Faction:</FormLabel>
+              <Select me={2}
+                      bg='none'
+                // placeholder='Please select a faction'
+                      style={{ background: '#272523' }}
+                      value={selectedFaction}
+                      name="faction"
+                      onChange={onChangeInputsFaction}
+              >
+                <option selected hidden disabled value="">Please select a faction</option>
+                {hasFaction ? (
+                  <option style={{ background: '#272523' }} value={playerFaction!.name} key={0}>
+                    {playerFaction!.name}
+                  </option>
+                ) : allFactions.map((faction, index) => (
+                  <option style={{ background: '#272523' }} value={faction.name} key={index}>
+                    {faction.name}
+                  </option>
+                ))}
+              </Select>
+              <FormErrorMessage>{factionError}</FormErrorMessage>
+            </FormControl>
 
-        <Center>
-        <Flex direction='row' justify='center' mb={2}>
-          <RdTabButton
-            isActive={currentTab === tabs.deploy}
-            onClick={() => setCurrentTab(tabs.deploy)}
-          > Deploy
-          </RdTabButton>
-          <RdTabButton
-            isActive={currentTab === tabs.recall}
-            onClick={() => setCurrentTab(tabs.recall)}
-          > Recall
-          </RdTabButton>
+            <FormControl isInvalid={!!troopsError}>
+              <FormLabel>
+                <HStack justifyContent='space-between'>
+                  <Text>Troops To {currentTab === tabs.recall ? "Recall" : "Deploy"}:</Text>
+                  {currentTab === tabs.deploy && (
+                    <Box>
+                      <HStack justifyContent='space-between'>
+                        <Text fontSize={14} color='#aaa' align='right'> Troops Available: </Text>
+                        <Text fontWeight='bold'>{troopsAvailable}</Text>
+                      </HStack>
+                    </Box>
+                  )}
+                  {currentTab === tabs.recall &&  (
+                    <Box>
+                      <HStack justifyContent='space-between'>
+                        <Text fontSize={14} color='#aaa' align='right'> Troops Deployed: </Text>
+                        <Text fontWeight='bold'>{troopsDeployed}</Text>
+                      </HStack>
+                    </Box>
+                  )}
+                </HStack>
+
+              </FormLabel>
+              <NumberInput defaultValue={1} min={1} max={GetMaxTroops()} name="quantity"
+                           onChange={handleQuantityChange}
+                           value={selectedQuantity}
+              >
+                <NumberInputField />
+                <NumberInputStepper >
+                  <NumberIncrementStepper color='#ffffff'/>
+                  <NumberDecrementStepper color='#ffffff'/>
+                </NumberInputStepper>
+              </NumberInput>
+              <FormErrorMessage>{troopsError}</FormErrorMessage>
+            </FormControl>
+
+            <Spacer h='8'/>
+
+            <Center>
+              <RdButton
+                w='250px'
+                fontSize={{base: 'lg', sm: 'lg'}}
+                onClick={DeployOrRecallTroops}
+                disabled={isExecuting}
+              >
+                {currentTab === tabs.deploy ? "Deploy" :"Recall" }
+              </RdButton>
+            </Center>
+
+          </Box>
         </Flex>
-      </Center>
-
-
-      <FormControl
-        isInvalid={!!factionError} 
-        mb={'24px'}
-        bg='none'>
-        <FormLabel>Faction:</FormLabel>
-        <Select me={2} 
-          bg='none'
-          // placeholder='Please select a faction'
-          style={{ background: '#272523' }}
-          value={selectedFaction} 
-          name="faction" 
-          onChange={onChangeInputsFaction}>
-            <option selected hidden disabled value="">Please select a faction</option>
-          {factionOption}
-        </Select>
-        <FormErrorMessage>{factionError}</FormErrorMessage>
-      </FormControl>
-
-      <FormControl isInvalid={!!troopsError}>
-        <FormLabel>
-        <HStack justifyContent='space-between'>
-        <Text>Troops To {currentTab === tabs.recall ? "Recall" : "Deploy"}:</Text>
-            {currentTab === tabs.deploy && (
-                <Box>
-                <HStack justifyContent='space-between'>
-                  <Text fontSize={14} color='#aaa' align='right'> Troops Available: </Text> 
-                  <Text fontWeight='bold'>{troopsAvailable}</Text>
-                </HStack>
-              </Box>
-                )}
-            {currentTab === tabs.recall &&  (
-              <Box>
-                <HStack justifyContent='space-between'>
-                  <Text fontSize={14} color='#aaa' align='right'> Troops Deployed: </Text> 
-                  <Text fontWeight='bold'>{troopsDeployed}</Text>
-                </HStack>
-              </Box>
-              )}
-            </HStack>
-          
-        </FormLabel>
-        <NumberInput defaultValue={1} min={1} max={GetMaxTroops()} name="quantity" 
-          onChange={handleQuantityChange}
-          value={selectedQuantity}
-        >
-          <NumberInputField />
-          <NumberInputStepper >
-            <NumberIncrementStepper color='#ffffff'/>
-            <NumberDecrementStepper color='#ffffff'/>
-          </NumberInputStepper>
-        </NumberInput>
-      <FormErrorMessage>{troopsError}</FormErrorMessage>
-      </FormControl>
-      
-      <Spacer h='8'/>
-
-      <Center>
-        <RdButton
-          w='250px'
-          fontSize={{base: 'lg', sm: 'lg'}}
-          onClick={DeployOrRecallTroops}
-          disabled={isExecuting}
-        >
-          {currentTab === tabs.deploy ? "Deploy" :"Recall" }
-        </RdButton>
-      </Center>
-
-      </Box>
-    </Flex>
+      ) : (
+        <Box textAlign='center' pt={8} pb={4} px={2}>
+          <Box ps='20px'>
+            <RdButton
+              w='250px'
+              fontSize={{base: 'xl', sm: '2xl'}}
+              stickyIcon={true}
+              onClick={handleConnect}
+            >
+              Connect
+            </RdButton>
+          </Box>
+        </Box>
+      )}
     </Flex>
   )
 }
