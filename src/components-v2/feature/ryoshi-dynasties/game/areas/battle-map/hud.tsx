@@ -169,83 +169,81 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
            */}
 
       <Box mb={4} mt={6} mr={2}
- justifyContent='right'
+        justifyContent='right'
         bg={user.theme === 'dark' ? '#272523EE' : '#272523EE'}
-        rounded='md' w={{base: '200px', sm: '200px'}}>
-
-
-      {/* <Accordion defaultIndex={[0]} allowToggle paddingRight={0} justifyContent='right' */}
-      <Accordion defaultIndex={[0]} allowToggle paddingRight={0} justifyContent='right'
-      >
-            <AccordionItem border='none'>
-              <AccordionButton pointerEvents='auto'>
-                {!isLoading ? (
+        rounded='md' 
+        w={{base: '200px', sm: '200px'}}
+        >
+      <Accordion defaultIndex={[0]} allowToggle paddingRight={0} justifyContent='right'>
+        <AccordionItem border='none'>
+          <AccordionButton pointerEvents='auto'>
+            {!isLoading ? (
+              <>
+                {!!user.address ? (
                   <>
-                    {!!user.address ? (
-                      <>
-                      <Flex justify="right" align="right">
-                      <HStack justifyContent='right' marginTop='0'>
-                        <Text fontSize='xs' color="#aaa" zIndex='9'>Game End:</Text>
-                        <Text fontWeight='bold' zIndex='9'> {timer}</Text>
-                        <AccordionIcon 
-                          color='#ffffff'/>
-                      </HStack>
-                      </Flex>
-                      </>
-                    ) : (
-                      <Text align='center'>Connect wallet for stats</Text>
-                    )}
-                    {/* <Spacer /> */}
-                    
+                  <Flex justify="right" align="right">
+                  <HStack justifyContent='right' marginTop='0'>
+                    <Text fontSize='xs' color="#aaa" zIndex='9'>Game End:</Text>
+                    <Text fontWeight='bold' zIndex='9'> {timer}</Text>
+                    <AccordionIcon 
+                      color='#ffffff'/>
+                  </HStack>
+                  </Flex>
                   </>
+                ) : (
+                  <Text align='center'>Connect wallet for stats</Text>
+                )}
+                {/* <Spacer /> */}
+                
+              </>
+            ) : (
+              <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>
+            )}
+          </AccordionButton>
+        
+          <AccordionPanel pb={4} alignItems={'right'}>
+
+          <Center>
+            <Tag  variant='outline'>
+              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()}
+                      alt="troopsIcon" boxSize={4}/>
+              <Box ms={1}>
+              {!isLoading ? (<>
+                {koban}
+              </>
                 ) : (
                   <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>
                 )}
-              </AccordionButton>
-            
-              <AccordionPanel pb={4} alignItems={'right'}>
-
-              <Center>
-                <Tag  variant='outline'>
-                  <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()}
-                          alt="troopsIcon" boxSize={4}/>
-                  <Box ms={1}>
-                  {!isLoading ? (<>
-                    {koban}
-                  </>
-                    ) : (
-                      <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>
-                    )}
-                  </Box>
-                </Tag>
-              </Center>
-              <Flex justify="right" align="right">
-              <SimpleGrid columns={2} my={4} px={1}>
-                <Box color="#aaa">Available:</Box>
-                <Flex textAlign='end' fontWeight='bold' alignContent='space-between'>
-                  <HStack textAlign='end'>
-                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
-                    <Text>{availableTroops}</Text>
-                  </HStack>
-                  </Flex>
-                <Box color="#aaa">Total:</Box>
-                <Box textAlign='end' fontWeight='bold'>
-                  <HStack textAlign='end'>
-                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
-                    <Text>{totalTroops}</Text>
-                  </HStack>
-                  </Box>
-              </SimpleGrid>
+              </Box>
+            </Tag>
+          </Center>
+          <Flex justify="right" align="right">
+          <SimpleGrid columns={2} my={4} px={1}>
+            <Box color="#aaa">Available:</Box>
+            <Flex textAlign='end' fontWeight='bold' alignContent='space-between'>
+              <HStack textAlign='end'>
+                <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
+                <Text>{availableTroops}</Text>
+              </HStack>
               </Flex>
+            <Box color="#aaa">Total:</Box>
+            <Box textAlign='end' fontWeight='bold'>
+              <HStack textAlign='end'>
+                <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
+                <Text>{totalTroops}</Text>
+              </HStack>
+              </Box>
+          </SimpleGrid>
+          </Flex>
 
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
           
         {troopTimer !== '' && (
             <Box mt={-3} bg='#cc2828' p={2} roundedBottom='md' 
               
-               w={{base: '182px', sm: '182px'}}
+               w={{base: '200px', sm: '200px'}}
                h={{base: '35px', sm: '35px'}}
                >
                 <HStack justifyContent='space-between'>
