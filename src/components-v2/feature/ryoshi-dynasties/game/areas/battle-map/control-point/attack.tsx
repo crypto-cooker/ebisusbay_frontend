@@ -97,13 +97,14 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   const [battleAttack, setBattleAttack] = useState<any>([]);
 
   interface attackTypeInterface {
+    id: number;
     name: string;
     maxTroops: number;
     desc: string;
   }
   const attackTypeEnum: Array<attackTypeInterface> = [
-    {name:"Conquest", maxTroops:3, desc: "Launch a relentless assault, battling until all troops are eliminated or the opposing faction is defeated"},
-    {name:"Skirmish", maxTroops:Infinity, desc: "Engage in a single attack using the number of troops you wager"}
+    {id:1, name:"Conquest", maxTroops:3, desc: "Launch a relentless assault, battling until all troops are eliminated or the opposing faction is defeated"},
+    {id:2, name:"Skirmish", maxTroops:Infinity, desc: "Engage in a single attack using the number of troops you wager"}
   ];
   function getAttackCost(){
     return attackType == 2 ? skirmishPrice : conquestPrice
@@ -327,11 +328,11 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
     setKoban(Number(ethers.utils.hexValue(BigNumber.from(tx))));
   }
   const GetMaxTroops=()=>{
-    const troops = attackTypeEnum.find((attackType: any) => attackType.name === attackType)?.maxTroops;
+    const troops = attackTypeEnum.find((attackTypeEnum: any) => attackTypeEnum.id === attackType)?.maxTroops;
     return troops;
   }
   const GetDescription = () => {
-    const desc = attackTypeEnum.find((attackType: any) => attackType.name === attackType)?.desc;
+    const desc = attackTypeEnum.find((attackTypeEnum: any) => attackTypeEnum.id === attackType)?.desc;
     return desc;
   }
   const forceRefresh = () => {
