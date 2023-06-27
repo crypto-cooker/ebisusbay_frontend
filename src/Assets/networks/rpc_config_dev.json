@@ -28289,52 +28289,6 @@
           "Project completes 2 NFT raffles, or more, totalling at least 2000 CRO, whichever comes later"
         ]
       }
-    },
-    {
-      "id": 174,
-      "slug": "ballies-cheerleaders",
-      "title": "Ballies Cheerleaders",
-      "subtitle": "",
-      "description": "Ballies Cheerleaders are the new assets in the Ballies Metaverse. They are a set of 3333 completely unique basketball characters algorithmically generated from over 140 hand-drawn traits. They are amazing collectibles as well as super strong game assets. They have rarity skills to influence the Ballie's game and give you the advantage on the Meta-court. Own a Cheerleader Ballie and live out your basketball dream! Become the KING of the Meta-Court! Do you have what it takes?",
-      "author": {
-        "name": "Ballies",
-        "website":"https://ballies.gg",
-        "twitter": "https://twitter.com/Ballies_NFT",
-        "discord": "https://discord.gg/Hec5CgFKfX"
-      },
-      "address": "",
-      "maxMintPerTx": 30,
-      "maxMintPerAddress": 100,
-      "totalSupply": 3333,
-      "cost": "560",
-      "memberCost": "465",
-      "foundersOnly": false,
-      "start": 1687892400000,
-      "end": null,
-      "referral": false,
-      "is1155": false,
-      "published": true,
-      "complete": false,
-      "images": {
-        "drop": "/img/drops/ballies-cheerleaders/drop.webp",
-        "banner": "/img/collections/ballies-cheerleaders/banner.webp",
-        "avatar": "/img/collections/ballies-cheerleaders/avatar.webp",
-        "preview": "/img/collections/ballies-cheerleaders/card.webp"
-      },
-      "verification": {
-        "doxx": false,
-        "kyc": true,
-        "escrow": true,
-        "verified": true
-      },
-      "escrow": {
-        "description": "15% of mint funds to be released to the Strange Camel project at mint. The remaining funds to be released in 3 equal installments upon:",
-        "milestones": [
-          "Staking is released for holders",
-          "DAO is created and the first voting takes place",
-          "Project completes 2 NFT raffles, or more, totalling at least 2000 CRO, whichever comes later"
-        ]
-      }
     }
   ]
 }
