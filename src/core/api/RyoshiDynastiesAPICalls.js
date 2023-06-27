@@ -298,6 +298,17 @@ export const getAllFactions = async (gameId) => {
     throw error;
   }
 }
+export const getAllFactionsSeasonId = async (gameId, seasonId) => {
+  try{
+    console.log(gameId, seasonId)
+    var data = await api.get("ryoshi-dynasties/factions/all",
+      {params: {gameId, seasonId}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
 export const addTroops = async (address, signature, troops) => {
   try{
     return await api.post("ryoshi-dynasties/armies?", 
