@@ -13,7 +13,8 @@ import {
   NumberInputStepper,
   Select,
   Spacer,
-  Text
+  Text,
+  Image
 } from "@chakra-ui/react";
 
 import React, {ChangeEvent, ReactElement, useContext, useEffect, useState} from "react";
@@ -38,7 +39,8 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
-
+import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/searchFactions";
+// import Select from "react-select";
 const tabs = {
   recall: 'recall',
   deploy: 'deploy',
@@ -60,7 +62,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
   const [factionError, setFactionError] = useState('');
   const [isExecuting, setIsExecuting] = useState(false);
 
-  const [factionOption, setFactionOption] = useState<ReactElement[] | ReactElement>();
+  // const [factionOption, setFactionOption] = useState<ReactElement[] | ReactElement>();
   const [dataForm, setDataForm] = useState({
     faction: "" ?? null,
     quantity: 0,
@@ -89,11 +91,9 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
       }
     }
   }
-
   const onChangeInputsFaction = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedFaction(e.target.value)
   }
-
   const GetTroopsOnPoint = async () => {
     if (!user.address) return;
     let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -111,7 +111,6 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
       }
     }
   }
-
   const GetPlayerTroops = async () => {
     if (!user.address) return;
 
@@ -157,6 +156,13 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
     rdContext.refreshUser();
   }, []);
 
+  // useEffect(() => {
+  //   console.log("allFactions", allFactions)
+  // }, [allFactions]);
+
+  const HandleSelectCollectionCallback = (factionName: string) => {
+    setSelectedFaction(factionName);
+  }
   const DeployOrRecallTroops = async () => {
     if (!user.address) return;
 
@@ -191,7 +197,6 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
       Recall()
     }
   }
-
   const Deploy = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -308,7 +313,10 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
               isInvalid={!!factionError}
               mb={'24px'}
               bg='none'>
-              <FormLabel>Faction:</FormLabel>
+              <HStack justifyContent={'space-between'} marginBottom={'2'}>
+                <FormLabel w='20%'>Faction:</FormLabel>
+                <Search handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions}/>
+              </HStack>
               <Select me={2}
                       bg='none'
                 // placeholder='Please select a faction'
@@ -319,11 +327,25 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
               >
                 <option selected hidden disabled value="">Please select a faction</option>
                 {hasFaction ? (
-                  <option style={{ background: '#272523' }} value={playerFaction!.name} key={0}>
+                  <option 
+                    style={{ background: '#272523' }} 
+                    value={playerFaction!.name} 
+                    key={0}>
+                    <Image 
+                      src={playerFaction!.image} 
+                      width='20px' 
+                      height='20px' />
                     {playerFaction!.name}
                   </option>
                 ) : allFactions.map((faction, index) => (
-                  <option style={{ background: '#272523' }} value={faction.name} key={index}>
+                  <option 
+                    style={{ background: '#272523' }} 
+                    value={faction.name} 
+                    key={index}>
+                    <Image 
+                      src={faction.image} 
+                      width='50px' 
+                      height='50px' />
                     {faction.name}
                   </option>
                 ))}

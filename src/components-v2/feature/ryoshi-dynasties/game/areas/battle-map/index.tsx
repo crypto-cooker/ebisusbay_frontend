@@ -3,7 +3,7 @@ import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex, Imag
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
-import {getAllFactions, getControlPoint} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getAllFactions, getControlPoint, getAllFactionsSeasonId} from "@src/core/api/RyoshiDynastiesAPICalls";
 import ControlPointModal from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point';
 import ImageService from '@src/core/services/image';
 import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/hud";
@@ -243,8 +243,9 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
   const [allFactions, setAllFactions] = useState<any>([]);
   const GetFactions = async () => {
-    const factions = await getAllFactions(rdGameContext?.game.id);
-    // console.log('factions', factions);
+    console.log('rdGameContext', rdGameContext);
+    const factions = await getAllFactionsSeasonId(rdGameContext?.game.id, rdGameContext?.season.id);
+    console.log('factions', factions);
     setAllFactions(factions);
   }
 
