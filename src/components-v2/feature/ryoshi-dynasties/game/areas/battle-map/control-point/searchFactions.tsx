@@ -245,7 +245,7 @@ import {
                   </Center>
                 ) : status === "error" ? (
                   <Center>
-                    <Text>Error: {(error as any)?.message}</Text>
+                    <Text>Error: {(Error as any)?.message}</Text>
                   </Center>
                 ) : (
                   <>
