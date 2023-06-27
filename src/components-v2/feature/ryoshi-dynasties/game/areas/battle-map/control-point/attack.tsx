@@ -79,13 +79,13 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   const [defenderImage, setDefenderImage] = useState('');
 
   // const [allFactions, setAllFactions] = useState([]);
-  const[factionsOnPoint, setFactionsOnPoint] = useState<any>([]);
+  // const[factionsOnPoint, setFactionsOnPoint] = useState<any>([]);
   const [factionsLoaded, setFactionsLoaded] = useState(false);
   const [playerArmies, setPlayerArmies] = useState<any>([]);
   const [combinedArmies, setCombinedArmies] = useState<any>([]);
-  const [isOwnerOfFaction, setIsOwnerOfFaction] = useState(false);
-  const [playerFaction, setPlayerFaction] = useState<any>();
-  const [factionTroops, setFactionTroops] = useState(0);
+  // const [isOwnerOfFaction, setIsOwnerOfFaction] = useState(false);
+  // const [playerFaction, setPlayerFaction] = useState<any>();
+  // const [factionTroops, setFactionTroops] = useState(0);
   const handleChange = (value: any) => setAttackerTroops(value)
   const [attackType, setAttackType] = useState(1);
 
@@ -114,7 +114,6 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   }
   const [dataForm, setDataForm] = useState({
     attackersFaction: "" ?? null,
-    // quantity: 0,
     defendersFaction: "" ?? null,
   })
 
@@ -134,7 +133,10 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   const onChangeInputsAttacker = (e : any) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     if(e.target.value !== ''){
-      setAttackerTroopsAvailable(combinedArmies.filter((faction:any)=> faction?.name === e.target.value)[0].troops);
+      const faction = combinedArmies.filter((faction:any)=> faction?.name === e.target.value)[0];
+      console.log("faction", faction)
+      setAttackerTroopsAvailable(faction.troops);
+      setAttackerImage(faction.image);
     } else { 
       setAttackerTroopsAvailable(0);
     }
@@ -147,9 +149,37 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       setDefenderTroops(0);
     }
   }
-  const CheckIfAttackerFactionIsOwnedByPlayer = async () => {
-      setIsOwnerOfFaction(dataForm.attackersFaction == playerFaction?.name);
-  }
+  // const CheckIfAttackerFactionIsOwnedByPlayer = async () => {
+  //     // const isOwner = dataForm.attackersFaction == playerFaction?.name
+  //     const faction = combinedArmies.filter((faction:any)=> faction?.name === dataForm.attackersFaction)[0];
+
+  //     setAttackerTroopsAvailable(faction.troops);
+  //     setAttackerImage(faction.image);
+  //     // setIsOwnerOfFaction(isOwner);
+
+  //     // if(isOwner)
+  //     // {
+  //     //   const faction = combinedArmies.filter((faction:any)=> faction?.name === dataForm.attackersFaction)[0];
+  //     //   // console.log("faction", faction)
+  //     //   setAttackerTroopsAvailable(faction.troops);
+  //     //   setAttackerImage(faction.image);
+  //     //   //if owner, get all troops
+  //     //   // controlPoint.leaderBoard.forEach(faction => {
+  //     //   //   if(faction.name === dataForm.attackersFaction){
+  //     //   //     // console.log("faction", faction)
+  //     //   //     setAttackerTroopsAvailable(faction.totalTroops);
+  //     //   //     setAttackerImage(faction.image);
+  //     //   //   }});
+  //     // }
+  //     // else
+  //     // {
+  //     //   //if not owner, only get the troops that the user deployed
+  //     //   const faction = combinedArmies.filter((faction:any)=> faction?.name === dataForm.attackersFaction)[0];
+  //     //   // console.log("faction", faction)
+  //     //   setAttackerTroopsAvailable(faction.troops);
+  //     //   setAttackerImage(faction.image);
+  //     // }
+  // }
   const GetPlayerArmies = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -167,23 +197,24 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       }
     }
   }
-  const GetPlayerOwnedFaction = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getFactionOwned(user.address?.toLowerCase(), signatureInStorage);
-        setPlayerFaction(data.data.data);
-        // console.log('data.data.data', data.data.data);
-        setFactionTroops(data.data.data.troops);
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
+  // const GetPlayerOwnedFaction = async () => {
+  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   if (!signatureInStorage) {
+  //     const { signature } = await getSigner();
+  //     signatureInStorage = signature;
+  //   }
+  //   if (signatureInStorage) {
+  //     try {
+  //       const data = await getFactionOwned(user.address?.toLowerCase(), signatureInStorage);
+  //       if(data.data.data!) {
+  //         setPlayerFaction(data.data.data);
+  //         setFactionTroops(data.data.data.troops);
+  //       }
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  // }
   const CheckForApproval = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const resourceContract = new Contract(config.contracts.resources, Resources, readProvider);
@@ -331,13 +362,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
         setDefenderImage(faction.image);
       }});
   }
-  function getAttackerTroopsInRegion(){
-    controlPoint.leaderBoard.forEach(faction => {
-      if(faction.name === dataForm.attackersFaction){
-        setAttackerTroopsAvailable(faction.totalTroops);
-        setAttackerImage(faction.image);
-      }});
-  }
+  
   const CheckForKoban = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const resourceContract = new Contract(config.contracts.resources, Resources, readProvider);
@@ -375,18 +400,18 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
     getDefenderTroopsInRegion()
   }, [dataForm.defendersFaction])
 
-  useEffect(() => {
-    if(dataForm.attackersFaction==="") return;
+  // useEffect(() => {
+  //   if(dataForm.attackersFaction==="") return;
 
-    getAttackerTroopsInRegion()
-    CheckIfAttackerFactionIsOwnedByPlayer()
-  }, [dataForm.attackersFaction])
+  //   // getAttackerTroopsInRegion()
+  //   CheckIfAttackerFactionIsOwnedByPlayer()
+  // }, [dataForm.attackersFaction])
   
   useEffect(() => {
     refreshControlPoint();
     CheckForKoban();
-    GetPlayerOwnedFaction();
     GetPlayerArmies();
+    // GetPlayerOwnedFaction();
     // CheckForBattleRewards();
   }, [])
 
@@ -405,8 +430,12 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       playerArmies.forEach((army:any) => {
         var found = combinedArmiesLocal.find(f => f.factionId === army.factionId);
         if(found === undefined) {
-          combinedArmiesLocal.push({name: allFactions.find(f => f.id === army.factionId).name, 
-            factionId: army.factionId, troops: army.troops});
+          combinedArmiesLocal.push({
+            name: allFactions.find(f => f.id === army.factionId).name, 
+            factionId: army.factionId, 
+            troops: army.troops,
+            image: allFactions.find(f => f.id === army.factionId).image, 
+          });
         }
         else {
           found.troops += army.troops;

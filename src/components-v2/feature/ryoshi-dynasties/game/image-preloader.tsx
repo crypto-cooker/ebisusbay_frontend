@@ -37,7 +37,7 @@ const ImagePreloader = ({ children }: ImagePreloaderProps) => {
 
   const getPreloadedImage = (key: string) => {
     const record = Object.entries(loadedUrls).find(([k, v]) => k === key);
-    console.log('found?', key, Object.entries(loadedUrls), record, !!record);
+    // console.log('found?', key, Object.entries(loadedUrls), record, !!record);
     return record ? record[1].src : key;
   }
 
