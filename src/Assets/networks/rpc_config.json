@@ -21203,9 +21203,9 @@
       "listable": true,
       "metadata": {
         "description": "GreenStix thrives for a greener tomorrow. We plan to make this possible by sending every minter a sapling so they too can get outside and #KeepItGreen. We will be making contributions to organizations all of the U.S. and eventually globally. By building up this community we can all do one small deed and globally it can be a massive effort into preserving as much natural habit land as possible. It all starts with 1 person picking up 1 piece of trash every day, that is 365 pieces of trash, If we ALL do it and we all relay this message we can really have a cleaner and greener tomorrow for our generations to come.",
-        "avatar": "/img/collections/greenstix-mutant-candles/avatar.webp",
-        "card": "/img/collections/greenstix-mutant-candles/card.webp",
-        "banner": "/img/collections/greenstix-mutant-candles/banner.webp",
+        "avatar": "/img/collections/greenstix-og-candles/avatar.webp",
+        "card": "/img/collections/greenstix-og-candles/card.webp",
+        "banner": "/img/collections/greenstix-og-candles/banner.webp",
         "website": "https://greenstix.xyz/",
         "twitter": "https://twitter.com/GreenStix_v2",
         "discord": "https://discord.gg/W3FuHamTen",
@@ -21323,6 +21323,198 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Crypto Sportsbook Club",
+      "slug": "crypto-sportsbook-club",
+      "multiToken": false,
+      "address": "0x2945E9916d04E2040b620D67D26F10B04AE41764",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Skully-X are assembling their forces \uD83D\uDC80  Will they win the war, or will their DNA get stolen by the Cr00ts labs.. \uD83E\uDDEC\uD83E\uDDEA | Royalties | GameFi access | IP rights | and more",
+        "avatar": "/img/collections/crypto-sportsbook-club/avatar.webp",
+        "card": "/img/collections/crypto-sportsbook-club/card.webp",
+        "banner": "/img/collections/crypto-sportsbook-club/banner.webp",
+        "website": "https://cryptosbclub.com/",
+        "twitter": "https://twitter.com/cryptosbclub",
+        "discord": "https://discord.gg/YPGc2Qs7T3",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "GreenStix Gen2 Candles",
+      "slug": "greenstix-gen2-candles",
+      "multiToken": false,
+      "address": "0xF771Abe345430f5831Bb5AF553C80A0483eFC039",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "GreenStix Gen2 candles taking the next step to #KeepingItGreen. We Will be focusing this mints ReFi aspect on planting up to 44,000 mangrove trees in east Africa! 10% of mint funds will be automatically distributed to GEN2 holders in the form of $GRNSTX v2 claimable on the dApp. Staking features will open at 100% mint out.",
+        "avatar": "/img/collections/greenstix-gen2-candles/avatar.webp",
+        "card": "/img/collections/greenstix-gen2-candles/card.webp",
+        "banner": "/img/collections/greenstix-gen2-candles/banner.webp",
+        "website": "https://greenstix.xyz/",
+        "twitter": "https://twitter.com/GreenStix_v2",
+        "discord": "https://discord.gg/W3FuHamTen",
+        "medium": "https://medium.com/@greenstixinc",
+        "telegram": "https://t.me/greeenstixtoken",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "AngelusBoBsAiNFTs",
+      "slug": "angelusbobsainfts",
+      "multiToken": false,
+      "address": "0xA96541979f499B1054F4A0cD82027D7e32b07c33",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of single nfts from the amazing Ai artist AngelusBoBsAiNFTs  Buy any 5 NFTs and claim a free 3d card Threads of Crypto August 1st from my discord. Threads of crypto special edition also give a free 3d card",
+        "avatar": "/img/collections/angelusbobsainfts/avatar.webp",
+        "card": "/img/collections/angelusbobsainfts/card.webp",
+        "twitter": "https://twitter.com/AngelusbobRh",
+        "discord": "https://discord.gg/YfT2CUfjxV",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ninjas v Samurais AngelusBoBsAiNFTs",
+      "slug": "angelusbobsainfts-ninjas-v-samurais",
+      "multiToken": false,
+      "address": "0x279381dd7eFCC939311245259Dc29F6dF665AD26",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of Ninja v Samurai NFTs by AngelusBoBsAiNFTs  Buy any 5 NFTs and claim a 3d Staking Threads of Crypto NFT August 1st",
+        "avatar": "/img/collections/angelusbobsainfts-ninjas-v-samurais/avatar.webp",
+        "card": "/img/collections/angelusbobsainfts-ninjas-v-samurais/card.webp",
+        "twitter": "https://twitter.com/AngelusbobRh",
+        "discord": "https://discord.gg/M3gKXu5HA",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Dead Beat Dads Birth Certificates",
+      "slug": "dbd-birth-certificates",
+      "multiToken": false,
+      "address": "0xBC49267179d67050619CEB59a9870b14c9255C6e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Birth Certificates are earned by sending a Dead Beat Dad and Trophy Wife on a honeymoon. There are 3 honeymoon options, each rewarding a different tiered birth certificate that can be swapped for a random Teenage Dirtbag NFT within their ranking pool. Tier 1 = Rank 11-500, Tier 2 = rank 501-2000, Tier 3 = rank 2001-5000. Legendary Birth Certificates will mint 1 of 10 legendary Teenage Dirtbags.",
+        "avatar": "/img/collections/dbd-birth-certificates/avatar.webp",
+        "card": "/img/collections/dbd-birth-certificates/card.webp",
+        "banner": "/img/collections/dbd-birth-certificates/banner.webp",
+        "website": "https://deadbeatdadscronos.com/",
+        "twitter": "https://twitter.com/zolape01",
+        "discord": "https://discord.gg/KnRmEA4u8v",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Trophy Wives",
+      "slug": "dbd-trophy-wives",
+      "multiToken": false,
+      "address": "0x96adF7839A133da31824113a23e223D02e97c53A",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Trophy Wives is the 2nd collection by Dead Beat Dads. These 3000 well-endowed ladies married far below their standards to satisfy their lifestyle. Trophy Wives must endure a torturous honeymoon with a Dead Beat Dad in order to earn a birth certificate. Birth certificates will allow one to mint our 3rd collection, Teenage Dirtbags. Our family is growing. Come be a part of it, even if it is dysfunctional.",
+        "avatar": "/img/collections/dbd-trophy-wives/avatar.webp",
+        "card": "/img/collections/dbd-trophy-wives/card.webp",
+        "banner": "/img/collections/dbd-trophy-wives/banner.webp",
+        "website": "https://deadbeatdadscronos.com/",
+        "twitter": "https://twitter.com/zolape01",
+        "discord": "https://discord.gg/KnRmEA4u8v",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "SpicyCro",
+      "slug": "spicycro",
+      "multiToken": false,
+      "address": "0x59b25F3f5Cdcb4A76f1cB7A7EC2Af5d1B1b89337",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Get SpicyCro drinks and exchange them for a SpicyCroPepe king!",
+        "avatar": "/img/collections/spicycro/avatar.webp",
+        "banner": "/img/collections/spicycro/banner.webp",
+        "card": "/img/collections/spicycro/card.webp",
+        "website": "https://www.cropepe.com/",
+        "twitter": "https://twitter.com/CroPepeNft",
+        "discord": "https://discord.gg/zCZeY8Ejgq",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "SpicyCroPepe",
+      "slug": "spicycropepe",
+      "multiToken": false,
+      "address": "0xbCC5101564a626CE9FC7FF8287573d42bCe66f97",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Get your SpicyCroPepe king and start your CroPepeLand adventure!",
+        "avatar": "/img/collections/spicycro/avatar.webp",
+        "banner": "/img/collections/spicycro/banner.webp",
+        "card": "/img/collections/spicycro/card.webp",
+        "website": "https://www.cropepe.com/",
+        "twitter": "https://twitter.com/CroPepeNft",
+        "discord": "https://discord.gg/zCZeY8Ejgq",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
