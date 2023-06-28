@@ -133,10 +133,8 @@ export interface RdArmy {
 
 export interface RdUserContext {
     faction: RdFaction;
+    armies: RdUserContextArmies;
     season: RdUserContextSeason;
-    armies:{
-        redeploymentDelay: number;
-    },
     bank: {
         nfts: any[];
         bonus: {
@@ -165,11 +163,23 @@ interface RdUserContextSeason {
     }
 }
 
+interface RdUserContextArmies {
+    redeploymentDelay: number;
+}
+
 export interface RdGameContext {
     season: RdSeason;
     game: RdGame;
     rewards: RdGameRewards;
     state: RdGameState;
+    gameLeaders: {
+        factions: {
+            id: number;
+            image: string;
+            name: string;
+            totalTroops: number;
+        }[];
+    }[];
 }
 
 interface RdGameBase {

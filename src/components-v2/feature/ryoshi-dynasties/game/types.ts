@@ -4,6 +4,7 @@ export interface RyoshiConfig {
   rewards: RyoshiConfigCheckinRewards;
   factions: RyoshiConfigFactions;
   presale: RyoshiConfigPresale;
+  armies: RyoshiConfigArmies;
 }
 
 interface RyoshiConfigBank {
@@ -96,4 +97,8 @@ interface RyoshiConfigFactions {
 interface RyoshiConfigFactionsRegistration {
   cost: number;
   troopsCost: number;
+}
+
+interface RyoshiConfigArmies {
+  redeploymentDelay: number[];
 }
