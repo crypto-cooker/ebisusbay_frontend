@@ -520,22 +520,18 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     setSizeMultiplier(window.innerWidth / 2880);
   }, [])
 
-  // useEffect(() => {
-    // onOpenAnnouncementBoard();
-    // GetGameTokens();
-    // CheckForGameTokens();
-  // }, [user.address])
-
   useEffect(() => {
     if (!firstRun) {
-      onOpenAnnouncementBoard();
-      onFirstRun();
+
+      // Use timer to allow SEO bots to crawl the page before announcement board pops up.
+      const timer = setTimeout(() => {
+        onOpenAnnouncementBoard();
+        onFirstRun();
+      }, 2000);
+
+      return () => clearTimeout(timer);
     }
   }, []);
-  // useEffect(() => {
-  //   if (!rdConfig) return;
-  //     console.log('rdUser', rdGameContext);
-  // }, [rdConfig]);
 
   useEffect(() => {
     if(!transformComponentRef?.current) return;
