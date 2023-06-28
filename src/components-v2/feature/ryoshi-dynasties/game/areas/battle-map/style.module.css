@@ -8,6 +8,15 @@
     cursor: grab;
 	//overflow: hidden;
 } */
+.leader_flag{
+	width:70px; 
+	height:100px; 
+	position:absolute; 
+	/* right:20px;  */
+	left:-20; 
+	top:-30px;
+	/* top: -100px; */
+}
 .background{
 	height: 2021px;
 	width: 2880px;
@@ -222,6 +231,7 @@
 	transform: scale(1, .7);
 	line-height: .9em;
 	position: relative;
+	text-align: left;
 }
 
 .seashrine_label{
@@ -353,7 +363,6 @@
 	text-stroke: 1px #664c00;
 }
 .venoms_descent_label{
-	width: 110%;
 	top: 175px;
 	left: 20px;
 	color: #fff8e5;
