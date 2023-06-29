@@ -1,17 +1,18 @@
 import {
   Box,
+  Button,
   Center,
   Flex,
   HStack,
   Icon,
   IconButton,
   Image,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverTrigger,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   SimpleGrid,
   Spinner,
   Text,
@@ -21,7 +22,7 @@ import {
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
+import {useInfiniteQuery, useQuery, useQueryClient} from "@tanstack/react-query";
 import nextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -34,8 +35,8 @@ import {StakedToken} from "@src/core/services/api-service/graph/types";
 import ShrineIcon from "@src/components-v2/shared/icons/shrine";
 import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {Contract} from "ethers";
-import {ERC721} from "@src/Contracts/Abis";
+import {Contract, ethers} from "ethers";
+import {ERC1155, ERC721} from "@src/Contracts/Abis";
 import useBankStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-bank-stake-nfts";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -48,8 +49,11 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/faq-page";
+import SeasonUnlocks from "@src/Contracts/SeasonUnlocks.json";
+import Fortune from "@src/Contracts/Fortune.json";
 
 const config = appConfig();
+const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 const tabs = {
   ryoshiVip: 'ryoshi-tales-vip',
@@ -75,7 +79,6 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const [page, setPage] = useState<string>();
 
   const addressForTab = config.collections.find((c: any) => c.slug === currentTab)?.address;
-
 
   const handleBtnClick = (key: string) => (e: any) => {
     setCurrentTab(key);
@@ -187,6 +190,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       }
       setPendingNfts(nfts);
     });
+
+
   }, [isOpen]);
 
   useEffect(() => {
@@ -271,7 +276,36 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
   const [isExecutingStake, setIsExecutingStake] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('');
   const [stakeNfts, response] = useBankStakeNfts();
+  // const { isOpen: isUnlockDialogOpen, onOpen: onOpenUnlockDialog, onClose: onCloseUnlockDialog } = useDisclosure();
+  const [unlockApprovalState, setUnlockApprovalState] = useState<[number, boolean]>([0, false]);
+  const [selectedLockedSlot, setSelectedLockedSlot] = useState<number>();
 
+  const { data: slotUnlockContext } = useQuery({
+    queryKey: ['BankSlotUnlockContext', user.address],
+    queryFn: async () => {
+      const contract = new Contract(config.contracts.seasonUnlocks, SeasonUnlocks, readProvider);
+      const unlocks = await contract.unlocks(1, user.address!);
+      const resources = await contract.resources();
+      const fortune = await contract.fortune();
+      const recipes = await contract.recipes(1, 0);
+      return {
+        unlocks,
+        resources,
+        fortune,
+        recipes
+      }
+    },
+    refetchOnWindowFocus: false,
+    enabled: !!user.address,
+    initialData: {
+      unlocks: 0,
+      resources: 0,
+      fortune: 0,
+      recipes: []
+    }
+  });
+
+  console.log('DAAATA', slotUnlockContext);
   const handleStake = useCallback(async () => {
     if (pendingNfts.length === 0 && stakedNfts.length === 0) return;
 
@@ -296,6 +330,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
       hasCompletedApproval = true;
 
       setExecutingLabel('Staking');
+      console.log('stake', pendingNfts, stakedNfts);
       await stakeNfts(
         pendingNfts.map((nft) => ({...nft, amount: 1})),
         stakedNfts
@@ -316,132 +351,148 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
 
   }, [pendingNfts, executingLabel, isExecutingStake]);
 
-  return (
-    <VStack my={6} px={4} spacing={8}>
-      <SimpleGrid columns={{base: 2, sm: 3, md: 5}} gap={2}>
-        {[...Array(5).fill(0)].map((_, index) => {
-          return (
-            <Box key={index} w='120px'>
-              {!!pendingNfts[index] ? (
-                <Box position='relative'>
-                  <Box
-                    bg='#376dcf'
-                    p={2}
-                    rounded='xl'
-                    border='2px dashed'
-                    borderColor={pendingNfts[index].isAlreadyStaked ? 'transparent' : '#ffa71c'}
-                  >
-                    <Box
-                      width={100}
-                      height={100}
-                    >
-                      <Image src={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)} rounded='lg'/>
-                    </Box>
-                    <Flex fontSize='xs' justify='space-between' mt={1}>
-                      <Box verticalAlign='top'>
-                        {pendingNfts[index].rank && (
-                          <HStack spacing={1}>
-                            <Icon as={FontAwesomeIcon} icon={faAward} />
-                            <Box as='span'>{pendingNfts[index].rank ?? ''}</Box>
-                          </HStack>
-                        )}
-                      </Box>
-                      <VStack align='end' spacing={0} fontWeight='bold'>
-                        {pendingNfts[index].multiplier && (
-                          <Box>x {pendingNfts[index].multiplier}%</Box>
-                        )}
-                        {pendingNfts[index].adder && (
-                          <Box>+ {pendingNfts[index].adder}%</Box>
-                        )}
-                      </VStack>
-                    </Flex>
-                  </Box>
+  const checkForApproval = async () => {
+    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+    const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
+    const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.seasonUnlocks);
 
-                  <Box
-                    position='absolute'
-                    top={0}
-                    right={0}
-                    pe='3px'
-                  >
-                    <IconButton
-                      icon={<CloseIcon boxSize={2} />}
-                      aria-label='Remove'
-                      bg='gray.800'
-                      _hover={{ bg: 'gray.600' }}
-                      size='xs'
-                      rounded='full'
-                      onClick={() => onRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)}
-                    />
-                  </Box>
-                </Box>
-              ) : (
-                <Box position='relative' overflow='hidden'>
-                  <Popover>
-                    <PopoverTrigger>
+    const resourcesContract = new Contract(config.contracts.resources, ERC1155, readProvider);
+    const isResourcesApproved = await resourcesContract.isApprovedForAll(user.address, config.contracts.seasonUnlocks);
+
+    setUnlockApprovalState([totalApproved, isResourcesApproved]);
+  }
+
+  useEffect(() => {
+    checkForApproval();
+  }, []);
+
+  return (
+    <Box>
+      <VStack my={6} px={4} spacing={8}>
+        <SimpleGrid columns={{base: 2, sm: 3, md: 5}} gap={2}>
+          {[...Array(5).fill(0)].map((_, index) => {
+            return (
+              <Box key={index} w='120px'>
+                {!!pendingNfts[index] ? (
+                  <Box position='relative'>
+                    <Box
+                      bg='#376dcf'
+                      p={2}
+                      rounded='xl'
+                      border='2px dashed'
+                      borderColor={pendingNfts[index].isAlreadyStaked ? 'transparent' : '#ffa71c'}
+                    >
                       <Box
-                        p={2}
-                        rounded='xl'
-                        cursor='pointer'
+                        width={100}
+                        height={100}
                       >
-                        <Box
-                          width={100}
-                          height={100}
-                          bgColor='#716A67'
-                          rounded='xl'
-                          position='relative'
-                        >
-                          <ShrineIcon boxSize='100%' fill='#B1ADAC'/>
-                          {index > 0 && (
-                            <Flex
-                              position='absolute'
-                              top={0}
-                              left={0}
-                              w={100}
-                              h={100}
-                              fontSize='sm'
-                              bg='#333333DD'
-                              rounded='xl'
-                              justify='center'
-                              fontWeight='semibold'
-                              textAlign='center'
-                            >
-                              <Center>
-                                <Image
-                                  src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
-                                  alt="lockIcon"
-                                  boxSize={12}
-                                />
-                              </Center>
-                            </Flex>
+                        <Image src={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)} rounded='lg'/>
+                      </Box>
+                      <Flex fontSize='xs' justify='space-between' mt={1}>
+                        <Box verticalAlign='top'>
+                          {pendingNfts[index].rank && (
+                            <HStack spacing={1}>
+                              <Icon as={FontAwesomeIcon} icon={faAward} />
+                              <Box as='span'>{pendingNfts[index].rank ?? ''}</Box>
+                            </HStack>
                           )}
                         </Box>
+                        <VStack align='end' spacing={0} fontWeight='bold'>
+                          {pendingNfts[index].multiplier && (
+                            <Box>x {pendingNfts[index].multiplier}%</Box>
+                          )}
+                          {pendingNfts[index].adder && (
+                            <Box>+ {pendingNfts[index].adder}%</Box>
+                          )}
+                        </VStack>
+                      </Flex>
+                    </Box>
+
+                    <Box
+                      position='absolute'
+                      top={0}
+                      right={0}
+                      pe='3px'
+                    >
+                      <IconButton
+                        icon={<CloseIcon boxSize={2} />}
+                        aria-label='Remove'
+                        bg='gray.800'
+                        _hover={{ bg: 'gray.600' }}
+                        size='xs'
+                        rounded='full'
+                        onClick={() => onRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)}
+                      />
+                    </Box>
+                  </Box>
+                ) : (
+                  <Box position='relative' overflow='hidden'>
+                    <Box
+                      p={2}
+                      rounded='xl'
+                      cursor='pointer'
+                      onClick={() => setSelectedLockedSlot(index)}
+                    >
+                      <Box
+                        width={100}
+                        height={100}
+                        bgColor='#716A67'
+                        rounded='xl'
+                        position='relative'
+                      >
+                        <ShrineIcon boxSize='100%' fill='#B1ADAC'/>
+                        {index > slotUnlockContext.unlocks && (
+                          <Flex
+                            position='absolute'
+                            top={0}
+                            left={0}
+                            w={100}
+                            h={100}
+                            fontSize='sm'
+                            bg='#333333DD'
+                            rounded='xl'
+                            justify='center'
+                            fontWeight='semibold'
+                            textAlign='center'
+                          >
+                            <Center>
+                              <Image
+                                src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
+                                alt="lockIcon"
+                                boxSize={12}
+                              />
+                            </Center>
+                          </Flex>
+                        )}
                       </Box>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <PopoverArrow />
-                      <PopoverCloseButton />
-                      <PopoverBody>Additional slots coming soon!</PopoverBody>
-                    </PopoverContent>
-                  </Popover>
-                </Box>
-              )}
-            </Box>
-          )
-        })}
-      </SimpleGrid>
-      <Box ms={8} my={{base: 4, md: 'auto'}} textAlign='center'>
-        <RdButton
-          minW='150px'
-          onClick={handleStake}
-          isLoading={isExecutingStake}
-          disabled={isExecutingStake}
-          stickyIcon={true}
-          loadingText={executingLabel}
-        >
-          Save
-        </RdButton>
-      </Box>
-    </VStack>
+                    </Box>
+                  </Box>
+                )}
+              </Box>
+            )
+          })}
+        </SimpleGrid>
+        <Box ms={8} my={{base: 4, md: 'auto'}} textAlign='center'>
+          <RdButton
+            minW='150px'
+            onClick={handleStake}
+            isLoading={isExecutingStake}
+            disabled={isExecutingStake}
+            stickyIcon={true}
+            loadingText={executingLabel}
+          >
+            Save
+          </RdButton>
+        </Box>
+      </VStack>
+      <SlotUnlockDialog
+        isOpen={selectedLockedSlot !== undefined}
+        onClose={() => setSelectedLockedSlot(undefined)}
+        initialApprovalState={unlockApprovalState}
+        index={selectedLockedSlot! - 1}
+        slotUnlockContext={slotUnlockContext}
+      />
+    </Box>
   )
 }
 
@@ -516,5 +567,144 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
       </InfiniteScroll>
 
     </>
+  )
+}
+
+
+// interface LockedSlotProps {
+//   onClick: () => void;
+// }
+// const LockedSlot = ({onClick}) => {
+//
+// }
+
+interface SlotUnlockDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  initialApprovalState: [number, boolean];
+  index: number;
+  slotUnlockContext: { unlocks: number, fortune: number, resources: number };
+}
+
+const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, index, slotUnlockContext}: SlotUnlockDialogProps) => {
+  const user = useAppSelector((state) => state.user);
+  const [executingFortuneApproval, setExecutingFortuneApproval] = useState(false);
+  const [executingResourcesApproval, setExecutingResourcesApproval] = useState(false);
+  const [isExecutingUnlock, setIsExecutingUnlock] = useState(false);
+  const [unlockApprovalState, setUnlockApprovalState] = useState(initialApprovalState);
+  const [executingLabel, setExecutingLabel] = useState('Unlocking');
+
+  const handleUnlock = async () => {
+    // if (unlockApprovalState[0] > 0 && unlockApprovalState[1]) {
+    //
+    // } else if (unlockApprovalState[0] > 0 && !unlockApprovalState[1]) {
+    //
+    // } else if (unlockApprovalState[0] < 1 && unlockApprovalState[1]) {
+    //
+    // } else {
+    //
+    // }
+
+    try {
+      setIsExecutingUnlock(true);
+      const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
+      const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.seasonUnlocks);
+      const fortuneSoftLimit = 10000;
+      if (totalApproved.lt(ethers.utils.parseEther(fortuneSoftLimit.toString()))) {
+        setExecutingLabel('Approving');
+        const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
+        const tx = await fortuneContract.approve(config.contracts.seasonUnlocks, ethers.utils.parseEther(fortuneSoftLimit.toString()));
+        await tx.wait();
+        setUnlockApprovalState([fortuneSoftLimit, unlockApprovalState[1]]);
+      }
+
+      console.log('unlock!!1', config.contracts.seasonUnlocks, user.address)
+      const resourcesContract = new Contract(config.contracts.resources, ERC1155, user.provider.getSigner());
+      const isResourcesApproved = await resourcesContract.isApprovedForAll(user.address, config.contracts.seasonUnlocks);
+      console.log('unlock!!2', index)
+
+      if (!isResourcesApproved) {
+        setExecutingLabel('Approving');
+        let tx = await resourcesContract.setApprovalForAll(config.contracts.seasonUnlocks, true);
+        await tx.wait();
+        setUnlockApprovalState([fortuneSoftLimit, true]);
+      }
+
+      setExecutingLabel('Unlocking2');
+      const unlockContract = new Contract(config.contracts.seasonUnlocks, SeasonUnlocks, user.provider.getSigner());
+
+      let tx = await unlockContract.unlock(1, index);
+      await tx.wait();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setExecutingLabel('Unlocking');
+      setExecutingFortuneApproval(false);
+      setExecutingResourcesApproval(false);
+      setIsExecutingUnlock(false);
+    }
+  }
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      isCentered={true}
+      onClose={onClose}
+      size='lg'
+    >
+      <ModalOverlay />
+      <ModalContent border='2px solid #CCC'>
+        <ModalHeader>
+          <Center>
+            <HStack>
+              <Text>Unlock Staking Slots</Text>
+            </HStack>
+          </Center>
+        </ModalHeader>
+        <ModalBody color='white' >
+          <Text>Unlock staking slots to allow additional NFTs to be staked and earn more APR in the bank.</Text>
+          <Box mt={4}>
+            {unlockApprovalState[0] > 0 && unlockApprovalState[1] ? (
+              <Text>Current cost for this slot is {slotUnlockContext.fortune} Fortune and {slotUnlockContext.unlocks} Koban</Text>
+            ) : unlockApprovalState[0] > 0 && !unlockApprovalState[1] ? (
+              <Text>Ryoshi Dynasties needs approval to transfer Koban on your behalf to complete this transaction. Please approve the contract to continue.</Text>
+            ) : unlockApprovalState[0] < 1 && unlockApprovalState[1] ? (
+              <Text>Ryoshi Dynasties needs approval to transfer $Fortune on your behalf to complete this transaction. Please approve the contract to continue.</Text>
+            ) : (
+              <Text>Please approve the following two transactions to allow Ryoshi Dynasties to transfer both $Fortune and Koban on your behalf to allow this slot to be unlocked.</Text>
+            )}
+          </Box>
+        </ModalBody>
+        <ModalFooter>
+          <HStack justify='end' spacing={4}>
+            <Button variant='unstyled' onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              size='md'
+              bg='#F48F0C'
+              rounded='full'
+              className='rd-button'
+              isLoading={isExecutingUnlock}
+              loadingText={executingLabel}
+              disabled={isExecutingUnlock}
+              onClick={handleUnlock}
+              _hover={{
+                bg: '#C17109'
+              }}
+              _loading={{
+                bg: '#C17109'
+              }}
+            >
+              {unlockApprovalState[0] > 0 && unlockApprovalState[1] ? (
+                <Text>Unlock</Text>
+              ) : (
+                <Text>Approve</Text>
+              )}
+            </Button>
+          </HStack>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   )
 }
