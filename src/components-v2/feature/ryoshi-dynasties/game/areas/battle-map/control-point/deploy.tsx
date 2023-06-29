@@ -40,7 +40,8 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/searchFactions";
-// import Select from "react-select";
+import CollectionsComponent from '@src/components-v2/feature/collections';
+                // import Select from "react-select";
 const tabs = {
   recall: 'recall',
   deploy: 'deploy',
@@ -292,8 +293,10 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
     <Flex flexDirection='column' textAlign='center'justifyContent='space-around'>
       {!!user.address ? (
         <Flex direction='row' justify='space-between' justifyContent='center'>
+
           <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
 
+                  {/* <CollectionsComponent /> */}
             <Center>
               <Flex direction='row' justify='center' mb={2}>
                 <RdTabButton
@@ -316,6 +319,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
               <HStack justifyContent={'space-between'} marginBottom={'2'}>
                 <FormLabel w='20%'>Faction:</FormLabel>
                 <Search handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions}/>
+
               </HStack>
               <Select me={2}
                       bg='none'
