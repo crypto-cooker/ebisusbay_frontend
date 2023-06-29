@@ -9,13 +9,11 @@
 	//overflow: hidden;
 } */
 .leader_flag{
-	width:70px; 
-	height:100px; 
 	position:absolute; 
-	/* right:20px;  */
-	left:-20; 
-	top:-30px;
-	/* top: -100px; */
+	size: 'xl';
+	transform: scale(.7, 1);
+	left: -90px;
+	top: -30px;
 }
 .background{
 	height: 2021px;

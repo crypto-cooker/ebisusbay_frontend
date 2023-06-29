@@ -25,6 +25,7 @@ import {
   import ResultFaction from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/factionRow";
   import Scrollbars from "react-custom-scrollbars-2";
   import {addToSearchVisitsInStorage, getSearchVisitsInStorage, removeSearchVisitFromStorage} from "@src/helpers/storage";
+  import {getCollection, getMultipleCollections} from "@src/core/api/next/collectioninfo";
   
   const searchRegex = /^\w+([\s-_]\w+)*$/;
   const minChars = 3;
@@ -51,6 +52,7 @@ import {
   
     const [maxResults, setMaxResults] = useState(defaultMaxVisible);
     const [searchVisits, setSearchVisits] = useState([]);
+    const [collectionAddresses, setCollectionAddresses] = useState<CollectionAddress[]>([]);
   
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [value, setValue] = useState('');
@@ -65,36 +67,73 @@ import {
     const [filteredFactions, setFilteredFactions] = useState<any[]>([]);
     
     const searchForFactions = () => {
-      const filteredFactions_ = allFactions.filter((faction) => {
+      let filteredFactions_: any[] = [];
+      //check if their names match the value
+      allFactions.filter((faction) => {
         return faction.name.toLowerCase().includes(value.toLowerCase());
       })
       //check if their addresses match the value as well
-      const filteredFactions2 = allFactions.filter((faction) => {
+      allFactions.filter((faction) => {
         if(faction.addresses.length > 0){
           for(let i = 0; i < faction.addresses.length; i++){
             if(faction.addresses[i].toLowerCase().includes(value.toLowerCase())){
-              return faction;
+              if(!filteredFactions_.find((f) => f.address === faction.address))
+                filteredFactions_.push(faction);
       }}}})
-      setFilteredFactions(filteredFactions_.concat(filteredFactions2));
+      //check if the names of the collections of the addresses match the value
+      allFactions.filter((faction) => {
+        if(faction.addresses.length > 0){
+          for(let i = 0; i < faction.addresses.length; i++){
+            const collection = collectionAddresses.find((f) => f.address === faction.addresses[i]);
+            if(collection && collection.collectionName?.toLowerCase().includes(value.toLowerCase())){
+              if(!filteredFactions_.find((f) => f.address === faction.address))
+                filteredFactions_.push(faction);
+      }}}})
+
+      setFilteredFactions(filteredFactions_);
     }
+
+    interface CollectionAddress {
+      address: string;
+      factionName: string;
+      collectionName?: string;
+    }
+
+    const getCollectionAddresses = async () => {
+      let newAddresses: CollectionAddress[] = [];
+      console.log("Searching for factions");
+
+      allFactions.filter(async (faction) => {
+        if(faction.type === "COLLECTION" && faction.addresses.length > 0){
+          for(let i = 0; i < faction.addresses.length; i++){
+          newAddresses.push({address: faction.addresses[i], factionName: faction.name});}
+      }})
+
+      //get all addresses in new addresses
+      const collections = await getMultipleCollections(newAddresses.map((a) => a.address).toString());
+      // console.log("collections", collections);
+
+      if(!collections) return;
+
+      //add collection names to new addresses
+      for(let i = 0; i < newAddresses.length; i++){
+        const collection = collections.find((c:any) => c.address.toLowerCase() === newAddresses[i].address.toLowerCase());
+        if(collection){
+          newAddresses[i].collectionName = collection.name;
+        }
+      }
+
+      // console.log(newAddresses);
+      setCollectionAddresses(newAddresses);
+    }
+
+    useEffect(() => {
+      if(!allFactions) return;
+      
+      getCollectionAddresses();
+    }
+    , [allFactions]);
   
-    // const { data, status, error, refetch } = useQuery(
-    //   ['Search', debouncedSearch],
-    //   () => search(debouncedSearch),
-    //   {
-    //     enabled: !!debouncedSearch && debouncedSearch.length >= minChars,
-    //     refetchOnWindowFocus: false,
-    //     select: (d) => {
-    //       return d.data.collections
-    //         .filter((collection: any) =>{
-    //           const knownContract = knownContracts.find((c: any) => caseInsensitiveCompare(c.address, collection.address));
-    //           if (!knownContract) return false;
-    //           return !knownContract.mergedWith;
-    //         })
-    //         .sort((a: any, b: any) => b.verification?.verified - a.verification?.verified)
-    //     }
-    //   }
-    // );
     const hasDisplayableContent = searchVisits.length > 0 || (data && data.length > 0);
   
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -129,7 +168,7 @@ import {
 
       searchForFactions();
     } , [value]);
-  
+
     const handleRemoveVisit = (collection: any) => {
       removeSearchVisitFromStorage(collection.address);
       const remainingVisits = getRelevantVisits();
@@ -220,7 +259,7 @@ import {
             universal
           >
             <Box fontSize="12px" p={2}>
-              {searchVisits.length > 0 && (
+              {/* {searchVisits.length > 0 && (
                 <Box mb={2}>
                   <Text textTransform="uppercase" ms={1} color={headingColor}>Recent</Text>
                   <VStack>
@@ -237,7 +276,7 @@ import {
                     ))}
                   </VStack>
                 </Box>
-              )}
+              )} */}
               <Box display={value?.length >= minChars ? 'inherit' : 'none'}>
                 {status === "loading" ? (
                   <Center>

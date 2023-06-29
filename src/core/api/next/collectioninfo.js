@@ -30,6 +30,19 @@ export const getCollection = async (address) => {
   }
 }
 
+//added by Tea for getting multiple collections, can be removed if easier way exists
+export const getMultipleCollections = async (address) => {
+  try{
+    const params = {...defaults, ...{address}};
+
+    const collections = await api.get(`collections`, {params});
+    return collections.data.collections;
+  }
+  catch(error){
+    throw error;
+  }
+}
+
 export const getOwnerCollections = async (address, query) => {
   return getCollections({owner: address, ...query});
 }
