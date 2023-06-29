@@ -25,7 +25,7 @@ import {
   import ResultFaction from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/factionRow";
   import Scrollbars from "react-custom-scrollbars-2";
   import {addToSearchVisitsInStorage, getSearchVisitsInStorage, removeSearchVisitFromStorage} from "@src/helpers/storage";
-  import {getCollection, getCollections} from "@src/core/api/next/collectioninfo";
+  import {getCollection, getMultipleCollections} from "@src/core/api/next/collectioninfo";
   
   const searchRegex = /^\w+([\s-_]\w+)*$/;
   const minChars = 3;
@@ -106,23 +106,26 @@ import {
       allFactions.filter(async (faction) => {
         if(faction.type === "COLLECTION" && faction.addresses.length > 0){
           for(let i = 0; i < faction.addresses.length; i++){
-            //get addresses names
-            const collection = await getCollection(faction.addresses[i]);
-            if(collection && faction.addresses[i].toLowerCase().includes(collection.address.toLowerCase())){
-              //check if filterd faction already has this collection
-              if(!collectionAddresses.find((f) => f.address === faction.address)){
-                newAddresses.push({address: faction.addresses[i], factionName: faction.name, collectionName: collection.name});
-      }}}}})
-      console.log(newAddresses);
+          newAddresses.push({address: faction.addresses[i], factionName: faction.name});}
+      }})
+
+      //get all addresses in new addresses
+      const collections = await getMultipleCollections(newAddresses.map((a) => a.address).toString());
+      // console.log("collections", collections);
+
+      if(!collections) return;
+
+      //add collection names to new addresses
+      for(let i = 0; i < newAddresses.length; i++){
+        const collection = collections.find((c:any) => c.address.toLowerCase() === newAddresses[i].address.toLowerCase());
+        if(collection){
+          newAddresses[i].collectionName = collection.name;
+        }
+      }
+
+      // console.log(newAddresses);
       setCollectionAddresses(newAddresses);
     }
-    useEffect(() => {
-      if(!filteredFactions) return;
-      
-      console.log("Filtered factions changed");
-      console.log(filteredFactions);
-    }
-    , [filteredFactions]);
 
     useEffect(() => {
       if(!allFactions) return;
@@ -131,23 +134,6 @@ import {
     }
     , [allFactions]);
   
-    // const { data, status, error, refetch } = useQuery(
-    //   ['Search', debouncedSearch],
-    //   () => search(debouncedSearch),
-    //   {
-    //     enabled: !!debouncedSearch && debouncedSearch.length >= minChars,
-    //     refetchOnWindowFocus: false,
-    //     select: (d) => {
-    //       return d.data.collections
-    //         .filter((collection: any) =>{
-    //           const knownContract = knownContracts.find((c: any) => caseInsensitiveCompare(c.address, collection.address));
-    //           if (!knownContract) return false;
-    //           return !knownContract.mergedWith;
-    //         })
-    //         .sort((a: any, b: any) => b.verification?.verified - a.verification?.verified)
-    //     }
-    //   }
-    // );
     const hasDisplayableContent = searchVisits.length > 0 || (data && data.length > 0);
   
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
