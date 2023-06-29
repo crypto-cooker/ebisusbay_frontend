@@ -648,29 +648,6 @@
     "style": {}
   },
   {
-    "slug": "cronos-apes",
-    "name": "Cronos Apes",
-    "description": "The Cronos Apes brand features various iconic NFT collection. Each NFT of these collections has been uniquely and randomly generated from a fully animated traits set. Each NFT gives access to an exclusive Community and set of utilities, such as the distribution of earnings. If you are searching for the most iconic Apes collection on the Cronos Chain, you are in the right place. Join the #CronosApesArmy now!",
-    "images": {
-      "banner": "/img/brands/cronos-apes/banner.webp",
-      "preview": "/img/brands/cronos-apes/preview.webp"
-    },
-    "collections": [
-      "0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580",
-      "0x7D89dCC2f35403cFD9B07475826F9a14a340d06A",
-      "0x33e0b91c773D500FB4De87957740f5D200Be7371",
-      "0x688c9c95a7fF91cF1559cdaf098b3038Bc538BE1"
-    ],
-    "socials": {
-      "website": "https://www.cronosapesnft.com/",
-      "twitter": "https://www.twitter.com/cronosapesnft",
-      "discord": "https://discord.gg/G3JkKJAYVB"
-    },
-    "featured": true,
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "crofam-ladies",
     "name": "CrofamLadies",
     "description": "The beautiful side of #crofam.",
@@ -718,6 +695,29 @@
     "style": {}
   },
   {
+    "slug": "cronos-apes",
+    "name": "Cronos Apes",
+    "description": "The Cronos Apes brand features various iconic NFT collection. Each NFT of these collections has been uniquely and randomly generated from a fully animated traits set. Each NFT gives access to an exclusive Community and set of utilities, such as the distribution of earnings. If you are searching for the most iconic Apes collection on the Cronos Chain, you are in the right place. Join the #CronosApesArmy now!",
+    "images": {
+      "banner": "/img/brands/cronos-apes/banner.webp",
+      "preview": "/img/brands/cronos-apes/preview.webp"
+    },
+    "collections": [
+      "0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580",
+      "0x7D89dCC2f35403cFD9B07475826F9a14a340d06A",
+      "0x33e0b91c773D500FB4De87957740f5D200Be7371",
+      "0x688c9c95a7fF91cF1559cdaf098b3038Bc538BE1"
+    ],
+    "socials": {
+      "website": "https://www.cronosapesnft.com/",
+      "twitter": "https://www.twitter.com/cronosapesnft",
+      "discord": "https://discord.gg/G3JkKJAYVB"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "croarmy-collection",
     "name": "CroArmy Collection",
     "description": "CroArmy is a collection of NFTs that each serve a purpose. We attempt to diversify our holdings so we’re not too heavy in one singular project. Earnings from those projects, are swapped to bcro and airdropped to Coalitions, Soldiers, Burns, and Jackals. On top of our main treasury, we also have side hustles with BTC miners, and Jarheads.",
@@ -746,27 +746,6 @@
     "style": {}
   },
   {
-    "slug": "zap-projects",
-    "name": "Zap Projects",
-    "description": "",
-    "images": {
-      "banner": "/img/brands/zap-projects/banner.webp"
-    },
-    "collections": [
-      "0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc",
-      "0xF257E02D8c5c9a405589F99859f8b28b0Ccc5474",
-      "0x63dF2BB08bcc9807c0ef5BD0C169FF3b4b289543"
-    ],
-    "socials": {
-      "website": "https://zap7art.club/",
-      "twitter": "https://twitter.com/zap7project",
-      "discord": "https://discord.gg/tBgUbvsSZX"
-    },
-    "featured": true,
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "bob-adventures",
     "name": "BOB Adventures",
     "description": "BOB Adventures is community driven project on Cronos with our own story and utility. We will be traveling from planet to planet to meet new friends. Join our adventure and let's explore universe together!",
@@ -788,6 +767,71 @@
       "discord": "https://discord.gg/kemzRExMju"
     },
     "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "cr00ts-club",
+    "name": "Cr00ts Club",
+    "description": "Welcome in the growing ecosystem of the Cr00ts, we are here to takeover the Cronos chain \uD83D\uDE0E",
+    "images": {
+      "banner": "/img/brands/cr00ts-club/banner.webp",
+      "preview": "/img/brands/cr00ts-club/preview.webp"
+    },
+    "collections": [
+      "0xf8c82cc093D22f6dC782F0D781f4770E17266C23",
+      "0xca00aba7689e3c0f9f74e1f8d82e61c04c787734",
+      "0x08FB1f6625d034019f2F6a3E70bab2FaA55CA068"
+    ],
+    "socials": {
+      "website": "https://cr00tsnft.ca/",
+      "twitter": "https://twitter.com/cr00tsnft",
+      "discord": "https://discord.gg/Xb5xv84mS2"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "zap-projects",
+    "name": "Zap Projects",
+    "description": "",
+    "images": {
+      "banner": "/img/brands/zap-projects/banner.webp"
+    },
+    "collections": [
+      "0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc",
+      "0xF257E02D8c5c9a405589F99859f8b28b0Ccc5474",
+      "0x63dF2BB08bcc9807c0ef5BD0C169FF3b4b289543"
+    ],
+    "socials": {
+      "website": "https://zap7art.club/",
+      "twitter": "https://twitter.com/zap7project",
+      "discord": "https://discord.gg/tBgUbvsSZX"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "sleazy-weasel",
+    "name": "Sleazy Weasel",
+    "description": "Welcome to #StaySleazy, where style, success, and self-empowerment converge. Our brand page is a hub for the Sleazy Weasels movement, inspiring individuals to manifest their own success. Discover our fashion-forward pieces, embrace your unique style, and find financial freedom within. Join our elite community as we celebrate ambition, resilience, and the relentless pursuit of success. #StaySleazy, where the world is yours for the taking.",
+    "images": {
+      "banner": "/img/brands/sleazy-weasel/banner.webp",
+      "preview": "/img/brands/sleazy-weasel/preview.webp"
+    },
+    "collections": [
+      "0x07BEa69887Ce393F91b3D5697bADB53b92367C71",
+      "0xEeCA8a560F0b7069E7a310F883A8aff435ffDd92"
+    ],
+    "socials": {
+      "website": "https://staysleazy.com/",
+      "twitter": "https://twitter.com/sleazy_weasel",
+      "discord": "https://discord.gg/7FN3P8evtE",
+      "telegram": "https://t.me/sleazywsal"
+    },
+    "featured": false,
     "categories": [],
     "style": {}
   },
@@ -961,28 +1005,6 @@
     "style": {}
   },
   {
-    "slug": "cr00ts-club",
-    "name": "Cr00ts Club",
-    "description": "Welcome in the growing ecosystem of the Cr00ts, we are here to takeover the Cronos chain \uD83D\uDE0E",
-    "images": {
-      "banner": "/img/brands/cr00ts-club/banner.webp",
-      "preview": "/img/brands/cr00ts-club/preview.webp"
-    },
-    "collections": [
-      "0xf8c82cc093D22f6dC782F0D781f4770E17266C23",
-      "0xca00aba7689e3c0f9f74e1f8d82e61c04c787734",
-      "0x08FB1f6625d034019f2F6a3E70bab2FaA55CA068"
-    ],
-    "socials": {
-      "website": "https://cr00tsnft.ca/",
-      "twitter": "https://twitter.com/cr00tsnft",
-      "discord": "https://discord.gg/Xb5xv84mS2"
-    },
-    "featured": false,
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "titans-of-cronos",
     "name": "Titans of Cronos",
     "description": "3 cro to the moon",
@@ -1003,6 +1025,29 @@
       "website": "https://kingkong-cronos.netlify.app/",
       "twitter": "https://twitter.com/kingkongcronos2",
       "discord": "https://discord.gg/8ZQUXur8hH"
+    },
+    "featured": false,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "dead-beat-dads",
+    "name": "Dead Beat Dads",
+    "description": "Dead Beat Dads is a fun-spirited, pixel art project looking to bring the joy back to collecting NFTs while also earning CRO along the way. There are already 3 different collections in the family (Dead Beat Dads, Trophy Wives, and Teenage Dirtbags). Come join our family, even if it is dysfunctional.",
+    "images": {
+      "banner": "/img/brands/titans-of-cronos/banner.webp",
+      "preview": "/img/brands/titans-of-cronos/preview.webp"
+    },
+    "collections": [
+      "0xE971838cED4949E5c51DD7bAA6d2D0188eD772f0",
+      "0x96adF7839A133da31824113a23e223D02e97c53A",
+      "0xBC49267179d67050619CEB59a9870b14c9255C6e",
+      "0xb2a5Fc03533d397943c9Eae3183e409208DDaab3"
+    ],
+    "socials": {
+      "website": "https://deadbeatdadscronos.com/",
+      "twitter": "https://twitter.com/zolape01",
+      "discord": "https://discord.gg/KnRmEA4u8v"
     },
     "featured": false,
     "categories": [],
