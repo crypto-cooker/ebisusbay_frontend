@@ -1,4 +1,4 @@
-import {useMediaQuery, Input, Box, Modal, ModalContent, ModalOverlay, Text, VStack, Stack, Slider, Button, useDisclosure, Center, Image, SliderTrack, SliderFilledTrack, SliderThumb, Flex} from "@chakra-ui/react";
+import {useMediaQuery, Input, Box, Modal, ModalContent, ModalOverlay,Avatar, Text, VStack, Stack, Slider, Button, useDisclosure, Center, Image, SliderTrack, SliderFilledTrack, SliderThumb, Flex} from "@chakra-ui/react";
 import { RdModal } from "@src/components-v2/feature/ryoshi-dynasties/components";
 import { useRef, useState, useContext } from "react";
 import AvatarEditor from "react-avatar-editor";
@@ -181,11 +181,12 @@ const Cropper = () => {
         <VStack>
         <Center>
         <div className="img-container">
-          <Image
+          <Avatar
+            size={'2xl'}
             src={preview || rdContext.user?.faction.image}
-            rounded="lg"
-            width="150"
-            height="150"
+            // rounded="lg"
+            // width="150"
+            // height="150"
           />
         </div>
         </Center>

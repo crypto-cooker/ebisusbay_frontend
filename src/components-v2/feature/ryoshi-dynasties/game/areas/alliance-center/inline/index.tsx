@@ -14,7 +14,8 @@ import {
   Stack,
   Text,
   useDisclosure,
-  VStack
+  VStack,
+  Avatar
 } from "@chakra-ui/react";
 import {AddIcon, ArrowBackIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
@@ -302,10 +303,11 @@ const CurrentFaction = () => {
         <>
           {!!rdContext.user?.faction ? (
             <VStack>
-              <Image
+              <Avatar
+                size='2xl'
                 src={rdContext.user?.faction.image}
-                w='150px'
-                rounded='lg'
+                // w='150px'
+                // rounded='lg'
                 
               />
               {/* <form onSubmit={handleSubmit} >

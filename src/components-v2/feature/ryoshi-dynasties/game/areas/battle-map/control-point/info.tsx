@@ -11,7 +11,8 @@ import {
   Button,
   useBreakpointValue,
   TableContainer,
-  Text
+  Text,
+  Avatar
 } from '@chakra-ui/react';
 import {RdControlPoint} from "@src/core/services/api-service/types";
 import {
@@ -121,11 +122,11 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
                   <Tbody>
                     {controlPoint.leaderBoard.filter((faction, index) => index < 5).map((faction, index ) => (
                       <Tr key={index}>
-                        <Image
-                          width='40px'
-                          height='40px'
+                        <Avatar
+                          // width='40px'
+                          // height='40px'
                           src={ImageService.translate(faction.image).avatar()}
-                          rounded='sm'
+                          rounded='xs'
                         />
                         <Td textAlign='center'>
                           <Text fontSize={{base: 14, sm: 14}}>{faction.totalTroops}</Text>
