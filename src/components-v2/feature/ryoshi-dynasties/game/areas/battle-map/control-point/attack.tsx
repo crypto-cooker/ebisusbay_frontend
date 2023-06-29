@@ -18,6 +18,7 @@ import {
   Text,
   useDisclosure,
   VStack,
+  Avatar
 } from "@chakra-ui/react";
 import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
@@ -606,7 +607,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
                     <Box w='45'>
                       <VStack>
                         {attackerImage !== '' ?
-                          <Image
+                          <Avatar
                             boxSize={{base: '50px', sm: '100px'}}
                             objectFit="cover"
                             src={ImageService.translate(attackerImage).fixedWidth(100, 100)}
@@ -631,7 +632,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
                     <Box  w='45'>
                       <VStack>
                         {defenderImage !== '' ?
-                          <Image
+                          <Avatar
                             boxSize={{base: '50px', sm: '100px'}}
                             objectFit="cover"
                             src={ImageService.translate(defenderImage).fixedWidth(100, 100)}

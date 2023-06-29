@@ -20,6 +20,7 @@ import {
   Text,
   useDisclosure,
   VStack,
+  Avatar
 } from "@chakra-ui/react";
 import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
@@ -124,8 +125,8 @@ const BattleConclusion = ({attackerTroops, defenderTroops, battleAttack, display
       setAttackerFilter('brightness(1)');
       setDefenderFilter('brightness(0.4)');
       setAttackerStyle({position: "relative", background: "whitesmoke", display: "flex", justifyContent: "center",
-                        padding: "5px", boxSize: "border-box", boxShadow: "0 20px 50px rgba(255, 255, 255, 0.8)"});
-      setDefenderStyle({boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)"});
+                        padding: "5px",borderRadius:"50%", boxSize: "border-box", boxShadow: "0 20px 50px rgba(255, 255, 255, 0.8)"});
+      setDefenderStyle({borderRadius:"50%",boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)"});
     }
     else if(attackersSlain > defendersSlain) {
       battleOutcome.current.textContent = "Defeat!";
@@ -133,16 +134,16 @@ const BattleConclusion = ({attackerTroops, defenderTroops, battleAttack, display
       setAttackerFilter('brightness(0.4)');
       setDefenderFilter('brightness(1');
       setDefenderStyle({position: "relative", background: "whitesmoke", display: "flex", justifyContent: "center",
-                        padding: "5px", boxSize: "border-box", boxShadow: "0 20px 50px rgba(255, 255, 255, 0.8)"});
-      setAttackerStyle({boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)"});
+                        padding: "5px", borderRadius:"50%", boxSize: "border-box", boxShadow: "0 20px 50px rgba(255, 255, 255, 0.8)"});
+      setAttackerStyle({borderRadius:"50%",boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)"});
     }
     else if(attackersSlain == defendersSlain) {
       battleOutcome.current.textContent = "Draw";
       battleContext.current.textContent = "Neither side was able to gain an advantage over the other";
       setAttackerFilter('brightness(1)');
       setDefenderFilter('brightness(1)');
-      setAttackerStyle({});
-      setDefenderStyle({});
+      setAttackerStyle({borderRadius:"50%"});
+      setDefenderStyle({borderRadius:"50%"});
     }
 
     attackerOutcome.current.textContent = "lost "+attackersSlain+"/"+ Number(attackerTroops)+" troops";
@@ -208,7 +209,7 @@ return (
               <VStack>
               {attackerImage !== '' ?
                <div style={attackerStyle}>
-                <Image
+                <Avatar
                   boxSize={{base: '50px', sm: '100px'}}
                   objectFit="cover"
                   src={ImageService.translate(attackerImage).fixedWidth(100, 100)}
@@ -231,7 +232,7 @@ return (
               <VStack>
               {defenderImage !== '' ?
               <div style={defenderStyle}>
-                <Image
+                <Avatar
                   boxSize={{base: '50px', sm: '100px'}}
                   objectFit="cover"
                   src={ImageService.translate(defenderImage).fixedWidth(100, 100)}
