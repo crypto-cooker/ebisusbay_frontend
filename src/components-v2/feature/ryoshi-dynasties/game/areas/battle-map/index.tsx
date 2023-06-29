@@ -1,5 +1,5 @@
 import React, {ReactElement, useEffect, useRef, useState, useContext } from 'react';
-import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex, Image, HStack } from '@chakra-ui/react'
+import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex, Image, Avatar, WrapItem} from '@chakra-ui/react'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
@@ -455,64 +455,64 @@ const BattleMap = ({onChange}: BattleMapProps) => {
                   <div className={styles.water}></div>
                   <div id='beach' className={[styles.buccaneer_beach, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Buccaneer Beach")}>
                     <div className={[styles.worldmap_label, styles.buccaneer_beach_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("Buccaneer Beach")}></Image>Buccaneer Beach</div> </div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Buccaneer Beach")}></Avatar>Buccaneer Beach</div> </div>
                   <div className={[styles.mitagi_retreat, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Mitagi Retreat")}>
                     <div className={[styles.worldmap_label, styles.mitagi_retreat_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("Mitagi Retreat")}></Image>Mitagi Retreat</div> </div>	
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Mitagi Retreat")}></Avatar>Mitagi Retreat</div> </div>	
                   <div className={[styles.omoikanes_athenaeum, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Omoikanes Athenaeum")}>
                     <div className={[styles.worldmap_label, styles.omoikanes_athenaeum_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("Omoikanes Athenaeum")}></Image>Omoikane's Athenaeum</div> </div>		
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Omoikanes Athenaeum")}></Avatar>Omoikane's Athenaeum</div> </div>		
                   <div className={[styles.clutch_of_fukurokuju, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Clutch Of Fukurokujo")}>
                     <div className={[styles.worldmap_label, styles.clutch_of_fukurokuju_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("Clutch Of Fukurokujo")}></Image>Clutch of Fukurokuju</div> </div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Clutch Of Fukurokujo")}></Avatar>Clutch of Fukurokuju</div> </div>
                   <div className={[styles.orcunheim, styles.enlarge].filter(e => !!e).join(' ') } onClick={()=> GetControlPointId("Orcunheim")}>
                     <div className={[styles.worldmap_label, styles.orcunheim_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("Orcunheim")}></Image>Orcunheim</div> </div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Orcunheim")}></Avatar>Orcunheim</div> </div>
                   <div className={[styles.ice_shrine, styles.enlarge].filter(e => !!e).join(' ') } onClick={()=> GetControlPointId("Ice Shrine")}>
                     <div className={[styles.worldmap_label, styles.ice_shrine_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("Ice Shrine")}></Image>Ice Shrine</div> </div>	
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Ice Shrine")}></Avatar>Ice Shrine</div> </div>	
                   <div className={[styles.felisgarde, styles.enlarge].filter(e => !!e).join(' ') } onClick={()=> GetControlPointId("Felisgarde")}>
                     <div className={[styles.worldmap_label, styles.felisgarde_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-70' src={GetLeaderIcon("Felisgarde")}></Image>Felisgarde</div> </div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Felisgarde")}></Avatar>Felisgarde</div> </div>
                   <div className={[styles.ebisusbay, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Ebisus Bay")}>
                     <div className={[styles.worldmap_label, styles.ebisusbay_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("Ebisus Bay")}></Image>Ebisu's Bay</div> </div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Ebisus Bay")}></Avatar>Ebisu's Bay</div> </div>
                   <div className={[styles.verdant_forest, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Verdant Forest")}>
                     <div className={[styles.worldmap_label, styles.verdant_forest_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("Verdant Forest")}></Image>Verdant Forest</div> </div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Verdant Forest")}></Avatar>Verdant Forest</div> </div>
                   <div className={[styles.infinite_nexus, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Infinte Nexus")}>
                     <div className={[styles.worldmap_label, styles.infinite_nexus_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("The Infinte Nexus")}></Image>Infinite Nexus</div></div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("The Infinte Nexus")}></Avatar>Infinite Nexus</div></div>
                   <div className={[styles.venoms_descent, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Venoms Descent")}>
                     <div className={[styles.worldmap_label, styles.venoms_descent_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("Venoms Descent")}></Image>Venom's Descent</div></div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Venoms Descent")}></Avatar>Venom's Descent</div></div>
                   <div className={[styles.mitamic_fissure, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Mitamic Fissure")}>
                     <div className={[styles.worldmap_label, styles.mitamic_fissure_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("Mitamic Fissure")}></Image>Mitamic Fissure</div></div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Mitamic Fissure")}></Avatar>Mitamic Fissure</div></div>
                   <div className={[styles.seashrine, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Seashrine")}>
                     <div className={[styles.worldmap_label, styles.seashrine_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20' src={GetLeaderIcon("Seashrine")}></Image>Seashrine</div></div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag}  src={GetLeaderIcon("Seashrine")}></Avatar>Seashrine</div></div>
                   <div className={[styles.classy_keep, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Classy Keep")}>
                     <div className={[styles.worldmap_label, styles.classy_keep_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("Classy Keep")}></Image>Classy Keep</div></div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Classy Keep")}></Avatar>Classy Keep</div></div>
                   <div className={[styles.ancestors_final_rest, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Ancestors Final Rest")}>
                     <div className={[styles.worldmap_label, styles.ancestors_final_rest_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("Ancestors Final Rest")}></Image>Ancestor's Final Rest</div></div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Ancestors Final Rest")}></Avatar>Ancestor's Final Rest</div></div>
                   <div className={[styles.dragon_roost, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Dragons Roost")}>
                     <div className={[styles.worldmap_label, styles.dragon_roost_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag}left='-20' src={GetLeaderIcon("Dragons Roost")}></Image>Dragon Roost</div></div>	
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Dragons Roost")}></Avatar>Dragon Roost</div></div>	
                   <div className={[styles.nyar_spire, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("N'yar Spire")}>
                     <div className={[styles.worldmap_label, styles.nyar_spire_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag}left='-20' src={GetLeaderIcon("N'yar Spire")}></Image>N'yar Spire</div></div>		
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("N'yar Spire")}></Avatar>N'yar Spire</div></div>		
                   <div className={[styles.iron_bastion, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Iron Bastion")}>
                     <div className={[styles.worldmap_label, styles.iron_bastion_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("The Iron Bastion")}></Image>Iron Bastion</div></div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("The Iron Bastion")}></Avatar>Iron Bastion</div></div>
                   <div className={[styles.volcanic_reach, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Volcanic Reach")}>
                     <div className={[styles.worldmap_label, styles.volcanic_reach_label].filter(e => !!e).join(' ')}>
-                    <Image className={styles.leader_flag} left='-20' src={GetLeaderIcon("Volcanic Reach")}></Image>Volcanic Reach</div></div>	
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag}  src={GetLeaderIcon("Volcanic Reach")}></Avatar>Volcanic Reach</div></div>	
                   <div className={[styles.the_conflagration, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Conflagration")}>
                     <div className={[styles.worldmap_label, styles.the_conflagration_label].filter(e => !!e).join(' ')}>
-                      <Image className={styles.leader_flag} left='-20'src={GetLeaderIcon("The Conflagration")} ></Image>The Conflagration</div></div>
+                      <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("The Conflagration")} ></Avatar>The Conflagration</div></div>
                 </div>
                 
                 </Flex>
