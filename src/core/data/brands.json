@@ -511,26 +511,6 @@
     "style": {}
   },
   {
-    "slug": "croodle-ape",
-    "name": "Croodle Ape",
-    "description": "Cronos NFTs ecosystem focus on passive income and long-term sustainability",
-    "images": {
-      "banner": "/img/brands/croodle-ape/banner.webp"
-    },
-    "collections": [
-      "0x84Fd887B14442C070a9B63a966D15a2C98E03FA2",
-      "0xfcE5A6571fA0495d28f9D305945E74bA4dDEAD62",
-      "0x434c8845261d5cF942d62fcd6503569cE05798b3"
-    ],
-    "socials": {
-      "website": "https://croodleape.com/",
-      "twitter": "https://www.twitter.com/croodleape",
-      "discord": "https://discord.gg/Tj97K4c4Y9"
-    },
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "lost-toys",
     "name": "Lost Toys",
     "description": "",
@@ -793,6 +773,36 @@
     "style": {}
   },
   {
+    "slug": "carkayous",
+    "name": "Carkayous",
+    "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives.",
+    "images": {
+      "banner": "/img/brands/carkayous/banner.webp",
+      "preview": "/img/brands/carkayous/preview.webp"
+    },
+    "collections": [
+      "0x72af9c869a4759e6d50e9656c0741b395532c3dd",
+      "0x6c2757ee563d063cce48bd06b130292fe530e76d",
+      "0xe0afa67d7E4F2329f81562DB9318837A28be83Ec",
+      "0xD717708d012dCa8C3d108BD1E079f937C4A2C0cF",
+      "0x7781b08298d7EDD97354989307A37cFd79BeB175",
+      "0x384A13ca5eA3BF799387DAf3dB0140AE66a7f3f0",
+      "0x4Ba5b1094455D1C8bDCcD534F5053DED02477b50",
+      "0xDaFab3c3EdA8029C881986B30EFCBd1d32523a4e",
+      "0x00A605feDeF87d8C53D46d17eda9E3fe37d9927B",
+      "0x5bf2b7f2640a80c0f0592dcc1e98120136fa5595",
+      "0x7ddd8c4786ea4422d9c3b2b0903ac4bfaacea797"
+    ],
+    "socials": {
+      "website": "https://carkayous.com/",
+      "twitter": "https://twitter.com/carkayous",
+      "discord": "https://discord.gg/carkayous"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "zap-projects",
     "name": "Zap Projects",
     "description": "",
@@ -836,30 +846,22 @@
     "style": {}
   },
   {
-    "slug": "carkayous",
-    "name": "Carkayous",
-    "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives.",
+    "slug": "kaiju-of-cronos",
+    "name": "Kaiju of Cronos",
+    "description": "Kaiju of Cronos, a double KYC'd project, utilizes IRL business to maintain a consistent cash flow within the ecosystem, while systemically providing longevity to the NFT project. \nOur IRL business brand is crucial to creating rewards, IRL products and services to all, no matter the market conditions.",
     "images": {
-      "banner": "/img/brands/carkayous/banner.webp",
-      "preview": "/img/brands/carkayous/preview.webp"
+      "banner": "/img/brands/kaiju-of-cronos/banner.webp",
+      "preview": "/img/brands/kaiju-of-cronos/preview.webp"
     },
     "collections": [
-      "0x72af9c869a4759e6d50e9656c0741b395532c3dd",
-      "0x6c2757ee563d063cce48bd06b130292fe530e76d",
-      "0xe0afa67d7E4F2329f81562DB9318837A28be83Ec",
-      "0xD717708d012dCa8C3d108BD1E079f937C4A2C0cF",
-      "0x7781b08298d7EDD97354989307A37cFd79BeB175",
-      "0x384A13ca5eA3BF799387DAf3dB0140AE66a7f3f0",
-      "0x4Ba5b1094455D1C8bDCcD534F5053DED02477b50",
-      "0xDaFab3c3EdA8029C881986B30EFCBd1d32523a4e",
-      "0x00A605feDeF87d8C53D46d17eda9E3fe37d9927B",
-      "0x5bf2b7f2640a80c0f0592dcc1e98120136fa5595",
-      "0x7ddd8c4786ea4422d9c3b2b0903ac4bfaacea797"
+      "0x0C5cEA99fEd27c98B505837A8E72cfDF70bcF8F0",
+      "0xe28B4045A6C1cb3ED30861CAF62A01A2C4DAaa69"
     ],
     "socials": {
-      "website": "https://carkayous.com/",
-      "twitter": "https://twitter.com/carkayous",
-      "discord": "https://discord.gg/carkayous"
+      "website": "https://kaijuofcronos.com/",
+      "twitter": "https://twitter.com/kaiju_of_cronos",
+      "discord": "https://discord.gg/kaijuofcronos",
+      "gitbook": "https://docs.kaijuofcronos.com/"
     },
     "featured": true,
     "categories": [],
@@ -889,6 +891,7 @@
       "medium": "https://medium.com/@drdao.club",
       "telegram": "https://t.me/DrDaoFounder"
     },
+    "featured": false,
     "categories": [],
     "style": {}
   },
@@ -910,6 +913,7 @@
       "discord": "https://discord.gg/fnVzKYPbg/",
       "telegram": "https://t.me/BabyHopToken"
     },
+    "featured": false,
     "categories": [],
     "style": {}
   },
@@ -977,28 +981,6 @@
     "socials": {
       "website": "https://dripderivatives.com/",
       "discord": "https://discord.gg/ttaPM95WcR"
-    },
-    "featured": false,
-    "categories": [],
-    "style": {}
-  },
-  {
-    "slug": "kaiju-of-cronos",
-    "name": "Kaiju of Cronos",
-    "description": "Kaiju of Cronos, a double KYC'd project, utilizes IRL business to maintain a consistent cash flow within the ecosystem, while systemically providing longevity to the NFT project. \nOur IRL business brand is crucial to creating rewards, IRL products and services to all, no matter the market conditions.",
-    "images": {
-      "banner": "/img/brands/kaiju-of-cronos/banner.webp",
-      "preview": "/img/brands/kaiju-of-cronos/preview.webp"
-    },
-    "collections": [
-      "0x0C5cEA99fEd27c98B505837A8E72cfDF70bcF8F0",
-      "0xe28B4045A6C1cb3ED30861CAF62A01A2C4DAaa69"
-    ],
-    "socials": {
-      "website": "https://kaijuofcronos.com/",
-      "twitter": "https://twitter.com/kaiju_of_cronos",
-      "discord": "https://discord.gg/kaijuofcronos",
-      "gitbook": "https://docs.kaijuofcronos.com/"
     },
     "featured": false,
     "categories": [],
