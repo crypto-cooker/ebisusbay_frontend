@@ -9,7 +9,7 @@ import {
   IconButton,
   Image,
   Modal,
-  ModalBody,
+  ModalBody, ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -94,7 +94,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const handleAddNft = useCallback((nft: WalletNft) => {
     const pendingCount = pendingNfts.filter((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress)).length;
     const hasRemainingBalance = pendingCount === 0 || pendingCount < (nft.balance ?? 1);
-    if (hasRemainingBalance && pendingNfts.length <= rdConfig.barracks.staking.nft.maxSlots) {
+    if (hasRemainingBalance && pendingNfts.length < rdConfig.barracks.staking.nft.maxSlots) {
       const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
       const stakeConfig = rdConfig.barracks.staking.nft.collections.find((c) => c.slug === collectionSlug);
 
@@ -715,6 +715,7 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, slotUnlockCont
             </HStack>
           </Center>
         </ModalHeader>
+        <ModalCloseButton />
         <ModalBody color='white'>
           <Text>Unlock staking slots to allow additional NFTs to earn more troops in the barracks.</Text>
           <Box

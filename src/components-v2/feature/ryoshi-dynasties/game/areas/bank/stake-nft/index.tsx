@@ -9,7 +9,7 @@ import {
   IconButton,
   Image,
   Modal,
-  ModalBody,
+  ModalBody, ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -54,6 +54,7 @@ import SeasonUnlocks from "@src/Contracts/SeasonUnlocks.json";
 import Fortune from "@src/Contracts/Fortune.json";
 import {parseErrorMessage} from "@src/helpers/validator";
 import localFont from "next/font/local";
+import {getTheme} from "@src/Theme/theme";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -90,7 +91,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
   const handleAddNft = useCallback((nft: WalletNft) => {
     const isInList = pendingNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
-    if (!isInList && pendingNfts.length <= rdContext.config.bank.staking.nft.maxSlots) {
+    if (!isInList && pendingNfts.length < rdContext.config.bank.staking.nft.maxSlots) {
       const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
       const stakeConfig = rdContext.config.bank.staking.nft.collections.find((c) => c.slug === collectionSlug);
 
@@ -688,6 +689,7 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, slotUnlockCont
             </HStack>
           </Center>
         </ModalHeader>
+        <ModalCloseButton />
         <ModalBody color='white'>
           <Text>Unlock staking slots to allow additional NFTs to earn more APR in the bank.</Text>
           <Box
