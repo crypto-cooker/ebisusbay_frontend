@@ -1,6 +1,7 @@
 import {
   Box,
-  Button, ButtonGroup,
+  Button,
+  ButtonGroup,
   Center,
   Flex,
   HStack,
@@ -14,7 +15,7 @@ import {
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
-  Spinner, Stack,
+  Spinner,
   Text,
   VStack
 } from "@chakra-ui/react"
