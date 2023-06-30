@@ -62,7 +62,7 @@ export const configData = {
       fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
-      seasonUnlocks: ''
+      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af'
     },
     tokens: {
       loot: {
@@ -166,7 +166,7 @@ export const configData = {
       fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
-      seasonUnlocks: ''
+      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af'
     },
     tokens: {
       loot: {
@@ -371,7 +371,7 @@ export const configData = {
       fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
-      seasonUnlocks: ''
+      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af'
     },
     tokens: {
       loot: {
