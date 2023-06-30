@@ -175,6 +175,11 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
       setFactionError(`You must select a faction`);
       return;
     }
+    if(allFactions.filter(faction => faction.name === selectedFaction)[0].addresses.length === 0){
+      setFactionError(`Faction must have addresses to participate`);
+      return;
+    }
+
     setFactionError('');
 
     if(currentTab === tabs.deploy) {
