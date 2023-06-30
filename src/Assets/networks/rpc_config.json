@@ -21542,6 +21542,29 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Teenage Dirtbags",
+      "slug": "dbd-teenage-dirtbags",
+      "multiToken": false,
+      "address": "0xb2a5Fc03533d397943c9Eae3183e409208DDaab3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Teenage Dirtbags, a collection of 5000 teenagers who lacked parental guidance growing up. The only way to mint a Teenage Dirtbag is through a honeymoon, with a Dead Beat Dad and Trophy Wife. Become a role model for these misguided teens and earn CRO!",
+        "avatar": "/img/collections/dbd-teenage-dirtbags/avatar.webp",
+        "card": "/img/collections/dbd-teenage-dirtbags/card.webp",
+        "banner": "/img/collections/dbd-teenage-dirtbags/banner.webp",
+        "website": "https://deadbeatdadscronos.com/",
+        "twitter": "https://twitter.com/zolape01",
+        "discord": "https://discord.gg/KnRmEA4u8v",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
