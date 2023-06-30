@@ -320,15 +320,17 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
               isInvalid={!!factionError}
               mb={'24px'}
               bg='none'>
-
-              <Grid templateColumns={{base:'repeat(1, 1fr)', sm:'repeat(5, 1fr)'}} gap={6} marginBottom='4'>
-                <GridItem w='100%' h='5' >
-                  <FormLabel> Faction:</FormLabel>
-                </GridItem>
-                <GridItem colSpan={{base:5, sm:4}} w='100%' >
-                  <Search handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions}/>
-                </GridItem>
-              </Grid>
+              
+              {hasFaction ? (<></>) : (<>
+                <Grid templateColumns={{base:'repeat(1, 1fr)', sm:'repeat(5, 1fr)'}} gap={6} marginBottom='4'>
+                  <GridItem w='100%' h='5' >
+                    <FormLabel> Faction:</FormLabel>
+                  </GridItem>
+                  <GridItem colSpan={{base:5, sm:4}} w='100%' >
+                    <Search handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions}/>
+                  </GridItem>
+                </Grid>
+              </>)}
 
               <Select me={2}
                       bg='none'
