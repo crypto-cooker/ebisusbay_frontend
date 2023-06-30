@@ -91,6 +91,25 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
     setCurrentTab(key);
   };
 
+  const { data: slotUnlockContext, refetch: refetchSlotUnlockContext } = useQuery({
+    queryKey: ['BarracksSlotUnlockContext', user.address],
+    queryFn: async () => {
+      const contract = new Contract(config.contracts.seasonUnlocks, SeasonUnlocks, readProvider);
+      const unlocks = await contract.unlocks(1, user.address!);
+      const recipes = await contract.getRecipesForType(1);
+      return {
+        unlocks,
+        recipes
+      }
+    },
+    refetchOnWindowFocus: false,
+    enabled: !!user.address,
+    initialData: {
+      unlocks: 0,
+      recipes: []
+    }
+  });
+
   const handleAddNft = useCallback((nft: WalletNft) => {
     const pendingCount = pendingNfts.filter((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress)).length;
     const hasRemainingBalance = pendingCount === 0 || pendingCount < (nft.balance ?? 1);
@@ -115,7 +134,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         isAlreadyStaked: false
       }]);
     }
-  }, [pendingNfts]);
+  }, [pendingNfts, slotUnlockContext]);
 
   const handleRemoveNft = useCallback((nftAddress: string, nftId: string) => {
     setPendingNfts(pendingNfts.filter((nft) => nft.nftId !== nftId || !caseInsensitiveCompare(nft.nftAddress, nftAddress)));
@@ -194,25 +213,6 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       setPendingNfts(nfts);
     });
   }, [isOpen]);
-
-  const { data: slotUnlockContext, refetch: refetchSlotUnlockContext } = useQuery({
-    queryKey: ['BankSlotUnlockContext', user.address],
-    queryFn: async () => {
-      const contract = new Contract(config.contracts.seasonUnlocks, SeasonUnlocks, readProvider);
-      const unlocks = await contract.unlocks(1, user.address!);
-      const recipes = await contract.getRecipesForType(1);
-      return {
-        unlocks,
-        recipes
-      }
-    },
-    refetchOnWindowFocus: false,
-    enabled: !!user.address,
-    initialData: {
-      unlocks: 0,
-      recipes: []
-    }
-  });
 
   useEffect(() => {
     setCurrentCollection(addressForTab);
