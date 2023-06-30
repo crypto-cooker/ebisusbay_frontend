@@ -14,7 +14,9 @@ import {
   Select,
   Spacer,
   Text,
-  Image
+  Image,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 
 import React, {ChangeEvent, ReactElement, useContext, useEffect, useState} from "react";
@@ -41,6 +43,8 @@ import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/searchFactions";
 import CollectionsComponent from '@src/components-v2/feature/collections';
+import useBreakpoint from "use-breakpoint";
+import { isMobile } from "web3modal";
                 // import Select from "react-select";
 const tabs = {
   recall: 'recall',
@@ -171,6 +175,11 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
       setFactionError(`You must select a faction`);
       return;
     }
+    if(allFactions.filter(faction => faction.name === selectedFaction)[0].addresses.length === 0){
+      setFactionError(`Faction must have addresses to participate`);
+      return;
+    }
+
     setFactionError('');
 
     if(currentTab === tabs.deploy) {
@@ -316,11 +325,18 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
               isInvalid={!!factionError}
               mb={'24px'}
               bg='none'>
-              <HStack justifyContent={'space-between'} marginBottom={'2'}>
-                <FormLabel w='20%'>Faction:</FormLabel>
-                <Search handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions}/>
+              
+              {hasFaction ? (<></>) : (<>
+                <Grid templateColumns={{base:'repeat(1, 1fr)', sm:'repeat(5, 1fr)'}} gap={6} marginBottom='4'>
+                  <GridItem w='100%' h='5' >
+                    <FormLabel> Faction:</FormLabel>
+                  </GridItem>
+                  <GridItem colSpan={{base:5, sm:4}} w='100%' >
+                    <Search handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions}/>
+                  </GridItem>
+                </Grid>
+              </>)}
 
-              </HStack>
               <Select me={2}
                       bg='none'
                 // placeholder='Please select a faction'

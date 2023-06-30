@@ -1,12 +1,12 @@
 import brands from "@src/core/data/brands.json";
-import {Box, SimpleGrid, Text, useMediaQuery, VStack, Wrap, WrapItem} from "@chakra-ui/react";
+import {Box, Button, SimpleGrid, Text, useMediaQuery, VStack, Wrap, WrapItem} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import React from "react";
 import Header from "@src/components-v2/shared/layout/page-header";
 import categories from "@src/core/data/categories.json";
 import ImageService from "@src/core/services/image";
 import {GetServerSidePropsContext} from "next";
+import {useState} from "react";
 
 interface BrandsProps {
   ssrBrands: any[]
@@ -15,6 +15,7 @@ interface BrandsProps {
 const Brands = ({ssrBrands}: BrandsProps) => {
   const router = useRouter();
   const [supportsHover] = useMediaQuery('(hover: hover)')
+  const [showAll, setShowAll] = useState<boolean>(false);
 
   const navigate = (slug: string) => {
     router.push(`/brands/${slug}`)
@@ -30,7 +31,7 @@ const Brands = ({ssrBrands}: BrandsProps) => {
       <Header title="Brands" subtitle="Showcasing the most prominent brands on the Cronos chain" />
       <Box mt={4} maxW="2560px" mx="auto">
         <SimpleGrid columns={{base: 1, md: 2, lg: 3, xl: 4}} gap={4} mx={6}>
-          {ssrBrands.map((brand) => (
+          {ssrBrands.filter((brand) => showAll || brand.featured).map((brand) => (
             <Box
               key={brand.slug}
               h="200px"
@@ -84,17 +85,27 @@ const Brands = ({ssrBrands}: BrandsProps) => {
             </Box>
           ))}
         </SimpleGrid>
+        {!showAll && (
+          <Box textAlign='center' mt={4}>
+            <Button
+              variant='primary'
+              onClick={() => setShowAll(true)}
+            >
+              Show All
+            </Button>
+          </Box>
+        )}
       </Box>
     </>
   )
 }
 
 export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
-  const filteredBrands = brands.filter((b) => b.featured);
+  // const filteredBrands = brands.filter((b) => b.featured);
 
   return {
     props: {
-      ssrBrands: filteredBrands
+      ssrBrands: brands.sort((a, b) => (b.featured === a.featured) ? 0 : (a.featured ? -1 : 1))
     },
   };
 };

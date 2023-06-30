@@ -61,7 +61,8 @@ export const configData = {
       barracks: '0xfDE081ACB68Ac6BB7B7702DEba49D99b081Bd1eF',
       fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
-      presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0'
+      presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
+      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af'
     },
     tokens: {
       loot: {
@@ -164,7 +165,8 @@ export const configData = {
       barracks: '0xfDE081ACB68Ac6BB7B7702DEba49D99b081Bd1eF',
       fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
-      presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0'
+      presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
+      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af'
     },
     tokens: {
       loot: {
@@ -267,7 +269,8 @@ export const configData = {
       barracks: '0x099402e2FBd74Ef6cAe01951F965888eb9408AC5',
       fortune: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
       rewards: '0xB775F2Ef8E007F6719fF0fc113048180b4482e2c',
-      presaleVaults: '0x677a4B2910e0e5667907B5bf4cD4fdb188e99281'
+      presaleVaults: '0x677a4B2910e0e5667907B5bf4cD4fdb188e99281',
+      seasonUnlocks: '0x107ca22a421b24b0986150E51ce03b772b56440f'
     },
     tokens: {
       loot: {
@@ -367,7 +370,8 @@ export const configData = {
       barracks: '0xfDE081ACB68Ac6BB7B7702DEba49D99b081Bd1eF',
       fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
-      presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0'
+      presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
+      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af'
     },
     tokens: {
       loot: {

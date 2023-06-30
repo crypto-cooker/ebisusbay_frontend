@@ -206,6 +206,14 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   }
   function RemoveAddress(addressToRemove: string) {
     setShowAlert(false)
+    //check faction for troops deployed
+    if(rdContext.user?.season.troops.deployed){
+      if(rdContext.user?.season.troops.deployed > 0) {
+        setAlertMessage("You cannot remove an address while troops are deployed")
+        setShowAlert(true)
+        return
+      }
+    }
     if(addresses.includes(addressToRemove)) {
       setAddresses(addresses.filter(address => address !== addressToRemove)) 
     } else {

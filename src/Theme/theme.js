@@ -104,6 +104,34 @@ const Button = defineStyleConfig({
       _active: {
         bg: '#35669e'
       }
+    },
+    ryoshiDynasties: {
+      bg: '#F48F0C',
+      color: 'white',
+      _hover: {
+        bg: '#dc810b',
+        _disabled: {
+          bg: '#7a4806',
+          textShadow: 'none'
+        }
+      },
+      _active: {
+        bg: '#c3720a'
+      },
+      _disabled: {
+        color: 'white',
+        bg: '#7a4806ff',
+        textShadow: 'none'
+      },
+      rounded: 'lg',
+      textShadow: '-1px -1px 0 #9f2729,\n' +
+        '          0   -1px 0 #9f2729,\n' +
+        '          1px -1px 0 #9f2729,\n' +
+        '          1px  0   0 #9f2729,\n' +
+        '          1px  1px 0 #9f2729,\n' +
+        '          0    1px 0 #9f2729,\n' +
+        '          -1px  1px 0 #9f2729,\n' +
+        '          -1px  0   0 #9f2729;'
     }
   }
 });
