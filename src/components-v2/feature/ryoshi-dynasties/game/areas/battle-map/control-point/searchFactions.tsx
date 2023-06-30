@@ -126,6 +126,19 @@ import {
       // console.log(newAddresses);
       setCollectionAddresses(newAddresses);
     }
+    const GetCollectionNames = (addresses:any) => {
+      if(!addresses) return;
+      if(!collectionAddresses) return;
+
+      let names: string[] = [];
+      for(let i = 0; i < addresses.length; i++){
+        const collection = collectionAddresses.find((c) => c.address.toLowerCase() === addresses[i].toLowerCase());
+        if(collection){
+          names.push(collection.collectionName!);
+        }
+      }
+      return names;
+    }
 
     useEffect(() => {
       if(!allFactions) return;
@@ -299,6 +312,7 @@ import {
                               onClick={handleCollectionClick}
                               isFocused={cursor === key + searchVisits.length}
                               faction={item}
+                              collectionNames={GetCollectionNames(item.addresses)}
                             />
                           ))}
                         </VStack>

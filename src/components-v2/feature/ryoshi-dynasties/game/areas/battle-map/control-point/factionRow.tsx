@@ -1,6 +1,6 @@
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import React, {useCallback} from "react";
-import {Box, CloseButton, Flex, Image, Text, VStack} from "@chakra-ui/react";
+import {Avatar, Box, CloseButton, Flex, Image, Text, VStack} from "@chakra-ui/react";
 import {commify} from "ethers/lib/utils";
 import {pluralize, round} from "@src/utils";
 import NextImage from "next/image";
@@ -13,8 +13,9 @@ type ResultFactionProps = {
   onRemove?: (collection: any) => void;
   useCloseButton?: boolean;
   isFocused?: boolean;
+  collectionNames?: any;
 }
-const ResultFaction = ({collection, faction, onClick, onRemove, useCloseButton = false, isFocused = false}: ResultFactionProps) => {
+const ResultFaction = ({collection, faction, onClick, onRemove, useCloseButton = false, isFocused = false, collectionNames}: ResultFactionProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const hoverColor = useColorModeValue('black', 'white');
 
@@ -45,15 +46,21 @@ const ResultFaction = ({collection, faction, onClick, onRemove, useCloseButton =
           height={50}
           style={{borderRadius: '20px'}}
         >
-        <Image
+        <Avatar
             src={ImageService.translate(faction.image).avatar()}
-            alt={faction.name}
-            rounded="md"
+            size="lg"
         />
         </Box>
         <Box flex='1' ms={2} fontSize="14px">
           <VStack align="left" spacing={0}>
             <Text fontWeight="bold" noOfLines={1}>{faction.name}</Text>
+            {faction.type === 'COLLECTION' && (
+              <>
+              {collectionNames.map((collectionName: any) => (
+                <Text fontWeight="l" color='#aaaa' fontSize={12} noOfLines={1}>{collectionName}</Text>
+              ))}
+              </>
+            )}
           </VStack>
         </Box>
       </Flex>
