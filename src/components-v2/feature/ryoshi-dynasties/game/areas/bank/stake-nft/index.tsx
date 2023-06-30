@@ -1,6 +1,6 @@
 import {
   Box,
-  Button,
+  Button, ButtonGroup,
   Center,
   Flex,
   HStack,
@@ -14,7 +14,7 @@ import {
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
-  Spinner,
+  Spinner, Stack,
   Text,
   VStack
 } from "@chakra-ui/react"
@@ -52,9 +52,11 @@ import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank
 import SeasonUnlocks from "@src/Contracts/SeasonUnlocks.json";
 import Fortune from "@src/Contracts/Fortune.json";
 import {parseErrorMessage} from "@src/helpers/validator";
+import localFont from "next/font/local";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+const gothamBook = localFont({ src: '../../../../../../../../src/fonts/Gotham-Book.woff2' });
 
 const tabs = {
   ryoshiVip: 'ryoshi-tales-vip',
@@ -277,7 +279,6 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
   const [isExecutingStake, setIsExecutingStake] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('');
   const [stakeNfts, response] = useBankStakeNfts();
-  // const { isOpen: isUnlockDialogOpen, onOpen: onOpenUnlockDialog, onClose: onCloseUnlockDialog } = useDisclosure();
   const [unlockApprovalState, setUnlockApprovalState] = useState<[BigNumber, boolean]>([BigNumber.from(0), false]);
   const [selectedLockedSlot, setSelectedLockedSlot] = useState<number>();
 
@@ -345,7 +346,6 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
   }, [pendingNfts, executingLabel, isExecutingStake]);
 
   const checkForApproval = async () => {
-    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
     const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.seasonUnlocks);
 
@@ -356,8 +356,11 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
   }
 
   useEffect(() => {
-    checkForApproval();
-  }, []);
+    setSelectedLockedSlot(undefined);
+    if (user.address) {
+      checkForApproval();
+    }
+  }, [user.address]);
 
   return (
     <Box>
@@ -449,11 +452,19 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                             onClick={() => setSelectedLockedSlot(index)}
                           >
                             <Center>
-                              <Image
-                                src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
-                                alt="lockIcon"
-                                boxSize={12}
-                              />
+                              {selectedLockedSlot === index ? (
+                                <Image
+                                  src={ImageService.translate('/img/ryoshi-dynasties/icons/unlock.png').convert()}
+                                  alt="unlockIcon"
+                                  boxSize={12}
+                                />
+                              ) : (
+                                <Image
+                                  src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
+                                  alt="lockIcon"
+                                  boxSize={12}
+                                />
+                              )}
                             </Center>
                           </Flex>
                         )}
@@ -478,7 +489,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
           </RdButton>
         </Box>
       </VStack>
-      {selectedLockedSlot !== undefined && (
+      {selectedLockedSlot !== undefined && slotUnlockContext.recipes.length > 0 && (
         <SlotUnlockDialog
           isOpen={true}
           onClose={() => {
@@ -486,7 +497,6 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
             refetchSlotUnlockContext();
           }}
           initialApprovalState={unlockApprovalState}
-          index={selectedLockedSlot! - 1}
           slotUnlockContext={slotUnlockContext}
         />
       )}
@@ -568,31 +578,22 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
   )
 }
 
-
-// interface LockedSlotProps {
-//   onClick: () => void;
-// }
-// const LockedSlot = ({onClick}) => {
-//
-// }
-
 interface SlotUnlockDialogProps {
   isOpen: boolean;
   onClose: () => void;
   initialApprovalState: [BigNumber, boolean];
-  index: number;
   slotUnlockContext: { unlocks: number, recipes: any[] };
 }
 
-const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, index, slotUnlockContext}: SlotUnlockDialogProps) => {
+const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, slotUnlockContext}: SlotUnlockDialogProps) => {
   const user = useAppSelector((state) => state.user);
   const [executingFortuneApproval, setExecutingFortuneApproval] = useState(false);
   const [executingResourcesApproval, setExecutingResourcesApproval] = useState(false);
-  const [isExecutingUnlock, setIsExecutingUnlock] = useState(false);
+  const [executingUnlock, setExecutingUnlock] = useState(false);
   const [unlockApprovalState, setUnlockApprovalState] = useState(initialApprovalState);
-  const [executingLabel, setExecutingLabel] = useState('Unlocking');
   const fortuneApprovalLimit = 10000;
   const fortuneTopUpThreshold = 5000;
+  const currentRecipe = slotUnlockContext.recipes[slotUnlockContext.unlocks];
 
   useEffect(() => {
     setUnlockApprovalState(initialApprovalState);
@@ -600,32 +601,21 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, index, slotUnl
 
   const handleUnlock = async () => {
     try {
-      setIsExecutingUnlock(true);
+      setExecutingUnlock(true);
       const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
       const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.seasonUnlocks);
-      const fortuneApprovalLimitWei = ethers.utils.parseEther(fortuneTopUpThreshold.toString());
-      if (totalApproved.lt(fortuneApprovalLimitWei)) {
-        setExecutingLabel('Approving');
-        const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
-        const tx = await fortuneContract.approve(config.contracts.seasonUnlocks, fortuneApprovalLimitWei);
-        await tx.wait();
-        setUnlockApprovalState([fortuneApprovalLimitWei, unlockApprovalState[1]]);
+      if (totalApproved.lt(currentRecipe.fortuneAmount)) {
+        throw new Error('Not enough Fortune.');
       }
 
-      const resourcesContract = new Contract(config.contracts.resources, ERC1155, user.provider.getSigner());
-      const isResourcesApproved = await resourcesContract.isApprovedForAll(user.address, config.contracts.seasonUnlocks);
-
-      if (!isResourcesApproved) {
-        setExecutingLabel('Approving');
-        let tx = await resourcesContract.setApprovalForAll(config.contracts.seasonUnlocks, true);
-        await tx.wait();
-        setUnlockApprovalState([fortuneApprovalLimitWei, true]);
+      const resourcesContract = new Contract(config.contracts.resources, ERC1155, readProvider);
+      const balance = await resourcesContract.balanceOf(user.address, 1);
+      if (balance.lt(currentRecipe.resourcesAmounts[0])) {
+        throw new Error('Not enough Koban.');
       }
 
-      setExecutingLabel('Unlocking');
       const unlockContract = new Contract(config.contracts.seasonUnlocks, SeasonUnlocks, user.provider.getSigner());
-
-      let tx = await unlockContract.unlock(1, index);
+      let tx = await unlockContract.unlock(1, slotUnlockContext.unlocks);
       await tx.wait();
       toast.success('Slot has been unlocked!');
       onClose();
@@ -633,10 +623,51 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, index, slotUnl
       console.log(e);
       toast.error(parseErrorMessage(e));
     } finally {
-      setExecutingLabel('Unlocking');
       setExecutingFortuneApproval(false);
       setExecutingResourcesApproval(false);
-      setIsExecutingUnlock(false);
+      setExecutingUnlock(false);
+    }
+  }
+
+  const handleEnableFortune = async () => {
+    try {
+      setExecutingFortuneApproval(true);
+      const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
+      const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.seasonUnlocks);
+      const fortuneApprovalLimitWei = ethers.utils.parseEther(fortuneApprovalLimit.toString());
+      const fortuneTopUpThresholdWei = ethers.utils.parseEther(fortuneTopUpThreshold.toString());
+      if (totalApproved.lt(fortuneTopUpThresholdWei)) {
+        const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
+        const tx = await fortuneContract.approve(config.contracts.seasonUnlocks, fortuneApprovalLimitWei);
+        await tx.wait();
+        setUnlockApprovalState([fortuneApprovalLimitWei, unlockApprovalState[1]]);
+      }
+      toast.success('Fortune has been enabled!');
+    } catch (e) {
+      console.log(e);
+      toast.error(parseErrorMessage(e));
+    } finally {
+      setExecutingFortuneApproval(false);
+    }
+  }
+
+  const handleEnableResources = async () => {
+    try {
+      setExecutingResourcesApproval(true);
+      const resourcesContract = new Contract(config.contracts.resources, ERC1155, user.provider.getSigner());
+      const isResourcesApproved = await resourcesContract.isApprovedForAll(user.address, config.contracts.seasonUnlocks);
+
+      if (!isResourcesApproved) {
+        let tx = await resourcesContract.setApprovalForAll(config.contracts.seasonUnlocks, true);
+        await tx.wait();
+        setUnlockApprovalState([unlockApprovalState[0], true]);
+      }
+      toast.success('Koban has been enabled!');
+    } catch (e) {
+      console.log(e);
+      toast.error(parseErrorMessage(e));
+    } finally {
+      setExecutingResourcesApproval(false);
     }
   }
 
@@ -648,7 +679,7 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, index, slotUnl
       size='lg'
     >
       <ModalOverlay />
-      <ModalContent border='2px solid #CCC'>
+      <ModalContent border='2px solid #CCC' bg='#292626' color='white' className={gothamBook.className}>
         <ModalHeader>
           <Center>
             <HStack>
@@ -656,48 +687,66 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, index, slotUnl
             </HStack>
           </Center>
         </ModalHeader>
-        <ModalBody color='white' >
-          <Text>Unlock staking slots to allow additional NFTs to be staked and earn more APR in the bank.</Text>
-          <Box mt={4}>
-            {unlockApprovalState[0].gt(ethers.utils.parseEther(fortuneTopUpThreshold.toString())) && unlockApprovalState[1] ? (
-              <Text>Current cost for this slot is {ethers.utils.formatEther(slotUnlockContext.recipes[index].fortuneAmount)} Fortune and {slotUnlockContext.recipes[index].resourcesAmounts[0].toString()} Koban</Text>
-            ) : unlockApprovalState[0].gt(ethers.utils.parseEther(fortuneTopUpThreshold.toString())) && !unlockApprovalState[1] ? (
-              <Text>Ryoshi Dynasties needs approval to transfer Koban on your behalf to complete this transaction. Please approve the contract to continue.</Text>
-            ) : unlockApprovalState[0].lt(ethers.utils.parseEther(fortuneTopUpThreshold.toString())) && unlockApprovalState[1] ? (
-              <Text>Ryoshi Dynasties needs approval to transfer $Fortune on your behalf to complete this transaction. Please approve the contract to continue.</Text>
-            ) : (
-              <Text>Please approve the following two transactions to allow Ryoshi Dynasties to transfer both $Fortune and Koban on your behalf to allow this slot to be unlocked.</Text>
-            )}
+        <ModalBody color='white'>
+          <Text>Unlock staking slots to allow additional NFTs to earn more APR in the bank.</Text>
+          <Box
+            bg='#453e3b'
+            rounded='lg'
+            p={2}
+            mt={4}
+          >
+            <Text textAlign='center' mb={4}>Current slot cost</Text>
+            <SimpleGrid columns={2}>
+              <VStack spacing={0}>
+                <Box fontWeight='bold' fontSize='lg'>{ethers.utils.formatEther(currentRecipe.fortuneAmount)}</Box>
+                <Box>Fortune</Box>
+              </VStack>
+              <VStack spacing={0}>
+                <Box fontWeight='bold' fontSize='lg'>{currentRecipe.resourcesAmounts[0].toString()}</Box>
+                <Box>Koban</Box>
+              </VStack>
+            </SimpleGrid>
           </Box>
         </ModalBody>
         <ModalFooter>
-          <HStack justify='end' spacing={4}>
-            <Button variant='unstyled' onClick={onClose}>
-              Cancel
-            </Button>
-            <Button
-              size='md'
-              bg='#F48F0C'
-              rounded='full'
-              className='rd-button'
-              isLoading={isExecutingUnlock}
-              loadingText={executingLabel}
-              disabled={isExecutingUnlock}
-              onClick={handleUnlock}
-              _hover={{
-                bg: '#C17109'
-              }}
-              _loading={{
-                bg: '#C17109'
-              }}
-            >
-              {unlockApprovalState[0].gt(ethers.utils.parseEther(fortuneTopUpThreshold.toString())) && unlockApprovalState[1] ? (
-                <Text>Unlock</Text>
-              ) : (
-                <Text>Approve</Text>
+          <VStack w='full'>
+            <ButtonGroup spacing={2} width="full">
+              {unlockApprovalState[0].lt(ethers.utils.parseEther(fortuneTopUpThreshold.toString())) && (
+                <Button
+                  size='md'
+                  isLoading={executingFortuneApproval}
+                  isDisabled={executingFortuneApproval || executingResourcesApproval || executingUnlock}
+                  onClick={handleEnableFortune}
+                  variant='ryoshiDynasties'
+                  flex={1}
+                >
+                  Enable FRTN
+                </Button>
               )}
+              {!unlockApprovalState[1] && (
+                <Button
+                  size='md'
+                  isLoading={executingResourcesApproval}
+                  isDisabled={executingFortuneApproval || executingResourcesApproval || executingUnlock}
+                  onClick={handleEnableResources}
+                  variant='ryoshiDynasties'
+                  flex={1}
+                >
+                  Enable Koban
+                </Button>
+              )}
+            </ButtonGroup>
+            <Button
+              w='full'
+              size='md'
+              isLoading={executingUnlock}
+              isDisabled={executingUnlock || !unlockApprovalState[0].gt(ethers.utils.parseEther(fortuneTopUpThreshold.toString())) || !unlockApprovalState[1]}
+              onClick={handleUnlock}
+              variant='ryoshiDynasties'
+            >
+              Unlock
             </Button>
-          </HStack>
+          </VStack>
         </ModalFooter>
       </ModalContent>
     </Modal>
