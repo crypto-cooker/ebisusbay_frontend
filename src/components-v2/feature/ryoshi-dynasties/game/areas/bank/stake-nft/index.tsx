@@ -90,8 +90,11 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   };
 
   const handleAddNft = useCallback((nft: WalletNft) => {
-    const isInList = pendingNfts.some((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress));
-    if (!isInList && pendingNfts.length < rdContext.config.bank.staking.nft.maxSlots) {
+    const pendingCount = pendingNfts.filter((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress)).length;
+    const hasRemainingBalance = pendingCount === 0 || pendingCount < (nft.balance ?? 1);
+    const withinUnlockedRange = pendingNfts.length < (slotUnlockContext.unlocks + 1);
+    const withinMaxSlotRange = pendingNfts.length < rdContext.config.bank.staking.nft.maxSlots;
+    if (hasRemainingBalance && withinUnlockedRange && withinMaxSlotRange) {
       const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
       const stakeConfig = rdContext.config.bank.staking.nft.collections.find((c) => c.slug === collectionSlug);
 
@@ -199,9 +202,34 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
   }, [isOpen]);
 
+  const { data: slotUnlockContext, refetch: refetchSlotUnlockContext } = useQuery({
+    queryKey: ['BankSlotUnlockContext', user.address],
+    queryFn: async () => {
+      const contract = new Contract(config.contracts.seasonUnlocks, SeasonUnlocks, readProvider);
+      const unlocks = await contract.unlocks(1, user.address!);
+      const recipes = await contract.getRecipesForType(1);
+      return {
+        unlocks,
+        recipes
+      }
+    },
+    refetchOnWindowFocus: false,
+    enabled: !!user.address,
+    initialData: {
+      unlocks: 0,
+      recipes: []
+    }
+  });
+
   useEffect(() => {
     setCurrentCollection(addressForTab);
   }, [currentTab]);
+
+  useEffect(() => {
+    if (!user.address) {
+      onClose();
+    }
+  }, [user.address]);
 
   return (
     <RdModal
@@ -223,6 +251,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
             stakedNfts={stakedNfts}
             onRemove={handleRemoveNft}
             onStaked={handleStakeSuccess}
+            slotUnlockContext={slotUnlockContext}
+            refetchSlotUnlockContext={refetchSlotUnlockContext}
           />
           <Box p={4}>
             <Flex direction='row' justify='center' mb={2}>
@@ -264,6 +294,8 @@ interface StakingBlockProps {
   stakedNfts: StakedToken[];
   onRemove: (nftAddress: string, nftId: string) => void;
   onStaked: () => void;
+  slotUnlockContext: { unlocks: number, recipes: any[] };
+  refetchSlotUnlockContext: () => void;
 }
 
 interface PendingNft {
@@ -276,32 +308,13 @@ interface PendingNft {
   isAlreadyStaked: boolean;
 }
 
-const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBlockProps) => {
+const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockContext, refetchSlotUnlockContext}: StakingBlockProps) => {
   const user = useAppSelector((state) => state.user);
   const [isExecutingStake, setIsExecutingStake] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('');
   const [stakeNfts, response] = useBankStakeNfts();
   const [unlockApprovalState, setUnlockApprovalState] = useState<[BigNumber, boolean]>([BigNumber.from(0), false]);
   const [selectedLockedSlot, setSelectedLockedSlot] = useState<number>();
-
-  const { data: slotUnlockContext, refetch: refetchSlotUnlockContext } = useQuery({
-    queryKey: ['BankSlotUnlockContext', user.address],
-    queryFn: async () => {
-      const contract = new Contract(config.contracts.seasonUnlocks, SeasonUnlocks, readProvider);
-      const unlocks = await contract.unlocks(1, user.address!);
-      const recipes = await contract.getRecipesForType(1);
-      return {
-        unlocks,
-        recipes
-      }
-    },
-    refetchOnWindowFocus: false,
-    enabled: !!user.address,
-    initialData: {
-      unlocks: 0,
-      recipes: []
-    }
-  });
 
   const handleStake = useCallback(async () => {
     if (pendingNfts.length === 0 && stakedNfts.length === 0) return;
@@ -701,12 +714,18 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, slotUnlockCont
             <Text textAlign='center' mb={4}>Current slot cost</Text>
             <SimpleGrid columns={2}>
               <VStack spacing={0}>
-                <Box fontWeight='bold' fontSize='lg'>{ethers.utils.formatEther(currentRecipe.fortuneAmount)}</Box>
-                <Box>Fortune</Box>
+                <HStack>
+                  <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
+                  <Text fontWeight='bold' fontSize='lg'>{ethers.utils.formatEther(currentRecipe.fortuneAmount)}</Text>
+                </HStack>
+                <Box fontSize='sm'>Fortune</Box>
               </VStack>
               <VStack spacing={0}>
-                <Box fontWeight='bold' fontSize='lg'>{currentRecipe.resourcesAmounts[0].toString()}</Box>
-                <Box>Koban</Box>
+                <HStack>
+                  <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/>
+                  <Text fontWeight='bold' fontSize='lg'>{currentRecipe.resourcesAmounts[0].toString()}</Text>
+                </HStack>
+                <Box fontSize='sm'>Koban</Box>
               </VStack>
             </SimpleGrid>
           </Box>
