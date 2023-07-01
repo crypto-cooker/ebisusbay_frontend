@@ -18457,7 +18457,7 @@
       "multiToken": false,
       "address": "0x4684619abcd81dBBfAa19438E9570F28008e180F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "CroMorphs are currently stuck in a timeloop - and need your help to mint safely out of the timeloop - and onto the cronos chain.\nThese mysterious creatures have connections to mythic ancient worlds - where they once lived.\n\nThey now find themselves in MetaMorphis - a barren desert land, where they are doing their best to grow and prosper.\nExplore the hidden secrets of MetaMorphis together with CroMorphs, and unlock all the mysteries of the world.",
         "avatar": "/img/collections/cromorphs/avatar.webp",
@@ -27862,7 +27862,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/cromorphs/drop.webp",
         "banner": "/img/drops/cromorphs/banner.webp",
