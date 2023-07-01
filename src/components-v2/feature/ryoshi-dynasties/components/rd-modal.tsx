@@ -3,12 +3,15 @@ import {ReactNode, useEffect, useState} from "react";
 import localFont from "next/font/local";
 import {CloseIcon} from "@chakra-ui/icons";
 
-const gothamBook = localFont({ src: '../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({
+  src: '../../../../fonts/Gotham-Book.woff2',
+  fallback: ['Roboto', 'system-ui', 'arial'],
+})
 
 
 interface RdModalProps {
   isOpen: boolean;
-  onClose?: () => void;
+  onClose: () => void;
   children?: ReactNode;
   title: string;
   utilBtnTitle?: ReactNode;
@@ -42,10 +45,6 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
     setMaskOuterClass(_maskOuterClass);
 
   }, [utilBtnTitle, onUtilBtnClick, onClose]);
-
-  useEffect(() => {
-
-  }, [onClose, onUtilBtnClick]);
 
   return (
     <>
