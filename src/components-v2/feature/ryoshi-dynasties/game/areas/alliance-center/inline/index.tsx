@@ -48,7 +48,10 @@ import { commify } from "ethers/lib/utils";
 import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
-const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({
+  src: '../../../../../../../fonts/Gotham-Book.woff2',
+  fallback: ['Roboto', 'system-ui', 'arial'],
+})
 
 interface AllianceCenterInlineProps {
   onClose: () => void;

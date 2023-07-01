@@ -13,7 +13,10 @@ import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSig
 import React, {useState} from 'react';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 
-const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({
+  src: '../../../../../../fonts/Gotham-Book.woff2',
+  fallback: ['Roboto', 'system-ui', 'arial'],
+})
 
 interface BarracksProps {
   onBack: () => void;
