@@ -11,7 +11,7 @@ const gothamBook = localFont({
 
 interface RdModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children?: ReactNode;
   title: string;
   utilBtnTitle?: ReactNode;
