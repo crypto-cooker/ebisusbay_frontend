@@ -96,7 +96,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
     queryFn: async () => {
       const contract = new Contract(config.contracts.seasonUnlocks, SeasonUnlocks, readProvider);
       const unlocks = await contract.unlocks(2, user.address!);
-      const recipes = await contract.getRecipesForType(1);
+      const recipes = await contract.getRecipesForType(2);
       return {
         unlocks,
         recipes
