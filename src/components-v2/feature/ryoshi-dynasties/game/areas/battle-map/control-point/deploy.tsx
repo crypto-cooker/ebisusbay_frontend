@@ -32,7 +32,7 @@ import {
 } from "@src/core/api/RyoshiDynastiesAPICalls";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {RdControlPoint, RdFaction} from "@src/core/services/api-service/types";
+import {RdControlPoint, RdFaction, RdGameState} from "@src/core/services/api-service/types";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
@@ -170,6 +170,11 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
   }
   const DeployOrRecallTroops = async () => {
     if (!user.address) return;
+
+    if (rdContext.game?.state === RdGameState.RESET) {
+      setFactionError("Game has ended. Please wait until the next game begins")
+      return
+    }
 
     if(selectedFaction === "") {
       setFactionError(`You must select a faction`);
