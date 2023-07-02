@@ -126,7 +126,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
                         padding={{base: '0 10px', sm: '0 20px'}}
                         margin={{base: '0 5px', sm: '0 10px'}}
                       >
-                        Leaderboard
+                        Leaders
                       </RdTabButton>
                       <RdTabButton
                         isActive={currentTab === tabs.deploy}
@@ -135,7 +135,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
                         padding={{base: '0 10px', sm: '0 20px'}}
                         margin={{base: '0 5px', sm: '0 10px'}}
                       >
-                        Dispatch Troops
+                        Dispatch
                       </RdTabButton>
                       <RdTabButton
                         isActive={currentTab === tabs.attack}

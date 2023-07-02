@@ -195,7 +195,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
       Deploy()
     }
     else if(currentTab === tabs.recall) {
-      if(selectedQuantity > troopsDeployed || selectedQuantity <= 0) {
+      if(selectedQuantity > troopsDeployed || selectedQuantity < 0) {
         setTroopsError(`You can't recall more troops than you have deployed`);
         return;
       }
