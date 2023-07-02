@@ -1,5 +1,16 @@
 import React, {ReactElement, useEffect, useRef, useState, useContext } from 'react';
-import { useDisclosure, Button, AspectRatio, useBreakpointValue, Box, Flex, Image, Avatar, WrapItem} from '@chakra-ui/react'
+import {
+  useDisclosure,
+  Button,
+  AspectRatio,
+  useBreakpointValue,
+  Box,
+  Flex,
+  Image,
+  Avatar,
+  WrapItem,
+  Text
+} from '@chakra-ui/react'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
@@ -24,6 +35,9 @@ import {
   RyoshiDynastiesPreloaderProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/preloader-context";
 import localFont from "next/font/local";
+import {RdGameState} from "@src/core/services/api-service/types";
+import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
+import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
 const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Black.woff2' })
 
@@ -56,6 +70,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
   const [selectedControlPoint, setSelectedControlPoint] = useState(0);
   const [explosion, setExplosion] = useState<ReactElement>();
+  const { isOpen: isResetModalOpen, onOpen: onOpenResetModal, onClose: onCloseResetModal } = useDisclosure();
 
 
   useEffect(() => {
@@ -381,17 +396,19 @@ const BattleMap = ({onChange}: BattleMapProps) => {
       setIcons(newIcons);
       setAllIconsAqcuired(true);
   }
+
   useEffect(() => {
     if(!rdGameContext) return;
     GetAllIcons();
-  }
-  , [rdGameContext]);
+    if (rdGameContext.state === RdGameState.RESET) {
+      onOpenResetModal();
+    }
+  }, [rdGameContext]);
 
   useEffect(() => {
     if(!allIconsAqcuired) return;
     // console.log('icons', icons);
-  }
-  , [allIconsAqcuired]);
+  }, [allIconsAqcuired]);
 
   const GetLeaderIcon = (name: any) => {
     if(!allIconsAqcuired) return 'img/avatar.jpg';
@@ -524,6 +541,17 @@ const BattleMap = ({onChange}: BattleMapProps) => {
         )}
         <BattleMapHUD onBack={onChange}/>
       </Box>
+      <RdModal
+        isOpen={isResetModalOpen}
+        onClose={() => {
+          onChange();
+        }}
+        title='Game Ended'
+      >
+        <RdModalAlert>
+          <Text>The current game has ended and rewards are being calculated. A new game will begin shortly!</Text>
+        </RdModalAlert>
+      </RdModal>
     </section>
   )
 };

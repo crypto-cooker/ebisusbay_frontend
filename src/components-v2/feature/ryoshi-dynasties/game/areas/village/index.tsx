@@ -597,11 +597,16 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
 
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
+  const { isOpen: isResetModalOpen, onOpen: onOpenResetModal, onClose: onCloseResetModal } = useDisclosure();
   const handleSceneChange = useCallback((area: string) => {
     if (area === 'battleMap') {
       const blockableStates = [RdGameState.IN_MAINTENANCE, RdGameState.NOT_STARTED];
       if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
         onOpenBlockingModal();
+        return;
+      }
+      if (!!rdGameContext?.state && rdGameContext.state === RdGameState.RESET) {
+        onOpenResetModal();
         return;
       }
     }
@@ -817,6 +822,15 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       >
         <RdModalAlert>
           <Text>This area is currently unavailable, either due to maintenance, or a game that has yet to be started. Check back again soon!</Text>
+        </RdModalAlert>
+      </RdModal>
+      <RdModal
+        isOpen={isResetModalOpen}
+        onClose={onCloseResetModal}
+        title='Game Ended'
+      >
+        <RdModalAlert>
+          <Text>The current game has ended and rewards are being calculated. A new game will begin shortly!</Text>
         </RdModalAlert>
       </RdModal>
     </section>

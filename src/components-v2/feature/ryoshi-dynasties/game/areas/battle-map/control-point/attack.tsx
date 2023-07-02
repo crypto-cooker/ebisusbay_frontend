@@ -41,7 +41,7 @@ import {io} from "socket.io-client";
 
 import localFont from 'next/font/local';
 import ImageService from "@src/core/services/image";
-import {RdControlPoint} from "@src/core/services/api-service/types";
+import {RdControlPoint, RdGameState} from "@src/core/services/api-service/types";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {
   RyoshiDynastiesContext,
@@ -351,6 +351,11 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       setAlertMessage("Must attack with atleast 1 troop")
       setShowAlert(true)
       return;
+    }
+
+    if (rdGameContext?.state === RdGameState.RESET) {
+      setAlertMessage("Game has ended. Please wait until the next game begins")
+      setShowAlert(true)
     }
 
     RealAttack();
