@@ -62,9 +62,8 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     }
   };
   //timer functions
-  const getTimeRemaining = (e:any) => {
-    const subtractResetGap = 3600000;
-    const total = Date.parse(e) - Date.now() - subtractResetGap;
+  const getTimeRemaining = (e:any, subtractTime: number = 0) => {
+    const total = Date.parse(e) - Date.now() - subtractTime;
     const days = Math.floor(total / (1000 * 60 * 60 * 24));
     const seconds = Math.floor((total / 1000) % 60);
     const minutes = Math.floor((total / 1000 / 60) % 60);
@@ -74,7 +73,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     };
   }
   const startTimer = (e:any) => {
-      let { total, hours, days, minutes, seconds } = getTimeRemaining(e);
+      let { total, hours, days, minutes, seconds } = getTimeRemaining(e, 3600000);
       if (total >= 0) {
           setTimer(
               ((days) > 0 ? (days + ' days ') : (
