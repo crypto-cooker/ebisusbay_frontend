@@ -2,7 +2,6 @@ import React, {useEffect, useContext, useState, ReactElement} from 'react';
 import {
   Center,
   Flex,
-  Heading,
   Spinner,
   Stack,
   Table,
@@ -16,19 +15,17 @@ import {
   Text,
   Tabs,
   TabList,
-  TabPanels,
   Tab,
-  TabPanel,
   VStack,
   Box,
 } from "@chakra-ui/react"
+
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import {getLeaderBoard, getSeason} from "@src/core/api/RyoshiDynastiesAPICalls";
 import moment from 'moment';
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
-import { log } from 'console';
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
@@ -56,7 +53,6 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
 
   const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [regionSelected, setRegionSelected] = useState(false);
-  const [controlPoints, setControlPoints] = useState<controlpoint[]>([]);
   const [previousSeasonTime, setPreviousSeasonTime] = useState('');
   const [currentSeasonTime, setCurrentSeasonTime] = useState('');
   const [leaderBoard, setLeaderBoard] = useState<ReactElement[]>([]);
@@ -65,10 +61,10 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
 
   const [attackerOptions, setLeaderboardDropDown] = useState<ReactElement[]>([]);
   const [dataForm, setDataForm] = useState({
-    attackersFaction: "" ?? null,
+    selectedFaction: "" ?? null,
   })
 
-  const onChangeInputsAttacker = (e : any) => {
+  const onChangeSelectedControlPoint = (e : any) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     if(e.target.value !== ''){
       LoadControlPointLeaderBoard(e.target.value);
@@ -128,7 +124,10 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
 
   const LoadControlPointLeaderBoard = async (e : controlpoint) => {
     if(!rdGameContext) return;
-    const allFactionsOnPoint = await getLeaderBoard(getControlPointId(e), rdGameContext?.game?.id);
+
+    const gameId = showCurrentGame ? rdGameContext.game.id : 7;
+
+    const allFactionsOnPoint = await getLeaderBoard(getControlPointId(e), gameId);
     // console.log(allFactionsOnPoint.slice(0, 5))
     setLeaderBoard(
         allFactionsOnPoint.slice(0, 5).map((faction:any, index:any) => (
@@ -196,8 +195,8 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                     me={2}
                     placeholder='Select a Control Point'
                     marginTop={2}
-                    value={dataForm.attackersFaction}
-                    onChange={onChangeInputsAttacker}
+                    value={dataForm.selectedFaction}
+                    onChange={onChangeSelectedControlPoint}
                   >
                     {attackerOptions}
                   </Select>
@@ -243,7 +242,34 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                   )}
                 </>
               ) : (
-                <Text> No previous game data</Text>
+                <>
+                {regionSelected ? (
+                    <>
+                      <TableContainer w='90%'>
+                        <Table size='m'>
+                          <Thead>
+                            <Tr>
+                              <Th textAlign='center'>Rank</Th>
+                              <Th textAlign='center'>Faction</Th>
+                              <Th textAlign='center'>Troops</Th>
+                            </Tr>
+                          </Thead>
+                          <Tbody>
+                          {leaderBoard}
+                          </Tbody>
+                        </Table>
+                      </TableContainer>
+                    </>
+                  ) : (
+                    <Box minH={'200px'}>
+                      <Center>
+                        <Text
+                        margin='100'
+                        > </Text>
+                      </Center>
+                    </Box>
+                  )}
+                  </>
               )}
             </Center>
           </Stack>
