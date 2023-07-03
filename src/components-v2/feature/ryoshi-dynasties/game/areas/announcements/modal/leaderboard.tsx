@@ -14,11 +14,11 @@ import {
   Select,
   Td,
   Text,
-  Tabs, 
-  TabList, 
-  TabPanels, 
-  Tab, 
-  TabPanel, 
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
   VStack,
   Box,
 } from "@chakra-ui/react"
@@ -53,7 +53,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     queryFn: () => ApiService.withoutKey().ryoshiDynasties.getGameContext(),
     enabled: !!user.address,
   });
- 
+
   const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [regionSelected, setRegionSelected] = useState(false);
   const [controlPoints, setControlPoints] = useState<controlpoint[]>([]);
@@ -90,14 +90,10 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
       else {
         setNoGameActive(true)
       }
-      
+
     }
   }, [status, allFactions]);
 
-  const ShowCurrentGame = (e : any) => {
-    console.log(e)
-  }
-  
   const GetGameDates = async () => {
     try{
       // const previousGame = await getSeason(-1);
@@ -146,108 +142,113 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
 
   useEffect(() => {
     if(!rdGameContext) return;
-    
+
     setLeaderboardDropDown(rdGameContext.game.parent.map.regions.map((region: any) =>
       region.controlPoints.map((controlPoint: any, i: any) => (
         <>
-        console.log(controlPoint.name)
-        <option 
-          value={controlPoint.name}
-          key={controlPoint.id}>
-          {controlPoint.name}</option>
+          <option
+            value={controlPoint.name}
+            key={controlPoint.id}>
+            {controlPoint.name}
+          </option>
         </>
-    ))))
+      ))
+    ))
   }, [rdGameContext]);
 
   return (
     <>
-    {noGameActive ? (<>
-    <Box minH={'200px'}>
-      <Center>
-        <Text
-        margin='100'
-        > No game currently active </Text>
-      </Center>
-    </Box>
-        </>) : (<>
-    <Stack spacing={3} p={4}>
-      <Center>
-      <Tabs>
-
-        <TabList
-          >
-            <Tab onClick={() => setShowCurrentGame(true)}>
-            <VStack>
+      {noGameActive ? (
+        <>
+          <Box minH={'200px'}>
+            <Center>
               <Text
-        className={gothamXLight.className} 
-        > Current Game </Text>
-              <Text> {currentSeasonTime} </Text>
-            </VStack>
-          </Tab>
-          <Tab onClick={() => setShowCurrentGame(false)}>
-            <VStack>
-              <Text
-        className={gothamXLight.className} 
-        > Previous Game </Text>
-              <Text> {previousSeasonTime} </Text>
-            </VStack>
-          </Tab>
-        </TabList>
+              margin='100'
+              > No game currently active </Text>
+            </Center>
+          </Box>
+        </>
+      ) : (
+        <>
+          <Stack spacing={3} p={4}>
+            <Center>
+              <Tabs>
+                <TabList>
+                  <Tab onClick={() => setShowCurrentGame(true)}>
+                    <VStack>
+                      <Text className={gothamXLight.className}> Current Game </Text>
+                      <Text> {currentSeasonTime} </Text>
+                    </VStack>
+                  </Tab>
+                  <Tab onClick={() => setShowCurrentGame(false)}>
+                    <VStack>
+                      <Text className={gothamXLight.className}> Previous Game </Text>
+                      <Text> {previousSeasonTime} </Text>
+                    </VStack>
+                  </Tab>
+                </TabList>
 
-        <Center>
-        <Select 
-          name='attackersFaction'
-          backgroundColor='#292626'
-          w='90%' 
-          me={2} 
-          placeholder='Select a Control Point'
-          marginTop={2}
-          value={dataForm.attackersFaction} 
-          onChange={onChangeInputsAttacker}>
-          {attackerOptions}
-        </Select>
-        </Center>
+                <Center>
+                  <Select
+                    name='attackersFaction'
+                    backgroundColor='#292626'
+                    w='90%'
+                    me={2}
+                    placeholder='Select a Control Point'
+                    marginTop={2}
+                    value={dataForm.attackersFaction}
+                    onChange={onChangeInputsAttacker}
+                  >
+                    {attackerOptions}
+                  </Select>
+                </Center>
 
-        <Flex>
-        {!rdGameContext ? <Spinner size='sm'/> : <></>}
-        </Flex>
-      </Tabs>
-        <Text>
-        
-        </Text>
-      </Center>
+                <Flex>
+                  {!rdGameContext ? <Spinner size='sm'/> : <></>}
+                </Flex>
+              </Tabs>
+              <Text>
 
-      <Center>
+              </Text>
+            </Center>
 
-      {showCurrentGame ? (<>
-      {regionSelected ? (<>
-      <TableContainer w='90%'>
-        <Table size='m'>
-          <Thead>
-            <Tr>
-              <Th textAlign='center'>Rank</Th>
-              <Th textAlign='center'>Faction</Th>
-              <Th textAlign='center'>Troops</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-          {leaderBoard}
-          </Tbody>
-        </Table>
-      </TableContainer>
-      </>) : (
-      <Box minH={'200px'}>
-      <Center>
-        <Text
-        margin='100'
-        > </Text>
-      </Center>
-    </Box>
+            <Center>
+              {showCurrentGame ? (
+                <>
+                  {regionSelected ? (
+                    <>
+                      <TableContainer w='90%'>
+                        <Table size='m'>
+                          <Thead>
+                            <Tr>
+                              <Th textAlign='center'>Rank</Th>
+                              <Th textAlign='center'>Faction</Th>
+                              <Th textAlign='center'>Troops</Th>
+                            </Tr>
+                          </Thead>
+                          <Tbody>
+                          {leaderBoard}
+                          </Tbody>
+                        </Table>
+                      </TableContainer>
+                    </>
+                  ) : (
+                    <Box minH={'200px'}>
+                      <Center>
+                        <Text
+                        margin='100'
+                        > </Text>
+                      </Center>
+                    </Box>
+                  )}
+                </>
+              ) : (
+                <Text> No previous game data</Text>
+              )}
+            </Center>
+          </Stack>
+        </>
       )}
-      </> ) : (<Text> No previous game data</Text>)}
-      </Center>
-    </Stack>
-    </>)}
     </>
   );
 }
