@@ -30,16 +30,18 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import { CalendarIcon } from "@chakra-ui/icons";
 
 const config = appConfig();
 
 interface VillageHudProps {
   onOpenBuildings: () => void;
   onOpenDailyCheckin: () => void;
+  onOpenBattleLog: () => void;
   forceRefresh: boolean;
 }
 
-export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: VillageHudProps) => {
+export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog, forceRefresh}: VillageHudProps) => {
   const user = useAppSelector((state) => state.user);
   const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const config = appConfig();
@@ -202,6 +204,18 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, forceRefresh}: 
                     ) : (
                       "Claim in "+ timer
                      )}
+                  </RdButton>
+                  <Spacer h='4'/>
+                  <RdButton
+                    pointerEvents='auto'
+                    size='sm'
+                    hoverIcon={false}
+                    onClick={onOpenBattleLog}
+                    // fontSize={'14'}
+                    w={{base: '100px', sm: '60px'}}
+                    h={{base: '55px', sm: '40px'}}
+                    lineHeight={'1.2'}
+                  ><CalendarIcon/>
                   </RdButton>
                 </Stack>
               </AccordionPanel>

@@ -26,6 +26,8 @@ import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bar
 import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/portal";
 import FishMarketModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/fish-market";
 import {VillageHud} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/hud";
+import BattleLog from "@src/components-v2/feature/ryoshi-dynasties/game/modals/battle-log";
+
 import ImageService from "@src/core/services/image";
 import AllianceCenterInline from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
@@ -77,7 +79,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
   // const [battleRewards, setBattleRewards] = useState<any[]>([]);
   const [forceRefreshBool, setForceRefreshBool] = useState(false);
-
+  const { isOpen: isOpenBattleLog, onOpen: onOpenBattleLog, onClose: onCloseBattleLog } = useDisclosure();
   const forceRefresh = () => {
     // console.log("force refresh")
     setForceRefreshBool(!forceRefreshBool);
@@ -784,7 +786,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         )}
 
         {!allianceCenterOpen && !barracksOpen && !portalOpen && !marketOpen && (
-          <VillageHud onOpenBuildings={onOpenBuildings} onOpenDailyCheckin={onOpenDailyCheckin} forceRefresh={forceRefreshBool} />
+          <VillageHud onOpenBuildings={onOpenBuildings} onOpenDailyCheckin={onOpenDailyCheckin} 
+            onOpenBattleLog={onOpenBattleLog} forceRefresh={forceRefreshBool} />
         )}
 
         <Box  position='absolute' top={0} left={0} p={4} >
@@ -815,6 +818,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
       <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin}/>
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
+      <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
+      
       <RdModal
         isOpen={isBlockingModalOpen}
         onClose={onCloseBlockingModal}
