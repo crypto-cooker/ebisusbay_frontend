@@ -21075,7 +21075,7 @@
       "multiToken": false,
       "address": "0xCd8799DcFEe2d5a5bD8f26a3b4f30afb1099bCbc",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "In Atlantis, Spaceships play a crucial role in earning Gold and Stardust. Players can race their spaceships against other players’ ships to win valuable  Stardust and Gold. Races are won based on speed tagged to each specific race track, so it’s important to have a fast and well-upgraded spaceship to come out on top.",
         "avatar": "/img/collections/atlantis-spaceships/avatar.webp",
