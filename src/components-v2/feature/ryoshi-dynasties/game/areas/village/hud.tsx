@@ -206,7 +206,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
                      )}
                   </RdButton>
                   <Spacer h='4'/>
-                  <RdButton
+                  {/* <RdButton
                     pointerEvents='auto'
                     size='sm'
                     hoverIcon={false}
@@ -216,7 +216,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
                     h={{base: '55px', sm: '40px'}}
                     lineHeight={'1.2'}
                   ><CalendarIcon/>
-                  </RdButton>
+                  </RdButton> */}
                 </Stack>
               </AccordionPanel>
             </AccordionItem>
