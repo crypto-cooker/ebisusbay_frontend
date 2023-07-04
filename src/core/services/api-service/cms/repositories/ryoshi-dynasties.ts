@@ -2,7 +2,7 @@ import CmsRepository from "@src/core/services/api-service/cms/repositories/index
 import {
   BankStakeNft,
   BarracksStakeNft,
-  RdControlPointLeaderBoard,
+  RdFaction,
   RdGameContext,
   RdUserContext
 } from "@src/core/services/api-service/types";
@@ -109,13 +109,16 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data.data as RdGameContext;
   }
 
-  async getFactions() {
-    let gameID = await this.cms.get("ryoshi-dynasties/games/0");
-    if (!gameID.data.data) return [];
+  async getFactions(gameId?: number) {
+    if (!gameId) {
+      let gameID = await this.cms.get("ryoshi-dynasties/games/0");
+      if (!gameID.data.data) return [];
+      gameId = gameID.data.data.id;
+    }
 
-    let data = await this.cms.get("ryoshi-dynasties/control-points/"+gameID.data.data.parent.map.regions[0].controlPoints[0].id,
-      {params: {gameId: gameID.data.data.id}});
-    return data.data.data.leaderBoard as RdControlPointLeaderBoard[];
+    let data = await this.cms.get(`ryoshi-dynasties/factions/all`,
+      {params: {gameId}});
+    return data.data.data as RdFaction[];
   }
 }
 

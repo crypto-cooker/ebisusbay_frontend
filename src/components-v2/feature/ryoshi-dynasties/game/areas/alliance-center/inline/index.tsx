@@ -165,8 +165,10 @@ const CurrentFaction = () => {
   // const [totalTroops, setTotalTroops] = useState(rdContext.user?.season.troops.undeployed ?? 0);
   const {data: allFactions, status, error} = useQuery({
     queryKey: ['GetAllFactions'],
-    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getFactions(),
-    enabled: !!user.address,
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getFactions(rdContext.game?.game.id),
+    enabled: !!user.address && !!rdContext.game?.game.id,
+    initialData: [],
+    refetchOnWindowFocus: false,
   });
 
   const handleActionComplete = async ()=> {

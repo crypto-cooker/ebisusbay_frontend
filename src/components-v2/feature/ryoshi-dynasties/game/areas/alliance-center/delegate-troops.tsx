@@ -125,8 +125,9 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode, factions=[], troops
     >
       <RdModalBody>
         <FormControl mb={'24px'}>
-          <FormLabel>Please select a faction to {delegateMode==='delegate' ? 'delegate troops to'
-            : 'recall troops from'}</FormLabel>
+          <FormLabel>
+            Please select a faction to {delegateMode==='delegate' ? 'delegate troops to' : 'recall troops from'}
+          </FormLabel>
           <Select me={2} value={dataForm.faction} name="faction" onChange={changeFactionDropdown}>
             {factions.sort((a, b) => a.name > b.name ? 1 : -1).map((faction, index) =>
               (<option value={faction.name} key={index}>{faction.name}</option>))}

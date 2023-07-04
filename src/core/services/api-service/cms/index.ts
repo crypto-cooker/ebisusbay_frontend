@@ -62,8 +62,8 @@ class Cms {
     return this.ryoshiDynasties.getGameContext();
   }
 
-  async getFactions() {
-    return this.ryoshiDynasties.getFactions();
+  async getFactions(gameId?: number) {
+    return this.ryoshiDynasties.getFactions(gameId);
   }
 }
 

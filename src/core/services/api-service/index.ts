@@ -147,7 +147,7 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.graph.getBankStakingAccount(address);
   }
 
-  async getFactions() {
-    return this.cms.getFactions();
+  async getFactions(gameId?: number) {
+    return this.cms.getFactions(gameId);
   }
 }
