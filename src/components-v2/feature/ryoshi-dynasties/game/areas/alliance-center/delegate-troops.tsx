@@ -72,7 +72,7 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsForm
   }
   const GetFactions = async () => {
     const factions = await getAllFactionsSeasonId(rdGameContext?.game.id, rdGameContext?.season.id);
-    setAllFactions(factions);
+    setAllFactions(factions.sort((a:any, b:any) => a.name.localeCompare(b.name)));
   }
 
   const handleDelegateTroops = async () => {

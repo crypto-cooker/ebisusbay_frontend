@@ -160,10 +160,6 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
     rdContext.refreshUser();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("allFactions", allFactions)
-  // }, [allFactions]);
-
   const HandleSelectCollectionCallback = (factionName: string) => {
     setSelectedFaction(factionName);
   }
