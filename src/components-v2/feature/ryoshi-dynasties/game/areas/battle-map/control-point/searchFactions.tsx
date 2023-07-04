@@ -38,9 +38,10 @@ import {
   interface SearchProps {
     handleSelectCollectionCallback: (address:string) => void;
     allFactions: any[];
+    imgSize: string;
   }
   
-  const Search = ({handleSelectCollectionCallback, allFactions} : SearchProps) => {
+  const Search = ({handleSelectCollectionCallback, allFactions, imgSize} : SearchProps) => {
     const router = useRouter();
     const headingColor = useColorModeValue('black', 'gray.300');
     const searchIconColor = useColorModeValue('white', 'gray.300');
@@ -313,6 +314,7 @@ import {
                               isFocused={cursor === key + searchVisits.length}
                               faction={item}
                               collectionNames={GetCollectionNames(item.addresses)}
+                              imgSize={imgSize}
                             />
                           ))}
                         </VStack>

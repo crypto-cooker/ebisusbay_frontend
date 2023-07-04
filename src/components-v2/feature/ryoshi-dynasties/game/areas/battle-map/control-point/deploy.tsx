@@ -76,7 +76,6 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [selectedFaction, setSelectedFaction] = useState<string>(dataForm.faction);
   const handleQuantityChange = (stringValue: string, numValue: number) => setSelectedQuantity(numValue)
-  // const [allFactions, setAllFactions] = useState<RdControlPointLeaderBoard[]>([]);
 
   const [playerFaction, setPlayerFaction] = useState<RdFaction>();
   const [hasFaction, setHasFaction] = useState(false);
@@ -302,7 +301,9 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
   useEffect(() => {
     GetPlayerTroops();
   }, [user.address])
-
+  useEffect(() => {
+    console.log('allFactions', allFactions);
+  }, [allFactions]);
   return (
     <Flex flexDirection='column' textAlign='center'justifyContent='space-around'>
       {!!user.address ? (
@@ -337,7 +338,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
                     <FormLabel> Faction:</FormLabel>
                   </GridItem>
                   <GridItem colSpan={{base:5, sm:4}} w='100%' >
-                    <Search handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions}/>
+                    <Search handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"lrg"}/>
                   </GridItem>
                 </Grid>
               </>)}

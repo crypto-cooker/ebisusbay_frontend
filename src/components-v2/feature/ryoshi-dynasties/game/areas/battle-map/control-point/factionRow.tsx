@@ -1,6 +1,6 @@
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import React, {useCallback} from "react";
-import {Avatar, Box, CloseButton, Flex, Image, Text, VStack} from "@chakra-ui/react";
+import {Avatar, Box, Flex, Text, VStack} from "@chakra-ui/react";
 import {commify} from "ethers/lib/utils";
 import {pluralize, round} from "@src/utils";
 import NextImage from "next/image";
@@ -14,8 +14,9 @@ type ResultFactionProps = {
   useCloseButton?: boolean;
   isFocused?: boolean;
   collectionNames?: any;
+  imgSize: string;
 }
-const ResultFaction = ({collection, faction, onClick, onRemove, useCloseButton = false, isFocused = false, collectionNames}: ResultFactionProps) => {
+const ResultFaction = ({collection, faction, onClick, onRemove, useCloseButton = false, isFocused = false, collectionNames, imgSize}: ResultFactionProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const hoverColor = useColorModeValue('black', 'white');
 
@@ -48,7 +49,7 @@ const ResultFaction = ({collection, faction, onClick, onRemove, useCloseButton =
         >
         <Avatar
             src={ImageService.translate(faction.image).avatar()}
-            size="lg"
+            size={imgSize}
         />
         </Box>
         <Box flex='1' ms={2} fontSize="14px">

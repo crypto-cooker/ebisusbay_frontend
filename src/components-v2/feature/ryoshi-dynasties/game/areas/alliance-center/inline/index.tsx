@@ -313,21 +313,7 @@ const CurrentFaction = () => {
                 src={rdContext.user?.faction.image}
                 // w='150px'
                 // rounded='lg'
-                
               />
-              {/* <form onSubmit={handleSubmit} >
-               <FactionPfp 
-                  values={values}
-                  errors={errors}
-                  touched={touched}
-                  handleChange={handleSubmit}
-                  setFieldValue={setFieldValue}
-                  setFieldTouched={setFieldTouched}
-                  handleBlur={handleBlur}
-                  faction={rdContext.user.faction}
-                  onSuccess={handleTJUploadSuccess}
-                />
-                </form> */}
               <Stack direction='row' align='center'>
                 <Text fontSize='lg' fontWeight='bold'>{rdContext.user.faction.name}</Text>
                 <IconButton
@@ -398,11 +384,16 @@ const CurrentFaction = () => {
                   <Text fontSize='sm' pt={4}>Faction Troops</Text>
                   <Text fontSize='lg' fontWeight='bold'>{totalTroops}</Text>
                 </VStack>
-                {/*{!!rdContext.user.season.troops.undeployed && !rdContext.user.season.faction && (*/}
-                {/*  <RdButton hoverIcon={false} onClick={onOpenDelegate} maxH='50px'>*/}
-                {/*    Delegate*/}
-                {/*  </RdButton>*/}
-                {/*)}*/}
+                {
+                !!rdContext.user.season.troops.undeployed && 
+                !rdContext.user.season.faction && (
+                 <RdButton 
+                  hoverIcon={false} 
+                  onClick={onOpenDelegate} 
+                  maxH='50px'>
+                  Delegate
+                 </RdButton>
+                )}
               </SimpleGrid>
             </Box>
           )}
@@ -416,7 +407,11 @@ const CurrentFaction = () => {
           ) : (
             <CreateFactionForm isOpen={isOpenCreateFaction} onClose={onCloseCreateFaction} handleClose={handleActionComplete} />
           )}
-          <DelegateTroopsForm isOpen={isOpenDelegate} onClose={onCloseDelegate} delegateMode='delegate' factions={allFactions ?? []} troops={rdContext.user.season.troops.deployed} setTotalTroops={setTotalTroops}/>
+          <DelegateTroopsForm 
+            isOpen={isOpenDelegate} 
+            onClose={onCloseDelegate} 
+            delegateMode='delegate' 
+          />
         </>
       )}
 

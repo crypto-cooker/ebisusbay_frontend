@@ -1,4 +1,4 @@
-import {ChangeEvent, useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useState, useContext} from "react";
 import {
   Alert,
   AlertIcon,
@@ -14,6 +14,11 @@ import {
   NumberInputField,
   NumberInputStepper,
   Select,
+  Grid,
+  GridItem,
+  FormErrorMessage,
+  Image,
+  Text
 } from "@chakra-ui/react"
 import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
@@ -23,45 +28,74 @@ import {useAppSelector} from "@src/Store/hooks";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalBody, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {AxiosError} from "axios";
-
+import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/searchFactions";
+import {toast} from "react-toastify";
+import {parseErrorMessage} from "@src/helpers/validator";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {getAllFactionsSeasonId} from "@src/core/api/RyoshiDynastiesAPICalls";
 interface DelegateTroopsFormProps {
   isOpen: boolean;
   onClose: () => void;
   delegateMode: 'delegate';
-  factions: any[];
-  troops: number;
-  setTotalTroops: (troops: number) => void;
 }
 
-const DelegateTroopsForm = ({ isOpen, onClose, delegateMode, factions=[], troops, setTotalTroops}: DelegateTroopsFormProps) => {
+const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsFormProps) => {
   
   const [dataForm, setDataForm] = useState({
-    faction: factions[0]
+    faction: "" ?? null,
   })
-  const [factionId, setFactionId] = useState(0)
-  //alerts
-  const [showAlert, setShowAlert] = useState(false)
-  const [alertMessage, setAlertMessage] = useState("")
-  
-  const [troopsToDelegate, setTroopsToDelegate] = useState(0)
-  const handleChange = (valueAsString: string, valusAsNumber: number) => setTroopsToDelegate(valusAsNumber)
-
-  //other
-  const [isLoading, setIsLoading] = useState(false);
   const user = useAppSelector((state) => state.user);
   const [_, getSigner] = useCreateSigner();
+  const [troopsAvailable, setTroopsAvailable] = useState(0);
+  const [selectedFaction, setSelectedFaction] = useState<string>(dataForm.faction);
+
+  const [isExecuting, setIsExecuting] = useState(false);
+  const [troopsToDelegate, setTroopsToDelegate] = useState(0)
+  const handleChange = (stringValue: string, valusAsNumber: number) => setTroopsToDelegate(valusAsNumber)
+  const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const [allFactions, setAllFactions] = useState<any[]>([]);
+
+  //error alerts
+  const [troopsError, setTroopsError] = useState('');
+  const [factionError, setFactionError] = useState('');
+
 
   const changeFactionDropdown = (e: ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.name, e.target.value)
-    setDataForm({...dataForm, [e.target.name]: e.target.value})
-    //get factions with the name of the selected faction
-    const faction = factions.filter(faction => faction.name === e.target.value)
-    setFactionId(faction[0].id)
-    // console.log(faction[0].id)
+    setSelectedFaction(e.target.value)
   }
-  
+  const HandleSelectCollectionCallback = (factionName: string) => {
+    setSelectedFaction(factionName)
+  }
+  const GetFactions = async () => {
+    const factions = await getAllFactionsSeasonId(rdGameContext?.game.id, rdGameContext?.season.id);
+    setAllFactions(factions);
+  }
+
   const handleDelegateTroops = async () => {
     if (!user.address) return;
+
+    if(selectedFaction === "") {
+      setFactionError(`You must select a faction`);
+      return;
+    }
+    if(allFactions.filter(faction => faction.name === selectedFaction)[0].addresses.length === 0){
+      setFactionError(`Faction must have addresses to participate`);
+      return;
+    }
+    if(troopsToDelegate > troopsAvailable || troopsAvailable <= 0) {
+      setTroopsError(`You cant deploy more troops than you have available`);
+      return;
+    }
+    if(troopsToDelegate === 0) {
+      setTroopsError(`You must deploy at least 1 troop`);
+      return;
+    }
+    setTroopsError('');
+    setFactionError('');
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -70,19 +104,22 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode, factions=[], troops
     }
     if (signatureInStorage) {
       try {
-        const res = await delegateTroops(user.address.toLowerCase(), signatureInStorage, troopsToDelegate, factionId);
-        setTotalTroops(troops - troopsToDelegate)
-        // console.log(res)
-        setShowAlert(false)
-        onClose();
+        setIsExecuting(true);
+        var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
+        const res = await delegateTroops(user.address.toLowerCase(), 
+                                        signatureInStorage, 
+                                        troopsToDelegate, 
+                                        factionId);
+        await rdContext.refreshUser();
+        setTroopsToDelegate(0);
+        toast.success("You delegated "+ troopsToDelegate+ " troops to on behalf of " + selectedFaction)
+
       } catch (error: any) {
         console.log(error);
-        if (error instanceof AxiosError) {
-          setAlertMessage(`There was an issue delegating troops. ${error.response?.data.error.metadata.message}`);
-        } else {
-          setAlertMessage("There was an issue delegating troops. Please try again later.");
-        }
-        setShowAlert(true)
+        toast.error(parseErrorMessage(error));
+      }
+      finally {
+        setIsExecuting(false);
       }
     }
   }
@@ -108,13 +145,16 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode, factions=[], troops
   }
 
   useEffect(() => {
-    if(factions.length > 0)
-    {
-      setDataForm({...dataForm, faction: factions[0].name})
-      setFactionId(factions[0].id)
+    if(!rdUser) return;
+
+    if(rdUser.season?.troops?.undeployed !== undefined){
+      setTroopsAvailable(rdUser.season?.troops?.undeployed);
     }
-  }, [factions])
-  // console.log(factions)
+  }, [rdUser]);
+
+  useEffect(() => {
+    GetFactions();
+  }, []);
 
   return (
     <RdModal
@@ -123,23 +163,51 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode, factions=[], troops
       title='Delegate Troops'
       size='lg'
     >
-      <RdModalBody>
-        <FormControl mb={'24px'}>
-          <FormLabel>
-            Please select a faction to {delegateMode==='delegate' ? 'delegate troops to' : 'recall troops from'}
-          </FormLabel>
-          <Select me={2} value={dataForm.faction} name="faction" onChange={changeFactionDropdown}>
-            {factions.sort((a, b) => a.name > b.name ? 1 : -1).map((faction, index) =>
-              (<option value={faction.name} key={index}>{faction.name}</option>))}
+      <Flex direction='row' justify='space-between' justifyContent='center'>
+      <Box mb={1} bg='#272523' p={2} roundedBottom='xl' w='98%' justifyContent='center' >
+
+        <Grid templateColumns={{base:'repeat(1, 1fr)', sm:'repeat(5, 1fr)'}} gap={6} marginBottom='4'>
+          <GridItem w='100%' h='5' >
+            <FormLabel> Faction:</FormLabel>
+          </GridItem>
+          <GridItem colSpan={{base:5, sm:4}} w='100%' >
+            <Search handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"md"}/>
+          </GridItem>
+        </Grid>
+              
+        <FormControl 
+          mb={'24px'}
+          isInvalid={!!factionError}
+          >
+          <Select 
+            me={2} 
+            value={selectedFaction}
+            style={{ background: '#272523' }}
+            name="faction" 
+            onChange={changeFactionDropdown}>
+            <option selected hidden disabled value="">Please select a faction</option>
+            {allFactions.map((faction, index) => (
+              <option 
+                style={{ background: '#272523' }} 
+                value={faction.name} 
+                key={index}>
+                <Image 
+                  src={faction.image} 
+                  width='50px' 
+                  height='50px' />
+                {faction.name}
+              </option>))}
           </Select>
+
+          <FormErrorMessage>{factionError}</FormErrorMessage>
         </FormControl>
 
-        <FormControl>
-          <FormLabel>Quantity: (Max {troops})</FormLabel>
+        <FormControl isInvalid={!!troopsError}>
+          <FormLabel>Quantity: (Max {troopsAvailable})</FormLabel>
           <NumberInput
             defaultValue={0}
             min={0}
-            max={troops}
+            max={troopsAvailable}
             name="quantity"
             onChange={handleChange}
             value={troopsToDelegate}
@@ -150,36 +218,35 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode, factions=[], troops
               <NumberDecrementStepper />
             </NumberInputStepper>
           </NumberInput>
+          <FormErrorMessage>{troopsError}</FormErrorMessage>
         </FormControl>
         <Flex mt='16px'>
-        <p>{delegateMode==='delegate' ? 'Once delegated, troops may be recalled but will not be unallocated until the end of the game.'
-           : 'Recalling troops will return them to you at the end of the game.'} </p>
+        <Text as='i' fontSize={14} color='#aaa'>
+          {delegateMode==='delegate' ? 
+          'Once delegated, troops may be recalled but will not be unallocated until the end of the game.'
+           : 'Recalling troops will return them to you at the end of the game'} </Text>
         </Flex>
         <Flex mt='16px' justifyContent='center'>
         <Box
           ps='20px'>
         </Box>
         </Flex>
-        <Flex>
-          {showAlert && (
-            <Alert status='error'>
-              <AlertIcon />
-              <AlertTitle>{alertMessage}</AlertTitle>
-            </Alert>
-          )}
-        </Flex>
-      </RdModalBody>
-      <RdModalFooter>
+        
         <Center>
           <RdButton
-            w='250px'
+            w={{base: '200px', sm: '200px'}}
+            disabled={isExecuting}
             fontSize={{base: 'lg', sm: 'xl'}}
             stickyIcon={true}
+            marginTop='16px'
+            marginBottom={{base: '16px', sm: '16px'}}
             onClick={delegateMode==='delegate' ? handleDelegateTroops : handleRecallTroops}>
             {delegateMode==='delegate' ? 'Delegate' : 'Recall'}
           </RdButton>
         </Center>
-      </RdModalFooter>
+
+        </Box>
+      </Flex>
     </RdModal>
   )
 }

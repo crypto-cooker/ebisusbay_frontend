@@ -243,7 +243,7 @@ const AddLog = ({spoofTroopLog}: LogProps) => {
             borderColor: '#f9a50b',
           }}
         >
-          <MinusIcon />
+          <AddIcon />
         </Button>
       </Box>
 
