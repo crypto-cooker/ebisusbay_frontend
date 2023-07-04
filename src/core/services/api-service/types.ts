@@ -180,6 +180,9 @@ export interface RdGameContext {
             totalTroops: number;
         }[];
     }[];
+    history: {
+        previousGameId: number;
+    };
 }
 
 interface RdGameBase {
