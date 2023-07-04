@@ -87,11 +87,11 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsForm
       return;
     }
     if(troopsToDelegate > troopsAvailable || troopsAvailable <= 0) {
-      setTroopsError(`You cant deploy more troops than you have available`);
+      setTroopsError(`You can't delegate more troops than you have available`);
       return;
     }
     if(troopsToDelegate === 0) {
-      setTroopsError(`You must deploy at least 1 troop`);
+      setTroopsError(`You must delegate at least 1 troop`);
       return;
     }
     setTroopsError('');
