@@ -18321,6 +18321,7 @@
         "avatar": "/img/collections/journey-to-exodus/avatar.webp",
         "card": "/img/collections/journey-to-exodus/card.webp",
         "banner": "/img/collections/journey-to-exodus/banner.webp",
+        "website": "https://verai.it",
         "twitter": "https://www.twitter.com/VerAI_Nft",
         "discord": "https://discord.gg/qZFWU4YTNX",
         "categories": [
@@ -21616,6 +21617,56 @@
         "doxx": false,
         "kyc": true,
         "verified": true
+      }
+    },
+    {
+      "name": "Exodus",
+      "slug": "exodus",
+      "multiToken": false,
+      "address": "0x47992d3d472c91ae2c8AFDe7a8F2d8630cc0Bc5B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Captain’s log. Year 2301. Space. The engines are finally off and I’m using the short time we have before hibernation to record this message for any intelligent life form who might ever listen to it. I’m speaking as a representative of human beings as we fly away from our native planet into the sidereal emptiness; banished by those same species we’ve been greedily exploiting for so long, while we could have simply shared with them the plentiful resources we had. In order not to repeat the same mistakes, the High Council of Human Race has agreed on putting a sophisticated artificial intelligence in charge of the reconstruction of humanity. And now this AI is streaming on every screen of the ship images from the few active cameras left on Earth of our fleets escaping; an eternal memento of why we put it in charge. Time for me to go, there’s a long journey ahead and most probably I’ll end my days on this ship, searching for a planet that might not even exist. What a shame. Over and out.",
+        "avatar": "/img/collections/exodus/avatar.webp",
+        "card": "/img/collections/exodus/card.webp",
+        "banner": "/img/collections/exodus/banner.webp",
+        "website": "https://verai.it",
+        "twitter": "https://www.twitter.com/VerAI_Nft",
+        "discord": "https://discord.gg/ETntkFX4Hx",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Endless",
+      "slug": "endless",
+      "multiToken": false,
+      "address": "0xFB16f9e5372C8E6E8C5538Bc0542dAAA86Bde16a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Captain’s log. Year 3301. Earth’s orbit.  Operation Endless has finally begun, just as scheduled 1000 years ago after Exodus. Spaceships have gathered around our native planet from all over the universe, perfectly synchronized by the guidance of VerAI.  Probes have returned from a first inspection to the planet and the results are unbelievable.  Nature reconquered the whole environment and evolved according to fractal patterns that seem to be dictated by a sentient mind.  If this sounds incredible, just wait for the rest.  We have proof that natural elements have absorbed the memory of humans and reproduced their shape. Grass, rock, sand, metal… Even water preserves in its molecules the shape of human race. This planet was sentenced to death by our ancestors and yet it decided to remember them as if it had a mind of its own.  We are sending out our exploration spaceships and robots ‘cause we might have found a portal to the core of the planet.  Sending updates soon.  Over and out.",
+        "avatar": "/img/collections/endless/avatar.webp",
+        "card": "/img/collections/endless/card.webp",
+        "banner": "/img/collections/endless/banner.webp",
+        "website": "https://verai.it",
+        "twitter": "https://www.twitter.com/VerAI_Nft",
+        "discord": "https://discord.gg/qZFWU4YTNX",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
