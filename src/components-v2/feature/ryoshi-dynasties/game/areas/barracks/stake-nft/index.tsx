@@ -312,9 +312,6 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
     if (pendingNfts.length === 0 && stakedNfts.length === 0) return;
 
     let hasCompletedApproval = false;
-    toast.error('Staking temporarily locked.');
-    return;
-
     try {
       setIsExecutingStake(true);
       setExecutingLabel('Approving');
