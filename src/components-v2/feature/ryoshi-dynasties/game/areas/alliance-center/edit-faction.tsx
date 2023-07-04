@@ -125,17 +125,23 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   }
 
   const SaveChanges = async() => {
+    
     if(factionNameInput.current === undefined) {
       setAlertMessage("You must enter a faction name")
       setShowAlert(true)
       return;
     }
-    // console.log(factionType)
+    if(formik.values.factionName === "") {
+      setAlertMessage("You must enter a faction name")
+      setShowAlert(true)
+      return;
+    }
     if(addresses.length > getMaxAddresses()) {
       setAlertMessage("You are over the maximum number of addresses for this faction type")
       setShowAlert(true)
       return;
     }
+    setShowAlert(false)
 
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
