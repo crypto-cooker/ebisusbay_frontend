@@ -226,7 +226,7 @@ export default function Inventory({ address }: InventoryProps) {
                           onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft)) }
                           onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
                           onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
-                          newTab={false}
+                          newTab={true}
                         />
                       ) : (
                         <NftCard
