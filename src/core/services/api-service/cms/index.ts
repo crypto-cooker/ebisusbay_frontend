@@ -65,6 +65,10 @@ class Cms {
   async getFactions(gameId?: number) {
     return this.ryoshiDynasties.getFactions(gameId);
   }
+
+  async getGameWinners(gameId: number) {
+    return this.ryoshiDynasties.getGameWinners(gameId);
+  }
 }
 
 export default Cms;

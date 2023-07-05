@@ -120,6 +120,11 @@ class RyoshiDynastiesRepository extends CmsRepository {
       {params: {gameId}});
     return data.data.data as RdFaction[];
   }
+
+  async getGameWinners(gameId: number) {
+    const response = await this.cms.get(`ryoshi-dynasties/games/${gameId}/winners`);
+    return response.data.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;

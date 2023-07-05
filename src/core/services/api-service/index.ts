@@ -16,7 +16,8 @@ import {Offer} from "@src/core/models/offer";
 import {WalletsQueryParams} from "./mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
 import Graph from "@src/core/services/api-service/graph";
-
+import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
+import {caseInsensitiveCompare} from "@src/utils";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -72,6 +73,54 @@ export class ApiService implements Api {
     query.purchaser = address;
 
     return await this.getOffers(query);
+  }
+
+  async getRewardedEntities(gameId: number): Promise<any> {
+    const pointsByAddress = Object.values(RdGame7Winners).reduce((result, record) => {
+      record.faction.addresses.forEach(address => {
+        const existingEntry = result.find(entry => entry.address === address);
+
+        if (existingEntry) {
+          existingEntry.points += record.points;
+        } else {
+          result.push({
+            address: address,
+            points: record.points,
+            type: record.faction.type
+          });
+        }
+      });
+
+      return result;
+    }, [] as Array<{ address: string; points: number; type: string }>);
+
+    const collectionAddresses = pointsByAddress
+      .filter(entry => entry.type === 'COLLECTION')
+      .map(entry => entry.address);
+    const collections = await this.mapi.getCollections({address: collectionAddresses, pageSize: 200});
+    const mappedCollections = collections.data.map((collection: any) => {
+      return {
+        name: collection.name,
+        address: collection.address,
+        avatar: collection.metadata.avatar,
+        type: 'COLLECTION',
+        points: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, collection.address))?.points ?? 0
+      }
+    });
+
+    const walletAddresses = pointsByAddress
+      .filter(entry => entry.type === 'WALLET')
+      .map(entry => {
+        return {
+          name: entry.address,
+          address: entry.address,
+          avatar: null,
+          type: 'WALLET',
+          points: entry.points
+        }
+      });
+
+    return mappedCollections.concat(walletAddresses).sort((a, b) => b.points - a.points);
   }
 }
 

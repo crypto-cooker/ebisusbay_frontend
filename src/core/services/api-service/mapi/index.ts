@@ -13,6 +13,11 @@ import WalletsRepository from "@src/core/services/api-service/mapi/repositories/
 import WalletNft from "@src/core/models/wallet-nft";
 import {enrichOwnerListing, enrichWalletNft} from "@src/core/services/api-service/mapi/enrichment";
 import {findCollectionByAddress} from "@src/utils";
+import CollectionsRepository from "@src/core/services/api-service/mapi/repositories/collections";
+import {
+  CollectionInfoQuery,
+  CollectionInfoQueryParams
+} from "@src/core/services/api-service/mapi/queries/collectioninfo";
 
 const config = appConfig();
 
@@ -20,11 +25,13 @@ class Mapi {
   private listings;
   private offers;
   private wallets;
+  private collections;
 
   constructor(apiKey?: string) {
     this.listings = new ListingsRepository(apiKey);
     this.offers = new OffersRepository(apiKey);
     this.wallets = new WalletsRepository(apiKey);
+    this.collections = new CollectionsRepository(apiKey);
   }
 
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
@@ -100,6 +107,16 @@ class Mapi {
     query.purchaser = address;
 
     return await this.getOffers(query);
+  }
+
+  async getCollections(query?: CollectionInfoQueryParams): Promise<PagedList<any>> {
+    const response = await this.collections.getCollections(new CollectionInfoQuery(query));
+
+    return new PagedList<Listing>(
+      response.data.collections,
+      response.data.page,
+      response.data.page < response.data.totalPages
+    )
   }
 }
 

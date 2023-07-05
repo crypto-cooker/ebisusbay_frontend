@@ -2,36 +2,34 @@ import {ListingsQuery} from "@src/core/services/api-service/mapi/queries/listing
 import {listingState} from "@src/core/api/enums";
 import {limitSizeOptions} from "@src/Components/components/constants/filter-options";
 import MapiRepository from "@src/core/services/api-service/mapi/repositories/index";
+import {CollectionInfoQuery} from "@src/core/services/api-service/mapi/queries/collectioninfo";
 
 class CollectionsRepository extends MapiRepository {
 
-  async getCollections(query?: ListingsQuery) {
+  async getCollections(query?: CollectionInfoQuery) {
     let defaultQuery = {
-      state: listingState.ACTIVE,
       page: 1,
-      pageSize: limitSizeOptions.lg,
-      sortBy: 'listingId',
-      direction: 'desc'
+      pageSize: 50,
     };
 
-    return await this.api.get(`listings`, {
+    return await this.api.get(`collectioninfo`, {
       params: {...defaultQuery, ...query?.toQuery()}
     });
   }
 
-  async getCollection(query?: ListingsQuery) {
-    let defaultQuery = {
-      state: listingState.ACTIVE,
-      page: 1,
-      pageSize: limitSizeOptions.lg,
-      sortBy: 'listingId',
-      direction: 'desc'
-    };
-
-    return await this.api.get(`listings`, {
-      params: {...defaultQuery, ...query?.toQuery()}
-    });
-  }
+  // async getCollection(query?: ListingsQuery) {
+  //   let defaultQuery = {
+  //     state: listingState.ACTIVE,
+  //     page: 1,
+  //     pageSize: limitSizeOptions.lg,
+  //     sortBy: 'listingId',
+  //     direction: 'desc'
+  //   };
+  //
+  //   return await this.api.get(`collectioninfo`, {
+  //     params: {...defaultQuery, ...query?.toQuery()}
+  //   });
+  // }
 }
 
 export default CollectionsRepository;
