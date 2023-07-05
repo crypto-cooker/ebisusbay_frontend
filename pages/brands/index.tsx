@@ -100,7 +100,7 @@ const Brands = ({ssrBrands}: BrandsProps) => {
   )
 }
 
-export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
+export const getStaticProps = async () => {
   // const filteredBrands = brands.filter((b) => b.featured);
 
   return {
