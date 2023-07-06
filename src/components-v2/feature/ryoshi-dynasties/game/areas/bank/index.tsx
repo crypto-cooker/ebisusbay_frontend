@@ -123,7 +123,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
               <TypewriterText
                 text={[
                   greetings[Math.floor(Math.random() * greetings.length)],
-                  '<br /><br />Stake Fortune to stake your Fortune tokens and earn troops. Stake NFTs to boost your staking APR. Go to "Rewards" to claim your presale rewards.'
+                  '<br /><br />Stake Fortune to stake your Fortune tokens and earn troops. Stake NFTs to boost your staking APR. Go to "Rewards" to claim your Fortune rewards.'
                 ]}
                 onComplete={() => setBankerImage(bankerImages.idle)}
               />
