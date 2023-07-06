@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 import {
   Accordion,
   AccordionButton,
@@ -13,14 +13,16 @@ import {
   UnorderedList,
 } from "@chakra-ui/react"
 import localFont from 'next/font/local';
-import {useAppSelector} from "@src/Store/hooks";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
 const FaqPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const user = useAppSelector((state) => state.user);
+  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   return (
     <Stack spacing={3} className={gothamBook.className} fontSize={{ base: 'xs', md: 'sm' }}>
@@ -41,7 +43,7 @@ const FaqPage = () => {
             </AccordionButton>
             <AccordionPanel pb={4}>
               <Text>The Fortune tab will contain all seasons with pending rewards, including the current season. Click <strong>Claim</strong> to receive your current season rewards.</Text>
-              <Text mt={4}>* Note that, the current season is subject to a burn malus, known here as the <strong>Karmic Debt</strong>. A percentage of the current rewards will be burned proportional to the time left in the season. The Karmic Debt starts at 90% at the start of a season. That value will decrease to 0% as the current time gets closer to the end of the season.</Text>
+              <Text mt={4}>* Note that, the current season is subject to a burn malus, known here as the <strong>Karmic Debt</strong>. A percentage of the current rewards will be burned proportional to the time left in the season. The Karmic Debt starts at {rdConfig.bank.staking.fortune.startingDebt}% at the start of a season. That value will decrease to 0% as the current time gets closer to the end of the season.</Text>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>
@@ -63,7 +65,7 @@ const FaqPage = () => {
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text>The Karmic Debt, also known as a burn malus, represents the percentage of rewards that will be burned if a user decides to withdraw before the end of season. At the start of the season, this value starts at 90% and decreases linearly until the end of the season when it becomes 0%</Text>
+              <Text>The Karmic Debt, also known as a burn malus, represents the percentage of rewards that will be burned if a user decides to withdraw before the end of season. At the start of the season, this value starts at {rdConfig.bank.staking.fortune.startingDebt}% and decreases linearly until the end of the season when it becomes 0%</Text>
             </AccordionPanel>
           </AccordionItem>
         </Accordion>

@@ -21,6 +21,7 @@ interface RyoshiConfigBankStakingFortune {
   termLength: number;
   maxTerms: number;
   mitamaTroopsRatio: number;
+  startingDebt: string;
   apr: {[key: number]: number};
 }
 
