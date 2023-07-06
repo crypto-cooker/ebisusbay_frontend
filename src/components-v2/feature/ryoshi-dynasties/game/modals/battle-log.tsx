@@ -133,16 +133,15 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   //   {eventTimestamp:"2021-09-30T18:00:00.000Z", event:"send",currentTroops:-10,entity1:[{"id":1,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/1.png","name":"FactionA","troops":20}],entity2:[{"id":2,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/2.png","name":"FactionB","troops":0}],locationId:0},
   // ];
 
-  useEffect(() => {
-    if(!rdGameContext) return;
+  // useEffect(() => {
+  //   if(!rdGameContext) return;
+  //   GetBattleLog();
+  // }, [rdGameContext])
 
-    GetBattleLog();
-  }, [rdGameContext])
-
-  useEffect(() => {
-    if(!battleLog) return;
-    console.log(battleLog);
-  }, [battleLog])
+  // useEffect(() => {
+  //   if(!battleLog) return;
+  //   console.log(battleLog);
+  // }, [battleLog])
 
   return (
     <RdModal
