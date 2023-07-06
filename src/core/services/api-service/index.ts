@@ -76,23 +76,25 @@ export class ApiService implements Api {
   }
 
   async getRewardedEntities(gameId: number): Promise<any> {
-    const pointsByAddress = Object.values(RdGame7Winners).reduce((result, record) => {
-      record.faction.addresses.forEach(address => {
-        const existingEntry = result.find(entry => entry.address === address);
-
-        if (existingEntry) {
-          existingEntry.points += record.points;
-        } else {
-          result.push({
-            address: address,
-            points: record.points,
-            type: record.faction.type
-          });
-        }
-      });
-
-      return result;
-    }, [] as Array<{ address: string; points: number; type: string }>);
+    const pointsByAddress = await this.cms.getGameWinners(gameId);
+    // const ids = rewardedCollections.map((collection: any) => collection.id);
+    // const pointsByAddress = Object.values(RdGame7Winners).reduce((result, record) => {
+    //   record.faction.addresses.forEach(address => {
+    //     const existingEntry = result.find(entry => entry.address === address);
+    //
+    //     if (existingEntry) {
+    //       existingEntry.points += record.points;
+    //     } else {
+    //       result.push({
+    //         address: address,
+    //         points: record.points,
+    //         type: record.faction.type
+    //       });
+    //     }
+    //   });
+    //
+    //   return result;
+    // }, [] as Array<{ address: string; points: number; type: string }>);
 
     const collectionAddresses = pointsByAddress
       .filter(entry => entry.type === 'COLLECTION')

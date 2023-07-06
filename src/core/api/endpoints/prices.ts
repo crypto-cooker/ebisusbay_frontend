@@ -1,5 +1,6 @@
 import {appConfig} from "@src/Config";
 import {Axios} from "@src/core/http/axios";
+import {caseInsensitiveCompare} from "@src/utils";
 
 const config = appConfig();
 const api = Axios.create(config.urls.api);
@@ -21,11 +22,11 @@ export async function getPrices(): Promise<PriceProps[]> {
   }
 }
 
-export async function getPrice(chainId: number): Promise<PriceProps> {
+export async function getPrice(chainId: number, token?: string): Promise<PriceProps> {
   try{
     const response = await api.get(`prices`);
     
-    return response.data.prices.find((p: any) => p.chain === chainId);
+    return response.data.prices.find((p: any) => p.chain === chainId && (!token || caseInsensitiveCompare(p.currency, token)));
   }
   catch(error){
     throw error;
