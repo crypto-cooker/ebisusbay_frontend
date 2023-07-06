@@ -80,8 +80,8 @@ const Rewards = () => {
                       <>
                         <HStack>
                           <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6} />
-                          <Text fontSize='2xl' fontWeight='bold'>{round(rewards?.data.rewards.totalRewards, 3)}</Text>
-                          <Text as='span' ms={1} fontSize='sm' className="text-muted">~${round((fortunePrice ? Number(fortunePrice.usdPrice) : 0) * rewards?.data.rewards.totalRewards, 2)}</Text>
+                          <Text fontSize='2xl' fontWeight='bold'>{round(rewards?.data.rewards.currentRewards, 3)}</Text>
+                          <Text as='span' ms={1} fontSize='sm' className="text-muted">~${round((fortunePrice ? Number(fortunePrice.usdPrice) : 0) * rewards?.data.rewards.currentRewards, 2)}</Text>
                         </HStack>
                         <Text fontSize='sm' className="text-muted">{round(rewards?.data.rewards.aprRewards, 3)} staking + {round(rewards?.data.rewards.listingRewards, 3)} listing rewards</Text>
                         <Text mt={6} fontSize='sm'>Visit the Ryoshi Dynasties bank to claim.</Text>

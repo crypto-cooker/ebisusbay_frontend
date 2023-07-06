@@ -17,6 +17,7 @@ import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {useFortunePrice} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
+import {toast} from "react-toastify";
 
 const config = appConfig();
 
@@ -129,8 +130,10 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
       }
       if (signatureInStorage) {
         const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, seasonId, signatureInStorage)
-        await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+        const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+        await tx.wait();
       }
+      toast.success('Withdraw success!')
     } finally {
       setExecutingClaim(false);
     }
@@ -145,7 +148,7 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
         <HStack>
           <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
           <Text fontSize='lg' fontWeight='bold'>{round(convertToNumberAndRoundDown(reward.currentRewards), 3)}</Text>
-          <Text as='span' ms={1} fontSize='sm' color="#aaa">~${round((fortunePrice ? Number(fortunePrice.usdPrice) : 0) * reward.totalRewards, 2)}</Text>
+          <Text as='span' ms={1} fontSize='sm' color="#aaa">~${round((fortunePrice ? Number(fortunePrice.usdPrice) : 0) * reward.currentRewards, 2)}</Text>
         </HStack>
         <Text fontSize='sm' color='#aaa'>{round(reward.aprRewards, 3)} staking + {round(reward.listingRewards, 3)} listing rewards</Text>
 
