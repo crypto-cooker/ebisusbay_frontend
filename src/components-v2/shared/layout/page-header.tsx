@@ -16,7 +16,7 @@ const PageHeader = ({ title, subtitle }: HeaderProps) => {
             <div className="col-12">
               <Heading as="h1" size="2xl" className="text-center">{title}</Heading>
               {subtitle && (
-                <Text align="center">{subtitle}</Text>
+                <Text align="center" fontWeight='bold'>{subtitle}</Text>
               )}
             </div>
           </div>

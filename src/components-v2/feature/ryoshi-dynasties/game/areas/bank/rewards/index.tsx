@@ -1,5 +1,5 @@
-import {Box, Center, Flex, Image, Text, VStack} from "@chakra-ui/react"
-import React, {ReactElement, useCallback, useState} from "react";
+import {Box, Flex, Image, Text, VStack} from "@chakra-ui/react"
+import React, {useCallback, useState} from "react";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useAppSelector} from "@src/Store/hooks";
@@ -8,7 +8,6 @@ import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import PresaleVaultTab from "./presale";
-import ResourcesTab from "./resources";
 import FortuneRewardsTab from "./fortune";
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/rewards/faq-page";
@@ -29,7 +28,7 @@ interface WithdrawProps {
 const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
-  const [currentTab, setCurrentTab] = useState(tabs.presale);
+  const [currentTab, setCurrentTab] = useState(tabs.fortune);
   const [page, setPage] = useState<string>();
 
   const handleConnect = async () => {
@@ -50,7 +49,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
   };
 
   const handleClose = useCallback(() => {
-    setCurrentTab(tabs.presale);
+    setCurrentTab(tabs.fortune);
     onClose();
   }, []);
 
@@ -91,17 +90,17 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
               </Flex>
               <Box>
                 {currentTab === tabs.fortune && (
-                  // <FortuneRewardsTab />
-                  <RdModalBox>
-                    <VStack>
-                      <Image
-                        src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
-                        alt="lockIcon"
-                        boxSize={12}
-                      />
-                      <Text>Coming Soon</Text>
-                    </VStack>
-                  </RdModalBox>
+                  <FortuneRewardsTab />
+                  // <RdModalBox>
+                  //   <VStack>
+                  //     <Image
+                  //       src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
+                  //       alt="lockIcon"
+                  //       boxSize={12}
+                  //     />
+                  //     <Text>Coming Soon</Text>
+                  //   </VStack>
+                  // </RdModalBox>
                 )}
                 {currentTab === tabs.resources && (
                   // <ResourcesTab />

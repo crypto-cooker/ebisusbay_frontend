@@ -56,20 +56,20 @@ const Rewards = () => {
   return (
     <Box>
       <PageHead
-        title="Rewards"
-        description="View the top performing collections on Ebisu's Bay Marketplace"
-        url="/collections"
+        title="Earn Rewards with FRTN"
+        description="Get rewarded with FRTN by playing Ryoshi Dynasties and listing NFTs on Ebisu's Bay"
+        url="/rewards"
       />
       <PageHeader
-        title={'Get Rewarded With FRTN'}
-        subtitle={'Earn FRTN by listing NFTs on Ebisu\'s Bay. Stake your FRTN for even more rewards and benefits!'}
+        title='Earn Rewards with FRTN'
+        subtitle={'Earn FRTN by playing Ryoshi Dynasties and listing NFTs on Ebisu\'s Bay. Stake your FRTN to multiply your rewards!'}
       />
       <Box className="gl-legacy container no-top" mt={4}>
         <Card variant='outline' mt={2}>
           <CardBody>
             <Flex direction='column'>
               <Text fontSize='26px' fontWeight='bold'>Claim Rewards</Text>
-              <Text fontSize='sm'>Get rewarded by listing NFTs on Ebisu's Bay. Rewards are calculated at the end of every game of <Link href='/ryoshi'>Ryoshi Dynasties</Link> and accumulate daily.</Text>
+              <Text fontSize='sm'>Unlock epic Fortune rewards by listing NFTs on Ebisu's Bay. Rewards are calculated at the end of every game of <Link href='/ryoshi'>Ryoshi Dynasties</Link> and accumulate daily.</Text>
             </Flex>
             {user.address ? (
               <>
