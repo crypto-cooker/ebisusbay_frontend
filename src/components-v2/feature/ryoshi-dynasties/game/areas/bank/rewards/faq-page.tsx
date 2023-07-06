@@ -54,7 +54,7 @@ const FaqPage = () => {
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text>Any seasons with unclaimed rewards will be displayed under the <strong>Fortune</strong> tab. Click the <strong>Claim</strong> button to receive the seaon rewards.</Text>
+              <Text>Any seasons with unclaimed rewards will be displayed under the <strong>Fortune</strong> tab. Click the <strong>Claim</strong> button to receive the season rewards.</Text>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>

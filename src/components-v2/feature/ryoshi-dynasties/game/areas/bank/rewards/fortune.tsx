@@ -168,7 +168,7 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
         title='Confirm'
       >
         <RdModalAlert>
-          <Text>Warning: Claiming from the current season is subject to a {round(burnMalus)}% Karmic Debt <strong>burn</strong> of <strong>{round(Number(reward.currentRewards) * (1 - burnMalus / 100), 3)} FRTN</strong>. At this point in the season, you will only be able to claim <Text as='span' color='#FDAB1A' fontWeight='bold'>{round(Number(reward.currentRewards) * burnMalus / 100, 3)} FRTN</Text></Text>
+          <Text>Warning: Claiming from the current season is subject to a {round(burnMalus)}% Karmic Debt <strong>burn</strong> of <strong>{round(Number(reward.currentRewards) * burnMalus / 100, 3)} FRTN</strong>. At this point in the season, you will only be able to claim <Text as='span' color='#FDAB1A' fontWeight='bold'>{round(Number(reward.currentRewards) * (1 - burnMalus / 100), 3)} FRTN</Text></Text>
         </RdModalAlert>
         <RdModalFooter>
           <Stack justify='center' direction='row' spacing={6}>
