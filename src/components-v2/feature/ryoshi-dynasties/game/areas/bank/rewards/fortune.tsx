@@ -3,8 +3,7 @@ import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSig
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery} from "@tanstack/react-query";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
-import {Box, Center, Flex, Heading, HStack, Image, Spinner, Text, VStack} from "@chakra-ui/react";
-import {commify} from "ethers/lib/utils";
+import {Box, Center, Flex, HStack, Image, Spinner, Stack, Text, useDisclosure, VStack} from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import RdButton from "../../../../components/rd-button";
 import React, {useContext, useEffect, useState} from "react";
@@ -14,6 +13,8 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {round} from "@src/utils";
+import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
+import {RdModalAlert, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
 
 const FortuneRewardsTab = () => {
@@ -75,7 +76,7 @@ const FortuneRewardsTab = () => {
                 <Box py={4}><hr /></Box>
                 {rewards.data.rewards.map((reward: any) => (
                   <>
-                    <ClaimRow reward={reward} />
+                    <ClaimRow reward={reward} burnMalus={burnMalus} />
                   </>
                 ))}
               </>
@@ -91,10 +92,14 @@ const FortuneRewardsTab = () => {
   )
 }
 
-const ClaimRow = ({reward}: {reward: any}) => {
+const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
+  const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
   const [executingClaim, setExecutingClaim] = useState(false);
+  const { isOpen: isConfirmationOpen, onOpen: onOpenConfirmation, onClose: onCloseConfirmation } = useDisclosure();
+
+  const isCurrentSeason = rdGameContext?.season.blockId === reward.blockId;
 
   // Round down decimals so that user can't claim more than they have
   function convertToNumberAndRoundDown(numStr: string): number {
@@ -110,6 +115,7 @@ const ClaimRow = ({reward}: {reward: any}) => {
   const handleWithdraw = async (amountAsString: string, seasonId: number) => {
     try {
       setExecutingClaim(true);
+      onCloseConfirmation();
       const flooredAmount = convertToNumberAndRoundDown(amountAsString);
 
       let signatureInStorage = getAuthSignerInStorage()?.signature;
@@ -129,20 +135,49 @@ const ClaimRow = ({reward}: {reward: any}) => {
   return (
     <Flex justify='space-between' mt={2}>
       <VStack align='start' spacing={0}>
-        <Text fontSize='xl' fontWeight='bold'>Season {commify(reward.blockId)}</Text>
+        <Text fontSize='xl' fontWeight='bold'>
+          {isCurrentSeason ? 'Current Season' : `Season ${reward.blockId}`}
+        </Text>
         <HStack>
           <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
-          <Text>{convertToNumberAndRoundDown(reward.currentRewards)}</Text>
+          <Text>{round(convertToNumberAndRoundDown(reward.currentRewards), 3)}</Text>
         </HStack>
+        <Text fontSize='sm' color='#aaa'>{round(reward.aprRewards, 3)} staking + {round(reward.listingRewards, 3)} listing rewards</Text>
+
       </VStack>
       <RdButton
         size='sm'
-        onClick={() => handleWithdraw(reward.currentRewards, Number(reward.seasonId))}
+        onClick={() => isCurrentSeason ? onOpenConfirmation() : handleWithdraw(reward.currentRewards, Number(reward.seasonId))}
         isLoading={executingClaim}
         loadingText='Claiming...'
       >
         Claim
       </RdButton>
+      <RdModal
+        isOpen={isConfirmationOpen}
+        onClose={onCloseConfirmation}
+        title='Confirm'
+      >
+        <RdModalAlert>
+          <Text>Warning: Claiming from the current season is subject to Karmic Debt. At this point in the season, you will only be able to claim <strong>{round(Number(reward.currentRewards) * burnMalus / 100, 3)} FRTN</strong></Text>
+        </RdModalAlert>
+        <RdModalFooter>
+          <Stack justify='center' direction='row' spacing={6}>
+            <RdButton
+              onClick={onCloseConfirmation}
+              size='lg'
+            >
+              Cancel
+            </RdButton>
+            <RdButton
+              onClick={() => handleWithdraw(reward.currentRewards, Number(reward.seasonId))}
+              size='lg'
+            >
+              Claim
+            </RdButton>
+          </Stack>
+        </RdModalFooter>
+      </RdModal>
     </Flex>
   )
 }
