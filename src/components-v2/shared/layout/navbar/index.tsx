@@ -3,16 +3,21 @@ import {useDispatch} from 'react-redux';
 import Link from 'next/link';
 import {createGlobalStyle} from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBars, faMoon, faSun} from '@fortawesome/free-solid-svg-icons';
+import {faMoon, faSun} from '@fortawesome/free-solid-svg-icons';
 
 import AccountMenu from './account-menu';
 import NotificationMenu from './notification-menu';
 import {setTheme} from '@src/GlobalState/User';
 import {
   Box,
+  Button,
   Flex,
   HStack,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Spacer,
   Stack,
   Text,
@@ -22,7 +27,7 @@ import {
   useOutsideClick
 } from "@chakra-ui/react";
 import Cart from "./cart";
-import {CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
+import {ChevronDownIcon, CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
 import Search from "@src/components-v2/shared/layout/navbar/search";
 import MobileSearchDrawer from "@src/components-v2/shared/layout/navbar/search/drawer";
 import {useAppSelector} from "@src/Store/hooks";
@@ -37,7 +42,7 @@ const GlobalStyles = createGlobalStyle`
 
 const NavLink = ({name, to, onClick}: {name: string, to: string, onClick?: any}) => {
   return (
-    <Link href={to}>
+    <Link href={to} className='single-link'>
       {name}
     </Link>
   );
@@ -101,14 +106,30 @@ const Header = function () {
                 as={'nav'}
                 spacing={3}
                 display={{base: 'none', md: 'flex'}}
-                me={2}
+                me={4}
               >
-                <NavLink name={'Marketplace'} to={'/marketplace'} />
-                <NavLink name={'Collections'} to={'/collections'} />
-                <NavLink name={'Brands'} to={'/brands'} />
-                <NavLink name={'Drops'} to={'/drops'} />
-                {/*<NavLink name={'Stats'} to={'/stats'} />*/}
-                {/*<NavLink name={'Auction'} to={'/auctions/mutant-serum'} />*/}
+                <NavLink name={'Rewards'} to={'/rewards'} />
+                <Menu placement='bottom-end'>
+                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
+                    Marketplace
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem as='a' href='/marketplace' _hover={{color: 'inherit'}} justifyContent='end'>Explore</MenuItem>
+                    <MenuItem as='a' href='/collections' _hover={{color: 'inherit'}} justifyContent='end'>Collections</MenuItem>
+                    <MenuItem as='a' href='/brands' _hover={{color: 'inherit'}} justifyContent='end'>Brands</MenuItem>
+                    <MenuItem as='a' href='/drops' _hover={{color: 'inherit'}} justifyContent='end'>Drops</MenuItem>
+                    {/*<MenuItem as='a' href='/stats'>Stats</MenuItem>*/}
+                    {/*<MenuItem as='a' href='/auctions'>Auction</MenuItem>*/}
+                  </MenuList>
+                </Menu>
+                <Menu placement='bottom-end'>
+                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
+                    GameFi
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem as='a' href='/ryoshi' _hover={{color: 'inherit'}} justifyContent='end'>Ryoshi Dynasties</MenuItem>
+                  </MenuList>
+                </Menu>
               </HStack>
 
               {shouldUseMobileSearch && <MobileSearchDrawer />}
@@ -133,6 +154,8 @@ const Header = function () {
           {isOpen ? (
             <Box pb={4} display={{md: 'none'}} textAlign="end">
               <Stack as={'nav'} spacing={4}>
+                <NavLink name={'Rewards'} to={'/rewards'} onClick={onClose} />
+                <NavLink name={'Ryoshi Dynasties'} to={'/ryoshi'} />
                 <NavLink name={'Marketplace'} to={'/marketplace'} onClick={onClose} />
                 <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
                 <NavLink name={'Brands'} to={'/brands'} onClick={onClose} />
