@@ -41,7 +41,7 @@ const FaqPage = () => {
             </AccordionButton>
             <AccordionPanel pb={4}>
               <Text>The Fortune tab will contain all seasons with pending rewards, including the current season. Click <strong>Claim</strong> to receive your current season rewards.</Text>
-              <Text mt={4}>* Note that, the current season is subject to a burn malus, known here as the <strong>Karmic Debt</strong>. A percentage of the current rewards will be burned proportional to the time left in the season. The Slothy Tax starts at 80% at the start of a season. That value will decrease to 0% as the current time gets closer to the end of the season.</Text>
+              <Text mt={4}>* Note that, the current season is subject to a burn malus, known here as the <strong>Karmic Debt</strong>. A percentage of the current rewards will be burned proportional to the time left in the season. The Karmic Debt starts at 80% at the start of a season. That value will decrease to 0% as the current time gets closer to the end of the season.</Text>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>
