@@ -70,7 +70,7 @@ import ListingBundleDrawerForm, {
 } from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-bundle-drawer-form";
 
 const config = appConfig();
-const MAX_NFTS_IN_CART = 40;
+const MAX_NFTS_IN_GAS_CART = 100;
 const MIN_NFTS_IN_BUNDLE = 2;
 const floorThreshold = 5;
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -424,9 +424,15 @@ export const ListingDrawer = () => {
           </Box>
         )}
         <Flex mb={2}>
-          <Text fontWeight="bold" color={batchListingCart.items.length > 40 ? 'red' : 'auto'}>
-            {batchListingCart.items.length} / {MAX_NFTS_IN_CART} Items
-          </Text>
+          {isBundling || expressMode ? (
+            <Text fontWeight="bold" color={batchListingCart.items.length > MAX_NFTS_IN_GAS_CART ? 'red' : 'auto'}>
+              {batchListingCart.items.length} / {MAX_NFTS_IN_GAS_CART} Items
+            </Text>
+          ) : (
+            <Text fontWeight="bold">
+              {batchListingCart.items.length} Items
+            </Text>
+          )}
           <Spacer />
           <Text fontWeight="bold" onClick={handleClearCart} cursor="pointer">Clear all</Text>
         </Flex>
