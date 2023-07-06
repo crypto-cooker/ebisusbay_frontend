@@ -67,7 +67,7 @@
       "multiToken": false,
       "address": "0xe51377a260043381b8B525D33B9fFBC601A1469b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Our very own Halloween collection, from the team at Ebisu's Bay.",
         "avatar": "/img/collections/ryoshi-tales-halloween/avatar.webp",
@@ -2415,7 +2415,7 @@
       "multiToken": false,
       "address": "0xcA2a705cd8c623Ed52848A272c8F8414Baeb918c",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Resurrection potion can be deadly if I\u2019m the wrong hands!!! Dr. Boo has been working hard in the lab to bring you the first of its kind mutant potion!!! If you own and nft and want to mutate it\u2026 then drink the juice.  You will get a resurrected version of your favorite nft!!  Don\u2019t worry the host nft will not be harmed.",
         "avatar": "/img/collections/dr-boo-resurrection/avatar.webp",
@@ -2460,7 +2460,7 @@
       "multiToken": false,
       "address": "0xa658fc75FC40B079345810503eb3E4Cca9Feae06",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Rebel Punks is an artistically hand drawn collection, pioneering a new hybrid Gaming Ecosystem, the Metawarz Shooter. The Rebel Punks are more than just collectibles, they carry endless possibilities and utilities. The art is derived from one faction of the Metawarz. Thus, they are the cornerstone of Metawarz Shooter ecosystem. Your Rebel serve as a membership card, and grants you access to members-only benefits.",
         "avatar": "/img/collections/rebel-punks/avatar.webp",
@@ -2511,7 +2511,7 @@
       "multiToken": false,
       "address": "0x068E74818582A542e35a37057b92f974F0823A50",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cro Llamas is a NFT project created to share a cultural vision with a Llama themed art. We want to build a successful project that collecting Llama artwork is the main center of it.\n\nThe CRO Llamas used to live in their world called Llamaverse, a beautiful world where all llamas could live in harmony and wealth. One day, the twin gods, creators of the world, wanted to choose one of the llamas to become a new god and sit next to them, but to do so, the chosen one would need to go in an adventure.\n\n1200 Llamas were hand picked to participate on this quest!\nWhen they started their journey, they were sent to a world called Cronos Blockchain.",
         "avatar": "/img/collections/cro-llamas/avatar.webp",
@@ -2534,7 +2534,7 @@
       "multiToken": false,
       "address": "0xf90f9C8448c8d147faC73695635f868D6c1f8f0b",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Crazy Crossbreeds are wicked beasts who's genetics consist of Goat & Boar DNA. These NFT's will powers our Defi Game Cove and will be by far the craziest beasts in our eco-system. Holders receive benefits through our DAO, Tools, Games, Mint, and upcoming Comic Book release. Join The Herd Today!",
         "avatar": "/img/collections/crazy-crossbreeds/avatar.webp",
@@ -2558,7 +2558,7 @@
       "multiToken": false,
       "address": "0x803F1caB2Bf0B13FbcaB54E993f552a0dd1AD28F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Selfie Guys is a collection with many utilities! Grab yours now and join our amazing community!",
         "avatar": "/img/collections/selfie-guys/avatar.webp",
@@ -3006,7 +3006,7 @@
       "multiToken": false,
       "address": "0xfaDb4ef67596492534d7315C405B4B06D1e19Bf1",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "CroHamsterNFT Items MK1 is a collection of 1000 animated 3D NFT Items that builds on our CroHamsterNFT collection for use in our CroHamster arena. These Item NFTs have different combat values and rarities! Owning such an Item will increase your CroHamsterNFT's combat abilities in one of our arena matchups, where you can compete for great NFT and Cro rewards and work your way up to our Hall of Fame for even more rewards and glory! In addition, 100% of the funds resulting from this Item collection will be used to burn the CroHamsterNFT floor price in multiple unannounced waves and expand our CroHamsterNFT Universe!",
         "avatar": "/img/collections/crohamsternft-items-mk1/avatar.webp",
@@ -3216,7 +3216,7 @@
       "multiToken": false,
       "address": "0xa3a9bd5142bfaf3126734096cacc96a71103611f",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Elf Citizens is a collection of 1,111 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
         "avatar": "/img/collections/elf-citizens/avatar.webp",
@@ -3240,7 +3240,7 @@
       "multiToken": false,
       "address": "0x57f458ad92147c27b5e00995cd228a2ba708480f",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The CronosVerse is offering 143 Unique In-Game Furniture and Decorative Items for you to place on your Land or in your Suite.  With 12 multiples of each item available, there will be a total of 1716 NFTs available in this drop. ",
         "avatar": "/img/collections/cronosverse-in-game-assets/avatar.webp",
@@ -3318,7 +3318,7 @@
       "multiToken": false,
       "address": "0xA9a3141033100ab6c1e7618eF140FB2bA02ADb25",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "There's a coin lying on the ground! Pick it up?",
         "avatar": "/img/collections/diamond-coins/avatar.webp",
@@ -3412,7 +3412,7 @@
       "multiToken": false,
       "address": "0xf92988Ee3dB59DA98d17BEb832491BDAb3825D70",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Pogo are randomly generated, non-fungible tokens, also known as an \"NFT.\" There are 2,500 unique & 3D rendered Pogo in our genesis collection with over 300 attribute, No two Pogo are the same. \n2490pcs random generated NFT\n10pcs Legendary 1:1 NFT\n\n-Hype The Fun Of Mint\nLucky minter will receive $cro token and NFT airdrops that worth over 15000$cro, Prizes and specific NFT ID can be found on The Pogo social media.\n\n -Sharing Is Caring\nHolder could earn passive income via our partnered NFT staking platform, 20% of mint fund and 50% of the royalties will be share to the Pogo liquidity pool. \n\n- Creative 1:1 Pogo Custom Design\nA fully customize 1/1 Special Pogo NFT with your idea to you in terms of swapping 8 of the genesis Pogo collection.\n\n-We Won't Stop The Joy\nOwner of POGO NFT means you're acquisition a POGO membership card and POGO discord holder badges that available to access the Pogo exclusive club.\nNFT raffles, Stealth event and more activities will be host to our valuable community.\n\n-Merch Store\nVarious merchs oriented from community activities, such as idea proposals, fan arts, will be produced and sold via online store. Figurines, Hats, Tees, Socks, Hoodies, etc will be designed by The Pogo Team.\n\n-Pogoland\nUsing cutting edge technology & art direction we bring Pogo into The Pogoland Metaverse, A web3 crypto home of immersive experiences, from gaming to social hangouts, to concerts, fashion shows, education, and entertainment, connecting each other with our resources.\n\n-Project Holder Benefits\nThis is not the end, it's only the beginning.\nPogo holder will be our first priority to benefit them with our future roadmap, partnership, future collection or even cross chain project.",
         "avatar": "/img/collections/the-pogo/avatar.webp",
@@ -3461,7 +3461,7 @@
       "multiToken": false,
       "address": "0x2963a24552A5E544e4CA5820Ba8A0B9e87a46011",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Introducing The Strange Camel - a one-of-a-kind collection of 4,000 custom-designed 3D Avatars. These stunningly beautiful avatars are aesthetically pleasing and carry special perks within the SCS ecosystem. The Strange Camel also tells a fascinating story about how camels were the only creatures to survive a deadly virus in 2969, leading to a thrilling adventure that you can be a part of.",
         "avatar": "/img/collections/strange-camel-society/avatar.webp",
@@ -3557,7 +3557,7 @@
       "multiToken": false,
       "address": "0xbf274fD475CBB7Dfc84d0Fbe35ce35bB8b1AA5e1",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Ballies Cheerleaders are the new assets in the Ballies Metaverse. They are a set of 3333 completely unique basketball characters algorithmically generated from over 140 hand-drawn traits. They are amazing collectibles as well as super strong game assets. They have rarity skills to influence the Ballie's game and give you the advantage on the Meta-court. Own a Cheerleader Ballie and live out your basketball dream! Become the KING of the Meta-Court! Do you have what it takes?",
         "avatar": "/img/collections/ballies-cheerleaders/avatar.webp",
@@ -3567,6 +3567,31 @@
         "twitter": "https://twitter.com/Ballies_NFT",
         "discord": "https://discord.gg/Hec5CgFKfX",
         "medium": "https://medium.com/@BalliesNFT",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Barber Shop",
+      "slug": "barber-shop",
+      "multiToken": false,
+      "address": "0x5a78147a57824872EE7AD0D07B0Eb57f92F3Dfb5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/barber-shop/avatar.webp",
+        "card": "/img/collections/barber-shop/card.webp",
+        "banner": "/img/collections/barber-shop/banner.webp",
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw",
         "categories": [
           "collectibles"
         ]
@@ -8540,6 +8565,44 @@
         "doxx": false,
         "kyc": true,
         "escrow": true,
+        "verified": true
+      }
+    },
+    {
+      "id": 175,
+      "slug": "barber-shop",
+      "title": "Barber Shop",
+      "subtitle": "",
+      "description": "We are pleased to present \"Barber Shop,\" the upcoming collection from Team Mustachios. By investing in this venture, you will gain access to a cryptocurrency miner that operates at the intersection of physical assets, Web3, and blockchain technology. This innovative miner guarantees a continuous revenue stream for the project.",
+      "author": {
+        "name": "Team Mustachios",
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw"
+      },
+      "address": "0x5a78147a57824872EE7AD0D07B0Eb57f92F3Dfb5",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 2222,
+      "totalSupply": 2222,
+      "cost": "300",
+      "memberCost": "300",
+      "foundersOnly": false,
+      "start": 1688657153000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/barber-shop/drop.webp",
+        "banner": "/img/collections/barber-shop/banner.webp",
+        "avatar": "/img/collections/barber-shop/avatar.webp",
+        "preview": "/img/collections/barber-shop/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
         "verified": true
       }
     }

@@ -8396,7 +8396,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -13036,7 +13036,7 @@
         "categories": []
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -21668,6 +21668,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Barber Shop",
+      "slug": "barber-shop",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/barber-shop/avatar.webp",
+        "card": "/img/collections/barber-shop/card.webp",
+        "banner": "/img/collections/barber-shop/banner.webp",
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -28478,6 +28503,44 @@
         "doxx": false,
         "kyc": true,
         "escrow": true,
+        "verified": true
+      }
+    },
+    {
+      "id": 175,
+      "slug": "barber-shop",
+      "title": "Barber Shop",
+      "subtitle": "",
+      "description": "We are pleased to present \"Barber Shop,\" the upcoming collection from Team Mustachios. By investing in this venture, you will gain access to a cryptocurrency miner that operates at the intersection of physical assets, Web3, and blockchain technology. This innovative miner guarantees a continuous revenue stream for the project.",
+      "author": {
+        "name": "Team Mustachios",
+        "website": "https://teammustachios.com/",
+        "twitter": "https://twitter.com/teammustachios",
+        "discord": "https://discord.gg/eH4SCJY5Qw"
+      },
+      "address": "",
+      "maxMintPerTx": 40,
+      "maxMintPerAddress": 2222,
+      "totalSupply": 2222,
+      "cost": "300",
+      "memberCost": "300",
+      "foundersOnly": false,
+      "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/barber-shop/drop.webp",
+        "banner": "/img/collections/barber-shop/banner.webp",
+        "avatar": "/img/collections/barber-shop/avatar.webp",
+        "preview": "/img/collections/barber-shop/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
         "verified": true
       }
     }

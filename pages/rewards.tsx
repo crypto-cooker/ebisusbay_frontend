@@ -73,7 +73,7 @@ const Rewards = () => {
             </Flex>
             {user.address ? (
               <>
-                <Heading size='md' fontWeight='normal' mt={4}>Total Pending Rewards</Heading>
+                <Heading size='md' fontWeight='normal' mt={4}>Your Pending Rewards</Heading>
                 {!isRewardsLoading && !isFortunePriceLoading ? (
                   <>
                     {!isRewardsError ? (
