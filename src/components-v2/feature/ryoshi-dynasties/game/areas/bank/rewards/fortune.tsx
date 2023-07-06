@@ -15,7 +15,7 @@ import {
 import {round} from "@src/utils";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import {useGlobalPrice} from "@src/hooks/useGlobalPrices";
+import {useFortunePrice} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 
 const config = appConfig();
@@ -101,7 +101,7 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
   const [isLoading, getSigner] = useCreateSigner();
   const [executingClaim, setExecutingClaim] = useState(false);
   const { isOpen: isConfirmationOpen, onOpen: onOpenConfirmation, onClose: onCloseConfirmation } = useDisclosure();
-  const { data: fortunePrice, isLoading: isFortunePriceLoading } = useGlobalPrice(config.chain.id);
+  const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
 
   const isCurrentSeason = rdGameContext?.season.blockId === reward.blockId;
 
