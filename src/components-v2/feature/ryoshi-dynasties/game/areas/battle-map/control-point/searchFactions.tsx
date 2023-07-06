@@ -71,8 +71,9 @@ import {
       let filteredFactions_: any[] = [];
       //check if their names match the value
       allFactions.filter((faction) => {
-        return faction.name.toLowerCase().includes(value.toLowerCase());
-      })
+        if(faction.name.toLowerCase().includes(value.toLowerCase())){
+          filteredFactions_.push(faction);
+      }})
       //check if their addresses match the value as well
       allFactions.filter((faction) => {
         if(faction.addresses.length > 0){
