@@ -401,6 +401,15 @@ const Home = ({rdConfig}: {rdConfig: RyoshiConfig | null}) => {
             </a>
           </Center>
           <Center>
+            <a href="https://www.coingecko.com/" target="_blank" rel="noreferrer">
+              <img
+                src={hostedImage(userTheme === 'light' ? '/img/logos/partners/coingecko.png' : '/img/logos/partners/coingecko-white.png')}
+                alt="CoinGecko"
+                width="150px"
+              />
+            </a>
+          </Center>
+          <Center>
             <a href="https://www.sentio.xyz/" target="_blank" rel="noreferrer">
               <img
                 src={hostedImage(userTheme === 'light' ? '/img/logos/partners/sentio.webp' : '/img/logos/partners/sentio-white.webp')}
