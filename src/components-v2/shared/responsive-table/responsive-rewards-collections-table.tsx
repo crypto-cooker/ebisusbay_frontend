@@ -174,9 +174,9 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
                   </Stat>
                 </VStack>
               </Box>
-              <AccordionButton w='auto'>
-                <AccordionIcon />
-              </AccordionButton>
+              {/*<AccordionButton w='auto'>*/}
+              {/*  <AccordionIcon />*/}
+              {/*</AccordionButton>*/}
             </Flex>
             <AccordionPanel px={0}>
               anything else?
