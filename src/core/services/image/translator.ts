@@ -139,6 +139,15 @@ class ImageTranslator {
       config.urls.cdn.app
     ]
 
+    // Hack to force any proxy urls to be remapped to bunnykit
+    const proxySubstring = 'proxy/http';
+    if (fromDomain.includes(proxySubstring)) {
+      let index = fromDomain.indexOf(proxySubstring);
+      if (index !== -1) {
+        return config.urls.cdn.bunnykit + fromDomain.slice(index);
+      }
+    }
+
     // Only replace once based on above priority
     for (const domain of remappableDomains) {
       if (fromDomain.includes(domain)) {
