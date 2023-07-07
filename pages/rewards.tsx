@@ -10,14 +10,14 @@ import ResponsiveRewardsCollectionsTable
 import {round} from "@src/utils";
 import ImageService from "@src/core/services/image";
 import {useAppSelector} from "@src/Store/hooks";
-import {useGlobalPrice} from "@src/hooks/useGlobalPrices";
+import {useFortunePrice} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 
 const config = appConfig();
 
 const Rewards = () => {
   const user = useAppSelector(state => state.user);
-  const { data: fortunePrice, isLoading: isFortunePriceLoading } = useGlobalPrice(config.chain.id);
+  const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
 
   const {data, error, status,} = useQuery(
     ['RewardsCollections'],
