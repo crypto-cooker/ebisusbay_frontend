@@ -70,9 +70,13 @@ export const AnyMedia = ({
 
     // If thumbnail for animation url can't be retrieved, use the image
     if (!!thumbnail) {
-      let response = await axios.head(thumbnail);
-      const [mediaType, format] = response.headers['content-type'].split('/');
-      setVideoThumbNail(mediaType === 'image' ? thumbnail : image);
+      try {
+        let response = await axios.head(thumbnail);
+        const [mediaType, format] = response.headers['content-type'].split('/');
+        setVideoThumbNail(mediaType === 'image' ? thumbnail : image);
+      } catch (e) {
+        // ignore
+      }
     }
 
     const knownImageTypes = ['.png', '.jpg', '.jpeg', '.webp', '.gif'];
