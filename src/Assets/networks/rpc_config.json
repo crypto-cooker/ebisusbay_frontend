@@ -21598,7 +21598,7 @@
       "multiToken": false,
       "address": "0xccE7B3067765FfbA74744C8dB4C1Cd58Bf8D77e7",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Playground Season 2 Game Tokens for brought to you by Boomer Squad",
         "avatar": "/img/collections/zoomer-squad-playground-tokens-s1/avatar.webp",
@@ -21692,6 +21692,212 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Ninjas v Samurais AngelusBoBsAiNFTs 2.0",
+      "slug": "angelusbobsainfts-ninjas-v-samurais-v2",
+      "multiToken": false,
+      "address": "0x4bcf2b3f61522aEf8d97b8dBbdc44fA7cdc1BdBE",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of Ninja v Samurai NFTs by AngelusBoBsAiNFTs  Buy any 5 NFTs and claim a 3d Staking Threads of Crypto",
+        "avatar": "/img/collections/angelusbobsainfts-ninjas-v-samurais-v2/avatar.webp",
+        "card": "/img/collections/angelusbobsainfts-ninjas-v-samurais-v2/card.webp",
+        "banner": "/img/collections/angelusbobsainfts-ninjas-v-samurais-v2/banner.webp",
+        "twitter": "https://twitter.com/AngelusbobRh",
+        "discord": "https://discord.gg/M3gKXu5HA",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Soul Corruption Chronicles",
+      "slug": "soul-corruption-chronicles",
+      "multiToken": false,
+      "address": "0xeFcFCcad093142FC95AB7d97c9369bf39bC9676D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of single nfts from the amazing Ai artist AngelusBoBsAiNFTs  Buy any 5 NFTs and claim a free 3d card Threads of Crypto August 1st from my discord. Threads of crypto special edition also give a free 3d card",
+        "avatar": "/img/collections/soul-corruption-chronicles/avatar.webp",
+        "card": "/img/collections/soul-corruption-chronicles/card.webp",
+        "banner": "/img/collections/soul-corruption-chronicles/banner.webp",
+        "twitter": "https://twitter.com/AngelusbobRh",
+        "discord": "https://discord.gg/QHrzqSn9Rf",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Soul Fighters",
+      "slug": "soul-fighters",
+      "multiToken": false,
+      "address": "0xC9547a96C58a1398Dce1fe76aAE897C9B57aD720",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of Soul Fighter nfts from the amazing Ai artist AngelusBoBsAiNFTs  Buy any 5 NFTs and claim a free 3d card Threads of Crypto August 1st from my discord. Threads of crypto special edition also give a free 3d card",
+        "avatar": "/img/collections/soul-fighters/avatar.webp",
+        "card": "/img/collections/soul-fighters/card.webp",
+        "banner": "/img/collections/soul-fighters/banner.webp",
+        "twitter": "https://twitter.com/AngelusbobRh",
+        "discord": "https://discord.gg/QHrzqSn9Rf",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Radiant Residences",
+      "slug": "radiant-residences",
+      "multiToken": false,
+      "address": "0x3720cde69E4E997bbDeaEc7b4e7b5f8c3C406869",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Radiant Residences (RAD) is an awe-inspiring building situated in the heart of the Rainbowland Metaverse, specifically in The City district. This architectural marvel represents a collection of 1,200 luxurious apartments, penthouses, offices, and stores spread across an impressive 108 floors. With one side of the building overlooking the vast sea and the other three sides embracing the bustling urban landscape, Radiant Residences offers a truly captivating living and working experience. By staking Radiant Residences (RAD) NFTs, participants unlock a gateway to a world of lucrative opportunities within the Rainbowland Metaverse. As a valued member of the Radiant community, your ownership of these prestigious properties allows you to tap into the immense potential for generating passive income. Through the process of staking these NFTs, participants earn rewards in the form of $RaVerse (symbol: $RaVerse), the official currency of the Rainbowland Metaverse. These rewards not only reflect the vibrant economy of Rainbowland but also serve as a testament to your status as an esteemed property owner within the Radiant Residences. Step into the immersive world of Rainbowland and embrace the chance to reap the benefits of your staked Radiant Residences NFTs. Join Radiant Stakings today and become an integral part of the flourishing Rainbowland community while unlocking the potential for both financial growth and enchanting experiences.",
+        "avatar": "/img/collections/radiant-residences/avatar.webp",
+        "card": "/img/collections/radiant-residences/card.webp",
+        "banner": "/img/collections/radiant-residences/banner.webp",
+        "website": "https://www.rainbowland.org/",
+        "twitter": "https://twitter.com/TheRainbowland",
+        "discord": "https://discord.gg/vPrsBGEngd",
+        "medium": "https://the-rainbowland-metaverse.medium.com/",
+        "telegram": "https://t.me/newsrainbowland",
+        "categories": [
+          "metaverse",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Project Zayon",
+      "slug": "project-zayon",
+      "multiToken": false,
+      "address": "0xF4ca337c841440BA2ad585d91361e535791c3f4c",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Project Zayon is a 5000 NFTs Collection. These nft have rarities. Each level of rarities will earn more daily Zayon$ Token. There is also something big hidden somewhere, but shh don't say it. Keep it to yourself. You don't want someone else to steal it from you.",
+        "avatar": "/img/collections/project-zayon/avatar.webp",
+        "card": "/img/collections/project-zayon/card.webp",
+        "banner": "/img/collections/project-zayon/banner.webp",
+        "website": "https://tatastwistedtonics.com/zayon",
+        "twitter": "https://twitter.com/ProjectZayon",
+        "discord": "https://discord.gg/rXqnfkFv",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ballies All-Stars",
+      "slug": "ballies-all-stars",
+      "multiToken": false,
+      "address": "0xd4390FF0122E9E79aF2054bF9B23103d20bFd155",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ballies All-Stars collection features 24 exceptional players carefully handpicked from the East and West. Each player showcased in this collection possesses unparalleled skills perfectly suited for the Ballies game. Get ready to own a piece of NFT history as you explore this meticulously curated selection of top-tier All-Star talent. From breathtaking dunks to astonishing three-pointers, these players embody the pinnacle of basketball excellence. Don't miss your chance to immerse yourself in the world of the Ballies game with the extraordinary All-Stars NFT collection.",
+        "avatar": "/img/collections/ballies-all-stars/avatar.webp",
+        "card": "/img/collections/ballies-all-stars/card.webp",
+        "banner": "/img/collections/ballies-all-stars/banner.webp",
+        "website":"https://ballies.gg",
+        "twitter": "https://twitter.com/Ballies_NFT",
+        "discord": "https://discord.gg/ballies-nft-903875114133753887",
+        "medium": "https://medium.com/@BalliesNFT",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "CroKing NFT",
+      "slug": "croking-nft",
+      "multiToken": false,
+      "address": "0xAD4bDA67bB8b6A502496EEF4dFba2ffdBAc38dB6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A Collection of 3001 CroKing Lion NFTs. Every NFT is unique, with 16 different attributes and a wide range of traits.",
+        "avatar": "/img/collections/croking-nft/avatar.webp",
+        "card": "/img/collections/croking-nft/card.webp",
+        "banner": "/img/collections/croking-nft/banner.webp",
+        "website": "https://croking.net/",
+        "twitter": "https://twitter.com/CroKingToken",
+        "discord": "https://discord.gg/chnHwdyu5R",
+        "telegram": "https://t.me/CroKingOfficial",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroQueen NFT",
+      "slug": "croqueen-nft",
+      "multiToken": false,
+      "address": "0x51D25FB5FBfe57FF67B20c499d4dd1d3c64844B7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of 3001 CroQueen to compliment the original CroKing collection of NFTs. Every NFT is unique, with 13 different attributes and a wide variety of different traits.",
+        "avatar": "/img/collections/croqueen-nft/avatar.webp",
+        "card": "/img/collections/croqueen-nft/card.webp",
+        "banner": "/img/collections/croqueen-nft/banner.webp",
+        "website": "https://croking.net/",
+        "twitter": "https://twitter.com/CroKingToken",
+        "discord": "https://discord.gg/chnHwdyu5R",
+        "telegram": "https://t.me/CroKingOfficial",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
