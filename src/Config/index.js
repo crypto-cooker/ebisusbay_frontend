@@ -266,7 +266,7 @@ export const configData = {
       battleField: '0x4EeDb8c80bEFB5d672F869a1bdc29Cc2f665Bb3b',
       resources: '0xDa72eE0B52A5a6d5C989f0e817c9e2AF72e572B5',
       bank: '0xeDa2FD22690e13070399605EE90E5c2F45b0c992',
-      barracks: '0x099402e2FBd74Ef6cAe01951F965888eb9408AC5',
+      barracks: '0x5009f0D7e529b0a70e97aB78d2EC3b02394b18Db',
       fortune: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
       rewards: '0xB775F2Ef8E007F6719fF0fc113048180b4482e2c',
       presaleVaults: '0x677a4B2910e0e5667907B5bf4cD4fdb188e99281',
@@ -486,5 +486,6 @@ export const featureFlags = {
   [Features.UNVERIFIED_WARNING]: false,            // Warning when buying from unverified collection
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
   [Features.NEW_CHAKRA_THEME]: false,             // Update theme
-  [Features.GASLESS_LISTING]: true                //Gasless listings
+  [Features.GASLESS_LISTING]: true,                //Gasless listings
+  [Features.NEW_BARRACKS]: false                //Barracks Staking
 }

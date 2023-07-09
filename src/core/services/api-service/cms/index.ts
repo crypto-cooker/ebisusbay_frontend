@@ -22,16 +22,16 @@ class Cms {
     return this.gdcClaims.getClaimSignature(email, address, signature);
   }
 
-  async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string) {
-    return this.ryoshiDynasties.requestBankStakeAuthorization(nfts, address);
+  async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
+    return this.ryoshiDynasties.requestBankStakeAuthorization(nfts, address, signature);
   }
 
-  async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string) {
-    return this.ryoshiDynasties.requestBarracksStakeAuthorization(nfts, address);
+  async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
+    return this.ryoshiDynasties.requestBarracksStakeAuthorization(nfts, address, signature);
   }
 
-  async cancelStakeAuthorization(signature: string): Promise<void> {
-    return this.ryoshiDynasties.cancelStakeAuthorization(signature);
+  async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
+    return this.ryoshiDynasties.requestBarracksUnstakeAuthorization(nfts, address, signature);
   }
 
   async getDailyRewards(address: string) {

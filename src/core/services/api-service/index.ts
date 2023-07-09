@@ -154,16 +154,16 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.graph.getStakedTokens(address, type);
   }
 
-  async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string) {
-    return this.cms.requestBankStakeAuthorization(nfts, address);
+  async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
+    return this.cms.requestBankStakeAuthorization(nfts, address, signature);
   }
 
-  async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string) {
-    return this.cms.requestBarracksStakeAuthorization(nfts, address);
+  async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
+    return this.cms.requestBarracksStakeAuthorization(nfts, address, signature);
   }
 
-  async cancelStakeAuthorization(signature: string): Promise<void> {
-    return this.cms.cancelStakeAuthorization(signature);
+  async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
+    return this.cms.requestBarracksUnstakeAuthorization(nfts, address, signature);
   }
 
   async getDailyRewards(address: string) {
