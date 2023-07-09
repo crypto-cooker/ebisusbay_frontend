@@ -107,6 +107,8 @@ export const ListingDrawer = () => {
     const nfts = await nextApiService.getWallet(user.address!, {
       page: 1,
       collection: [address],
+      pageSize: 100,
+      listed: 0
     });
     for (const nft of nfts.data) {
       dispatch(addToBatchListingCart(nft));
