@@ -5,7 +5,7 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box,
+  Box, Icon,
   ListItem,
   Stack,
   Text,
@@ -19,6 +19,8 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {titleCase} from "@src/utils";
 import {commify} from "ethers/lib/utils";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
@@ -35,6 +37,16 @@ const FaqPage = () => {
         <Text>
           Each stakeable NFT is eligible for bonus troops. These bonus troops are used to increase your chances of winning battles. Higher ranked NFTs can yield a larger amount of troops. However, some collections are restricted to where NFTs must contain specific traits. For example, NFTs from the holiday collections must contain a weapon.
         </Text>
+        <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={4}>
+          <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
+          <Text
+            fontSize='14'
+            color='#333'
+            fontWeight='bold'
+          >
+            Warning: Once staked, NFTs can only be unstaked if you have not deployed any troops. If troops have been deployed, then the staked NFTs are locked until the next game.
+          </Text>
+        </Stack>
         <Accordion fontSize='sm' mt={4}>
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
