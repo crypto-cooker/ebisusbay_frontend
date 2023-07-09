@@ -23,7 +23,8 @@ const Rewards = () => {
     ['RewardsCollections'],
     () => ApiService.withoutKey().getRewardedEntities(7),
     {
-      staleTime: 1
+      staleTime: 1,
+      refetchOnWindowFocus: false,
     }
   )
 
@@ -112,7 +113,13 @@ const Rewards = () => {
           </Flex>
         </Box>
         <Box mt={4}>
-          {content}
+          <Card variant='outline' mt={2}>
+            <CardBody textAlign='center'>
+              <Text fontSize='xl' fontWeight='bold'>Preparing Leaderboard...</Text>
+              <Text>Previous game winners will be available shortly!</Text>
+            </CardBody>
+          </Card>
+          {/*{content}*/}
         </Box>
       </Box>
     </Box>
