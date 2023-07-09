@@ -487,5 +487,5 @@ export const featureFlags = {
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
   [Features.NEW_CHAKRA_THEME]: false,             // Update theme
   [Features.GASLESS_LISTING]: true,                //Gasless listings
-  [Features.NEW_BARRACKS]: false                //Barracks Staking
+  [Features.NEW_BARRACKS]: true                //Barracks Staking
 }
