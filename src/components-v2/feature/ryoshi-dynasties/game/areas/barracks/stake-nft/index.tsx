@@ -238,7 +238,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         <FaqPage />
       ) : (
         <BarracksStakeNftContext.Provider value={pendingNfts}>
-          <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to earn extra battle units per slot. Some NFTs may require a weapon trait.</Text>
+          <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to earn extra battle units per slot. Some NFTs may require a weapon trait. Staked NFTs remain staked for the duration of the game while troops have been deployed or delegated.</Text>
           <StakingBlock
             pendingNfts={pendingNfts}
             stakedNfts={stakedNfts}
