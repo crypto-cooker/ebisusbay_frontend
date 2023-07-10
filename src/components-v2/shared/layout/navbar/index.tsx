@@ -114,10 +114,10 @@ const Header = function () {
                     Marketplace
                   </MenuButton>
                   <MenuList>
-                    <MenuItem as='a' href='/marketplace' _hover={{color: 'inherit'}} justifyContent='end'>Explore</MenuItem>
-                    <MenuItem as='a' href='/collections' _hover={{color: 'inherit'}} justifyContent='end'>Collections</MenuItem>
-                    <MenuItem as='a' href='/brands' _hover={{color: 'inherit'}} justifyContent='end'>Brands</MenuItem>
-                    <MenuItem as='a' href='/drops' _hover={{color: 'inherit'}} justifyContent='end'>Drops</MenuItem>
+                    <MenuItem as={Link} href='/marketplace' _hover={{color: 'inherit'}} justifyContent='end'>Explore</MenuItem>
+                    <MenuItem as={Link} href='/collections' _hover={{color: 'inherit'}} justifyContent='end'>Collections</MenuItem>
+                    <MenuItem as={Link} href='/brands' _hover={{color: 'inherit'}} justifyContent='end'>Brands</MenuItem>
+                    <MenuItem as={Link} href='/drops' _hover={{color: 'inherit'}} justifyContent='end'>Drops</MenuItem>
                     {/*<MenuItem as='a' href='/stats'>Stats</MenuItem>*/}
                     {/*<MenuItem as='a' href='/auctions'>Auction</MenuItem>*/}
                   </MenuList>
