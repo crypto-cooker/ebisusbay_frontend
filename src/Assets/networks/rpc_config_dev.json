@@ -21925,6 +21925,31 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "Icy Vikings Gen 2",
+      "slug": "icy-vikings-gen2",
+      "multiToken": false,
+      "address": "0xccc598ef1b4d17d9f44a889eee38c8de53f5df00",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Icy Vikings (Gen 2) are the children of the original Vikings and Valkyries. They have grown to be the strongest warriors of the whole Valhalla.   This is a collection of 170 NFTs who live in the darkest corner of Valhalla, Finnmark. Your Icy Viking automatically fights in the monthly Icy Squid Game for huge jackpots and for the glory of your clan.",
+        "avatar": "/img/collections/icy-vikings-gen2/avatar.webp",
+        "card": "/img/collections/icy-vikings-gen2/card.webp",
+        "banner": "/img/collections/icy-vikings-gen2/banner.webp",
+        "website": "https://www.icysquidgame.com/",
+        "twitter": "https://twitter.com/IcySquidGame",
+        "telegram": "https://t.me/IcySquidGame",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
