@@ -335,7 +335,7 @@ const LandDrop = ({drop}: LandDropProps) => {
                   <Box as='section'  id="drop_detail" className="gl-legacy container no-top">
                     <SimpleGrid columns={{base: 1, md: 2}} gap={4}>
                       <Flex justify='center'>
-                        <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/lands.webp').custom({width: 300})} w='300px' objectFit='contain' rounded='lg' />
+                        <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/land-beach.webp').custom({width: 400})} w='400px' objectFit='contain' />
                       </Flex>
                       <Box textAlign={{base: 'center', md: 'end'}}>
                         <Heading mb={4}>Unique & Rare Land Tiles</Heading>
