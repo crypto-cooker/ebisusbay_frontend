@@ -127,7 +127,7 @@ const Header = function () {
                     GameFi
                   </MenuButton>
                   <MenuList>
-                    <MenuItem as='a' href='/ryoshi' _hover={{color: 'inherit'}} justifyContent='end'>Ryoshi Dynasties</MenuItem>
+                    <MenuItem as={Link} href='/ryoshi' _hover={{color: 'inherit'}} justifyContent='end'>Ryoshi Dynasties</MenuItem>
                   </MenuList>
                 </Menu>
               </HStack>
