@@ -479,7 +479,6 @@ export const isTestnet = () => {
 
 export const featureFlags = {
   [Features.AUCTION_OPTION_SALE]: false,          // Auction listing option
-  [Features.GET_COLLECTION_NEW_ENDPOINT]: true,   // Paginated collections endpoint
   [Features.CMS_COLLECTIONS]: false,               // Collection editing
   [Features.VERIFIED_SWITCH_COLLECTION]: false,    // Filter verified collections
   [Features.VERIFIED_SWITCH_MARKETPLACE]: false,   // Filter verified in marketplace

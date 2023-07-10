@@ -32,50 +32,13 @@ export const { collectionsLoading, collectionsReceived } = collectionsSlice.acti
 
 export default collectionsSlice.reducer;
 
-const { Features } = Constants;
-const newEndpointEnabled = useFeatureFlag(Features.GET_COLLECTION_NEW_ENDPOINT)
-
 export const getAllCollections =
   (sortKey = 'totalVolume', sortDirection = 'desc') =>
     async (dispatch, state) => {
       try {
         dispatch(collectionsLoading());
         const response = await getCollectionMetadata();
-
-        if (newEndpointEnabled) {
-          response.collections = formatCollections(response.collections);
-        }
-        else {
-          response.collections.forEach(function (collection, index) {
-
-            let contract;
-
-            if (collection.collection.indexOf('-') !== -1) {
-
-              let parts = collection.collection.split('-');
-              contract = findCollectionByAddress(parts[0], parts[1]);
-              if (contract && !contract.split) return;
-
-            } else {
-              contract = findCollectionByAddress(collection.collection);
-              if (contract && contract.split) return;
-
-            }
-
-            if (contract) {
-              if (contract.mergedAddresses) {
-                mergeStats(contract, response, index);
-              }
-              response.collections[index].name = contract.name;
-              response.collections[index].slug = contract.slug;
-              response.collections[index].metadata = contract.metadata;
-              response.collections[index].verification = contract.verification;
-              response.collections[index].listable = contract.listable;
-              response.collections[index].skip = !!contract.mergedWith;
-            }
-
-          });
-        }
+        response.collections = formatCollections(response.collections);
 
         const sortedCollections = sortCollections(response.collections, sortKey, sortDirection);
         dispatch(
