@@ -8407,7 +8407,7 @@
       "multiToken": false,
       "address": "0x1eca64187AD00A86360D62f1CD4409Dc1A136B45",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Everybody's Not Friends is a handcrafted 3D designed set of 1/1 collectible characters and animations created by timebeam. We are a NFT, animated media and gaming project. Please see our website and join our Discord to learn more!",
         "avatar": "/img/collections/everybodysnf/avatar.png",
@@ -25254,7 +25254,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/everybodysnf/drop.png",
         "banner": "/img/collections/everybodysnf/banner.png",
