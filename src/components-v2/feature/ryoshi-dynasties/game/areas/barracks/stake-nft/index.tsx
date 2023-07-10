@@ -342,7 +342,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
       if (!hasCompletedApproval) {
         toast.error('Approval failed. Please try again.');
       } else {
-        toast.error('Staking failed. Please try again.');
+        toast.error(parseErrorMessage(e));
       }
     } finally {
       setIsExecutingStake(false);
