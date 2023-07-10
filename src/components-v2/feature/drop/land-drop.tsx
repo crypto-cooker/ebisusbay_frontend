@@ -377,7 +377,7 @@ const LandDrop = ({drop}: LandDropProps) => {
                         <Heading mb={4}>Discover Mighty Artifacts & Weapons</Heading>
                         <Text fontSize='lg'>The land of Izanami's Cradle is littered with ancient relics and artifacts, buried weapons of unimaginable power. Invest time in exploration and unearthing these artifacts to augment your prowess and secure your position in Ryoshi Dynasties.</Text>
                       </Box>
-                      <Stack justify='center' direction={{base: 'column', lg: 'row'}} spacing={8}>
+                      <Stack justify='center' direction={{base: 'column', lg: 'row'}} spacing={8} alignItems='center'>
                         <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/land-weapons.webp').custom({width: 300})} w='300px' objectFit='contain' />
                         <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/land-artifacts.webp').custom({width: 300})} w='300px' objectFit='contain' />
                       </Stack>
