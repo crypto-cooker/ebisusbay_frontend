@@ -44,7 +44,7 @@ const FaqPage = () => {
             color='#333'
             fontWeight='bold'
           >
-            Warning: Once staked, NFTs can only be unstaked if you have not deployed any troops. If troops have been deployed, then the staked NFTs are locked until the next game.
+            Warning: Once staked, NFTs can only be unstaked if you have neither deployed nor delegated any troops. If troops have been deployed or delegated, then the staked NFTs are locked until the next game.
           </Text>
         </Stack>
         <Accordion fontSize='sm' mt={4}>
