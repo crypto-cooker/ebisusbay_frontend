@@ -102,7 +102,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
       {/*  filter={'brightness(0.8)'}*/}
       {/*/>*/}
         <Box
-          backgroundImage='/img/battle-bay/imgs/vvs.png'
+          backgroundImage='/img/ryoshi-dynasties/announcements/deeds.webp'
           backgroundSize='cover'
           backgroundRepeat='no-repeat'
           backgroundPosition='center'
@@ -121,10 +121,10 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
             size='sm'
             hoverIcon={false}
             onClick={() => {
-              window.open('https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59','_blank');
+              router.push('/drops/izanamis-cradle-land-deeds');
             }}
           >
-            Buy $Fortune Token
+            View Drop
           </RdButton>
         </Box>
       {/* <Text 
@@ -191,6 +191,21 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               }}
             >
               Marketplace
+            </Box>
+            <Box
+              as="button"
+              bg=""
+              py={1}
+              px={4}
+              rounded="md"
+              className={gothamBook.className}
+              color="white"
+              _hover={{ bg: "yellow.900" }}
+              _focus={{ boxShadow: "outline" }}
+              onClick={() => {
+                window.open('https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59','_blank');              }}
+            >
+              Buy FRTN
             </Box>
           </VStack>
         </GridItem>

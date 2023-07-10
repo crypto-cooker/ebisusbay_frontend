@@ -40,7 +40,7 @@ const Drop = ({ssrDrop, ssrCollection}: DropProps) => {
           ) : ssrDrop.slug === 'ryoshi-tales-vip' ? (
             <RyoshiDrop drop={ssrDrop} />
           ) : ssrDrop.slug === 'izanamis-cradle-land-deeds' ? (
-            <SingleDrop drop={ssrDrop} />
+            <LandDrop drop={ssrDrop} />
           )  : (
             <SingleDrop drop={ssrDrop} />
           )}

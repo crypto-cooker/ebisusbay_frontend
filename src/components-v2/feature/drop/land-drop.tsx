@@ -14,11 +14,12 @@ import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {appConfig} from "@src/Config";
 import {hostedImage} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import {Box, Heading, SimpleGrid, Text, VStack} from "@chakra-ui/react";
+import {Box, Button, Center, Flex, Heading, Image, SimpleGrid, Stack, Text} from "@chakra-ui/react";
 import {MintBox} from "@src/components-v2/feature/drop/mint-box";
 import {useAppSelector} from "@src/Store/hooks";
 import {Drop, SpecialWhitelist} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
+import { ArrowForwardIcon } from '@chakra-ui/icons';
 
 const config = appConfig();
 
@@ -305,20 +306,89 @@ const LandDrop = ({drop}: LandDropProps) => {
               <span onClick={handleBtnClick(tabs.description)}>About</span>
             </li>
             <li className={`tab ${openMenu === tabs.shop ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.shop)}>Land Tiles</span>
+              <span onClick={handleBtnClick(tabs.shop)}>Mint</span>
             </li>
           </ul>
           <div className="de_tab_content">
             {openMenu === tabs.description && (
               <Box mt={3} mb={4}>
-                <section id="drop_detail" className="gl-legacy container no-top">
-                  <SimpleGrid columns={2}>
-                    <Box>
-                      <Heading>Unveil the Untamed Izanami's Cradle</Heading>
-                      <Text>Welcome to the largest expansion of Ryoshi Dynasties yet, the grand Land Sale. We're thrilled to present an opportunity to own a unique piece of Izanami's Cradle. With only 2500 plots available and a cap of 10 per wallet, this is a once-in-a-lifetime chance to etch your name in the annals of our gaming universe.</Text>
+                <Center mb={8}>
+                  <Box className="profile_avatar">
+                    {drop.images.avatar && <img src={hostedImage(drop.images.avatar)} alt={drop.author.name} />}
+                    <Box className="profile_name">
+                      <Heading as="h4" size="md">
+                        {drop.title}
+                        <Box mt={2}>
+                          <SocialsBar address={drop.address} socials={drop.author} />
+                        </Box>
+                      </Heading>
                     </Box>
-                  </SimpleGrid>
-                </section>
+                  </Box>
+                </Center>
+                <Box as='section' id="drop_detail" className="gl-legacy container no-top">
+                  <Box textAlign='center'>
+                    <Heading mb={4}>Unveil the Untamed Izanami's Cradle</Heading>
+                    <Text>Welcome to the largest expansion of Ryoshi Dynasties yet, the grand Land Sale. We're thrilled to present an opportunity to own a unique piece of Izanami's Cradle. With only 2500 plots available and a cap of 10 per wallet, this is a once-in-a-lifetime chance to etch your name in the annals of our gaming universe.</Text>
+                  </Box>
+                </Box>
+                <Box>
+                  <Box as='section'  id="drop_detail" className="gl-legacy container no-top">
+                    <SimpleGrid columns={{base: 1, md: 2}} gap={4}>
+                      <Flex justify='center'>
+                        <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/lands.webp').custom({width: 300})} w='300px' objectFit='contain' rounded='lg' />
+                      </Flex>
+                      <Box textAlign={{base: 'center', md: 'end'}}>
+                        <Heading mb={4}>Unique & Rare Land Tiles</Heading>
+                        <Text fontSize='lg'>Each piece of land carries its own story and value. With our exclusive tier system of rarities, owning a piece of land can mean possessing a common countryside plot or wielding the mighty epic castle plot. Each land tile is not just a plot but a token of uniqueness and diversity.</Text>
+                      </Box>
+                    </SimpleGrid>
+                  </Box>
+                </Box>
+                <Box>
+                  <Box as='section'  id="drop_detail" className="gl-legacy container no-top">
+                    <SimpleGrid columns={{base: 1, md: 2}} gap={4}>
+                      <Box textAlign={{base: 'center', md: 'start'}}>
+                        <Heading mb={4}>Harvesting Resources</Heading>
+                        <Text fontSize='lg'>Become a stalwart landowner and harvest an array of precious resources. From rare minerals to magical herbs, every land is teeming with resources ready for you to discover and utilize. Use these resources to develop your land, upgrade your buildings for more powerful bonuses and strengthen your faction.</Text>
+                      </Box>
+                      <Flex justify='center'>
+                        <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/land-resources.webp').custom({width: 400})} w='400px' objectFit='contain' />
+                      </Flex>
+                    </SimpleGrid>
+                  </Box>
+                </Box>
+                <Box>
+                  <Box as='section'  id="drop_detail" className="gl-legacy container no-top">
+                    <SimpleGrid columns={{base: 1, md: 2}} gap={4}>
+                      <Flex justify='center'>
+                        <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/land-boss.webp').custom({width: 400})} w='400px' objectFit='contain' />
+                      </Flex>
+                      <Box textAlign={{base: 'center', md: 'end'}}>
+                        <Heading mb={4}>Powerful Raid Bosses & Quests</Heading>
+                        <Text fontSize='lg'>Unleash the adventurer in you! Izanami's Cradle is home to fearsome raid bosses. Assemble your bravest NFTs and embark on thrilling quests to challenge these formidable foes. Only the most valiant warriors will reap the coveted rewards!</Text>
+                      </Box>
+                    </SimpleGrid>
+                  </Box>
+                </Box>
+                <Box>
+                  <Box as='section'  id="drop_detail" className="gl-legacy container no-top">
+                    <SimpleGrid columns={{base: 1, md: 2}} gap={4}>
+                      <Box textAlign={{base: 'center', md: 'start'}}>
+                        <Heading mb={4}>Discover Mighty Artifacts & Weapons</Heading>
+                        <Text fontSize='lg'>The land of Izanami's Cradle is littered with ancient relics and artifacts, buried weapons of unimaginable power. Invest time in exploration and unearthing these artifacts to augment your prowess and secure your position in Ryoshi Dynasties.</Text>
+                      </Box>
+                      <Stack justify='center' direction={{base: 'column', lg: 'row'}} spacing={8}>
+                        <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/land-weapons.webp').custom({width: 300})} w='300px' objectFit='contain' />
+                        <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/land-artifacts.webp').custom({width: 300})} w='300px' objectFit='contain' />
+                      </Stack>
+                    </SimpleGrid>
+                  </Box>
+                </Box>
+                <Center>
+                  <Button variant='primary' rightIcon={<ArrowForwardIcon />} onClick={() => setOpenMenu(tabs.shop)}>
+                    View Mint
+                  </Button>
+                </Center>
               </Box>
             )}
             {openMenu === tabs.shop && (
