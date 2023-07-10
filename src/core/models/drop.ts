@@ -97,7 +97,8 @@ export function mapDrop(drop: any): Drop {
     priceDescription: drop.priceDescription,
     specialWhitelistCost: drop.specialWhitelistCost,
     video: drop.video,
-    freeMint: drop.freeMint ?? false
+    freeMint: drop.freeMint ?? false,
+    featured: drop.featured
   }
 
   if (!!drop.memberCost) obj.memberCost = Number(drop.memberCost);

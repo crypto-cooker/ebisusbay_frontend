@@ -9,6 +9,7 @@ import {hostedImage} from "@src/helpers/image";
 import RyoshiDrop from "@src/components-v2/feature/drop/ryoshi-drop";
 import localDataService from "@src/core/services/local-data-service";
 import {Drop} from "@src/core/models/drop";
+import LandDrop from "@src/components-v2/feature/drop/land-drop";
 
 export const drops = appConfig('drops');
 const config = appConfig();
@@ -38,7 +39,9 @@ const Drop = ({ssrDrop, ssrCollection}: DropProps) => {
             <MultiDrop />
           ) : ssrDrop.slug === 'ryoshi-tales-vip' ? (
             <RyoshiDrop drop={ssrDrop} />
-          ) : (
+          ) : ssrDrop.slug === 'izanamis-cradle-land-deeds' ? (
+            <SingleDrop drop={ssrDrop} />
+          )  : (
             <SingleDrop drop={ssrDrop} />
           )}
         </>
