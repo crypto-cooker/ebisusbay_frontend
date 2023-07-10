@@ -3,14 +3,12 @@ import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
 import {Contract} from "ethers";
 import Barracks from "@src/Contracts/Barracks.json";
-import Barracks2 from "@src/Contracts/Barracks2.json";
 import {appConfig} from "@src/Config";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
 import {caseInsensitiveCompare} from "@src/utils";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import Constants from "@src/constants";
-import useFeatureFlag from "@src/hooks/useFeatureFlag";
 
 const config = appConfig();
 
@@ -35,7 +33,6 @@ const useBarracksStakeNfts = () => {
   const user = useAppSelector((state) => state.user);
 
   const { Features } = Constants;
-  const isNewBarracksEnabled = useFeatureFlag(Features.NEW_BARRACKS);
 
   const stakeNfts = async (pendingNfts: PendingNft[], stakedNfts: StakedToken[]) => {
     if (!user.address) throw 'User is not logged in';
@@ -47,8 +44,7 @@ const useBarracksStakeNfts = () => {
     }
     if (signatureInStorage) {
       try {
-        const barracksAbi = isNewBarracksEnabled ? Barracks2 : Barracks;
-        const barracks = new Contract(config.contracts.barracks, barracksAbi, user.provider.getSigner());
+        const barracks = new Contract(config.contracts.barracks, Barracks, user.provider.getSigner());
 
         let withdrawNfts = [];
         for (const stakedNft of stakedNfts) {
@@ -61,25 +57,17 @@ const useBarracksStakeNfts = () => {
         const unstakedNfts = pendingNfts.filter((nft) => !stakedNfts.some((stakedNft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId));
 
         if (withdrawNfts.length > 0) {
-          if (isNewBarracksEnabled) {
-            const approval = await ApiService.withoutKey().ryoshiDynasties.requestBarracksUnstakeAuthorization(
-              withdrawNfts.map((nft) => ({
-                nftAddress: nft.contractAddress,
-                nftId: nft.tokenId,
-                amount: Number(nft.amount),
-              })),
-              user.address,
-              signatureInStorage
-            );
-            const withdrawTx = await barracks.endStake(approval.data.unstakeApproval, approval.data.signature);
-            await withdrawTx.wait();
-          } else {
-            const withdrawTx = await barracks.withdrawStake(
-              withdrawNfts.map((nft) => nft.contractAddress),
-              withdrawNfts.map((nft) => nft.tokenId),
-            );
-            await withdrawTx.wait();
-          }
+          const approval = await ApiService.withoutKey().ryoshiDynasties.requestBarracksUnstakeAuthorization(
+            withdrawNfts.map((nft) => ({
+              nftAddress: nft.contractAddress,
+              nftId: nft.tokenId,
+              amount: Number(nft.amount),
+            })),
+            user.address,
+            signatureInStorage
+          );
+          const withdrawTx = await barracks.endStake(approval.data.unstakeApproval, approval.data.signature);
+          await withdrawTx.wait();
         }
 
         if (unstakedNfts.length > 0) {
