@@ -125,7 +125,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   const LoadControlPointLeaderBoard = async (e : controlpoint) => {
     if(!rdGameContext) return;
 
-    const gameId = showCurrentGame ? rdGameContext.game.id : 7;
+    const gameId = showCurrentGame ? rdGameContext.game.id : rdGameContext.history.previousGameId;
 
     const allFactionsOnPoint = await getLeaderBoard(getControlPointId(e), gameId);
     // console.log(allFactionsOnPoint.slice(0, 5))
