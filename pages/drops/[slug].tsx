@@ -31,7 +31,7 @@ const Drop = ({ssrDrop, ssrCollection}: DropProps) => {
         title={`${ssrDrop.title} - Drop`}
         description={ssrDrop.subtitle}
         url={`/drops/${ssrDrop.slug}`}
-        image={hostedImage(ssrCollection?.metadata.card ?? ssrDrop.images.drop)}
+        image={hostedImage(ssrDrop.images.preview ?? ssrDrop.images.drop ?? ssrCollection?.metadata.card)}
       />
       {ssrDrop && (
         <>
