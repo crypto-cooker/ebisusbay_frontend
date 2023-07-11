@@ -230,7 +230,7 @@ export const configData = {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
       subgraph: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
-      cms: 'https://testcms.ebisusbay.biz/api/',
+      cms: 'http://localhost:4000/api/',
       cmsSocket: 'wss://testcms.ebisusbay.biz/socket/',
       explorer: 'https://testnet.cronoscan.com/',
       cdn: {
@@ -297,6 +297,11 @@ export const configData = {
         name: 'VRSE',
         symbol: 'VRSE',
         address: '0x100123d24a69bd8862da338129471c41e3ca8791',
+      },
+      frtn: {
+        name: 'FRTN',
+        symbol: 'FRTN',
+        address: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
       }
     },
     collections: rpcConfigTestnet.known_contracts,

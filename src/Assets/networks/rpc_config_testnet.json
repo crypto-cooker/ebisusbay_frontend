@@ -8651,8 +8651,17 @@
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 2500,
+      "erc20Cost": "2000",
+      "erc20MemberCost": "1500",
+      "erc20WhitelistCost": "1000",
+      "erc20Token": "frtn",
       "foundersOnly": false,
       "start": 1688762127000,
+      "salePeriods": {
+        "allowlist1": 1688762127000,
+        "allowlist2": 1688762127000,
+        "public": 1688762127000
+      },
       "end": null,
       "referral": false,
       "is1155": false,
