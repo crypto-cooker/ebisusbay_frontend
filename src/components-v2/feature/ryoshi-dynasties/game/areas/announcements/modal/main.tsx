@@ -9,6 +9,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import ImageService from "@src/core/services/image";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -102,30 +103,16 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
       {/*  filter={'brightness(0.8)'}*/}
       {/*/>*/}
         <Box
-          backgroundImage='/img/ryoshi-dynasties/announcements/deeds.webp'
+          backgroundImage={ImageService.translate('/img/ryoshi-dynasties/announcements/deeds2.webp').convert()}
           backgroundSize='cover'
           backgroundRepeat='no-repeat'
           backgroundPosition='center'
           h='150px'
           position='relative'
+          onClick={() => {
+            router.push('/drops/izanamis-cradle-land-deeds');
+          }}
         >
-          <RdButton
-            position='absolute'
-            bottom={0}
-            mb={2}
-            left='50%'
-            transform='translate(-50%)'
-            // marginLeft={{base: '62%', sm: '60%'}}
-            // marginTop={{base: '-12%', sm: '-12%'}}
-            w='200px'
-            size='sm'
-            hoverIcon={false}
-            onClick={() => {
-              router.push('/drops/izanamis-cradle-land-deeds');
-            }}
-          >
-            View Drop
-          </RdButton>
         </Box>
       {/* <Text 
         marginLeft={{base: '10%', sm: '10%'}}
