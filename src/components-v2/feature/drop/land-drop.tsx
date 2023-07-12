@@ -419,7 +419,7 @@ const LandDrop = ({drop}: LandDropProps) => {
                     <Box position='relative' pt='125%'>
                       <ReactPlayer
                         className="react-player"
-                        url={drop.video}
+                        url={ImageService.translate(drop.video!).convert()}
                         config={{
                           file: {
                             attributes: {
