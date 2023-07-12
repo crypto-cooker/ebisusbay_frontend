@@ -596,7 +596,7 @@ const MintPhase = ({ title, description, price, startTime, endTime, onMint, maxM
       return <>Live!</>;
     } else {
       // Render a countdown
-      return <span>Starts in: {hours}:{minutes}:{seconds}</span>;
+      return <span>Starts in: {days}:{hours}:{minutes}:{seconds}</span>;
     }
   };
 
@@ -638,7 +638,7 @@ const MintPhase = ({ title, description, price, startTime, endTime, onMint, maxM
     >
       <Flex justify='space-between'>
         <Box fontSize="xl" fontWeight='bold' className="mb-1">{title}</Box>
-        <Box className='text-muted'>
+        <Box className='text-muted' textAlign='end' fontSize='sm'>
           {phaseStatus === statuses.LIVE ? (
             <>Live!</>
           ) : phaseStatus > statuses.LIVE ? (

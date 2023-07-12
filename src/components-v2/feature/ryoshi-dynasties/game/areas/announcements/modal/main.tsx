@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {Box, Grid, GridItem, Text, VStack} from "@chakra-ui/react"
+import {Box, Grid, GridItem, Text, useMediaQuery, VStack} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
@@ -10,6 +10,7 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import ImageService from "@src/core/services/image";
+import NextImage from "next/image";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -21,6 +22,7 @@ interface Props {
 const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
   const router = useRouter();
   const { user: rdUserContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const [isMobile] = useMediaQuery("(max-width: 480px)");
 
   const user = useAppSelector((state) => state.user);
 
@@ -103,16 +105,26 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
       {/*  filter={'brightness(0.8)'}*/}
       {/*/>*/}
         <Box
-          backgroundImage={ImageService.translate('/img/ryoshi-dynasties/announcements/deeds2.webp').convert()}
-          backgroundSize='cover'
-          backgroundRepeat='no-repeat'
-          backgroundPosition='center'
-          h='150px'
-          position='relative'
+          cursor='pointer'
           onClick={() => {
             router.push('/drops/izanamis-cradle-land-deeds');
           }}
         >
+          {isMobile ? (
+            <NextImage
+              alt="Izanami's Cradle: Land Deeds"
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/deeds-sm.webp').convert()}
+              width={408}
+              height={334}
+            />
+          ) : (
+            <NextImage
+              alt="Izanami's Cradle: Land Deeds"
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/deeds2.webp').convert()}
+              width={590}
+              height={150}
+            />
+          )}
         </Box>
       {/* <Text 
         marginLeft={{base: '10%', sm: '10%'}}
@@ -200,9 +212,9 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
           <Text fontSize={{ base: 'sm', md: 'md' }}>Claim Daily Rewards</Text>
           <RdButton
             mt={2}
-            w={{base: '125px', sm: '250px'}}
+            w='full'
+            maxW='200px'
             fontSize={{base: 'sm', sm: 'md'}}
-            hoverIcon={false}
             onClick={onOpenDailyCheckin}
           >
             {canClaim ? 'Claim Now!' : 'Claim in ' + timer}
@@ -210,15 +222,15 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
         </GridItem>
         <GridItem colSpan={2} bg='#272523' p={2} textAlign='center' rounded='md'>
           <Text fontSize={{ base: 'sm', md: 'md' }}>Leaderboards</Text>
-          <VStack padding='2' w='100%'
-                  onClick={handleShowLeaderboard}>
             <RdButton
-              textAlign='center'
-              // className={gothamBook.className}
-              // fontSize={{ base: '12px', md: '16px' }}
+              mt={2}
+              w='full'
+              maxW='200px'
               fontSize={{base: 'sm', sm: 'md'}}
-            > View Leaderboards</RdButton>
-          </VStack>
+              onClick={handleShowLeaderboard}
+            >
+              View Leaderboards
+            </RdButton>
         </GridItem>
       </Grid>
     </VStack>
