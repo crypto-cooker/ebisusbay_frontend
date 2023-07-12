@@ -688,7 +688,7 @@ const Results = ({listings, cost, isMobile}) => {
                   <div className="text-center" style={{fontSize:'14px'}}>#{shortString(listing.nftId, 3, 3)}</div>
                   {isBundle(listing.nft.address ?? listing.nft.nftAddress) ? (
                     <AnyMedia
-                      image={ImageService.translate('/img/logos/bundle.webp').avatar()}
+                      image={ImageService.translate('/img/logos/bundle.webp').fixedWidth(100, 100)}
                       title={listing.nft.name}
                       usePlaceholder={false}
                       className="img-fluid img-rounded swiper-lazy"

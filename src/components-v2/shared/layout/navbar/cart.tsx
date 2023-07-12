@@ -253,7 +253,7 @@ const Cart = function () {
                       >
                         {isBundle(nft.address) ? (
                           <AnyMedia
-                            image={ImageService.translate('/img/logos/bundle.webp').avatar()}
+                            image={ImageService.translate('/img/logos/bundle.webp').fixedWidth(100, 100)}
                             title={nft.name}
                             usePlaceholder={false}
                             className="img-rounded-8"

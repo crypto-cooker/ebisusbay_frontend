@@ -28,7 +28,7 @@ import {caseInsensitiveCompare, isBundle, timeSince} from "@src/utils";
 import {ListingState} from "@src/core/services/api-service/types";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
-import {AnyMedia} from "@src/components-v2/shared/media/any-media";
+import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {commify} from "ethers/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,6 +40,7 @@ import {
   MultiSelectContextProps
 } from "@src/components-v2/feature/account/profile/tabs/listings/context";
 import {WarningIcon} from "@chakra-ui/icons";
+import {specialImageTransform} from "@src/hacks";
 
 interface ResponsiveListingsTableProps {
   data: InfiniteData<IPaginatedList<OwnerListing>>;
@@ -136,12 +137,23 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
                       overflow='hidden'
                     >
                       {listing.valid ? (
-                        <AnyMedia
-                          image={ImageService.translate(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image).avatar()}
-                          video={listing.nft.animation_url}
-                          title={listing.nft.name}
-                          className=""
-                        />
+                        <>
+                          {isBundle(listing.nftAddress) ? (
+                            <AnyMedia
+                              image={ImageService.translate('/img/logos/bundle.webp').avatar()}
+                              title={listing.nft.name}
+                              usePlaceholder={false}
+                              className="img-rounded-8"
+                            />
+                          ) : (
+                            <MultimediaImage
+                              source={ImageService.translate(specialImageTransform(listing.nftAddress, listing.nft.image)).avatar()}
+                              fallbackSource={ImageService.bunnykit(ImageService.bunnykit(listing.nft.image).thumbnail()).avatar()}
+                              title={listing.nft.name}
+                              className="img-rounded-8"
+                            />
+                          )}
+                        </>
                       ) : (
                         <Tooltip label="This listing is invalid" aria-label='Invalid listing'>
                           <Box position='relative'>

@@ -21,7 +21,9 @@ const ListingsGroup = ({limitSize, showLoadMore = true, queryParams, smallWindow
 
   const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['Listings', queryParams],
-    () => nextApiService.getListings(queryParams),
+    ({ pageParam = 1 }) => {
+      return nextApiService.getListings({...queryParams, page: pageParam})
+    },
     {
       getNextPageParam: (lastPage, pages) => {
         return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
