@@ -21909,9 +21909,9 @@
       "listable": false,
       "metadata": {
         "description": "Discover the Legend of Izanami's Cradle.\n\nBecome the owner of unique lands, farm Resources, explore Points of Interest, fight Epic Bosses & receive Rare Artifacts and Weapons.\n\nLevel up the Buildings on your Land to Unlock Extra Staking Slots and Higher Bonuses. \nAre you ready? You can use $FRTN to acquire Land Deeds and become the first ever Ryoshi Dynasties official landowner.",
-        "avatar": "/img/collections/izanamis-cradle-land-deeds/avatar.webp",
+        "avatar": "/img/collections/izanamis-cradle-land-deeds/avatar2.webp",
         "banner": "/img/collections/izanamis-cradle-land-deeds/banner.webp",
-        "card": "/img/collections/izanamis-cradle-land-deeds/card.webp",
+        "card": "/img/collections/izanamis-cradle-land-deeds/card2.webp",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
         "discord": "https://discord.gg/ebisusbay",
@@ -28822,17 +28822,23 @@
       "totalSupply": 2500,
       "foundersOnly": false,
       "start": 1689364800000,
+      "salePeriods": {
+        "allowlist1": 1689364800000,
+        "allowlist2": 1689368400000,
+        "public": 1689372000000
+      },
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
       "complete": false,
       "featured": true,
+      "video": "/img/drops/izanamis-cradle-land-deeds/drop.mp4",
       "images": {
-        "drop": "/img/drops/izanamis-cradle-land-deeds/drop.webp",
-        "banner": "/img/drops/izanamis-cradle-land-deeds/banner.webp",
-        "avatar": "/img/collections/izanamis-cradle-land-deeds/avatar.webp",
-        "preview": "/img/collections/izanamis-cradle-land-deeds/card.webp"
+        "drop": "/img/drops/izanamis-cradle-land-deeds/drop2.webp",
+        "banner": "/img/drops/izanamis-cradle-land-deeds/banner2.webp",
+        "avatar": "/img/collections/izanamis-cradle-land-deeds/avatar2.webp",
+        "preview": "/img/collections/izanamis-cradle-land-deeds/card2.webp"
       },
       "verification": {
         "doxx": true,

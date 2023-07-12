@@ -291,7 +291,58 @@ export default class Responsive extends Component {
                               )}
                             </div>
                             <div className="line my-auto"></div>
-                            {drop.salePeriods ? (
+                            {drop.slug === 'izanamis-cradle-land-deeds' ? (
+                              <div className="col my-auto">
+                                {this.calculateStatus(drop.salePeriods.public) > dropState.NOT_STARTED ? (
+                                  <>
+                                    {this.calculateStatus(drop.salePeriods.public) === dropState.LIVE && (
+                                      <Heading as="h3" size="lg">Drop is Live!</Heading>
+                                    )}
+                                    {this.calculateStatus(drop.salePeriods.public) === dropState.EXPIRED && (
+                                      <Heading as="h3" size="lg">Drop Ended</Heading>
+                                    )}
+                                    {this.calculateStatus(drop.salePeriods.public) === dropState.SOLD_OUT && (
+                                      <Heading as="h3" size="lg">Sold Out</Heading>
+                                    )}
+                                  </>
+                                ) : this.calculateStatus(drop.salePeriods.allowlist2) > dropState.NOT_STARTED ? (
+                                  <>
+                                    {this.calculateStatus(drop.salePeriods.allowlist2) === dropState.LIVE && (
+                                      <Heading as="h3" size="lg">Allowlist 2 Live!</Heading>
+                                    )}
+                                    {this.calculateStatus(drop.salePeriods.public) < dropState.LIVE && (
+                                      <>
+                                        <span className="d-title">Public starts in</span>
+                                        <div className="de_countdown fs-4">
+                                          <Clock deadline={drop.salePeriods.public} />
+                                        </div>
+                                      </>
+                                    )}
+                                  </>
+                                ) : this.calculateStatus(drop.salePeriods.allowlist1) > dropState.NOT_STARTED ? (
+                                  <>
+                                    {this.calculateStatus(drop.salePeriods.allowlist1) === dropState.LIVE && (
+                                      <Heading as="h3" size="lg">Allowlist 1 Live!</Heading>
+                                    )}
+                                    {this.calculateStatus(drop.salePeriods.allowlist2) < dropState.LIVE && (
+                                      <>
+                                        <span className="d-title">Allowlist 2 starts in</span>
+                                        <div className="de_countdown fs-4">
+                                          <Clock deadline={drop.salePeriods.allowlist2} />
+                                        </div>
+                                      </>
+                                    )}
+                                  </>
+                                ) : (
+                                  <>
+                                    <span className="d-title">Allowlist 1 starts in</span>
+                                    <div className="de_countdown">
+                                      <Clock deadline={drop.salePeriods.allowlist1} />
+                                    </div>
+                                  </>
+                                )}
+                              </div>
+                            ) : drop.salePeriods ? (
                               <div className="col my-auto">
                                 {this.calculateStatus(drop.salePeriods.public) > dropState.NOT_STARTED ? (
                                   <>

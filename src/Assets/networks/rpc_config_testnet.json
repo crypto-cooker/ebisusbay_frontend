@@ -8651,19 +8651,29 @@
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 2500,
+      "erc20Cost": "2000",
+      "erc20MemberCost": "1500",
+      "erc20WhitelistCost": "1000",
+      "erc20Token": "frtn",
       "foundersOnly": false,
       "start": 1688762127000,
+      "salePeriods": {
+        "allowlist1": 1688762127000,
+        "allowlist2": 1688762127000,
+        "public": 1688762127000
+      },
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
       "complete": false,
       "featured": true,
+      "video": "/img/drops/izanamis-cradle-land-deeds/drop.mp4",
       "images": {
-        "drop": "/img/drops/izanamis-cradle-land-deeds/drop.webp",
-        "banner": "/img/drops/izanamis-cradle-land-deeds/banner.webp",
-        "avatar": "/img/collections/izanamis-cradle-land-deeds/avatar.webp",
-        "preview": "/img/collections/izanamis-cradle-land-deeds/card.webp"
+        "drop": "/img/drops/izanamis-cradle-land-deeds/drop2.webp",
+        "banner": "/img/drops/izanamis-cradle-land-deeds/banner2.webp",
+        "avatar": "/img/collections/izanamis-cradle-land-deeds/avatar2.webp",
+        "preview": "/img/collections/izanamis-cradle-land-deeds/card2.webp"
       },
       "verification": {
         "doxx": true,

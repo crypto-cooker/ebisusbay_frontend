@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import React, {useState} from 'react';
+import {useRouter} from 'next/router';
 
 import MultiDrop from '@src/components-v2/feature/drop/multi-drop';
 import SingleDrop from '@src/components-v2/feature/drop/single-drop';
@@ -53,9 +53,17 @@ const Drop = ({ssrDrop, ssrCollection}: DropProps) => {
 export const getServerSideProps = async ({ params }: {params: any}) => {
   const slug = params?.slug;
   const drop = localDataService.getDrop(slug);
-  const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`)
-  const json = await res.json();
-  const collection = json.collections[0] ?? null;
+  let collection = config.collections.find((c: any) => c.slug === slug);
+
+  try {
+    const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`)
+    const json = await res.json();
+    if (json.collections.length > 0) {
+      collection = json.collections[0];
+    }
+  } catch (e) {
+    // ignore
+  }
 
   if (!drop) {
     return {

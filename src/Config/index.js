@@ -89,6 +89,11 @@ export const configData = {
         name: 'VRSE',
         symbol: 'VRSE',
         address: '0x2ba01269eafce04c8dccc4a9887884ab66e4bcb1',
+      },
+      frtn: {
+        name: 'FRTN',
+        symbol: 'FRTN',
+        address: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       }
     },
     collections: rpcConfig.known_contracts,
@@ -193,6 +198,11 @@ export const configData = {
         name: 'VRSE',
         symbol: 'VRSE',
         address: '0x2ba01269eafce04c8dccc4a9887884ab66e4bcb1',
+      },
+      frtn: {
+        name: 'FRTN',
+        symbol: 'FRTN',
+        address: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       }
     },
     collections: rpcConfigDev.known_contracts,
@@ -297,6 +307,11 @@ export const configData = {
         name: 'VRSE',
         symbol: 'VRSE',
         address: '0x100123d24a69bd8862da338129471c41e3ca8791',
+      },
+      frtn: {
+        name: 'FRTN',
+        symbol: 'FRTN',
+        address: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
       }
     },
     collections: rpcConfigTestnet.known_contracts,
@@ -398,6 +413,11 @@ export const configData = {
         name: 'VRSE',
         symbol: 'VRSE',
         address: '0x2ba01269eafce04c8dccc4a9887884ab66e4bcb1',
+      },
+      frtn: {
+        name: 'FRTN',
+        symbol: 'FRTN',
+        address: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       }
     },
     collections: rpcConfig.known_contracts,
