@@ -21950,6 +21950,52 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "Time Creatures Class A",
+      "slug": "time-creatures-class-a",
+      "multiToken": false,
+      "address": "0x6D1FE0c2E1b32950afB6f4e61d2e4D934Dbb0400",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The main purpose of this collection is to act as a Give an enemy to the Time Troops, these creatures out power a troop 10:1",
+        "avatar": "/img/collections/time-creatures-class-a/avatar.webp",
+        "card": "/img/collections/time-creatures-class-a/card.webp",
+        "banner": "/img/collections/time-creatures-class-a/banner.webp",
+        "website": "https://time-dapp.netlify.app/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/8whpvt3WEr",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Time Creatures Class B",
+      "slug": "time-creatures-class-b",
+      "multiToken": false,
+      "address": "0x2d2c751fA5C34Aff54E4636EE8F2c2F8f076c6bd",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The main purpose of this collection is to act as a Give an enemy\uD83D\uDC40 to the Time Troops, these creatures out power a troop 10:1",
+        "avatar": "/img/collections/time-creatures-class-b/avatar.webp",
+        "card": "/img/collections/time-creatures-class-b/card.webp",
+        "banner": "/img/collections/time-creatures-class-b/banner.webp",
+        "website": "https://time-dapp.netlify.app/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/8whpvt3WEr",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
