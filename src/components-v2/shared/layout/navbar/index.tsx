@@ -118,6 +118,7 @@ const Header = function () {
                     <MenuItem as={Link} href='/collections' _hover={{color: 'inherit'}} justifyContent='end'>Collections</MenuItem>
                     <MenuItem as={Link} href='/brands' _hover={{color: 'inherit'}} justifyContent='end'>Brands</MenuItem>
                     <MenuItem as={Link} href='/drops' _hover={{color: 'inherit'}} justifyContent='end'>Drops</MenuItem>
+                    <MenuItem as={Link} href='/apply' _hover={{color: 'inherit'}} justifyContent='end'>Become a Creator</MenuItem>
                     {/*<MenuItem as='a' href='/stats'>Stats</MenuItem>*/}
                     {/*<MenuItem as='a' href='/auctions'>Auction</MenuItem>*/}
                   </MenuList>
@@ -160,6 +161,7 @@ const Header = function () {
                 <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
                 <NavLink name={'Brands'} to={'/brands'} onClick={onClose} />
                 <NavLink name={'Drops'} to={'/drops'} onClick={onClose} />
+                <NavLink name={'Become a Creator'} to={'/apply'} onClick={onClose} />
                 {/*<NavLink name={'Stats'} to={'/stats'} onClick={onClose} />*/}
                 {/*<NavLink name={'Auction'} to={'/auctions/mutant-serum'} />*/}
 
