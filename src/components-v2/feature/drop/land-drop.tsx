@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {constants, Contract, ethers} from 'ethers';
 import Countdown from 'react-countdown';
 import {keyframes} from '@emotion/react';
@@ -47,6 +47,8 @@ import {toast} from "react-toastify";
 import {getAnalytics, logEvent} from "@firebase/analytics";
 import Fortune from "@src/Contracts/Fortune.json";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import Link from "next/link";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 
@@ -150,7 +152,6 @@ const LandDrop = ({drop}: LandDropProps) => {
       const infos = await readContract.getInfo();
       const presaleTime = await readContract.presaleTime();
       const presaleDuration = await readContract.saleStarted();
-      console.log('INFO', Number(presaleTime * 1000), presaleDuration)
       const canMint = user.address ? await readContract.canMint(user.address) : 0;
 
       setDropInfoFromContract(infos, canMint, Number(presaleTime));
@@ -242,16 +243,7 @@ const LandDrop = ({drop}: LandDropProps) => {
         await retrieveDropInfo();
       } catch (error: any) {
         Sentry.captureException(error);
-        if (error.data) {
-          console.log(error);
-          toast.error(error.data.message);
-        } else if (error.message) {
-          console.log(error);
-          toast.error(error.message);
-        } else {
-          console.log(error);
-          toast.error('Unknown Error');
-        }
+        toast.error(parseErrorMessage(error));
       } finally {
         setMinting(false);
         setMintingState(null);
@@ -287,34 +279,6 @@ const LandDrop = ({drop}: LandDropProps) => {
         <div className="container">
           <div className="row align-items-center">
             <div className={`col-lg-6 mb-4 mb-sm-0 ${drop.mediaPosition === 'left' ? 'order-1' : 'order-2'}`}>
-              <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
-                <>
-                  {drop.video && (
-                    <div className="player-wrapper">
-                      <ReactPlayer
-                        className="react-player"
-                        controls
-                        url={drop.video}
-                        config={{
-                          file: {
-                            attributes: {
-                              onContextMenu: (e: any) => e.preventDefault(),
-                              controlsList: 'nodownload',
-                            },
-                          },
-                        }}
-                        muted={true}
-                        playing={true}
-                        loop={true}
-                        width="100%"
-                        height="100%"
-                      />
-                    </div>
-                  )}
-
-                  <>{drop.embed && <div dangerouslySetInnerHTML={{ __html: drop.embed }} />}</>
-                </>
-              </Reveal>
             </div>
             <div className={`col-lg-6 ${drop.mediaPosition === 'left' ? 'order-2' : 'order-1'}`}>
               <div className="spacer-single"></div>
@@ -452,7 +416,25 @@ const LandDrop = ({drop}: LandDropProps) => {
               <section id="drop_detail" className="gl-legacy container no-top">
                 <div className="row mt-md-5 pt-md-4">
                   <div className="col-md-6 text-center mt-4 md-md-0">
-                    <img src={hostedImage(drop.images.drop)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
+                    <Box position='relative' pt='125%'>
+                      <ReactPlayer
+                        className="react-player"
+                        url={drop.video}
+                        config={{
+                          file: {
+                            attributes: {
+                              onContextMenu: (e: any) => e.preventDefault(),
+                              controlsList: 'nodownload',
+                            },
+                          },
+                        }}
+                        muted={true}
+                        playing={true}
+                        loop={true}
+                        width="100%"
+                        height="100%"
+                      />
+                    </Box>
                   </div>
                   <div className="col-md-6 mt-4 mt-md-0">
 
@@ -479,8 +461,30 @@ const LandDrop = ({drop}: LandDropProps) => {
                       creativeCommons={drop.verification.creativeCommons}
                     />
 
+
+                    {(status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete) && (
+                      <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
+                        Supply: {ethers.utils.commify(maxSupply.toString())}
+                      </Text>
+                    )}
+                    {status >= statuses.LIVE && !drop.complete && (
+                      <Box>
+                        <Flex justify='space-between' mt={3} mb={1}>
+                          <Box fontWeight='bold'>{percentage(totalSupply.toString(), maxSupply.toString())}% minted</Box>
+                          <Box>{ethers.utils.commify(totalSupply.toString())} / {ethers.utils.commify(maxSupply.toString())}</Box>
+                        </Flex>
+                        <ProgressBar
+                          now={percentage(totalSupply.toString(), maxSupply.toString())}
+                          style={{ height: '4px' }}
+                        />
+                      </Box>
+                    )}
+
                     <MintPhase
                       title='Allowlist 1'
+                      description={
+                        <>For Fortune presale participants</>
+                      }
                       price={allowlist1Cost}
                       startTime={allowlist1Start}
                       endTime={allowlist2Start}
@@ -489,11 +493,16 @@ const LandDrop = ({drop}: LandDropProps) => {
                       isMinting={minting}
                       isDropComplete={drop.complete || status > dropState.LIVE}
                       dropStatus={status}
-                      currentSupply={totalSupply}
-                      maxSupply={maxSupply}
+                      currentSupply={Number(totalSupply)}
+                      maxSupply={Number(maxSupply)}
                     />
                     <MintPhase
                       title='Allowlist 2'
+                      description={
+                        <>
+                          For users with 1000+ Mitama. Earn Mitama by staking Fortune in <Link href='/ryoshi' className='color fw-bold'>Ryoshi Dynasties</Link>
+                        </>
+                      }
                       price={allowlist2Cost}
                       startTime={allowlist2Start}
                       endTime={publicStart}
@@ -502,8 +511,8 @@ const LandDrop = ({drop}: LandDropProps) => {
                       isMinting={minting}
                       isDropComplete={drop.complete || status > dropState.LIVE}
                       dropStatus={status}
-                      currentSupply={totalSupply}
-                      maxSupply={maxSupply}
+                      currentSupply={Number(totalSupply)}
+                      maxSupply={Number(maxSupply)}
                     />
                     <MintPhase
                       title='Public'
@@ -514,8 +523,8 @@ const LandDrop = ({drop}: LandDropProps) => {
                       isMinting={minting}
                       isDropComplete={drop.complete || status > dropState.LIVE}
                       dropStatus={status}
-                      currentSupply={totalSupply}
-                      maxSupply={maxSupply}
+                      currentSupply={Number(totalSupply)}
+                      maxSupply={Number(maxSupply)}
                     />
 
                   </div>
@@ -533,6 +542,7 @@ export default LandDrop;
 
 interface MintPhaseProps {
   title: string;
+  description?: ReactNode;
   price: number;
   startTime: number;
   endTime?: number;
@@ -545,11 +555,9 @@ interface MintPhaseProps {
   maxSupply: number;
 }
 
-const MintPhase = ({ title, price, startTime, endTime, onMint, maxMintQuantity, isMinting, isDropComplete, dropStatus, currentSupply, maxSupply }: MintPhaseProps) => {
+const MintPhase = ({ title, description, price, startTime, endTime, onMint, maxMintQuantity, isMinting, isDropComplete, dropStatus, currentSupply, maxSupply }: MintPhaseProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
-  const [isLive, setIsLive] = useState<boolean>(false);
-  const [isExpired, setIsExpired] = useState<boolean>(false);
   const [numToMint, setNumToMint] = useState(1);
   const [phaseStatus, setPhaseStatus] = useState(dropState.UNSET);
 
@@ -588,7 +596,7 @@ const MintPhase = ({ title, price, startTime, endTime, onMint, maxMintQuantity, 
       return <>Live!</>;
     } else {
       // Render a countdown
-      return <span>{hours}:{minutes}:{seconds}</span>;
+      return <span>Starts in: {hours}:{minutes}:{seconds}</span>;
     }
   };
 
@@ -622,14 +630,14 @@ const MintPhase = ({ title, price, startTime, endTime, onMint, maxMintQuantity, 
     <Box
       className="card shadow"
       mt={2}
-      borderColor={phaseStatus === statuses.LIVE || !endTime ? getTheme(user.theme).colors.borderColor3 : getTheme(user.theme).colors.borderColor2}
-      borderWidth={phaseStatus === statuses.LIVE || !endTime ? 2 : 1}
+      borderColor={phaseStatus === statuses.LIVE ? getTheme(user.theme).colors.borderColor3 : getTheme(user.theme).colors.borderColor2}
+      borderWidth={phaseStatus === statuses.LIVE ? 2 : 1}
       bgColor={getTheme(user.theme).colors.bgColor5}
       p={4}
       rounded='2xl'
     >
       <Flex justify='space-between'>
-        <Heading size="md" className="mb-1">{title}</Heading>
+        <Box fontSize="xl" fontWeight='bold' className="mb-1">{title}</Box>
         <Box className='text-muted'>
           {phaseStatus === statuses.LIVE ? (
             <>Live!</>
@@ -645,27 +653,8 @@ const MintPhase = ({ title, price, startTime, endTime, onMint, maxMintQuantity, 
       </Flex>
       <HStack>
         <Image src="/img/ryoshi-dynasties/icons/fortune.svg" width={8} height={8} alt='Cronos Logo' />
-        <span className="ms-2">{commify(price)}</span>
+        <span className="ms-2">{price ? commify(price) : 'TBA'}</span>
       </HStack>
-
-      <>
-        {phaseStatus < statuses.LIVE ? (
-          <div className="mt-2">
-            <div className="fs-6 fw-bold mb-1">Supply: {ethers.utils.commify(maxSupply.toString())}</div>
-          </div>
-        ) : (
-          <Box>
-            <div className="fs-6 fw-bold mb-1 mt-3 text-start text-md-end">
-              {percentage(currentSupply.toString(), maxSupply.toString())}% minted (
-              {ethers.utils.commify(currentSupply.toString())} / {ethers.utils.commify(maxSupply.toString())})
-            </div>
-            <ProgressBar
-              now={percentage(currentSupply.toString(), maxSupply.toString())}
-              style={{ height: '4px' }}
-            />
-          </Box>
-        )}
-      </>
 
       {phaseStatus === statuses.LIVE ? (
         <Box mt={2}>
@@ -692,13 +681,14 @@ const MintPhase = ({ title, price, startTime, endTime, onMint, maxMintQuantity, 
               Connect Wallet
             </PrimaryButton>
           )}
+          <Box textAlign='center' fontSize='sm' mt={4}>{description}</Box>
         </Box>
       ) : phaseStatus === statuses.SOLD_OUT ? (
-        <>SOLD OUT</>
+        <Box textAlign='center' mt={4} className='text-muted'>SOLD OUT</Box>
       ) : phaseStatus === statuses.EXPIRED ? (
-        <>ENDED</>
+        <Box textAlign='center' mt={4}>ENDED</Box>
       ) : (
-        <>UPCOMING</>
+        <Box textAlign='center' fontSize='sm' mt={4}>{description}</Box>
       )}
     </Box>
   )
