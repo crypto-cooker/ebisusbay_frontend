@@ -224,70 +224,93 @@ export default class Responsive extends Component {
                           </div>
                           <div className="d-attr">
                             <div className="col">
-                              {drop.slug === 'ryoshi-tales-vip' ? (
+                              {drop.slug === 'izanamis-cradle-land-deeds' ? (
                                 <>
-                                  <span className="d-title">VIP-only Mint Price</span>
-                                  <Heading as="h3" size="md">1 Ebisu's Bay VIP</Heading>
+                                  <span className="d-title">Mint Price</span>
+                                  <Heading as="h3" size="md">
+                                    <HStack>
+                                      <Image src='/img/ryoshi-dynasties/icons/fortune.svg' alt="Fortune Logo" width={32} height={32} />
+                                      <Text as='span'>
+                                        {drop.salePeriods.public < Date.now() ? (
+                                          <>{ethers.utils.commify(drop.erc20Cost!)}</>
+                                        ) : drop.salePeriods.allowlist2 < Date.now() ? (
+                                          <>{drop.erc20MemberCost}</>
+                                        ) : (
+                                          <>{drop.erc20WhitelistCost}</>
+                                        )}
+                                      </Text>
+                                      <Text as='span'>{tokens[drop.erc20Token!].symbol}</Text>
+                                    </HStack>
+                                  </Heading>
                                 </>
-                              ) : <span className="d-title">Mint Price</span>}
-
-                              {drop.freeMint ? (
-                                <Heading as="h3" size="md">Free Mint</Heading>
                               ) : (
                                 <>
-                                  {!!drop.cost &&
-                                    (Array.isArray(drop.cost) ? (
-                                      <Heading as="h3" size="md">
-                                        {ethers.utils.commify(Math.min(...drop.cost.map((c) => parseInt(c))))} -{' '}
-                                        {ethers.utils.commify(Math.max(...drop.cost.map((c) => parseInt(c))))} CRO
+                                  {drop.slug === 'ryoshi-tales-vip' ? (
+                                    <>
+                                      <span className="d-title">VIP-only Mint Price</span>
+                                      <Heading as="h3" size="md">1 Ebisu's Bay VIP</Heading>
+                                    </>
+                                  ) : <span className="d-title">Mint Price</span>}
+
+                                  {drop.freeMint ? (
+                                    <Heading as="h3" size="md">Free Mint</Heading>
+                                  ) : (
+                                    <>
+                                      {!!drop.cost &&
+                                        (Array.isArray(drop.cost) ? (
+                                          <Heading as="h3" size="md">
+                                            {ethers.utils.commify(Math.min(...drop.cost.map((c) => parseInt(c))))} -{' '}
+                                            {ethers.utils.commify(Math.max(...drop.cost.map((c) => parseInt(c))))} CRO
+                                          </Heading>
+                                        ) : (
+                                          <Heading as="h3" size="md">{ethers.utils.commify(drop.cost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
+                                        ))}
+                                      {!!drop.erc20Cost && !!drop.erc20Token && (
+                                        <HStack mt={2} mb={4}>
+                                          {drop.erc20Icon && <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />}
+                                          <Text fontSize="4xl" fontWeight="bold" lineHeight={1}>
+                                            {ethers.utils.commify(drop.erc20Cost)} {tokens[drop.erc20Token].symbol}
+                                          </Text>
+                                        </HStack>
+                                      )}
+                                      {!drop.cost && !drop.erc20Cost && drop.slug !== 'ryoshi-tales-vip' && (
+                                        <h3>TBA</h3>
+                                      )}
+                                    </>
+                                  )}
+                                  {!!drop.memberCost &&
+                                    (Array.isArray(drop.memberCost) ? (
+                                      <Heading as="h5" size="sm">
+                                        Members: {ethers.utils.commify(Math.min(...drop.memberCost.map((c) => parseInt(c))))}{' '}
+                                        - {ethers.utils.commify(Math.max(...drop.memberCost.map((c) => parseInt(c))))} CRO
                                       </Heading>
                                     ) : (
-                                      <Heading as="h3" size="md">{ethers.utils.commify(drop.cost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
+                                      <Heading as="h5" size="sm">Members: {ethers.utils.commify(drop.memberCost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
                                     ))}
-                                  {!!drop.erc20Cost && !!drop.erc20Token && (
-                                    <HStack mt={2} mb={4}>
-                                      {drop.erc20Icon && <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />}
-                                      <Text fontSize="4xl" fontWeight="bold" lineHeight={1}>
-                                        {ethers.utils.commify(drop.erc20Cost)} {tokens[drop.erc20Token].symbol}
+                                  {!!drop.erc20MemberCost && !!drop.erc20Token && (
+                                    <HStack mt={2}>
+                                      <Text fontSize="md" fontWeight="bold" lineHeight={1} className="ms-0" >
+                                        Members: {ethers.utils.commify(drop.erc20MemberCost)} {tokens[drop.erc20Token].symbol}
                                       </Text>
                                     </HStack>
                                   )}
-                                  {!drop.cost && !drop.erc20Cost && drop.slug !== 'ryoshi-tales-vip' && (
-                                    <h3>TBA</h3>
+                                  {!!drop.whitelistCost &&
+                                    (Array.isArray(drop.whitelistCost) ? (
+                                      <Heading as="h5" size="sm">
+                                        Whitelist:{' '}
+                                        {ethers.utils.commify(Math.min(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} -{' '}
+                                        {ethers.utils.commify(Math.max(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} CRO
+                                      </Heading>
+                                    ) : (
+                                      <Heading as="h5" size="sm">Whitelist: {ethers.utils.commify(drop.whitelistCost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
+                                    ))}
+                                  {drop.specialWhitelistCost && (
+                                    <Heading as="h5" size="sm">
+                                      {drop.specialWhitelistCost.name}:{' '}
+                                      {ethers.utils.commify(drop.specialWhitelistCost.value)} CRO
+                                    </Heading>
                                   )}
                                 </>
-                              )}
-                              {!!drop.memberCost &&
-                                (Array.isArray(drop.memberCost) ? (
-                                  <Heading as="h5" size="sm">
-                                    Members: {ethers.utils.commify(Math.min(...drop.memberCost.map((c) => parseInt(c))))}{' '}
-                                    - {ethers.utils.commify(Math.max(...drop.memberCost.map((c) => parseInt(c))))} CRO
-                                  </Heading>
-                                ) : (
-                                  <Heading as="h5" size="sm">Members: {ethers.utils.commify(drop.memberCost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
-                                ))}
-                              {!!drop.erc20MemberCost && !!drop.erc20Token && (
-                                <HStack mt={2}>
-                                  <Text fontSize="md" fontWeight="bold" lineHeight={1} className="ms-0" >
-                                    Members: {ethers.utils.commify(drop.erc20MemberCost)} {tokens[drop.erc20Token].symbol}
-                                  </Text>
-                                </HStack>
-                              )}
-                              {!!drop.whitelistCost &&
-                                (Array.isArray(drop.whitelistCost) ? (
-                                  <Heading as="h5" size="sm">
-                                    Whitelist:{' '}
-                                    {ethers.utils.commify(Math.min(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} -{' '}
-                                    {ethers.utils.commify(Math.max(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} CRO
-                                  </Heading>
-                                ) : (
-                                  <Heading as="h5" size="sm">Whitelist: {ethers.utils.commify(drop.whitelistCost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
-                                ))}
-                              {drop.specialWhitelistCost && (
-                                <Heading as="h5" size="sm">
-                                  {drop.specialWhitelistCost.name}:{' '}
-                                  {ethers.utils.commify(drop.specialWhitelistCost.value)} CRO
-                                </Heading>
                               )}
                             </div>
                             <div className="line my-auto"></div>
