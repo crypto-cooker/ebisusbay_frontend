@@ -272,7 +272,8 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
 
           toast.success("You recalled "+ selectedQuantity + " troops from "+ controlPoint.name +" on behalf of "+ selectedFaction)
       } catch (error: any) {
-        console.log(error)
+        console.log(error);
+        toast.error(parseErrorMessage(error));
         // toast.error(error.response.data.error.metadata.message)
       }
       finally {
