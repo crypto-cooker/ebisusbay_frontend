@@ -334,17 +334,17 @@ const LandDrop = ({drop}: LandDropProps) => {
             {openMenu === tabs.description && (
               <Box mt={3} mb={4}>
                 <Center mb={8}>
-                  <Box className="profile_avatar">
-                    {drop.images.avatar && <img src={hostedImage(drop.images.avatar)} alt={drop.author.name} />}
-                    <Box className="profile_name">
+                  <Stack direction={{base: 'column', md: 'row'}} className="profile_avatar" alignItems='center'>
+                    <Image src={hostedImage(drop.images.avatar)} alt={drop.author.name} />
+                    <Box className="profile_name" textAlign={{base: 'center', md: 'start'}}>
                       <Heading as="h4" size="md">
-                        {drop.title}
+                        <Box ms={2}>{drop.title}</Box>
                         <Box mt={2}>
                           <SocialsBar address={drop.address} socials={drop.author} />
                         </Box>
                       </Heading>
                     </Box>
-                  </Box>
+                  </Stack>
                 </Center>
                 <Box as='section' id="drop_detail" className="gl-legacy container no-top">
                   <Box textAlign='center'>
@@ -438,28 +438,28 @@ const LandDrop = ({drop}: LandDropProps) => {
                   </div>
                   <div className="col-md-6 mt-4 mt-md-0">
 
-                    <div className="de-flex mt-4 mt-sm-0 mb-2">
-                      <div className="de-flex-col">
-                        <div className="profile_avatar">
-                          {drop.images.avatar && <img src={hostedImage(drop.images.avatar)} alt={drop.author.name} />}
-                          <div className="profile_name">
-                            <Heading as="h4" size="md">
-                              {drop.title}
-                              <Box mt={2}>
-                                <SocialsBar address={drop.address} socials={drop.author} />
-                              </Box>
-                            </Heading>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <Flex justify={{base: 'center', md: 'start'}} mb={4}>
+                      <Stack direction={{base: 'column', md: 'row'}} className="profile_avatar" alignItems='center'>
+                        <Image src={hostedImage(drop.images.avatar)} alt={drop.author.name} />
+                        <Box className="profile_name" textAlign={{base: 'center', md: 'start'}}>
+                          <Heading as="h4" size="md">
+                            <Box ms={2}>{drop.title}</Box>
+                            <Box mt={2}>
+                              <SocialsBar address={drop.address} socials={drop.author} />
+                            </Box>
+                          </Heading>
+                        </Box>
+                      </Stack>
+                    </Flex>
 
-                    <CollectionVerificationRow
-                      doxx={drop.verification.doxx}
-                      kyc={drop.verification.kyc}
-                      escrow={drop.verification.escrow}
-                      creativeCommons={drop.verification.creativeCommons}
-                    />
+                    <Flex justify={{base: 'center', md: 'start'}}>
+                      <CollectionVerificationRow
+                        doxx={drop.verification.doxx}
+                        kyc={drop.verification.kyc}
+                        escrow={drop.verification.escrow}
+                        creativeCommons={drop.verification.creativeCommons}
+                      />
+                    </Flex>
 
 
                     {(status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete) && (
@@ -526,7 +526,6 @@ const LandDrop = ({drop}: LandDropProps) => {
                       currentSupply={Number(totalSupply)}
                       maxSupply={Number(maxSupply)}
                     />
-
                   </div>
                 </div>
               </section>

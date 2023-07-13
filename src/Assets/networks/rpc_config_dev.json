@@ -21904,7 +21904,7 @@
       "name": "Izanami's Cradle: Land Deeds",
       "slug": "izanamis-cradle-land-deeds",
       "multiToken": false,
-      "address": "",
+      "address": "0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -28852,7 +28852,7 @@
       "slug": "izanamis-cradle-land-deeds",
       "title": "Izanami's Cradle: Land Deeds",
       "subtitle": "Discover the Legend of Izanami's Cradle.\n\nBecome the owner of unique lands, farm Resources, explore Points of Interest, fight Epic Bosses & receive Rare Artifacts and Weapons.\n\nLevel up the Buildings on your Land to Unlock Extra Staking Slots and Higher Bonuses. \nAre you ready? You can use $FRTN to acquire Land Deeds and become the first ever Ryoshi Dynasties official landowner.",
-      "description": "",
+      "description": "0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3",
       "author": {
         "name": "Ebisu's Bay",
         "website": "https://app.ebisusbay.com/",
@@ -28866,6 +28866,10 @@
       "maxMintPerTx": 40,
       "maxMintPerAddress": 100,
       "totalSupply": 2500,
+      "erc20Cost": "1075",
+      "erc20MemberCost": "895",
+      "erc20WhitelistCost": "715",
+      "erc20Token": "frtn",
       "foundersOnly": false,
       "start": 1689364800000,
       "salePeriods": {
