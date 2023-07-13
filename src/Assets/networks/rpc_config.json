@@ -21996,6 +21996,31 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "The Grind Gear",
+      "slug": "the-grind-gear",
+      "multiToken": false,
+      "address": "0x00aDFd54b7BaeDFf9cE20F99dbEA0350bE379Dea",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A powerful set of digital wearables given to members of The Grind Guild. The 3D files for this NFT have been built with interoperability in mind. The files have been optimized and exported to be easily imported into games, worlds or metaverses that accept 3D file types if the owner so chooses.",
+        "avatar": "/img/collections/the-grind-gear/avatar.webp",
+        "banner": "/img/collections/the-grind-gear/banner.webp",
+        "card": "/img/collections/the-grind-gear/card.webp",
+        "website":"https://cronosgrind.io",
+        "twitter": "https://twitter.com/cronosgrind",
+        "discord": "https://discord.gg/thegrind",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
