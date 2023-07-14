@@ -495,6 +495,7 @@ const LandDrop = ({drop}: LandDropProps) => {
                       dropStatus={status}
                       currentSupply={Number(totalSupply)}
                       maxSupply={Number(maxSupply)}
+                      onRefreshDropStatus={() => calculateStatus(drop, totalSupply, maxSupply)}
                     />
                     <MintPhase
                       title='Allowlist 2'
@@ -513,6 +514,7 @@ const LandDrop = ({drop}: LandDropProps) => {
                       dropStatus={status}
                       currentSupply={Number(totalSupply)}
                       maxSupply={Number(maxSupply)}
+                      onRefreshDropStatus={() => calculateStatus(drop, totalSupply, maxSupply)}
                     />
                     <MintPhase
                       title='Public'
@@ -525,6 +527,7 @@ const LandDrop = ({drop}: LandDropProps) => {
                       dropStatus={status}
                       currentSupply={Number(totalSupply)}
                       maxSupply={Number(maxSupply)}
+                      onRefreshDropStatus={() => calculateStatus(drop, totalSupply, maxSupply)}
                     />
                   </div>
                 </div>
@@ -552,21 +555,21 @@ interface MintPhaseProps {
   dropStatus: number;
   currentSupply: number;
   maxSupply: number;
+  onRefreshDropStatus: () => void;
 }
 
-const MintPhase = ({ title, description, price, startTime, endTime, onMint, maxMintQuantity, isMinting, isDropComplete, dropStatus, currentSupply, maxSupply }: MintPhaseProps) => {
+const MintPhase = ({ title, description, price, startTime, endTime, onMint, maxMintQuantity, isMinting, isDropComplete, dropStatus, currentSupply, maxSupply, onRefreshDropStatus }: MintPhaseProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
   const [numToMint, setNumToMint] = useState(1);
   const [phaseStatus, setPhaseStatus] = useState(dropState.UNSET);
+  const [countdownFinished, setCountdownFinished] = useState(false);
 
   async function syncStatus() {
     if (dropStatus < dropState.LIVE) {
       setPhaseStatus(statuses.NOT_STARTED);
-      return;
     } else if (dropStatus > dropState.LIVE || isDropComplete) {
       setPhaseStatus(statuses.EXPIRED);
-      return;
     } else {
       const now = Date.now();
 
@@ -591,13 +594,19 @@ const MintPhase = ({ title, description, price, startTime, endTime, onMint, maxM
 
   const renderer = ({ days, hours, minutes, seconds, completed }: { days:number, hours:number, minutes:number, seconds: number, completed:boolean}) => {
     if (completed) {
-      // Render a completed state
       return <>Live!</>;
     } else {
       // Render a countdown
       return <span>Starts in: {days}:{hours}:{minutes}:{seconds}</span>;
     }
   };
+
+  const handleTimerComplete = () => {
+    if (!countdownFinished) {
+      onRefreshDropStatus();
+      setCountdownFinished(true);
+    }
+  }
 
   const connectWalletPressed = () => {
     if (user.needsOnboard) {
@@ -646,6 +655,7 @@ const MintPhase = ({ title, description, price, startTime, endTime, onMint, maxM
             <Countdown
               date={startTime}
               renderer={renderer}
+              onComplete={handleTimerComplete}
             />
           )}
         </Box>
