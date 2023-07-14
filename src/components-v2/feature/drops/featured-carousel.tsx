@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled, {createGlobalStyle} from 'styled-components';
 import Blockies from 'react-blockies';
 import {ethers} from 'ethers';
@@ -17,6 +17,7 @@ import Image from "next/image";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Drop, mapDrop} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
+import {useRouter} from "next/router";
 
 const tokens = appConfig('tokens')
 const drops: Drop[] = appConfig('drops').map((drop: any) => mapDrop(drop));
@@ -60,29 +61,20 @@ const VerifiedIcon = styled.span`
   z-index: 2;
 `;
 
-class CustomSlide extends Component {
-  render() {
-    const { ...props } = this.props;
-    return <div {...props}></div>;
-  }
-}
+const FeaturedDrops = () => {
+  const router = useRouter();
+  const [featuredDrops, setFeaturedDrops] = useState<Drop[]>([]);
 
-export default class Responsive extends Component {
-  private featuredDrops: Drop[];
-
-  constructor(props: any) {
-    super(props);
-    this.state = {};
-    this.featuredDrops = [];
-    this.arrangeCollections();
+  const navigateToDrop = (drop: Drop) => {
+    if (typeof window === 'undefined') return;
+    if (drop.redirect) {
+      window.open(drop.redirect, '_blank');
+    } else {
+      router.push(`/drops/${drop.slug}`);
+    }
   }
 
-  // @todo refactor out
-  isFounderDrop(drop: any) {
-    return drop.slug === 'founding-member';
-  }
-
-  calculateStatus(startDate: number, endDate?: number) {
+  const calculateStatus = (startDate: number, endDate?: number) => {
     const sTime = new Date(startDate);
     const eTime = !!endDate ? new Date(endDate) : 0;
     const now = new Date();
@@ -93,7 +85,7 @@ export default class Responsive extends Component {
     else return dropState.NOT_STARTED;
   }
 
-  arrangeCollections() {
+  useEffect(() => {
     const timeToShowInHours = 3600000 * 12;     // Threshold to display upcoming drops
     const maxShowTimeInDays = 3600000 * 24 * 2; // Threshold to show live drops
     const maxFreshnessInHours = 3600000 * 8;    // Threshold to label live drops as "stale"
@@ -134,7 +126,7 @@ export default class Responsive extends Component {
         .filter((d) => {
           if (liveDrops.length - c <= defaultMaxCount) return true;
 
-          if (Date.now() - d.start < maxShowTimeInDays || this.isFounderDrop(d)) {
+          if (Date.now() - d.start < maxShowTimeInDays || d.slug === 'founding-member') {
             return true;
           }
 
@@ -147,299 +139,291 @@ export default class Responsive extends Component {
     const liveFreshDrops = liveDrops.filter((d) => Date.now() - d.start <= maxFreshnessInHours);
     const liveStaleDrops = liveDrops.filter((d) => Date.now() - d.start > maxFreshnessInHours);
 
-    this.featuredDrops = [...upcomingDrops,  ...liveFreshDrops, ...topLevelDrops, ...liveStaleDrops];
-  }
+    setFeaturedDrops([...upcomingDrops,  ...liveFreshDrops, ...topLevelDrops, ...liveStaleDrops]);
+  }, []);
 
-  navigateToDrop(drop: Drop) {
-    if (typeof window === 'undefined') return;
-    if (drop.redirect) {
-      window.open(drop.redirect, '_blank');
-    } else {
-      window.open(`/drops/${drop.slug}`, '_self');
-    }
-  }
 
-  render() {
-    return (
-      <div className="nft-big">
-        <GlobalStyles />
-        <Swiper
-          spaceBetween={10}
-          slidesPerView={1}
-          navigation={true}
-          modules={[Navigation, Pagination]}
-          className="mySwiper"
-        >
-          {this.featuredDrops &&
-            this.featuredDrops.map((drop, index) => (
-              <SwiperSlide key={index}>
-                <Box className="itm">
-                  <div className="nft__item_lg">
-                    <div className="row align-items-center">
-                      <div className="col-lg-6 text-center">
-                        <img src={hostedImage(drop.images.drop)} className="img-fluid mx-auto" alt={drop.title} />
-                      </div>
-                      <div className="col-lg-6">
-                        <div className="d-desc">
-                          <Heading>{drop.title}</Heading>
-                          {drop.redirect && (
-                            <Tag mb={2}>
-                              {/*<FontAwesomeIcon icon={faExclamationCircle} />*/}
-                              <span className="">Promoted</span>
-                            </Tag>
-                          )}
-                          <CollectionVerificationRow
-                            doxx={drop.verification?.doxx}
-                            kyc={drop.verification?.kyc}
-                            escrow={drop.verification?.escrow}
-                            creativeCommons={null}
-                          />
-                          <div className="d-flex">
+  return (
+    <div className="nft-big">
+      <GlobalStyles />
+      <Swiper
+        spaceBetween={10}
+        slidesPerView={1}
+        navigation={true}
+        modules={[Navigation, Pagination]}
+        className="mySwiper"
+      >
+        {featuredDrops &&
+          featuredDrops.map((drop, index) => (
+            <SwiperSlide key={index}>
+              <Box className="itm">
+                <div className="nft__item_lg">
+                  <div className="row align-items-center">
+                    <div className="col-lg-6 text-center">
+                      <img src={hostedImage(drop.images.drop)} className="img-fluid mx-auto" alt={drop.title} />
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="d-desc">
+                        <Heading>{drop.title}</Heading>
+                        {drop.redirect && (
+                          <Tag mb={2}>
+                            {/*<FontAwesomeIcon icon={faExclamationCircle} />*/}
+                            <span className="">Promoted</span>
+                          </Tag>
+                        )}
+                        <CollectionVerificationRow
+                          doxx={drop.verification?.doxx}
+                          kyc={drop.verification?.kyc}
+                          escrow={drop.verification?.escrow}
+                          creativeCommons={null}
+                        />
+                        <div className="d-flex">
+                        </div>
+                        <div className="d-author">
+                          <div className="author_list_pp">
+                            {drop.images.avatar ? (
+                              <img className="lazy" src={ImageService.translate(drop.images.avatar).avatar()} alt={drop.author.name} />
+                            ) : (
+                              <Blockies seed={drop.slug} size={10} scale={5} />
+                            )}
+                            {drop.verification.verified && (
+                              <VerifiedIcon>
+                                <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
+                              </VerifiedIcon>
+                            )}
                           </div>
-                          <div className="d-author">
-                            <div className="author_list_pp">
-                              {drop.images.avatar ? (
-                                <img className="lazy" src={ImageService.translate(drop.images.avatar).avatar()} alt={drop.author.name} />
-                              ) : (
-                                <Blockies seed={drop.slug} size={10} scale={5} />
-                              )}
-                              {drop.verification.verified && (
-                                <VerifiedIcon>
-                                  <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={7} />
-                                </VerifiedIcon>
-                              )}
-                            </div>
-                            <div className="author_list_info">
-                              <div className="title">{drop.author.name}</div>
-                              <div className="subtitle">
-                                {!!drop.author.website && (
-                                  <span className="profile_username">
+                          <div className="author_list_info">
+                            <div className="title">{drop.author.name}</div>
+                            <div className="subtitle">
+                              {!!drop.author.website && (
+                                <span className="profile_username">
                                   <a href={drop.author.website} target="_blank" rel="noreferrer">
                                     View Website
                                   </a>
                                 </span>
-                                )}
-                              </div>
+                              )}
                             </div>
                           </div>
-                          <div className="d-attr">
-                            <div className="col">
-                              {drop.slug === 'izanamis-cradle-land-deeds' ? (
-                                <>
-                                  <span className="d-title">Mint Price</span>
-                                  <Heading as="h3" size="md">
-                                    <HStack>
-                                      <Image src='/img/ryoshi-dynasties/icons/fortune.svg' alt="Fortune Logo" width={32} height={32} />
-                                      <Text as='span'>
-                                        {drop.salePeriods.public < Date.now() ? (
-                                          <>{ethers.utils.commify(drop.erc20Cost!)}</>
-                                        ) : drop.salePeriods.allowlist2 < Date.now() ? (
-                                          <>{drop.erc20MemberCost}</>
-                                        ) : (
-                                          <>{drop.erc20WhitelistCost}</>
-                                        )}
-                                      </Text>
-                                      <Text as='span'>{tokens[drop.erc20Token!].symbol}</Text>
-                                    </HStack>
+                        </div>
+                        <div className="d-attr">
+                          <div className="col">
+                            {drop.slug === 'izanamis-cradle-land-deeds' ? (
+                              <>
+                                <span className="d-title">Mint Price</span>
+                                <Heading as="h3" size="md">
+                                  <HStack>
+                                    <Image src='/img/ryoshi-dynasties/icons/fortune.svg' alt="Fortune Logo" width={32} height={32} />
+                                    <Text as='span'>
+                                      {drop.salePeriods.public < Date.now() ? (
+                                        <>{ethers.utils.commify(drop.erc20Cost!)}</>
+                                      ) : drop.salePeriods.allowlist2 < Date.now() ? (
+                                        <>{drop.erc20MemberCost}</>
+                                      ) : (
+                                        <>{drop.erc20WhitelistCost}</>
+                                      )}
+                                    </Text>
+                                    <Text as='span'>{tokens[drop.erc20Token!].symbol}</Text>
+                                  </HStack>
+                                </Heading>
+                              </>
+                            ) : (
+                              <>
+                                {drop.slug === 'ryoshi-tales-vip' ? (
+                                  <>
+                                    <span className="d-title">VIP-only Mint Price</span>
+                                    <Heading as="h3" size="md">1 Ebisu's Bay VIP</Heading>
+                                  </>
+                                ) : <span className="d-title">Mint Price</span>}
+
+                                {drop.freeMint ? (
+                                  <Heading as="h3" size="md">Free Mint</Heading>
+                                ) : (
+                                  <>
+                                    {!!drop.cost &&
+                                      (Array.isArray(drop.cost) ? (
+                                        <Heading as="h3" size="md">
+                                          {ethers.utils.commify(Math.min(...drop.cost.map((c) => parseInt(c))))} -{' '}
+                                          {ethers.utils.commify(Math.max(...drop.cost.map((c) => parseInt(c))))} CRO
+                                        </Heading>
+                                      ) : (
+                                        <Heading as="h3" size="md">{ethers.utils.commify(drop.cost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
+                                      ))}
+                                    {!!drop.erc20Cost && !!drop.erc20Token && (
+                                      <HStack mt={2} mb={4}>
+                                        {drop.erc20Icon && <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />}
+                                        <Text fontSize="4xl" fontWeight="bold" lineHeight={1}>
+                                          {ethers.utils.commify(drop.erc20Cost)} {tokens[drop.erc20Token].symbol}
+                                        </Text>
+                                      </HStack>
+                                    )}
+                                    {!drop.cost && !drop.erc20Cost && drop.slug !== 'ryoshi-tales-vip' && (
+                                      <h3>TBA</h3>
+                                    )}
+                                  </>
+                                )}
+                                {!!drop.memberCost &&
+                                  (Array.isArray(drop.memberCost) ? (
+                                    <Heading as="h5" size="sm">
+                                      Members: {ethers.utils.commify(Math.min(...drop.memberCost.map((c) => parseInt(c))))}{' '}
+                                      - {ethers.utils.commify(Math.max(...drop.memberCost.map((c) => parseInt(c))))} CRO
+                                    </Heading>
+                                  ) : (
+                                    <Heading as="h5" size="sm">Members: {ethers.utils.commify(drop.memberCost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
+                                  ))}
+                                {!!drop.erc20MemberCost && !!drop.erc20Token && (
+                                  <HStack mt={2}>
+                                    <Text fontSize="md" fontWeight="bold" lineHeight={1} className="ms-0" >
+                                      Members: {ethers.utils.commify(drop.erc20MemberCost)} {tokens[drop.erc20Token].symbol}
+                                    </Text>
+                                  </HStack>
+                                )}
+                                {!!drop.whitelistCost &&
+                                  (Array.isArray(drop.whitelistCost) ? (
+                                    <Heading as="h5" size="sm">
+                                      Whitelist:{' '}
+                                      {ethers.utils.commify(Math.min(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} -{' '}
+                                      {ethers.utils.commify(Math.max(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} CRO
+                                    </Heading>
+                                  ) : (
+                                    <Heading as="h5" size="sm">Whitelist: {ethers.utils.commify(drop.whitelistCost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
+                                  ))}
+                                {drop.specialWhitelistCost && (
+                                  <Heading as="h5" size="sm">
+                                    {drop.specialWhitelistCost.name}:{' '}
+                                    {ethers.utils.commify(drop.specialWhitelistCost.value)} CRO
                                   </Heading>
+                                )}
+                              </>
+                            )}
+                          </div>
+                          <div className="line my-auto"></div>
+                          {drop.slug === 'izanamis-cradle-land-deeds' ? (
+                            <div className="col my-auto">
+                              {calculateStatus(drop.salePeriods.public) > dropState.NOT_STARTED ? (
+                                <>
+                                  {calculateStatus(drop.salePeriods.public) === dropState.LIVE && (
+                                    <Heading as="h3" size="lg">Drop is Live!</Heading>
+                                  )}
+                                  {calculateStatus(drop.salePeriods.public) === dropState.EXPIRED && (
+                                    <Heading as="h3" size="lg">Drop Ended</Heading>
+                                  )}
+                                  {calculateStatus(drop.salePeriods.public) === dropState.SOLD_OUT && (
+                                    <Heading as="h3" size="lg">Sold Out</Heading>
+                                  )}
+                                </>
+                              ) : calculateStatus(drop.salePeriods.allowlist2) > dropState.NOT_STARTED ? (
+                                <>
+                                  {calculateStatus(drop.salePeriods.allowlist2) === dropState.LIVE && (
+                                    <Heading as="h3" size="lg">Allowlist 2 Live!</Heading>
+                                  )}
+                                  {calculateStatus(drop.salePeriods.public) < dropState.LIVE && (
+                                    <>
+                                      <span className="d-title">Public starts in</span>
+                                      <div className="de_countdown fs-4">
+                                        <Clock deadline={drop.salePeriods.public} />
+                                      </div>
+                                    </>
+                                  )}
+                                </>
+                              ) : calculateStatus(drop.salePeriods.allowlist1) > dropState.NOT_STARTED ? (
+                                <>
+                                  {calculateStatus(drop.salePeriods.allowlist1) === dropState.LIVE && (
+                                    <Heading as="h3" size="lg">Allowlist 1 Live!</Heading>
+                                  )}
+                                  {calculateStatus(drop.salePeriods.allowlist2) < dropState.LIVE && (
+                                    <>
+                                      <span className="d-title">Allowlist 2 starts in</span>
+                                      <div className="de_countdown fs-4">
+                                        <Clock deadline={drop.salePeriods.allowlist2} />
+                                      </div>
+                                    </>
+                                  )}
                                 </>
                               ) : (
                                 <>
-                                  {drop.slug === 'ryoshi-tales-vip' ? (
+                                  <span className="d-title">Allowlist 1 starts in</span>
+                                  <div className="de_countdown">
+                                    <Clock deadline={drop.salePeriods.allowlist1} />
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          ) : drop.salePeriods ? (
+                            <div className="col my-auto">
+                              {calculateStatus(drop.salePeriods.public) > dropState.NOT_STARTED ? (
+                                <>
+                                  {calculateStatus(drop.salePeriods.public) === dropState.LIVE && (
+                                    <Heading as="h3" size="lg">Drop is Live!</Heading>
+                                  )}
+                                  {calculateStatus(drop.salePeriods.public) === dropState.EXPIRED && (
+                                    <Heading as="h3" size="lg">Drop Ended</Heading>
+                                  )}
+                                  {calculateStatus(drop.salePeriods.public) === dropState.SOLD_OUT && (
+                                    <Heading as="h3" size="lg">Sold Out</Heading>
+                                  )}
+                                </>
+                              ) : (
+                                <>
+                                  {calculateStatus(drop.salePeriods.presale) === dropState.NOT_STARTED && (
                                     <>
-                                      <span className="d-title">VIP-only Mint Price</span>
-                                      <Heading as="h3" size="md">1 Ebisu's Bay VIP</Heading>
-                                    </>
-                                  ) : <span className="d-title">Mint Price</span>}
-
-                                  {drop.freeMint ? (
-                                    <Heading as="h3" size="md">Free Mint</Heading>
-                                  ) : (
-                                    <>
-                                      {!!drop.cost &&
-                                        (Array.isArray(drop.cost) ? (
-                                          <Heading as="h3" size="md">
-                                            {ethers.utils.commify(Math.min(...drop.cost.map((c) => parseInt(c))))} -{' '}
-                                            {ethers.utils.commify(Math.max(...drop.cost.map((c) => parseInt(c))))} CRO
-                                          </Heading>
-                                        ) : (
-                                          <Heading as="h3" size="md">{ethers.utils.commify(drop.cost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
-                                        ))}
-                                      {!!drop.erc20Cost && !!drop.erc20Token && (
-                                        <HStack mt={2} mb={4}>
-                                          {drop.erc20Icon && <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />}
-                                          <Text fontSize="4xl" fontWeight="bold" lineHeight={1}>
-                                            {ethers.utils.commify(drop.erc20Cost)} {tokens[drop.erc20Token].symbol}
-                                          </Text>
-                                        </HStack>
-                                      )}
-                                      {!drop.cost && !drop.erc20Cost && drop.slug !== 'ryoshi-tales-vip' && (
-                                        <h3>TBA</h3>
-                                      )}
+                                      <span className="d-title">Presale starts in</span>
+                                      <div className="de_countdown">
+                                        <Clock deadline={drop.salePeriods.presale} />
+                                      </div>
                                     </>
                                   )}
-                                  {!!drop.memberCost &&
-                                    (Array.isArray(drop.memberCost) ? (
-                                      <Heading as="h5" size="sm">
-                                        Members: {ethers.utils.commify(Math.min(...drop.memberCost.map((c) => parseInt(c))))}{' '}
-                                        - {ethers.utils.commify(Math.max(...drop.memberCost.map((c) => parseInt(c))))} CRO
-                                      </Heading>
-                                    ) : (
-                                      <Heading as="h5" size="sm">Members: {ethers.utils.commify(drop.memberCost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
-                                    ))}
-                                  {!!drop.erc20MemberCost && !!drop.erc20Token && (
-                                    <HStack mt={2}>
-                                      <Text fontSize="md" fontWeight="bold" lineHeight={1} className="ms-0" >
-                                        Members: {ethers.utils.commify(drop.erc20MemberCost)} {tokens[drop.erc20Token].symbol}
-                                      </Text>
-                                    </HStack>
+                                  {calculateStatus(drop.salePeriods.presale) === dropState.LIVE && (
+                                    <Heading as="h3" size="lg">Presale Live!</Heading>
                                   )}
-                                  {!!drop.whitelistCost &&
-                                    (Array.isArray(drop.whitelistCost) ? (
-                                      <Heading as="h5" size="sm">
-                                        Whitelist:{' '}
-                                        {ethers.utils.commify(Math.min(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} -{' '}
-                                        {ethers.utils.commify(Math.max(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} CRO
-                                      </Heading>
-                                    ) : (
-                                      <Heading as="h5" size="sm">Whitelist: {ethers.utils.commify(drop.whitelistCost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
-                                    ))}
-                                  {drop.specialWhitelistCost && (
-                                    <Heading as="h5" size="sm">
-                                      {drop.specialWhitelistCost.name}:{' '}
-                                      {ethers.utils.commify(drop.specialWhitelistCost.value)} CRO
-                                    </Heading>
+                                  {calculateStatus(drop.salePeriods.public) === dropState.NOT_STARTED && (
+                                    <>
+                                      <span className="d-title">Public Sale starts in</span>
+                                      <div className="de_countdown">
+                                        <Clock deadline={drop.salePeriods.public} />
+                                      </div>
+                                    </>
                                   )}
                                 </>
                               )}
                             </div>
-                            <div className="line my-auto"></div>
-                            {drop.slug === 'izanamis-cradle-land-deeds' ? (
-                              <div className="col my-auto">
-                                {this.calculateStatus(drop.salePeriods.public) > dropState.NOT_STARTED ? (
-                                  <>
-                                    {this.calculateStatus(drop.salePeriods.public) === dropState.LIVE && (
-                                      <Heading as="h3" size="lg">Drop is Live!</Heading>
-                                    )}
-                                    {this.calculateStatus(drop.salePeriods.public) === dropState.EXPIRED && (
-                                      <Heading as="h3" size="lg">Drop Ended</Heading>
-                                    )}
-                                    {this.calculateStatus(drop.salePeriods.public) === dropState.SOLD_OUT && (
-                                      <Heading as="h3" size="lg">Sold Out</Heading>
-                                    )}
-                                  </>
-                                ) : this.calculateStatus(drop.salePeriods.allowlist2) > dropState.NOT_STARTED ? (
-                                  <>
-                                    {this.calculateStatus(drop.salePeriods.allowlist2) === dropState.LIVE && (
-                                      <Heading as="h3" size="lg">Allowlist 2 Live!</Heading>
-                                    )}
-                                    {this.calculateStatus(drop.salePeriods.public) < dropState.LIVE && (
-                                      <>
-                                        <span className="d-title">Public starts in</span>
-                                        <div className="de_countdown fs-4">
-                                          <Clock deadline={drop.salePeriods.public} />
-                                        </div>
-                                      </>
-                                    )}
-                                  </>
-                                ) : this.calculateStatus(drop.salePeriods.allowlist1) > dropState.NOT_STARTED ? (
-                                  <>
-                                    {this.calculateStatus(drop.salePeriods.allowlist1) === dropState.LIVE && (
-                                      <Heading as="h3" size="lg">Allowlist 1 Live!</Heading>
-                                    )}
-                                    {this.calculateStatus(drop.salePeriods.allowlist2) < dropState.LIVE && (
-                                      <>
-                                        <span className="d-title">Allowlist 2 starts in</span>
-                                        <div className="de_countdown fs-4">
-                                          <Clock deadline={drop.salePeriods.allowlist2} />
-                                        </div>
-                                      </>
-                                    )}
-                                  </>
-                                ) : (
-                                  <>
-                                    <span className="d-title">Allowlist 1 starts in</span>
-                                    <div className="de_countdown">
-                                      <Clock deadline={drop.salePeriods.allowlist1} />
-                                    </div>
-                                  </>
-                                )}
-                              </div>
-                            ) : drop.salePeriods ? (
-                              <div className="col my-auto">
-                                {this.calculateStatus(drop.salePeriods.public) > dropState.NOT_STARTED ? (
-                                  <>
-                                    {this.calculateStatus(drop.salePeriods.public) === dropState.LIVE && (
-                                      <Heading as="h3" size="lg">Drop is Live!</Heading>
-                                    )}
-                                    {this.calculateStatus(drop.salePeriods.public) === dropState.EXPIRED && (
-                                      <Heading as="h3" size="lg">Drop Ended</Heading>
-                                    )}
-                                    {this.calculateStatus(drop.salePeriods.public) === dropState.SOLD_OUT && (
-                                      <Heading as="h3" size="lg">Sold Out</Heading>
-                                    )}
-                                  </>
-                                ) : (
-                                  <>
-                                    {this.calculateStatus(drop.salePeriods.presale) === dropState.NOT_STARTED && (
-                                      <>
-                                        <span className="d-title">Presale starts in</span>
-                                        <div className="de_countdown">
-                                          <Clock deadline={drop.salePeriods.presale} />
-                                        </div>
-                                      </>
-                                    )}
-                                    {this.calculateStatus(drop.salePeriods.presale) === dropState.LIVE && (
-                                      <Heading as="h3" size="lg">Presale Live!</Heading>
-                                    )}
-                                    {this.calculateStatus(drop.salePeriods.public) === dropState.NOT_STARTED && (
-                                      <>
-                                        <span className="d-title">Public Sale starts in</span>
-                                        <div className="de_countdown">
-                                          <Clock deadline={drop.salePeriods.public} />
-                                        </div>
-                                      </>
-                                    )}
-                                  </>
-                                )}
-                              </div>
-                            ) : (
-                              <div className="col my-auto">
-                                {this.calculateStatus(drop.start) === dropState.NOT_STARTED && (
-                                  <>
-                                    <span className="d-title">Drop starts in</span>
-                                    <div className="de_countdown">
-                                      <Clock deadline={drop.start} />
-                                    </div>
-                                    <h5>
-                                      {new Date(drop.start).toDateString()}, {new Date(drop.start).toTimeString()}
-                                    </h5>
-                                  </>
-                                )}
-                                {this.calculateStatus(drop.start) === dropState.LIVE && <Heading as="h3" size="lg">Drop is Live!</Heading>}
-                                {this.calculateStatus(drop.start) === dropState.EXPIRED && <Heading as="h3" size="lg">Drop Ended</Heading>}
-                                {this.calculateStatus(drop.start) === dropState.SOLD_OUT && <Heading as="h3" size="lg">Sold Out</Heading>}
-                              </div>
-                            )}
-                          </div>
-                          <div className="spacer-10"></div>
-                          <div className="d-buttons">
-                          <span className="btn-main" onClick={() => this.navigateToDrop(drop)}>
+                          ) : (
+                            <div className="col my-auto">
+                              {calculateStatus(drop.start) === dropState.NOT_STARTED && (
+                                <>
+                                  <span className="d-title">Drop starts in</span>
+                                  <div className="de_countdown">
+                                    <Clock deadline={drop.start} />
+                                  </div>
+                                  <h5>
+                                    {new Date(drop.start).toDateString()}, {new Date(drop.start).toTimeString()}
+                                  </h5>
+                                </>
+                              )}
+                              {calculateStatus(drop.start) === dropState.LIVE && <Heading as="h3" size="lg">Drop is Live!</Heading>}
+                              {calculateStatus(drop.start) === dropState.EXPIRED && <Heading as="h3" size="lg">Drop Ended</Heading>}
+                              {calculateStatus(drop.start) === dropState.SOLD_OUT && <Heading as="h3" size="lg">Sold Out</Heading>}
+                            </div>
+                          )}
+                        </div>
+                        <div className="spacer-10"></div>
+                        <div className="d-buttons">
+                          <span className="btn-main" onClick={() => navigateToDrop(drop)}>
                             View Drop
                             {drop.redirect && (
                               <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2" />
                             )}
                           </span>
-                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </Box>
-              </SwiperSlide>
-            ))}
-        </Swiper>
-      </div>
-    );
-  }
+                </div>
+              </Box>
+            </SwiperSlide>
+          ))}
+      </Swiper>
+    </div>
+  );
 }
+
+export default FeaturedDrops;
