@@ -5,6 +5,7 @@ import MainPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/ann
 import LeaderboardPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/leaderboard";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/faq-page";
+import RdInlineModal from "@src/components-v2/feature/ryoshi-dynasties/components/rd-inline-modal";
 
 interface AnnouncementBoardModalProps {
   isOpen: boolean;
@@ -43,7 +44,7 @@ const AnnouncementBoardModal = ({isOpen, onClose, onOpenDailyCheckin}: Announcem
   }, [returnHome]);
 
   return (
-    <RdModal
+    <RdInlineModal
       title={title}
       isOpen={isOpen}
       onClose={handleClose}
@@ -58,7 +59,7 @@ const AnnouncementBoardModal = ({isOpen, onClose, onOpenDailyCheckin}: Announcem
               onOpenDailyCheckin={onOpenDailyCheckin}/>
           )}
       
-    </RdModal>
+    </RdInlineModal>
   )
 }
 

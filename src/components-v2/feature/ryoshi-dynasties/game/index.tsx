@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
@@ -12,6 +12,8 @@ import {useAppSelector} from "@src/Store/hooks";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import GameSync from "@src/components-v2/feature/ryoshi-dynasties/game/game-sync";
 import ImagePreloader from "@src/components-v2/feature/ryoshi-dynasties/game/image-preloader";
+import {InlineModalContext} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/inline-modal-context";
+import {Box} from "@chakra-ui/react";
 
 const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | null}) => {
   const user = useAppSelector((state) => state.user);
@@ -19,6 +21,8 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
   const [currentPage, setCurrentPage] = useState<string>('village');
   const [previousPage, setPreviousPage] = useState<string>();
   const [firstRun, setFirstRun] = useState<boolean>(false);
+  const [currentModalRef, setCurrentModalRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
+  const ref = useRef(null);
 
   const navigate = (page: string) => {
     setPreviousPage(currentPage)
@@ -29,31 +33,44 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
     setCurrentPage(previousPage ?? 'village')
   };
 
+  useEffect(() => {
+    setCurrentModalRef(ref);
+  }, [ref]);
+
   return (
-    <GameSync initialRdConfig={initialRdConfig}>
-      <ImagePreloader>
-        {currentPage === 'barracks' ? (
-          <Barracks onBack={returnToPreviousPage} />
-        ) : currentPage === 'battleMap' ? (
-          // <Suspense fallback={<Center><Spinner/></Center>}>
-          <BattleMap onChange={returnToPreviousPage}/>
-          // </Suspense>
-          // ) : currentPage === 'leaderboard' ? (
-          //   <Leaderboard onBack={returnToPreviousPage}/>
-        ) : currentPage === 'bank' ? (
-          <Bank address={user.address ?? ''} onBack={returnToPreviousPage} />
-        ) : currentPage === 'allianceCenter' ? (
-          <AllianceCenter onClose={returnToPreviousPage} />
-        ) : currentPage === 'academy' ? (
-          <Academy onBack={returnToPreviousPage} />
-          // ): currentPage === 'announcementBoard' ? (
-          // <AnnouncementBoard onBack={returnToPreviousPage} />
-        ) : (!currentPage || currentPage === 'village') && (
-          <Village onChange={navigate} firstRun={firstRun} onFirstRun={() => setFirstRun(true)}/>
-          // <BattleMap onChange={navigate} />
-        )}
-      </ImagePreloader>
-    </GameSync>
+    <InlineModalContext.Provider
+      value={{
+        ref: currentModalRef,
+        setRef: setCurrentModalRef
+      }}
+    >
+      <GameSync initialRdConfig={initialRdConfig}>
+        <ImagePreloader>
+          <Box ref={currentModalRef} position='relative'>
+            {currentPage === 'barracks' ? (
+              <Barracks onBack={returnToPreviousPage} />
+            ) : currentPage === 'battleMap' ? (
+              // <Suspense fallback={<Center><Spinner/></Center>}>
+              <BattleMap onChange={returnToPreviousPage}/>
+              // </Suspense>
+              // ) : currentPage === 'leaderboard' ? (
+              //   <Leaderboard onBack={returnToPreviousPage}/>
+            ) : currentPage === 'bank' ? (
+              <Bank address={user.address ?? ''} onBack={returnToPreviousPage} />
+            ) : currentPage === 'allianceCenter' ? (
+              <AllianceCenter onClose={returnToPreviousPage} />
+            ) : currentPage === 'academy' ? (
+              <Academy onBack={returnToPreviousPage} />
+              // ): currentPage === 'announcementBoard' ? (
+              // <AnnouncementBoard onBack={returnToPreviousPage} />
+            ) : (!currentPage || currentPage === 'village') && (
+              <Village onChange={navigate} firstRun={firstRun} onFirstRun={() => setFirstRun(true)}/>
+              // <BattleMap onChange={navigate} />
+            )}
+          </Box>
+        </ImagePreloader>
+      </GameSync>
+    </InlineModalContext.Provider>
   )
 }
 
