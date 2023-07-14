@@ -39,6 +39,10 @@ import { getLocation } from "graphql";
 import {getBattleLog} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {toast} from "react-toastify";
 import {pluralize} from "@src/utils";
+import RdInlineModal from "../../components/rd-inline-modal";
+
+import localFont from 'next/font/local';
+const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
 interface BattleLogProps {
   isOpen: boolean;
@@ -70,9 +74,11 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   const { config: rdConfig, game: rdGameContext, user: rdUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector(state => state.user);
   const [_, getSigner] = useCreateSigner();
-  const [amountLoaded, setAmountLoaded] = useState(0);
-  const [pagesToLoad, setPagesToLoad] = useState(2);
+  const [pageToLoad, setPageToLoad] = useState(1);
   const [battleLog, setBattleLog] = useState<any[]>([]);
+  const [sortOrder, setSortOrder] = useState("DESC" as "ASC" | "DESC");
+  const [moreToLoad, setMoreToLoad] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const connectWalletPressed = async () => {
     if (user.needsOnboard) {
@@ -84,6 +90,7 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
       dispatch(chainConnect());
     }
   };
+
   const GetBattleLog = async () => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
@@ -92,47 +99,41 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
     }
     if (signatureInStorage) {
       try {
-        const data = await getBattleLog(user.address!.toLowerCase(), signatureInStorage,
-          rdGameContext?.game.id, pagesToLoad, 1);
-        setBattleLog(data);
-       
+        const data = await getBattleLog(
+          user.address!.toLowerCase(), 
+          signatureInStorage,
+          rdGameContext?.game.id, 
+          5, 
+          pageToLoad
+          );
+        console.log(data.length);
+        if(data.length < 5) setMoreToLoad(false);
+        //add the data to the battleLog array
+        setBattleLog([...battleLog, ...data]);
       } catch (error:any) {
         console.log(error)
         toast.error(parseErrorMessage(error));
       }
     }
+    setIsLoading(false)
   }
 
-  const GetControlPointName = (locationNumber: number) => {
-    if(!rdGameContext) return "";
-
-    if(locationNumber===0) return "available";
-
-    if(locationNumber===1) return "Seashrine";
-    //itterate through all control points
-    // rdGameContext.game.parent.map.regions.map((region: any) =>
-    //   region.controlPoints.map((controlPoint: any, i: any) => (
-    //     //if controlPoint.id == id
-    //     //return controlPoint.name
-    //     //else continue
-    //   )))
+  const LoadAdditionalBattleLog = () => {
+    setIsLoading(true);
+    setPageToLoad(pageToLoad+1);
   }
-  const ParseTimestamp = (timestamp: string) => {
-    return moment(timestamp).format('MM/DD/YYYY h:mm:ss a');
+
+  const ParseTimestamp = (timestamp: number) => {
+    const milliseconds = timestamp * 1000 
+    const dateObject = new Date(milliseconds)
+    return dateObject.toLocaleString()
   }
+
+  // useEffect(() => {
+  //   if(pageToLoad==1) return;
+  //   GetBattleLog();
+  // }, [pageToLoad])
   
-  // const spoofedTroops: Array<battleLog> = [
-  //   {eventTimestamp:"2021-09-30T18:00:00.000Z", event:"attack",currentTroops:-2,entity1:[{"id":1,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/1.png","name":"FactionA","troops":12}],entity2:[{"id":2,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/2.png","name":"FactionB","troops":0}],locationId:0},
-  //   {eventTimestamp:"2021-09-30T18:00:00.000Z", event:"add",currentTroops:2,entity1:[{"id":1,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/1.png","name":"FactionA","troops":220}],entity2:[{"id":2,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/2.png","name":"FactionB","troops":0}],locationId:1},
-  //   {eventTimestamp:"2021-09-30T18:00:00.000Z", event:"send",currentTroops:-3,entity1:[{"id":1,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/1.png","name":"FactionA","troops":440}],entity2:[{"id":2,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/2.png","name":"FactionB","troops":0}],locationId:0},
-  //   {eventTimestamp:"2021-09-30T18:00:00.000Z", event:"send",currentTroops:-10,entity1:[{"id":1,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/1.png","name":"FactionA","troops":30}],entity2:[{"id":2,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/2.png","name":"FactionB","troops":0}],locationId:0},
-  //   {eventTimestamp:"2021-09-30T18:00:00.000Z", event:"send",currentTroops:-10,entity1:[{"id":1,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/1.png","name":"FactionA","troops":20}],entity2:[{"id":2,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/2.png","name":"FactionB","troops":0}],locationId:1},
-  //   {eventTimestamp:"2021-09-30T18:00:00.000Z", event:"send",currentTroops:-10,entity1:[{"id":1,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/1.png","name":"FactionA","troops":20}],entity2:[{"id":2,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/2.png","name":"FactionB","troops":0}],locationId:0},
-  //   {eventTimestamp:"2021-09-30T18:00:00.000Z", event:"send",currentTroops:-10,entity1:[{"id":1,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/1.png","name":"FactionA","troops":10}],entity2:[{"id":2,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/2.png","name":"FactionB","troops":0}],locationId:1},
-  //   {eventTimestamp:"2021-09-30T18:00:00.000Z", event:"send",currentTroops:-10,entity1:[{"id":1,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/1.png","name":"FactionA","troops":10}],entity2:[{"id":2,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/2.png","name":"FactionB","troops":0}],locationId:0},
-  //   {eventTimestamp:"2021-09-30T18:00:00.000Z", event:"send",currentTroops:-10,entity1:[{"id":1,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/1.png","name":"FactionA","troops":20}],entity2:[{"id":2,"image":"https://ryoshis-portal.s3.amazonaws.com/factions/2.png","name":"FactionB","troops":0}],locationId:0},
-  // ];
-
   // useEffect(() => {
   //   if(!rdGameContext) return;
   //   GetBattleLog();
@@ -144,21 +145,31 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   // }, [battleLog])
 
   return (
-    <RdModal
+    <RdInlineModal
       isOpen={isOpen}
       onClose={onClose}
-      title='Battle Log'
+      title='Game Log'
     >
-      <Box mx={1} pb={4} mt={25}>
-        {/* <Text align='center'> Add Filter Here </Text> */}
+      <Box position='absolute'>
+      <Button w={100} marginTop={-24} marginLeft={5} onClick={() => setSortOrder(sortOrder === "ASC" ? "DESC" : "ASC")} >
+          <Text fontSize={12}> {sortOrder === "ASC" ? "Most Recent" : "Oldest"} </Text>
+      </Button>
+      </Box>
+
+      <Box mx={1} pb={4} mt={25} maxW="500px">
+        
         <Divider orientation='vertical' position='absolute' height='100%' marginLeft='4' borderWidth='2px'/>
 
         {!!user.address ? (
           <>
           <SimpleGrid columns={1} gap={35} padding={2} my={4} paddingLeft='10'>
               {battleLog.map((logEntry, index) => (
-                <Box bg='gray.700' borderRadius='md' p={2}>
-                  {/* <Text fontSize={14} marginTop={-7} marginBottom={2}>{ParseTimestamp(logEntry.eventTimestamp)}</Text> */}
+                <Box bg='#272523' borderRadius='md' p={2}
+                  box-shadow= "5px 10px 18px red"
+                  style={{boxShadow: "0 10px 20px rgba(0, 0, 0, 0.7)"}}
+                  border="1px solid #F48F0C"
+                  >
+                  <Text fontSize={14} marginTop={-8} marginBottom={2}>{ParseTimestamp(logEntry.date)}</Text>
 
                   {logEntry.event === "ATTACK" ? (
                     <AttackLog battleLog={logEntry} key={index}/>
@@ -198,9 +209,19 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
                 </Box>
               ))}
             </SimpleGrid> */}
+            {moreToLoad ? (
             <Box textAlign='center' mt={4}>
-              <RdButton onClick={() => setAmountLoaded(amountLoaded+10)}>Load More</RdButton>
+              <RdButton 
+                onClick={() => LoadAdditionalBattleLog()}>
+                  {isLoading ? "Loading..." : "Load More"}
+                </RdButton>
             </Box>
+            ) : 
+              (<>
+            <Box textAlign='center' mt={4}>
+              <Text as={"i"} color='lightgray' textAlign='center' mt={4}>No more logs to load</Text>
+            </Box>
+              </>)}
           </>
         ) : (
           <Box textAlign='center' mt={4}>
@@ -208,7 +229,7 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
           </Box>
         )}
       </Box>
-    </RdModal>
+    </RdInlineModal>
   )
 }
 
@@ -251,7 +272,7 @@ const AttackLog = ({battleLog}: LogProps) => {
 
 
       <HStack justifyContent={"space-between"}>
-        <Text as='b' fontSize={26}>Lost {battleLog.pastTroops-battleLog.currentTroops} {pluralize(battleLog.pastTroops-battleLog.currentTroops, 'troop')}</Text>
+        <Text as='b' fontSize={26} className={gothamBook.className}>Lost {battleLog.pastTroops-battleLog.currentTroops} {pluralize(battleLog.pastTroops-battleLog.currentTroops, 'troop')}</Text>
          <VStack justifyContent="center" spacing='0'>
           <Text fontSize={14}>({battleLog.controlPoint})</Text>
            <HStack justifyContent={"space-between"}>
