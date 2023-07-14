@@ -21906,7 +21906,7 @@
       "multiToken": false,
       "address": "0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Discover the Legend of Izanami's Cradle.\n\nBecome the owner of unique lands, farm Resources, explore Points of Interest, fight Epic Bosses & receive Rare Artifacts and Weapons.\n\nLevel up the Buildings on your Land to Unlock Extra Staking Slots and Higher Bonuses. \nAre you ready? You can use $FRTN to acquire Land Deeds and become the first ever Ryoshi Dynasties official landowner.",
         "avatar": "/img/collections/izanamis-cradle-land-deeds/avatar2.webp",
