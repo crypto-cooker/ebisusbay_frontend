@@ -21955,7 +21955,7 @@
       "name": "Time Creatures Class A",
       "slug": "time-creatures-class-a",
       "multiToken": false,
-      "address": "",
+      "address": "0x1c4924f36Fe60374DB6ac206894D82F03d522933",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -21978,7 +21978,7 @@
       "name": "Time Creatures Class B",
       "slug": "time-creatures-class-b",
       "multiToken": false,
-      "address": "",
+      "address": "0x15Af2503a934D211A1936684fEd986E7E3f417db",
       "onChain": false,
       "listable": false,
       "metadata": {
