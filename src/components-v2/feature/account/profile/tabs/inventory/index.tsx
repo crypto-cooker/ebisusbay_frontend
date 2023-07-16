@@ -160,7 +160,7 @@ export default function Inventory({ address }: InventoryProps) {
     ) : (
       <>
         <SimpleGrid
-          columns={!useMobileMenu && filtersVisible ? {base: 1, sm: 2, lg: 3, xl: 4} : {base: 2, sm: 3, md: 4, lg: 5, xl: 6, '2xl': 7}}
+          columns={!useMobileMenu && filtersVisible ? {base: 1, sm: 2, lg: 3, xl: 4, '2xl': 6} : {base: 2, sm: 3, md: 4, lg: 5, xl: 6, '2xl': 7}}
           gap={3}
         >
           {!!pendingGdcNft && caseInsensitiveCompare(user.address, address) && (

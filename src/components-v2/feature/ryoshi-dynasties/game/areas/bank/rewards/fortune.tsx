@@ -134,7 +134,10 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
         await tx.wait();
       }
       toast.success('Withdraw success!')
-    } finally {
+    } catch (e) {
+      console.log(e);
+    }
+    finally {
       setExecutingClaim(false);
     }
   }
