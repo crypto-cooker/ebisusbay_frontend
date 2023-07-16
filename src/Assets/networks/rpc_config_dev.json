@@ -1391,9 +1391,9 @@
       "listable": true,
       "metadata": {
         "description": "CROugars is a limited collection of 2,222 cougar NFTs with concrete utility. Deployed on the Cronos Chain.",
-        "avatar": "/img/collections/crougars/avatar.webp",
-        "card": "/img/collections/crougars/card.webp",
-        "banner": "/img/collections/crougars/banner.webp",
+        "avatar": "/img/collections/crougars/avatar2.webp",
+        "card": "/img/collections/crougars/card2.webp",
+        "banner": "/img/collections/crougars/banner2.webp",
         "website": "https://crougarkingdom.com/",
         "twitter": "https://twitter.com/CROugarKingdom",
         "discord": "https://discord.gg/G8Puur6Qea",
@@ -22330,9 +22330,9 @@
       "complete": true,
       "images": {
         "drop": "/img/drops/crougars/drop.gif",
-        "banner": "/img/collections/crougars/banner.webp",
-        "avatar": "/img/collections/crougars/avatar.webp",
-        "preview": "/img/collections/crougars/card.webp"
+        "banner": "/img/collections/crougars/banner2.webp",
+        "avatar": "/img/collections/crougars/avatar2.webp",
+        "preview": "/img/collections/crougars/card2.webp"
       },
       "verification": {
         "verified": true,
