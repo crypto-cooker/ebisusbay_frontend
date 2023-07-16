@@ -146,7 +146,7 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
     //   }
     // });
     // // console.log('===nftImage', nftImage);
-    let nftImage = nftImages.find((nftImage) => nftImage.id === tokenId);
+    let nftImage = nftImages.find((nftImage) => nftImage.id.toString() === tokenId.toString());
     if(!nftImage) return ('');
     return nftImage.image;
   }
