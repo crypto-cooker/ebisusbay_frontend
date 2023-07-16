@@ -21957,7 +21957,7 @@
       "multiToken": false,
       "address": "0x1c4924f36Fe60374DB6ac206894D82F03d522933",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The main purpose of this collection is to act as a Give an enemy to the Time Troops, these creatures out power a troop 10:1",
         "avatar": "/img/collections/time-creatures-class-a/avatar.webp",
@@ -21980,7 +21980,7 @@
       "multiToken": false,
       "address": "0x15Af2503a934D211A1936684fEd986E7E3f417db",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The main purpose of this collection is to act as a Give an enemy\uD83D\uDC40 to the Time Troops, these creatures out power a troop 10:1",
         "avatar": "/img/collections/time-creatures-class-b/avatar.webp",
