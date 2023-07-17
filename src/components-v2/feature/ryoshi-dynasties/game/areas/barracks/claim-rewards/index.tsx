@@ -1,4 +1,4 @@
-import {Box, Center, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Spacer, Text, Wrap, WrapItem} from "@chakra-ui/react"
+import {Box, Center, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Spacer, Text, Wrap, WrapItem, Heading} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
@@ -26,6 +26,8 @@ import {nftCardUrl} from "@src/helpers/image";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
 import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
+import {useColorModeValue} from "@chakra-ui/color-mode";
+import {darkTheme, lightTheme} from "@src/Theme/theme";
 const config = appConfig();
 
 import axios from "axios";
@@ -53,8 +55,7 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const [isExecutingClaim, setIsExecutingClaim] = useState(false);
   const [isLoading, getSigner] = useCreateSigner();
   const [nftImages, setNftImages] = useState<any[]>([]);
-  // const query = FullCollectionsQuery.createApiQuery({address: "0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5", token: ids});
-    // const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
+  const [isHovered, setIsHovered] = useState(false);
   const fetcher = async () => {
     // let signatureInStorage = getAuthSignerInStorage()?.signature;
     //
@@ -132,20 +133,6 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
     }
   }
   const GetTokenImage = (tokenId: number) => {
-    //itterate through nftImages and find the one with the matching tokenId
-    // console.log('===nftImages', nftImages);
-    // console.log('===tokenId', tokenId);
-
-    // //itterate through nftImages and find the one with the matching tokenId
-    // nftImages.map((nft: NftImage) => {
-    //   // console.log('===nft', nft);
-
-    //   if(Number(nft.id) === tokenId) {
-    //     console.log('===nftImage.image', nft);
-    //     return nft.image;
-    //   }
-    // });
-    // // console.log('===nftImage', nftImage);
     let nftImage = nftImages.find((nftImage) => nftImage.id.toString() === tokenId.toString());
     if(!nftImage) return ('');
     return nftImage.image;
@@ -202,31 +189,73 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
             {!!battleRewards.tokenIds[index] ? (
               <Box position='relative'>
                 <Box
-                  bg='#376dcf'
-                  p={2}
-                  rounded='xl'
-                //   border={pendingNfts[index].isAlreadyStaked ? 'none' : '2px dashed #ffa71c'}
+                  className="card eb-nft__card h-100 shadow"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  _hover={{
+                    borderColor:useColorModeValue('#595d69', '#ddd'),
+                  }}
                 >
                   <Box
-                    width={120}
-                    height={175}
-                      // onClick={(e) => {
-                      // e.preventDefault();
-                      // href=new URL(appUrl(`/collection/0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5/`+battleRewards.tokenIds[index]));
-                      // }}
-                  >
-                      <Text fontSize='10'>{GetTokenName(battleRewards.tokenIds[index])} x{battleRewards.quantity[index]}</Text>
-                        <Image
-                          src={GetTokenImage(battleRewards.tokenIds[index])}
-                        />
-                  </Box>
+          _groupHover={{
+            background:useColorModeValue('#FFFFFF', '#404040'),
+            transition:'0.3s ease'
+          }}
+          borderRadius={'15px'}
+          transition="0.3s ease"
+          height="100%"
+        >
+          <Flex direction="column" height="100%">
+            <div className="card-img-container">
+              <Box
+                _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
+                transition="0.3s ease"
+                transform="scale(1.0)"
+                width={180}
+                height={225}
+              >
+                  <Image
+                    src = {GetTokenImage(battleRewards.tokenIds[index])}
+                    // image={nftCardUrl(listing.nftAddress, listing.nft.image)}
+                    // className={`card-img-top ${imgClass}`}
+                    // title={listing.nft.name}
+                    // url={`/collection/${listing.nftAddress}/${listing.nftId}`}
+                    // width={440}
+                    // height={440}
+                    // video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
+                    // thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.translate(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url).thumbnail() : undefined}
+                    // usePlaceholder={true}
+                  />
+              </Box>
+            </div>
+
+            {/* {listing.nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>} */}
+
+            <Spacer />
+            <Box
+              borderBottomRadius={15}
+              _groupHover={{background: useColorModeValue(lightTheme.textColor4, darkTheme.textColor4), color:lightTheme.textColor1}}
+              px={4}
+              py={1}
+            >
+              <div className="d-flex justify-content-between">
+                <Box
+                  // _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
+                  // visibility="hidden"
+                  justifyContent='space-between'
+                >
+                  <Heading  as="h6" size="sm" className="card-title mt-auto mb-1">{GetTokenName(battleRewards.tokenIds[index])}</Heading>
+                  <Heading  as="h6" size="sm" className="card-title mt-auto mb-1">x{battleRewards.quantity[index]}</Heading>
+                </Box>
+                
+              </div>
+            </Box>
+          </Flex>
+        </Box>
                   <Flex fontSize='xs' justify='space-between' mt={4}>
                     <Flex marginLeft='auto'>
-                      {/* <Icon as={FontAwesomeIcon} icon={faAward} /> */}
                       <Text as='b'></Text>
-                      {/* <Box as='span'>{pendingNfts[index].rank ?? ''}</Box> */}
                     </Flex>
-                    {/* <Box as='span' fontWeight='bold'>+ {collections.find(c => caseInsensitiveCompare(c.address, pendingNfts[index].nftAddress))?.multipliers[0].value}</Box> */}
                   </Flex>
                 </Box>
 
@@ -236,15 +265,6 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
                   right={0}
                   pe='3px'
                 >
-                  {/* <IconButton
-                    icon={<CloseIcon boxSize={2} />}
-                    aria-label='Remove'
-                    bg='gray.800'
-                    _hover={{ bg: 'gray.600' }}
-                    size='xs'
-                    rounded='full'
-                    // onClick={() => onRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)}
-                  /> */}
                 </Box>
               </Box>
             ) : (
