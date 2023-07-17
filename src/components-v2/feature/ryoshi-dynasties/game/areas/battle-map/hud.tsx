@@ -123,7 +123,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
 
   useEffect(() => {
       getSeasonEndTime();
-  }, []); 
+  }, [rdGameContext?.game?.endAt]); 
 
   useEffect(() => {
     if(!rdContext) return;
@@ -154,6 +154,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
       setAccordionIndex(-1);
     }
 }, [isNotMobile]); 
+
   return (
     <Box position='absolute' top={0} left={0}  w='100%' pointerEvents='none' >
       <Flex direction='row' justify='space-between' >
