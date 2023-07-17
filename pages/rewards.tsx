@@ -21,7 +21,7 @@ const Rewards = () => {
 
   const {data, error, status,} = useQuery(
     ['RewardsCollections'],
-    () => ApiService.withoutKey().getRewardedEntities(36),
+    () => ApiService.withoutKey().getRewardedEntities(41),
     {
       staleTime: 30,
       cacheTime: 35,
