@@ -102,11 +102,14 @@ const FeaturedDrops = () => {
           d.published &&
           d.start &&
           d.start > Date.now() &&
-          d.start - Date.now() < timeToShowInHours &&
           !!d.images.preview &&
           !topLevelKeys.includes(d.slug)
       )
       .sort((a, b) => (a.start > b.start ? 1 : -1));
+
+    const imminentUpcomingDrops = upcomingDrops.filter((d) => d.start - Date.now() < timeToShowInHours);
+    const distantUpcomingDrops = upcomingDrops.filter((d) => d.start - Date.now() >= timeToShowInHours);
+
     let liveDrops = drops
       .filter(
         (d) =>
@@ -139,7 +142,13 @@ const FeaturedDrops = () => {
     const liveFreshDrops = liveDrops.filter((d) => Date.now() - d.start <= maxFreshnessInHours);
     const liveStaleDrops = liveDrops.filter((d) => Date.now() - d.start > maxFreshnessInHours);
 
-    setFeaturedDrops([...upcomingDrops,  ...liveFreshDrops, ...topLevelDrops, ...liveStaleDrops]);
+    setFeaturedDrops([
+      ...imminentUpcomingDrops,
+      ...liveFreshDrops,
+      ...topLevelDrops,
+      ...distantUpcomingDrops,
+      ...liveStaleDrops
+    ]);
   }, []);
 
 
