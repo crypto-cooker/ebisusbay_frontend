@@ -16,7 +16,6 @@ import {Offer} from "@src/core/models/offer";
 import {WalletsQueryParams} from "./mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
 import Graph from "@src/core/services/api-service/graph";
-import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
 import {caseInsensitiveCompare} from "@src/utils";
 
 export class ApiService implements Api {
@@ -96,33 +95,42 @@ export class ApiService implements Api {
     //   return result;
     // }, [] as Array<{ address: string; points: number; type: string }>);
 
-    const collectionAddresses = pointsByAddress
+    const unqiueCollectionAddresses = new Set(pointsByAddress
       .filter(entry => entry.type === 'COLLECTION')
-      .map(entry => entry.address);
-    const collections = await this.mapi.getCollections({address: collectionAddresses, pageSize: 200});
+      .map(entry => entry.address));
+    const collections = await this.mapi.getCollections({address: Array.from(unqiueCollectionAddresses), pageSize: 200});
     const mappedCollections = collections.data.map((collection: any) => {
       return {
         name: collection.name,
         address: collection.address,
         avatar: collection.metadata.avatar,
         type: 'COLLECTION',
-        points: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, collection.address))?.points ?? 0
+        points: pointsByAddress
+          .filter(entry => caseInsensitiveCompare(entry.address, collection.address))
+          .reduce((prev, next) => {
+            return prev + next.points;
+          }, 0)
       }
     });
 
-    const walletAddresses = pointsByAddress
+    const uniqueWalletAddresses = new Set(pointsByAddress
       .filter(entry => entry.type === 'WALLET')
-      .map(entry => {
-        return {
-          name: entry.address,
-          address: entry.address,
-          avatar: null,
-          type: 'WALLET',
-          points: entry.points
-        }
-      });
+      .map(entry => entry.address));
+    const walletRecords = Array.from(uniqueWalletAddresses).map(address => {
+      return {
+        name: address,
+        address: address,
+        avatar: null,
+        type: 'WALLET',
+        points: pointsByAddress
+          .filter(entry => caseInsensitiveCompare(entry.address, address))
+          .reduce((prev, next) => {
+            return prev + next.points;
+          }, 0)
+      }
+    });
 
-    return mappedCollections.concat(walletAddresses).sort((a, b) => b.points - a.points);
+    return mappedCollections.concat(walletRecords).sort((a, b) => b.points - a.points);
   }
 }
 
