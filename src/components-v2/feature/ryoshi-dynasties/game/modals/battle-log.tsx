@@ -82,7 +82,7 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   const [_, getSigner] = useCreateSigner();
   const [pageToLoad, setPageToLoad] = useState(1);
   const [battleLog, setBattleLog] = useState<any[]>([]);
-  const [sortOrder, setSortOrder] = useState("DESC" as "ASC" | "DESC");
+  const [sortOrder, setSortOrder] = useState("desc" as "asc" | "desc");
   const [moreToLoad, setMoreToLoad] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -110,9 +110,9 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
           signatureInStorage,
           rdGameContext?.game.id, 
           5, 
-          pageToLoad
+          pageToLoad,
+          sortOrder
           );
-        console.log(data.length);
         if(data.length < 5) setMoreToLoad(false);
         //add the data to the battleLog array
         setBattleLog([...battleLog, ...data]);
@@ -126,7 +126,14 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
 
   const LoadAdditionalBattleLog = () => {
     setIsLoading(true);
+    setMoreToLoad(true);
     setPageToLoad(pageToLoad+1);
+  }
+
+  const ReloadBattleLog = () => {
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+    setPageToLoad(1);
+    setBattleLog([]);
   }
 
   const ParseTimestamp = (timestamp: number) => {
@@ -147,10 +154,12 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
     GetBattleLog();
   }, [rdGameContext, user.address])
 
-  // useEffect(() => {
-  //   if(!battleLog) return;
-  //   console.log(battleLog);
-  // }, [battleLog])
+  useEffect(() => {
+    if(!battleLog) return;
+    if(battleLog.length != 0) return;
+
+    GetBattleLog();
+  }, [battleLog])
 
   return (
     <Drawer
@@ -166,8 +175,8 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
       <DrawerBody>
       <Box position='absolute'>
 
-      <Button w={100} marginTop={-24} marginLeft={150} onClick={() => setSortOrder(sortOrder === "ASC" ? "DESC" : "ASC")} >
-          <Text fontSize={12}> {sortOrder === "ASC" ? "Most Recent" : "Oldest"} </Text>
+      <Button w={100} marginTop={-24} marginLeft={150} onClick={() => ReloadBattleLog()} >
+          <Text fontSize={12}> {sortOrder === "asc" ? "Oldest" : "Most Recent"} </Text>
       </Button>
       
       </Box>

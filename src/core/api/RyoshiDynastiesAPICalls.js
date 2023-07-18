@@ -462,11 +462,11 @@ export const getRegistrationCost = async (address, signature, blockId, gameId, f
     throw error;
   }
 }
-export const getBattleLog = async (address, signature, gameId, pageSize, page) => {
+export const getBattleLog = async (address, signature, gameId, pageSize, page, orderBy) => {
   try{
     // console.log(address, signature, blockId, gameId, factionId);
     let data = await api.get("ryoshi-dynasties/game-log?", 
-      {params: {address, signature, gameId, pageSize, page}});
+      {params: {address, signature, gameId, pageSize, page, orderBy}});
     return data.data.data.logs;
   }
   catch(error){
