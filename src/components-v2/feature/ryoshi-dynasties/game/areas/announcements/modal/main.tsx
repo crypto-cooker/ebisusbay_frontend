@@ -107,20 +107,20 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
         <Box
           cursor='pointer'
           onClick={() => {
-            router.push('/drops/izanamis-cradle-land-deeds');
+            router.push('/drops/ballies-cheerleaders');
           }}
         >
           {isMobile ? (
             <NextImage
               alt="Izanami's Cradle: Land Deeds"
-              src={ImageService.translate('/img/ryoshi-dynasties/announcements/deeds-sm.webp').convert()}
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/ballies-sm.webp').convert()}
               width={408}
               height={334}
             />
           ) : (
             <NextImage
-              alt="Izanami's Cradle: Land Deeds"
-              src={ImageService.translate('/img/ryoshi-dynasties/announcements/deeds2.webp').convert()}
+              alt="Ballies Cheerleaders"
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/ballies2.webp').convert()}
               width={590}
               height={150}
             />

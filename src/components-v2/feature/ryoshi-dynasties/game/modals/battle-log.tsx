@@ -118,6 +118,8 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   }
 
   useEffect(() => {
+    if (!isOpen) return;
+
     async function getSig() {
       let signatureInStorage = getAuthSignerInStorage()?.signature;
       if (!signatureInStorage) {
@@ -131,7 +133,7 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
     } else {
       setSignature(null);
     }
-  }, [user.address]);
+  }, [user.address, isOpen]);
 
   return (
     <Drawer
