@@ -1,6 +1,7 @@
 import {humanize, mapAttributeString, millisecondTimestamp, relativePrecision} from "@src/utils";
 import Link from "next/link";
 import React from "react";
+import {Box, Heading} from "@chakra-ui/react";
 
 interface TraitProps {
   title: string;
@@ -27,7 +28,7 @@ const Trait = ({
 }: TraitProps) => {
   const Value = () => {
     return (
-      <h4>
+      <Heading as='h4'>
         {value !== undefined ? (
           <>
             {type === 'date' ? (
@@ -39,14 +40,14 @@ const Trait = ({
         ) : (
           <>N/A</>
         )}
-      </h4>
+      </Heading>
     );
   };
 
   return (
-    <div className="col-lg-4 col-md-6 col-sm-6">
-      <div className="nft_attr">
-        <h5>{humanize(title)}</h5>
+    <Box h='full'>
+      <Box className="nft_attr">
+        <Heading as='h5'>{humanize(title)}</Heading>
         {collectionSlug && queryKey && value ? (
           <Link
             href={{
@@ -60,12 +61,12 @@ const Trait = ({
           <Value />
         )}
         {occurrence ? (
-          <span>{relativePrecision(occurrence)}% have this trait</span>
+          <Box as='span'>{relativePrecision(occurrence)}% have this trait</Box>
         ) : (
-          percent && <span>{percent}% have this trait</span>
+          percent && <Box as='span'>{percent}% have this trait</Box>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

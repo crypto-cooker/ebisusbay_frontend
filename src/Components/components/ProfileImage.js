@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 import LayeredIcon from './LayeredIcon';
-import { shortAddress } from '@src/utils';
+import {isAddress, shortAddress} from '@src/utils';
 import { getProfile } from "@src/core/cms/endpoints/profile";
 import ImageService from "@src/core/services/image";
 
@@ -48,7 +48,7 @@ const ProfileImage = ({ title, displayName, address = '' }) => {
             )}
           </div>
           {displayName && <div className="author_list_info">
-            <span>{data?.data?.username ? data?.data?.username : shortAddress(address)}</span>
+            <span>{data?.data?.username && !isAddress(data.data.username) ? data?.data?.username : shortAddress(address)}</span>
           </div>}
         </Link>
       </div>

@@ -18,16 +18,11 @@ import ProfilePreview from '@src/Components/components/ProfilePreview';
 import {
   appUrl,
   caseInsensitiveCompare,
-  humanize,
-  isCrosmocraftsPartsDrop,
   isEbVipCollection,
   isEmptyObj,
-  mapAttributeString,
-  millisecondTimestamp,
   rankingsLinkForCollection,
   rankingsLogoForCollection,
   rankingsTitleForCollection,
-  relativePrecision,
   shortAddress,
   timeSince,
 } from '@src/utils';
@@ -43,7 +38,6 @@ import NFTTabListings from '@src/components-v2/feature/nft/tabs/listings';
 import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
 import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {hostedImage} from '@src/helpers/image';
 import {appConfig} from "@src/Config";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
@@ -61,6 +55,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferType} from "@src/core/services/api-service/types";
 import ImageService from "@src/core/services/image";
+import Properties from "@src/components-v2/feature/nft/tabs/properties";
 
 const config = appConfig();
 const tabs = {
@@ -455,85 +450,33 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
 
                     <div className="de_tab_content">
                       {currentTab === tabs.properties && (
-                        <div className="tab-1 onStep fadeIn">
+                        <>
                           {(nft.attributes && Array.isArray(nft.attributes) && nft.attributes.length > 0) ||
-                            (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
-                            <div className="d-block mb-3">
-                              <div className="row gx-3 gy-2">
-                                {nft.attributes &&
-                                  Array.isArray(nft.attributes) &&
-                                  nft.attributes
-                                    .filter((a: any) => a.value !== 'None')
-                                    .map((data: any, i: number) => {
-                                      return (
-                                        <div key={i} className="col-lg-4 col-md-6 col-sm-6">
-                                          <div className="nft_attr">
-                                            <h5>{humanize(data.trait_type)}</h5>
-                                            <h4>
-                                              {data.value !== undefined ? (
-                                                <>
-                                                  {data?.display_type === 'date' ? (
-                                                    <>{new Date(millisecondTimestamp(data.value)).toDateString()}</>
-                                                  ) : (
-                                                    <>{mapAttributeString(data.value, address, data.trait_type, true)}</>
-                                                  )}
-                                                </>
-                                              ) : (
-                                                <>N/A</>
-                                              )}
-                                            </h4>
-                                            {data.occurrence ? (
-                                              <span>{relativePrecision(data.occurrence)}% have this trait</span>
-                                            ) : (
-                                              data.percent && <span>{data.percent}% have this trait</span>
-                                            )}
-                                          </div>
-                                        </div>
-                                      );
-                                    })}
-                                {nft.properties &&
-                                  Array.isArray(nft.properties) &&
-                                  nft.properties.map((data: any, i: number) => {
-                                    return (
-                                      <div key={i} className="col-lg-4 col-md-6 col-sm-6">
-                                        <div className="nft_attr">
-                                          <h5>{humanize(data.trait_type)}</h5>
-                                          <h4>
-                                            {data.value !== undefined ? (
-                                              <>
-                                                {data?.display_type === 'date' ? (
-                                                  <>{new Date(millisecondTimestamp(data.value)).toDateString()}</>
-                                                ) : (
-                                                  <>
-                                                    {mapAttributeString(
-                                                      isCrosmocraftsPartsDrop(address) ? data.Value : data.value,
-                                                      address,
-                                                      true
-                                                    )}
-                                                  </>
-                                                )}
-                                              </>
-                                            ) : (
-                                              <>N/A</>
-                                            )}
-                                          </h4>
-                                          {data.occurrence ? (
-                                            <span>{Math.round(data.occurrence * 100)}% have this trait</span>
-                                          ) : (
-                                            data.percent && <span>{data.percent}% have this trait</span>
-                                          )}
-                                        </div>
-                                      </div>
-                                    );
-                                  })}
-                              </div>
-                            </div>
+                          (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
+                            <>
+                              {nft.attributes && Array.isArray(nft.attributes) && (
+                                <Properties
+                                  address={address}
+                                  slug={nft.collectionSlug}
+                                  attributes={nft.attributes}
+                                  queryKey='traits'
+                                />
+                              )}
+                              {nft.attributes && Array.isArray(nft.properties) && (
+                                <Properties
+                                  address={address}
+                                  slug={nft.collectionSlug}
+                                  attributes={nft.properties}
+                                  queryKey='traits'
+                                />
+                              )}
+                            </>
                           ) : (
                             <>
                               <span>No traits found for this item</span>
                             </>
                           )}
-                        </div>
+                        </>
                       )}
                       {currentTab === tabs.powertraits && (
                         <div className="tab-2 onStep fadeIn">

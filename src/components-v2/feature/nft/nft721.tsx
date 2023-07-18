@@ -6,7 +6,8 @@ import {
   faCopy,
   faCrow,
   faExternalLinkAlt,
-  faHeart as faHeartSolid, faHeartBroken,
+  faHeart as faHeartSolid,
+  faHeartBroken,
   faShareAlt,
   faSync
 } from '@fortawesome/free-solid-svg-icons';
@@ -54,7 +55,6 @@ import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import {offerState} from '@src/core/api/enums';
 import {commify} from 'ethers/lib/utils';
 import {appConfig} from '@src/Config';
-import {hostedImage} from '@src/helpers/image';
 import Link from 'next/link';
 import axios from "axios";
 import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
@@ -81,10 +81,10 @@ import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFav
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {useAppSelector} from "@src/Store/hooks";
 import {ContractInterface} from "@ethersproject/contracts";
-import Trait from "@src/components-v2/feature/nft/trait";
 import ImageService from "@src/core/services/image";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferType} from "@src/core/services/api-service/types";
+import Properties from "@src/components-v2/feature/nft/tabs/properties";
 
 const config = appConfig();
 const tabs = {
@@ -795,113 +795,71 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
 
                     <div className="de_tab_content">
                       {currentTab === tabs.properties && (
-                        <div className="tab-1 onStep fadeIn">
+                        <>
                           {(nft.attributes && Array.isArray(nft.attributes) && nft.attributes.length > 0) ||
-                            (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
-                            <div className="d-block mb-3">
-                              <div className="row gx-3 gy-2">
-                                {nft.attributes &&
-                                  Array.isArray(nft.attributes) &&
-                                  nft.attributes
-                                    .filter((a: any) => a.value !== 'None')
-                                    .map((data: any, i: number) => {
-                                      return (
-                                        <Trait
-                                          key={i}
-                                          title={data.trait_type}
-                                          value={data.value}
-                                          percent={data.percent}
-                                          occurrence={data.occurrence}
-                                          type={data.display_type}
-                                          collectionAddress={address}
-                                          collectionSlug={collection.slug}
-                                          queryKey="traits"
-                                        />
-                                      );
-                                    })}
-                                {nft.properties &&
-                                  Array.isArray(nft.properties) &&
-                                  nft.properties.map((data: any, i: number) => {
-                                    return (
-                                      <Trait
-                                        key={i}
-                                        title={data.trait_type}
-                                        value={data.value}
-                                        percent={data.percent}
-                                        occurrence={data.occurrence}
-                                        type={data.display_type}
-                                        collectionAddress={address}
-                                        collectionSlug={collection.slug}
-                                        queryKey="traits"
-                                      />
-                                    );
-                                  })}
-                              </div>
-                            </div>
+                          (nft.properties && Array.isArray(nft.properties) && nft.properties.length > 0) ? (
+                            <>
+                              {nft.attributes && Array.isArray(nft.attributes) && (
+                                <Properties
+                                  address={address}
+                                  slug={nft.collectionSlug}
+                                  attributes={nft.attributes}
+                                  queryKey='traits'
+                                />
+                              )}
+                              {nft.attributes && Array.isArray(nft.properties) && (
+                                <Properties
+                                  address={address}
+                                  slug={nft.collectionSlug}
+                                  attributes={nft.properties}
+                                  queryKey='traits'
+                                />
+                              )}
+                            </>
                           ) : (
                             <>
                               <span>No traits found for this item</span>
                             </>
                           )}
-                        </div>
+                        </>
                       )}
                       {currentTab === tabs.powertraits && (
-                        <div className="tab-2 onStep fadeIn">
+                        <>
                           {(powertraits && powertraits.length > 0) || (onChainPowertraits && onChainPowertraits.length > 0) || (lazyHorseTraits && lazyHorseTraits.length > 0) ? (
                             <>
-                              <div className="d-block mb-3">
-                                <div className="row gx-3 gy-2">
-                                  {powertraits &&
-                                    powertraits.length > 0 &&
-                                    powertraits.map((data: any, i: number) => {
-                                      return (
-                                        <Trait
-                                          key={i}
-                                          title={data.trait_type}
-                                          value={data.value}
-                                          valueDisplay={data.value > 0 ? `+ ${data.value}` : data.value}
-                                          percent={data.percent}
-                                          occurrence={data.occurrence}
-                                          type={data.display_type}
-                                          collectionAddress={address}
-                                          collectionSlug={collection.slug}
-                                          queryKey="powertraits"
-                                        />
-                                      );
-                                    })}
-                                  {onChainPowertraits &&
-                                    Array.isArray(onChainPowertraits) &&
-                                    onChainPowertraits.map((data: any, i) => {
-                                      return (
-                                        <Trait
-                                          key={i}
-                                          title={data.key}
-                                          value={data.value}
-                                          type={data.type}
-                                          collectionAddress={address}
-                                        />
-                                      );
-                                    })}
-                                  {lazyHorseTraits &&
-                                    Array.isArray(lazyHorseTraits) &&
-                                    lazyHorseTraits.map((data: any, i) => {
-                                      return (
-                                        <Trait
-                                          key={i}
-                                          title={data.trait_type}
-                                          value={data.value}
-                                        />
-                                      );
-                                    })}
-                                </div>
-                              </div>
+                              {powertraits && powertraits.length > 0 && (
+                                <Properties
+                                  address={address}
+                                  slug={nft.collectionSlug}
+                                  attributes={powertraits}
+                                  queryKey='powertraits'
+                                />
+                              )}
+                              {onChainPowertraits && Array.isArray(onChainPowertraits) && (
+                                <Properties
+                                  address={address}
+                                  slug={nft.collectionSlug}
+                                  attributes={onChainPowertraits}
+                                  queryKey='powertraits'
+                                />
+                              )}
+                              {lazyHorseTraits && Array.isArray(lazyHorseTraits) && (
+                                <Box mt={3}>
+                                  <Properties
+                                    address={address}
+                                    slug={nft.collectionSlug}
+                                    attributes={lazyHorseTraits}
+                                    queryKey='powertraits'
+                                  />
+                                </Box>
+                              )}
                             </>
                           ) : (
                             <>
                               <span>No in-game attributes found for this item</span>
                             </>
                           )}
-                        </div>
+                        </>
                       )}
                       {currentTab === tabs.history && (
                         <div className="listing-tab tab-3 onStep fadeIn">

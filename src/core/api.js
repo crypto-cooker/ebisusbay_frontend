@@ -225,9 +225,9 @@ export async function getCollectionTraits(contractAddress) {
     }
 
     // Below is deprecated, consider removing entirely
-    const internalUri = new URL(`/files/${contractAddress.toLowerCase()}/rarity.json`, `${config.urls.cdn.files}`);
+    const fallback = new URL(`/files/${contractAddress.toLowerCase()}/rarity.json`, `${config.urls.cdn.files}`);
 
-    return await (await fetch(internalUri)).json();
+    return await (await fetch(fallback)).json();
   } catch (error) {
     console.log(error);
   }
