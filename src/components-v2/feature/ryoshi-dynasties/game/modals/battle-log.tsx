@@ -19,7 +19,13 @@ import {
   AccordionPanel,
   AccordionIcon,
   Divider,
-  Button
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
 } from "@chakra-ui/react";
 
 import {useContext, useEffect, useState} from "react";
@@ -129,15 +135,18 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
     return dateObject.toLocaleString()
   }
 
-  // useEffect(() => {
-  //   if(pageToLoad==1) return;
-  //   GetBattleLog();
-  // }, [pageToLoad])
+  useEffect(() => {
+    if(pageToLoad==1) return;
+    GetBattleLog();
+  }, [pageToLoad])
   
-  // useEffect(() => {
-  //   if(!rdGameContext) return;
-  //   GetBattleLog();
-  // }, [rdGameContext])
+  useEffect(() => {
+    if(!rdGameContext) return;
+    console.log(rdGameContext?.game.id);
+    console.log(user.address);
+
+    GetBattleLog();
+  }, [rdGameContext])
 
   // useEffect(() => {
   //   if(!battleLog) return;
@@ -145,15 +154,23 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   // }, [battleLog])
 
   return (
-    <RdInlineModal
-      isOpen={isOpen}
-      onClose={onClose}
-      title='Game Log'
-    >
+    <Drawer
+        isOpen={isOpen}
+        onClose={onClose}
+        size="sm"
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>GameLog</DrawerHeader>
+
+      <DrawerBody>
       <Box position='absolute'>
-      <Button w={100} marginTop={-24} marginLeft={5} onClick={() => setSortOrder(sortOrder === "ASC" ? "DESC" : "ASC")} >
+
+      <Button w={100} marginTop={-24} marginLeft={150} onClick={() => setSortOrder(sortOrder === "ASC" ? "DESC" : "ASC")} >
           <Text fontSize={12}> {sortOrder === "ASC" ? "Most Recent" : "Oldest"} </Text>
       </Button>
+      
       </Box>
 
       <Box mx={1} pb={4} mt={25} maxW="500px">
@@ -162,7 +179,7 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
 
         {!!user.address ? (
           <>
-          <SimpleGrid columns={1} gap={35} padding={2} my={4} paddingLeft='10'>
+          <SimpleGrid columns={1} gap={55} padding={2} my={4} paddingLeft='10'>
               {battleLog.map((logEntry, index) => (
                 <Box bg='#272523' borderRadius='md' p={2}
                   box-shadow= "5px 10px 18px red"
@@ -189,26 +206,8 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
 
                 </Box>
               ))}
-            </SimpleGrid>
+          </SimpleGrid>
 
-            {/* <SimpleGrid columns={1} gap={35} padding={2} my={4} paddingLeft='10'>
-              {spoofedTroops.map((log, index) => (
-                <Box bg='gray.700' borderRadius='md' p={2}>
-                  <Text fontSize={14} marginTop={-7} marginBottom={2}>{ParseTimestamp(log.eventTimestamp)}</Text>
-
-                  {log.actionType === "attack" ? (
-                    <AttackLog spoofTroopLog={log} key={index}/>
-                  ) : 
-                  log.actionType === "add" ? (
-                    <AddLog spoofTroopLog={log} key={index}/>
-                  ) :
-                  log.actionType === "send" ? (
-                    <SendLog spoofTroopLog={log} locationName={GetControlPointName(log.locationId)} key={index}/>
-                  ) : (<></> )}
-
-                </Box>
-              ))}
-            </SimpleGrid> */}
             {moreToLoad ? (
             <Box textAlign='center' mt={4}>
               <RdButton 
@@ -228,8 +227,12 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
             <RdButton onClick={connectWalletPressed}>Connect Wallet</RdButton>
           </Box>
         )}
+
+
       </Box>
-    </RdInlineModal>
+    </DrawerBody>
+        </DrawerContent>
+      </Drawer>
   )
 }
 
@@ -244,9 +247,9 @@ const AttackLog = ({battleLog}: LogProps) => {
   return (
     <>
       <Box
-        position='absolute'
+        // position='absolute'
         boxSize='20px'
-        marginTop={-10}
+        marginTop={-6}
         marginLeft={-12}
         rounded='full'
         zIndex={1}
@@ -272,9 +275,9 @@ const AttackLog = ({battleLog}: LogProps) => {
 
 
       <HStack justifyContent={"space-between"}>
-        <Text as='b' fontSize={26} className={gothamBook.className}>Lost {battleLog.pastTroops-battleLog.currentTroops} {pluralize(battleLog.pastTroops-battleLog.currentTroops, 'troop')}</Text>
+        <Text as='b' fontSize={16} className={gothamBook.className}>Lost {battleLog.pastTroops-battleLog.currentTroops} {pluralize(battleLog.pastTroops-battleLog.currentTroops, 'troop')}</Text>
          <VStack justifyContent="center" spacing='0'>
-          <Text fontSize={14}>({battleLog.controlPoint})</Text>
+          <Text fontSize={10}>({battleLog.controlPoint})</Text>
            <HStack justifyContent={"space-between"}>
              <Text>{battleLog.pastTroops}</Text>
              <ArrowForwardIcon/>
@@ -313,9 +316,9 @@ const DefendLog = ({battleLog}: LogProps) => {
   return (
     <>
       <Box
-        position='absolute'
+        // position='absolute'
         boxSize='20px'
-        marginTop={-10}
+        marginTop={-6}
         marginLeft={-12}
         rounded='full'
         zIndex={1}
@@ -341,9 +344,9 @@ const DefendLog = ({battleLog}: LogProps) => {
 
 
       <HStack justifyContent={"space-between"}>
-        <Text as='b' fontSize={26}>Lost {battleLog.pastTroops-battleLog.currentTroops} {pluralize(battleLog.pastTroops-battleLog.currentTroops, 'troop')}</Text>
+        <Text as='b' fontSize={16}>Lost {battleLog.pastTroops-battleLog.currentTroops} {pluralize(battleLog.pastTroops-battleLog.currentTroops, 'troop')}</Text>
          <VStack justifyContent="center" spacing='0'>
-          <Text fontSize={14}>({battleLog.controlPoint})</Text>
+          <Text fontSize={10}>({battleLog.controlPoint})</Text>
            <HStack justifyContent={"space-between"}>
              <Text>{battleLog.pastTroops}</Text>
              <ArrowForwardIcon/>
@@ -382,9 +385,9 @@ const DeployLog = ({battleLog}: LogProps) => {
   return (
     <>
       <Box
-        position='absolute'
+        // position='absolute'
         boxSize='20px'
-        marginTop={-10}
+        marginTop={-6}
         marginLeft={-12}
         rounded='full'
         zIndex={1}
@@ -410,9 +413,9 @@ const DeployLog = ({battleLog}: LogProps) => {
 
 
       <HStack justifyContent={"space-between"}>
-        <Text as='b' fontSize={26}>Deployed {battleLog.currentTroops-battleLog.pastTroops} {pluralize(battleLog.currentTroops -battleLog.pastTroops, 'troop')}</Text>
+        <Text as='b' fontSize={16}>Deployed {battleLog.currentTroops-battleLog.pastTroops} {pluralize(battleLog.currentTroops -battleLog.pastTroops, 'troop')}</Text>
          <VStack justifyContent="center" spacing='0'>
-          <Text fontSize={14}>({battleLog.controlPoint})</Text>
+          <Text fontSize={10}>({battleLog.controlPoint})</Text>
            <HStack justifyContent={"space-between"}>
              <Text>{battleLog.pastTroops}</Text>
              <ArrowForwardIcon/>

@@ -27,6 +27,7 @@ import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/
 import FishMarketModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/fish-market";
 import {VillageHud} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/hud";
 import BattleLog from "@src/components-v2/feature/ryoshi-dynasties/game/modals/battle-log";
+import Buildings from "@src/components-v2/feature/ryoshi-dynasties/game/modals/buildings";
 
 import ImageService from "@src/core/services/image";
 import AllianceCenterInline from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
@@ -51,7 +52,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
   const [isLoading, getSigner] = useCreateSigner();
 
-  const [pins, setPins] = useState<ReactElement[]>([]);
   const transformComponentRef = useRef<any>(null)
   const [elementToZoomTo, setElementToZoomTo] = useState("");
   const [zoomState, setZoomState] = useState({
@@ -219,13 +219,12 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     'fishmarket_label' : {height: 545, width: 793, top: '36.5%', left: '55%'},
     'bank_label' : {height: 456, width: 579, top: '7%', left: '33%'},
   }
-  const buttonsNames = ["bank", "alliancecenter", "moongate", "barracks", "announcement", "boat", "market"];
 
   const OpenAllianceCenter = () => {
     setBarracksOpen(false);
     setPortalOpen(false);
     setMarketOpen(false);
-    setElementToZoomTo('alliancecenter');
+    setElementToZoomTo('Alliance Center');
     setAllianceCenterOpen(true);
   }
   const CloseAllianceCenter = () => {
@@ -236,7 +235,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     setAllianceCenterOpen(false);
     setPortalOpen(false);
     setMarketOpen(false);
-    setElementToZoomTo('barracks');
+    setElementToZoomTo('Barracks');
     setBarracksOpen(true);
   }
   const CloseBarracks = () => {
@@ -247,7 +246,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     setBarracksOpen(false);
     setAllianceCenterOpen(false);
     setMarketOpen(false);
-    setElementToZoomTo('moongate');
+    setElementToZoomTo('Moongate');
     setPortalOpen(true);
   }
   const ClosePortal = () => {
@@ -258,7 +257,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     setBarracksOpen(false);
     setAllianceCenterOpen(false);
     setPortalOpen(false);
-    setElementToZoomTo('market');
+    setElementToZoomTo('Market');
     setMarketOpen(true);
   }
   const CloseMarket = () => {
@@ -518,7 +517,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
   useEffect(() => {
     // resizeMap();
-    SetUpButtons();
     setSizeMultiplier(window.innerWidth / 2880);
   }, [])
 
@@ -539,14 +537,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     if(!transformComponentRef?.current) return;
     setElementToZoomTo('fancyMenu'); 
   }, [transformComponentRef?.current]);
-
-  const SetUpButtons = async () => {
-    setPins(buttonsNames.map((button, i) =>
-      (<Button style={{ marginTop: '4px', marginLeft: '4px' }}
-               onClick={() => setElementToZoomTo(button)} variant='outline'size='sm'>
-          {button}</Button>
-      )))
-  }
 
   const [mapInitialized, setMapInitialized] = useState(false);
   // const mapScale = useBreakpointValue(
@@ -661,7 +651,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                     <map name="image-map">
                     </map>
 
-                    <Box id="alliancecenter" className={styles.enlarge} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}}
+                    <Box id="Alliance Center" className={styles.enlarge} style={{position:"absolute", marginTop: allianceCenterTop, marginLeft: allianceCenterLeft, zIndex:"9"}}
                       // onClick={() => onChange('allianceCenter')}
                          onClick={() => OpenAllianceCenter()}
                     >
@@ -693,7 +683,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       <img src={ImageService.translate('/img/battle-bay/mapImages/tavern_turbine.apng').convert()} />
                     </Box>
 
-                    <Box id="boat" className={styles.enlarge} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
+                    <Box id="Battle Map" className={styles.enlarge} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
                          onClick={() => handleSceneChange('battleMap')}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/boat_day.apng').convert()} />
@@ -704,7 +694,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                     </Box>
 
                     <Box 
-                      id="market"
+                      id="Market"
                       className={styles.enlarge}
                       onClick={() => OpenMarket()}
                       style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
@@ -715,7 +705,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       <img src={ImageService.translate('/img/battle-bay/mapImages/water.png').custom({width: 2880, height: 703})} />
                     </Box>
 
-                    <Box id="bank" className={styles.enlarge} style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}}
+                    <Box id="Bank" className={styles.enlarge} style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}}
                          onClick={() => onChange('bank')}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/bank_day.png').convert()} />
@@ -726,13 +716,13 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       {/* </div> */}
                     </Box>
 
-                    <Box id="announcement" className={styles.enlarge} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}}
+                    <Box id="Announcements" className={styles.enlarge} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}}
                          onClick={onOpenAnnouncementBoard}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/announcement.png').convert()} />
                     </Box>
 
-                    <Box id="barracks" className={styles.enlarge} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
+                    <Box id="Barracks" className={styles.enlarge} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
                          onClick={() => handleSceneChange('barracks')}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/barracks.png').convert()} />
@@ -742,7 +732,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       <img src={ImageService.translate('/img/battle-bay/mapImages/swordsmen.apng').convert()} />
                     </Box>
 
-                    <Box id="moongate" className={styles.enlarge} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}
+                    <Box id="Moongate" className={styles.enlarge} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}
                       onClick={() => OpenPortal()}>
                       <img src={ImageService.translate('/img/battle-bay/mapImages/moongate_day.apng').convert()} onClick={() => OpenPortal()}/>
                       {/* <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
@@ -801,24 +791,25 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         </Box>
 
       </Box>
-      <Drawer
+      {/* <Drawer
         isOpen={isOpenBuildings}
-        placement='bottom'
+        placement='right'
         onClose={onCloseBuildings}
         finalFocusRef={buildingButtonRef}
       >
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Zoom to Building</DrawerHeader>
-          <DrawerBody>
+          <DrawerBody gridColumn={1}>
             {pins}
           </DrawerBody>
         </DrawerContent>
-      </Drawer>
+      </Drawer> */}
 
       <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin}/>
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
       <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
+      <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
       
       <RdModal
         isOpen={isBlockingModalOpen}
