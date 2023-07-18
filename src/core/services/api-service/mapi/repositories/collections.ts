@@ -3,6 +3,7 @@ import {listingState} from "@src/core/api/enums";
 import {limitSizeOptions} from "@src/Components/components/constants/filter-options";
 import MapiRepository from "@src/core/services/api-service/mapi/repositories/index";
 import {CollectionInfoQuery} from "@src/core/services/api-service/mapi/queries/collectioninfo";
+import {getCollectionTraits} from "@src/core/api";
 
 class CollectionsRepository extends MapiRepository {
 
@@ -30,6 +31,12 @@ class CollectionsRepository extends MapiRepository {
   //     params: {...defaultQuery, ...query?.toQuery()}
   //   });
   // }
+
+  async getCollectionTraits(address: string) {
+    return await this.api.get(`collectionrarity`, {
+      params: {address}
+    });
+  }
 }
 
 export default CollectionsRepository;

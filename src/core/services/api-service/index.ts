@@ -16,6 +16,7 @@ import {Offer} from "@src/core/models/offer";
 import {WalletsQueryParams} from "./mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
 import Graph from "@src/core/services/api-service/graph";
+import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
 import {caseInsensitiveCompare} from "@src/utils";
 
 export class ApiService implements Api {
@@ -131,6 +132,10 @@ export class ApiService implements Api {
     });
 
     return mappedCollections.concat(walletRecords).sort((a, b) => b.points - a.points);
+  }
+
+  async getCollectionTraits(address: string) {
+    return await this.mapi.getCollectionTraits(address);
   }
 }
 

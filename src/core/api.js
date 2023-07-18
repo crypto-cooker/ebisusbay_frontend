@@ -30,6 +30,7 @@ import {getQuickWallet} from "./api/endpoints/wallets";
 import Constants from '../constants'
 import useFeatureFlag from '../hooks/useFeatureFlag';
 import { getCollections } from "@src/core/api/next/collectioninfo";
+import {ApiService} from "@src/core/services/api-service";
 
 const config = appConfig();
 let gatewayTools = new IPFSGatewayTools();
@@ -218,6 +219,12 @@ export async function sortAndFetchCollectionDetails(
 
 export async function getCollectionTraits(contractAddress) {
   try {
+    const result = await ApiService.withoutKey().getCollectionTraits(contractAddress);
+    if (Object.keys(result).length > 0) {
+      return result;
+    }
+
+    // Below is deprecated, consider removing entirely
     const internalUri = new URL(`/files/${contractAddress.toLowerCase()}/rarity.json`, `${config.urls.cdn.files}`);
 
     return await (await fetch(internalUri)).json();

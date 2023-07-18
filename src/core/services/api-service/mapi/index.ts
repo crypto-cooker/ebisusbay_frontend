@@ -118,6 +118,16 @@ class Mapi {
       response.data.page < response.data.totalPages
     )
   }
+
+  async getCollectionTraits(address: string) {
+    const response = await this.collections.getCollectionTraits(address);
+
+    if (response.data.collections.length > 0 && response.data.collections[0].rarity) {
+      return response.data.collections[0].rarity;
+    }
+
+    return {}
+  }
 }
 
 export default Mapi;
