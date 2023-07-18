@@ -159,6 +159,7 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   useEffect(() => {
     if(!battleLog) return;
     if(battleLog.length != 0) return;
+    if(!user.address) return;
 
     GetBattleLog();
   }, [battleLog])
