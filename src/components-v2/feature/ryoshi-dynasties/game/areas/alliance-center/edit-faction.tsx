@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react"
 import {Spinner} from 'react-bootstrap';
 import {useFormik} from 'formik';
-import {deleteFaction, editFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {deleteFaction, disbandFaction, editFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {shortAddress} from "@src/utils";
 
 import {getAuthSignerInStorage} from '@src/helpers/storage';
@@ -164,7 +164,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     }
   }
 
-  const DeleteFaction = async() => {
+  const DisbandFaction = async() => {
     let signatureInStorage = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
@@ -172,12 +172,32 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     }
     if (signatureInStorage) {
       try {
-        const data = await deleteFaction(user.address!.toLowerCase(), signatureInStorage, faction.id);
-        // console.log(data);
-        //add payment code here
+        const data = await disbandFaction(user.address!.toLowerCase(), signatureInStorage, "DEACTIVATE");
         handleClose();
         onClose();
+        setShowDeleteAlert(false)
+        rdContext.refreshUser();
         toast.success("Faction disbanded");
+        
+      } catch (error: any) {
+        console.log(error);
+        toast.error(parseErrorMessage(error));
+      }
+    }
+  }
+  const ReenableFaction = async() => {
+    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    if (!signatureInStorage) {
+      const { signature } = await getSigner();
+      signatureInStorage = signature;
+    }
+    if (signatureInStorage) {
+      try {
+        const data = await disbandFaction(user.address!.toLowerCase(), signatureInStorage, "ACTIVE");
+        handleClose();
+        onClose();
+        rdContext.refreshUser();
+        toast.success("Faction reenabled");
       } catch (error: any) {
         console.log(error);
         toast.error(parseErrorMessage(error));
@@ -353,7 +373,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                         </HStack>
                         <HStack>
                         <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
-                          onClick={DeleteFaction} variant='outline'colorScheme='red'
+                          onClick={DisbandFaction} variant='outline'colorScheme='red'
                           >Confirm Disband</Button>
                         <Button type="submit" style={{ display: 'flex', marginTop: '4px' }}
                             onClick={() => setShowDeleteAlert(false)} variant='outline' colorScheme='white'
@@ -362,13 +382,25 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                       </VStack>
                     </Alert>
                     ) : (
-                      // <Button type="submit"
-                      //   onClick={showDeleteWarning}  
-                      //   colorScheme='red'
-                      //   fontSize={{base: '12', sm: '14'}}
-                      //   variant={"outline"}
-                      //   >x Disband Faction</Button>
-                      <></>
+                      <>
+                      {rdContext.user?.faction.isEnabled ? (
+                      <Button type="submit"
+                        onClick={showDeleteWarning}  
+                        colorScheme='red'
+                        fontSize={{base: '12', sm: '14'}}
+                        variant={"outline"}
+                        >x Disband Faction</Button>
+
+                    ) : (
+                        <Button type="submit"
+                        onClick={ReenableFaction}  
+                        colorScheme='green'
+                        fontSize={{base: '12', sm: '14'}}
+                        variant={"outline"}
+                        >Reenable Faction</Button>
+                    )}
+                    </>
+                      
                     )}
                     </VStack>
                   <Spacer />

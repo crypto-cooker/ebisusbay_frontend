@@ -300,7 +300,7 @@ export const getAllFactions = async (gameId) => {
 }
 export const getAllFactionsSeasonId = async (gameId, seasonId) => {
   try{
-    console.log(gameId, seasonId)
+    // console.log(gameId, seasonId)
     var data = await api.get("ryoshi-dynasties/factions/all",
       {params: {gameId, seasonId}});
     return data.data.data;
@@ -319,38 +319,6 @@ export const addTroops = async (address, signature, troops) => {
     throw error;
   }
 }
-// export const getRegions= async () => {
-//   try{
-//     // var gameID = await api.get("ryoshi-dynasties/games/0");
-//     let controlPoints = [];
-//     map.regions.forEach((region) => {
-//       region.controlPoints.forEach((controlPoint) => {
-//       controlPoints.push(controlPoint);
-//       });
-//     });
-//     // console.log(controlPoints)
-//     return controlPoints;
-//   }
-//   catch(error){
-//     throw error;
-//   }
-// }
-// export const getControlPoints= async (regionNumber) => {
-//   try{
-//     var gameID = await api.get("ryoshi-dynasties/games/0");
-//     var regions = gameID.data.data.parent.map.regions;
-//     //get all control points under regions
-//     var controlPoints = [];
-//     regions[regionNumber].controlPoints.forEach((controlPoint) => {
-//       controlPoints.push(controlPoint.id);
-//     });
-//     return controlPoints;
-//   }
-//   catch(error){
-//     throw error;
-//   }
-// }
-
 export const getLeaderBoard = async (controlPointId, gameId) => {
   try{
     var data = await api.get("ryoshi-dynasties/control-points/"+controlPointId,
@@ -468,6 +436,17 @@ export const getBattleLog = async (address, signature, gameId, pageSize, page, o
     let data = await api.get("ryoshi-dynasties/game-log?", 
       {params: {address, signature, gameId, pageSize, page, orderBy}});
     return data.data.data.logs;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const disbandFaction = async (address, signature, action) => {
+  try{
+    let data = await api.patch("ryoshi-dynasties/factions/status?", 
+      {address},
+      {params: {address, signature, action}});
+    return data;
   }
   catch(error){
     throw error;

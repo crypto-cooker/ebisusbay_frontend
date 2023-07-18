@@ -97,6 +97,7 @@ export interface RdFaction {
     troops: number;
     type: RdFactionType;
     uuid: string;
+    isEnabled: boolean;
 }
 
 export enum RdFactionType {

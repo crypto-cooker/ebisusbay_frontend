@@ -38,3 +38,4 @@ volumes/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.vscode/settings.json

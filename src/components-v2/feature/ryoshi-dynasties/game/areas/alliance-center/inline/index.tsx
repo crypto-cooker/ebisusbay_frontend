@@ -144,14 +144,6 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
 export default AllianceCenterInline;
 
 
-type FactionData = {
-  faction: RdFaction | null;
-  registration: RdFaction | null;
-  factionTroops: number;
-  walletTroops: number;
-  allFactions: RdFaction[];
-}
-
 const CurrentFaction = () => {
   const user = useAppSelector((state) => state.user);
   const [_, getSigner] = useCreateSigner();
@@ -178,7 +170,6 @@ const CurrentFaction = () => {
     await rdContext.refreshUser();
     // queryClient.invalidateQueries(['GetAllFactions']);
   }
-
   const handleAddTroops = async () => {
     if (!user.address) return;
 
@@ -198,14 +189,12 @@ const CurrentFaction = () => {
       }
     }
   }
-
   const checkForApproval = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
     const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.allianceCenter);
     return totalApproved as BigNumber;
   }
-
   const handleRegister = async () => {
     if (!user.address) return;
 
@@ -261,16 +250,15 @@ const CurrentFaction = () => {
     initialValues: {},
     enableReinitialize: true,
   });
-  const handleTJUploadSuccess = (e: any) => {
-    // GetFactions();
-    console.log(e);
-    rdContext.refreshUser();
-  }
 
   const[availableTroops, setAvailableTroops] = useState(0);
   const[totalTroops, setTotalTroops] = useState(0);
+  const [factionCreatedAndEnabled, setFactionCreatedAndEnabled] = useState(false);
 
   useEffect(() => {
+    console.log(rdContext.user?.faction);
+    // console.log(getAuthSignerInStorage()?.signature)
+    // console.log(user.address)
     if(rdContext.user?.season?.troops?.undeployed !== undefined){
       setAvailableTroops(rdContext.user?.season?.troops?.undeployed);
     }
@@ -278,7 +266,17 @@ const CurrentFaction = () => {
        rdContext.user?.season?.troops?.undeployed !== undefined){
       setTotalTroops(rdContext.user?.season?.troops?.deployed + rdContext.user?.season?.troops?.undeployed);
     }
+    if(rdContext.user?.faction?.id !== undefined && rdContext.user?.faction.isEnabled){
+      console.log('Faction Created and Enabled');
+      setFactionCreatedAndEnabled(true);
+    }
+    else{
+      console.log('Faction Not Created or Enabled');
+      setFactionCreatedAndEnabled(false);
+    }
 }, [rdContext]); 
+
+
 
   const {
     values,
@@ -311,9 +309,11 @@ const CurrentFaction = () => {
               <Avatar
                 size='2xl'
                 src={rdContext.user?.faction.image}
+                filter={factionCreatedAndEnabled ? 'none' : 'grayscale(100%)'}
                 // w='150px'
-                // rounded='lg'
+                // rounded='lg
               />
+              <Text paddingTop='40px' position='absolute' fontSize='lg' as='i' fontWeight='bold' textColor='red'>{factionCreatedAndEnabled ? '':'Faction Disbanded'}</Text>
               <Stack direction='row' align='center'>
                 <Text fontSize='lg' fontWeight='bold'>{rdContext.user.faction.name}</Text>
                 <IconButton
@@ -324,6 +324,7 @@ const CurrentFaction = () => {
                   onClick={onOpenFaction}
                 />
               </Stack>
+              {factionCreatedAndEnabled && (
               <Box bg='#564D4A' p={2} rounded='lg' w='full'>
                 <SimpleGrid columns={2}>
                   <VStack align='start' spacing={0} my='auto'>
@@ -348,6 +349,7 @@ const CurrentFaction = () => {
                   </Box>
                 )}
               </Box>
+              )}
             </VStack>
           ) : (
             <Center>
@@ -385,8 +387,8 @@ const CurrentFaction = () => {
                   <Text fontSize='lg' fontWeight='bold'>{totalTroops}</Text>
                 </VStack>
                 {
-                !!rdContext.user.season.troops.undeployed && 
-                !rdContext.user.season.faction && (
+                ((!!rdContext.user.season.troops.undeployed && !rdContext.user.season.faction) ||
+                (!rdContext.user.faction.isEnabled)) && (
                  <RdButton 
                   hoverIcon={false} 
                   onClick={onOpenDelegate} 
