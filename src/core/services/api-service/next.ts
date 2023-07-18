@@ -108,6 +108,10 @@ class NextApiService implements Api {
 
     return await this.getOffers(query);
   }
+
+  getCollectionTraits(address: string): Promise<any> {
+    throw new Error("Method not implemented.");
+  }
 }
 
 export default new NextApiService();
