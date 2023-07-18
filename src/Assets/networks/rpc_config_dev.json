@@ -3410,10 +3410,8 @@
         "avatar": "/img/collections/slothty/avatar.png",
         "card": "/img/collections/slothty/card.webp",
         "banner": "/img/collections/slothty/banner.webp",
-        "website": "https://croslothty.com/",
-        "twitter": "https://twitter.com/Slothtynft",
-        "discord": "http://discord.gg/wkq88dHDyA",
-        "telegram": "https://t.me/croslothty",
+        "website": "https://dripcro.com",
+        "discord": "https://discord.gg/ttaPM95WcR",
         "categories": [
           "uncollectible"
         ]
@@ -22020,6 +22018,169 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Alpha Lady Lions",
+      "slug": "alpha-lady-lions",
+      "multiToken": false,
+      "address": "0x1767A7dddF0e888FA87efD46fdc7c43eDA514F59",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Alpha Lady Lions on the Cronos Blockchain armed and ready to fight to support the original ALR Cyborg, Guerilla & Spartan factions.",
+        "avatar": "/img/collections/alpha-lady-lions/avatar.webp",
+        "card": "/img/collections/alpha-lady-lions/card.webp",
+        "banner": "/img/collections/alpha-lady-lions/banner.webp",
+        "website": "https://alphalionsrebooted.com/",
+        "twitter": "https://twitter.com/AlphaLionsRBT",
+        "discord": "https://discord.gg/alphalionsrbt",
+        "medium": "https://medium.com/@cronosalphalions",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Threads Of Crypto 3D Trading Cards",
+      "slug": "threads-of-crypto-3d-trading-cards",
+      "multiToken": false,
+      "address": "0x66AE5739d5aaF966A8B6a627d7Ad8833aC3Bfd8c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Threads of Crypto 3D Trading Cards staking NFT set buy any 5 of my NFTs and claim one. Discord",
+        "avatar": "/img/collections/threads-of-crypto-3d-trading-cards/avatar.webp",
+        "card": "/img/collections/threads-of-crypto-3d-trading-cards/card.webp",
+        "banner": "/img/collections/threads-of-crypto-3d-trading-cards/banner.webp",
+        "twitter": "https://twitter.com/AngelusbobRh",
+        "discord": "https://discord.gg/YfT2CUfjxV",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ShinyCroPepe",
+      "slug": "shinycropepe",
+      "multiToken": false,
+      "address": "0x3ac8d48DdF2C09460F435206BDC7BA04F2560114",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The ShinyCroPepe collection has 350 pieces. Feel the power of shiny!",
+        "avatar": "/img/collections/shinycropepe/avatar.webp",
+        "banner": "/img/collections/shinycropepe/banner.webp",
+        "card": "/img/collections/shinycropepe/card.webp",
+        "website": "https://www.cropepe.com/",
+        "twitter": "https://twitter.com/CroPepeNft",
+        "discord": "https://discord.gg/zCZeY8Ejgq",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Wish Lamps",
+      "slug": "wish-lamps",
+      "multiToken": false,
+      "address": "0xE665e0F2f34176B3DF59dF8B481B0292029C9353",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A Lamp NFT is more than just a light source - it's a gateway to infinite possibilities. Each Lamp NFT holds the power of the community's voice and the potential to create new Genie NFTs. When you rub a Lamp NFT, two magical Genie NFTs will appear, granting you the power to vote on important decisions and build a access to an endless list of utilities.",
+        "avatar": "/img/collections/wish-lamps/avatar.webp",
+        "banner": "/img/collections/wish-lamps/banner.webp",
+        "card": "/img/collections/wish-lamps/card.webp",
+        "twitter": "https://twitter.com/WishCRO",
+        "discord": "https://discord.gg/bQ8z8sDHw8",
+        "medium": "https://medium.com/@WISHCOINCRO/wish-coin-nft-lite-paper-f068b59911e4",
+        "telegram": "https://t.me/wishcro",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Lions of North America",
+      "slug": "lona",
+      "multiToken": false,
+      "address": "0xD19892F1778306F47a24Ca1Af2A1693c4FB09778",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/lona/avatar.webp",
+        "banner": "/img/collections/lona/banner.webp",
+        "card": "/img/collections/lona/card.webp",
+        "twitter": "https://twitter.com/LionsofNA",
+        "discord": "https://discord.gg/ZvMJQ8dw",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Lions of North America Pass",
+      "slug": "lona-pass",
+      "multiToken": false,
+      "address": "0xdEF6bD412331dd36766beCA774BF10AcB066d2c7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/lona-pass/avatar.webp",
+        "banner": "/img/collections/lona-pass/banner.webp",
+        "card": "/img/collections/lona-pass/card.webp",
+        "twitter": "https://twitter.com/LionsofNA",
+        "discord": "https://discord.gg/ZvMJQ8dw",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Zoodles",
+      "slug": "zoodles",
+      "multiToken": false,
+      "address": "0xdEF6bD412331dd36766beCA774BF10AcB066d2c7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "8888 utility packed Zoodles!  \uD83E\uDE77Staking \uD83D\uDC9CDAO \uD83D\uDC99P2E \uD83D\uDC9Agiveaways \uD83D\uDC9Bcontests \uD83E\uDDE1WL opportunities ❤\uFE0Fstory  #crofam #defi #p2e",
+        "avatar": "/img/collections/zoodles/avatar.webp",
+        "card": "/img/collections/zoodles/card.webp",
+        "twitter": "https://twitter.com/Zoodles_NFTs",
+        "discord": "https://discord.gg/RqgJDr6fSw",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
