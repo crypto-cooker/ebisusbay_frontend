@@ -114,6 +114,8 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
           sortOrder
           );
         if(data.length < 5) setMoreToLoad(false);
+        if(data.length == 0) return; //prevents run away loop
+
         //add the data to the battleLog array
         setBattleLog([...battleLog, ...data]);
       } catch (error:any) {
@@ -204,6 +206,9 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
                     ) : 
                   logEntry.event === "DEPLOY" ? (
                     <DeployLog battleLog={logEntry} key={index}/>
+                    ) : 
+                  logEntry.event === "DELEGATE" ? (
+                    <DelegateLog battleLog={logEntry} key={index}/>
                   // ) : 
                   // logEntry.event === "ADD" ? (
                   //   <AddLog2 spoofTroopLog={logEntry} key={index}/>
@@ -447,6 +452,74 @@ const DeployLog = ({battleLog}: LogProps) => {
         
         <VStack justifySelf='center' justifyContent="center">
           <Text marginBottom={-2}>DEPLOY</Text>
+          <ArrowForwardIcon/>
+        </VStack>
+
+        <VStack justifySelf='center' spacing='0'>
+          <Text>{battleLog.entity2.name}</Text>
+          <Avatar src={ImageService.translate(battleLog.entity2.image).avatar()} size='lg' />
+        </VStack>
+      </Grid>
+    </>
+  )
+}
+const DelegateLog = ({battleLog}: LogProps) => {
+  return (
+    <>
+      <Box
+        // position='absolute'
+        boxSize='20px'
+        marginTop={-6}
+        marginLeft={-12}
+        rounded='full'
+        zIndex={1}
+        _groupHover={{
+          cursor: 'pointer'
+        }}
+        data-group
+      >
+        <Button
+          bg='#C17109'
+          rounded='full'
+          border='4px solid #F48F0C'
+          w={8}
+          h={10}
+          _groupHover={{
+            bg: '#de8b08',
+            borderColor: '#f9a50b',
+          }}
+        >
+          <ArrowForwardIcon />
+        </Button>
+      </Box>
+
+
+      <HStack justifyContent={"space-between"}>
+        <Text as='b' fontSize={16}>Delegated {battleLog.currentTroops-battleLog.pastTroops} {pluralize(battleLog.currentTroops -battleLog.pastTroops, 'troop')}</Text>
+         <VStack justifyContent="center" spacing='0'>
+           <HStack justifyContent={"space-between"}>
+             <Text>{battleLog.pastTroops}</Text>
+             <ArrowForwardIcon/>
+             <Text as='b'>{battleLog.currentTroops}</Text>
+           </HStack>
+         </VStack>
+       </HStack>
+
+      <Grid
+        marginTop={4}
+        marginBottom={4}
+        h='100px'
+        templateRows='repeat(1, 1fr)'
+        templateColumns='repeat(3, 1fr)'
+        gap={4}
+      >
+        <VStack justifySelf='center' spacing='0'>
+          <Text>{battleLog.entity1.name}</Text>
+          <Avatar src={ImageService.translate(battleLog.entity1.image).avatar()} size='lg' />
+        </VStack>
+        
+        <VStack justifySelf='center' justifyContent="center">
+          <Text marginBottom={-2}>DELEGATE</Text>
           <ArrowForwardIcon/>
         </VStack>
 
