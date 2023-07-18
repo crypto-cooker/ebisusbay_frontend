@@ -1,12 +1,13 @@
 import CmsRepository from "@src/core/services/api-service/cms/repositories/index";
 import {
   BankStakeNft,
-  BarracksStakeNft,
+  BarracksStakeNft, RdBattleLog,
   RdFaction,
   RdGameContext,
   RdUserContext
 } from "@src/core/services/api-service/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
+import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 
 class RyoshiDynastiesRepository extends CmsRepository {
 
@@ -135,6 +136,15 @@ class RyoshiDynastiesRepository extends CmsRepository {
   async getGameWinners(gameId: number) {
     const response = await this.cms.get(`ryoshi-dynasties/games/${gameId}/winners`);
     return response.data.data as Array<{ address: string; points: number; type: string }>;
+  }
+
+  async getBattleLog(query: GetBattleLog) {
+    const response = await this.cms.get('ryoshi-dynasties/game-log',
+      {
+        params: query
+      });
+
+    return response.data.data as {currentPage: number, logs: RdBattleLog[], pageSize: number, totalPages: number};
   }
 }
 

@@ -12,6 +12,7 @@ import {
     StakingAccount
 } from "@src/core/services/api-service/graph/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
+import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 
 export interface Api {
     getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>>;
@@ -42,6 +43,7 @@ export interface RyoshiDynastiesApi {
     getGameContext(): Promise<RdGameContext>;
     getBankStakingAccount(address: string): Promise<StakingAccount | null>;
     getFactions(gameId?: number): Promise<RdFaction[]>;
+    getBattleLog(query: GetBattleLog): Promise<PagedList<RdBattleLog>>;
 }
 
 export enum ListingState {
@@ -238,4 +240,14 @@ export enum RdGameState {
     UPCOMING = 'UPCOMING',
     RESET = 'RESET',
     IN_MAINTENANCE = 'IN_MAINTENANCE'
+}
+
+export interface RdBattleLog {
+    controlPoint: string;
+    currentTroops: number;
+    date: number;
+    entity1: any;
+    entity2: any;
+    event: string;
+    pastTroops: number;
 }

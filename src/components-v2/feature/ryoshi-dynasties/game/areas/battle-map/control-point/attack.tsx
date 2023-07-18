@@ -296,7 +296,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       } catch (error: any) {
         console.log(error);
         toast.error(parseErrorMessage(error));
-      }  finally {
+      } finally {
         setIsExecuting(false);
       }
     }

@@ -18,6 +18,7 @@ import WalletNft from "@src/core/models/wallet-nft";
 import Graph from "@src/core/services/api-service/graph";
 import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
 import {caseInsensitiveCompare} from "@src/utils";
+import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -213,5 +214,9 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async getFactions(gameId?: number) {
     return this.cms.getFactions(gameId);
+  }
+
+  async getBattleLog(query: GetBattleLog) {
+    return this.cms.getBattleLog(query);
   }
 }

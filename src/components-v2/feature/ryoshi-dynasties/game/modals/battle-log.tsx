@@ -1,53 +1,44 @@
-import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
+import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {
-  Box, 
-  GridItem,
-  HStack, 
-  Image, 
-  SimpleGrid, 
-  Text, 
-  VStack,
   Avatar,
-  Grid,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Divider,
+  Box,
   Button,
+  Center,
+  Divider,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  Grid,
+  HStack,
+  SimpleGrid,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 
-import {useContext, useEffect, useState} from "react";
-import {appConfig} from "@src/Config";
+import React, {useContext, useEffect, useState} from "react";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
-import moment from "moment";
 import ImageService from "@src/core/services/image";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {parseErrorMessage} from "@src/helpers/validator";
-import { AddIcon, MinusIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import { getLocation } from "graphql";
-import {getBattleLog} from "@src/core/api/RyoshiDynastiesAPICalls";
-import {toast} from "react-toastify";
+import {ArrowForwardIcon, MinusIcon} from "@chakra-ui/icons";
 import {pluralize} from "@src/utils";
-import RdInlineModal from "../../components/rd-inline-modal";
 
 import localFont from 'next/font/local';
+import {useInfiniteQuery} from "@tanstack/react-query";
+import {Spinner} from "react-bootstrap";
+import InfiniteScroll from "react-infinite-scroll-component";
+
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
 interface BattleLogProps {
@@ -80,11 +71,8 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   const { config: rdConfig, game: rdGameContext, user: rdUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector(state => state.user);
   const [_, getSigner] = useCreateSigner();
-  const [pageToLoad, setPageToLoad] = useState(1);
-  const [battleLog, setBattleLog] = useState<any[]>([]);
   const [sortOrder, setSortOrder] = useState("desc" as "asc" | "desc");
-  const [moreToLoad, setMoreToLoad] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+  const [signature, setSignature] = useState<string | null>(null);
 
   const connectWalletPressed = async () => {
     if (user.needsOnboard) {
@@ -97,45 +85,30 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
     }
   };
 
-  const GetBattleLog = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getBattleLog(
-          user.address!.toLowerCase(), 
-          signatureInStorage,
-          rdGameContext?.game.id, 
-          5, 
-          pageToLoad,
-          sortOrder
-          );
-        if(data.length < 5) setMoreToLoad(false);
-        if(data.length == 0) return; //prevents run away loop
-
-        //add the data to the battleLog array
-        setBattleLog([...battleLog, ...data]);
-      } catch (error:any) {
-        console.log(error)
-        toast.error(parseErrorMessage(error));
-      }
-    }
-    setIsLoading(false)
+  const GetBattleLog = async ({ pageParam = 1 }) => {
+    return await ApiService.withoutKey().ryoshiDynasties.getBattleLog({
+      address: user.address!,
+      signature: signature!,
+      gameId: rdGameContext!.game.id,
+      page: pageParam,
+      pageSize: 10,
+      orderBy: sortOrder
+    })
   }
 
-  const LoadAdditionalBattleLog = () => {
-    setIsLoading(true);
-    setMoreToLoad(true);
-    setPageToLoad(pageToLoad+1);
-  }
+  const {data, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery(
+    ['BattleLog', user.address, rdGameContext?.game.id, sortOrder],
+    GetBattleLog,
+    {
+      getNextPageParam: (lastPage, pages) => {
+        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+      },
+      refetchOnWindowFocus: false,
+      enabled: isOpen && !!user.address && !!rdGameContext?.game.id && !!signature,
+  });
 
   const ReloadBattleLog = () => {
-    setSortOrder(sortOrder === "asc" ? "desc" : "asc")
-    setPageToLoad(1);
-    setBattleLog([]);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   }
 
   const ParseTimestamp = (timestamp: number) => {
@@ -145,108 +118,110 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   }
 
   useEffect(() => {
-    if(pageToLoad==1) return;
-    GetBattleLog();
-  }, [pageToLoad])
-  
-  useEffect(() => {
-    if(!rdGameContext) return;
-    if(!user.address) return;
-
-    GetBattleLog();
-  }, [rdGameContext, user.address])
-
-  useEffect(() => {
-    if(!battleLog) return;
-    if(battleLog.length != 0) return;
-    if(!user.address) return;
-
-    GetBattleLog();
-  }, [battleLog])
+    async function getSig() {
+      let signatureInStorage = getAuthSignerInStorage()?.signature;
+      if (!signatureInStorage) {
+        const { signature } = await getSigner();
+        signatureInStorage = signature;
+      }
+      setSignature(signatureInStorage);
+    }
+    if (!!user.address) {
+      getSig();
+    } else {
+      setSignature(null);
+    }
+  }, [user.address]);
 
   return (
     <Drawer
-        isOpen={isOpen}
-        onClose={onClose}
-        size="sm"
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>GameLog</DrawerHeader>
+      isOpen={isOpen}
+      onClose={onClose}
+      size="sm"
+    >
+      <DrawerOverlay />
+      <DrawerContent>
+        <DrawerCloseButton />
+        <DrawerHeader>GameLog</DrawerHeader>
 
-      <DrawerBody>
-      <Box position='absolute'>
+        <DrawerBody>
+          <Box position='absolute'>
 
-      <Button w={100} marginTop={-24} marginLeft={150} onClick={() => ReloadBattleLog()} >
-          <Text fontSize={12}> {sortOrder === "asc" ? "Oldest" : "Most Recent"} </Text>
-      </Button>
-      
-      </Box>
+            <Button w={100} marginTop={-24} marginLeft={150} onClick={() => ReloadBattleLog()} >
+                <Text fontSize={12}> {sortOrder === "asc" ? "Oldest" : "Most Recent"} </Text>
+            </Button>
 
-      <Box mx={1} pb={4} mt={25} maxW="500px">
-        
-        <Divider orientation='vertical' position='absolute' height='100%' marginLeft='4' borderWidth='2px'/>
-
-        {!!user.address ? (
-          <>
-          <SimpleGrid columns={1} gap={55} padding={2} my={4} paddingLeft='10'>
-              {battleLog.map((logEntry, index) => (
-                <Box bg='#272523' borderRadius='md' p={2}
-                  box-shadow= "5px 10px 18px red"
-                  style={{boxShadow: "0 10px 20px rgba(0, 0, 0, 0.7)"}}
-                  border="1px solid #F48F0C"
-                  >
-                  <Text fontSize={14} marginTop={-8} marginBottom={2}>{ParseTimestamp(logEntry.date)}</Text>
-
-                  {logEntry.event === "ATTACK" ? (
-                    <AttackLog battleLog={logEntry} key={index}/>
-                    ) : 
-                  logEntry.event === "DEFEND" ? (
-                    <DefendLog battleLog={logEntry} key={index}/>
-                    ) : 
-                  logEntry.event === "DEPLOY" ? (
-                    <DeployLog battleLog={logEntry} key={index}/>
-                    ) : 
-                  logEntry.event === "DELEGATE" ? (
-                    <DelegateLog battleLog={logEntry} key={index}/>
-                  // ) : 
-                  // logEntry.event === "ADD" ? (
-                  //   <AddLog2 spoofTroopLog={logEntry} key={index}/>
-                  // ) :
-                  // logEntry.event === "SEND" ? (
-                  //   <SendLog2 spoofTroopLog={logEntry} key={index}/>
-                  ) : (<></> )}
-
-                </Box>
-              ))}
-          </SimpleGrid>
-
-            {moreToLoad ? (
-            <Box textAlign='center' mt={4}>
-              <RdButton 
-                onClick={() => LoadAdditionalBattleLog()}>
-                  {isLoading ? "Loading..." : "Load More"}
-                </RdButton>
-            </Box>
-            ) : 
-              (<>
-            <Box textAlign='center' mt={4}>
-              <Text as={"i"} color='lightgray' textAlign='center' mt={4}>No more logs to load</Text>
-            </Box>
-              </>)}
-          </>
-        ) : (
-          <Box textAlign='center' mt={4}>
-            <RdButton onClick={connectWalletPressed}>Connect Wallet</RdButton>
           </Box>
-        )}
 
+          <Box mx={1} pb={4} mt={25} maxW="500px">
 
-      </Box>
-    </DrawerBody>
-        </DrawerContent>
-      </Drawer>
+            <Divider orientation='vertical' position='absolute' height='100%' marginLeft='4' borderWidth='2px'/>
+
+            {!!user.address ? (
+              <InfiniteScroll
+                dataLength={data?.pages ? data.pages.flat().length : 0}
+                next={fetchNextPage}
+                hasMore={hasNextPage ?? false}
+                style={{ overflow: 'hidden' }}
+                loader={
+                  <Center>
+                    <Spinner />
+                  </Center>
+                }
+              >
+                {status === "loading" ? (
+                  <Center>
+                    <Spinner />
+                  </Center>
+                ) : status === "error" ? (
+                  <Box textAlign='center'>Error: {(error as any).message}</Box>
+                ) : data?.pages.map((page) => page).flat().length > 0 ? (
+                  <SimpleGrid columns={1} gap={55} padding={2} my={4} paddingLeft='10'>
+                    {data.pages.map((items, pageIndex) => (
+                      <React.Fragment key={pageIndex}>
+                        {items.data.map((logEntry, itemIndex) => (
+                          <Box bg='#272523' borderRadius='md' p={2}
+                               box-shadow= "5px 10px 18px red"
+                               style={{boxShadow: "0 10px 20px rgba(0, 0, 0, 0.7)"}}
+                               border="1px solid #F48F0C"
+                          >
+                            <Text fontSize={14} marginTop={-8} marginBottom={2}>{ParseTimestamp(logEntry.date)}</Text>
+
+                            {logEntry.event === "ATTACK" ? (
+                                <AttackLog battleLog={logEntry} key={itemIndex}/>
+                            ) : logEntry.event === "DEFEND" ? (
+                                  <DefendLog battleLog={logEntry} key={itemIndex}/>
+                            ) : logEntry.event === "DEPLOY" ? (
+                                    <DeployLog battleLog={logEntry} key={itemIndex}/>
+                            ) : logEntry.event === "DELEGATE" && (
+                              <DelegateLog battleLog={logEntry} key={itemIndex}/>
+                              // ) :
+                              // logEntry.event === "ADD" ? (
+                              //   <AddLog2 spoofTroopLog={logEntry} key={index}/>
+                              // ) :
+                              // logEntry.event === "SEND" ? (
+                              //   <SendLog2 spoofTroopLog={logEntry} key={index}/>
+                            )}
+                          </Box>
+                        ))}
+                      </React.Fragment>
+                    ))}
+                  </SimpleGrid>
+                ) : (
+                  <Box textAlign='center' mt={8}>
+                    <Text>No logs available</Text>
+                  </Box>
+                )}
+              </InfiniteScroll>
+            ) : (
+              <Box textAlign='center' mt={4}>
+                <RdButton onClick={connectWalletPressed}>Connect Wallet</RdButton>
+              </Box>
+            )}
+          </Box>
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
   )
 }
 
