@@ -46,7 +46,7 @@ const Buildings = ({isOpenBuildings, onCloseBuildings, buildingButtonRef, setEle
     <Drawer
         isOpen={isOpenBuildings}
         // placement={{base:'bottom', sm:'right'}}
-        placement='right'
+        placement='top'
         onClose={onCloseBuildings}
         finalFocusRef={buildingButtonRef}
         size='xs'

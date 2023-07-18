@@ -31,6 +31,8 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import { CalendarIcon } from "@chakra-ui/icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBuilding, faClipboardList} from "@fortawesome/free-solid-svg-icons";
 
 const config = appConfig();
 
@@ -133,96 +135,152 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
   }, [user.address, forceRefresh])
 
   return (
-    <Box position='absolute' top={0} left={0} p={4}  pointerEvents='none' >
-      <Flex direction='row' justify='space-between' >
-        <Box mb={4} 
-        bg={user.theme === 'dark' ? '#272523EE' : '#272523EE'}
-        p={2} rounded='md' w={{base: '345px', sm: '400px'}}>
-          <Accordion defaultIndex={[0]} allowToggle>
-            <AccordionItem border='none'>
-              <AccordionButton pointerEvents='auto'>
-                {!isLoading ? (
-                  <>
-                    {!!user.address ? (
-                      <HStack w='full' spacing={4}>
-                        <HStack>
-                          <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="walletIcon" boxSize={6}/>
-                          <Text
-                            textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
-                            >{fortune}</Text>
-                        </HStack>
-                        <HStack>
-                          <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/mitama.png').convert()} alt="walletIcon" boxSize={6}/>
-                          <Text
-                            textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
-                            >{mitama}</Text>
-                        </HStack>
-                        <HStack>
-                          <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={6}/>
-                          <Text
-                            textColor={user.theme === 'dark' ? '#ffffff' : '#ffffff'}
-                            >{koban}</Text>
-                        </HStack>
-                      </HStack>
-                    ) : (
-                      <Text align='center'>Connect wallet for stats</Text>
-                    )}
-                    <Spacer />
-                    <AccordionIcon 
-                      color='#ffffff'/>
-                  </>
+    <Box position='absolute' top={0} left={0} p={4}  pointerEvents='none' w='100%'>
+      <Flex justifyContent='space-between' w='100%'>
+        <SimpleGrid spacing={2} 
+        >
+          <RdButton
+                pointerEvents='auto'
+                size='sm'
+                hoverIcon={false}
+                onClick={onOpenDailyCheckin}
+                fontSize={{base: '12', sm: '14'}}
+                w={{base: '150px', sm: '200px'}}
+                h={{base: '40px', sm: '40px'}}
+                lineHeight={'1.2'}
+              >
+                {canClaim ? (
+                  "Claim Rewards!"
                 ) : (
-                  <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>
+                  "Claim in "+ timer
                 )}
-              </AccordionButton>
-              <AccordionPanel pb={4}>
-                <Stack direction='row'>
-                  <RdButton
-                    pointerEvents='auto'
-                    fontSize='m'
-                    hoverIcon={false}
-                    onClick={onOpenBuildings}
-                    w={{base: '175px', sm: '175px'}}
-                    h={{base: '55px', sm: '40px'}}
-                    lineHeight={'1.2'}
-                  >
-                    View Building
-                  </RdButton>
-                  <Spacer h='4'/>
-                  <RdButton
-                    pointerEvents='auto'
-                    size='sm'
-                    hoverIcon={false}
-                    onClick={onOpenDailyCheckin}
-                    // fontSize={'14'}
-                    w={{base: '200px', sm: '200px'}}
-                    h={{base: '55px', sm: '40px'}}
-                    lineHeight={'1.2'}
-                  >
-                    {canClaim ? (
-                      "Claim Rewards"
-                    ) : (
-                      "Claim in "+ timer
-                     )}
-                  </RdButton>
-                  <Spacer h='4'/>
-                  {/* <RdButton
-                    pointerEvents='auto'
-                    size='sm'
-                    hoverIcon={false}
-                    onClick={onOpenBattleLog}
-                    // fontSize={'14'}
-                    w={{base: '100px', sm: '60px'}}
-                    h={{base: '55px', sm: '40px'}}
-                    lineHeight={'1.2'}
-                  ><CalendarIcon/>
-                  </RdButton> */}
-                </Stack>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+          </RdButton>
+            
+          <CurrencyDisplay
+            isLoading={isLoading}
+            icon ='/img/ryoshi-dynasties/icons/fortune.svg'
+            address={user.address}
+            amount={fortune}
+            />
+          <CurrencyDisplay
+            isLoading={isLoading}
+            icon ='/img/ryoshi-dynasties/icons/mitama.png'
+            address={user.address}
+            amount={mitama}
+            />
+          <CurrencyDisplay
+            isLoading={isLoading}
+            icon ='/img/ryoshi-dynasties/icons/koban.png'
+            address={user.address}
+            amount={koban}
+            />
+        </SimpleGrid>
+
+        <Box >
+          <SimpleGrid columns={{base: 1, sm: 2}} gap={2}>
+
+          <DarkButton
+            onClick={onOpenBuildings}
+            icon={faBuilding}/>
+
+          <DarkButton
+            onClick={onOpenBattleLog}
+            icon={faClipboardList}/>
+
+          </SimpleGrid>
         </Box>
+
       </Flex>
     </Box>
+  )
+  
+}
+interface ButtonProps {
+  onClick: () => void;
+  icon?: any;
+}
+
+const DarkButton = ({onClick, icon}: ButtonProps) => {
+  return (
+    <>
+      <Box
+            pointerEvents='auto'
+            as='button'
+            w={{base: '50px', sm: '50px'}}
+            h={{base: '40px', sm: '40px'}}
+            borderColor='#4c4859'
+            color='#272523EE !important'
+            borderRadius='4px'
+            position='relative'
+            borderWidth='4px 4px 4px 4px'
+            data-group
+            className='rd-button'
+            _active={{
+              borderColor: '#FFFFFF'
+            }}
+            bgColor='transparent !important'
+            onClick={onClick}
+          >
+            <Flex
+              direction='column'
+              justify='center'
+              px={0}
+              bg='linear-gradient(to left, #272523EE, #151418 )'
+              _groupHover={{
+                bg: 'linear-gradient(to left, #272523EE, #272523EE )' ,
+                ps: '0px',
+              }}
+              h='full'
+              >
+              <FontAwesomeIcon icon={icon} color='white'/>
+            </Flex>
+          </Box>
+    </>
+  )
+}
+interface CurrencyProps {
+  isLoading: boolean;
+  icon: string;
+  address: string | null;
+  amount: string | number;
+}
+
+const CurrencyDisplay = ({isLoading, icon, address, amount}: CurrencyProps) => {
+  return (
+    <>
+      <Box
+          bg={'#272523EE'}
+          rounded='md' 
+          w={{base: '150px', sm: '200px'}}
+          h={{base: '24px', sm: '24px'}}
+          borderColor='#4c4859'
+          borderRadius='6px'
+          position='relative'
+          borderWidth='4px 4px 4px 4px'
+          >
+          {!isLoading ? (
+            <>
+              {!!address ? (
+                  <Flex justifyContent='space-between'
+                 h={{base: '14px', sm: '12px'}}>
+                    <Image src={ImageService.translate(icon).convert()} alt="walletIcon" 
+                    boxSize={6}
+                    marginY={-1}
+                    marginX={-1}/>
+                    <Text
+                    fontSize={{base: '12', sm: '14'}}
+                      textColor={'#ffffff'}
+                      >{amount}</Text>
+                  </Flex>
+              ) : (
+                <Text align='center'>Connect wallet for stats</Text>
+              )}
+              <Spacer />
+            </>
+          ) : (
+            <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>
+          )}
+          </Box>
+    </>
   )
 }
