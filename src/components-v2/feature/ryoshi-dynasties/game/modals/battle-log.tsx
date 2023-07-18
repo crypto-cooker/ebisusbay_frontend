@@ -142,11 +142,10 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   
   useEffect(() => {
     if(!rdGameContext) return;
-    console.log(rdGameContext?.game.id);
-    console.log(user.address);
+    if(!user.address) return;
 
     GetBattleLog();
-  }, [rdGameContext])
+  }, [rdGameContext, user.address])
 
   // useEffect(() => {
   //   if(!battleLog) return;
