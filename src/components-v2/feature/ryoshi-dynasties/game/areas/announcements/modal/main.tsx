@@ -112,7 +112,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
         >
           {isMobile ? (
             <Image
-              alt="Izanami's Cradle: Land Deeds"
+              alt="Ballies Cheerleaders"
               src={ImageService.translate('/img/ryoshi-dynasties/announcements/ballies-sm.webp').convert()}
               w={408}
               h={334}
