@@ -32,7 +32,7 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {ArrowForwardIcon, MinusIcon} from "@chakra-ui/icons";
-import {pluralize} from "@src/utils";
+import {isAddress, pluralize, shortAddress} from "@src/utils";
 
 import localFont from 'next/font/local';
 import {useInfiniteQuery} from "@tanstack/react-query";
@@ -286,7 +286,7 @@ const AttackLog = ({battleLog}: LogProps) => {
         gap={4}
       >
         <VStack justifySelf='center' spacing='0'>
-          <Text>{battleLog.entity1.name}</Text>
+          <Text>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
           <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
         
@@ -296,7 +296,7 @@ const AttackLog = ({battleLog}: LogProps) => {
         </VStack>
 
         <VStack justifySelf='center' spacing='0'>
-          <Text>{battleLog.entity2.name}</Text>
+          <Text>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
           <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
       </Grid>
@@ -355,7 +355,7 @@ const DefendLog = ({battleLog}: LogProps) => {
         gap={4}
       >
         <VStack justifySelf='center' spacing='0'>
-          <Text>{battleLog.entity1.name}</Text>
+          <Text>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
           <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
         
@@ -365,7 +365,7 @@ const DefendLog = ({battleLog}: LogProps) => {
         </VStack>
 
         <VStack justifySelf='center' spacing='0'>
-          <Text>{battleLog.entity2.name}</Text>
+          <Text>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
           <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
       </Grid>
@@ -424,7 +424,7 @@ const DeployLog = ({battleLog}: LogProps) => {
         gap={4}
       >
         <VStack justifySelf='center' spacing='0'>
-          <Text>{battleLog.entity1.name}</Text>
+          <Text>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
           <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
         
@@ -434,7 +434,7 @@ const DeployLog = ({battleLog}: LogProps) => {
         </VStack>
 
         <VStack justifySelf='center' spacing='0'>
-          <Text>{battleLog.entity2.name}</Text>
+          <Text>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
           <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
       </Grid>
@@ -492,7 +492,7 @@ const DelegateLog = ({battleLog}: LogProps) => {
         gap={4}
       >
         <VStack justifySelf='center' spacing='0'>
-          <Text>{battleLog.entity1.name}</Text>
+          <Text>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
           <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
         
@@ -502,7 +502,7 @@ const DelegateLog = ({battleLog}: LogProps) => {
         </VStack>
 
         <VStack justifySelf='center' spacing='0'>
-          <Text>{battleLog.entity2.name}</Text>
+          <Text>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
           <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
       </Grid>
