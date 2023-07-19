@@ -90,7 +90,7 @@ const FaqPage = () => {
           <AccordionPanel pb={4}>
             <Text>Factions need to control countries on the map for weekly rewards. Some areas (aka “control points”) are more valuable due to their location!  At the end of each week, listing rewards will be distributed to factions with the most troops on each country. 
 Factions can spend Koban tokens to attack each other. The fate of the battle will be decided by rolling a pair of statistically accurate, virtual dice! </Text>
-          <Text mt={2}> For each roll, whichever participant has the higher numbered die wins that roll.  The defender wins all ties, giving them a small advantage in battles.
+          <Text mt={2}> For each roll, whichever participant has the higher numbered die wins that roll.  Any ties result in a re-roll of both dice until the tie is eliminated.
 Attacking factions earn one of 60 Battle Card NFTs as a reward for each dice roll won.
 Separately, a player can burn 3 matching Battle Card NFTs in exchange for additional troops in the game.</Text>  
           <Text mt={2}> <strong>Skirmish</strong> - Battle attack continues for a more or less fixed set of rolls. User can select up to three (3) troops for the skirmish, and pays 20 Koban per troop.  Attack continues up to a maximum of the troop number selected.  If an attacker selects 3 troops for a skirmish, and the defender has 3 troops, then the dice are rolled three times. If the attacker wins 2 of the 3 rolls, then they also receive two Battle Cards, which they will need to subsequently claim.</Text>
