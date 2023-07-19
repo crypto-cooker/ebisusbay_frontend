@@ -244,6 +244,11 @@ export const ListingDrawer = () => {
         return;
       }
 
+      if (expressMode && batchListingCart.items.some((item) => item.quantity > 1)) {
+        toast.error('Express Mode unavailable for items with quantity greater than 1');
+        return;
+      }
+
       const nftFloorPrices = Object.entries(batchListingCart.extras).map(([k, v]) => {
         return { address: k, floorPrice: v.floorPrice }
       });
