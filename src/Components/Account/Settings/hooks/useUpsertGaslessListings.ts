@@ -14,6 +14,7 @@ export interface PendingListings {
   collectionAddress: string;
   tokenId: string;
   price: number;
+  amount: number;
   expirationDate: number;
   is1155: boolean;
 }
@@ -36,7 +37,7 @@ const useUpsertGaslessListings = () => {
     error: null,
   });
 
-  const [isLoadingListing, createListingSigner] = useCreateListingSigner();
+  const [_, createListingSigner] = useCreateListingSigner();
 
   const user = useAppSelector((state) => state.user);
 
@@ -96,6 +97,7 @@ const useUpsertGaslessListings = () => {
           listingTime: Math.round(new Date().getTime() / 1000),
           expirationDate: Math.round(pendingListing.expirationDate / 1000),
           salt: generator.uuid(),
+          amount: pendingListing.amount,
         };
 
         const {objectSignature, objectHash} = await createListingSigner(listingSignerProps);

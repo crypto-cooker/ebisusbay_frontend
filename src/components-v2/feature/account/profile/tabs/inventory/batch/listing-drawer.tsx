@@ -32,7 +32,6 @@ import {
 import Button from "@src/Components/components/Button";
 import {Spinner} from "react-bootstrap";
 import React, {ChangeEvent, useCallback, useRef, useState} from "react";
-import {useDispatch} from "react-redux";
 import {
   addToBatchListingCart,
   applyExpirationToAll,
@@ -68,6 +67,7 @@ import nextApiService from "@src/core/services/api-service/next";
 import ListingBundleDrawerForm, {
   ListingBundleDrawerFormHandle
 } from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-bundle-drawer-form";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const MAX_NFTS_IN_GAS_CART = 100;
@@ -204,6 +204,7 @@ export const ListingDrawer = () => {
       collectionAddress: item.nft.nftAddress,
       tokenId: item.nft.nftId,
       price: item.price!,
+      amount: item.quantity,
       expirationDate: new Date().getTime() + item.expiration!,
       is1155: item.nft.multiToken
     })))
@@ -268,13 +269,7 @@ export const ListingDrawer = () => {
 
     } catch (error: any) {
       console.log(error);
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
+      toast.error(parseErrorMessage(error));
     }
   }
 

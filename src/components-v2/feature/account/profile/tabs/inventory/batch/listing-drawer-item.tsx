@@ -12,6 +12,11 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   Select,
   Skeleton,
   Spacer,
@@ -25,6 +30,7 @@ import {
   removeFromBatchListingCart,
   setApproval,
   setExtras,
+  update1155Quantity,
   updateExpiration,
   updatePrice,
   UserBatchExtras,
@@ -36,13 +42,12 @@ import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
-import Link from "next/link";
 import {Button as ChakraButton} from "@chakra-ui/button";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
-import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
+import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
@@ -108,9 +113,12 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
   const user = useAppSelector((state) => state.user);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+
+  // Form values
   const [price, setPrice] = useState('');
   const [expirationDate, setExpirationDate] = useState(defaultExpiry.toString());
   const [invalid, setInvalid] = useState<string | boolean>(false);
+  const [quantity, setQuantity] = useState('1');
 
   // Approvals
   const extras = useAppSelector((state) => state.batchListing.extras[item.nft.nftAddress.toLowerCase()] ?? {});
@@ -121,6 +129,18 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
   const handleRemoveItem = () => {
     dispatch(removeFromBatchListingCart(item.nft));
   };
+
+  const handleQuantityChange = useCallback((newQuantity: string) => {
+    if (!numberRegexValidation.test(newQuantity)) {
+      setInvalid('quantity');
+      return;
+    } else if (item.nft.balance && Number(newQuantity) > Number(item.nft.balance)) {
+      setInvalid('quantity');
+      return;
+    }
+    setInvalid(false);
+    dispatch(update1155Quantity({ nft: item.nft, quantity: newQuantity }));
+  }, [dispatch, item.nft, quantity]);
 
   const handlePriceChange = useCallback((e: any) => {
     const newSalePrice = e.target.value;
@@ -152,6 +172,10 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
       setExpirationDate(item.expiration?.toString());
     }
   }, [item.expiration]);
+
+  useEffect(() => {
+    setQuantity(item.quantity?.toString() ?? '');
+  }, [item.quantity]);
 
   const checkApproval = async () => {
     const contract = new Contract(item.nft.nftAddress, ERC721, user.provider.getSigner());
@@ -234,9 +258,9 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
         </Box>
         <Box flex='1' ms={2} fontSize="14px">
           <VStack align="left" spacing={0}>
-            <Link href={`/collection/${item.nft.nftAddress}/${item.nft.nftId}`}>
+            {/*<Link href={`/collection/${item.nft.nftAddress}/${item.nft.nftId}`}>*/}
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
-            </Link>
+            {/*</Link>*/}
             <Skeleton isLoaded={!initializing}>
               {approvalStatus ? (
                 <>
@@ -254,6 +278,50 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                     </Box>
                   ) : !isBundling && (
                     <>
+                      <FormControl isInvalid={invalid === 'expiration'} mt={1}>
+                        <Stack direction="row" mt={1}>
+                          <Box fontSize='xs'>
+                            <Box>Qty</Box>
+                            <NumberInput
+                              placeholder="Qty"
+                              size="xs"
+                              value={quantity}
+                              min={1}
+                              max={item.nft.balance ?? 1}
+                              step={1}
+                              maxW='100px'
+                              onChange={(valueString) => handleQuantityChange(valueString)}
+
+                            >
+                              <NumberInputField />
+                              <NumberInputStepper>
+                                <NumberIncrementStepper />
+                                <NumberDecrementStepper />
+                              </NumberInputStepper>
+                            </NumberInput>
+                          </Box>
+                          <Box fontSize='xs' w='full'>
+                            <Box>Expiry</Box>
+                            <Select
+                              placeholder='Select expiration'
+                              size="xs"
+                              bg="transparent !important"
+                              onChange={handleExpirationDateChange}
+                              disabled={disabled}
+                              defaultValue={defaultExpiry.toString()}
+                              value={expirationDate}
+                            >
+                              {expirationDatesValues.map((time) => (
+                                <option key={time.value.toString()} value={time.value.toString()}>{time.label}</option>
+                              ))}
+                            </Select>
+                          </Box>
+                        </Stack>
+                        <FormErrorMessage fontSize='xs' mt={1}>Select a valid expiration.</FormErrorMessage>
+                      </FormControl>
+                      <Box fontSize='xs' mt={1}>
+                        Price (each)
+                      </Box>
                       <FormControl isInvalid={invalid === 'price'}>
                         <Stack direction="row">
                           <Input
@@ -292,26 +360,6 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                           </Menu>
                         </Stack>
                         <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
-                      </FormControl>
-
-                      <FormControl isInvalid={invalid === 'expiration'} mt={1}>
-                        <Stack direction="row">
-                          <Text>Expires</Text>
-                          <Select
-                            placeholder='Select expiration'
-                            size="xs"
-                            bg="transparent !important"
-                            onChange={handleExpirationDateChange}
-                            disabled={disabled}
-                            defaultValue={defaultExpiry.toString()}
-                            value={expirationDate}
-                          >
-                            {expirationDatesValues.map((time) => (
-                              <option key={time.value.toString()} value={time.value.toString()}>{time.label}</option>
-                            ))}
-                          </Select>
-                        </Stack>
-                        <FormErrorMessage fontSize='xs' mt={1}>Select a valid expiration.</FormErrorMessage>
                       </FormControl>
                     </>
                   )}
