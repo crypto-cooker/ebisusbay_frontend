@@ -39,7 +39,6 @@ import {commify} from "ethers/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
-import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
 import styled from "styled-components";
@@ -146,20 +145,20 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
                   <Td isNumeric>
                     <RichDataTableCell
                       value={siPrefixedNumber(collectionVolume(collection, timeFrame))}
-                      change={collection.volume1dIncrease}
+                      change={collectionDeltas(collection, timeFrame).volume}
                       isCroValue={true}
-                      showChange={timeFrame === '1d'}
+                      showChange={timeframeHasDelta(timeFrame)}
                     />
                   </Td>
                   <Td isNumeric>
                     <RichDataTableCell
                       value={siPrefixedNumber(collectionSales(collection, timeFrame))}
-                      change={collection.sales1dIncrease}
+                      change={collectionDeltas(collection, timeFrame).sales}
                       isCroValue={false}
-                      showChange={timeFrame === '1d'}
+                      showChange={timeframeHasDelta(timeFrame)}
                     />
                   </Td>
-                  <Td valign={timeFrame === '1d' ? 'top' : 'middle'} isNumeric>
+                  <Td valign={timeframeHasDelta(timeFrame) ? 'top' : 'middle'} isNumeric>
                     <RichDataTableCell
                       value={collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice ?? 0)) : 0}
                       change={0}
@@ -170,12 +169,12 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
                   <Td isNumeric>
                     <RichDataTableCell
                       value={siPrefixedNumber(collectionAveragePrices(collection, timeFrame))}
-                      change={collection.averageSalePrice1dIncrease}
+                      change={collectionDeltas(collection, timeFrame).avgPrice}
                       isCroValue={true}
-                      showChange={timeFrame === '1d'}
+                      showChange={timeframeHasDelta(timeFrame)}
                     />
                   </Td>
-                  <Td valign={timeFrame === '1d' ? 'top' : 'middle'} isNumeric>
+                  <Td valign={timeframeHasDelta(timeFrame) ? 'top' : 'middle'} isNumeric>
                     <RichDataTableCell
                       value={siPrefixedNumber(collection.numberActive)}
                       change={0}
@@ -196,18 +195,18 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
 const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollectionsTableProps, 'data' | 'timeFrame' | 'primarySort'>) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
-  const stats = (collection: any): {[key: string]: { field: string, value: number, displayValue: any, oneDayDelta?: number }} => ({
+  const stats = (collection: any): {[key: string]: { field: string, value: number, displayValue: any, delta?: number }} => ({
     totalvolume: {
       field: 'Volume',
       value: collectionVolume(collection, timeFrame),
       displayValue: siPrefixedNumber(collectionVolume(collection, timeFrame)),
-      oneDayDelta: Number(collection.volume1dIncrease)
+      delta: collectionDeltas(collection, timeFrame).volume
     },
     totalsales: {
       field: 'Sales',
       value: collectionSales(collection, timeFrame),
       displayValue: siPrefixedNumber(collectionSales(collection, timeFrame)),
-      oneDayDelta: Number(collection.sales1dIncrease)
+      delta: collectionDeltas(collection, timeFrame).sales
     },
     totalfloorprice: {
       field: 'Floor',
@@ -218,7 +217,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
       field: 'Avg',
       value: collectionAveragePrices(collection, timeFrame),
       displayValue: siPrefixedNumber(collectionAveragePrices(collection, timeFrame)),
-      oneDayDelta: Number(collection.averageSalePrice1dIncrease)
+      delta: collectionDeltas(collection, timeFrame).avgPrice
     },
     totalactive: {
       field: 'Active',
@@ -280,10 +279,10 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                           <Box fontWeight='bold'>{stats(collection)[primarySort as SortKeys].displayValue}</Box>
                         </HStack>
                       </StatNumber>
-                      {stats(collection)[primarySort as SortKeys].oneDayDelta! !== 0 && timeFrame === '1d' && !!primarySort && ['totalvolume', 'totalsales', 'totalaveragesaleprice'].includes(primarySort) && (
+                      {stats(collection)[primarySort as SortKeys].delta! !== 0 && timeframeHasDelta(timeFrame) && !!primarySort && ['totalvolume', 'totalsales', 'totalaveragesaleprice'].includes(primarySort) && (
                         <StatHelpText>
-                          <StatArrow type={stats(collection)[primarySort as SortKeys].oneDayDelta! > 0 ? 'increase' : 'decrease'} />
-                          {commify(round(stats(collection)[primarySort as SortKeys].oneDayDelta, 2))}%
+                          <StatArrow type={stats(collection)[primarySort as SortKeys].delta! > 0 ? 'increase' : 'decrease'} />
+                          {commify(round(stats(collection)[primarySort as SortKeys].delta, 2))}%
                         </StatHelpText>
                       )}
                     </Stat>
@@ -302,10 +301,10 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                         <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
                         <Text>{siPrefixedNumber(collectionVolume(collection, timeFrame))}</Text>
                       </HStack>
-                      {Number(collection.volume1dIncrease) !== 0 && timeFrame === '1d' && (
+                      {timeframeHasDelta(timeFrame) && collectionDeltas(collection, timeFrame).volume !== 0 && (
                         <Stat>
-                          <StatArrow type={Number(collection.volume1dIncrease) > 0 ? 'increase' : 'decrease'} />
-                          {commify(round(collection.volume1dIncrease))}%
+                          <StatArrow type={collectionDeltas(collection, timeFrame).volume > 0 ? 'increase' : 'decrease'} />
+                          {commify(round(collectionDeltas(collection, timeFrame).volume))}%
                         </Stat>
                       )}
                     </Stack>
@@ -314,10 +313,10 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                     <Stack spacing={0}>
                       <Text fontWeight='bold'>Sales</Text>
                       <Text>{siPrefixedNumber(collectionSales(collection, timeFrame))}</Text>
-                      {Number(collection.sales1dIncrease) !== 0 && timeFrame === '1d' && (
+                      {timeframeHasDelta(timeFrame) && collectionDeltas(collection, timeFrame).sales !== 0 && (
                         <Stat>
-                          <StatArrow type={Number(collection.sales1dIncrease) > 0 ? 'increase' : 'decrease'} />
-                          {commify(round(collection.sales1dIncrease))}%
+                          <StatArrow type={collectionDeltas(collection, timeFrame).sales > 0 ? 'increase' : 'decrease'} />
+                          {commify(round(collectionDeltas(collection, timeFrame).sales))}%
                         </Stat>
                       )}
                     </Stack>
@@ -342,10 +341,10 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                         <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
                         <Box>{siPrefixedNumber(collectionAveragePrices(collection, timeFrame))}</Box>
                       </HStack>
-                      {Number(collection.averageSalePrice1dIncrease) !== 0 && timeFrame === '1d' && (
+                      {timeframeHasDelta(timeFrame) && collectionDeltas(collection, timeFrame).avgPrice !== 0 && (
                         <Stat>
-                          <StatArrow type={Number(collection.averageSalePrice1dIncrease) > 0 ? 'increase' : 'decrease'} />
-                          {commify(round(collection.averageSalePrice1dIncrease))}%
+                          <StatArrow type={collectionDeltas(collection, timeFrame).avgPrice > 0 ? 'increase' : 'decrease'} />
+                          {commify(round(collectionDeltas(collection, timeFrame).avgPrice))}%
                         </Stat>
                       )}
                     </Stack>
@@ -418,6 +417,34 @@ const collectionAveragePrices = (collection: any, timeFrame: string | null) => {
   if (timeFrame === '30d') return Math.round(Math.round(collection.averageSalePrice30d));
   return 0;
 };
+
+const collectionDeltas = (collection: any, timeFrame: string | null) => {
+  if (timeFrame === '1d') {
+    return {
+      volume: Number(collection.volume1dIncrease),
+      sales: Number(collection.sales1dIncrease),
+      avgPrice: Number(collection.averageSalePrice1dIncrease),
+    }
+  }
+
+  if (timeFrame === '7d') {
+    return {
+      volume: Number(collection.volume7dIncrease),
+      sales: Number(collection.sales7dIncrease),
+      avgPrice: Number(collection.averageSalePrice7dIncrease),
+    }
+  }
+
+  return {
+    volume: 0,
+    sales: 0,
+    avgPrice: 0,
+  }
+};
+
+const timeframeHasDelta = (timeFrame: string | null) => {
+  return ['1d', '7d'].includes(timeFrame ?? '');
+}
 
 const VerifiedIcon = styled.span`
   font-size: 8px;

@@ -47,6 +47,7 @@ const useGetCollections = () => {
           averageSalePrice7d: collection.stats?.total?.avgSalePrice7d,
           averageSalePrice30d: collection.stats?.total?.avgSalePrice30d,
           averageSalePrice1dIncrease: collection.stats?.total?.avgSalePrice1d_increase,
+          averageSalePrice7dIncrease: collection.stats?.total?.avgSalePrice7d_increase,
           collection: collection.address,
           floorPrice: collection.stats?.total?.floorPrice,
           listable: collection.listable,
@@ -59,6 +60,7 @@ const useGetCollections = () => {
           sales7d: collection.stats?.total?.sales7d,
           sales30d: collection.stats?.total?.sales30d,
           sales1dIncrease: collection.stats?.total?.sales1d_increase,
+          sales7dIncrease: collection.stats?.total?.sales7d_increase,
           slug: collection.slug,
           totalFees: collection.stats?.total?.fee,
           totalRoyalties: collection.stats?.total?.royalty,
@@ -67,6 +69,7 @@ const useGetCollections = () => {
           volume7d: collection.stats?.total?.volume7d,
           volume30d: collection.stats?.total?.volume30d,
           volume1dIncrease: collection.stats?.total?.volume1d_increase,
+          volume7dIncrease: collection.stats?.total?.volume7d_increase,
           multiToken: collection.multiToken,
           verification: collection.verification
         };
