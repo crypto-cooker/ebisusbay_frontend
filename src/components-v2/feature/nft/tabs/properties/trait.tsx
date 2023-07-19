@@ -48,10 +48,10 @@ const Trait = ({
     <Box h='full'>
       <Box className="nft_attr">
         <Heading as='h5'>{humanize(title)}</Heading>
-        {collectionSlug && queryKey && value ? (
+        {(collectionSlug || collectionAddress) && queryKey && value ? (
           <Link
             href={{
-              pathname: `/collection/${collectionSlug}`,
+              pathname: `/collection/${collectionSlug ?? collectionAddress}`,
               query: { [queryKey]: JSON.stringify({ [title]: [value.toString()] }) },
             }}
           >
