@@ -287,7 +287,7 @@ const AttackLog = ({battleLog}: LogProps) => {
       >
         <VStack justifySelf='center' spacing='0'>
           <Text>{battleLog.entity1.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity1.image).avatar()} size='lg' />
+          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
         
         <VStack justifySelf='center' justifyContent="center">
@@ -297,7 +297,7 @@ const AttackLog = ({battleLog}: LogProps) => {
 
         <VStack justifySelf='center' spacing='0'>
           <Text>{battleLog.entity2.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity2.image).avatar()} size='lg' />
+          <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
       </Grid>
     </>
@@ -356,7 +356,7 @@ const DefendLog = ({battleLog}: LogProps) => {
       >
         <VStack justifySelf='center' spacing='0'>
           <Text>{battleLog.entity1.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity1.image).avatar()} size='lg' />
+          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
         
         <VStack justifySelf='center' justifyContent="center">
@@ -366,7 +366,7 @@ const DefendLog = ({battleLog}: LogProps) => {
 
         <VStack justifySelf='center' spacing='0'>
           <Text>{battleLog.entity2.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity2.image).avatar()} size='lg' />
+          <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
       </Grid>
     </>
@@ -425,7 +425,7 @@ const DeployLog = ({battleLog}: LogProps) => {
       >
         <VStack justifySelf='center' spacing='0'>
           <Text>{battleLog.entity1.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity1.image).avatar()} size='lg' />
+          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
         
         <VStack justifySelf='center' justifyContent="center">
@@ -435,7 +435,7 @@ const DeployLog = ({battleLog}: LogProps) => {
 
         <VStack justifySelf='center' spacing='0'>
           <Text>{battleLog.entity2.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity2.image).avatar()} size='lg' />
+          <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
       </Grid>
     </>
@@ -493,7 +493,7 @@ const DelegateLog = ({battleLog}: LogProps) => {
       >
         <VStack justifySelf='center' spacing='0'>
           <Text>{battleLog.entity1.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity1.image).avatar()} size='lg' />
+          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
         
         <VStack justifySelf='center' justifyContent="center">
@@ -503,7 +503,7 @@ const DelegateLog = ({battleLog}: LogProps) => {
 
         <VStack justifySelf='center' spacing='0'>
           <Text>{battleLog.entity2.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity2.image).avatar()} size='lg' />
+          <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
         </VStack>
       </Grid>
     </>
