@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {Box, Grid, GridItem, Text, useMediaQuery, VStack} from "@chakra-ui/react"
+import {Box, Grid, GridItem, Image, Text, useMediaQuery, VStack} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
@@ -111,18 +111,18 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
           }}
         >
           {isMobile ? (
-            <NextImage
+            <Image
               alt="Izanami's Cradle: Land Deeds"
               src={ImageService.translate('/img/ryoshi-dynasties/announcements/ballies-sm.webp').convert()}
-              width={408}
-              height={334}
+              w={408}
+              h={334}
             />
           ) : (
-            <NextImage
+            <Image
               alt="Ballies Cheerleaders"
               src={ImageService.translate('/img/ryoshi-dynasties/announcements/ballies2.webp').convert()}
-              width={590}
-              height={150}
+              w={590}
+              h={150}
             />
           )}
         </Box>
