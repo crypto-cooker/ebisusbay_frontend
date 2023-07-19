@@ -211,7 +211,8 @@ const LandDrop = ({drop}: LandDropProps) => {
         const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
         const allowance = await fortuneContract.allowance(user.address, drop.address);
         if (allowance.sub(finalCost) < 0) {
-          await fortuneContract.approve(drop.address, constants.MaxUint256);
+          const approvalTx = await fortuneContract.approve(drop.address, constants.MaxUint256);
+          await approvalTx.wait();
         }
 
         const response = await mintContract.mintWithToken(numToMint);
@@ -242,6 +243,7 @@ const LandDrop = ({drop}: LandDropProps) => {
 
         await retrieveDropInfo();
       } catch (error: any) {
+        console.log(error);
         Sentry.captureException(error);
         toast.error(parseErrorMessage(error));
       } finally {
