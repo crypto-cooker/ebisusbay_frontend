@@ -14017,7 +14017,7 @@
       "multiToken": false,
       "address": "0x2F29a990DCf380632b15893Cc8435eD9C1C88544",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A Collection of 4420 PFPs to hit our Cronos blockchains, with planned donations to clinics, Holder Royalties pay outs, exclusive holder competitions, custom merch, app development and potential business investment opportunity for our O.G 4420 Buds holders, as well as plenty of live team chats! Our team is excited to bring you all along with us! let's better our medicinal cannabis industry 1 Bud at a time we look forward to providing greatness to our CroFam and the world.\nWe have planned an app development to help link patients, doctors and clinics to full cultivator information (what's used in the process, THC/CBD info, also trying to help recognizing the various cultivars and terpenes with DNA as well to optimize therapy outcomes.\n\nFuture plans for Buds is an import/export licensing to help regulate a more affordable medicinal option on our Aussie market, with the full potential to explore possible Cultivation licensing in the future! \n\nLets Break The Stigma!",
         "avatar": "/img/collections/buds/avatar.webp",
@@ -27621,7 +27621,7 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/buds/drop.webp",
         "banner": "/img/drops/buds/banner.webp",
