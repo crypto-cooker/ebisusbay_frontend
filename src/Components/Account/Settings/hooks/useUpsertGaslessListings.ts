@@ -10,20 +10,13 @@ import {useAppSelector} from "@src/Store/hooks";
 
 const generator = UUID(0);
 
-export interface PendingListings {
+export interface PendingListing {
   collectionAddress: string;
   tokenId: string;
   price: number;
   amount: number;
   expirationDate: number;
   is1155: boolean;
-}
-
-interface ListingCandidate {
-  itemType: string;
-  salt: string;
-  listingTime: number;
-  expirationDate: number;
 }
 
 type ResponseProps = {
@@ -41,7 +34,7 @@ const useUpsertGaslessListings = () => {
 
   const user = useAppSelector((state) => state.user);
 
-  const upsertGaslessListings = async (pendingListings: PendingListings[]) => {
+  const upsertGaslessListings = async (pendingListings: PendingListing[] | PendingListing) => {
     if (!Array.isArray(pendingListings)) pendingListings = [pendingListings];
 
     setResponse({
@@ -53,7 +46,7 @@ const useUpsertGaslessListings = () => {
     // Get any existing listings
     const listingsResponse = await NextApiService.getAllListingsByUser(user.address!);
     const existingListings = listingsResponse.data.filter((eListing) => {
-      return pendingListings.some((pListing) => {
+      return (pendingListings as Array<PendingListing>).some((pListing) => {
         return caseInsensitiveCompare(eListing.nftAddress, pListing.collectionAddress) &&
           eListing.nftId.toString() === pListing.tokenId.toString();
       })
@@ -90,7 +83,7 @@ const useUpsertGaslessListings = () => {
         }
 
         const listingSignerProps: ListingSignerProps = {
-          price: pendingListing.price.toString(),
+          price: (pendingListing.price * pendingListing.amount).toString(),
           itemType: itemTypes[pendingListing.collectionAddress],
           collectionAddress: pendingListing.collectionAddress,
           tokenId: pendingListing.tokenId,

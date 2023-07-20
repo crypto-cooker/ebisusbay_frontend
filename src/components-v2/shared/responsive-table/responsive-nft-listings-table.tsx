@@ -109,7 +109,7 @@ const DataTableLg = ({data, onAddToCart}: ResponsiveNftListingsTableProps) => {
                 </Link>
               </Td>
               <Td textAlign='end'>
-                <PrimaryButton onClick={onAddToCart}>
+                <PrimaryButton onClick={() => onAddToCart(entity)}>
                   Add to Cart
                 </PrimaryButton>
               </Td>

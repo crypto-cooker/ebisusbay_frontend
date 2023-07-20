@@ -134,7 +134,8 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
       expirationDate: listing.expirationDate ?? null,
       seller: listing.seller ?? null,
       listingTime:  listing.listingTime ?? null,
-      is1155: listing.is1155
+      is1155: listing.is1155,
+      amount: listing.amount
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };
@@ -251,7 +252,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                 </Link>
               )}
               <Link href={`/collection/${listing.collection.slug}/${listing.nftId}`}>
-                <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}</Heading>
+                <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}{listing.amount > 1 ? ` (x${listing.amount})` : ''}</Heading>
               </Link>
 
               <Tooltip label="Listing Price" placement='top-start'>

@@ -280,26 +280,27 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                     <>
                       <FormControl isInvalid={invalid === 'expiration'} mt={1}>
                         <Stack direction="row" mt={1}>
-                          <Box fontSize='xs'>
-                            <Box>Qty</Box>
-                            <NumberInput
-                              placeholder="Qty"
-                              size="xs"
-                              value={quantity}
-                              min={1}
-                              max={item.nft.balance ?? 1}
-                              step={1}
-                              maxW='100px'
-                              onChange={(valueString) => handleQuantityChange(valueString)}
-
-                            >
-                              <NumberInputField />
-                              <NumberInputStepper>
-                                <NumberIncrementStepper />
-                                <NumberDecrementStepper />
-                              </NumberInputStepper>
-                            </NumberInput>
-                          </Box>
+                          {item.nft.balance && item.nft.balance > 1 && (
+                            <Box fontSize='xs'>
+                              <Box>Qty</Box>
+                              <NumberInput
+                                placeholder="Qty"
+                                size="xs"
+                                value={quantity}
+                                min={1}
+                                max={item.nft.balance ?? 1}
+                                step={1}
+                                maxW='100px'
+                                onChange={(valueString) => handleQuantityChange(valueString)}
+                              >
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                  <NumberIncrementStepper />
+                                  <NumberDecrementStepper />
+                                </NumberInputStepper>
+                              </NumberInput>
+                            </Box>
+                          )}
                           <Box fontSize='xs' w='full'>
                             <Box>Expiry</Box>
                             <Select

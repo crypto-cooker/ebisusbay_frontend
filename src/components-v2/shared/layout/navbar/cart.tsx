@@ -198,6 +198,8 @@ const Cart = function () {
   useEffect(() => {
     let fees = 0;
     const totalPrice = cart.nfts.reduce((total, nft) => {
+      if (!nft.price) return total;
+
       const numericPrice = parseInt(nft.price);
       let amt = numericPrice;
 
@@ -282,7 +284,7 @@ const Cart = function () {
                             </Link>
                           )}
                           {nft.amount && (
-                            <Text>Qty: {nft.amount}</Text>
+                            <Text fontSize='sm'>Pack of {nft.amount}</Text>
                           )}
                           {nft.rank && (
                             <Box>
