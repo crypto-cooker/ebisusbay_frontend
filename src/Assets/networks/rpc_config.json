@@ -21671,7 +21671,7 @@
       "name": "Barber Shop",
       "slug": "barber-shop",
       "multiToken": false,
-      "address": "",
+      "address": "0x262915dea2203a3483eaD96a4F22eF932aa932Bf",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -29007,7 +29007,7 @@
         "twitter": "https://twitter.com/teammustachios",
         "discord": "https://discord.gg/eH4SCJY5Qw"
       },
-      "address": "",
+      "address": "0x262915dea2203a3483eaD96a4F22eF932aa932Bf",
       "maxMintPerTx": 40,
       "maxMintPerAddress": 2222,
       "totalSupply": 2222,
