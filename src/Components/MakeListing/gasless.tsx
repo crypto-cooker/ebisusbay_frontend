@@ -96,6 +96,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const [expirationDate, setExpirationDate] = useState({ type: 'dropdown', value: new Date().getTime() + 2592000000 });
   const [floorPrice, setFloorPrice] = useState(0);
   const [priceError, setPriceError] = useState<string | null>(null);
+  const [quantityError, setQuantityError] = useState<string | null>(null);
   const [royalty, setRoyalty] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState<string>('1');
@@ -252,6 +253,11 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   }
 
   const validateInput = () => {
+    if (nft.balance > 1 && (Number(quantity) < 1 || Number(quantity) > nft.balance)) {
+      setQuantityError('Quantity out of range');
+      return false;
+    }
+
     if (!salePrice || salePrice < 1) {
       setPriceError('Value must be greater than zero');
       return false;
@@ -322,7 +328,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                             <ChakraButton {...inc}>+</ChakraButton>
                           </HStack>
                           <Form.Text className="field-description textError">
-                            {priceError}
+                            {quantityError}
                           </Form.Text>
                         </Form.Group>
                       )}
