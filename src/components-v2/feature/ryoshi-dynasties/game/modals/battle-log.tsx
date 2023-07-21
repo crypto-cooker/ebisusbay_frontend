@@ -188,7 +188,6 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
                                border="1px solid #F48F0C"
                           >
                             <Text fontSize={14} marginTop={-8} marginBottom={2}>{ParseTimestamp(logEntry.date)}</Text>
-
                             {logEntry.event === "ATTACK" ? (
                                 <AttackLog battleLog={logEntry} key={itemIndex}/>
                             ) : logEntry.event === "DEFEND" ? (
@@ -197,6 +196,8 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
                                     <DeployLog battleLog={logEntry} key={itemIndex}/>
                             ) : logEntry.event === "DELEGATE" ? (
                               <DelegateLog battleLog={logEntry} key={itemIndex}/>
+                            ) : logEntry.event === "ADJUSTMENT" ? (
+                              <AdjustmentLog battleLog={logEntry} key={itemIndex}/>
                             ) :
                             logEntry.event === "UNDELEGATE" && (
                               <UndelegateLog battleLog={logEntry} key={itemIndex}/>
@@ -566,6 +567,74 @@ const UndelegateLog = ({battleLog}: LogProps) => {
         
         <VStack justifySelf='center' justifyContent="center">
           <Text marginBottom={-2}>UNDELEGATE</Text>
+          <ArrowForwardIcon/>
+        </VStack>
+
+        <VStack justifySelf='center' spacing='0'>
+          <Text>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+          <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
+        </VStack>
+      </Grid>
+    </>
+  )
+}
+const AdjustmentLog = ({battleLog}: LogProps) => {
+  return (
+    <>
+      <Box
+        // position='absolute'
+        boxSize='20px'
+        marginTop={-6}
+        marginLeft={-12}
+        rounded='full'
+        zIndex={1}
+        _groupHover={{
+          cursor: 'pointer'
+        }}
+        data-group
+      >
+        <Button
+          bg='#C17109'
+          rounded='full'
+          border='4px solid #F48F0C'
+          w={8}
+          h={10}
+          _groupHover={{
+            bg: '#de8b08',
+            borderColor: '#f9a50b',
+          }}
+        >
+          <ArrowForwardIcon />
+        </Button>
+      </Box>
+
+
+      <HStack justifyContent={"space-between"}>
+        <Text as='b' fontSize={16}>Adjusted {battleLog.currentTroops-battleLog.pastTroops} {pluralize(battleLog.currentTroops -battleLog.pastTroops, 'troop')}</Text>
+         <VStack justifyContent="center" spacing='0'>
+           <HStack justifyContent={"space-between"}>
+             <Text>{battleLog.pastTroops}</Text>
+             <ArrowForwardIcon/>
+             <Text as='b'>{battleLog.currentTroops}</Text>
+           </HStack>
+         </VStack>
+       </HStack>
+
+      <Grid
+        marginTop={4}
+        marginBottom={4}
+        h='100px'
+        templateRows='repeat(1, 1fr)'
+        templateColumns='repeat(3, 1fr)'
+        gap={4}
+      >
+        <VStack justifySelf='center' spacing='0'>
+          <Text>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
+          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
+        </VStack>
+        
+        <VStack justifySelf='center' justifyContent="center">
+          <Text marginBottom={-2}>ADJUSTMENT</Text>
           <ArrowForwardIcon/>
         </VStack>
 
