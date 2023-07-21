@@ -111,18 +111,18 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
           }}
         >
           {isMobile ? (
-            <Image
+            <NextImage
               alt="Ballies Cheerleaders"
               src={ImageService.translate('/img/ryoshi-dynasties/announcements/ballies-sm.webp').convert()}
-              w={408}
-              h={334}
+              width={408}
+              height={334}
             />
           ) : (
             <Image
               alt="Ballies Cheerleaders"
               src={ImageService.translate('/img/ryoshi-dynasties/announcements/ballies2.webp').convert()}
-              w={590}
-              h={150}
+              width={590}
+              height={150}
             />
           )}
         </Box>
