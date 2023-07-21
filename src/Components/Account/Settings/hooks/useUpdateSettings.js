@@ -30,7 +30,8 @@ const useUpdateSettings = () => {
     }
     if (signatureInStorage) {
       try {
-        const fetchResponse = await updateProfile(userInfo, signatureInStorage, address);
+        const cleanedInput = removeNullAndUndefinedFields(userInfo);
+        const fetchResponse = await updateProfile(cleanedInput, signatureInStorage, address);
 
         if (userAvatar?.profilePicture[0]?.file?.name) {
           const formData = new FormData();
@@ -66,6 +67,12 @@ const useUpdateSettings = () => {
       });
     }
   };
+
+  const removeNullAndUndefinedFields = (obj) => {
+    return Object.entries(obj)
+      .filter(([_, value]) => value !== null && value !== undefined)
+      .reduce((newObj, [key, value]) => Object.assign(newObj, {[key]: value}), {});
+  }
 
   return [requestUpdateSettings, response];
 };
