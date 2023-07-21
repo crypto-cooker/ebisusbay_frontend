@@ -1,49 +1,32 @@
-import React, {useMemo} from 'react';
+import React, {useMemo} from "react";
+import {useInfiniteQuery} from "@tanstack/react-query";
+import {Center, Spinner} from "@chakra-ui/react";
 import ResponsiveNftListingsTable, {
   SortKeys
 } from "@src/components-v2/shared/responsive-table/responsive-nft-listings-table";
-import {addToCart, openCart} from "@src/GlobalState/cartSlice";
-import {toast} from "react-toastify";
-import {createSuccessfulAddCartContent} from "@src/utils";
-import {useDispatch} from "react-redux";
-import {useInfiniteQuery} from "@tanstack/react-query";
+import InfiniteScroll from "react-infinite-scroll-component";
 import useGetNftListings from "@src/components-v2/feature/nft/hooks/useGetNftListings";
 import {ListingState} from "@src/core/services/api-service/types";
-import {Center, Spinner} from "@chakra-ui/react";
-import InfiniteScroll from "react-infinite-scroll-component";
 
-interface ListingsProps {
-  nft: any;
+interface HistoryTabProps {
+  address: string;
+  tokenId: string;
 }
 
-const ListingsTab = ({ nft }: ListingsProps) => {
-  const dispatch = useDispatch();
+const HistoryTab = ({address, tokenId}: HistoryTabProps) => {
   const [filters, getNftListings, changeFilters] = useGetNftListings({
-    collection: [nft.nftAddress],
-    tokenId: [nft.nftId],
-    state: ListingState.ACTIVE,
-    sortBy: 'listingTime',
+    collection: [address],
+    tokenId: [tokenId],
+    state: ListingState.SOLD,
+    sortBy: 'saleTime',
     direction: 'desc'
   });
 
-  const handleAddToCart = (listing: any) => {
-    if (!listing || !listing.listingId) return;
-
-    dispatch(addToCart({
-      listingId: listing.listingId,
-      name: nft.name,
-      image: nft.image,
-      price: listing.price,
-      address: listing.nftAddress,
-      id: listing.nftId,
-      rank: nft.rank,
-      amount: listing.amount
-    }));
-    toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
-  };
-
   const fetcher = ({ pageParam = 1}) => {
-    return getNftListings({page: pageParam});
+    return getNftListings({
+      state: ListingState.SOLD,
+      page: pageParam
+    });
   }
 
   const {
@@ -53,7 +36,7 @@ const ListingsTab = ({ nft }: ListingsProps) => {
     hasNextPage,
     status,
   } = useInfiniteQuery(
-    ['NftListings', filters],
+    ['NftHistory', filters],
     fetcher,
     {
       getNextPageParam: (lastPage, pages) => {
@@ -85,13 +68,12 @@ const ListingsTab = ({ nft }: ListingsProps) => {
         data={data}
         onSort={sortCollections}
         primarySort={filters.sortBy as SortKeys}
-        onAddToCart={handleAddToCart}
       />
     )
   }, [data, status]);
 
   return (
-    <div className='listing-tab'>
+    <div className="listing-tab tab-3 onStep fadeIn">
       {status === 'loading' || (data && data.pages[0]?.data.length > 0) ? (
         <InfiniteScroll
           dataLength={data?.pages ? data.pages.flat().length : 0}
@@ -108,11 +90,11 @@ const ListingsTab = ({ nft }: ListingsProps) => {
         </InfiniteScroll>
       ) : (
         <>
-          <span>No listings found for this item</span>
+          <span>No history found for this item</span>
         </>
       )}
     </div>
-  );
+  )
 }
 
-export default ListingsTab;
+export default HistoryTab;

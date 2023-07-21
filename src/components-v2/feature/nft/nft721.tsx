@@ -41,12 +41,10 @@ import {
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   shortAddress,
-  timeSince,
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
 import {specialImageTransform} from '@src/hacks';
-import ListingItem from './tabs/listings/item';
 import PriceActionBar from './price-action-bar';
 import {ERC721} from '@src/Contracts/Abis';
 import {getFilteredOffers} from '@src/core/subgraph';
@@ -85,6 +83,7 @@ import ImageService from "@src/core/services/image";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferType} from "@src/core/services/api-service/types";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
+import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
 
 const config = appConfig();
 const tabs = {
@@ -116,12 +115,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   const currentListing = useAppSelector((state) => state.nft.currentListing);
-  const listingHistory = useAppSelector((state) =>
-    state.nft.history.filter((i: any) => i.state === 1).sort((a: any, b: any) => (a.saleTime < b.saleTime ? 1 : -1))
-  );
-
   const powertraits = useAppSelector((state) => state.nft.nft?.powertraits);
-
 
   const collectionStats = useAppSelector((state) => state.collection.stats);
 
@@ -863,25 +857,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                       )}
                       {currentTab === tabs.history && (
                         <div className="listing-tab tab-3 onStep fadeIn">
-                          {listingHistory && listingHistory.length > 0 ? (
-                            <>
-                              {listingHistory.map((listing: any, index: number) => (
-                                <ListingItem
-                                  key={`sold-item-${index}`}
-                                  route="/account"
-                                  primaryTitle="Bought by"
-                                  user={listing.purchaser}
-                                  time={timeSince(listing.saleTime)}
-                                  price={ethers.utils.commify(listing.price)}
-                                  primaryText={shortAddress(listing.purchaser)}
-                                />
-                              ))}
-                            </>
-                          ) : (
-                            <>
-                              <span>No history found for this item</span>
-                            </>
-                          )}
+                          <HistoryTab address={address} tokenId={id} />
                         </div>
                       )}
 
