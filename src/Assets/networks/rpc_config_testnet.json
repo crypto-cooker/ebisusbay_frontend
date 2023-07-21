@@ -3627,6 +3627,31 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "JAFC-Comics",
+      "slug": "jafc-comics",
+      "multiToken": false,
+      "address": "0xaBb614A25e2e77B6FdecdA172a6806a3D61E472B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/jafc-comics/avatar.webp",
+        "card": "/img/collections/jafc-comics/card.webp",
+        "banner": "/img/collections/jafc-comics/banner.webp",
+        "website": "https://medium.com/@jungleanimalfc",
+        "twitter": "https://twitter.com/JAFC_nft",
+        "discord": "https://discord.gg/W3HwbZUwfr",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -8677,6 +8702,44 @@
       },
       "verification": {
         "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 177,
+      "slug": "jafc-comics",
+      "title": "JAFC-Comics",
+      "subtitle": "Introducing ROAD TO GOAT - a comic by JAFC COMICS on the cronos chain. The covers come as a free mint. Enjoy the stunning hand-drawn art of Keeve Neo,  read our medium article and join our community.",
+      "description": "",
+      "author": {
+        "name": "JAFC Comics",
+        "website": "https://medium.com/@jungleanimalfc",
+        "twitter": "https://twitter.com/JAFC_nft",
+        "discord": "https://discord.gg/W3HwbZUwfr"
+      },
+      "address": "0xaBb614A25e2e77B6FdecdA172a6806a3D61E472B",
+      "maxMintPerTx": 1,
+      "maxMintPerAddress": 1,
+      "totalSupply": 2500,
+      "cost": "0",
+      "memberCost": "0",
+      "foundersOnly": false,
+      "start": 1689920290000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/jafc-comics/drop.webp",
+        "banner": "/img/collections/jafc-comics/banner.webp",
+        "avatar": "/img/collections/jafc-comics/avatar.webp",
+        "preview": "/img/collections/jafc-comics/card.webp"
+      },
+      "verification": {
+        "doxx": false,
         "kyc": true,
         "escrow": false,
         "verified": true

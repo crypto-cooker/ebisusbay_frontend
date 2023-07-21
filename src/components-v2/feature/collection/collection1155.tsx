@@ -6,7 +6,7 @@ import Blockies from 'react-blockies';
 import CollectionListingsGroup from '../../../Components/components/CollectionListingsGroup';
 import LayeredIcon from '../../../Components/components/LayeredIcon';
 import {fetchListings, getStats, init, updateTab} from '@src/GlobalState/collectionSlice';
-import {isCrosmocraftsPartsCollection} from '@src/utils';
+import {isBundle, isCrosmocraftsPartsCollection} from '@src/utils';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {CollectionSortOption} from '@src/Components/Models/collection-sort-option.model';
 import CollectionInfoBar from '@src/Components/components/CollectionInfoBar';
@@ -23,10 +23,12 @@ import {useAppSelector} from "@src/Store/hooks";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import useGetStakingPlatform from "@src/hooks/useGetStakingPlatform";
 import ImageService from "@src/core/services/image";
+import CollectionBundlesGroup from "@src/Components/components/CollectionBundlesGroup";
 
 
 const tabs = {
   items: 'items',
+  bundles: 'bundles',
   activity: 'activity'
 };
 
@@ -233,6 +235,11 @@ const Collection1155 = ({ collection, tokenId, query, activeDrop = null }: Colle
             <li id="Mainbtn0" className={`tab ${openMenu === tabs.items ? 'active' : ''}`}>
               <span onClick={handleBtnClick(tabs.items)}>Items</span>
             </li>
+            {!isBundle(collection.address) && (
+              <li className={`tab ${openMenu === tabs.bundles ? 'active' : ''} my-1`}>
+                <span onClick={handleBtnClick(tabs.bundles)}>Bundles</span>
+              </li>
+            )}
             <li id="Mainbtn1" className={`tab ${openMenu === tabs.activity ? 'active' : ''}`}>
               <span onClick={handleBtnClick(tabs.activity)}>Activity</span>
             </li>
@@ -272,6 +279,13 @@ const Collection1155 = ({ collection, tokenId, query, activeDrop = null }: Colle
                     )}
                   </div>
                 </div>
+              </div>
+            )}
+            {openMenu === tabs.bundles && (
+              <div className="tab-2 onStep fadeIn container">
+                <CollectionBundlesGroup
+                  collection={collection}
+                />
               </div>
             )}
             {openMenu === tabs.activity && (

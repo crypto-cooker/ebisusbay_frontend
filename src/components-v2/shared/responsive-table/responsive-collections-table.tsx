@@ -275,7 +275,9 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                       <StatLabel>{stats(collection)[primarySort as SortKeys].field}</StatLabel>
                       <StatNumber>
                         <HStack spacing={1} h="full" justify='end'>
-                          <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                          {!['totalsales', 'totalactive'].includes(primarySort ?? '') && (
+                            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                          )}
                           <Box fontWeight='bold'>{stats(collection)[primarySort as SortKeys].displayValue}</Box>
                         </HStack>
                       </StatNumber>

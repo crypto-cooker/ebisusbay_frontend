@@ -126,8 +126,8 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
     if (signatureInStorage) {
       try {
         const data = await getFactionOwned(user.address.toLowerCase(), signatureInStorage);
-
-        if(data.data.data)
+        // console.log("data.data.data", data.data.data)
+        if(data.data.data?.isEnabled)
         {
           setHasFaction(true)
           setPlayerFaction(data.data.data)
@@ -216,7 +216,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
     if (signatureInStorage) {
       try {
         setIsExecuting(true);
-        console.log("deploying troops")
+        // console.log("deploying troops")
         var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
         // console.log("factionId", factionId)
         // console.log("selectedQuantity", selectedQuantity)
@@ -253,7 +253,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
     if (signatureInStorage) {
       try {
           setIsExecuting(true);
-          console.log("recalling troops")
+          // console.log("recalling troops")
           // console.log("rdContext", rdContext?.game?.game.id)
           var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
           // console.log("user.address", user.address?.toLowerCase())
@@ -299,7 +299,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
     GetPlayerTroops();
   }, [user.address])
   useEffect(() => {
-    console.log('allFactions', allFactions);
+    // console.log('allFactions', allFactions);
   }, [allFactions]);
   return (
     <Flex flexDirection='column' textAlign='center'justifyContent='space-around'>
