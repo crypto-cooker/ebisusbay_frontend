@@ -14,14 +14,15 @@ import {useFortunePrice} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 
 const config = appConfig();
+const currentGameId = 42;
 
 const Rewards = () => {
   const user = useAppSelector(state => state.user);
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
 
   const {data, error, status,} = useQuery(
-    ['RewardsCollections'],
-    () => ApiService.withoutKey().getRewardedEntities(41),
+    ['RewardsCollections', currentGameId],
+    () => ApiService.withoutKey().getRewardedEntities(currentGameId),
     {
       staleTime: 30,
       cacheTime: 35,
