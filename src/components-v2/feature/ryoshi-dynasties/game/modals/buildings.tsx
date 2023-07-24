@@ -46,16 +46,16 @@ const Buildings = ({isOpenBuildings, onCloseBuildings, buildingButtonRef, setEle
     <Drawer
         isOpen={isOpenBuildings}
         // placement={{base:'bottom', sm:'right'}}
-        placement='top'
+        placement='bottom'
         onClose={onCloseBuildings}
         finalFocusRef={buildingButtonRef}
         size='xs'
       >
-        <DrawerContent w={'1200px'}>
+        <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Zoom to Building</DrawerHeader>
           <DrawerBody >
-            <SimpleGrid column={1} w={'150px'}>
+            <SimpleGrid columns={{base: 2, sm: 3}} w={{base: '300px', sm: '500px'}}>
             {buildingButtons}
 
             </SimpleGrid>

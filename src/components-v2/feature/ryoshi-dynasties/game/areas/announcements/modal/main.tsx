@@ -214,7 +214,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
             mt={2}
             w='full'
             maxW='200px'
-            fontSize={{base: 'sm', sm: 'md'}}
+            fontSize={{base: '12px', sm: 'md'}}
             onClick={onOpenDailyCheckin}
           >
             {canClaim ? 'Claim Now!' : 'Claim in ' + timer}
@@ -226,7 +226,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               mt={2}
               w='full'
               maxW='200px'
-              fontSize={{base: 'sm', sm: 'md'}}
+              fontSize={{base: '12px', sm: 'md'}}
               onClick={handleShowLeaderboard}
             >
               View Leaderboards
