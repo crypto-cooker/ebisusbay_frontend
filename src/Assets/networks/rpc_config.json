@@ -21525,7 +21525,7 @@
       "multiToken": false,
       "address": "0x9E38e9FE0b613be34F1826A5a3d63d9759d29873",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Ballies Cheerleaders are the new assets in the Ballies Metaverse. They are a set of 3333 completely unique basketball characters algorithmically generated from over 140 hand-drawn traits. They are amazing collectibles as well as super strong game assets. They have rarity skills to influence the Ballie's game and give you the advantage on the Meta-court. Own a Cheerleader Ballie and live out your basketball dream! Become the KING of the Meta-Court! Do you have what it takes?",
         "avatar": "/img/collections/ballies-cheerleaders/avatar.webp",
@@ -28984,7 +28984,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/ballies-cheerleaders/drop.webp",
         "banner": "/img/collections/ballies-cheerleaders/banner.webp",
