@@ -68,7 +68,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const [barracksOpen, setBarracksOpen] = useState(false);
   const [portalOpen, setPortalOpen] = useState(false);
   const [marketOpen, setMarketOpen] = useState(false);
-  
+  const [dimensionsLoaded, setDimensionsLoaded] = useState(false);
+
   // const [buildingOpen, setBuildingOpen] = useState(false);
 
   const buildingButtonRef = useRef<any>(null)
@@ -407,6 +408,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const [barracks_labelTop, setbarracks_labelTop] = useState<number | string>(buildings.barracks_label.width);
   const [barracks_labelLeft, setbarracks_labelLeft] = useState<number | string>(buildings.barracks_label.height);
 
+  const [mapInitialized, setMapInitialized] = useState(false);
+
 //#endregion
 
   useEffect(() => {
@@ -534,11 +537,10 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   }, []);
 
   useEffect(() => {
-    if(!transformComponentRef?.current) return;
+    if(!transformComponentRef?.current || !mapInitialized || !dimensionsLoaded) return;
     setElementToZoomTo('fancyMenu'); 
-  }, [transformComponentRef?.current]);
-
-  const [mapInitialized, setMapInitialized] = useState(false);
+  }, [transformComponentRef?.current, mapInitialized, dimensionsLoaded]);
+  
   // const mapScale = useBreakpointValue(
   //   {base: 0.4, sm: 0.6, md: 0.7, lg: 0.8, xl: 0.9, '2xl': 1},
   //   {fallback: 'lg'}
@@ -647,6 +649,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       useMap="#image-map"
                       className={`${styles.mapImageArea}`}
                       id="fancyMenu"
+                      onLoad={() => setDimensionsLoaded(true)}
                     />
                     <map name="image-map">
                     </map>
