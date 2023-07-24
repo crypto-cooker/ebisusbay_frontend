@@ -131,7 +131,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         nftId: nft.nftId,
         image: nft.image,
         rank: nft.rank,
-        multiplier,
+        multiplier: multiplier + 1,
         adder: adder + idBonus,
         isAlreadyStaked: false
       }]);
@@ -209,7 +209,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
             nftId: token.tokenId,
             image: nft.nft.image,
             rank: nft.nft.rank,
-            multiplier,
+            multiplier: multiplier + 1,
             adder: adder + idBonus,
             isAlreadyStaked:  true
           })
