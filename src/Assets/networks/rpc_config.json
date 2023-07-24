@@ -28994,7 +28994,7 @@
       "verification": {
         "doxx": false,
         "kyc": true,
-        "escrow": true,
+        "escrow": false,
         "verified": true
       }
     },
