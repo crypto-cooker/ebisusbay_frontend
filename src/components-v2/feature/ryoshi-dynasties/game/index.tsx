@@ -14,6 +14,7 @@ import GameSync from "@src/components-v2/feature/ryoshi-dynasties/game/game-sync
 import ImagePreloader from "@src/components-v2/feature/ryoshi-dynasties/game/image-preloader";
 import {InlineModalContext} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/inline-modal-context";
 import {Box} from "@chakra-ui/react";
+import DynastiesLands from "./areas/lands";
 
 const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | null}) => {
   const user = useAppSelector((state) => state.user);
@@ -61,6 +62,8 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
               <AllianceCenter onClose={returnToPreviousPage} />
             ) : currentPage === 'academy' ? (
               <Academy onBack={returnToPreviousPage} />
+            ) : currentPage === 'lands' ? (
+              <DynastiesLands onBack={returnToPreviousPage} />
               // ): currentPage === 'announcementBoard' ? (
               // <AnnouncementBoard onBack={returnToPreviousPage} />
             ) : (!currentPage || currentPage === 'village') && (
