@@ -13269,6 +13269,9 @@
         },
         {
           "id": 21
+        },
+        {
+          "id": 22
         }
       ],
       "address": "0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14",
@@ -22179,6 +22182,79 @@
         "twitter": "https://twitter.com/Zoodles_NFTs",
         "discord": "https://discord.gg/RqgJDr6fSw",
         "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Fantasy Rainbow Creatures",
+      "slug": "fantasy-rainbow-creatures",
+      "multiToken": false,
+      "address": "0x858a5e38BdEE7C6AB39A5c640a2849D23FDAae18",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of Rainbow Creatures nfts from the amazing Ai artist AngelusBoBsAiNFTs  Buy any 5 NFTs and claim a free 3d card Threads of Crypto August 1st from my discord. Threads of crypto special edition also give a free 3d card",
+        "avatar": "/img/collections/fantasy-rainbow-creatures/avatar.webp",
+        "twitter": "https://twitter.com/AngelusbobRh",
+        "discord": "https://discord.gg/QHrzqSn9Rf",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Demons N Gremlins",
+      "slug": "demons-n-gremlins",
+      "multiToken": false,
+      "address": "0x64DebA62D33A8DeE96F72cbA3Fa7349Ae8e319bD",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of Gremlins nfts from the amazing Ai artist AngelusBoBsAiNFTs  Buy any 5 NFTs and claim a free 3d card Threads of Crypto August 1st from my discord. Threads of crypto special edition also give a free 3d card",
+        "avatar": "/img/collections/demons-n-gremlins/avatar.webp",
+        "card": "/img/collections/demons-n-gremlins/card.webp",
+        "banner": "/img/collections/demons-n-gremlins/banner.webp",
+        "twitter": "https://twitter.com/AngelusbobRh",
+        "discord": "https://discord.gg/QHrzqSn9Rf",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Alien Creatures",
+      "slug": "alien-creatures",
+      "multiToken": false,
+      "address": "0x076085A7E5Aa07e04B2B25229fB9307b0BF48f3d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of Alien Creatures NFTs by AngelusBoBsAiNFTs  Buy any 5 NFTs and claim a 3d Staking Threads of Crypto",
+        "avatar": "/img/collections/alien-creatures/avatar.webp",
+        "card": "/img/collections/alien-creatures/card.webp",
+        "banner": "/img/collections/alien-creatures/banner.webp",
+        "twitter": "https://twitter.com/AngelusbobRh",
+        "discord": "https://discord.gg/QHrzqSn9Rf",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
       },
       "verification": {
         "verified": false,

@@ -205,16 +205,7 @@ const StakingNftCard = ({
             p={2}
           >
             <div className="d-flex justify-content-between">
-              <Box
-                _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
-                visibility="hidden"
-              >
-                {isStaked ? (
-                  <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onAdd}>Unstake</Text>
-                ) : canStake && (
-                  <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onAdd}>Stake</Text>
-                )}
-              </Box>
+              <Spacer />
               <MenuPopup options={getOptions()}>
                 <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
               </MenuPopup>
