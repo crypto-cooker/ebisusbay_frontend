@@ -28984,7 +28984,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": true,
+      "complete": false,
       "images": {
         "drop": "/img/drops/ballies-cheerleaders/drop.webp",
         "banner": "/img/collections/ballies-cheerleaders/banner.webp",
