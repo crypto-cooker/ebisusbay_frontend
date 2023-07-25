@@ -57,27 +57,28 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     scale: 1,
   });
   const [area, setAreas] = useState<ReactElement[]>([]);
-  const [mapInitialized, setMapInitialized] = useState(true);
+  const [mapInitialized, setMapInitialized] = useState(false);
   const [plotId, setPlotId] = useState(0);
 
   const loadPoints = () => {
     setAreas(
       myData.vectors.map((point: any, i :number) => (
-      <area 
-          onClick={() => {
-            console.log('i', i),
-            onOpen();
-          }}
-          coords={`${point.x},${point.y},20`} 
-          shape="circle" 
-          alt= {point}
-          className='cursor-pointer'
-          href="venus.htm"
-          />
+      <Text
+       position="absolute"
+        fontSize={10}
+        width={10}
+        height={1}
+        left={point.x}
+        top={1662 - point.y}
+        zIndex="10"
+        onClick={() => {
+                setPlotId(i);
+                onOpen();
+              }}
+        >{i}</Text>
       )))
     
-    //set points
-    //set mapInitialized to true
+    setMapInitialized(true);
   }
 
   useEffect(() => {
@@ -161,9 +162,10 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
                    id="fancyMenu"
                 />
                 <map name="imageMap" > 
-                  {area} 
+                  {/* {area}  */}
                 </map>
                 <Flex position="absolute" zIndex="0" width="100%" height="100%">
+                {area}
                 {/* <div className={gothamCondBlack.className}>
                   <div className={styles.water}></div>
                   <div id='beach' className={[styles.buccaneer_beach, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Buccaneer Beach")}>
