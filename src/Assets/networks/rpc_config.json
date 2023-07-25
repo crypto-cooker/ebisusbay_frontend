@@ -22261,6 +22261,28 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "The Cronos Night Owls",
+      "slug": "the-cronos-night-owls",
+      "multiToken": false,
+      "address": "0xe2cAB6655F33192F174781206c123C5B605480f4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Night Owls offer an enchanting and engaging experience for NFT collectors and Web3 explorers alike. Each Night Owl from the 5555 piece collection, possesses a distinct attribute, artistic story, and irresistible visuals making them highly valuable and sought after within the digital art realm. On top of their artwork they individually come with their own utility and perks that you can benefit from by holding Night Owl NFTs and being a part of the community.",
+        "avatar": "/img/collections/the-cronos-night-owls/avatar.webp",
+        "card": "/img/collections/the-cronos-night-owls/card.webp",
+        "banner": "/img/collections/the-cronos-night-owls/banner.webp",
+        "twitter": "https://twitter.com/CronosNightOwls",
+        "discord": "https://discord.gg/8BrbdbGzbm",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
