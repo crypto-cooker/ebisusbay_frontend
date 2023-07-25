@@ -145,7 +145,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
             initialPositionX={mapProps?.initialPosition.x}
             initialPositionY={mapProps?.initialPosition.y}
             minScale={mapProps?.minScale}
-            maxScale={1}
+            maxScale={2.5}
             >
             {(utils) => (
               <React.Fragment>

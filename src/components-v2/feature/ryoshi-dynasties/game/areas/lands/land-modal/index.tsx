@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {Box, Center, Flex, Text,} from "@chakra-ui/react"
+import {Box, Center, Flex, Text, VStack,} from "@chakra-ui/react"
 import {Spinner} from 'react-bootstrap';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
@@ -73,12 +73,16 @@ const LandModal = ({ isOpen, onClose, plotId}: LandModalFormProps) => {
         <HelpPage />
       ) : (
         <>
-          <Center>
+          <VStack>
             <Text
               as='i'
               marginBottom='2'
-            > Region:, Total Control Bonus:  </Text>
-          </Center>
+            > You are loading the land at {plotId.toString()} </Text>
+            <Text
+              as='i'
+              marginBottom='2'
+            > Owner: ' ' </Text>
+          </VStack>
 
           {!isLoading ? (
             <>
@@ -93,7 +97,7 @@ const LandModal = ({ isOpen, onClose, plotId}: LandModalFormProps) => {
                         padding={{base: '0 10px', sm: '0 20px'}}
                         margin={{base: '0 5px', sm: '0 10px'}}
                       >
-                        Leaders
+                        Action
                       </RdTabButton>
                     </Flex>
                   </Center>
