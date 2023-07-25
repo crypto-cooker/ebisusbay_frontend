@@ -11,7 +11,7 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle, round} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -146,7 +146,8 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   }, [executingCreateListing, showConfirmButton, floorPrice, setSalePrice, isBelowFloorPrice]);
 
   const getYouReceiveViewValue = () => {
-    return salePrice ? salePrice - (salePrice * (royalty / 100)) : 0;
+    const qty = quantity ? Number(quantity) : 1;
+    return round(salePrice ? (salePrice - (salePrice * (royalty / 100))) * qty : 0, 2);
   };
 
   useEffect(() => {
@@ -433,6 +434,10 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       </Form.Group>
                     </Box>
                     <Box>
+                      <div className="fee">
+                        <span>Total Listing Price: </span>
+                        <span>{Number(salePrice ?? 0) * (quantity ? Number(quantity) : 1)} CRO</span>
+                      </div>
                       <div className="fee">
                         <span>Royalty Fee: </span>
                         <span>{royalty} %</span>
