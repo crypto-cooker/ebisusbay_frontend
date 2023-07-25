@@ -16,7 +16,7 @@ import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
 import ControlPointModal from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point';
 import ImageService from '@src/core/services/image';
-import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/hud";
+import {LandsHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-hud";
 import {useAppSelector} from "@src/Store/hooks";
 
 import {appConfig} from "@src/Config";
@@ -60,12 +60,24 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   const [mapInitialized, setMapInitialized] = useState(false);
   const [plotId, setPlotId] = useState(0);
 
+  //zoomin
+  const [elementToZoomTo, setElementToZoomTo] = useState("");
+  useEffect(() => {
+    if (transformComponentRef.current) {
+      const { zoomToElement } = transformComponentRef.current as any;
+      zoomToElement(elementToZoomTo);
+      setPlotId(Number(elementToZoomTo));
+      onOpen();
+    }
+  }, [elementToZoomTo]);
+
   const loadPoints = () => {
     setAreas(
       myData.vectors.map((point: any, i :number) => (
       <Text
        position="absolute"
-        fontSize={10}
+        id={i.toString()}
+        fontSize={8}
         width={10}
         height={1}
         left={point.x}
@@ -180,7 +192,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               )}
             </TransformWrapper>
         )}
-        <BattleMapHUD onBack={onBack}/>
+        <LandsHUD onBack={onBack} setElementToZoomTo={setElementToZoomTo}/>
       </Box>
     </section>
   )
