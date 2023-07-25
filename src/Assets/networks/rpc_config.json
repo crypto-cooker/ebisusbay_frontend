@@ -22053,7 +22053,7 @@
       }
     },
     {
-      "name": "Threads Of Crypto 3D Trading Cards",
+      "name": "Threads Of Crypto 3D AngelusBoBsAiNFTs",
       "slug": "threads-of-crypto-3d-trading-cards",
       "multiToken": false,
       "address": "0x352a53fa866043d91e7Ee016F1Cbe76F1EFB1d7f",
@@ -22064,6 +22064,30 @@
         "avatar": "/img/collections/threads-of-crypto-3d-trading-cards/avatar.webp",
         "card": "/img/collections/threads-of-crypto-3d-trading-cards/card.webp",
         "banner": "/img/collections/threads-of-crypto-3d-trading-cards/banner.webp",
+        "twitter": "https://twitter.com/AngelusbobRh",
+        "discord": "https://discord.gg/YfT2CUfjxV",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Threads Of Crypto 2D AngelusBoBsAiNFTs",
+      "slug": "threads-of-crypto-2d-angelusbobsainfts",
+      "multiToken": false,
+      "address": "0x6627B04918269357eC6d15543cf4F6836bfc2EeB",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Threads Of Crypto Hunt for the Mythical, Secret and Ultimate rares. Buy 8 - Claim a free 3D one",
+        "avatar": "/img/collections/threads-of-crypto-2d-angelusbobsainfts/avatar.webp",
+        "card": "/img/collections/threads-of-crypto-2d-angelusbobsainfts/card.webp",
         "twitter": "https://twitter.com/AngelusbobRh",
         "discord": "https://discord.gg/YfT2CUfjxV",
         "categories": [
