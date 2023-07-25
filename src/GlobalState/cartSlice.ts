@@ -15,9 +15,11 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const itemToAdd = action.payload;
-      state.nfts.push(itemToAdd);
-      addToCartInStorage(itemToAdd.listingId, itemToAdd);
-      state.shouldPrompt = state.nfts.length === 1;
+      if (!state.nfts.some((nft) => nft.listingId === itemToAdd.listingId)) {
+        state.nfts.push(itemToAdd);
+        addToCartInStorage(itemToAdd.listingId, itemToAdd);
+        state.shouldPrompt = state.nfts.length === 1;
+      }
     },
     removeFromCart: (state, action) => {
       const listingId = action.payload;

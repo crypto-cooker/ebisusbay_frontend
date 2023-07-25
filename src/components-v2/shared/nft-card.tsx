@@ -128,7 +128,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
       price: listing.price,
       address: nft.address,
       id: nft.id,
-      rank: nft.rank
+      rank: nft.rank,
+      amount: listing.amount
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };

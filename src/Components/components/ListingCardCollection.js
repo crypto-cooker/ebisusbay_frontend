@@ -131,7 +131,8 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
       price: listing.price,
       address: listing.nftAddress,
       id: listing.nftId,
-      rank: listing.nft.rank
+      rank: listing.nft.rank,
+      amount: listing.amount
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };
@@ -228,7 +229,7 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
             {listing.nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>}
             <Flex direction='column' justify='space-between' px={2} py={1}>
               <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
-                <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}</Heading>
+                <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}{listing.amount > 1 ? ` (x${listing.amount})` : ''}</Heading>
               </Link>
 
               <Tooltip label="Listing Price" placement='top-start'>
