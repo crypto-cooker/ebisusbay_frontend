@@ -89,7 +89,10 @@ export const LandsHUD = ({onBack, setElementToZoomTo}: BattleMapHUDProps) => {
               </NumberInput>
             <RdButton
               pointerEvents={'auto'}
-              onClick={() => validateEntry()}>
+              onClick={() => validateEntry()}
+              h={10}
+              fontSize={'sm'}
+              >
               Search
             </RdButton>
           </Flex>

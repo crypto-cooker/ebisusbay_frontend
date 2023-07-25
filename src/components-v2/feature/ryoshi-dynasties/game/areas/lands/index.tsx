@@ -13,15 +13,12 @@ import {
 } from '@chakra-ui/react'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
-
-import ControlPointModal from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point';
 import ImageService from '@src/core/services/image';
 import {LandsHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-hud";
 import {useAppSelector} from "@src/Store/hooks";
 
 import {appConfig} from "@src/Config";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
-import styles from "./style.module.css";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
@@ -31,8 +28,6 @@ import {
   RyoshiDynastiesPreloaderProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/preloader-context";
 import localFont from "next/font/local";
-import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import LandModal from './land-modal';
 import myData from './points.json';
 
@@ -49,6 +44,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   const config = appConfig();
   const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const transformComponentRef = useRef<any>(null)
+  const previousElementToZoomTo = useRef<any>(null)
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [zoomState, setZoomState] = useState({
@@ -69,6 +65,10 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       setPlotId(Number(elementToZoomTo));
       onOpen();
     }
+    // if(previousElementToZoomTo !== elementToZoomTo){
+    //   // previousElementToZoomTo.
+    //   setPreviousElementToZoomTo(elementToZoomTo);
+    // }
   }, [elementToZoomTo]);
 
   const loadPoints = () => {
@@ -76,6 +76,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       myData.vectors.map((point: any, i :number) => (
       <Text
        position="absolute"
+       textColor={'#aaa'}
         id={i.toString()}
         fontSize={8}
         width={10}
@@ -84,9 +85,10 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
         top={1662 - point.y}
         zIndex="10"
         onClick={() => {
-                setPlotId(i);
-                onOpen();
-              }}
+          setElementToZoomTo(i.toString());
+          setPlotId(i);
+          onOpen();
+        }}
         >{i}</Text>
       )))
     
