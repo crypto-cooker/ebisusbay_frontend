@@ -4,7 +4,6 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Badge, Form, Spinner} from "react-bootstrap";
-import {useSelector} from "react-redux";
 import {Contract} from "ethers";
 import Button from "@src/Components/components/Button";
 import {getCollectionMetadata} from "@src/core/api";
@@ -18,7 +17,9 @@ import {collectionRoyaltyPercent} from "@src/core/chain";
 import {
   Box,
   Button as ChakraButton,
-  Flex, HStack, Input,
+  Flex,
+  HStack,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -268,6 +269,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       return false;
     }
 
+    setQuantityError(null);
     setPriceError(null);
     return true;
   }

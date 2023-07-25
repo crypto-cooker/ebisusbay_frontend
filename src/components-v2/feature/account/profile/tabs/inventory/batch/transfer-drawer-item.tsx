@@ -3,11 +3,17 @@ import {
   Badge,
   Box,
   Flex,
+  FormControl,
   Image,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   Skeleton,
   Stack,
   Text,
@@ -19,6 +25,7 @@ import {
   removeFromBatchListingCart,
   setApproval,
   setExtras,
+  update1155Quantity,
   UserBatchExtras,
   UserBatchItem
 } from "@src/GlobalState/user-batch";
@@ -31,12 +38,13 @@ import {Button as ChakraButton} from "@chakra-ui/button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
-import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
+import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
 
 const config = appConfig();
+const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
 interface TransferDrawerItemProps {
   item: UserBatchItem;
@@ -54,9 +62,25 @@ const TransferDrawerItem = ({ item, onAddCollection }: TransferDrawerItemProps) 
   const [executingApproval, setExecutingApproval] = useState(false);
   const [initializing, setInitializing] = useState(false);
 
+  // Form values
+  const [invalid, setInvalid] = useState<string | boolean>(false);
+  const [quantity, setQuantity] = useState('1');
+
   const handleRemoveItem = () => {
     dispatch(removeFromBatchListingCart(item.nft));
   };
+
+  const handleQuantityChange = useCallback((newQuantity: string) => {
+    if (!numberRegexValidation.test(newQuantity)) {
+      setInvalid('quantity');
+      return;
+    } else if (item.nft.balance && Number(newQuantity) > Number(item.nft.balance)) {
+      setInvalid('quantity');
+      return;
+    }
+    setInvalid(false);
+    dispatch(update1155Quantity({ nft: item.nft, quantity: Number(newQuantity || 1) }));
+  }, [dispatch, item.nft, quantity]);
 
   const checkApproval = async () => {
     const contract = new Contract(item.nft.nftAddress, ERC721, user.provider.getSigner());
@@ -103,6 +127,10 @@ const TransferDrawerItem = ({ item, onAddCollection }: TransferDrawerItemProps) 
     func();
   }, []);
 
+  useEffect(() => {
+    setQuantity(item.quantity?.toString() ?? '');
+  }, [item.quantity]);
+
   return (
     <Box
       key={`${item.nft.nftAddress}-${item.nft.nftId}`}
@@ -138,7 +166,29 @@ const TransferDrawerItem = ({ item, onAddCollection }: TransferDrawerItemProps) 
             </Link>
             <Skeleton isLoaded={!initializing}>
               {approvalStatus && canTransfer ? (
-                <></>
+                <FormControl isInvalid={invalid === 'quantity'} mt={1}>
+                  {item.nft.balance && item.nft.balance > 1 && (
+                    <Box fontSize='xs'>
+                      <Box>Qty</Box>
+                      <NumberInput
+                        placeholder="Qty"
+                        size="xs"
+                        value={quantity}
+                        min={1}
+                        max={item.nft.balance ?? 1}
+                        step={1}
+                        maxW='100px'
+                        onChange={(valueString) => handleQuantityChange(valueString)}
+                      >
+                        <NumberInputField />
+                        <NumberInputStepper>
+                          <NumberIncrementStepper />
+                          <NumberDecrementStepper />
+                        </NumberInputStepper>
+                      </NumberInput>
+                    </Box>
+                  )}
+                </FormControl>
               ) : !canTransfer ? (
                 <Box>
                   <Badge variant='outline' colorScheme='red'>

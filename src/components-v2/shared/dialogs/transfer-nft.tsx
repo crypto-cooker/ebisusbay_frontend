@@ -1,6 +1,5 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {Form, Spinner} from "react-bootstrap";
-import {useSelector} from "react-redux";
 import {Contract} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
@@ -12,29 +11,44 @@ import {specialImageTransform} from "@src/hacks";
 import {ERC1155, ERC721} from "@src/Contracts/Abis";
 import {getCnsAddress, isCnsName} from "@src/helpers/cns";
 import {
+  Button as ChakraButton,
+  HStack,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay
+  ModalOverlay,
+  useNumberInput
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import {is1155} from "@src/helpers/chain";
+import {parseErrorMessage} from "@src/helpers/validator";
+import {useAppSelector} from "@src/Store/hooks";
 
-export default function TransferNftDialog({ isOpen, nft, onClose }) {
-  const [recipientAddress, setRecipientAddress] = useState(null);
-  const [fieldError, setFieldError] = useState(false);
+interface TransferNftDialogProps {
+  isOpen: boolean;
+  nft: any;
+  onClose: () => void;
+}
+
+export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftDialogProps) {
+  const [recipientAddress, setRecipientAddress] = useState<string>();
+  const [fieldError, setFieldError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [executingTransferNft, setExecutingTransferNft] = useState(false);
   const [executingCnsLookup, setExecutingCnsLookup] = useState(false);
+  const [quantity, setQuantity] = useState<string>('1');
+  const [quantityError, setQuantityError] = useState<string | null>(null);
+  const [showConfirmButton, setShowConfirmButton] = useState(false);
 
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
-  const onChangeAddress = useCallback((e) => {
-    const newSalePrice = e.target.value.toString();
-    setRecipientAddress(newSalePrice)
+  const onChangeAddress = useCallback((e: any) => {
+    const newRecipientAddress = e.target.value.toString();
+    setRecipientAddress(newRecipientAddress)
   }, [setRecipientAddress, recipientAddress]);
 
   useEffect(() => {
@@ -52,22 +66,17 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
       setFieldError(null);
 
       setIsLoading(false);
-    } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
+    } catch (error: any) {
       console.log(error);
+      toast.error(parseErrorMessage(error));
     }
   };
 
-  const handleTransfer = async (e) => {
-    e.preventDefault();
-    if (!validateInput()) return;
+  const handleMaxQuantity = () => {
+    setQuantity(nft.balance.toString());
+  }
 
+  const handleTransfer = async () => {
     try {
       const nftAddress = nft.address ?? nft.nftAddress;
       const nftId = nft.id ?? nft.nftId;
@@ -92,7 +101,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
       let tx;
       if (await is1155(nftAddress)) {
         const contract = new Contract(nftAddress, ERC1155, user.provider.getSigner());
-        tx = await contract.safeTransferFrom(user.address, targetAddress, nftId, 1, []);
+        tx = await contract.safeTransferFrom(user.address, targetAddress, nftId, quantity, []);
       } else {
         const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
         tx = await contract.safeTransferFrom(user.address, targetAddress, nftId);
@@ -103,28 +112,56 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
       setExecutingTransferNft(false);
       onClose();
     } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
+      console.log(error);
+      toast.error(parseErrorMessage(error));
     } finally {
       setExecutingTransferNft(false);
       setExecutingCnsLookup(false);
     }
   };
 
+  const processTransferRequest = async (e: ChangeEvent<HTMLButtonElement>) => {
+    if (!validateInput()) return;
+
+    if (Number(quantity || 1) > 1) {
+      setShowConfirmButton(true);
+    } else {
+      await handleTransfer();
+    }
+  }
+
   const validateInput = () => {
+    if (nft.balance > 1 && (Number(quantity) < 1 || Number(quantity) > nft.balance)) {
+      setQuantityError('Quantity out of range');
+      return false;
+    }
+
     if (!recipientAddress || (!recipientAddress.endsWith('.cro') && !recipientAddress.startsWith('0x'))) {
       setFieldError('Please enter a valid Cronos address or CNS name');
       return false;
     }
 
+    setQuantityError(null);
     setFieldError(null);
     return true;
   }
+
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+    useNumberInput({
+      step: 1,
+      defaultValue: 1,
+      min: 1,
+      max: nft.balance,
+      precision: 0,
+      value: quantity,
+      onChange(valueAsString, valueAsNumber) {
+        setQuantity(valueAsString);
+      },
+      isDisabled: showConfirmButton || executingTransferNft
+    })
+  const inc = getIncrementButtonProps()
+  const dec = getDecrementButtonProps()
+  const input = getInputProps()
 
   if (!nft) return <></>;
 
@@ -151,6 +188,24 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
                   />
                 </div>
                 <div className="col-12 col-sm-8 my-auto">
+                  {nft.balance > 1 && (
+                    <Form.Group className="mb-3">
+                      <Form.Label className="formLabel">
+                        Quantity (up to {nft.balance})
+                      </Form.Label>
+                      <HStack>
+                        <ChakraButton {...dec}>-</ChakraButton>
+                        <Input {...input} />
+                        <ChakraButton {...inc}>+</ChakraButton>
+                        <ChakraButton minW='65px' onClick={handleMaxQuantity}>
+                          Max
+                        </ChakraButton>
+                      </HStack>
+                      <Form.Text className="field-description textError">
+                        {quantityError}
+                      </Form.Text>
+                    </Form.Group>
+                  )}
                   <div className="mt-4 mt-sm-0 mb-3 mb-sm-0">
                     <Form.Group className="form-field">
                       <Form.Label className="formLabel w-100">
@@ -162,37 +217,62 @@ export default function TransferNftDialog({ isOpen, nft, onClose }) {
                         placeholder="Address or CNS name"
                         value={recipientAddress}
                         onChange={onChangeAddress}
-                        disabled={executingTransferNft}
+                        disabled={showConfirmButton || executingTransferNft}
                       />
                       <Form.Text className="field-description textError">
                         {fieldError}
                       </Form.Text>
                     </Form.Group>
                   </div>
-                  {nft.multiToken && (
-                    <div className="text-center my-3 text-muted" style={{fontSize: '14px'}}>
-                      This is a CRC-1155 token. Tokens of this type are limited to a quantity of one per transaction at this time
-                    </div>
-                  )}
                 </div>
               </div>
             </ModalBody>
             <ModalFooter className="border-0">
               <div className="w-100">
-                {executingTransferNft && (
-                  <div className="mb-2 text-center fst-italic">
-                    <small>Please check your wallet for confirmation</small>
-                  </div>
+                {showConfirmButton ? (
+                  <>
+                    <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
+                      {quantity} items selected. Do you wish to continue?
+                    </div>
+                    {executingTransferNft && (
+                      <div className="mb-2 text-center fst-italic">
+                        <small>Please check your wallet for confirmation</small>
+                      </div>
+                    )}
+                    <div className="d-flex">
+                      <Button type="legacy"
+                              onClick={() => setShowConfirmButton(false)}
+                              disabled={executingTransferNft}
+                              className="me-2 flex-fill">
+                        Go Back
+                      </Button>
+                      <Button type="legacy-outlined"
+                              onClick={handleTransfer}
+                              isLoading={executingTransferNft || executingCnsLookup}
+                              disabled={executingTransferNft || executingCnsLookup}
+                              className="flex-fill">
+                        Continue
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {executingTransferNft && (
+                      <div className="mb-2 text-center fst-italic">
+                        <small>Please check your wallet for confirmation</small>
+                      </div>
+                    )}
+                    <div className="d-flex">
+                      <Button type="legacy"
+                              onClick={processTransferRequest}
+                              isLoading={executingTransferNft || executingCnsLookup}
+                              disabled={executingTransferNft || executingCnsLookup}
+                              className="flex-fill">
+                        Confirm Transfer
+                      </Button>
+                    </div>
+                  </>
                 )}
-                <div className="d-flex">
-                  <Button type="legacy"
-                          onClick={handleTransfer}
-                          isLoading={executingTransferNft || executingCnsLookup}
-                          disabled={executingTransferNft || executingCnsLookup}
-                          className="flex-fill">
-                    Confirm Transfer
-                  </Button>
-                </div>
               </div>
             </ModalFooter>
           </>
