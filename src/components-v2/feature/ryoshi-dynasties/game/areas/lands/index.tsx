@@ -13,26 +13,21 @@ import {
 } from '@chakra-ui/react'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
-
-import ControlPointModal from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point';
 import ImageService from '@src/core/services/image';
-import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/hud";
+import {LandsHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-hud";
 import {useAppSelector} from "@src/Store/hooks";
 
-import {appConfig} from "@src/Config";
+// import {appConfig} from "@src/Config";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
-import styles from "./style.module.css";
-import {
-  RyoshiDynastiesContext,
-  RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {
-  RyoshiDynastiesPreloaderContext,
-  RyoshiDynastiesPreloaderProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/preloader-context";
+// import {
+//   RyoshiDynastiesContext,
+//   RyoshiDynastiesContextProps
+// } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+// import {
+//   RyoshiDynastiesPreloaderContext,
+//   RyoshiDynastiesPreloaderProps
+// } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/preloader-context";
 import localFont from "next/font/local";
-import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import LandModal from './land-modal';
 import myData from './points.json';
 
@@ -43,12 +38,13 @@ interface BattleMapProps {
 }
 
 const DynastiesLands = ({onBack}: BattleMapProps) => {
-  const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
+  // const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
 
   const user = useAppSelector(state => state.user);
-  const config = appConfig();
-  const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  // const config = appConfig();
+  // const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const transformComponentRef = useRef<any>(null)
+  // const previousElementToZoomTo = useRef<any>(null)
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [zoomState, setZoomState] = useState({
@@ -60,22 +56,40 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   const [mapInitialized, setMapInitialized] = useState(false);
   const [plotId, setPlotId] = useState(0);
 
+  //zoomin
+  const [elementToZoomTo, setElementToZoomTo] = useState("");
+  useEffect(() => {
+    if (transformComponentRef.current) {
+      const { zoomToElement } = transformComponentRef.current as any;
+      zoomToElement(elementToZoomTo);
+      setPlotId(Number(elementToZoomTo)+1);
+      onOpen();
+    }
+    // if(previousElementToZoomTo !== elementToZoomTo){
+    //   // previousElementToZoomTo.
+    //   setPreviousElementToZoomTo(elementToZoomTo);
+    // }
+  }, [elementToZoomTo]);
+
   const loadPoints = () => {
     setAreas(
       myData.vectors.map((point: any, i :number) => (
       <Text
-       position="absolute"
-        fontSize={10}
-        width={10}
-        height={1}
+        position="absolute"
+        textAlign="center"
+        textColor={'#aaa'}
+        cursor="pointer"
+        id={i.toString()}
+        fontSize={8}
+        width={6}
+        height={3}
         left={point.x}
         top={1662 - point.y}
         zIndex="10"
         onClick={() => {
-                setPlotId(i);
-                onOpen();
-              }}
-        >{i}</Text>
+          setElementToZoomTo((i).toString());
+        }}
+        >{i+1}</Text>
       )))
     
     setMapInitialized(true);
@@ -127,13 +141,10 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
 
   return (
     <section>
-      <LandModal 
-        isOpen={isOpen} 
-        onClose={onClose}
-        plotId={plotId}
-        />
-      <Box
-        position='relative' h='calc(100vh - 74px)'
+      <Box 
+        h='600px'
+        marginBottom={'30'}
+        position='relative' 
         backgroundImage={ImageService.translate(`/img/ryoshi-dynasties/village/background-${user.theme}.png`).convert()}
         backgroundSize='cover'
       >
@@ -145,7 +156,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
             initialPositionX={mapProps?.initialPosition.x}
             initialPositionY={mapProps?.initialPosition.y}
             minScale={mapProps?.minScale}
-            maxScale={1}
+            maxScale={2.5}
             >
             {(utils) => (
               <React.Fragment>
@@ -155,7 +166,8 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
                 <Box
                   as='img'
                   //  src={'/img/ryoshi-dynasties/lands/emptyIsland.png'}
-                   src={getPreloadedImage(ImageService.translate('/img/ryoshi-dynasties/lands/emptyIsland.png').custom({width: 2048, height: 1662}))}
+                   src={ImageService.translate('/img/ryoshi-dynasties/lands/emptyIsland.png').custom({width: 2048, height: 1662})}
+                   //  src={getPreloadedImage(ImageService.translate('/img/ryoshi-dynasties/lands/emptyIsland.png').custom({width: 2048, height: 1662}))}
                    maxW='none'
                    useMap="#imageMap" 
                    className={`${styles0.mapImageArea}`} 
@@ -180,7 +192,8 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               )}
             </TransformWrapper>
         )}
-        <BattleMapHUD onBack={onBack}/>
+        <LandModal  isOpen={isOpen}  onClose={onClose} plotId={plotId} />
+        <LandsHUD onBack={onBack} setElementToZoomTo={setElementToZoomTo} showBack={false}/>
       </Box>
     </section>
   )

@@ -10,11 +10,16 @@ import SalesCollection from '../../../Components/components/SalesCollection';
 import CollectionNftsGroup from '../../../Components/components/CollectionNftsGroup';
 import CollectionListingsGroup from '../../../Components/components/CollectionListingsGroup';
 import {fetchListings, getStats, init, updateTab} from '@src/GlobalState/collectionSlice';
-import {isBundle, isCnsCollection, isCronosVerseCollection, isCrosmocraftsCollection} from '@src/utils';
+import {
+  isBundle,
+  isCnsCollection,
+  isCronosVerseCollection,
+  isCrosmocraftsCollection,
+  isLandDeedsCollection
+} from '@src/utils';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {CollectionSortOption} from '@src/Components/Models/collection-sort-option.model';
 import CollectionCronosverse from '@src/Components/Collection/Custom/Cronosverse';
-import {hostedImage} from "@src/helpers/image";
 import {useRouter} from "next/router";
 import {CollectionFilters} from "@src/Components/Models/collection-filters.model";
 import {pushQueryString} from "@src/helpers/query";
@@ -32,6 +37,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import useGetStakingPlatform from "@src/hooks/useGetStakingPlatform";
 import ImageService from "@src/core/services/image";
+import DynastiesLands from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands";
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -47,6 +53,7 @@ const tabs = {
   bundles: 'bundles',
   activity: 'activity',
   map: 'map',
+  dynastiesMap: 'dynastiesMap',
   cns: 'cns'
 };
 
@@ -125,6 +132,7 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
   //
   //   return count;
   // };
+  const emptyFunction = () => {};
 
   const loadMore = () => {
     dispatch(fetchListings());
@@ -244,7 +252,7 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
           </div>
         </div>
       </section>
-
+      
       <div className="px-4 mb-4">
         {collectionStats && (
           <div className="row">
@@ -314,6 +322,11 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
             {isCnsCollection(collection.address) && (
               <li className={`tab ${openMenu === tabs.cns ? 'active' : ''} my-1`}>
                 <span onClick={handleBtnClick(tabs.cns)}>Register Domain</span>
+              </li>
+            )}
+            {isLandDeedsCollection(collection.address) && (
+              <li className={`tab ${openMenu === tabs.dynastiesMap ? 'active' : ''} my-1`}>
+                <span onClick={handleBtnClick(tabs.dynastiesMap)}>Map</span>
               </li>
             )}
           </ul>
@@ -387,6 +400,11 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
             {openMenu === tabs.map && (
               <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
                 <CollectionCronosverse collection={collection} />
+              </NegativeMargin>
+            )}
+            {openMenu === tabs.dynastiesMap && (
+              <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
+                <DynastiesLands onBack={emptyFunction} />
               </NegativeMargin>
             )}
             {openMenu === tabs.cns && (

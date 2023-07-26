@@ -708,8 +708,11 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       <img src={ImageService.translate('/img/battle-bay/mapImages/water.png').custom({width: 2880, height: 703})} />
                     </Box>
 
-                    <Box id="Bank" className={styles.enlarge} style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}}
-                         onClick={() => onChange('bank')}
+                    <Box 
+                      id="Bank" 
+                      className={styles.enlarge} 
+                      style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}}
+                      onClick={() => onChange('bank')}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/bank_day.png').convert()} />
                       {/* <div className={[styles.bank_label]} > */}
@@ -725,8 +728,11 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       <img src={ImageService.translate('/img/battle-bay/mapImages/announcement.png').convert()} />
                     </Box>
 
-                    <Box id="Barracks" className={styles.enlarge} style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
-                         onClick={() => handleSceneChange('barracks')}
+                    <Box 
+                      id="Barracks" 
+                      className={styles.enlarge} 
+                      style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
+                      onClick={() => handleSceneChange('barracks')}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/barracks.png').convert()} />
                     </Box>
@@ -742,7 +748,12 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
                     </Box>
 
-                    <Box id="torii"  style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"9"}} >
+                    <Box 
+                      id="torii"  
+                      className={styles.enlarge} 
+                      style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"8"}}
+                      onClick={() => onChange('lands')}
+                    >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/torii.png').convert()} />
                     </Box>
 

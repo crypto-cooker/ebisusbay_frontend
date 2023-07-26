@@ -546,6 +546,10 @@ export const isCroSwapQuartermastersCollection = (address) => {
   return isCollection(address, 'croswap-quartermasters', '0x333580e4B59E74243451c531c29121c02F8E3102');
 };
 
+export const isLandDeedsCollection = (address) => {
+  return isCollection(address, 'izanamis-cradle-land-deeds', '0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3');
+};
+
 export const isBundle = (addressOrSlug) => {
   return caseInsensitiveCompare(addressOrSlug, config.contracts.bundle) || addressOrSlug === 'nft-bundles';
 }

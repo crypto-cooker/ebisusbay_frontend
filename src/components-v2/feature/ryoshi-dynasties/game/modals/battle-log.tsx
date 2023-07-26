@@ -189,11 +189,11 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
                           >
                             <Text fontSize={14} marginTop={-8} marginBottom={2}>{ParseTimestamp(logEntry.date)}</Text>
                             {logEntry.event === "ATTACK" ? (
-                                <AttackLog battleLog={logEntry} key={itemIndex}/>
+                              <AttackLog battleLog={logEntry} key={itemIndex}/>
                             ) : logEntry.event === "DEFEND" ? (
-                                  <DefendLog battleLog={logEntry} key={itemIndex}/>
+                              <DefendLog battleLog={logEntry} key={itemIndex}/>
                             ) : logEntry.event === "DEPLOY" ? (
-                                    <DeployLog battleLog={logEntry} key={itemIndex}/>
+                              <DeployLog battleLog={logEntry} key={itemIndex}/>
                             ) : logEntry.event === "DELEGATE" ? (
                               <DelegateLog battleLog={logEntry} key={itemIndex}/>
                             ) : logEntry.event === "ADJUSTMENT" ? (
