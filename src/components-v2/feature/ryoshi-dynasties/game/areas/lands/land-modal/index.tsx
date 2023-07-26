@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {Box, Center, Flex, Text, VStack,} from "@chakra-ui/react"
+import {Box, Center, Flex, Text, VStack,Image, SimpleGrid} from "@chakra-ui/react"
 import {Spinner} from 'react-bootstrap';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
@@ -11,7 +11,8 @@ import DeployTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/ba
 import InfoTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/info";
 import AttackTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/attack";
 import HelpPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/help";
-
+import {appConfig} from "@src/Config";
+import {ApiService} from "@src/core/services/api-service";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
@@ -41,7 +42,10 @@ const LandModal = ({ isOpen, onClose, plotId}: LandModalFormProps) => {
   const [currentTab, setCurrentTab] = useState(tabs.info);
   const [battleEnabled, setBattleEnabled] = useState(false);
   const [page, setPage] = useState<string>();
+  const [nftData, setNftData] = useState<any>();
+  const [nftImage, setNftImage] = useState<string>();
 
+  const config = appConfig();
   const handleClose = useCallback(() => {
     setCurrentTab(tabs.info);
     onClose();
@@ -55,8 +59,24 @@ const LandModal = ({ isOpen, onClose, plotId}: LandModalFormProps) => {
     }
   };
 
+  
+  const GetNftImages = async () => {
+    const izCollection = config.collections.find((collection: any) => collection.slug === 'izanamis-cradle-land-deeds');
+    console.log('===izLandDeeds', izCollection);
+    setNftImage(izCollection.metadata.avatar)
+  }
+  const GoToNFTPage = () => {
+    //redirect to page
+    window.open('https://app.ebisusbay.com/collection/izanamis-cradle-land-deeds/'+plotId,'_blank');
+  }
+
   useEffect(() => {
-    setTitle(plotId.toString());
+
+    GetNftImages();
+  }, [])
+
+  useEffect(() => {
+    setTitle("Land Deed #" + plotId.toString());
     setIsLoading(false);
   }, [plotId]);
 
@@ -73,16 +93,35 @@ const LandModal = ({ isOpen, onClose, plotId}: LandModalFormProps) => {
         <HelpPage />
       ) : (
         <>
-          <VStack>
-            <Text
-              as='i'
-              marginBottom='2'
-            > You are loading the land at {plotId.toString()} </Text>
-            <Text
-              as='i'
-              marginBottom='2'
-            > Owner: ' ' </Text>
-          </VStack>
+          <SimpleGrid columns={2} padding='10'>
+            <Image
+              src={nftImage}
+              alt='NFT Image'
+              width='200'
+              height='200'
+              rounded={'md'}
+              />
+              <Flex justifyContent={'center'}>
+                <VStack>
+                <Text
+                as='i'
+                marginBottom='2'
+                textAlign='center'
+              > Token Id: {plotId.toString()} </Text>
+
+                  <RdTabButton
+                        isActive={currentTab === tabs.info}
+                        onClick={() => GoToNFTPage()}
+                        fontSize={{base: '12', sm: '14'}}
+                        padding={{base: '0 10px', sm: '0 20px'}}
+                        margin={{base: '0 5px', sm: '0 10px'}}
+                      >
+                        Make Offer
+                      </RdTabButton>
+                </VStack>
+              </Flex>
+           
+          </SimpleGrid>
 
           {!isLoading ? (
             <>
@@ -90,15 +129,7 @@ const LandModal = ({ isOpen, onClose, plotId}: LandModalFormProps) => {
                 <div className="">
                   <Center>
                     <Flex direction='row' justify='center' mb={2}>
-                      <RdTabButton
-                        isActive={currentTab === tabs.info}
-                        onClick={() => setCurrentTab(tabs.info)}
-                        fontSize={{base: '12', sm: '14'}}
-                        padding={{base: '0 10px', sm: '0 20px'}}
-                        margin={{base: '0 5px', sm: '0 10px'}}
-                      >
-                        Action
-                      </RdTabButton>
+                     
                     </Flex>
                   </Center>
 
