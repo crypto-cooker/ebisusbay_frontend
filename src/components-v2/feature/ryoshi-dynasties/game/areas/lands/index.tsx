@@ -62,7 +62,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     if (transformComponentRef.current) {
       const { zoomToElement } = transformComponentRef.current as any;
       zoomToElement(elementToZoomTo);
-      setPlotId(Number(elementToZoomTo));
+      setPlotId(Number(elementToZoomTo)+1);
       onOpen();
     }
     // if(previousElementToZoomTo !== elementToZoomTo){
@@ -87,9 +87,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
         top={1662 - point.y}
         zIndex="10"
         onClick={() => {
-          setElementToZoomTo((i+1).toString());
-          setPlotId(i+1);
-          onOpen();
+          setElementToZoomTo((i).toString());
         }}
         >{i+1}</Text>
       )))

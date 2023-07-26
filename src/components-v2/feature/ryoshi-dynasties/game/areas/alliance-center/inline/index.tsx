@@ -256,7 +256,7 @@ const CurrentFaction = () => {
   const [factionCreatedAndEnabled, setFactionCreatedAndEnabled] = useState(false);
 
   useEffect(() => {
-    console.log(rdContext.user?.faction);
+    // console.log(rdContext.user?.armiesInfo);
     // console.log(getAuthSignerInStorage()?.signature)
     // console.log(user.address)
     if(rdContext.user?.season?.troops?.undeployed !== undefined){

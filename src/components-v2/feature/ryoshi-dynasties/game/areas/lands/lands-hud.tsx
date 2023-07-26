@@ -53,7 +53,7 @@ export const LandsHUD = ({onBack, setElementToZoomTo}: BattleMapHUDProps) => {
 }, [isNotMobile]); 
 
   const validateEntry = () => {
-     setElementToZoomTo(value.toString())
+     setElementToZoomTo((value-1).toString())
   }
 
   return (
