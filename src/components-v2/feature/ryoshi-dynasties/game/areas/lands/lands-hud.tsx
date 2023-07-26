@@ -78,7 +78,7 @@ export const LandsHUD = ({onBack, setElementToZoomTo}: BattleMapHUDProps) => {
 
 
           <Flex justify="right" align="right">
-          <NumberInput defaultValue={0} min={0} max={2500} w={300} mr={2}
+          <NumberInput defaultValue={1} min={1} max={2500} w={300} mr={2}
               placeholder='Search for Plot'
               value={value}
               onChange={handleChange}

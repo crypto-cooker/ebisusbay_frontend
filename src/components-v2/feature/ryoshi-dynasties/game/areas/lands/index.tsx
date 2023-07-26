@@ -75,21 +75,23 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     setAreas(
       myData.vectors.map((point: any, i :number) => (
       <Text
-       position="absolute"
-       textColor={'#aaa'}
+        position="absolute"
+        textAlign="center"
+        textColor={'#aaa'}
+        cursor="pointer"
         id={i.toString()}
         fontSize={8}
-        width={10}
-        height={1}
+        width={6}
+        height={3}
         left={point.x}
         top={1662 - point.y}
         zIndex="10"
         onClick={() => {
-          setElementToZoomTo(i.toString());
-          setPlotId(i);
+          setElementToZoomTo((i+1).toString());
+          setPlotId(i+1);
           onOpen();
         }}
-        >{i}</Text>
+        >{i+1}</Text>
       )))
     
     setMapInitialized(true);
