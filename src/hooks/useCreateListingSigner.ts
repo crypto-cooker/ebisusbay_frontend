@@ -1,8 +1,6 @@
-import { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { appConfig } from "@src/Config";
+import {useCallback, useState} from 'react';
+import {appConfig} from "@src/Config";
 import {BigNumber, ethers} from "ethers";
-import Constants from '@src/constants';
 import {useAppSelector} from "@src/Store/hooks";
 
 export interface ListingSignerProps {
@@ -13,6 +11,7 @@ export interface ListingSignerProps {
   listingTime: number;
   expirationDate: number;
   salt: number;
+  amount: number;
 }
 
 export enum ItemType {
@@ -120,8 +119,8 @@ const useSignature = () => {
       itemType: signatureValues.itemType,
       token: signatureValues.collectionAddress.toLowerCase(),
       identifierOrCriteria: BigNumber.from(signatureValues.tokenId),
-      startAmount: 1,
-      endAmount: 1
+      startAmount: signatureValues.amount ?? 1,
+      endAmount: signatureValues.amount ?? 1
     };
 
     const considerationItem = {

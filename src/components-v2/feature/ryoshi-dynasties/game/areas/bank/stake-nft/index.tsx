@@ -762,7 +762,7 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, slotUnlockCont
               w='full'
               size='md'
               isLoading={executingUnlock}
-              isDisabled={executingUnlock || !unlockApprovalState[0].gt(ethers.utils.parseEther(fortuneTopUpThreshold.toString())) || !unlockApprovalState[1]}
+              isDisabled={executingUnlock || !unlockApprovalState[0].gte(ethers.utils.parseEther(fortuneTopUpThreshold.toString())) || !unlockApprovalState[1]}
               onClick={handleUnlock}
               variant='ryoshiDynasties'
             >

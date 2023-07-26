@@ -14,6 +14,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
+  HStack,
   Spacer,
   Text,
   useBreakpointValue,
@@ -41,6 +42,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import {AnchorProps} from "react-bootstrap";
 import ImageService from "@src/core/services/image";
 import {specialImageTransform} from "@src/hacks";
+import Image from "next/image";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -196,6 +198,8 @@ const Cart = function () {
   useEffect(() => {
     let fees = 0;
     const totalPrice = cart.nfts.reduce((total, nft) => {
+      if (!nft.price) return total;
+
       const numericPrice = parseInt(nft.price);
       let amt = numericPrice;
 
@@ -270,16 +274,18 @@ const Cart = function () {
                       <Box flex='1' ms={2}>
                         
                         <VStack align="left" spacing={0}>
-                         {!nft.isBundle? (<Link href={`/collection/${nft.address}/${nft.id}`} passHref>
-                            <NftLink name={nft.name} />
-                          </Link>)
-                          :
-                          (
+                          {!nft.isBundle? (
                             <Link href={`/collection/${nft.address}/${nft.id}`} passHref>
                               <NftLink name={nft.name} />
                             </Link>
-                          )
-                          }
+                          ) : (
+                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref>
+                              <NftLink name={nft.name} />
+                            </Link>
+                          )}
+                          {nft.amount && (
+                            <Text fontSize='sm'>Pack of {nft.amount}</Text>
+                          )}
                           {nft.rank && (
                             <Box>
                               <Badge variant='solid' colorScheme='blue'>
@@ -288,7 +294,10 @@ const Cart = function () {
                             </Box>
                           )}
                           {nft.price && (
-                            <Text>{commify(nft.price)} CRO</Text>
+                            <HStack>
+                              <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                              <Box>{commify(round(nft.price, 2))}</Box>
+                            </HStack>
                           )}
                           <Wrap>
                             {soldItems.includes(nft.listingId) && (

@@ -58,8 +58,17 @@ const TransferDrawer = () => {
       const filteredCartNfts = batchListingCart.items.filter((o) => {
         return batchListingCart.extras[o.nft.nftAddress.toLowerCase()]?.approval ?? false;
       });
-      const nftAddresses = filteredCartNfts.map((o) => o.nft.nftAddress);
-      const nftIds = filteredCartNfts.map((o) => o.nft.nftId);
+
+      const reducedNfts = filteredCartNfts.reduce((prev, next) => {
+        const quantity = next.quantity || 1;
+        return [...prev, ...Array(quantity).fill({
+          address: next.nft.nftAddress,
+          id: next.nft.nftId
+        })];
+      }, [] as Array<{ address: string, id: string }>);
+
+      const nftAddresses = reducedNfts.map((o) => o.address);
+      const nftIds = reducedNfts.map((o) => o.id);
 
       Sentry.captureEvent({ message: 'handleBatchTransfer', extra: { nftAddresses, nftIds } });
       let tx = await user.contractService!.market.bulkTransfer(nftAddresses, nftIds, recipient);
@@ -161,6 +170,8 @@ const TransferDrawer = () => {
     validateForm,
   } = formikProps;
 
+  const totalItemsPlusQuantity = batchListingCart.items.reduce((p: any, n: any) => p + n.quantity, 0);
+
   return (
     <>
       <GridItem p={4}>
@@ -212,7 +223,7 @@ const TransferDrawer = () => {
             {!executingTransfer && (
               <Alert status="error" mb={2}>
                 <AlertIcon />
-                <AlertDescription>Transferring {batchListingCart.items.length} {pluralize(batchListingCart.items.length, 'item')}. Please double check the receiving address before continuing</AlertDescription>
+                <AlertDescription>Transferring {totalItemsPlusQuantity} {pluralize(totalItemsPlusQuantity, 'item')}. Please double check the receiving address before continuing</AlertDescription>
               </Alert>
             )}
             {executingTransfer && (

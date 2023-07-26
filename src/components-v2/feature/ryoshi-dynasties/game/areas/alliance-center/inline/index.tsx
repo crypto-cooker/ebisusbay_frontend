@@ -15,7 +15,8 @@ import {
   Text,
   useDisclosure,
   VStack,
-  Avatar
+  Avatar,
+  Spacer
 } from "@chakra-ui/react";
 import {AddIcon, ArrowBackIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
@@ -250,12 +251,20 @@ const CurrentFaction = () => {
     initialValues: {},
     enableReinitialize: true,
   });
+  const GetTotalTroopsSlain = () => {
+    let totalSlain = 0;
+    rdContext.user?.armiesInfo.slain.slainTroopsPerControlPoint.forEach((element) => {
+      totalSlain += element.troops});
+    return totalSlain;
+  }
 
   const[availableTroops, setAvailableTroops] = useState(0);
   const[totalTroops, setTotalTroops] = useState(0);
   const [factionCreatedAndEnabled, setFactionCreatedAndEnabled] = useState(false);
 
   useEffect(() => {
+    if(!rdContext.user) return;
+
     // console.log(rdContext.user?.armiesInfo);
     // console.log(getAuthSignerInStorage()?.signature)
     // console.log(user.address)
@@ -368,7 +377,28 @@ const CurrentFaction = () => {
           {!!rdContext.user && (
             <Box bg='#564D4A' p={2} rounded='lg' w='full' mt={2}>
               <SimpleGrid columns={2}>
-                <VStack align='start' spacing={0} my='auto'>
+              <Text textAlign='left' marginTop='auto' fontSize='sm' >Total</Text>
+                  <Text textAlign='right' marginTop='auto' fontSize='lg' fontWeight='bold'>
+                    {rdContext.user.armiesInfo.total.nativeTroops + rdContext.user.armiesInfo.total.delegatedTroops}</Text>
+                  <Spacer></Spacer>
+                  <Text textColor='#aaa' textAlign='right' marginTop='auto' fontSize='sm' as='i'>Native ({rdContext.user.armiesInfo.total.nativeTroops}) + Delegated({rdContext.user.armiesInfo.total.delegatedTroops})</Text>
+                 
+                 <Text textAlign='left' marginTop='auto' fontSize='sm'>Available Troops</Text>
+                  <Text textAlign='right' marginTop='auto' fontSize='lg' fontWeight='bold'>{availableTroops}</Text>
+                  <Spacer></Spacer>
+                  <Text textColor='#aaa' textAlign='right' marginTop='auto' fontSize='sm' as='i'>Native ({rdContext.user.armiesInfo.available.availableTroops - rdContext.user.armiesInfo.total.delegatedTroops}
+                    ) + Delegated({rdContext.user.armiesInfo.total.delegatedTroops})</Text>
+                 
+
+                  <Text textAlign='left' marginTop='auto' fontSize='sm'>Deployed Troops</Text>
+                  <Text textAlign='right' marginTop='auto' fontSize='lg' fontWeight='bold'>{rdContext.user.armiesInfo.available.availableControlPoint}</Text>
+                  <Spacer></Spacer>
+                  <Text textColor='#aaa' textAlign='right' marginTop='auto' fontSize='sm' as='i'>You ({rdContext.user.armiesInfo.available.ownDeployedTroops}) 
+                    + Other Players({rdContext.user.armiesInfo.deployed.deployedTroopsPerOthersPlayers})</Text>
+                 
+                  <Text textAlign='left' marginTop='auto' fontSize='sm'>Slain Troops</Text>
+                  <Text textAlign='right' marginTop='auto' fontSize='lg' fontWeight='bold'>{GetTotalTroopsSlain()}</Text>
+                {/* <VStack align='start' spacing={0} my='auto'>
                   <Text fontSize='sm'>Available Troops</Text>
                   <HStack>
                     <Text fontSize='lg' fontWeight='bold'>{availableTroops}</Text>
@@ -385,7 +415,7 @@ const CurrentFaction = () => {
                   </HStack>
                   <Text fontSize='sm' pt={4}>Faction Troops</Text>
                   <Text fontSize='lg' fontWeight='bold'>{totalTroops}</Text>
-                </VStack>
+                </VStack> */}
                 {
                 ((!!rdContext.user.season.troops.undeployed && !rdContext.user.season.faction) || !rdContext.user.faction?.isEnabled) && (
                   <RdButton

@@ -138,6 +138,7 @@ export interface RdArmy {
 export interface RdUserContext {
     faction: RdFaction;
     armies: RdUserContextArmies;
+    armiesInfo: RDArmiesInfo;
     season: RdUserContextSeason;
     bank: {
         nfts: any[];
@@ -169,6 +170,34 @@ interface RdUserContextSeason {
 
 interface RdUserContextArmies {
     redeploymentDelay: number;
+}
+
+interface RDArmiesInfo {
+    available: {
+        availableControlPoint: number;
+        // nativeAvailableTroops: number; would be nice to have this
+        availableTroops: number;
+        othersPlayersDeployedTroopsLived: number;
+        ownDeployedTroops: number;
+    };
+    delegate: {
+        delegateTroopsPerPlayer: any[];
+    };
+    deployed: {
+        deployedTroopsPerOthersPlayers: number;
+        playersDeployerTroops: any[];
+        troopsPerControlPoint: any[];
+    };
+    slain: {
+        slainTroopsPerControlPoint: any[];
+        slainTroopsPerPlayer: any[];
+    };
+    total: {
+        delegatedTroops: number;
+        deployedTroops: number;
+        nativeTroops: number;
+        // slainTroops: number; would be nice to have this
+    };
 }
 
 export interface RdGameContext {

@@ -1,7 +1,5 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {useRouter} from 'next/router';
-import {ethers} from 'ethers';
 import {
   faBullhorn,
   faCopy,
@@ -24,17 +22,14 @@ import {
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   shortAddress,
-  timeSince,
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {specialImageTransform} from '@src/hacks';
 import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
-
-import ListingItem from '@src/components-v2/feature/nft/tabs/listings/item';
-import {listingState, offerState} from '@src/core/api/enums';
+import {offerState} from '@src/core/api/enums';
 import {getFilteredOffers} from '@src/core/subgraph';
 import PriceActionBar from '@src/components-v2/feature/nft/price-action-bar';
-import NFTTabListings from '@src/components-v2/feature/nft/tabs/listings';
+import ListingsTab from '@src/components-v2/feature/nft/tabs/listings';
 import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
 import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
@@ -56,6 +51,7 @@ import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferType} from "@src/core/services/api-service/types";
 import ImageService from "@src/core/services/image";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
+import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
 
 const config = appConfig();
 const tabs = {
@@ -75,16 +71,9 @@ interface Nft721Props {
 
 const Nft1155 = ({ address, id, collection }: Nft721Props) => {
   const dispatch = useDispatch();
-  const history = useRouter();
   const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`).toString());
 
   const { nft, refreshing, favorites } = useAppSelector((state) => state.nft);
-  const soldListings = useAppSelector((state) =>
-    state.nft.history.filter((i) => i.state === listingState.SOLD).sort((a, b) => (a.saleTime < b.saleTime ? 1 : -1))
-  );
-  const activeListings = useAppSelector((state) =>
-    state.nft.history.filter((i) => i.state === listingState.ACTIVE).sort((a, b) => a.price - b.price)
-  );
 
   const powertraits = useAppSelector((state) => state.nft.nft?.powertraits);
   const collectionMetadata = useAppSelector((state) => {
@@ -506,55 +495,12 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                       )}
                       {currentTab === tabs.history && (
                         <div className="listing-tab tab-3 onStep fadeIn">
-                          {soldListings && soldListings.length > 0 ? (
-                            <>
-                              {soldListings.map((listing, index) => (
-                                <ListingItem
-                                  key={`sold-item-${index}`}
-                                  route="/account"
-                                  primaryTitle="Bought by"
-                                  user={listing.purchaser}
-                                  time={timeSince(listing.saleTime)}
-                                  price={ethers.utils.commify(listing.price)}
-                                  primaryText={shortAddress(listing.purchaser)}
-                                />
-                                /*
-                                <div className="p_list" key={index}>
-                                  <Link href={`/seller/${listing.purchaser}`}>
-                                    <a>
-                                      <div className="p_list_pp">
-                                        <span>
-                                          <span onClick={viewSeller(listing.purchaser)}>
-                                            <Blockies seed={listing.purchaser} size={10} scale={5} />
-                                          </span>
-                                        </span>
-                                      </div>
-                                    </a>
-                                  </Link>
-                                  <div className="p_list_info">
-                                    <span>{timeSince(listing.saleTime + '000')} ago</span>
-                                    Bought by{' '}
-                                    <b>
-                                      <Link href={`/seller/${listing.purchaser}`}>
-                                        <a>{shortAddress(listing.purchaser)}</a>
-                                      </Link>
-                                    </b>{' '}
-                                    for <b>{ethers.utils.commify(listing.price)} CRO</b>
-                                  </div>
-                                </div>
-*/
-                              ))}
-                            </>
-                          ) : (
-                            <>
-                              <span>No history found for this item</span>
-                            </>
-                          )}
+                          <HistoryTab address={address} tokenId={id} />
                         </div>
                       )}
                       {currentTab === tabs.listings && (
                         <div className="tab-3 onStep fadeIn">
-                          <NFTTabListings listings={activeListings} nft={nft} />
+                          <ListingsTab nft={nft} />
                         </div>
                       )}
 
