@@ -48,6 +48,7 @@ const tabs = {
   bundles: 'bundles',
   activity: 'activity',
   map: 'map',
+  dynastiesMap: 'dynastiesMap',
   cns: 'cns'
 };
 
@@ -245,9 +246,6 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
             </div>
           </div>
         </div>
-        { collection.slug === 'izanamis-cradle-land-deeds' && (
-          <DynastiesLands onBack={emptyFunction} />
-        )}
       </section>
       
       <div className="px-4 mb-4">
@@ -321,6 +319,11 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
                 <span onClick={handleBtnClick(tabs.cns)}>Register Domain</span>
               </li>
             )}
+            {collection.slug === 'izanamis-cradle-land-deeds' && (
+              <li className={`tab ${openMenu === tabs.dynastiesMap ? 'active' : ''} my-1`}>
+                <span onClick={handleBtnClick(tabs.dynastiesMap)}>Map</span>
+              </li>
+            )}
           </ul>
 
           <div className="de_tab_content">
@@ -392,6 +395,11 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
             {openMenu === tabs.map && (
               <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
                 <CollectionCronosverse collection={collection} />
+              </NegativeMargin>
+            )}
+            {openMenu === tabs.dynastiesMap && (
+              <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
+                <DynastiesLands onBack={emptyFunction} />
               </NegativeMargin>
             )}
             {openMenu === tabs.cns && (
