@@ -30,13 +30,14 @@ const config = appConfig();
 interface BattleMapHUDProps {
   onBack: () => void;
   setElementToZoomTo : (value: any) => void;
+  showBack: boolean;
 }
 
-export const LandsHUD = ({onBack, setElementToZoomTo}: BattleMapHUDProps) => {
+export const LandsHUD = ({onBack, setElementToZoomTo, showBack}: BattleMapHUDProps) => {
     
   const user = useAppSelector((state) => state.user);
-  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const {game: rdGameContext, user:rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  // const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  // const {game: rdGameContext, user:rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const [isNotMobile] = useMediaQuery("(max-width: 768px)") 
 
@@ -59,7 +60,9 @@ export const LandsHUD = ({onBack, setElementToZoomTo}: BattleMapHUDProps) => {
   return (
     <Box position='absolute' top={0} left={0}  w='100%' pointerEvents='auto' >
       <Flex direction='row' justify='space-between' >
+        {showBack && 
       <ReturnToVillageButton onBack={onBack} />
+    }
       <Spacer />
 
       <Box mb={4} mt={6} mr={2}

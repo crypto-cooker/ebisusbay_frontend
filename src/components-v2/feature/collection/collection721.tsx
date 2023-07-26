@@ -25,13 +25,14 @@ import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/Mobile
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
 import {MobileSort} from "@src/Components/Collection/CollectionTaskBar/MobileSort";
 import {CnsRegistration} from "@src/Components/Collection/Custom/CnsRegistration";
-import {Box, Button, Flex, Heading, Text, useBreakpointValue} from "@chakra-ui/react";
+import {Box, Button, Center, Flex, Heading, Text, useBreakpointValue} from "@chakra-ui/react";
 import MintingButton from "@src/Components/Collection/MintingButton";
 import CollectionBundlesGroup from "@src/Components/components/CollectionBundlesGroup";
 import {useAppSelector} from "@src/Store/hooks";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import useGetStakingPlatform from "@src/hooks/useGetStakingPlatform";
 import ImageService from "@src/core/services/image";
+import DynastiesLands from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands";
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -125,6 +126,7 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
   //
   //   return count;
   // };
+  const emptyFunction = () => {};
 
   const loadMore = () => {
     dispatch(fetchListings());
@@ -243,8 +245,11 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
             </div>
           </div>
         </div>
+        { collection.slug === 'izanamis-cradle-land-deeds' && (
+          <DynastiesLands onBack={emptyFunction} />
+        )}
       </section>
-
+      
       <div className="px-4 mb-4">
         {collectionStats && (
           <div className="row">

@@ -31,18 +31,18 @@ interface LandModalFormProps {
 }
 
 const LandModal = ({ isOpen, onClose, plotId}: LandModalFormProps) => {
-  const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  // const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
   // const [info, setInfo] = useState([]);
   // const [rewardID, setRewardID] = useState(0);
-  const user = useAppSelector((state) => state.user);
+  // const user = useAppSelector((state) => state.user);
 
   const [currentTab, setCurrentTab] = useState(tabs.info);
-  const [battleEnabled, setBattleEnabled] = useState(false);
+  // const [battleEnabled, setBattleEnabled] = useState(false);
   const [page, setPage] = useState<string>();
-  const [nftData, setNftData] = useState<any>();
+  // const [nftData, setNftData] = useState<any>();
   const [nftImage, setNftImage] = useState<string>();
 
   const config = appConfig();

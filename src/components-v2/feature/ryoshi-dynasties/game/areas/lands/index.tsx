@@ -17,16 +17,16 @@ import ImageService from '@src/core/services/image';
 import {LandsHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-hud";
 import {useAppSelector} from "@src/Store/hooks";
 
-import {appConfig} from "@src/Config";
+// import {appConfig} from "@src/Config";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
-import {
-  RyoshiDynastiesContext,
-  RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {
-  RyoshiDynastiesPreloaderContext,
-  RyoshiDynastiesPreloaderProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/preloader-context";
+// import {
+//   RyoshiDynastiesContext,
+//   RyoshiDynastiesContextProps
+// } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+// import {
+//   RyoshiDynastiesPreloaderContext,
+//   RyoshiDynastiesPreloaderProps
+// } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/preloader-context";
 import localFont from "next/font/local";
 import LandModal from './land-modal';
 import myData from './points.json';
@@ -38,13 +38,13 @@ interface BattleMapProps {
 }
 
 const DynastiesLands = ({onBack}: BattleMapProps) => {
-  const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
+  // const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
 
   const user = useAppSelector(state => state.user);
-  const config = appConfig();
-  const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  // const config = appConfig();
+  // const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const transformComponentRef = useRef<any>(null)
-  const previousElementToZoomTo = useRef<any>(null)
+  // const previousElementToZoomTo = useRef<any>(null)
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [zoomState, setZoomState] = useState({
@@ -141,13 +141,10 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
 
   return (
     <section>
-      <LandModal 
-        isOpen={isOpen} 
-        onClose={onClose}
-        plotId={plotId}
-        />
-      <Box
-        position='relative' h='calc(100vh - 74px)'
+      <Box 
+        h='600px'
+        marginBottom={'30'}
+        position='relative' 
         backgroundImage={ImageService.translate(`/img/ryoshi-dynasties/village/background-${user.theme}.png`).convert()}
         backgroundSize='cover'
       >
@@ -169,7 +166,8 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
                 <Box
                   as='img'
                   //  src={'/img/ryoshi-dynasties/lands/emptyIsland.png'}
-                   src={getPreloadedImage(ImageService.translate('/img/ryoshi-dynasties/lands/emptyIsland.png').custom({width: 2048, height: 1662}))}
+                   src={ImageService.translate('/img/ryoshi-dynasties/lands/emptyIsland.png').custom({width: 2048, height: 1662})}
+                   //  src={getPreloadedImage(ImageService.translate('/img/ryoshi-dynasties/lands/emptyIsland.png').custom({width: 2048, height: 1662}))}
                    maxW='none'
                    useMap="#imageMap" 
                    className={`${styles0.mapImageArea}`} 
@@ -194,7 +192,8 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               )}
             </TransformWrapper>
         )}
-        <LandsHUD onBack={onBack} setElementToZoomTo={setElementToZoomTo}/>
+        <LandModal  isOpen={isOpen}  onClose={onClose} plotId={plotId} />
+        <LandsHUD onBack={onBack} setElementToZoomTo={setElementToZoomTo} showBack={false}/>
       </Box>
     </section>
   )
