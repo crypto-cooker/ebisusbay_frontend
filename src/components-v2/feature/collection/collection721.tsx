@@ -10,11 +10,16 @@ import SalesCollection from '../../../Components/components/SalesCollection';
 import CollectionNftsGroup from '../../../Components/components/CollectionNftsGroup';
 import CollectionListingsGroup from '../../../Components/components/CollectionListingsGroup';
 import {fetchListings, getStats, init, updateTab} from '@src/GlobalState/collectionSlice';
-import {isBundle, isCnsCollection, isCronosVerseCollection, isCrosmocraftsCollection} from '@src/utils';
+import {
+  isBundle,
+  isCnsCollection,
+  isCronosVerseCollection,
+  isCrosmocraftsCollection,
+  isLandDeedsCollection
+} from '@src/utils';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {CollectionSortOption} from '@src/Components/Models/collection-sort-option.model';
 import CollectionCronosverse from '@src/Components/Collection/Custom/Cronosverse';
-import {hostedImage} from "@src/helpers/image";
 import {useRouter} from "next/router";
 import {CollectionFilters} from "@src/Components/Models/collection-filters.model";
 import {pushQueryString} from "@src/helpers/query";
@@ -25,7 +30,7 @@ import {MobileFilters} from "@src/Components/Collection/CollectionTaskBar/Mobile
 import {FilterResultsBar} from "@src/Components/Collection/FilterResultsBar";
 import {MobileSort} from "@src/Components/Collection/CollectionTaskBar/MobileSort";
 import {CnsRegistration} from "@src/Components/Collection/Custom/CnsRegistration";
-import {Box, Button, Center, Flex, Heading, Text, useBreakpointValue} from "@chakra-ui/react";
+import {Box, Button, Flex, Heading, Text, useBreakpointValue} from "@chakra-ui/react";
 import MintingButton from "@src/Components/Collection/MintingButton";
 import CollectionBundlesGroup from "@src/Components/components/CollectionBundlesGroup";
 import {useAppSelector} from "@src/Store/hooks";
@@ -319,7 +324,7 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
                 <span onClick={handleBtnClick(tabs.cns)}>Register Domain</span>
               </li>
             )}
-            {collection.slug === 'izanamis-cradle-land-deeds' && (
+            {isLandDeedsCollection(collection.address) && (
               <li className={`tab ${openMenu === tabs.dynastiesMap ? 'active' : ''} my-1`}>
                 <span onClick={handleBtnClick(tabs.dynastiesMap)}>Map</span>
               </li>
