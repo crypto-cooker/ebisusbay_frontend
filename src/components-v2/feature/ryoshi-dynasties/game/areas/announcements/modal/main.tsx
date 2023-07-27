@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {Box, Grid, GridItem, Image, Text, useMediaQuery, VStack} from "@chakra-ui/react"
+import {Box, Grid, GridItem, Image, Link, Text, useMediaQuery, VStack} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
@@ -11,6 +11,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import ImageService from "@src/core/services/image";
 import NextImage from "next/image";
+import NextLink from "next/link";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -85,13 +86,14 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
         </Text>
       </RdModalBox>
       <Box 
-       bg='#272523' 
-       rounded='md' 
-      //  backgroundImage="/img/battle-bay/announcementBoard/seashrineAd.png"
-       minWidth='100%'
-       minHeight='100%'
-       position='relative'
-       >
+        bg='#272523'
+        rounded='md'
+        //  backgroundImage="/img/battle-bay/announcementBoard/seashrineAd.png"
+        minWidth='100%'
+        minHeight='100%'
+        position='relative'
+        overflow='hidden'
+      >
       {/* <Image position='absolute' src="/img/battle-bay/announcementBoard/seashrineAd.png"/> */}
       {/*<Image */}
       {/*//  src="/img/battle-bay/announcementBoard/seashrineAd.png" */}
@@ -101,12 +103,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
       {/*  // filter={'brightness(0.7)' + ' ' + 'sepia(0.1)'}*/}
       {/*  filter={'brightness(0.8)'}*/}
       {/*/>*/}
-        <Box
-          cursor='pointer'
-          onClick={() => {
-            router.push('/drops/ballies-cheerleaders');
-          }}
-        >
+        <Link as={NextLink} href='https://atlantis.argofinance.money' isExternal>
           {isMobile ? (
             <NextImage
               alt="ArgoPetz (sm)"
@@ -122,7 +119,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               height={150}
             />
           )}
-        </Box>
+        </Link>
       {/* <Text 
         marginLeft={{base: '10%', sm: '10%'}}
         marginTop={{base: '-20%', sm: '-17%'}}
