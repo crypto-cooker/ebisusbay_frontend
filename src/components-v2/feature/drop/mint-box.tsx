@@ -100,9 +100,9 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
         }
         return await readContract.mintCost(user.address);
       }
-      const regCost = ethers.utils.parseEther(drop.cost.toString() ?? '0');
-      const memberCost = ethers.utils.parseEther(drop.memberCost?.toString() ?? '0');
-      return user.isMember && !!drop.memberCost ? memberCost : regCost;
+      const regCost = ethers.utils.parseEther(regularCost.toString() ?? '0');
+      const mbrCost = ethers.utils.parseEther(memberCost?.toString() ?? '0');
+      return user.isMember && !!memberCost ? mbrCost : regCost;
     }
   };
 
@@ -116,7 +116,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   const mintNow = async (isErc20 = false) => {
     if (user.address) {
       if (!drop.writeContract) {
-        console.log('nooo')
+        console.log('missing write contract')
         return;
       }
       if (isErc20) {
@@ -193,7 +193,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
               item_id: drop.slug,
               item_name: drop.title,
               item_brand: drop.author.name,
-              price: drop.cost,
+              price: regularCost,
               discount: regularCost - Number(ethers.utils.formatEther(finalCost)),
               quantity: numToMint
             }]
@@ -339,7 +339,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       <Input {...input} />
                       <Button {...inc}>+</Button>
                     </HStack>
-                    {(!!drop.cost || drop.freeMint) && (
+                    {(!!regularCost || drop.freeMint) && (
                       <PrimaryButton
                         w='full'
                         onClick={() => mintNow(false)}
