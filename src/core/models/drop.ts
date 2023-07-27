@@ -33,6 +33,7 @@ export interface Drop {
   specialWhitelistCost?: SpecialWhitelist;
   video?: string;
   freeMint?: boolean;
+  redirect?: string;
   [key: string]: any;
 }
 
@@ -98,7 +99,8 @@ export function mapDrop(drop: any): Drop {
     specialWhitelistCost: drop.specialWhitelistCost,
     video: drop.video,
     freeMint: drop.freeMint ?? false,
-    featured: drop.featured
+    featured: drop.featured,
+    redirect: drop.redirect
   }
 
   if (!!drop.memberCost) obj.memberCost = Number(drop.memberCost);

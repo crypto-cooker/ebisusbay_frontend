@@ -81,10 +81,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
     <VStack padding='2'>
       <RdModalBox textAlign='center'>
         <Text>
-          Welcome to Ryoshi Dynasties! A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards.
-        </Text>
-        <Text mt={4}>
-          Users wishing to visit the Ebisu's Bay marketplace experience can still do so by using the links at the top of the page.
+          Welcome to Ryoshi Dynasties by Ebisu's Bay! A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards.
         </Text>
       </RdModalBox>
       <Box 
@@ -112,15 +109,15 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
         >
           {isMobile ? (
             <NextImage
-              alt="Ballies Cheerleaders"
-              src={ImageService.translate('/img/ryoshi-dynasties/announcements/ballies-sm.webp').convert()}
+              alt="ArgoPetz (sm)"
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/argo-pets-sm.webp').convert()}
               width={408}
               height={334}
             />
           ) : (
-            <Image
-              alt="Ballies Cheerleaders"
-              src={ImageService.translate('/img/ryoshi-dynasties/announcements/ballies2.webp').convert()}
+            <NextImage
+              alt="ArgoPetz"
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/argo-pets.webp').convert()}
               width={590}
               height={150}
             />

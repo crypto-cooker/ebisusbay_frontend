@@ -29107,7 +29107,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/ballies-cheerleaders/drop.webp",
         "banner": "/img/collections/ballies-cheerleaders/banner.webp",
@@ -29208,6 +29208,48 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 177,
+      "slug": "argopetz",
+      "title": "ArgoPetz",
+      "subtitle": "Introducing ArgoPetz, the next phase of the Argonauts and Atlantis expansion. These companions are utility-packed & will be a core asset within the Argonauts ecosystem.",
+      "description": "Introducing ArgoPetz, the next phase of the Argonauts and Atlantis expansion. These companions are utility-packed & will be a core asset within the Argonauts ecosystem.",
+      "author": {
+        "name": "Argonauts",
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium": "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance"
+      },
+      "address": "",
+      "maxMintPerTx": 7,
+      "maxMintPerAddress": 10,
+      "totalSupply": 1000,
+      "cost": "499",
+      "whitelistCost": "449",
+      "foundersOnly": false,
+      "start": 1690812000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "redirect": "https://atlantis.argofinance.money",
+      "images": {
+        "drop": "/img/drops/argopetz/drop.webp",
+        "avatar": "/img/collections/argonauts/avatar.webp",
+        "preview": "/img/collections/argonauts/card.webp",
+        "banner": "/img/collections/argonauts/banner.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
       }
     }
   ]
