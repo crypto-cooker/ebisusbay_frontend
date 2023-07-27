@@ -169,7 +169,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
                 h='1662px'
                 topFrame={ImageService.translate(`/img/ryoshi-dynasties/village/frame-top-${user.theme}.png`).convert()}
                 rightFrame={ImageService.translate(`/img/ryoshi-dynasties/village/frame-right-${user.theme}.png`).convert()}
-                bottomFrame={ImageService.translate(`/img/ryoshi-dynasties/village/frame-top-${user.theme}.png`).convert()}
+                bottomFrame={ImageService.translate(`/img/ryoshi-dynasties/village/frame-bottom-${user.theme}.png`).convert()}
                 leftFrame={ImageService.translate(`/img/ryoshi-dynasties/village/frame-left-${user.theme}.png`).convert()}
               >
                 <Box
