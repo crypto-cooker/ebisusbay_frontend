@@ -395,8 +395,12 @@ const CurrentFaction = () => {
                     <SimpleGrid columns={2} w='full'>
                       <Box textAlign='start'>Owned</Box>
                       <Box textAlign='end'>{commify(rdContext.user.season.troops.overall.owned)}</Box>
-                      <Box textAlign='start'>Delegated</Box>
-                      <Box textAlign='end'>{commify(rdContext.user.season.troops.overall.delegated)}</Box>
+                      {rdContext.user.faction && (
+                        <>
+                          <Box textAlign='start'>Delegated</Box>
+                          <Box textAlign='end'>{commify(rdContext.user.season.troops.overall.delegated)}</Box>
+                        </>
+                      )}
                     </SimpleGrid>
                   </AccordionPanel>
                 </AccordionItem>
