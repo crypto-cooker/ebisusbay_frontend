@@ -366,19 +366,31 @@ const CurrentFaction = () => {
 
           {!!rdContext.user && (
             <>
-              <HStack mt={4}>
-                <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={6}/>
-                <Text fontSize='xl' fontWeight='bold'textAlign='start'>Troops</Text>
-              </HStack>
+              <Flex mt={4} justify='space-between'>
+                <HStack>
+                  <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={6}/>
+                  <Text fontSize='xl' fontWeight='bold'textAlign='start'>Troops</Text>
+                </HStack>
+                {(rdContext.user.season.troops.available.total > 0 && (!rdContext.user.season.faction || !rdContext.user.faction?.isEnabled)) && (
+                  <RdButton
+                    hoverIcon={false}
+                    onClick={onOpenDelegate}
+                    maxH='50px'
+                    size='sm'
+                  >
+                    Delegate
+                  </RdButton>
+                )}
+              </Flex>
               <Accordion w='full' mt={2} allowMultiple>
                 <AccordionItem bgColor='#564D4A' rounded='md'>
-                  <Flex w='100%' ps={4}>
-                    <Box flex='1' textAlign='left' my='auto'>Total</Box>
-                    <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.overall.total)}</Box>
-                    <AccordionButton w='auto'>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </Flex>
+                  <AccordionButton>
+                    <Flex w='full'>
+                      <Box flex='1' textAlign='left' my='auto'>Total</Box>
+                      <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.overall.total)}</Box>
+                      <AccordionIcon ms={4} my='auto'/>
+                    </Flex>
+                  </AccordionButton>
                   <AccordionPanel pb={1} fontSize='sm'>
                     <SimpleGrid columns={2} w='full'>
                       <Box textAlign='start'>Owned</Box>
@@ -389,15 +401,15 @@ const CurrentFaction = () => {
                   </AccordionPanel>
                 </AccordionItem>
                 <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
-                  <Flex w='100%' ps={4}>
-                    <Box flex='1' textAlign='left' my='auto'>Available</Box>
-                    <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.available.total)}</Box>
-                    <AccordionButton w='auto'>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </Flex>
+                  <AccordionButton>
+                    <Flex w='full'>
+                      <Box flex='1' textAlign='left' my='auto'>Available</Box>
+                      <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.available.total)}</Box>
+                      <AccordionIcon ms={4} my='auto'/>
+                    </Flex>
+                  </AccordionButton>
                   <AccordionPanel pb={1} pt={0} fontSize='sm'>
-                    <Text color='#ccc' textAlign='start' pb={2}>Alive Troops ready for deployment</Text>
+                    <Text color='#ccc' textAlign='start' pb={2}>Troops ready for deployment</Text>
                     <SimpleGrid columns={2} w='full'>
                       <Box textAlign='start'>Owned</Box>
                       <Box textAlign='end'>{commify(rdContext.user.season.troops.available.owned)}</Box>
@@ -411,13 +423,13 @@ const CurrentFaction = () => {
                   </AccordionPanel>
                 </AccordionItem>
                 <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
-                  <Flex w='100%' ps={4}>
-                    <Box flex='1' textAlign='left' my='auto'>Delegations</Box>
-                    <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.delegate.total)}</Box>
-                    <AccordionButton w='auto'>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </Flex>
+                  <AccordionButton>
+                    <Flex w='full'>
+                      <Box flex='1' textAlign='left' my='auto'>Delegations</Box>
+                      <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.delegate.total)}</Box>
+                      <AccordionIcon ms={4} my='auto'/>
+                    </Flex>
+                  </AccordionButton>
                   <AccordionPanel pb={1} pt={0} fontSize='sm'>
                     {rdContext.user.faction ? (
                       <>
@@ -455,13 +467,13 @@ const CurrentFaction = () => {
                   </AccordionPanel>
                 </AccordionItem>
                 <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
-                  <Flex w='100%' ps={4}>
-                    <Box flex='1' textAlign='left' my='auto'>Deployments</Box>
-                    <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.deployed.total)}</Box>
-                    <AccordionButton w='auto'>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </Flex>
+                  <AccordionButton>
+                    <Flex w='full'>
+                      <Box flex='1' textAlign='left' my='auto'>Deployments</Box>
+                      <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.deployed.total)}</Box>
+                      <AccordionIcon ms={4} my='auto'/>
+                    </Flex>
+                  </AccordionButton>
                   <AccordionPanel pb={1} pt={0} fontSize='sm'>
                     <Text color='#ccc' textAlign='start' pb={2}>Troops deployed to control points</Text>
                     {rdContext.user.faction ? (
@@ -536,13 +548,13 @@ const CurrentFaction = () => {
                   </AccordionPanel>
                 </AccordionItem>
                 <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
-                  <Flex w='100%' ps={4}>
-                    <Box flex='1' textAlign='left' my='auto'>Slain</Box>
-                    <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.slain.total)}</Box>
-                    <AccordionButton w='auto'>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </Flex>
+                  <AccordionButton>
+                    <Flex w='full'>
+                      <Box flex='1' textAlign='left' my='auto'>Slain</Box>
+                      <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.slain.total)}</Box>
+                      <AccordionIcon ms={4} my='auto'/>
+                    </Flex>
+                  </AccordionButton>
                   <AccordionPanel pb={1} pt={0} fontSize='sm'>
                     <Text color='#ccc' textAlign='start' pb={2}>Troops defeated in battle</Text>
                     {rdContext.user.faction ? (
