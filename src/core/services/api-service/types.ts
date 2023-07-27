@@ -125,20 +125,9 @@ export interface RdControlPointLeaderBoard {
     totalTroops: number;
 }
 
-export interface RdArmy {
-    controlPointId?: number;
-    factionId: number;
-    id: number;
-    parentId: number;
-    profileId?: number;
-    troops?: number;
-    uuid: string;
-}
-
 export interface RdUserContext {
     faction: RdFaction;
     armies: RdUserContextArmies;
-    armiesInfo: RDArmiesInfo;
     season: RdUserContextSeason;
     bank: {
         nfts: any[];
@@ -162,42 +151,92 @@ export interface RdUserContext {
 
 interface RdUserContextSeason {
     faction: RdFaction;
-    troops: {
-        deployed: number;
-        undeployed: number;
+    troops: RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops;
+}
+
+export interface RdUserContextOwnerFactionTroops {
+    overall: {
+        owned: number;
+        delegated: number;
+        total: number;
+    },
+    available: {
+        owned: number;
+        total: number;
+    },
+    delegate: {
+        users: RdUserContextDelegatedTroopsProfile[];
+        total: number;
+    },
+    deployed: {
+        users: RdUserTroopsContext[];
+        total: number;
+    },
+    slain: {
+        users: RdUserTroopsContext[];
+        total: number;
     }
+}
+
+export interface RdUserContextNoOwnerFactionTroops {
+    overall: {
+        owned: number;
+        delegated: number;
+        total: number;
+    },
+    available: {
+        owned: number;
+        total: number;
+    },
+    delegate: {
+        factions: RdUserContextDelegateTroopsFaction[];
+        total: number;
+    },
+    deployed: {
+        factions: RdFactionTroopsContext[];
+        total: number;
+    },
+    slain: {
+        factions: RdFactionTroopsContext[];
+        total: number;
+    }
+}
+
+interface RdControlPointContext {
+    controlPointId: number;
+    name: string;
+    troops: number;
+}
+
+interface RdUserContextDelegatedTroopsProfile {
+    profileId: number;
+    profileWalletAddress: string;
+    profileName: string,
+    troops: number;
+}
+
+interface RdUserContextDelegateTroopsFaction {
+    factionId: number,
+    factionName: string,
+    troops: number,
+}
+interface RdFactionTroopsContext {
+    factionId: number;
+    factionName: string;
+    troops: number;
+    controlPoints: RdControlPointContext[];
+}
+
+interface RdUserTroopsContext {
+    profileId: number;
+    profileWalletAddress: string;
+    profileName: string;
+    troops: number;
+    controlPoints: RdControlPointContext[];
 }
 
 interface RdUserContextArmies {
     redeploymentDelay: number;
-}
-
-interface RDArmiesInfo {
-    available: {
-        availableControlPoint: number;
-        // nativeAvailableTroops: number; would be nice to have this
-        availableTroops: number;
-        othersPlayersDeployedTroopsLived: number;
-        ownDeployedTroops: number;
-    };
-    delegate: {
-        delegateTroopsPerPlayer: any[];
-    };
-    deployed: {
-        deployedTroopsPerOthersPlayers: number;
-        playersDeployerTroops: any[];
-        troopsPerControlPoint: any[];
-    };
-    slain: {
-        slainTroopsPerControlPoint: any[];
-        slainTroopsPerPlayer: any[];
-    };
-    total: {
-        delegatedTroops: number;
-        deployedTroops: number;
-        nativeTroops: number;
-        // slainTroops: number; would be nice to have this
-    };
 }
 
 export interface RdGameContext {
