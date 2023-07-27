@@ -167,10 +167,10 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
                 gridWidth={'50px 1fr 50px'}
                 w='2048px'
                 h='1662px'
-                topFrame={ImageService.translate(`/img/ryoshi-dynasties/village/frame-top-${user.theme}.png`).convert()}
-                rightFrame={ImageService.translate(`/img/ryoshi-dynasties/village/frame-right-${user.theme}.png`).convert()}
-                bottomFrame={ImageService.translate(`/img/ryoshi-dynasties/village/frame-bottom-${user.theme}.png`).convert()}
-                leftFrame={ImageService.translate(`/img/ryoshi-dynasties/village/frame-left-${user.theme}.png`).convert()}
+                topFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-top-${user.theme}.png`).convert()}
+                rightFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-right-${user.theme}.png`).convert()}
+                bottomFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-bottom-${user.theme}.png`).convert()}
+                leftFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-left-${user.theme}.png`).convert()}
               >
                 <Box
                   as='img'
