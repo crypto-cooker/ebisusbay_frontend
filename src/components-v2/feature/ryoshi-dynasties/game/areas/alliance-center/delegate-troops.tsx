@@ -1,33 +1,28 @@
-import {ChangeEvent, useEffect, useState, useContext} from "react";
+import {ChangeEvent, useContext, useEffect, useState} from "react";
 import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
   Box,
   Center,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
+  Grid,
+  GridItem,
+  Image,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
   Select,
-  Grid,
-  GridItem,
-  FormErrorMessage,
-  Image,
   Text
 } from "@chakra-ui/react"
 import {getAuthSignerInStorage} from '@src/helpers/storage';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {delegateTroops} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {delegateTroops, getAllFactionsSeasonId} from "@src/core/api/RyoshiDynastiesAPICalls";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {useAppSelector} from "@src/Store/hooks";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {RdModalBody, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import {AxiosError} from "axios";
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/searchFactions";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
@@ -35,7 +30,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {getAllFactionsSeasonId} from "@src/core/api/RyoshiDynastiesAPICalls";
+
 interface DelegateTroopsFormProps {
   isOpen: boolean;
   onClose: () => void;
@@ -147,8 +142,8 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsForm
   useEffect(() => {
     if(!rdUser) return;
 
-    if(rdUser.season?.troops?.undeployed !== undefined){
-      setTroopsAvailable(rdUser.season?.troops?.undeployed);
+    if(rdUser.season.troops.available.total !== undefined){
+      setTroopsAvailable(rdUser.season.troops.available.total);
     }
   }, [rdUser]);
 

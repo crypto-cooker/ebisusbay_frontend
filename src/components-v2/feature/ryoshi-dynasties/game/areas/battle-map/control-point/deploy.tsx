@@ -5,7 +5,10 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Grid,
+  GridItem,
   HStack,
+  Image,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -14,12 +17,9 @@ import {
   Select,
   Spacer,
   Text,
-  Image,
-  Grid,
-  GridItem,
 } from "@chakra-ui/react";
 
-import React, {ChangeEvent, ReactElement, useContext, useEffect, useState} from "react";
+import React, {ChangeEvent, useContext, useEffect, useState} from "react";
 import {getAuthSignerInStorage} from '@src/helpers/storage';
 import {useAppSelector} from "@src/Store/hooks";
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
@@ -42,10 +42,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/searchFactions";
-import CollectionsComponent from '@src/components-v2/feature/collections';
-import useBreakpoint from "use-breakpoint";
-import { isMobile } from "web3modal";
-                // import Select from "react-select";
+// import Select from "react-select";
 const tabs = {
   recall: 'recall',
   deploy: 'deploy',
@@ -147,8 +144,10 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
   }
 
   useEffect(() => {
-    if(rdContext.user?.season?.troops?.undeployed !== undefined){
-      setTroopsAvailable(rdContext.user?.season?.troops?.undeployed);
+    if(!rdContext?.user) return;
+
+    if(rdContext.user.season.troops.available.total !== undefined) {
+      setTroopsAvailable(rdContext.user.season.troops.available.total);
     }
     // if(rdContext.user?.season?.troops?.deployed !== undefined && 
     //    rdContext.user?.season?.troops?.undeployed !== undefined){

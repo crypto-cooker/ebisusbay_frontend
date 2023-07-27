@@ -1,13 +1,23 @@
-import {Box, Flex, Spacer, Text, Progress, HStack, Tag, Image, SimpleGrid, Center,
+import {
   Accordion,
   AccordionButton,
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  useMediaQuery 
+  Box,
+  Center,
+  Flex,
+  HStack,
+  Image,
+  Progress,
+  SimpleGrid,
+  Spacer,
+  Tag,
+  Text,
+  useMediaQuery
 } from "@chakra-ui/react";
 import {useAppSelector} from "@src/Store/hooks";
-import React, {useState, useEffect, useRef, useContext} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 import ImageService from "@src/core/services/image";
 import {
@@ -16,8 +26,6 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 //for showing koban
-import {ApiService} from "@src/core/services/api-service";
-import {ethers} from "ethers";
 import {siPrefixedNumber} from "@src/utils";
 import NextApiService from "@src/core/services/api-service/next";
 import {appConfig} from "@src/Config";
@@ -126,14 +134,13 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   }, [rdGameContext?.game?.endAt]); 
 
   useEffect(() => {
-    if(!rdContext) return;
+    if(!rdContext?.user) return;
 
-    if(rdContext.user?.season?.troops?.undeployed !== undefined){
-      setAvailableTroops(rdContext.user?.season?.troops?.undeployed);
+    if(rdContext.user.season.troops.available.total !== undefined) {
+      setAvailableTroops(rdContext.user.season.troops.available.total);
     }
-    if(rdContext.user?.season?.troops?.deployed !== undefined && 
-       rdContext.user?.season?.troops?.undeployed !== undefined){
-      setTotalTroops(rdContext.user?.season?.troops?.deployed + rdContext.user?.season?.troops?.undeployed);
+    if(rdContext.user.season.troops.overall.total !== undefined) {
+      setTotalTroops(rdContext.user.season.troops.overall.total);
     }
     getTroopCooldown();
 
