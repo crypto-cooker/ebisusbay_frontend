@@ -6,11 +6,15 @@ import {useAppSelector} from "@src/Store/hooks";
 
 interface MapOutlineProps extends GridProps {
   children: ReactElement[] | ReactElement;
-  gridHeight ?: string;
-  gridWidth ?: string;
+  gridHeight?: string;
+  gridWidth?: string;
+  topFrame?: string;
+  rightFrame?: string;
+  bottomFrame?: string;
+  leftFrame?: string;
 }
 
-const MapFrame = ({children, gridHeight, gridWidth, ...props}: MapOutlineProps) => {
+const MapFrame = ({children, gridHeight, topFrame, rightFrame, bottomFrame, leftFrame, gridWidth, ...props}: MapOutlineProps) => {
   const user = useAppSelector((state) => state.user);
   return (
     <Grid
@@ -26,25 +30,25 @@ const MapFrame = ({children, gridHeight, gridWidth, ...props}: MapOutlineProps) 
     >
       <GridItem area={'left'}>
         <Image
-          src={ImageService.translate(`/img/ryoshi-dynasties/village/frame-left-${user.theme}.png`).convert()}
+          src={leftFrame ?? ImageService.translate(`/img/ryoshi-dynasties/village/frame-left-${user.theme}.png`).convert()}
           h={'100%'}
         />
       </GridItem>
       <GridItem area={'top'}>
         <Image
-          src={ImageService.translate(`/img/ryoshi-dynasties/village/frame-top-${user.theme}.png`).convert()}
+          src={topFrame ?? ImageService.translate(`/img/ryoshi-dynasties/village/frame-top-${user.theme}.png`).convert()}
           w={'100%'}
         />
       </GridItem>
       <GridItem area={'right'}>
         <Image
-          src={ImageService.translate(`/img/ryoshi-dynasties/village/frame-right-${user.theme}.png`).convert()}
+          src={rightFrame ?? ImageService.translate(`/img/ryoshi-dynasties/village/frame-right-${user.theme}.png`).convert()}
           h={'100%'}
         />
       </GridItem>
       <GridItem area={'bottom'}>
         <Image
-          src={ImageService.translate(`/img/ryoshi-dynasties/village/frame-bottom-${user.theme}.png`).convert()}
+          src={bottomFrame ?? ImageService.translate(`/img/ryoshi-dynasties/village/frame-bottom-${user.theme}.png`).convert()}
           w={'100%'}
         />
       </GridItem>
