@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef, useState, useContext } from 'react';
+import React, {ReactElement, useEffect, useRef, useState, useContext, use } from 'react';
 import {
   useDisclosure,
   Button,
@@ -17,19 +17,11 @@ import ImageService from '@src/core/services/image';
 import {LandsHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-hud";
 import {useAppSelector} from "@src/Store/hooks";
 
-// import {appConfig} from "@src/Config";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
-// import {
-//   RyoshiDynastiesContext,
-//   RyoshiDynastiesContextProps
-// } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-// import {
-//   RyoshiDynastiesPreloaderContext,
-//   RyoshiDynastiesPreloaderProps
-// } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/preloader-context";
 import localFont from "next/font/local";
 import LandModal from './land-modal';
 import myData from './points.json';
+import NextApiService from "@src/core/services/api-service/next";
 
 const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Black.woff2' })
 
@@ -55,6 +47,8 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   const [area, setAreas] = useState<ReactElement[]>([]);
   const [mapInitialized, setMapInitialized] = useState(false);
   const [plotId, setPlotId] = useState(0);
+  const [listings, SetListings] = useState<any>([]);
+  
 
   //zoomin
   const [elementToZoomTo, setElementToZoomTo] = useState("");
@@ -70,14 +64,20 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     //   setPreviousElementToZoomTo(elementToZoomTo);
     // }
   }, [elementToZoomTo]);
-
+  const GetListings = async () => {
+    return await NextApiService.getListingsByCollection("0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad", {
+      pageSize: 2500
+    });
+  }
+ 
   const loadPoints = () => {
     setAreas(
       myData.vectors.map((point: any, i :number) => (
       <Text
         position="absolute"
         textAlign="center"
-        textColor={'#aaa'}
+        as={'b'}
+        textColor={listings.includes((i+1).toString()) ? "red" : "white"}
         cursor="pointer"
         id={i.toString()}
         fontSize={8}
@@ -96,7 +96,24 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   }
 
   useEffect(() => {
+    if(listings.length <= 0) return;
     loadPoints();
+  }, [listings]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await GetListings();
+      if(data){
+        //itterate through
+        let listings = data.data.map((item: any) => {
+          return item.nftId;
+        });
+        SetListings(listings)
+      }
+    }
+    fetchData()
+    .catch(console.error);;
+
   }, []);
 
   const mapProps = useBreakpointValue<MapProps>(
