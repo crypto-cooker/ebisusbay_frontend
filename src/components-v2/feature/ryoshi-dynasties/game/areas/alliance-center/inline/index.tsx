@@ -395,7 +395,7 @@ const CurrentFaction = () => {
                     <SimpleGrid columns={2} w='full'>
                       <Box textAlign='start'>Owned</Box>
                       <Box textAlign='end'>{commify(rdContext.user.season.troops.overall.owned)}</Box>
-                      {rdContext.user.faction && (
+                      {rdContext.user.faction && rdContext.user.faction.isEnabled && (
                         <>
                           <Box textAlign='start'>Delegated</Box>
                           <Box textAlign='end'>{commify(rdContext.user.season.troops.overall.delegated)}</Box>
@@ -417,12 +417,12 @@ const CurrentFaction = () => {
                     <SimpleGrid columns={2} w='full'>
                       <Box textAlign='start'>Owned</Box>
                       <Box textAlign='end'>{commify(rdContext.user.season.troops.available.owned)}</Box>
-                      {rdContext.user.faction && (
-                        <>
-                          <Box textAlign='start'>Delegated</Box>
-                          <Box textAlign='end'>{commify(rdContext.user.season.troops.delegate.total)}</Box>
-                        </>
-                      )}
+                      {/*{rdContext.user.faction && rdContext.user.faction.isEnabled && (*/}
+                      {/*  <>*/}
+                      {/*    <Box textAlign='start'>Delegated</Box>*/}
+                      {/*    <Box textAlign='end'>{commify(rdContext.user.season.troops.delegate.total)}</Box>*/}
+                      {/*  </>*/}
+                      {/*)}*/}
                     </SimpleGrid>
                   </AccordionPanel>
                 </AccordionItem>
@@ -435,7 +435,7 @@ const CurrentFaction = () => {
                     </Flex>
                   </AccordionButton>
                   <AccordionPanel pb={1} pt={0} fontSize='sm'>
-                    {rdContext.user.faction ? (
+                    {rdContext.user.faction && rdContext.user.faction.isEnabled ? (
                       <>
                         <Text color='#ccc' textAlign='start' pb={2}>Troops received from users</Text>
                         {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.length > 0 ? (
@@ -480,7 +480,7 @@ const CurrentFaction = () => {
                   </AccordionButton>
                   <AccordionPanel pb={1} pt={0} fontSize='sm'>
                     <Text color='#ccc' textAlign='start' pb={2}>Troops deployed to control points</Text>
-                    {rdContext.user.faction ? (
+                    {rdContext.user.faction && rdContext.user.faction.isEnabled ? (
                       <>
                         {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).deployed.users.length > 0 ? (
                           <Accordion allowMultiple>
@@ -561,7 +561,7 @@ const CurrentFaction = () => {
                   </AccordionButton>
                   <AccordionPanel pb={1} pt={0} fontSize='sm'>
                     <Text color='#ccc' textAlign='start' pb={2}>Troops defeated in battle</Text>
-                    {rdContext.user.faction ? (
+                    {rdContext.user.faction && rdContext.user.faction.isEnabled ? (
                       <>
                         {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).slain.users.length > 0 ? (
                           <Accordion allowMultiple>
