@@ -46,9 +46,12 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   });
   const [area, setAreas] = useState<ReactElement[]>([]);
   const [mapInitialized, setMapInitialized] = useState(false);
-  const [plotId, setPlotId] = useState(0);
   const [listings, SetListings] = useState<any>([]);
   
+  const [plotId, setPlotId] = useState(0);
+  const [plotPrice, setPlotPrice] = useState(0);
+  const [forSale, setForSale] = useState(false);
+  const [nft, setNft] = useState<any>(null);
 
   //zoomin
   const [elementToZoomTo, setElementToZoomTo] = useState("");
@@ -69,6 +72,34 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       pageSize: 2500
     });
   }
+
+  const CheckIfListing = (i :number) => {
+    let isListing = false;
+    listings.forEach((element:any) => {
+        if(element.nftId === (i).toString()){
+          isListing = true;
+        }
+    })
+    return isListing;
+  }
+  const GetListingPrice = (i :number) => {
+    let listingPrice = 0;
+    listings.forEach((element:any) => {
+        if(element.nftId === (i).toString()){
+          listingPrice = element.price;
+        }
+    })
+    return listingPrice;
+  }
+  const GetListingNft = (i :number) => {
+    let listingNft = null;
+    listings.forEach((element:any) => {
+        if(element.nftId === (i).toString()){
+          listingNft = element.nft;
+        }
+    })
+    return listingNft;
+  }
  
   const loadPoints = () => {
     setAreas(
@@ -77,7 +108,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
         position="absolute"
         textAlign="center"
         as={'b'}
-        textColor={listings.includes((i+1).toString()) ? "red" : "white"}
+        textColor={CheckIfListing(i+1) ? "red" : "white"}
         cursor="pointer"
         id={i.toString()}
         fontSize={8}
@@ -97,8 +128,22 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
 
   useEffect(() => {
     if(listings.length <= 0) return;
+    console.log(listings);
     loadPoints();
   }, [listings]);
+
+  useEffect(() => {
+    if(CheckIfListing(plotId)){
+      setPlotPrice(GetListingPrice(plotId));
+      setNft(GetListingNft(plotId));
+      setForSale(true);
+    }
+    else{
+      setPlotPrice(0);
+      setNft(null);
+      setForSale(false);
+    }
+  }, [plotId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,7 +151,8 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       if(data){
         //itterate through
         let listings = data.data.map((item: any) => {
-          return item.nftId;
+          // console.log(item);
+          return item;
         });
         SetListings(listings)
       }
@@ -210,6 +256,9 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
                     <div className={[styles.worldmap_label, styles.buccaneer_beach_label].filter(e => !!e).join(' ')}>
                     <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Buccaneer Beach")}></Avatar>Buccaneer Beach</div> </div>
                 </div> */}
+
+           
+
                 
                 </Flex>
                 </MapFrame>
@@ -218,7 +267,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               )}
             </TransformWrapper>
         )}
-        <LandModal  isOpen={isOpen}  onClose={onClose} plotId={plotId} />
+        <LandModal isOpen={isOpen}  onClose={onClose} plotId={plotId} forSale={forSale} price={plotPrice} nft={nft}/>
         <LandsHUD onBack={onBack} setElementToZoomTo={setElementToZoomTo} showBack={false}/>
       </Box>
     </section>

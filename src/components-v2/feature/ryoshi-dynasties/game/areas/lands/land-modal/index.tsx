@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {Box, Center, Flex, Text, VStack,Image, SimpleGrid} from "@chakra-ui/react"
+import {Box, Center, Flex, Text, VStack,Image, SimpleGrid, HStack, Spacer} from "@chakra-ui/react"
 import {Spinner} from 'react-bootstrap';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
@@ -18,6 +18,14 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
+import {  useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import MetaMaskOnboarding from '@metamask/onboarding';
+import { chainConnect, connectAccount } from '@src/GlobalState/User';
+import {CollectionFilters} from "@src/Components/Models/collection-filters.model";
+import { init, fetchListings } from '@src/GlobalState/collectionSlice';
+import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
+
 const tabs = {
   info: 'info',
   deploy: 'deploy',
@@ -28,21 +36,17 @@ interface LandModalFormProps {
   isOpen: boolean;
   onClose: () => void;
   plotId: number;
+  forSale: boolean;
+  price: number;
+  nft:any;
 }
 
-const LandModal = ({ isOpen, onClose, plotId}: LandModalFormProps) => {
-  // const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-
+const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFormProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
-  // const [info, setInfo] = useState([]);
-  // const [rewardID, setRewardID] = useState(0);
-  // const user = useAppSelector((state) => state.user);
 
   const [currentTab, setCurrentTab] = useState(tabs.info);
-  // const [battleEnabled, setBattleEnabled] = useState(false);
   const [page, setPage] = useState<string>();
-  // const [nftData, setNftData] = useState<any>();
   const [nftImage, setNftImage] = useState<string>();
 
   const config = appConfig();
@@ -59,14 +63,47 @@ const LandModal = ({ isOpen, onClose, plotId}: LandModalFormProps) => {
     }
   };
 
+  const dispatch = useDispatch();
+  // const router = useRouter();
+  const user = useAppSelector(state => state.user);
+  // const user = useSelector((state) => state.user);
+  // const items = useSelector((state) => state.collection.listings);
+  // const listings = useSelector((state) => state.collection.listings.filter((item) => item.market.id));
+
+  const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
+  const [nftOffer, setNftOffer] = useState(null);
+
+  // useEffect(() => {
+  //   const filterOption = CollectionFilters.default();
+  //   // filterOption.address = "0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad";
+  //   dispatch(init("0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad"));
+  //   dispatch(fetchListings(true));
+  //   // eslint-disable-next-line
+  // }, [dispatch]);
+
+  const handleMakeOffer = (nft:any) => {
+    console.log('===handleMakeOffer', nft);
+    if (user.address) {
+      setNftOffer(nft);
+      setOpenMakeOfferDialog(!openMakeOfferDialog);
+    } else {
+      if (user.needsOnboard) {
+        const onboarding = new MetaMaskOnboarding();
+        onboarding.startOnboarding();
+      } else if (!user.address) {
+        dispatch(connectAccount());
+      } else if (!user.correctChain) {
+        dispatch(chainConnect());
+      }
+    }
+  };
   
   const GetNftImages = async () => {
     const izCollection = config.collections.find((collection: any) => collection.slug === 'izanamis-cradle-land-deeds');
-    console.log('===izLandDeeds', izCollection);
+    // console.log('===izLandDeeds', izCollection);
     setNftImage(izCollection.metadata.avatar)
   }
   const GoToNFTPage = () => {
-    //redirect to page
     window.open('https://app.ebisusbay.com/collection/izanamis-cradle-land-deeds/'+plotId,'_blank');
   }
 
@@ -81,12 +118,55 @@ const LandModal = ({ isOpen, onClose, plotId}: LandModalFormProps) => {
   }, [plotId]);
 
   return (
+    //  <div
+    //           className={`${styles.tip_modal}`}
+    //           style={{
+    //             display: modalFlag,
+    //             left: `${tileInfo.modalPosition?.x}px`,
+    //             top: `${tileInfo.modalPosition?.y}px`,
+    //           }}
+    //         >
+    //           <div className={styles.modal_content}>
+    //             <div
+    //               className={`${styles.cross}`}
+    //               onClick={() => {
+    //                 setModalFlag('none');
+    //               }}
+    //             >
+    //               &times;
+    //             </div>
+    //             <img className={styles.tile_img} src={tileInfo.tile} alt="tile" />
+    //             <div className={styles.tile_items}>
+    //               <div>TokenId: {tileInfo.tokenId}</div>
+    //               {/* <div>Type: {tileType[tileInfo.type - 1]}</div> */}
+    //               {/* <div>
+    //                 Location: {tileInfo.xPos < 27 ? tileInfo.xPos - 27 : tileInfo.xPos - 26},
+    //                 {tileInfo.yPos < 14 ? 14 - tileInfo.yPos : 13 - tileInfo.yPos}
+    //               </div> */}
+    //               {tileInfo.canBuy && <div>Price: {commify(tileInfo.price ?? 0)} CRO</div>}
+    //               <MakeOffer>
+    //                 {tileInfo.canBuy && (
+    //                   <div className="me-2">
+    //                     <Button type="legacy" onClick={() => onBuy(tileInfo.listing)}>
+    //                       Buy
+    //                     </Button>
+    //                   </div>
+    //                 )}
+    //                 <div>
+    //                   <Button type="legacy-outlined" onClick={() => onOffer(tileInfo.nft)}>
+    //                     Offer
+    //                   </Button>
+    //                 </div>
+    //               </MakeOffer>
+    //             </div>
+    //           </div>
+    //         </div>
     <RdModal
       isOpen={isOpen}
       onClose={handleClose}
       title={title}
       isCentered={false}
-      utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
+      // utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
       onUtilBtnClick={handleBack}
     >
       {page === 'faq' ? (
@@ -105,19 +185,39 @@ const LandModal = ({ isOpen, onClose, plotId}: LandModalFormProps) => {
                 <VStack>
                 <Text
                 as='i'
-                marginBottom='2'
                 textAlign='center'
               > Token Id: {plotId.toString()} </Text>
+              {forSale && (
+                <Text
+                as='i'
+                textAlign='center'
+              > Price: {price} CRO </Text>
+              )}
+              <Spacer h={8} />
+              <HStack>
+              {forSale && (
+                <RdTabButton
+                isActive={currentTab === tabs.info}
+                onClick={() => GoToNFTPage()}
+                fontSize={{base: '12', sm: '14'}}
+                padding={{base: '0 10px', sm: '0 20px'}}
+                margin={{base: '0 5px', sm: '0 10px'}}
+              >
+                Buy Now
+              </RdTabButton>)
+
+                }
 
                   <RdTabButton
                         isActive={currentTab === tabs.info}
-                        onClick={() => GoToNFTPage()}
+                        onClick={() => handleMakeOffer(nft)}
                         fontSize={{base: '12', sm: '14'}}
                         padding={{base: '0 10px', sm: '0 20px'}}
                         margin={{base: '0 5px', sm: '0 10px'}}
                       >
                         Make Offer
                       </RdTabButton>
+                </HStack>
                 </VStack>
               </Flex>
            
@@ -149,6 +249,15 @@ const LandModal = ({ isOpen, onClose, plotId}: LandModalFormProps) => {
             </Spinner>
           )}
         </>
+      )}
+      {openMakeOfferDialog && (
+        <MakeOfferDialog
+          isOpen={openMakeOfferDialog}
+          initialNft={nftOffer}
+          onClose={() => setOpenMakeOfferDialog(false)}
+          nftId={plotId}
+          nftAddress={"0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad"}
+        />
       )}
     </RdModal>
   )
