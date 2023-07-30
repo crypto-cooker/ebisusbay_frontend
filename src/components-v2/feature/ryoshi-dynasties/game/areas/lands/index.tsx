@@ -22,8 +22,10 @@ import localFont from "next/font/local";
 import LandModal from './land-modal';
 import myData from './points.json';
 import NextApiService from "@src/core/services/api-service/next";
+import {appConfig} from "@src/Config";
 
 const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Black.woff2' })
+const config = appConfig();
 
 interface BattleMapProps {
   onBack: () => void;
@@ -68,7 +70,8 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     // }
   }, [elementToZoomTo]);
   const GetListings = async () => {
-    return await NextApiService.getListingsByCollection("0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad", {
+    const collectionAddress = config.collections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds')?.address;
+    return await NextApiService.getListingsByCollection(collectionAddress, {
       pageSize: 2500
     });
   }
