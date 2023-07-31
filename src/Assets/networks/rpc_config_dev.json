@@ -14259,7 +14259,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "DACC shares 75% of its royalties with holders. Holders of 5+ DACC qualify for the weekly royalty payment.",
+        "description": "A collection of 7777 Degen Apes that know how to have a good time.\nClaim royalties here -> https://dacc.netlify.app/",
         "avatar": "/img/collections/degen-ape-cronos-club/avatar.webp",
         "banner": "/img/collections/degen-ape-cronos-club/banner.webp",
         "card": "/img/collections/degen-ape-cronos-club/card.webp",
@@ -22306,6 +22306,28 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "Time Commanders",
+      "slug": "time-commanders",
+      "multiToken": false,
+      "address": "0xBE6B2d035289A90987781026732C4B6BB47F7686",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "\"Time Commanders\"    \uD83D\uDC8EWILL stealth drop within the next 6 hours MAKE sure to keep an eye on our drops page   https://time-launcher.com/drops/  \uD83D\uDC40   Supply: 5000 Public price: 50 cro  WL price: 45 cro   IF you are not WL and should be please open a ticket!!!  \uD83D\uDCAA This collections main purpose is reinforcements to time troops. depending on which tier you hold. A MAX of 2 Commanders to increase payout yields by up to 15%.  \uD83D\uDEA8\uD83D\uDEA8Boosters for ATGs, Creatures, tonics, and outside collections(possibly) and future releases   Orange bottom = 100 pieces - 15% Purple = 400 pieces - 10% Red top = 2000 pieces - 5% Green = 2500 pieces - 2% @everyone  **IF you are not WL and should be please open a ticket and i will WL you ASAP**",
+        "avatar": "/img/collections/time-commanders/avatar.webp",
+        "banner": "/img/collections/time-commanders/banner.webp",
+        "website": "https://time-dapp.netlify.app/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/8whpvt3WEr",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "verified": true
       }
     }
   ],
