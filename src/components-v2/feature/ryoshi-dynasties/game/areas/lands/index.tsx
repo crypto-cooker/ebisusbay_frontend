@@ -6,7 +6,7 @@ import {
   Flex,
   Text,
   Image,
-  
+  Icon
 } from '@chakra-ui/react'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
@@ -24,6 +24,8 @@ const config = appConfig();
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import {TriangleUpIcon } from '@chakra-ui/icons';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBuildingColumns} from "@fortawesome/free-solid-svg-icons";
 
 interface BattleMapProps {
   onBack: () => void;
@@ -85,9 +87,6 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   )
   const GetTextColor = (i :number) => {
     if(CheckIfListing(i)){
-      return "white";
-     }
-     if(ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i).toString())) {
       return "gold";
      }
      return "white";
@@ -122,38 +121,84 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   }
  
   const loadPoints = () => {
+
+
     setTextArea(
       myData.vectors.map((point: any, i :number) => (
-      <Text
-        position="absolute"
-        textAlign="center"
-        as={'b'}
-        textColor={GetTextColor(i+1)}
-        cursor="pointer"
-        id={i.toString()}
-        fontSize={8}
-        width={6}
-        height={3}
-        left={point.x}
-        top={1662 - point.y}
-        zIndex="10"
-        onClick={() => {
-          setElementToZoomTo((i).toString());
-        }}
-        >{i+1}</Text>
-    )))
+        <>
+          {ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i).toString()) ? (<>
+            <Icon
+              position="absolute"
+              as={FontAwesomeIcon} 
+              icon={faBuildingColumns}
+              color={'#D24547'}
+              width={4}
+              height={4}
+              left={point.x}
+              top={1662 - point.y}
+              id={i.toString()}
+              cursor="pointer"
+              zIndex="10"
+              onClick={() => {
+                setElementToZoomTo((i).toString());
+              }}
+            ></Icon>
+          </> ) : (<> 
+            <Text
+              position="absolute"
+              textAlign="center"
+              as={'b'}
+              textColor={GetTextColor(i+1)}
+              cursor="pointer"
+              id={i.toString()}
+              fontSize={8}
+              width={6}
+              height={3}
+              left={point.x}
+              top={1662 - point.y}
+              zIndex="10"
+              onClick={() => {
+                setElementToZoomTo((i).toString());
+              }}
+            >{i+1}</Text>
+          </>)}
+        </>
+      )))
+
+
     setPointArea(
-      myData.vectors.map((point: any, i :number) => (
-      <TriangleUpIcon
-        position="absolute"
-        // id={i.toString()}
-        width={1}
-        height={1}
-        left={point.x}
-        top={1662 - point.y}
-        zIndex="10"
-        ></TriangleUpIcon>
-    )))
+        myData.vectors.map((point: any, i :number) => (
+          <>
+            {ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i).toString()) ? (<>
+              <Icon
+                position="absolute"
+                as={FontAwesomeIcon} 
+                icon={faBuildingColumns}
+                color={'#D24547'}
+                width={4}
+                height={4}
+                left={point.x}
+                top={1662 - point.y}
+                id={i.toString()}
+                cursor="pointer"
+                zIndex="10"
+                onClick={() => {
+                  setElementToZoomTo((i).toString());
+                }}
+              ></Icon>
+            </> ) : (<> 
+              <TriangleUpIcon
+                position="absolute"
+                // id={i.toString()}
+                width={1}
+                height={1}
+                left={point.x}
+                top={1662 - point.y}
+                zIndex="10"
+                ></TriangleUpIcon>
+            </>)}
+          </>
+        )))
     
     setMapInitialized(true);
   }
