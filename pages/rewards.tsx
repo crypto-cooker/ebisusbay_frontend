@@ -14,7 +14,7 @@ import {useFortunePrice} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 
 const config = appConfig();
-const currentGameId = 42;
+const currentGameId = 43;
 
 const Rewards = () => {
   const user = useAppSelector(state => state.user);
