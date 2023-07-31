@@ -6,7 +6,8 @@ import {Box, Flex, Spacer, Text, Progress, HStack, Tag, Image, SimpleGrid, Cente
   useMediaQuery,
   NumberInput,
   NumberInputField,
-  VStack
+  VStack,
+  Divider
 } from "@chakra-ui/react";
 import {useAppSelector} from "@src/Store/hooks";
 import React, {useState, useEffect} from "react";
@@ -53,7 +54,7 @@ export const LandsHUD = ({onBack, setElementToZoomTo, showBack}: BattleMapHUDPro
         justifyContent='right'
         bg={user.theme === 'dark' ? '#272523EE' : '#272523EE'}
         rounded='md' 
-        w={{base: '250px', sm: '250px'}}
+        w={{base: '240px', sm: '240px'}}
         >
       <Accordion defaultIndex={[0]} allowToggle paddingRight={0} justifyContent='right'>
         <AccordionItem border='none'>
@@ -61,7 +62,7 @@ export const LandsHUD = ({onBack, setElementToZoomTo, showBack}: BattleMapHUDPro
           </AccordionButton>
           <AccordionPanel pb={4} alignItems={'right'}>
 
-          <Flex justify="center" align="right">
+          <Flex justify="space-between" align="right">
 
             <VStack justifyContent={'center'}>
               <NumberInput 
@@ -90,13 +91,14 @@ export const LandsHUD = ({onBack, setElementToZoomTo, showBack}: BattleMapHUDPro
 
             <VStack spacing={0}>
               <Text
-                textColor={'white'}
+                textColor={'#aaa'}
                 fontSize={'sm'}
-                as='u'
+                as='i'
                 > Legend
               </Text>
+              <Divider orientation="horizontal" />
               <Text
-                textColor={'yellow'}
+                textColor={'gold'}
                 fontSize={'sm'}
                 as='b'
                 > Owned
@@ -108,9 +110,9 @@ export const LandsHUD = ({onBack, setElementToZoomTo, showBack}: BattleMapHUDPro
                 > For Sale
               </Text>
               <Text
-                textColor={'gray'}
+                textColor={'white'}
                 fontSize={'sm'}
-                as='b'
+                // as='b'
                 > Make Offer
               </Text>
             </VStack>

@@ -4,7 +4,9 @@ import {
   useBreakpointValue,
   Box,
   Flex,
-  Text
+  Text,
+  Image,
+  
 } from '@chakra-ui/react'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
@@ -21,6 +23,7 @@ const config = appConfig();
 
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
+import {TriangleUpIcon } from '@chakra-ui/icons';
 
 interface BattleMapProps {
   onBack: () => void;
@@ -31,7 +34,8 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   const transformComponentRef = useRef<any>(null)
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [area, setAreas] = useState<ReactElement[]>([]);
+  const [textArea, setTextArea] = useState<ReactElement[]>([]);
+  const [pointArea, setPointArea] = useState<ReactElement[]>([]);
   const [mapInitialized, setMapInitialized] = useState(false);
   const [listings, SetListings] = useState<any>([]);
   
@@ -80,13 +84,13 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     }
   )
   const GetTextColor = (i :number) => {
-     if(ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i).toString())) {
-      return "yellow";
-     }
-     if(CheckIfListing(i)){
+    if(CheckIfListing(i)){
       return "white";
      }
-     return "gray";
+     if(ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i).toString())) {
+      return "gold";
+     }
+     return "white";
   }
 
   const CheckIfListing = (i :number) => {
@@ -118,7 +122,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   }
  
   const loadPoints = () => {
-    setAreas(
+    setTextArea(
       myData.vectors.map((point: any, i :number) => (
       <Text
         position="absolute"
@@ -137,7 +141,19 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
           setElementToZoomTo((i).toString());
         }}
         >{i+1}</Text>
-      )))
+    )))
+    setPointArea(
+      myData.vectors.map((point: any, i :number) => (
+      <TriangleUpIcon
+        position="absolute"
+        // id={i.toString()}
+        width={1}
+        height={1}
+        left={point.x}
+        top={1662 - point.y}
+        zIndex="10"
+        ></TriangleUpIcon>
+    )))
     
     setMapInitialized(true);
   }
@@ -149,7 +165,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   }, [listings]);
 
   useEffect(() => {
-    console.log(ownedDeeds);
+    // console.log(ownedDeeds);
     loadPoints();
 
   }, [ownedDeeds]);
@@ -166,6 +182,32 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       setForSale(false);
     }
   }, [plotId]);
+
+  const [showText, setShowText] = useState(false);
+  const [zoomState, setZoomState] = useState({
+    offsetX: 0,
+    offsetY: 0,
+    scale: 1,
+  });
+
+  const changeCanvasState = (ReactZoomPanPinchRef: any, event: any) => {
+    setZoomState({
+      offsetX: ReactZoomPanPinchRef.state.positionX,
+      offsetY: ReactZoomPanPinchRef.state.positionY,
+      scale: ReactZoomPanPinchRef.state.scale,
+    });
+  };
+
+  useEffect(() => {
+    // console.log(zoomState.scale);
+    if(!showText &&  zoomState.scale >= 1.1){
+      setShowText(true);
+    }
+    else if(showText &&  zoomState.scale < 1.1){
+      setShowText(false);
+    }
+
+  }, [zoomState.scale]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -235,6 +277,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
         {mapInitialized && (
           <TransformWrapper
             ref={transformComponentRef}
+            onZoom={changeCanvasState}
             initialScale={mapProps?.scale}
             initialPositionX={mapProps?.initialPosition.x}
             initialPositionY={mapProps?.initialPosition.y}
@@ -267,7 +310,15 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
                 <map name="imageMap" > 
                 </map>
                 <Flex position="absolute" zIndex="0" width="100%" height="100%">
-                  {area}
+                {showText ?(
+                  <>
+                    {textArea}
+                  </> 
+                )  : (
+                  <>
+                    {pointArea}
+                  </>
+                )}
                 </Flex>
                 </MapFrame>
               </TransformComponent>
