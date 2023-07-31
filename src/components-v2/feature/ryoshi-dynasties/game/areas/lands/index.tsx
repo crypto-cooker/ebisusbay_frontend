@@ -1,14 +1,9 @@
-import React, {ReactElement, useEffect, useRef, useState, useContext, use } from 'react';
+import React, {ReactElement, useEffect, useRef, useState} from 'react';
 import {
   useDisclosure,
-  Button,
-  AspectRatio,
   useBreakpointValue,
   Box,
   Flex,
-  Image,
-  Avatar,
-  WrapItem,
   Text
 } from '@chakra-ui/react'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -18,34 +13,24 @@ import {LandsHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/l
 import {useAppSelector} from "@src/Store/hooks";
 
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
-import localFont from "next/font/local";
 import LandModal from './land-modal';
 import myData from './points.json';
 import NextApiService from "@src/core/services/api-service/next";
 import {appConfig} from "@src/Config";
-
-const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Black.woff2' })
 const config = appConfig();
+
+import {useInfiniteQuery} from "@tanstack/react-query";
+import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 
 interface BattleMapProps {
   onBack: () => void;
 }
 
 const DynastiesLands = ({onBack}: BattleMapProps) => {
-  // const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
-
   const user = useAppSelector(state => state.user);
-  // const config = appConfig();
-  // const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const transformComponentRef = useRef<any>(null)
-  // const previousElementToZoomTo = useRef<any>(null)
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [zoomState, setZoomState] = useState({
-    offsetX: 0,
-    offsetY: 0,
-    scale: 1,
-  });
   const [area, setAreas] = useState<ReactElement[]>([]);
   const [mapInitialized, setMapInitialized] = useState(false);
   const [listings, SetListings] = useState<any>([]);
@@ -55,7 +40,6 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   const [forSale, setForSale] = useState(false);
   const [nft, setNft] = useState<any>(null);
 
-  //zoomin
   const [elementToZoomTo, setElementToZoomTo] = useState("");
   useEffect(() => {
     if (transformComponentRef.current) {
@@ -64,16 +48,45 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       setPlotId(Number(elementToZoomTo)+1);
       onOpen();
     }
-    // if(previousElementToZoomTo !== elementToZoomTo){
-    //   // previousElementToZoomTo.
-    //   setPreviousElementToZoomTo(elementToZoomTo);
-    // }
   }, [elementToZoomTo]);
+
   const GetListings = async () => {
     const collectionAddress = config.collections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds')?.address;
     return await NextApiService.getListingsByCollection(collectionAddress, {
       pageSize: 2500
     });
+  }
+
+  const [queryParams, setQueryParams] = useState<WalletsQueryParams>({
+    collection: config.collections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds')?.address,
+  });
+
+  const fetcher = async ({ pageParam = 1 }) => {
+    const params: WalletsQueryParams = {
+      page: pageParam,
+      ...queryParams
+    }
+    return NextApiService.getWallet(user.address!, params);
+  };
+
+  const {data: ownedDeeds, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
+    ['Inventory', user.address, queryParams],
+    fetcher,
+    {
+      getNextPageParam: (lastPage, pages) => {
+        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+      },
+      refetchOnWindowFocus: false
+    }
+  )
+  const GetTextColor = (i :number) => {
+     if(ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i).toString())) {
+      return "yellow";
+     }
+     if(CheckIfListing(i)){
+      return "white";
+     }
+     return "gray";
   }
 
   const CheckIfListing = (i :number) => {
@@ -111,7 +124,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
         position="absolute"
         textAlign="center"
         as={'b'}
-        textColor={CheckIfListing(i+1) ? "red" : "white"}
+        textColor={GetTextColor(i+1)}
         cursor="pointer"
         id={i.toString()}
         fontSize={8}
@@ -131,9 +144,15 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
 
   useEffect(() => {
     if(listings.length <= 0) return;
-    console.log(listings);
+    // console.log(listings);
     loadPoints();
   }, [listings]);
+
+  useEffect(() => {
+    console.log(ownedDeeds);
+    loadPoints();
+
+  }, [ownedDeeds]);
 
   useEffect(() => {
     if(CheckIfListing(plotId)){
@@ -154,7 +173,6 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       if(data){
         //itterate through
         let listings = data.data.map((item: any) => {
-          // console.log(item);
           return item;
         });
         SetListings(listings)
@@ -216,7 +234,6 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       >
         {mapInitialized && (
           <TransformWrapper
-            // centerOnInit={true}
             ref={transformComponentRef}
             initialScale={mapProps?.scale}
             initialPositionX={mapProps?.initialPosition.x}
@@ -240,7 +257,6 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               >
                 <Box
                   as='img'
-                  //  src={'/img/ryoshi-dynasties/lands/emptyIsland.png'}
                    src={ImageService.translate('/img/ryoshi-dynasties/lands/emptyIsland.png').custom({width: 2048, height: 1662})}
                    //  src={getPreloadedImage(ImageService.translate('/img/ryoshi-dynasties/lands/emptyIsland.png').custom({width: 2048, height: 1662}))}
                    maxW='none'
@@ -249,20 +265,9 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
                    id="fancyMenu"
                 />
                 <map name="imageMap" > 
-                  {/* {area}  */}
                 </map>
                 <Flex position="absolute" zIndex="0" width="100%" height="100%">
-                {area}
-                {/* <div className={gothamCondBlack.className}>
-                  <div className={styles.water}></div>
-                  <div id='beach' className={[styles.buccaneer_beach, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Buccaneer Beach")}>
-                    <div className={[styles.worldmap_label, styles.buccaneer_beach_label].filter(e => !!e).join(' ')}>
-                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Buccaneer Beach")}></Avatar>Buccaneer Beach</div> </div>
-                </div> */}
-
-           
-
-                
+                  {area}
                 </Flex>
                 </MapFrame>
               </TransformComponent>
