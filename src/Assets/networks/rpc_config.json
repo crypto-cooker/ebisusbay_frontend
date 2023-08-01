@@ -20522,7 +20522,7 @@
       "multiToken": false,
       "address": "0x37f25F400983256e84c39749d05d65fD96Ca461d",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cronos Towers is a NFT collection of 1234 unique towers made with AI Midjourney + Scenario.\n\nOur aim is to create more awareness about capabilities of new AIs while providing various utilities to holders of our NFTs. Such as, staking, free AI subsciptions, AI guides, secondary profits, P2E game, Metaverse experience and more.",
         "avatar": "/img/collections/cronos-towers/avatar.webp",
