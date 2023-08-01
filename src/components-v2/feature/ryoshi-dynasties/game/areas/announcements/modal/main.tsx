@@ -106,13 +106,13 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
         <Link as={NextLink} href='https://atlantis.argofinance.money' isExternal>
           {isMobile ? (
             <Image
-              alt="ArgoPetz (sm)"
-              src={ImageService.translate('/img/ryoshi-dynasties/announcements/argo-pets-sm.webp').convert()}
+              alt="Buy FRTN on VVS"
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/vvs-sm.gif').convert()}
             />
           ) : (
             <Image
-              alt="ArgoPetz"
-              src={ImageService.translate('/img/ryoshi-dynasties/announcements/argo-pets.webp').convert()}
+              alt="Buy FRTN on VVS"
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/vvs.webp').convert()}
             />
           )}
         </Link>

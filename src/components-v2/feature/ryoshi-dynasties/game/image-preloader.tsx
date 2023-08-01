@@ -96,6 +96,6 @@ const imageUrls = [
   '/img/battle-bay/imgs/verdant_forest.png',
   '/img/battle-bay/imgs/explosion.png',
   ImageService.translate('/img/battle-bay/mapImages/boat_day.apng').convert(),
-  ImageService.translate('/img/ryoshi-dynasties/announcements/argo-pets.webp').convert(),
-  ImageService.translate('/img/ryoshi-dynasties/announcements/argo-pets-sm.webp').convert()
+  ImageService.translate('/img/ryoshi-dynasties/announcements/vvs.webp').convert(),
+  ImageService.translate('/img/ryoshi-dynasties/announcements/vvs-sm.gif').convert()
 ];
