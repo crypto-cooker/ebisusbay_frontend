@@ -22356,6 +22356,60 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Atlantis Equipment",
+      "slug": "atlantis-equipment",
+      "multiToken": false,
+      "address": "0xfa6888f9f3602e02507a2bbed661c8cb256949c8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/atlantis-planets/avatar.webp",
+        "card": "/img/collections/atlantis-planets/card.webp",
+        "banner": "/img/collections/atlantis-planets/banner.webp",
+        "website": "https://atlantis.argofinance.money/",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium": "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Atlantis Gemstones",
+      "slug": "atlantis-gemstones",
+      "multiToken": false,
+      "address": "0xcbb22330413be9c5de7d80bba4b14ce99d9f3aba",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/atlantis-planets/avatar.webp",
+        "card": "/img/collections/atlantis-planets/card.webp",
+        "banner": "/img/collections/atlantis-planets/banner.webp",
+        "website": "https://atlantis.argofinance.money/",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium": "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -29061,7 +29115,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/cronos-towers/drop.webp",
         "banner": "/img/collections/cronos-towers/banner.webp",
