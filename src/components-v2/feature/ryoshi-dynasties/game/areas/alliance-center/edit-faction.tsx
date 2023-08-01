@@ -17,11 +17,14 @@ import {
   Stack,
   Text,
   VStack,
-  useMediaQuery 
+  useMediaQuery,
+  
+  useDisclosure
+
 } from "@chakra-ui/react"
 import {Spinner} from 'react-bootstrap';
 import {useFormik} from 'formik';
-import {deleteFaction, disbandFaction, editFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {disbandFaction, editFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {shortAddress} from "@src/utils";
 
 import {getAuthSignerInStorage} from '@src/helpers/storage';
@@ -44,7 +47,6 @@ import AvatarEditor from 'react-avatar-editor'
 import Cropper from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline/Cropper';
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/search";
 import {parseErrorMessage} from "@src/helpers/validator";
-const config = appConfig();
 
 interface EditFactionProps {
   isOpen: boolean;
@@ -58,15 +60,13 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
 
   const addressInput = useRef<HTMLInputElement>(null);
   const [addresses, setAddresses] = useState<string[]>([])
-  const handleAddChange = (event: ChangeEvent<HTMLInputElement>) => 
-  {
-    console.log(event.target.value)
+  const handleAddChange = (event: ChangeEvent<HTMLInputElement>) =>  {
+    // console.log(event.target.value)
     setAddressesToAdd(event.target.value)
   }
   const [addressToAdd, setAddressesToAdd] = useState('')
   const factionNameInput = useRef(null);
   const [factionType, setFactionType] = useState("")
-  // const [factionIndex, setFactionIndex] = useState(0)
   const [addressDisplay, setAddressDisplay] = useState<ReactElement[]>([])
 
   //alerts
@@ -76,12 +76,8 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   //other
   const [isLoading, getSigner] = useCreateSigner();
   const user = useAppSelector((state) => state.user);
-
-  //registration
-  const GetRegistrationColor = (registered: boolean) => {if(registered) {return 'green'} else {return 'red'}}
-  const GetRegisterButtonText = (registered: boolean) => {if(registered) {return 'Registered'} else {return 'Register'}}
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
-
+  const [isMobile] = useMediaQuery("(max-width: 768px)") 
   //pfp editor
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const[editFactionIcon, setEditFactionIcon] = useState(false);
@@ -92,40 +88,12 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     setAddressesToAdd(collectionAddress);
   }
 
-  const RegistrationAction = async (factionId: number) => {
-    if(isRegistered) {
-      console.log('Already Registered')
-    } else {
-      let signatureInStorage = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
-      }
-      if (signatureInStorage) {
-        try {
-          //0x0000000000000000000000000000000000000001
-          const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
-          const tx = await registerFactionContract.registerFaction(user.address!.toLowerCase())
-          const receipt = await tx.wait();
-          isRegistered = true;
-          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-
-          // console.log('Registered')
-        } catch (error) {
-          console.log(error)
-          toast.error("ERROR: This account has already registered a faction this season.");
-        }
-      } 
-    }
-  }
-  const registerButton = () => {
-    <Button colorScheme={GetRegistrationColor(isRegistered)}
-    onClick={() => {RegistrationAction(faction.id)}}>{GetRegisterButtonText(isRegistered)}
-  </Button>
-  }
-
   const SaveChanges = async() => {
-    
+    if(rdContext.config.factions.editableDays >= 4) {
+      setAlertMessage("You cannot edit your faction at this point in the game, changes can be made at the start of the next game")
+      setShowAlert(true)
+      return;
+    }
     if(factionNameInput.current === undefined) {
       setAlertMessage("You must enter a faction name")
       setShowAlert(true)
@@ -267,6 +235,11 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     enableReinitialize: true,
   })
   function showDeleteWarning() {
+    if(rdContext.config.factions.editableDays >= 4) {
+      setAlertMessage("You cannot edit your faction at this point in the game, changes can be made at the start of the next game")
+      setShowAlert(true)
+      return;
+    }
     setShowDeleteAlert(true)
   }
 
@@ -276,11 +249,6 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     setFactionType(faction.type)
   }, [faction]);
 
-  // useEffect(() => {
-  //   factionType === 'COLLECTION' ? setFactionIndex(0) : setFactionIndex(1)
-  // }, [factionType]);
-
-  const [isMobile] = useMediaQuery("(max-width: 768px)") 
 
   useEffect(() => {
     if(addresses !== undefined) {
@@ -311,6 +279,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   }, [addresses]);
 
   return (
+    <>
     <RdModal
       isOpen={isOpen}
       onClose={onClose}
@@ -332,7 +301,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                     p={2}
                     bg='#272523'
                     >
-                    <Cropper />
+                    <Cropper editsAllowed={rdContext.config.factions.editableDays<4}/>
                     {editFactionIcon && ( <>
                         <AvatarEditor
                         ref={editorRef}
@@ -478,19 +447,15 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                   )}
                 </Box>
               </Flex>
-
-              <Flex justifyContent={"center"} align={"center"}>
-                <Box p='3'>
-                  <RdButton 
-                    onClick={SaveChanges} 
-                   >Save Changes</RdButton>
-                </Box>
-              </Flex>
-              <Flex justifyContent={"right"} align={"right"}>
-                
-
-                
-              </Flex>
+              {rdContext.config.factions.editableDays < 4 && (
+                <Flex justifyContent={"center"} align={"center"}>
+                  <Box p='3'>
+                    <RdButton 
+                      onClick={SaveChanges} 
+                    >Save Changes</RdButton>
+                  </Box>
+                </Flex>
+                )}
           </Box>
         </Box>
       ) : (
@@ -499,7 +464,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
         </Spinner>
       )}
     </RdModal>
-    
+    </>
   )
 }
 

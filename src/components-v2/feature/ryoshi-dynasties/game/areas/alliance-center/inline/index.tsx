@@ -20,7 +20,14 @@ import {
   Stack,
   Text,
   useDisclosure,
-  VStack
+  VStack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import {ArrowBackIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
@@ -44,7 +51,6 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {useFormik} from 'formik';
 
 import {BigNumber, Contract, ethers} from "ethers";
 import Fortune from "@src/Contracts/Fortune.json";
@@ -158,7 +164,15 @@ const CurrentFaction = () => {
   const { isOpen: isOpenFaction, onOpen: onOpenFaction, onClose: onCloseFaction } = useDisclosure();
   const { isOpen: isOpenCreateFaction, onOpen: onOpenCreateFaction, onClose: onCloseCreateFaction } = useDisclosure();
   const { isOpen: isOpenDelegate, onOpen: onOpenDelegate, onClose: onCloseDelegate } = useDisclosure();
+  const { isOpen: noEditsModalisOpen, onOpen: noEditsModalOnOpen, onClose: noEditsModalonClose } = useDisclosure()
 
+  const OpenEditFaction = () => {
+    onOpenFaction();
+    if(rdContext.config.factions.editableDays >= 3){
+      //will give a warning on day 3, explain on day 4
+      noEditsModalOnOpen();
+    }
+  }
   const [isExecutingRegister, setIsExecutingRegister] = useState(false);
   // const [totalTroops, setTotalTroops] = useState(rdContext.user?.season.troops.undeployed ?? 0);
   const {data: allFactions, status, error} = useQuery({
@@ -250,12 +264,6 @@ const CurrentFaction = () => {
       }
     }
   }
-  const formikProps = useFormik({
-    onSubmit: () => console.log('submit'),
-    // validationSchema: userInfoValidation,
-    initialValues: {},
-    enableReinitialize: true,
-  });
 
   const [factionCreatedAndEnabled, setFactionCreatedAndEnabled] = useState(false);
 
@@ -273,21 +281,10 @@ const CurrentFaction = () => {
       console.log('Faction Not Created or Enabled');
       setFactionCreatedAndEnabled(false);
     }
-}, [rdContext]); 
+  }, [rdContext]); 
 
 
 
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    setFieldValue,
-    setFieldTouched,
-    handleBlur,
-    validateForm,
-    handleSubmit,
-  } = formikProps;
   return (
     <Box mt={4}>
       {status === 'loading' ? (
@@ -319,8 +316,8 @@ const CurrentFaction = () => {
                   aria-label='Edit Faction'
                   icon={<EditIcon />}
                   variant='ghost'
-                  color={'#FFD700'}
-                  onClick={onOpenFaction}
+                  color={rdContext.config.factions.editableDays >= 4 ? 'red' :'#FFD700'}
+                  onClick={OpenEditFaction}
                 />
               </Stack>
               {factionCreatedAndEnabled && (
@@ -641,7 +638,28 @@ const CurrentFaction = () => {
       {!!rdContext.user && (
         <>
           {!!rdContext.user.faction ? (
+            <>
             <EditFactionForm isOpen={isOpenFaction} onClose={onCloseFaction} faction={rdContext.user.faction} handleClose={handleActionComplete} isRegistered={!!rdContext.user.season.faction} />
+            <Modal isCentered={true} closeOnOverlayClick={false} isOpen={noEditsModalisOpen} onClose={noEditsModalonClose}>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Mid Game Faction Editing Disabled</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody pb={6}>{ rdContext.config.factions.editableDays <= 3 ? (<>
+                      Today is the last day you can make changes to your faction this game. Changes may be made during the first 3 days of every game.
+                    </>):(<>
+                      You cannot edit your faction at this point in the game. Changes may be made during the first 3 days of every game.
+                    </>)
+                    
+                  }
+                  </ModalBody>
+                  <ModalFooter justifyContent={'center'}>
+                    <Button onClick={noEditsModalonClose}>I Understand</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </>
+            
           ) : (
             <CreateFactionForm isOpen={isOpenCreateFaction} onClose={onCloseCreateFaction} handleClose={handleActionComplete} />
           )}

@@ -1,6 +1,6 @@
 import {useMediaQuery, Input, Box, Modal, ModalContent, ModalOverlay,Avatar, Text, VStack, Stack, Slider, Button, useDisclosure, Center, Image, SliderTrack, SliderFilledTrack, SliderThumb, Flex} from "@chakra-ui/react";
 import { RdModal } from "@src/components-v2/feature/ryoshi-dynasties/components";
-import { useRef, useState, useContext } from "react";
+import { useRef, useState, useContext, ReactElement } from "react";
 import AvatarEditor from "react-avatar-editor";
 import {
   RyoshiDynastiesContext,
@@ -143,7 +143,7 @@ const CropperModal = ({isOpen, onClose, src, setPreview}:CropperProps) => {
 };
 
 // Container
-const Cropper = () => {
+const Cropper = ({editsAllowed} : {editsAllowed : boolean}): ReactElement => {
     const { isOpen, onOpen, onClose } = useDisclosure()
   // image src
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
@@ -192,15 +192,17 @@ const Cropper = () => {
         </Center>
         <Flex maxW={{base: '300', sm: '100%'}} justifyContent='center'>
         <Center>
-        <Input
-          // variant='filled' 
-          variant='ghost'
-          type="file"
-          // accept="image/*"
-          ref={inputRef}
-          onChange={handleImgChange}
-          placeholder="Upload Image"
-        />
+        {editsAllowed && (
+          <Input
+            // variant='filled' 
+            variant='ghost'
+            type="file"
+            // accept="image/*"
+            ref={inputRef}
+            onChange={handleImgChange}
+            placeholder="Upload Image"
+          />
+        )}
         </Center>
         </Flex>
         </VStack>

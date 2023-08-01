@@ -92,6 +92,7 @@ interface RyoshiConfigPresale {
 }
 
 interface RyoshiConfigFactions {
+  editableDays: number;
   registration: RyoshiConfigFactionsRegistration;
 }
 
