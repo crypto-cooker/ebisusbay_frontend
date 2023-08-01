@@ -1,17 +1,14 @@
 import React, {memo, useContext, useState} from 'react';
 import {useRouter} from 'next/router';
-import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import {faEllipsisH, faInfoCircle, faLink, faMinus, faPlus, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {MenuPopup} from '@src/Components/components/chakra-components';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {nftCardUrl} from "@src/helpers/image";
-import {Badge, Box, Center, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
-import Image from "next/image";
-import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
+import {Box, Flex, Heading, Spacer, useClipboard} from "@chakra-ui/react";
+import {appUrl, caseInsensitiveCompare} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
-import {lightTheme} from "@src/Theme/theme";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import {useAppSelector} from "@src/Store/hooks";
 import {
@@ -21,16 +18,12 @@ import {
 
 interface StakingNftCardProps {
   nft: any;
-  canStake?: boolean;
-  isStaked?: boolean;
   onAdd: () => void;
   onRemove: () => void;
 }
 
 const StakingNftCard = ({
    nft,
-   canStake = false,
-   isStaked = false,
    onAdd,
    onRemove,
  }: StakingNftCardProps) => {
@@ -40,7 +33,7 @@ const StakingNftCard = ({
   const user = useAppSelector((state) => state.user);
   const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
   const { onCopy } = useClipboard(nftUrl.toString());
-  const bankStakeNftContext = useContext(BankStakeNftContext) as BankStakeNftContextProps[];
+  const bankStakeNftContext = useContext(BankStakeNftContext) as BankStakeNftContextProps;
 
 
   const handleCopyLinkButtonPressed = () => {
@@ -52,9 +45,11 @@ const StakingNftCard = ({
     router.push(nftUrl)
   };
 
-  const navigateTo = (link: string) => {
+  const handleSelect = () => {
     const count = cartCount();
-    if (count > 0 && count >= (nft.balance ?? 1)) {
+    const newAdds = count - stakedCount();
+
+    if (count > 0 && newAdds >= (nft.balance ?? 1)) {
       onRemove();
     } else {
       onAdd();
@@ -95,7 +90,11 @@ const StakingNftCard = ({
   };
 
   const cartCount = () => {
-    return bankStakeNftContext.filter((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress)).length;
+    return bankStakeNftContext.pendingNfts.filter((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress)).length;
+  };
+
+  const stakedCount = () => {
+    return bankStakeNftContext.stakedNfts.filter((o) => o.tokenId === nft.nftId && caseInsensitiveCompare(o.contractAddress, nft.nftAddress)).length;
   };
 
   return (
@@ -131,7 +130,7 @@ const StakingNftCard = ({
                   cursor="pointer"
                   onClick={onRemove}
                 >
-                  {nft.balance && nft.balance > 1 ? (
+                  {nft.balance && nft.multiToken && cartCount() + nft.balance > 0 ? (
                     <Box
                       rounded='full'
                       bg='dodgerblue'
@@ -171,7 +170,7 @@ const StakingNftCard = ({
               transition="0.3s ease"
               transform="scale(1.0)"
               cursor="pointer"
-              onClick={() => navigateTo(nftUrl.toString())}
+              onClick={handleSelect}
             >
               <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
                         title={nft.name}
@@ -188,7 +187,7 @@ const StakingNftCard = ({
           )}
           <div className="d-flex flex-column p-2 pb-1">
             <div className="card-title mt-auto">
-              <span onClick={() => navigateTo(nftUrl.toString())} style={{ cursor: 'pointer' }}>
+              <span onClick={handleSelect} style={{ cursor: 'pointer' }}>
                 {nft.count && nft.count > 0 ? (
                   <Heading as="h6" size="sm">
                     {nft.name} (x{nft.count})

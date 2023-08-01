@@ -9,7 +9,8 @@ import {
   IconButton,
   Image,
   Modal,
-  ModalBody, ModalCloseButton,
+  ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -54,7 +55,6 @@ import SeasonUnlocks from "@src/Contracts/SeasonUnlocks.json";
 import Fortune from "@src/Contracts/Fortune.json";
 import {parseErrorMessage} from "@src/helpers/validator";
 import localFont from "next/font/local";
-import {getTheme} from "@src/Theme/theme";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -110,9 +110,11 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
   const handleAddNft = useCallback((nft: WalletNft) => {
     const pendingCount = pendingNfts.filter((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress)).length;
-    const hasRemainingBalance = pendingCount === 0 || pendingCount < (nft.balance ?? 1);
     const withinUnlockedRange = pendingNfts.length < (slotUnlockContext.unlocks + 1);
     const withinMaxSlotRange = pendingNfts.length < rdContext.config.bank.staking.nft.maxSlots;
+    const stakedCount = stakedNfts.filter((sNft) => sNft.tokenId === nft.nftId && caseInsensitiveCompare(sNft.contractAddress, nft.nftAddress)).length;
+    const hasRemainingBalance = (nft.balance ?? 1) - (pendingCount - stakedCount) > 0;
+
     if (hasRemainingBalance && withinUnlockedRange && withinMaxSlotRange) {
       const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
       const stakeConfig = rdContext.config.bank.staking.nft.collections.find((c) => c.slug === collectionSlug);
@@ -133,13 +135,20 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         rank: nft.rank,
         multiplier: multiplier + 1,
         adder: adder + idBonus,
-        isAlreadyStaked: false
+        isAlreadyStaked: stakedCount > pendingCount,
+        refBalance: nft.balance ?? 1,
       }]);
     }
   }, [pendingNfts, slotUnlockContext]);
 
   const handleRemoveNft = useCallback((nftAddress: string, nftId: string) => {
-    setPendingNfts(pendingNfts.filter((nft) => nft.nftId !== nftId || !caseInsensitiveCompare(nft.nftAddress, nftAddress)));
+    let arrCopy = [...pendingNfts]; // Copy the original array
+
+    let indexToRemove = arrCopy.slice().reverse().findIndex(nft => nft.nftId == nftId && caseInsensitiveCompare(nft.nftAddress, nftAddress));
+    if (indexToRemove !== -1) {
+      arrCopy.splice(arrCopy.length - 1 - indexToRemove, 1);
+    }
+    setPendingNfts(arrCopy);
   }, [pendingNfts]);
 
   const handleStakeSuccess = useCallback(() => {
@@ -161,7 +170,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       type: StakedTokenType.BANK,
       user: user.address!
     }))]);
-    setPendingNfts([...pendingNfts.map((nft) => ({...nft, isAlreadyStaked: true}))]);
+    setPendingNfts([...pendingNfts.map((nft) => ({...nft, isAlreadyStaked: true, refBalance: nft.refBalance - 1}))]);
   }, [queryClient, stakedNfts, pendingNfts, user.address]);
 
   const handleClose = () => {
@@ -204,15 +213,18 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
             .find((m: any) => percentile <= m.percentile)?.value || 0;
           const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nft.nftId)?.bonus || 0;
 
-          nfts.push({
-            nftAddress: token.contractAddress,
-            nftId: token.tokenId,
-            image: nft.nft.image,
-            rank: nft.nft.rank,
-            multiplier: multiplier + 1,
-            adder: adder + idBonus,
-            isAlreadyStaked:  true
-          })
+          for (let i = 0; i < Number(token.amount); i++) {
+            nfts.push({
+              nftAddress: token.contractAddress,
+              nftId: token.tokenId,
+              image: nft.nft.image,
+              rank: nft.nft.rank,
+              multiplier: multiplier + 1,
+              adder: adder + idBonus,
+              isAlreadyStaked: true,
+              refBalance: 0,
+            })
+          }
         }
       }
       setPendingNfts(nfts);
@@ -244,7 +256,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       {page === 'faq' ? (
         <FaqPage />
       ) : (
-        <BankStakeNftContext.Provider value={pendingNfts}>
+        <BankStakeNftContext.Provider value={{pendingNfts, stakedNfts}}>
           <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to boost rewards for staked $Fortune. Receive larger boosts by staking higher ranked NFTs.</Text>
           <StakingBlock
             pendingNfts={pendingNfts}
@@ -306,6 +318,7 @@ interface PendingNft {
   multiplier: number;
   adder: number;
   isAlreadyStaked: boolean;
+  refBalance: number;
 }
 
 const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockContext, refetchSlotUnlockContext}: StakingBlockProps) => {

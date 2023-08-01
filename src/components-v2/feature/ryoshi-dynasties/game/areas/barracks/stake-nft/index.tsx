@@ -9,7 +9,8 @@ import {
   IconButton,
   Image,
   Modal,
-  ModalBody, ModalCloseButton,
+  ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -112,9 +113,11 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
   const handleAddNft = useCallback((nft: WalletNft) => {
     const pendingCount = pendingNfts.filter((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress)).length;
-    const hasRemainingBalance = pendingCount === 0 || pendingCount < (nft.balance ?? 1);
     const withinUnlockedRange = pendingNfts.length < (slotUnlockContext.unlocks + 1);
     const withinMaxSlotRange = pendingNfts.length < rdConfig.barracks.staking.nft.maxSlots;
+    const stakedCount = stakedNfts.filter((sNft) => sNft.tokenId === nft.nftId && caseInsensitiveCompare(sNft.contractAddress, nft.nftAddress)).length;
+    const hasRemainingBalance = (nft.balance ?? 1) - (pendingCount - stakedCount) > 0;
+
     if (hasRemainingBalance && withinUnlockedRange && withinMaxSlotRange) {
       const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
       const stakeConfig = rdConfig.barracks.staking.nft.collections.find((c) => c.slug === collectionSlug);
@@ -131,13 +134,20 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         image: nft.image,
         rank: nft.rank,
         multiplier: multiplier + idBonus,
-        isAlreadyStaked: false
+        isAlreadyStaked: stakedCount > pendingCount,
+        refBalance: nft.balance ?? 1,
       }]);
     }
   }, [pendingNfts, slotUnlockContext]);
 
   const handleRemoveNft = useCallback((nftAddress: string, nftId: string) => {
-    setPendingNfts(pendingNfts.filter((nft) => nft.nftId !== nftId || !caseInsensitiveCompare(nft.nftAddress, nftAddress)));
+    let arrCopy = [...pendingNfts]; // Copy the original array
+
+    let indexToRemove = arrCopy.slice().reverse().findIndex(nft => nft.nftId == nftId && caseInsensitiveCompare(nft.nftAddress, nftAddress));
+    if (indexToRemove !== -1) {
+      arrCopy.splice(arrCopy.length - 1 - indexToRemove, 1);
+    }
+    setPendingNfts(arrCopy);
   }, [pendingNfts]);
 
   const handleStakeSuccess = useCallback(() => {
@@ -159,7 +169,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       type: StakedTokenType.BARRACKS,
       user: user.address!
     }))]);
-    setPendingNfts([...pendingNfts.map((nft) => ({...nft, isAlreadyStaked: true}))]);
+    setPendingNfts([...pendingNfts.map((nft) => ({...nft, isAlreadyStaked: true, refBalance: nft.refBalance - 1}))]);
     refreshUser();
   }, [queryClient, stakedNfts, pendingNfts, user.address]);
 
@@ -200,14 +210,17 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
             .find((m: any) => percentile <= m.percentile)?.value || 0;
           const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nft.nftId)?.bonus || 0;
 
-          nfts.push({
-            nftAddress: token.contractAddress,
-            nftId: token.tokenId,
-            image: nft.nft.image,
-            rank: nft.nft.rank,
-            multiplier: multiplier + idBonus,
-            isAlreadyStaked:  true
-          })
+          for (let i = 0; i < Number(token.amount); i++) {
+            nfts.push({
+              nftAddress: token.contractAddress,
+              nftId: token.tokenId,
+              image: nft.nft.image,
+              rank: nft.nft.rank,
+              multiplier: multiplier + idBonus,
+              isAlreadyStaked: true,
+              refBalance: 0,
+            })
+          }
         }
       }
       setPendingNfts(nfts);
@@ -237,7 +250,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       {page === 'faq' ? (
         <FaqPage />
       ) : (
-        <BarracksStakeNftContext.Provider value={pendingNfts}>
+        <BarracksStakeNftContext.Provider value={{pendingNfts, stakedNfts}}>
           <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to earn extra battle units per slot. Some NFTs may require a weapon trait. Staked NFTs remain staked for the duration of the game while troops have been deployed or delegated.</Text>
           <StakingBlock
             pendingNfts={pendingNfts}
@@ -298,6 +311,7 @@ interface PendingNft {
   rank: number;
   multiplier: number;
   isAlreadyStaked: boolean;
+  refBalance: number;
 }
 
 const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockContext, refetchSlotUnlockContext}: StakingBlockProps) => {

@@ -16,6 +16,8 @@ interface PendingNft {
   nftAddress: string;
   nftId: string;
   amount: number;
+  refBalance: number;
+  isAlreadyStaked: boolean;
 }
 
 type ResponseProps = {
@@ -46,15 +48,20 @@ const useBarracksStakeNfts = () => {
       try {
         const barracks = new Contract(config.contracts.barracks, Barracks, user.provider.getSigner());
 
+        // Note that stakedNfts are not flattened like pendingNfts
+        // i.e. multiple entries for the same nft in pendingNfts will consolidate into one entry in stakedNfts with an amount
         let withdrawNfts = [];
         for (const stakedNft of stakedNfts) {
-          if (!pendingNfts.some((nft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId)) {
-            withdrawNfts.push(stakedNft);
+          const pendingAmount = pendingNfts.filter((nft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId).length;
+          if (Number(stakedNft.amount) > pendingAmount) {
+            const amountToWithdraw = Number(stakedNft.amount) - pendingAmount;
+            for (let i = 0; i < amountToWithdraw; i++) {
+              withdrawNfts.push({...stakedNft, amount: amountToWithdraw});
+            }
           }
         }
 
-
-        const unstakedNfts = pendingNfts.filter((nft) => !stakedNfts.some((stakedNft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId));
+        const newNfts = pendingNfts.filter((nft) => !nft.isAlreadyStaked);
 
         if (withdrawNfts.length > 0) {
           const approval = await ApiService.withoutKey().ryoshiDynasties.requestBarracksUnstakeAuthorization(
@@ -70,8 +77,8 @@ const useBarracksStakeNfts = () => {
           await withdrawTx.wait();
         }
 
-        if (unstakedNfts.length > 0) {
-          const approval = await ApiService.withoutKey().ryoshiDynasties.requestBarracksStakeAuthorization(unstakedNfts, user.address, signatureInStorage);
+        if (newNfts.length > 0) {
+          const approval = await ApiService.withoutKey().ryoshiDynasties.requestBarracksStakeAuthorization(newNfts, user.address, signatureInStorage);
           const stakeTx = await barracks.startStake(approval.data.stakeApproval, approval.data.signature);
           await stakeTx.wait();
         }
@@ -82,6 +89,7 @@ const useBarracksStakeNfts = () => {
           error: null,
         });
       } catch (error) {
+        console.log(error);
         setResponse({
           ...response,
           loading: false,

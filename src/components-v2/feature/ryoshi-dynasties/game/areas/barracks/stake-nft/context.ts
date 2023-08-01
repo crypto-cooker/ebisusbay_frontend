@@ -1,8 +1,9 @@
 import {createContext} from "react";
+import {StakedToken} from "@src/core/services/api-service/graph/types";
 
 export interface BarracksStakeNftContextProps {
-  nftAddress: string;
-  nftId: string;
+  pendingNfts: Array<{nftAddress: string, nftId: string}>;
+  stakedNfts: StakedToken[];
 };
 
-export const BarracksStakeNftContext = createContext<BarracksStakeNftContextProps[] | null>(null);
+export const BarracksStakeNftContext = createContext<BarracksStakeNftContextProps | null>(null);

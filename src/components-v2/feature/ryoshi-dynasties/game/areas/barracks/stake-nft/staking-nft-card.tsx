@@ -19,16 +19,12 @@ import WalletNft from "@src/core/models/wallet-nft";
 
 interface StakingNftCardProps {
   nft: WalletNft;
-  canStake?: boolean;
-  isStaked?: boolean;
   onAdd: () => void;
   onRemove: () => void;
 }
 
 const StakingNftCard = ({
    nft,
-   canStake = false,
-   isStaked = false,
    onAdd,
    onRemove,
  }: StakingNftCardProps) => {
@@ -38,7 +34,7 @@ const StakingNftCard = ({
   const user = useAppSelector((state) => state.user);
   const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
   const { onCopy } = useClipboard(nftUrl.toString());
-  const barracksStakeNftContext = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps[];
+  const barracksStakeNftContext = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
 
 
   const handleCopyLinkButtonPressed = () => {
@@ -52,7 +48,9 @@ const StakingNftCard = ({
 
   const handleSelect = () => {
     const count = cartCount();
-    if (count > 0 && count >= (nft.balance ?? 1)) {
+    const newAdds = count - stakedCount();
+
+    if (count > 0 && newAdds >= (nft.balance ?? 1)) {
       onRemove();
     } else {
       onAdd();
@@ -93,7 +91,11 @@ const StakingNftCard = ({
   };
 
   const cartCount = () => {
-    return barracksStakeNftContext.filter((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress)).length;
+    return barracksStakeNftContext.pendingNfts.filter((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress)).length;
+  };
+
+  const stakedCount = () => {
+    return barracksStakeNftContext.stakedNfts.filter((o) => o.tokenId === nft.nftId && caseInsensitiveCompare(o.contractAddress, nft.nftAddress)).length;
   };
 
   return (
@@ -129,7 +131,7 @@ const StakingNftCard = ({
                   cursor="pointer"
                   onClick={onRemove}
                 >
-                  {nft.balance && nft.balance > 1 ? (
+                  {nft.balance && nft.multiToken && cartCount() + nft.balance > 0 ? (
                     <Box
                       rounded='full'
                       bg='dodgerblue'
@@ -169,7 +171,7 @@ const StakingNftCard = ({
               transition="0.3s ease"
               transform="scale(1.0)"
               cursor="pointer"
-              onClick={() => handleSelect()}
+              onClick={handleSelect}
             >
               <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
                         title={nft.name}
