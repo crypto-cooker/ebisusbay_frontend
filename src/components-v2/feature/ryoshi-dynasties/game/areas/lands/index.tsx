@@ -126,7 +126,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     setTextArea(
       myData.vectors.map((point: any, i :number) => (
         <>
-          {ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i).toString()) ? (<>
+          {ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i + 1).toString()) ? (<>
             <Icon
               position="absolute"
               as={FontAwesomeIcon} 
@@ -169,7 +169,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     setPointArea(
         myData.vectors.map((point: any, i :number) => (
           <>
-            {ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i).toString()) ? (<>
+            {ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i + 1).toString()) ? (<>
               <Icon
                 position="absolute"
                 as={FontAwesomeIcon} 
