@@ -226,7 +226,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       setNft(null);
       setForSale(false);
     }
-  }, [plotId]);
+  }, []);
 
   const [showText, setShowText] = useState(false);
   const [zoomState, setZoomState] = useState({
@@ -334,9 +334,9 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
 
             <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
               <MapFrame
-                gridHeight={'50px 1fr 50px'}
-                gridWidth={'50px 1fr 50px'}
-                w='2048px'
+                gridHeight={'18px 1fr 18px'}
+                gridWidth={'18px 1fr 18px'}
+                w='2084px'
                 h='1662px'
                 topFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-top-${user.theme}.png`).convert()}
                 rightFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-right-${user.theme}.png`).convert()}
