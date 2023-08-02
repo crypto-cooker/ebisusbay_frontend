@@ -75,11 +75,9 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
         justifyContent='center'
         alignItems='center'
         onClick={handleClose}
-        py='100px'
-       
         >
           <Flex >
-        <Box
+        <Box 
           // borderWidth='1px'
           // borderStyle='solid'
           // borderLeftColor='#45433C'
@@ -93,12 +91,9 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
           backgroundImage='/img/ryoshi-dynasties/announcements/base/modal_background.png'
           backgroundRepeat='repeat-y'
           className={gothamBook.className}
-          maxW={isMobile ?'350px' :'590px'}
+          maxW={isMobile ?'350px' :'800px'}
           maxH={isMobile ? 'calc(100vh - 74px)': 'calc(100vh - 74px)'}
-          // {isMobile ?'350px' :'590px'}
-          // overflowY={isMobile ?'auto' :'visible'}
-          // overflowY="scroll"
-          overflowX={isMobile ?'auto' :'visible'}
+          overflowY={isMobile ?'auto' :'visible'}
           onClick={e => e.stopPropagation()}
         >
           <Center>
@@ -221,13 +216,13 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
                 {children}
               {/* </Box> */}
               <Center>
-                <Image 
+                {/* <Image 
                   position='relative' 
                   minW='105%'
                   mt={isMobile ? '32px' : [0, "0rem !important"]}
                   src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
                   minH={isMobile ? '20px' : '100%'}
-                  />
+                  /> */}
               </Center>
             </Box>
           </Box>

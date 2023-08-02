@@ -32,7 +32,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import { CalendarIcon } from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBuilding, faClipboardList} from "@fortawesome/free-solid-svg-icons";
+import {faBuilding, faClipboardList, faBlog} from "@fortawesome/free-solid-svg-icons";
 
 const config = appConfig();
 
@@ -58,6 +58,14 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
   const Ref = useRef<NodeJS.Timer | null>(null);
   const [timer, setTimer] = useState('00:00:00');
   const [canClaim, setCanClaim] = useState(true);
+
+  //image ref
+  const eyeColorImageRef = useRef<any>(null);
+  const eyeBallImageRef = useRef<any>(null);
+  const backgroundImageRef = useRef<any>(null);
+  const bottomLidImageRef = useRef<any>(null);
+  const topLidImageRef = useRef<any>(null);
+  const irisImageRef = useRef<any>(null);
 
     //timer functions
   const getTimeRemaining = (e:any) => {
@@ -127,6 +135,33 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     }
   };
 
+  const GenerateIcon = () => {
+    console.log("GenerateIcon")
+    //get random from array of eye colors
+    let eyeColor = ['Cyan1', 'Green1', 'Pink1', 'Purple1', 'Red1', 'Yellow10'][Math.floor(Math.random() * 6)]
+    eyeColorImageRef.current.src = '/img/ryoshi-dynasties/lands/layers/Eye color/'+eyeColor+'.png'
+
+    let eyeBall = ['Red50', 'White50'][Math.floor(Math.random() * 2)]
+    eyeBallImageRef.current.src = '/img/ryoshi-dynasties/lands/layers/Eyeball/'+eyeBall+'.png'
+
+    let background = 'Black1'
+    backgroundImageRef.current.src = '/img/ryoshi-dynasties/lands/layers/Background/'+background+'.png'
+
+    let iris = ['Large20', 'Medium20', 'Small60'][Math.floor(Math.random() * 3)]
+    irisImageRef.current.src = '/img/ryoshi-dynasties/lands/layers/Iris/'+iris+'.png'
+
+    let topLid = ['High30', 'Low20', 'Middle50'][Math.floor(Math.random() * 3)]
+    topLidImageRef.current.src = '/img/ryoshi-dynasties/lands/layers/Top lid/'+topLid+'.png'
+
+    let bottomLid = ['High20', 'Low40', 'Middle40'][Math.floor(Math.random() * 3)]
+    bottomLidImageRef.current.src = '/img/ryoshi-dynasties/lands/layers/Bottom lid/'+bottomLid+'.png'
+
+
+    
+    //get image from folder
+    // src = '/img/ryoshi-dynasties/lands/layers/Eye color/'+eyeColor+'.png'
+  }
+
   useEffect(() => {
     // get all resources
     if (!!user.address) {
@@ -187,7 +222,29 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             onClick={onOpenBattleLog}
             icon={faClipboardList}/>
 
+          <DarkButton
+            onClick={GenerateIcon}
+            icon={faBlog}/>
+          <Box
+          marginRight={100}
+            >
+            <Image w='100' h='100' position={'absolute'}
+              ref={eyeColorImageRef} zIndex={2}/>
+            <Image w='100' h='100' position={'absolute'}
+              ref={eyeBallImageRef} zIndex={3}/>
+            <Image w='100' h='100' position={'absolute'}
+              ref={bottomLidImageRef} zIndex={5}/>
+            <Image w='100' h='100' position={'absolute'}
+              ref={topLidImageRef} zIndex={5}/>
+            <Image w='100' h='100' position={'absolute'} 
+              ref={backgroundImageRef} zIndex={0}/>
+            <Image w='100' h='100' position={'absolute'}
+              ref={irisImageRef}zIndex={4} />
+            
+            </Box>
           </SimpleGrid>
+          
+          
         </Box>
 
       </Flex>
