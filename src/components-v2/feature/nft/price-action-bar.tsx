@@ -18,7 +18,7 @@ import {listingState} from '@src/core/api/enums';
 import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
 import Button from "@src/Components/components/Button";
 import {useRouter} from "next/router";
-import MakeListingDialog from "@src/Components/MakeListing";
+import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listing";
 import Image from "next/image";
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
@@ -298,7 +298,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
         </Card.Body>
       </Card>
       {isSellDialogOpen && (
-        <MakeListingDialog
+        <CreateListingDialog
           isOpen={isSellDialogOpen}
           nft={nft}
           onClose={() => setIsSellDialogOpen(false)}
