@@ -222,9 +222,9 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             onClick={onOpenBattleLog}
             icon={faClipboardList}/>
 
-          <DarkButton
+          {/* <DarkButton
             onClick={GenerateIcon}
-            icon={faBlog}/>
+            icon={faBlog}/> */}
           <Box
           marginRight={100}
             >

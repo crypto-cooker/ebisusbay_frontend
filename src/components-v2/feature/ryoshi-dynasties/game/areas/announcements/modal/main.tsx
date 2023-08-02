@@ -86,8 +86,8 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
   //src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
   return (
     <VStack marginBottom={20} >
-      <Box rounded='md' p={4} fontSize='sm' textAlign='center' marginTop={12} >
-        <Text textColor={'255, 244, 220'}>
+      <Box rounded='md' p={4} fontSize='sm' textAlign='left' marginTop={12} >
+        <Text textColor={'255, 244, 220'} >
           Welcome to <b>Ryoshi Dynasties!</b> A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards.
         </Text>
         <Text mt={4}>
