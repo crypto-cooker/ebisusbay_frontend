@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {Box, Grid, GridItem, Image, Link, Text, useMediaQuery, VStack} from "@chakra-ui/react"
+import {Box, Grid, GridItem, Image, Link, Text, useMediaQuery, VStack, ListItem, UnorderedList, Flex} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
@@ -11,20 +11,25 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import ImageService from "@src/core/services/image";
 import NextImage from "next/image";
+import PatchNoteProps from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/patch-notes-page";
+import {patchNotes} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/patch-notes-data";
 import NextLink from "next/link";
+import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
 interface Props {
   handleShowLeaderboard: () => void;
   onOpenDailyCheckin: () => void;
+  handleShowPatchNotes: (changeDate:string, patchNumer:string, notes:string[]) => void;
 }
 
-const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
+const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNotes}: Props) => {
   const router = useRouter();
   const { user: rdUserContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [isMobile] = useMediaQuery("(max-width: 480px)");
 
+  
   const user = useAppSelector((state) => state.user);
 
   //timer
@@ -32,7 +37,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
   const [timer, setTimer] = useState('00:00:00');
   const [canClaim, setCanClaim] = useState(false);
 
-    //timer functions
+  //timer functions
   const getTimeRemaining = (e:any) => {
     const total = Date.parse(e) - Date.now();
     const days = Math.floor(total / (1000 * 60 * 60 * 24));
@@ -79,31 +84,39 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
   }, [user.address, rdUserContext])
 
   return (
-    <VStack padding='2'>
-      <RdModalBox textAlign='center'>
+    <VStack marginBottom={20} >
+      <Box rounded='md' p={4} fontSize='sm' textAlign='center' marginTop={8} >
         <Text>
-          Welcome to Ryoshi Dynasties by Ebisu's Bay! A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards.
+          Welcome to Ryoshi Dynasties! A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards.
         </Text>
-      </RdModalBox>
+        <Text mt={4}>
+          Users wishing to visit the Ebisu's Bay marketplace experience can still do so by using the links at the top of the page.
+        </Text>
+      </Box>
+
+        <Image 
+          position='relative' 
+          minW='102%'
+          top={isMobile ? '10px' : '0px'}
+          mt={[0, "0rem !important"]}
+          src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
+          minH={isMobile ? '20px' : '100%'}
+        />
+
       <Box 
-        bg='#272523'
-        rounded='md'
-        //  backgroundImage="/img/battle-bay/announcementBoard/seashrineAd.png"
-        minWidth='100%'
-        minHeight='100%'
-        position='relative'
-        overflow='hidden'
-      >
-      {/* <Image position='absolute' src="/img/battle-bay/announcementBoard/seashrineAd.png"/> */}
-      {/*<Image */}
-      {/*//  src="/img/battle-bay/announcementBoard/seashrineAd.png" */}
-      {/*  src="/img/battle-bay/imgs/vvs.png" */}
-      {/*  w='100%'*/}
-      {/*  // filter={sepia(100%) saturate(300%) brightness(70%) hue-rotate(180deg);}*/}
-      {/*  // filter={'brightness(0.7)' + ' ' + 'sepia(0.1)'}*/}
-      {/*  filter={'brightness(0.8)'}*/}
-      {/*/>*/}
-        <Link as={NextLink} href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59' isExternal>
+       rounded='md' 
+       minWidth='100%'
+       minHeight='100%'
+       position='relative'
+       mt={[0, "0rem !important"]}
+       >
+        <Box
+          cursor='pointer'
+          onClick={() => {
+            router.push('/drops/ballies-cheerleaders');
+          }}
+          >
+           <Link as={NextLink} href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59' isExternal>
           {isMobile ? (
             <Image
               alt="Buy FRTN on VVS"
@@ -116,43 +129,48 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
             />
           )}
         </Link>
-      {/* <Text 
-        marginLeft={{base: '10%', sm: '10%'}}
-        marginTop={{base: '-20%', sm: '-17%'}}
-        fontSize={{ base: '24px', md: '24px' }} 
-        position='absolute'
-        as='b'
-        >SEASHRINE</Text>
-      <Text 
-        marginLeft={{base: '10%', sm: '10%'}}
-        marginTop={{base: '-10%', sm: '-12%'}}
-        fontSize={{ base: '12px', md: '12px' }} 
-        position='absolute' 
-        as='b'
-        >RELOADED</Text>
-      <Text 
-        marginLeft={{base: '10%', sm: '50%'}}
-        marginTop={{base: '-10%', sm: '-17%'}}
-        fontSize={{ base: '0px', md: '16px' }} 
-        position='absolute' 
-        as='b'
-        >Join in the quest for sea treasures</Text> */}
+        </Box>
       </Box>
+      
+      <Image 
+          top={isMobile ? '-10px' : '0px'}
+          position='relative' 
+          minW='102%'
+          minH={isMobile ? '20px' : '100%'}
+          mt={[0, "0rem !important"]}
+          src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
+      />
 
       <Grid
         h='240px'
         templateRows='repeat(2, 1fr)'
-        templateColumns='repeat(4, 1fr)'
+        templateColumns={isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)'}
         gap={3}
         w='full'
+        rowGap={6}
       >
-        <GridItem rowSpan={2} colSpan={2} bg='#272523' p={4} textAlign='center' rounded='md'>
-          <Text fontSize={{ base: 'sm', md: 'xl' }} fontWeight='bold'>Information</Text>
+        <GridItem 
+          rowSpan={2} 
+          colSpan={2} 
+          p={4} 
+          textAlign='center'
+          rounded='md'
+          minH='150px'
+          >
+
+          <RdButton
+            pointerEvents={'none'}
+            w='full'
+            maxW='200px'
+            fontSize={{base: '12px', sm: 'md'}}
+            >
+            Information
+          </RdButton>
+
           <VStack mt={4}>
             <Box
               as="button"
               bg=""
-              py={1}
               px={4}
               rounded="md"
               className={gothamBook.className}
@@ -168,7 +186,6 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
             <Box
               as="button"
               bg=""
-              py={1}
               px={4}
               rounded="md"
               className={gothamBook.className}
@@ -184,7 +201,6 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
             <Box
               as="button"
               bg=""
-              py={1}
               px={4}
               rounded="md"
               className={gothamBook.className}
@@ -197,31 +213,140 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               Buy FRTN
             </Box>
           </VStack>
+        
         </GridItem>
-        <GridItem colSpan={2} bg='#272523' p={2} textAlign='center' rounded='md'>
-          <Text fontSize={{ base: 'sm', md: 'md' }}>Claim Daily Rewards</Text>
+        <GridItem rowSpan={2} colSpan={2} 
+        // bg='#272523' 
+        p={4} textAlign='center' rounded='md' >
+          <Text fontSize={{ base: 'sm', md: 'xl' }} fontWeight='bold'></Text>
           <RdButton
-            mt={2}
+          pointerEvents={'none'}
             w='full'
             maxW='200px'
             fontSize={{base: '12px', sm: 'md'}}
+          >
+            Patch Notes
+          </RdButton>
+          <VStack mt={4}>
+            <Box as="button" bg="" px={4} rounded="md" className={gothamBook.className} color="white" _hover={{ bg: "yellow.900" }} _focus={{ boxShadow: "outline" }}
+              onClick={() => {handleShowPatchNotes(patchNotes[0].changeDate, patchNotes[0].patchNumber, patchNotes[0].notes)}}
+            >
+              <UnorderedList>
+                <ListItem>{patchNotes[0].changeDate} {patchNotes[0].patchNumber}</ListItem>
+              </UnorderedList>
+            </Box>
+            <Box as="button" bg="" px={4} rounded="md" className={gothamBook.className} color="white" _hover={{ bg: "yellow.900" }} _focus={{ boxShadow: "outline" }}
+              onClick={() => {handleShowPatchNotes(patchNotes[1].changeDate, patchNotes[1].patchNumber, patchNotes[1].notes)}}
+            >
+              <UnorderedList>
+                <ListItem>{patchNotes[1].changeDate} {patchNotes[1].patchNumber}</ListItem>
+              </UnorderedList>
+            </Box>
+            <Box as="button" bg="" px={4} rounded="md" className={gothamBook.className} color="white" _hover={{ bg: "yellow.900" }} _focus={{ boxShadow: "outline" }}
+              onClick={() => {handleShowPatchNotes(patchNotes[2].changeDate, patchNotes[2].patchNumber, patchNotes[2].notes)}}
+            >
+              <UnorderedList>
+                <ListItem>{patchNotes[2].changeDate} {patchNotes[2].patchNumber}</ListItem>
+              </UnorderedList>
+            </Box>
+            
+          </VStack>
+        </GridItem>
+
+        <GridItem 
+          colSpan={2} 
+          position='relative'
+          p={2}  
+          textAlign='center' 
+          minH='150px'
+          rounded='md'
+          bgImage={'/img/ryoshi-dynasties/announcements/base/graphic_claim_koban_clean.png'}
+          justifyContent='center'
+          >
+          <RdButton
+            w='full'
+            maxW='200px'
+            fontSize={{base: 'lg', sm: 'lg'}}
             onClick={onOpenDailyCheckin}
+              bottom={'-90px'}
+              zIndex={2}
           >
             {canClaim ? 'Claim Now!' : 'Claim in ' + timer}
           </RdButton>
         </GridItem>
-        <GridItem colSpan={2} bg='#272523' p={2} textAlign='center' rounded='md'>
-          <Text fontSize={{ base: 'sm', md: 'md' }}>Leaderboards</Text>
-            <RdButton
-              mt={2}
-              w='full'
-              maxW='200px'
-              fontSize={{base: '12px', sm: 'md'}}
-              onClick={handleShowLeaderboard}
-            >
-              View Leaderboards
-            </RdButton>
+
+        <GridItem 
+          colSpan={2} 
+          position='relative'
+          p={2}  
+          textAlign='center' 
+          minH='150px'
+          rounded='md'
+          bgImage={'/img/ryoshi-dynasties/announcements/base/graphic_leaderboard_clean.png'}
+          justifyContent='center'
+          >
+          <RdButton
+            w='full'
+            maxW='225px'
+            fontSize={{base: 'lg', sm: 'lg'}}
+            onClick={handleShowLeaderboard}
+              bottom={'-90px'}
+              zIndex={2}
+          >
+            View Leaderboards
+          </RdButton>
         </GridItem>
+
+        {/* <GridItem 
+          colSpan={2} 
+          textAlign='center' 
+          rounded='md'
+          minH='150px'
+          minW={
+            isMobile ? '100%' : '100%'
+          }
+          
+          >
+            <MapFrame
+                gridHeight={'17px 1fr 18px'}
+                gridWidth={'18px 1fr 18px'}
+                h='100px'
+                w='289px'
+                topFrame='/img/ryoshi-dynasties/announcements/base/small_frame_top.png'
+                rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
+                bottomFrame='/img/ryoshi-dynasties/announcements/base/small_frame_bottom.png'
+                leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'
+              >
+                <Flex
+                >
+                  <Image
+                  src={'/img/ryoshi-dynasties/announcements/base/graphic_leaderboard_clean.png'}
+                  zIndex={0}
+                // 
+                >
+                    
+                  </Image>
+                  <RdButton
+                  position={'absolute'}
+                  bottom={'10px'}
+                // w='full'
+                // maxW='225px'
+                // maxH={'40px'}
+                fontSize={{base: 'lg', sm: 'lg'}}
+                onClick={handleShowLeaderboard}
+                >
+                View Leaderboards
+            </RdButton>
+
+                </Flex>
+              
+
+          </MapFrame>
+
+            
+            
+        </GridItem> */}
+
       </Grid>
     </VStack>
   );

@@ -21,7 +21,7 @@ const FaqPage = () => {
   const user = useAppSelector((state) => state.user);
 
   return (
-    <Stack spacing={3}className={gothamBook.className} fontSize={{ base: 'xs', md: 'sm' }}>
+    <Stack spacing={3}className={gothamBook.className} mt={10} fontSize={{ base: 'xs', md: 'sm' }}>
       <Text p={4}>
       Ryoshi Dynasties is a gamified DAO governance system built on top of Ebisu’s Bay. This system is designed to reward Ebisu’s Bay users for their participation in the platform and their daily check-ins, while nourishing and supporting the Cronos NFT & Game-Fi ecosystem.
       </Text>

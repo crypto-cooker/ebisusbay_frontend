@@ -3,9 +3,11 @@ import {Spinner} from 'react-bootstrap';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import MainPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/main";
 import LeaderboardPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/leaderboard";
+import PatchNotes from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/patch-notes-page";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/faq-page";
-import RdInlineModal from "@src/components-v2/feature/ryoshi-dynasties/components/rd-inline-modal";
+import RdAnnouncementModal from "@src/components-v2/feature/ryoshi-dynasties/components/rd-announcement-modal";
+import PatchNoteProps from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/patch-notes-page";
 
 interface AnnouncementBoardModalProps {
   isOpen: boolean;
@@ -43,12 +45,16 @@ const AnnouncementBoardModal = ({isOpen, onClose, onOpenDailyCheckin}: Announcem
     setTitle('Leaderboard');
   }, [returnHome]);
 
+  const handleShowPatchNotes = useCallback((changeDate:string, patchNumer:string, notes:string[]) => {
+    setPage(<PatchNotes changeDate={patchNumer} patchNumber={changeDate} notes={notes} />)
+  }, [returnHome]);
+
   return (
-    <RdInlineModal
-      title={title}
+    <RdAnnouncementModal
       isOpen={isOpen}
       onClose={handleClose}
-      utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
+      utilBtnTitle={!!page ? <></> : <>?</>}
+      isFAQ={!!page}
       onUtilBtnClick={handleBack}
     >         
           {!!page ? (
@@ -56,10 +62,12 @@ const AnnouncementBoardModal = ({isOpen, onClose, onOpenDailyCheckin}: Announcem
           ) : (
             <MainPage 
               handleShowLeaderboard={handleShowLeaderboard} 
-              onOpenDailyCheckin={onOpenDailyCheckin}/>
+              onOpenDailyCheckin={onOpenDailyCheckin}
+              handleShowPatchNotes={handleShowPatchNotes}
+              />
           )}
       
-    </RdInlineModal>
+    </RdAnnouncementModal>
   )
 }
 
