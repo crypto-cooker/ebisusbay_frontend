@@ -88,8 +88,20 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     setAddressesToAdd(collectionAddress);
   }
 
+  const canEditFaction = () => {
+    if(!rdContext.game) return false;
+    const startDate = new Date(rdContext.game.game.startAt);
+    const timeSinceStart = Date.now() - startDate.getTime();
+    const daysSinceStart = timeSinceStart / (1000 * 3600 * 24);
+
+    if(daysSinceStart <= rdContext.config.factions.editableDays) {
+      return true;
+    }
+    return false;
+  }
+
   const SaveChanges = async() => {
-    if(rdContext.config.factions.editableDays >= 4) {
+    if(!canEditFaction()) {
       setAlertMessage("You cannot edit your faction at this point in the game, changes can be made at the start of the next game")
       setShowAlert(true)
       return;
@@ -235,7 +247,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     enableReinitialize: true,
   })
   function showDeleteWarning() {
-    if(rdContext.config.factions.editableDays >= 4) {
+    if(!canEditFaction()) {
       setAlertMessage("You cannot edit your faction at this point in the game, changes can be made at the start of the next game")
       setShowAlert(true)
       return;
@@ -301,7 +313,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                     p={2}
                     bg='#272523'
                     >
-                    <Cropper editsAllowed={rdContext.config.factions.editableDays<4}/>
+                    <Cropper editsAllowed={canEditFaction()}/>
                     {editFactionIcon && ( <>
                         <AvatarEditor
                         ref={editorRef}
@@ -447,7 +459,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                   )}
                 </Box>
               </Flex>
-              {rdContext.config.factions.editableDays < 4 && (
+              {canEditFaction()&& (
                 <Flex justifyContent={"center"} align={"center"}>
                   <Box p='3'>
                     <RdButton 

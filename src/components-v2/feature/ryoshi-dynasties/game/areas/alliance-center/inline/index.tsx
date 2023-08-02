@@ -166,9 +166,19 @@ const CurrentFaction = () => {
   const { isOpen: isOpenDelegate, onOpen: onOpenDelegate, onClose: onCloseDelegate } = useDisclosure();
   const { isOpen: noEditsModalisOpen, onOpen: noEditsModalOnOpen, onClose: noEditsModalonClose } = useDisclosure()
 
+  const getDaysSinceGameStart = () => {
+    if(!rdContext.game) return 0;
+    const startDate = new Date(rdContext.game.game.startAt);
+    const timeSinceStart = Date.now() - startDate.getTime();
+    const daysSinceStart = timeSinceStart / (1000 * 3600 * 24);
+    // console.log(daysSinceStart);
+    return daysSinceStart;
+  }
+
   const OpenEditFaction = () => {
     onOpenFaction();
-    if(rdContext.config.factions.editableDays >= 3){
+    if(getDaysSinceGameStart() >= rdContext.config.factions.editableDays-1){
+      console.log('Open Modal');
       //will give a warning on day 3, explain on day 4
       noEditsModalOnOpen();
     }
@@ -316,7 +326,7 @@ const CurrentFaction = () => {
                   aria-label='Edit Faction'
                   icon={<EditIcon />}
                   variant='ghost'
-                  color={rdContext.config.factions.editableDays >= 4 ? 'red' :'#FFD700'}
+                  color={getDaysSinceGameStart() > rdContext.config.factions.editableDays ? 'red' :'#FFD700'}
                   onClick={OpenEditFaction}
                 />
               </Stack>
@@ -645,10 +655,10 @@ const CurrentFaction = () => {
                 <ModalContent>
                   <ModalHeader>Mid Game Faction Editing Disabled</ModalHeader>
                   <ModalCloseButton />
-                  <ModalBody pb={6}>{ rdContext.config.factions.editableDays <= 3 ? (<>
-                      Today is the last day you can make changes to your faction this game. Changes may be made during the first 3 days of every game.
+                  <ModalBody pb={6}>{getDaysSinceGameStart() < rdContext.config.factions.editableDays ? (<>
+                      Today is the last day you can make changes to your faction this game. Changes may be made during the first {rdContext.config.factions.editableDays} days of every game.
                     </>):(<>
-                      You cannot edit your faction at this point in the game. Changes may be made during the first 3 days of every game.
+                      You cannot edit your faction at this point in the game. Changes may be made during the first {rdContext.config.factions.editableDays} days of every game.
                     </>)
                     
                   }
