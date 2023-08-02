@@ -133,7 +133,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         nftId: nft.nftId,
         image: nft.image,
         rank: nft.rank,
-        multiplier: multiplier + 1,
+        multiplier: multiplier > 0 ? multiplier + 1 : 0,
         adder: adder + idBonus,
         isAlreadyStaked: stakedCount > pendingCount,
         refBalance: nft.balance ?? 1,
@@ -219,7 +219,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
               nftId: token.tokenId,
               image: nft.nft.image,
               rank: nft.nft.rank,
-              multiplier: multiplier + 1,
+              multiplier: multiplier > 0 ? multiplier + 1 : 0,
               adder: adder + idBonus,
               isAlreadyStaked: true,
               refBalance: 0,
@@ -423,7 +423,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
                         </Box>
                         <VStack align='end' spacing={0} fontWeight='bold'>
                           {pendingNfts[index].multiplier && (
-                            <Box>x {pendingNfts[index].multiplier}%</Box>
+                            <Box>x {pendingNfts[index].multiplier}</Box>
                           )}
                           {pendingNfts[index].adder && (
                             <Box>+ {pendingNfts[index].adder}%</Box>
