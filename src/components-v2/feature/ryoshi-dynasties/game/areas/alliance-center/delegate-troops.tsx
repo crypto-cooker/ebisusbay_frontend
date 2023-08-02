@@ -161,8 +161,8 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsForm
       <Flex direction='row' justify='space-between' justifyContent='center'>
       <Box mb={1} bg='#272523' p={2} roundedBottom='xl' w='98%' justifyContent='center' >
 
-        <Grid templateColumns={{base:'repeat(1, 1fr)', sm:'repeat(5, 1fr)'}} gap={6} marginBottom='4'>
-          <GridItem w='100%' h='5' >
+        <Grid templateColumns={{base:'repeat(1, 1fr)', sm:'repeat(5, 1fr)'}} gap={4} marginBottom='4'>
+          <GridItem w='100%' h='5' margin={'auto'}>
             <FormLabel> Faction:</FormLabel>
           </GridItem>
           <GridItem colSpan={{base:5, sm:4}} w='100%' >
