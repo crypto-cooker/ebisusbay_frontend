@@ -12,6 +12,7 @@ export interface ListingSignerProps {
   expirationDate: number;
   salt: number;
   amount: number;
+  currency?: string;
 }
 
 export enum ItemType {
@@ -39,7 +40,13 @@ export enum ItemType {
 
 export enum OrderType {
   //0: NFTS -> NATIVE
-  SELL_NFT_NATIVE
+  SELL_NFT_NATIVE,
+
+  //1: ERC20, ERC721, ERC1155 -> ERC20, ERC721, ERC1155
+  TOKEN_TRADES,
+
+  //2: NFT -> ERC20
+  SELL_NFT_TOKEN
 }
 
 export type Order = {
@@ -124,8 +131,8 @@ const useSignature = () => {
     };
 
     const considerationItem = {
-      itemType: 0, //Native
-      token: ethers.constants.AddressZero,
+      itemType: signatureValues.currency ? ItemType.ERC20 : ItemType.NATIVE,
+      token: signatureValues.currency ?? ethers.constants.AddressZero,
       identifierOrCriteria: 0,
       startAmount: considerationPrice,
       endAmount: considerationPrice
@@ -135,7 +142,7 @@ const useSignature = () => {
       offerer: user.address!.toLowerCase(),
       offerings: [offerItem],
       considerations: [considerationItem],
-      orderType: 0, //OrderType.SELL_NFT_NATIVE -> 0
+      orderType: signatureValues.currency ? OrderType.SELL_NFT_TOKEN : OrderType.SELL_NFT_NATIVE,
       startAt: signatureValues.listingTime,
       endAt: signatureValues.expirationDate,
       salt: signatureValues.salt,

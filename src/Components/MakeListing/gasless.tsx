@@ -91,8 +91,6 @@ interface MakeGaslessListingDialogProps {
 }
 
 export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing }: MakeGaslessListingDialogProps) {
-  console.log('NFT', nft);
-
   const [salePrice, setSalePrice] = useState<number>();
   const [expirationDate, setExpirationDate] = useState({ type: 'dropdown', value: new Date().getTime() + 2592000000 });
   const [floorPrice, setFloorPrice] = useState(0);
