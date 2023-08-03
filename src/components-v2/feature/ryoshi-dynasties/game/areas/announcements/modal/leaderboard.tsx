@@ -159,7 +159,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     <>
       {noGameActive ? (
         <>
-          <Box minH={'200px'}>
+          <Box minH={'200px'} marginTop={10}>
             <Center>
               <Text
               margin='100'
@@ -169,7 +169,9 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
         </>
       ) : (
         <>
-          <Stack spacing={3} p={4}>
+          <Stack spacing={3} p={4} 
+              marginTop={10}
+              >
             <Center>
               <Tabs>
                 <TabList>
