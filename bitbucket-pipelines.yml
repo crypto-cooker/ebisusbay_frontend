@@ -20,11 +20,11 @@ definitions:
   awsEcrLogin: &ecrlogin
     aws ecr get-login-password | docker login --password-stdin --username AWS "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
   buildApp: &appcontainer
-    docker buildx build --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
+    docker buildx build --push --platform linux/arm64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
   buildProxyWeb: &proxywebcontainer
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
-    docker buildx build --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f proxy/Dockerfile ./proxy
+    docker buildx build --push --platform linux/arm64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f proxy/Dockerfile ./proxy
   build: &build
     CI=false NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN npm run build
   steps:
@@ -33,9 +33,9 @@ definitions:
         image: node:18
         runs-on:
           - 'self.hosted'
-          - 'linux'
+          - 'linux.arm64'
           - 'web'
-        size: 1x
+        size: 2x
         script:
           - *update
           - *upgradenpm
@@ -54,7 +54,7 @@ pipelines:
           deployment: TestnetBuildStep
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
           size: 2x
           script:
@@ -72,7 +72,7 @@ pipelines:
           image: amazon/aws-cli
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
           artifacts:
             download: false
@@ -87,9 +87,9 @@ pipelines:
             - docker
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
-          size: 1x
+          size: 2x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -103,7 +103,7 @@ pipelines:
           image: alpine:latest
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
           size: 1x
           artifacts:
@@ -111,7 +111,7 @@ pipelines:
           clone:
             enabled: false
           script:
-            # deploy test-ebisusbay-web-amd64-us-east-1 / testapp.ebisusbay.biz
+            # deploy test-ebisusbay-web-arm64-us-east-1 / testapp.ebisusbay.biz
             - apk add --no-cache curl
             - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     deploy-to-sandbox:
@@ -122,7 +122,7 @@ pipelines:
           deployment: SandboxBuildStep
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
           size: 2x
           script:
@@ -140,7 +140,7 @@ pipelines:
           image: amazon/aws-cli
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
           artifacts:
             download: false
@@ -155,9 +155,9 @@ pipelines:
             - docker
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
-          size: 1x
+          size: 2x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -171,7 +171,7 @@ pipelines:
           image: alpine:latest
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
           size: 1x
           artifacts:
@@ -179,7 +179,7 @@ pipelines:
           clone:
             enabled: false
           script:
-            # deploy sandbox-ebisusbay-web-amd64-us-east-1 / sandboxapp.ebisusbay.biz
+            # deploy sandbox-ebisusbay-web-arm64-us-east-1 / sandboxapp.ebisusbay.biz
             - apk add --no-cache curl
             - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"sandbox\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
   branches:
@@ -191,7 +191,7 @@ pipelines:
           deployment: DevelopmentBuildStep
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
           size: 2x
           script:
@@ -209,7 +209,7 @@ pipelines:
           image: amazon/aws-cli
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
           # Copy RPC config to Admin S3 Bucket
           script:
@@ -222,9 +222,9 @@ pipelines:
             - docker
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
-          size: 1x
+          size: 2x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -238,13 +238,13 @@ pipelines:
          image: alpine:latest
          runs-on:
            - 'self.hosted'
-           - 'linux'
+           - 'linux.arm64'
            - 'web'
          size: 1x
          clone:
            enabled: false
          script:
-           # deploy dev-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.biz
+           # deploy dev-ebisusbay-web-arm64-us-east-1 / app.ebisusbay.biz
            - apk add --no-cache curl
            - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"dev\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     prod:
@@ -255,7 +255,7 @@ pipelines:
           deployment: ProductionBuildStep
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
           size: 2x
           script:
@@ -271,7 +271,7 @@ pipelines:
           image: amazon/aws-cli
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
           # Copy RPC config to Admin S3 Bucket
           script:
@@ -284,9 +284,9 @@ pipelines:
             - docker
           runs-on:
             - 'self.hosted'
-            - 'linux'
+            - 'linux.arm64'
             - 'web'
-          size: 1x
+          size: 2x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -300,13 +300,13 @@ pipelines:
          image: alpine:latest
          runs-on:
            - 'self.hosted'
-           - 'linux'
+           - 'linux.arm64'
            - 'web'
          size: 1x
          clone:
            enabled: false
          script:
-           # deploy prod-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.com
+           # deploy prod-ebisusbay-web-arm64-us-east-1 / app.ebisusbay.com
            - apk add --no-cache curl
            - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"prod\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
 definitions:
