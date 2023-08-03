@@ -1,5 +1,6 @@
 options:
   docker: true
+  size: 2x
 
 definitions:
   updateOS: &update
@@ -35,7 +36,6 @@ definitions:
           - 'self.hosted'
           - 'linux.arm64'
           - 'web'
-        size: 2x
         script:
           - *update
           - *upgradenpm
@@ -56,7 +56,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.arm64'
             - 'web'
-          size: 2x
           script:
             - *update
             - *upgradenpm
@@ -89,7 +88,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.arm64'
             - 'web'
-          size: 2x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -105,7 +103,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.arm64'
             - 'web'
-          size: 1x
           artifacts:
             download: false
           clone:
@@ -124,7 +121,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.arm64'
             - 'web'
-          size: 2x
           script:
             - *update
             - *upgradenpm
@@ -157,7 +153,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.arm64'
             - 'web'
-          size: 2x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -173,7 +168,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.arm64'
             - 'web'
-          size: 1x
           artifacts:
             download: false
           clone:
@@ -193,7 +187,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.arm64'
             - 'web'
-          size: 2x
           script:
             - *update
             - *upgradenpm
@@ -224,7 +217,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.arm64'
             - 'web'
-          size: 2x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -240,7 +232,6 @@ pipelines:
            - 'self.hosted'
            - 'linux.arm64'
            - 'web'
-         size: 1x
          clone:
            enabled: false
          script:
@@ -257,7 +248,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.arm64'
             - 'web'
-          size: 2x
           script:
             - *update
             - *upgradenpm
@@ -286,7 +276,6 @@ pipelines:
             - 'self.hosted'
             - 'linux.arm64'
             - 'web'
-          size: 2x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -302,7 +291,6 @@ pipelines:
            - 'self.hosted'
            - 'linux.arm64'
            - 'web'
-         size: 1x
          clone:
            enabled: false
          script:
