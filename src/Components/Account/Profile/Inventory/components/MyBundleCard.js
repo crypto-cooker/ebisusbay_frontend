@@ -39,6 +39,7 @@ import {useSelector} from "react-redux";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import Slider from './Slider';
 import UnwrapBundleDialog from '@src/Components/UnwrapBundleDialog';
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 const MyNftCard = ({
   nft,
@@ -240,8 +241,8 @@ const MyNftCard = ({
                     <FontAwesomeIcon icon={faBoltLightning} />
                   </Box>
                   <Box>
-                    <Flex>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                    <Flex alignItems='center'>
+                      <CronosIconBlue boxSize={4} />
                       <Box as='span' ms={1}>
                         {nft.market.price > 6 ? siPrefixedNumber(nft.market.price) : ethers.utils.commify(round(nft.market.price))}
                       </Box>
@@ -260,8 +261,8 @@ const MyNftCard = ({
                     <FontAwesomeIcon icon={faHand} />
                   </Box>
                   <Box>
-                    <Flex>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                    <Flex alignItems='center'>
+                      <CronosIconBlue boxSize={4} />
                       <Box as='span' ms={1}>
                         {nft.offer.price > 6 ? siPrefixedNumber(nft.offer.price) : ethers.utils.commify(round(nft.offer.price))}
                       </Box>

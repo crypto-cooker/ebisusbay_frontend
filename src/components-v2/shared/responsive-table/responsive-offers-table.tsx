@@ -33,6 +33,7 @@ import Link from "next/link";
 import {hostedImage} from "@src/helpers/image";
 import {Button as ChakraButton} from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 interface ResponsiveOffersTableProps {
   data: InfiniteData<IPaginatedList<Offer>>;
@@ -109,7 +110,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveOffersTableProp
                   </Td>
                   <Td>
                     <HStack spacing={1}>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                      <CronosIconBlue boxSize={4} />
                       <Box>{commify(offer.price)}</Box>
                     </HStack>
                   </Td>
@@ -206,7 +207,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveOffersTable
                   </Box>
                   <Box ms={2}>
                     <HStack spacing={1} h="full" fontSize='sm'>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                      <CronosIconBlue boxSize={4} />
                       <Box>{commify(offer.price)}</Box>
                     </HStack>
                   </Box>

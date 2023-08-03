@@ -34,6 +34,7 @@ import {hostedImage} from "@src/helpers/image";
 import {Button as ChakraButton} from "@chakra-ui/react";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import ImageService from "@src/core/services/image";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 interface ResponsiveTableProps {
   data: InfiniteData<AxiosResponse<IPaginatedList<any>>>;
@@ -102,7 +103,7 @@ const DataTable = ({data, onSort}: ResponsiveTableProps) => {
                   </Td>
                   <Td>
                     <HStack spacing={1}>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                      <CronosIconBlue boxSize={4} />
                       <Box>{commify(listing.price)}</Box>
                     </HStack>
                   </Td>
@@ -177,7 +178,7 @@ const DataAccordion = ({data, onSort}: ResponsiveTableProps) => {
                     <VStack align='end' spacing={0} fontSize='sm'>
                       <Text>{getTimeSince(listing.saleTime)}</Text>
                       <HStack spacing={1} h="full">
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                        <CronosIconBlue boxSize={4} />
                         <Box>{commify(listing.price)}</Box>
                       </HStack>
                     </VStack>

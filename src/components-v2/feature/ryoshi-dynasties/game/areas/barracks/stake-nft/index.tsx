@@ -57,6 +57,7 @@ import Fortune from "@src/Contracts/Fortune.json";
 import SeasonUnlocks from "@src/Contracts/SeasonUnlocks.json";
 import {parseErrorMessage} from "@src/helpers/validator";
 import localFont from "next/font/local";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -753,7 +754,7 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, slotUnlockCont
             <SimpleGrid columns={2}>
               <VStack spacing={0}>
                 <HStack>
-                  <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
+                  <FortuneIcon boxSize={6} />
                   <Text fontWeight='bold' fontSize='lg'>{ethers.utils.formatEther(currentRecipe.fortuneAmount)}</Text>
                 </HStack>
                 <Box fontSize='sm'>Fortune</Box>

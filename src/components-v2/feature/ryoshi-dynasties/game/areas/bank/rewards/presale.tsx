@@ -35,6 +35,7 @@ import moment from "moment";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import Link from "next/link";
 import {appConfig} from "@src/Config";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -217,7 +218,7 @@ const PresaleVaultTab = () => {
                         <Box>
                           <Text fontSize='xs' color='#aaa'>To Claim</Text>
                           <HStack>
-                            <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
+                            <FortuneIcon boxSize={6} />
                             <Text fontSize='lg' fontWeight='bold'>{round(data.vault.releasable, 4)}</Text>
                           </HStack>
                         </Box>

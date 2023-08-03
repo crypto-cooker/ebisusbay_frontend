@@ -39,6 +39,7 @@ import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types"
 import {commify} from "ethers/lib/utils";
 import moment from "moment/moment";
 import {useQueryClient} from "@tanstack/react-query";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
 
@@ -322,8 +323,8 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
               {type === 'amount' && (
                 <VStack align='end' textAlign='end'>
                   <Box fontSize='sm' fontWeight='bold'>Balance: {isRetrievingFortune ? <Spinner size='sm'/> : commify(round(userFortune))}</Box>
-                  <Flex justify='end'>
-                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
+                  <Flex justify='end' align='center'>
+                    <FortuneIcon boxSize={6} />
                     <Box ms={1}>$Fortune</Box>
                   </Flex>
                 </VStack>

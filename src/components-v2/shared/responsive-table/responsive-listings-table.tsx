@@ -41,6 +41,7 @@ import {
 } from "@src/components-v2/feature/account/profile/tabs/listings/context";
 import {WarningIcon} from "@chakra-ui/icons";
 import {specialImageTransform} from "@src/hacks";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 interface ResponsiveListingsTableProps {
   data: InfiniteData<IPaginatedList<OwnerListing>>;
@@ -182,7 +183,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
                   </Td>
                   <Td>
                     <HStack spacing={1}>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                      <CronosIconBlue boxSize={4} />
                       <Box>{commify(listing.price)}</Box>
                     </HStack>
                   </Td>
@@ -297,7 +298,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}:
                   </Box>
                   <Box ms={2}>
                     <HStack spacing={1} h="full" fontSize='sm'>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                      <CronosIconBlue boxSize={4} />
                       <Box>{commify(listing.price)}</Box>
                     </HStack>
                   </Box>

@@ -37,6 +37,7 @@ import Bank from "@src/Contracts/Bank.json";
 import {appConfig} from "@src/Config";
 import {useDispatch} from "react-redux";
 import ImageService from "@src/core/services/image";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
 
@@ -207,7 +208,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
                 <Spacer />
                 <HStack>
                   <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>Your</Text>
-                  <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
+                  <FortuneIcon boxSize={6} />
                   <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
                     $Fortune: {isRetrievingFortune ? <Spinner size='sm'/> : commify(round(userFortune))}
                   </Text>

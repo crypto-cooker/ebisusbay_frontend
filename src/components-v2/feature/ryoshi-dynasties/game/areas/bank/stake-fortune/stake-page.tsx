@@ -40,6 +40,7 @@ import {
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery} from "@tanstack/react-query";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
 
@@ -223,8 +224,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
                 <Box>
                   <VStack align='end' spacing={2} fontSize='sm'>
                     <HStack fontWeight='bold'>
-                      <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()}
-                             alt="fortuneIcon" boxSize={6}/>
+                      <FortuneIcon boxSize={6} />
                       <Box>{commify(balance)}</Box>
                     </HStack>
                     <Flex>

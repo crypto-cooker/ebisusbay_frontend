@@ -31,6 +31,7 @@ import Link from "next/link";
 import ImageService from "@src/core/services/image";
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
 import Blockies from "react-blockies";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 interface ResponsiveRewardsCollectionsTableProps {
   data: Array<{ name: string, address: string; points: number; type: string, avatar?: string }>;
@@ -167,7 +168,7 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
                     <StatLabel>Points</StatLabel>
                     <StatNumber>
                       <HStack spacing={1} h="full" justify='end'>
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                        <CronosIconBlue boxSize={4} />
                         <Box fontWeight='bold'>{entity.points}</Box>
                       </HStack>
                     </StatNumber>

@@ -24,8 +24,7 @@ import {toast} from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {Modal, ModalTitle, Spinner} from 'react-bootstrap';
 import styled from 'styled-components';
-import {Contract, ethers} from 'ethers';
-import {ERC20} from '@src/Contracts/Abis';
+import {ethers} from 'ethers';
 import {round, shortAddress, useInterval} from '@src/utils';
 import styles from './accountmenu.module.scss';
 
@@ -64,12 +63,13 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
-import CronosIcon from "@src/components-v2/shared/icons/cronos";
+import CronosIconFlat from "@src/components-v2/shared/icons/cronos";
 import {useAppSelector} from "@src/Store/hooks";
 import GdcClaimConfirmation from "@src/components-v2/shared/dialogs/gdc-claim-confirmation";
 import ImageService from "@src/core/services/image";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {router} from "next/client";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const StyledModal = styled(Modal)`
   .modal-content {
@@ -461,7 +461,7 @@ const Index = function () {
                     {!user.connectingWallet ? (
                       <span className="d-wallet-value">
                         <div className="d-flex">
-                          <Image src='/img/ryoshi-dynasties/icons/fortune.svg' alt="Fortune Logo" width={16} height={16} />
+                          <FortuneIcon boxSize={6} />
                           <span className="ms-1">
                             {ethers.utils.commify(round(user.fortuneBalance))}
                           </span>
@@ -490,7 +490,7 @@ const Index = function () {
                       <span className="d-wallet-value">
                       {user.balance ? (
                         <div className="d-flex">
-                          <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                          <CronosIconBlue boxSize={6} />
                           <span className="ms-1">
                             {ethers.utils.commify(round(user.balance, 2))}
                           </span>
@@ -511,7 +511,7 @@ const Index = function () {
                 <div className="my-auto">
                   <Button type="legacy"
                           onClick={handleBuyCro}>
-                    <CronosIcon boxSize={4}/>
+                    <CronosIconFlat boxSize={4} />
                     <Text ms={1}>Buy CRO</Text>
                   </Button>
                 </div>
@@ -524,10 +524,10 @@ const Index = function () {
                       {user.marketBalance ? (
                         <>
                           <div className="d-flex">
-                            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                            <CronosIconBlue boxSize={6} />
                             <span className="ms-1">
-                          {ethers.utils.commify(round(user.marketBalance, 2))}
-                        </span>
+                              {ethers.utils.commify(round(user.marketBalance, 2))}
+                            </span>
                           </div>
                         </>
                       ) : (

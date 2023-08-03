@@ -8,6 +8,7 @@ import {appUrl, round} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import Button from "@src/Components/components/Button";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 type StakingNftCardProps = {
   nft: any;
@@ -106,12 +107,12 @@ const StakingNftCard = ({
             </div>
             <span className="card-text">
               {nft.listed && nft.price ? (
-                <div className="d-flex">
-                  <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                <Flex alignItems='center'>
+                  <CronosIconBlue boxSize={4} />
                   <span className="ms-1">
                     {ethers.utils.commify(round(nft.price, 2))}
                   </span>
-                </div>
+                </Flex>
               ) : (
                 <>&nbsp;</>
               )}

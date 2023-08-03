@@ -12,6 +12,7 @@ import ImageService from "@src/core/services/image";
 import {useAppSelector} from "@src/Store/hooks";
 import {useFortunePrice} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
 const currentGameId = 43;
@@ -82,7 +83,7 @@ const Rewards = () => {
                     {!isRewardsError ? (
                       <>
                         <HStack>
-                          <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6} />
+                          <FortuneIcon boxSize={6} />
                           <Text fontSize='2xl' fontWeight='bold'>{round(rewards?.data.rewards.currentRewards, 3)}</Text>
                           <Text as='span' ms={1} fontSize='sm' className="text-muted">~${round((fortunePrice ? Number(fortunePrice.usdPrice) : 0) * rewards?.data.rewards.currentRewards, 2)}</Text>
                         </HStack>

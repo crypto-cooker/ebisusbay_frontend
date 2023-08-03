@@ -45,6 +45,7 @@ import styled from "styled-components";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
 import ImageService from "@src/core/services/image";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 interface ResponsiveCollectionsTableProps {
   data: InfiniteData<AxiosResponse<IPaginatedList<any>>>;
@@ -276,7 +277,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                       <StatNumber>
                         <HStack spacing={1} h="full" justify='end'>
                           {!['totalsales', 'totalactive'].includes(primarySort ?? '') && (
-                            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                            <CronosIconBlue boxSize={4} />
                           )}
                           <Box fontWeight='bold'>{stats(collection)[primarySort as SortKeys].displayValue}</Box>
                         </HStack>
@@ -300,7 +301,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                     <Stack spacing={0}>
                       <Text fontWeight='bold'>Volume</Text>
                       <HStack spacing={1} w="full" justify="center">
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                        <CronosIconBlue boxSize={4} />
                         <Text>{siPrefixedNumber(collectionVolume(collection, timeFrame))}</Text>
                       </HStack>
                       {timeframeHasDelta(timeFrame) && collectionDeltas(collection, timeFrame).volume !== 0 && (
@@ -328,7 +329,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                       <Text fontWeight='bold'>Floor</Text>
                       {collection.listable && collection.numberActive > 0 && !!collection.floorPrice ? (
                         <HStack spacing={1} w="full" justify="center">
-                          <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                          <CronosIconBlue boxSize={4} />
                           <Box>{siPrefixedNumber(Math.round(collection.floorPrice))}</Box>
                         </HStack>
                       ) : (
@@ -340,7 +341,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                     <Stack spacing={0}>
                       <Text fontWeight='bold'>Avg</Text>
                       <HStack spacing={1} w="full" justify="center">
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                        <CronosIconBlue boxSize={4} />
                         <Box>{siPrefixedNumber(collectionAveragePrices(collection, timeFrame))}</Box>
                       </HStack>
                       {timeframeHasDelta(timeFrame) && collectionDeltas(collection, timeFrame).avgPrice !== 0 && (
@@ -374,7 +375,7 @@ const RichDataTableCell = ({value, change, isCroValue, showChange}: {value?: num
         {value ? (
           <HStack align='center' justify='end'>
             <Text fontSize='md'>{value}</Text>
-            {isCroValue && <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />}
+            {isCroValue && <CronosIconBlue boxSize={4} />}
           </HStack>
         ) : (
           <>-</>

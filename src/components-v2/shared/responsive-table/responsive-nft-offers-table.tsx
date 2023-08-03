@@ -35,6 +35,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import {useQuery} from "@tanstack/react-query";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import ImageService from "@src/core/services/image";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 interface ResponsiveNftOffersTableProps {
   data: InfiniteData<IPaginatedList<Offer>>;
@@ -89,7 +90,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveNftOffersTableP
                   {/*</Td>*/}
                   <Td>
                     <HStack spacing={1}>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                      <CronosIconBlue boxSize={4} />
                       <Box>{commify(offer.price)}</Box>
                     </HStack>
                   </Td>
@@ -138,7 +139,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveNftOffersTa
                   </Box>
                   <Box ms={2}>
                     <HStack spacing={1} h="full" fontSize='sm'>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                      <CronosIconBlue boxSize={4} />
                       <Box>{commify(offer.price)}</Box>
                     </HStack>
                   </Box>
