@@ -30,7 +30,7 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
   const [maskOuterClass, setMaskOuterClass] = useState('');
   const [maskInnerClass, setMaskInnerClass] = useState('');
   const {ref: globalRef, setRef: setGlobalRef} = useContext(InlineModalContext) as InlineModalContextProps;
-  const [isMobile] = useMediaQuery("(max-width: 480px)");
+  const [isMobile] = useMediaQuery("(max-width: 750px)");
 
   useEffect(() => {
     const _hasUtilBtn = !!utilBtnTitle && !!onUtilBtnClick;

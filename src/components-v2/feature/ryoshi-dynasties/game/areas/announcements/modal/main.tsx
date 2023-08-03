@@ -27,8 +27,7 @@ interface Props {
 const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNotes}: Props) => {
   const router = useRouter();
   const { user: rdUserContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const [isMobile] = useMediaQuery("(max-width: 480px)");
-
+  const [isMobile] = useMediaQuery("(max-width: 750px)");
   
   const user = useAppSelector((state) => state.user);
 
@@ -104,6 +103,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
             <Image
               alt="Buy FRTN on VVS"
               src={ImageService.translate('/img/ryoshi-dynasties/announcements/vvs-sm.gif').convert()}
+              maxH='300px'
             />
           ) : (
             // <Image
