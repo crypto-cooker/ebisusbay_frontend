@@ -7,8 +7,10 @@ import {caseInsensitiveCompare, isGaslessListing} from "@src/utils";
 import NextApiService from "@src/core/services/api-service/next";
 import {getItemType} from "@src/helpers/chain";
 import {useAppSelector} from "@src/Store/hooks";
+import {appConfig} from "@src/Config";
 
 const generator = UUID(0);
+const config = appConfig();
 
 export interface PendingListing {
   collectionAddress: string;
@@ -17,6 +19,7 @@ export interface PendingListing {
   amount: number;
   expirationDate: number;
   is1155: boolean;
+  currencySymbol?: string;
 }
 
 type ResponseProps = {
@@ -82,6 +85,8 @@ const useUpsertGaslessListings = () => {
           itemTypes[pendingListing.collectionAddress] = await getItemType(pendingListing.collectionAddress);
         }
 
+        const currencyAddress = pendingListing.currencySymbol ? config.tokens[pendingListing.currencySymbol]?.address : undefined;
+
         const listingSignerProps: ListingSignerProps = {
           price: (pendingListing.price * pendingListing.amount).toString(),
           itemType: itemTypes[pendingListing.collectionAddress],
@@ -91,6 +96,7 @@ const useUpsertGaslessListings = () => {
           expirationDate: Math.round(pendingListing.expirationDate / 1000),
           salt: generator.uuid(),
           amount: pendingListing.amount,
+          currency: currencyAddress,
         };
 
         const {objectSignature, objectHash} = await createListingSigner(listingSignerProps);
@@ -100,6 +106,7 @@ const useUpsertGaslessListings = () => {
           sellerSignature: objectSignature,
           seller: user.address!.toLowerCase(),
           digest: objectHash,
+          currency: currencyAddress,
         });
       }
 

@@ -10,7 +10,7 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {createSuccessfulTransactionToastContent, isBundle, round} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle, isLandDeedsCollection, round} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -18,8 +18,13 @@ import {
   Box,
   Button as ChakraButton,
   Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
   HStack,
+  Image,
   Input,
+  InputGroup,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -27,6 +32,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Stack,
   useNumberInput
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
@@ -36,6 +42,9 @@ import moment from 'moment';
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useAppSelector} from "@src/Store/hooks";
+import Select from "react-select";
+import CronosIcon from "@src/components-v2/shared/icons/cronos";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -83,6 +92,11 @@ const expirationDatesValues = [
   },
 ]
 
+const currencyOptions = [
+  { label: 'CRO', symbol: 'cro', image: <CronosIcon boxSize={6}/> },
+  { label: 'FRTN', symbol: 'frtn', image: <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/> }
+];
+
 interface MakeGaslessListingDialogProps {
   isOpen: boolean;
   nft: any;
@@ -105,6 +119,8 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
 
   const [showConfirmButton, setShowConfirmButton] = useState(false);
+  const [allowedCurrencies, setAllowedCurrencies] = useState<string[]>(['cro']);
+  const [selectedCurrency, setSelectedCurrency] = useState<any>(currencyOptions.find((option) => option.symbol === allowedCurrencies[0]));
 
   const windowSize = useWindowSize();
 
@@ -186,6 +202,11 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         setIsTransferApproved(false);
       }
 
+      if (isLandDeedsCollection(nftAddress)) {
+        setAllowedCurrencies(['frtn']);
+        setSelectedCurrency(currencyOptions.find((option) => option.symbol === 'frtn'));
+      }
+
       setIsLoading(false);
     } catch (error: any) {
       console.log(error);
@@ -229,7 +250,8 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         price: salePrice!,
         amount: Number(quantity),
         expirationDate: expirationDate.value,
-        is1155: nft.multiToken
+        is1155: nft.multiToken,
+        currencySymbol: selectedCurrency.symbol,
       });
       toast.success("Listing Successful");
 
@@ -287,6 +309,46 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const dec = getDecrementButtonProps()
   const input = getInputProps()
 
+  const userTheme = useAppSelector((state) => state.user.theme);
+  const customStyles = {
+    option: (base: any, state: any) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
+      borderRadius: state.isFocused ? '0' : 0,
+      '&:hover': {
+        background: '#eee',
+        color: '#000',
+      },
+    }),
+    menu: (base: any) => ({
+      ...base,
+      borderRadius: 0,
+      marginTop: 0,
+    }),
+    menuList: (base: any) => ({
+      ...base,
+      padding: 0,
+    }),
+    singleValue: (base: any, state: any) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3
+    }),
+    control: (base: any, state: any) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
+      padding: 2,
+      minWidth: '132px',
+      borderColor: 'none'
+    }),
+  };
+
+  const handleCurrencyChange = useCallback((currency: { symbol: string }) => {
+    setSelectedCurrency(currency);
+  }, [selectedCurrency]);
+
   if (!nft) return <></>;
 
   return (
@@ -334,11 +396,13 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                         </Form.Group>
                       )}
 
-                      <Form.Group className="form-field">
-                        <Form.Label className="formLabel w-100">
-                          <div className="d-flex">
-                            <div className="flex-grow-1">{nft.balance > 1 ? 'Listing Price (each)' : 'Listing Price'}</div>
-                            <div className="my-auto">
+                      <FormControl isInvalid={!!priceError}>
+                        <FormLabel className='formLabel' me={0} mb={1}>
+                          <Flex justify='space-between' alignItems='center'>
+                            <Box>
+                              {nft.balance > 1 ? 'Listing Price (each)' : 'Listing Price'}
+                            </Box>
+                            <Box>
                               <Badge
                                 pill
                                 bg={user.theme === 'dark' ? 'light' : 'secondary'}
@@ -347,21 +411,36 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                               >
                                 Floor: {floorPrice} CRO
                               </Badge>
-                            </div>
-                          </div>
-                        </Form.Label>
-                        <Form.Control
-                          className="input"
-                          type="number"
-                          placeholder="Enter Amount"
-                          value={salePrice}
-                          onChange={costOnChange}
-                          disabled={showConfirmButton || executingCreateListing}
-                        />
-                        <Form.Text className="field-description textError">
-                          {priceError}
-                        </Form.Text>
-                      </Form.Group>
+                            </Box>
+                          </Flex>
+                        </FormLabel>
+                        <InputGroup>
+                          <Stack direction='row'>
+                            <Input
+                              placeholder="Enter Amount"
+                              type="numeric"
+                              value={salePrice}
+                              onChange={costOnChange}
+                              disabled={showConfirmButton || executingCreateListing}
+                            />
+                            <Select
+                              styles={customStyles}
+                              options={currencyOptions.filter((option) => allowedCurrencies?.includes(option.symbol))}
+                              formatOptionLabel={({ label, image }) => (
+                                <HStack>
+                                  {image}
+                                  <span>{label}</span>
+                                </HStack>
+                              )}
+                              value={selectedCurrency}
+                              defaultValue={currencyOptions.find((option) => option.symbol === allowedCurrencies[0])}
+                              onChange={handleCurrencyChange}
+                              isDisabled={showConfirmButton || executingCreateListing}
+                            />
+                          </Stack>
+                        </InputGroup>
+                        <FormErrorMessage fontSize='xs' mt={1}>{priceError}</FormErrorMessage>
+                      </FormControl>
 
                       <div className="d-flex flex-wrap justify-content-between mb-3">
                         {windowSize.width && windowSize.width > 377 && (
