@@ -1,5 +1,6 @@
 options:
   docker: true
+  size: 2x
 
 definitions:
   updateOS: &update
@@ -21,10 +22,16 @@ definitions:
     aws ecr get-login-password | docker login --password-stdin --username AWS "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
   buildApp: &appcontainer
     docker buildx build --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
+  buildAppArm: &appcontainerarm
+    docker buildx build --push --platform linux/arm64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
   buildProxyWeb: &proxywebcontainer
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
     docker buildx build --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f proxy/Dockerfile ./proxy
+  buildProxyWebArm: &proxywebcontainerarm
+    sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
+    sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
+    docker buildx build --push --platform linux/arm64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f proxy/Dockerfile ./proxy
   build: &build
     CI=false NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN npm run build
   steps:
@@ -35,7 +42,21 @@ definitions:
           - 'self.hosted'
           - 'linux'
           - 'web'
-        size: 1x
+        script:
+          - *update
+          - *upgradenpm
+          - *version
+          - npm install --no-audit
+          #- npm run test
+        artifacts:
+          - node_modules/**
+    - step: &testarm
+        name: Test
+        image: node:18
+        runs-on:
+          - 'self.hosted'
+          - 'linux.arm64'
+          - 'web'
         script:
           - *update
           - *upgradenpm
@@ -56,7 +77,6 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 2x
           script:
             - *update
             - *upgradenpm
@@ -89,7 +109,6 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 1x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -105,7 +124,6 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 1x
           artifacts:
             download: false
           clone:
@@ -114,6 +132,71 @@ pipelines:
             # deploy test-ebisusbay-web-amd64-us-east-1 / testapp.ebisusbay.biz
             - apk add --no-cache curl
             - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
+    deploy-to-testnet-with-arm:
+      - step: *testarm
+      - step:
+          name: Build
+          image: node:18
+          deployment: TestnetBuildStep
+          runs-on:
+            - 'self.hosted'
+            - 'linux.arm64'
+            - 'web'
+          script:
+            - *update
+            - *upgradenpm
+            - *version
+            # RPC config
+            - cp -p ./src/Assets/networks/rpc_config_testnet.json ./src/Assets/networks/rpc_config.json
+            # Build frontend
+            - *build
+          artifacts:
+            - .next/**
+      - step:
+          name: Upload to S3
+          image: amazon/aws-cli
+          runs-on:
+            - 'self.hosted'
+            - 'linux.arm64'
+            - 'web'
+          artifacts:
+            download: false
+          # Copy RPC config to Admin S3 Bucket
+          script:
+            - aws s3 cp ./src/Assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
+      - step:
+          name: Build containers
+          image: amazon/aws-cli
+          deployment: Testnet
+          services:
+            - docker
+          runs-on:
+            - 'self.hosted'
+            - 'linux.arm64'
+            - 'web'
+          script:
+            # Install and configure Docker Buildx
+            - *buildx
+            # Login to ECR
+            - *ecrlogin
+            # Build container images and push to ECR repositorys and push to ECR repository
+            - *appcontainerarm
+            - *proxywebcontainerarm
+      - step:
+          name: Deploy
+          image: alpine:latest
+          runs-on:
+            - 'self.hosted'
+            - 'linux.arm64'
+            - 'web'
+          artifacts:
+            download: false
+          clone:
+            enabled: false
+          script:
+            # deploy test-ebisusbay-web-arm64-us-east-1 / testapp.ebisusbay.biz
+            - apk add --no-cache curl
+            - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet-with-arm\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     deploy-to-sandbox:
       - step: *test
       - step:
@@ -124,7 +207,6 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 2x
           script:
             - *update
             - *upgradenpm
@@ -157,7 +239,6 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 1x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -173,7 +254,6 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 1x
           artifacts:
             download: false
           clone:
@@ -193,7 +273,6 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 2x
           script:
             - *update
             - *upgradenpm
@@ -224,7 +303,6 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 1x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -240,7 +318,6 @@ pipelines:
            - 'self.hosted'
            - 'linux'
            - 'web'
-         size: 1x
          clone:
            enabled: false
          script:
@@ -257,7 +334,6 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 2x
           script:
             - *update
             - *upgradenpm
@@ -286,7 +362,6 @@ pipelines:
             - 'self.hosted'
             - 'linux'
             - 'web'
-          size: 1x
           script:
             # Install and configure Docker Buildx
             - *buildx
@@ -302,7 +377,6 @@ pipelines:
            - 'self.hosted'
            - 'linux'
            - 'web'
-         size: 1x
          clone:
            enabled: false
          script:
