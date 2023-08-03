@@ -35,7 +35,6 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
   useEffect(() => {
     const _hasUtilBtn = !!utilBtnTitle && !!onUtilBtnClick;
     setHasUtilBtn(_hasUtilBtn);
-    console.log('utilBtnTitle');
 
     let _maskInnerClass = '';
     let _maskOuterClass = '';
@@ -63,7 +62,9 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
   }
 
   return (
-    <Portal containerRef={isOpen ? globalRef! : undefined}>
+    <Portal containerRef={isOpen ? globalRef! : undefined} 
+      
+    >
       <Box
         position='absolute'
         top={0}
@@ -76,7 +77,7 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
         alignItems='center'
         onClick={handleClose}
         >
-          <Flex >
+        <Flex >
         <Box 
           // borderWidth='1px'
           // borderStyle='solid'
@@ -84,15 +85,16 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
           // borderRightColor='#684918'
           // borderTopColor='#625C4D'
           // borderBottomColor='#181514'
-          // rounded='3xl'
-          // bg='linear-gradient(#1C1917, #272624, #000000)'
-          // paddingRight={isMobile ?'200px' :'200px'}
-          // marginRight={isMobile ?'200px' :'-200px'}
-          backgroundImage='/img/ryoshi-dynasties/announcements/base/modal_background.png'
-          backgroundRepeat='repeat-y'
+          rounded='3xl'
+          bg='linear-gradient(#1f1818, #332727, #1f1818)'
+          // bgImage='/img/ryoshi-dynasties/announcements/base/modal_background.png'
+          // backgroundImage={isMobile ? '' : '/img/ryoshi-dynasties/announcements/base/modal_background.png'}
+          // backgroundRepeat='repeat-y'
+          paddingLeft={isMobile ?'10px' :'0'}
+          paddingRight={isMobile ?'10px' :'0'}
           className={gothamBook.className}
-          maxW={isMobile ?'350px' :'800px'}
-          maxH={isMobile ? 'calc(100vh - 74px)': 'calc(100vh - 74px)'}
+          maxW={isMobile ?'' :'800px'}
+          maxH='calc(100vh - 74px)'
           overflowY={isMobile ?'auto' :'visible'}
           onClick={e => e.stopPropagation()}
         >

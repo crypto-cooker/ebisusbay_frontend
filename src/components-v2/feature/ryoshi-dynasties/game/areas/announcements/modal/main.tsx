@@ -86,7 +86,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
   //src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
   return (
     <VStack marginBottom={20} >
-      <Box rounded='md' p={4} fontSize='sm' textAlign='left' marginTop={12} >
+      <Box rounded='md' p={isMobile?'0':'4'} fontSize='sm' textAlign='left' marginTop={12} >
         <Text textColor={'255, 244, 220'} >
           Welcome to <b>Ryoshi Dynasties!</b> A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards.
         </Text>
@@ -130,7 +130,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
               <Box
                 cursor='pointer'
                 onClick={() => {
-                  router.push('/drops/ballies-cheerleaders');
+                  // router.push('/drops/ballies-cheerleaders');
                 }}
                 >
                 <Link as={NextLink} href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59' isExternal>
