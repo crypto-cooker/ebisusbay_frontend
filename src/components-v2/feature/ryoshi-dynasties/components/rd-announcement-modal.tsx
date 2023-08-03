@@ -198,7 +198,7 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
                     {title}
                   </Flex>
                 </Box> */}
-                <Box className="whatsinthebox" rounded='md' pt={55} pb={6} fontSize='sm' >
+                <Box  rounded='md' pt={55} pb={6} fontSize='sm' >
                     <Flex justifyItems={'center'} justifyContent={'center'} alignItems={'center'} >
                     <Image 
                       minW={isMobile ? '105%' : '110%'}
@@ -218,13 +218,13 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
                 {children}
               {/* </Box> */}
               <Center>
-                {/* <Image 
+                <Image 
                   position='relative' 
                   minW='105%'
-                  mt={isMobile ? '32px' : [0, "0rem !important"]}
-                  src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
-                  minH={isMobile ? '20px' : '100%'}
-                  /> */}
+                  mt={isMobile ? '310px' : ''}
+                  src='/img/ryoshi-dynasties/announcements/base/bottom_wood.png'
+                  minH={isMobile ? '100%' : '100%'}
+                  />
               </Center>
             </Box>
           </Box>

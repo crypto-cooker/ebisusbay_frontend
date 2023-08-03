@@ -87,10 +87,10 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
   return (
     <VStack marginBottom={20} >
       <Box rounded='md' p={isMobile?'0':'4'} fontSize='sm' textAlign='left' marginTop={12} >
-        <Text textColor={'255, 244, 220'} >
+        <Text textColor={'#fefaee'} >
           Welcome to <b>Ryoshi Dynasties!</b> A captivating gamified DAO experience, combining NFT marketplace, battles, and strategic gameplay. Build your dynasty, collect rare NFTs, and earn rewards.
         </Text>
-        <Text mt={4}>
+        <Text mt={4} textColor={'#fefaee'} >
           Users wishing to visit the <b>Ebisu's Bay</b> marketplace experience can still do so by <b>using the links at the top of the page.</b>
         </Text>
       </Box>
@@ -154,147 +154,118 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
         h='100px'
         templateRows='repeat(1, 1fr)'
         templateColumns={isMobile ? 'repeat(2, 1fr)' : 'repeat(6, 1fr)'}
-        gap={3}
+        gap={0}
         w='full'
         rowGap={6}
-      >
-        <GridItem 
-          colSpan={2} 
-        textAlign='center' 
-          rounded='md'
-          minH='150px'
-          minW={
-            isMobile ? '100%' : '100%'
-          }
-          
-          >
-        <Flex justifyContent={'center'}
-            w={'100%'}
-            
-            // bgImage={'/img/ryoshi-dynasties/announcements/base/small_header.png'}
-            >
-
-          <Image
-          position={'absolute'}
-            pointerEvents={'none'}
-            w='200px'
-            // maxW='100px'
-            fontSize={{base: '12px', sm: 'md'}}
-            zIndex={1}
-            // margin={'auto'}
-           src='/img/ryoshi-dynasties/announcements/base/small_header.png'
-            >
-          </Image>
-       
-          </Flex>
-
-
-         <VStack spacing={0} >
-          <Text w='100%'zIndex={9}as='b' fontSize={'24px'} mb='12px'>
-          Information
-          </Text>
-
-
-            <Box
-              as="button"
-              bg=""
-              px={4}
-              rounded="md"
-              className={gothamBook.className}
-              color="white"
-              _hover={{ bg: "yellow.900" }}
-              _focus={{ boxShadow: "outline" }}
-              onClick={() => {
-                window.open('https://ebisusbay.notion.site/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6','_blank');
-              }}
-            >
-              Whitepaper
-            </Box>
-            <Box
-              as="button"
-              bg=""
-              px={4}
-              rounded="md"
-              className={gothamBook.className}
-              color="white"
-              _hover={{ bg: "yellow.900" }}
-              _focus={{ boxShadow: "outline" }}
-              onClick={() => {
-                router.push('/marketplace');
-              }}
-            >
-              Marketplace
-            </Box>
-            <Box
-              as="button"
-              bg=""
-              px={4}
-              rounded="md"
-              className={gothamBook.className}
-              color="white"
-              _hover={{ bg: "yellow.900" }}
-              _focus={{ boxShadow: "outline" }}
-              onClick={() => {
-                window.open('https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59','_blank');              }}
-            >
-              Buy FRTN
-            </Box>
-
-            
-          </VStack>
-            
-            
-        </GridItem>
-        
+        >
         <GridItem 
           colSpan={2} 
           textAlign='center' 
           rounded='md'
           minH='150px'
-          minW={
-            isMobile ? '100%' : '100%'
-          }>
-          
-        <Flex justifyContent='center' w={'100%'} >
-            <MapFrame
-                gridHeight={'16px 1fr 16px'}
-                gridWidth={'16px 1fr 16px'}
-                h='75px'
-                w='250px'
-                topFrame='/img/ryoshi-dynasties/announcements/base/small_frame_top.png'
-                rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
-                bottomFrame='/img/ryoshi-dynasties/announcements/base/small_frame_bottom.png'
-                leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'
+          minW={ isMobile ? '100%' : '100%' }
+          >
+          <Flex justifyContent={'center'} >
+            <Image
+              position={'absolute'}
+              pointerEvents={'none'}
+              w='250px'
+              fontSize={{base: '12px', sm: 'md'}}
+              zIndex={1}
+              src='/img/ryoshi-dynasties/announcements/base/small_header.png'
               >
-                <Flex justifyContent={'center'}
+            </Image>
+          </Flex>
+
+
+      <VStack spacing={0} >
+
+        <Text w='100%' mt={'2'} zIndex={9} as='b' fontSize={'24px'} mb='12px' textColor={'#fefaee'}>
+          Information
+        </Text>
+
+
+          <Box
+            as="button"
+            bg=""
+            px={4}
+            rounded="md"
+            className={gothamBook.className}
+            textColor={'#fefaee'}
+            _hover={{ bg: "yellow.900" }}
+            _focus={{ boxShadow: "outline" }}
+            onClick={() => {
+              window.open('https://ebisusbay.notion.site/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6','_blank');
+            }}
+          >
+            Whitepaper
+          </Box>
+          <Box
+            as="button"
+            bg=""
+            px={4}
+            rounded="md"
+            className={gothamBook.className}
+            textColor={'#fefaee'}
+            _hover={{ bg: "yellow.900" }}
+            _focus={{ boxShadow: "outline" }}
+            onClick={() => {
+              router.push('/marketplace');
+            }}
+          >
+            Marketplace
+          </Box>
+          <Box
+            as="button"
+            bg=""
+            px={4}
+            rounded="md"
+            className={gothamBook.className}
+            textColor={'#fefaee'}
+            _hover={{ bg: "yellow.900" }}
+            _focus={{ boxShadow: "outline" }}
+            onClick={() => {
+              window.open('https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59','_blank');              }}
+          >
+            Buy FRTN
+          </Box>
+        </VStack>
+      </GridItem>
+        
+      <GridItem 
+          colSpan={2} 
+          textAlign='center' 
+          rounded='md'
+          minH='150px'
+          minW={ isMobile ? '100%' : '100%' }>
+        <Flex justifyContent='center' w={'100%'} >
+          <MapFrame
+              gridHeight={'16px 1fr 16px'}
+              gridWidth={'16px 1fr 16px'}
+              h='75px'
+              w='250px'
+              topFrame='/img/ryoshi-dynasties/announcements/base/small_frame_top.png'
+              rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
+              bottomFrame='/img/ryoshi-dynasties/announcements/base/small_frame_bottom.png'
+              leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'
+            >
+              <Flex justifyContent={'center'} >
+                <Image
+                src={'/img/ryoshi-dynasties/announcements/base/graphic_claim_koban_clean.png'}
+                zIndex={0}
                 >
-                  <Image
-                  src={'/img/ryoshi-dynasties/announcements/base/graphic_claim_koban_clean.png'}
-                  zIndex={0}
-                // 
-                >
-                    
-                  </Image>
-                  <RdButton
+                </Image>
+                <RdButton
                   position={'absolute'}
                   bottom={'10px'}
-                // w='full'
-                // maxW='225px'
-                // maxH={'40px'}
-                fontSize={{base: 'lg', sm: 'lg'}}
-                onClick={handleShowLeaderboard}
-                >
-                {canClaim ? 'Claim Now!' : 'Claim in ' + timer}
-            </RdButton>
-
-                </Flex>
-              
-
-          </MapFrame>
+                  fontSize={{base: 'lg', sm: 'lg'}}
+                  onClick={handleShowLeaderboard}
+                  >
+                  {canClaim ? 'Claim Now!' : 'Claim in ' + timer}
+                </RdButton>
+              </Flex>
+            </MapFrame>
           </Flex>
-
-            
-            
         </GridItem>
 
         <GridItem 
@@ -302,52 +273,37 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
           textAlign='center' 
           rounded='md'
           minH='150px'
-          minW={
-            isMobile ? '100%' : '100%'
-          }
-          
+          minW={isMobile ? '100%' : '100%' }
           >
         <Flex justifyContent='center' w={'100%'} >
-            <MapFrame
-                gridHeight={'16px 1fr 16px'}
-                gridWidth={'16px 1fr 16px'}
-                h='75px'
-                w='250px'
-                topFrame='/img/ryoshi-dynasties/announcements/base/small_frame_top.png'
-                rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
-                bottomFrame='/img/ryoshi-dynasties/announcements/base/small_frame_bottom.png'
-                leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'
-              >
-                <Flex justifyContent={'center'}
-                >
-                  <Image
+          <MapFrame
+              gridHeight={'16px 1fr 16px'}
+              gridWidth={'16px 1fr 16px'}
+              h='75px'
+              w='250px'
+              topFrame='/img/ryoshi-dynasties/announcements/base/small_frame_top.png'
+              rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
+              bottomFrame='/img/ryoshi-dynasties/announcements/base/small_frame_bottom.png'
+              leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'
+            >
+              <Flex justifyContent={'center'} >
+                <Image
                   src={'/img/ryoshi-dynasties/announcements/base/graphic_leaderboard_clean.png'}
                   zIndex={0}
-                // 
-                >
-                    
-                  </Image>
-                  <RdButton
+                  >
+                </Image>
+                <RdButton
                   position={'absolute'}
                   bottom={'10px'}
-                // w='full'
-                // maxW='225px'
-                // maxH={'40px'}
-                fontSize={{base: 'lg', sm: 'lg'}}
-                onClick={handleShowLeaderboard}
-                >
-                View Leaderboards
-            </RdButton>
-
-                </Flex>
-              
-
-          </MapFrame>
+                  fontSize={{base: 'lg', sm: 'lg'}}
+                  onClick={handleShowLeaderboard}
+                  >
+                  View Leaderboards
+                </RdButton>
+              </Flex>
+            </MapFrame>
           </Flex>
-            
-            
         </GridItem>
-
       </Grid>
     </VStack>
   );
