@@ -259,7 +259,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
                   position={'absolute'}
                   bottom={'10px'}
                   fontSize={{base: 'lg', sm: 'lg'}}
-                  onClick={handleShowLeaderboard}
+                  onClick={onOpenDailyCheckin}
                   >
                   {canClaim ? 'Claim Now!' : 'Claim in ' + timer}
                 </RdButton>

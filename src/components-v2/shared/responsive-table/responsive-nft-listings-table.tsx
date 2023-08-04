@@ -35,6 +35,7 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import moment from "moment/moment";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 interface ResponsiveNftListingsTableProps {
   data: InfiniteData<IPaginatedList<any>>;
@@ -85,7 +86,7 @@ const DataTableLg = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTabl
                 <Tr key={entity.listingId} _hover={{bg: hoverBackground}}>
                   <Td>
                     <HStack>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                      <CronosIconBlue boxSize={4} />
                       <Box>{commify(round(entity.price, 2))}</Box>
                     </HStack>
                   </Td>
@@ -159,7 +160,7 @@ const DataTableSm = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTabl
                 <Tr key={entity.listingId} _hover={{bg: hoverBackground}}>
                   <Td>
                     <HStack>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                      <CronosIconBlue boxSize={4} />
                       <Box>{commify(round(entity.price, 2))}</Box>
                     </HStack>
                     <Box fontSize='sm'>
@@ -231,8 +232,8 @@ const DataAccordion = ({data, onAddToCart, primarySort}: Pick<ResponsiveNftListi
                 <Flex w='100%' my={2}>
                   <Stat>
                     <StatNumber>
-                      <HStack >
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                      <HStack>
+                        <CronosIconBlue boxSize={4} />
                         <Box fontWeight='bold'>{entity.price}</Box>
                       </HStack></StatNumber>
                     <StatHelpText>Qty: {entity.amount}</StatHelpText>

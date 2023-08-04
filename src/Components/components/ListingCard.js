@@ -31,6 +31,7 @@ import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
 import {appConfig} from "@src/Config";
 import ImageService from "@src/core/services/image";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 const config = appConfig();
 
@@ -261,8 +262,8 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                     <FontAwesomeIcon icon={faBoltLightning} />
                   </Box>
                   <Box>
-                    <Flex>
-                      <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                    <Flex alignItems='center'>
+                      <CronosIconBlue boxSize={4} />
                       <Box as='span' ms={1}>
                         {getCorrectPrice(listing.price)}
                       </Box>

@@ -18,6 +18,7 @@ import Select from "react-select";
 import {getTheme} from "@src/Theme/theme";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {
+  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -32,6 +33,7 @@ import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import {useQuery} from "@tanstack/react-query";
 import {getNft} from "@src/core/api/endpoints/nft";
 import ImageService from "@src/core/services/image";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -262,12 +264,12 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
                   <div className="mb-4 text-center">
                     <div className="fs-6">Offer Price</div>
                     <div className="fs-2 fw-bold">
-                      <div className="d-flex justify-content-center">
-                        <Image src="/img/logos/cdc_icon.svg" width={32} height={32} alt='Cronos Logo' />
+                      <Flex justify='center' alignItems='center'>
+                        <CronosIconBlue boxSize={10} />
                         <span className="ms-1">
                           {commify(offer.price)}
                         </span>
-                      </div>
+                      </Flex>
                     </div>
                   </div>
 

@@ -17,6 +17,7 @@ import Image from "next/image";
 import {useAppSelector} from "@src/Store/hooks";
 import {Drop} from "@src/core/models/drop";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -249,8 +250,8 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       )}
                       {!!regularCost && (
                         <Heading as="h5" size="md">
-                          <Flex>
-                            <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                          <Flex alignItems='center'>
+                            <CronosIconBlue boxSize={5} />
                             <span className="ms-2">{ethers.utils.commify(round(regularCost))}</span>
                           </Flex>
                         </Heading>
@@ -266,8 +267,8 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                     <Heading as="h6" size="sm" className="mb-1">Member Price</Heading>
                     {!!memberCost && (
                       <Heading as="h5" size="md">
-                        <Flex>
-                          <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                        <Flex alignItems='center'>
+                          <CronosIconBlue boxSize={5} />
                           <span className="ms-2">{ethers.utils.commify(round(memberCost))}</span>
                         </Flex>
                       </Heading>
@@ -282,8 +283,8 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                   <Box>
                     <Heading as="h6" size="sm" className="mb-1">Whitelist Price</Heading>
                     <Heading as="h5" size="md">
-                      <Flex>
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                      <Flex alignItems='center'>
+                        <CronosIconBlue boxSize={5} />
                         <span className="ms-2">{ethers.utils.commify(round(whitelistCost))}</span>
                       </Flex>
                     </Heading>
@@ -294,8 +295,8 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                   <Box>
                     <Heading as="h6" size="sm" className="mb-1">{specialWhitelist.name}</Heading>
                     <Heading as="h5" size="md">
-                      <Flex>
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                      <Flex alignItems='center'>
+                        <CronosIconBlue boxSize={5} />
                         <span className="ms-2">{ethers.utils.commify(round(specialWhitelist.value))}</span>
                       </Flex>
                     </Heading>

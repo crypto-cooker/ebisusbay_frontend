@@ -16,6 +16,7 @@ import Select from "react-select";
 import {getTheme} from "@src/Theme/theme";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {
+  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -29,6 +30,7 @@ import {commify} from "ethers/lib/utils";
 import {getAllCollectionOffers} from "@src/core/subgraph";
 import {getCollectionMetadata} from "@src/core/api";
 import ImageService from "@src/core/services/image";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -231,12 +233,12 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
                       <div className="mb-4 text-center">
                         <div className="fs-6">Offer Price</div>
                         <div className="fs-2 fw-bold">
-                          <div className="d-flex justify-content-center">
-                            <Image src="/img/logos/cdc_icon.svg" width={32} height={32} alt='Cronos Logo' />
+                          <Flex justify='center' alignItems='center'>
+                            <CronosIconBlue boxSize={10} />
                             <span className="ms-1">
-                          {commify(offer.price)}
-                        </span>
-                          </div>
+                              {commify(offer.price)}
+                            </span>
+                          </Flex>
                         </div>
                       </div>
 

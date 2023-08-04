@@ -18,6 +18,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Drop, mapDrop} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
 import {useRouter} from "next/router";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const tokens = appConfig('tokens')
 const drops: Drop[] = appConfig('drops').map((drop: any) => mapDrop(drop));
@@ -221,7 +222,7 @@ const FeaturedDrops = () => {
                                 <span className="d-title">Mint Price</span>
                                 <Heading as="h3" size="md">
                                   <HStack>
-                                    <Image src='/img/ryoshi-dynasties/icons/fortune.svg' alt="Fortune Logo" width={32} height={32} />
+                                    <FortuneIcon boxSize={10} />
                                     <Text as='span'>
                                       {drop.salePeriods.public < Date.now() ? (
                                         <>{ethers.utils.commify(drop.erc20Cost!)}</>

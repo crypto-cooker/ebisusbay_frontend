@@ -1,7 +1,7 @@
-import {createIcon} from "@chakra-ui/icons";
+import {createIcon, IconProps} from "@chakra-ui/icons";
 
 const CronosIcon = createIcon({
-    displayName: 'CronosIcon',
+    displayName: 'CronosIconFlat',
     viewBox: '0 0 121 139',
     path: [
         <path fill='currentColor'
@@ -14,4 +14,9 @@ const CronosIcon = createIcon({
               d="M88.1163,85.6176,60.07,101.811,32,85.6176V53.2086L60.07,36.9924,88.1163,53.2086l-11.6744,6.747L60.07,50.4865,43.6977,59.9556V78.8473L60.07,88.3165l16.3721-9.4692Z"/>,
     ]
 });
-export default CronosIcon;
+
+const CronosIconFlat = (params: IconProps) => {
+    return <CronosIcon {...params} />
+}
+
+export default CronosIconFlat;

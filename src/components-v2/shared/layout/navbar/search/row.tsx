@@ -5,6 +5,7 @@ import {commify} from "ethers/lib/utils";
 import {pluralize, round} from "@src/utils";
 import NextImage from "next/image";
 import ImageService from "@src/core/services/image";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 type ResultCollectionProps = {
   collection: any;
@@ -62,14 +63,14 @@ const ResultCollection = ({collection, floorPrice, onClick, onRemove, useCloseBu
           </VStack>
         </Box>
         {(useCloseButton || (!!floorPrice && floorPrice > 0)) && (
-          <Flex ms={2} my="auto" className="text-muted">
+          <Flex ms={2} my="auto" className="text-muted" alignItems='center'>
             {useCloseButton ? (
               <>
                 <CloseButton onClick={handleRemove} _hover={{color: hoverColor}} color={isFocused ? hoverColor : 'inherit'} />
               </>
             ) : (!!floorPrice && floorPrice > 0) && (
               <>
-                <NextImage src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                <CronosIconBlue boxSize={4} />
                 <span className="ms-1">
                   {commify(round(floorPrice))}
                 </span>

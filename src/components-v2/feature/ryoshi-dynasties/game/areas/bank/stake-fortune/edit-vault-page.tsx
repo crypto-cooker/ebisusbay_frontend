@@ -39,6 +39,7 @@ import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types"
 import {commify} from "ethers/lib/utils";
 import moment from "moment/moment";
 import {useQueryClient} from "@tanstack/react-query";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
 
@@ -214,8 +215,10 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
     }
     const daysForTroops = canUseDuration ? totalDays : depositLength;
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    let newTroops = Math.floor(((fortuneToStake * daysToStake) / 1080) / mitamaTroopsRatio);
-    if (newTroops < 1 && fortuneToStake > 0) newTroops = 1;
+    const sumDays = Number(vault.length / (86400)) + (type === 'duration' ? daysToStake : 0);
+    const sumAmount = Number(ethers.utils.formatEther(vault.balance)) + (type === 'amount' ? fortuneToStake : 0);
+    let newTroops = Math.floor(((sumAmount * sumDays) / 1080) / mitamaTroopsRatio);
+    if (newTroops < 1 && sumAmount > 0) newTroops = 1;
     setNewTroops(newTroops);
 
     setNewWithdrawDate((Number(vault.endTime) + (daysToStake * 86400))*1000);
@@ -231,9 +234,9 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
     setCurrentApr(availableAprs[aprKey] ?? availableAprs[1]);
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    let newTroops = Math.floor(((fortuneToStake * daysToStake) / 1080) / mitamaTroopsRatio);
-    if (newTroops < 1 && fortuneToStake > 0) newTroops = 1;
-    setNewTroops(newTroops);
+    let newTroops = Math.floor(((vaultFortune * vaultDays) / 1080) / mitamaTroopsRatio);
+    if (newTroops < 1 && vaultFortune > 0) newTroops = 1;
+    setCurrentTroops(newTroops);
   }, [vault]);
 
   // Check for fortune on load
@@ -322,8 +325,8 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
               {type === 'amount' && (
                 <VStack align='end' textAlign='end'>
                   <Box fontSize='sm' fontWeight='bold'>Balance: {isRetrievingFortune ? <Spinner size='sm'/> : commify(round(userFortune))}</Box>
-                  <Flex justify='end'>
-                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/>
+                  <Flex justify='end' align='center'>
+                    <FortuneIcon boxSize={6} />
                     <Box ms={1}>$Fortune</Box>
                   </Flex>
                 </VStack>

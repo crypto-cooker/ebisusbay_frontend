@@ -32,6 +32,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import ContractService from "@src/core/contractService";
 import {useGlobalPrice} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 const config = appConfig();
 
@@ -225,8 +226,8 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                   </Flex>
                   <span>
                     {listing ? (
-                      <Stack direction='row' align='baseline'>
-                        <Image src="/img/logos/cdc_icon.svg" width={25} height={25} className="my-auto" alt='Cronos Logo' />
+                      <Stack direction='row' alignItems='center'>
+                        <CronosIconBlue boxSize={6} />
 
                         <Text fontSize={28} ms={1} fontWeight='bold'>
                           <span className="ms-1">{ethers.utils.commify(listing.price)}</span>

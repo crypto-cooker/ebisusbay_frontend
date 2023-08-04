@@ -49,6 +49,7 @@ import Fortune from "@src/Contracts/Fortune.json";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import Link from "next/link";
 import {parseErrorMessage} from "@src/helpers/validator";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
 
@@ -663,7 +664,7 @@ const MintPhase = ({ title, description, price, startTime, endTime, onMint, maxM
         </Box>
       </Flex>
       <HStack>
-        <Image src="/img/ryoshi-dynasties/icons/fortune.svg" width={8} height={8} alt='Cronos Logo' />
+        <FortuneIcon boxSize={8} />
         <span className="ms-2">{price ? commify(price) : 'TBA'}</span>
       </HStack>
 

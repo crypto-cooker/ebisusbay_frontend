@@ -43,6 +43,7 @@ import {AnchorProps} from "react-bootstrap";
 import ImageService from "@src/core/services/image";
 import {specialImageTransform} from "@src/hacks";
 import Image from "next/image";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -295,7 +296,7 @@ const Cart = function () {
                           )}
                           {nft.price && (
                             <HStack>
-                              <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt="Cronos Logo" />
+                              <CronosIconBlue boxSize={4} />
                               <Box>{commify(round(nft.price, 2))}</Box>
                             </HStack>
                           )}

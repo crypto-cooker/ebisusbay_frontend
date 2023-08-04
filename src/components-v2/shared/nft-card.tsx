@@ -45,6 +45,7 @@ import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
@@ -239,8 +240,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                       <FontAwesomeIcon icon={faBoltLightning} />
                     </Box>
                     <Box>
-                      <Flex>
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                      <Flex alignItems='center'>
+                        <CronosIconBlue boxSize={4} />
                         <Box as='span' ms={1}>
                           {getListing().price > 6 ? siPrefixedNumber(getListing().price) : ethers.utils.commify(round(getListing().price))}
                         </Box>
@@ -259,8 +260,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                       <FontAwesomeIcon icon={faHand} />
                     </Box>
                     <Box>
-                      <Flex>
-                        <Image src="/img/logos/cdc_icon.svg" width={16} height={16} alt='Cronos Logo' />
+                      <Flex alignItems='center'>
+                        <CronosIconBlue boxSize={4} />
                         <Box as='span' ms={1}>
                           {nft.offer.price > 6 ? siPrefixedNumber(nft.offer.price) : ethers.utils.commify(round(nft.offer.price))}
                         </Box>
