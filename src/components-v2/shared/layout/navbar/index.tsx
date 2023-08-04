@@ -42,7 +42,7 @@ const GlobalStyles = createGlobalStyle`
 
 const NavLink = ({name, to, onClick}: {name: string, to: string, onClick?: any}) => {
   return (
-    <Link href={to} className='single-link'>
+    <Link href={to} className='single-link' onClick={onClick}>
       {name}
     </Link>
   );
@@ -156,7 +156,7 @@ const Header = function () {
             <Box pb={4} display={{md: 'none'}} textAlign="end">
               <Stack as={'nav'} spacing={4}>
                 <NavLink name={'Rewards'} to={'/rewards'} onClick={onClose} />
-                <NavLink name={'Ryoshi Dynasties'} to={'/ryoshi'} />
+                <NavLink name={'Ryoshi Dynasties'} to={'/ryoshi'} onClick={onClose} />
                 <NavLink name={'Marketplace'} to={'/marketplace'} onClick={onClose} />
                 <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
                 <NavLink name={'Brands'} to={'/brands'} onClick={onClose} />
