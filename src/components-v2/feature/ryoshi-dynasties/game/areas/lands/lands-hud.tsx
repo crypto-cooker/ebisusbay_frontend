@@ -97,12 +97,12 @@ export const LandsHUD = ({onBack, setElementToZoomTo, showBack}: BattleMapHUDPro
                 > Legend
               </Text>
               <Divider orientation="horizontal" />
-              {/* <Text
-                textColor={''}
+              <Text
+                textColor={'#D24547'}
                 fontSize={'sm'}
                 as='b'
                 > Owned
-              </Text> */}
+              </Text>
               <Text
                 textColor={'gold'}
                 fontSize={'sm'}

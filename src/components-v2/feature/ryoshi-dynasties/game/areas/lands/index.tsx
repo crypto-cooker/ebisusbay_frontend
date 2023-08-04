@@ -226,7 +226,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       setNft(null);
       setForSale(false);
     }
-  }, []);
+  }, [plotId]);
 
   const [showText, setShowText] = useState(false);
   const [zoomState, setZoomState] = useState({

@@ -118,55 +118,11 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
   }, [plotId]);
 
   return (
-    //  <div
-    //           className={`${styles.tip_modal}`}
-    //           style={{
-    //             display: modalFlag,
-    //             left: `${tileInfo.modalPosition?.x}px`,
-    //             top: `${tileInfo.modalPosition?.y}px`,
-    //           }}
-    //         >
-    //           <div className={styles.modal_content}>
-    //             <div
-    //               className={`${styles.cross}`}
-    //               onClick={() => {
-    //                 setModalFlag('none');
-    //               }}
-    //             >
-    //               &times;
-    //             </div>
-    //             <img className={styles.tile_img} src={tileInfo.tile} alt="tile" />
-    //             <div className={styles.tile_items}>
-    //               <div>TokenId: {tileInfo.tokenId}</div>
-    //               {/* <div>Type: {tileType[tileInfo.type - 1]}</div> */}
-    //               {/* <div>
-    //                 Location: {tileInfo.xPos < 27 ? tileInfo.xPos - 27 : tileInfo.xPos - 26},
-    //                 {tileInfo.yPos < 14 ? 14 - tileInfo.yPos : 13 - tileInfo.yPos}
-    //               </div> */}
-    //               {tileInfo.canBuy && <div>Price: {commify(tileInfo.price ?? 0)} CRO</div>}
-    //               <MakeOffer>
-    //                 {tileInfo.canBuy && (
-    //                   <div className="me-2">
-    //                     <Button type="legacy" onClick={() => onBuy(tileInfo.listing)}>
-    //                       Buy
-    //                     </Button>
-    //                   </div>
-    //                 )}
-    //                 <div>
-    //                   <Button type="legacy-outlined" onClick={() => onOffer(tileInfo.nft)}>
-    //                     Offer
-    //                   </Button>
-    //                 </div>
-    //               </MakeOffer>
-    //             </div>
-    //           </div>
-    //         </div>
     <RdModal
       isOpen={isOpen}
       onClose={handleClose}
       title={title}
       isCentered={false}
-      // utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
       onUtilBtnClick={handleBack}
     >
       {page === 'faq' ? (
