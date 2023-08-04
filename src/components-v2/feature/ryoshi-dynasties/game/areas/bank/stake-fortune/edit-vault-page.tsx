@@ -215,8 +215,10 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
     }
     const daysForTroops = canUseDuration ? totalDays : depositLength;
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    let newTroops = Math.floor(((fortuneToStake * daysToStake) / 1080) / mitamaTroopsRatio);
-    if (newTroops < 1 && fortuneToStake > 0) newTroops = 1;
+    const sumDays = Number(vault.length / (86400)) + (type === 'duration' ? daysToStake : 0);
+    const sumAmount = Number(ethers.utils.formatEther(vault.balance)) + (type === 'amount' ? fortuneToStake : 0);
+    let newTroops = Math.floor(((sumAmount * sumDays) / 1080) / mitamaTroopsRatio);
+    if (newTroops < 1 && sumAmount > 0) newTroops = 1;
     setNewTroops(newTroops);
 
     setNewWithdrawDate((Number(vault.endTime) + (daysToStake * 86400))*1000);
@@ -232,9 +234,9 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
     setCurrentApr(availableAprs[aprKey] ?? availableAprs[1]);
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    let newTroops = Math.floor(((fortuneToStake * daysToStake) / 1080) / mitamaTroopsRatio);
-    if (newTroops < 1 && fortuneToStake > 0) newTroops = 1;
-    setNewTroops(newTroops);
+    let newTroops = Math.floor(((vaultFortune * vaultDays) / 1080) / mitamaTroopsRatio);
+    if (newTroops < 1 && vaultFortune > 0) newTroops = 1;
+    setCurrentTroops(newTroops);
   }, [vault]);
 
   // Check for fortune on load
