@@ -209,7 +209,7 @@ const Cart = function () {
         const erc20UsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, nft.currency));
         if (!!erc20UsdRate && erc20UsdRate.currency !== ethers.constants.AddressZero) {
           const croUsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, ethers.constants.AddressZero) && rate.chain === 25);
-          fee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice);
+          fee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice) * (user.fee / 100);
         }
         fees += fee;
         amt += nft.currency === ethers.constants.AddressZero ? fee : 0;
