@@ -21807,7 +21807,7 @@
       "multiToken": false,
       "address": "0xF4ca337c841440BA2ad585d91361e535791c3f4c",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Project Zayon is a 5000 NFTs Collection. These nft have rarities. Each level of rarities will earn more daily Zayon$ Token. There is also something big hidden somewhere, but shh don't say it. Keep it to yourself. You don't want someone else to steal it from you.",
         "avatar": "/img/collections/project-zayon/avatar.webp",
