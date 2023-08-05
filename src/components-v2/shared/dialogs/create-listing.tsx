@@ -45,6 +45,8 @@ import {useAppSelector} from "@src/Store/hooks";
 import Select from "react-select";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
 import ImageService from "@src/core/services/image";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -93,8 +95,8 @@ const expirationDatesValues = [
 ]
 
 const currencyOptions = [
-  { label: 'CRO', symbol: 'cro', image: <CronosIcon boxSize={6}/> },
-  { label: 'FRTN', symbol: 'frtn', image: <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/fortune.svg').convert()} alt="fortuneIcon" boxSize={6}/> }
+  { label: 'CRO', symbol: 'cro', image: <CronosIconBlue boxSize={6}/> },
+  { label: 'FRTN', symbol: 'frtn', image: <FortuneIcon boxSize={6}/> }
 ];
 
 interface MakeGaslessListingDialogProps {
@@ -187,7 +189,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       if (collectionInfo.collections.length > 0) {
         const stats = collectionInfo.collections[0].stats;
         let floor = stats.total.floorPrice;
-        setFloorPrice(floor);
+        setFloorPrice(floor ? round(floor) : 0);
       }
 
       const royalties = await collectionRoyaltyPercent(nftAddress, nftId);
@@ -409,7 +411,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                                 text={user.theme === 'dark' ? 'dark' : 'light'}
                                 className="ms-2"
                               >
-                                Floor: {floorPrice} CRO
+                                Floor: {floorPrice} {selectedCurrency.label}
                               </Badge>
                             </Box>
                           </Flex>
@@ -515,7 +517,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                     <Box>
                       <div className="fee">
                         <span>Total Listing Price: </span>
-                        <span>{Number(salePrice ?? 0) * (quantity ? Number(quantity) : 1)} CRO</span>
+                        <span>{Number(salePrice ?? 0) * (quantity ? Number(quantity) : 1)} {selectedCurrency.label}</span>
                       </div>
                       <div className="fee">
                         <span>Royalty Fee: </span>
@@ -523,7 +525,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       </div>
                       <div className="fee" style={{marginBottom:0}}>
                         <span className='label'>You receive: </span>
-                        <span>{getYouReceiveViewValue()} CRO</span>
+                        <span>{getYouReceiveViewValue()} {selectedCurrency.label}</span>
                       </div>
                     </Box>
                   </Flex>

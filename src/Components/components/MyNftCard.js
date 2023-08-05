@@ -31,7 +31,6 @@ import {
   useBreakpointValue,
   useClipboard
 } from "@chakra-ui/react";
-import Image from "next/image";
 import {appUrl, caseInsensitiveCompare, round, siPrefixedNumber, timeSince} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
@@ -39,6 +38,7 @@ import {useSelector} from "react-redux";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 const MyNftCard = ({
   nft,
@@ -233,7 +233,7 @@ const MyNftCard = ({
                   </Box>
                   <Box>
                     <Flex alignItems='center'>
-                      <CronosIconBlue boxSize={4} />
+                      <DynamicCurrencyIcon address={nft.market.currency} boxSize={4} />
                       <Box as='span' ms={1}>
                         {nft.market.price > 6 ? siPrefixedNumber(nft.market.price) : ethers.utils.commify(round(nft.market.price))}
                       </Box>

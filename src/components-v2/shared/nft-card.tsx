@@ -46,6 +46,7 @@ import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
@@ -86,14 +87,16 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
       return {
         id: nft.market.id,
         price: nft.market.price,
-        expirationDate: nft.market.expirationDate
+        expirationDate: nft.market.expirationDate,
+        currency: nft.market.currency
       };
     }
     if (nft.listed) {
       return {
         id: nft.listingId,
         price: nft.price,
-        expirationDate: nft.expirationDate
+        expirationDate: nft.expirationDate,
+        currency: nft.currency
       };
     }
 
@@ -130,7 +133,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
       address: nft.address,
       id: nft.id,
       rank: nft.rank,
-      amount: listing.amount
+      amount: listing.amount,
+      currency: listing.currency
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };
@@ -241,7 +245,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                     </Box>
                     <Box>
                       <Flex alignItems='center'>
-                        <CronosIconBlue boxSize={4} />
+                        <DynamicCurrencyIcon address={getListing().currency} boxSize={4} />
                         <Box as='span' ms={1}>
                           {getListing().price > 6 ? siPrefixedNumber(getListing().price) : ethers.utils.commify(round(getListing().price))}
                         </Box>

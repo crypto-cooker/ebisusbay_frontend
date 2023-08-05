@@ -4,7 +4,6 @@ import attributes from './core/configs/attributes.json';
 import {useEffect, useRef} from 'react';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
 import {appConfig} from './Config';
-import {hostedImage} from './helpers/image';
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {commify} from "ethers/lib/utils";
 import brands from '../src/core/data/brands.json';
@@ -547,7 +546,11 @@ export const isCroSwapQuartermastersCollection = (address) => {
 };
 
 export const isLandDeedsCollection = (address) => {
-  return isCollection(address, 'izanamis-cradle-land-deeds', '0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3');
+  return isCollection(
+    address,
+    'izanamis-cradle-land-deeds',
+    ['0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3', '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad']
+  );
 };
 
 export const isBundle = (addressOrSlug) => {
@@ -885,4 +888,13 @@ export const titleCase = (str) => {
   }
 
   return splitStr.join(' ');
+}
+
+export const knownErc20Token = (address) => {
+  const value = Object.entries(config.tokens).find(([key, value]) => caseInsensitiveCompare(value.address, address));
+  return value ? value[1] : null;
+}
+
+export const isFortuneToken = (address) => {
+  return caseInsensitiveCompare(address, config.tokens.frtn.address);
 }

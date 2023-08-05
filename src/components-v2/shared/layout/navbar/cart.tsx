@@ -27,7 +27,7 @@ import {acknowledgePrompt, clearCart, removeFromCart, syncCartStorage} from "@sr
 import {commify} from "ethers/lib/utils";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
-import {isBundle, round} from "@src/utils";
+import {caseInsensitiveCompare, isBundle, knownErc20Token, round} from "@src/utils";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import Button from "@src/Components/components/common/Button";
@@ -42,8 +42,8 @@ import {useAppSelector} from "@src/Store/hooks";
 import {AnchorProps} from "react-bootstrap";
 import ImageService from "@src/core/services/image";
 import {specialImageTransform} from "@src/hacks";
-import Image from "next/image";
-import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import {getPrices} from "@src/core/api/endpoints/prices";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -105,17 +105,12 @@ const Cart = function () {
     setShowMenu(true);
   }, [showMenu]);
 
-  const calculateTotalPrice = () => {
-    return cart.nfts.reduce((p, n) => {
-      const price = parseInt(n.price);
-      return p + (isNaN(price) ? 0 : price);
-    }, 0);
-  }
-
   const executeBuy = async () => {
-    const listingIds = cart.nfts.map((o) => o.listingId);
-    const totalPrice = calculateTotalPrice();
-    const aux = await buyGaslessListings(listingIds, totalPrice);
+    await buyGaslessListings(cart.nfts.map((nft) => ({
+      listingId: nft.listingId,
+      price: isNaN(nft.price) ? 0 : nft.price,
+      currency: nft.currency ?? ethers.constants.AddressZero
+    })));
     handleClose();
     handleClearCart();
   };
@@ -194,24 +189,52 @@ const Cart = function () {
     }
   }, []);
 
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [totals, setTotals] = useState<any[]>([]);
   const [serviceFees, setServiceFees] = useState(0);
   useEffect(() => {
-    let fees = 0;
-    const totalPrice = cart.nfts.reduce((total, nft) => {
-      if (!nft.price) return total;
+    async function func() {
+      let fees = 0;
+      const exchangeRates = await getPrices();
+      console.log('excahge', exchangeRates);
 
-      const numericPrice = parseInt(nft.price);
-      let amt = numericPrice;
+      const totals = cart.nfts.reduce((acc, nft) => {
+        if (!nft.price) return acc;
 
-      const fee = numericPrice * (user.fee / 100);
-      fees += fee;
-      amt += fee;
+        const currencyToken = knownErc20Token(nft.currency);
 
-      return total + amt;
-    }, 0);
-    setTotalPrice(totalPrice);
-    setServiceFees(fees);
+        const numericPrice = parseInt(nft.price);
+        let amt = numericPrice;
+
+        let fee =  numericPrice * (user.fee / 100);
+        const erc20UsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, nft.currency));
+        if (!!erc20UsdRate && erc20UsdRate.currency !== ethers.constants.AddressZero) {
+          const croUsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, ethers.constants.AddressZero) && rate.chain === 25);
+          fee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice);
+        }
+        fees += fee;
+        amt += nft.currency === ethers.constants.AddressZero ? fee : 0;
+
+        const existing = acc.find((o: any) => o.currency === (currencyToken?.address ?? ethers.constants.AddressZero));
+        if (existing) {
+          existing.subtotal += parseInt(nft.price);
+          // existing.serviceFees += fee;
+          existing.finalTotal += amt;
+        } else {
+          acc.push({
+            currency: currencyToken ? currencyToken.address : ethers.constants.AddressZero,
+            symbol: currencyToken ? currencyToken.symbol : 'CRO',
+            subtotal: parseInt(nft.price),
+            // serviceFees: fee,
+            finalTotal: amt,
+          })
+        }
+        return acc;
+      }, []);
+
+      setTotals(totals);
+      setServiceFees(fees);
+    }
+    func();
   }, [cart.nfts, user.fee]);
 
   return (
@@ -284,7 +307,7 @@ const Cart = function () {
                               <NftLink name={nft.name} />
                             </Link>
                           )}
-                          {nft.amount && (
+                          {nft.amount && nft.amount > 1 && (
                             <Text fontSize='sm'>Pack of {nft.amount}</Text>
                           )}
                           {nft.rank && (
@@ -296,7 +319,7 @@ const Cart = function () {
                           )}
                           {nft.price && (
                             <HStack>
-                              <CronosIconBlue boxSize={4} />
+                              <DynamicCurrencyIcon address={nft.currency} boxSize={4} />
                               <Box>{commify(round(nft.price, 2))}</Box>
                             </HStack>
                           )}
@@ -342,7 +365,9 @@ const Cart = function () {
                     <Text>Subtotal</Text>
                   </Box>
                   <Box>
-                    <Text>{commify(calculateTotalPrice())} CRO</Text>
+                    {totals.map((total) => (
+                      <Text align='end'>{commify(total.subtotal)} {total.symbol}</Text>
+                    ))}
                   </Box>
                 </Flex>
               </Box>
@@ -352,7 +377,7 @@ const Cart = function () {
                     <Text>Service Fees</Text>
                   </Box>
                   <Box>
-                    <Text>{commify(serviceFees)} CRO</Text>
+                    <Text>{commify(round(serviceFees, 2))} CRO</Text>
                   </Box>
                 </Flex>
               </Box>
@@ -362,7 +387,9 @@ const Cart = function () {
                     <Text fontWeight="bold">Total Price</Text>
                   </Box>
                   <Box>
-                    <Text fontWeight="bold">{commify(round(totalPrice, 2))} CRO</Text>
+                    {totals.map((total) => (
+                      <Text fontWeight="bold" align='end'>{commify(round(total.finalTotal, 2))} {total.symbol}</Text>
+                    ))}
                   </Box>
                 </Flex>
               </Box>

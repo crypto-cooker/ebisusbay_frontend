@@ -135,7 +135,8 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
       price: nft.market.price,
       address: nft.address ?? nft.nftAddress,
       id: nft.id ?? nft.nftId,
-      rank: nft.rank
+      rank: nft.rank,
+      currency: listing.currency
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };

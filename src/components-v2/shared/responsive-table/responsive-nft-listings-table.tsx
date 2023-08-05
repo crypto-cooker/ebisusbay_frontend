@@ -25,7 +25,6 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import {round, shortAddress, timeSince} from "@src/utils";
-import Image from "next/image";
 import Link from "next/link";
 import ImageService from "@src/core/services/image";
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
@@ -35,7 +34,7 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import moment from "moment/moment";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
-import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 interface ResponsiveNftListingsTableProps {
   data: InfiniteData<IPaginatedList<any>>;
@@ -86,7 +85,7 @@ const DataTableLg = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTabl
                 <Tr key={entity.listingId} _hover={{bg: hoverBackground}}>
                   <Td>
                     <HStack>
-                      <CronosIconBlue boxSize={4} />
+                      <DynamicCurrencyIcon address={entity.currency} boxSize={4} />
                       <Box>{commify(round(entity.price, 2))}</Box>
                     </HStack>
                   </Td>
@@ -160,7 +159,7 @@ const DataTableSm = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTabl
                 <Tr key={entity.listingId} _hover={{bg: hoverBackground}}>
                   <Td>
                     <HStack>
-                      <CronosIconBlue boxSize={4} />
+                      <DynamicCurrencyIcon address={entity.currency} boxSize={4} />
                       <Box>{commify(round(entity.price, 2))}</Box>
                     </HStack>
                     <Box fontSize='sm'>
@@ -233,7 +232,7 @@ const DataAccordion = ({data, onAddToCart, primarySort}: Pick<ResponsiveNftListi
                   <Stat>
                     <StatNumber>
                       <HStack>
-                        <CronosIconBlue boxSize={4} />
+                        <DynamicCurrencyIcon address={entity.currency} boxSize={4} />
                         <Box fontWeight='bold'>{entity.price}</Box>
                       </HStack></StatNumber>
                     <StatHelpText>Qty: {entity.amount}</StatHelpText>

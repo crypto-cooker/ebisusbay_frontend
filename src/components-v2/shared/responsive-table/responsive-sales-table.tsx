@@ -4,9 +4,11 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box, ButtonGroup,
+  Box,
+  Button as ChakraButton,
+  ButtonGroup,
   Flex,
-  HStack, SimpleGrid,
+  HStack,
   Table,
   TableContainer,
   Tbody,
@@ -22,19 +24,13 @@ import {
 import React from "react";
 import {AxiosResponse} from "axios";
 import {shortAddress, timeSince} from "@src/utils";
-import Button from "@src/Components/components/Button";
-import {ListingState} from "@src/core/services/api-service/types";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {commify} from "ethers/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
-import {hostedImage} from "@src/helpers/image";
-import {Button as ChakraButton} from "@chakra-ui/react";
-import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import ImageService from "@src/core/services/image";
-import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 interface ResponsiveTableProps {
   data: InfiniteData<AxiosResponse<IPaginatedList<any>>>;
@@ -103,7 +99,7 @@ const DataTable = ({data, onSort}: ResponsiveTableProps) => {
                   </Td>
                   <Td>
                     <HStack spacing={1}>
-                      <CronosIconBlue boxSize={4} />
+                      <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
                       <Box>{commify(listing.price)}</Box>
                     </HStack>
                   </Td>
@@ -178,7 +174,7 @@ const DataAccordion = ({data, onSort}: ResponsiveTableProps) => {
                     <VStack align='end' spacing={0} fontSize='sm'>
                       <Text>{getTimeSince(listing.saleTime)}</Text>
                       <HStack spacing={1} h="full">
-                        <CronosIconBlue boxSize={4} />
+                        <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
                         <Box>{commify(listing.price)}</Box>
                       </HStack>
                     </VStack>
