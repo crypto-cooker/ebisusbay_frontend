@@ -21814,8 +21814,8 @@
         "card": "/img/collections/project-zayon/card.webp",
         "banner": "/img/collections/project-zayon/banner.webp",
         "website": "https://tatastwistedtonics.com/zayon",
-        "twitter": "https://twitter.com/ProjectZayon",
-        "discord": "https://discord.gg/rXqnfkFv",
+        "twitter": "https://twitter.com/zayonproject",
+        "discord": "https://discord.gg/4r7s8huZgU",
         "categories": [
           "collectibles"
         ]
@@ -29453,6 +29453,45 @@
         "avatar": "/img/collections/argonauts/avatar.webp",
         "preview": "/img/collections/argonauts/card.webp",
         "banner": "/img/collections/argonauts/banner.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
+        "escrow": false
+      }
+    },
+    {
+      "id": 178,
+      "slug": "time-machine-spaceships",
+      "title": "Time Machine Spaceships",
+      "subtitle": "Time Machine Spaceships are coming on Cronos very soon!",
+      "description": "Time Machine Spaceships are coming on Cronos very soon!",
+      "author": {
+        "name": "Time Machines",
+        "website": "https://time-launcher.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/8whpvt3WEr"
+      },
+      "address": "",
+      "maxMintPerTx": 7,
+      "maxMintPerAddress": 10,
+      "totalSupply": 2500,
+      "cost": "500",
+      "whitelistCost": "400",
+      "foundersOnly": false,
+      "start": 1693584000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "redirect": "https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan",
+      "images": {
+        "drop": "/img/drops/time-machine-spaceships/drop.webp",
+        "avatar": "/img/collections/time-machine-spaceships/avatar.webp",
+        "preview": "/img/collections/time-machine-spaceships/card.webp"
       },
       "verification": {
         "verified": true,
