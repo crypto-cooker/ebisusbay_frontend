@@ -206,7 +206,8 @@ export const ListingDrawer = () => {
       price: item.price!,
       amount: item.quantity,
       expirationDate: new Date().getTime() + item.expiration!,
-      is1155: item.nft.multiToken
+      is1155: item.nft.multiToken,
+      currencySymbol: item.currency,
     })))
     toast.success("Listings Successful");
   }

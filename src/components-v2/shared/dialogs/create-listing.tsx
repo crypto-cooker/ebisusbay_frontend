@@ -22,7 +22,6 @@ import {
   FormErrorMessage,
   FormLabel,
   HStack,
-  Image,
   Input,
   InputGroup,
   Modal,
@@ -43,8 +42,6 @@ import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/use
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useAppSelector} from "@src/Store/hooks";
 import Select from "react-select";
-import CronosIcon from "@src/components-v2/shared/icons/cronos";
-import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 

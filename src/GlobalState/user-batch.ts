@@ -7,6 +7,7 @@ export interface UserBatchItem {
   quantity: number;
   price?: number;
   expiration?: number;
+  currency?: string;
 }
 
 export interface UserBatchExtras {
@@ -16,6 +17,7 @@ export interface UserBatchExtras {
   canList?: boolean;
   royalty?: number;
   floorPrice?: number;
+  availableCurrencies?: { symbol: string, label: string }[];
 }
 
 interface UserBatchState {
@@ -39,7 +41,7 @@ const batchListingSlice = createSlice({
     addToBatchListingCart: (state, action) => {
       const nftToAdd = action.payload;
       if (!state.items.some((o) => caseInsensitiveCompare(o.nft.nftAddress, nftToAdd.nftAddress) && o.nft.nftId === nftToAdd.nftId)) {
-        state.items.push({nft: nftToAdd, price: undefined, quantity: 1, expiration: 2592000000});
+        state.items.push({nft: nftToAdd, price: undefined, quantity: 1, expiration: 2592000000, currency: 'cro'});
       }
 
       if (state.items.length === 1) {
@@ -106,6 +108,16 @@ const batchListingSlice = createSlice({
         state.items[foundIndex] = nft;
       }
     },
+    updateCurrency: (state, action) => {
+      const itemToModify = action.payload.nft;
+      const currency = action.payload.currency;
+      const foundIndex = state.items.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
+      if (foundIndex >= 0) {
+        const nft = state.items[foundIndex]
+        nft.currency = currency;
+        state.items[foundIndex] = nft;
+      }
+    },
     cascadePrices: (state, action) => {
       const startingItem = action.payload.startingItem ?? state.items[0];
       let currentPrice = Number(action.payload.startingPrice);
@@ -120,7 +132,6 @@ const batchListingSlice = createSlice({
 
         const price = currentPrice > 1 ? currentPrice : 1;
         currentPrice += step;
-        console.log('cascade', price, currentPrice, step)
         return {...o, price}
       });
     },
@@ -185,6 +196,11 @@ const batchListingSlice = createSlice({
     },
     setExtras: (state, action) => {
       state.extras[action.payload.address.toLowerCase()] = action.payload;
+      if (!!action.payload.availableCurrencies && action.payload.availableCurrencies.length > 0) {
+        state.items
+          .filter((o) => caseInsensitiveCompare(o.nft.nftAddress, action.payload.address))
+          .forEach((o) => o.currency = action.payload.availableCurrencies[0].symbol);
+      }
     },
     setRefetchNfts: (state, action) => {
       state.refetchNfts = action.payload;
@@ -226,6 +242,7 @@ export const {
   updatePrice,
   updateExpiration,
   update1155Quantity,
+  updateCurrency,
   cascadePrices,
   cascadePricesPercent,
   applyPriceToAll,

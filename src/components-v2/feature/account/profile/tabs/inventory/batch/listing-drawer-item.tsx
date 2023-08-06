@@ -31,6 +31,7 @@ import {
   setApproval,
   setExtras,
   update1155Quantity,
+  updateCurrency,
   updateExpiration,
   updatePrice,
   UserBatchExtras,
@@ -39,7 +40,7 @@ import {
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle, isLandDeedsCollection, round} from "@src/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {Button as ChakraButton} from "@chakra-ui/button";
@@ -51,6 +52,8 @@ import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -98,6 +101,10 @@ const expirationDatesValues = [
 ];
 
 const defaultExpiry = 2592000000;
+const currencyOptions = [
+  { label: 'CRO', symbol: 'cro', image: <CronosIconBlue boxSize={6}/> },
+  { label: 'FRTN', symbol: 'frtn', image: <FortuneIcon boxSize={6}/> }
+];
 
 interface ListingDrawerItemProps {
   item: UserBatchItem;
@@ -119,6 +126,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
   const [expirationDate, setExpirationDate] = useState(defaultExpiry.toString());
   const [invalid, setInvalid] = useState<string | boolean>(false);
   const [quantity, setQuantity] = useState('1');
+  const [currency, setCurrency] = useState('cro');
 
   // Approvals
   const extras = useAppSelector((state) => state.batchListing.extras[item.nft.nftAddress.toLowerCase()] ?? {});
@@ -163,6 +171,17 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
     dispatch(updateExpiration({ nft: item.nft, expiration: expirationLength }));
   }, [dispatch, item.nft, expirationDate]);
 
+  const handleCurrencyChange = useCallback((e: any) => {
+    const value = e.target.value;
+    if (!!value && (!extras.availableCurrencies || extras.availableCurrencies.includes(value))) {
+      setInvalid(false);
+      setCurrency(value);
+      dispatch(updateCurrency({ nft: item.nft, currency: value }));
+    } else {
+      setInvalid('currency');
+    }
+  }, [dispatch, item.nft, currency, extras]);
+
   useEffect(() => {
     setPrice(item.price?.toString() ?? '');
   }, [item.price]);
@@ -176,6 +195,12 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
   useEffect(() => {
     setQuantity(item.quantity?.toString() ?? '');
   }, [item.quantity]);
+
+  useEffect(() => {
+    if (item.currency) {
+      setCurrency(item.currency);
+    }
+  }, [item.currency]);
 
   const checkApproval = async () => {
     const contract = new Contract(item.nft.nftAddress, ERC721, user.provider.getSigner());
@@ -220,7 +245,8 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
 
         newExtras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId);
         newExtras.canList = item.nft.listable && !item.nft.isStaked;
-
+        newExtras.availableCurrencies = isLandDeedsCollection(item.nft.nftAddress) ? [currencyOptions.find((o) => o.symbol === 'frtn')!] : [currencyOptions.find((o) => o.symbol === 'cro')!];
+        setCurrency(newExtras.availableCurrencies[0].symbol);
         dispatch(setExtras(newExtras));
       } finally {
         setInitializing(false);
@@ -321,7 +347,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                         <FormErrorMessage fontSize='xs' mt={1}>Select a valid expiration.</FormErrorMessage>
                       </FormControl>
                       <Box fontSize='xs' mt={1}>
-                        Price (each)
+                        Price {item.nft.balance && item.nft.balance > 1 && <>(each)</>}
                       </Box>
                       <FormControl isInvalid={invalid === 'price'}>
                         <Stack direction="row">
@@ -333,32 +359,17 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                             onChange={handlePriceChange}
                             disabled={disabled}
                           />
-                          <ChakraButton
-                            size='xs'
-                            transition='all 0.2s'
-                            borderRadius='md'
-                            borderWidth='1px'
-                            onClick={() => setIsDetailsOpen(!isDetailsOpen)}
-                          >
-                            {isDetailsOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                          </ChakraButton>
-                          <Menu>
-                            <MenuButton
-                              px={2}
-                              transition='all 0.2s'
-                              borderRadius='md'
-                              borderWidth='1px'
-                              height={6}
-                            >
-                              <FontAwesomeIcon icon={faEllipsisH} />
-                            </MenuButton>
-                            <MenuList textAlign="right">
-                              <MenuItem onClick={() => onApplyAllSelected(Number(price), Number(expirationDate))}>Apply values to all</MenuItem>
-                              <MenuItem onClick={() => onCascadePriceSelected(item, Number(price))}>Cascade price</MenuItem>
-                              <MenuItem onClick={() => onAddCollection(item.nft.nftAddress)}>Add entire collection</MenuItem>
-                              <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
-                            </MenuList>
-                          </Menu>
+                          {!!extras.availableCurrencies ? (
+                            <Select value={currency} size='xs' isDisabled={extras.availableCurrencies.length < 2}>
+                              {extras.availableCurrencies?.map((c: any) => (
+                                <option key={c} value={c.symbol}>{c.label}</option>
+                              ))}
+                            </Select>
+                          ) : (
+                            <Select value='cro' size='xs'>
+                              <option key='cro' value='cro'>CRO</option>
+                            </Select>
+                          )}
                         </Stack>
                         <FormErrorMessage fontSize='xs' mt={1}>Enter a valid number.</FormErrorMessage>
                       </FormControl>
@@ -377,37 +388,69 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                 </ChakraButton>
               )}
             </Skeleton>
-            <Collapse in={isDetailsOpen} animateOpacity>
-              <VStack spacing={0} mt={1}>
-                {item.nft.rank && (
-                  <Flex w="100%">
-                    <Text>Rank</Text>
-                    <Spacer />
-                    <Text fontWeight="bold">{item.nft.rank}</Text>
-                  </Flex>
-                )}
-                <Flex w="100%">
-                  <>
-                    <Text>Floor</Text>
-                    <Spacer />
-                    <Text fontWeight="bold">{extras.floorPrice ?? 0} CRO</Text>
-                  </>
-                </Flex>
-                <Flex w="100%">
-                  <>
-                    <Text>Royalty</Text>
-                    <Spacer />
-                    <Text fontWeight="bold">{extras.royalty ?? 'N/A'} %</Text>
-                  </>
-                </Flex>
-              </VStack>
-            </Collapse>
           </VStack>
         </Box>
-        <Box ms={2} cursor="pointer" onClick={handleRemoveItem}>
-          <FontAwesomeIcon icon={faTrash} />
-        </Box>
+        <Flex direction='column' ms={2} fontSize='sm'>
+          <Box ms={2} cursor="pointer" onClick={handleRemoveItem}>
+            <FontAwesomeIcon icon={faTrash} />
+          </Box>
+          <Spacer />
+          <Menu>
+            <MenuButton
+              transition='all 0.2s'
+              borderRadius='md'
+              borderWidth='1px'
+              height={6}
+              w='28px'
+            >
+              <FontAwesomeIcon icon={faEllipsisH} />
+            </MenuButton>
+            <MenuList textAlign="right">
+              <MenuItem onClick={() => onApplyAllSelected(Number(price), Number(expirationDate))}>Apply values to all</MenuItem>
+              <MenuItem onClick={() => onCascadePriceSelected(item, Number(price))}>Cascade price</MenuItem>
+              <MenuItem onClick={() => onAddCollection(item.nft.nftAddress)}>Add entire collection</MenuItem>
+              <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
+            </MenuList>
+          </Menu>
+          <ChakraButton
+            size='xs'
+            transition='all 0.2s'
+            borderRadius='md'
+            borderWidth='1px'
+            onClick={() => setIsDetailsOpen(!isDetailsOpen)}
+            mt={1}
+            w='28px'
+          >
+            {isDetailsOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          </ChakraButton>
+        </Flex>
       </Flex>
+
+      <Collapse in={isDetailsOpen} animateOpacity>
+        <VStack spacing={0} mt={1} fontSize='sm'>
+          {item.nft.rank && (
+            <Flex w="100%">
+              <Text>Rank</Text>
+              <Spacer />
+              <Text fontWeight="bold">{item.nft.rank}</Text>
+            </Flex>
+          )}
+          <Flex w="100%">
+            <>
+              <Text>Floor</Text>
+              <Spacer />
+              <Text fontWeight="bold">{round(extras.floorPrice ?? 0)} CRO</Text>
+            </>
+          </Flex>
+          <Flex w="100%">
+            <>
+              <Text>Royalty</Text>
+              <Spacer />
+              <Text fontWeight="bold">{extras.royalty ?? 'N/A'} %</Text>
+            </>
+          </Flex>
+        </VStack>
+      </Collapse>
     </Box>
   )
 }
