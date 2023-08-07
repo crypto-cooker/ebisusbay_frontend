@@ -212,10 +212,10 @@ export default function Inventory({ address }: InventoryProps) {
                         <MyNftCard
                           nft={nft}
                           canTransfer={nft.canTransfer}
-                          canSell={nft.listable && !nft.listed && nft.canSell}
+                          canSell={nft.listable && (!nft.listed || nft.multiToken) && nft.canSell}
                           isStaked={nft.isStaked}
                           canCancel={nft.listed && !!nft.listingId}
-                          canUpdate={nft.listable && nft.listed}
+                          canUpdate={nft.listable && nft.listed && !nft.multiToken}
                           onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
                           onSellButtonPressed={() => {
                             dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))

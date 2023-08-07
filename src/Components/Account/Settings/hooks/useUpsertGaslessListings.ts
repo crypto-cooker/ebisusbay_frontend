@@ -47,13 +47,15 @@ const useUpsertGaslessListings = () => {
     });
 
     // Get any existing listings
+    // CRC1155 tokens are excluded as we want to allow them to have multiple listings per user
     const listingsResponse = await NextApiService.getAllListingsByUser(user.address!);
     const existingListings = listingsResponse.data.filter((eListing) => {
       return (pendingListings as Array<PendingListing>).some((pListing) => {
-        return caseInsensitiveCompare(eListing.nftAddress, pListing.collectionAddress) &&
+        return !pListing.is1155 && caseInsensitiveCompare(eListing.nftAddress, pListing.collectionAddress) &&
           eListing.nftId.toString() === pListing.tokenId.toString();
       })
     });
+
     // Split legacy so that we can run one cancel tx for all gasless
     const cancelIds = {
       legacy: existingListings

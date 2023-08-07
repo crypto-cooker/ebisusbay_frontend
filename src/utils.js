@@ -352,6 +352,10 @@ export function caseInsensitiveCompare(str1, str2) {
   return str1?.toLowerCase() === str2?.toLowerCase();
 }
 
+export function ciEquals(str1, str2) {
+  return caseInsensitiveCompare(str1, str2);
+}
+
 export function ciIncludes(array, str) {
   if (!array) return false;
   return array.map((item) => item.toLowerCase()).includes(str.toLowerCase());

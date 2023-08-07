@@ -3,7 +3,7 @@ import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Badge, Form, Spinner} from "react-bootstrap";
+import {Badge, Form} from "react-bootstrap";
 import {Contract} from "ethers";
 import Button from "@src/Components/components/common/Button";
 import {getCollectionMetadata} from "@src/core/api";
@@ -17,7 +17,7 @@ import {collectionRoyaltyPercent} from "@src/core/chain";
 import {
   Box,
   Button as ChakraButton,
-  ButtonGroup,
+  ButtonGroup, Center,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -32,6 +32,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spinner,
   Stack,
   useNumberInput
 } from "@chakra-ui/react";
@@ -374,7 +375,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
-          {listing || nft.listed ? 'Update' : 'Sell'} {nft.name}
+          {(listing || nft.listed) && !nft.multiToken ? 'Update' : 'Sell'} {nft.name}
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
         {!isLoading ? (
@@ -613,7 +614,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                                   isLoading={executingCreateListing}
                                   disabled={executingCreateListing}
                                   className="flex-fill">
-                            {listing || nft.listed? 'Update Listing' : 'Confirm Listing'}
+                            {(listing || nft.listed) && !nft.multiToken ? 'Update Listing' : 'Confirm Listing'}
                           </Button>
                         </div>
                       </>
@@ -640,9 +641,9 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
           </>
         ) : (
           <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Center>
+              <Spinner />
+            </Center>
           </EmptyData>
         )}
       </ModalContent>
