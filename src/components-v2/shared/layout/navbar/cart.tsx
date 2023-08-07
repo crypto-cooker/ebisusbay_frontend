@@ -195,7 +195,6 @@ const Cart = function () {
     async function func() {
       let fees = 0;
       const exchangeRates = await getPrices();
-      console.log('excahge', exchangeRates);
 
       const totals = cart.nfts.reduce((acc, nft) => {
         if (!nft.price) return acc;
