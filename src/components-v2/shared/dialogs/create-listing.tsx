@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
@@ -10,14 +10,15 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {createSuccessfulTransactionToastContent, isBundle, isLandDeedsCollection, round} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle, isLandDeedsCollection, round, valueToUsd} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {
   Box,
   Button as ChakraButton,
-  ButtonGroup, Center,
+  ButtonGroup,
+  Center,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -34,7 +35,8 @@ import {
   ModalOverlay,
   Spinner,
   Stack,
-  useNumberInput
+  useNumberInput,
+  VStack
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
@@ -46,6 +48,8 @@ import {useAppSelector} from "@src/Store/hooks";
 import Select from "react-select";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {useExchangeRate} from "@src/hooks/useGlobalPrices";
+import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -134,6 +138,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
 
   const user = useAppSelector((state) => state.user);
   const [upsertGaslessListings, responseUpsert] = useUpsertGaslessListings();
+  const { usdRate } = useExchangeRate(config.tokens[selectedCurrency.symbol.toLowerCase()]?.address);
 
   const isBelowFloorPrice = (price: number) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
@@ -169,7 +174,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   }, [executingCreateListing, showConfirmButton, floorPrice, setSalePrice, isBelowFloorPrice, perUnitPrice]);
 
   const getYouReceiveViewValue = () => {
-    return round(totalPrice * (1 + (royalty / 100)));
+    return round(totalPrice * (1 - (royalty / 100)));
   };
 
   useEffect(() => {
@@ -221,8 +226,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     }
   };
 
-  const handleApproval = async (e: ChangeEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleApproval = async () => {
     try {
       const nftAddress = nft.address ?? nft.nftAddress;
       const marketContractAddress = config.contracts.market;
@@ -242,11 +246,11 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     }
   };
 
-  const handleCreateListing = async (e: ChangeEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleCreateListing = async () => {
     if (!validateInput()) return;
 
     try {
+      setShowConfirmButton(false);
       const nftAddress = nft.address ?? nft.nftAddress;
       const nftId = nft.id ?? nft.nftId;
       setExecutingCreateListing(true);
@@ -271,13 +275,13 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     }
   };
 
-  const processCreateListingRequest = async (e: ChangeEvent<HTMLButtonElement>) => {
+  const processCreateListingRequest = async () => {
     if (!validateInput()) return;
 
     if (isBelowFloorPrice(perUnitPrice)) {
       setShowConfirmButton(true);
     } else {
-      await handleCreateListing(e)
+      await handleCreateListing()
     }
   }
 
@@ -553,20 +557,25 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                     </Box>
                     <Box>
                       <Flex justify='space-between'>
-                        <span>Total Listing Price: </span>
-                        <span>{totalPrice} {selectedCurrency.label}</span>
+                        <Box as='span'>Total Listing Price: </Box>
+                        <Box as='span'>{totalPrice} {selectedCurrency.label}</Box>
                       </Flex>
                       <Flex justify='space-between'>
-                        <span>Floor: </span>
-                        <span>{floorPrice} CRO</span>
+                        <Box as='span'>Floor: </Box>
+                        <Box as='span'>{floorPrice} CRO</Box>
                       </Flex>
                       <Flex justify='space-between'>
-                        <span>Royalty Fee: </span>
-                        <span>{royalty} %</span>
+                        <Box as='span'>Royalty Fee: </Box>
+                        <Box as='span'>{royalty} %</Box>
                       </Flex>
                       <Flex justify='space-between' style={{marginBottom:0}}>
-                        <span className='label'>You receive: </span>
-                        <span>{getYouReceiveViewValue()} {selectedCurrency.label}</span>
+                        <Box as='span' className='label' fontWeight='bold'>You receive: </Box>
+                        <Box as='span'>
+                          <VStack spacing={0} align='end'>
+                            <Box fontWeight='bold'>{getYouReceiveViewValue()} {selectedCurrency.label}</Box>
+                            <Box fontSize='sm' fontWeight='bold' className='text-muted'>{valueToUsd(getYouReceiveViewValue(), usdRate)} USD</Box>
+                          </VStack>
+                        </Box>
                       </Flex>
                     </Box>
                   </Flex>
@@ -586,19 +595,18 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                           <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
                         )}
                         <div className="d-flex">
-                          <Button type="legacy"
-                                  onClick={() => setShowConfirmButton(false)}
-                                  disabled={executingCreateListing}
-                                  className="me-2 flex-fill">
+                          <PrimaryButton
+                            onClick={() => setShowConfirmButton(false)}
+                            className="me-2 flex-fill"
+                          >
                             Go Back
-                          </Button>
-                          <Button type="legacy-outlined"
-                                  onClick={handleCreateListing}
-                                  isLoading={executingCreateListing}
-                                  disabled={executingCreateListing}
-                                  className="flex-fill">
+                          </PrimaryButton>
+                          <SecondaryButton
+                            onClick={handleCreateListing}
+                            className="flex-fill"
+                          >
                             I understand, continue
-                          </Button>
+                          </SecondaryButton>
                         </div>
                       </>
                     ) : (
@@ -609,13 +617,15 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                           </div>
                         )}
                         <div className="d-flex">
-                          <Button type="legacy"
-                                  onClick={processCreateListingRequest}
-                                  isLoading={executingCreateListing}
-                                  disabled={executingCreateListing}
-                                  className="flex-fill">
+                          <PrimaryButton
+                            onClick={processCreateListingRequest}
+                            isLoading={executingCreateListing}
+                            isDisabled={executingCreateListing}
+                            loadingText='Confirming'
+                            className="flex-fill"
+                          >
                             {(listing || nft.listed) && !nft.multiToken ? 'Update Listing' : 'Confirm Listing'}
-                          </Button>
+                          </PrimaryButton>
                         </div>
                       </>
                     )}
@@ -626,13 +636,15 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <small>Ebisu's Bay needs approval to transfer this NFT on your behalf once sold</small>
                     </div>
                     <div className="d-flex justify-content-end">
-                      <Button type="legacy"
-                              onClick={handleApproval}
-                              isLoading={executingApproval}
-                              disabled={executingApproval}
-                              className="flex-fill">
+                      <PrimaryButton
+                        onClick={handleApproval}
+                        isLoading={executingApproval}
+                        isDisabled={executingApproval}
+                        loadingText='Approving'
+                        className="flex-fill"
+                      >
                         Approve
-                      </Button>
+                      </PrimaryButton>
                     </div>
                   </>
                 )}

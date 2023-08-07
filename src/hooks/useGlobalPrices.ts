@@ -1,12 +1,17 @@
 import {useQuery} from "@tanstack/react-query";
-import {getPrices, getPrice} from "@src/core/api/endpoints/prices";
+import {getPrice, getPrices, PriceProps} from "@src/core/api/endpoints/prices";
 import {appConfig} from "@src/Config";
+import {useContext, useEffect, useState} from "react";
+import {ciEquals} from "@src/utils";
+import {ExchangePricesContext, ExchangePricesContextProps} from "@src/components-v2/shared/contexts/exchange-prices";
+import {ethers} from "ethers";
 
 const config = appConfig();
 
 export const useGlobalPrices = () => {
   return useQuery(['GlobalPrices'], getPrices, {
-    staleTime: 2
+    staleTime: 2,
+    initialData: []
   })
 };
 
@@ -22,3 +27,24 @@ export const useFortunePrice = (chainId?: number | string) => {
     staleTime: 2
   })
 };
+
+export const useExchangeRate = (token: string, chainId: number = 25) => {
+  const [price, setPrice] = useState<PriceProps>();
+  const [usdRate, setUsdRate] = useState(0);
+  const globalPrices = useContext(ExchangePricesContext) as ExchangePricesContextProps;
+
+  useEffect(() => {
+    const safeToken = token || ethers.constants.AddressZero;
+    const price = globalPrices.prices.find((p) => ciEquals(p.currency, safeToken) && Number(p.chain) === Number(chainId));
+
+    if (price) {
+      setPrice(price);
+      setUsdRate(Number(price.usdPrice));
+    } else {
+      setPrice({usdPrice: '0', chain: chainId, currency: safeToken});
+      setUsdRate(0);
+    }
+  }, [globalPrices, token, chainId]);
+
+  return {price, usdRate}
+}

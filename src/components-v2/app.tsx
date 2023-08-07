@@ -7,14 +7,18 @@ import { getAnalytics } from "@firebase/analytics";
 
 import ScrollToTopBtn from '@src/modules/layout/navbar/ScrollToTop';
 import Header from '@src/components-v2/shared/layout/navbar';
-import firebaseConfig from './Firebase/firebase_config';
-import { initProvider } from './GlobalState/User';
-import { appInitializer } from './GlobalState/InitSlice';
-import { getTheme } from './Theme/theme';
+import firebaseConfig from '../Firebase/firebase_config';
+import { initProvider } from '../GlobalState/User';
+import { appInitializer } from '../GlobalState/InitSlice';
+import { getTheme } from '../Theme/theme';
 import DefaultHead from "@src/components-v2/shared/layout/default-head";
 import {useColorMode} from "@chakra-ui/react";
 import {syncCartStorage} from "@src/GlobalState/cartSlice";
 import Footer from "@src/components-v2/shared/layout/footer";
+import {useAppSelector} from "@src/Store/hooks";
+import {AppProps} from "next/app";
+import {ExchangePricesContext} from "@src/components-v2/shared/contexts/exchange-prices";
+import {useGlobalPrices} from "@src/hooks/useGlobalPrices";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -25,7 +29,7 @@ const GlobalStyles = createGlobalStyle`
     background-blend-mode: multiply;
   }
   .jumbotron.breadcumb.no-bg.tint {
-    background-image: url(${({ isDark }) =>
+    background-image: url(${({ isDark }: {isDark: boolean}) =>
       isDark ? '/img/background/header-dark.webp' : '/img/background/Ebisu-DT-Header.webp'});
     background-repeat: no-repeat;
     background-size: cover;
@@ -34,7 +38,7 @@ const GlobalStyles = createGlobalStyle`
     
   @media only screen and (max-width: 768px) {
     .jumbotron.breadcumb.no-bg.tint {
-      background-image: url(${({ isDark }) =>
+      background-image: url(${({ isDark }: {isDark: boolean}) =>
         isDark ? '/img/background/mobile-header-dark.webp' : '/img/background/Ebisu-Mobile-Header.webp'});
       background-size: cover;
       background-repeat: no-repeat;
@@ -45,11 +49,12 @@ const GlobalStyles = createGlobalStyle`
 
 const firebase = initializeApp(firebaseConfig);
 
-function App({ Component, pageProps }) {
+function App({ Component, ...pageProps }: AppProps) {
   const dispatch = useDispatch();
   const { colorMode } = useColorMode()
+  const exchangePrices = useGlobalPrices();
 
-  const userTheme = useSelector((state) => {
+  const userTheme = useAppSelector((state) => {
     return state.user.theme;
   });
 
@@ -81,21 +86,23 @@ function App({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={getTheme(userTheme)}>
-      <DefaultHead />
-      <div className="wraper">
-        <GlobalStyles isDark={userTheme === 'dark'} />
-        <Header />
-        <div style={{paddingTop:'74px'}}>
-          <Component {...pageProps} />
+      <ExchangePricesContext.Provider value={{prices: exchangePrices.data}}>
+        <DefaultHead />
+        <div className="wraper">
+          <GlobalStyles isDark={userTheme === 'dark'} />
+          <Header />
+          <div style={{paddingTop:'74px'}}>
+            <Component {...pageProps} />
+          </div>
+          <Footer />
+          <ScrollToTopBtn />
+          <ToastContainer
+            position={toast.POSITION.BOTTOM_LEFT}
+            hideProgressBar={true}
+            theme={colorMode}
+          />
         </div>
-        <Footer />
-        <ScrollToTopBtn />
-        <ToastContainer
-          position={toast.POSITION.BOTTOM_LEFT}
-          hideProgressBar={true}
-          theme={colorMode}
-        />
-      </div>
+      </ExchangePricesContext.Provider>
     </ThemeProvider>
   );
 }

@@ -4,7 +4,6 @@ import * as Sentry from '@sentry/react';
 
 import { ErrorPage } from '@src/Components/ErrorPage';
 import store from '../src/Store/store';
-import App from '../src/App';
 import { SentryLoggingService } from '@src/services/sentry-logging.service';
 import { Site24x7LoggingService } from '@src/services/site24x7-logging.service';
 import {
@@ -30,6 +29,7 @@ import customThemeCK from "@src/Theme/themeCK";
 import useFeatureFlag from '@src/hooks/useFeatureFlag';
 import Constants from '@src/constants';
 import {AppProps} from "next/app";
+import App from "@src/components-v2/app";
 
 SentryLoggingService.init();
 Site24x7LoggingService.init();
@@ -48,7 +48,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <Sentry.ErrorBoundary fallback={() => <ErrorPage />}>
           <QueryClientProvider client={queryClient} >
             <ChakraProvider theme={useNewTheme? customThemeCK : customTheme}>
-              <App Component={Component} pageProps={pageProps} />
+              <App Component={Component} {...pageProps} />
             </ChakraProvider>
           </QueryClientProvider>
         </Sentry.ErrorBoundary>

@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import {Contract, ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import {
-  createSuccessfulTransactionToastContent, croToUsd,
+  createSuccessfulTransactionToastContent,
   isGaslessListing,
   isNftBlacklisted,
   isUserBlacklisted,
-  shortAddress, timeSince
+  shortAddress,
+  timeSince,
+  valueToUsd
 } from '@src/utils';
 import {Card, Spinner} from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -17,9 +19,7 @@ import {listingUpdated} from '@src/GlobalState/listingSlice';
 import {listingState} from '@src/core/api/enums';
 import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
 import Button from "@src/Components/components/Button";
-import {useRouter} from "next/router";
 import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listing";
-import Image from "next/image";
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
 import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useCancelGaslessListing';
@@ -30,9 +30,8 @@ import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {TransactionReceipt} from "@ethersproject/abstract-provider";
 import {useAppSelector} from "@src/Store/hooks";
 import ContractService from "@src/core/contractService";
-import {useGlobalPrice} from "@src/hooks/useGlobalPrices";
+import {useExchangeRate} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
-import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 const config = appConfig();
@@ -49,10 +48,8 @@ interface PriceActionBarProps {
 
 const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }: PriceActionBarProps) => {
   const dispatch = useDispatch();
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [runAuthedFunction] = useAuthedFunction();
-  const globalPrice = useGlobalPrice(config.chain.id);
 
   const { Features } = Constants;
   const isWarningMessageEnabled = useFeatureFlag(Features.UNVERIFIED_WARNING);
@@ -64,6 +61,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
   const [isPurchaseDialogOpen, setIsPurchaseDialogOpen] = useState(false);
   const [cancelGaslessListing, responseCancelListing] = useCancelGaslessListing();
+  const { usdRate } = useExchangeRate(listing.currency, config.chain.id);
 
   const executeBuy = async () => {
     await runAuthedFunction(() => setIsPurchaseDialogOpen(true));
@@ -232,8 +230,8 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                         <Text fontSize={28} ms={1} fontWeight='bold'>
                           <span className="ms-1">{ethers.utils.commify(listing.price)}</span>
                         </Text>
-                        {!!globalPrice.data && (
-                          <Box as='span' ms={1} fontSize='sm' className="text-muted">({croToUsd(listing.price, globalPrice.data.usdPrice)})</Box>
+                        {!!listing.currency && usdRate && (
+                          <Box as='span' ms={1} fontSize='sm' className="text-muted">({valueToUsd(listing.price, usdRate)})</Box>
                         )}
                       </Stack>
                     ) : (

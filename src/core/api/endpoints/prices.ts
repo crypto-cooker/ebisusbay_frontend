@@ -5,7 +5,7 @@ import {caseInsensitiveCompare} from "@src/utils";
 const config = appConfig();
 const api = Axios.create(config.urls.api);
 
-interface PriceProps {
+export interface PriceProps {
   usdPrice: string;
   chain: number;
   currency: string;

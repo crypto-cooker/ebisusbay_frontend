@@ -856,6 +856,10 @@ export const croToUsd = (value, rate) => {
   return formatter.format(value * rate);
 }
 
+export const valueToUsd = (value, rate) => {
+  return croToUsd(value, rate);
+}
+
 export const cacheBustingKey = (minutes = 5, date = Date.now()) => {
   const coeff = 1000 * 60 * minutes;
   return Math.round(date / coeff) * coeff;
