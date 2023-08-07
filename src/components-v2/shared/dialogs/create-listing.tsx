@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useState} from 'react';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
@@ -10,7 +10,7 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {createSuccessfulTransactionToastContent, isBundle, isLandDeedsCollection, round, valueToUsd} from "@src/utils";
+import {ciEquals, createSuccessfulTransactionToastContent, isBundle, round, valueToUsd} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -97,10 +97,26 @@ const expirationDatesValues = [
   },
 ]
 
+const currencyImages: {[key: string]: ReactElement} = {
+  'cro': <CronosIconBlue boxSize={6}/>,
+  'frtn': <FortuneIcon boxSize={6}/>,
+};
 const currencyOptions = [
-  { label: 'CRO', symbol: 'cro', image: <CronosIconBlue boxSize={6}/> },
-  { label: 'FRTN', symbol: 'frtn', image: <FortuneIcon boxSize={6}/> }
-];
+  ...config.listings.currencies.available
+    .filter((symbol: string) => config.tokens[symbol.toLowerCase()])
+    .map((symbol: string) => {
+      const token = config.tokens[symbol.toLowerCase()];
+      return {
+        ...token,
+        image: currencyImages[token.symbol.toLowerCase()] || <CronosIconBlue boxSize={6}/>
+      }
+    }),
+  {
+    name: 'CRO',
+    symbol: 'cro',
+    image: currencyImages['cro']
+  }
+]
 
 interface MakeGaslessListingDialogProps {
   isOpen: boolean;
@@ -131,14 +147,14 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
 
   const [showConfirmButton, setShowConfirmButton] = useState(false);
-  const [allowedCurrencies, setAllowedCurrencies] = useState<string[]>(['cro']);
-  const [selectedCurrency, setSelectedCurrency] = useState<any>(currencyOptions.find((option) => option.symbol === allowedCurrencies[0]));
+  const [allowedCurrencies, setAllowedCurrencies] = useState<string[]>([]);
+  const [selectedCurrency, setSelectedCurrency] = useState<any>();
 
   const windowSize = useWindowSize();
 
   const user = useAppSelector((state) => state.user);
   const [upsertGaslessListings, responseUpsert] = useUpsertGaslessListings();
-  const { usdRate } = useExchangeRate(config.tokens[selectedCurrency.symbol.toLowerCase()]?.address);
+  const { usdRate } = useExchangeRate(selectedCurrency?.address);
 
   const isBelowFloorPrice = (price: number) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
@@ -214,10 +230,19 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         setIsTransferApproved(false);
       }
 
-      if (isLandDeedsCollection(nftAddress)) {
-        setAllowedCurrencies(['frtn']);
-        setSelectedCurrency(currencyOptions.find((option) => option.symbol === 'frtn'));
+
+      type CurrencyEntry = {
+        [key: string]: string[];
       }
+
+      const availableCurrencySymbols: CurrencyEntry | undefined = Object.entries(config.listings.currencies.nft)
+        .find(([key]) => ciEquals(key, nftAddress)) as CurrencyEntry | undefined;
+
+      const allowed = currencyOptions.filter(({symbol}: { symbol: string }) => {
+        return availableCurrencySymbols ? availableCurrencySymbols[1].includes(symbol.toLowerCase()) : symbol === 'cro';
+      });
+      setAllowedCurrencies(allowed);
+      setSelectedCurrency(allowed[0]);
 
       setIsLoading(false);
     } catch (error: any) {
@@ -466,15 +491,15 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                             />
                             <Select
                               styles={customStyles}
-                              options={currencyOptions.filter((option) => allowedCurrencies?.includes(option.symbol))}
-                              formatOptionLabel={({ label, image }) => (
+                              options={allowedCurrencies}
+                              formatOptionLabel={({ name, image }) => (
                                 <HStack>
                                   {image}
-                                  <span>{label}</span>
+                                  <span>{name}</span>
                                 </HStack>
                               )}
                               value={selectedCurrency}
-                              defaultValue={currencyOptions.find((option) => option.symbol === allowedCurrencies[0])}
+                              defaultValue={allowedCurrencies[0]}
                               onChange={handleCurrencyChange}
                               isDisabled={showConfirmButton || executingCreateListing}
                             />
@@ -558,7 +583,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                     <Box>
                       <Flex justify='space-between'>
                         <Box as='span'>Total Listing Price: </Box>
-                        <Box as='span'>{totalPrice} {selectedCurrency.label}</Box>
+                        <Box as='span'>{totalPrice} {selectedCurrency.name}</Box>
                       </Flex>
                       <Flex justify='space-between'>
                         <Box as='span'>Floor: </Box>
@@ -572,7 +597,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                         <Box as='span' className='label' fontWeight='bold'>You receive: </Box>
                         <Box as='span'>
                           <VStack spacing={0} align='end'>
-                            <Box fontWeight='bold'>{getYouReceiveViewValue()} {selectedCurrency.label}</Box>
+                            <Box fontWeight='bold'>{getYouReceiveViewValue()} {selectedCurrency.name}</Box>
                             <Box fontSize='sm' fontWeight='bold' className='text-muted'>{valueToUsd(getYouReceiveViewValue(), usdRate)} USD</Box>
                           </VStack>
                         </Box>

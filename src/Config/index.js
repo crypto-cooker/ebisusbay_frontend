@@ -119,6 +119,26 @@ export const configData = {
         '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506', // SeaShrine VIP
         '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C', // Ryoshi Christmas
       ]
+    },
+    listings: {
+      currencies : {
+        available: ['cro', 'frtn'],
+        nft: {
+          '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],
+          '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],
+          '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C': ['frtn'],
+          '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d': ['frtn'],
+          '0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3': ['frtn'],
+          '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5': ['frtn'],
+          '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'],
+          '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],
+          '0xf54abdcba21e7a740f98307a561b605cb3fdcf63': ['cro', 'frtn'],
+          '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506': ['cro', 'frtn'],
+          '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29': ['cro', 'frtn'],
+          '0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab': ['cro', 'frtn'],
+          '0xD961956B319A10CBdF89409C0aE7059788A4DaBb': ['cro', 'frtn']
+        }
+      }
     }
   },
   [environments.development]: {
@@ -228,6 +248,26 @@ export const configData = {
         '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506', // SeaShrine VIP
         '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C', // Ryoshi Christmas
       ]
+    },
+    listings: {
+      currencies : {
+        available: ['cro', 'frtn'],
+        nft: {
+          '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],
+          '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],
+          '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C': ['frtn'],
+          '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d': ['frtn'],
+          '0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3': ['frtn'],
+          '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5': ['frtn'],
+          '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'],
+          '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],
+          '0xf54abdcba21e7a740f98307a561b605cb3fdcf63': ['cro', 'frtn'],
+          '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506': ['cro', 'frtn'],
+          '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29': ['cro', 'frtn'],
+          '0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab': ['cro', 'frtn'],
+          '0xD961956B319A10CBdF89409C0aE7059788A4DaBb': ['cro', 'frtn']
+        }
+      }
     }
   },
   [environments.testnet]: {
@@ -334,6 +374,24 @@ export const configData = {
         '0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9', // SeaShrine VIP
         '0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad', // Ryoshi Christmas
       ]
+    },
+    listings: {
+      currencies : {
+        available: ['cro', 'frtn'],
+        nft: {
+          '0xCF7aedEbC5223c4C620625A560300582B77D8719': ['frtn'],
+          '0xe51377a260043381b8B525D33B9fFBC601A1469b': ['frtn'],
+          '0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad': ['frtn'],
+          '0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5': ['frtn'],
+          '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad': ['frtn'],
+          '0x3F1590A5984C89e6d5831bFB76788F3517Cdf034': ['frtn'],
+          '0x04Bd856E96127f3ef3C45864BeAEe26F5Df5066a': ['frtn'],
+          '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0': ['frtn'],
+          '0xa937e814A2c5e99E9e86c4F34162c4F012F75a52': ['cro', 'frtn'],
+          '0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9': ['cro', 'frtn'],
+          '0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f': ['cro', 'frtn']
+        }
+      }
     }
   },
   [environments.local]: {
@@ -443,6 +501,26 @@ export const configData = {
         '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506', // SeaShrine VIP
         '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C', // Ryoshi Christmas
       ]
+    },
+    listings: {
+      currencies : {
+        available: ['cro', 'frtn'],
+        nft: {
+          '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],
+          '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],
+          '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C': ['frtn'],
+          '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d': ['frtn'],
+          '0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3': ['frtn'],
+          '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5': ['frtn'],
+          '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'],
+          '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],
+          '0xf54abdcba21e7a740f98307a561b605cb3fdcf63': ['cro', 'frtn'],
+          '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506': ['cro', 'frtn'],
+          '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29': ['cro', 'frtn'],
+          '0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab': ['cro', 'frtn'],
+          '0xD961956B319A10CBdF89409C0aE7059788A4DaBb': ['cro', 'frtn']
+        }
+      }
     }
   }
 };
