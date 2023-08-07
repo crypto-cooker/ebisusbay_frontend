@@ -5,7 +5,7 @@ import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Badge, Form, Spinner} from "react-bootstrap";
 import {Contract} from "ethers";
-import Button from "@src/Components/components/Button";
+import Button from "@src/Components/components/common/Button";
 import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
@@ -17,6 +17,7 @@ import {collectionRoyaltyPercent} from "@src/core/chain";
 import {
   Box,
   Button as ChakraButton,
+  ButtonGroup,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -104,14 +105,21 @@ interface MakeGaslessListingDialogProps {
 }
 
 export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing }: MakeGaslessListingDialogProps) {
+
+  // Input states
   const [salePrice, setSalePrice] = useState<number>();
   const [expirationDate, setExpirationDate] = useState({ type: 'dropdown', value: new Date().getTime() + 2592000000 });
-  const [floorPrice, setFloorPrice] = useState(0);
   const [priceError, setPriceError] = useState<string | null>(null);
   const [quantityError, setQuantityError] = useState<string | null>(null);
-  const [royalty, setRoyalty] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState<string>('1');
+  const [priceType, setPriceType] = useState<'each' | 'total'>('each');
+
+  // Derived values
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [perUnitPrice, setPerUnitPrice] = useState<number>(0);
+  const [floorPrice, setFloorPrice] = useState(0);
+  const [royalty, setRoyalty] = useState(0);
 
   const [isTransferApproved, setIsTransferApproved] = useState(false);
   const [executingApproval, setExecutingApproval] = useState(false);
@@ -154,14 +162,13 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     const newSalePrice = Math.round(floorPrice * (1 + percentage));
     setSalePrice(newSalePrice);
 
-    if (isBelowFloorPrice(newSalePrice)) {
+    if (isBelowFloorPrice(perUnitPrice)) {
       setShowConfirmButton(false);
     }
-  }, [executingCreateListing, showConfirmButton, floorPrice, setSalePrice, isBelowFloorPrice]);
+  }, [executingCreateListing, showConfirmButton, floorPrice, setSalePrice, isBelowFloorPrice, perUnitPrice]);
 
   const getYouReceiveViewValue = () => {
-    const qty = quantity ? Number(quantity) : 1;
-    return round(salePrice ? (salePrice - (salePrice * (royalty / 100))) * qty : 0, 2);
+    return round(totalPrice * (1 + (royalty / 100)));
   };
 
   useEffect(() => {
@@ -246,7 +253,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       const res = await upsertGaslessListings({
         collectionAddress: nftAddress,
         tokenId: nftId,
-        price: salePrice!,
+        price: totalPrice,
         amount: Number(quantity),
         expirationDate: expirationDate.value,
         is1155: nft.multiToken,
@@ -266,7 +273,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const processCreateListingRequest = async (e: ChangeEvent<HTMLButtonElement>) => {
     if (!validateInput()) return;
 
-    if (isBelowFloorPrice(salePrice!)) {
+    if (isBelowFloorPrice(perUnitPrice)) {
       setShowConfirmButton(true);
     } else {
       await handleCreateListing(e)
@@ -338,7 +345,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       ...base,
       background: getTheme(userTheme).colors.bgColor2,
       color: getTheme(userTheme).colors.textColor3,
-      padding: 2,
+      padding: 1,
       minWidth: '132px',
       borderColor: 'none'
     }),
@@ -347,6 +354,18 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const handleCurrencyChange = useCallback((currency: { symbol: string }) => {
     setSelectedCurrency(currency);
   }, [selectedCurrency]);
+
+  useEffect(() => {
+    const safeSalePrice = Number(salePrice ?? 0);
+    const safeQuantity = quantity ? Number(quantity) : 1;
+    if (priceType === 'each') {
+      setTotalPrice(safeSalePrice * safeQuantity);
+      setPerUnitPrice(safeSalePrice);
+    } else {
+      setTotalPrice(safeSalePrice);
+      setPerUnitPrice(safeSalePrice / safeQuantity);
+    }
+  }, [salePrice, quantity, priceType]);
 
   if (!nft) return <></>;
 
@@ -398,23 +417,41 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <FormControl isInvalid={!!priceError}>
                         <FormLabel className='formLabel' me={0} mb={1}>
                           <Flex justify='space-between' alignItems='center'>
-                            <Box>
-                              {nft.balance > 1 ? 'Listing Price (each)' : 'Listing Price'}
-                            </Box>
-                            <Box>
-                              <Badge
-                                pill
-                                bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                                text={user.theme === 'dark' ? 'dark' : 'light'}
-                                className="ms-2"
-                              >
-                                Floor: {floorPrice} {selectedCurrency.label}
-                              </Badge>
-                            </Box>
+                            {nft.balance > 1 ? (
+                              <>
+                                <Box>
+                                  Listing Price ({priceType})
+                                </Box>
+                                <ButtonGroup size='xs' isAttached variant='outline'>
+                                  <ChakraButton
+                                    isActive={priceType === 'each'}
+                                    onClick={() => setPriceType('each')}
+                                    _active={{
+                                      bg: getTheme(userTheme).colors.textColor4,
+                                      color: 'light'
+                                    }}
+                                  >
+                                    Each
+                                  </ChakraButton>
+                                  <ChakraButton
+                                    isActive={priceType === 'total'}
+                                    onClick={() => setPriceType('total')}
+                                    _active={{
+                                      bg: getTheme(userTheme).colors.textColor4,
+                                      color: 'light'
+                                    }}
+                                  >
+                                    Total
+                                  </ChakraButton>
+                                </ButtonGroup>
+                              </>
+                            ) : (
+                              <Box>Listing Price</Box>
+                            )}
                           </Flex>
                         </FormLabel>
                         <InputGroup>
-                          <Stack direction='row'>
+                          <Stack direction='row' w='full'>
                             <Input
                               placeholder="Enter Amount"
                               type="numeric"
@@ -475,7 +512,6 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                           </div>
                         </Form.Label>
                         <div style={{ display: 'flex', gap: '8px' }}>
-
                           {expirationDate.type === 'dropdown' ? (
                             <>
                               <Form.Select
@@ -501,29 +537,36 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                             </>
                           )}
                           <Form.Control
-                            style={{ maxWidth: '38px', visibility: expirationDate.type === 'dropdown' ? 'visible' : 'hidden', position: expirationDate.type === 'dropdown' ? 'relative' : 'absolute' }}
+                            style={{
+                              maxWidth: '38px',
+                              visibility: expirationDate.type === 'dropdown' ? 'visible' : 'hidden',
+                              position: expirationDate.type === 'dropdown' ? 'relative' : 'absolute'
+                            }}
                             className="input"
                             type="datetime-local"
                             onChange={handleExpirationDateChange}
-
                           />
 
                         </div>
                       </Form.Group>
                     </Box>
                     <Box>
-                      <div className="fee">
+                      <Flex justify='space-between'>
                         <span>Total Listing Price: </span>
-                        <span>{Number(salePrice ?? 0) * (quantity ? Number(quantity) : 1)} {selectedCurrency.label}</span>
-                      </div>
-                      <div className="fee">
+                        <span>{totalPrice} {selectedCurrency.label}</span>
+                      </Flex>
+                      <Flex justify='space-between'>
+                        <span>Floor: </span>
+                        <span>{floorPrice} CRO</span>
+                      </Flex>
+                      <Flex justify='space-between'>
                         <span>Royalty Fee: </span>
                         <span>{royalty} %</span>
-                      </div>
-                      <div className="fee" style={{marginBottom:0}}>
+                      </Flex>
+                      <Flex justify='space-between' style={{marginBottom:0}}>
                         <span className='label'>You receive: </span>
                         <span>{getYouReceiveViewValue()} {selectedCurrency.label}</span>
-                      </div>
+                      </Flex>
                     </Box>
                   </Flex>
                 </div>

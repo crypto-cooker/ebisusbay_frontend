@@ -8,6 +8,7 @@ export interface UserBatchItem {
   price?: number;
   expiration?: number;
   currency?: string;
+  priceType: 'each' | 'total';
 }
 
 export interface UserBatchExtras {
@@ -41,7 +42,7 @@ const batchListingSlice = createSlice({
     addToBatchListingCart: (state, action) => {
       const nftToAdd = action.payload;
       if (!state.items.some((o) => caseInsensitiveCompare(o.nft.nftAddress, nftToAdd.nftAddress) && o.nft.nftId === nftToAdd.nftId)) {
-        state.items.push({nft: nftToAdd, price: undefined, quantity: 1, expiration: 2592000000, currency: 'cro'});
+        state.items.push({nft: nftToAdd, price: undefined, quantity: 1, expiration: 2592000000, currency: 'cro', priceType: 'each'});
       }
 
       if (state.items.length === 1) {
@@ -115,6 +116,16 @@ const batchListingSlice = createSlice({
       if (foundIndex >= 0) {
         const nft = state.items[foundIndex]
         nft.currency = currency;
+        state.items[foundIndex] = nft;
+      }
+    },
+    updatePriceType: (state, action) => {
+      const itemToModify = action.payload.nft;
+      const priceType = action.payload.priceType;
+      const foundIndex = state.items.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
+      if (foundIndex >= 0) {
+        const nft = state.items[foundIndex]
+        nft.priceType = priceType;
         state.items[foundIndex] = nft;
       }
     },
@@ -243,6 +254,7 @@ export const {
   updateExpiration,
   update1155Quantity,
   updateCurrency,
+  updatePriceType,
   cascadePrices,
   cascadePricesPercent,
   applyPriceToAll,

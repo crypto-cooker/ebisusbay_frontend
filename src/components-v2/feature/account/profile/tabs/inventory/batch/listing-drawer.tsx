@@ -203,7 +203,7 @@ export const ListingDrawer = () => {
     await upsertGaslessListings(items.map((item) => ({
       collectionAddress: item.nft.nftAddress,
       tokenId: item.nft.nftId,
-      price: item.price!,
+      price: item.priceType === 'each' ? item.price! * item.quantity : item.price!,
       amount: item.quantity,
       expirationDate: new Date().getTime() + item.expiration!,
       is1155: item.nft.multiToken,
@@ -256,7 +256,8 @@ export const ListingDrawer = () => {
       let floorWarning = false;
       const nftPrices = batchListingCart.items.map((o) => {
         const floorPriceObj = nftFloorPrices.find((fp) => caseInsensitiveCompare(fp.address, o.nft.nftAddress));
-        const isBelowFloor = !!floorPriceObj?.floorPrice && (floorPriceObj.floorPrice !== 0 && ((floorPriceObj.floorPrice - Number(o.price)) / floorPriceObj.floorPrice) * 100 > floorThreshold);
+        const perUnitPrice = o.priceType === 'each' ? Number(o.price) : Number(o.price) / o.quantity;
+        const isBelowFloor = !!floorPriceObj?.floorPrice && (floorPriceObj.floorPrice !== 0 && ((floorPriceObj.floorPrice - perUnitPrice) / floorPriceObj.floorPrice) * 100 > floorThreshold);
         if (isBelowFloor) {
           floorWarning = true;
         }

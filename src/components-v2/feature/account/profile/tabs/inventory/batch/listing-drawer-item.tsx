@@ -34,6 +34,7 @@ import {
   updateCurrency,
   updateExpiration,
   updatePrice,
+  updatePriceType,
   UserBatchExtras,
   UserBatchItem
 } from "@src/GlobalState/user-batch";
@@ -127,6 +128,11 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
   const [invalid, setInvalid] = useState<string | boolean>(false);
   const [quantity, setQuantity] = useState('1');
   const [currency, setCurrency] = useState('cro');
+  const [priceType, setPriceType] = useState<'each' | 'total'>('each');
+
+  // Derived values
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [perUnitPrice, setPerUnitPrice] = useState<number>(0);
 
   // Approvals
   const extras = useAppSelector((state) => state.batchListing.extras[item.nft.nftAddress.toLowerCase()] ?? {});
@@ -182,6 +188,10 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
     }
   }, [dispatch, item.nft, currency, extras]);
 
+  const handlePriceTypeChange = useCallback((newPriceType: 'total' | 'each') => {
+    dispatch(updatePriceType({ nft: item.nft, priceType: newPriceType }));
+  }, [dispatch, item.nft, priceType]);
+
   useEffect(() => {
     setPrice(item.price?.toString() ?? '');
   }, [item.price]);
@@ -201,6 +211,10 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
       setCurrency(item.currency);
     }
   }, [item.currency]);
+
+  useEffect(() => {
+    setPriceType(item.priceType);
+  }, [item.priceType]);
 
   const checkApproval = async () => {
     const contract = new Contract(item.nft.nftAddress, ERC721, user.provider.getSigner());
@@ -254,6 +268,18 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
     }
     func();
   }, []);
+
+  useEffect(() => {
+    const safePrice = Number(price ?? 0);
+    const safeQuantity = quantity ? Number(quantity) : 1;
+    if (priceType === 'each') {
+      setTotalPrice(safePrice * safeQuantity);
+      setPerUnitPrice(safePrice);
+    } else {
+      setTotalPrice(safePrice);
+      setPerUnitPrice(safePrice / safeQuantity);
+    }
+  }, [price, quantity, priceType]);
 
   return (
     <Box
@@ -347,7 +373,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                         <FormErrorMessage fontSize='xs' mt={1}>Select a valid expiration.</FormErrorMessage>
                       </FormControl>
                       <Box fontSize='xs' mt={1}>
-                        Price {item.nft.balance && item.nft.balance > 1 && <>(each)</>}
+                        Price {item.nft.balance && item.nft.balance > 1 && <>({priceType})</>}
                       </Box>
                       <FormControl isInvalid={invalid === 'price'}>
                         <Stack direction="row">
@@ -360,7 +386,12 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                             disabled={disabled}
                           />
                           {!!extras.availableCurrencies ? (
-                            <Select value={currency} size='xs' isDisabled={extras.availableCurrencies.length < 2}>
+                            <Select
+                              value={currency}
+                              size='xs'
+                              isDisabled={extras.availableCurrencies.length < 2}
+                              onChange={handleCurrencyChange}
+                            >
                               {extras.availableCurrencies?.map((c: any) => (
                                 <option key={c} value={c.symbol}>{c.label}</option>
                               ))}
@@ -409,6 +440,9 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
               <MenuItem onClick={() => onApplyAllSelected(Number(price), Number(expirationDate))}>Apply values to all</MenuItem>
               <MenuItem onClick={() => onCascadePriceSelected(item, Number(price))}>Cascade price</MenuItem>
               <MenuItem onClick={() => onAddCollection(item.nft.nftAddress)}>Add entire collection</MenuItem>
+              {item.nft.balance && item.nft.balance > 1 && (
+                <MenuItem onClick={() => handlePriceTypeChange(priceType === 'each' ? 'total' : 'each')}>Toggle price type</MenuItem>
+              )}
               <MenuItem onClick={handleRemoveItem}>Remove</MenuItem>
             </MenuList>
           </Menu>
