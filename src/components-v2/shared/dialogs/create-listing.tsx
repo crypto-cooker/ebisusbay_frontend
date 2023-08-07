@@ -3,23 +3,28 @@ import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Badge, Form, Spinner} from "react-bootstrap";
+import {Badge, Form} from "react-bootstrap";
 import {Contract} from "ethers";
-import Button from "@src/Components/components/Button";
+import Button from "@src/Components/components/common/Button";
 import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {createSuccessfulTransactionToastContent, isBundle, round} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle, isLandDeedsCollection, round} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {
   Box,
   Button as ChakraButton,
+  ButtonGroup, Center,
   Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
   HStack,
   Input,
+  InputGroup,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -27,6 +32,8 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spinner,
+  Stack,
   useNumberInput
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
@@ -36,6 +43,9 @@ import moment from 'moment';
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useAppSelector} from "@src/Store/hooks";
+import Select from "react-select";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -83,6 +93,11 @@ const expirationDatesValues = [
   },
 ]
 
+const currencyOptions = [
+  { label: 'CRO', symbol: 'cro', image: <CronosIconBlue boxSize={6}/> },
+  { label: 'FRTN', symbol: 'frtn', image: <FortuneIcon boxSize={6}/> }
+];
+
 interface MakeGaslessListingDialogProps {
   isOpen: boolean;
   nft: any;
@@ -91,22 +106,29 @@ interface MakeGaslessListingDialogProps {
 }
 
 export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing }: MakeGaslessListingDialogProps) {
-  console.log('NFT', nft);
 
+  // Input states
   const [salePrice, setSalePrice] = useState<number>();
   const [expirationDate, setExpirationDate] = useState({ type: 'dropdown', value: new Date().getTime() + 2592000000 });
-  const [floorPrice, setFloorPrice] = useState(0);
   const [priceError, setPriceError] = useState<string | null>(null);
   const [quantityError, setQuantityError] = useState<string | null>(null);
-  const [royalty, setRoyalty] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState<string>('1');
+  const [priceType, setPriceType] = useState<'each' | 'total'>('each');
+
+  // Derived values
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [perUnitPrice, setPerUnitPrice] = useState<number>(0);
+  const [floorPrice, setFloorPrice] = useState(0);
+  const [royalty, setRoyalty] = useState(0);
 
   const [isTransferApproved, setIsTransferApproved] = useState(false);
   const [executingApproval, setExecutingApproval] = useState(false);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
 
   const [showConfirmButton, setShowConfirmButton] = useState(false);
+  const [allowedCurrencies, setAllowedCurrencies] = useState<string[]>(['cro']);
+  const [selectedCurrency, setSelectedCurrency] = useState<any>(currencyOptions.find((option) => option.symbol === allowedCurrencies[0]));
 
   const windowSize = useWindowSize();
 
@@ -141,14 +163,13 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     const newSalePrice = Math.round(floorPrice * (1 + percentage));
     setSalePrice(newSalePrice);
 
-    if (isBelowFloorPrice(newSalePrice)) {
+    if (isBelowFloorPrice(perUnitPrice)) {
       setShowConfirmButton(false);
     }
-  }, [executingCreateListing, showConfirmButton, floorPrice, setSalePrice, isBelowFloorPrice]);
+  }, [executingCreateListing, showConfirmButton, floorPrice, setSalePrice, isBelowFloorPrice, perUnitPrice]);
 
   const getYouReceiveViewValue = () => {
-    const qty = quantity ? Number(quantity) : 1;
-    return round(salePrice ? (salePrice - (salePrice * (royalty / 100))) * qty : 0, 2);
+    return round(totalPrice * (1 + (royalty / 100)));
   };
 
   useEffect(() => {
@@ -173,7 +194,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       if (collectionInfo.collections.length > 0) {
         const stats = collectionInfo.collections[0].stats;
         let floor = stats.total.floorPrice;
-        setFloorPrice(floor);
+        setFloorPrice(floor ? round(floor) : 0);
       }
 
       const royalties = await collectionRoyaltyPercent(nftAddress, nftId);
@@ -186,6 +207,11 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         setIsTransferApproved(true);
       } else {
         setIsTransferApproved(false);
+      }
+
+      if (isLandDeedsCollection(nftAddress)) {
+        setAllowedCurrencies(['frtn']);
+        setSelectedCurrency(currencyOptions.find((option) => option.symbol === 'frtn'));
       }
 
       setIsLoading(false);
@@ -228,10 +254,11 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       const res = await upsertGaslessListings({
         collectionAddress: nftAddress,
         tokenId: nftId,
-        price: salePrice!,
+        price: totalPrice,
         amount: Number(quantity),
         expirationDate: expirationDate.value,
-        is1155: nft.multiToken
+        is1155: nft.multiToken,
+        currencySymbol: selectedCurrency.symbol,
       });
       toast.success("Listing Successful");
 
@@ -247,7 +274,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const processCreateListingRequest = async (e: ChangeEvent<HTMLButtonElement>) => {
     if (!validateInput()) return;
 
-    if (isBelowFloorPrice(salePrice!)) {
+    if (isBelowFloorPrice(perUnitPrice)) {
       setShowConfirmButton(true);
     } else {
       await handleCreateListing(e)
@@ -289,6 +316,58 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const dec = getDecrementButtonProps()
   const input = getInputProps()
 
+  const userTheme = useAppSelector((state) => state.user.theme);
+  const customStyles = {
+    option: (base: any, state: any) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
+      borderRadius: state.isFocused ? '0' : 0,
+      '&:hover': {
+        background: '#eee',
+        color: '#000',
+      },
+    }),
+    menu: (base: any) => ({
+      ...base,
+      borderRadius: 0,
+      marginTop: 0,
+    }),
+    menuList: (base: any) => ({
+      ...base,
+      padding: 0,
+    }),
+    singleValue: (base: any, state: any) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3
+    }),
+    control: (base: any, state: any) => ({
+      ...base,
+      background: getTheme(userTheme).colors.bgColor2,
+      color: getTheme(userTheme).colors.textColor3,
+      padding: 1,
+      minWidth: '132px',
+      borderColor: 'none'
+    }),
+  };
+
+  const handleCurrencyChange = useCallback((currency: { symbol: string }) => {
+    setSelectedCurrency(currency);
+  }, [selectedCurrency]);
+
+  useEffect(() => {
+    const safeSalePrice = Number(salePrice ?? 0);
+    const safeQuantity = quantity ? Number(quantity) : 1;
+    if (priceType === 'each') {
+      setTotalPrice(safeSalePrice * safeQuantity);
+      setPerUnitPrice(safeSalePrice);
+    } else {
+      setTotalPrice(safeSalePrice);
+      setPerUnitPrice(safeSalePrice / safeQuantity);
+    }
+  }, [salePrice, quantity, priceType]);
+
   if (!nft) return <></>;
 
   return (
@@ -296,7 +375,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
-          {listing || nft.listed ? 'Update' : 'Sell'} {nft.name}
+          {(listing || nft.listed) && !nft.multiToken ? 'Update' : 'Sell'} {nft.name}
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
         {!isLoading ? (
@@ -336,34 +415,69 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                         </Form.Group>
                       )}
 
-                      <Form.Group className="form-field">
-                        <Form.Label className="formLabel w-100">
-                          <div className="d-flex">
-                            <div className="flex-grow-1">{nft.balance > 1 ? 'Listing Price (each)' : 'Listing Price'}</div>
-                            <div className="my-auto">
-                              <Badge
-                                pill
-                                bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                                text={user.theme === 'dark' ? 'dark' : 'light'}
-                                className="ms-2"
-                              >
-                                Floor: {floorPrice} CRO
-                              </Badge>
-                            </div>
-                          </div>
-                        </Form.Label>
-                        <Form.Control
-                          className="input"
-                          type="number"
-                          placeholder="Enter Amount"
-                          value={salePrice}
-                          onChange={costOnChange}
-                          disabled={showConfirmButton || executingCreateListing}
-                        />
-                        <Form.Text className="field-description textError">
-                          {priceError}
-                        </Form.Text>
-                      </Form.Group>
+                      <FormControl isInvalid={!!priceError}>
+                        <FormLabel className='formLabel' me={0} mb={1}>
+                          <Flex justify='space-between' alignItems='center'>
+                            {nft.balance > 1 ? (
+                              <>
+                                <Box>
+                                  Listing Price ({priceType})
+                                </Box>
+                                <ButtonGroup size='xs' isAttached variant='outline'>
+                                  <ChakraButton
+                                    isActive={priceType === 'each'}
+                                    onClick={() => setPriceType('each')}
+                                    _active={{
+                                      bg: getTheme(userTheme).colors.textColor4,
+                                      color: 'light'
+                                    }}
+                                  >
+                                    Each
+                                  </ChakraButton>
+                                  <ChakraButton
+                                    isActive={priceType === 'total'}
+                                    onClick={() => setPriceType('total')}
+                                    _active={{
+                                      bg: getTheme(userTheme).colors.textColor4,
+                                      color: 'light'
+                                    }}
+                                  >
+                                    Total
+                                  </ChakraButton>
+                                </ButtonGroup>
+                              </>
+                            ) : (
+                              <Box>Listing Price</Box>
+                            )}
+                          </Flex>
+                        </FormLabel>
+                        <InputGroup>
+                          <Stack direction='row' w='full'>
+                            <Input
+                              placeholder="Enter Amount"
+                              type="numeric"
+                              value={salePrice}
+                              onChange={costOnChange}
+                              disabled={showConfirmButton || executingCreateListing}
+                            />
+                            <Select
+                              styles={customStyles}
+                              options={currencyOptions.filter((option) => allowedCurrencies?.includes(option.symbol))}
+                              formatOptionLabel={({ label, image }) => (
+                                <HStack>
+                                  {image}
+                                  <span>{label}</span>
+                                </HStack>
+                              )}
+                              value={selectedCurrency}
+                              defaultValue={currencyOptions.find((option) => option.symbol === allowedCurrencies[0])}
+                              onChange={handleCurrencyChange}
+                              isDisabled={showConfirmButton || executingCreateListing}
+                            />
+                          </Stack>
+                        </InputGroup>
+                        <FormErrorMessage fontSize='xs' mt={1}>{priceError}</FormErrorMessage>
+                      </FormControl>
 
                       <div className="d-flex flex-wrap justify-content-between mb-3">
                         {windowSize.width && windowSize.width > 377 && (
@@ -399,7 +513,6 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                           </div>
                         </Form.Label>
                         <div style={{ display: 'flex', gap: '8px' }}>
-
                           {expirationDate.type === 'dropdown' ? (
                             <>
                               <Form.Select
@@ -425,29 +538,36 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                             </>
                           )}
                           <Form.Control
-                            style={{ maxWidth: '38px', visibility: expirationDate.type === 'dropdown' ? 'visible' : 'hidden', position: expirationDate.type === 'dropdown' ? 'relative' : 'absolute' }}
+                            style={{
+                              maxWidth: '38px',
+                              visibility: expirationDate.type === 'dropdown' ? 'visible' : 'hidden',
+                              position: expirationDate.type === 'dropdown' ? 'relative' : 'absolute'
+                            }}
                             className="input"
                             type="datetime-local"
                             onChange={handleExpirationDateChange}
-
                           />
 
                         </div>
                       </Form.Group>
                     </Box>
                     <Box>
-                      <div className="fee">
+                      <Flex justify='space-between'>
                         <span>Total Listing Price: </span>
-                        <span>{Number(salePrice ?? 0) * (quantity ? Number(quantity) : 1)} CRO</span>
-                      </div>
-                      <div className="fee">
+                        <span>{totalPrice} {selectedCurrency.label}</span>
+                      </Flex>
+                      <Flex justify='space-between'>
+                        <span>Floor: </span>
+                        <span>{floorPrice} CRO</span>
+                      </Flex>
+                      <Flex justify='space-between'>
                         <span>Royalty Fee: </span>
                         <span>{royalty} %</span>
-                      </div>
-                      <div className="fee" style={{marginBottom:0}}>
+                      </Flex>
+                      <Flex justify='space-between' style={{marginBottom:0}}>
                         <span className='label'>You receive: </span>
-                        <span>{getYouReceiveViewValue()} CRO</span>
-                      </div>
+                        <span>{getYouReceiveViewValue()} {selectedCurrency.label}</span>
+                      </Flex>
                     </Box>
                   </Flex>
                 </div>
@@ -494,7 +614,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                                   isLoading={executingCreateListing}
                                   disabled={executingCreateListing}
                                   className="flex-fill">
-                            {listing || nft.listed? 'Update Listing' : 'Confirm Listing'}
+                            {(listing || nft.listed) && !nft.multiToken ? 'Update Listing' : 'Confirm Listing'}
                           </Button>
                         </div>
                       </>
@@ -521,9 +641,9 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
           </>
         ) : (
           <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Center>
+              <Spinner />
+            </Center>
           </EmptyData>
         )}
       </ModalContent>

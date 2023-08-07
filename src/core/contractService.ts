@@ -1,4 +1,4 @@
-import {Contract} from "ethers";
+import {Contract, Signer} from "ethers";
 import Market from "@src/Contracts/Marketplace.json";
 import {appConfig} from "@src/Config";
 import Auction from "@src/Contracts/DegenAuction.json";
@@ -9,13 +9,25 @@ import gaslessListingContract from "@src/Contracts/GaslessListing.json";
 import gdcAbi from "@src/Contracts/GDC.json";
 import PlatformRewards from "@src/Contracts/PlatformRewards.json";
 import PresaleVaults from "@src/Contracts/PresaleVaults.json";
+import {ERC20} from "@src/Contracts/Abis";
 
 const config = appConfig();
 
 class UserContractService {
-  signer = null;
+  private signer: Signer;
+  private erc20Tokens: { [key: string]: Contract } = {};
 
-  constructor(signer) {
+  private _market?: Contract;
+  private _auction?: Contract;
+  private _offer?: Contract;
+  private _staking?: Contract;
+  private _membership?: Contract;
+  private _ship?: Contract;
+  private _gdc?: Contract;
+  private _ryoshiPlatformRewards?: Contract;
+  private _ryoshiPresaleVaults?: Contract;
+
+  constructor(signer: Signer) {
     this.signer = signer;
   }
 
@@ -80,6 +92,13 @@ class UserContractService {
       this._ryoshiPresaleVaults = new Contract(config.contracts.presaleVaults, PresaleVaults, this.signer)
     }
     return this._ryoshiPresaleVaults;
+  }
+
+  public erc20(address: string) {
+    if (!this.erc20Tokens[address]) {
+      this.erc20Tokens[address] = new Contract(address, ERC20, this.signer)
+    }
+    return this.erc20Tokens[address];
   }
 }
 //

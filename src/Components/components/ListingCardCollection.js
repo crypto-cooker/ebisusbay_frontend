@@ -133,7 +133,8 @@ const ListingCardCollection = ({ listing, imgClass = 'marketplace', watermark })
       address: listing.nftAddress,
       id: listing.nftId,
       rank: listing.nft.rank,
-      amount: listing.amount
+      amount: listing.amount,
+      currency: listing.currency
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };

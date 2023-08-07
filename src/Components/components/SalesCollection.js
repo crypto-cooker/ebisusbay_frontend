@@ -4,7 +4,7 @@ import {fetchListings, filterListings, init, searchListings, sortListings} from 
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {Spinner, Table} from 'react-bootstrap';
 import {SortOption} from '../Models/sort-option.model';
-import {debounce, isBundle, shortAddress, timeSince} from '@src/utils';
+import {debounce, isBundle, knownErc20Token, shortAddress, timeSince} from '@src/utils';
 import Link from 'next/link';
 import {ethers} from 'ethers';
 import TopFilterBar from './TopFilterBar';
@@ -209,7 +209,7 @@ const SalesCollection = ({
                     </Link>
                   </th>
                   <td>{listing.nft.rank ?? '-'}</td>
-                  <td style={{ minWidth: '100px' }}>{ethers.utils.commify(Math.round(listing.price))} CRO</td>
+                  <td style={{ minWidth: '100px' }}>{ethers.utils.commify(Math.round(listing.price))} {knownErc20Token(listing.currency)?.symbol ?? 'CRO'}</td>
                   <td>
                     <Link href={`/account/${listing.seller}`}>
                       {shortAddress(listing.seller)}

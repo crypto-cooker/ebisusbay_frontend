@@ -30,7 +30,6 @@ import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
 import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {commify} from "ethers/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
 import {Listing, OwnerListing} from "@src/core/models/listing";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
@@ -41,7 +40,7 @@ import {
 } from "@src/components-v2/feature/account/profile/tabs/listings/context";
 import {WarningIcon} from "@chakra-ui/icons";
 import {specialImageTransform} from "@src/hacks";
-import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 interface ResponsiveListingsTableProps {
   data: InfiniteData<IPaginatedList<OwnerListing>>;
@@ -183,7 +182,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
                   </Td>
                   <Td>
                     <HStack spacing={1}>
-                      <CronosIconBlue boxSize={4} />
+                      <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
                       <Box>{commify(listing.price)}</Box>
                     </HStack>
                   </Td>
@@ -298,7 +297,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}:
                   </Box>
                   <Box ms={2}>
                     <HStack spacing={1} h="full" fontSize='sm'>
-                      <CronosIconBlue boxSize={4} />
+                      <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
                       <Box>{commify(listing.price)}</Box>
                     </HStack>
                   </Box>

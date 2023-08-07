@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import {MyListingsCollectionPageActions, MyNftPageActions,} from '@src/GlobalState/User';
 import {Form, Spinner} from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import MakeListingDialog from "@src/Components/MakeListing";
+import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listing";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import ResponsiveListingsTable from "@src/components-v2/shared/responsive-table/responsive-listings-table";
 import {
@@ -291,7 +291,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
 
       <MyNftCancelDialog/>
       {user.myNftPageListDialog?.nft && (
-        <MakeListingDialog
+        <CreateListingDialog
           isOpen={!!user.myNftPageListDialog?.nft}
           nft={user.myNftPageListDialog?.nft}
           onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}

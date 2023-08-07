@@ -9,7 +9,7 @@ import {MyNftPageActions} from "@src/GlobalState/User";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {useInfiniteQuery} from "@tanstack/react-query";
-import MakeListingDialog from "@src/Components/MakeListing";
+import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listing";
 import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter, faLayerGroup, faMagnifyingGlass, faSort} from "@fortawesome/free-solid-svg-icons";
@@ -212,10 +212,10 @@ export default function Inventory({ address }: InventoryProps) {
                         <MyNftCard
                           nft={nft}
                           canTransfer={nft.canTransfer}
-                          canSell={nft.listable && !nft.listed && nft.canSell}
+                          canSell={nft.listable && (!nft.listed || nft.multiToken) && nft.canSell}
                           isStaked={nft.isStaked}
                           canCancel={nft.listed && !!nft.listingId}
-                          canUpdate={nft.listable && nft.listed}
+                          canUpdate={nft.listable && nft.listed && !nft.multiToken}
                           onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
                           onSellButtonPressed={() => {
                             dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
@@ -449,7 +449,7 @@ export default function Inventory({ address }: InventoryProps) {
         />
       )}
       {user.myNftPageListDialog?.nft && (
-        <MakeListingDialog
+        <CreateListingDialog
           isOpen={!!user.myNftPageListDialog?.nft}
           nft={user.myNftPageListDialog?.nft}
           onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}

@@ -1,20 +1,21 @@
 import {useState} from 'react';
-import {ContractReceipt, ethers} from "ethers";
+import {constants, ContractReceipt, ethers} from "ethers";
 import {toast} from 'react-toastify';
-
-import {getAuthSignerInStorage} from '@src/helpers/storage';
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner';
-import {useSelector} from "react-redux";
 import {getServerSignature} from '@src/core/cms/endpoints/gaslessListing';
 import {pluralize} from "@src/utils";
 import {useAppSelector} from "@src/Store/hooks";
-import ContractService from "@src/core/contractService";
 
 type ResponseProps = {
   loading: boolean;
   error?: any;
   tx?: ContractReceipt;
 };
+
+interface PendingGaslessPurchase {
+  listingId: string;
+  price: number;
+  currency: string;
+}
 
 const useBuyGaslessListings = () => {
   const [response, setResponse] = useState<ResponseProps>({
@@ -25,7 +26,7 @@ const useBuyGaslessListings = () => {
 
   const {contractService, address} = useAppSelector((state) => state.user);
 
-  const buyGaslessListings = async (listingIds: string[], cartPrice: number | string) => {
+  const buyGaslessListings = async (pendingPurchases: PendingGaslessPurchase[]) => {
     setResponse({
       ...response,
       loading: true,
@@ -34,15 +35,31 @@ const useBuyGaslessListings = () => {
     });
 
     try {
-      const buyContract = (contractService! as ContractService).ship;
-      const price = ethers.utils.parseEther(`${cartPrice}`);
+      const buyContract = contractService!.ship;
+      const croTotal = pendingPurchases
+        .filter((purchase) => !purchase.currency || purchase.currency === ethers.constants.AddressZero)
+        .reduce((acc, curr) => acc + curr.price, 0);
+      const price = ethers.utils.parseEther(`${croTotal}`);
 
-      const { data: serverSig } = await getServerSignature((address! as string), listingIds);
+      const approvedTokens: string[] = [];
+      for (const purchase of pendingPurchases) {
+        if (purchase.currency && purchase.currency !== ethers.constants.AddressZero && !approvedTokens.includes(purchase.currency)) {
+          const tokenContract = contractService!.erc20(purchase.currency);
+          const allowance = await tokenContract.allowance(address!, contractService!.market.address);
+          if (allowance.lt(1)) {
+            const tx = await tokenContract.approve(contractService!.market.address, constants.MaxUint256);
+            await tx.wait();
+          }
+          approvedTokens.push(purchase.currency);
+        }
+      }
+
+      const { data: serverSig } = await getServerSignature((address! as string), pendingPurchases.map((purchase) => purchase.listingId));
       const { signature, orderData, ...sigData } = serverSig;
       const total = price.add(sigData.feeAmount);
       const tx = await buyContract.fillOrders(orderData, sigData, signature, { value: total });
       const receipt = await tx.wait()
-      toast.success(`${pluralize(listingIds.length, 'NFT')} successfully purchased`);
+      toast.success(`${pluralize(pendingPurchases.length, 'NFT')} successfully purchased`);
 
       setResponse({
         ...response,

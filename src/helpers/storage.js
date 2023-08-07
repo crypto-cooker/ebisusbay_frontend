@@ -33,11 +33,11 @@ export const getCartInStorage = () => {
   return [];
 };
 
-export const addToCartInStorage = (listingId, {name, image, price, address, id, rank, amount = 1}) => {
+export const addToCartInStorage = (listingId, {name, image, price, address, id, rank, amount = 1, currency}) => {
   let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);
   const cart = storage ? JSON.parse(storage) : [];
   if (!cart.some((o) => o.listingId === listingId)) {
-    cart.push({listingId, name, image, price, address, id, rank, amount});
+    cart.push({listingId, name, image, price, address, id, rank, amount, currency});
     localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, JSON.stringify(cart));
   }
 };

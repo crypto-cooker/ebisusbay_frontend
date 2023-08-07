@@ -18,7 +18,7 @@ import {listingState} from '@src/core/api/enums';
 import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
 import Button from "@src/Components/components/Button";
 import {useRouter} from "next/router";
-import MakeListingDialog from "@src/Components/MakeListing";
+import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listing";
 import Image from "next/image";
 import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
@@ -33,6 +33,7 @@ import ContractService from "@src/core/contractService";
 import {useGlobalPrice} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 const config = appConfig();
 
@@ -227,8 +228,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                   <span>
                     {listing ? (
                       <Stack direction='row' alignItems='center'>
-                        <CronosIconBlue boxSize={6} />
-
+                        <DynamicCurrencyIcon address={listing.currency} boxSize={6} />
                         <Text fontSize={28} ms={1} fontWeight='bold'>
                           <span className="ms-1">{ethers.utils.commify(listing.price)}</span>
                         </Text>
@@ -299,7 +299,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
         </Card.Body>
       </Card>
       {isSellDialogOpen && (
-        <MakeListingDialog
+        <CreateListingDialog
           isOpen={isSellDialogOpen}
           nft={nft}
           onClose={() => setIsSellDialogOpen(false)}

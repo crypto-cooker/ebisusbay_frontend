@@ -18,6 +18,7 @@ export interface Listing {
   transactionHash: string | null;
   nft: any;
   collection: any;
+  currency: string;
 }
 
 export interface OwnerListing extends Listing {
@@ -44,7 +45,8 @@ export class ListingMapper {
       expirationDate: Number(props.expirationDate),
       transactionHash: props.transactionHash,
       nft: props.nft,
-      collection: props.collection
+      collection: props.collection,
+      currency: props.currency
     }
   }
 

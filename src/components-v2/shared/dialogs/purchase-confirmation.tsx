@@ -6,7 +6,7 @@ import {Contract, ContractReceipt, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {isBundle, isGaslessListing, round} from "@src/utils";
+import {isBundle, isFortuneToken, isGaslessListing, knownErc20Token, round} from "@src/utils";
 import {getTheme} from "@src/Theme/theme";
 import {
   Box,
@@ -36,6 +36,7 @@ import Market from "@src/Contracts/Marketplace.json";
 import {useAppSelector} from "@src/Store/hooks";
 import PurchaseSuccessDialog from './purchase-success';
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -64,6 +65,15 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       url.searchParams.append('walletAddress', user.address);
     }
 
+    window.open(url, '_blank');
+  }
+
+  const handleBuyErc20 = (address: string) => {
+    const url = new URL('https://vvs.finance/swap');
+    if (user.address) {
+      url.searchParams.append('outputCurrency', address);
+      url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
+    }
     window.open(url, '_blank');
   }
 
@@ -104,7 +114,11 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       // return;
 
       setExecutingPurchase(true);
-      await buyGaslessListings([listing.listingId], parseInt(listing.price));
+      await buyGaslessListings([{
+        listingId: listing.listingId,
+        price: parseInt(listing.price),
+        currency: listing.currency
+      }]);
       setIsComplete(true);
     } catch (error: any) {
       if (error.data) {
@@ -170,7 +184,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       <Flex justify="space-between" fontSize="lg">
                         <Text>Listing Price</Text>
                         <Flex justify="space-between" align="center">
-                          <CronosIconBlue boxSize={6} />
+                          <DynamicCurrencyIcon address={listing.currency} boxSize={6} />
                           <Text as="span" ms={1}>
                             {commify(listing.price)}
                           </Text>
@@ -189,13 +203,27 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                     <SimpleGrid columns={{base: 1, sm: 2}}>
                       <Box className="card form_icon_button shadow active" alignItems="start !important" p={2}>
                         <DotIcon icon={faCheck} />
-                        <Flex align="center">
-                          <CronosIconBlue boxSize={6} />
-                          <Text as="span" ms={1}>CRO</Text>
-                        </Flex>
-                        <Flex mt={1}>
-                          <Text as="span" className="text-muted">Balance: {commify(round(user.balance, 3))}</Text>
-                        </Flex>
+                        {knownErc20Token(listing.currency) ? (
+                          <>
+                            <Flex align="center">
+                              <DynamicCurrencyIcon address={listing.currency} boxSize={6} />
+                              <Text as="span" ms={1}>{knownErc20Token(listing.currency)!.symbol}</Text>
+                            </Flex>
+                            <Flex mt={1}>
+                              <Text as="span" className="text-muted">Balance: {commify(round(user.fortuneBalance, 3))}</Text>
+                            </Flex>
+                          </>
+                        ) : (
+                          <>
+                            <Flex align="center">
+                              <CronosIconBlue boxSize={6} />
+                              <Text as="span" ms={1}>CRO</Text>
+                            </Flex>
+                            <Flex mt={1}>
+                              <Text as="span" className="text-muted">Balance: {commify(round(user.balance, 3))}</Text>
+                            </Flex>
+                          </>
+                        )}
                       </Box>
                     </SimpleGrid>
                     <Spacer />
@@ -204,24 +232,38 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       <Text>Total:</Text>
                       <Box>
                         <Flex justify="space-between" align="center">
-                          <CronosIconBlue boxSize={6} />
+                          <DynamicCurrencyIcon address={listing.currency} boxSize={6} />
                           <Text as="span" ms={1} fontWeight="bold">
                             {getYouReceiveViewValue()} CRO
                           </Text>
                         </Flex>
                       </Box>
                     </Flex>
-                    <Box textAlign="end" fontSize="sm">
-                      Low on CRO?&nbsp;
-                      <ChakraButton
-                        size="sm"
-                        variant="link"
-                        color={getTheme(user.theme)!.colors.textColor4}
-                        onClick={handleBuyCro}
-                      >
-                        Buy CRO
-                      </ChakraButton>
-                    </Box>
+                    {isFortuneToken(listing.currency) ? (
+                      <Box textAlign="end" fontSize="sm">
+                        Low on FRTN?&nbsp;
+                        <ChakraButton
+                          size="sm"
+                          variant="link"
+                          color={getTheme(user.theme)!.colors.textColor4}
+                          onClick={() => handleBuyErc20(listing.currency)}
+                        >
+                          Buy FRTN
+                        </ChakraButton>
+                      </Box>
+                    ) : (
+                      <Box textAlign="end" fontSize="sm">
+                        Low on CRO?&nbsp;
+                        <ChakraButton
+                          size="sm"
+                          variant="link"
+                          color={getTheme(user.theme)!.colors.textColor4}
+                          onClick={handleBuyCro}
+                        >
+                          Buy CRO
+                        </ChakraButton>
+                      </Box>
+                    )}
                   </Flex>
 
                 </div>

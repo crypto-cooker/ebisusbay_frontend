@@ -32,6 +32,7 @@ import {specialImageTransform} from "@src/hacks";
 import {appConfig} from "@src/Config";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 const config = appConfig();
 
@@ -136,7 +137,8 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
       seller: listing.seller ?? null,
       listingTime:  listing.listingTime ?? null,
       is1155: listing.is1155,
-      amount: listing.amount
+      amount: listing.amount,
+      currency: listing.currency
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };
@@ -263,7 +265,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                   </Box>
                   <Box>
                     <Flex alignItems='center'>
-                      <CronosIconBlue boxSize={4} />
+                      <DynamicCurrencyIcon address={listing.currency} size={4} />
                       <Box as='span' ms={1}>
                         {getCorrectPrice(listing.price)}
                       </Box>
