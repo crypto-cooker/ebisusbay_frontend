@@ -507,7 +507,9 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                         </InputGroup>
                         <FormErrorMessage fontSize='xs' mt={1}>{priceError}</FormErrorMessage>
                       </FormControl>
-
+                      <Box fontSize='sm' fontWeight='bold' className='text-muted'>
+                        {valueToUsd(totalPrice, usdRate)} USD
+                      </Box>
                       <div className="d-flex flex-wrap justify-content-between mb-3">
                         {windowSize.width && windowSize.width > 377 && (
                           <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
@@ -583,11 +585,12 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                     <Box>
                       <Flex justify='space-between'>
                         <Box as='span'>Total Listing Price: </Box>
-                        <Box as='span'>{totalPrice} {selectedCurrency.name}</Box>
-                      </Flex>
-                      <Flex justify='space-between'>
-                        <Box as='span'>Floor: </Box>
-                        <Box as='span'>{floorPrice} CRO</Box>
+                        <Box as='span'>
+                          <VStack spacing={0} align='end'>
+                            <Box fontWeight='bold'>{totalPrice} {selectedCurrency.name}</Box>
+                            <Box fontSize='sm' fontWeight='bold' className='text-muted'>Floor: {floorPrice} CRO</Box>
+                          </VStack>
+                        </Box>
                       </Flex>
                       <Flex justify='space-between'>
                         <Box as='span'>Royalty Fee: </Box>
