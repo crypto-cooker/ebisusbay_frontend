@@ -61,7 +61,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
   const [isPurchaseDialogOpen, setIsPurchaseDialogOpen] = useState(false);
   const [cancelGaslessListing, responseCancelListing] = useCancelGaslessListing();
-  const { usdRate } = useExchangeRate(listing.currency, config.chain.id);
+  const { usdRate } = useExchangeRate(listing?.currency, config.chain.id);
 
   const executeBuy = async () => {
     await runAuthedFunction(() => setIsPurchaseDialogOpen(true));
