@@ -116,7 +116,7 @@ const currencyOptions = [
     symbol: 'cro',
     image: currencyImages['cro']
   }
-]
+];
 
 interface MakeGaslessListingDialogProps {
   isOpen: boolean;

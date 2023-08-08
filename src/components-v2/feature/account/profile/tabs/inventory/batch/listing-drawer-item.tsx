@@ -25,7 +25,7 @@ import {
   useColorModeValue,
   VStack
 } from "@chakra-ui/react";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {ReactElement, useCallback, useEffect, useState} from "react";
 import {
   removeFromBatchListingCart,
   setApproval,
@@ -41,7 +41,7 @@ import {
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, isBundle, isLandDeedsCollection, round} from "@src/utils";
+import {ciEquals, createSuccessfulTransactionToastContent, isBundle, round} from "@src/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {Button as ChakraButton} from "@chakra-ui/button";
@@ -102,9 +102,25 @@ const expirationDatesValues = [
 ];
 
 const defaultExpiry = 2592000000;
+const currencyImages: {[key: string]: ReactElement} = {
+  'cro': <CronosIconBlue boxSize={6}/>,
+  'frtn': <FortuneIcon boxSize={6}/>,
+};
 const currencyOptions = [
-  { label: 'CRO', symbol: 'cro', image: <CronosIconBlue boxSize={6}/> },
-  { label: 'FRTN', symbol: 'frtn', image: <FortuneIcon boxSize={6}/> }
+  ...config.listings.currencies.available
+    .filter((symbol: string) => config.tokens[symbol.toLowerCase()])
+    .map((symbol: string) => {
+      const token = config.tokens[symbol.toLowerCase()];
+      return {
+        ...token,
+        image: currencyImages[token.symbol.toLowerCase()] || <CronosIconBlue boxSize={6}/>
+      }
+    }),
+  {
+    name: 'CRO',
+    symbol: 'cro',
+    image: currencyImages['cro']
+  }
 ];
 
 interface ListingDrawerItemProps {
@@ -179,7 +195,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
 
   const handleCurrencyChange = useCallback((e: any) => {
     const value = e.target.value;
-    if (!!value && (!extras.availableCurrencies || extras.availableCurrencies.includes(value))) {
+    if (!!value && (!extras.availableCurrencies || extras.availableCurrencies.some((c) => ciEquals(c.symbol, value)))) {
       setInvalid(false);
       setCurrency(value);
       dispatch(updateCurrency({ nft: item.nft, currency: value }));
@@ -259,7 +275,16 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
 
         newExtras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId);
         newExtras.canList = item.nft.listable && !item.nft.isStaked;
-        newExtras.availableCurrencies = isLandDeedsCollection(item.nft.nftAddress) ? [currencyOptions.find((o) => o.symbol === 'frtn')!] : [currencyOptions.find((o) => o.symbol === 'cro')!];
+
+        type CurrencyEntry = {
+          [key: string]: string[];
+        }
+        const availableCurrencySymbols: CurrencyEntry | undefined = Object.entries(config.listings.currencies.nft)
+          .find(([key]) => ciEquals(key, item.nft.nftAddress)) as CurrencyEntry | undefined;
+        newExtras.availableCurrencies = currencyOptions.filter(({symbol}: { symbol: string }) => {
+          return availableCurrencySymbols ? availableCurrencySymbols[1].includes(symbol.toLowerCase()) : symbol === 'cro';
+        });
+
         setCurrency(newExtras.availableCurrencies[0].symbol);
         dispatch(setExtras(newExtras));
       } finally {
@@ -393,7 +418,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                               onChange={handleCurrencyChange}
                             >
                               {extras.availableCurrencies?.map((c: any) => (
-                                <option key={c} value={c.symbol}>{c.label}</option>
+                                <option key={c} value={c.symbol}>{c.name}</option>
                               ))}
                             </Select>
                           ) : (
