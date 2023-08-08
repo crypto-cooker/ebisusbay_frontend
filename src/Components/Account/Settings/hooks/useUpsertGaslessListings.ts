@@ -87,8 +87,8 @@ const useUpsertGaslessListings = () => {
           itemTypes[pendingListing.collectionAddress] = await getItemType(pendingListing.collectionAddress);
         }
 
-        const currencyAddress = pendingListing.currencySymbol ? config.tokens[pendingListing.currencySymbol]?.address : undefined;
-
+        const currencyAddress = pendingListing.currencySymbol ? config.tokens[pendingListing.currencySymbol.toLowerCase()]?.address : undefined;
+        
         const listingSignerProps: ListingSignerProps = {
           price: pendingListing.price.toString(),
           itemType: itemTypes[pendingListing.collectionAddress],
