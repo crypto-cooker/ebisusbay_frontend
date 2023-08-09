@@ -38,7 +38,7 @@ const useBuyGaslessListings = () => {
       const buyContract = contractService!.ship;
       const croTotal = pendingPurchases
         .filter((purchase) => !purchase.currency || purchase.currency === ethers.constants.AddressZero)
-        .reduce((acc, curr) => acc + curr.price, 0);
+        .reduce((acc, curr) => acc + Number(curr.price), 0);
       const price = ethers.utils.parseEther(`${croTotal}`);
 
       const approvedTokens: string[] = [];
