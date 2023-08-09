@@ -289,6 +289,8 @@ export const ListingDrawer = () => {
       !batchListingCart.items.some((o) => !o.nft.listable || o.nft.isStaked || (isBundling && isBundle(o.nft.nftAddress)));
   }
 
+  const hasErc20Listing = Object.values(batchListingCart.items).some((o) => o.currency !== 'cro');
+
   const onBundleToggled = useCallback((e: any) => {
     setIsBundling(e.target.checked);
   }, [setIsBundling, isBundling]);
@@ -340,14 +342,14 @@ export const ListingDrawer = () => {
           <FormLabel htmlFor='debug-legacy-toggle' mb='0'>
             Express Mode
           </FormLabel>
-          <Switch id='debug-legacy-toggle' isChecked={expressMode} onChange={() => setExpressMode(!expressMode)}/>
+          <Switch id='debug-legacy-toggle' isChecked={expressMode} onChange={() => setExpressMode(!expressMode)} isDisabled={hasErc20Listing}/>
           <Popover>
             <PopoverTrigger>
               <IconButton aria-label='Express Mode Help' icon={<QuestionOutlineIcon />} variant='unstyled'/>
             </PopoverTrigger>
             <PopoverContent>
               <PopoverArrow />
-              <PopoverBody>Express mode reduces the amount of signings required for listing. However this may increase gas fees</PopoverBody>
+              <PopoverBody>Express mode reduces the amount of signings required for listing. However this may increase gas fees. Only available for CRO</PopoverBody>
             </PopoverContent>
           </Popover>
         </FormControl>
