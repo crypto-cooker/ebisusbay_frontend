@@ -22516,6 +22516,160 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "HunterZ",
+      "slug": "hunterz",
+      "multiToken": false,
+      "address": "0xDdEAaE0e4A009411e32A46645AE4787550fDc804",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The HunterZ is an 3000 NFT big collection of bloodthirsty Bounty Hunters. When the bounty of the once appreciated CroHogs started to rise, even friends became enemies. With the purchase of one of our hunterZ, you open the doors to CroHogs world under the Moonflow umbrella. Holders benefits: -Engage2Earn system at our discord to have the opportunity to make $CRO! -\"Listings and Trading Rewards Booster\" at Moonflow NFT marketplace up to 25% Royalities sharing model for holders With this step, we are building a future together with passive income and CroHogs burning. With different income streams in CroHogs world, we are jointly strengthening the Crohogs backed asset system.",
+        "avatar": "/img/collections/hunterz/avatar.webp",
+        "card": "/img/collections/hunterz/card.webp",
+        "banner": "/img/collections/hunterz/banner.webp",
+        "website": "https://www.crohogs.com/",
+        "twitter": "https://twitter.com/cro_hogs",
+        "discord": "https://discord.gg/factionsnft",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cronos Factions",
+      "slug": "cronos-factions",
+      "multiToken": false,
+      "address": "0x20f2221084ae06926e8bd042ceef5df33486b0b5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cronos Faction is a #cronos project bringing together a series of casual mini-games and other fun activities. Everyday Games in our Discord. Casual mini-games P2E live. Royalty sharing distribution based on Faction",
+        "avatar": "/img/collections/cronos-factions/avatar.webp",
+        "card": "/img/collections/cronos-factions/card.webp",
+        "banner": "/img/collections/cronos-factions/banner.webp",
+        "website": "https://cronosfactions.com/",
+        "twitter": "https://www.twitter.com/factions_nft",
+        "discord": "https://discord.gg/factionsnft",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "InventorBot",
+      "slug": "inventorbot",
+      "multiToken": false,
+      "address": "0xADB9E5199818F006A5852EF34EDc879614D7a8A1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Inventorbot is a collection only for people who Collect all of the components and specificity points + CrofamLadiesAI.  Inventorbots have dedicated staking pool for holders.",
+        "avatar": "/img/collections/inventorbot/avatar.webp",
+        "banner": "/img/collections/inventorbot/banner.webp",
+        "card": "/img/collections/inventorbot/card.webp",
+        "website": "https://crofamladies.netlify.app/",
+        "twitter": "https://twitter.com/CrofamLadies",
+        "discord": "https://discord.gg/4ZwwXghGEj",
+        "medium": "https://crofamladies.gitbook.io/cro-poly-ladies-wp/cronos/inventorbot",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Blumies Specials",
+      "slug": "blumies-specials",
+      "address": "0xc3425337a7e892C6574A4940D29c428065fE4B30",
+      "multiToken": true,
+      "tokens": [
+        {
+          "id": 0
+        }
+      ],
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Blumies collection brought to you by ''Purple Fantasy'' team. \n\nUnique styles lead to unique ideas. Join the journey and discover what you haven't seen and heard before! Work with the team, learn, receive, observe and enjoy while the story evolves.",
+        "avatar": "/img/collections/blumies-specials/avatar.webp",
+        "banner": "/img/collections/blumies-specials/banner.webp",
+        "card": "/img/collections/blumies-specials/card.webp",
+        "website": "https://www.blumiesofficial.com/",
+        "twitter": "https://twitter.com/BlumiesNFT",
+        "discord": "https://discord.gg/wu5SsgbhHm",
+        "medium": "https://blumies.gitbook.io/blumies-nft/",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "0xTesseract",
+      "slug": "0xtesseract",
+      "multiToken": false,
+      "address": "0x54E21F0Bb9dD88C9246dC915f0170BC34A8B8Ca4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "4K Four Dimensional Cube",
+        "avatar": "/img/collections/Oxtesseract/avatar.gif",
+        "banner": "/img/collections/Oxtesseract/banner.webp",
+        "card": "/img/collections/Oxtesseract/card.webp",
+        "website": "https://linktr.ee/oxcronosart/",
+        "twitter": "https://twitter.com/0xchicagotitan",
+        "categories": [
+          "art"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "The Cro Cult",
+      "slug": "the-cro-cult",
+      "multiToken": false,
+      "address": "0x1d897a8fFE0679D1d38d6e525150269430a6F17f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Cro Cult is a meme collection on Cronos for CroFam. The idea is to pay tribute to all projects, builders on Cronos and to the CroFam!  The story:  There was a group of passionate Cronos blockchain protesters. They met online, sharing their love for the Web3 and their desire to see its widespread adoption. They decided to get together as a group and organize protests to raise awareness about its benefits. Their leader was a guy named BigJack.cro, who firmly believed that Cronos blockchain and Crypto.com was the key to a better and fairer future. He was passionate and charismatic, and he managed to gather a determined group of people who shared his views, and thus he created the Cro Cult.  As the months went by, the group grew in numbers and influence, holding larger and more militant demonstrations. Unfortunately, some demonstrations turned violent, with protests ending in rampages. The protesters, under the influence of BigJack, believed that this was the only way to make their voices heard and to pressure the world to adopt Cronos.  Police and local authorities began to take action to quell the violent protests, and many members of the group were arrested. BigJack.cro was charged with inciting violence and was imprisoned. Without their leader, the group continues to thrive, and is trying to pressure the government to release him from prison. So their message of the importance of Cronos continues to be spread by those who have been inspired by their passionate commitment, and it is through a collection of committed NFTs, that the message continues to be spread, and The Cro Cult can spread until the world folds in.",
+        "avatar": "/img/collections/the-cro-cult/avatar.gif",
+        "banner": "/img/collections/the-cro-cult/banner.webp",
+        "card": "/img/collections/the-cro-cult/card.webp",
+        "website": "https://thecrocult.com/",
+        "twitter": "https://twitter.com/TheCroCult",
+        "discord": "https://twitter.com/4GU6Dm3Xb",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
