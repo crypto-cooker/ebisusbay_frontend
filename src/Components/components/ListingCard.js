@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {ethers} from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
-import MakeOfferDialog from '../Offer/Dialogs/MakeOfferDialog';
+import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {chainConnect, connectAccount} from '@src/GlobalState/User';

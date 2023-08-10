@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {ethers} from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
-import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
+import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {
   appUrl,
