@@ -98,7 +98,7 @@ const ListingsTab = ({ nft }: ListingsProps) => {
           dataLength={data?.pages ? data.pages.flat().length : 0}
           next={fetchNextPage}
           hasMore={hasNextPage ?? false}
-          style={{ overflow: 'none' }}
+          height={400}
           loader={
             <Center>
               <Spinner />
