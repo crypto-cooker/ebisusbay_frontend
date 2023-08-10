@@ -137,7 +137,7 @@ export const LandsHUD = ({onBack, setElementToZoomTo, showBack, traitTypes, Filt
               </Text>
             </VStack>
           </Flex>
-          <Flex>
+          <Flex mt={4}>
                 {/* <Input placeholder="inputtest"></Input> */}
               <Select onChange={handleChangeTrait} placeholder="Select option">
               <option selected hidden disabled value="">Search</option>
