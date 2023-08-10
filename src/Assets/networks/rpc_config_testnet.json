@@ -8726,6 +8726,7 @@
       "cost": "3",
       "memberCost": "2",
       "whitelistCost": "1",
+      "freeMint": true,
       "foundersOnly": false,
       "start": 1689920290000,
       "end": null,
