@@ -124,19 +124,19 @@ export const configData = {
       currencies : {
         available: ['cro', 'frtn'],
         nft: {
-          '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],
-          '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],
-          '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C': ['frtn'],
-          '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d': ['frtn'],
-          '0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3': ['frtn'],
-          '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5': ['frtn'],
-          '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'],
-          '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],
-          '0xf54abdcba21e7a740f98307a561b605cb3fdcf63': ['cro', 'frtn'],
-          '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506': ['cro', 'frtn'],
-          '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29': ['cro', 'frtn'],
-          '0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab': ['cro', 'frtn'],
-          '0xD961956B319A10CBdF89409C0aE7059788A4DaBb': ['cro', 'frtn']
+          '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'], // Ryoshi VIP
+          '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'], // Ryoshi Halloween
+          '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C': ['frtn'], // Ryoshi Christmas
+          '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d': ['frtn'], // Ryoshi Resources
+          '0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3': ['frtn'], // Land Deeds
+          '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5': ['frtn'], // EB FM/VIP
+          '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'], // Fortune Guards
+          '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'], // FortuneTeller
+          '0xf54abdcba21e7a740f98307a561b605cb3fdcf63': ['cro', 'frtn'], // Legacy VIP Art
+          '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506': ['cro', 'frtn'], // SeaShrine VIP
+          '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29': ['cro', 'frtn'], // Valentine
+          '0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab': ['cro', 'frtn'], // Holiday Hares
+          '0xD961956B319A10CBdF89409C0aE7059788A4DaBb': ['cro', 'frtn'] // Cronies
         }
       }
     }

@@ -154,7 +154,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
 
   const user = useAppSelector((state) => state.user);
   const [upsertGaslessListings, responseUpsert] = useUpsertGaslessListings();
-  const { usdRate } = useExchangeRate(selectedCurrency?.address);
+  const { usdRate, croRate } = useExchangeRate(selectedCurrency?.address);
 
   const isBelowFloorPrice = (price: number) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
@@ -182,7 +182,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     if (executingCreateListing || showConfirmButton) return;
 
     const newSalePrice = Math.round(floorPrice * (1 + percentage));
-    setSalePrice(newSalePrice);
+    setSalePrice(round(newSalePrice * croRate));
 
     if (isBelowFloorPrice(perUnitPrice)) {
       setShowConfirmButton(false);
