@@ -22695,6 +22695,54 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Dragon Meme Coins",
+      "slug": "dragon-meme-coins",
+      "multiToken": false,
+      "address": "0xe20B6C284b339809C7Cf5b5951F802a902d39E8A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Limited Edition 150 Coin Set A collection of Dragon Coins from the amazing Ai artist AngelusBoBsAiNFTs  Mint or buy 1 NFT 75 CRO - I will airdrop a Threads of Crypto 3D staking NFT ASAP",
+        "avatar": "/img/collections/dragon-meme-coins/avatar.webp",
+        "card": "/img/collections/dragon-meme-coins/card.webp",
+        "twitter": "https://twitter.com/AngelusbobRh",
+        "discord": "https://discord.gg/QHrzqSn9Rf",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "National Fat Guy League (NFGL) 2023 Season",
+      "slug": "nfgl-2023",
+      "multiToken": false,
+      "address": "0xd265D2fd5BbBbFF42BF226c360c48C17bc24f49b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dead Beat Dads cherish only a few things in life. One of those being football. Mint a Dead Beat Dad rocking your favorite jersey and have a chance to win CRO!",
+        "avatar": "/img/collections/dead-beat-dads/avatar.webp",
+        "card": "/img/collections/dead-beat-dads/card.webp",
+        "banner": "/img/collections/dead-beat-dads/banner.webp",
+        "website": "https://dead-beat-dads.netlify.app/nfgl",
+        "twitter": "https://twitter.com/zolape01",
+        "discord": "https://discord.gg/KnRmEA4u8v",
+        "medium": "https://medium.com/@deadbeatdadscro/national-fat-guy-league-nfgl-42130ff0edda",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
