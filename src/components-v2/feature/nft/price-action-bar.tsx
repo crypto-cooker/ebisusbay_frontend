@@ -8,9 +8,10 @@ import {
   isGaslessListing,
   isNftBlacklisted,
   isUserBlacklisted,
+  round,
   shortAddress,
   timeSince,
-  valueToUsd
+  usdFormat
 } from '@src/utils';
 import {Card, Spinner} from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
@@ -30,9 +31,10 @@ import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {TransactionReceipt} from "@ethersproject/abstract-provider";
 import {useAppSelector} from "@src/Store/hooks";
 import ContractService from "@src/core/contractService";
-import {useExchangeRate} from "@src/hooks/useGlobalPrices";
+import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import {commify} from "ethers/lib/utils";
 
 const config = appConfig();
 
@@ -61,7 +63,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
   const [isPurchaseDialogOpen, setIsPurchaseDialogOpen] = useState(false);
   const [cancelGaslessListing, responseCancelListing] = useCancelGaslessListing();
-  const { usdRate } = useExchangeRate(listing?.currency, config.chain.id);
+  const { tokenToUsdValue, tokenToCroValue } = useTokenExchangeRate(listing?.currency, config.chain.id);
 
   const executeBuy = async () => {
     await runAuthedFunction(() => setIsPurchaseDialogOpen(true));
@@ -230,8 +232,15 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                         <Text fontSize={28} ms={1} fontWeight='bold'>
                           <span className="ms-1">{ethers.utils.commify(listing.price)}</span>
                         </Text>
-                        {!!listing.currency && usdRate && (
-                          <Box as='span' ms={1} fontSize='sm' className="text-muted">({valueToUsd(listing.price, usdRate)})</Box>
+                        {!!listing.currency && (
+                          <Box as='span' ms={1} fontSize='sm' className="text-muted">
+                            (
+                            {listing.currency !== ethers.constants.AddressZero && (
+                              <Text as='span'>{commify(round(tokenToCroValue(listing.price)))} CRO / </Text>
+                            )}
+                            <Text as='span'>{usdFormat(tokenToUsdValue(listing.price))}</Text>
+                            )
+                          </Box>
                         )}
                       </Stack>
                     ) : (

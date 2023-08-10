@@ -10,7 +10,7 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {ciEquals, createSuccessfulTransactionToastContent, isBundle, round, valueToUsd} from "@src/utils";
+import {ciEquals, createSuccessfulTransactionToastContent, isBundle, round, usdFormat} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -35,8 +35,8 @@ import {
   ModalOverlay,
   Spinner,
   Stack,
-  useNumberInput,
-  VStack
+  Text,
+  useNumberInput
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
@@ -48,7 +48,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import Select from "react-select";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import {useExchangeRate} from "@src/hooks/useGlobalPrices";
+import {useExchangeRate, useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 
 const config = appConfig();
@@ -154,7 +154,8 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
 
   const user = useAppSelector((state) => state.user);
   const [upsertGaslessListings, responseUpsert] = useUpsertGaslessListings();
-  const { usdRate, croRate } = useExchangeRate(selectedCurrency?.address);
+  const { tokenToUsdValue, tokenToCroValue, croToTokenValue } = useTokenExchangeRate(selectedCurrency?.address);
+  const { usdValueForToken, croValueForToken } = useExchangeRate();
 
   const isBelowFloorPrice = (price: number) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
@@ -182,7 +183,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     if (executingCreateListing || showConfirmButton) return;
 
     const newSalePrice = Math.round(floorPrice * (1 + percentage));
-    setSalePrice(round(newSalePrice * croRate));
+    setSalePrice(round(croToTokenValue(newSalePrice)));
 
     if (isBelowFloorPrice(perUnitPrice)) {
       setShowConfirmButton(false);
@@ -508,7 +509,10 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                         <FormErrorMessage fontSize='xs' mt={1}>{priceError}</FormErrorMessage>
                       </FormControl>
                       <Box fontSize='sm' fontWeight='bold' className='text-muted'>
-                        {valueToUsd(totalPrice, usdRate)} USD
+                        {selectedCurrency.symbol !== 'cro' && (
+                          <Text as='span'>{round(tokenToCroValue(totalPrice), 2)} CRO / </Text>
+                        )}
+                        <Text as='span'>{usdFormat(tokenToUsdValue(totalPrice))} USD</Text>
                       </Box>
                       <div className="d-flex flex-wrap justify-content-between mb-3">
                         {windowSize.width && windowSize.width > 377 && (
@@ -586,10 +590,29 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <Flex justify='space-between'>
                         <Box as='span'>Total Listing Price: </Box>
                         <Box as='span'>
-                          <VStack spacing={0} align='end'>
-                            <Box fontWeight='bold'>{totalPrice} {selectedCurrency.name}</Box>
-                            <Box fontSize='sm' fontWeight='bold' className='text-muted'>Floor: {floorPrice} CRO</Box>
-                          </VStack>
+                          <Box fontWeight='bold'>{totalPrice} {selectedCurrency.name}</Box>
+                        </Box>
+                      </Flex>
+                      <Flex justify='end' style={{marginBottom:0}}>
+                        <Box fontSize='sm' className='text-muted'>
+                          {selectedCurrency.symbol !== 'cro' && (
+                            <Text as='span' fontSize='sm' className='text-muted'>{round(tokenToCroValue(totalPrice))} CRO / </Text>
+                          )}
+                          <Text as='span' fontSize='sm' className='text-muted'>{usdFormat(tokenToUsdValue(totalPrice))} USD</Text>
+                        </Box>
+                      </Flex>
+                      <Flex justify='space-between'>
+                        <Box as='span'>Floor: </Box>
+                        <Box as='span'>
+                          <Box fontWeight='bold'>{floorPrice} CRO</Box>
+                        </Box>
+                      </Flex>
+                      <Flex justify='end' style={{marginBottom:0}}>
+                        <Box fontSize='sm' className='text-muted'>
+                          {selectedCurrency.symbol !== 'cro' && (
+                            <Text as='span' fontSize='sm' className='text-muted'>{round(croValueForToken(floorPrice, selectedCurrency?.address))} {selectedCurrency?.name} / </Text>
+                          )}
+                          <Text as='span' fontSize='sm' className='text-muted'>{usdFormat(usdValueForToken(floorPrice))} USD</Text>
                         </Box>
                       </Flex>
                       <Flex justify='space-between'>
@@ -599,10 +622,15 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <Flex justify='space-between' style={{marginBottom:0}}>
                         <Box as='span' className='label' fontWeight='bold'>You receive: </Box>
                         <Box as='span'>
-                          <VStack spacing={0} align='end'>
-                            <Box fontWeight='bold'>{getYouReceiveViewValue()} {selectedCurrency.name}</Box>
-                            <Box fontSize='sm' fontWeight='bold' className='text-muted'>{valueToUsd(getYouReceiveViewValue(), usdRate)} USD</Box>
-                          </VStack>
+                          <Box fontWeight='bold'>{getYouReceiveViewValue()} {selectedCurrency.name}</Box>
+                        </Box>
+                      </Flex>
+                      <Flex justify='end' style={{marginBottom:0}}>
+                        <Box fontSize='sm' className='text-muted'>
+                          {selectedCurrency.symbol !== 'cro' && (
+                            <Text as='span' fontWeight='bold' fontSize='sm' className='text-muted'>{round(tokenToCroValue(getYouReceiveViewValue()))} CRO / </Text>
+                          )}
+                          <Text as='span' fontWeight='bold' fontSize='sm' className='text-muted'>{usdFormat(tokenToUsdValue(getYouReceiveViewValue()))} USD</Text>
                         </Box>
                       </Flex>
                     </Box>

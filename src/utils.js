@@ -844,20 +844,15 @@ export const isGaslessListing = (listingId) => {
   return listingId && listingId.toString().startsWith('0x')
 }
 
-export const croToUsd = (value, rate) => {
-  if (typeof value === 'string') value = Number(value);
-  if (typeof rate === 'string') rate = Number(rate);
+export const usdFormat = (num) => {
+  if (typeof num === 'string') num = Number(num);
 
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   });
 
-  return formatter.format(value * rate);
-}
-
-export const valueToUsd = (value, rate) => {
-  return croToUsd(value, rate);
+  return formatter.format(num);
 }
 
 export const cacheBustingKey = (minutes = 5, date = Date.now()) => {

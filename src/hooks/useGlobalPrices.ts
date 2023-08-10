@@ -28,27 +28,85 @@ export const useFortunePrice = (chainId?: number | string) => {
   })
 };
 
-export const useExchangeRate = (token: string, chainId: number = 25) => {
-  const [price, setPrice] = useState<PriceProps>();
-  const [usdRate, setUsdRate] = useState(0);
-  const [croRate, setCroRate] = useState(0);
+export const useExchangeRate = (chainId: number = 25) => {
+  const [croPrice, setCroPrice] = useState<PriceProps>();
+  const globalPrices = useContext(ExchangePricesContext) as ExchangePricesContextProps;
+
+  useEffect(() => {
+    const price = globalPrices.prices.find((p) => ciEquals(p.currency, ethers.constants.AddressZero) && Number(p.chain) === 25);
+    if (price) {
+      setCroPrice(price);
+    }
+  }, [globalPrices]);
+
+  const usdRateForToken = (token: string) => {
+    const safeToken = token || ethers.constants.AddressZero;
+    const price = globalPrices.prices.find((p) => ciEquals(p.currency, safeToken) && Number(p.chain) === Number(chainId));
+
+    return price ? Number(price.usdPrice) : 0;
+  }
+
+  const croRateForToken = (token: string) => {
+    const safeToken = token || ethers.constants.AddressZero;
+    const tokenPrice = globalPrices.prices.find((p) => ciEquals(p.currency, safeToken) && Number(p.chain) === Number(chainId));
+
+    return tokenPrice && croPrice ? Number(croPrice.usdPrice) / Number(tokenPrice.usdPrice) : 0;
+  }
+
+  const usdValueForToken = (value: number, token?: string) => {
+    const rate = usdRateForToken(token ?? ethers.constants.AddressZero);
+    return value * rate;
+  }
+
+  const croValueForToken = (value: number, token?: string) => {
+    if (token === ethers.constants.AddressZero) return value;
+
+    const rate = croRateForToken(token ?? ethers.constants.AddressZero);
+    return value * rate;
+  }
+
+  return {usdRateForToken, croRateForToken, usdValueForToken, croValueForToken};
+}
+
+export const useTokenExchangeRate = (token: string, chainId: number = 25) => {
+  const [tokenPrice, setTokenPrice] = useState<PriceProps>();
+  const [tokenUsdRate, setTokenUsdRate] = useState(0);
+  const [tokenToCroRate, setTokenToCroRate] = useState(0);
+  const [croToTokenRate, setCroToTokenRate] = useState(0);
   const globalPrices = useContext(ExchangePricesContext) as ExchangePricesContextProps;
 
   useEffect(() => {
     const safeToken = token || ethers.constants.AddressZero;
     const price = globalPrices.prices.find((p) => ciEquals(p.currency, safeToken) && Number(p.chain) === Number(chainId));
-    const nativePrice = globalPrices.prices.find((p) => ciEquals(p.currency, ethers.constants.AddressZero) && Number(p.chain) === 25);
+    const croPrice = globalPrices.prices.find((p) => ciEquals(p.currency, ethers.constants.AddressZero) && Number(p.chain) === 25);
 
     if (price) {
-      setPrice(price);
-      setUsdRate(Number(price.usdPrice));
-      if (nativePrice) setCroRate(Number(nativePrice.usdPrice) / Number(price.usdPrice));
+      setTokenPrice(price);
+      setTokenUsdRate(Number(price.usdPrice));
+      if (croPrice) {
+        setTokenToCroRate(Number(price.usdPrice) / Number(croPrice.usdPrice));
+        setCroToTokenRate(Number(croPrice.usdPrice) / Number(price.usdPrice));
+      }
     } else {
-      setPrice({usdPrice: '0', chain: chainId, currency: safeToken});
-      setUsdRate(0);
-      setCroRate(0);
+      setTokenPrice({usdPrice: '0', chain: chainId, currency: safeToken});
+      setTokenUsdRate(0);
+      setTokenToCroRate(0);
     }
   }, [globalPrices, token, chainId]);
 
-  return {price, usdRate, croRate}
+  const usdToTokenValue = (value: number) => (value ?? 1) / Number(tokenUsdRate);
+  const tokenToUsdValue = (value: number) => (value ?? 1) * Number(tokenUsdRate);
+  const croToTokenValue = (value: number) => (value ?? 1) * Number(croToTokenRate);
+  const tokenToCroValue = (value: number) => (value ?? 1) * Number(tokenToCroRate);
+
+  return {
+    tokenPrice,
+    tokenUsdRate,
+    tokenToCroRate,
+    croToTokenRate,
+    usdToTokenValue,
+    tokenToUsdValue,
+    croToTokenValue,
+    tokenToCroValue
+  }
 }
