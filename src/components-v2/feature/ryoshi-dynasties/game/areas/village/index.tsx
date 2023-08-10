@@ -794,7 +794,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
             onOpenBattleLog={onOpenBattleLog} forceRefresh={forceRefreshBool} />
         )}
 
-        <Box  position='absolute' top={0} left={0} p={4} >
+        <Box  position='absolute' top={0} left={0} p={4} zIndex={1}>
           <Flex direction='row' justify='space-between' >
             {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>}
             {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>}
