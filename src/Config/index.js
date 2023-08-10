@@ -170,6 +170,8 @@ export const configData = {
           '0xf96ec7C11D311920833753FAB9b174B6FD53517E': ['cro', 'frtn'], // Reckless Robots Legends
           '0x84Fda8563E6556a7Fb1578E10e114dB56d64638d': ['cro', 'frtn'], // Cronos Chibis
           '0xdbFDf81D1fDD2e79e8ffaDE50c219452587e9488': ['frtn'],        // Cowz
+          '0xc6Cfb3f2D9D33FF1D0B77cE78c5dD6f790B5605A': ['cro', 'frtn'], // Punk Weapon
+          '0x6625e0b113CC4f4E70Fc409Cd1ABFcE8Cf7E747b': ['cro', 'frtn'], // Cyberpunk Cronicles
         }
       }
     }
