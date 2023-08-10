@@ -22631,9 +22631,9 @@
       "listable": true,
       "metadata": {
         "description": "4K Four Dimensional Cube",
-        "avatar": "/img/collections/Oxtesseract/avatar.gif",
-        "banner": "/img/collections/Oxtesseract/banner.webp",
-        "card": "/img/collections/Oxtesseract/card.webp",
+        "avatar": "/img/collections/0xtesseract/avatar.gif",
+        "banner": "/img/collections/0xtesseract/banner.webp",
+        "card": "/img/collections/0xtesseract/card.webp",
         "website": "https://linktr.ee/oxcronosart/",
         "twitter": "https://twitter.com/0xchicagotitan",
         "categories": [
@@ -22661,6 +22661,31 @@
         "website": "https://thecrocult.com/",
         "twitter": "https://twitter.com/TheCroCult",
         "discord": "https://twitter.com/4GU6Dm3Xb",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Nuclear Ape Squad",
+      "slug": "nuclear-ape-squad",
+      "multiToken": false,
+      "address": "0x933851f01d146c04D051b8FC7ccb8035828873F7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Nuclear Ape Squad is an immersive NFT project set in the captivating world of Arakun, where an epic war unfolds between apes and mutant bananas. As a member of the NAS, you possess the power to shape the outcome of this conflict and save the planet. Through cutting-edge technology and seamless web3 integration, we offer a unique experience that combines stunning art, a vibrant community, and engaging gameplay.  Our collection stands out with its avant-garde avatar design, featuring a distinct forward-facing perspective. Each piece in our collection is meticulously crafted with a high level of detail, encompassing intricate shadows and a diverse range of elements. With over 300 layers and details, our collection of 1000 pieces ensures each artwork is truly one-of-a-kind. Additionally, there are rare gold items that add even more exclusivity to our collection.  Airdrop rewards. Web3 GameFi. Giveaway pool. Branded NAS Merch. Whales rewards. Additional collection. Exclusive Comic Books. Ape Board game.",
+        "avatar": "/img/collections/nuclear-ape-squad/avatar.webp",
+        "banner": "/img/collections/nuclear-ape-squad/banner.webp",
+        "card": "/img/collections/nuclear-ape-squad/card.webp",
+        "website": "https://nuclearapesquad.com/",
+        "twitter": "https://twitter.com/nuclearapesquad",
+        "discord": "https://twitter.com/EWjDt94MTH",
         "categories": [
           "collectibles"
         ]
