@@ -7,13 +7,17 @@ import {Box, Flex, Spacer, Text, Progress, HStack, Tag, Image, SimpleGrid, Cente
   NumberInput,
   NumberInputField,
   VStack,
-  Divider
+  Divider,
+  Select,
+  Input
 } from "@chakra-ui/react";
 import {useAppSelector} from "@src/Store/hooks";
 import React, {useState, useEffect} from "react";
 import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 import {appConfig} from "@src/Config";
 import { RdButton } from "../../../components";
+import { Dropdown } from "react-bootstrap";
+import { NavigationEvents } from "swiper/types";
 
 const config = appConfig();
 
@@ -21,15 +25,21 @@ interface BattleMapHUDProps {
   onBack: () => void;
   setElementToZoomTo : (value: any) => void;
   showBack: boolean;
+  traitTypes: string[];
+  FilterByTraitCallback: (value:string) => void;
 }
 
-export const LandsHUD = ({onBack, setElementToZoomTo, showBack}: BattleMapHUDProps) => {
+export const LandsHUD = ({onBack, setElementToZoomTo, showBack, traitTypes, FilterByTraitCallback}: BattleMapHUDProps) => {
     
   const user = useAppSelector((state) => state.user);
   const [isNotMobile] = useMediaQuery("(max-width: 768px)") 
   const [value, setValue] = React.useState(0)
   const handleChange = (value:string) => setValue(Number(value))
   const [accordionIndex, setAccordionIndex] = useState(-1);
+  useEffect(() => {
+    traitTypes
+  }, []); 
+
   useEffect(() => {
     if(isNotMobile){
       setAccordionIndex(0);
@@ -40,6 +50,16 @@ export const LandsHUD = ({onBack, setElementToZoomTo, showBack}: BattleMapHUDPro
 
   const validateEntry = () => {
      setElementToZoomTo((value-1).toString())
+  }
+
+  const handleChangeTrait = (event: any) => {
+    // console.log(event?.target.value)
+    if(traitTypes.includes(event.target.value)){
+      FilterByTraitCallback(event.target.value)
+    }
+    else{
+      console.log(value);
+    }
   }
 
   return (
@@ -116,8 +136,23 @@ export const LandsHUD = ({onBack, setElementToZoomTo, showBack}: BattleMapHUDPro
                 > Make Offer
               </Text>
             </VStack>
-
           </Flex>
+          <Flex>
+                {/* <Input placeholder="inputtest"></Input> */}
+              <Select onChange={handleChangeTrait} placeholder="Select option">
+              <option selected hidden disabled value="">Search</option>
+                {traitTypes.length >= 0 ? (
+                  traitTypes.map((trait, index) => (
+                  <option 
+                    style={{ background: '#272523' }} 
+                    value={trait} 
+                    key={index}>
+                    {trait}
+                  </option>
+                  ))) : (<></>)}
+              </Select>
+
+            </Flex>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
