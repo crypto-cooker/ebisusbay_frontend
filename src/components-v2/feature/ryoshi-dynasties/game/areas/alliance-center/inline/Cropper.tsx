@@ -31,7 +31,7 @@ const CropperModal = ({isOpen, onClose, src, setPreview}:CropperProps) => {
   const [_, getSigner] = useCreateSigner();
 
   const CallPatchFaction = async (newData:any, faction:any) => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;

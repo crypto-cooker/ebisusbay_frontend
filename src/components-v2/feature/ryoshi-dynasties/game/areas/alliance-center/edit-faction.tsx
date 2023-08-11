@@ -123,7 +123,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     }
     setShowAlert(false)
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
@@ -145,7 +145,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   }
 
   const DisbandFaction = async() => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
@@ -166,7 +166,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     }
   }
   const ReenableFaction = async() => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;

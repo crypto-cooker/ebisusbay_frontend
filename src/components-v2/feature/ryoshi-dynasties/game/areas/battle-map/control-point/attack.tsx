@@ -182,7 +182,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   //     // }
   // }
   const GetPlayerArmies = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
@@ -199,7 +199,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
     }
   }
   // const GetPlayerOwnedFaction = async () => {
-  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
   //   if (!signatureInStorage) {
   //     const { signature } = await getSigner();
   //     signatureInStorage = signature;
@@ -224,7 +224,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   }
   const RealAttack = async () => {
     setIsExecuting(true);
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;

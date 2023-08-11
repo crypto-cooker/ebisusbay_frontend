@@ -37,7 +37,7 @@ const Barracks = ({onBack}: BarracksProps) => {
   const checkForBattleRewards = async () => {
     if (!user.address) return;
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;

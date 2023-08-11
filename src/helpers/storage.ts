@@ -20,7 +20,7 @@ export const setAuthSignerInStorage = (signer: { date: Date, signature: string, 
   localStorage.setItem(LOCAL_STORAGE_ITEMS.authSignature, JSON.stringify(signer));
 };
 
-export const getAuthSignerInStorage = (): { date: Date, signature: string, address: string } => {
+export const getAuthSignerInStorage = (): { date: Date, signature: string, address: string } | null => {
   const item = localStorage.getItem(LOCAL_STORAGE_ITEMS.authSignature);
   return item ? JSON.parse(item) : null;
 };

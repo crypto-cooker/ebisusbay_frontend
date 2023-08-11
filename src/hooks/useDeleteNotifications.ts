@@ -24,7 +24,7 @@ const useDeleteNotifications = () => {
       error: undefined,
     });
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;

@@ -106,7 +106,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   };
 
   // const GetGameTokens = async () => {
-  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
   //   if (!signatureInStorage) {
   //     const { signature } = await getSigner();
   //     signatureInStorage = signature;
@@ -124,7 +124,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   //   }
   // }
   // const ClaimDailyRewards = async () => {
-  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
   //   if (!signatureInStorage) {
   //     const { signature } = await getSigner();
   //     signatureInStorage = signature;
@@ -158,7 +158,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   // const CheckForGameTokens = async () => {
   //   if (!user.address) return;
   
-  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
   //   if (!signatureInStorage) {
   //     const { signature } = await getSigner();
   //     signatureInStorage = signature;

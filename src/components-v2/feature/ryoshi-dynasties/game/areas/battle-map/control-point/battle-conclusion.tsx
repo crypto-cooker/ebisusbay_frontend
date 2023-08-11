@@ -161,7 +161,7 @@ const BattleConclusion = ({attackerTroops, defenderTroops, battleAttack, display
     if(defendersSlain>0) CheckForBattleRewards();
   }
   const CheckForBattleRewards = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
