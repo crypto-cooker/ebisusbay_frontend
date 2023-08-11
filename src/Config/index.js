@@ -172,6 +172,7 @@ export const configData = {
           '0xdbFDf81D1fDD2e79e8ffaDE50c219452587e9488': ['frtn'],        // Cowz
           '0xc6Cfb3f2D9D33FF1D0B77cE78c5dD6f790B5605A': ['cro', 'frtn'], // Punk Weapon
           '0x6625e0b113CC4f4E70Fc409Cd1ABFcE8Cf7E747b': ['cro', 'frtn'], // Cyberpunk Cronicles
+          '0xA560c70220c32c81217cF993676d177d43D48349': ['cro', 'frtn'], // CroDoo
         }
       }
     }
