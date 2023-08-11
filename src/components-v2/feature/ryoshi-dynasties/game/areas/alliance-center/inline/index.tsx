@@ -27,7 +27,7 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
+  ModalCloseButton, useClipboard,
 } from "@chakra-ui/react";
 import {ArrowBackIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
@@ -449,7 +449,12 @@ const CurrentFaction = () => {
                           <SimpleGrid columns={2} w='full'>
                             {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => (
                               <>
-                                <Box textAlign='start'>{isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}</Box>
+                                <Box textAlign='start'>
+                                  <CopyableText
+                                    text={user.profileWalletAddress}
+                                    label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
+                                  />
+                                </Box>
                                 <Box textAlign='end'>{commify(user.troops)}</Box>
                               </>
                             ))}
@@ -494,7 +499,12 @@ const CurrentFaction = () => {
                             {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).deployed.users.map((user) => (
                               <AccordionItem bgColor='#564D4A' rounded='md'>
                                 <Flex w='100%' ps={4}>
-                                  <Box flex='1' textAlign='left' my='auto'>{isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}</Box>
+                                  <Box flex='1' textAlign='left' my='auto'>
+                                    <CopyableText
+                                      text={user.profileWalletAddress}
+                                      label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
+                                    />
+                                  </Box>
                                   <Box ms={2} my='auto' fontWeight='bold'>{commify(user.troops)}</Box>
                                   <AccordionButton w='auto'>
                                     <AccordionIcon />
@@ -575,7 +585,12 @@ const CurrentFaction = () => {
                             {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).slain.users.map((user) => (
                               <AccordionItem bgColor='#564D4A' rounded='md'>
                                 <Flex w='100%' ps={4}>
-                                  <Box flex='1' textAlign='left' my='auto'>{isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}</Box>
+                                  <Box flex='1' textAlign='left' my='auto'>
+                                    <CopyableText
+                                      text={user.profileWalletAddress}
+                                      label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
+                                    />
+                                  </Box>
                                   <Box ms={2} my='auto' fontWeight='bold'>{commify(user.troops)}</Box>
                                   <AccordionButton w='auto'>
                                     <AccordionIcon />
@@ -683,4 +698,16 @@ const CurrentFaction = () => {
 
     </Box>
   );
+}
+
+const CopyableText = ({text, label}: {text: string, label: string}) => {
+  const { onCopy, value, setValue, hasCopied } = useClipboard('');
+
+  useEffect(() => {
+    setValue(text);
+  }, [text]);
+
+  return (
+    <Text cursor='pointer' onClick={onCopy}>{label}</Text>
+  )
 }
