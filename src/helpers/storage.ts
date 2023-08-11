@@ -8,7 +8,7 @@ export const LOCAL_STORAGE_ITEMS = {
   dismissRdAnnouncement: 'DISMISS_RD_ANNOUNCEMENT',
 };
 
-export const setThemeInStorage = (theme) => {
+export const setThemeInStorage = (theme: string) => {
   localStorage.setItem(LOCAL_STORAGE_ITEMS.theme, theme);
 };
 
@@ -16,12 +16,13 @@ export const getThemeInStorage = () => {
   return localStorage.getItem(LOCAL_STORAGE_ITEMS.theme);
 };
 
-export const setAuthSignerInStorage = (signer) => {
+export const setAuthSignerInStorage = (signer: { date: Date, signature: string, address: string }) => {
   localStorage.setItem(LOCAL_STORAGE_ITEMS.authSignature, JSON.stringify(signer));
 };
 
-export const getAuthSignerInStorage = () => {
-  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_ITEMS.authSignature));
+export const getAuthSignerInStorage = (): { date: Date, signature: string, address: string } => {
+  const item = localStorage.getItem(LOCAL_STORAGE_ITEMS.authSignature);
+  return item ? JSON.parse(item) : null;
 };
 
 export const removeAuthSignerInStorage = () => {
@@ -34,19 +35,30 @@ export const getCartInStorage = () => {
   return [];
 };
 
-export const addToCartInStorage = (listingId, {name, image, price, address, id, rank, amount = 1, currency}) => {
+type CartItem = {
+  name: string;
+  image: string;
+  price: number;
+  address: string;
+  id: string;
+  rank: number;
+  amount: number;
+  currency: string;
+}
+
+export const addToCartInStorage = (listingId: string, {name, image, price, address, id, rank, amount = 1, currency}: CartItem) => {
   let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);
   const cart = storage ? JSON.parse(storage) : [];
-  if (!cart.some((o) => o.listingId === listingId)) {
+  if (!cart.some((o: any) => o.listingId === listingId)) {
     cart.push({listingId, name, image, price, address, id, rank, amount, currency});
     localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, JSON.stringify(cart));
   }
 };
 
-export const removeFromCartInStorage = (listingId) => {
+export const removeFromCartInStorage = (listingId: string) => {
   let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);
   let cart = storage ? JSON.parse(storage) : [];
-  cart = cart.filter((o) => o.listingId !== listingId);
+  cart = cart.filter((o: any) => o.listingId !== listingId);
   localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, JSON.stringify(cart));
 };
 
@@ -60,28 +72,28 @@ export const getSearchVisitsInStorage = () => {
   return [];
 };
 
-export const addToSearchVisitsInStorage = (collection) => {
+export const addToSearchVisitsInStorage = (collection: any) => {
   let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.searchVisits);
   const items = storage ? JSON.parse(storage) : [];
-  if (!items.map((o) => o.address.toLowerCase()).includes(collection.address.toLowerCase())) {
+  if (!items.map((o: any) => o.address.toLowerCase()).includes(collection.address.toLowerCase())) {
     items.push(collection);
     localStorage.setItem(LOCAL_STORAGE_ITEMS.searchVisits, JSON.stringify(items));
   }
 };
 
-export const removeSearchVisitFromStorage = (address) => {
+export const removeSearchVisitFromStorage = (address: string) => {
   let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.searchVisits);
   let items = storage ? JSON.parse(storage) : [];
-  items = items.filter((o) => !caseInsensitiveCompare(o.address, address));
+  items = items.filter((o: any) => !caseInsensitiveCompare(o.address, address));
   localStorage.setItem(LOCAL_STORAGE_ITEMS.searchVisits, JSON.stringify(items));
 };
 
-export const getBooleanValue = (key) => {
+export const getBooleanValue = (key: string) => {
   return localStorage.getItem(key);
 }
 
-export const setBooleanValue = (key, value) => {
-  localStorage.setItem(key, value);
+export const setBooleanValue = (key: string, value: boolean) => {
+  localStorage.setItem(key, value.toString());
 }
 
 export const persistRdAnnouncementDismissal = () => {
