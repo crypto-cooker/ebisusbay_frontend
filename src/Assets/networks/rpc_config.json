@@ -19331,7 +19331,7 @@
       "multiToken": false,
       "address": "0x7C144DBF04cf991d932bf6DC404C8B37c8807946",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Elf Citizens is a collection of 1,111 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
         "avatar": "/img/collections/elf-citizens/avatar.webp",
