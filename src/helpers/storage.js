@@ -4,7 +4,8 @@ export const LOCAL_STORAGE_ITEMS = {
   theme: 'THEME',
   authSignature: 'AUTH_SIGNATURE',
   cart: 'CART',
-  searchVisits: 'SEARCH_VISITS'
+  searchVisits: 'SEARCH_VISITS',
+  dismissRdAnnouncement: 'DISMISS_RD_ANNOUNCEMENT',
 };
 
 export const setThemeInStorage = (theme) => {
@@ -74,3 +75,19 @@ export const removeSearchVisitFromStorage = (address) => {
   items = items.filter((o) => !caseInsensitiveCompare(o.address, address));
   localStorage.setItem(LOCAL_STORAGE_ITEMS.searchVisits, JSON.stringify(items));
 };
+
+export const getBooleanValue = (key) => {
+  return localStorage.getItem(key);
+}
+
+export const setBooleanValue = (key, value) => {
+  localStorage.setItem(key, value);
+}
+
+export const persistRdAnnouncementDismissal = () => {
+  setBooleanValue(LOCAL_STORAGE_ITEMS.dismissRdAnnouncement, true);
+}
+
+export const isRdAnnouncementDismissed = () => {
+  return getBooleanValue(LOCAL_STORAGE_ITEMS.dismissRdAnnouncement);
+}

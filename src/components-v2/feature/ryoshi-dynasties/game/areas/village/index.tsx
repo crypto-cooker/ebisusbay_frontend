@@ -39,6 +39,7 @@ import {
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import { RdGameState } from "@src/core/services/api-service/types";
+import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
 
 interface VillageProps {
   onChange: (value: string) => void;
@@ -528,8 +529,11 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
       // Use timer to allow SEO bots to crawl the page before announcement board pops up.
       const timer = setTimeout(() => {
-        onOpenAnnouncementBoard();
-        onFirstRun();
+        if (!isRdAnnouncementDismissed()) {
+          onOpenAnnouncementBoard();
+          onFirstRun();
+          persistRdAnnouncementDismissal();
+        }
       }, 2000);
 
       return () => clearTimeout(timer);
