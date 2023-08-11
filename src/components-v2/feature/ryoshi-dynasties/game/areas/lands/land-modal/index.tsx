@@ -197,7 +197,7 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
           isOpen={openMakeOfferDialog}
           initialNft={nftOffer}
           onClose={() => setOpenMakeOfferDialog(false)}
-          nftId={plotId}
+          nftId={plotId.toString()}
           nftAddress={"0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad"}
         />
       )}
