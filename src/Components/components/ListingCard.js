@@ -265,7 +265,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                   </Box>
                   <Box>
                     <Flex alignItems='center'>
-                      <DynamicCurrencyIcon address={listing.currency} size={4} />
+                      <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
                       <Box as='span' ms={1}>
                         {getCorrectPrice(listing.price)}
                       </Box>

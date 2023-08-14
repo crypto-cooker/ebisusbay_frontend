@@ -38,7 +38,7 @@ import {
   UserBatchExtras,
   UserBatchItem
 } from "@src/GlobalState/user-batch";
-import {Contract} from "ethers";
+import {Contract, ethers} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
 import {ciEquals, createSuccessfulTransactionToastContent, isBundle, round} from "@src/utils";
@@ -55,6 +55,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -102,24 +103,20 @@ const expirationDatesValues = [
 ];
 
 const defaultExpiry = 2592000000;
-const currencyImages: {[key: string]: ReactElement} = {
-  'cro': <CronosIconBlue boxSize={6}/>,
-  'frtn': <FortuneIcon boxSize={6}/>,
-};
 const currencyOptions = [
   ...config.listings.currencies.available
-    .filter((symbol: string) => config.tokens[symbol.toLowerCase()])
+    .filter((symbol: string) => !!config.tokens[symbol.toLowerCase()])
     .map((symbol: string) => {
       const token = config.tokens[symbol.toLowerCase()];
       return {
         ...token,
-        image: currencyImages[token.symbol.toLowerCase()] || <CronosIconBlue boxSize={6}/>
+        image: <DynamicCurrencyIcon address={token.address} boxSize={6} />
       }
     }),
   {
     name: 'CRO',
     symbol: 'cro',
-    image: currencyImages['cro']
+    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
   }
 ];
 
