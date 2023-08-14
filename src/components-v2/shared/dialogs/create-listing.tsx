@@ -155,7 +155,8 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const { usdValueForToken, croValueForToken } = useExchangeRate();
 
   const isBelowFloorPrice = (price: number) => {
-    return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
+    const croPrice = tokenToCroValue(price);
+    return (floorPrice !== 0 && ((floorPrice - croPrice) / floorPrice) * 100 > floorThreshold);
   };
 
   const costOnChange = useCallback((e: any) => {
@@ -642,7 +643,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                     {showConfirmButton ? (
                       <>
                         <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
-                          The desired price is {(100 - ((salePrice ?? 0) * 100 / floorPrice)).toFixed(1)}% below the current floor price of {floorPrice} CRO. Are you sure?
+                          The desired price is {(100 - ((tokenToCroValue(salePrice ?? 0)) * 100 / floorPrice)).toFixed(1)}% below the current floor price of {floorPrice} CRO. Are you sure?
                         </div>
                         {executingCreateListing && (
                           <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
