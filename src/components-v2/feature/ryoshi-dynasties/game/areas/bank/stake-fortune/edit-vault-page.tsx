@@ -197,11 +197,9 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
   // Calculate APR and Troops from vault plus input
   useEffect(() => {
     const isAddingDuration = type === 'duration';
-    const depositLength = vault.length / 86400;
 
-    let totalDays = depositLength;
-    const canUseDuration = isAddingDuration;
-    if (canUseDuration) {
+    let totalDays = vault.length / 86400;
+    if (isAddingDuration) {
       totalDays += daysToStake;
     }
     const numTerms = Math.floor(totalDays / rdConfig.bank.staking.fortune.termLength);
@@ -209,11 +207,6 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
     const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
     setNewApr(availableAprs[aprKey] ?? availableAprs[1]);
 
-    let totalFortune = Number(ethers.utils.formatEther(vault.balance));
-    if (!isAddingDuration) {
-      totalFortune += fortuneToStake;
-    }
-    const daysForTroops = canUseDuration ? totalDays : depositLength;
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
     const sumDays = Number(vault.length / (86400)) + (type === 'duration' ? daysToStake : 0);
     const sumAmount = Number(ethers.utils.formatEther(vault.balance)) + (type === 'amount' ? fortuneToStake : 0);
@@ -221,8 +214,12 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
     if (newTroops < 1 && sumAmount > 0) newTroops = 1;
     setNewTroops(newTroops);
 
-    setNewWithdrawDate((Number(vault.endTime) + (daysToStake * 86400))*1000);
-  }, [daysToStake, fortuneToStake]);
+    if (isAddingDuration) {
+      setNewWithdrawDate((Number(vault.endTime) + (daysToStake * 86400)) * 1000);
+    } else {
+      setNewWithdrawDate(Number(vault.endTime) * 1000);
+    }
+  }, [daysToStake, fortuneToStake, vault]);
 
   // Calculate APR and Troops from current vault
   useEffect(() => {
