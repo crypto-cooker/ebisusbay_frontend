@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {Spinner} from "react-bootstrap";
 import {Contract, ContractReceipt, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {isBundle, isFortuneToken, isGaslessListing, knownErc20Token, round} from "@src/utils";
+import {isBundle, isErc20Token, isGaslessListing, knownErc20Token, round} from "@src/utils";
 import {getTheme} from "@src/Theme/theme";
 import {
   Box,
-  Button as ChakraButton, Center,
+  Button as ChakraButton,
   Flex,
+  HStack,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -21,9 +21,10 @@ import {
   ModalOverlay,
   SimpleGrid,
   Spacer,
-  Text, VStack
+  Spinner,
+  Text,
+  VStack
 } from "@chakra-ui/react";
-import Image from "next/image";
 import {commify} from "ethers/lib/utils";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import {useQuery} from "@tanstack/react-query";
@@ -57,6 +58,24 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
 
   const [isComplete, setIsComplete] = useState(false);
   const [tx, setTx] = useState<ContractReceipt>();
+
+  const getInitialProps = async () => {
+    const listingsResponse = await NextApiService.getListingsByIds(listingId);
+    const listing = listingsResponse.data[0];
+
+    const fees = await readMarket.fee(user.address);
+    setFee((fees / 10000) * 100);
+
+    return listing;
+  };
+
+  const { error, data: listing, status } = useQuery({
+    queryKey: ['PurchaseDialog', listingId],
+    queryFn: getInitialProps,
+    refetchOnWindowFocus: false
+  });
+
+  const token = knownErc20Token(listing?.currency);
 
   const handleBuyCro = () => {
     const url = new URL(config.vendors.transak.url);
@@ -92,21 +111,9 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
     }
   };
 
-  const getInitialProps = async () => {
-    const listingsResponse = await NextApiService.getListingsByIds(listingId);
-    const listing = listingsResponse.data[0];
 
-    const fees = await readMarket.fee(user.address);
-    setFee((fees / 10000) * 100);
 
-    return listing;
-  };
 
-  const { error, data: listing, status } = useQuery(
-    ['PurchaseDialog', listingId],
-    getInitialProps,
-    { refetchOnWindowFocus: false }
-  );
 
   const handleExecutePurchase = async () => {
     try {
@@ -151,9 +158,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
         <ModalCloseButton color={getTheme(user.theme)!.colors.textColor4} />
         {status === "loading" ? (
           <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner />
           </EmptyData>
         ) : status === "error" ? (
           <VStack spacing={0} mb={2}>
@@ -204,15 +209,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       <Box className="card form_icon_button shadow active" alignItems="start !important" p={2}>
                         <DotIcon icon={faCheck} />
                         {knownErc20Token(listing.currency) ? (
-                          <>
-                            <Flex align="center">
-                              <DynamicCurrencyIcon address={listing.currency} boxSize={6} />
-                              <Text as="span" ms={1}>{knownErc20Token(listing.currency)!.symbol}</Text>
-                            </Flex>
-                            <Flex mt={1}>
-                              <Text as="span" className="text-muted">Balance: {commify(round(user.fortuneBalance, 3))}</Text>
-                            </Flex>
-                          </>
+                          <CurrencyOption currency={knownErc20Token(listing.currency)} />
                         ) : (
                           <>
                             <Flex align="center">
@@ -239,16 +236,16 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                         </Flex>
                       </Box>
                     </Flex>
-                    {isFortuneToken(listing.currency) ? (
+                    {isErc20Token(listing.currency) && !!token ? (
                       <Box textAlign="end" fontSize="sm">
-                        Low on FRTN?&nbsp;
+                        Low on {token.name}?&nbsp;
                         <ChakraButton
                           size="sm"
                           variant="link"
                           color={getTheme(user.theme)!.colors.textColor4}
                           onClick={() => handleBuyErc20(listing.currency)}
                         >
-                          Buy FRTN
+                          Buy {token.name}
                         </ChakraButton>
                       </Box>
                     ) : (
@@ -292,4 +289,34 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       </ModalContent>
     </Modal>
   );
+}
+
+const CurrencyOption = ({currency}: {currency: {address: string, symbol: string, name: string}}) => {
+  const user = useAppSelector((state) => state.user);
+
+  const { data: tokenBalance, isLoading } = useQuery({
+    queryKey: ['UserTokenBalance', currency.address, user.address],
+    queryFn: async () => {
+      const tokenContract = user.contractService!.erc20(currency.address);
+      const balance = await tokenContract.balanceOf(user.address);
+      // const decimals = await tokenContract.decimals();
+      return ethers.utils.formatEther(balance);  // assuming
+    },
+    enabled: !!currency && !!user.address,
+  });
+
+  return (
+    <>
+      <Flex align="center">
+        <DynamicCurrencyIcon address={currency.address} boxSize={6} />
+        <Text as="span" ms={1}>{currency.symbol}</Text>
+      </Flex>
+      <Flex mt={1}>
+        <HStack as="span" className="text-muted">
+          <Box>Balance: </Box>
+          {isLoading ? <Spinner /> : <>{commify(round(tokenBalance, 2))}</>}
+        </HStack>
+      </Flex>
+    </>
+  )
 }

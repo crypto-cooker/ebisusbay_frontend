@@ -901,3 +901,7 @@ export const knownErc20Token = (address) => {
 export const isFortuneToken = (address) => {
   return caseInsensitiveCompare(address, config.tokens.frtn.address);
 }
+
+export const isErc20Token = (address) => {
+  return !!knownErc20Token(address);
+}
