@@ -440,7 +440,7 @@ export const configData = {
       bcro: {
         name: 'bCRO',
         symbol: 'bCRO',
-        address: '0xebaceb7f193955b946cc5dd8f8724a80671a1f2f',
+        address: '0x0A3cAaC2F607E38bF1C6533B9CB46aFAD918dE16',
       }
     },
     collections: rpcConfigTestnet.known_contracts,
