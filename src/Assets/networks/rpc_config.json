@@ -21679,7 +21679,7 @@
       "multiToken": false,
       "address": "0x262915dea2203a3483eaD96a4F22eF932aa932Bf",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "avatar": "/img/collections/barber-shop/avatar.webp",
