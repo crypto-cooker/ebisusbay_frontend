@@ -102,13 +102,13 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
           {isMobile ? (
             <Image
               alt="Buy FRTN on VVS"
-              src={ImageService.translate('/img/ryoshi-dynasties/announcements/vvs-sm.gif').convert()}
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines-sm.gif').convert()}
               maxH='300px'
             />
           ) : (
             // <Image
             //   alt="Buy FRTN on VVS"
-            //   src={ImageService.translate('/img/ryoshi-dynasties/announcements/vvs.webp').convert()}
+            //   src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines.webp').convert()}
             // />
             <MapFrame
           gridHeight={'15px 1fr 15px'}
@@ -139,7 +139,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
                 />
                   <Image
                     alt="Buy FRTN on VVS"
-                    src={ImageService.translate('/img/ryoshi-dynasties/announcements/vvs.webp').convert()}
+                    src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines.webp').convert()}
                   />
               </Link>
               </Box>
