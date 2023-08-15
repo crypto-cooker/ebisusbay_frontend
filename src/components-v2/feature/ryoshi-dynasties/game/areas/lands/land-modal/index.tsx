@@ -25,6 +25,7 @@ import { chainConnect, connectAccount } from '@src/GlobalState/User';
 import {CollectionFilters} from "@src/Components/Models/collection-filters.model";
 import { init, fetchListings } from '@src/GlobalState/collectionSlice';
 import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
+import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 
 const tabs = {
   info: 'info',
@@ -66,6 +67,7 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
   const dispatch = useDispatch();
   // const router = useRouter();
   const user = useAppSelector(state => state.user);
+  
   // const user = useSelector((state) => state.user);
   // const items = useSelector((state) => state.collection.listings);
   // const listings = useSelector((state) => state.collection.listings.filter((item) => item.market.id));
@@ -130,13 +132,7 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
       ) : (
         <>
           <SimpleGrid columns={2} padding='10'>
-            <Image
-              src={nftImage}
-              alt='NFT Image'
-              width='200'
-              height='200'
-              rounded={'md'}
-              />
+            <RdLand nftId={plotId.toString()} boxSize={183} />
               <Flex justifyContent={'center'}>
                 <VStack>
                 <Text

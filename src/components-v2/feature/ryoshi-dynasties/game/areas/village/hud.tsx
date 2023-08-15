@@ -35,6 +35,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBuilding, faClipboardList, faBlog} from "@fortawesome/free-solid-svg-icons";
 
 import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
+import { random, range } from "lodash";
 
 interface VillageHudProps {
   onOpenBuildings: () => void;
@@ -247,8 +248,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             </SimpleGrid>
           </Box>
       </Flex>
-      <RdLand nFTMetaData={selectedNFT}/>
-     
+      <RdLand nftId={Math.floor(Math.random() * 2500).toString()} boxSize={368}/>
     </Box>
   )
   
