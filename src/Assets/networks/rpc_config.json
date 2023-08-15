@@ -4128,7 +4128,7 @@
       "multiToken": false,
       "address": "0x0D21051BD422A9A54988d25b1Be1211Dc7f3D7bD",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Holding a Bushicro NFT is not just a simple possession, it is a badge of honor that signifies your dedication to the principles of the Bushido code. As a holder, you will unlock a special role in our Discord server, with increasing privileges based on the number of NFTs you own. These benefits translate into real-life utilities and perks that will enhance your standing as a true follower of the Bushido way.",
         "avatar": "/img/collections/bushicro/femalewarriors/avatar.webp",
@@ -29159,7 +29159,7 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/elf-citizens/drop.webp",
         "banner": "/img/collections/elf-citizens/banner.webp",
