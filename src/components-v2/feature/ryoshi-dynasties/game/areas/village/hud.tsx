@@ -34,7 +34,7 @@ import { CalendarIcon } from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBuilding, faClipboardList, faBlog} from "@fortawesome/free-solid-svg-icons";
 
-const config = appConfig();
+import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 
 interface VillageHudProps {
   onOpenBuildings: () => void;
@@ -59,18 +59,10 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
   const [timer, setTimer] = useState('00:00:00');
   const [canClaim, setCanClaim] = useState(true);
 
-  //image ref
-  const landTypeRef = useRef<any>(null);
-  const underlandLeftImageRef = useRef<any>(null);
-  const underlandMiddleImageRef = useRef<any>(null);
-  const underlandRightImageRef = useRef<any>(null);
-  const pathsImageRef = useRef<any>(null);
-  const northImageRef = useRef<any>(null);
-  const southImageRef = useRef<any>(null);
-  const eastImageRef = useRef<any>(null);
-  const westImageRef = useRef<any>(null);
+  //nft metadata
+  const[selectedNFT, setSelectedNFT] = useState<any>(null);
 
-    //timer functions
+  //timer functions
   const getTimeRemaining = (e:any) => {
     const total = Date.parse(e) - Date.now();
     const days = Math.floor(total / (1000 * 60 * 60 * 24));
@@ -138,107 +130,54 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     }
   };
 
-  // const GenerateIcon = () => {
-  //   let izanamiFolder = '/img/ryoshi-dynasties/lands/layers/'
-  //   // let izanamiFolder = '/img/ryoshi-dynasties/lands/izanamisCradle/'
-  //   console.log("GenerateIcon")
-  //   //get random from array of eye colors
-  //   let eyeColor = ['Cyan1', 'Green1', 'Pink1', 'Purple1', 'Red1', 'Yellow10'][Math.floor(Math.random() * 6)]
-  //   landTypeRef.current.src = izanamiFolder +'Eye color/'+eyeColor+'.png'
-
-  //   let eyeBall = ['Red50', 'White50'][Math.floor(Math.random() * 2)]
-  //   underlandLeftImageRef.current.src = '/img/ryoshi-dynasties/lands/layers/Eyeball/'+eyeBall+'.png'
-
-  //   let background = 'Black1'
-  //   underlandMiddleImageRef.current.src = '/img/ryoshi-dynasties/lands/layers/Background/'+background+'.png'
-
-  //   let iris = ['Large20', 'Medium20', 'Small60'][Math.floor(Math.random() * 3)]
-  //   northImageRef.current.src = '/img/ryoshi-dynasties/lands/layers/Iris/'+iris+'.png'
-
-  //   let topLid = ['High30', 'Low20', 'Middle50'][Math.floor(Math.random() * 3)]
-  //   pathsImageRef.current.src = '/img/ryoshi-dynasties/lands/layers/Top lid/'+topLid+'.png'
-
-  //   let bottomLid = ['High20', 'Low40', 'Middle40'][Math.floor(Math.random() * 3)]
-  //   underlandRightImageRef.current.src = '/img/ryoshi-dynasties/lands/layers/Bottom lid/'+bottomLid+'.png'
-  //   //get image from folder
-  //   // src = '/img/ryoshi-dynasties/lands/layers/Eye color/'+eyeColor+'.png'
-  // }
   let metaData = {
     "image": "",
     "name": "1",
     "attributes": [
-        {
-            "trait_type": "landType",
-            "value": "Highlands",
-            "display_type": "LandType"
-        },
-        {
-            "trait_type": "underlandLeft",
-            "value": "Fresh-Water",
-            "display_type": "Resource"
-        },
-        {
-            "trait_type": "northSpot",
-            "value": "Tree (Oak)",
-            "display_type": "Resource"
-        },
-        {
-            "trait_type": "southSpot",
-            "value": "Tree (Ash)",
-            "display_type": "Resource"
-        },
-        {
-            "trait_type": "eastSpot",
-            "value": "Bandit Camp",
-            "display_type": "PlacesOfInterest"
-        }
+      {
+        "trait_type": "landType",
+        "value": "Plains",
+        "display_type": "LandType"
+    },
+    {
+        "trait_type": "underlandLeft",
+        "value": "Fortune-Chest",
+        "display_type": "Resource"
+    },
+    {
+        "trait_type": "underlandRight",
+        "value": "Emerald",
+        "display_type": "Resource"
+    },
+    {
+        "trait_type": "northSpot",
+        "value": "Lotus",
+        "display_type": "Resource"
+    },
+    {
+        "trait_type": "southSpot",
+        "value": "Rock",
+        "display_type": "Resource"
+    },
+    {
+        "trait_type": "eastSpot",
+        "value": "Red-Yucca",
+        "display_type": "Resource"
+    },
+    {
+        "trait_type": "westSpot",
+        "value": "Paddy-Field",
+        "display_type": "Resource"
+    },
+    {
+      "trait_type": "road",
+      "value": "Dirt-Path",
+      "display_type": "Road"
+  }
     ]
 }
-interface NFTMetaData{
-  image : string;
-  name : string;
-  attributes : Attribute[];
-}
-interface Attribute{
-  trait_type : string;
-  value : string;
-  display_type : string;
-}
-const GetTraitType = (traitType:string, attributes:Attribute[]) => {
-  for(let i = 0; i < attributes.length; i++){
-    if(attributes[i].trait_type == traitType){
-      return attributes[i].value
-    }
-  }
-  return "empty"
-}
-const GetDisplayType = (traitType:string, attributes:Attribute[]) => {
-  for(let i = 0; i < attributes.length; i++){
-    if(attributes[i].display_type == traitType){
-      return attributes[i].display_type;
-    }
-  }
-  return "Empty";
-}
-
-
-  const GenerateLandPNG = (nft : NFTMetaData) => {
-
-    let izanamiFolder = '/img/ryoshi-dynasties/lands/izanamisCradle/'
-    console.log("Generate Land")
-
-    //get random from array of eye colors
-    landTypeRef.current.src = izanamiFolder +'LANDS/'+GetTraitType('landType', nft.attributes)+'.png'
-    // console.log(izanamiFolder +'UNDERLAND LEFT/'+GetTraitType('underlandMiddle', nft.attributes)+'.png')
-    
-    underlandLeftImageRef.current.src = izanamiFolder +'UNDERLAND LEFT/'+GetTraitType('underlandLeft', nft.attributes)+'(L).png'
-    underlandMiddleImageRef.current.src = izanamiFolder +'UNDERLAND MIDDLE/'+GetTraitType('underlandMiddle', nft.attributes)+'(M).png'
-    underlandRightImageRef.current.src = izanamiFolder +'UNDERLAND RIGHT/'+GetTraitType('underlandRight', nft.attributes)+'(R).png'
-
-    northImageRef.current.src = izanamiFolder +GetDisplayType('northSpot', nft.attributes)+'/'+GetTraitType('northSpot', nft.attributes)+'.png'
-    southImageRef.current.src = izanamiFolder +GetDisplayType('southSpot', nft.attributes)+'/'+GetTraitType('southSpot', nft.attributes)+'.png'
-    eastImageRef.current.src = izanamiFolder +GetDisplayType('eastSpot', nft.attributes)+'/'+GetTraitType('eastSpot', nft.attributes)+'.png'
-    westImageRef.current.src = izanamiFolder +GetDisplayType('westSpot', nft.attributes)+'/'+GetTraitType('westSpot', nft.attributes)+'.png'
+  const UpdateMetaData = (id: number) => {
+    setSelectedNFT(metaData)
   }
 
   useEffect(() => {
@@ -293,55 +232,23 @@ const GetDisplayType = (traitType:string, attributes:Attribute[]) => {
         <Box >
           <SimpleGrid columns={{base: 1, sm: 2}} gap={2}>
 
-          <DarkButton
-            onClick={onOpenBuildings}
-            icon={faBuilding}/>
+            <DarkButton
+              onClick={onOpenBuildings}
+              icon={faBuilding}/>
 
-          <DarkButton
-            onClick={onOpenBattleLog}
-            icon={faClipboardList}/>
+            <DarkButton
+              onClick={onOpenBattleLog}
+              icon={faClipboardList}/>
 
-          <DarkButton
-            onClick={() => GenerateLandPNG(metaData)}
-            icon={faBlog}/>
-          <Box
-            marginRight={100}
-            bg='black'
-            w={'50px'}
-            h={'50px'}
-            maxH={'50px'}
-            maxW={'50px'}
-            >
-            <Image  w='100' h='100' position={'absolute'}
-              src='/img/ryoshi-dynasties/lands/izanamisCradle/BACKGROUND/Green Background.png' zIndex={0}/>
-            <Image w='100' h='100' position={'absolute'}
-              ref={landTypeRef} zIndex={1}/>
-            <Image w='100' h='100' position={'absolute'}
-              ref={underlandLeftImageRef} zIndex={3}/>
-            <Image w='100' h='100' position={'absolute'} 
-              ref={underlandMiddleImageRef} zIndex={0}/>
-            <Image w='100' h='100' position={'absolute'}
-              ref={underlandRightImageRef} zIndex={5}/>
-            <Image w='100' h='100' position={'absolute'}
-              ref={pathsImageRef} zIndex={5}/>
-            
-            <Image w='100' h='100' position={'absolute'}
-              ref={northImageRef}zIndex={4} />
-            <Image w='100' h='100' position={'absolute'}
-              ref={southImageRef} zIndex={4}/>
-            <Image w='100' h='100' position={'absolute'}
-              ref={eastImageRef} zIndex={4}/>
-            <Image w='100' h='100' position={'absolute'}
-              ref={westImageRef} zIndex={4}/>
+            <DarkButton
+              onClick={() => UpdateMetaData(1)}
+              icon={faBlog}/>
 
-            
-            </Box>
-          </SimpleGrid>
-          
-          
-        </Box>
-
+            </SimpleGrid>
+          </Box>
       </Flex>
+      <RdLand nFTMetaData={selectedNFT}/>
+     
     </Box>
   )
   
