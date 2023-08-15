@@ -101,8 +101,8 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
       <Link as={NextLink} href='https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan' isExternal>
           {isMobile ? (
             <Image
-              alt="Buy FRTN on VVS"
-              src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines-sm.gif').convert()}
+              alt="Time Machine Spaceships"
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines-sm.webp').convert()}
               maxH='300px'
             />
           ) : (
@@ -135,7 +135,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
                 >
                 <Link as={NextLink} href='https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan' isExternal>
                   <Image
-                    alt="Buy FRTN on VVS"
+                    alt="Time Machine Spaceships"
                     src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines.webp').convert()}
                   />
                 </Link>
