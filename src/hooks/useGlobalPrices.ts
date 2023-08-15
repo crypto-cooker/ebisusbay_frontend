@@ -53,6 +53,13 @@ export const useExchangeRate = (chainId: number = 25) => {
     return tokenPrice && croPrice ? Number(croPrice.usdPrice) / Number(tokenPrice.usdPrice) : 0;
   }
 
+  const tokenToCroRate = (token: string) => {
+    const safeToken = token || ethers.constants.AddressZero;
+    const tokenPrice = globalPrices.prices.find((p) => ciEquals(p.currency, safeToken) && Number(p.chain) === Number(chainId));
+
+    return tokenPrice && croPrice ? Number(tokenPrice.usdPrice) / Number(croPrice.usdPrice) : 0;
+  }
+
   const usdValueForToken = (value: number, token?: string) => {
     const rate = usdRateForToken(token ?? ethers.constants.AddressZero);
     return value * rate;
@@ -65,7 +72,14 @@ export const useExchangeRate = (chainId: number = 25) => {
     return value * rate;
   }
 
-  return {usdRateForToken, croRateForToken, usdValueForToken, croValueForToken};
+  const tokenToCroValue = (value: number, token?: string) => {
+    if (token === ethers.constants.AddressZero) return value;
+
+    const rate = tokenToCroRate(token ?? ethers.constants.AddressZero);
+    return value * rate;
+  }
+
+  return {usdRateForToken, croRateForToken, usdValueForToken, croValueForToken, tokenToCroValue};
 }
 
 export const useTokenExchangeRate = (token: string, chainId: number = 25) => {

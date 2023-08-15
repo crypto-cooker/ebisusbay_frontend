@@ -70,6 +70,7 @@ import ListingBundleDrawerForm, {
 } from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-bundle-drawer-form";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {getPrices} from "@src/core/api/endpoints/prices";
+import {useExchangeRate} from "@src/hooks/useGlobalPrices";
 
 const config = appConfig();
 const MAX_NFTS_IN_GAS_CART = 100;
@@ -91,6 +92,7 @@ export const ListingDrawer = () => {
 
   const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings();
   const [cancelGaslessListing, response] = useCancelGaslessListing();
+  const { tokenToCroValue } = useExchangeRate();
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -293,7 +295,8 @@ export const ListingDrawer = () => {
       const nftPrices = batchListingCart.items.map((o) => {
         const floorPriceObj = nftFloorPrices.find((fp) => caseInsensitiveCompare(fp.address, o.nft.nftAddress));
         const perUnitPrice = o.priceType === 'each' ? Number(o.price) : Number(o.price) / o.quantity;
-        const isBelowFloor = !!floorPriceObj?.floorPrice && (floorPriceObj.floorPrice !== 0 && ((floorPriceObj.floorPrice - perUnitPrice) / floorPriceObj.floorPrice) * 100 > floorThreshold);
+        const croPrice = tokenToCroValue(perUnitPrice, config.tokens[o.currency?.toLowerCase() ?? 'cro'].address);
+        const isBelowFloor = !!floorPriceObj?.floorPrice && (floorPriceObj.floorPrice !== 0 && ((Number(floorPriceObj.floorPrice) - croPrice) / Number(floorPriceObj.floorPrice)) * 100 > floorThreshold);
         if (isBelowFloor) {
           floorWarning = true;
         }
