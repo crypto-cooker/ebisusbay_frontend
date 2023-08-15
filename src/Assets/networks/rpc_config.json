@@ -29236,7 +29236,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/0xluckless-v2-2/drop.webp",
         "banner": "/img/drops/0xluckless-v2-2/banner.webp",
