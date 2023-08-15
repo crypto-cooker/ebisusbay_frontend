@@ -25,7 +25,7 @@ import {
   useColorModeValue,
   VStack
 } from "@chakra-ui/react";
-import React, {ReactElement, useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {
   removeFromBatchListingCart,
   setApproval,
@@ -53,8 +53,6 @@ import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
-import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
-import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 const config = appConfig();
@@ -123,7 +121,7 @@ const currencyOptions = [
 interface ListingDrawerItemProps {
   item: UserBatchItem;
   onCascadePriceSelected: (startingItem: UserBatchItem, startingPrice: number) => void;
-  onApplyAllSelected: (price: number, expirationDate: number) => void;
+  onApplyAllSelected: (price: number, currencySymbol: string, expirationDate: number) => void;
   onAddCollection: (address: string) => void;
   disabled: boolean;
   isBundling?: boolean;
@@ -459,7 +457,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
               <FontAwesomeIcon icon={faEllipsisH} />
             </MenuButton>
             <MenuList textAlign="right">
-              <MenuItem onClick={() => onApplyAllSelected(Number(price), Number(expirationDate))}>Apply values to all</MenuItem>
+              <MenuItem onClick={() => onApplyAllSelected(Number(price), currency, Number(expirationDate))}>Apply values to all</MenuItem>
               <MenuItem onClick={() => onCascadePriceSelected(item, Number(price))}>Cascade price</MenuItem>
               <MenuItem onClick={() => onAddCollection(item.nft.nftAddress)}>Add entire collection</MenuItem>
               {item.nft.balance && item.nft.balance > 1 && (
