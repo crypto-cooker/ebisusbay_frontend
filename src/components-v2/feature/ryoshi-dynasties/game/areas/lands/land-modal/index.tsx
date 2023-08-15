@@ -132,7 +132,7 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
       ) : (
         <>
           <SimpleGrid columns={2} padding='10'>
-            <RdLand nftId={plotId.toString()} boxSize={183} />
+            <RdLand nftId={plotId.toString()} boxSize={199} />
               <Flex justifyContent={'center'}>
                 <VStack>
                 <Text

@@ -165,6 +165,8 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   }
   const loadPoints = () => {
     if(!filteredMapData || !filteredMetadata) return;
+
+    console.log("loadPoints", filteredMetadata);
     
     setTextArea(
       filteredMapData.vectors.map((point: any, i :number) => (
@@ -179,21 +181,23 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               height={4}
               left={point.x-2}
               top={1662 - point.y-2}
-              id={i.toString()}
+              id={filteredMapData.nfts[i].toString()}
               cursor="pointer"
               zIndex="10"
               onClick={() => {
-                setElementToZoomTo((i).toString());
+                setElementToZoomTo(filteredMapData.nfts[i].toString());
               }}
             ></Icon>
           </> ) : (<> 
+          <>
+          console.log("point", point);
             <Text
               position="absolute"
               textAlign="center"
               as={'b'}
-              textColor={GetTextColor(i+1)}
+              textColor={GetTextColor(Number(filteredMapData.nfts[i].name)+1)}
               cursor="pointer"
-              id={i.toString()}
+              id={filteredMapData.nfts[i].toString()}
               fontSize={8}
               width={6}
               height={3}
@@ -201,9 +205,10 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               top={1662 - point.y-1}
               zIndex="10"
               onClick={() => {
-                setElementToZoomTo((i).toString());
+                setElementToZoomTo(filteredMapData.nfts[i].toString());
               }}
-            >{i+1}</Text>
+            >{filteredMapData.nfts[i]}</Text>
+          </>
           </>)}
         </>
       )))
@@ -276,7 +281,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     if (transformComponentRef.current) {
       const { zoomToElement } = transformComponentRef.current as any;
       zoomToElement(elementToZoomTo);
-      setPlotId(Number(elementToZoomTo)+1);
+      setPlotId(Number(elementToZoomTo));
       onOpen();
     }
   }, [elementToZoomTo]);
@@ -308,7 +313,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     if(!landsMetadata) return;
     if(!mapData) return;
 
-    setFilteredMapData(mapData);
+    setFilteredMapData({vectors: mapData.vectors, nfts: landsMetadata.finalMetadata});
     setFilteredMetadata(landsMetadata);
   }, [mapData, landsMetadata, resetMap]);
 
@@ -332,7 +337,12 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     let filteredMapDataLocal = mapData.vectors.filter((item: any, index:number) => {
       return filteredMetadata.finalMetadata.some((metadata: landNFT) => metadata.name === (index+1).toString());
     });
-    setFilteredMapData({vectors: filteredMapDataLocal});
+
+    let nftIdsLocal = filteredMetadata.finalMetadata.map((item: any) => {
+      return item.name;
+    });
+
+    setFilteredMapData({vectors: filteredMapDataLocal, nfts: nftIdsLocal});
 
   }, [filteredMetadata]);
 
@@ -427,6 +437,7 @@ interface landNFT{
 }
 interface MapPoints{
   vectors:Vector[];
+  nfts:landNFT[];
 }
 interface Vector{
   x:number;

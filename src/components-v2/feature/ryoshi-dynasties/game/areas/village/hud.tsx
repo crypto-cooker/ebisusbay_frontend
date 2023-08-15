@@ -248,7 +248,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             </SimpleGrid>
           </Box>
       </Flex>
-      <RdLand nftId={Math.floor(Math.random() * 2500).toString()} boxSize={368}/>
+      {/* <RdLand nftId={Math.floor(Math.random() * 2500).toString()} boxSize={368}/> */}
     </Box>
   )
   
