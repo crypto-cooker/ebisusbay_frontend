@@ -8362,11 +8362,6 @@ native-fetch@^3.0.0:
   resolved "https://registry.npmjs.org/native-fetch/-/native-fetch-3.0.0.tgz"
   integrity sha512-G3Z7vx0IFb/FQ4JxvtqGABsOTIqRWvgQz6e+erkB+JJD6LrszQtMozEHI4EkmgZQvnGHrpLVzUWk7t4sJCIkVw==
 
-native-forms-react@^1.9.66:
-  version "1.9.66"
-  resolved "https://registry.npmjs.org/native-forms-react/-/native-forms-react-1.9.66.tgz"
-  integrity sha512-Ytmqs2SZsIEoxi0r+a5E7j/XcEa3+2HznwRnRYyv/OyLqnim/FItZ7AN6Mwo/0VcSYVZFPKZko4ZuEmO07hLaw==
-
 natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"

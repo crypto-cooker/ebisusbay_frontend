@@ -1,17 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
-import { useSelector } from 'react-redux';
+import styled, {createGlobalStyle} from 'styled-components';
 import Reveal from 'react-awesome-reveal';
-import { keyframes } from '@emotion/react';
+import {keyframes} from '@emotion/react';
 import dynamic from 'next/dynamic';
-import { faLightbulb, faTags } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faLightbulb, faTags} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useRouter} from "next/router";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 import {GetServerSidePropsContext} from "next";
 import {useAppSelector} from "@src/Store/hooks";
-const NativeForms = dynamic(() => import('native-forms-react'), { ssr: false });
 
 const fadeInUp = keyframes`
   0% {
@@ -181,17 +179,23 @@ const Application = ({type}: { type: string }) => {
               {openTab === choice.listing && (
                 <>
                   <Heading as="h3" size="md" className="text-center">Listing Request</Heading>
-                  <StyledForm>
-                    <NativeForms {...{form: 'https://form.nativeforms.com/iNHbm1jZmoWRPBXaK1Db'} as any} />
-                  </StyledForm>
+                  <iframe
+                    height="1660px"
+                    src="https://noteforms.com/forms/listing-requests-silnni"
+                    style={{width: '100%', border:'none'}}
+                  >
+                  </iframe>
                 </>
               )}
               {openTab === choice.launchpad && (
                 <>
                   <Heading as="h3" size="md" className="text-center">Launchpad Request</Heading>
-                  <StyledForm>
-                    <NativeForms {...{form: 'https://form.nativeforms.com/AM0YjZ50jZmoWRPBXaK1Db'} as any} />
-                  </StyledForm>
+                  <iframe
+                    height="1660px"
+                    src="https://noteforms.com/forms/launchpad-applications-orrort"
+                    style={{width: '100%', border:'none'}}
+                  >
+                  </iframe>
                 </>
               )}
             </div>
