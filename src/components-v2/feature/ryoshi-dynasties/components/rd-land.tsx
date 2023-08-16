@@ -35,6 +35,7 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
   const rockFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/ROCKS/'
   const [size, setSize] = useState(184);
   const [isHighlands, setIsHighlands] = useState(false);
+  const [landType, setLandType] = useState('')
 
   const GetTraitType = (traitType:string, attributes:Attribute[], underlandSpot?:string) => {
     if(!underlandSpot) underlandSpot = '';
@@ -78,6 +79,15 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
     }
     return "empty.png";
   }
+  const GetLandType = (attributes:Attribute[]) => {
+    for(let i = 0; i < attributes.length; i++){
+      if(attributes[i].trait_type == 'landType'){
+        return attributes[i].value;
+      }
+    }
+    console.log("broken")
+    return "broken";
+  }
 
   const GenerateLandPNG = (nftId : string) => {
     console.log("Generating Land")
@@ -86,9 +96,10 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
     let folderPath = isCliffs ? rockFolderPath : mainFolderPath;
     // console.log(nft)
 
-    landTypeRef.current.src = folderPath +'LANDS/'+GetTraitType('landType', nft.attributes);
-    landsBaseRef.current.src = folderPath +'LAND BASE/' + (isCliffs ? 'Celestial-Cliffs.png' : 'Green-Land.png');
-    landsBackgroundRef.current.src = folderPath +'BACKGROUND/'+ (isCliffs ? 'Grey-Background.png' : 'Green-Background.png');
+    setLandType(GetLandType(nft.attributes));
+    landTypeRef.current.src = mainFolderPath +'LANDS/'+GetTraitType('landType', nft.attributes);
+    landsBaseRef.current.src = mainFolderPath +'LAND BASE/' + (isCliffs ? 'Celestial-Cliffs.png' : 'Green-Land.png');
+    landsBackgroundRef.current.src = mainFolderPath +'BACKGROUND/'+ (isCliffs ? 'Grey-Background.png' : 'Green-Background.png');
 
     underlandLeftImageRef.current.src = folderPath +'UNDERLAND LEFT/'+GetTraitType('underlandLeft', nft.attributes, '(L)')
     underlandMiddleImageRef.current.src = folderPath +'UNDERLAND MIDDLE/'+GetTraitType('underlandMiddle', nft.attributes, '(M)')
@@ -117,11 +128,90 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
   },[nftId])
 
   useEffect(() => {
+    // console.log("landType", landType)
+  },[landType])
+  
+  useEffect(() => {
     if(boxSize){
       setSize(boxSize)
     }
   },[boxSize])
 
+  const GetMarginLeft = (directional:string) => {
+    switch(landType){
+      case 'Highlands':
+        switch(directional){
+          case "North":
+            return size/3;
+          case "South":
+            return size/2.5;
+          case "East":
+            return size/1.4;
+          case "West":
+            return size/12;
+        }
+      case 'Beach':
+        switch(directional){
+          case "North":
+            return size/2.75;
+          case "South":
+            return size/3;
+          case "East":
+            return size/1.7;
+          case "West":
+            return size/8;
+        }
+      default:
+        switch(directional){
+          case "North":
+            return size/2.5;
+          case "South":
+            return size/2.5;
+          case "East":
+            return size/1.5;
+          case "West":
+            return size/8;
+        }
+    }
+  }
+  
+  const GetMarginTop = (directional:string) => {
+    switch(landType){
+      case 'Highlands':
+        switch(directional){
+          case "North":
+            return size/12;
+          case "South":
+            return size/1.9;
+          case "East":
+            return size/2.65;
+          case "West":
+            return size/3.75;
+        }
+      case 'Beach':
+        switch(directional){
+          case "North":
+            return size/4.5;
+          case "South":
+            return size/2;
+          case "East":
+            return size/3;
+          case "West":
+            return size/2.75;
+        }
+      default:
+        switch(directional){
+          case "North":
+            return size/4;
+          case "South":
+            return size/2;
+          case "East":
+            return size/2.75;
+          case "West":
+            return size/2.75;
+        }
+    }
+  }
   return (
 
     <Box
@@ -150,20 +240,20 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
       ref={underlandRightImageRef} zIndex={5}/>
     
     <Image 
-      ml={isHighlands ? size/3 : size/2.5} 
-      mt={isHighlands ? size/12 : size/4}
+      ml={GetMarginLeft("North")} 
+      mt={GetMarginTop("North")}
       ref={northImageRef}zIndex={4} position={'absolute'} maxW={size/5} maxH={size/5} />
     <Image
-      ml={isHighlands ? size/2.5 : size/2.5} 
-      mt={isHighlands ? size/1.9 : size/2}
+      ml={GetMarginLeft("South")} 
+      mt={GetMarginTop("South")}
       ref={southImageRef} zIndex={4} position={'absolute'} maxW={size/5} maxH={size/5} />
     <Image 
-      ml={isHighlands ? size/1.4 :size/1.5} 
-      mt={isHighlands ? size/2.65 :size/2.75}
+      ml={GetMarginLeft("East")} 
+      mt={GetMarginTop("East")}
       ref={eastImageRef} zIndex={4} position={'absolute'} maxW={size/5} maxH={size/5} />
     <Image 
-      ml={isHighlands ? size/12 : size/8} 
-      mt={isHighlands ? size/3.75 :size/2.75}
+      ml={GetMarginLeft("West")} 
+      mt={GetMarginTop("West")}
       ref={westImageRef} zIndex={4} position={'absolute'} maxW={size/5}  maxH={size/5} />
 
     <Image h={size} position={'absolute'}
