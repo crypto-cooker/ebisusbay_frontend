@@ -178,7 +178,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     ]
 }
   const UpdateMetaData = (id: number) => {
-    setSelectedNFT(metaData)
+    setSelectedNFT(id)
   }
 
   useEffect(() => {
@@ -242,13 +242,14 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
               icon={faClipboardList}/>
 
             <DarkButton
-              onClick={() => UpdateMetaData(1)}
+              onClick={() => UpdateMetaData(Math.floor(Math.random() * 2500))}
               icon={faBlog}/>
 
             </SimpleGrid>
           </Box>
+          <RdLand nftId={selectedNFT} boxSize={368}/>
       </Flex>
-      {/* <RdLand nftId={Math.floor(Math.random() * 2500).toString()} boxSize={368}/> */}
+      
     </Box>
   )
   
