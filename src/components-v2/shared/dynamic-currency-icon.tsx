@@ -14,6 +14,16 @@ const iconMapping: Record<string, (props: ChakraProps) => ReactElement> = {
     <Box width={props.boxSize} height={props.boxSize}>
       <Image src='/img/icons/bcro-outline.png' alt='bCRO Icon' title='bCRO' {...props} boxSize={undefined} />
     </Box>
+  ),
+  'mad': (props) => (
+    <Box width={props.boxSize} height={props.boxSize}>
+      <Image src='/img/icons/mad.png' alt='MAD Icon' title='MAD' {...props} boxSize={undefined} />
+    </Box>
+  ),
+  'vrse': (props) => (
+    <Box width={props.boxSize} height={props.boxSize}>
+      <Image src='/img/icons/vrse.png' alt='VRSE Icon' title='VRSE' {...props} boxSize={undefined} />
+    </Box>
   )
 };
 
