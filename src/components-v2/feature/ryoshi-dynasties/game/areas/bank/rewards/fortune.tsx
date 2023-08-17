@@ -113,7 +113,7 @@ const FortuneRewardsTab = () => {
                 <Box py={4}><hr /></Box>
                 {rewards.data.rewards.map((reward: any) => (
                   <>
-                    <ClaimRow reward={reward} burnMalus={burnMalus} />
+                    <ClaimRow reward={reward} burnMalus={burnMalus} onRefresh={refetch}/>
                   </>
                 ))}
               </>
@@ -129,7 +129,7 @@ const FortuneRewardsTab = () => {
   )
 }
 
-const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
+const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: number, onRefresh: () => void}) => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
@@ -158,7 +158,9 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
         const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
         await tx.wait();
       }
-      toast.success('Withdraw success!')
+      toast.success('Withdraw success!');
+      setVaultIndexWarningOpenWithProps(false);
+      onRefresh();
     } catch (e) {
       console.log(e);
     } finally {
@@ -187,6 +189,7 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
         }
         const tx = await user.contractService?.ryoshiPlatformRewards.compound(auth.data.reward, auth.data.signature);
         await tx.wait();
+        toast.success('Compound complete!');
       }
     } catch (e) {
       console.log(e);
@@ -209,9 +212,10 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
         const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, seasonId, newVault.index, signatureInStorage)
         const tx = await user.contractService?.ryoshiPlatformRewards.cancelCompound(auth.data.reward, auth.data.signature);
         await tx.wait();
+        toast.success('Previous request cancelled');
+        setExecutingCancelCompound(false);
+        await handleCompound(newVault, seasonId, true);
       }
-      setExecutingCancelCompound(false);
-      await handleCompound(newVault, seasonId, true);
     } catch (e) {
       console.log(e);
     } finally {
@@ -228,7 +232,7 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
             onClaim={onOpenConfirmation}
             isExecutingClaim={executingClaim}
             onCompound={handleCompound}
-            isExecutingCompound={executingCompound}
+            isExecutingCompound={executingCompound || executingCancelCompound}
           />
 
           <RdModal
@@ -242,21 +246,23 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
             </RdModalAlert>
             <RdModalFooter>
               <Stack justify='center' direction='row' spacing={6}>
+                {!executingCompound && !executingCancelCompound && (
+                  <RdButton
+                    onClick={() => setVaultIndexWarningOpenWithProps(false)}
+                    size='lg'
+                  >
+                    Cancel
+                  </RdButton>
+                )}
                 <RdButton
-                  onClick={() => setVaultIndexWarningOpenWithProps(false)}
+                  onClick={() => {
+                    setVaultIndexWarningOpenWithProps(false);
+                    handleChangeCompound((vaultIndexWarningOpenWithProps as any).newVault, Number(reward.seasonId))
+                  }}
                   size='lg'
-                  isLoading={executingCancelCompound}
-                  isDisabled={executingCancelCompound}
-                  loadingText='Cancelling'
-                >
-                  Cancel
-                </RdButton>
-                <RdButton
-                  onClick={() => handleCompound((vaultIndexWarningOpenWithProps as any).newVault, Number(reward.seasonId), true)}
-                  size='lg'
-                  isLoading={executingCompound}
-                  isDisabled={executingCompound}
-                  loadingText='Confirming'
+                  // isLoading={executingCompound || executingCancelCompound}
+                  // isDisabled={executingCompound || executingCancelCompound}
+                  // loadingText='Confirming'
                 >
                   Confirm
                 </RdButton>

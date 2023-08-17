@@ -102,10 +102,9 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
   async requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, seasonId: number, vaultIndex: number, signature: string) {
     const response = await this.cms.post(
-      `ryoshi-dynasties/fortune-rewards/compound/${seasonId}`,
+      `ryoshi-dynasties/fortune-rewards/compound/${seasonId}/${vaultIndex}`,
       {
-        amount,
-        vaultIndex
+        amount
       },
       {
         params: {
