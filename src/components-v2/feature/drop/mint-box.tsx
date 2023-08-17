@@ -4,7 +4,7 @@ import {dropState as statuses} from "@src/core/api/enums";
 import {constants, ethers} from "ethers";
 import {createSuccessfulTransactionToastContent, percentage, round} from "@src/utils";
 import {ProgressBar, Spinner} from "react-bootstrap";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
@@ -18,6 +18,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import {Drop} from "@src/core/models/drop";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -53,6 +54,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   const [numToMint, setNumToMint] = useState(1);
   const [mintingState, setMintingState] = useState(null);
   const isReady = !!maxSupply;
+  const [erc20Token, setErc20Token] = useState<{name: string, symbol: string, address: string} | null>(null);
 
   const connectWalletPressed = () => {
     if (user.needsOnboard) {
@@ -227,7 +229,16 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       dispatch(connectAccount());
     }
   };
-  
+
+  useEffect(() => {
+    const tokenKey = drop.erc20Token?.toLowerCase();
+    const tokenValue = config.tokens[tokenKey ?? ''];
+
+    if (tokenValue) {
+      setErc20Token(tokenValue);
+    }
+  }, [drop]);
+
   return (
     <div className="card h-100 shadow mt-2" style={{
       borderColor:getTheme(userTheme).colors.borderColor3,
@@ -256,8 +267,13 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                           </Flex>
                         </Heading>
                       )}
-                      {drop.erc20Cost && drop.erc20Token && (
-                        <Heading as="h5" size="md">{`${ethers.utils.commify(round(drop.erc20Cost))} ${config.tokens[drop.erc20Token].symbol}`}</Heading>
+                      {drop.erc20Cost && drop.erc20Token && erc20Token && (
+                        <Heading as="h5" size="md" mt={1}>
+                          <Flex alignItems='center'>
+                            <DynamicCurrencyIcon address={erc20Token.address} boxSize={6} />
+                            <span className="ms-2">{ethers.utils.commify(round(drop.erc20Cost))}</span>
+                          </Flex>
+                        </Heading>
                       )}
                     </>
                   )}
@@ -273,8 +289,13 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                         </Flex>
                       </Heading>
                     )}
-                    {!!drop.erc20Token && !!drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost && (
-                      <Heading as="h5" size="md">{`${ethers.utils.commify(round(drop.erc20MemberCost))} ${config.tokens[drop.erc20Token].symbol}`}</Heading>
+                    {!!drop.erc20Token && !!drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost && erc20Token && (
+                      <Heading as="h5" size="md" mt={1}>
+                        <Flex alignItems='center'>
+                          <DynamicCurrencyIcon address={erc20Token.address} boxSize={6} />
+                          <span className="ms-2">{ethers.utils.commify(round(drop.erc20MemberCost))}</span>
+                        </Flex>
+                      </Heading>
                     )}
                   </Box>
                 )}
@@ -288,6 +309,14 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                         <span className="ms-2">{ethers.utils.commify(round(whitelistCost))}</span>
                       </Flex>
                     </Heading>
+                    {!!drop.erc20Token && !!drop.erc20WhitelistCost && drop.erc20Cost !== drop.erc20WhitelistCost && erc20Token && (
+                      <Heading as="h5" size="md" mt={1}>
+                        <Flex alignItems='center'>
+                          <DynamicCurrencyIcon address={erc20Token.address} boxSize={6} />
+                          <span className="ms-2">{ethers.utils.commify(round(drop.erc20WhitelistCost))}</span>
+                        </Flex>
+                      </Heading>
+                    )}
                   </Box>
                 )}
 
