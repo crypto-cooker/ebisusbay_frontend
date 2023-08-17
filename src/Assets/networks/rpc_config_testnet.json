@@ -3657,13 +3657,14 @@
       "name": "Coom Cats",
       "slug": "coom-cats",
       "multiToken": false,
-      "address": "0xDf23671dD875c9de001a3A9977EE8082dd35ec86",
+      "address": "0x757092f15Fc90BEDa1089B3bd999AD8Ff45E1ef6",
       "onChain": false,
       "listable": true,
       "metadata": {
         "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
         "avatar": "/img/collections/coom-cats/avatar.webp",
         "card": "/img/collections/coom-cats/card.webp",
+        "banner": "/img/collections/coom-cats/banner.webp",
         "website": "https://coomcats.com/",
         "twitter": "https://twitter.com/CoomCatsNFT",
         "discord": "https://discord.gg/fDgERHyUzC",
@@ -8781,7 +8782,7 @@
         "twitter": "https://twitter.com/CoomCatsNFT",
         "discord": "https://discord.gg/fDgERHyUzC"
       },
-      "address": "0xDf23671dD875c9de001a3A9977EE8082dd35ec86",
+      "address": "0x757092f15Fc90BEDa1089B3bd999AD8Ff45E1ef6",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 100,
       "totalSupply": 1000,
@@ -8799,6 +8800,7 @@
       "images": {
         "drop": "/img/drops/coom-cats/drop.webp",
         "avatar": "/img/collections/coom-cats/avatar.webp",
+        "banner": "/img/collections/coom-cats/banner.webp",
         "preview": "/img/collections/coom-cats/card.webp"
       },
       "verification": {
