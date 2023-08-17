@@ -127,7 +127,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
           '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],        // Ryoshi Halloween
@@ -215,6 +215,11 @@ export const configData = {
           '0xDC5bBDb4A4b051BDB85B959eB3cBD1c8C0d0c105': ['cro', 'frtn', 'mad'], // MM Treehouse
           '0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8': ['cro', 'frtn', 'mad'], // Mad Meerkat Degen
           '0x23721073592FB452C556fB9322bA4dF6A6675050': ['cro', 'frtn', 'mad'], // Mad Sacks
+          '0x0aCDA31Cf1F301a7Eb8f988D47F708FbA058F8f5': ['cro', 'frtn', 'vrse'], // CronosVerse
+          '0x130a6c2884325d302830179C691D328dDAd9b78C': ['cro', 'frtn', 'vrse'], // Crovilians
+          '0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a': ['cro', 'frtn', 'vrse'], // Cro Snowmen
+          '0x1eD88baF12Ec3fd8D2955B1b2a883e6E79a10828': ['cro', 'frtn', 'vrse'], // The CronosVerse Suites
+          '0xaf038d14905409de31fb5577c460d18b1013e4f1': ['cro', 'frtn', 'vrse'], // The CronosVerse In-Game Assets
         }
       }
     }
@@ -334,7 +339,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
           '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],        // Ryoshi Halloween
@@ -422,6 +427,11 @@ export const configData = {
           '0xDC5bBDb4A4b051BDB85B959eB3cBD1c8C0d0c105': ['cro', 'frtn', 'mad'], // MM Treehouse
           '0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8': ['cro', 'frtn', 'mad'], // Mad Meerkat Degen
           '0x23721073592FB452C556fB9322bA4dF6A6675050': ['cro', 'frtn', 'mad'], // Mad Sacks
+          '0x0aCDA31Cf1F301a7Eb8f988D47F708FbA058F8f5': ['cro', 'frtn', 'vrse'], // CronosVerse
+          '0x130a6c2884325d302830179C691D328dDAd9b78C': ['cro', 'frtn', 'vrse'], // Crovilians
+          '0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a': ['cro', 'frtn', 'vrse'], // Cro Snowmen
+          '0x1eD88baF12Ec3fd8D2955B1b2a883e6E79a10828': ['cro', 'frtn', 'vrse'], // The CronosVerse Suites
+          '0xaf038d14905409de31fb5577c460d18b1013e4f1': ['cro', 'frtn', 'vrse'], // The CronosVerse In-Game Assets
         }
       }
     }
@@ -565,7 +575,7 @@ export const configData = {
       api: 'https://api.ebisusbay.com/',
       app: 'http://localhost:3000/',
       subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
-      cms: 'http://localhost:4000/api/',
+      cms: 'https://cms.ebisusbay.com/api/',
       cmsSocket: 'wss://cms.ebisusbay.com/socket/',
       explorer: 'https://cronoscan.com/',
       cdn: {
@@ -670,7 +680,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
           '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],        // Ryoshi Halloween
@@ -758,6 +768,11 @@ export const configData = {
           '0xDC5bBDb4A4b051BDB85B959eB3cBD1c8C0d0c105': ['cro', 'frtn', 'mad'], // MM Treehouse
           '0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8': ['cro', 'frtn', 'mad'], // Mad Meerkat Degen
           '0x23721073592FB452C556fB9322bA4dF6A6675050': ['cro', 'frtn', 'mad'], // Mad Sacks
+          '0x0aCDA31Cf1F301a7Eb8f988D47F708FbA058F8f5': ['cro', 'frtn', 'vrse'], // CronosVerse
+          '0x130a6c2884325d302830179C691D328dDAd9b78C': ['cro', 'frtn', 'vrse'], // Crovilians
+          '0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a': ['cro', 'frtn', 'vrse'], // Cro Snowmen
+          '0x1eD88baF12Ec3fd8D2955B1b2a883e6E79a10828': ['cro', 'frtn', 'vrse'], // The CronosVerse Suites
+          '0xaf038d14905409de31fb5577c460d18b1013e4f1': ['cro', 'frtn', 'vrse'], // The CronosVerse In-Game Assets
         }
       }
     }
