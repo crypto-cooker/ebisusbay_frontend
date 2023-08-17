@@ -38,6 +38,7 @@ export interface RyoshiDynastiesApi {
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
     claimDailyRewards(address: string, signature: string): Promise<any>
     requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string): Promise<any>;
+    requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, seasonId: number, vaultIndex: number, signature: string): Promise<any>;
     getGlobalContext(): Promise<RyoshiConfig>;
     getUserContext(address: string, signature: string): Promise<RdUserContext>;
     getGameContext(): Promise<RdGameContext>;
