@@ -445,6 +445,7 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
                         </Grid>
                       </VStack>
                       <Button
+                        size='sm'
                         mt={1}
                         w='full'
                         variant='outline'
@@ -501,6 +502,7 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
                         </Grid>
                       </VStack>
                       <Button
+                        size='sm'
                         mt={1}
                         w='full'
                         variant='outline'
