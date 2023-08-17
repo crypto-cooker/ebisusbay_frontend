@@ -166,7 +166,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   const loadPoints = () => {
     if(!filteredMapData || !filteredMetadata) return;
 
-    console.log("loadPoints", filteredMetadata);
+    // console.log("loadPoints", filteredMetadata);
     
     setTextArea(
       filteredMapData.vectors.map((point: any, i :number) => (

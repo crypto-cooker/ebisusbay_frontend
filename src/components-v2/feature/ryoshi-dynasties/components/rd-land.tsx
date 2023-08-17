@@ -31,10 +31,12 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
   const southImageRef = useRef<any>(null);
   const eastImageRef = useRef<any>(null);
   const westImageRef = useRef<any>(null);
+  const waterSourceRef = useRef<any>(null);
+
   const mainFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/'
   const rockFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/ROCKS/'
   const [size, setSize] = useState(184);
-  const [isHighlands, setIsHighlands] = useState(false);
+  // const [isHighlands, setIsHighlands] = useState(false);
   const [landType, setLandType] = useState('')
 
   const GetTraitType = (traitType:string, attributes:Attribute[], underlandSpot?:string) => {
@@ -90,7 +92,7 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
   }
 
   const GenerateLandPNG = (nftId : string) => {
-    console.log("Generating Land")
+    // console.log("Generating Land")
     let nft : NFTMetaData = landsMetadata.finalMetadata.find((nft) => nft.name == nftId) as NFTMetaData;
     let isCliffs = IsCliffs(nft.attributes);
     let folderPath = isCliffs ? rockFolderPath : mainFolderPath;
@@ -110,13 +112,16 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
     eastImageRef.current.src = folderPath +GetDisplayType('eastSpot', nft.attributes)+'/'+GetTraitType('eastSpot', nft.attributes);
     westImageRef.current.src = folderPath +GetDisplayType('westSpot', nft.attributes)+'/'+GetTraitType('westSpot', nft.attributes);
 
+
     if(IsHighlands(nft.attributes)){
       pathsImageRef.current.src = folderPath +'PATHS/'+GetTraitTypeHighlands('road', nft.attributes);
-      setIsHighlands(true);
+      waterSourceRef.current.src = folderPath +'PATHS/'+GetTraitTypeHighlands('waterSource', nft.attributes);
+      // setIsHighlands(true);
     }
     else{
       pathsImageRef.current.src = folderPath +'PATHS/'+GetTraitType('road', nft.attributes);
-      setIsHighlands(false);
+      waterSourceRef.current.src = folderPath +'PATHS/'+GetTraitType('waterSource', nft.attributes);
+      // setIsHighlands(false);
     }
   }
 
@@ -256,8 +261,8 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
       mt={GetMarginTop("West")}
       ref={westImageRef} zIndex={4} position={'absolute'} maxW={size/5}  maxH={size/5} />
 
-    <Image h={size} position={'absolute'}
-      ref={pathsImageRef} zIndex={3}/>
+    <Image h={size} position={'absolute'} ref={pathsImageRef} zIndex={3}/>
+    <Image h={size} position={'absolute'} ref={waterSourceRef} zIndex={3}/>
     </Box>
 </Box>
   )
