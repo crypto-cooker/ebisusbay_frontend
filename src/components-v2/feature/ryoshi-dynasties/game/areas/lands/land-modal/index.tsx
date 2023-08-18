@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {Box, Center, Flex, HStack, Image, SimpleGrid, Spacer, Text, VStack} from "@chakra-ui/react"
+import {Box, Center, Flex, HStack, Image, SimpleGrid, Spacer, Text, VStack, useMediaQuery} from "@chakra-ui/react"
 import {Spinner} from 'react-bootstrap';
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
@@ -60,6 +60,7 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [nftOffer, setNftOffer] = useState(null);
+  const [isMobile] = useMediaQuery("(max-width: 750px)");
 
   // useEffect(() => {
   //   const filterOption = CollectionFilters.default();
@@ -101,6 +102,7 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
 
   useEffect(() => {
     setTitle("Land Deed #" + plotId.toString());
+    console.log("isMobile", isMobile)
     setIsLoading(false);
   }, [plotId]);
 
@@ -116,11 +118,17 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
         <HelpPage />
       ) : (
         <>
-          <SimpleGrid columns={2} padding='10'>
+          <SimpleGrid 
+          columns={isMobile ? 1 : 2} 
+          padding='10'
+          justifyItems={'center'}
+          >
+
             <RdLand nftId={plotId.toString()} boxSize={199} />
               <Flex justifyContent={'center'}>
                 <VStack>
                 <Text
+                mt={2}
                 as='i'
                 textAlign='center'
               > Token Id: {plotId.toString()} </Text>
