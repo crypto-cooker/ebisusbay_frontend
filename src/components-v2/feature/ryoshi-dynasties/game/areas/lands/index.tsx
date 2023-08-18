@@ -190,7 +190,6 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
             ></Icon>
           </> ) : (<> 
           <>
-          console.log("point", point);
             <Text
               position="absolute"
               textAlign="center"
@@ -207,7 +206,9 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               onClick={() => {
                 setElementToZoomTo(filteredMapData.nfts[i].toString());
               }}
-            >{filteredMapData.nfts[i]}</Text>
+            >
+              {filteredMapData.nfts[i]}
+            </Text>
           </>
           </>)}
         </>
