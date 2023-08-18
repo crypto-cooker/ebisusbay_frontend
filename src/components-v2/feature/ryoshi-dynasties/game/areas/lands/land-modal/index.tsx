@@ -29,6 +29,7 @@ interface LandModalFormProps {
 }
 
 const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFormProps) => {
+  console.log('===nft', nft);
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
 
@@ -96,7 +97,6 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
   }
 
   useEffect(() => {
-
     GetNftImages();
   }, [])
 
@@ -129,7 +129,7 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
                 <Text
                 as='i'
                 textAlign='center'
-              > Price: {price} CRO </Text>
+              > Price: {price} $Fortune </Text>
               )}
               <Spacer h={8} />
               <HStack>
