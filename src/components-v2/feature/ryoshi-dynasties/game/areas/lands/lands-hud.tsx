@@ -49,7 +49,7 @@ export const LandsHUD = ({onBack, setElementToZoomTo, showBack, traitTypes, Filt
 }, [isNotMobile]); 
 
   const validateEntry = () => {
-     setElementToZoomTo((value-1).toString())
+     setElementToZoomTo((value).toString())
   }
 
   const handleChangeTrait = (event: any) => {
