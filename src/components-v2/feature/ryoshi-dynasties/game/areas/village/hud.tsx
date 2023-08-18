@@ -241,13 +241,13 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
               onClick={onOpenBattleLog}
               icon={faClipboardList}/>
 
-            <DarkButton
+            {/* <DarkButton
               onClick={() => UpdateMetaData(Math.floor(Math.random() * 2500))}
-              icon={faBlog}/>
+              icon={faBlog}/> */}
 
             </SimpleGrid>
           </Box>
-          <RdLand nftId={selectedNFT} boxSize={368}/>
+          {/* <RdLand nftId={selectedNFT} boxSize={368}/> */}
       </Flex>
       
     </Box>

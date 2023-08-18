@@ -32,6 +32,7 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
   const eastImageRef = useRef<any>(null);
   const westImageRef = useRef<any>(null);
   const waterSourceRef = useRef<any>(null);
+  const legendaryRef = useRef<any>(null);
 
   const mainFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/'
   const rockFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/ROCKS/'
@@ -101,6 +102,7 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
     setLandType(GetLandType(nft.attributes));
     landTypeRef.current.src = mainFolderPath +'LANDS/'+GetTraitType('landType', nft.attributes);
     landsBaseRef.current.src = mainFolderPath +'LAND BASE/' + (isCliffs ? 'Celestial-Cliffs.png' : 'Green-Land.png');
+    legendaryRef.current.src = mainFolderPath +'LEGENDARY/'+GetTraitType('legendary', nft.attributes);
     landsBackgroundRef.current.src = mainFolderPath +'BACKGROUND/'+ (isCliffs ? 'Grey-Background.png' : 'Green-Background.png');
 
     underlandLeftImageRef.current.src = folderPath +'UNDERLAND LEFT/'+GetTraitType('underlandLeft', nft.attributes, '(L)')
@@ -111,7 +113,7 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
     southImageRef.current.src = folderPath +GetDisplayType('southSpot', nft.attributes)+'/'+GetTraitType('southSpot', nft.attributes);
     eastImageRef.current.src = folderPath +GetDisplayType('eastSpot', nft.attributes)+'/'+GetTraitType('eastSpot', nft.attributes);
     westImageRef.current.src = folderPath +GetDisplayType('westSpot', nft.attributes)+'/'+GetTraitType('westSpot', nft.attributes);
-
+    
 
     if(IsHighlands(nft.attributes)){
       pathsImageRef.current.src = folderPath +'PATHS/'+GetTraitTypeHighlands('road', nft.attributes);
@@ -235,7 +237,8 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
     >
     <Image h={size} position={'absolute'} ref={landsBackgroundRef} borderRadius='20px' zIndex={0}/>
     <Image h={size} position={'absolute'} ref={landsBaseRef} zIndex={0}/>
-    <Image  h={size} position={'absolute'} ref={landTypeRef} zIndex={1}/>
+    <Image h={size} position={'absolute'} ref={landTypeRef} zIndex={1}/>
+    <Image h={size} position={'absolute'} ref={legendaryRef} zIndex={2}/>
 
     <Image h={size} position={'absolute'}
       ref={underlandLeftImageRef} zIndex={5}/>
