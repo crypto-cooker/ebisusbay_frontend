@@ -127,7 +127,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse'],
+        available: ['cro', 'frtn', 'bcro'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
           '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],        // Ryoshi Halloween
