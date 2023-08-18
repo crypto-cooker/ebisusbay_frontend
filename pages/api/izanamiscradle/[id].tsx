@@ -36,14 +36,15 @@ export default async function handler(req: NextRequest) {
   const imgLandsBase = urlify(appConfig('urls.app'), mainFolderPath +'LAND BASE/' + (isCliffs ? 'Celestial-Cliffs.png' : 'Green-Land.png'));
   const imgLandType = urlify(appConfig('urls.app'), mainFolderPath +'LANDS/'+GetTraitType('landType', nft.attributes));
   const imgLegendary = urlify(appConfig('urls.app'), mainFolderPath +'LEGENDARY/'+GetTraitType('legendary', nft.attributes));
+  
   const imgUnderlandLeft = urlify(appConfig('urls.app'), folderPath +'UNDERLAND LEFT/'+GetTraitType('underlandLeft', nft.attributes, '(L)'));
   const imgUnderlandMiddle = urlify(appConfig('urls.app'), folderPath +'UNDERLAND MIDDLE/'+GetTraitType('underlandMiddle', nft.attributes, '(M)'));
   const imgUnderlandRight = urlify(appConfig('urls.app'), folderPath +'UNDERLAND RIGHT/'+GetTraitType('underlandRight', nft.attributes, '(R)'));
+  
   const imgNorth = urlify(appConfig('urls.app'), folderPath +GetDisplayType('northSpot', nft.attributes)+'/'+GetTraitType('northSpot', nft.attributes));
   const imgSouth = urlify(appConfig('urls.app'), folderPath +GetDisplayType('southSpot', nft.attributes)+'/'+GetTraitType('southSpot', nft.attributes));
   const imgEast = urlify(appConfig('urls.app'), folderPath +GetDisplayType('eastSpot', nft.attributes)+'/'+GetTraitType('eastSpot', nft.attributes));
   const imgWest = urlify(appConfig('urls.app'), folderPath +GetDisplayType('westSpot', nft.attributes)+'/'+GetTraitType('westSpot', nft.attributes));
-
 
   let imgPaths = urlify(appConfig('urls.app'), folderPath +'PATHS/'+GetTraitType('road', nft.attributes));
   let imgWaterSource = urlify(appConfig('urls.app'), folderPath +'PATHS/'+GetTraitType('waterSource', nft.attributes));
@@ -73,24 +74,22 @@ export default async function handler(req: NextRequest) {
             borderRadius: '20px',
           }}
         >
-          <img
-            src={imgLandsBackground}
+          <img src={imgLandsBackground}
             alt='imgLandsBackground'
             height={size}
             width={size}
             style={{
               position: 'absolute',
-              borderRadius: '20px',
+              // borderRadius: '20px',
               zIndex: '0'
-            }}
-          />
-          <img src={imgLandsBase} alt='imgLandsBase' height={size} width={size} style={{zIndex: '0'}} />
-          <img src={imgLandType} alt='imgLandType' height={size} width={size} style={{zIndex: '1'}} />
-          <img src={imgLegendary} alt='imgLegendary' height={size} width={size} style={{zIndex: '2'}} />
+            }}/>
+          <img src={imgLandsBase} alt='imgLandsBase' height={size} width={size} style={{zIndex: '1', position:'absolute'}} />
+          <img src={imgLandType} alt='imgLandType' height={size} width={size} style={{zIndex: '2', position:'absolute'}} />
+          <img src={imgLegendary} alt='imgLegendary' height={size} width={size} style={{zIndex: '3', position:'absolute' }} />
 
-          <img src={imgUnderlandLeft} alt='imgUnderlandLeft' height={size} width={size} style={{zIndex: '5'}} />
-          <img src={imgUnderlandMiddle} alt='imgUnderlandMiddle' height={size} width={size} style={{zIndex: '5'}} />
-          <img src={imgUnderlandRight} alt='imgUnderlandRight' height={size} width={size} style={{zIndex: '5'}} />
+          <img src={imgUnderlandLeft} alt='imgUnderlandLeft' height={size} width={size} style={{zIndex: '4', position:'absolute'}} />
+          <img src={imgUnderlandMiddle} alt='imgUnderlandMiddle' height={size} width={size} style={{zIndex: '5', position:'absolute'}} />
+          <img src={imgUnderlandRight} alt='imgUnderlandRight' height={size} width={size} style={{zIndex: '6', position:'absolute'}} />
 
           <img src={imgNorth} alt='imgNorth' height={size/5} width={size/5} style={{
               position: 'absolute',
