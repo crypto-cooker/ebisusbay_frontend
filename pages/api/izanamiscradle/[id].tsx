@@ -255,7 +255,7 @@ const GetMarginTop = (landType: string, size: number,directional:string) => {
     default:
       switch(directional){
         case "North":
-          return size/4;
+          return size/4.5;
         case "South":
           return size/2;
         case "East":
