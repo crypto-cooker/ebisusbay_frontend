@@ -123,7 +123,6 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
           padding='10'
           justifyItems={'center'}
           >
-
             <RdLand nftId={plotId.toString()} boxSize={199} />
               <Flex justifyContent={'center'}>
                 <VStack>
