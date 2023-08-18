@@ -1,16 +1,12 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
 import {Badge, Form, Spinner} from "react-bootstrap";
-import {useSelector} from "react-redux";
-import {Contract, ethers} from "ethers";
+import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
-import {appConfig} from "@src/Config";
-import Offer from "@src/Contracts/Offer.json";
-import Market from "@src/Contracts/Marketplace.json";
+import {createSuccessfulTransactionToastContent, round} from "@src/utils";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import * as Sentry from '@sentry/react';
 import {hostedImage} from "@src/helpers/image";
@@ -27,46 +23,54 @@ import {
   ModalOverlay
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
+import {useAppSelector} from "@src/Store/hooks";
+import {parseErrorMessage} from "@src/helpers/validator";
 
-const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 25;
 
-export default function MakeCollectionOfferDialog({ isOpen, collection, onClose }) {
-  const [offerPrice, setOfferPrice] = useState(null);
-  const [floorPrice, setFloorPrice] = useState(0);
-  const [priceError, setPriceError] = useState(false);
-  const [existingOffer, setExistingOffer] = useState(null);
+interface MakeCollectionOfferDialogProps {
+  isOpen: boolean;
+  collection: any;
+  onClose: () => void;
+}
+
+export default function MakeCollectionOfferDialog({ isOpen, collection, onClose }: MakeCollectionOfferDialogProps) {
+  const [offerPrice, setOfferPrice] = useState<string | number | null>(null);
+  const [floorPrice, setFloorPrice] = useState<string | number>(0);
+  const [priceError, setPriceError] = useState<string>();
+  const [existingOffer, setExistingOffer] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
 
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
   const windowSize = useWindowSize();
-  const user = useSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const {contractService} = user;
 
-  const isAboveFloorPrice = (price) => {
-    return (parseInt(floorPrice) > 0 && ((Number(price) - floorPrice) / floorPrice) * 100 > floorThreshold);
+  const isAboveFloorPrice = (price: string | number) => {
+    const floor = Number(floorPrice);
+    return (floor > 0 && ((Number(price) - floor) / floor) * 100 > floorThreshold);
   };
 
-  const costOnChange = useCallback((e) => {
+  const costOnChange = useCallback((e: any) => {
     const newSalePrice = e.target.value.toString();
     if (numberRegexValidation.test(newSalePrice) || newSalePrice === '') {
       setOfferPrice(newSalePrice)
     }
   }, [setOfferPrice, floorPrice, offerPrice]);
 
-  const onQuickCost = useCallback((percentage) => {
+  const onQuickCost = useCallback((percentage: number) => {
     if (executingCreateListing || showConfirmButton) return;
 
-    const newSalePrice = Math.round(floorPrice * (1 + percentage));
+    const newSalePrice = Math.round(Number(floorPrice) * (1 + percentage));
     setOfferPrice(newSalePrice);
 
     if (isAboveFloorPrice(newSalePrice)) {
       setShowConfirmButton(false);
     }
-  })
+  }, [executingCreateListing, showConfirmButton, floorPrice]);
 
   useEffect(() => {
     async function asyncFunc() {
@@ -80,12 +84,12 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
   const getInitialProps = async () => {
     try {
       setIsLoading(true);
-      setPriceError(null);
+      setPriceError(undefined);
       const collectionAddress = collection.address;
 
       const floorPrice = await getCollectionMetadata(collectionAddress);
       if (floorPrice.collections.length > 0) {
-        setFloorPrice(floorPrice.collections[0].floorPrice ?? 0);
+        setFloorPrice(floorPrice.collections[0].stats.total.floorPrice ?? 0);
       }
 
       const collectionOffers = await getMyCollectionOffers(user.address, '0', '0', collection.address);
@@ -93,32 +97,28 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
 
       setIsLoading(false);
     } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
+      toast.error(parseErrorMessage(error));
       console.log(error);
     }
   };
 
-  const handleCreateOffer = async (e) => {
+  const handleCreateOffer = async (e: any) => {
     e.preventDefault();
     if (!validateInput()) return;
 
     try {
+      if (!offerPrice) throw 'Invalid offer price';
+
       const collectionAddress = collection.address;
       const price = ethers.utils.parseEther(offerPrice.toString());
 
       setExecutingCreateListing(true);
       Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: collectionAddress, price}});
-      const contract = contractService.offer;;
+      const contract = contractService!.offer;
 
       let tx;
       if (existingOffer) {
-        const newPrice = parseInt(offerPrice) - parseInt(existingOffer.price)
+        const newPrice = Number(offerPrice) - parseInt(existingOffer.price)
         tx = await contract.uppdateCollectionOffer(existingOffer.nftAddress, existingOffer.offerIndex, {
           value: ethers.utils.parseEther(newPrice.toString())
         });
@@ -133,22 +133,16 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
       setExecutingCreateListing(false);
       onClose();
     } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
+      toast.error(parseErrorMessage(error));
     } finally {
       setExecutingCreateListing(false);
     }
   };
 
-  const processCreateListingRequest = async (e) => {
+  const processCreateListingRequest = async (e: any) => {
     if (!validateInput()) return;
 
-    if (isAboveFloorPrice(offerPrice)) {
+    if (isAboveFloorPrice(Number(offerPrice))) {
       setShowConfirmButton(true);
     } else {
       await handleCreateOffer(e)
@@ -156,7 +150,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
   }
 
   const validateInput = () => {
-    if (!offerPrice || parseInt(offerPrice) < 1) {
+    if (!offerPrice || Number(offerPrice) < 1) {
       setPriceError('Value must be greater than zero');
       return false;
     }
@@ -164,12 +158,12 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
       setPriceError('Value must not exceed 18 digits');
       return false;
     }
-    if (existingOffer && parseInt(offerPrice) <= parseInt(existingOffer.price)) {
+    if (existingOffer && Number(offerPrice) <= parseInt(existingOffer.price)) {
       setPriceError('Offer must be greater than previous offer');
       return false;
     }
 
-    setPriceError(null);
+    setPriceError(undefined);
     return true;
   }
 
@@ -227,7 +221,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
                               text={user.theme === 'dark' ? 'dark' : 'light'}
                               className="ms-2"
                             >
-                              Floor: {floorPrice} CRO
+                              Floor: {round(floorPrice)} CRO
                             </Badge>
                           </div>
                         </div>
@@ -236,7 +230,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
                         className="input"
                         type="number"
                         placeholder="Enter Amount"
-                        value={offerPrice}
+                        value={offerPrice?.toString()}
                         onChange={costOnChange}
                         disabled={showConfirmButton || executingCreateListing}
                       />
@@ -246,7 +240,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
                     </Form.Group>
 
                     <div className="d-flex flex-wrap justify-content-between">
-                      {windowSize.width > 377 && (
+                      {windowSize?.width && windowSize.width > 377 && (
                         <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
                           -25%
                         </Badge>
@@ -265,7 +259,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
                         +10%
                       </Badge>
 
-                      {windowSize.width > 377 && (
+                      {windowSize?.width && windowSize.width > 377 && (
                         <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
                           +25%
                         </Badge>
@@ -280,7 +274,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
                 {showConfirmButton ? (
                   <>
                     <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
-                      The desired price is {(100 - (floorPrice * 100 / offerPrice)).toFixed(1)}% above the current floor price of {floorPrice} CRO. Are you sure?
+                      The desired price is {(100 - (Number(floorPrice) * 100 / Number(offerPrice))).toFixed(1)}% above the current floor price of {floorPrice} CRO. Are you sure?
                     </div>
                     {executingCreateListing && (
                       <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>

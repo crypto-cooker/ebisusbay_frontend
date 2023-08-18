@@ -3632,7 +3632,7 @@
       "name": "JAFC-Comics",
       "slug": "jafc-comics",
       "multiToken": false,
-      "address": "0xaBb614A25e2e77B6FdecdA172a6806a3D61E472B",
+      "address": "0x653397aA2E3167492e13f34191EaEc6455D0C3C1",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -3649,6 +3649,29 @@
       },
       "verification": {
         "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Coom Cats",
+      "slug": "coom-cats",
+      "multiToken": false,
+      "address": "0x757092f15Fc90BEDa1089B3bd999AD8Ff45E1ef6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
+        "avatar": "/img/collections/coom-cats/avatar.webp",
+        "card": "/img/collections/coom-cats/card.webp",
+        "banner": "/img/collections/coom-cats/banner.webp",
+        "website": "https://coomcats.com/",
+        "twitter": "https://twitter.com/CoomCatsNFT",
+        "discord": "https://discord.gg/fDgERHyUzC",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
         "doxx": false,
         "kyc": true
       }
@@ -8719,13 +8742,14 @@
         "twitter": "https://twitter.com/JAFC_nft",
         "discord": "https://discord.gg/W3HwbZUwfr"
       },
-      "address": "0xaBb614A25e2e77B6FdecdA172a6806a3D61E472B",
+      "address": "0x653397aA2E3167492e13f34191EaEc6455D0C3C1",
       "maxMintPerTx": 1,
       "maxMintPerAddress": 1,
       "totalSupply": 2500,
       "cost": "3",
       "memberCost": "2",
       "whitelistCost": "1",
+      "freeMint": true,
       "foundersOnly": false,
       "start": 1689920290000,
       "end": null,
@@ -8744,6 +8768,50 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 179,
+      "slug": "coom-cats",
+      "title": "Coom Cats",
+      "subtitle": "COOM - Create Our Own Movement",
+      "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
+      "author": {
+        "name": "Coomcats",
+        "website": "https://coomcats.com/",
+        "twitter": "https://twitter.com/CoomCatsNFT",
+        "discord": "https://discord.gg/fDgERHyUzC"
+      },
+      "address": "0x757092f15Fc90BEDa1089B3bd999AD8Ff45E1ef6",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1000,
+      "cost": "590",
+      "memberCost": "550",
+      "whitelistCost": "500",
+      "erc20Cost": "1500",
+      "erc20MemberCost": "1400",
+      "erc20WhitelistCost": "1300",
+      "erc20Token": "frtn",
+      "foundersOnly": false,
+      "start": 1692214495000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": false,
+      "images": {
+        "drop": "/img/drops/coom-cats/drop.webp",
+        "avatar": "/img/collections/coom-cats/avatar.webp",
+        "banner": "/img/collections/coom-cats/banner.webp",
+        "preview": "/img/collections/coom-cats/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
       }
     }
   ]

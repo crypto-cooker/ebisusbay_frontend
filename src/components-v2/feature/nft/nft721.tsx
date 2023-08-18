@@ -48,7 +48,7 @@ import {specialImageTransform} from '@src/hacks';
 import PriceActionBar from './price-action-bar';
 import {ERC721} from '@src/Contracts/Abis';
 import {getFilteredOffers} from '@src/core/subgraph';
-import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
+import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import {offerState} from '@src/core/api/enums';
 import {commify} from 'ethers/lib/utils';

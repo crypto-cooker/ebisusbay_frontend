@@ -46,8 +46,9 @@ const useBuyGaslessListings = () => {
         if (purchase.currency && purchase.currency !== ethers.constants.AddressZero && !approvedTokens.includes(purchase.currency)) {
           const tokenContract = contractService!.erc20(purchase.currency);
           const allowance = await tokenContract.allowance(address!, contractService!.market.address);
-          if (allowance.lt(1)) {
-            const tx = await tokenContract.approve(contractService!.market.address, constants.MaxUint256);
+          if (allowance.lt(ethers.utils.parseEther(`${purchase.price}`))) {
+            const approvalAmout = ethers.utils.parseEther(`${purchase.price * 10}`);
+            const tx = await tokenContract.approve(contractService!.market.address, approvalAmout);
             await tx.wait();
           }
           approvedTokens.push(purchase.currency);

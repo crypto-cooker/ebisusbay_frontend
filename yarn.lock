@@ -3525,15 +3525,15 @@
   resolved "https://registry.npmjs.org/@multiformats/base-x/-/base-x-4.0.1.tgz"
   integrity sha512-eMk0b9ReBbV23xXU693TAIrLyeO5iTgBZGSJfpqriG8UkYvr/hC9u9pyMlAakDNHWmbhMZCDs6KQO0jzKD8OTw==
 
-"@next/env@13.4.8":
-  version "13.4.8"
-  resolved "https://registry.npmjs.org/@next/env/-/env-13.4.8.tgz"
-  integrity sha512-twuSf1klb3k9wXI7IZhbZGtFCWvGD4wXTY2rmvzIgVhXhs7ISThrbNyutBx3jWIL8Y/Hk9+woytFz5QsgtcRKQ==
+"@next/env@13.4.16":
+  version "13.4.16"
+  resolved "https://registry.npmjs.org/@next/env/-/env-13.4.16.tgz"
+  integrity sha512-pCU0sJBqdfKP9mwDadxvZd+eLz3fZrTlmmDHY12Hdpl3DD0vy8ou5HWKVfG0zZS6tqhL4wnQqRbspdY5nqa7MA==
 
-"@next/swc-win32-x64-msvc@13.4.8":
-  version "13.4.8"
-  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.4.8.tgz"
-  integrity sha512-UIRKoByVKbuR6SnFG4JM8EMFlJrfEGuUQ1ihxzEleWcNwRMMiVaCj1KyqfTOW8VTQhJ0u8P1Ngg6q1RwnIBTtw==
+"@next/swc-win32-x64-msvc@13.4.16":
+  version "13.4.16"
+  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.4.16.tgz"
+  integrity sha512-WamDZm1M/OEM4QLce3lOmD1XdLEl37zYZwlmOLhmF7qYJ2G6oYm9+ejZVv+LakQIsIuXhSpVlOvrxIAHqwRkPQ==
 
 "@noble/hashes@^1.0.0":
   version "1.0.0"
@@ -8362,11 +8362,6 @@ native-fetch@^3.0.0:
   resolved "https://registry.npmjs.org/native-fetch/-/native-fetch-3.0.0.tgz"
   integrity sha512-G3Z7vx0IFb/FQ4JxvtqGABsOTIqRWvgQz6e+erkB+JJD6LrszQtMozEHI4EkmgZQvnGHrpLVzUWk7t4sJCIkVw==
 
-native-forms-react@^1.9.66:
-  version "1.9.66"
-  resolved "https://registry.npmjs.org/native-forms-react/-/native-forms-react-1.9.66.tgz"
-  integrity sha512-Ytmqs2SZsIEoxi0r+a5E7j/XcEa3+2HznwRnRYyv/OyLqnim/FItZ7AN6Mwo/0VcSYVZFPKZko4ZuEmO07hLaw==
-
 natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
@@ -8377,12 +8372,12 @@ negotiator@0.6.3:
   resolved "https://registry.npmjs.org/negotiator/-/negotiator-0.6.3.tgz"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-"next@^10.0.8 || ^11.0 || ^12.0 || ^13.0", next@^13.4.8:
-  version "13.4.8"
-  resolved "https://registry.npmjs.org/next/-/next-13.4.8.tgz"
-  integrity sha512-lxUjndYKjZHGK3CWeN2RI+/6ni6EUvjiqGWXAYPxUfGIdFGQ5XoisrqAJ/dF74aP27buAfs8MKIbIMMdxjqSBg==
+"next@^10.0.8 || ^11.0 || ^12.0 || ^13.0", next@^13.4.16:
+  version "13.4.16"
+  resolved "https://registry.npmjs.org/next/-/next-13.4.16.tgz"
+  integrity sha512-1xaA/5DrfpPu0eV31Iro7JfPeqO8uxQWb1zYNTe+KDKdzqkAGapLcDYHMLNKXKB7lHjZ7LfKUOf9dyuzcibrhA==
   dependencies:
-    "@next/env" "13.4.8"
+    "@next/env" "13.4.16"
     "@swc/helpers" "0.5.1"
     busboy "1.6.0"
     caniuse-lite "^1.0.30001406"
@@ -8391,15 +8386,15 @@ negotiator@0.6.3:
     watchpack "2.4.0"
     zod "3.21.4"
   optionalDependencies:
-    "@next/swc-darwin-arm64" "13.4.8"
-    "@next/swc-darwin-x64" "13.4.8"
-    "@next/swc-linux-arm64-gnu" "13.4.8"
-    "@next/swc-linux-arm64-musl" "13.4.8"
-    "@next/swc-linux-x64-gnu" "13.4.8"
-    "@next/swc-linux-x64-musl" "13.4.8"
-    "@next/swc-win32-arm64-msvc" "13.4.8"
-    "@next/swc-win32-ia32-msvc" "13.4.8"
-    "@next/swc-win32-x64-msvc" "13.4.8"
+    "@next/swc-darwin-arm64" "13.4.16"
+    "@next/swc-darwin-x64" "13.4.16"
+    "@next/swc-linux-arm64-gnu" "13.4.16"
+    "@next/swc-linux-arm64-musl" "13.4.16"
+    "@next/swc-linux-x64-gnu" "13.4.16"
+    "@next/swc-linux-x64-musl" "13.4.16"
+    "@next/swc-win32-arm64-msvc" "13.4.16"
+    "@next/swc-win32-ia32-msvc" "13.4.16"
+    "@next/swc-win32-x64-msvc" "13.4.16"
 
 no-case@^2.2.0, no-case@^2.3.2:
   version "2.3.2"

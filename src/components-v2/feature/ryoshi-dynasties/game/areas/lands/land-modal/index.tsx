@@ -1,30 +1,16 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
-import {Box, Center, Flex, Text, VStack,Image, SimpleGrid, HStack, Spacer} from "@chakra-ui/react"
+import React, {useCallback, useEffect, useState} from "react";
+import {Box, Center, Flex, HStack, Image, SimpleGrid, Spacer, Text, VStack} from "@chakra-ui/react"
 import {Spinner} from 'react-bootstrap';
-import {ArrowBackIcon} from "@chakra-ui/icons";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {useAppSelector} from "@src/Store/hooks";
-import {RdGameState} from "@src/core/services/api-service/types";
-
-import DeployTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/deploy";
-import InfoTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/info";
-import AttackTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/attack";
 import HelpPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/help";
 import {appConfig} from "@src/Config";
-import {ApiService} from "@src/core/services/api-service";
-import {
-  RyoshiDynastiesContext,
-  RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
-import {  useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
+import {useDispatch} from 'react-redux';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { chainConnect, connectAccount } from '@src/GlobalState/User';
-import {CollectionFilters} from "@src/Components/Models/collection-filters.model";
-import { init, fetchListings } from '@src/GlobalState/collectionSlice';
-import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
+import {chainConnect, connectAccount} from '@src/GlobalState/User';
+import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 
 const tabs = {
@@ -207,7 +193,7 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
           isOpen={openMakeOfferDialog}
           initialNft={nftOffer}
           onClose={() => setOpenMakeOfferDialog(false)}
-          nftId={plotId}
+          nftId={plotId.toString()}
           nftAddress={"0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad"}
         />
       )}

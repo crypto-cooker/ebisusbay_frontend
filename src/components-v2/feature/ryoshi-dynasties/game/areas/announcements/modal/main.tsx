@@ -98,17 +98,17 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
       <Flex h={isMobile ? "300px" :"200px"}>
         
 
-      <Link as={NextLink} href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59' isExternal>
+      <Link as={NextLink} href='https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan' isExternal>
           {isMobile ? (
             <Image
-              alt="Buy FRTN on VVS"
-              src={ImageService.translate('/img/ryoshi-dynasties/announcements/vvs-sm.gif').convert()}
+              alt="Time Machine Spaceships"
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines-sm.webp').convert()}
               maxH='300px'
             />
           ) : (
             // <Image
             //   alt="Buy FRTN on VVS"
-            //   src={ImageService.translate('/img/ryoshi-dynasties/announcements/vvs.webp').convert()}
+            //   src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines.webp').convert()}
             // />
             <MapFrame
           gridHeight={'15px 1fr 15px'}
@@ -133,15 +133,12 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
                   // router.push('/drops/ballies-cheerleaders');
                 }}
                 >
-                <Link as={NextLink} href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59' isExternal>
-                <Image
-              // src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
-                />
+                <Link as={NextLink} href='https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan' isExternal>
                   <Image
-                    alt="Buy FRTN on VVS"
-                    src={ImageService.translate('/img/ryoshi-dynasties/announcements/vvs.webp').convert()}
+                    alt="Time Machine Spaceships"
+                    src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines.webp').convert()}
                   />
-              </Link>
+                </Link>
               </Box>
             </Box>
         </MapFrame>

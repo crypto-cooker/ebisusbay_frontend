@@ -130,6 +130,7 @@ const batchListingSlice = createSlice({
       }
     },
     cascadePrices: (state, action) => {
+      const currencyRates = action.payload.currencyRates;
       const startingItem = action.payload.startingItem ?? state.items[0];
       let currentPrice = Number(action.payload.startingPrice);
       const step = Number(action.payload.step ?? 1);
@@ -141,12 +142,17 @@ const batchListingSlice = createSlice({
         else if (startingIndex === null) return o;
         if (!state.extras[o.nft.nftAddress.toLowerCase()]?.approval) return o;
 
-        const price = currentPrice > 1 ? currentPrice : 1;
+        let price = currentPrice > 1 ? currentPrice : 1;
+        if (o.currency && currencyRates[o.currency.toLowerCase()]) {
+          price = round(price * currencyRates[o.currency.toLowerCase()]);
+        }
+
         currentPrice += step;
         return {...o, price}
       });
     },
     cascadePricesPercent: (state, action) => {
+      const currencyRates = action.payload.currencyRates;
       const startingItem = action.payload.startingItem ?? state.items[0];
       let currentPrice = Number(action.payload.startingPrice);
       const step = Number(action.payload.step ?? 1);
@@ -158,15 +164,24 @@ const batchListingSlice = createSlice({
         else if (startingIndex === null) return o;
         if (!state.extras[o.nft.nftAddress.toLowerCase()]?.approval) return o;
 
-        const price = currentPrice > 1 ? currentPrice : 1;
+        let price = currentPrice > 1 ? currentPrice : 1;
+
+        if (o.currency && currencyRates[o.currency.toLowerCase()]) {
+          price = round(price * currencyRates[o.currency.toLowerCase()]);
+        }
+
         currentPrice += round(currentPrice * (step * 0.01));
         return {...o, price}
       });
     },
     applyPriceToAll: (state, action) => {
-      const { price, expiration } = action.payload;
+      const { price, currencyRates, expiration } = action.payload;
       state.items = state.items.map((o) => {
-        const obj = {...o, price};
+        let newPrice = price;
+        if (o.currency && currencyRates[o.currency.toLowerCase()]) {
+          newPrice = round(newPrice * currencyRates[o.currency.toLowerCase()]);
+        }
+        const obj = {...o, price: newPrice};
         if (expiration) obj.expiration = expiration;
         return obj;
       });
@@ -177,19 +192,29 @@ const batchListingSlice = createSlice({
         return {...o, expiration};
       });
     },
-    applyFloorPriceToAll: (state) => {
+    applyFloorPriceToAll: (state, action) => {
+      const { currencyRates } = action.payload;
       state.items = state.items.map((o) => {
         const extra = state.extras[o.nft.nftAddress.toLowerCase()] ?? {};
-        if (extra?.floorPrice) return {...o, price: extra.floorPrice}
+        if (extra?.floorPrice) {
+          let price = extra.floorPrice;
+          if (o.currency && currencyRates[o.currency.toLowerCase()]) {
+            price = round(price * currencyRates[o.currency.toLowerCase()]);
+          }
+          return {...o, price}
+        }
         return o;
       });
     },
     applyFloorPctToAll: (state, action) => {
-      const { pct } = action.payload;
+      const { pct, currencyRates } = action.payload;
       state.items = state.items.map((o) => {
         const extra = state.extras[o.nft.nftAddress.toLowerCase()] ?? {};
         if (extra?.floorPrice) {
-          const price = round(extra.floorPrice * (1 + (pct / 100)))
+          let price = round(extra.floorPrice * (1 + (pct / 100)))
+          if (o.currency && currencyRates[o.currency.toLowerCase()]) {
+            price = round(price * currencyRates[o.currency.toLowerCase()]);
+          }
           return {...o, price}
         }
         return o;

@@ -7,8 +7,8 @@ import {Box, Radio, RadioGroup, Stack, Text, Wrap, WrapItem} from "@chakra-ui/re
 import NextApiService from "@src/core/services/api-service/next";
 import {OfferState, OfferType} from "@src/core/services/api-service/types";
 import ResponsiveOffersTable from "@src/components-v2/shared/responsive-table/responsive-offers-table";
-import MakeOfferDialog from "@src/Components/Offer/Dialogs/MakeOfferDialog";
-import MakeCollectionOfferDialog from "@src/Components/Offer/Dialogs/MakeCollectionOfferDialog";
+import MakeOfferDialog from "@src/components-v2/shared/dialogs/make-offer";
+import MakeCollectionOfferDialog from "@src/components-v2/shared/dialogs/make-collection-offer";
 import {CancelOfferDialog} from "@src/Components/Offer/Dialogs/CancelOfferDialog";
 import {Offer} from "@src/core/models/offer";
 

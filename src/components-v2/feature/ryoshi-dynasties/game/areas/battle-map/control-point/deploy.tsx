@@ -97,7 +97,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
   }
   const GetTroopsOnPoint = async () => {
     if (!user.address) return;
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
@@ -115,7 +115,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
   const GetPlayerTroops = async () => {
     if (!user.address) return;
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
@@ -207,7 +207,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
     }
   }
   const Deploy = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
@@ -244,7 +244,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
     }
   }
   const Recall = async () => {
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;

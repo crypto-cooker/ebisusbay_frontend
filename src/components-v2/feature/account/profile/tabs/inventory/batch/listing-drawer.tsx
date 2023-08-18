@@ -48,6 +48,7 @@ import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
 import {
   caseInsensitiveCompare,
+  ciEquals,
   createSuccessfulTransactionToastContent,
   isBundle,
   isGaslessListing,
@@ -68,6 +69,8 @@ import ListingBundleDrawerForm, {
   ListingBundleDrawerFormHandle
 } from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-bundle-drawer-form";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {getPrices} from "@src/core/api/endpoints/prices";
+import {useExchangeRate} from "@src/hooks/useGlobalPrices";
 
 const config = appConfig();
 const MAX_NFTS_IN_GAS_CART = 100;
@@ -89,19 +92,51 @@ export const ListingDrawer = () => {
 
   const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings();
   const [cancelGaslessListing, response] = useCancelGaslessListing();
+  const { tokenToCroValue } = useExchangeRate();
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
     dispatch(clearBatchListingCart());
   };
-  const handleCascadePrices = (startingItem: UserBatchItem, startingPrice: number) => {
+  const handleCascadePrices = async (startingItem: UserBatchItem, startingPrice: number) => {
     if (!startingPrice) return;
-    dispatch(cascadePrices({ startingItem, startingPrice }));
+
+    const currencyRates = await getConvertedRates(startingItem.currency ?? 'cro');
+    dispatch(cascadePrices({ startingItem, startingPrice, currencyRates }));
   }
-  const handleApplyAll = (price: number, expiration: number) => {
+  const handleApplyAll = async (price: number, inputCurrencySymbol: string, expiration: number) => {
     if (!price && !expiration) return;
-    dispatch(applyPriceToAll({price, expiration}));
+
+    const currencyRates = await getConvertedRates(inputCurrencySymbol);
+    dispatch(applyPriceToAll({price, currencyRates, expiration}));
   }
+
+  const getConvertedRates = async (targetSymbol: string, targetPrice?: number) => {
+    const prices = await getPrices();
+    const inputToken = config.tokens[targetSymbol.toLowerCase()];
+    const inputPrice = prices.find((price: any) => inputToken ? ciEquals(price.currency, inputToken.address) : ethers.constants.AddressZero);
+
+    // const usdPrice = targetPrice * Number(inputPrice?.usdPrice);
+
+    return [...new Set(batchListingCart.items.map((item) => item.currency?.toLowerCase()))]
+      .filter((currencySymbol) => !!currencySymbol && config.listings.currencies.available.includes(currencySymbol))
+      .map((currencySymbol) => {
+        const token = config.tokens[currencySymbol!];
+        const tokenAddress = token ? token.address : ethers.constants.AddressZero;
+        const price = prices.find((price: any) => ciEquals(price.currency, tokenAddress));
+
+        return {
+          symbol: token ? token.symbol.toLowerCase() : 'cro',
+          // price: usdPrice / Number(price?.usdPrice),
+          rate: Number(inputPrice?.usdPrice) / Number(price?.usdPrice)
+        }
+      })
+      .reduce((acc, curr) => {
+        acc[curr.symbol.toLowerCase()] = curr.rate;
+        return acc;
+      }, {} as Record<string, number>);
+  }
+
   const handleAddCollection = async (address: string) => {
     if (!address) return;
     const nfts = await nextApiService.getWallet(user.address!, {
@@ -114,31 +149,34 @@ export const ListingDrawer = () => {
       dispatch(addToBatchListingCart(nft));
     }
   }
-  const handleFloorAll = () => {
-    dispatch(applyFloorPriceToAll());
+  const handleFloorAll = async () => {
+    const currencyRates = await getConvertedRates('cro');
+    dispatch(applyFloorPriceToAll({currencyRates}));
   }
-  const handleApplyCustomPriceToAll = (option: string, value: number) => {
+  const handleApplyCustomPriceToAll = async (option: string, value: number) => {
     if (!value) return;
 
+    const currencyRates = await getConvertedRates('cro');
     if (option === customPriceOptions.price) {
-      dispatch(applyPriceToAll({price: value}));
+      dispatch(applyPriceToAll({price: value, currencyRates}));
     } else if (option === customPriceOptions.pctAboveFloor) {
-      dispatch(applyFloorPctToAll({pct: value}));
+      dispatch(applyFloorPctToAll({pct: value, currencyRates}));
     } else if (option === customPriceOptions.pctBelowFloor) {
-      dispatch(applyFloorPctToAll({pct: value * -1}));
+      dispatch(applyFloorPctToAll({pct: value * -1, currencyRates}));
     }
   }
-  const handleCascadePriceToAll = (option: string, value: number, step: number) => {
+  const handleCascadePriceToAll = async (option: string, value: number, step: number) => {
     if (!value) return;
 
+    const currencyRates = await getConvertedRates('cro');
     if (option === customCascadeOptions.priceDown) {
-      dispatch(cascadePrices({ startingPrice: value, step: step * -1 }));
+      dispatch(cascadePrices({ startingPrice: value, currencyRates, step: step * -1 }));
     } else if (option === customCascadeOptions.priceUp) {
-      dispatch(cascadePrices({ startingPrice: value, step }));
+      dispatch(cascadePrices({ startingPrice: value, currencyRates, step }));
     } else if (option === customCascadeOptions.pctDown) {
-      dispatch(cascadePricesPercent({ startingPrice: value, step: step * -1 }));
+      dispatch(cascadePricesPercent({ startingPrice: value, currencyRates, step: step * -1 }));
     } else if (option === customCascadeOptions.pctUp) {
-      dispatch(cascadePricesPercent({ startingPrice: value, step }));
+      dispatch(cascadePricesPercent({ startingPrice: value, currencyRates, step }));
     }
   }
   const handleApplyExpirationDateToAll = (value?: string) => {
@@ -257,7 +295,8 @@ export const ListingDrawer = () => {
       const nftPrices = batchListingCart.items.map((o) => {
         const floorPriceObj = nftFloorPrices.find((fp) => caseInsensitiveCompare(fp.address, o.nft.nftAddress));
         const perUnitPrice = o.priceType === 'each' ? Number(o.price) : Number(o.price) / o.quantity;
-        const isBelowFloor = !!floorPriceObj?.floorPrice && (floorPriceObj.floorPrice !== 0 && ((floorPriceObj.floorPrice - perUnitPrice) / floorPriceObj.floorPrice) * 100 > floorThreshold);
+        const croPrice = tokenToCroValue(perUnitPrice, config.tokens[o.currency?.toLowerCase() ?? 'cro']?.address);
+        const isBelowFloor = !!floorPriceObj?.floorPrice && (floorPriceObj.floorPrice !== 0 && ((Number(floorPriceObj.floorPrice) - croPrice) / Number(floorPriceObj.floorPrice)) * 100 > floorThreshold);
         if (isBelowFloor) {
           floorWarning = true;
         }
@@ -364,7 +403,7 @@ export const ListingDrawer = () => {
             <AccordionPanel px={0}>
               <VStack align='start'>
                 <Box w="full">
-                  <Text fontSize="sm" fontWeight="bold">Apply price:</Text>
+                  <Text fontSize="sm" fontWeight="bold">Apply price (CRO):</Text>
                   <HStack mt={1}>
                     <CustomPriceRow
                       onChange={handleApplyCustomPriceToAll}
@@ -373,7 +412,7 @@ export const ListingDrawer = () => {
                   </HStack>
                 </Box>
                 <Box w="full">
-                  <Text fontSize="sm" fontWeight="bold">Cascade price:</Text>
+                  <Text fontSize="sm" fontWeight="bold">Cascade price (CRO):</Text>
                   <HStack mt={1}>
                     <CustomCascadeRow
                       onChange={handleCascadePriceToAll}

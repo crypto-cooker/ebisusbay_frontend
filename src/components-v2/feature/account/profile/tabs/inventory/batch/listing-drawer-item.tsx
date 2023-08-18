@@ -25,7 +25,7 @@ import {
   useColorModeValue,
   VStack
 } from "@chakra-ui/react";
-import React, {ReactElement, useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {
   removeFromBatchListingCart,
   setApproval,
@@ -38,7 +38,7 @@ import {
   UserBatchExtras,
   UserBatchItem
 } from "@src/GlobalState/user-batch";
-import {Contract} from "ethers";
+import {Contract, ethers} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
 import {ciEquals, createSuccessfulTransactionToastContent, isBundle, round} from "@src/utils";
@@ -53,8 +53,7 @@ import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
-import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
-import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -102,31 +101,27 @@ const expirationDatesValues = [
 ];
 
 const defaultExpiry = 2592000000;
-const currencyImages: {[key: string]: ReactElement} = {
-  'cro': <CronosIconBlue boxSize={6}/>,
-  'frtn': <FortuneIcon boxSize={6}/>,
-};
 const currencyOptions = [
   ...config.listings.currencies.available
-    .filter((symbol: string) => config.tokens[symbol.toLowerCase()])
+    .filter((symbol: string) => !!config.tokens[symbol.toLowerCase()])
     .map((symbol: string) => {
       const token = config.tokens[symbol.toLowerCase()];
       return {
         ...token,
-        image: currencyImages[token.symbol.toLowerCase()] || <CronosIconBlue boxSize={6}/>
+        image: <DynamicCurrencyIcon address={token.address} boxSize={6} />
       }
     }),
   {
     name: 'CRO',
     symbol: 'cro',
-    image: currencyImages['cro']
+    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
   }
 ];
 
 interface ListingDrawerItemProps {
   item: UserBatchItem;
   onCascadePriceSelected: (startingItem: UserBatchItem, startingPrice: number) => void;
-  onApplyAllSelected: (price: number, expirationDate: number) => void;
+  onApplyAllSelected: (price: number, currencySymbol: string, expirationDate: number) => void;
   onAddCollection: (address: string) => void;
   disabled: boolean;
   isBundling?: boolean;
@@ -462,7 +457,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
               <FontAwesomeIcon icon={faEllipsisH} />
             </MenuButton>
             <MenuList textAlign="right">
-              <MenuItem onClick={() => onApplyAllSelected(Number(price), Number(expirationDate))}>Apply values to all</MenuItem>
+              <MenuItem onClick={() => onApplyAllSelected(Number(price), currency, Number(expirationDate))}>Apply values to all</MenuItem>
               <MenuItem onClick={() => onCascadePriceSelected(item, Number(price))}>Cascade price</MenuItem>
               <MenuItem onClick={() => onAddCollection(item.nft.nftAddress)}>Add entire collection</MenuItem>
               {item.nft.balance && item.nft.balance > 1 && (

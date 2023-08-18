@@ -57,7 +57,7 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const [nftImages, setNftImages] = useState<any[]>([]);
   const [isHovered, setIsHovered] = useState(false);
   const fetcher = async () => {
-    // let signatureInStorage = getAuthSignerInStorage()?.signature;
+    // let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     //
     // if (!signatureInStorage) {
     //   const { signature } = await getSigner();
@@ -83,7 +83,7 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const checkForBattleRewards = async () => {
     if (!user.address) return;
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;
@@ -97,7 +97,7 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const claimBattleRewards = async () => {
     if (!user.address) return;
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;

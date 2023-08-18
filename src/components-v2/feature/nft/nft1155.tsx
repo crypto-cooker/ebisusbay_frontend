@@ -30,7 +30,7 @@ import {offerState} from '@src/core/api/enums';
 import {getFilteredOffers} from '@src/core/subgraph';
 import PriceActionBar from '@src/components-v2/feature/nft/price-action-bar';
 import ListingsTab from '@src/components-v2/feature/nft/tabs/listings';
-import MakeOfferDialog from '@src/Components/Offer/Dialogs/MakeOfferDialog';
+import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {appConfig} from "@src/Config";

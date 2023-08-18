@@ -44,7 +44,7 @@ export default function GdcClaimConfirmation({ onClose, isOpen}: GdcClaimConfirm
   const handleExecuteClaim = async () => {
     try {
       setExecutingClaim(true);
-      let signatureInStorage = getAuthSignerInStorage()?.signature;
+      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
       if (!signatureInStorage) {
         const { signature } = await getSigner();
         signatureInStorage = signature;

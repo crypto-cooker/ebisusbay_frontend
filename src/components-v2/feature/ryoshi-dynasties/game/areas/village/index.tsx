@@ -39,6 +39,7 @@ import {
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import { RdGameState } from "@src/core/services/api-service/types";
+import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
 
 interface VillageProps {
   onChange: (value: string) => void;
@@ -105,7 +106,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   };
 
   // const GetGameTokens = async () => {
-  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
   //   if (!signatureInStorage) {
   //     const { signature } = await getSigner();
   //     signatureInStorage = signature;
@@ -123,7 +124,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   //   }
   // }
   // const ClaimDailyRewards = async () => {
-  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
   //   if (!signatureInStorage) {
   //     const { signature } = await getSigner();
   //     signatureInStorage = signature;
@@ -157,7 +158,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   // const CheckForGameTokens = async () => {
   //   if (!user.address) return;
   
-  //   let signatureInStorage = getAuthSignerInStorage()?.signature;
+  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
   //   if (!signatureInStorage) {
   //     const { signature } = await getSigner();
   //     signatureInStorage = signature;
@@ -528,8 +529,11 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
       // Use timer to allow SEO bots to crawl the page before announcement board pops up.
       const timer = setTimeout(() => {
-        onOpenAnnouncementBoard();
-        onFirstRun();
+        if (!isRdAnnouncementDismissed()) {
+          onOpenAnnouncementBoard();
+          onFirstRun();
+          persistRdAnnouncementDismissal();
+        }
       }, 2000);
 
       return () => clearTimeout(timer);
@@ -794,7 +798,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
             onOpenBattleLog={onOpenBattleLog} forceRefresh={forceRefreshBool} />
         )}
 
-        <Box  position='absolute' top={0} left={0} p={4} >
+        <Box  position='absolute' top={0} left={0} p={4} zIndex={1}>
           <Flex direction='row' justify='space-between' >
             {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>}
             {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>}

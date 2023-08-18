@@ -36,7 +36,7 @@ const useBankStakeNfts = () => {
   const stakeNfts = async (pendingNfts: PendingNft[], stakedNfts: StakedToken[]) => {
     if (!user.address) throw 'User is not logged in';
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
+    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     if (!signatureInStorage) {
       const { signature } = await getSigner();
       signatureInStorage = signature;

@@ -10,7 +10,7 @@ import { init, fetchListings } from '@src/GlobalState/collectionSlice';
 import { devLog } from '@src/utils';
 import Button from '../../../components/Button';
 import { chainConnect, connectAccount } from '@src/GlobalState/User';
-import MakeOfferDialog from '../../../Offer/Dialogs/MakeOfferDialog';
+import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 
 import styles from './CollectionCronosverse.module.scss';
 import {CollectionFilters} from "../../../Models/collection-filters.model";

@@ -97,5 +97,7 @@ const imageUrls = [
   '/img/battle-bay/imgs/explosion.png',
   ImageService.translate('/img/battle-bay/mapImages/boat_day.apng').convert(),
   ImageService.translate('/img/ryoshi-dynasties/announcements/vvs.webp').convert(),
-  ImageService.translate('/img/ryoshi-dynasties/announcements/vvs-sm.gif').convert()
+  ImageService.translate('/img/ryoshi-dynasties/announcements/vvs-sm.gif').convert(),
+  ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines.webp').convert(),
+  ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines-sm.webp').convert()
 ];

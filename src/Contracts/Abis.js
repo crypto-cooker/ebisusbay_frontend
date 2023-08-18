@@ -26,6 +26,7 @@ export const ERC20 = [
   'function approve(address, uint256) public',
   'function allowance(address owner, address spender) external view returns (uint256)',
   'function balanceOf(address owner) public view returns (uint256)',
+  'function decimals() public view returns (uint8)',
 ];
 export const ERC2981 = [
   'function royaltyInfo(uint256 tokenId, uint256 salePrice) external view returns (address receiver, uint256 royaltyAmount)',
