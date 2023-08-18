@@ -40,13 +40,24 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
   // const [isHighlands, setIsHighlands] = useState(false);
   const [landType, setLandType] = useState('')
 
-  const GetTraitType = (traitType:string, attributes:Attribute[], underlandSpot?:string) => {
+  const GetTraitType = (traitType:string, attributes:Attribute[], underlandSpot?:string, animVersion?:boolean) => {
     if(!underlandSpot) underlandSpot = '';
     for(let i = 0; i < attributes.length; i++){
       if(attributes[i].trait_type == traitType){
-
-        return attributes[i].value === "Fairy-Fountain" ? attributes[i].value + '.gif' : attributes[i].value + underlandSpot + '.png';
-      }
+        let finalValue = attributes[i].value;
+        if(attributes[i].value == 'Fairy-Fountain'){
+          finalValue = 'Fairy Fountain.gif';
+        }
+        else{
+          if(attributes[i].value == 'Bramblethorn-Titan' || attributes[i].value == 'Moongate'){
+            finalValue = attributes[i].value + 'Anim.png';
+          }
+          else{
+          finalValue = attributes[i].value + underlandSpot + '.png';
+        }
+        } 
+      return finalValue;
+    }
     }
     return "empty"+ underlandSpot +".png"
   }
@@ -103,17 +114,17 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
     setLandType(GetLandType(nft.attributes));
     landTypeRef.current.src = mainFolderPath +'LANDS/'+GetTraitType('landType', nft.attributes);
     landsBaseRef.current.src = mainFolderPath +'LAND BASE/' + (isCliffs ? 'Celestial-Cliffs.png' : 'Green-Land.png');
-    legendaryRef.current.src = mainFolderPath +'LEGENDARY/'+GetTraitType('legendary', nft.attributes);
+    legendaryRef.current.src = mainFolderPath +'LEGENDARY/'+GetTraitType('legendary', nft.attributes, '', true);
     landsBackgroundRef.current.src = mainFolderPath +'BACKGROUND/'+ (isCliffs ? 'Grey-Background.png' : 'Green-Background.png');
 
     underlandLeftImageRef.current.src = folderPath +'UNDERLAND LEFT/'+GetTraitType('underlandLeft', nft.attributes, '(L)')
     underlandMiddleImageRef.current.src = folderPath +'UNDERLAND MIDDLE/'+GetTraitType('underlandMiddle', nft.attributes, '(M)')
     underlandRightImageRef.current.src = folderPath +'UNDERLAND RIGHT/'+GetTraitType('underlandRight', nft.attributes, '(R)')
 
-    northImageRef.current.src = folderPath +GetDisplayType('northSpot', nft.attributes)+'/'+GetTraitType('northSpot', nft.attributes);
-    southImageRef.current.src = folderPath +GetDisplayType('southSpot', nft.attributes)+'/'+GetTraitType('southSpot', nft.attributes);
-    eastImageRef.current.src = folderPath +GetDisplayType('eastSpot', nft.attributes)+'/'+GetTraitType('eastSpot', nft.attributes);
-    westImageRef.current.src = folderPath +GetDisplayType('westSpot', nft.attributes)+'/'+GetTraitType('westSpot', nft.attributes);
+    northImageRef.current.src = folderPath +GetDisplayType('northSpot', nft.attributes)+'/'+GetTraitType('northSpot', nft.attributes, '', true);
+    southImageRef.current.src = folderPath +GetDisplayType('southSpot', nft.attributes)+'/'+GetTraitType('southSpot', nft.attributes, '', true);
+    eastImageRef.current.src = folderPath +GetDisplayType('eastSpot', nft.attributes)+'/'+GetTraitType('eastSpot', nft.attributes, '', true);
+    westImageRef.current.src = folderPath +GetDisplayType('westSpot', nft.attributes)+'/'+GetTraitType('westSpot', nft.attributes, '', true);
     
 
     if(IsHighlands(nft.attributes)){
