@@ -59,6 +59,7 @@ export type AccountClosedByAdmin_Filter = {
   admin_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   admin_starts_with?: InputMaybe<Scalars['String']['input']>;
   admin_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  and?: InputMaybe<Array<InputMaybe<AccountClosedByAdmin_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -95,6 +96,7 @@ export type AccountClosedByAdmin_Filter = {
   id_lte?: InputMaybe<Scalars['ID']['input']>;
   id_not?: InputMaybe<Scalars['ID']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<AccountClosedByAdmin_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -137,6 +139,7 @@ export enum AccountClosedByAdmin_OrderBy {
 export type AccountClosed_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<AccountClosed_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -173,6 +176,7 @@ export type AccountClosed_Filter = {
   id_lte?: InputMaybe<Scalars['ID']['input']>;
   id_not?: InputMaybe<Scalars['ID']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<AccountClosed_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -223,6 +227,7 @@ export type AccountOpened = {
 export type AccountOpened_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<AccountOpened_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -259,6 +264,7 @@ export type AccountOpened_Filter = {
   id_lte?: InputMaybe<Scalars['ID']['input']>;
   id_not?: InputMaybe<Scalars['ID']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<AccountOpened_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -332,6 +338,7 @@ export type AccountUpdated_Filter = {
   amount_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  and?: InputMaybe<Array<InputMaybe<AccountUpdated_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -388,6 +395,7 @@ export type AccountUpdated_Filter = {
   length_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   length_starts_with?: InputMaybe<Scalars['String']['input']>;
   length_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  or?: InputMaybe<Array<InputMaybe<AccountUpdated_Filter>>>;
   startTime?: InputMaybe<Scalars['String']['input']>;
   startTime_contains?: InputMaybe<Scalars['String']['input']>;
   startTime_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -462,6 +470,7 @@ export type AttackFactionEvent = {
 export type AttackFactionEvent_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<AttackFactionEvent_Filter>>>;
   attackId?: InputMaybe<Scalars['String']['input']>;
   attackId_contains?: InputMaybe<Scalars['String']['input']>;
   attackId_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -538,6 +547,7 @@ export type AttackFactionEvent_Filter = {
   id_lte?: InputMaybe<Scalars['ID']['input']>;
   id_not?: InputMaybe<Scalars['ID']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<AttackFactionEvent_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -580,6 +590,7 @@ export type Cancelled = {
 export type Cancelled_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<Cancelled_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -636,6 +647,7 @@ export type Cancelled_Filter = {
   nonce_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   nonce_starts_with?: InputMaybe<Scalars['String']['input']>;
   nonce_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  or?: InputMaybe<Array<InputMaybe<Cancelled_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -710,6 +722,7 @@ export type Compounded_Filter = {
   amount_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  and?: InputMaybe<Array<InputMaybe<Compounded_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -766,6 +779,7 @@ export type Compounded_Filter = {
   nonce_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   nonce_starts_with?: InputMaybe<Scalars['String']['input']>;
   nonce_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  or?: InputMaybe<Array<InputMaybe<Compounded_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -825,7 +839,16 @@ export enum Compounded_OrderBy {
   Nonce = 'nonce',
   Time = 'time',
   User = 'user',
-  VaultId = 'vaultId'
+  VaultId = 'vaultId',
+  VaultIdBalance = 'vaultId__balance',
+  VaultIdBalanceString = 'vaultId__balanceString',
+  VaultIdEndTime = 'vaultId__endTime',
+  VaultIdId = 'vaultId__id',
+  VaultIdIndex = 'vaultId__index',
+  VaultIdLength = 'vaultId__length',
+  VaultIdOpen = 'vaultId__open',
+  VaultIdStartTime = 'vaultId__startTime',
+  VaultIdVaultId = 'vaultId__vaultId'
 }
 
 export type Erc20Account = {
@@ -840,6 +863,7 @@ export type Erc20Account = {
 export type Erc20Account_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<Erc20Account_Filter>>>;
   fortuneBalance?: InputMaybe<Scalars['BigInt']['input']>;
   fortuneBalanceString?: InputMaybe<Scalars['String']['input']>;
   fortuneBalanceString_contains?: InputMaybe<Scalars['String']['input']>;
@@ -904,6 +928,7 @@ export type Erc20Account_Filter = {
   mitamaBalance_lte?: InputMaybe<Scalars['BigInt']['input']>;
   mitamaBalance_not?: InputMaybe<Scalars['BigInt']['input']>;
   mitamaBalance_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<Erc20Account_Filter>>>;
 };
 
 export enum Erc20Account_OrderBy {
@@ -931,6 +956,7 @@ export type FortuneStakingAccount = {
 export type FortuneStakingAccount_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<FortuneStakingAccount_Filter>>>;
   balance?: InputMaybe<Scalars['BigInt']['input']>;
   balanceString?: InputMaybe<Scalars['String']['input']>;
   balanceString_contains?: InputMaybe<Scalars['String']['input']>;
@@ -995,6 +1021,7 @@ export type FortuneStakingAccount_Filter = {
   open_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
   open_not?: InputMaybe<Scalars['Boolean']['input']>;
   open_not_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<FortuneStakingAccount_Filter>>>;
   startTime?: InputMaybe<Scalars['BigInt']['input']>;
   startTime_gt?: InputMaybe<Scalars['BigInt']['input']>;
   startTime_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -1044,6 +1071,9 @@ export enum FortuneStakingAccount_OrderBy {
   Open = 'open',
   StartTime = 'startTime',
   User = 'user',
+  UserId = 'user__id',
+  UserTotalStaked = 'user__totalStaked',
+  UserTotalStakedString = 'user__totalStakedString',
   VaultId = 'vaultId'
 }
 
@@ -1059,6 +1089,7 @@ export type MintRequestCancelledEvent = {
 export type MintRequestCancelledEvent_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<MintRequestCancelledEvent_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -1115,6 +1146,7 @@ export type MintRequestCancelledEvent_Filter = {
   id_lte?: InputMaybe<Scalars['ID']['input']>;
   id_not?: InputMaybe<Scalars['ID']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<MintRequestCancelledEvent_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -1145,6 +1177,7 @@ export type MintRequestSuccessEvent = {
 export type MintRequestSuccessEvent_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<MintRequestSuccessEvent_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -1201,6 +1234,7 @@ export type MintRequestSuccessEvent_Filter = {
   id_lte?: InputMaybe<Scalars['ID']['input']>;
   id_not?: InputMaybe<Scalars['ID']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<MintRequestSuccessEvent_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -1262,6 +1296,7 @@ export type MitamaTransfer_Filter = {
   amount_lte?: InputMaybe<Scalars['BigInt']['input']>;
   amount_not?: InputMaybe<Scalars['BigInt']['input']>;
   amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  and?: InputMaybe<Array<InputMaybe<MitamaTransfer_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -1318,6 +1353,7 @@ export type MitamaTransfer_Filter = {
   id_lte?: InputMaybe<Scalars['ID']['input']>;
   id_not?: InputMaybe<Scalars['ID']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<MitamaTransfer_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -1769,6 +1805,7 @@ export type RegisteredSeason = {
 export type RegisteredSeason_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<RegisteredSeason_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -1825,6 +1862,7 @@ export type RegisteredSeason_Filter = {
   leader_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   leader_starts_with?: InputMaybe<Scalars['String']['input']>;
   leader_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  or?: InputMaybe<Array<InputMaybe<RegisteredSeason_Filter>>>;
   season?: InputMaybe<Scalars['String']['input']>;
   season_contains?: InputMaybe<Scalars['String']['input']>;
   season_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -1898,6 +1936,7 @@ export type Spend_Filter = {
   amount_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  and?: InputMaybe<Array<InputMaybe<Spend_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -1954,6 +1993,7 @@ export type Spend_Filter = {
   nonce_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   nonce_starts_with?: InputMaybe<Scalars['String']['input']>;
   nonce_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  or?: InputMaybe<Array<InputMaybe<Spend_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -2040,6 +2080,7 @@ export type StakedToken_Filter = {
   amount_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  and?: InputMaybe<Array<InputMaybe<StakedToken_Filter>>>;
   contractAddress?: InputMaybe<Scalars['String']['input']>;
   contractAddress_contains?: InputMaybe<Scalars['String']['input']>;
   contractAddress_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -2068,6 +2109,7 @@ export type StakedToken_Filter = {
   id_lte?: InputMaybe<Scalars['ID']['input']>;
   id_not?: InputMaybe<Scalars['ID']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<StakedToken_Filter>>>;
   tokenId?: InputMaybe<Scalars['String']['input']>;
   tokenId_contains?: InputMaybe<Scalars['String']['input']>;
   tokenId_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -2162,6 +2204,7 @@ export type Staked_Filter = {
   amount_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  and?: InputMaybe<Array<InputMaybe<Staked_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -2218,6 +2261,7 @@ export type Staked_Filter = {
   id_lte?: InputMaybe<Scalars['ID']['input']>;
   id_not?: InputMaybe<Scalars['ID']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<Staked_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -2320,6 +2364,7 @@ export type StakingAccountVaultsArgs = {
 export type StakingAccount_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<StakingAccount_Filter>>>;
   id?: InputMaybe<Scalars['ID']['input']>;
   id_gt?: InputMaybe<Scalars['ID']['input']>;
   id_gte?: InputMaybe<Scalars['ID']['input']>;
@@ -2328,6 +2373,7 @@ export type StakingAccount_Filter = {
   id_lte?: InputMaybe<Scalars['ID']['input']>;
   id_not?: InputMaybe<Scalars['ID']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<StakingAccount_Filter>>>;
   totalStaked?: InputMaybe<Scalars['BigInt']['input']>;
   totalStakedString?: InputMaybe<Scalars['String']['input']>;
   totalStakedString_contains?: InputMaybe<Scalars['String']['input']>;
@@ -2793,6 +2839,7 @@ export type Unstaked_Filter = {
   amount_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  and?: InputMaybe<Array<InputMaybe<Unstaked_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -2849,6 +2896,7 @@ export type Unstaked_Filter = {
   id_lte?: InputMaybe<Scalars['ID']['input']>;
   id_not?: InputMaybe<Scalars['ID']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<Unstaked_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -2966,6 +3014,7 @@ export type Withdrawn_Filter = {
   amount_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with?: InputMaybe<Scalars['String']['input']>;
   amount_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  and?: InputMaybe<Array<InputMaybe<Withdrawn_Filter>>>;
   block?: InputMaybe<Scalars['BigInt']['input']>;
   block_gt?: InputMaybe<Scalars['BigInt']['input']>;
   block_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -3042,6 +3091,7 @@ export type Withdrawn_Filter = {
   nonce_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   nonce_starts_with?: InputMaybe<Scalars['String']['input']>;
   nonce_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  or?: InputMaybe<Array<InputMaybe<Withdrawn_Filter>>>;
   time?: InputMaybe<Scalars['BigInt']['input']>;
   time_gt?: InputMaybe<Scalars['BigInt']['input']>;
   time_gte?: InputMaybe<Scalars['BigInt']['input']>;

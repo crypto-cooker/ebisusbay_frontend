@@ -16,7 +16,6 @@ import {useAppSelector} from "@src/Store/hooks";
 
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 import LandModal from './land-modal';
-import myData from './points.json';
 import NextApiService from "@src/core/services/api-service/next";
 import {appConfig} from "@src/Config";
 const config = appConfig();
@@ -26,6 +25,10 @@ import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wa
 import {TriangleUpIcon } from '@chakra-ui/icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBuildingColumns} from "@fortawesome/free-solid-svg-icons";
+
+import mapData from './points.json';
+import landsMetadata from './lands-metadata.json';
+import { set } from 'lodash';
 
 interface BattleMapProps {
   onBack: () => void;
@@ -45,28 +48,25 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   const [plotPrice, setPlotPrice] = useState(0);
   const [forSale, setForSale] = useState(false);
   const [nft, setNft] = useState<any>(null);
-
   const [elementToZoomTo, setElementToZoomTo] = useState("");
-  useEffect(() => {
-    if (transformComponentRef.current) {
-      const { zoomToElement } = transformComponentRef.current as any;
-      zoomToElement(elementToZoomTo);
-      setPlotId(Number(elementToZoomTo)+1);
-      onOpen();
-    }
-  }, [elementToZoomTo]);
+  const [showText, setShowText] = useState(false);
+  const [zoomState, setZoomState] = useState({offsetX: 0, offsetY: 0, scale: 1,});
 
+  // const [attributes, setAttributes] = useState<Attribute>([]);
+  const [traitTypes, setTraitTypes] = useState<string[]>([]);
+  const [filteredMapData, setFilteredMapData] = useState<MapPoints>()
+  const [filteredMetadata, setFilteredMetadata] = useState<MetaData>()
+  const [resetMap, setResetMap] = useState(false);
+  
   const GetListings = async () => {
     const collectionAddress = config.collections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds')?.address;
     return await NextApiService.getListingsByCollection(collectionAddress, {
       pageSize: 2500
     });
   }
-
   const [queryParams, setQueryParams] = useState<WalletsQueryParams>({
     collection: config.collections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds')?.address,
   });
-
   const fetcher = async ({ pageParam = 1 }) => {
     const params: WalletsQueryParams = {
       page: pageParam,
@@ -74,167 +74,6 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     }
     return NextApiService.getWallet(user.address!, params);
   };
-
-  const {data: ownedDeeds, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
-    ['Inventory', user.address, queryParams],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    }
-  )
-  const GetTextColor = (i :number) => {
-    if(CheckIfListing(i)){
-      return "gold";
-     }
-     return "white";
-  }
-
-  const CheckIfListing = (i :number) => {
-    let isListing = false;
-    listings.forEach((element:any) => {
-        if(element.nftId === (i).toString()){
-          isListing = true;
-        }
-    })
-    return isListing;
-  }
-  const GetListingPrice = (i :number) => {
-    let listingPrice = 0;
-    listings.forEach((element:any) => {
-        if(element.nftId === (i).toString()){
-          listingPrice = element.price;
-        }
-    })
-    return listingPrice;
-  }
-  const GetListingNft = (i :number) => {
-    let listingNft = null;
-    listings.forEach((element:any) => {
-        if(element.nftId === (i).toString()){
-          listingNft = element.nft;
-        }
-    })
-    return listingNft;
-  }
- 
-  const loadPoints = () => {
-
-
-    setTextArea(
-      myData.vectors.map((point: any, i :number) => (
-        <>
-          {ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i + 1).toString()) ? (<>
-            <Icon
-              position="absolute"
-              as={FontAwesomeIcon} 
-              icon={faBuildingColumns}
-              color={'#D24547'}
-              width={4}
-              height={4}
-              left={point.x}
-              top={1662 - point.y}
-              id={i.toString()}
-              cursor="pointer"
-              zIndex="10"
-              onClick={() => {
-                setElementToZoomTo((i).toString());
-              }}
-            ></Icon>
-          </> ) : (<> 
-            <Text
-              position="absolute"
-              textAlign="center"
-              as={'b'}
-              textColor={GetTextColor(i+1)}
-              cursor="pointer"
-              id={i.toString()}
-              fontSize={8}
-              width={6}
-              height={3}
-              left={point.x}
-              top={1662 - point.y}
-              zIndex="10"
-              onClick={() => {
-                setElementToZoomTo((i).toString());
-              }}
-            >{i+1}</Text>
-          </>)}
-        </>
-      )))
-
-
-    setPointArea(
-        myData.vectors.map((point: any, i :number) => (
-          <>
-            {ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i + 1).toString()) ? (<>
-              <Icon
-                position="absolute"
-                as={FontAwesomeIcon} 
-                icon={faBuildingColumns}
-                color={'#D24547'}
-                width={4}
-                height={4}
-                left={point.x}
-                top={1662 - point.y}
-                id={i.toString()}
-                cursor="pointer"
-                zIndex="10"
-                onClick={() => {
-                  setElementToZoomTo((i).toString());
-                }}
-              ></Icon>
-            </> ) : (<> 
-              <TriangleUpIcon
-                position="absolute"
-                // id={i.toString()}
-                width={1}
-                height={1}
-                left={point.x}
-                top={1662 - point.y}
-                zIndex="10"
-                ></TriangleUpIcon>
-            </>)}
-          </>
-        )))
-    
-    setMapInitialized(true);
-  }
-
-  useEffect(() => {
-    if(listings.length <= 0) return;
-    // console.log(listings);
-    loadPoints();
-  }, [listings]);
-
-  useEffect(() => {
-    // console.log(ownedDeeds);
-    loadPoints();
-
-  }, [ownedDeeds]);
-
-  useEffect(() => {
-    if(CheckIfListing(plotId)){
-      setPlotPrice(GetListingPrice(plotId));
-      setNft(GetListingNft(plotId));
-      setForSale(true);
-    }
-    else{
-      setPlotPrice(0);
-      setNft(null);
-      setForSale(false);
-    }
-  }, [plotId]);
-
-  const [showText, setShowText] = useState(false);
-  const [zoomState, setZoomState] = useState({
-    offsetX: 0,
-    offsetY: 0,
-    scale: 1,
-  });
-
   const changeCanvasState = (ReactZoomPanPinchRef: any, event: any) => {
     setZoomState({
       offsetX: ReactZoomPanPinchRef.state.positionX,
@@ -242,34 +81,6 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       scale: ReactZoomPanPinchRef.state.scale,
     });
   };
-
-  useEffect(() => {
-    // console.log(zoomState.scale);
-    if(!showText &&  zoomState.scale >= 1.1){
-      setShowText(true);
-    }
-    else if(showText &&  zoomState.scale < 1.1){
-      setShowText(false);
-    }
-
-  }, [zoomState.scale]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await GetListings();
-      if(data){
-        //itterate through
-        let listings = data.data.map((item: any) => {
-          return item;
-        });
-        SetListings(listings)
-      }
-    }
-    fetchData()
-    .catch(console.error);;
-
-  }, []);
-
   const mapProps = useBreakpointValue<MapProps>(
     {
       base: {
@@ -309,6 +120,231 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       }
     }
   );
+  const {data: ownedDeeds, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
+    ['Inventory', user.address, queryParams],
+    fetcher,
+    {
+      getNextPageParam: (lastPage, pages) => {
+        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+      },
+      refetchOnWindowFocus: false
+    }
+  )
+  const GetTextColor = (i :number) => {
+    if(CheckIfListing(i)){
+      return "gold";
+     }
+     return "white";
+  }
+  const CheckIfListing = (i :number) => {
+    let isListing = false;
+    listings.forEach((element:any) => {
+        if(element.nftId === (i).toString()){
+          isListing = true;
+        }
+    })
+    return isListing;
+  }
+  const GetListingPrice = (i :number) => {
+    let listingPrice = 0;
+    listings.forEach((element:any) => {
+        if(element.nftId === (i).toString()){
+          listingPrice = element.price;
+        }
+    })
+    return listingPrice;
+  }
+  const GetListingNft = (i :number) => {
+    let listingNft = null;
+    listings.forEach((element:any) => {
+        if(element.nftId === (i).toString()){
+          listingNft = element.nft;
+        }
+    })
+    return listingNft;
+  }
+  const loadPoints = () => {
+    if(!filteredMapData || !filteredMetadata) return;
+
+    // console.log("loadPoints", filteredMetadata);
+    
+    setTextArea(
+      filteredMapData.vectors.map((point: any, i :number) => (
+        <>
+          {ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i + 1).toString()) ? (<>
+            <Icon
+              position="absolute"
+              as={FontAwesomeIcon} 
+              icon={faBuildingColumns}
+              color={'#D24547'}
+              width={4}
+              height={4}
+              left={point.x-2}
+              top={1662 - point.y-2}
+              id={filteredMapData.nfts[i].toString()}
+              cursor="pointer"
+              zIndex="10"
+              onClick={() => {
+                setElementToZoomTo(filteredMapData.nfts[i].toString());
+              }}
+            ></Icon>
+          </> ) : (<> 
+          <>
+          console.log("point", point);
+            <Text
+              position="absolute"
+              textAlign="center"
+              as={'b'}
+              textColor={GetTextColor(Number(filteredMapData.nfts[i].name)+1)}
+              cursor="pointer"
+              id={filteredMapData.nfts[i].toString()}
+              fontSize={8}
+              width={6}
+              height={3}
+              left={point.x-3}
+              top={1662 - point.y-1}
+              zIndex="10"
+              onClick={() => {
+                setElementToZoomTo(filteredMapData.nfts[i].toString());
+              }}
+            >{filteredMapData.nfts[i]}</Text>
+          </>
+          </>)}
+        </>
+      )))
+
+    setPointArea(
+      filteredMapData.vectors.map((point: any, i :number) => (
+          <>
+            {ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i + 1).toString()) ? (<>
+              <Icon
+                position="absolute"
+                as={FontAwesomeIcon} 
+                icon={faBuildingColumns}
+                color={'#D24547'}
+                width={4}
+                height={4}
+                left={point.x}
+                top={1662 - point.y}
+                id={i.toString()}
+                cursor="pointer"
+                zIndex="10"
+                onClick={() => {
+                  setElementToZoomTo((i).toString());
+                }}
+              ></Icon>
+            </> ) : (<> 
+              <TriangleUpIcon
+                position="absolute"
+                // id={i.toString()}
+                width={8}
+                height={8}
+                left={point.x-16}
+                top={1662 - point.y-16}
+                zIndex="10"
+                ></TriangleUpIcon>
+            </>)}
+          </>
+        )))
+    setMapInitialized(true);
+  }
+
+  useEffect(() => {
+    if(!filteredMapData) return;
+    loadPoints();
+  }, [listings, filteredMapData, ownedDeeds]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await GetListings();
+      if(data){
+        let listings = data.data.map((element:any) => {
+          return element;
+          });
+          SetListings(listings);
+      }
+    }
+    fetchData().catch((e) => console.log(e));
+  }, []);
+  useEffect(() => {
+    if(CheckIfListing(plotId)){
+      setPlotPrice(GetListingPrice(plotId));
+      setNft(GetListingNft(plotId));
+      setForSale(true);
+    }
+    else{
+      setPlotPrice(0);
+      setNft(null);
+      setForSale(false);
+    }
+  }, [plotId]);
+  useEffect(() => {
+    if (transformComponentRef.current) {
+      const { zoomToElement } = transformComponentRef.current as any;
+      zoomToElement(elementToZoomTo);
+      setPlotId(Number(elementToZoomTo));
+      onOpen();
+    }
+  }, [elementToZoomTo]);
+  useEffect(() => {
+    if(!showText && zoomState.scale >= 1.1){
+      setShowText(true);
+    }
+    else if(showText && zoomState.scale < 1.1){
+      setShowText(false);
+    }
+  }, [zoomState.scale]);
+  useEffect(() => {
+    if(!landsMetadata) return;
+
+    let allTraitTypes: string[] = [];
+    landsMetadata.finalMetadata.map((item: any) => {
+      //check if attribute exists
+      //itterate through item attributes
+      item.attributes.forEach((attribute: any) => {
+        if(!allTraitTypes.includes(attribute.value)){
+          allTraitTypes.push(attribute.value);
+        }
+      });
+    });
+    setTraitTypes(allTraitTypes.sort());
+  }, [landsMetadata]);
+
+  useEffect(() => {
+    if(!landsMetadata) return;
+    if(!mapData) return;
+
+    setFilteredMapData({vectors: mapData.vectors, nfts: landsMetadata.finalMetadata});
+    setFilteredMetadata(landsMetadata);
+  }, [mapData, landsMetadata, resetMap]);
+
+  const FilterByTraitCallback = (trait:string) => {
+    if(!filteredMetadata) return;
+    //filter to only get the ones with that trait under attributes
+    let filteredMetadataLocal = landsMetadata.finalMetadata.filter((item: any) => {
+      return item.attributes.some((attribute: any) => attribute.value === trait);
+    });
+    console.log(trait, "count:", filteredMetadataLocal.length);
+    setFilteredMetadata({finalMetadata: filteredMetadataLocal});
+  }
+
+  useEffect(() => {
+    if(!filteredMetadata) return;
+    if(!filteredMapData) return;
+
+    // console.log("", filteredMetadata.finalMetadata.length);
+    // console.log("filteredMapData", filteredMapData);
+
+    let filteredMapDataLocal = mapData.vectors.filter((item: any, index:number) => {
+      return filteredMetadata.finalMetadata.some((metadata: landNFT) => metadata.name === (index+1).toString());
+    });
+
+    let nftIdsLocal = filteredMetadata.finalMetadata.map((item: any) => {
+      return item.name;
+    });
+
+    setFilteredMapData({vectors: filteredMapDataLocal, nfts: nftIdsLocal});
+
+  }, [filteredMetadata]);
 
   return (
     <section>
@@ -372,7 +408,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
             </TransformWrapper>
         )}
         <LandModal isOpen={isOpen}  onClose={onClose} plotId={plotId} forSale={forSale} price={plotPrice} nft={nft}/>
-        <LandsHUD onBack={onBack} setElementToZoomTo={setElementToZoomTo} showBack={false}/>
+        <LandsHUD onBack={onBack} traitTypes={traitTypes} setElementToZoomTo={setElementToZoomTo} showBack={false} FilterByTraitCallback={FilterByTraitCallback}/>
       </Box>
     </section>
   )
@@ -385,4 +421,25 @@ interface MapProps {
   scale: number;
   initialPosition: { x: number; y: number };
   minScale: number;
+}
+interface Attribute {
+  trait_type: string;
+  value: string;
+  display_type:string;
+}
+interface MetaData {
+  finalMetadata: landNFT[]
+}
+interface landNFT{
+  image:string;
+  name:string;
+  attributes:Attribute[];
+}
+interface MapPoints{
+  vectors:Vector[];
+  nfts:landNFT[];
+}
+interface Vector{
+  x:number;
+  y:number;
 }

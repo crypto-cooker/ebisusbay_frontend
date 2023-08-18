@@ -11,6 +11,7 @@ import {useDispatch} from 'react-redux';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
+import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 
 const tabs = {
   info: 'info',
@@ -52,6 +53,7 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
   const dispatch = useDispatch();
   // const router = useRouter();
   const user = useAppSelector(state => state.user);
+  
   // const user = useSelector((state) => state.user);
   // const items = useSelector((state) => state.collection.listings);
   // const listings = useSelector((state) => state.collection.listings.filter((item) => item.market.id));
@@ -116,13 +118,7 @@ const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFor
       ) : (
         <>
           <SimpleGrid columns={2} padding='10'>
-            <Image
-              src={nftImage}
-              alt='NFT Image'
-              width='200'
-              height='200'
-              rounded={'md'}
-              />
+            <RdLand nftId={plotId.toString()} boxSize={199} />
               <Flex justifyContent={'center'}>
                 <VStack>
                 <Text
