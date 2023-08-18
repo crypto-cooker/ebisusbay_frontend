@@ -5,7 +5,6 @@ import {
   Box,
   Flex,
   Text,
-  Image,
   Icon
 } from '@chakra-ui/react'
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -13,7 +12,6 @@ import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 import ImageService from '@src/core/services/image';
 import {LandsHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-hud";
 import {useAppSelector} from "@src/Store/hooks";
-import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
 
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 import LandModal from './land-modal';
@@ -26,22 +24,14 @@ import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wa
 import {TriangleUpIcon } from '@chakra-ui/icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBuildingColumns} from "@fortawesome/free-solid-svg-icons";
+import {getNft} from "@src/core/api/endpoints/nft";
 
 import mapData from './points.json';
 import landsMetadata from './lands-metadata.json';
-import { set } from 'lodash';
-import axios from "axios";
-import {CollectionSortOption} from "@src/Components/Models/collection-sort-option.model";
-import {sortAndFetchCollectionDetails} from "@src/core/api/endpoints/fullcollections";
-import {getNft} from "@src/core/api/endpoints/nft";
 
 interface BattleMapProps {
   onBack: () => void;
 }
-const api = axios.create({
-  baseURL: config.urls.api,
-});
-import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
 
 const DynastiesLands = ({onBack}: BattleMapProps) => {
   const user = useAppSelector(state => state.user);
@@ -207,7 +197,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               cursor="pointer"
               zIndex="10"
               onClick={() => {
-                setElementToZoomTo(filteredMapData.nfts[i].id);
+                setElementToZoomTo(filteredMapData.nfts[i]);
               }}
             ></Icon>
           </> ) : (<> 
@@ -226,7 +216,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               top={1662 - point.y-1}
               zIndex="10"
               onClick={() => {
-                setElementToZoomTo(filteredMapData.nfts[i].id);
+                setElementToZoomTo(filteredMapData.nfts[i]);
               }}
             >
               <>{filteredMapData.nfts[i]}</>
@@ -308,6 +298,8 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   useEffect(() => {
     if (transformComponentRef.current) {
       const { zoomToElement } = transformComponentRef.current as any;
+
+      // console.log("elementToZoomTo", elementToZoomTo);
       zoomToElement(elementToZoomTo);
       setPlotId(Number(elementToZoomTo));
       onOpen();
