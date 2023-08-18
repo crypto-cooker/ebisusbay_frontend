@@ -16,10 +16,9 @@ interface Attribute{
 interface RdLandProps {
   nftId: string;
   boxSize: number;
-  specificNFT?: boolean;
 }
 
-const RdLand = ({nftId, boxSize, specificNFT}: RdLandProps) => {
+const RdLand = ({nftId, boxSize}: RdLandProps) => {
 
   const landTypeRef = useRef<any>(null);
   const landsBaseRef = useRef<any>(null);
@@ -95,7 +94,8 @@ const RdLand = ({nftId, boxSize, specificNFT}: RdLandProps) => {
 
   const GenerateLandPNG = (nftId : string) => {
     // console.log("Generating Land")
-    let nft : NFTMetaData = landsMetadata.finalMetadata.find((nft) => nft.name == nftId) as NFTMetaData;
+    console.log("nftId", nftId)
+    let nft : NFTMetaData = landsMetadata.finalMetadata.find((nft) => nft.id == nftId) as NFTMetaData;
     let isCliffs = IsCliffs(nft.attributes);
     let folderPath = isCliffs ? rockFolderPath : mainFolderPath;
     // console.log(nft)

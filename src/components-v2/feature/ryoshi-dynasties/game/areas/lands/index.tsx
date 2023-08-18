@@ -182,6 +182,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
           listingNft = element.nft;
         }
     })
+    console.log("listingNft", listingNft);
     return listingNft;
   }
   const loadPoints = () => {
@@ -202,11 +203,11 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               height={4}
               left={point.x-2}
               top={1662 - point.y-2}
-              id={filteredMapData.nfts[i].toString()}
+              id={filteredMapData.nfts[i].id}
               cursor="pointer"
               zIndex="10"
               onClick={() => {
-                setElementToZoomTo(filteredMapData.nfts[i].toString());
+                setElementToZoomTo(filteredMapData.nfts[i].id);
               }}
             ></Icon>
           </> ) : (<> 
@@ -215,9 +216,9 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               position="absolute"
               textAlign="center"
               as={'b'}
-              textColor={GetTextColor(Number(filteredMapData.nfts[i].name)+1)}
+              textColor={GetTextColor(Number(filteredMapData.nfts[i].id)+1)}
               cursor="pointer"
-              id={filteredMapData.nfts[i].toString()}
+              id={filteredMapData.nfts[i].id}
               fontSize={8}
               width={6}
               height={3}
@@ -225,7 +226,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               top={1662 - point.y-1}
               zIndex="10"
               onClick={() => {
-                setElementToZoomTo(filteredMapData.nfts[i].toString());
+                setElementToZoomTo(filteredMapData.nfts[i].id);
               }}
             >
               <>{filteredMapData.nfts[i]}</>
@@ -252,7 +253,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
                 cursor="pointer"
                 zIndex="10"
                 onClick={() => {
-                  setElementToZoomTo(filteredMapData.nfts[i].name);
+                  setElementToZoomTo(filteredMapData.nfts[i].id);
                 }}
               ></Icon>
             </> ) : (<> 
@@ -289,6 +290,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   }, []);
 
   useEffect(() => {
+    console.log("plotId", plotId);
     if(CheckIfListing(plotId)){
       console.log("for sale");
       setPlotPrice(GetListingPrice(plotId));
@@ -361,11 +363,11 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     // console.log("filteredMapData", filteredMapData);
 
     let filteredMapDataLocal = mapData.vectors.filter((item: any, index:number) => {
-      return filteredMetadata.finalMetadata.some((metadata: landNFT) => metadata.name === (index+1).toString());
+      return filteredMetadata.finalMetadata.some((metadata: landNFT) => metadata.id === (index+1).toString());
     });
 
     let nftIdsLocal = filteredMetadata.finalMetadata.map((item: any) => {
-      return item.name;
+      return item.id;
     });
 
     setFilteredMapData({vectors: filteredMapDataLocal, nfts: nftIdsLocal});
@@ -459,6 +461,8 @@ interface MetaData {
 interface landNFT{
   image:string;
   name:string;
+  description:string;
+  id:string;
   attributes:Attribute[];
 }
 interface MapPoints{

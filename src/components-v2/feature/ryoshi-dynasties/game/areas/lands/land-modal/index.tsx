@@ -29,7 +29,6 @@ interface LandModalFormProps {
 }
 
 const LandModal = ({ isOpen, onClose, plotId, forSale, price, nft}: LandModalFormProps) => {
-  console.log('===nft', nft);
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
 
