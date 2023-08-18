@@ -24,6 +24,12 @@ const mainFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/'
 const rockFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/ROCKS/'
 
 export default async function handler(req: NextRequest) {
+  if (req.method === 'HEAD') {
+    return new Response(null, {headers: {
+        'Content-Type': 'image/png',
+    }});
+  }
+
   const nftId = req.nextUrl.pathname.split('/')[3];
 
   let nft : NFTMetaData = landsMetadata.finalMetadata.find((nft) => nft.id == nftId) as NFTMetaData;
@@ -31,7 +37,7 @@ export default async function handler(req: NextRequest) {
   let folderPath = isCliffs ? rockFolderPath : mainFolderPath;
   const landType = GetLandType(nft.attributes);
 
-  const size = 500;
+  const size = 1000;
   const imgLandsBackground = urlify(appConfig('urls.app'), mainFolderPath +'BACKGROUND/'+ (isCliffs ? 'Grey-Background.png' : 'Green-Background.png'));
   const imgLandsBase = urlify(appConfig('urls.app'), mainFolderPath +'LAND BASE/' + (isCliffs ? 'Celestial-Cliffs.png' : 'Green-Land.png'));
   const imgLandType = urlify(appConfig('urls.app'), mainFolderPath +'LANDS/'+GetTraitType('landType', nft.attributes));
@@ -132,7 +138,7 @@ export default async function handler(req: NextRequest) {
       width: size,
       height: size,
       headers: {
-        'cache-control': 'public, max-age=180, stale-while-revalidate=300, no-transform'
+        'cache-control': 'public, max-age=3600, stale-while-revalidate=4200, no-transform'
       }
     }
   )
