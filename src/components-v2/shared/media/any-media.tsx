@@ -96,6 +96,11 @@ export const AnyMedia = ({
           return;
         }
 
+        if (contentType.includes('text/html')) {
+          setDynamicType(MediaType.iFrame);
+          return;
+        }
+
         const [mediaType, format] = contentType.split('/');
         let type = MediaType[mediaType as keyof typeof MediaType] ?? MediaType.image;
         if (type === MediaType.video) {

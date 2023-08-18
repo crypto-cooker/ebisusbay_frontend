@@ -207,7 +207,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
                 setElementToZoomTo(filteredMapData.nfts[i].toString());
               }}
             >
-              {filteredMapData.nfts[i]}
+              <>{filteredMapData.nfts[i]}</>
             </Text>
           </>
           </>)}
