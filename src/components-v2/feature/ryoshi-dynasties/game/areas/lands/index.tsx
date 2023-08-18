@@ -13,6 +13,7 @@ import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 import ImageService from '@src/core/services/image';
 import {LandsHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-hud";
 import {useAppSelector} from "@src/Store/hooks";
+import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
 
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 import LandModal from './land-modal';
@@ -29,10 +30,18 @@ import {faBuildingColumns} from "@fortawesome/free-solid-svg-icons";
 import mapData from './points.json';
 import landsMetadata from './lands-metadata.json';
 import { set } from 'lodash';
+import axios from "axios";
+import {CollectionSortOption} from "@src/Components/Models/collection-sort-option.model";
+import {sortAndFetchCollectionDetails} from "@src/core/api/endpoints/fullcollections";
+import {getNft} from "@src/core/api/endpoints/nft";
 
 interface BattleMapProps {
   onBack: () => void;
 }
+const api = axios.create({
+  baseURL: config.urls.api,
+});
+import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
 
 const DynastiesLands = ({onBack}: BattleMapProps) => {
   const user = useAppSelector(state => state.user);
@@ -43,11 +52,13 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   const [pointArea, setPointArea] = useState<ReactElement[]>([]);
   const [mapInitialized, setMapInitialized] = useState(false);
   const [listings, SetListings] = useState<any>([]);
+  const [allNFTs, SetAllNFTs] = useState<any>([]);
   
   const [plotId, setPlotId] = useState(0);
   const [plotPrice, setPlotPrice] = useState(0);
   const [forSale, setForSale] = useState(false);
   const [nft, setNft] = useState<any>(null);
+
   const [elementToZoomTo, setElementToZoomTo] = useState("");
   const [showText, setShowText] = useState(false);
   const [zoomState, setZoomState] = useState({offsetX: 0, offsetY: 0, scale: 1,});
@@ -64,6 +75,16 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       pageSize: 2500
     });
   }
+
+  const GetSpecificNFT = async (tokenId: number) => {
+    const collectionAddress = config.collections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds').address;
+    // console.log("collectionAddress", collectionAddress);
+    // console.log("tokenId", tokenId);
+    const data = await getNft(collectionAddress, tokenId);
+    // console.log("data", data);
+    setNft(data);
+  }
+
   const [queryParams, setQueryParams] = useState<WalletsQueryParams>({
     collection: config.collections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds')?.address,
   });
@@ -231,7 +252,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
                 cursor="pointer"
                 zIndex="10"
                 onClick={() => {
-                  setElementToZoomTo((i).toString());
+                  setElementToZoomTo(filteredMapData.nfts[i].name);
                 }}
               ></Icon>
             </> ) : (<> 
@@ -266,18 +287,22 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     }
     fetchData().catch((e) => console.log(e));
   }, []);
+
   useEffect(() => {
     if(CheckIfListing(plotId)){
+      console.log("for sale");
       setPlotPrice(GetListingPrice(plotId));
       setNft(GetListingNft(plotId));
       setForSale(true);
     }
     else{
+      console.log("not for sale");
       setPlotPrice(0);
-      setNft(null);
+      GetSpecificNFT(plotId);
       setForSale(false);
     }
   }, [plotId]);
+
   useEffect(() => {
     if (transformComponentRef.current) {
       const { zoomToElement } = transformComponentRef.current as any;
