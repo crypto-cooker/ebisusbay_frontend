@@ -87,41 +87,42 @@ export default async function handler(req: NextRequest) {
           <img src={imgLandType} alt='imgLandType' height={size} width={size} style={{zIndex: '2', position:'absolute'}} />
           <img src={imgLegendary} alt='imgLegendary' height={size} width={size} style={{zIndex: '3', position:'absolute' }} />
 
-          <img src={imgUnderlandLeft} alt='imgUnderlandLeft' height={size} width={size} style={{zIndex: '4', position:'absolute'}} />
-          <img src={imgUnderlandMiddle} alt='imgUnderlandMiddle' height={size} width={size} style={{zIndex: '5', position:'absolute'}} />
-          <img src={imgUnderlandRight} alt='imgUnderlandRight' height={size} width={size} style={{zIndex: '6', position:'absolute'}} />
-
+     
+          <img src={imgPaths} alt='imgPaths' height={size} width={size} style={{position: 'absolute', zIndex: '2'}} />
+          <img src={imgWaterSource} alt='imgWaterSource' height={size} width={size} style={{position: 'absolute', zIndex: '2'}} />
+          
           <img src={imgNorth} alt='imgNorth' height={size/5} width={size/5} style={{
               position: 'absolute',
-              zIndex: '4',
+              zIndex: '3',
               marginLeft: GetMarginLeft(landType, size, 'North'),
               marginTop: GetMarginTop(landType, size, 'North')
             }}
           />
           <img src={imgSouth} alt='imgSouth' height={size/5} width={size/5} style={{
               position: 'absolute',
-              zIndex: '4',
+              zIndex: '3',
               marginLeft: GetMarginLeft(landType, size, 'South'),
               marginTop: GetMarginTop(landType, size, 'South')
             }}
           />
           <img src={imgEast} alt='imgEast' height={size/5} width={size/5} style={{
               position: 'absolute',
-              zIndex: '4',
+              zIndex: '3',
               marginLeft: GetMarginLeft(landType, size, 'East'),
               marginTop: GetMarginTop(landType, size, 'East')
             }}
           />
           <img src={imgWest} alt='imgWest' height={size/5} width={size/5} style={{
               position: 'absolute',
-              zIndex: '4',
+              zIndex: '3',
               marginLeft: GetMarginLeft(landType, size, 'West'),
               marginTop: GetMarginTop(landType, size, 'West')
             }}
           />
 
-          <img src={imgPaths} alt='imgPaths' height={size} width={size} style={{position: 'absolute', zIndex: '3'}} />
-          <img src={imgWaterSource} alt='imgWaterSource' height={size} width={size} style={{position: 'absolute', zIndex: '3'}} />
+          <img src={imgUnderlandLeft} alt='imgUnderlandLeft' height={size} width={size} style={{zIndex: '5', position:'absolute'}} />
+          <img src={imgUnderlandMiddle} alt='imgUnderlandMiddle' height={size} width={size} style={{zIndex: '5', position:'absolute'}} />
+          <img src={imgUnderlandRight} alt='imgUnderlandRight' height={size} width={size} style={{zIndex: '5', position:'absolute'}} />
 
         </div>
 
