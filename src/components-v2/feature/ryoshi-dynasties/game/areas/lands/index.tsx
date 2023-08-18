@@ -197,7 +197,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               cursor="pointer"
               zIndex="10"
               onClick={() => {
-                setElementToZoomTo(filteredMapData.nfts[i]);
+                setElementToZoomTo(filteredMapData.nfts[i] as any);
               }}
             ></Icon>
           </> ) : (<> 
@@ -216,7 +216,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
               top={1662 - point.y-1}
               zIndex="10"
               onClick={() => {
-                setElementToZoomTo(filteredMapData.nfts[i]);
+                setElementToZoomTo(filteredMapData.nfts[i] as any);
               }}
             >
               <>{filteredMapData.nfts[i]}</>
