@@ -16,9 +16,10 @@ interface Attribute{
 interface RdLandProps {
   nftId: string;
   boxSize: number;
+  specificNFT?: boolean;
 }
 
-const RdLand = ({nftId, boxSize}: RdLandProps) => {
+const RdLand = ({nftId, boxSize, specificNFT}: RdLandProps) => {
 
   const landTypeRef = useRef<any>(null);
   const landsBaseRef = useRef<any>(null);
