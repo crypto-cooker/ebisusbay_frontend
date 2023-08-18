@@ -40,3 +40,4 @@ volumes/
 next-env.d.ts
 .vscode/settings.json
 src/components-v2/feature/ryoshi-dynasties/game/areas/lands/indv-meta/
+src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-metadata.json
