@@ -45,10 +45,16 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
     for(let i = 0; i < attributes.length; i++){
       if(attributes[i].trait_type == traitType){
         let finalValue = attributes[i].value;
-        if (attributes[i].value == 'Bramblethorn-Titan' || attributes[i].value == 'Moongate') {
-          finalValue = attributes[i].value + 'Anim.png';
-        } else {
+        if(attributes[i].value == 'Fairy-Fountain'){
+          finalValue = 'Fairy-Fountain.gif';
+        }
+        else{
+          if(attributes[i].value == 'Bramblethorn-Titan' || attributes[i].value == 'Moongate'){
+            finalValue = attributes[i].value + 'Anim.png';
+          }
+          else{
           finalValue = attributes[i].value + underlandSpot + '.png';
+        }
         }
       return finalValue;
     }
