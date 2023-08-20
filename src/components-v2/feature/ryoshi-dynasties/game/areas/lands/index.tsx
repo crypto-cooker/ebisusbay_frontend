@@ -1,13 +1,6 @@
-import React, {ReactElement, useEffect, useRef, useState} from 'react';
-import {
-  useDisclosure,
-  useBreakpointValue,
-  Box,
-  Flex,
-  Text,
-  Icon
-} from '@chakra-ui/react'
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {Box, Flex, Icon, useBreakpointValue, useDisclosure} from '@chakra-ui/react'
+import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 import ImageService from '@src/core/services/image';
 import {LandsHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-hud";
@@ -17,17 +10,23 @@ import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map
 import LandModal from './land-modal';
 import NextApiService from "@src/core/services/api-service/next";
 import {appConfig} from "@src/Config";
-const config = appConfig();
-
-import {useInfiniteQuery} from "@tanstack/react-query";
-import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
-import {TriangleUpIcon } from '@chakra-ui/icons';
+import {useQuery} from "@tanstack/react-query";
+import {TriangleUpIcon} from '@chakra-ui/icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBuildingColumns} from "@fortawesome/free-solid-svg-icons";
 import {getNft} from "@src/core/api/endpoints/nft";
 
 import mapData from './points.json';
 import landsMetadata from './lands-metadata.json';
+
+const config = appConfig();
+
+interface SelectedPlot {
+  id: number;
+  price: number;
+  forSale: boolean;
+  nft: any;
+}
 
 interface BattleMapProps {
   onBack: () => void;
@@ -38,53 +37,46 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
   const transformComponentRef = useRef<any>(null)
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [textArea, setTextArea] = useState<ReactElement[]>([]);
-  const [pointArea, setPointArea] = useState<ReactElement[]>([]);
   const [mapInitialized, setMapInitialized] = useState(false);
-  const [listings, SetListings] = useState<any>([]);
-  const [allNFTs, SetAllNFTs] = useState<any>([]);
-  
-  const [plotId, setPlotId] = useState(0);
-  const [plotPrice, setPlotPrice] = useState(0);
-  const [forSale, setForSale] = useState(false);
-  const [nft, setNft] = useState<any>(null);
+
+  const [selectedPlot, setSelectedPlot] = useState<SelectedPlot | null>(null);
 
   const [elementToZoomTo, setElementToZoomTo] = useState("");
   const [showText, setShowText] = useState(false);
   const [zoomState, setZoomState] = useState({offsetX: 0, offsetY: 0, scale: 1,});
 
-  // const [attributes, setAttributes] = useState<Attribute>([]);
   const [traitTypes, setTraitTypes] = useState<string[]>([]);
-  const [filteredMapData, setFilteredMapData] = useState<MapPoints>()
-  const [filteredMetadata, setFilteredMetadata] = useState<MetaData>()
   const [resetMap, setResetMap] = useState(false);
-  
-  const GetListings = async () => {
-    const collectionAddress = config.collections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds')?.address;
-    return await NextApiService.getListingsByCollection(collectionAddress, {
-      pageSize: 2500
-    });
-  }
+  const [plots, setPlots] = useState<MapPlot[]>([]);
+  const collectionAddress = config.collections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds')!.address;
 
-  const GetSpecificNFT = async (tokenId: number) => {
-    const collectionAddress = config.collections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds').address;
-    // console.log("collectionAddress", collectionAddress);
-    // console.log("tokenId", tokenId);
-    const data = await getNft(collectionAddress, tokenId);
-    // console.log("data", data);
-    setNft(data);
-  }
-
-  const [queryParams, setQueryParams] = useState<WalletsQueryParams>({
-    collection: config.collections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds')?.address,
+  const {data: listings} = useQuery({
+    queryKey: ['IzanamiMapListings', collectionAddress],
+    queryFn: async () => {
+      const listings = await NextApiService.getListingsByCollection(collectionAddress, {
+        pageSize: 2500
+      });
+      return listings.data.map((element:any) => {
+        return element;
+      });
+    },
+    enabled: !!collectionAddress,
+    refetchOnWindowFocus: false,
+    initialData: []
   });
-  const fetcher = async ({ pageParam = 1 }) => {
-    const params: WalletsQueryParams = {
-      page: pageParam,
-      ...queryParams
-    }
-    return NextApiService.getWallet(user.address!, params);
-  };
+
+  const {data: ownedDeeds} = useQuery({
+    queryKey: ['IzanamiMapInventory', user.address],
+    queryFn: () => NextApiService.getWallet(user.address!, {
+      page: 1,
+      pageSize: 100,
+      collection: collectionAddress
+    }),
+    refetchOnWindowFocus: false,
+    enabled: !!user.address && !!collectionAddress,
+    initialData: {data: [], hasNextPage: false, nextPage: 2, page: 1}
+  });
+
   const changeCanvasState = (ReactZoomPanPinchRef: any, event: any) => {
     setZoomState({
       offsetX: ReactZoomPanPinchRef.state.positionX,
@@ -92,6 +84,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       scale: ReactZoomPanPinchRef.state.scale,
     });
   };
+
   const mapProps = useBreakpointValue<MapProps>(
     {
       base: {
@@ -131,188 +124,135 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
       }
     }
   );
-  const {data: ownedDeeds, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
-    ['Inventory', user.address, queryParams],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    }
-  )
-  const GetTextColor = (i :number) => {
-    if(CheckIfListing(i)){
-      return "gold";
-     }
-     return "white";
-  }
-  const CheckIfListing = (i :number) => {
-    let isListing = false;
-    listings.forEach((element:any) => {
-        if(element.nftId === (i).toString()){
-          isListing = true;
-        }
-    })
-    return isListing;
-  }
-  const GetListingPrice = (i :number) => {
-    let listingPrice = 0;
-    listings.forEach((element:any) => {
-        if(element.nftId === (i).toString()){
-          listingPrice = element.price;
-        }
-    })
-    return listingPrice;
-  }
-  const GetListingNft = (i :number) => {
-    let listingNft = null;
-    listings.forEach((element:any) => {
-        if(element.nftId === (i).toString()){
-          listingNft = element.nft;
-        }
-    })
-    console.log("listingNft", listingNft);
-    return listingNft;
-  }
-  const loadPoints = () => {
-    if(!filteredMapData || !filteredMetadata) return;
 
-    // console.log("loadPoints", filteredMetadata);
-    
-    setTextArea(
-      filteredMapData.vectors.map((point: any, i :number) => (
-        <>
-          {ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i + 1).toString()) ? (<>
-            <Icon
-              position="absolute"
-              as={FontAwesomeIcon} 
-              icon={faBuildingColumns}
-              color={'#D24547'}
-              width={4}
-              height={4}
-              left={point.x-2}
-              top={1662 - point.y-2}
-              id={filteredMapData.nfts[i].id}
-              cursor="pointer"
-              zIndex="10"
-              onClick={() => {
-                setElementToZoomTo(filteredMapData.nfts[i] as any);
-              }}
-            ></Icon>
-          </> ) : (<> 
-          <>
-            <Text
-              position="absolute"
-              textAlign="center"
-              as={'b'}
-              textColor={GetTextColor(Number(filteredMapData.nfts[i].id)+1)}
-              cursor="pointer"
-              id={filteredMapData.nfts[i].id}
-              fontSize={8}
-              width={6}
-              height={3}
-              left={point.x-3}
-              top={1662 - point.y-1}
-              zIndex="10"
-              onClick={() => {
-                setElementToZoomTo(filteredMapData.nfts[i] as any);
-              }}
-            >
-              <>{filteredMapData.nfts[i]}</>
-            </Text>
-          </>
-          </>)}
-        </>
-      )))
+  const textColor = (isListed: boolean) => {
+    return isListed ? 'gold' : 'white';
+  }
 
-    setPointArea(
-      filteredMapData.vectors.map((point: any, i :number) => (
-          <>
-            {ownedDeeds?.pages[0].data.find((element:any) => element.nftId === (i + 1).toString()) ? (<>
-              <Icon
-                position="absolute"
-                as={FontAwesomeIcon} 
-                icon={faBuildingColumns}
-                color={'#D24547'}
-                width={4}
-                height={4}
-                left={point.x}
-                top={1662 - point.y}
-                id={i.toString()}
-                cursor="pointer"
-                zIndex="10"
-                onClick={() => {
-                  setElementToZoomTo(filteredMapData.nfts[i].id);
-                }}
-              ></Icon>
-            </> ) : (<> 
-              <TriangleUpIcon
-                position="absolute"
-                // id={i.toString()}
-                width={8}
-                height={8}
-                left={point.x-16}
-                top={1662 - point.y-16}
-                zIndex="10"
-                ></TriangleUpIcon>
-            </>)}
-          </>
-        )))
+  const plotTextPoints = useMemo(() => {
+    return plots.map((plot: any) => (
+      <>
+        {plot.owned ? (
+          <Icon
+            position="absolute"
+            as={FontAwesomeIcon}
+            icon={faBuildingColumns}
+            color={'#D24547'}
+            width={4}
+            height={4}
+            left={plot.vector.x-2}
+            top={1662 - plot.vector.y-2}
+            id={plot.nft.id}
+            cursor="pointer"
+            zIndex="10"
+            onClick={() => setElementToZoomTo(plot.nft.id)}
+          />
+        ) : (
+          <Box
+            position="absolute"
+            textAlign="center"
+            fontWeight="bold"
+            textColor={textColor(plot.listed)}
+            cursor="pointer"
+            id={plot.nft.id}
+            fontSize={8}
+            width={6}
+            height={3}
+            left={plot.vector.x-3}
+            top={1662 - plot.vector.y-1}
+            zIndex="10"
+            onClick={() => setElementToZoomTo(plot.nft.id)}
+          >
+            <>{plot.nft.id}</>
+          </Box>
+        )}
+      </>
+    ));
+  }, [plots]);
+
+  const plotPoints = useMemo(() => {
+    return plots.map((plot: any) => (
+      <>
+        {plot.owned ? (
+          <Icon
+            position="absolute"
+            as={FontAwesomeIcon}
+            icon={faBuildingColumns}
+            color={'#D24547'}
+            width={4}
+            height={4}
+            left={plot.vector.x}
+            top={1662 - plot.vector.y}
+            id={plot.nft.id}
+            cursor="pointer"
+            zIndex="10"
+            onClick={() => setElementToZoomTo(plot.nft.id)}
+          />
+        ) : (
+          <TriangleUpIcon
+            position="absolute"
+            // id={i.toString()}
+            width={8}
+            height={8}
+            left={plot.vector.x-16}
+            top={1662 - plot.vector.y-16}
+            zIndex="10"
+          />
+        )}
+      </>
+    ))
+  }, [plots]);
+
+  useEffect(() => {
+    if(!plots) return;
     setMapInitialized(true);
-  }
+  }, [plots]);
 
+  // Load selected plot
   useEffect(() => {
-    if(!filteredMapData) return;
-    loadPoints();
-  }, [listings, filteredMapData, ownedDeeds]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await GetListings();
-      if(data){
-        let listings = data.data.map((element:any) => {
-          return element;
-          });
-          SetListings(listings);
+    async function selectPlot(plotId: number) {
+      let plot = {
+        id: plotId,
+        price: 0,
+        forSale: false,
+        nft: null
+      };
+
+      if (!plotId) {
+        setSelectedPlot(null);
+        return;
       }
-    }
-    fetchData().catch((e) => console.log(e));
-  }, []);
 
-  useEffect(() => {
-    console.log("plotId", plotId);
-    if(CheckIfListing(plotId)){
-      console.log("for sale");
-      setPlotPrice(GetListingPrice(plotId));
-      setNft(GetListingNft(plotId));
-      setForSale(true);
+      const listing = listings.find((listing: any) => listing.nftId === plotId.toString());
+      if(!!listing){
+        plot.price = listing.price;
+        plot.nft = listing.nft;
+        plot.forSale = true;
+      } else {
+        plot.nft = await getNft(collectionAddress, plotId)
+      }
+      setSelectedPlot(plot);
     }
-    else{
-      console.log("not for sale");
-      setPlotPrice(0);
-      GetSpecificNFT(plotId);
-      setForSale(false);
-    }
-  }, [plotId]);
 
-  useEffect(() => {
     if (transformComponentRef.current) {
       const { zoomToElement } = transformComponentRef.current as any;
 
-      // console.log("elementToZoomTo", elementToZoomTo);
       zoomToElement(elementToZoomTo);
-      setPlotId(Number(elementToZoomTo));
+      selectPlot(Number(elementToZoomTo));
       onOpen();
     }
   }, [elementToZoomTo]);
+
+  // Toggle map text
   useEffect(() => {
     if(!showText && zoomState.scale >= 1.1){
       setShowText(true);
-    }
-    else if(showText && zoomState.scale < 1.1){
+    } else if(showText && zoomState.scale < 1.1){
       setShowText(false);
     }
   }, [zoomState.scale]);
+
+  // Populate trait types filter
   useEffect(() => {
     if(!landsMetadata) return;
 
@@ -329,42 +269,35 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     setTraitTypes(allTraitTypes.sort());
   }, [landsMetadata]);
 
+  // Initialize plots
   useEffect(() => {
     if(!landsMetadata) return;
     if(!mapData) return;
 
-    setFilteredMapData({vectors: mapData.vectors, nfts: landsMetadata.finalMetadata});
-    setFilteredMetadata(landsMetadata);
-  }, [mapData, landsMetadata, resetMap]);
+    setPlots(landsMetadata.finalMetadata.map((item: any, key) => {
+      return {
+        nft: item,
+        vector: mapData.vectors[key],
+        listed: listings.some((listing: any) => listing.nftId === item.id.toString()),
+        owned: ownedDeeds.data.some((element:any) => element.nftId === item.id.toString())
+      }
+    }));
+  }, [mapData, landsMetadata, resetMap, listings, ownedDeeds]);
 
-  const FilterByTraitCallback = (trait:string) => {
-    if(!filteredMetadata) return;
-    //filter to only get the ones with that trait under attributes
-    let filteredMetadataLocal = landsMetadata.finalMetadata.filter((item: any) => {
+  const handleFilterByTrait = (trait: string) => {
+    let filteredMetadata = landsMetadata.finalMetadata.filter((item: any) => {
       return item.attributes.some((attribute: any) => attribute.value === trait);
     });
-    console.log(trait, "count:", filteredMetadataLocal.length);
-    setFilteredMetadata({finalMetadata: filteredMetadataLocal});
+
+    setPlots(filteredMetadata.map((item: any, key) => {
+      return {
+        nft: item,
+        vector: mapData.vectors[item.id - 1],
+        listed: listings.some((listing: any) => listing.nftId === item.id.toString()),
+        owned: ownedDeeds.data.some((element:any) => element.nftId === item.id.toString())
+      }
+    }));
   }
-
-  useEffect(() => {
-    if(!filteredMetadata) return;
-    if(!filteredMapData) return;
-
-    // console.log("", filteredMetadata.finalMetadata.length);
-    // console.log("filteredMapData", filteredMapData);
-
-    let filteredMapDataLocal = mapData.vectors.filter((item: any, index:number) => {
-      return filteredMetadata.finalMetadata.some((metadata: landNFT) => metadata.id === (index+1).toString());
-    });
-
-    let nftIdsLocal = filteredMetadata.finalMetadata.map((item: any) => {
-      return item.id;
-    });
-
-    setFilteredMapData({vectors: filteredMapDataLocal, nfts: nftIdsLocal});
-
-  }, [filteredMetadata]);
 
   return (
     <section>
@@ -387,48 +320,41 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
             >
             {(utils) => (
               <React.Fragment>
-
-            <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
-              <MapFrame
-                gridHeight={'18px 1fr 18px'}
-                gridWidth={'18px 1fr 18px'}
-                w='2084px'
-                h='1662px'
-                topFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-top-${user.theme}.png`).convert()}
-                rightFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-right-${user.theme}.png`).convert()}
-                bottomFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-bottom-${user.theme}.png`).convert()}
-                leftFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-left-${user.theme}.png`).convert()}
-              >
-                <Box
-                  as='img'
-                   src={ImageService.translate('/img/ryoshi-dynasties/lands/emptyIsland.png').custom({width: 2048, height: 1662})}
-                   //  src={getPreloadedImage(ImageService.translate('/img/ryoshi-dynasties/lands/emptyIsland.png').custom({width: 2048, height: 1662}))}
-                   maxW='none'
-                   useMap="#imageMap" 
-                   className={`${styles0.mapImageArea}`} 
-                   id="fancyMenu"
-                />
-                <map name="imageMap" > 
-                </map>
-                <Flex position="absolute" zIndex="0" width="100%" height="100%">
-                {showText ?(
-                  <>
-                    {textArea}
-                  </> 
-                )  : (
-                  <>
-                    {pointArea}
-                  </>
-                )}
-                </Flex>
-                </MapFrame>
-              </TransformComponent>
+                <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
+                  <MapFrame
+                    gridHeight={'18px 1fr 18px'}
+                    gridWidth={'18px 1fr 18px'}
+                    w='2084px'
+                    h='1662px'
+                    topFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-top-${user.theme}.png`).convert()}
+                    rightFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-right-${user.theme}.png`).convert()}
+                    bottomFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-bottom-${user.theme}.png`).convert()}
+                    leftFrame={ImageService.translate(`/img/ryoshi-dynasties/lands/frame-left-${user.theme}.png`).convert()}
+                  >
+                    <Box
+                      as='img'
+                       src={ImageService.translate('/img/ryoshi-dynasties/lands/emptyIsland.png').custom({width: 2048, height: 1662})}
+                       //  src={getPreloadedImage(ImageService.translate('/img/ryoshi-dynasties/lands/emptyIsland.png').custom({width: 2048, height: 1662}))}
+                       maxW='none'
+                       useMap="#imageMap"
+                       className={`${styles0.mapImageArea}`}
+                       id="fancyMenu"
+                    />
+                    <map name="imageMap" >
+                    </map>
+                    <Flex position="absolute" zIndex="0" width="100%" height="100%">
+                      {showText ? <>{plotTextPoints}</> : <>{plotPoints}</>}
+                    </Flex>
+                  </MapFrame>
+                </TransformComponent>
               </React.Fragment>
-              )}
-            </TransformWrapper>
+            )}
+          </TransformWrapper>
         )}
-        <LandModal isOpen={isOpen}  onClose={onClose} plotId={plotId} forSale={forSale} price={plotPrice} nft={nft}/>
-        <LandsHUD onBack={onBack} traitTypes={traitTypes} setElementToZoomTo={setElementToZoomTo} showBack={false} FilterByTraitCallback={FilterByTraitCallback}/>
+        {selectedPlot && (
+          <LandModal isOpen={isOpen} onClose={onClose} plot={selectedPlot} />
+        )}
+        <LandsHUD onBack={onBack} traitTypes={traitTypes} setElementToZoomTo={setElementToZoomTo} showBack={false} FilterByTraitCallback={handleFilterByTrait}/>
       </Box>
     </section>
   )
@@ -447,19 +373,18 @@ interface Attribute {
   value: string;
   display_type:string;
 }
-interface MetaData {
-  finalMetadata: landNFT[]
-}
-interface landNFT{
+interface LandNft {
   image:string;
   name:string;
   description:string;
   id:string;
   attributes:Attribute[];
 }
-interface MapPoints{
-  vectors:Vector[];
-  nfts:landNFT[];
+interface MapPlot {
+  nft: LandNft;
+  vector: Vector;
+  listed: boolean;
+  owned: boolean;
 }
 interface Vector{
   x:number;
