@@ -2467,7 +2467,7 @@
       }
     },
     {
-      "name": "Bushicro",
+      "name": "Bushicro Male Warrior",
       "slug": "bushicro",
       "multiToken": false,
       "address": "0xB8C3257E71E8294134E9B59a498d0BAF0c72C2b0",
@@ -4123,7 +4123,7 @@
       }
     },
     {
-      "name": "Female Warriors",
+      "name": "Bushicro Female Warrior",
       "slug": "female-warriors",
       "multiToken": false,
       "address": "0x0D21051BD422A9A54988d25b1Be1211Dc7f3D7bD",
