@@ -583,11 +583,11 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                 ) : nft.useIframe ? (
                   <iframe width="100%" height="636" src={nft.iframeSource} title="nft" />
                 ) : isLandDeedsCollection(address) ? (
-                  <Center><RdLand nftId={id} boxSize={izanamiImageSize} /></Center>
+                  <Center><RdLand nftId={id} boxSize={izanamiImageSize ?? 368} /></Center>
                 ) : (
                   <>
                     <AnyMedia
-                      image={ImageService.translate(specialImageTransform(address, nft.image)).convert()}
+                      image={`http://localhost:3000/api/izanamiscradle/${nft.id ?? nft.nftId}`}
                       video={nft.video ?? nft.animation_url}
                       videoProps={{ height: 'auto', autoPlay: true }}
                       title={nft.name}
