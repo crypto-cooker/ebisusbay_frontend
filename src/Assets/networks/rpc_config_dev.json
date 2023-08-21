@@ -21796,7 +21796,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": true
       }
@@ -22729,9 +22729,9 @@
       "listable": true,
       "metadata": {
         "description": "Dead Beat Dads cherish only a few things in life. One of those being football. Mint a Dead Beat Dad rocking your favorite jersey and have a chance to win CRO!",
-        "avatar": "/img/collections/dead-beat-dads/avatar.webp",
-        "card": "/img/collections/dead-beat-dads/card.webp",
-        "banner": "/img/collections/dead-beat-dads/banner.webp",
+        "avatar": "/img/collections/nfgl-2023/avatar.webp",
+        "card": "/img/collections/nfgl-2023/card.webp",
+        "banner": "/img/collections/nfgl-2023/banner.webp",
         "website": "https://dead-beat-dads.netlify.app/nfgl",
         "twitter": "https://twitter.com/zolape01",
         "discord": "https://discord.gg/KnRmEA4u8v",
@@ -22762,7 +22762,7 @@
         "categories": []
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": true
       }
@@ -22835,6 +22835,34 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "Milky Way Marvels",
+      "slug": "milky-way-marvels",
+      "multiToken": false,
+      "address": "0xf37A3686800A9fb19625c05e1A7ACf2D232e8aa4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to Milky Way Marvels, an exciting new NFT game where you can explore the vast expanse of the galaxy in search of hidden planets and rare treasures.  As a space explorer, your mission is to travel to different star systems, scan planets to discover their unique characteristics, and earn rewards for your discoveries. Each planet you find will be a unique NFT from the Milky Way Marvels collection, with its own set of attributes and rarity level.  The game will feature a dynamic, interactive map of the galaxy, where you can navigate to different star systems and planets. You can use your scanner to analyze the planet's atmosphere, composition, and other key characteristics, which will determine its rarity level and potential rewards.  As you explore the galaxy and collect new planets, you can trade them with other players or use them to level up your own spaceship and equipment. You can also compete in challenges and events to earn special rewards and unlock new areas of the galaxy.",
+        "avatar": "/img/collections/milky-way-marvels/avatar.webp",
+        "card": "/img/collections/milky-way-marvels/card.webp",
+        "banner": "/img/collections/milky-way-marvels/banner.webp",
+        "website": "https://www.cryptoplanets.rainbowland.org/",
+        "twitter": "https://twitter.com/MilkyWayMarvels",
+        "discord": "https://discord.gg/mGSKXUzWDs",
+        "medium": "https://the-rainbowland-metaverse.medium.com/",
+        "telegram": "https://t.me/newsrainbowland",
+        "categories": [
+          "metaverse",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
