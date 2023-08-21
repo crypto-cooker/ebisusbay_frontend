@@ -22748,7 +22748,7 @@
       "name": "Coom Cats",
       "slug": "coom-cats",
       "multiToken": false,
-      "address": "",
+      "address": "0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -22765,6 +22765,76 @@
         "verified": false,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Y-Plush Foot Print",
+      "slug": "y-plush-foot-print",
+      "multiToken": false,
+      "address": "0x902b49b97Ab03bcF5095e3439422f4a9351cAe82",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection consisting of 5,000 Plush Foot Print (PFP) NFTs. There will be 20 different Foot Prints with different rarities and no Foot Print will have the same amount.",
+        "avatar": "/img/collections/y-plush-foot-print/avatar.webp",
+        "card": "/img/collections/y-plush-foot-print/card.webp",
+        "banner": "/img/collections/y-plush-foot-print/banner.webp",
+        "website": "https://lnk.bio/YplushNFT",
+        "twitter": "https://twitter.com/YplushNft",
+        "discord": "https://discord.gg/wGFHqSag",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cronoballz",
+      "slug": "cronoballz",
+      "multiToken": false,
+      "address": "0x8195Fd40c3FAf8809f6C302F46a09d6a6a3C9445",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection dedicated to helping sponsor youth into sports.",
+        "avatar": "/img/collections/cronoballz/avatar.webp",
+        "card": "/img/collections/cronoballz/card.webp",
+        "banner": "/img/collections/cronoballz/banner.webp",
+        "website": "https://www.cronoballz.com/",
+        "twitter": "https://twitter.com/Crono_Ballz",
+        "discord": "https://discord.gg/cronoballz",
+        "medium": "https://medium.com/@cronoballz",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "LIFE OF HEL - Volume 1",
+      "slug": "life-of-hel-vol-1",
+      "multiToken": false,
+      "address": "0x51084c32AA5ee43a0e7bD8220195da53b5c69868",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "First volume of the LOH saga. LIFE OF HEL (LOH) is the first token-gated manga series ever released on the blockchain. The LOH saga will consist of 7 volumes to be issued through 7 separate NFTs collections. Each NFT collection will entitle its holders to exclusive benefits (including exclusive digital read and priority over future mints). If you like manga, fun, and ramen, look no further! Hundreds of pages of fantastic art and story await!",
+        "avatar": "/img/collections/life-of-hel-vol-1/avatar.webp",
+        "card": "/img/collections/life-of-hel-vol-1/card.webp",
+        "banner": "/img/collections/life-of-hel-vol-1/banner.webp",
+        "website": "https://www.lifeofhel.xyz/",
+        "twitter": "https://twitter.com/lifeofhel",
+        "discord": "https://discord.gg/life-of-hel",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -29762,7 +29832,7 @@
         "twitter": "https://twitter.com/CoomCatsNFT",
         "discord": "https://discord.gg/fDgERHyUzC"
       },
-      "address": "",
+      "address": "0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 100,
       "totalSupply": 1000,
