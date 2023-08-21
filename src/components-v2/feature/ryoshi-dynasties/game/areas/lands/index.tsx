@@ -65,6 +65,12 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
     initialData: []
   });
 
+  const onCloseResetElement = () => {
+    setElementToZoomTo("");
+    onClose();
+  };
+
+
   const {data: ownedDeeds} = useQuery({
     queryKey: ['IzanamiMapInventory', user.address],
     queryFn: () => NextApiService.getWallet(user.address!, {
@@ -352,7 +358,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
           </TransformWrapper>
         )}
         {selectedPlot && (
-          <LandModal isOpen={isOpen} onClose={onClose} plot={selectedPlot} />
+          <LandModal isOpen={isOpen} onClose={onCloseResetElement} plot={selectedPlot} />
         )}
         <LandsHUD onBack={onBack} traitTypes={traitTypes} setElementToZoomTo={setElementToZoomTo} showBack={false} FilterByTraitCallback={handleFilterByTrait}/>
       </Box>

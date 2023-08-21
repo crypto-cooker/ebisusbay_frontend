@@ -105,7 +105,7 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
 
   const GenerateLandPNG = (nftId : string) => {
     // console.log("Generating Land")
-    console.log("nftId", nftId)
+    // console.log("nftId", nftId)
     let nft : NFTMetaData = landsMetadata.finalMetadata.find((nft) => nft.id == nftId) as NFTMetaData;
     let isCliffs = IsCliffs(nft.attributes);
     let folderPath = isCliffs ? rockFolderPath : mainFolderPath;
@@ -140,7 +140,7 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
   }
 
   useEffect(() => {
-    console.log("nftId", nftId)
+    // console.log("nftId", nftId)
     if(nftId){
       GenerateLandPNG(nftId)
     }
