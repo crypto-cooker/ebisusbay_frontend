@@ -587,7 +587,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                 ) : (
                   <>
                     <AnyMedia
-                      image={`http://localhost:3000/api/izanamiscradle/${nft.id ?? nft.nftId}`}
+                      image={ImageService.translate(specialImageTransform(address, nft.image)).convert()}
                       video={nft.video ?? nft.animation_url}
                       videoProps={{ height: 'auto', autoPlay: true }}
                       title={nft.name}
