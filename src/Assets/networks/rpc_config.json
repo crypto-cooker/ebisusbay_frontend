@@ -21798,7 +21798,7 @@
       "verification": {
         "verified": false,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
