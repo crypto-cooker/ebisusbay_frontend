@@ -283,7 +283,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
                 <Heading as="h1" size="2xl" className="col-white mb-4">{drop.title}</Heading>
               </Reveal>
               <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
-                <div className="lead col-white mb-4">{newlineText(drop.subtitle)}</div>
+                <Box className="lead col-white mb-4" fontWeight='bold'>{newlineText(drop.subtitle)}</Box>
               </Reveal>
               <Reveal className="onStep" keyframes={fadeInUp} delay={300} duration={900} triggerOnce>
                 <div>
