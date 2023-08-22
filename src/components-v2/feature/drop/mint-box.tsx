@@ -8,7 +8,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {parseUnits} from "ethers/lib/utils";
+import {commify, parseUnits} from "ethers/lib/utils";
 import {toast} from "react-toastify";
 import {getAnalytics, logEvent} from "@firebase/analytics";
 import * as Sentry from "@sentry/react";
@@ -19,6 +19,7 @@ import {Drop} from "@src/core/models/drop";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import Link from "next/link";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -135,7 +136,8 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
         if (isErc20) {
           const allowance = await drop.erc20ReadContract.allowance(user.address, drop.address);
           if (allowance.sub(finalCost) < 0) {
-            await drop.erc20Contract.approve(drop.address, constants.MaxUint256);
+            const approvalTx = await drop.erc20Contract.approve(drop.address, constants.MaxUint256);
+            await approvalTx.wait();
           }
         }
 
@@ -259,7 +261,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       {!regularCost && !drop.erc20Cost && (
                         <Heading as="h5" size="md">TBA</Heading>
                       )}
-                      {!!regularCost && (
+                      {!!regularCost && !drop.erc20Only && (
                         <Heading as="h5" size="md">
                           <Flex alignItems='center'>
                             <CronosIconBlue boxSize={5} />
@@ -280,8 +282,10 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                 </Box>
                 {(!!memberCost || (drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost)) && (
                   <Box>
-                    <Heading as="h6" size="sm" className="mb-1">Member Price</Heading>
-                    {!!memberCost && (
+                    <Heading as="h6" size="sm" className="mb-1">
+                      {drop.memberMitama > 0 ? 'Mitama Price' : 'Member Price'}
+                    </Heading>
+                    {!!memberCost && !drop.erc20Only && (
                       <Heading as="h5" size="md">
                         <Flex alignItems='center'>
                           <CronosIconBlue boxSize={5} />
@@ -338,6 +342,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                 Limit: {maxMintPerAddress} per wallet
               </Text>
             )}
+            {drop.slug === 'crypto-hodlem' && drop.memberMitama > 0 && (
+              <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
+                Users must have {commify(drop.memberMitama)} Mitama for Mitama price. Earn more by staking $Fortune in <Link href='/ryoshi' className='color'>Ryoshi Dynasties</Link>
+              </Text>
+            )}
             {(status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete) && (
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
                 Supply: {ethers.utils.commify(maxSupply.toString())}
@@ -369,7 +378,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       <Input {...input} />
                       <Button {...inc}>+</Button>
                     </HStack>
-                    {(!!regularCost || drop.freeMint) && (
+                    {(!!regularCost || drop.freeMint) && !drop.erc20Only && (
                       <PrimaryButton
                         w='full'
                         onClick={() => mintNow(false)}

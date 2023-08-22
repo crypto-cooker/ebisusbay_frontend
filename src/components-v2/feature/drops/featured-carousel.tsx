@@ -19,6 +19,8 @@ import {Drop, mapDrop} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
 import {useRouter} from "next/router";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import LocalDataService from "@src/core/services/local-data-service";
+import {millisecondTimestamp} from "@src/utils";
 
 const tokens = appConfig('tokens')
 const drops: Drop[] = appConfig('drops').map((drop: any) => mapDrop(drop));
@@ -92,11 +94,45 @@ const FeaturedDrops = () => {
     const maxFreshnessInHours = 3600000 * 8;    // Threshold to label live drops as "stale"
     const defaultMaxCount = 5;                  // Maximum drops on the carousel
 
-    const topLevelDrops = drops.filter((d) => !d.complete && d.featured && d.published)
+    const ads = LocalDataService
+      .getDropsAds()
+      .map(ad => ({
+        ...ad.details,
+        id: 99999,
+        slug: ad.name,
+        title: ad.name,
+        subtitle: '',
+        description: '',
+        author: {
+          ...ad.details.socials,
+          name: ad.details.author
+        },
+        address: '',
+        maxMintPerTx: 0,
+        maxMintPerAddress: 0,
+        totalSupply: 0,
+        start: millisecondTimestamp(ad.details.date),
+        published: true,
+        images: {
+          ...ad.details.images,
+          banner: ''
+        },
+        verification: {
+          ...ad.details.verification,
+          escrow: false
+        },
+        redirect: ad.details.link.url,
+        erc20Only: false,
+        memberMitama: 0
+      } as Drop));
+
+    const mappedDrops = drops.concat(ads);
+
+    const topLevelDrops = mappedDrops.filter((d) => !d.complete && d.featured && d.published)
       .sort((a, b) => (a.start < b.start ? 1 : -1));
     const topLevelKeys = topLevelDrops.map((d) => d.slug);
 
-    const upcomingDrops = drops
+    const upcomingDrops = mappedDrops
       .filter(
         (d) =>
           !d.complete &&
@@ -111,7 +147,7 @@ const FeaturedDrops = () => {
     const imminentUpcomingDrops = upcomingDrops.filter((d) => d.start - Date.now() < timeToShowInHours);
     const distantUpcomingDrops = upcomingDrops.filter((d) => d.start - Date.now() >= timeToShowInHours);
 
-    let liveDrops = drops
+    let liveDrops = mappedDrops
       .filter(
         (d) =>
           !d.complete &&

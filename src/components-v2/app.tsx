@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { toast, ToastContainer } from 'react-toastify';
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from "@firebase/analytics";
+import React, {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+import {createGlobalStyle, ThemeProvider} from 'styled-components';
+import {toast, ToastContainer} from 'react-toastify';
+import {initializeApp} from 'firebase/app';
+import {getAnalytics} from "@firebase/analytics";
 
 import ScrollToTopBtn from '@src/modules/layout/navbar/ScrollToTop';
 import Header from '@src/components-v2/shared/layout/navbar';
 import firebaseConfig from '../Firebase/firebase_config';
-import { initProvider } from '../GlobalState/User';
-import { appInitializer } from '../GlobalState/InitSlice';
-import { getTheme } from '../Theme/theme';
+import {initProvider} from '../GlobalState/User';
+import {appInitializer} from '../GlobalState/InitSlice';
+import {getTheme} from '../Theme/theme';
 import DefaultHead from "@src/components-v2/shared/layout/default-head";
 import {useColorMode} from "@chakra-ui/react";
 import {syncCartStorage} from "@src/GlobalState/cartSlice";
@@ -19,6 +19,8 @@ import {useAppSelector} from "@src/Store/hooks";
 import {AppProps} from "next/app";
 import {ExchangePricesContext} from "@src/components-v2/shared/contexts/exchange-prices";
 import {useGlobalPrices} from "@src/hooks/useGlobalPrices";
+import {useRouter} from "next/router";
+import LandDisplay from "../../pages/izanamiscradle/[slug]";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -50,6 +52,17 @@ const GlobalStyles = createGlobalStyle`
 const firebase = initializeApp(firebaseConfig);
 
 function App({ Component, ...pageProps }: AppProps) {
+
+  // Hack to get lands to display
+  const router = useRouter();
+  if (router.pathname.startsWith('/izanamiscradle/')) {
+    if (typeof window !== 'undefined') {
+      const loader = document.getElementById('initialLoader');
+      if (loader) loader.style.display = 'none';
+    }
+    return <LandDisplay slug={(pageProps as any).slug} {...pageProps} />;
+  }
+
   const dispatch = useDispatch();
   const { colorMode } = useColorMode()
   const exchangePrices = useGlobalPrices();

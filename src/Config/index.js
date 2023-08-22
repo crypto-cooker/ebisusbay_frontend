@@ -127,7 +127,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
           '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],        // Ryoshi Halloween
@@ -137,6 +137,7 @@ export const configData = {
           '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5': ['frtn'],        // EB FM/VIP
           '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'],        // Fortune Guards
           '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],        // FortuneTeller
+          '0xd87838a982a401510255ec27e603b0f5fea98d24': ['frtn'],
           '0xf54abdcba21e7a740f98307a561b605cb3fdcf63': ['cro', 'frtn'], // Legacy VIP Art
           '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506': ['cro', 'frtn'], // SeaShrine VIP
           '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29': ['cro', 'frtn'], // Valentine
@@ -179,6 +180,47 @@ export const configData = {
           '0x6625e0b113CC4f4E70Fc409Cd1ABFcE8Cf7E747b': ['cro', 'frtn'], // Cyberpunk Cronicles
           '0xA560c70220c32c81217cF993676d177d43D48349': ['cro', 'frtn'], // CroDoo
           '0x7C144DBF04cf991d932bf6DC404C8B37c8807946': ['cro', 'frtn'], // Elf Citizens
+          '0xe971838ced4949e5c51dd7baa6d2d0188ed772f0': ['cro', 'frtn'], // Dead Beat Dads
+          '0xb2a5Fc03533d397943c9Eae3183e409208DDaab3': ['cro', 'frtn'], // Teenage Dirtbags
+          '0xBC49267179d67050619CEB59a9870b14c9255C6e': ['cro', 'frtn'], // Dead Beat Dads Birth Certificates
+          '0x96adF7839A133da31824113a23e223D02e97c53A': ['cro', 'frtn'], // Trophy Wives
+          '0x7841dA84C0eC87744306C6420Eb039b8Cbd39d70': ['cro', 'frtn'], // BOB Adventures
+          '0x4ab89f361a7db22beee8df47630c52b9167f7bb7': ['cro', 'frtn'], // BOB Adventures 2
+          '0xa45894D91395580D5D5D2178795d3F0b2F27CF32': ['cro', 'frtn'], // Cronos Weed
+          '0xC5Fe01a64e63EDefC40d620A5716B90c52D444f9': ['cro', 'frtn'], // BOB Spaceships
+          '0x028169964177AA2050Db3FaE53EEAeE1443F9b04': ['cro', 'frtn'], // BOB Mutants
+          '0x3f4A31D0a13A267d0b567580E2E8fa8f8b73A7aC': ['cro', 'frtn'], // BOB Weed
+          '0xB340c91182b9fF831bB36232cB3296eD306c79B2': ['cro', 'frtn'], // Baby Alien Division
+          '0x11984C500B477e83891f7cDb4246734387764E20': ['cro', 'frtn'], // BAM - Baby Alien Mutants
+          '0xbe5F02b6fD5C1e714f0bdd28B6a119827D8b6c61': ['cro', 'frtn'], // B.A.D. - Spaceships
+          '0x1A8C07dd1933433cDdBE3123b583695AE3C56b9b': ['cro', 'frtn'], // B.A.D. - Spacebags
+          '0x4E6795D725e26E340865140a870C25d1e413A118': ['cro', 'frtn'], // B.A.D. - Founders Passport
+          '0xA217d6feEf38F9f2D139300E0C4adF42cf96F4C3': ['cro', 'frtn'], // B.A.D. - Bits
+          '0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16': ['cro', 'frtn'], // B.A.D. - Lizzys
+          '0xA3a4104B2A429b3A33Ac1304371E2eEf6E6aF44B': ['cro', 'frtn'], // ETH Stones",
+          '0xD6e807eE8B5513d7a5594be15Ef0cF81a3EEbc1d': ['cro', 'frtn'], // Inside an Alien
+          '0xE0eF98948B187c5Cd23CDE3339B78dDdEFe44f92': ['cro', 'frtn'], // Peepz
+          '0x903B9a9d58742d0699fbd5b0AC7C9C4000B7ce43': ['cro', 'frtn'], // Monkey Of Anarkey
+          '0xda663336FEC3Ef6e310be6522F35E391aAE6F43a': ['cro', 'frtn'], // Braindead Monkeys
+          '0x9a254a3e8656702a2850a34251784c70113561df': ['cro', 'frtn'], // Braindead Monkeys - Gen 2
+          '0x5b66e985c313fec158B2ee45B93976A167a115f5': ['cro', 'frtn'], // Braindead Monkeys Allies Collection
+          '0x092791Ba7E03139C34103754689BcF8E6A3e8C0c': ['cro', 'frtn'], // Braindead Moonkeys
+          '0x7aEBFd662494299CE53feb533BFE80a749e656BC': ['cro', 'frtn'], // Degen Ape Cronos Club
+          '0xf8e63021C3d757b63eb53a9124271251A964D572': ['cro', 'frtn'], // Cronos Rocks
+          '0xbd6b9a1A0477d64E99F660b7b7C205f4604E4Ff3': ['cro', 'frtn'], // Cronos Fossils
+          '0x30aB0D8C808Ec024365D45A105c559BDF06BCB14': ['cro', 'frtn'], // Cronos Fossils Gen 2"
+          '0xc536b6151599A3fdA22E63eD61AA918d738e1B7d': ['cro', 'frtn'], // Decentral Mamas
+          '0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1': ['cro', 'frtn'], // Crazzzy Monsters
+          '0xA0edf26589AD4318DAb2354629541cfFd3e5EBDf': ['cro', 'frtn', 'bcro'], // Piggy Bank Finance
+          '0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56': ['cro', 'frtn', 'mad'], // Mad Meerkat
+          '0xDC5bBDb4A4b051BDB85B959eB3cBD1c8C0d0c105': ['cro', 'frtn', 'mad'], // MM Treehouse
+          '0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8': ['cro', 'frtn', 'mad'], // Mad Meerkat Degen
+          '0x23721073592FB452C556fB9322bA4dF6A6675050': ['cro', 'frtn', 'mad'], // Mad Sacks
+          '0x0aCDA31Cf1F301a7Eb8f988D47F708FbA058F8f5': ['cro', 'frtn', 'vrse'], // CronosVerse
+          '0x130a6c2884325d302830179C691D328dDAd9b78C': ['cro', 'frtn', 'vrse'], // Crovilians
+          '0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a': ['cro', 'frtn', 'vrse'], // Cro Snowmen
+          '0x1eD88baF12Ec3fd8D2955B1b2a883e6E79a10828': ['cro', 'frtn', 'vrse'], // The CronosVerse Suites
+          '0xaf038d14905409de31fb5577c460d18b1013e4f1': ['cro', 'frtn', 'vrse'], // The CronosVerse In-Game Assets
         }
       }
     }
@@ -298,7 +340,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
           '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],        // Ryoshi Halloween
@@ -350,6 +392,47 @@ export const configData = {
           '0x6625e0b113CC4f4E70Fc409Cd1ABFcE8Cf7E747b': ['cro', 'frtn'], // Cyberpunk Cronicles
           '0xA560c70220c32c81217cF993676d177d43D48349': ['cro', 'frtn'], // CroDoo
           '0x7C144DBF04cf991d932bf6DC404C8B37c8807946': ['cro', 'frtn'], // Elf Citizens
+          '0xe971838ced4949e5c51dd7baa6d2d0188ed772f0': ['cro', 'frtn'], // Dead Beat Dads
+          '0xb2a5Fc03533d397943c9Eae3183e409208DDaab3': ['cro', 'frtn'], // Teenage Dirtbags
+          '0xBC49267179d67050619CEB59a9870b14c9255C6e': ['cro', 'frtn'], // Dead Beat Dads Birth Certificates
+          '0x96adF7839A133da31824113a23e223D02e97c53A': ['cro', 'frtn'], // Trophy Wives
+          '0x7841dA84C0eC87744306C6420Eb039b8Cbd39d70': ['cro', 'frtn'], // BOB Adventures
+          '0x4ab89f361a7db22beee8df47630c52b9167f7bb7': ['cro', 'frtn'], // BOB Adventures 2
+          '0xa45894D91395580D5D5D2178795d3F0b2F27CF32': ['cro', 'frtn'], // Cronos Weed
+          '0xC5Fe01a64e63EDefC40d620A5716B90c52D444f9': ['cro', 'frtn'], // BOB Spaceships
+          '0x028169964177AA2050Db3FaE53EEAeE1443F9b04': ['cro', 'frtn'], // BOB Mutants
+          '0x3f4A31D0a13A267d0b567580E2E8fa8f8b73A7aC': ['cro', 'frtn'], // BOB Weed
+          '0xB340c91182b9fF831bB36232cB3296eD306c79B2': ['cro', 'frtn'], // Baby Alien Division
+          '0x11984C500B477e83891f7cDb4246734387764E20': ['cro', 'frtn'], // BAM - Baby Alien Mutants
+          '0xbe5F02b6fD5C1e714f0bdd28B6a119827D8b6c61': ['cro', 'frtn'], // B.A.D. - Spaceships
+          '0x1A8C07dd1933433cDdBE3123b583695AE3C56b9b': ['cro', 'frtn'], // B.A.D. - Spacebags
+          '0x4E6795D725e26E340865140a870C25d1e413A118': ['cro', 'frtn'], // B.A.D. - Founders Passport
+          '0xA217d6feEf38F9f2D139300E0C4adF42cf96F4C3': ['cro', 'frtn'], // B.A.D. - Bits
+          '0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16': ['cro', 'frtn'], // B.A.D. - Lizzys
+          '0xA3a4104B2A429b3A33Ac1304371E2eEf6E6aF44B': ['cro', 'frtn'], // ETH Stones",
+          '0xD6e807eE8B5513d7a5594be15Ef0cF81a3EEbc1d': ['cro', 'frtn'], // Inside an Alien
+          '0xE0eF98948B187c5Cd23CDE3339B78dDdEFe44f92': ['cro', 'frtn'], // Peepz
+          '0x903B9a9d58742d0699fbd5b0AC7C9C4000B7ce43': ['cro', 'frtn'], // Monkey Of Anarkey
+          '0xda663336FEC3Ef6e310be6522F35E391aAE6F43a': ['cro', 'frtn'], // Braindead Monkeys
+          '0x9a254a3e8656702a2850a34251784c70113561df': ['cro', 'frtn'], // Braindead Monkeys - Gen 2
+          '0x5b66e985c313fec158B2ee45B93976A167a115f5': ['cro', 'frtn'], // Braindead Monkeys Allies Collection
+          '0x092791Ba7E03139C34103754689BcF8E6A3e8C0c': ['cro', 'frtn'], // Braindead Moonkeys
+          '0x7aEBFd662494299CE53feb533BFE80a749e656BC': ['cro', 'frtn'], // Degen Ape Cronos Club
+          '0xf8e63021C3d757b63eb53a9124271251A964D572': ['cro', 'frtn'], // Cronos Rocks
+          '0xbd6b9a1A0477d64E99F660b7b7C205f4604E4Ff3': ['cro', 'frtn'], // Cronos Fossils
+          '0x30aB0D8C808Ec024365D45A105c559BDF06BCB14': ['cro', 'frtn'], // Cronos Fossils Gen 2"
+          '0xc536b6151599A3fdA22E63eD61AA918d738e1B7d': ['cro', 'frtn'], // Decentral Mamas
+          '0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1': ['cro', 'frtn'], // Crazzzy Monsters
+          '0xA0edf26589AD4318DAb2354629541cfFd3e5EBDf': ['cro', 'frtn', 'bcro'], // Piggy Bank Finance
+          '0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56': ['cro', 'frtn', 'mad'], // Mad Meerkat
+          '0xDC5bBDb4A4b051BDB85B959eB3cBD1c8C0d0c105': ['cro', 'frtn', 'mad'], // MM Treehouse
+          '0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8': ['cro', 'frtn', 'mad'], // Mad Meerkat Degen
+          '0x23721073592FB452C556fB9322bA4dF6A6675050': ['cro', 'frtn', 'mad'], // Mad Sacks
+          '0x0aCDA31Cf1F301a7Eb8f988D47F708FbA058F8f5': ['cro', 'frtn', 'vrse'], // CronosVerse
+          '0x130a6c2884325d302830179C691D328dDAd9b78C': ['cro', 'frtn', 'vrse'], // Crovilians
+          '0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a': ['cro', 'frtn', 'vrse'], // Cro Snowmen
+          '0x1eD88baF12Ec3fd8D2955B1b2a883e6E79a10828': ['cro', 'frtn', 'vrse'], // The CronosVerse Suites
+          '0xaf038d14905409de31fb5577c460d18b1013e4f1': ['cro', 'frtn', 'vrse'], // The CronosVerse In-Game Assets
         }
       }
     }
@@ -493,7 +576,7 @@ export const configData = {
       api: 'https://api.ebisusbay.com/',
       app: 'http://localhost:3000/',
       subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
-      cms: 'http://localhost:4000/api/',
+      cms: 'https://cms.ebisusbay.com/api/',
       cmsSocket: 'wss://cms.ebisusbay.com/socket/',
       explorer: 'https://cronoscan.com/',
       cdn: {
@@ -598,7 +681,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
           '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],        // Ryoshi Halloween
@@ -650,6 +733,47 @@ export const configData = {
           '0x6625e0b113CC4f4E70Fc409Cd1ABFcE8Cf7E747b': ['cro', 'frtn'], // Cyberpunk Cronicles
           '0xA560c70220c32c81217cF993676d177d43D48349': ['cro', 'frtn'], // CroDoo
           '0x7C144DBF04cf991d932bf6DC404C8B37c8807946': ['cro', 'frtn'], // Elf Citizens
+          '0xe971838ced4949e5c51dd7baa6d2d0188ed772f0': ['cro', 'frtn'], // Dead Beat Dads
+          '0xb2a5Fc03533d397943c9Eae3183e409208DDaab3': ['cro', 'frtn'], // Teenage Dirtbags
+          '0xBC49267179d67050619CEB59a9870b14c9255C6e': ['cro', 'frtn'], // Dead Beat Dads Birth Certificates
+          '0x96adF7839A133da31824113a23e223D02e97c53A': ['cro', 'frtn'], // Trophy Wives
+          '0x7841dA84C0eC87744306C6420Eb039b8Cbd39d70': ['cro', 'frtn'], // BOB Adventures
+          '0x4ab89f361a7db22beee8df47630c52b9167f7bb7': ['cro', 'frtn'], // BOB Adventures 2
+          '0xa45894D91395580D5D5D2178795d3F0b2F27CF32': ['cro', 'frtn'], // Cronos Weed
+          '0xC5Fe01a64e63EDefC40d620A5716B90c52D444f9': ['cro', 'frtn'], // BOB Spaceships
+          '0x028169964177AA2050Db3FaE53EEAeE1443F9b04': ['cro', 'frtn'], // BOB Mutants
+          '0x3f4A31D0a13A267d0b567580E2E8fa8f8b73A7aC': ['cro', 'frtn'], // BOB Weed
+          '0xB340c91182b9fF831bB36232cB3296eD306c79B2': ['cro', 'frtn'], // Baby Alien Division
+          '0x11984C500B477e83891f7cDb4246734387764E20': ['cro', 'frtn'], // BAM - Baby Alien Mutants
+          '0xbe5F02b6fD5C1e714f0bdd28B6a119827D8b6c61': ['cro', 'frtn'], // B.A.D. - Spaceships
+          '0x1A8C07dd1933433cDdBE3123b583695AE3C56b9b': ['cro', 'frtn'], // B.A.D. - Spacebags
+          '0x4E6795D725e26E340865140a870C25d1e413A118': ['cro', 'frtn'], // B.A.D. - Founders Passport
+          '0xA217d6feEf38F9f2D139300E0C4adF42cf96F4C3': ['cro', 'frtn'], // B.A.D. - Bits
+          '0xd7eEc30A764B3Eed788e93de9fc69b432Dd54d16': ['cro', 'frtn'], // B.A.D. - Lizzys
+          '0xA3a4104B2A429b3A33Ac1304371E2eEf6E6aF44B': ['cro', 'frtn'], // ETH Stones",
+          '0xD6e807eE8B5513d7a5594be15Ef0cF81a3EEbc1d': ['cro', 'frtn'], // Inside an Alien
+          '0xE0eF98948B187c5Cd23CDE3339B78dDdEFe44f92': ['cro', 'frtn'], // Peepz
+          '0x903B9a9d58742d0699fbd5b0AC7C9C4000B7ce43': ['cro', 'frtn'], // Monkey Of Anarkey
+          '0xda663336FEC3Ef6e310be6522F35E391aAE6F43a': ['cro', 'frtn'], // Braindead Monkeys
+          '0x9a254a3e8656702a2850a34251784c70113561df': ['cro', 'frtn'], // Braindead Monkeys - Gen 2
+          '0x5b66e985c313fec158B2ee45B93976A167a115f5': ['cro', 'frtn'], // Braindead Monkeys Allies Collection
+          '0x092791Ba7E03139C34103754689BcF8E6A3e8C0c': ['cro', 'frtn'], // Braindead Moonkeys
+          '0x7aEBFd662494299CE53feb533BFE80a749e656BC': ['cro', 'frtn'], // Degen Ape Cronos Club
+          '0xf8e63021C3d757b63eb53a9124271251A964D572': ['cro', 'frtn'], // Cronos Rocks
+          '0xbd6b9a1A0477d64E99F660b7b7C205f4604E4Ff3': ['cro', 'frtn'], // Cronos Fossils
+          '0x30aB0D8C808Ec024365D45A105c559BDF06BCB14': ['cro', 'frtn'], // Cronos Fossils Gen 2"
+          '0xc536b6151599A3fdA22E63eD61AA918d738e1B7d': ['cro', 'frtn'], // Decentral Mamas
+          '0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1': ['cro', 'frtn'], // Crazzzy Monsters
+          '0xA0edf26589AD4318DAb2354629541cfFd3e5EBDf': ['cro', 'frtn', 'bcro'], // Piggy Bank Finance
+          '0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56': ['cro', 'frtn', 'mad'], // Mad Meerkat
+          '0xDC5bBDb4A4b051BDB85B959eB3cBD1c8C0d0c105': ['cro', 'frtn', 'mad'], // MM Treehouse
+          '0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8': ['cro', 'frtn', 'mad'], // Mad Meerkat Degen
+          '0x23721073592FB452C556fB9322bA4dF6A6675050': ['cro', 'frtn', 'mad'], // Mad Sacks
+          '0x0aCDA31Cf1F301a7Eb8f988D47F708FbA058F8f5': ['cro', 'frtn', 'vrse'], // CronosVerse
+          '0x130a6c2884325d302830179C691D328dDAd9b78C': ['cro', 'frtn', 'vrse'], // Crovilians
+          '0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a': ['cro', 'frtn', 'vrse'], // Cro Snowmen
+          '0x1eD88baF12Ec3fd8D2955B1b2a883e6E79a10828': ['cro', 'frtn', 'vrse'], // The CronosVerse Suites
+          '0xaf038d14905409de31fb5577c460d18b1013e4f1': ['cro', 'frtn', 'vrse'], // The CronosVerse In-Game Assets
         }
       }
     }

@@ -32,6 +32,7 @@ import {
   isEmptyObj,
   isEvoSkullCollection,
   isLadyWeirdApesCollection,
+  isLandDeedsCollection,
   isLazyHorseCollection,
   isLazyHorsePonyCollection,
   isNftBlacklisted,
@@ -61,11 +62,13 @@ import {
   Box,
   Button as ChakraButton,
   ButtonGroup,
+  Center,
   Flex,
   Heading,
   MenuButton as MenuButtonCK,
   Stack,
   Text,
+  useBreakpointValue,
   useClipboard
 } from "@chakra-ui/react";
 import {toast} from "react-toastify";
@@ -84,6 +87,7 @@ import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferType} from "@src/core/services/api-service/types";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
+import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 
 const config = appConfig();
 const tabs = {
@@ -124,7 +128,10 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
   )
 
   const [collection, setCollection] = useState<any>(null);
-
+  const izanamiImageSize = useBreakpointValue(
+    {base: 250, sm: 368, lg: 500},
+    {fallback: 'md'}
+  )
   // useEffect(() => {
   //   if (collection) {
   //     async function asyncFunc() {
@@ -575,6 +582,8 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                   <ImageContainer nft={nft} />
                 ) : nft.useIframe ? (
                   <iframe width="100%" height="636" src={nft.iframeSource} title="nft" />
+                ) : isLandDeedsCollection(address) ? (
+                  <Center><RdLand nftId={id} boxSize={izanamiImageSize ?? 368} /></Center>
                 ) : (
                   <>
                     <AnyMedia

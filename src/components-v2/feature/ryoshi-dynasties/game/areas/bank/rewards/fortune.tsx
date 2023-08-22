@@ -146,7 +146,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
     try {
       setExecutingClaim(true);
       onCloseConfirmation();
-      const flooredAmount = convertToNumberAndRoundDown(amountAsString);
+      const flooredAmount = Math.floor(Number(amountAsString));
 
       let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
       if (!signatureInStorage) {

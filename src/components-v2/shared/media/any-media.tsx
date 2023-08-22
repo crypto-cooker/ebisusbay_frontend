@@ -82,7 +82,10 @@ export const AnyMedia = ({
     const knownImageTypes = ['.png', '.jpg', '.jpeg', '.webp', '.gif'];
 
     try {
-      const imageURL = new URL(image);
+      let imageURL = new URL(image);
+      if (imageURL.pathname && imageURL.pathname.includes('izanamiscradle')) {
+        imageURL = new URL('https://cdn-prod.ebisusbay.com/files/ryoshi/images/cradle/deed.png');
+      }
 
       if (imageURL.pathname && imageURL.pathname.endsWith('.html')) {
         setDynamicType(MediaType.iFrame);
@@ -93,6 +96,11 @@ export const AnyMedia = ({
         let contentType = response.headers['content-type'];
         if (!contentType) {
           setDynamicType(MediaType.image);
+          return;
+        }
+
+        if (contentType.includes('text/html')) {
+          setDynamicType(MediaType.iFrame);
           return;
         }
 

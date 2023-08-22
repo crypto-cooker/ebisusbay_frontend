@@ -574,7 +574,6 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                             style={{
                               maxWidth: '38px',
                               visibility: expirationDate.type === 'dropdown' ? 'visible' : 'hidden',
-                              position: expirationDate.type === 'dropdown' ? 'relative' : 'absolute'
                             }}
                             className="input"
                             type="datetime-local"

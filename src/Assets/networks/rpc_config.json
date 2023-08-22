@@ -2467,7 +2467,7 @@
       }
     },
     {
-      "name": "Bushicro",
+      "name": "Bushicro Male Warrior",
       "slug": "bushicro",
       "multiToken": false,
       "address": "0xB8C3257E71E8294134E9B59a498d0BAF0c72C2b0",
@@ -4123,7 +4123,7 @@
       }
     },
     {
-      "name": "Female Warriors",
+      "name": "Bushicro Female Warrior",
       "slug": "female-warriors",
       "multiToken": false,
       "address": "0x0D21051BD422A9A54988d25b1Be1211Dc7f3D7bD",
@@ -21796,9 +21796,9 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -22729,9 +22729,9 @@
       "listable": true,
       "metadata": {
         "description": "Dead Beat Dads cherish only a few things in life. One of those being football. Mint a Dead Beat Dad rocking your favorite jersey and have a chance to win CRO!",
-        "avatar": "/img/collections/dead-beat-dads/avatar.webp",
-        "card": "/img/collections/dead-beat-dads/card.webp",
-        "banner": "/img/collections/dead-beat-dads/banner.webp",
+        "avatar": "/img/collections/nfgl-2023/avatar.webp",
+        "card": "/img/collections/nfgl-2023/card.webp",
+        "banner": "/img/collections/nfgl-2023/banner.webp",
         "website": "https://dead-beat-dads.netlify.app/nfgl",
         "twitter": "https://twitter.com/zolape01",
         "discord": "https://discord.gg/KnRmEA4u8v",
@@ -22748,7 +22748,7 @@
       "name": "Coom Cats",
       "slug": "coom-cats",
       "multiToken": false,
-      "address": "",
+      "address": "0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -22762,9 +22762,133 @@
         "categories": []
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Y-Plush Foot Print",
+      "slug": "y-plush-foot-print",
+      "multiToken": false,
+      "address": "0x902b49b97Ab03bcF5095e3439422f4a9351cAe82",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection consisting of 5,000 Plush Foot Print (PFP) NFTs. There will be 20 different Foot Prints with different rarities and no Foot Print will have the same amount.",
+        "avatar": "/img/collections/y-plush-foot-print/avatar.webp",
+        "card": "/img/collections/y-plush-foot-print/card.webp",
+        "banner": "/img/collections/y-plush-foot-print/banner.webp",
+        "website": "https://lnk.bio/YplushNFT",
+        "twitter": "https://twitter.com/YplushNft",
+        "discord": "https://discord.gg/wGFHqSag",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cronoballz",
+      "slug": "cronoballz",
+      "multiToken": false,
+      "address": "0x8195Fd40c3FAf8809f6C302F46a09d6a6a3C9445",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection dedicated to helping sponsor youth into sports.",
+        "avatar": "/img/collections/cronoballz/avatar.webp",
+        "card": "/img/collections/cronoballz/card.webp",
+        "banner": "/img/collections/cronoballz/banner.webp",
+        "website": "https://www.cronoballz.com/",
+        "twitter": "https://twitter.com/Crono_Ballz",
+        "discord": "https://discord.gg/cronoballz",
+        "medium": "https://medium.com/@cronoballz",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "LIFE OF HEL - Volume 1",
+      "slug": "life-of-hel-vol-1",
+      "multiToken": false,
+      "address": "0x51084c32AA5ee43a0e7bD8220195da53b5c69868",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "First volume of the LOH saga. LIFE OF HEL (LOH) is the first token-gated manga series ever released on the blockchain. The LOH saga will consist of 7 volumes to be issued through 7 separate NFTs collections. Each NFT collection will entitle its holders to exclusive benefits (including exclusive digital read and priority over future mints). If you like manga, fun, and ramen, look no further! Hundreds of pages of fantastic art and story await!",
+        "avatar": "/img/collections/life-of-hel-vol-1/avatar.webp",
+        "card": "/img/collections/life-of-hel-vol-1/card.webp",
+        "banner": "/img/collections/life-of-hel-vol-1/banner.webp",
+        "website": "https://www.lifeofhel.xyz/",
+        "twitter": "https://twitter.com/lifeofhel",
+        "discord": "https://discord.gg/life-of-hel",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Milky Way Marvels",
+      "slug": "milky-way-marvels",
+      "multiToken": false,
+      "address": "0xf37A3686800A9fb19625c05e1A7ACf2D232e8aa4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to Milky Way Marvels, an exciting new NFT game where you can explore the vast expanse of the galaxy in search of hidden planets and rare treasures.  As a space explorer, your mission is to travel to different star systems, scan planets to discover their unique characteristics, and earn rewards for your discoveries. Each planet you find will be a unique NFT from the Milky Way Marvels collection, with its own set of attributes and rarity level.  The game will feature a dynamic, interactive map of the galaxy, where you can navigate to different star systems and planets. You can use your scanner to analyze the planet's atmosphere, composition, and other key characteristics, which will determine its rarity level and potential rewards.  As you explore the galaxy and collect new planets, you can trade them with other players or use them to level up your own spaceship and equipment. You can also compete in challenges and events to earn special rewards and unlock new areas of the galaxy.",
+        "avatar": "/img/collections/milky-way-marvels/avatar.webp",
+        "card": "/img/collections/milky-way-marvels/card.webp",
+        "banner": "/img/collections/milky-way-marvels/banner.webp",
+        "website": "https://www.cryptoplanets.rainbowland.org/",
+        "twitter": "https://twitter.com/MilkyWayMarvels",
+        "discord": "https://discord.gg/mGSKXUzWDs",
+        "medium": "https://the-rainbowland-metaverse.medium.com/",
+        "telegram": "https://t.me/newsrainbowland",
+        "categories": [
+          "metaverse",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Crypto Hodl'em",
+      "slug": "crypto-hodlem",
+      "multiToken": false,
+      "address": "0xd87838a982a401510255ec27e603b0f5fea98d24",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Crypto Hodl’em: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #1 Ryoshi Diamonds, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
+        "avatar": "/img/collections/crypto-hodlem/avatar.webp",
+        "banner": "/img/collections/crypto-hodlem/banner.webp",
+        "card": "/img/collections/crypto-hodlem/card.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "verified": true
       }
     }
   ],
@@ -29605,7 +29729,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/barber-shop/drop.webp",
         "banner": "/img/collections/barber-shop/banner.webp",
@@ -29734,7 +29858,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": true,
       "redirect": "https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan",
@@ -29754,24 +29878,24 @@
       "id": 179,
       "slug": "coom-cats",
       "title": "Coom Cats",
-      "subtitle": "COOM - Create Our Own Movement",
-      "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
+      "subtitle": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
+      "description": "Coom Cats: A Cronos-based project featuring a collection of 1,000 Cats.\n\nOur ambition is to breathe fresh life into the Cronos blockchain and to provide community solutions through the various utilities we plan to implement.\n\nFor now, we can share some of these utilities with you (with others remaining confidential):\n\nStep 1 - Presale Platform:\nOur platform aims to deliver long-term benefits to COOM token holders. By creating a robust and scalable project, COOM seeks to profit from NFT project presales, taking a percentage fee from the profits and then redistributing a certain percentage of that as passive income to holders weekly. The more Coom Cats NFTs you hold, the greater your passive income potential. Future aspirations for the platform include cross-chain capabilities.\n\nStep 2 - Coom Club:\n\nBenefits of joining the Investor's Club:\n\nRegular Updates on Our Activities: Keeping club members informed about CoomLabs' latest news.\n\nEarly Glimpses of Our Future Features: Sneak peeks of upcoming features, with detailed information provided in advance to club members.\n\nExclusive COOMLABS Industry Offers: Club members can enjoy preferential rates on exclusive merchandising as well as future subscriptions. This offer is reserved exclusively for Investor's Club members for private use.\n\nDedicated Online Private Space: Access a private area where you can interact with other club members.\n\nStep 3 - CoomLabs:\nMore information to come.\n\nStep 4 - COOM Platform:\nCurrently confidential.\n\nEach of our utilities addresses the growing demands of the ecosystem. Our long-term goal is to meet these needs while establishing a project and ecosystem that's scalable in the long run.",
       "author": {
         "name": "Coomcats",
         "website": "https://coomcats.com/",
         "twitter": "https://twitter.com/CoomCatsNFT",
         "discord": "https://discord.gg/fDgERHyUzC"
       },
-      "address": "",
+      "address": "0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 100,
       "totalSupply": 1000,
       "cost": "590",
-      "memberCost": "550",
-      "whitelistCost": "500",
-      "erc20Cost": "1500",
-      "erc20MemberCost": "1400",
-      "erc20WhitelistCost": "1300",
+      "memberCost": "525",
+      "whitelistCost": "525",
+      "erc20Cost": "995",
+      "erc20MemberCost": "900",
+      "erc20WhitelistCost": "900",
       "erc20Token": "frtn",
       "foundersOnly": false,
       "start": 1692648000000,
@@ -29786,6 +29910,51 @@
         "avatar": "/img/collections/coom-cats/avatar.webp",
         "banner": "/img/collections/coom-cats/banner.webp",
         "preview": "/img/collections/coom-cats/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 180,
+      "slug": "crypto-hodlem",
+      "title": "Crypto Hodl'em",
+      "subtitle": "Crypto Hodl’em: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #1 Ryoshi Diamonds, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
+      "description": "Ebisu’s Bay recognizes the importance of nurturing a vibrant and supportive community. As the contest unfolds, members of the Crofam will have the opportunity to engage with the captivating NFTs and partake in an event that not only celebrates creativity but also reinforces the symbiotic relationship between art and technology.\n\nThe upcoming Playing Cards Collection marks yet another pivotal moment in the history of the Bay, bringing together individuals who are not just collectors, but pioneers in the new era of Cronos.\n\nHow does Crypto Hodl’em work?\nStart: August 22nd 2023\nSnapshot: September 12th 2023\n\n*Note: Trades happening in the period between August 22nd and September 12th will be counted for the snapshot that will determine the winners on September 12th.\n\nCollectors who own 5 or more “Ryoshi Diamonds” collectibles will automatically qualify to enter the contest. The Prizes that users are eligible to win will depend on the number of places among all participants. If you own more than 5 collectibles, you’ll only participate with the best hand from 5 cards. Cards must have been minted by the wallet or purchased via secondary ebisusbay.com market sales.\nCards traded or transferred off platform will not be counted.\n\nSince only one suit is released (Ryoshi Diamonds), the following hands are expected (ranked by order from better to worse):\n\nFour of a kind — Own 4 editions of the same collectible, with 1 edition of another collectible, e.g. A, A, A, A, 2\nFull house — Own 3 editions of 1 collectible, and 2 editions of another collectible, e.g. A, A, A, 2, 2\nStraight — Own 1 edition of 5 consecutively ranked collectibles, e.g. A, 2, 3, 4, 5\nThree of a kind — own 3 editions of 1 collectibles, and 1 edition of 2 other collectibles, e.g. A, A, A, 2, 3\nTwo Pairs — Own 2 editions of 2 collectibles, and 1 edition of another collectible, e.g. A, A, 2, 2, 3\nOne Pair — Own 2 editions of a collectible, and 1 edition of 3 other collectibles, e.g. A, A, 2, 3, 4",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xd87838a982a401510255ec27e603b0f5fea98d24",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 100,
+      "totalSupply": 4000,
+      "erc20Cost": "250",
+      "erc20MemberCost": "200",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "memberMitama": 1000,
+      "foundersOnly": false,
+      "start": 1692734400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/crypto-hodlem/drop.webp",
+        "avatar": "/img/collections/crypto-hodlem/avatar.webp",
+        "banner": "/img/drops/crypto-hodlem/banner.webp",
+        "preview": "/img/collections/crypto-hodlem/card.webp"
       },
       "verification": {
         "verified": true,

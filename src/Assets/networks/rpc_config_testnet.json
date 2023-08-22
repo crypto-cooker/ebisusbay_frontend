@@ -3675,6 +3675,32 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Crypto Hodl'em",
+      "slug": "crypto-hodlem",
+      "multiToken": false,
+      "address": "0x75524C8c0509223A9F4B81FF34901FC132ce32f3",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Crypto Hodl’em: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #1 Ryoshi Diamonds, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
+        "avatar": "/img/collections/crypto-hodlem/avatar.webp",
+        "banner": "/img/collections/crypto-hodlem/banner.webp",
+        "card": "/img/collections/crypto-hodlem/card.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -8806,6 +8832,51 @@
         "avatar": "/img/collections/coom-cats/avatar.webp",
         "banner": "/img/collections/coom-cats/banner.webp",
         "preview": "/img/collections/coom-cats/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 180,
+      "slug": "crypto-hodlem",
+      "title": "Crypto Hodl'em",
+      "subtitle": "Crypto Hodl’em: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #1 Ryoshi Diamonds, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
+      "description": "Ebisu’s Bay recognizes the importance of nurturing a vibrant and supportive community. As the contest unfolds, members of the Crofam will have the opportunity to engage with the captivating NFTs and partake in an event that not only celebrates creativity but also reinforces the symbiotic relationship between art and technology.\n\nThe upcoming Playing Cards Collection marks yet another pivotal moment in the history of the Bay, bringing together individuals who are not just collectors, but pioneers in the new era of Cronos.\n\nHow does Crypto Hodl’em work?\nStart: August 22nd 2023\nSnapshot: September 12th 2023\n\n*Note: Trades happening in the period between August 22nd and September 12th will be counted for the snapshot that will determine the winners on September 12th.\n\nCollectors who own 5 or more “Ryoshi Diamonds” collectibles will automatically qualify to enter the contest. The Prizes that users are eligible to win will depend on the number of places among all participants. If you own more than 5 collectibles, you’ll only participate with the best hand from 5 cards. Cards must have been minted by the wallet or purchased via secondary ebisusbay.com market sales.\nCards traded or transferred off platform will not be counted.\n\nSince only one suit is released (Ryoshi Diamonds), the following hands are expected (ranked by order from better to worse):\n\nFour of a kind — Own 4 editions of the same collectible, with 1 edition of another collectible, e.g. A, A, A, A, 2\nFull house — Own 3 editions of 1 collectible, and 2 editions of another collectible, e.g. A, A, A, 2, 2\nStraight — Own 1 edition of 5 consecutively ranked collectibles, e.g. A, 2, 3, 4, 5\nThree of a kind — own 3 editions of 1 collectibles, and 1 edition of 2 other collectibles, e.g. A, A, A, 2, 3\nTwo Pairs — Own 2 editions of 2 collectibles, and 1 edition of another collectible, e.g. A, A, 2, 2, 3\nOne Pair — Own 2 editions of a collectible, and 1 edition of 3 other collectibles, e.g. A, A, 2, 3, 4",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0x75524C8c0509223A9F4B81FF34901FC132ce32f3",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 100,
+      "totalSupply": 4000,
+      "erc20Cost": "250",
+      "erc20MemberCost": "200",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "memberMitama": 1000,
+      "foundersOnly": false,
+      "start": 1692719400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/crypto-hodlem/drop.webp",
+        "avatar": "/img/collections/crypto-hodlem/avatar.webp",
+        "banner": "/img/drops/crypto-hodlem/banner.webp",
+        "preview": "/img/collections/crypto-hodlem/card.webp"
       },
       "verification": {
         "verified": true,
