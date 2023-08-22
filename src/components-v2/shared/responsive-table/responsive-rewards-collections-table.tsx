@@ -1,7 +1,5 @@
 import {
   Accordion,
-  AccordionButton,
-  AccordionIcon,
   AccordionItem,
   AccordionPanel,
   Box,
@@ -26,12 +24,10 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import {shortAddress, timeSince} from "@src/utils";
-import Image from "next/image";
 import Link from "next/link";
 import ImageService from "@src/core/services/image";
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
 import Blockies from "react-blockies";
-import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 interface ResponsiveRewardsCollectionsTableProps {
   data: Array<{ name: string, address: string; points: number; type: string, avatar?: string }>;
@@ -167,10 +163,7 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
                   <Stat size='sm' textAlign='end'>
                     <StatLabel>Points</StatLabel>
                     <StatNumber>
-                      <HStack spacing={1} h="full" justify='end'>
-                        <CronosIconBlue boxSize={4} />
-                        <Box fontWeight='bold'>{entity.points}</Box>
-                      </HStack>
+                      <Box fontWeight='bold'>{entity.points}</Box>
                     </StatNumber>
                   </Stat>
                 </VStack>
