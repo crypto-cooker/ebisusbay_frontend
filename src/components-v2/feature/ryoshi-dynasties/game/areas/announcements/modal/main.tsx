@@ -92,7 +92,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
   //src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
   const adSpot = useMemo(() => {
     return (
-      <Box mb={20}>
+      <Box>
         {isMobile ? (
           <Swiper
             centeredSlides={true}
@@ -125,6 +125,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
             rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
             bottomFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
             leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'
+            mb={10}
           >
             <Swiper
               loop={true}
@@ -142,7 +143,6 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
                     minWidth='100%'
                     minHeight='100%'
                     position='relative'
-                    mt={[0, "0rem !important"]}
                   >
                     <Box
                       cursor='pointer'
