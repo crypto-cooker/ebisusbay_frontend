@@ -8862,6 +8862,7 @@
       "erc20Cost": "250",
       "erc20MemberCost": "200",
       "erc20Token": "frtn",
+      "erc20Only": true,
       "foundersOnly": false,
       "start": 1692719400000,
       "end": null,

@@ -19,6 +19,7 @@ import {Drop} from "@src/core/models/drop";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import Link from "next/link";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -260,7 +261,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       {!regularCost && !drop.erc20Cost && (
                         <Heading as="h5" size="md">TBA</Heading>
                       )}
-                      {!!regularCost && (
+                      {!!regularCost && !drop.erc20Only && (
                         <Heading as="h5" size="md">
                           <Flex alignItems='center'>
                             <CronosIconBlue boxSize={5} />
@@ -282,7 +283,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                 {(!!memberCost || (drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost)) && (
                   <Box>
                     <Heading as="h6" size="sm" className="mb-1">Member Price</Heading>
-                    {!!memberCost && (
+                    {!!memberCost && !drop.erc20Only && (
                       <Heading as="h5" size="md">
                         <Flex alignItems='center'>
                           <CronosIconBlue boxSize={5} />
@@ -339,6 +340,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                 Limit: {maxMintPerAddress} per wallet
               </Text>
             )}
+            {drop.slug === 'crypto-hodlem' && (
+              <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
+                Users must have 1000 Mitama for member price. Get more Mitama by staking FRTN in <Link href='/ryoshi' className='color'>Ryoshi Dynasties</Link>
+              </Text>
+            )}
             {(status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete) && (
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
                 Supply: {ethers.utils.commify(maxSupply.toString())}
@@ -370,7 +376,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       <Input {...input} />
                       <Button {...inc}>+</Button>
                     </HStack>
-                    {(!!regularCost || drop.freeMint) && (
+                    {(!!regularCost || drop.freeMint) && !drop.erc20Only && (
                       <PrimaryButton
                         w='full'
                         onClick={() => mintNow(false)}

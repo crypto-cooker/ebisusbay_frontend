@@ -34,6 +34,7 @@ export interface Drop {
   video?: string;
   freeMint?: boolean;
   redirect?: string;
+  erc20Only: boolean;
   [key: string]: any;
 }
 
@@ -100,7 +101,8 @@ export function mapDrop(drop: any): Drop {
     video: drop.video,
     freeMint: drop.freeMint ?? false,
     featured: drop.featured,
-    redirect: drop.redirect
+    redirect: drop.redirect,
+    erc20Only: drop.erc20Only ?? false
   }
 
   if (!!drop.memberCost) obj.memberCost = Number(drop.memberCost);
