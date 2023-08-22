@@ -92,7 +92,7 @@ console.log('ads', ads);
   //src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
   const adSpot = useMemo(() => {
     return (
-      <>
+      <Box mb={20}>
         {isMobile ? (
           <Swiper
             centeredSlides={true}
@@ -120,7 +120,7 @@ console.log('ads', ads);
           <MapFrame
             gridHeight={'15px 1fr 15px'}
             gridWidth={'18px 1fr 18px'}
-            w='590px'
+            w='626px'
             topFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
             rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
             bottomFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
@@ -163,7 +163,7 @@ console.log('ads', ads);
             </Swiper>
           </MapFrame>
         )}
-      </>
+      </Box>
     )
   }, [ads, isMobile]);
 

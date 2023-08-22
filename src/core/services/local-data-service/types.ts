@@ -23,13 +23,15 @@ export interface DropsAdDetails {
   erc20Cost?: number;
   erc20MemberCost?: number;
   erc20WhitelistCost?: number;
-  image: string;
-  avatar: string;
-  preview: string;
   featured: boolean;
   complete: boolean;
   link: AdLink;
   author: string;
+  images: {
+    drop: string;
+    avatar: string;
+    preview: string;
+  }
   socials: {
     website: string;
     twitter: string;

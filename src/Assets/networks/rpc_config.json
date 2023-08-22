@@ -29729,7 +29729,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/barber-shop/drop.webp",
         "banner": "/img/collections/barber-shop/banner.webp",
@@ -29858,7 +29858,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "featured": true,
       "redirect": "https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan",

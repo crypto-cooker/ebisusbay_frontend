@@ -39,16 +39,18 @@
       "date": 1693584000,
       "cost": 500,
       "whitelistCost": 400,
-      "image": "/img/drops/time-machine-spaceships/drop.webp",
-      "avatar": "/img/collections/time-machine-spaceships/avatar.webp",
-      "preview": "/img/collections/time-machine-spaceships/card.webp",
-      "featured": true,
+      "featured": false,
       "complete": false,
       "link": {
         "url": "https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan",
         "external": true
       },
       "author": "Time Machine",
+      "images": {
+        "drop": "/img/drops/time-machine-spaceships/drop.webp",
+        "avatar": "/img/collections/time-machine-spaceships/avatar.webp",
+        "preview": "/img/collections/time-machine-spaceships/card.webp"
+      },
       "socials": {
         "website": "https://time-launcher.com/",
         "twitter": "https://twitter.com/TimeMachines101",
