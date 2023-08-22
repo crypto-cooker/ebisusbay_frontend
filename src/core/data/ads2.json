@@ -1,0 +1,64 @@
+[
+  {
+    "name": "Crypto Hodl'em",
+    "start": 1692654452,
+    "end": 1692740852,
+    "placement": "rd-board",
+    "details": {
+      "weight": 2,
+      "imageLg": "/img/ryoshi-dynasties/announcements/ads/crypto-hodlem-lg.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/ads/crypto-hodlem-sm.webp",
+      "link": {
+        "url": "/drops/crypto-hodlem",
+        "external": false
+      }
+    }
+  },
+  {
+    "name": "Time Machine Spaceships",
+    "start": 1692654452,
+    "end": 1692740852,
+    "placement": "rd-board",
+    "details": {
+      "weight": 1,
+      "imageLg": "/img/ryoshi-dynasties/announcements/time-machines.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/time-machines-sm.webp",
+      "link": {
+        "url": "https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan",
+        "external": true
+      }
+    }
+  },
+  {
+    "name": "Time Machine Spaceships",
+    "start": 1692654452,
+    "end": 1692740852,
+    "placement": "drops",
+    "details": {
+      "weight": 1,
+      "date": 1693584000,
+      "cost": 500,
+      "whitelistCost": 400,
+      "image": "/img/drops/time-machine-spaceships/drop.webp",
+      "avatar": "/img/collections/time-machine-spaceships/avatar.webp",
+      "preview": "/img/collections/time-machine-spaceships/card.webp",
+      "featured": true,
+      "complete": false,
+      "link": {
+        "url": "https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan",
+        "external": true
+      },
+      "author": "Time Machine",
+      "socials": {
+        "website": "https://time-launcher.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/8whpvt3WEr"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    }
+  }
+]

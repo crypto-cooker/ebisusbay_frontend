@@ -1,20 +1,20 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import {Box, Grid, GridItem, Image, Link, Text, useMediaQuery, VStack, ListItem, UnorderedList, Flex} from "@chakra-ui/react"
+import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
+import {Box, Center, Flex, Grid, GridItem, Image, Link, Text, useMediaQuery, VStack} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {useRouter} from "next/router";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import ImageService from "@src/core/services/image";
-import NextImage from "next/image";
-import PatchNoteProps from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/patch-notes-page";
-import {patchNotes} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/patch-notes-data";
-import NextLink from "next/link";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
+import LocalDataService from "@src/core/services/local-data-service";
+import {useQuery} from "@tanstack/react-query";
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {Autoplay} from "swiper";
+import NextLink from "next/link";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -31,6 +31,13 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
   
   const user = useAppSelector((state) => state.user);
 
+  const { data: ads } = useQuery({
+    queryKey: ['RdBoardAds'],
+    queryFn: () => LocalDataService.getRdBoardAds(),
+    refetchOnWindowFocus: false,
+    initialData: []
+  });
+console.log('ads', ads);
   //timer
   const Ref = useRef<NodeJS.Timer | null>(null);
   const [timer, setTimer] = useState('00:00:00');
@@ -58,12 +65,12 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
           )
       }
   }
-  const clearTimer = (e:any) => {
-    startTimer(e);
-    if (Ref.current) clearInterval(Ref.current);
-    const id = setInterval(() => { startTimer(e); }, 1000) 
-    Ref.current = id;
-  }
+  // const clearTimer = (e:any) => {
+  //   startTimer(e);
+  //   if (Ref.current) clearInterval(Ref.current);
+  //   const id = setInterval(() => { startTimer(e); }, 1000)
+  //   Ref.current = id;
+  // }
 
   useEffect(() => {
       if (!user.address || !rdUserContext) {
@@ -78,11 +85,88 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
         setCanClaim(true);
       } else {
         setCanClaim(false);
-        clearTimer(claimData.nextClaim);
+        // clearTimer(claimData.nextClaim);
       }
   }, [user.address, rdUserContext])
 
   //src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
+  const adSpot = useMemo(() => {
+    return (
+      <>
+        {isMobile ? (
+          <Swiper
+            centeredSlides={true}
+            loop={true}
+            autoplay={{
+              delay: 10000,
+              disableOnInteraction: false,
+            }}
+            modules={[Autoplay]}
+            style={{maxWidth:'356px', height:'100%'}}
+          >
+            {ads.map((ad) => (
+              <SwiperSlide>
+                <Center>
+                  <Image
+                    alt={ad.name}
+                    src={ImageService.translate(ad.details.imageSm).convert()}
+                    maxH='300px'
+                  />
+                </Center>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <MapFrame
+            gridHeight={'15px 1fr 15px'}
+            gridWidth={'18px 1fr 18px'}
+            w='590px'
+            topFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
+            rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
+            bottomFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
+            leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'
+          >
+            <Swiper
+              loop={true}
+              autoplay={{
+                delay: 10000,
+                disableOnInteraction: false,
+              }}
+              modules={[Autoplay]}
+              style={{width:'590px', height:'100%'}}
+            >
+              {ads.map((ad) => (
+                <SwiperSlide>
+                  <Box
+                    rounded='md'
+                    minWidth='100%'
+                    minHeight='100%'
+                    position='relative'
+                    mt={[0, "0rem !important"]}
+                  >
+                    <Box
+                      cursor='pointer'
+                      onClick={() => {
+                        // router.push('/drops/ballies-cheerleaders');
+                      }}
+                    >
+                      <Link as={NextLink} href={ad.details.link.url} isExternal={ad.details.link.external}>
+                        <Image
+                          alt={ad.name}
+                          src={ImageService.translate(ad.details.imageLg).convert()}
+                        />
+                      </Link>
+                    </Box>
+                  </Box>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </MapFrame>
+        )}
+      </>
+    )
+  }, [ads, isMobile]);
+
   return (
     <VStack marginBottom={20} >
       <Box rounded='md' p={isMobile?'0':'4'} fontSize='sm' textAlign='left' marginTop={12} >
@@ -94,57 +178,72 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
         </Text>
       </Box>
 
-      
-      <Flex h={isMobile ? "300px" :"200px"}>
-        
+      {adSpot}
+      {/*<Flex h={isMobile ? "300px" :"200px"}>*/}
 
-      <Link as={NextLink} href='https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan' isExternal>
-          {isMobile ? (
-            <Image
-              alt="Time Machine Spaceships"
-              src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines-sm.webp').convert()}
-              maxH='300px'
-            />
-          ) : (
-            // <Image
-            //   alt="Buy FRTN on VVS"
-            //   src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines.webp').convert()}
-            // />
-            <MapFrame
-          gridHeight={'15px 1fr 15px'}
-          gridWidth={'18px 1fr 18px'}
-          h='75px'
-          w='590px'
-          topFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
-          rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
-          bottomFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
-          leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'
-          >
-          <Box 
-            rounded='md' 
-            minWidth='100%'
-            minHeight='100%'
-            position='relative'
-            mt={[0, "0rem !important"]}
-            >
-              <Box
-                cursor='pointer'
-                onClick={() => {
-                  // router.push('/drops/ballies-cheerleaders');
-                }}
-                >
-                <Link as={NextLink} href='https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan' isExternal>
-                  <Image
-                    alt="Time Machine Spaceships"
-                    src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines.webp').convert()}
-                  />
-                </Link>
-              </Box>
-            </Box>
-        </MapFrame>
-          )}
-        </Link>
-        </Flex>
+      {/*</Flex>*/}
+
+      {/*<Flex h={isMobile ? "300px" :"200px"} >*/}
+      {/*  <Swiper*/}
+      {/*    spaceBetween={10}*/}
+      {/*    slidesPerView={1}*/}
+      {/*    navigation={true}*/}
+      {/*    loop={true}*/}
+      {/*    modules={[Navigation, Pagination]}*/}
+      {/*    className="mySwiper"*/}
+      {/*  >*/}
+      {/*  {ads.map((ad) => (*/}
+      {/*    <SwiperSlide>*/}
+      {/*      <Link as={NextLink} href={ad.details.link.url} isExternal={ad.details.link.external}>*/}
+      {/*        {isMobile ? (*/}
+      {/*          <Image*/}
+      {/*            alt={ad.name}*/}
+      {/*            src={ImageService.translate(ad.details.imageSm).convert()}*/}
+      {/*            maxH='300px'*/}
+      {/*          />*/}
+      {/*        ) : (*/}
+      {/*          // <Image*/}
+      {/*          //   alt="Buy FRTN on VVS"*/}
+      {/*          //   src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines.webp').convert()}*/}
+      {/*          // />*/}
+      {/*          <MapFrame*/}
+      {/*            gridHeight={'15px 1fr 15px'}*/}
+      {/*            gridWidth={'18px 1fr 18px'}*/}
+      {/*            h='75px'*/}
+      {/*            w='590px'*/}
+      {/*            topFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'*/}
+      {/*            rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'*/}
+      {/*            bottomFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'*/}
+      {/*            leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'*/}
+      {/*          >*/}
+      {/*            <Box*/}
+      {/*              rounded='md'*/}
+      {/*              minWidth='100%'*/}
+      {/*              minHeight='100%'*/}
+      {/*              position='relative'*/}
+      {/*              mt={[0, "0rem !important"]}*/}
+      {/*            >*/}
+      {/*              <Box*/}
+      {/*                cursor='pointer'*/}
+      {/*                onClick={() => {*/}
+      {/*                  // router.push('/drops/ballies-cheerleaders');*/}
+      {/*                }}*/}
+      {/*              >*/}
+      {/*                <Link as={NextLink} href={ad.details.link.url} isExternal={ad.details.link.external}>*/}
+      {/*                  <Image*/}
+      {/*                    alt={ad.name}*/}
+      {/*                    src={ImageService.translate(ad.details.imageLg).convert()}*/}
+      {/*                  />*/}
+      {/*                </Link>*/}
+      {/*              </Box>*/}
+      {/*            </Box>*/}
+      {/*          </MapFrame>*/}
+      {/*        )}*/}
+      {/*      </Link>*/}
+      {/*    </SwiperSlide>*/}
+      {/*  ))}*/}
+      {/*  </Swiper>*/}
+      {/*</Flex>*/}
 
 
       <Grid
