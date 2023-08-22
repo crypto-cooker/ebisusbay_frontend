@@ -37,7 +37,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
     refetchOnWindowFocus: false,
     initialData: []
   });
-console.log('ads', ads);
+
   //timer
   const Ref = useRef<NodeJS.Timer | null>(null);
   const [timer, setTimer] = useState('00:00:00');
