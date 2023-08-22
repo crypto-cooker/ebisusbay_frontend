@@ -8863,6 +8863,7 @@
       "erc20MemberCost": "200",
       "erc20Token": "frtn",
       "erc20Only": true,
+      "memberMitama": 1000,
       "foundersOnly": false,
       "start": 1692719400000,
       "end": null,

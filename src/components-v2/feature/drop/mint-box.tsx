@@ -8,7 +8,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {parseUnits} from "ethers/lib/utils";
+import {commify, parseUnits} from "ethers/lib/utils";
 import {toast} from "react-toastify";
 import {getAnalytics, logEvent} from "@firebase/analytics";
 import * as Sentry from "@sentry/react";
@@ -282,7 +282,9 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                 </Box>
                 {(!!memberCost || (drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost)) && (
                   <Box>
-                    <Heading as="h6" size="sm" className="mb-1">Member Price</Heading>
+                    <Heading as="h6" size="sm" className="mb-1">
+                      {drop.memberMitama > 0 ? 'Mitama Price' : 'Member Price'}
+                    </Heading>
                     {!!memberCost && !drop.erc20Only && (
                       <Heading as="h5" size="md">
                         <Flex alignItems='center'>
@@ -340,9 +342,9 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                 Limit: {maxMintPerAddress} per wallet
               </Text>
             )}
-            {drop.slug === 'crypto-hodlem' && (
+            {drop.slug === 'crypto-hodlem' && drop.memberMitama > 0 && (
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
-                Users must have 1000 Mitama for member price. Get more Mitama by staking FRTN in <Link href='/ryoshi' className='color'>Ryoshi Dynasties</Link>
+                Users must have {commify(drop.memberMitama)} Mitama for Mitama price. Earn more by staking $Fortune in <Link href='/ryoshi' className='color'>Ryoshi Dynasties</Link>
               </Text>
             )}
             {(status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete) && (

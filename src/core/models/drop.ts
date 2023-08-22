@@ -35,6 +35,7 @@ export interface Drop {
   freeMint?: boolean;
   redirect?: string;
   erc20Only: boolean;
+  memberMitama: number;
   [key: string]: any;
 }
 
@@ -102,7 +103,8 @@ export function mapDrop(drop: any): Drop {
     freeMint: drop.freeMint ?? false,
     featured: drop.featured,
     redirect: drop.redirect,
-    erc20Only: drop.erc20Only ?? false
+    erc20Only: drop.erc20Only ?? false,
+    memberMitama: drop.memberMitama ?? 0
   }
 
   if (!!drop.memberCost) obj.memberCost = Number(drop.memberCost);
