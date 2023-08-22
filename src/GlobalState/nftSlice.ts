@@ -63,7 +63,6 @@ export const getNftDetails = (collectionAddress: string, nftId: string) => async
   let response = await getNft(collectionAddress, nftId);
 
   const currentListing = response.listings ? response.listings
-    .sort((a: any, b: any) => (parseInt(a.price) > parseInt(b.price) ? 1 : -1))
     .find((l: any) => l.state === listingState.ACTIVE) : null;
   response.nft = { ...response.nft, address: collectionAddress, id: nftId };
   response.currentListing = currentListing;
