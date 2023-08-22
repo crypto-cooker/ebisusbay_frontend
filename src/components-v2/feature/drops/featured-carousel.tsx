@@ -121,7 +121,9 @@ const FeaturedDrops = () => {
           ...ad.details.verification,
           escrow: false
         },
-        redirect: ad.details.link.url
+        redirect: ad.details.link.url,
+        erc20Only: false,
+        memberMitama: 0
       } as Drop));
 
     const mappedDrops = drops.concat(ads);
