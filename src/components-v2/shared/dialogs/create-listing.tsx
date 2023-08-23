@@ -508,9 +508,9 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       </FormControl>
                       <Box fontSize='sm' fontWeight='bold' className='text-muted'>
                         {selectedCurrency.symbol !== 'cro' && (
-                          <Text as='span'>{round(tokenToCroValue(totalPrice), 2)} CRO / </Text>
+                          <Text as='span'>{round(tokenToCroValue(salePrice ?? 0), 2)} CRO / </Text>
                         )}
-                        <Text as='span'>{usdFormat(tokenToUsdValue(totalPrice))} USD</Text>
+                        <Text as='span'>{usdFormat(tokenToUsdValue(salePrice ?? 0))} USD</Text>
                       </Box>
                       <div className="d-flex flex-wrap justify-content-between mb-3">
                         {windowSize.width && windowSize.width > 377 && (
