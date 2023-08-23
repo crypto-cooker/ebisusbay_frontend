@@ -2,7 +2,7 @@ import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Slider from '../components/Slider';
 
-import CustomSlide from './CustomSlide';
+import PreviewCard from '../../components-v2/shared/preview-card';
 import { getAllCollections } from '../../GlobalState/collectionsSlice';
 
 const HotCollections = () => {
@@ -28,7 +28,7 @@ const HotCollections = () => {
       <Slider size={hotCollections.length}>
         {hotCollections &&
           hotCollections.map((item, index) => (
-            <CustomSlide
+            <PreviewCard
               key={index}
               index={index + 1}
               avatar={item.metadata.avatar}

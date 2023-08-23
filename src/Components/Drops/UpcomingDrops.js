@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import Slider from '../components/Slider';
-import CustomSlide from '../components/CustomSlide';
+import PreviewCard from '../../components-v2/shared/preview-card';
 import { appConfig } from "@src/Config";
 
 const drops = appConfig('drops');
@@ -33,7 +33,7 @@ const UpcomingDrops = () => {
     <div className="nft">
       <Slider size={upcomingDrops.length}>
         {upcomingDrops && upcomingDrops.map((drop, index) => (
-          <CustomSlide
+          <PreviewCard
             key={index}
             index={index + 1}
             avatar={drop.images.avatar}
