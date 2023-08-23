@@ -22871,7 +22871,7 @@
       "multiToken": false,
       "address": "0xd87838a982a401510255ec27e603b0f5fea98d24",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Collectable playing cards allowing you participation in several different ongoing card games on EbisusBay.com\n\nCollect them all and join in on the fun!",
         "avatar": "/img/collections/crypto-hodlem/avatar.webp",
