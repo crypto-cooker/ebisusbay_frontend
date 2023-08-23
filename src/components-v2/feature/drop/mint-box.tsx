@@ -342,7 +342,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                 Limit: {maxMintPerAddress} per wallet
               </Text>
             )}
-            {drop.slug === 'crypto-hodlem' && drop.memberMitama > 0 && (
+            {drop.slug === 'ryoshi-playing-cards' && drop.memberMitama > 0 && (
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
                 Users must have {commify(drop.memberMitama)} Mitama for Mitama price. Earn more by staking $Fortune in <Link href='/ryoshi' className='color'>Ryoshi Dynasties</Link>
               </Text>
