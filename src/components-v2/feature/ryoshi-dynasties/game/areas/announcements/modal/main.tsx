@@ -65,12 +65,12 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
           )
       }
   }
-  // const clearTimer = (e:any) => {
-  //   startTimer(e);
-  //   if (Ref.current) clearInterval(Ref.current);
-  //   const id = setInterval(() => { startTimer(e); }, 1000)
-  //   Ref.current = id;
-  // }
+  const clearTimer = (e:any) => {
+    startTimer(e);
+    if (Ref.current) clearInterval(Ref.current);
+    const id = setInterval(() => { startTimer(e); }, 1000)
+    Ref.current = id;
+  }
 
   useEffect(() => {
       if (!user.address || !rdUserContext) {
@@ -85,7 +85,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
         setCanClaim(true);
       } else {
         setCanClaim(false);
-        // clearTimer(claimData.nextClaim);
+        clearTimer(claimData.nextClaim);
       }
   }, [user.address, rdUserContext])
 
