@@ -58,6 +58,10 @@ class Cms {
     return this.ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(address, amount, seasonId, vaultIndex, signature);
   }
 
+  async getPendingFortuneAuthorizations(address: string, signature: string) {
+    return this.ryoshiDynasties.getPendingFortuneAuthorizations(address, signature);
+  }
+
   async getGlobalContext() {
     return this.ryoshiDynasties.getGlobalContext();
   }

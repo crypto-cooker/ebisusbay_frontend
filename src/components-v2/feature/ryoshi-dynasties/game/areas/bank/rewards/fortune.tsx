@@ -1,7 +1,7 @@
 import {useAppSelector} from "@src/Store/hooks";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {ApiService} from "@src/core/services/api-service";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import {
   Accordion,
@@ -10,20 +10,12 @@ import {
   AccordionPanel,
   Box,
   Button,
-  ButtonGroup,
   Center,
   Flex,
   Grid,
   GridItem,
   HStack,
   Image,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   SimpleGrid,
   Spacer,
   Spinner,
@@ -50,7 +42,6 @@ import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {ethers} from "ethers";
 import {commify} from "ethers/lib/utils";
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
-import localFont from "next/font/local";
 
 const config = appConfig();
 
@@ -138,11 +129,12 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
   const [executingCancelCompound, setExecutingCancelCompound] = useState(false);
   const { isOpen: isConfirmationOpen, onOpen: onOpenConfirmation, onClose: onCloseConfirmation } = useDisclosure();
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
-  const [vaultIndexWarningOpenWithProps, setVaultIndexWarningOpenWithProps] = useState<{oldIndex: number, newVault: FortuneStakingAccount} | boolean>(false);
+  const [existingAuthWarningOpenWithProps, setExistingAuthWarningOpenWithProps] = useState<{type: string, onCancel: () => void, onCancelComplete: () => void} | boolean>(false);
 
   const isCurrentSeason = rdGameContext?.season.blockId === reward.blockId;
+  const queryClient = useQueryClient();
 
-  const handleWithdraw = async (amountAsString: string, seasonId: number) => {
+  const handleClaim = async (amountAsString: string, seasonId: number, force = false) => {
     try {
       setExecutingClaim(true);
       onCloseConfirmation();
@@ -154,16 +146,81 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
         signatureInStorage = signature;
       }
       if (signatureInStorage) {
+        const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signatureInStorage);
+        const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND');
+        const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL');;
+        const mustCancelClaim = !!pendingClaim && pendingClaim.seasonId !== seasonId;
+
+        if (!force && (pendingCompound || mustCancelClaim)) {
+          setExistingAuthWarningOpenWithProps({
+            type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
+            onCancel: async () => {
+              if (pendingClaim) await handleCancelClaim(pendingClaim.seasonId);
+              else await handleCancelCompound(Number(pendingCompound.vaultIndex), pendingCompound.seasonId);
+            },
+            onCancelComplete: () => {
+              setExistingAuthWarningOpenWithProps(false);
+              handleClaim(amountAsString, seasonId, true);
+            }
+          });
+          return;
+        }
+
         const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, seasonId, signatureInStorage)
         const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
         await tx.wait();
+
+        queryClient.setQueryData(
+          ['BankSeasonalRewards', user.address],
+          (oldData: any) => {
+            return {
+              ...oldData,
+              data: {
+                ...oldData.data,
+                rewards: oldData.data.rewards.map((reward: any) => {
+                  if (reward.seasonId === seasonId) {
+                    return {
+                      ...reward,
+                      currentRewards: '0'
+                    }
+                  }
+                  return reward;
+                })
+              }
+            }
+          }
+        );
+
+        toast.success('Withdraw success!');
       }
-      toast.success('Withdraw success!');
-      setVaultIndexWarningOpenWithProps(false);
-      onRefresh();
     } catch (e) {
       console.log(e);
     } finally {
+      setExecutingClaim(false);
+    }
+  }
+
+  const handleCancelClaim = async (seasonId: number) => {
+    try {
+      setExecutingClaim(true);
+      const flooredAmount = Math.floor(Number(reward.currentRewards));
+
+      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
+      if (!signatureInStorage) {
+        const { signature } = await getSigner();
+        signatureInStorage = signature;
+      }
+      if (signatureInStorage) {
+        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, seasonId, signatureInStorage)
+        const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+        await tx.wait();
+        toast.success('Previous request cancelled');
+      }
+    }
+    // catch (e) {
+    //   console.log(e);
+    // }
+    finally {
       setExecutingClaim(false);
     }
   }
@@ -179,16 +236,52 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
         signatureInStorage = signature;
       }
       if (signatureInStorage) {
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, seasonId, vault.index, signatureInStorage)
-        if (Number(auth.data.reward.index) !== Number(vault.index) && !force) {
-          setVaultIndexWarningOpenWithProps({
-            oldIndex: Number(auth.data.reward.index) + 1,
-            newVault: vault
+        const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signatureInStorage);
+        const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND');
+        const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL');
+        const mustCancelCompound = !!pendingCompound && Number(pendingCompound.vaultIndex) !== Number(vault.index);
+
+        if (!force && (pendingClaim || mustCancelCompound)) {
+          setExistingAuthWarningOpenWithProps({
+            type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
+            onCancel: async () => {
+              if (pendingClaim) await handleCancelClaim(pendingClaim.seasonId);
+              else await handleCancelCompound(vault.index, pendingCompound.seasonId);
+            },
+            onCancelComplete: () => {
+              setExistingAuthWarningOpenWithProps(false);
+              handleCompound(vault, seasonId, true);
+            }
           });
           return;
         }
+
+        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, seasonId, vault.index, signatureInStorage)
+
         const tx = await user.contractService?.ryoshiPlatformRewards.compound(auth.data.reward, auth.data.signature);
         await tx.wait();
+
+        queryClient.setQueryData(
+          ['BankSeasonalRewards', user.address],
+        (oldData: any) => {
+            return {
+              ...oldData,
+              data: {
+                ...oldData.data,
+                rewards: oldData.data.rewards.map((reward: any) => {
+                  if (reward.seasonId === seasonId) {
+                    return {
+                      ...reward,
+                      currentRewards: '0'
+                    }
+                  }
+                  return reward;
+                })
+              }
+            }
+          }
+        );
+
         toast.success('Compound complete!');
       }
     } catch (e) {
@@ -198,7 +291,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
     }
   }
 
-  const handleChangeCompound = async (newVault: FortuneStakingAccount, seasonId: number) => {
+  const handleCancelCompound = async (vaultIndex: number, seasonId: number) => {
     try {
       setExecutingCancelCompound(true);
       const flooredAmount = convertToNumberAndRoundDown(reward.currentRewards);
@@ -209,16 +302,16 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
         signatureInStorage = signature;
       }
       if (signatureInStorage) {
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, seasonId, newVault.index, signatureInStorage)
+        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, seasonId, vaultIndex, signatureInStorage)
         const tx = await user.contractService?.ryoshiPlatformRewards.cancelCompound(auth.data.reward, auth.data.signature);
         await tx.wait();
         toast.success('Previous request cancelled');
-        setExecutingCancelCompound(false);
-        await handleCompound(newVault, seasonId, true);
       }
-    } catch (e) {
-      console.log(e);
-    } finally {
+    }
+    // catch (e) {
+    //   console.log(e);
+    // }
+    finally {
       setExecutingCancelCompound(false);
     }
   }
@@ -234,50 +327,23 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
             onCompound={handleCompound}
             isExecutingCompound={executingCompound || executingCancelCompound}
           />
-
-          <RdModal
-            isOpen={!!vaultIndexWarningOpenWithProps}
-            onClose={() => setVaultIndexWarningOpenWithProps(false)}
-            title='Confirm'
-          >
-            <RdModalAlert>
-              <Text>The previously requested vault ({(vaultIndexWarningOpenWithProps as any).oldIndex}) is different than the vault for the current request ({Number((vaultIndexWarningOpenWithProps as any).newVault?.index) + 1}).</Text>
-              <Text mt={2}>Press <strong>Confirm</strong> below to cancel the previous request and compound to vault {Number((vaultIndexWarningOpenWithProps as any).newVault?.index) + 1}. Alternatively, you can close this dialog and wait 5 minutes before requesting again.</Text>
-            </RdModalAlert>
-            <RdModalFooter>
-              <Stack justify='center' direction='row' spacing={6}>
-                {!executingCompound && !executingCancelCompound && (
-                  <RdButton
-                    onClick={() => setVaultIndexWarningOpenWithProps(false)}
-                    size='lg'
-                  >
-                    Cancel
-                  </RdButton>
-                )}
-                <RdButton
-                  onClick={() => {
-                    setVaultIndexWarningOpenWithProps(false);
-                    handleChangeCompound((vaultIndexWarningOpenWithProps as any).newVault, Number(reward.seasonId))
-                  }}
-                  size='lg'
-                  // isLoading={executingCompound || executingCancelCompound}
-                  // isDisabled={executingCompound || executingCancelCompound}
-                  // loadingText='Confirming'
-                >
-                  Confirm
-                </RdButton>
-              </Stack>
-            </RdModalFooter>
-          </RdModal>
         </>
       ) : (
         <SeasonRecord
           reward={reward}
-          onClaim={() => handleWithdraw(reward.currentRewards, Number(reward.seasonId))}
+          onClaim={() => handleClaim(reward.currentRewards, Number(reward.seasonId))}
           isExecutingClaim={executingClaim}
           onCompound={handleCompound}
         />
       )}
+
+      <PendingAuthorizationWarningDialog
+        isOpen={!!existingAuthWarningOpenWithProps}
+        onClose={() => setExistingAuthWarningOpenWithProps(false)}
+        type={(existingAuthWarningOpenWithProps as any)!.type}
+        onExecuteCancel={(existingAuthWarningOpenWithProps as any)!.onCancel}
+        onCancelComplete={(existingAuthWarningOpenWithProps as any)!.onCancelComplete}
+      />
 
       <RdModal
         isOpen={isConfirmationOpen}
@@ -296,7 +362,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
               Cancel
             </RdButton>
             <RdButton
-              onClick={() => handleWithdraw(reward.currentRewards, Number(reward.seasonId))}
+              onClick={() => handleClaim(reward.currentRewards, Number(reward.seasonId))}
               size='lg'
             >
               Confirm
@@ -377,14 +443,16 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
           <Flex direction='column'>
             <Spacer />
             <Stack direction={{base: 'column', sm: 'row'}}>
-              <AccordionButton w='full' p={0}>
-                <RdButton
-                  size='sm'
-                  onClick={handleExpandCompound}
-                >
-                  Compound
-                </RdButton>
-              </AccordionButton>
+              {!isExecutingClaim && (
+                <AccordionButton w='full' p={0}>
+                  <RdButton
+                    size='sm'
+                    onClick={handleExpandCompound}
+                  >
+                    Compound
+                  </RdButton>
+                </AccordionButton>
+              )}
               <Flex direction='column'>
                 <Spacer />
                 <RdButton
@@ -572,61 +640,60 @@ const SeasonRecord = ({reward, onClaim, isExecutingClaim}: SeasonRecordProps) =>
   )
 }
 
-const gothamBook = localFont({ src: '../../../../../../../../src/fonts/Gotham-Book.woff2' });
 interface VaultIndexWarningDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
-  onCancel: () => void;
-  oldIndex: number;
-  newIndex: number;
+  onExecuteCancel: () => Promise<void>;
+  onCancelComplete: () => void;
+  type: 'CLAIM' | 'COMPOUND';
 }
 
-const VaultIndexWarningDialog = ({isOpen, onClose, onConfirm, onCancel, oldIndex, newIndex}: VaultIndexWarningDialogProps) => {
+const PendingAuthorizationWarningDialog = ({isOpen, onClose, onExecuteCancel, onCancelComplete, type}: VaultIndexWarningDialogProps) => {
+  const [executingCancel, setExecutingCancel] = useState(false);
+  const [_, getSigner] = useCreateSigner();
+
+  const handleExecuteCancel = async () => {
+    try {
+      setExecutingCancel(true);
+      await onExecuteCancel();
+      onCancelComplete();
+    } finally {
+      setExecutingCancel(false);
+    }
+  }
+
   return (
-    <Modal
+    <RdModal
       isOpen={isOpen}
-      isCentered={true}
       onClose={onClose}
-      size='lg'
+      title='Confirm'
     >
-      <ModalOverlay />
-      <ModalContent border='2px solid #CCC' bg='#292626' color='white' className={gothamBook.className}>
-        <ModalHeader>
-          <Center>
-            <HStack>
-              <Text>Confirm Vault</Text>
-            </HStack>
-          </Center>
-        </ModalHeader>
-        <ModalCloseButton />
-        <ModalBody color='white'>
-          <Text>The previously requested vault ({oldIndex}) is different than the current request ({newIndex}). If this is ok, please press Confirm below. If not, please cancel the previous request by pressing the Cancel. Alternatively, you can close this dialog and wait 5 minutes before requesting again.</Text>
-        </ModalBody>
-        <ModalFooter>
-          <VStack w='full'>
-            <ButtonGroup spacing={2} width="full">
-              <Button
-                size='md'
-                onClick={onCancel}
-                variant='ryoshiDynasties'
-                flex={1}
-              >
-                Cancel
-              </Button>
-              <Button
-                size='md'
-                onClick={onConfirm}
-                variant='ryoshiDynasties'
-                flex={1}
-              >
-                Confirm Vault {newIndex}
-              </Button>
-            </ButtonGroup>
-          </VStack>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+      <RdModalAlert>
+        <Text>There is currently a pending {type === 'CLAIM' ? 'claim' : 'compound'}. This must be cancelled before proceeding. Press the <strong>Confirm</strong> button below to continue</Text>
+        <Text mt={2}>Alternatively, you can close this dialog and wait 5 minutes before requesting again.</Text>
+      </RdModalAlert>
+      <RdModalFooter>
+        <Stack justify='center' direction='row' spacing={6}>
+          {!executingCancel && (
+            <RdButton
+              onClick={onClose}
+              size='lg'
+            >
+              Cancel
+            </RdButton>
+          )}
+          <RdButton
+            onClick={handleExecuteCancel}
+            size='lg'
+            isLoading={executingCancel}
+            isDisabled={executingCancel}
+            loadingText='Confirming'
+          >
+            Confirm
+          </RdButton>
+        </Stack>
+      </RdModalFooter>
+    </RdModal>
   )
 }
 

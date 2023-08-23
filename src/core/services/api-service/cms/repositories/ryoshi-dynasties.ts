@@ -116,6 +116,20 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
+  async getPendingFortuneAuthorizations(address: string, signature: string) {
+    const response = await this.cms.get(
+      `ryoshi-dynasties/fortune-rewards/pending`,
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+
+    return response.data.data;
+  }
+
   async getGlobalContext() {
     const response = await this.cms.get('ryoshi-dynasties/context');
     return response.data.data as RyoshiConfig;
