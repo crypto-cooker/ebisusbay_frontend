@@ -24,11 +24,11 @@ const VerifiedIcon = styled.span`
 
 interface CustomSlideProps {
   index: number;
-  avatar: string;
+  avatar?: string;
   banner: string;
   title: string;
   subtitle?: ReactNode | string;
-  collectionId: string;
+  collectionId?: string;
   url: string;
   verified: boolean;
   externalPage?: boolean;
@@ -70,7 +70,7 @@ const PreviewCard = ({ index, avatar, banner, title, subtitle, collectionId, url
               {avatar ? (
                 <img className="lazy" src={ImageService.translate(avatar).avatar()} alt={title} />
               ) : (
-                <Blockies seed={collectionId} size={10} scale={6} />
+                <Blockies seed={collectionId ?? ''} size={10} scale={6} />
               )}
               {verified && (
                 <VerifiedIcon>

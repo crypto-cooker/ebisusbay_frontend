@@ -65,8 +65,6 @@ const CollectionsTab = ({collections}: CollectionsTabProps) => {
           }
           url={`/collection/${collection.slug ?? collection.address}`}
           verified={collection.verification?.verified}
-          avatar={null}
-          collectionId={null}
         />
       ))}
     </SimpleGrid>
