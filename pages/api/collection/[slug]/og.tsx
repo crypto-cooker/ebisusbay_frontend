@@ -1,5 +1,5 @@
 import {ImageResponse, NextRequest} from "next/server";
-import {caseInsensitiveCompare, isAddress, siPrefixedNumber, urlify} from "@src/utils";
+import {caseInsensitiveCompare, isAddress, round, siPrefixedNumber, urlify} from "@src/utils";
 import {appConfig} from "@src/Config";
 import imageSize from "image-size";
 
@@ -160,7 +160,7 @@ export default async function handler(req: NextRequest) {
                 }}
               >
                 <div style={{fontWeight:'bold', fontSize: 20, display: 'flex'}}>
-                  <span>{!!Number(collectionData.stats.total.volume) ? `${siPrefixedNumber(collectionData.stats.total.volume)} CRO` : '-'}</span>
+                  <span>{!!Number(collectionData.stats.total.volume) ? `${siPrefixedNumber(round(collectionData.stats.total.volume))} CRO` : '-'}</span>
                   {/*<img src={cronosIconData} width='17' height='20' style={{marginTop: '3px', marginLeft: '2px'}}/>*/}
                 </div>
                 <div style={{fontWeight:'bold', fontSize: 16, color:'#DDDDDDCC'}}>Volume</div>
@@ -173,7 +173,7 @@ export default async function handler(req: NextRequest) {
                 }}
               >
                 <div style={{fontWeight:'bold', fontSize: 20, display: 'flex'}}>
-                  <span>{!!Number(collectionData.stats.total.floorPrice) ? `${siPrefixedNumber(collectionData.stats.total.floorPrice)} CRO` : '-'}</span>
+                  <span>{!!Number(collectionData.stats.total.floorPrice) ? `${siPrefixedNumber(round(collectionData.stats.total.floorPrice))} CRO` : '-'}</span>
                   {/*<img src={cronosIconData} width='17' height='20' style={{marginTop: '3px', marginLeft: '2px'}}/>*/}
                 </div>
                 <div style={{fontWeight:'bold', fontSize: 16, color:'#DDDDDDCC'}}>Floor</div>
