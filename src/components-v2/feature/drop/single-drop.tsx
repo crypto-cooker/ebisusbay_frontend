@@ -197,6 +197,12 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     setTotalSupply(infos.totalSupply);
     if (infos.whitelistCost) setWhitelistCost(Number(ethers.utils.formatEther(infos.whitelistCost)));
     setCanMintQuantity(Math.min(canMint, infos.maxMintPerTx));
+
+
+    if (drop.slug === 'cronosverse-in-game-assets') {
+      setTotalSupply(infos.totalSupply - 1716);
+      setMaxSupply(infos.maxSupply - 1716);
+    }
   };
 
   const calculateStatus = (drop: any, totalSupply: number, maxSupply: number) => {
