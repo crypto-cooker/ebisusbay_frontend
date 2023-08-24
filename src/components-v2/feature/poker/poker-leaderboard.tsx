@@ -1,5 +1,5 @@
 import {useInfiniteQuery} from "@tanstack/react-query";
-import { Center, Spinner, Box } from "@chakra-ui/react";
+import { Center, Spinner, Box, HStack } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { ApiService } from "@src/core/services/api-service";
 import {Text,Grid, GridItem, Flex,SimpleGrid } from "@chakra-ui/react";
@@ -141,8 +141,8 @@ const PokerLeaderboardComponent = () => {
 	  >
 			<SimpleGrid  
 				border={'2px solid white'}
-				maxW={'1600px'}
-			 	columns={7}
+				maxW={'1000px'}
+			 	columns={6}
 				// templateColumns="repeat(5, 1fr)"
 				gap={0}
 				justifyItems='left'
@@ -152,11 +152,11 @@ const PokerLeaderboardComponent = () => {
 					<Text>Rank</Text>
 				</GridItem>
 
-				<GridItem  w='50%' > 
+				<GridItem> 
 					<Text>Address</Text>
 				</GridItem>
 		
-				<GridItem w={'100%'}>
+				<GridItem >
 					<Text>Best Hand</Text>
 				</GridItem>
 		
@@ -166,10 +166,6 @@ const PokerLeaderboardComponent = () => {
 		
 				<GridItem>
 					<Text>Secondary</Text>
-				</GridItem>
-
-				<GridItem>
-					<Text>Secondary Card Edition</Text>
 				</GridItem>
 		
 				<GridItem>
@@ -182,11 +178,11 @@ const PokerLeaderboardComponent = () => {
 					{i+1}
 				</GridItem>
 
-				<GridItem  w='50%' >
-					<Text>{player.address.slice(0,10)}</Text>
+				<GridItem   >
+					<Text isTruncated maxW={'150px'}>{player.address}</Text>
 				</GridItem>
 		
-				<GridItem w={'100%'}>
+				<GridItem>
 					<Text>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text>
 				</GridItem>
 		
@@ -195,15 +191,17 @@ const PokerLeaderboardComponent = () => {
 				</GridItem>
 		
 				<GridItem>
-					<Text>{getCardName(player.bestHand.secondaryValue)}</Text>
-				</GridItem>
-
-				<GridItem>
-					<Text>{player.bestHand.secondaryCardEdition}</Text>
+					<HStack>
+						<Text>{getCardName(player.bestHand.secondaryValue)}</Text>
+						<Text
+							fontSize={12}
+							color={'gray.500'}
+						>id:{player.bestHand.secondaryCardEdition}</Text>
+					</HStack>
 				</GridItem>
 		
 				<GridItem>
-					<Text fontSize={12}>{printCardRanks(player.cardRanks)}</Text>
+					<Text isTruncated maxW={'150px'} fontSize={12}>{printCardRanks(player.cardRanks)}</Text>
 				</GridItem>
 				</>
 				))}

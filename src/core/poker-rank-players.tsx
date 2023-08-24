@@ -129,31 +129,36 @@ export const RankPlayers = async (data : any) => {
     return null;
   }
   const checkForStraight = (cards: number[]) => {
+
+    
     //sort and remove any duplicates
-    cards.sort((a, b) => a - b);
+    cards.sort((a, b) => b - a);
     const uniqueCards = [...new Set(cards)];
+    if(uniqueCards.length < 5) return null;
+
     let straight = false;
     let straightValue = 0;
-    let secondaryValue = 0;
     let straightStartIndex = 0;
     for(let i = 0; i < uniqueCards.length - 5; i++) {
-      if(uniqueCards[i] + 1 === uniqueCards[i + 1] &&
-        uniqueCards[i + 1] + 1 === uniqueCards[i + 2] &&
-        uniqueCards[i + 2] + 1 === uniqueCards[i + 3] &&
-        uniqueCards[i + 3] + 1 === uniqueCards[i + 4] &&
-        uniqueCards[i + 4] + 1 === uniqueCards[i + 5]) {
+      if(uniqueCards[i] - 1 === uniqueCards[i + 1] &&
+        uniqueCards[i + 1] - 1 === uniqueCards[i + 2] &&
+        uniqueCards[i + 2] - 1 === uniqueCards[i + 3] &&
+        uniqueCards[i + 3] - 1 === uniqueCards[i + 4] &&
+        uniqueCards[i + 4] - 1 === uniqueCards[i + 5]) {
           straight = true;
           straightValue = uniqueCards[i + 4];
           straightStartIndex = i;
           break;
         }
     }
+    cards.sort((a, b) => a - b);
+
     if(straight) {
       return {
         handRef: 2,
         primaryValue: straightValue,
         secondaryValue: uniqueCards[uniqueCards.length - 1],
-        handDescription: uniqueCards[straightStartIndex].toString() + " - " + uniqueCards[straightStartIndex + 4].toString()
+        handDescription: getCardName(uniqueCards[straightStartIndex+ 4]) + " - " + getCardName(uniqueCards[straightStartIndex])
       }
     }
     return null;
@@ -225,6 +230,7 @@ export const RankPlayers = async (data : any) => {
   }
   const checkForTwoPair = (cards: number[]) => {
     const cardCountDict: any = {};
+    cards.sort((a, b) => a - b);
     cards.forEach((card) => {
       if(cardCountDict[card]) {
         cardCountDict[card]++;
@@ -233,30 +239,35 @@ export const RankPlayers = async (data : any) => {
       }
     }
     )
+
+    let onePair = false;
     let twoPair = false;
-    let twoPairValue = 0;
-    let secondaryValue = 0;
-    let secondaryTwoPairValue = 0;
+    let smallerPairValue = 0;
+    let largerPair = 0;
+
     Object.keys(cardCountDict).forEach((card) => {
       if(cardCountDict[card] === 2) {
-        if(twoPair) {
-          secondaryTwoPairValue = twoPairValue;
-          twoPairValue = parseInt(card);
+        if(!onePair) {
+          onePair = true;
+          smallerPairValue = parseInt(card);
         } else {
           twoPair = true;
-          twoPairValue = parseInt(card);
-        }
-      } else {
-        secondaryValue = parseInt(card);
-      }
+          if(parseInt(card) > largerPair) {
+            if(largerPair > smallerPairValue) {
+              smallerPairValue = largerPair;
+            }
+            largerPair = parseInt(card);
+        }}
+      }  
     }
     )
+    // cards.sort((a, b) => b - a);
     if(twoPair) {
       return {
-        handRef: twoPairValue,
-        primaryValue: twoPairValue,
-        secondaryValue: secondaryValue,
-        handDescription: getCardName(twoPairValue) + " " + getCardName(secondaryTwoPairValue)
+        handRef: 5,
+        primaryValue: largerPair,
+        secondaryValue: smallerPairValue,
+        handDescription: getCardName(largerPair) + " " + getCardName(smallerPairValue)
       }
     }
     return null;
@@ -288,7 +299,7 @@ export const RankPlayers = async (data : any) => {
         handRef: 6,
         primaryValue: onePairValue,
         secondaryValue: secondaryValue,
-        handDescription: GetScoreOfHighestCards(3, cards, [onePairValue]).toString()
+        handDescription: getCardName(onePairValue) + "s"
       }
     }
     return null;
@@ -316,9 +327,8 @@ export const RankPlayers = async (data : any) => {
   const SetSecondaryCardEdition = (rankedPlayers: Player[]) => {
     rankedPlayers.forEach((player) => {
       if(player.bestHand.secondaryValue < 2){
-        console.log("player.bestHand.secondaryValue", player.bestHand.secondaryValue)
-        player.bestHand.secondaryCardEdition = player.cards.find((card) => 
-        cardValueDict.find((cardValue) => cardValue.value === player.bestHand.primaryValue && cardValue.max >= card) !== undefined) as never;
+        // console.log("player.bestHand.secondaryValue", player.bestHand.secondaryValue)
+        player.bestHand.secondaryCardEdition = 0;
       }
       else{
         player.bestHand.secondaryCardEdition = player.cards.find((card) => 
@@ -355,12 +365,13 @@ export const RankPlayers = async (data : any) => {
     if(onePair) return onePair;
 
     let cardsToIgnore: number[] = [];
+    let highestCard = GetScoreOfHighestCards(cards.length, cards, cardsToIgnore);
     //high card
     return {
       handRef: 7,
-      primaryValue: 0,
-      secondaryValue: GetScoreOfHighestCards(cards.length, cards, cardsToIgnore),
-      handDescription: GetScoreOfHighestCards(cards.length, cards, cardsToIgnore).toString()
+      primaryValue: highestCard,
+      secondaryValue: GetScoreOfHighestCards(cards.length, cards, [highestCard]),
+      handDescription: getCardName(highestCard)
     }
   }
 
@@ -373,7 +384,8 @@ export const RankPlayers = async (data : any) => {
         numberOfCards++;
         continue;
       }
-      score = cards[i];
+      if(cards[i] > score)
+        score = cards[i];
     }
     return score;
   }
