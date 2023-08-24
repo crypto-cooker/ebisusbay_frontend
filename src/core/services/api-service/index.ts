@@ -19,6 +19,8 @@ import Graph from "@src/core/services/api-service/graph";
 import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
 import {caseInsensitiveCompare} from "@src/utils";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
+import {getOwners} from "@src/core/subgraph"
+import {RankPlayers} from "@src/core/poker-rank-players"
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -74,6 +76,16 @@ export class ApiService implements Api {
     query.purchaser = address;
 
     return await this.getOffers(query);
+  }
+
+  async getRyoshiDiamondsLeaderboard(){
+    //info from subgraph
+    const owners = await getOwners();
+    return owners;
+
+    //rank the info
+    const ownersRanked = await RankPlayers(owners);
+    return ownersRanked;
   }
 
   async getRewardedEntities(gameId: number): Promise<any> {
