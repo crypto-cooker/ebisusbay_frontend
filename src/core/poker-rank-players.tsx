@@ -64,20 +64,15 @@ export const getHandName = (handRef: number) => {
 
 export const RankPlayers = async (data : any) => {
 
-  // data = data.slice(0, 50)
   let rankedPlayers : Player[] = [];
   rankedPlayers = CreateRankedPlayersFromData(data);
   rankedPlayers = CreateCardRanks(rankedPlayers);
   rankedPlayers = FindBestHand(rankedPlayers);
   rankedPlayers = SetSecondaryCardEdition(rankedPlayers);
   rankedPlayers = RankPlayersByCards(rankedPlayers);
-
-  // rankedPlayers = rankedPlayers.slice(0, 5)
-  // rankedPlayers = SetSecondaryCardEdition(rankedPlayers);
-  console.log("Ranked players ", rankedPlayers)
-
   return rankedPlayers;
 }
+
   const CreateRankedPlayersFromData = (data: any) => {
     const rankedPlayers: Player[] = [];
     data.forEach((owner:any) => {
@@ -129,8 +124,6 @@ export const RankPlayers = async (data : any) => {
     return null;
   }
   const checkForStraight = (cards: number[]) => {
-
-    
     //sort and remove any duplicates
     cards.sort((a, b) => b - a);
     const uniqueCards = [...new Set(cards)];
@@ -337,7 +330,6 @@ export const RankPlayers = async (data : any) => {
     })
     return rankedPlayers;
   }
-
   const SearchForBestHand = (cards: number[]) => {
 
     //check for 4 of a kind
@@ -374,7 +366,6 @@ export const RankPlayers = async (data : any) => {
       handDescription: getCardName(highestCard)
     }
   }
-
   const GetScoreOfHighestCards = (numberOfCards: number, cards: number[], cardsToIgnore: number[]) => {
     let score = 0;
     cards.sort((a, b) => b - a);
@@ -389,8 +380,6 @@ export const RankPlayers = async (data : any) => {
     }
     return score;
   }
-
-  //rank players by their cards
   const RankPlayersByCards = (playersWithHands: Player[]) => {
       //sort by handRef
       playersWithHands.sort((a, b) => a.bestHand.handRef - b.bestHand.handRef);
@@ -416,63 +405,3 @@ export const RankPlayers = async (data : any) => {
 
       return playersWithHands;
   }
-
-  // const dummyPlayerCards = [
-//   {
-//     address: "0x123",
-//     cards: [1, 392, 412, 714, 746, 1150],
-//     cardRanks: [],
-//     bestHand: {
-//       handRef: 0,
-//       primaryValue: 0,
-//       secondaryValue: 0
-//     }
-//   },
-//   {
-//     address: "0x456",
-//     cards: [16, 383, 468, 35],
-//     cardRanks: [],
-//     bestHand: {
-//       handRef: 0,
-//       primaryValue: 0,
-//       secondaryValue: 0
-//     }
-//   },
-//   {
-//     address: "0x789",
-//     cards: [256, 361, 435, 490, 557],
-//     cardRanks: [],
-//     bestHand: {
-//       handRef: 0,
-//       primaryValue: 0,
-//       secondaryValue: 0
-//     }
-//   }
-// ]
-
-
-  // const generateDummyPlayers = () => {
-  //   const players: Player[] = [];
-  //   for(let i = 0; i < playersToGenerate; i++) {
-  //     players.push({
-  //       address: "0x" + Math.floor(Math.random() * 1000000000000000000).toString(16),
-  //       cards: generateRandomCards(),
-  //       cardRanks: [],
-  //       bestHand: {
-  //         handRef: 0,
-  //         primaryValue: 0,
-  //         secondaryValue: 0,
-  //         handDescription: ""
-  //       }
-  //     })
-      
-  //   }
-  //   return players;
-  // }
-    // const generateRandomCards = () => {
-  //   const cards: number[] = [];
-  //   for(let i = 0; i < cardsToGenerate; i++) {
-  //       cards.push(Math.floor(Math.random() * 4000) + 1);
-  //   }
-  //   return cards;
-  // }

@@ -36,7 +36,7 @@ const PokerLeaderboardComponent = () => {
 
 	}, [data])
 
-	const printCardRanks = (cardRanks: number[]) => {
+	const PrintOutPlayerCards = (cardRanks: number[]) => {
 		let cardRanksString = "";
 		cardRanks.sort((a, b) => b - a);
 		cardRanks.forEach((cardRank) => {
@@ -46,107 +46,22 @@ const PokerLeaderboardComponent = () => {
 		return cardRanksString;
 	  }
 	
-	//   useEffect(() => {
-	// 	if(players.length === 0) return;
-	
-	// 	players.forEach(
-	// 	  (player) => {
-	// 		player.bestHand = SearchForHand(player.cardRanks);
-	// 		// console.log(player.address + " " + getHandName(player.bestHand.handRef) + " " + getCardName(player.bestHand.primaryValue) + " " + getCardName(player.bestHand.secondaryValue))
-	// 	  }
-	// 	)
-	// 	console.log(players)
-	// 	RankPlayersByCards(players);
-	//   }, [players])
-	
-	// const content = useMemo(() => {
-	// 	console.log("UseMemo " + data)
-	// 	return status === "loading" ? (
-	// 	  <Center>
-	// 		<Spinner />
-	// 	  </Center> 
-	// 	) : status === "error" ? (
-	// 	  <Box textAlign='center'>
-	// 		Error: {(error as any).message}
-	// 	  </Box>
-	// 	) : (
-	// 	  <>
-	// 	  <Text>Poker Component</Text>
-	// 	  {console.log(data)}
-	// 	  {/* {data?.pages.map((items, index) => (
-	// 		<Fragment key={index}>
-	// 			{items.data.map((player, index) => (
-	// 			<Box key={`${player.address}`}>
-	// 			  <Text>{player.address}</Text>
-	// 			</Box>
-	// 		  ))}
-	// 		</Fragment>
-	// 		))} */}
-
-	// 		{/* <Grid 
-	// 			templateColumns="repeat(5, 1fr)"
-	// 			gap={0}
-	// 		>
-	// 			<GridItem>
-	// 				<Text>Address</Text>
-	// 			</GridItem>
-		
-	// 			<GridItem w={'200px'}>
-	// 				<Text>Hand Rank</Text>
-	// 			</GridItem>
-		
-	// 			<GridItem >
-	// 				<Text>Primary</Text>
-	// 			</GridItem>
-		
-	// 			<GridItem>
-	// 				<Text>Secondary</Text>
-	// 			</GridItem>
-		
-	// 			<GridItem>
-	// 				<Text>All Cards</Text>
-	// 			</GridItem>
-		
-	// 			{rankedPlayers.map((player) => (
-	// 			<>
-	// 			<GridItem>
-	// 				<Text>{player.address}</Text>
-	// 			</GridItem>
-		
-	// 			<GridItem>
-	// 				<Text>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text>
-	// 			</GridItem>
-		
-	// 			<GridItem>
-	// 				<Text>{getCardName(player.bestHand.primaryValue)}</Text>
-	// 			</GridItem>
-		
-	// 			<GridItem>
-	// 				<Text>{getCardName(player.bestHand.secondaryValue)}</Text>
-	// 			</GridItem>
-		
-	// 			<GridItem>
-	// 				<Text fontSize={'sm'}>{printCardRanks(player.cardRanks)}</Text>
-	// 			</GridItem>
-	// 			</>
-	// 			))}
-	// 		</Grid> */}
-			
-	// 	  </>
-	// 	)
-	// 	}, [data, status]);
-	
 	return (
-	  <Box
-	  >
+	  <Flex
+		w={'100%'}
+		justifyContent={'center'}
+		>
 			<SimpleGrid  
 				border={'2px solid white'}
 				maxW={'1000px'}
 			 	columns={6}
-				// templateColumns="repeat(5, 1fr)"
 				gap={0}
 				justifyItems='left'
 				padding={4}
+				justifySelf={'center'}
+				spacingX={8}
+				gridTemplateColumns={'50px 250px 150px 50px 100px 150px'}
+				// justifyItems={'center'}
 			>
 				<GridItem maxW='50px' >
 					<Text>Rank</Text>
@@ -179,7 +94,7 @@ const PokerLeaderboardComponent = () => {
 				</GridItem>
 
 				<GridItem   >
-					<Text isTruncated maxW={'150px'}>{player.address}</Text>
+					<Text isTruncated maxW={'250px'}>{player.address}</Text>
 				</GridItem>
 		
 				<GridItem>
@@ -201,13 +116,12 @@ const PokerLeaderboardComponent = () => {
 				</GridItem>
 		
 				<GridItem>
-					<Text isTruncated maxW={'150px'} fontSize={12}>{printCardRanks(player.cardRanks)}</Text>
+					<Text isTruncated maxW={'150px'} fontSize={12}>{PrintOutPlayerCards(player.cardRanks)}</Text>
 				</GridItem>
 				</>
 				))}
 			</SimpleGrid > 
-		 {/* {content} */}
-	  </Box>
+	  </Flex>
 	);
 }
 
