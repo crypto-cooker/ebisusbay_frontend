@@ -1,46 +1,36 @@
 import {Accordion} from "@chakra-ui/react";
 import CheckboxFilter, {CheckboxItem} from "@src/components-v2/shared/filter-container/filters/checkbox-filter";
 import RangeFilter from "@src/components-v2/shared/filter-container/filters/range-filter";
-import {CollectionFilter} from "@src/components-v2/feature/account/profile/tabs/inventory/collection-filter";
 import React, {ReactNode, useCallback, useMemo, useState} from "react";
 import DesktopFilterContainer, {FilteredItem} from "@src/components-v2/shared/filter-container";
-import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
-import {caseInsensitiveCompare} from "@src/utils";
 import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-filters";
-import { appConfig } from '@src/Config';
+import {appConfig} from '@src/Config';
+import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 
 const config = appConfig();
 
 interface CollectionFilterContainerProps {
-  queryParams: WalletsQueryParams;
-  collections: any[];
-  onFilter: (newParams: WalletsQueryParams) => void;
+  queryParams: FullCollectionsQueryParams;
+  collection: any;
+  onFilter: (newParams: FullCollectionsQueryParams) => void;
   filtersVisible: boolean;
   useMobileMenu: boolean;
   onMobileMenuClose: () => void;
   children: ReactNode;
 }
 
-const CollectionFilterContainer = ({queryParams, collections, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, children}: CollectionFilterContainerProps) => {
+const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, children}: CollectionFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
     const params = queryParams;
     for (const item of items) {
       if (item.key === 'status-buy-now') delete params.listed;
-      if (item.key === 'status-has-offers') delete params.offered;
+      // if (item.key === 'status-has-offers') delete params.offered;
       if (item.key === 'range-min-rank') delete params.minRank;
       if (item.key === 'range-max-rank') delete params.maxRank;
       if (item.key === 'range-min-price') delete params.minPrice;
       if (item.key === 'range-max-price') delete params.maxPrice;
-      if (item.key.startsWith('collection')) {
-        if (params.collection && params.collection.length > 1) {
-          const address = item.key.split('-')[1];
-          params.collection = params.collection.filter((a) => !caseInsensitiveCompare(a, address));
-        } else {
-          delete params.collection;
-        }
-      }
     }
     onFilter({...queryParams, ...params});
     setFilteredItems(filteredItems.filter((fi) => !items.map(i => i.key).includes(fi.key)));
@@ -48,19 +38,8 @@ const CollectionFilterContainer = ({queryParams, collections, onFilter, filtersV
 
   const handleStatusFilter = useCallback((item: CheckboxItem, checked: boolean) => {
     const params = queryParams;
-    if (item.key === 'status-buy-now') params.listed = checked ? 1 : undefined;
-    if (item.key === 'status-has-offers') params.offered = checked ? 1 : undefined;
-    if (item.key === 'status-bundles') {
-      if (checked) {
-        handleCollectionFilter([{name: 'Bundles', address: config.contracts.bundle}]);
-      } else {
-        let tmpSelectedCollections = collections.filter(
-          (c: any) => params.collection?.includes(c.address) && c.address !== config.contracts.bundle
-        );
-        handleCollectionFilter(tmpSelectedCollections);
-      }
-      return;
-    }
+    if (item.key === 'status-buy-now') params.listed = checked ? 1 : 0;
+    // if (item.key === 'status-has-offers') params.offered = checked ? 1 : undefined;
     onFilter({...queryParams, ...params});
 
     const i = filteredItems.findIndex((fi) => fi.key === item.key)
@@ -96,23 +75,13 @@ const CollectionFilterContainer = ({queryParams, collections, onFilter, filtersV
 
   }, [queryParams, filteredItems]);
 
-  const handleCollectionFilter = useCallback((collections: any) => {
-    onFilter({...queryParams, collection: collections ? collections.map((c: any) => c.address) : []});
-
-    const curFilters = filteredItems
-      .filter(c => !c.key.startsWith('collection'))
-      .concat(collections.map((c: any) => ({label: c.name, key: `collection-${c.address}`})));
-
-    setFilteredItems([...curFilters]);
-  }, [queryParams, filteredItems]);
-
   const FilterAccordion = useMemo(() => (
     <Accordion defaultIndex={[0]} allowMultiple>
       <CheckboxFilter
         title='Status'
         items={[
           {label: 'Buy Now', key: 'status-buy-now', isChecked: filteredItems.some((fi) => fi.key === 'status-buy-now')},
-          {label: 'Has Offers', key: 'status-has-offers', isChecked: filteredItems.some((fi) => fi.key === 'status-has-offers')}
+          // {label: 'Has Offers', key: 'status-has-offers', isChecked: filteredItems.some((fi) => fi.key === 'status-has-offers')}
         ]}
         onCheck={handleStatusFilter}
       />
@@ -138,7 +107,7 @@ const CollectionFilterContainer = ({queryParams, collections, onFilter, filtersV
         onChange={handlePriceFilter}
       />
     </Accordion>
-  ), [collections, queryParams, filteredItems, handleCollectionFilter, handleStatusFilter, handleRankFilter, handlePriceFilter]);
+  ), [queryParams, filteredItems, handleStatusFilter, handleRankFilter, handlePriceFilter]);
 
   return (
     <>

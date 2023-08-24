@@ -3,7 +3,7 @@ import Query from "@src/core/services/api-service/mapi/queries/index";
 export interface FullCollectionsQueryParams {
   address?: string;
   token?: string;
-  listed?: boolean;
+  listed?: number;
   traits?: object;
   powertraits?: object;
   page?: number;
