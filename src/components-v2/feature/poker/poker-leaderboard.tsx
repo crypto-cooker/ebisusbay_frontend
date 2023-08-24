@@ -61,29 +61,30 @@ const PokerLeaderboardComponent = () => {
 				justifySelf={'center'}
 				spacingX={8}
 				gridTemplateColumns={'50px 250px 150px 50px 100px 150px'}
+				rounded={'md'}
 				// justifyItems={'center'}
 			>
-				<GridItem maxW='50px' >
+				<GridItem  as='b' maxW='50px' >
 					<Text>Rank</Text>
 				</GridItem>
 
-				<GridItem> 
+				<GridItem as='b'> 
 					<Text>Address</Text>
 				</GridItem>
 		
-				<GridItem >
+				<GridItem  as='b'>
 					<Text>Best Hand</Text>
 				</GridItem>
 		
 				<GridItem >
-					<Text>Primary</Text>
+					<Text as='b'>Primary</Text>
 				</GridItem>
 		
-				<GridItem>
+				<GridItem as='b'>
 					<Text>Secondary</Text>
 				</GridItem>
 		
-				<GridItem>
+				<GridItem as='b'>
 					<Text>All Cards</Text>
 				</GridItem>
 		
@@ -108,10 +109,12 @@ const PokerLeaderboardComponent = () => {
 				<GridItem>
 					<HStack>
 						<Text>{getCardName(player.bestHand.secondaryValue)}</Text>
-						<Text
+						{player?.bestHand?.secondaryCardEdition! > 0 &&
+							<Text
 							fontSize={12}
 							color={'gray.500'}
 						>id:{player.bestHand.secondaryCardEdition}</Text>
+						}
 					</HStack>
 				</GridItem>
 		
