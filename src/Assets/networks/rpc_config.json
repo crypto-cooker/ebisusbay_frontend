@@ -29336,7 +29336,7 @@
       "maxMintPerTx": 10,
       "maxMintPerAddress": 250,
       "totalSupply": 1200,
-      "erc20Cost": "2000",
+      "erc20Cost": "1500",
       "erc20Token": "vrse",
       "foundersOnly": false,
       "start": 1692918000000,
