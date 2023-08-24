@@ -18,6 +18,10 @@ import {
   CollectionInfoQuery,
   CollectionInfoQueryParams
 } from "@src/core/services/api-service/mapi/queries/collectioninfo";
+import {
+  FullCollectionsQuery,
+  FullCollectionsQueryParams
+} from "@src/core/services/api-service/mapi/queries/fullcollections";
 
 const config = appConfig();
 
@@ -39,6 +43,16 @@ class Mapi {
 
     return new PagedList<Listing>(
       response.data.listings,
+      response.data.page,
+      response.data.page < response.data.totalPages
+    )
+  }
+
+  async getCollectionItems(query: FullCollectionsQueryParams): Promise<PagedList<any>> {
+    const response = await this.collections.getFullCollections(new FullCollectionsQuery(query));
+
+    return new PagedList<Listing>(
+      response.data.nfts,
       response.data.page,
       response.data.page < response.data.totalPages
     )

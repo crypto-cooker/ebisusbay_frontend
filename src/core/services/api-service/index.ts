@@ -19,6 +19,7 @@ import Graph from "@src/core/services/api-service/graph";
 import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
 import {caseInsensitiveCompare} from "@src/utils";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
+import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -44,6 +45,10 @@ export class ApiService implements Api {
 
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
     return await this.mapi.getListings(query);
+  }
+
+  async getCollectionItems(query: FullCollectionsQueryParams): Promise<PagedList<any>> {
+    return await this.mapi.getCollectionItems(query);
   }
 
   async getUserUnfilteredListings(address: string, query?: ListingsQueryParams): Promise<PagedList<OwnerListing>> {

@@ -8,6 +8,7 @@ import {Api, OfferType} from "@src/core/services/api-service/types";
 import {Offer} from "@src/core/models/offer";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
+import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 
 class NextApiService implements Api {
   private next: AxiosInstance;
@@ -23,6 +24,14 @@ class NextApiService implements Api {
 
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
     const response = await this.next.get(`listings`, {
+      params: query
+    });
+
+    return response.data;
+  }
+
+  async getCollectionItems(address: string, query?: FullCollectionsQueryParams): Promise<PagedList<any>> {
+    const response = await this.next.get(`collection/${address}/items`, {
       params: query
     });
 
