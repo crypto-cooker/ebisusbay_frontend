@@ -35,6 +35,19 @@ export const cardValueDict = [
   { max: 4000, value: 14 },//Ace
 ]
 
+const BlackListedWallets = [
+  "0x708d93ac77262d8b911174447b919076ab6ce08a",
+  "0x358758277ce0785104ea72acadc1de7e7af7aecd",
+  "0x0f5a35dd7bbc94734139dc8a145c320d46594404",
+  "0x9a9c18e0deae5ae3b4928f8f0efeffd490c6de85",
+  "0x358758277ce0785104ea72acadc1de7e7af7aecd",
+  "0x0f5a35dd7bbc94734139dc8a145c320d46594404",
+  "0x02b2c2edfecb367be26092fac3e3b38a14d1adf0",
+  "0xb67abc8e8c64c35f7dd0ba76f54420e935335b32",
+  "0x24cb7600f7d631982c072536c8f602f54282d2ef",
+  "0x358758277ce0785104ea72acadc1de7e7af7aecd"
+]
+
 export const GetActualEditionNumber = (edition: number) => {
   let actualEdition = 0;
   cardValueDict.forEach((cardValue) => {
@@ -78,6 +91,7 @@ export const RankPlayers = async (data : any) => {
 
   let rankedPlayers : Player[] = [];
   rankedPlayers = CreateRankedPlayersFromData(data);
+  rankedPlayers = RemoveBlackListedPlayers(rankedPlayers);
   rankedPlayers = CreateCardRanks(rankedPlayers);
   rankedPlayers = FindBestHand(rankedPlayers);
   rankedPlayers = SetSecondaryCardEdition(rankedPlayers);
@@ -102,6 +116,15 @@ export const RankPlayers = async (data : any) => {
         })
       }
       rankedPlayers.find((player) => player.address === owner.owner.id)?.cards.sort( (a, b) => b - a).push(Number(owner.identifier));
+    })
+    return rankedPlayers;
+  }
+  const RemoveBlackListedPlayers = (rankedPlayers: Player[]) => {
+    rankedPlayers.forEach((player) => {
+      if(BlackListedWallets.includes(player.address)) {
+        console.log("removing blacklisted player", player.address);
+        rankedPlayers.splice(rankedPlayers.indexOf(player), 1);
+      }
     })
     return rankedPlayers;
   }
