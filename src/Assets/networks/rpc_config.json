@@ -29344,7 +29344,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/cronosverse-in-game-assets/drop2.webp",
         "banner": "/img/drops/cronosverse-in-game-assets/banner.webp",
