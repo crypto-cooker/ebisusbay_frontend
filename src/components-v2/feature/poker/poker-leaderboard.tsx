@@ -38,8 +38,8 @@ const PokerLeaderboardComponent = () => {
 	useEffect(() => {
 		if(!data) return; 
 		
-		console.log(data)
-		console.log(data?.pages[0])
+		// console.log(data)
+		// console.log(data?.pages[0])
 		// setRankedPlayers()
 		// Rank();
 

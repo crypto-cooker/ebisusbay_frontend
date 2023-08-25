@@ -122,7 +122,7 @@ export const RankPlayers = async (data : any) => {
   const RemoveBlackListedPlayers = (rankedPlayers: Player[]) => {
     rankedPlayers.forEach((player) => {
       if(BlackListedWallets.includes(player.address)) {
-        console.log("removing blacklisted player", player.address);
+        // console.log("removing blacklisted player", player.address);
         rankedPlayers.splice(rankedPlayers.indexOf(player), 1);
       }
     })
