@@ -20,7 +20,7 @@ import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
 import {caseInsensitiveCompare} from "@src/utils";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 import {getOwners} from "@src/core/subgraph"
-import {RankPlayers} from "@src/core/poker-rank-players"
+import {Player, RankPlayers} from "@src/core/poker-rank-players"
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -78,14 +78,27 @@ export class ApiService implements Api {
     return await this.getOffers(query);
   }
 
-  async getRyoshiDiamondsLeaderboard(){
+  async getRyoshiDiamondsLeaderboard(page: number, pageSize: number): Promise<any> {
     //info from subgraph
-    const owners = await getOwners();
-    return owners;
 
+    const owners = await getOwners();
     //rank the info
-    const ownersRanked = await RankPlayers(owners);
-    return ownersRanked;
+    
+    const response = await RankPlayers(owners);
+
+    function paginate(array : any, page_size:number, page_number:number) {
+      return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    //convert response to paged list
+    const paginatedResponse = paginate(response, pageSize, page);
+    const totalPages = Math.ceil(response.length / pageSize);
+
+    return new PagedList<Player>(
+      paginatedResponse,
+      page,
+      page < totalPages
+    );
   }
 
   async getRewardedEntities(gameId: number): Promise<any> {
