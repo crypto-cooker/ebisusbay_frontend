@@ -64,8 +64,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
 
   async getSeasonalRewards(address: string, seasonId?: number) {
-    const endpoint = seasonId ? `season-rewards/${seasonId}` : 'all-season-rewards';
-    const response = await this.cms.get(`ryoshi-dynasties/fortune-rewards/${endpoint}`, {
+    const response = await this.cms.get(`ryoshi-dynasties/fortune-rewards/season-rewards`, {
       params: {
         walletAddress: address,
       }
@@ -84,9 +83,9 @@ class RyoshiDynastiesRepository extends CmsRepository {
   }
 
 
-  async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string) {
+  async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string) {
     const response = await this.cms.post(
-      `ryoshi-dynasties/fortune-rewards/withdraw/${seasonId}`,
+      `ryoshi-dynasties/fortune-rewards/withdraw`,
       {
         amount,
       },
@@ -100,9 +99,9 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, seasonId: number, vaultIndex: number, signature: string) {
+  async requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string) {
     const response = await this.cms.post(
-      `ryoshi-dynasties/fortune-rewards/compound/${seasonId}/${vaultIndex}`,
+      `ryoshi-dynasties/fortune-rewards/compound/${vaultIndex}`,
       {
         amount
       },

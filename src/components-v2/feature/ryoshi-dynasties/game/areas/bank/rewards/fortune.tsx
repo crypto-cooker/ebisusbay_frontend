@@ -69,10 +69,16 @@ const FortuneRewardsTab = () => {
       const totalTime = Date.parse(rdGameContext.season.endAt) - Date.parse(rdGameContext.season.startAt);
       const currentElapsed = Date.parse(rdGameContext.season.endAt) - Date.now();
       setSeasonTimeRemaining(Math.floor(((totalTime - currentElapsed) / totalTime) * 100));
-      setBurnMalus(rdGameContext!.rewards.burnPercentage / 100);
+      // setBurnMalus(rdGameContext!.rewards.burnPercentage / 100);
     }
 
   }, [rdGameContext]);
+
+  useEffect(() => {
+    if (!!rewards?.data?.rewards) {
+      setBurnMalus(rewards.data.rewards.currentBurnPercentage / 100);
+    }
+  }, [rewards]);
 
   return (
     <Box>
@@ -99,14 +105,9 @@ const FortuneRewardsTab = () => {
           </Center>
         ) : (
           <>
-            {rewards.data.rewards.length > 0 ? (
+            {!!rewards.data.rewards ? (
               <>
-                <Box py={4}><hr /></Box>
-                {rewards.data.rewards.map((reward: any) => (
-                  <>
-                    <ClaimRow reward={reward} burnMalus={burnMalus} onRefresh={refetch}/>
-                  </>
-                ))}
+                <ClaimRow reward={rewards.data.rewards} burnMalus={burnMalus} onRefresh={refetch} />
               </>
             ) : (
               <Box mt={2}>
@@ -123,7 +124,7 @@ const FortuneRewardsTab = () => {
 const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: number, onRefresh: () => void}) => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
-  const [isLoading, getSigner] = useCreateSigner();
+  const [_, getSigner] = useCreateSigner();
   const [executingClaim, setExecutingClaim] = useState(false);
   const [executingCompound, setExecutingCompound] = useState(false);
   const [executingCancelCompound, setExecutingCancelCompound] = useState(false);
@@ -166,7 +167,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
           return;
         }
 
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, seasonId, signatureInStorage)
+        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signatureInStorage)
         const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
         await tx.wait();
 
@@ -177,15 +178,10 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
               ...oldData,
               data: {
                 ...oldData.data,
-                rewards: oldData.data.rewards.map((reward: any) => {
-                  if (reward.seasonId === seasonId) {
-                    return {
-                      ...reward,
-                      currentRewards: '0'
-                    }
-                  }
-                  return reward;
-                })
+                rewards: {
+                  ...oldData.data.rewards,
+                  currentRewards: '0'
+                }
               }
             }
           }
@@ -211,7 +207,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
         signatureInStorage = signature;
       }
       if (signatureInStorage) {
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, seasonId, signatureInStorage)
+        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signatureInStorage)
         const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
         await tx.wait();
         toast.success('Previous request cancelled');
@@ -256,7 +252,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
           return;
         }
 
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, seasonId, vault.index, signatureInStorage)
+        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vault.index, signatureInStorage)
 
         const tx = await user.contractService?.ryoshiPlatformRewards.compound(auth.data.reward, auth.data.signature);
         await tx.wait();
@@ -268,15 +264,10 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
               ...oldData,
               data: {
                 ...oldData.data,
-                rewards: oldData.data.rewards.map((reward: any) => {
-                  if (reward.seasonId === seasonId) {
-                    return {
-                      ...reward,
-                      currentRewards: '0'
-                    }
-                  }
-                  return reward;
-                })
+                rewards: {
+                  ...oldData.data.rewards,
+                  currentRewards: '0'
+                }
               }
             }
           }
@@ -302,7 +293,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
         signatureInStorage = signature;
       }
       if (signatureInStorage) {
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, seasonId, vaultIndex, signatureInStorage)
+        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vaultIndex, signatureInStorage)
         const tx = await user.contractService?.ryoshiPlatformRewards.cancelCompound(auth.data.reward, auth.data.signature);
         await tx.wait();
         toast.success('Previous request cancelled');
@@ -318,24 +309,13 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 
   return (
     <>
-      {isCurrentSeason ? (
-        <>
-          <CurrentSeasonRecord
-            reward={reward}
-            onClaim={onOpenConfirmation}
-            isExecutingClaim={executingClaim}
-            onCompound={handleCompound}
-            isExecutingCompound={executingCompound || executingCancelCompound}
-          />
-        </>
-      ) : (
-        <SeasonRecord
-          reward={reward}
-          onClaim={() => handleClaim(reward.currentRewards, Number(reward.seasonId))}
-          isExecutingClaim={executingClaim}
-          onCompound={handleCompound}
-        />
-      )}
+      <CurrentSeasonRecord
+        reward={reward}
+        onClaim={onOpenConfirmation}
+        isExecutingClaim={executingClaim}
+        onCompound={handleCompound}
+        isExecutingCompound={executingCompound || executingCancelCompound}
+      />
 
       <PendingAuthorizationWarningDialog
         isOpen={!!existingAuthWarningOpenWithProps}
@@ -429,7 +409,7 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
         <Flex justify='space-between' mt={2}>
           <VStack align='start' spacing={0}>
             <Text fontSize='xl' fontWeight='bold'>
-              Current Season
+              Current Rewards
             </Text>
             <HStack>
               <FortuneIcon boxSize={6} />
@@ -473,8 +453,8 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
           {!!account && account.vaults.length > 0 ? (
             <>
               <Box mb={2}>
-                <Box fontWeight='bold'>No Fee Vaults</Box>
-                <Box fontSize='sm' color="#aaa">Compounding to vaults that expire later than 90 days will cost zero Karmic Debt</Box>
+                <Box fontWeight='bold'>Compound to Vault Vaults</Box>
+                <Box fontSize='sm' color="#aaa">Only vaults that expire later than 90 days are eligible for compounding and will cost zero Karmic Debt</Box>
               </Box>
               {noFeeCompoundVaults.length > 0 ? (
                 <SimpleGrid columns={{base: 2, sm: 3, md: 4}} gap={4}>
@@ -489,63 +469,6 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
                     >
                       <VStack w='full' align='start'>
                         <Box textAlign='center' w='full' mb={2} fontWeight='bold' fontSize='lg'>
-                          Vault {Number(vault.index) + 1}
-                        </Box>
-                        <Grid templateColumns='26px 1fr' w='full' fontSize='xs' fontWeight='normal' gap={2}>
-                          <GridItem textAlign='start'>
-                            <FortuneIcon boxSize={4} />
-                          </GridItem>
-                          <GridItem textAlign='end'>
-                            <Box as='span'>{commify(round(Number(ethers.utils.formatEther(vault.balance))))}</Box>
-                          </GridItem>
-                          <GridItem textAlign='start'>
-                            <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={4}/>
-                          </GridItem>
-                          <GridItem textAlign='end'>
-                            <Box as='span'>{Math.floor(((Number(ethers.utils.formatEther(vault.balance)) * Number(vault.length / (86400)) / 1080) / rdConfig.bank.staking.fortune.mitamaTroopsRatio))}</Box>
-                          </GridItem>
-                          <GridItem textAlign='start'>
-                            Exp:
-                          </GridItem>
-                          <GridItem textAlign='end'>
-                            <Box as='span'>{timeSince(vault.endTime)}</Box>
-                          </GridItem>
-                        </Grid>
-                      </VStack>
-                      <Button
-                        size='sm'
-                        mt={1}
-                        w='full'
-                        variant='outline'
-                        onClick={() => handleSelectVault(vault)}
-                        isLoading={isExecutingCompound && selectedVaultIndex === vault.index}
-                        isDisabled={isExecutingCompound && selectedVaultIndex === vault.index}
-                      >
-                        Choose
-                      </Button>
-                    </Box>
-                  ))}
-                </SimpleGrid>
-              ) : (
-                <Text align='center' color='#aaa'>No vaults found</Text>
-              )}
-              <Box my={2}>
-                <Box fontWeight='bold'>Karmic Debt Vaults</Box>
-                <Box fontSize='sm' color="#aaa">Compounding to vaults that expire sooner than 90 days are still subject to Karmic Debt</Box>
-              </Box>
-              {feeCompoundVaults.length > 0 ? (
-                <SimpleGrid columns={{base: 2, sm: 3, md: 4}} gap={4}>
-                  {feeCompoundVaults.map((vault, index) => (
-                    <Box
-                      key={vault.index}
-                      height='full'
-                      w='full'
-                      p={2}
-                      bg='whiteAlpha.200'
-                      rounded='md'
-                    >
-                      <VStack w='full' align='start'>
-                        <Box textAlign='center' w='full' mb={2}>
                           Vault {Number(vault.index) + 1}
                         </Box>
                         <Grid templateColumns='26px 1fr' w='full' fontSize='xs' fontWeight='normal' gap={2}>
@@ -604,42 +527,6 @@ interface SeasonRecordProps {
   isExecutingCompound?: boolean;
 }
 
-const SeasonRecord = ({reward, onClaim, isExecutingClaim}: SeasonRecordProps) => {
-  const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
-
-  return (
-    <Flex justify='space-between' mt={2}>
-      <VStack align='start' spacing={0}>
-        <Text fontSize='xl' fontWeight='bold'>
-          {`Season ${reward.blockId}`}
-        </Text>
-        <HStack>
-          <FortuneIcon boxSize={6} />
-          <Text fontSize='lg' fontWeight='bold'>{round(convertToNumberAndRoundDown(reward.currentRewards), 3)}</Text>
-          <Text as='span' ms={1} fontSize='sm' color="#aaa">~${round((fortunePrice ? Number(fortunePrice.usdPrice) : 0) * reward.currentRewards, 2)}</Text>
-        </HStack>
-        {reward.currentRewards === reward.totalRewards && (
-          <Text fontSize='sm' color='#aaa'>{round(reward.aprRewards, 3)} staking + {round(reward.listingRewards, 3)} listing rewards</Text>
-        )}
-      </VStack>
-      <Flex direction='column'>
-        <Spacer />
-        <Stack direction='row'>
-          <RdButton
-            size='sm'
-            onClick={onClaim}
-            isLoading={isExecutingClaim}
-            loadingText='Claiming...'
-          >
-            Claim
-          </RdButton>
-        </Stack>
-        <Spacer />
-      </Flex>
-    </Flex>
-  )
-}
-
 interface VaultIndexWarningDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -669,7 +556,7 @@ const PendingAuthorizationWarningDialog = ({isOpen, onClose, onExecuteCancel, on
       title='Confirm'
     >
       <RdModalAlert>
-        <Text>There is currently a pending {type === 'CLAIM' ? 'claim' : 'compound'}. This must be cancelled before proceeding. Press the <strong>Confirm</strong> button below to continue</Text>
+        <Text>There is currently a pending {type === 'CLAIM' ? 'claim' : 'compound'}. This must be cancelled before proceeding. Press the <strong>Confirm</strong> button below to continue.</Text>
         <Text mt={2}>Alternatively, you can close this dialog and wait 5 minutes before requesting again.</Text>
       </RdModalAlert>
       <RdModalFooter>

@@ -50,12 +50,12 @@ class Cms {
     return this.ryoshiDynasties.claimDailyRewards(address, signature);
   }
 
-  async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string) {
-    return this.ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(address, amount, seasonId, signature);
+  async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string) {
+    return this.ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(address, amount, signature);
   }
 
-  async requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, seasonId: number, vaultIndex: number, signature: string) {
-    return this.ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(address, amount, seasonId, vaultIndex, signature);
+  async requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string) {
+    return this.ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(address, amount, vaultIndex, signature);
   }
 
   async getPendingFortuneAuthorizations(address: string, signature: string) {
