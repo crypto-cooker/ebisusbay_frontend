@@ -1,14 +1,14 @@
-import React, { memo } from 'react';
+import React, {memo, ReactNode} from 'react';
 import Blockies from 'react-blockies';
-import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faCircle, faExternalLink} from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
-import LayeredIcon from './LayeredIcon';
-import {hostedImage} from "@src/helpers/image";
-import {Box, Heading, Text} from "@chakra-ui/react";
+import LayeredIcon from '../../Components/components/LayeredIcon';
+import {Box, Heading, Icon, Text} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import ImageService from "@src/core/services/image";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const VerifiedIcon = styled.span`
   font-size: 10px;
@@ -22,11 +22,24 @@ const VerifiedIcon = styled.span`
   right: 2px;
 `;
 
-const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url, verified, externalPage = false, contextComponent }) => {
+interface CustomSlideProps {
+  index: number;
+  avatar?: string;
+  banner: string;
+  title: string;
+  subtitle?: ReactNode | string;
+  collectionId?: string;
+  url: string;
+  verified: boolean;
+  externalPage?: boolean;
+  contextComponent?: any;
+}
+
+const PreviewCard = ({ index, avatar, banner, title, subtitle, collectionId, url, verified, externalPage = false, contextComponent }: CustomSlideProps) => {
   const router = useRouter();
   const hoverBgColor = useColorModeValue('#FFFFFF', '#404040');
 
-  const navigateTo = (url) => {
+  const navigateTo = (url: string) => {
     if (url && typeof window !== 'undefined') {
       if (externalPage) {
         window.open(url, '_blank');
@@ -41,7 +54,7 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
       <Box className="nft_coll cursor-pointer h-100" _hover={{
         backgroundColor: hoverBgColor
       }} shadow="lg">
-        <div className="nft_wrap position-relative">
+        <Box className="nft_wrap position-relative">
           <span onClick={() => navigateTo(url)}>
             <img src={ImageService.translate(banner).bannerPreview()} className="lazy img-fluid w-100" alt={title} />
           </span>
@@ -50,14 +63,14 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
               {contextComponent}
             </div>
           )}
-        </div>
-        <div className="nft_coll_pp" onClick={() => navigateTo(url)}>
+        </Box>
+        <Box className="nft_coll_pp" onClick={() => navigateTo(url)}>
           {avatar || collectionId ? (
             <span>
               {avatar ? (
                 <img className="lazy" src={ImageService.translate(avatar).avatar()} alt={title} />
               ) : (
-                <Blockies seed={collectionId} size={10} scale={6} />
+                <Blockies seed={collectionId ?? ''} size={10} scale={6} />
               )}
               {verified && (
                 <VerifiedIcon>
@@ -68,20 +81,25 @@ const CustomSlide = ({ index, avatar, banner, title, subtitle, collectionId, url
           ) : (
             <Box h="30px"></Box>
           )}
-        </div>
-        <div className="nft_coll_info" onClick={() => navigateTo(url)}>
+        </Box>
+        <Box className="nft_coll_info" onClick={() => navigateTo(url)}>
           <span>
-            <Heading as="h4" size="md">{title}</Heading>
+            <Heading as="h4" size="md">
+              <>{title}</>
+              {externalPage && (
+                <Icon as={FontAwesomeIcon} icon={faExternalLink} ms={1} fontSize='sm' className='text-muted'/>
+              )}
+            </Heading>
           </span>
           {typeof subtitle === 'string' ? (
             <Text noOfLines={3} fontSize="14px" px={2}>{subtitle}</Text>
           ) : (
             <>{subtitle}</>
           )}
-        </div>
+        </Box>
       </Box>
     </Box>
   );
 };
 
-export default memo(CustomSlide);
+export default memo(PreviewCard);

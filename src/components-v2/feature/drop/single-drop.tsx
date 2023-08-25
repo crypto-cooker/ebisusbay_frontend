@@ -19,6 +19,8 @@ import {MintBox} from "@src/components-v2/feature/drop/mint-box";
 import {useAppSelector} from "@src/Store/hooks";
 import {Drop, SpecialWhitelist} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
+import {commify} from "ethers/lib/utils";
+import Link from "next/link";
 
 const config = appConfig();
 
@@ -195,6 +197,12 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     setTotalSupply(infos.totalSupply);
     if (infos.whitelistCost) setWhitelistCost(Number(ethers.utils.formatEther(infos.whitelistCost)));
     setCanMintQuantity(Math.min(canMint, infos.maxMintPerTx));
+
+
+    if (drop.slug === 'cronosverse-in-game-assets') {
+      setTotalSupply(infos.totalSupply - 1716);
+      setMaxSupply(infos.maxSupply - 1716);
+    }
   };
 
   const calculateStatus = (drop: any, totalSupply: number, maxSupply: number) => {
@@ -391,6 +399,12 @@ const SingleDrop = ({drop}: SingleDropProps) => {
                     </Text>
                   )}
                   {newlineText(drop.description)}
+
+                  {drop.slug === 'ryoshi-playing-cards' && (
+                    <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
+                      For complete rules to Crypto Holdem please visit our blog post <Link href={'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'} target='_blank' className='color'>https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496</Link>
+                    </Text>
+                  )}
                 </div>
               )}
             </div>

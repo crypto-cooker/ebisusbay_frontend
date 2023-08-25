@@ -111,6 +111,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
             <Th colSpan={2}>Item</Th>
             <Th onClick={() => onSort('rank')} cursor='pointer'>Rank</Th>
             <Th onClick={() => onSort('price')} cursor='pointer'>Price</Th>
+            <Th onClick={() => onSort('quantity')} cursor='pointer'>Quantity</Th>
             <Th onClick={() => onSort('listingTime')} cursor='pointer'>Listing Time</Th>
             <Th>Valid</Th>
             <Th></Th>
@@ -185,6 +186,9 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
                       <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
                       <Box>{commify(listing.price)}</Box>
                     </HStack>
+                  </Td>
+                  <Td>
+                    {commify(listing.amount)}
                   </Td>
                   <Td>{getTimeSince(listing.listingTime)} ago</Td>
                   <Td>{listing.valid ? 'Valid' : 'Invalid'}</Td>
@@ -267,9 +271,9 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}:
                         onClick={() => onCheck(listing)}
                       >
                         {listing.valid ? (
-                          <AnyMedia
-                            image={ImageService.translate(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image).avatar()}
-                            video={listing.nft.animation_url}
+                          <MultimediaImage
+                            source={ImageService.translate(isBundle(listing.nftAddress) ? '/img/logos/bundle.webp' : listing.nft.image).avatar()}
+                            fallbackSource={ImageService.bunnykit(ImageService.bunnykit(listing.nft.image).thumbnail()).avatar()}
                             title={listing.nft.name}
                           />
                         ) : (
@@ -316,6 +320,10 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}:
                     <VStack direction="row" spacing={0}>
                       <Text fontWeight="bold">Listing Time:</Text>
                       <Text>{getTimeSince(listing.listingTime)} ago</Text>
+                    </VStack>
+                    <VStack direction="row" spacing={0}>
+                      <Text fontWeight="bold">Quantity:</Text>
+                      <Text>{listing.amount}</Text>
                     </VStack>
                   </Flex>
                   {listing.state === ListingState.ACTIVE && (

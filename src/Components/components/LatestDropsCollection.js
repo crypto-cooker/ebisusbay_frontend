@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import Slider from '../components/Slider';
 
-import CustomSlide from './CustomSlide';
+import PreviewCard from '../../components-v2/shared/preview-card';
 import { appConfig } from "../../Config";
 const drops = appConfig('drops');
 
@@ -11,7 +11,7 @@ const LatestDropsCollection = () => {
       <Slider size={drops.length}>
         {drops &&
           drops.map((drop, index) => (
-            <CustomSlide
+            <PreviewCard
               key={index}
               index={index + 1}
               avatar="/img/collections/crosmonauts/avatar.png"

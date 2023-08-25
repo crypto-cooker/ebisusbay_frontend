@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "users": [
+      "0x708d93Ac77262D8B911174447b919076AB6Ce08a",
+      "0x358758277CE0785104eA72aCADC1De7e7af7AEcD",
+      "0x0F5A35dD7Bbc94734139dc8A145c320d46594404",
+      "0x9a9c18E0DeAe5aE3b4928F8f0efEFfd490C6De85",
+      "0x358758277CE0785104eA72aCADC1De7e7af7AEcD",
+      "0x0F5A35dD7Bbc94734139dc8A145c320d46594404",
+      "0x02b2C2EdFECb367bE26092FAc3e3B38a14D1aDf0",
+      "0xb67abc8e8c64c35f7dd0ba76f54420e935335b32",
+      "0x24Cb7600f7d631982c072536c8f602f54282d2EF",
+      "0x358758277CE0785104eA72aCADC1De7e7af7AEcD"
+    ],
+    "tokens": [
+      {
+        "slug": "ryoshi-playing-cards",
+        "address": "0xd87838a982a401510255ec27e603b0f5fea98d24",
+        "ids": [3934,3974,3968,3992,3859]
+      }
+    ],
+    "reason": "Possible exploit in Ryoshi Playing Cards"
+  }
+]
