@@ -8,13 +8,15 @@ import {Offer} from "@src/core/models/offer";
 import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<IPaginatedList<Offer>>) {
-  const {query} = req;
+  const { address, ...query }: { address?: string } = req.query;
 
-  const address = query.address as string;
+  if (!!address) {
+    const response = await ApiService
+      .withKey(process.env.EB_API_KEY as string)
+      .getReceivedOffersByUser(address, query as OffersV2QueryParams);
 
-  const response = await ApiService
-    .withKey(process.env.EB_API_KEY as string)
-    .getReceivedOffersByUser(address, query as OffersV2QueryParams);
-
-  res.status(200).json(response);
+    res.status(200).json(response);
+  } else {
+    res.status(500);
+  }
 }

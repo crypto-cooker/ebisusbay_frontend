@@ -81,7 +81,7 @@ export class ApiService implements Api {
     if (!query) query = {};
     query.wallet = address;
 
-    return await this.getOffers(query);
+    return await this.mapi.getReceivedOffers(query);
   }
 
   async getRewardedEntities(gameId: number): Promise<any> {

@@ -1,9 +1,10 @@
-import {OfferState} from "@src/core/services/api-service/types";
+import {OfferState, ReceivedOfferType} from "@src/core/services/api-service/types";
 import Query from "@src/core/services/api-service/mapi/queries/index";
 import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 
-export interface OffersV2QueryParams extends OffersQueryParams {
+export interface OffersV2QueryParams extends Omit<OffersQueryParams, 'type'> {
   wallet?: string;
+  type?: ReceivedOfferType;
 }
 
 class OffersV2Query extends Query<OffersV2QueryParams> {
@@ -11,8 +12,6 @@ class OffersV2Query extends Query<OffersV2QueryParams> {
   defaultParams(): OffersV2QueryParams {
     return {
       state: OfferState.ACTIVE,
-      traits: {},
-      powertraits: {},
       page: 1
     };
   }

@@ -100,10 +100,10 @@ const DataTable = ({data, onAccept, onReject, canReject, onSort}: ResponsiveRece
           </Tr>
         </Thead>
         <Tbody>
-          {data.pages.map((page: any, pageIndex: any) => (
+          {data.pages.map((page, pageIndex) => (
             <React.Fragment key={pageIndex}>
-              {page.map((offer: any) => (
-                <Tr key={`${offer.id}`} _hover={{bg: hoverBackground}}>
+              {page.data.map((offer) => (
+                <Tr key={`${offer.offerId}`} _hover={{bg: hoverBackground}}>
                   <Td w='50px'>
                     <Box
                       width={50}
@@ -137,10 +137,10 @@ const DataTable = ({data, onAccept, onReject, canReject, onSort}: ResponsiveRece
                       <Box>{commify(offer.price)}</Box>
                     </HStack>
                   </Td>
-                  <Td>{getOfferDate(offer.timeCreated)} ago</Td>
+                  <Td>{getOfferDate(offer.listingTime)} ago</Td>
                   <Td>
                     <Flex>
-                      {offer.state === OfferState.ACTIVE.toString() && (
+                      {offer.state === OfferState.ACTIVE && (
                         <>
                           <Button
                             type="legacy"
@@ -207,10 +207,10 @@ const DataAccordion = ({data, onSort, onAccept, onReject, canReject}: Responsive
       {/*  </HStack>*/}
       {/*</Box>*/}
       <Accordion w='full' allowMultiple>
-        {data.pages.map((page: any, pageIndex: any) => (
+        {data.pages.map((page, pageIndex) => (
           <React.Fragment key={pageIndex}>
-            {page.map((offer: any) => (
-              <AccordionItem key={offer.id}>
+            {page.data.map((offer) => (
+              <AccordionItem key={offer.offerId}>
                 <Flex w='100%' my={2}>
                   <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
                     <HStack>
@@ -261,10 +261,10 @@ const DataAccordion = ({data, onSort, onAccept, onReject, canReject}: Responsive
                     {/*)}*/}
                     <Stack direction="row" spacing={2}>
                       <Text fontWeight="bold">Offer Time:</Text>
-                      <Text>{getOfferDate(offer.timeCreated)} ago</Text>
+                      <Text>{getOfferDate(offer.listingTime)} ago</Text>
                     </Stack>
                   </Flex>
-                  {offer.state === OfferState.ACTIVE.toString() && (
+                  {offer.state === OfferState.ACTIVE && (
                     <Flex mt={2}>
                       <Button
                         type="legacy"
