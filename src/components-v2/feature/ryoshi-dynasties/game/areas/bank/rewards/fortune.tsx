@@ -42,6 +42,7 @@ import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {ethers} from "ethers";
 import {commify} from "ethers/lib/utils";
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
+import moment from 'moment';
 
 const config = appConfig();
 
@@ -148,8 +149,8 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       }
       if (signatureInStorage) {
         const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signatureInStorage);
-        const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND');
-        const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL');;
+        const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+        const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
         const mustCancelClaim = !!pendingClaim && pendingClaim.seasonId !== seasonId;
 
         if (!force && (pendingCompound || mustCancelClaim)) {
@@ -233,8 +234,8 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       }
       if (signatureInStorage) {
         const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signatureInStorage);
-        const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND');
-        const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL');
+        const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+        const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
         const mustCancelCompound = !!pendingCompound && Number(pendingCompound.vaultIndex) !== Number(vault.index);
 
         if (!force && (pendingClaim || mustCancelCompound)) {
