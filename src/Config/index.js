@@ -227,6 +227,11 @@ export const configData = {
           '0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14': ['cro', 'frtn'], // World of Cats: Seasonal
           '0x28Fc9DaCa33E0a3Ada666064F54B400E63596c6C': ['cro', 'frtn'], // Hidden Avatars
           '0xFd14Cb97102eC422ADF507138580798cb2e6B824': ['cro', 'frtn'], // World of Cats: MILK
+          '0xd0B45e7bFcc58C99203E60a363E2574e01B0a581': ['cro', 'frtn', 'bcro'], // 0xLuckless
+          '0xad350404b1564c732f3ed6673cfd8bdf93206a97': ['cro', 'frtn', 'bcro'], // 0xLuckless v1.5
+          '0xb9efdd70E93DbE4C700a229deCAf09e24C4Aef8C': ['cro', 'frtn', 'bcro'], // 0xLuckless v1.6
+          '0x0d511FAA531d8D36aDE88daFcBbb9cE83Be42111': ['cro', 'frtn', 'bcro'], // 0xLuckless v2.0
+          '0x5141E99523002317BE6D63214Bf300cBD8269bE6': ['cro', 'frtn', 'bcro'], // 0xluckless-v2-2
         }
       }
     }

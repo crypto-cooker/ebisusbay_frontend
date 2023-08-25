@@ -22773,7 +22773,7 @@
       "multiToken": false,
       "address": "0x902b49b97Ab03bcF5095e3439422f4a9351cAe82",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "A collection consisting of 5,000 Plush Foot Print (PFP) NFTs. There will be 20 different Foot Prints with different rarities and no Foot Print will have the same amount.",
         "avatar": "/img/collections/y-plush-foot-print/avatar.webp",
@@ -29344,7 +29344,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/cronosverse-in-game-assets/drop2.webp",
         "banner": "/img/drops/cronosverse-in-game-assets/banner.webp",
