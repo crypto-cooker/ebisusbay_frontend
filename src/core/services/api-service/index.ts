@@ -19,6 +19,7 @@ import Graph from "@src/core/services/api-service/graph";
 import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
 import {caseInsensitiveCompare} from "@src/utils";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
+import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -72,6 +73,13 @@ export class ApiService implements Api {
   async getMadeOffersByUser(address: string, query?: OffersQueryParams): Promise<PagedList<Offer>> {
     if (!query) query = {};
     query.purchaser = address;
+
+    return await this.getOffers(query);
+  }
+
+  async getReceivedOffersByUser(address: string, query?: OffersV2QueryParams): Promise<PagedList<Offer>> {
+    if (!query) query = {};
+    query.wallet = address;
 
     return await this.getOffers(query);
   }

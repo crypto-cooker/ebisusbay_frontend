@@ -53,6 +53,14 @@ class NextApiService implements Api {
     return response.data;
   }
 
+  async getReceivedOffers(address: string, query?: OffersQueryParams): Promise<PagedList<Offer>> {
+    const response = await this.next.get(`users/${address}/received-offers`, {
+      params: query
+    });
+
+    return response.data;
+  }
+
   async getWallet(address: string, query?: WalletsQueryParams): Promise<PagedList<WalletNft>> {
     const response = await this.next.get(`users/${address}/wallet`, {
       params: query

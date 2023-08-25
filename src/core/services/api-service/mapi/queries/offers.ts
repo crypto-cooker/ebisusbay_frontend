@@ -9,7 +9,7 @@ export interface OffersQueryParams {
   tokenId?: string;
   seller?: string;
   purchaser?: string;
-  sortBy?: 'listingId' | 'listingTime' | 'saleTime' | 'price' | 'rank';
+  sortBy?: 'offerId' | 'listingId' | 'listingTime' | 'saleTime' | 'price' | 'rank' | 'nft' | 'name' | 'collectionName';
   direction?: 'asc' | 'desc';
   state?: OfferState;
   page?: number;
