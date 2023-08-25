@@ -8,7 +8,7 @@ import { useEffect, useState, Fragment } from "react";
 import {RankPlayers} from "@src/core/poker-rank-players"
 import InfiniteScroll from "react-infinite-scroll-component";
 import Button from "@src/Components/components/Button";
-
+import {shortAddress} from "@src/utils";
 
 const PokerLeaderboardComponent = () => {
 
@@ -93,21 +93,21 @@ const PokerLeaderboardComponent = () => {
 				justifyItems='left'
 				padding={4}
 				justifySelf={'center'}
-				spacingX={8}
-				gridTemplateColumns={'50px 375px 150px 100px'}
+				spacingX={{base: 4, md: 12}}
+				gridTemplateColumns={{base: '15px 50px 125px 50px', sm:'50px 75px 150px 100px'}}
 				rounded={'md'}
 				// justifyItems={'center'}
 			>
 				<GridItem  as='b' maxW='50px' >
-					<Text>Rank</Text>
+					<Text fontSize={{base: 12, md:14}}>Rank</Text>
 				</GridItem>
 
 				<GridItem as='b'> 
-					<Text>Address</Text>
+					<Text fontSize={{base: 12, md:14}}>Address</Text>
 				</GridItem>
 		
 				<GridItem  as='b'>
-					<Text>Best Hand</Text>
+					<Text fontSize={{base: 12, md:14}}>Best Hand</Text>
 				</GridItem>
 		
 				{/* <GridItem >
@@ -115,7 +115,7 @@ const PokerLeaderboardComponent = () => {
 				</GridItem>
 		 */}
 				<GridItem as='b'>
-					<Text>Secondary</Text>
+					<Text fontSize={{base: 12, md:14}}>Secondary</Text>
 				</GridItem>
 		
 				{/* <GridItem as='b'>
@@ -126,15 +126,15 @@ const PokerLeaderboardComponent = () => {
 				{data?.pages[0].data.map((player: Player, i : number) => (
 				<>
 				<GridItem maxW='50px'  >
-					{i+1}
+				<Text fontSize={{base: 12, md:14}}> {i+1}</Text>
 				</GridItem>
 
 				<GridItem   >
-					<Text>{player.address}</Text>
+					<Text fontSize={{base: 12, md:14}}>{shortAddress(player.address)}</Text>
 				</GridItem>
 		
 				<GridItem>
-					<Text>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text>
+					<Text fontSize={{base: 12, md:14}}>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text>
 				</GridItem>
 		
 				{/* <GridItem>
@@ -146,7 +146,7 @@ const PokerLeaderboardComponent = () => {
 						<Text>{getCardName(player.bestHand.secondaryValue)}</Text>
 						{player?.bestHand?.secondaryCardEdition! > 0 &&
 							<Text
-							fontSize={12}
+							fontSize={{base: 8, md:12}}
 							color={'gray.500'}
 						>id:{player.bestHand.secondaryCardEdition}</Text>
 						}

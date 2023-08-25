@@ -19,6 +19,7 @@ export interface Player {
   bestHand: Hand;
 }
 export const cardValueDict = [
+  { max: 0, value: 1},
   { max: 400, value: 2 },
   { max: 800, value: 3 },
   { max: 1200, value: 4 },
@@ -33,6 +34,17 @@ export const cardValueDict = [
   { max: 3900, value: 13 },//King
   { max: 4000, value: 14 },//Ace
 ]
+
+export const GetActualEditionNumber = (edition: number) => {
+  let actualEdition = 0;
+  cardValueDict.forEach((cardValue) => {
+    if(cardValue.max <= edition) {
+      actualEdition = edition - cardValue.max;
+    }
+  })
+  return actualEdition;
+}
+
 export const getCardName = (card: number) => {
   switch(card) {
     case 2: return "2";
@@ -325,8 +337,9 @@ export const RankPlayers = async (data : any) => {
         player.bestHand.secondaryCardEdition = 0;
       }
       else{
-        player.bestHand.secondaryCardEdition = player.cards.find((card) => 
+        let edition = player.cards.find((card) => 
           cardValueDict.find((cardValue) => cardValue.value === player.bestHand.secondaryValue && cardValue.max >= card) !== undefined) as never;
+          player.bestHand.secondaryCardEdition = GetActualEditionNumber(edition);
       }
     })
     return rankedPlayers;
