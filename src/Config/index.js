@@ -232,6 +232,8 @@ export const configData = {
           '0xb9efdd70E93DbE4C700a229deCAf09e24C4Aef8C': ['cro', 'frtn', 'bcro'], // 0xLuckless v1.6
           '0x0d511FAA531d8D36aDE88daFcBbb9cE83Be42111': ['cro', 'frtn', 'bcro'], // 0xLuckless v2.0
           '0x5141E99523002317BE6D63214Bf300cBD8269bE6': ['cro', 'frtn', 'bcro'], // 0xluckless-v2-2
+          '0x51084c32AA5ee43a0e7bD8220195da53b5c69868': ['cro', 'frtn', 'bcro'], // Trusted Cases
+          '0x724900a57ED516ba023b1F5F86A92E222BC32D02': ['cro', 'frtn', 'bcro'], // Chefz Army
         }
       }
     }
