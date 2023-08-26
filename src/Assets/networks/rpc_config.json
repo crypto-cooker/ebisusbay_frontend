@@ -9194,8 +9194,8 @@
         "avatar": "/img/collections/crodoo/avatar.webp",
         "card": "/img/collections/crodoo/card.webp",
         "banner": "/img/collections/crodoo/banner.webp",
-        "website": "https://crodoonft.com/",
-        "twitter": "https://twitter.com/CroDooNFT",
+        "website": "https://cro.doonft.com/",
+        "twitter": "https://twitter.com/TheDooNFT",
         "discord": "https://discord.gg/W43dReVMq5",
         "rankings": {
           "source": "provided"
@@ -19358,9 +19358,9 @@
       "listable": true,
       "metadata": {
         "description": "The CronosVerse is offering 143 Unique In-Game Furniture and Decorative Items for you to place on your Land or in your Suite.  With 12 multiples of each item available, there will be a total of 1716 NFTs available in this drop. ",
-        "avatar": "/img/collections/cronosverse-in-game-assets/avatar.webp",
+        "avatar": "/img/collections/cronosverse-in-game-assets/avatar2.webp",
         "card": "/img/collections/cronosverse-in-game-assets/card.webp",
-        "banner": "/img/collections/cronosverse-in-game-assets/banner.webp",
+        "banner": "/img/collections/cronosverse-in-game-assets/banner2.webp",
         "website": "https://thecronosverse.com/",
         "twitter": "https://twitter.com/TheCronosVerse",
         "discord": "https://discord.gg/E9Mzzy9Hex",
@@ -22773,7 +22773,7 @@
       "multiToken": false,
       "address": "0x902b49b97Ab03bcF5095e3439422f4a9351cAe82",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "A collection consisting of 5,000 Plush Foot Print (PFP) NFTs. There will be 20 different Foot Prints with different rarities and no Foot Print will have the same amount.",
         "avatar": "/img/collections/y-plush-foot-print/avatar.webp",
@@ -22866,14 +22866,14 @@
       }
     },
     {
-      "name": "Crypto Hodl'em",
-      "slug": "crypto-hodlem",
+      "name": "Ryoshi Playing Cards",
+      "slug": "ryoshi-playing-cards",
       "multiToken": false,
       "address": "0xd87838a982a401510255ec27e603b0f5fea98d24",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "Crypto Hodl’em: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #1 Ryoshi Diamonds, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
+        "description": "Collectable playing cards allowing you participation in several different ongoing card games on EbisusBay.com\n\nCollect them all and join in on the fun!",
         "avatar": "/img/collections/crypto-hodlem/avatar.webp",
         "banner": "/img/collections/crypto-hodlem/banner.webp",
         "card": "/img/collections/crypto-hodlem/card.webp",
@@ -22889,6 +22889,98 @@
         "doxx": true,
         "kyc": "hidden",
         "verified": true
+      }
+    },
+    {
+      "name": "Trusted Cases",
+      "slug": "trusted-cases",
+      "multiToken": false,
+      "address": "0x5e8f23c596BB2B665046b697001524a89C689413",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "\"With Cronos new to the game. I've seen tons of projects fail, give up, or just straight out rug. So many paper hands expecting to get rich overnight.\"  \"Investing is a long-term decision\"  -Trusted Founder and project lead  Here at Trusted we're in it for the Long haul. A majority of sales generated from mint will be forever locked. A small portion will be used to develop the project. Distributing 1/2 of returns to holders of this NFT. The other half will be locked used to grow the pool. We are also taking a percentage of secondary sales that will also go directly to the pool and remain locked. Consistently growing our pool which in turn will bring us the most profitable long-term returns. Utility is our goal.",
+        "avatar": "/img/collections/trusted-cases/avatar.webp",
+        "card": "/img/collections/trusted-cases/card.webp",
+        "banner": "/img/collections/trusted-cases/banner.webp",
+        "website": "https://cronossteakhouse.com/launchpad/trusted",
+        "twitter": "https://www.twitter.com/CroShop_Trade",
+        "discord": "https://discord.gg/S6TzckDQtz",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "The Liberators",
+      "slug": "the-liberators",
+      "multiToken": false,
+      "address": "0xC0D28282A4780e099884f344A9746A2D75A1BAF7",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Ever wanted to own the libs? Now you can! The Liberators, Cronos Steakhouse's 4th of July Special collection! First minted during 2023 Independence week, These feisty fellows will liberate you from FEEdom across the steakhouse ecosystem! Structured fee discounts on all future smart contracts based on amount held/time consumed",
+        "avatar": "/img/collections/the-liberators/avatar.webp",
+        "card": "/img/collections/the-liberators/card.webp",
+        "banner": "/img/collections/the-liberators/banner.webp",
+        "website": "https://www.cronossteakhouse.com/",
+        "twitter": "https://www.twitter.com/CronoSteakHouse",
+        "discord": "https://discord.gg/fpTgAReDyN",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Chefz Army",
+      "slug": "chefz-army",
+      "multiToken": false,
+      "address": "0x724900a57ED516ba023b1F5F86A92E222BC32D02",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/chefz-army/avatar.webp",
+        "card": "/img/collections/chefz-army/card.webp",
+        "banner": "/img/collections/chefz-army/banner.webp",
+        "website": "https://www.cronossteakhouse.com/",
+        "twitter": "https://www.twitter.com/CronoSteakHouse",
+        "discord": "https://discord.gg/fpTgAReDyN",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Alpha Invitations",
+      "slug": "alpha-invitations",
+      "multiToken": false,
+      "address": "0x257f30fbD890840FA00c2e0f043cF5Ad9A631546",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "We are a group of hustlers, fighting everyday to make Cronos a better place.    We Hyenas have a mission. A Mission to make Cronos a better place to be! To bring back the promise of solidity in projects.  Our objective is to demonstrate that Cronos is not only a great chain to be on, but also a home for amazing and profitable projects. To show what a strong team of dedicated DeFi enthusiats can achieve working together with the community always in mind  We're bringing together all of the things that make NFT projects great, NFT Staking, Effective tokenomics, GameFi, a strong and integrated ecosystem for our community to earn that ROI and more.   Goals:  1) Make a sustainable project from one collection. 2) Put the best Cronos utilities into one collection.",
+        "avatar": "/img/collections/alpha-invitations/avatar.webp",
+        "card": "/img/collections/alpha-invitations/card.webp",
+        "banner": "/img/collections/alpha-invitations/banner.webp",
+        "website": "https://hyenahustlers.xyz/",
+        "twitter": "https://twitter.com/hyenahustlers",
+        "discord": "https://discord.gg/dkvVXHvJ",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -29324,8 +29416,8 @@
       "id": 166,
       "slug": "cronosverse-in-game-assets",
       "title": "The CronosVerse In-Game Assets",
-      "subtitle": "The CronosVerse is offering 143 Unique In-Game Furniture and Decorative Items for you to place on your Land or in your Suite.  With 12 multiples of each item available, there will be a total of 1716 NFTs available in this drop. ",
-      "description": "The CronosVerse is the first true metaverse project on the Cronos Blockchain.  Offering users a piece of digital real estate where they can build their own immersive, virtual reality and metaverse experience.  \n\n      The CronosVerse In-Game items are the first of their kind on The Cronos Blockchain.  Owners are able to spawn 1 of each their In-Game NFTs on their property and show it off however they see fit.  In-Game NFTs are also linked straight back to the marketplace so that you can buy and sell your In-Game Assets from within the CronosVerse.  \n\n      There are 1716 total NFTs available in this drop, minting exclusively with the CronosVerse Native Token:  $VRSE \n\n      $VRSE can be purchased at Crodex:  https://swap.crodex.app/#/swap",
+      "subtitle": "Each Digital Asset NFT represents ownership of a Digital Asset within The CronosVerse. By owning a Digital Asset NFT, users are able to decorate their CronosVerse property and customize their metaverse experience inside of their digital property.",
+      "description": "1200 New In-Game Assets are available which include in-game character armor, knifes, swords, guns and various other weapons to participate in player vs player and player vs environment battles.",
       "author": {
         "name": "CronosVerse",
         "website": "https://thecronosverse.com/",
@@ -29333,22 +29425,22 @@
         "discord": "https://discord.gg/E9Mzzy9Hex"
       },
       "address": "0xaf038d14905409de31fb5577c460d18b1013e4f1",
-      "maxMintPerTx": 5,
-      "maxMintPerAddress": 200,
-      "totalSupply": 1716,
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 250,
+      "totalSupply": 1200,
       "erc20Cost": "1500",
       "erc20Token": "vrse",
       "foundersOnly": false,
-      "start": 1680303600000,
+      "start": 1692918000000,
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
       "complete": true,
       "images": {
-        "drop": "/img/drops/cronosverse-in-game-assets/drop.webp",
+        "drop": "/img/drops/cronosverse-in-game-assets/drop2.webp",
         "banner": "/img/drops/cronosverse-in-game-assets/banner.webp",
-        "avatar": "/img/collections/cronosverse-in-game-assets/avatar.webp",
+        "avatar": "/img/collections/cronosverse-in-game-assets/avatar2.webp",
         "preview": "/img/collections/cronosverse-in-game-assets/card.webp"
       },
       "verification": {
@@ -29920,10 +30012,10 @@
     },
     {
       "id": 180,
-      "slug": "crypto-hodlem",
-      "title": "Crypto Hodl'em",
-      "subtitle": "Crypto Hodl’em: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #1 Ryoshi Diamonds, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
-      "description": "Ebisu’s Bay recognizes the importance of nurturing a vibrant and supportive community. As the contest unfolds, members of the Crofam will have the opportunity to engage with the captivating NFTs and partake in an event that not only celebrates creativity but also reinforces the symbiotic relationship between art and technology.\n\nThe upcoming Playing Cards Collection marks yet another pivotal moment in the history of the Bay, bringing together individuals who are not just collectors, but pioneers in the new era of Cronos.\n\nHow does Crypto Hodl’em work?\nStart: August 22nd 2023\nSnapshot: September 12th 2023\n\n*Note: Trades happening in the period between August 22nd and September 12th will be counted for the snapshot that will determine the winners on September 12th.\n\nCollectors who own 5 or more “Ryoshi Diamonds” collectibles will automatically qualify to enter the contest. The Prizes that users are eligible to win will depend on the number of places among all participants. If you own more than 5 collectibles, you’ll only participate with the best hand from 5 cards. Cards must have been minted by the wallet or purchased via secondary ebisusbay.com market sales.\nCards traded or transferred off platform will not be counted.\n\nSince only one suit is released (Ryoshi Diamonds), the following hands are expected (ranked by order from better to worse):\n\nFour of a kind — Own 4 editions of the same collectible, with 1 edition of another collectible, e.g. A, A, A, A, 2\nFull house — Own 3 editions of 1 collectible, and 2 editions of another collectible, e.g. A, A, A, 2, 2\nStraight — Own 1 edition of 5 consecutively ranked collectibles, e.g. A, 2, 3, 4, 5\nThree of a kind — own 3 editions of 1 collectibles, and 1 edition of 2 other collectibles, e.g. A, A, A, 2, 3\nTwo Pairs — Own 2 editions of 2 collectibles, and 1 edition of another collectible, e.g. A, A, 2, 2, 3\nOne Pair — Own 2 editions of a collectible, and 1 edition of 3 other collectibles, e.g. A, A, 2, 3, 4",
+      "slug": "ryoshi-playing-cards",
+      "title": "Ryoshi Diamonds",
+      "subtitle": "Ryoshi Diamonds: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #1 Ryoshi Diamonds, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
+      "description": "Ebisu’s Bay recognizes the importance of nurturing a vibrant and supportive community. As the contest unfolds, members of the Crofam will have the opportunity to engage with the captivating NFTs and partake in an event that not only celebrates creativity but also reinforces the symbiotic relationship between art and technology.\n\nThe upcoming Playing Cards Collection marks yet another pivotal moment in the history of the Bay, bringing together individuals who are not just collectors, but pioneers in the new era of Cronos.",
       "author": {
         "name": "Ebisu's Bay",
         "website": "https://app.ebisusbay.com/",
@@ -29948,7 +30040,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "images": {
         "drop": "/img/drops/crypto-hodlem/drop.webp",

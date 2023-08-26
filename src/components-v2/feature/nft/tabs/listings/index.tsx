@@ -22,8 +22,8 @@ const ListingsTab = ({ nft }: ListingsProps) => {
     collection: [nft.nftAddress],
     tokenId: [nft.nftId],
     state: ListingState.ACTIVE,
-    sortBy: 'listingTime',
-    direction: 'desc'
+    sortBy: 'price',
+    direction: 'asc'
   });
 
   const handleAddToCart = (listing: any) => {

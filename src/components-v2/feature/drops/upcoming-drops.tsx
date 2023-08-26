@@ -1,9 +1,12 @@
-import React, { memo, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, {memo, useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 import Slider from '@src/Components/components/Slider';
-import CustomSlide from '@src/Components/components/CustomSlide';
-import { appConfig } from "@src/Config";
+import PreviewCard from '@src/components-v2/shared/preview-card';
+import {appConfig} from "@src/Config";
+import LocalDataService from "@src/core/services/local-data-service";
+import {millisecondTimestamp} from "@src/utils";
+import {Drop} from "@src/core/models/drop";
 
 const drops = appConfig('drops');
 
@@ -13,7 +16,42 @@ const UpcomingDrops = () => {
   const [upcomingDrops, setUpcomingDrops] = useState<any[]>([]);
 
   function arrangeCollections() {
-    const nextDrops = drops.filter((d: any) => !d.complete && d.published && (!d.start || d.start > Date.now()));
+
+    const ads = LocalDataService
+      .getDropsAds()
+      .map(ad => ({
+        ...ad.details,
+        id: 99999,
+        slug: ad.name,
+        title: ad.name,
+        subtitle: '',
+        description: '',
+        author: {
+          ...ad.details.socials,
+          name: ad.details.author
+        },
+        address: '',
+        maxMintPerTx: 0,
+        maxMintPerAddress: 0,
+        totalSupply: 0,
+        start: millisecondTimestamp(ad.details.date),
+        published: true,
+        images: {
+          ...ad.details.images,
+          banner: ''
+        },
+        verification: {
+          ...ad.details.verification,
+          escrow: false
+        },
+        redirect: ad.details.link.url,
+        erc20Only: false,
+        memberMitama: 0
+      } as Drop));
+
+    const nextDrops = drops
+      .concat(ads)
+      .filter((d: any) => !d.complete && d.published && (!d.start || d.start > Date.now()));
 
     const dropsWithDate = nextDrops
       .filter((d: any) => d.start)
@@ -33,7 +71,7 @@ const UpcomingDrops = () => {
     <div className="nft">
       <Slider size={upcomingDrops.length}>
         {upcomingDrops && upcomingDrops.map((drop: any, index) => (
-          <CustomSlide
+          <PreviewCard
             key={index}
             index={index + 1}
             avatar={drop.images.avatar}

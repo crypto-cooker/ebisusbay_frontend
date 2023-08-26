@@ -19,6 +19,7 @@ export interface Listing {
   nft: any;
   collection: any;
   currency: string;
+  amount: number;
 }
 
 export interface OwnerListing extends Listing {
@@ -46,7 +47,8 @@ export class ListingMapper {
       transactionHash: props.transactionHash,
       nft: props.nft,
       collection: props.collection,
-      currency: props.currency
+      currency: props.currency,
+      amount: Number(props.amount)
     }
   }
 

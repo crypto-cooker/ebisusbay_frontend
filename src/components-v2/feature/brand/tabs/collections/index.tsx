@@ -1,5 +1,5 @@
 import {Box, SimpleGrid, Stat, StatLabel, StatNumber, Text, Wrap, WrapItem} from "@chakra-ui/react";
-import CustomSlide from "@src/Components/components/CustomSlide";
+import PreviewCard from "@src/components-v2/shared/preview-card";
 import MintingButton from "@src/Components/Collection/MintingButton";
 import {round, siPrefixedNumber} from "@src/utils";
 import React from "react";
@@ -23,7 +23,7 @@ const CollectionsTab = ({collections}: CollectionsTabProps) => {
   return (
     <SimpleGrid columns={{base: 1, sm: 2, md: 3, lg: 4}} gap={{base: 4, '2xl': 8}}>
       {collections.filter((c) => !c.hidden).map((collection, index) => (
-        <CustomSlide
+        <PreviewCard
           key={index}
           index={index + 1}
           banner={collection.metadata.card}
@@ -65,8 +65,6 @@ const CollectionsTab = ({collections}: CollectionsTabProps) => {
           }
           url={`/collection/${collection.slug ?? collection.address}`}
           verified={collection.verification?.verified}
-          avatar={null}
-          collectionId={null}
         />
       ))}
     </SimpleGrid>

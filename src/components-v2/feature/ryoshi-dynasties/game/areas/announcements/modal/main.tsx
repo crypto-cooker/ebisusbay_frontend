@@ -37,7 +37,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
     refetchOnWindowFocus: false,
     initialData: []
   });
-console.log('ads', ads);
+
   //timer
   const Ref = useRef<NodeJS.Timer | null>(null);
   const [timer, setTimer] = useState('00:00:00');
@@ -65,12 +65,12 @@ console.log('ads', ads);
           )
       }
   }
-  // const clearTimer = (e:any) => {
-  //   startTimer(e);
-  //   if (Ref.current) clearInterval(Ref.current);
-  //   const id = setInterval(() => { startTimer(e); }, 1000)
-  //   Ref.current = id;
-  // }
+  const clearTimer = (e:any) => {
+    startTimer(e);
+    if (Ref.current) clearInterval(Ref.current);
+    const id = setInterval(() => { startTimer(e); }, 1000)
+    Ref.current = id;
+  }
 
   useEffect(() => {
       if (!user.address || !rdUserContext) {
@@ -85,14 +85,14 @@ console.log('ads', ads);
         setCanClaim(true);
       } else {
         setCanClaim(false);
-        // clearTimer(claimData.nextClaim);
+        clearTimer(claimData.nextClaim);
       }
   }, [user.address, rdUserContext])
 
   //src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
   const adSpot = useMemo(() => {
     return (
-      <Box mb={20}>
+      <Box>
         {isMobile ? (
           <Swiper
             centeredSlides={true}
@@ -125,6 +125,7 @@ console.log('ads', ads);
             rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
             bottomFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
             leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'
+            mb={10}
           >
             <Swiper
               loop={true}
@@ -142,7 +143,6 @@ console.log('ads', ads);
                     minWidth='100%'
                     minHeight='100%'
                     position='relative'
-                    mt={[0, "0rem !important"]}
                   >
                     <Box
                       cursor='pointer'

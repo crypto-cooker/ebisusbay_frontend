@@ -1,10 +1,13 @@
-import React, { memo, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import CustomSlide from '@src/Components/components/CustomSlide';
+import React, {memo, useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import PreviewCard from '@src/components-v2/shared/preview-card';
 import {appConfig} from "@src/Config";
 import Slider from '@src/Components/components/Slider';
+import LocalDataService from "@src/core/services/local-data-service";
+import {millisecondTimestamp} from "@src/utils";
+import {Drop} from "@src/core/models/drop";
 
 const drops = appConfig('drops');
 
@@ -16,7 +19,39 @@ const CurrentDrops = ({ useCarousel = true }) => {
   const [showAll, setShowAll] = useState(false);
 
   function arrangeCollections() {
-    const liveDrops = drops.filter((d: any) => !d.complete && d.published && d.start && d.start < Date.now());
+    const ads = LocalDataService
+      .getDropsAds()
+      .map(ad => ({
+        ...ad.details,
+        id: 99999,
+        slug: ad.name,
+        title: ad.name,
+        subtitle: '',
+        description: '',
+        author: {
+          ...ad.details.socials,
+          name: ad.details.author
+        },
+        address: '',
+        maxMintPerTx: 0,
+        maxMintPerAddress: 0,
+        totalSupply: 0,
+        start: millisecondTimestamp(ad.details.date),
+        published: true,
+        images: {
+          ...ad.details.images,
+          banner: ''
+        },
+        verification: {
+          ...ad.details.verification,
+          escrow: false
+        },
+        redirect: ad.details.link.url,
+        erc20Only: false,
+        memberMitama: 0
+      } as Drop));
+
+    const liveDrops = drops.concat(ads).filter((d: any) => !d.complete && d.published && d.start && d.start < Date.now());
     const cd = liveDrops.sort((a: any, b: any) => (a.start < b.start ? 1 : -1));
     setCurrentDrops(cd);
   }
@@ -54,7 +89,7 @@ const CurrentDrops = ({ useCarousel = true }) => {
           <Slider size={currentDrops.length}>
             {currentDrops &&
               currentDrops.map((drop: any, index) => (
-                  <CustomSlide
+                  <PreviewCard
                     key={index}
                     index={index + 1}
                     avatar={drop.images.avatar}
@@ -77,7 +112,7 @@ const CurrentDrops = ({ useCarousel = true }) => {
               .slice(showAll ? undefined : 0, showAll ? undefined : threePerRowSize ? 3 : 4)
               .map((drop: any, index) => (
                 <div className="col-12 col-xs-6 col-md-4 col-lg-3 my-2" key={index}>
-                  <CustomSlide
+                  <PreviewCard
                     key={index}
                     index={index + 1}
                     avatar={drop.images.avatar}

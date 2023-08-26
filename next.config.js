@@ -179,6 +179,21 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/collection/crypto-hodlem',
+        destination: '/collection/ryoshi-playing-cards',
+        permanent: true,
+      },
+      {
+        source: '/collection/crypto-hodlem/:id',
+        destination: '/collection/ryoshi-playing-cards/:id',
+        permanent: true,
+      },
+      {
+        source: '/drops/crypto-hodlem',
+        destination: '/drops/ryoshi-playing-cards',
+        permanent: true,
+      },
+      {
         source: '/mad-auction',
         destination: '/auctions/mad-auction',
         permanent: false,

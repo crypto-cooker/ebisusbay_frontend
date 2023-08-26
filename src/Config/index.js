@@ -137,6 +137,7 @@ export const configData = {
           '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5': ['frtn'],        // EB FM/VIP
           '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'],        // Fortune Guards
           '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],        // FortuneTeller
+          '0xd87838a982a401510255ec27e603b0f5fea98d24': ['frtn'],
           '0xf54abdcba21e7a740f98307a561b605cb3fdcf63': ['cro', 'frtn'], // Legacy VIP Art
           '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506': ['cro', 'frtn'], // SeaShrine VIP
           '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29': ['cro', 'frtn'], // Valentine
@@ -207,7 +208,7 @@ export const configData = {
           '0x7aEBFd662494299CE53feb533BFE80a749e656BC': ['cro', 'frtn'], // Degen Ape Cronos Club
           '0xf8e63021C3d757b63eb53a9124271251A964D572': ['cro', 'frtn'], // Cronos Rocks
           '0xbd6b9a1A0477d64E99F660b7b7C205f4604E4Ff3': ['cro', 'frtn'], // Cronos Fossils
-          '0x30aB0D8C808Ec024365D45A105c559BDF06BCB14': ['cro', 'frtn'], // Cronos Fossils Gen 2"
+          '0x30aB0D8C808Ec024365D45A105c559BDF06BCB14': ['cro', 'frtn'], // Cronos Fossils Gen 2
           '0xc536b6151599A3fdA22E63eD61AA918d738e1B7d': ['cro', 'frtn'], // Decentral Mamas
           '0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1': ['cro', 'frtn'], // Crazzzy Monsters
           '0xA0edf26589AD4318DAb2354629541cfFd3e5EBDf': ['cro', 'frtn', 'bcro'], // Piggy Bank Finance
@@ -220,6 +221,19 @@ export const configData = {
           '0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a': ['cro', 'frtn', 'vrse'], // Cro Snowmen
           '0x1eD88baF12Ec3fd8D2955B1b2a883e6E79a10828': ['cro', 'frtn', 'vrse'], // The CronosVerse Suites
           '0xaf038d14905409de31fb5577c460d18b1013e4f1': ['cro', 'frtn', 'vrse'], // The CronosVerse In-Game Assets
+          '0x90665eEd780C027CDef63C31C8dFa296aE168E5A': ['cro', 'frtn'], // Hidden Fish Founding Member VIP
+          '0xaa3cFC29BEaAdA4456B777Bfa7dcDfCBE0d122A9': ['cro', 'frtn'], // Hidden Fish Founding Member
+          '0x4Ce0B9608006533dA056170f1efe8eEa771e0d19': ['cro', 'frtn'], // World Of Cats
+          '0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14': ['cro', 'frtn'], // World of Cats: Seasonal
+          '0x28Fc9DaCa33E0a3Ada666064F54B400E63596c6C': ['cro', 'frtn'], // Hidden Avatars
+          '0xFd14Cb97102eC422ADF507138580798cb2e6B824': ['cro', 'frtn'], // World of Cats: MILK
+          '0xd0B45e7bFcc58C99203E60a363E2574e01B0a581': ['cro', 'frtn', 'bcro'], // 0xLuckless
+          '0xad350404b1564c732f3ed6673cfd8bdf93206a97': ['cro', 'frtn', 'bcro'], // 0xLuckless v1.5
+          '0xb9efdd70E93DbE4C700a229deCAf09e24C4Aef8C': ['cro', 'frtn', 'bcro'], // 0xLuckless v1.6
+          '0x0d511FAA531d8D36aDE88daFcBbb9cE83Be42111': ['cro', 'frtn', 'bcro'], // 0xLuckless v2.0
+          '0x5141E99523002317BE6D63214Bf300cBD8269bE6': ['cro', 'frtn', 'bcro'], // 0xluckless-v2-2
+          '0x51084c32AA5ee43a0e7bD8220195da53b5c69868': ['cro', 'frtn', 'bcro'], // Trusted Cases
+          '0x724900a57ED516ba023b1F5F86A92E222BC32D02': ['cro', 'frtn', 'bcro'], // Chefz Army
         }
       }
     }
@@ -419,7 +433,7 @@ export const configData = {
           '0x7aEBFd662494299CE53feb533BFE80a749e656BC': ['cro', 'frtn'], // Degen Ape Cronos Club
           '0xf8e63021C3d757b63eb53a9124271251A964D572': ['cro', 'frtn'], // Cronos Rocks
           '0xbd6b9a1A0477d64E99F660b7b7C205f4604E4Ff3': ['cro', 'frtn'], // Cronos Fossils
-          '0x30aB0D8C808Ec024365D45A105c559BDF06BCB14': ['cro', 'frtn'], // Cronos Fossils Gen 2"
+          '0x30aB0D8C808Ec024365D45A105c559BDF06BCB14': ['cro', 'frtn'], // Cronos Fossils Gen 2
           '0xc536b6151599A3fdA22E63eD61AA918d738e1B7d': ['cro', 'frtn'], // Decentral Mamas
           '0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1': ['cro', 'frtn'], // Crazzzy Monsters
           '0xA0edf26589AD4318DAb2354629541cfFd3e5EBDf': ['cro', 'frtn', 'bcro'], // Piggy Bank Finance
@@ -432,6 +446,12 @@ export const configData = {
           '0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a': ['cro', 'frtn', 'vrse'], // Cro Snowmen
           '0x1eD88baF12Ec3fd8D2955B1b2a883e6E79a10828': ['cro', 'frtn', 'vrse'], // The CronosVerse Suites
           '0xaf038d14905409de31fb5577c460d18b1013e4f1': ['cro', 'frtn', 'vrse'], // The CronosVerse In-Game Assets
+          '0x90665eEd780C027CDef63C31C8dFa296aE168E5A': ['cro', 'frtn'], // Hidden Fish Founding Member VIP
+          '0xaa3cFC29BEaAdA4456B777Bfa7dcDfCBE0d122A9': ['cro', 'frtn'], // Hidden Fish Founding Member
+          '0x4Ce0B9608006533dA056170f1efe8eEa771e0d19': ['cro', 'frtn'], // World Of Cats
+          '0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14': ['cro', 'frtn'], // World of Cats: Seasonal
+          '0x28Fc9DaCa33E0a3Ada666064F54B400E63596c6C': ['cro', 'frtn'], // Hidden Avatars
+          '0xFd14Cb97102eC422ADF507138580798cb2e6B824': ['cro', 'frtn'], // World of Cats: MILK
         }
       }
     }
