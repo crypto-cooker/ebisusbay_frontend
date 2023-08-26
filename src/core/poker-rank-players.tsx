@@ -418,14 +418,14 @@ export const RankPlayers = async (data : any) => {
         if(a.bestHand.handRef === b.bestHand.handRef) {
           return b.bestHand.primaryValue - a.bestHand.primaryValue;
         }
-        return -1;
+        return 1;
       })
       //sort by secondaryValue but only if primaryValue is the same
       playersWithHands.sort((a, b) => {
         if(a.bestHand.handRef === b.bestHand.handRef && a.bestHand.primaryValue === b.bestHand.primaryValue) {
             return b.bestHand.secondaryValue - a.bestHand.secondaryValue;
           }
-        return -1;
+        return 1;
       })
 
       //sort by secondaryCardEdition but only if secondaryValue is the same
@@ -433,7 +433,7 @@ export const RankPlayers = async (data : any) => {
         if(a.bestHand.handRef === b.bestHand.handRef && a.bestHand.primaryValue === b.bestHand.primaryValue && a.bestHand.secondaryValue === b.bestHand.secondaryValue) {
           return (a.bestHand.secondaryCardEdition ?? 0) - (b.bestHand.secondaryCardEdition ?? 0);
         }
-        return -1;
+        return 1;
       })
 
       return playersWithHands;
