@@ -17,21 +17,20 @@ const PokerLeaderboardComponent = () => {
 	const isMobile = useMediaQuery("(max-width: 768px)")[0];
 
 
-	const { data, fetchNextPage, hasNextPage, status, error} = useInfiniteQuery(['RyoshiDiamondsLeaderboard'],
-	  ({page = 1}) => ApiService.withoutKey().getRyoshiDiamondsLeaderboard(page, 500), {
-
-		getNextPageParam: (lastPage, pages) => {
-	      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-	    },
+	const { data, fetchNextPage, hasNextPage, status, error} = useInfiniteQuery(
+		['RyoshiDiamondsLeaderboard'],
+	  ({pageParam = 1}) => ApiService.withoutKey().getRyoshiDiamondsLeaderboard(pageParam, 500),
+		{
+			getNextPageParam: (lastPage, pages) => {
+				return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+			},
 		// onSuccess: (data) => {
 		// 	const [refreshTime, setRefreshTime] = useState('00:00:00');
 		// 	setRefreshTime(new Date().toLocaleTimeString())
 		// },
-
 	    refetchOnWindowFocus: false,
 	    staleTime: 60,
 	    cacheTime: 65
-
 	  }
 	)
 
