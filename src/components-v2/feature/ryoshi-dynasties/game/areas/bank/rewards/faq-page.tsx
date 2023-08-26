@@ -60,6 +60,17 @@ const FaqPage = () => {
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
               <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                Can I compound my current season rewards?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>Yes, your current season rewards can be automatically compounded into an existing Fortune vault to maximize rewards. If the vault ends later than 90 days, then there is no Karmic Debt fee to compound.</Text>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
                 What is the Karmic Debt?
               </Box>
               <AccordionIcon />
