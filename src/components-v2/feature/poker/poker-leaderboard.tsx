@@ -1,5 +1,5 @@
 import {useInfiniteQuery} from "@tanstack/react-query";
-import { Center, Spinner, Box, HStack, } from "@chakra-ui/react";
+import { Center, Spinner, Box, HStack, useMediaQuery, VStack, } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { ApiService } from "@src/core/services/api-service";
 import {Text,Grid, GridItem, Flex,SimpleGrid } from "@chakra-ui/react";
@@ -14,41 +14,35 @@ const PokerLeaderboardComponent = () => {
 
 	const [rankedPlayers, setRankedPlayers] = useState<Player[]>([])
   	const params = {} // whatever needed
+	const isMobile = useMediaQuery("(max-width: 768px)")[0];
+
+
 	const { data, fetchNextPage, hasNextPage, status, error} = useInfiniteQuery(['RyoshiDiamondsLeaderboard'],
 	  ({page = 1}) => ApiService.withoutKey().getRyoshiDiamondsLeaderboard(page, 500), {
 
 		getNextPageParam: (lastPage, pages) => {
 	      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
 	    },
+		// onSuccess: (data) => {
+		// 	const [refreshTime, setRefreshTime] = useState('00:00:00');
+		// 	setRefreshTime(new Date().toLocaleTimeString())
+		// },
 
 	    refetchOnWindowFocus: false,
 	    staleTime: 60,
 	    cacheTime: 65
+
 	  }
 	)
 
-	const Rank = async() => {
-		// const newPlayers = await RankPlayers(data?.pages[0])
-		// setRankedPlayers(data?.pages[0])
-	}
 	const loadMore = () => {
 		fetchNextPage();
 	  };
 
 	useEffect(() => {
 		if(!data) return; 
-		
-		// console.log(data)
-		// console.log(data?.pages[0])
-		// setRankedPlayers()
-		// Rank();
 
 	}, [data])
-
-	// useEffect(() => {
-	// 	if(!rankedPlayers) return; 
-	// 	console.log(rankedPlayers)
-	// }, [rankedPlayers])
 
 	const content = useMemo(() => {
 
@@ -70,6 +64,8 @@ const PokerLeaderboardComponent = () => {
 	        Error: {(error as any).message}
 	      </Box>
 	    ) : (<>
+		<VStack>
+		{/* <Text fontSize={{base: 12, md:14}} textAlign='center'>Last Updated: {}</Text> */}
 			<InfiniteScroll
 				dataLength={data?.pages ? data.pages.flat().length : 0}
 				next={loadMore}
@@ -94,7 +90,7 @@ const PokerLeaderboardComponent = () => {
 				padding={4}
 				justifySelf={'center'}
 				spacingX={{base: 4, md: 12}}
-				gridTemplateColumns={{base: '15px 50px 125px 50px', sm:'50px 75px 150px 100px'}}
+				gridTemplateColumns={{base: '15px 50px 125px 50px', md:'50px 350px 150px 100px'}}
 				rounded={'md'}
 				// justifyItems={'center'}
 			>
@@ -129,8 +125,8 @@ const PokerLeaderboardComponent = () => {
 				<Text fontSize={{base: 12, md:14}}> {i+1}</Text>
 				</GridItem>
 
-				<GridItem   >
-					<Text fontSize={{base: 12, md:14}}>{shortAddress(player.address)}</Text>
+				<GridItem >
+					<Text fontSize={{base: 12, md:14}}>{isMobile ? shortAddress(player.address) : player.address}</Text>
 				</GridItem>
 		
 				<GridItem>
@@ -163,6 +159,7 @@ const PokerLeaderboardComponent = () => {
 				<Button maxW='250px' onClick={() => loadMore()}>Load More</Button>
 			</> }
 		  </InfiniteScroll>
+		  </VStack>
 		</>
 	    )
 	  }, [data, status]);
