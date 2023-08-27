@@ -354,7 +354,7 @@ export const RankPlayers = async (data : any) => {
     rankedPlayers.forEach((player) => {
       player.cards.sort((a, b) => b - a);
       if(player.bestHand.secondaryValue < 2){
-        player.bestHand.secondaryCardEdition = 0;
+        player.bestHand.secondaryCardEdition = -1;
       }
       else{
         let edition = player.cards.find((card) => 

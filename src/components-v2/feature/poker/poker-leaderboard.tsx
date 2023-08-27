@@ -143,7 +143,7 @@ const PokerLeaderboardComponent = () => {
 							<Text
 							fontSize={{base: 8, md:12}}
 							color={'gray.500'}
-						>id:{player.bestHand.secondaryCardEdition}</Text>
+						>id:{player.bestHand.secondaryCardEdition!+1}</Text>
 						}
 					</HStack>
 				</GridItem>
