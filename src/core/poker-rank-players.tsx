@@ -72,8 +72,8 @@ export const getCardName = (card: number) => {
 export const getHandName = (handRef: number) => {
   switch(handRef) {
     case 1: return "Four of a Kind";
-    case 2: return "Straight";
-    case 3: return "Full House";
+    case 2: return "Full House";
+    case 3: return "Straight";
     case 4: return "Three of a Kind";
     case 5: return "Two Pair";
     case 6: return "One Pair";
