@@ -14228,7 +14228,7 @@
       "multiToken": false,
       "address": "0xE97e0636abA2A02E7aB523fc6dE726C3525DBc39",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Brought to you by CROugar Kingdom! Weekly Twitter and Discord giveaways for an entire year!  Maybe you will be a big winner! Get your Wetland Razzle Tix and tune in for the fun!",
         "avatar": "/img/collections/wetland-razzles/avatar.webp",
