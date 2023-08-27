@@ -42,7 +42,7 @@ const BlackListedWallets = [
 ]
 
 export const GetActualEditionNumber = (edition: number) => {
-  let actualEdition = 0;
+  let actualEdition = -1;
   cardValueDict.forEach((cardValue) => {
     if(cardValue.max <= edition) {
       actualEdition = edition - cardValue.max;
@@ -138,6 +138,10 @@ export const RankPlayers = async (data : any) => {
       if(cardCountDict[card] === 4) {
         fourOfAKind = true;
         fourOfAKindValue = parseInt(card);
+      } else if (cardCountDict[card] >= 4){
+        fourOfAKind = true;
+        fourOfAKindValue = parseInt(card);
+        secondaryValue = parseInt(card);
       } else {
         secondaryValue = parseInt(card);
       }
@@ -364,7 +368,7 @@ export const RankPlayers = async (data : any) => {
 
     //check for 4 of a kind
     const fourOfAKind = checkForFourOfAKind(cards);
-    if(fourOfAKind)  return fourOfAKind;
+    if(fourOfAKind) return fourOfAKind;
 
     //check for straight
     const straight = checkForStraight(cards);

@@ -139,7 +139,7 @@ const PokerLeaderboardComponent = () => {
 				<GridItem>
 					<HStack>
 						<Text>{getCardName(player.bestHand.secondaryValue)}</Text>
-						{player?.bestHand?.secondaryCardEdition! > 0 &&
+						{player?.bestHand?.secondaryCardEdition! >= 0 &&
 							<Text
 							fontSize={{base: 8, md:12}}
 							color={'gray.500'}
