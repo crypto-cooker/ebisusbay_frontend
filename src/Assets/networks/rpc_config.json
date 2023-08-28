@@ -23050,6 +23050,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "KillaKoinZ",
+      "slug": "killakoinz",
+      "multiToken": false,
+      "address": "0xBE41a5df790e76C505CC72B51987cf6287D743ac",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "KillaKoinZ are your ticket into a discount for the KillaKatZ side of the KatZ N KidZ ecosystem.",
+        "avatar": "/img/collections/killakoinz/avatar.webp",
+        "card": "/img/collections/killakoinz/card.webp",
+        "banner": "/img/collections/killakoinz/banner.webp",
+        "website": "https://katznkidz.com/",
+        "twitter": "https://twitter.com/KatZNKidZ",
+        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
