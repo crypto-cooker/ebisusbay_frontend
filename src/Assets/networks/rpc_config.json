@@ -23027,6 +23027,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "DegenzSkulls",
+      "slug": "degenzskulls",
+      "multiToken": false,
+      "address": "0xE46837d6Bf5b6F6C90C1B170aECBFDEc0E4425ea",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "​​​DegenzSkulls is a gambling platform which providing numerous utilities to our NFT members, such as revenue-share, staking rewards, royalties rewards, P2E games, Raffle lottery, Multichain NFT airdrop and more.",
+        "avatar": "/img/collections/degenzskulls/avatar.webp",
+        "card": "/img/collections/degenzskulls/card.webp",
+        "banner": "/img/collections/degenzskulls/banner.webp",
+        "website": "https://degenzskullsnft.com/",
+        "twitter": "https://twitter.com/DegenzSkulls",
+        "discord": "https://discord.gg/3BxwqCmU96",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
