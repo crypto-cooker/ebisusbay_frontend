@@ -22982,6 +22982,27 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Dragon Warriors Booster",
+      "slug": "dragon-warriors-booster",
+      "multiToken": false,
+      "address": "0x73cc8C969090441B0b3B880f2642A07eFB08D562",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dragon warrior gen1booster 50% funds to staking for holders 40% to gen 1 staking for holders 10% project",
+        "avatar": "/img/collections/dragon-warriors-booster/avatar.webp",
+        "card": "/img/collections/dragon-warriors-booster/card.webp",
+        "twitter": "https://twitter.com/DragonW2307",
+        "discord": "https://discord.gg/9gEa38Aqcs",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
