@@ -23075,6 +23075,30 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Mythical Mafia",
+      "slug": "mythical-mafia",
+      "multiToken": false,
+      "address": "0x9ac290d92ba63e3e741e5afd0b9da3b78c50fbb7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Exclusive nft dropped to holders of a Mane City Mythical Blocked Chain plot.  Holding this nft not only represents that you are among the elite builders in Mane City, but also shows that your are part of the family.",
+        "avatar": "/img/collections/mythical-mafia/avatar.webp",
+        "card": "/img/collections/mythical-mafia/card.webp",
+        "banner": "/img/collections/mythical-mafia/banner.webp",
+        "twitter": "https://x.com/mythicalmafia",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
