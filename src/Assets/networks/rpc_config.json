@@ -23003,6 +23003,30 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Veno Unstaked ATOM",
+      "slug": "veno-unstaked-atom",
+      "multiToken": false,
+      "address": "0x10a1d7d9abefbc84f4ebe9daa546f50eb9e5d191",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Each Veno Unstaked ATOM NFT enables the holder to claim the ATOM amount stated on the NFT after the given unlock date on https://veno.finance",
+        "avatar": "/img/collections/veno-unstaked-cro/avatar.webp",
+        "card": "/img/collections/veno-unstaked-cro/card.webp",
+        "banner": "/img/collections/veno-unstaked-cro/banner.webp",
+        "website": "https://veno.finance/",
+        "twitter": "https://twitter.com/VenoFinance",
+        "discord": "https://discord.gg/xQK8f8wu26",
+        "telegram": "https://t.me/VenoFinance",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
