@@ -64,7 +64,7 @@ const PokerLeaderboardComponent = () => {
 	      </Box>
 	    ) : (<>
 		<VStack>
-		{/* <Text fontSize={{base: 12, md:14}} textAlign='center'>Last Updated: {}</Text> */}
+		<Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Must be holding at least 5 cards to be ranked</Text>
 			<InfiniteScroll
 				dataLength={data?.pages ? data.pages.flat().length : 0}
 				next={loadMore}

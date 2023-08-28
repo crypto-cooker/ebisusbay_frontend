@@ -90,6 +90,7 @@ export const RankPlayers = async (data : any) => {
   rankedPlayers = FindBestHand(rankedPlayers);
   rankedPlayers = SetSecondaryCardEdition(rankedPlayers);
   rankedPlayers = RankPlayersByCards(rankedPlayers);
+  rankedPlayers = rankedPlayers.filter((player) => player.cards.length >= 5);
   return rankedPlayers;
 }
 
