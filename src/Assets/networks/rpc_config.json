@@ -28500,8 +28500,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
-      "complete": false,
+      "published": true,
+      "complete": true,
       "images": {
         "drop": "/img/drops/wetland-razzles/drop.webp",
         "banner": "/img/collections/wetland-razzles/banner.webp",
