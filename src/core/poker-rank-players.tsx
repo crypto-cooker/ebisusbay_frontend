@@ -182,7 +182,7 @@ export const RankPlayers = async (data : any) => {
 
     if(straight) {
       return {
-        handRef: 2,
+        handRef: 3,
         primaryValue: straightValue,
         secondaryValue: uniqueCards[uniqueCards.length - 1],
         handDescription: getCardName(uniqueCards[straightStartIndex+ 4]) + " - " + getCardName(uniqueCards[straightStartIndex])
@@ -215,7 +215,7 @@ export const RankPlayers = async (data : any) => {
     })
     if(threeOfAKind && twoOfAKind) {
       return {
-        handRef: 3,
+        handRef: 2,
         primaryValue: threeOfAKindValue,
         secondaryValue: twoOfAKindValue,
         handDescription: getCardName(threeOfAKindValue) + "s " + getCardName(twoOfAKindValue)+ "s"
@@ -371,13 +371,13 @@ export const RankPlayers = async (data : any) => {
     const fourOfAKind = checkForFourOfAKind(cards);
     if(fourOfAKind) return fourOfAKind;
 
-    //check for straight
-    const straight = checkForStraight(cards);
-    if(straight) return straight;
-
     //check for full house
     const fullHouse = checkForFullHouse(cards);
     if(fullHouse) return fullHouse;
+
+    //check for straight
+    const straight = checkForStraight(cards);
+    if(straight) return straight;
 
     //check for three of a kind
     const threeOfAKind = checkForThreeOfAKind(cards);
