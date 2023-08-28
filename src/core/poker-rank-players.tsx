@@ -166,16 +166,14 @@ export const RankPlayers = async (data : any) => {
     let straight = false;
     let straightValue = 0;
     let straightStartIndex = 0;
-    for(let i = 0; i < uniqueCards.length - 5; i++) {
+    for(let i = 0; i <= uniqueCards.length - 5; i++) {
       if(uniqueCards[i] - 1 === uniqueCards[i + 1] &&
         uniqueCards[i + 1] - 1 === uniqueCards[i + 2] &&
         uniqueCards[i + 2] - 1 === uniqueCards[i + 3] &&
-        uniqueCards[i + 3] - 1 === uniqueCards[i + 4] &&
-        uniqueCards[i + 4] - 1 === uniqueCards[i + 5]) {
+        uniqueCards[i + 3] - 1 === uniqueCards[i + 4]) {
           straight = true;
           straightValue = uniqueCards[i + 4];
           straightStartIndex = i;
-          break;
         }
     }
     cards.sort((a, b) => a - b);
