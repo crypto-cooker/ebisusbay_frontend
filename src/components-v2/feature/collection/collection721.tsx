@@ -15,7 +15,8 @@ import {
   isCnsCollection,
   isCronosVerseCollection,
   isCrosmocraftsCollection,
-  isLandDeedsCollection
+  isLandDeedsCollection,
+  isPlayingCardsCollection
 } from '@src/utils';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {CollectionSortOption} from '@src/Components/Models/collection-sort-option.model';
@@ -38,6 +39,7 @@ import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import useGetStakingPlatform from "@src/hooks/useGetStakingPlatform";
 import ImageService from "@src/core/services/image";
 import DynastiesLands from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands";
+import PokerLeaderboardComponent from '@src/components-v2/feature/poker/poker-leaderboard';
 
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
@@ -54,6 +56,7 @@ const tabs = {
   activity: 'activity',
   map: 'map',
   dynastiesMap: 'dynastiesMap',
+  pokerRanks: 'pokerRanks',
   cns: 'cns'
 };
 
@@ -329,6 +332,11 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
                 <span onClick={handleBtnClick(tabs.dynastiesMap)}>Map</span>
               </li>
             )}
+            {isPlayingCardsCollection(collection.address) && (
+              <li className={`tab ${openMenu === tabs.pokerRanks ? 'active' : ''} my-1`}>
+                <span onClick={handleBtnClick(tabs.pokerRanks)}>Leaderboard</span>
+              </li>
+            )}
           </ul>
 
           <div className="de_tab_content">
@@ -405,6 +413,11 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
             {openMenu === tabs.dynastiesMap && (
               <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
                 <DynastiesLands onBack={emptyFunction} />
+              </NegativeMargin>
+            )}
+            {openMenu === tabs.pokerRanks && (
+              <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
+                <PokerLeaderboardComponent />
               </NegativeMargin>
             )}
             {openMenu === tabs.cns && (

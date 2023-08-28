@@ -19,6 +19,8 @@ import Graph from "@src/core/services/api-service/graph";
 import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
 import {caseInsensitiveCompare} from "@src/utils";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
+import {getOwners} from "@src/core/subgraph"
+import {Player, RankPlayers} from "@src/core/poker-rank-players"
 import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 
 export class ApiService implements Api {
@@ -75,6 +77,29 @@ export class ApiService implements Api {
     query.purchaser = address;
 
     return await this.getOffers(query);
+  }
+
+  async getRyoshiDiamondsLeaderboard(page: number, pageSize: number): Promise<any> {
+    //info from subgraph
+
+    const owners = await getOwners();
+    //rank the info
+    
+    const response = await RankPlayers(owners);
+
+    function paginate(array : any, page_size:number, page_number:number) {
+      return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    //convert response to paged list
+    const paginatedResponse = paginate(response, pageSize, page);
+    const totalPages = Math.ceil(response.length / pageSize);
+
+    return new PagedList<Player>(
+      paginatedResponse,
+      page,
+      page < totalPages
+    );
   }
 
   async getReceivedOffersByUser(address: string, query?: OffersV2QueryParams): Promise<PagedList<Offer>> {
@@ -200,10 +225,18 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.claimDailyRewards(address, signature);
   }
 
-  async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string) {
-    return this.cms.requestSeasonalRewardsClaimAuthorization(address, amount, seasonId, signature);
+  async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string) {
+    return this.cms.requestSeasonalRewardsClaimAuthorization(address, amount, signature);
   }
 
+  async requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string) {
+    return this.cms.requestSeasonalRewardsCompoundAuthorization(address, amount, vaultIndex, signature);
+  }
+
+
+  async getPendingFortuneAuthorizations(address: string, signature: string) {
+    return this.cms.getPendingFortuneAuthorizations(address, signature);
+  }
   async getGlobalContext() {
     return this.cms.getGlobalContext();
   }

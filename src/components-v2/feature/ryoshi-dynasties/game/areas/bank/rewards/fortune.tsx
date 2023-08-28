@@ -1,24 +1,48 @@
 import {useAppSelector} from "@src/Store/hooks";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {ApiService} from "@src/core/services/api-service";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
-import {Box, Center, Flex, HStack, Image, Spacer, Spinner, Stack, Text, useDisclosure, VStack} from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Image,
+  SimpleGrid,
+  Spacer,
+  Spinner,
+  Stack,
+  Text,
+  useDisclosure,
+  VStack
+} from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import RdButton from "../../../../components/rd-button";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import RdProgressBar from "@src/components-v2/feature/ryoshi-dynasties/components/rd-progress-bar";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {round} from "@src/utils";
+import {round, timeSince} from "@src/utils";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {useFortunePrice} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {ethers} from "ethers";
+import {commify} from "ethers/lib/utils";
+import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
+import moment from 'moment';
 
 const config = appConfig();
 
@@ -46,10 +70,16 @@ const FortuneRewardsTab = () => {
       const totalTime = Date.parse(rdGameContext.season.endAt) - Date.parse(rdGameContext.season.startAt);
       const currentElapsed = Date.parse(rdGameContext.season.endAt) - Date.now();
       setSeasonTimeRemaining(Math.floor(((totalTime - currentElapsed) / totalTime) * 100));
-      setBurnMalus(rdGameContext!.rewards.burnPercentage / 100);
+      // setBurnMalus(rdGameContext!.rewards.burnPercentage / 100);
     }
 
   }, [rdGameContext]);
+
+  useEffect(() => {
+    if (!!rewards?.data?.rewards) {
+      setBurnMalus(rewards.data.rewards.currentBurnPercentage / 100);
+    }
+  }, [rewards]);
 
   return (
     <Box>
@@ -76,14 +106,9 @@ const FortuneRewardsTab = () => {
           </Center>
         ) : (
           <>
-            {rewards.data.rewards.length > 0 ? (
+            {!!rewards.data.rewards ? (
               <>
-                <Box py={4}><hr /></Box>
-                {rewards.data.rewards.map((reward: any) => (
-                  <>
-                    <ClaimRow reward={reward} burnMalus={burnMalus} />
-                  </>
-                ))}
+                <ClaimRow reward={rewards.data.rewards} burnMalus={burnMalus} onRefresh={refetch} />
               </>
             ) : (
               <Box mt={2}>
@@ -97,28 +122,21 @@ const FortuneRewardsTab = () => {
   )
 }
 
-const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
+const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: number, onRefresh: () => void}) => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
-  const [isLoading, getSigner] = useCreateSigner();
+  const [_, getSigner] = useCreateSigner();
   const [executingClaim, setExecutingClaim] = useState(false);
+  const [executingCompound, setExecutingCompound] = useState(false);
+  const [executingCancelCompound, setExecutingCancelCompound] = useState(false);
   const { isOpen: isConfirmationOpen, onOpen: onOpenConfirmation, onClose: onCloseConfirmation } = useDisclosure();
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
+  const [existingAuthWarningOpenWithProps, setExistingAuthWarningOpenWithProps] = useState<{type: string, onCancel: () => void, onCancelComplete: () => void} | boolean>(false);
 
   const isCurrentSeason = rdGameContext?.season.blockId === reward.blockId;
+  const queryClient = useQueryClient();
 
-  // Round down decimals so that user can't claim more than they have
-  function convertToNumberAndRoundDown(numStr: string): number {
-    const precision = 13; // the precision you want to keep
-    const parts = numStr.split('.');
-    if (parts.length === 2 && parts[1].length > precision) {
-      parts[1] = parts[1].substring(0, precision);
-      numStr = parts.join('.');
-    }
-    return Number(numStr);
-  }
-
-  const handleWithdraw = async (amountAsString: string, seasonId: number) => {
+  const handleClaim = async (amountAsString: string, seasonId: number, force = false) => {
     try {
       setExecutingClaim(true);
       onCloseConfirmation();
@@ -130,45 +148,184 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
         signatureInStorage = signature;
       }
       if (signatureInStorage) {
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, seasonId, signatureInStorage)
+        const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signatureInStorage);
+        const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+        const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+        const mustCancelClaim = !!pendingClaim && pendingClaim.seasonId !== seasonId;
+
+        if (!force && (pendingCompound || mustCancelClaim)) {
+          setExistingAuthWarningOpenWithProps({
+            type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
+            onCancel: async () => {
+              if (pendingClaim) await handleCancelClaim(pendingClaim.seasonId);
+              else await handleCancelCompound(Number(pendingCompound.vaultIndex), pendingCompound.seasonId);
+            },
+            onCancelComplete: () => {
+              setExistingAuthWarningOpenWithProps(false);
+              handleClaim(amountAsString, seasonId, true);
+            }
+          });
+          return;
+        }
+
+        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signatureInStorage)
         const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
         await tx.wait();
+
+        queryClient.setQueryData(
+          ['BankSeasonalRewards', user.address],
+          (oldData: any) => {
+            return {
+              ...oldData,
+              data: {
+                ...oldData.data,
+                rewards: {
+                  ...oldData.data.rewards,
+                  currentRewards: '0'
+                }
+              }
+            }
+          }
+        );
+
+        toast.success('Withdraw success!');
       }
-      toast.success('Withdraw success!')
     } catch (e) {
       console.log(e);
+    } finally {
+      setExecutingClaim(false);
     }
+  }
+
+  const handleCancelClaim = async (seasonId: number) => {
+    try {
+      setExecutingClaim(true);
+      const flooredAmount = Math.floor(Number(reward.currentRewards));
+
+      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
+      if (!signatureInStorage) {
+        const { signature } = await getSigner();
+        signatureInStorage = signature;
+      }
+      if (signatureInStorage) {
+        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signatureInStorage)
+        const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+        await tx.wait();
+        toast.success('Previous request cancelled');
+      }
+    }
+    // catch (e) {
+    //   console.log(e);
+    // }
     finally {
       setExecutingClaim(false);
     }
   }
 
-  return (
-    <Flex justify='space-between' mt={2}>
-      <VStack align='start' spacing={0}>
-        <Text fontSize='xl' fontWeight='bold'>
-          {isCurrentSeason ? 'Current Season' : `Season ${reward.blockId}`}
-        </Text>
-        <HStack>
-          <FortuneIcon boxSize={6} />
-          <Text fontSize='lg' fontWeight='bold'>{round(convertToNumberAndRoundDown(reward.currentRewards), 3)}</Text>
-          <Text as='span' ms={1} fontSize='sm' color="#aaa">~${round((fortunePrice ? Number(fortunePrice.usdPrice) : 0) * reward.currentRewards, 2)}</Text>
-        </HStack>
-        <Text fontSize='sm' color='#aaa'>{round(reward.aprRewards, 3)} staking + {round(reward.listingRewards, 3)} listing rewards</Text>
+  const handleCompound = async (vault: FortuneStakingAccount, seasonId: number, force = false) => {
+    try {
+      setExecutingCompound(true);
+      const flooredAmount = convertToNumberAndRoundDown(reward.currentRewards);
 
-      </VStack>
-      <Flex direction='column'>
-        <Spacer />
-        <RdButton
-          size='sm'
-          onClick={() => isCurrentSeason ? onOpenConfirmation() : handleWithdraw(reward.currentRewards, Number(reward.seasonId))}
-          isLoading={executingClaim}
-          loadingText='Claiming...'
-        >
-          Claim
-        </RdButton>
-        <Spacer />
-      </Flex>
+      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
+      if (!signatureInStorage) {
+        const { signature } = await getSigner();
+        signatureInStorage = signature;
+      }
+      if (signatureInStorage) {
+        const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signatureInStorage);
+        const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+        const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+        const mustCancelCompound = !!pendingCompound && Number(pendingCompound.vaultIndex) !== Number(vault.index);
+
+        if (!force && (pendingClaim || mustCancelCompound)) {
+          setExistingAuthWarningOpenWithProps({
+            type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
+            onCancel: async () => {
+              if (pendingClaim) await handleCancelClaim(pendingClaim.seasonId);
+              else await handleCancelCompound(vault.index, pendingCompound.seasonId);
+            },
+            onCancelComplete: () => {
+              setExistingAuthWarningOpenWithProps(false);
+              handleCompound(vault, seasonId, true);
+            }
+          });
+          return;
+        }
+
+        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vault.index, signatureInStorage)
+
+        const tx = await user.contractService?.ryoshiPlatformRewards.compound(auth.data.reward, auth.data.signature);
+        await tx.wait();
+
+        queryClient.setQueryData(
+          ['BankSeasonalRewards', user.address],
+        (oldData: any) => {
+            return {
+              ...oldData,
+              data: {
+                ...oldData.data,
+                rewards: {
+                  ...oldData.data.rewards,
+                  currentRewards: '0'
+                }
+              }
+            }
+          }
+        );
+
+        toast.success('Compound complete!');
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setExecutingCompound(false);
+    }
+  }
+
+  const handleCancelCompound = async (vaultIndex: number, seasonId: number) => {
+    try {
+      setExecutingCancelCompound(true);
+      const flooredAmount = convertToNumberAndRoundDown(reward.currentRewards);
+
+      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
+      if (!signatureInStorage) {
+        const { signature } = await getSigner();
+        signatureInStorage = signature;
+      }
+      if (signatureInStorage) {
+        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vaultIndex, signatureInStorage)
+        const tx = await user.contractService?.ryoshiPlatformRewards.cancelCompound(auth.data.reward, auth.data.signature);
+        await tx.wait();
+        toast.success('Previous request cancelled');
+      }
+    }
+    // catch (e) {
+    //   console.log(e);
+    // }
+    finally {
+      setExecutingCancelCompound(false);
+    }
+  }
+
+  return (
+    <>
+      <CurrentSeasonRecord
+        reward={reward}
+        onClaim={onOpenConfirmation}
+        isExecutingClaim={executingClaim}
+        onCompound={handleCompound}
+        isExecutingCompound={executingCompound || executingCancelCompound}
+      />
+
+      <PendingAuthorizationWarningDialog
+        isOpen={!!existingAuthWarningOpenWithProps}
+        onClose={() => setExistingAuthWarningOpenWithProps(false)}
+        type={(existingAuthWarningOpenWithProps as any)!.type}
+        onExecuteCancel={(existingAuthWarningOpenWithProps as any)!.onCancel}
+        onCancelComplete={(existingAuthWarningOpenWithProps as any)!.onCancelComplete}
+      />
+
       <RdModal
         isOpen={isConfirmationOpen}
         onClose={onCloseConfirmation}
@@ -186,7 +343,7 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
               Cancel
             </RdButton>
             <RdButton
-              onClick={() => handleWithdraw(reward.currentRewards, Number(reward.seasonId))}
+              onClick={() => handleClaim(reward.currentRewards, Number(reward.seasonId))}
               size='lg'
             >
               Confirm
@@ -194,7 +351,247 @@ const ClaimRow = ({reward, burnMalus}: {reward: any, burnMalus: number}) => {
           </Stack>
         </RdModalFooter>
       </RdModal>
-    </Flex>
+    </>
   )
 }
 export default FortuneRewardsTab;
+
+const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isExecutingCompound}: SeasonRecordProps) => {
+  const user = useAppSelector((state) => state.user);
+  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedVaultIndex, setSelectedVaultIndex] = useState(0);
+  const [feeCompoundVaults, setFeeCompoundVaults] = useState<any[]>([]);
+  const [noFeeCompoundVaults, setNoFeeCompoundVaults] = useState<any[]>([]);
+
+  const { data: account, status, error, refetch } = useQuery(
+    ['UserStakeAccount', user.address],
+    () => ApiService.withoutKey().ryoshiDynasties.getBankStakingAccount(user.address!),
+    {
+      enabled: !!user.address,
+    }
+  )
+
+  const handleExpandCompound = useCallback(async () => {
+    if (isExpanded) {
+      setIsExpanded(false);
+      return;
+    }
+    setIsExpanded(true);
+  }, [isExpanded]);
+
+  const handleSelectVault = useCallback(async (vault: any) => {
+    setSelectedVaultIndex(vault.index);
+    onCompound(vault, Number(reward.seasonId));
+  }, [onCompound]);
+
+  useEffect(() => {
+    const sortRule = (a: FortuneStakingAccount, b: FortuneStakingAccount) => Number(b.endTime) - Number(a.endTime);
+
+    setFeeCompoundVaults(account?.vaults.filter((vault) => {
+      const endTime = vault.endTime * 1000;
+      const now = Date.now();
+      const threshold = 60*60*24*90*1000; // 90 days
+      return vault.open && endTime - now < threshold && endTime - now > 0;
+    }).sort(sortRule) || []);
+
+    setNoFeeCompoundVaults(account?.vaults.filter((vault) => {
+      const endTime = vault.endTime * 1000;
+      const now = Date.now();
+      const threshold = 60*60*24*90*1000; // 90 days
+      return vault.open && endTime - now >= threshold;
+    }).sort(sortRule) || []);
+  }, [account]);
+
+  return (
+    <Accordion index={isExpanded ? [0] : undefined} allowToggle>
+      <AccordionItem style={{borderWidth:'0'}}>
+        <Flex justify='space-between' mt={2}>
+          <VStack align='start' spacing={0}>
+            <Text fontSize='xl' fontWeight='bold'>
+              Current Rewards
+            </Text>
+            <HStack>
+              <FortuneIcon boxSize={6} />
+              <Text fontSize='lg' fontWeight='bold'>{round(convertToNumberAndRoundDown(reward.currentRewards), 3)}</Text>
+              <Text as='span' ms={1} fontSize='sm' color="#aaa">~${round((fortunePrice ? Number(fortunePrice.usdPrice) : 0) * reward.currentRewards, 2)}</Text>
+            </HStack>
+            {reward.currentRewards === reward.totalRewards && (
+              <Text fontSize='sm' color='#aaa'>{round(reward.aprRewards, 3)} staking + {round(reward.listingRewards, 3)} listing rewards</Text>
+            )}
+          </VStack>
+          <Flex direction='column'>
+            <Spacer />
+            <Stack direction={{base: 'column', sm: 'row'}}>
+              {!isExecutingClaim && (
+                <AccordionButton w='full' p={0}>
+                  <RdButton
+                    size='sm'
+                    onClick={handleExpandCompound}
+                  >
+                    Compound
+                  </RdButton>
+                </AccordionButton>
+              )}
+              <Flex direction='column'>
+                <Spacer />
+                <RdButton
+                  size='sm'
+                  onClick={onClaim}
+                  isLoading={isExecutingClaim}
+                  loadingText='Claiming...'
+                >
+                  Claim
+                </RdButton>
+                <Spacer />
+              </Flex>
+            </Stack>
+            <Spacer />
+          </Flex>
+        </Flex>
+        <AccordionPanel>
+          {!!account && account.vaults.length > 0 ? (
+            <>
+              <Box mb={2}>
+                <Box fontWeight='bold'>Compound to Vault Vaults</Box>
+                <Box fontSize='sm' color="#aaa">Only vaults that expire later than 90 days are eligible for compounding and will cost zero Karmic Debt</Box>
+              </Box>
+              {noFeeCompoundVaults.length > 0 ? (
+                <SimpleGrid columns={{base: 2, sm: 3, md: 4}} gap={4}>
+                  {noFeeCompoundVaults.map((vault, index) => (
+                    <Box
+                      key={vault.index}
+                      height='full'
+                      w='full'
+                      p={2}
+                      bg='whiteAlpha.200'
+                      rounded='md'
+                    >
+                      <VStack w='full' align='start'>
+                        <Box textAlign='center' w='full' mb={2} fontWeight='bold' fontSize='lg'>
+                          Vault {Number(vault.index) + 1}
+                        </Box>
+                        <Grid templateColumns='26px 1fr' w='full' fontSize='xs' fontWeight='normal' gap={2}>
+                          <GridItem textAlign='start'>
+                            <FortuneIcon boxSize={4} />
+                          </GridItem>
+                          <GridItem textAlign='end'>
+                            <Box as='span'>{commify(round(Number(ethers.utils.formatEther(vault.balance))))}</Box>
+                          </GridItem>
+                          <GridItem textAlign='start'>
+                            <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={4}/>
+                          </GridItem>
+                          <GridItem textAlign='end'>
+                            <Box as='span'>{Math.floor(((Number(ethers.utils.formatEther(vault.balance)) * Number(vault.length / (86400)) / 1080) / rdConfig.bank.staking.fortune.mitamaTroopsRatio))}</Box>
+                          </GridItem>
+                          <GridItem textAlign='start'>
+                            Exp:
+                          </GridItem>
+                          <GridItem textAlign='end'>
+                            <Box as='span'>{timeSince(vault.endTime)}</Box>
+                          </GridItem>
+                        </Grid>
+                      </VStack>
+                      <Button
+                        size='sm'
+                        mt={1}
+                        w='full'
+                        variant='outline'
+                        onClick={() => handleSelectVault(vault)}
+                        isLoading={isExecutingCompound && selectedVaultIndex === vault.index}
+                        isDisabled={isExecutingCompound && selectedVaultIndex === vault.index}
+                      >
+                        Choose
+                      </Button>
+                    </Box>
+                  ))}
+                </SimpleGrid>
+              ) : (
+                <Text align='center' color='#aaa'>No vaults found</Text>
+              )}
+            </>
+          ) : (
+            <Text align='center'>No vaults found. Create a $Fortune vault from the Bank screen and then use the vault here to start compounding</Text>
+          )}
+        </AccordionPanel>
+      </AccordionItem>
+    </Accordion>
+  )
+}
+
+interface SeasonRecordProps {
+  reward: any;
+  onClaim: () => void;
+  isExecutingClaim: boolean;
+  onCompound: (vault: FortuneStakingAccount, seasonId: number) => void;
+  isExecutingCompound?: boolean;
+}
+
+interface VaultIndexWarningDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onExecuteCancel: () => Promise<void>;
+  onCancelComplete: () => void;
+  type: 'CLAIM' | 'COMPOUND';
+}
+
+const PendingAuthorizationWarningDialog = ({isOpen, onClose, onExecuteCancel, onCancelComplete, type}: VaultIndexWarningDialogProps) => {
+  const [executingCancel, setExecutingCancel] = useState(false);
+  const [_, getSigner] = useCreateSigner();
+
+  const handleExecuteCancel = async () => {
+    try {
+      setExecutingCancel(true);
+      await onExecuteCancel();
+      onCancelComplete();
+    } finally {
+      setExecutingCancel(false);
+    }
+  }
+
+  return (
+    <RdModal
+      isOpen={isOpen}
+      onClose={onClose}
+      title='Confirm'
+    >
+      <RdModalAlert>
+        <Text>There is currently a pending {type === 'CLAIM' ? 'claim' : 'compound'}. This must be cancelled before proceeding. Press the <strong>Confirm</strong> button below to continue.</Text>
+        <Text mt={2}>Alternatively, you can close this dialog and wait 5 minutes before requesting again.</Text>
+      </RdModalAlert>
+      <RdModalFooter>
+        <Stack justify='center' direction='row' spacing={6}>
+          {!executingCancel && (
+            <RdButton
+              onClick={onClose}
+              size='lg'
+            >
+              Cancel
+            </RdButton>
+          )}
+          <RdButton
+            onClick={handleExecuteCancel}
+            size='lg'
+            isLoading={executingCancel}
+            isDisabled={executingCancel}
+            loadingText='Confirming'
+          >
+            Confirm
+          </RdButton>
+        </Stack>
+      </RdModalFooter>
+    </RdModal>
+  )
+}
+
+// Round down decimals so that user can't claim more than they have
+function convertToNumberAndRoundDown(numStr: string): number {
+  const precision = 13; // the precision you want to keep
+  const parts = numStr.split('.');
+  if (parts.length === 2 && parts[1].length > precision) {
+    parts[1] = parts[1].substring(0, precision);
+    numStr = parts.join('.');
+  }
+  return Number(numStr);
+}

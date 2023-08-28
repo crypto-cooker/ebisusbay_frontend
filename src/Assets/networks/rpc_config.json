@@ -9194,8 +9194,8 @@
         "avatar": "/img/collections/crodoo/avatar.webp",
         "card": "/img/collections/crodoo/card.webp",
         "banner": "/img/collections/crodoo/banner.webp",
-        "website": "https://crodoonft.com/",
-        "twitter": "https://twitter.com/CroDooNFT",
+        "website": "https://cro.doonft.com/",
+        "twitter": "https://twitter.com/TheDooNFT",
         "discord": "https://discord.gg/W43dReVMq5",
         "rankings": {
           "source": "provided"
@@ -14228,7 +14228,7 @@
       "multiToken": false,
       "address": "0xE97e0636abA2A02E7aB523fc6dE726C3525DBc39",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Brought to you by CROugar Kingdom! Weekly Twitter and Discord giveaways for an entire year!  Maybe you will be a big winner! Get your Wetland Razzle Tix and tune in for the fun!",
         "avatar": "/img/collections/wetland-razzles/avatar.webp",
@@ -22890,6 +22890,98 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "Trusted Cases",
+      "slug": "trusted-cases",
+      "multiToken": false,
+      "address": "0x5e8f23c596BB2B665046b697001524a89C689413",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "\"With Cronos new to the game. I've seen tons of projects fail, give up, or just straight out rug. So many paper hands expecting to get rich overnight.\"  \"Investing is a long-term decision\"  -Trusted Founder and project lead  Here at Trusted we're in it for the Long haul. A majority of sales generated from mint will be forever locked. A small portion will be used to develop the project. Distributing 1/2 of returns to holders of this NFT. The other half will be locked used to grow the pool. We are also taking a percentage of secondary sales that will also go directly to the pool and remain locked. Consistently growing our pool which in turn will bring us the most profitable long-term returns. Utility is our goal.",
+        "avatar": "/img/collections/trusted-cases/avatar.webp",
+        "card": "/img/collections/trusted-cases/card.webp",
+        "banner": "/img/collections/trusted-cases/banner.webp",
+        "website": "https://cronossteakhouse.com/launchpad/trusted",
+        "twitter": "https://www.twitter.com/CroShop_Trade",
+        "discord": "https://discord.gg/S6TzckDQtz",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "The Liberators",
+      "slug": "the-liberators",
+      "multiToken": false,
+      "address": "0xC0D28282A4780e099884f344A9746A2D75A1BAF7",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Ever wanted to own the libs? Now you can! The Liberators, Cronos Steakhouse's 4th of July Special collection! First minted during 2023 Independence week, These feisty fellows will liberate you from FEEdom across the steakhouse ecosystem! Structured fee discounts on all future smart contracts based on amount held/time consumed",
+        "avatar": "/img/collections/the-liberators/avatar.webp",
+        "card": "/img/collections/the-liberators/card.webp",
+        "banner": "/img/collections/the-liberators/banner.webp",
+        "website": "https://www.cronossteakhouse.com/",
+        "twitter": "https://www.twitter.com/CronoSteakHouse",
+        "discord": "https://discord.gg/fpTgAReDyN",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Chefz Army",
+      "slug": "chefz-army",
+      "multiToken": false,
+      "address": "0x724900a57ED516ba023b1F5F86A92E222BC32D02",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/chefz-army/avatar.webp",
+        "card": "/img/collections/chefz-army/card.webp",
+        "banner": "/img/collections/chefz-army/banner.webp",
+        "website": "https://www.cronossteakhouse.com/",
+        "twitter": "https://www.twitter.com/CronoSteakHouse",
+        "discord": "https://discord.gg/fpTgAReDyN",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Alpha Invitations",
+      "slug": "alpha-invitations",
+      "multiToken": false,
+      "address": "0x257f30fbD890840FA00c2e0f043cF5Ad9A631546",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "We are a group of hustlers, fighting everyday to make Cronos a better place.    We Hyenas have a mission. A Mission to make Cronos a better place to be! To bring back the promise of solidity in projects.  Our objective is to demonstrate that Cronos is not only a great chain to be on, but also a home for amazing and profitable projects. To show what a strong team of dedicated DeFi enthusiats can achieve working together with the community always in mind  We're bringing together all of the things that make NFT projects great, NFT Staking, Effective tokenomics, GameFi, a strong and integrated ecosystem for our community to earn that ROI and more.   Goals:  1) Make a sustainable project from one collection. 2) Put the best Cronos utilities into one collection.",
+        "avatar": "/img/collections/alpha-invitations/avatar.webp",
+        "card": "/img/collections/alpha-invitations/card.webp",
+        "banner": "/img/collections/alpha-invitations/banner.webp",
+        "website": "https://hyenahustlers.xyz/",
+        "twitter": "https://twitter.com/hyenahustlers",
+        "discord": "https://discord.gg/dkvVXHvJ",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -28408,8 +28500,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
-      "complete": false,
+      "published": true,
+      "complete": true,
       "images": {
         "drop": "/img/drops/wetland-razzles/drop.webp",
         "banner": "/img/collections/wetland-razzles/banner.webp",
