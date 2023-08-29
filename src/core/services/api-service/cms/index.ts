@@ -30,6 +30,10 @@ class Cms {
     return this.ryoshiDynasties.requestBankStakeAuthorization(nfts, address, signature);
   }
 
+  async requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
+    return this.ryoshiDynasties.requestBankUnstakeAuthorization(nfts, address, signature);
+  }
+
   async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
     return this.ryoshiDynasties.requestBarracksStakeAuthorization(nfts, address, signature);
   }

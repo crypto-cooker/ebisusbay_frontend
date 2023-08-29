@@ -25,6 +25,20 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
+  async requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
+    const response = await this.cms.get('ryoshi-dynasties/staking/authorize/bank/withdraw', {
+      params: {
+        user: address,
+        contractAddress: nfts.map(nft => nft.nftAddress),
+        tokenId: nfts.map(nft => nft.nftId),
+        amount: nfts.map(nft => nft.amount),
+        address,
+        signature
+      }
+    })
+    return response.data;
+  }
+
   async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
     const response = await this.cms.get('ryoshi-dynasties/staking/authorize/barracks', {
       params: {
@@ -40,7 +54,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
   }
 
   async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
-    const response = await this.cms.get('ryoshi-dynasties/staking/authorize/withdraw', {
+    const response = await this.cms.get('ryoshi-dynasties/staking/authorize/barracks/withdraw', {
       params: {
         user: address,
         contractAddress: nfts.map(nft => nft.nftAddress),

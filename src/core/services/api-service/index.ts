@@ -197,6 +197,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.requestBankStakeAuthorization(nfts, address, signature);
   }
 
+  async requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
+    return this.cms.requestBankUnstakeAuthorization(nfts, address, signature);
+  }
+
   async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
     return this.cms.requestBarracksStakeAuthorization(nfts, address, signature);
   }
