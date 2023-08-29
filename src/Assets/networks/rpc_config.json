@@ -22312,7 +22312,7 @@
       "name": "Time Commanders",
       "slug": "time-commanders",
       "multiToken": false,
-      "address": "0xBE6B2d035289A90987781026732C4B6BB47F7686",
+      "address": "0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -22981,6 +22981,123 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "Dragon Warriors Booster",
+      "slug": "dragon-warriors-booster",
+      "multiToken": false,
+      "address": "0x73cc8C969090441B0b3B880f2642A07eFB08D562",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dragon warrior gen1booster 50% funds to staking for holders 40% to gen 1 staking for holders 10% project",
+        "avatar": "/img/collections/dragon-warriors-booster/avatar.webp",
+        "card": "/img/collections/dragon-warriors-booster/card.webp",
+        "twitter": "https://twitter.com/DragonW2307",
+        "discord": "https://discord.gg/9gEa38Aqcs",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Veno Unstaked ATOM",
+      "slug": "veno-unstaked-atom",
+      "multiToken": false,
+      "address": "0x10a1d7d9abefbc84f4ebe9daa546f50eb9e5d191",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Each Veno Unstaked ATOM NFT enables the holder to claim the ATOM amount stated on the NFT after the given unlock date on https://veno.finance",
+        "avatar": "/img/collections/veno-unstaked-cro/avatar.webp",
+        "card": "/img/collections/veno-unstaked-cro/card.webp",
+        "banner": "/img/collections/veno-unstaked-cro/banner.webp",
+        "website": "https://veno.finance/",
+        "twitter": "https://twitter.com/VenoFinance",
+        "discord": "https://discord.gg/xQK8f8wu26",
+        "telegram": "https://t.me/VenoFinance",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "DegenzSkulls",
+      "slug": "degenzskulls",
+      "multiToken": false,
+      "address": "0xE46837d6Bf5b6F6C90C1B170aECBFDEc0E4425ea",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "​​​DegenzSkulls is a gambling platform which providing numerous utilities to our NFT members, such as revenue-share, staking rewards, royalties rewards, P2E games, Raffle lottery, Multichain NFT airdrop and more.",
+        "avatar": "/img/collections/degenzskulls/avatar.webp",
+        "card": "/img/collections/degenzskulls/card.webp",
+        "banner": "/img/collections/degenzskulls/banner.webp",
+        "website": "https://degenzskullsnft.com/",
+        "twitter": "https://twitter.com/DegenzSkulls",
+        "discord": "https://discord.gg/3BxwqCmU96",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "KillaKoinZ",
+      "slug": "killakoinz",
+      "multiToken": false,
+      "address": "0xBE41a5df790e76C505CC72B51987cf6287D743ac",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "KillaKoinZ are your ticket into a discount for the KillaKatZ side of the KatZ N KidZ ecosystem.",
+        "avatar": "/img/collections/killakoinz/avatar.webp",
+        "card": "/img/collections/killakoinz/card.webp",
+        "banner": "/img/collections/killakoinz/banner.webp",
+        "website": "https://katznkidz.com/",
+        "twitter": "https://twitter.com/KatZNKidZ",
+        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Mythical Mafia",
+      "slug": "mythical-mafia",
+      "multiToken": false,
+      "address": "0x9ac290d92ba63e3e741e5afd0b9da3b78c50fbb7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Exclusive nft dropped to holders of a Mane City Mythical Blocked Chain plot.  Holding this nft not only represents that you are among the elite builders in Mane City, but also shows that your are part of the family.",
+        "avatar": "/img/collections/mythical-mafia/avatar.webp",
+        "card": "/img/collections/mythical-mafia/card.webp",
+        "banner": "/img/collections/mythical-mafia/banner.webp",
+        "twitter": "https://x.com/mythicalmafia",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
       }
     }
   ],

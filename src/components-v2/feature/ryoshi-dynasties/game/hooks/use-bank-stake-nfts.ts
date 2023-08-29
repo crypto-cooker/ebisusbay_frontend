@@ -61,10 +61,16 @@ const useBankStakeNfts = () => {
         const newNfts = pendingNfts.filter((nft) => !nft.isAlreadyStaked);
 
         if (withdrawNfts.length > 0) {
-          const withdrawTx = await bank.withdrawStake(
-            withdrawNfts.map((nft) => nft.contractAddress),
-            withdrawNfts.map((nft) => nft.tokenId),
+          const approval = await ApiService.withoutKey().ryoshiDynasties.requestBankUnstakeAuthorization(
+            withdrawNfts.map((nft) => ({
+              nftAddress: nft.contractAddress,
+              nftId: nft.tokenId,
+              amount: Number(nft.amount),
+            })),
+            user.address,
+            signatureInStorage
           );
+          const withdrawTx = await bank.endStake(approval.data.unstakeApproval, approval.data.signature);
           await withdrawTx.wait();
         }
 

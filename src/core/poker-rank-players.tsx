@@ -90,6 +90,7 @@ export const RankPlayers = async (data : any) => {
   rankedPlayers = FindBestHand(rankedPlayers);
   rankedPlayers = SetSecondaryCardEdition(rankedPlayers);
   rankedPlayers = RankPlayersByCards(rankedPlayers);
+  rankedPlayers = rankedPlayers.filter((player) => player.cards.length >= 5);
   return rankedPlayers;
 }
 
@@ -165,23 +166,21 @@ export const RankPlayers = async (data : any) => {
     let straight = false;
     let straightValue = 0;
     let straightStartIndex = 0;
-    for(let i = 0; i < uniqueCards.length - 5; i++) {
+    for(let i = 0; i <= uniqueCards.length - 5; i++) {
       if(uniqueCards[i] - 1 === uniqueCards[i + 1] &&
         uniqueCards[i + 1] - 1 === uniqueCards[i + 2] &&
         uniqueCards[i + 2] - 1 === uniqueCards[i + 3] &&
-        uniqueCards[i + 3] - 1 === uniqueCards[i + 4] &&
-        uniqueCards[i + 4] - 1 === uniqueCards[i + 5]) {
+        uniqueCards[i + 3] - 1 === uniqueCards[i + 4]) {
           straight = true;
           straightValue = uniqueCards[i + 4];
           straightStartIndex = i;
-          break;
         }
     }
     cards.sort((a, b) => a - b);
 
     if(straight) {
       return {
-        handRef: 2,
+        handRef: 3,
         primaryValue: straightValue,
         secondaryValue: uniqueCards[uniqueCards.length - 1],
         handDescription: getCardName(uniqueCards[straightStartIndex+ 4]) + " - " + getCardName(uniqueCards[straightStartIndex])
@@ -214,7 +213,7 @@ export const RankPlayers = async (data : any) => {
     })
     if(threeOfAKind && twoOfAKind) {
       return {
-        handRef: 3,
+        handRef: 2,
         primaryValue: threeOfAKindValue,
         secondaryValue: twoOfAKindValue,
         handDescription: getCardName(threeOfAKindValue) + "s " + getCardName(twoOfAKindValue)+ "s"
@@ -370,13 +369,13 @@ export const RankPlayers = async (data : any) => {
     const fourOfAKind = checkForFourOfAKind(cards);
     if(fourOfAKind) return fourOfAKind;
 
-    //check for straight
-    const straight = checkForStraight(cards);
-    if(straight) return straight;
-
     //check for full house
     const fullHouse = checkForFullHouse(cards);
     if(fullHouse) return fullHouse;
+
+    //check for straight
+    const straight = checkForStraight(cards);
+    if(straight) return straight;
 
     //check for three of a kind
     const threeOfAKind = checkForThreeOfAKind(cards);

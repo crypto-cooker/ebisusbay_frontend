@@ -1,5 +1,5 @@
 import {useInfiniteQuery} from "@tanstack/react-query";
-import { Center, Spinner, Box, HStack, useMediaQuery, VStack, } from "@chakra-ui/react";
+import { Center, Spinner, Box, HStack, useMediaQuery, VStack, Link, Button} from "@chakra-ui/react";
 import { useMemo } from "react";
 import { ApiService } from "@src/core/services/api-service";
 import {Text,Grid, GridItem, Flex,SimpleGrid } from "@chakra-ui/react";
@@ -7,17 +7,19 @@ import {getHandName, getCardName, Player } from "@src/core/poker-rank-players";
 import { useEffect, useState, Fragment } from "react";
 import {RankPlayers} from "@src/core/poker-rank-players"
 import InfiniteScroll from "react-infinite-scroll-component";
-import Button from "@src/Components/components/Button";
 import {shortAddress} from "@src/utils";
+import NextLink from "next/link";
+import { InfoIcon, LinkIcon } from "@chakra-ui/icons";
 
 const PokerLeaderboardComponent = () => {
 
 	const [rankedPlayers, setRankedPlayers] = useState<Player[]>([])
   	const params = {} // whatever needed
 	const isMobile = useMediaQuery("(max-width: 768px)")[0];
+	const [updatedAt, setUpdatedAt] = useState<string>();
 
 
-	const { data, fetchNextPage, hasNextPage, status, error} = useInfiniteQuery(
+	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt} = useInfiniteQuery(
 		['RyoshiDiamondsLeaderboard'],
 	  ({pageParam = 1}) => ApiService.withoutKey().getRyoshiDiamondsLeaderboard(pageParam, 500),
 		{
@@ -43,6 +45,14 @@ const PokerLeaderboardComponent = () => {
 
 	}, [data])
 
+	useEffect(() => {
+		if(!dataUpdatedAt) return; 
+
+		const date = new Date(dataUpdatedAt);
+		const dateTimeFormat = new Intl.DateTimeFormat('en', {hour: 'numeric', minute: 'numeric', hour12: false })
+		setUpdatedAt(dateTimeFormat.format(date))
+	}, [dataUpdatedAt])
+
 	const content = useMemo(() => {
 
 		const PrintOutPlayerCards = (cardRanks: number[]) => {
@@ -63,8 +73,15 @@ const PokerLeaderboardComponent = () => {
 	        Error: {(error as any).message}
 	      </Box>
 	    ) : (<>
-		<VStack>
-		{/* <Text fontSize={{base: 12, md:14}} textAlign='center'>Last Updated: {}</Text> */}
+			<HStack>
+		<Text fontSize={{base: 12, md:14}} textAlign='center'>Must be holding at least 5 cards to be ranked</Text>
+			<Link 
+				as={NextLink} 
+				href={'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'} 
+				isExternal={true}>
+				<Button variant={'ghost'} maxW='250px' rightIcon={<InfoIcon/>}>Full Rules</Button>
+			</Link> 
+			</HStack>
 			<InfiniteScroll
 				dataLength={data?.pages ? data.pages.flat().length : 0}
 				next={loadMore}
@@ -158,17 +175,16 @@ const PokerLeaderboardComponent = () => {
 				<Button maxW='250px' onClick={() => loadMore()}>Load More</Button>
 			</> }
 		  </InfiniteScroll>
-		  </VStack>
 		</>
 	    )
 	  }, [data, status]);
 	
-
-	
-	
 	return (
 	  <Flex w={'100%'} justifyContent={'center'} >
-		{content}
+		<VStack>
+			{updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Last refreshed at {updatedAt}</Text>}
+			{content}
+		</VStack>
 	  </Flex>
 	);
 }

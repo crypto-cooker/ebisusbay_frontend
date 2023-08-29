@@ -1,4 +1,4 @@
-import {Center, Flex, Image} from "@chakra-ui/react";
+import {Center, Flex, HStack, Image} from "@chakra-ui/react";
 import React, {ReactElement, useEffect, useState, useRef, useContext} from 'react';
 import {
   Table,
@@ -27,11 +27,12 @@ interface InfoTabProps {
 
 const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
   
-  const [area, setAreas] = useState<ReactElement>();
+  const [leaderboard, setLeaderboard] = useState<ReactElement[]>([]);
   const {game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false, '2xl': false })
   const [weekEndDate, setWeekEndDate] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
-  const ImageRef1 = useRef(null);
+  
   const GetWeekEndDate = async () => {
     if(!rdGameContext) return;
     const timestamp = rdGameContext?.game?.endAt;
@@ -63,44 +64,50 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
       }
     }
   );
-  const parseFactionName = (name: string) => {
-    if(name.length > stringProps?.stringLength!) {
-      return name.substring(0, stringProps?.stringLength) + '...';
-    }
-    return name;
-  }
-  
 
   useEffect(() => {
     if(controlPoint.leaderBoard !== undefined)
     {
       GetWeekEndDate();
-      //get first one and see if the troops is > 0
-      // if() return;
-
-      setAreas(<Tbody>
-        {controlPoint.leaderBoard.filter((faction, index) => index < 5).map((faction, index ) => 
-      (<Tr key={index}>
-        <img
-          width={40}
-          height={40}
-         src={faction.image}></img>
-        <Td  textAlign='center'>
-        <Text
-          fontSize={{base: 14, sm: 14}}
-          >{faction.totalTroops}</Text></Td>
-        <Td  textAlign='center'>
+      setLeaderboard(
+        controlPoint.leaderBoard.filter((faction, index) => index < 5).map((faction, index ) =>  (
+      <Tr key={index} >
+        <Td  textAlign='center' w={16}>{index+1}</Td>
+        
+        <Td textAlign='left' 
+          alignSelf={'center'}
+          alignContent={'center'}
+          alignItems={'center'}
+          isTruncated
+        >
+          <HStack>
+        <Avatar
+          width='40px'
+          height='40px'
+          padding={'0.5px'}
+          src={ImageService.translate(faction.image).avatar()}
+          rounded='xs'
+        />
           <Text
-          fontSize={{base: 14, sm: 14}}
-          >{parseFactionName(faction.name)}</Text></Td>
-      </Tr>))}</Tbody>)
+          isTruncated={isMobile}
+          maxW={'100px'}
+          >
+            {faction.name} 
+          </Text>
+        </HStack>
+
+         </Td>
+        <Td  textAlign='left' 
+          maxW={'200px'}
+          >{faction.totalTroops}</Td>
+      </Tr>
+      )))
       setIsLoaded(true);
     }
     }, [controlPoint])
 
     useEffect(() => {
       setIsLoaded(false);
-      // console.log("opened info tap")
       refreshControlPoint();
       }, [])
 
@@ -110,42 +117,29 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
         {isLoaded && controlPoint?.leaderBoard[0]?.totalTroops !== 0 ? (
           <>
             <Flex flexDirection='column' textAlign='center' justifyContent='space-around'>
-              <TableContainer>
+              
+              <TableContainer w={{base: '100%', sm:'100%'}} h={'250px'}>
                 <Table size='m'>
                   <Thead>
                     <Tr>
-                      <Th textAlign='center' textColor='#a0aec0'></Th>
-                      <Th textAlign='center' textColor='#a0aec0'>Troops</Th>
-                      <Th textAlign='center' textColor='#a0aec0'>Faction</Th>
+                      <Th textAlign='left'>Rank</Th>
+                      <Th textAlign='left'>Faction</Th>
+                      <Th textAlign='left'>Troops</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {controlPoint.leaderBoard.filter((faction, index) => index < 5).map((faction, index ) => (
-                      <Tr key={index}>
-                        <Avatar
-                          // width='40px'
-                          // height='40px'
-                          src={ImageService.translate(faction.image).avatar()}
-                          rounded='xs'
-                        />
-                        <Td textAlign='center'>
-                          <Text fontSize={{base: 14, sm: 14}}>{faction.totalTroops}</Text>
-                        </Td>
-                        <Td textAlign='center'>
-                          <Text fontSize={{base: 14, sm: 14}}>{parseFactionName(faction.name)}</Text>
-                        </Td>
-                      </Tr>
-                    ))}
+                    {leaderboard}
                   </Tbody>
-                  </Table>
+                </Table>
               </TableContainer>
+
               <Flex
                marginTop='8'
                marginBottom='8'
                >
-                <p>
+                <Text as='i' textColor={'#aaa'}>
                   The faction with the highest troop count on {weekEndDate} will receive {controlPoint.points} points
-                </p>
+                </Text>
               </Flex>
             </Flex>
           </>
@@ -158,24 +152,10 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
                   > No Troops currently deployed </Text>
               </Center>
             </Box>
-            {/* <TableContainer>
-              <Table size='m'>
-                <Thead>
-                  <Tr>
-                    <Th textAlign='center' textColor='#a0aec0'>Rank</Th>
-                    <Th textAlign='center' textColor='#a0aec0'>Faction</Th>
-                    <Th textAlign='center' textColor='#a0aec0'>Troops</Th>
-                  </Tr>
-                </Thead>
-                <Tr>1</Tr>
-                <Tr>2</Tr>
-                <Tr>3</Tr>
-                <Tr>4</Tr>
-                <Tr>5</Tr>
-                </Table>
-            </TableContainer> */}
             <Flex marginTop='12' marginLeft='8' marginRight='8' marginBottom='8'>
-              <p>The faction with the highest troop count on {weekEndDate} will recieve rewards!</p>
+              <Text as='i' textColor={'#aaa'}>
+                The faction with the highest troop count on {weekEndDate} will receive {controlPoint.points} points
+              </Text>
             </Flex>
           </Flex>
         )}

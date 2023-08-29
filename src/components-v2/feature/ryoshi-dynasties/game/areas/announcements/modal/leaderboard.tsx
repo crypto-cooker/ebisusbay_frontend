@@ -22,6 +22,7 @@ import {
   GridItem,
   Avatar,
   useBreakpointValue,
+  HStack
 } from "@chakra-ui/react"
 
 import localFont from 'next/font/local';
@@ -140,8 +141,9 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
           alignContent={'center'}
           alignItems={'center'}
           display={'flex'}
-          maxW={'200px'}
+          h={43.5}
         >
+         <HStack>
         <Avatar
           width='40px'
           height='40px'
@@ -149,7 +151,14 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
           src={ImageService.translate(faction.image).avatar()}
           rounded='xs'
         />
-        {isMobile ? limit(faction.name) : faction.name }</Td>
+        <Text
+        isTruncated={isMobile}
+        maxW={'200px'}
+        >
+        {faction.name} 
+        </Text>
+        </HStack>
+        </Td>
         <Td textAlign='left' 
           maxW={'200px'}
           >{faction.totalTroops}</Td>

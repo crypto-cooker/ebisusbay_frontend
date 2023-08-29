@@ -234,6 +234,9 @@ export const configData = {
           '0x5141E99523002317BE6D63214Bf300cBD8269bE6': ['cro', 'frtn', 'bcro'], // 0xluckless-v2-2
           '0x51084c32AA5ee43a0e7bD8220195da53b5c69868': ['cro', 'frtn', 'bcro'], // Trusted Cases
           '0x724900a57ED516ba023b1F5F86A92E222BC32D02': ['cro', 'frtn', 'bcro'], // Chefz Army
+          '0xdCcCEd571dcbC82Bbeadf95Af20ee4442E21208C': ['cro', 'frtn'], // Crougar
+          '0x45958Cb5ede8dc9E1a797C1526D4523db1471F15': ['cro', 'frtn'], // CrougarX
+          '0xE97e0636abA2A02E7aB523fc6dE726C3525DBc39': ['cro', 'frtn'], // Wetland Razzles
         }
       }
     }
