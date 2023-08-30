@@ -5,6 +5,7 @@ import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/off
 export interface OffersV2QueryParams extends Omit<OffersQueryParams, 'type'> {
   wallet?: string;
   type?: ReceivedOfferType;
+  offertype?: string;
 }
 
 class OffersV2Query extends Query<OffersV2QueryParams> {

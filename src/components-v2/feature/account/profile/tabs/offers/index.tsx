@@ -153,6 +153,7 @@ export default function Offers({ address }: OffersProps) {
             <Tab.Pane eventKey={tabs.receivedDirect.key}>
               <ReceivedOffers2
                 type={ReceivedOfferType.ERC721}
+                group='nft'
                 address={address}
                 filterVisible={filtersVisible}
               />
@@ -160,13 +161,15 @@ export default function Offers({ address }: OffersProps) {
             <Tab.Pane eventKey={tabs.receivedPublic.key}>
               <ReceivedOffers2
                 type={ReceivedOfferType.ERC1155}
+                group={undefined}
                 address={address}
                 filterVisible={filtersVisible}
               />
             </Tab.Pane>
             <Tab.Pane eventKey={tabs.receivedCollection.key}>
               <ReceivedOffers2
-                type={ReceivedOfferType.ERC1155}
+                type={ReceivedOfferType.ERC721}
+                group='collection'
                 address={address}
                 filterVisible={filtersVisible}
               />

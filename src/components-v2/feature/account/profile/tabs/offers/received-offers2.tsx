@@ -15,14 +15,16 @@ import NextApiService from "@src/core/services/api-service/next";
 
 interface ReceivedOffersProps {
   address: string;
-  type: string;
+  type: ReceivedOfferType;
+  group?: string;
   filterVisible: boolean;
 }
 
-export default function ReceivedOffers({ address, type, filterVisible }: ReceivedOffersProps) {
+export default function ReceivedOffers({ address, type, group, filterVisible }: ReceivedOffersProps) {
   const [queryParams, setQueryParams] = useState<OffersV2QueryParams>({
     wallet: address,
-    type: type === 'received-direct' ? ReceivedOfferType.ERC721 : ReceivedOfferType.ERC721,
+    type: type,
+    offertype: group,
     page: 1,
     state: OfferState.ACTIVE,
     sortBy: 'price',
@@ -131,7 +133,7 @@ export default function ReceivedOffers({ address, type, filterVisible }: Receive
                 setSelectedOffer(offer);
                 setOfferAction(OFFER_TYPE.reject);
               }}
-              canReject={type === 'received-direct'}
+              canReject={type === ReceivedOfferType.ERC721 && group === 'nft'}
               onSort={handleSort}
               breakpointValue={filterVisible ? 'xl' : 'lg'}
             />
