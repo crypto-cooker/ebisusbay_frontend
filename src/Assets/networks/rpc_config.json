@@ -23173,6 +23173,31 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "JAFC-Comics",
+      "slug": "jafc-comics",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/jafc-comics/avatar.webp",
+        "card": "/img/collections/jafc-comics/card.webp",
+        "banner": "/img/collections/jafc-comics/banner.webp",
+        "website": "https://medium.com/@jungleanimalfc",
+        "twitter": "https://twitter.com/JAFC_nft",
+        "discord": "https://discord.gg/W3HwbZUwfr",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -30244,6 +30269,43 @@
         "doxx": false,
         "kyc": true,
         "escrow": false
+      }
+    },
+    {
+      "id": 177,
+      "slug": "jafc-comics",
+      "title": "JAFC-Comics",
+      "subtitle": "Introducing ROAD TO GOAT - a comic by JAFC COMICS on the cronos chain. The covers come as a free mint. Enjoy the stunning hand-drawn art of Keeve Neo,  read our medium article and join our community.",
+      "description": "JAFC COMICS is a brand by JAFC, a pure art NFT project on the cronos chain. ROAD TO GOAT is the first comic and is about the last fight of the Black Panther to get the \"Greatest of all Time\"\nThe covers of this comic come as a free mint. There are 5 different editions which also differ in their rarity. Like all JAFC collections, this cover comes as a pure art project and without any other utilities. However, certain editions may allow a discount on the following comic chapters. Please read our medium article and feel free to join our community in discord for the latest infos.",
+      "author": {
+        "name": "JAFC Comics",
+        "website": "https://medium.com/@jungleanimalfc",
+        "twitter": "https://twitter.com/JAFC_nft",
+        "discord": "https://discord.gg/W3HwbZUwfr"
+      },
+      "address": "",
+      "maxMintPerTx": 1,
+      "maxMintPerAddress": 1,
+      "totalSupply": 2500,
+      "freeMint": true,
+      "foundersOnly": false,
+      "start": 1693944000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/jafc-comics/drop.webp",
+        "banner": "/img/collections/jafc-comics/banner.webp",
+        "avatar": "/img/collections/jafc-comics/avatar.webp",
+        "preview": "/img/collections/jafc-comics/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
