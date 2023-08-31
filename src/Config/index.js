@@ -246,6 +246,10 @@ export const configData = {
           '0x15Af2503a934D211A1936684fEd986E7E3f417db': ['cro', 'frtn'], // Time Creatures Class B
           '0x739b5380156Fa14C7956145048d52dF27EDedfCE': ['cro', 'frtn'], // Tata's Twisted Tonics
           '0x6cC790CAE45EC057f9637784279A475CC91cf517': ['cro', 'frtn'], // Animated Time Gods
+          '0x73cc8C969090441B0b3B880f2642A07eFB08D562': ['cro', 'frtn'], // Dragon Warriors Booster
+          '0x3fF260ce7A8dFCaDAF5E880137ee1750ceae9889': ['cro', 'frtn', 'bcro'], // The Rainbowland LANDs
+          '0x9ac290d92ba63e3e741e5afd0b9da3b78c50fbb7': ['cro', 'frtn', 'bcro'], // Mythical Mafia
+          '0xE46837d6Bf5b6F6C90C1B170aECBFDEc0E4425ea': ['cro', 'frtn', 'bcro'], // DegenzSkulls
         }
       }
     }
