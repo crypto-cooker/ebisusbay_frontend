@@ -237,6 +237,15 @@ export const configData = {
           '0xdCcCEd571dcbC82Bbeadf95Af20ee4442E21208C': ['cro', 'frtn'], // Crougar
           '0x45958Cb5ede8dc9E1a797C1526D4523db1471F15': ['cro', 'frtn'], // CrougarX
           '0xE97e0636abA2A02E7aB523fc6dE726C3525DBc39': ['cro', 'frtn'], // Wetland Razzles
+          '0x9b72f7d5aecee857cc3d1a1a3357aff0e342d0a8': ['cro', 'frtn'], // Time Machine 101
+          '0x146cf0ee7b6b986769782ea832e8327f9dff55e7': ['cro', 'frtn'], // Tata's Guardians
+          '0x482eBe3063ED2d2281AAfec31941705787432A1A': ['cro', 'frtn'], // Time Machine 102: The Travellers
+          '0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35': ['cro', 'frtn'], // Time Ship Blueprints
+          '0x55c8f67e6D3f037297Daf94AD2bCC67CC477BEa9': ['cro', 'frtn'], // Time Troops
+          '0x1c4924f36Fe60374DB6ac206894D82F03d522933': ['cro', 'frtn'], // Time Creatures Class A
+          '0x15Af2503a934D211A1936684fEd986E7E3f417db': ['cro', 'frtn'], // Time Creatures Class B
+          '0x739b5380156Fa14C7956145048d52dF27EDedfCE': ['cro', 'frtn'], // Tata's Twisted Tonics
+          '0x6cC790CAE45EC057f9637784279A475CC91cf517': ['cro', 'frtn'], // Animated Time Gods
         }
       }
     }

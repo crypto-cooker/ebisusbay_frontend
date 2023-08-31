@@ -23099,6 +23099,52 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Time Ship Blueprints",
+      "slug": "time-ship-blueprints",
+      "multiToken": false,
+      "address": "0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Time Ship Blueprints are the first, OG collection of Time Ship hull blueprints for the Time Machine Ecosystem's web3 game in the making. Time Wars, These Blueprints will come with a few ship components, some of our in house token $tatastwistedtime ($TTT) and 1 blueprint, per box minted. Be on the lookout for the best hull skins/prints!!",
+        "avatar": "/img/collections/time-ship-blueprints/avatar.webp",
+        "website": "https://time-dapp.netlify.app/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/8whpvt3WEr",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Time Creature Ships",
+      "slug": "time-creature-ships",
+      "multiToken": false,
+      "address": "0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Time Creature Ships is partly a free drop for holding matching ID numbers of Time Creatures during the snapshot, The remaining will be sold for TTT only and 100% of the TTT will be BURNED!! Time Creature Ships will be required to send your Time Creatures off to gather resources in order to build your Time Ships for the Time Wars web3 game coming soon, Resources will start to be gathered for war BEFORE war!!",
+        "avatar": "/img/collections/time-creature-ships/avatar.webp",
+        "website": "https://time-dapp.netlify.app/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/8whpvt3WEr",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
