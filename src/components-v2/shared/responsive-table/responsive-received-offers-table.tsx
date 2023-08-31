@@ -16,7 +16,7 @@ import {
   Th,
   Thead,
   Tr,
-  useBreakpointValue, useColorModeValue
+  useBreakpointValue, useColorModeValue, VStack
 } from "@chakra-ui/react";
 import React, {useCallback} from "react";
 import {AxiosResponse} from "axios";
@@ -113,19 +113,21 @@ const DataTable = ({data, onAccept, onReject, canReject, onSort}: ResponsiveRece
                       overflow='hidden'
                     >
                       <AnyMedia
-                        image={getCollectionAvatar(offer.nftAddress, offer.nftId)}
+                        image={offer.metadata.image ?? offer.collection.metadata.avatar}
                         video=""
-                        title={getCollectionName(offer.nftAddress, offer.nftId)}
+                        title={offer.metadata.name ?? offer.collection.name}
                         className=""
                       />
                     </Box>
                   </Td>
-                  <Td fontWeight='bold'>
-                    {getCollectionName(offer.nftAddress, offer.nftId)}{' '}
-                    {offer.nftId && (
-                      <Link href={`/collection/${offer.nftAddress}/${offer.nftId}`}>
-                        #{offer.nftId}
-                      </Link>
+                  <Td>
+                    {!!offer.metadata.name ? (
+                      <VStack align='start'>
+                        <Box fontSize='xs' className='color'>{offer.collection.name}</Box>
+                        <Box fontWeight='bold'>{offer.metadata.name}</Box>
+                      </VStack>
+                    ) : (
+                      <Box fontWeight='bold'>{offer.collection.name}</Box>
                     )}
                   </Td>
                   <Td>
