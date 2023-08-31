@@ -21,6 +21,7 @@ import {caseInsensitiveCompare} from "@src/utils";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 import {getOwners} from "@src/core/subgraph"
 import {Player, RankPlayers} from "@src/core/poker-rank-players"
+import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -99,6 +100,13 @@ export class ApiService implements Api {
       page,
       page < totalPages
     );
+  }
+
+  async getReceivedOffersByUser(address: string, query?: OffersV2QueryParams): Promise<PagedList<Offer>> {
+    if (!query) query = {};
+    query.wallet = address;
+
+    return await this.mapi.getReceivedOffers(query);
   }
 
   async getRewardedEntities(gameId: number): Promise<any> {

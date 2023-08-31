@@ -1,17 +1,14 @@
 import {Collapse, Offcanvas} from "react-bootstrap";
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import MadeOffers from "./made-offers";
-import ReceivedOffers from "./received-offers";
+import ReceivedOffers2 from "./received-offers2";
 import styled from "styled-components";
-import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
-import {getQuickWallet} from "@src/core/api/endpoints/wallets";
-import {getCollectionMetadata} from "@src/core/api";
-import {OfferType} from "@src/core/services/api-service/types";
+import {OfferType, ReceivedOfferType} from "@src/core/services/api-service/types";
 import {useAppSelector} from "@src/Store/hooks";
 import {useBreakpointValue} from "@chakra-ui/react";
 
@@ -98,36 +95,6 @@ export default function Offers({ address }: OffersProps) {
     setFiltersVisible(false);
   };
 
-  const [receivedOffersDeps, setReceivedOffersDeps] = useState<any | null>(null);
-  useEffect(() => {
-    async function getDeps() {
-
-      const {data: collections} = await getWalletOverview(address);
-      const userNfts = [];
-      let paging = {
-        iterating: true,
-        size: 1000,
-        page: 1
-      }
-      while (paging.iterating) {
-        const walletNfts = await getQuickWallet(address, {pageSize: paging.size, page: paging.page});
-        userNfts.push(...walletNfts.data);
-        if (walletNfts.data.length < 1000 || paging.page > 10) paging.iterating = false;
-        paging.page++;
-      }
-      const collectionStats = await getCollectionMetadata();
-
-      const ret = {
-        collectionAddresses: collections.map((c: any) => c.nftAddress),
-        nfts: userNfts,
-        stats: collectionStats.collections
-      }
-      setReceivedOffersDeps(ret);
-    }
-
-    getDeps();
-  }, []);
-
   return (
     <div className="d-flex">
       <Tab.Container id="left-tabs-example" defaultActiveKey={tabs.madeDirect.key} activeKey={activeTab.key} onSelect={setTab}>
@@ -176,7 +143,7 @@ export default function Offers({ address }: OffersProps) {
               {activeTab.description}
             </div>
           </div>
-          <Tab.Content >
+          <Tab.Content>
             <Tab.Pane eventKey={tabs.madeDirect.key}>
               <MadeOffers address={address} type={OfferType.DIRECT} filterVisible={filtersVisible} />
             </Tab.Pane>
@@ -184,40 +151,28 @@ export default function Offers({ address }: OffersProps) {
               <MadeOffers address={address} type={OfferType.COLLECTION} filterVisible={filtersVisible} />
             </Tab.Pane>
             <Tab.Pane eventKey={tabs.receivedDirect.key}>
-              {receivedOffersDeps && (
-                <ReceivedOffers
-                  type="received-direct"
-                  address={address}
-                  collectionAddresses={receivedOffersDeps.collectionAddresses}
-                  nfts={receivedOffersDeps.nfts}
-                  stats={receivedOffersDeps.stats}
-                  filterVisible={filtersVisible}
-                />
-              )}
+              <ReceivedOffers2
+                type={ReceivedOfferType.ERC721}
+                group='nft'
+                address={address}
+                filterVisible={filtersVisible}
+              />
             </Tab.Pane>
             <Tab.Pane eventKey={tabs.receivedPublic.key}>
-              {receivedOffersDeps && (
-                <ReceivedOffers
-                  type="received-public"
-                  address={address}
-                  collectionAddresses={receivedOffersDeps.collectionAddresses}
-                  nfts={receivedOffersDeps.nfts}
-                  stats={receivedOffersDeps.stats}
-                  filterVisible={filtersVisible}
-                />
-              )}
+              <ReceivedOffers2
+                type={ReceivedOfferType.ERC1155}
+                group={undefined}
+                address={address}
+                filterVisible={filtersVisible}
+              />
             </Tab.Pane>
             <Tab.Pane eventKey={tabs.receivedCollection.key}>
-              {receivedOffersDeps && (
-                <ReceivedOffers
-                  type="received-collection"
-                  address={address}
-                  collectionAddresses={receivedOffersDeps.collectionAddresses}
-                  nfts={receivedOffersDeps.nfts}
-                  stats={receivedOffersDeps.stats}
-                  filterVisible={filtersVisible}
-                />
-              )}
+              <ReceivedOffers2
+                type={ReceivedOfferType.ERC721}
+                group='collection'
+                address={address}
+                filterVisible={filtersVisible}
+              />
             </Tab.Pane>
           </Tab.Content>
         </div>

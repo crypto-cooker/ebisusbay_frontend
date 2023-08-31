@@ -18,6 +18,7 @@ import {
   CollectionInfoQuery,
   CollectionInfoQueryParams
 } from "@src/core/services/api-service/mapi/queries/collectioninfo";
+import OffersV2Query, {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 
 const config = appConfig();
 
@@ -75,6 +76,16 @@ class Mapi {
 
   async getOffers(query?: OffersQueryParams): Promise<PagedList<Offer>> {
     const response = await this.offers.getOffers(new OffersQuery(query));
+
+    return new PagedList<Offer>(
+      response.data.offers,
+      response.data.page,
+      response.data.page < response.data.totalPages
+    )
+  }
+
+  async getReceivedOffers(query?: OffersV2QueryParams): Promise<PagedList<Offer>> {
+    const response = await this.offers.getReceivedOffers(new OffersV2Query(query));
 
     return new PagedList<Offer>(
       response.data.offers,

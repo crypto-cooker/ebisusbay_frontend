@@ -16,4 +16,5 @@ export interface Offer {
   listingTime: number;
   nft: any;
   collection: any;
+  metadata?: any;
 }
