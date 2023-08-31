@@ -99,6 +99,11 @@ export const configData = {
         name: 'bCRO',
         symbol: 'bCRO',
         address: '0xebaceb7f193955b946cc5dd8f8724a80671a1f2f',
+      },
+      scratch: {
+        name: 'Scratch',
+        symbol: 'SCRATCH',
+        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66'
       }
     },
     collections: rpcConfig.known_contracts,
@@ -250,6 +255,22 @@ export const configData = {
           '0x3fF260ce7A8dFCaDAF5E880137ee1750ceae9889': ['cro', 'frtn', 'bcro'], // The Rainbowland LANDs
           '0x9ac290d92ba63e3e741e5afd0b9da3b78c50fbb7': ['cro', 'frtn', 'bcro'], // Mythical Mafia
           '0xE46837d6Bf5b6F6C90C1B170aECBFDEc0E4425ea': ['cro', 'frtn', 'bcro'], // DegenzSkulls
+          '0xb650279e3d726B0c75C984cAA55341cB87A7F501': ['cro', 'frtn', 'scratch'], // Boomer Squad
+          '0x3D03292D428fd7d6C81a6E76b4A333A3d8a0E296': ['cro', 'frtn', 'scratch'], // Zoomer Squad
+          '0xacDA8C2818E7a120acd0395BD1f3EF562971A7F8': ['cro', 'frtn', 'scratch'], // Zoomer Squad - Playground Game Tokens: Season 1
+          '0x8Dd9975c78423480a6188F55B0767fbF4478b001': ['cro', 'frtn', 'scratch'], // Boomer Squad - Boom Rooms
+          '0x8Bff49Fc633e0A3eB879449B67500812B27a97B7': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Activity
+          '0x995d38004314836E48485D5fE328ebC17046FE68': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Bed
+          '0xc6a1f1034235F3B389bAb28B75719B3475Edf4AD': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Building
+          '0xf27205535932c7490F227F5bED7e5f7212b455bb': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Couch
+          '0xEa71F7AFA9eEEee5De16ee64b76255E216952511': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Desk
+          '0xAE40d175F2cf9C6777c0E0830E17211c4F5A66D0': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Door
+          '0x18550Cc44779EA72D6Fe6389D08D8Ab234f754CB': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Entertainment
+          '0x48D20305Ad156e44A0f93c3312A876E56c0e9f7E': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Pet
+          '0xb7109F93d780FD3f01eB7EbB0FE9436449F0D8EF': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Table
+          '0xc5B294B557402f8706aED487e155773756A9c400': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Window
+          '0x4AA9F792b51954A8903967375e854Ed7EE4bCBf0': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Cosmetics
+          '0xccE7B3067765FfbA74744C8dB4C1Cd58Bf8D77e7': ['cro', 'frtn', 'scratch'], // Zoomer Squad - Playground Game Tokens: Season 2
         }
       }
     }
@@ -341,6 +362,11 @@ export const configData = {
         name: 'bCRO',
         symbol: 'bCRO',
         address: '0xebaceb7f193955b946cc5dd8f8724a80671a1f2f',
+      },
+      scratch: {
+        name: 'Scratch',
+        symbol: 'SCRATCH',
+        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66'
       }
     },
     collections: rpcConfigDev.known_contracts,
@@ -559,6 +585,11 @@ export const configData = {
         name: 'bCRO',
         symbol: 'bCRO',
         address: '0x0A3cAaC2F607E38bF1C6533B9CB46aFAD918dE16',
+      },
+      scratch: {
+        name: 'Scratch',
+        symbol: 'SCRATCH',
+        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66'
       }
     },
     collections: rpcConfigTestnet.known_contracts,
@@ -688,6 +719,11 @@ export const configData = {
         name: 'bCRO',
         symbol: 'bCRO',
         address: '0xebaceb7f193955b946cc5dd8f8724a80671a1f2f',
+      },
+      scratch: {
+        name: 'Scratch',
+        symbol: 'SCRATCH',
+        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66'
       }
     },
     collections: rpcConfig.known_contracts,
