@@ -135,10 +135,12 @@ export const RankPlayers = async (data : any) => {
     let fourOfAKind = false;
     let fourOfAKindValue = 0;
     let secondaryValue = 0;
+    let previousCard = 0;
     Object.keys(cardCountDict).forEach((card) => {
       if(cardCountDict[card] === 4) {
         fourOfAKind = true;
         fourOfAKindValue = parseInt(card);
+        secondaryValue = previousCard;
       } else if (cardCountDict[card] >= 4){
         fourOfAKind = true;
         fourOfAKindValue = parseInt(card);
@@ -146,6 +148,7 @@ export const RankPlayers = async (data : any) => {
       } else {
         secondaryValue = parseInt(card);
       }
+      previousCard = parseInt(card);
     })
     if(fourOfAKind) {
       return {

@@ -20,6 +20,7 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {parseErrorMessage} from "@src/helpers/validator";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const config = appConfig();
 
@@ -39,6 +40,12 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
 
   const [canClaim, setCanClaim] = useState(false);
   const [executingClaim, setExecutingClaim] = useState(false);
+
+  const [runAuthedFunction] = useAuthedFunction();
+
+  const authCheckBeforeClaim = async () => {
+    await runAuthedFunction(claimDailyRewards);
+  };
 
   const claimDailyRewards = async () => {
     if (!user.address) return;
@@ -151,7 +158,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
               <Box textAlign='center' mt={4}>
                 <RdButton
                   stickyIcon={true}
-                  onClick={claimDailyRewards}
+                  onClick={authCheckBeforeClaim}
                   isLoading={executingClaim}
                   disabled={executingClaim}
                   loadingText='Claiming'

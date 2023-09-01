@@ -23,13 +23,13 @@ const config = appConfig();
 
 interface BattleMapHUDProps {
   onBack: () => void;
+  showBackButton: boolean;
   setElementToZoomTo : (value: any) => void;
-  showBack: boolean;
   traitTypes: string[];
   FilterByTraitCallback: (value:string) => void;
 }
 
-export const LandsHUD = ({onBack, setElementToZoomTo, showBack, traitTypes, FilterByTraitCallback}: BattleMapHUDProps) => {
+export const LandsHUD = ({onBack, showBackButton, setElementToZoomTo, traitTypes, FilterByTraitCallback}: BattleMapHUDProps) => {
     
   const user = useAppSelector((state) => state.user);
   const [isNotMobile] = useMediaQuery("(max-width: 768px)") 
@@ -65,7 +65,7 @@ export const LandsHUD = ({onBack, setElementToZoomTo, showBack, traitTypes, Filt
   return (
     <Box position='absolute' top={0} left={0}  w='100%' pointerEvents='auto' >
       <Flex direction='row' justify='space-between' >
-        {showBack && 
+        {showBackButton && 
       <ReturnToVillageButton onBack={onBack} />
     }
       <Spacer />

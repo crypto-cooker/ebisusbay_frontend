@@ -4,12 +4,12 @@ import Query from "@src/core/services/api-service/mapi/queries/index";
 export interface OffersQueryParams {
   offerId?: string;
   verified?: boolean;
-  collection?: string;
+  collection?: string[];
   type?: OfferType;
   tokenId?: string;
   seller?: string;
   purchaser?: string;
-  sortBy?: 'listingId' | 'listingTime' | 'saleTime' | 'price' | 'rank';
+  sortBy?: 'offerId' | 'listingId' | 'listingTime' | 'saleTime' | 'price' | 'rank' | 'nft' | 'name' | 'collectionName';
   direction?: 'asc' | 'desc';
   state?: OfferState;
   page?: number;

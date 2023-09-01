@@ -23099,6 +23099,105 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Time Ship Blueprints",
+      "slug": "time-ship-blueprints",
+      "multiToken": false,
+      "address": "0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Time Ship Blueprints are the first, OG collection of Time Ship hull blueprints for the Time Machine Ecosystem's web3 game in the making. Time Wars, These Blueprints will come with a few ship components, some of our in house token $tatastwistedtime ($TTT) and 1 blueprint, per box minted. Be on the lookout for the best hull skins/prints!!",
+        "avatar": "/img/collections/time-ship-blueprints/avatar.webp",
+        "website": "https://time-dapp.netlify.app/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/8whpvt3WEr",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Time Creature Ships",
+      "slug": "time-creature-ships",
+      "multiToken": false,
+      "address": "0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Time Creature Ships is partly a free drop for holding matching ID numbers of Time Creatures during the snapshot, The remaining will be sold for TTT only and 100% of the TTT will be BURNED!! Time Creature Ships will be required to send your Time Creatures off to gather resources in order to build your Time Ships for the Time Wars web3 game coming soon, Resources will start to be gathered for war BEFORE war!!",
+        "avatar": "/img/collections/time-creature-ships/avatar.webp",
+        "website": "https://time-dapp.netlify.app/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/8whpvt3WEr",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "The Rainbowland LANDs",
+      "slug": "rainbowland-lands",
+      "multiToken": false,
+      "address": "0x3fF260ce7A8dFCaDAF5E880137ee1750ceae9889",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Rainbowland Platform - the metaverse built on blockchain for top-notch content creation using NFTs and Unity in web3 & real world engagement. Welcome to Rainbowland Metaverse - a breathtaking archipelago of continents and islands in an endless ocean of virtual possibilities! This social gaming platform is like no other, offering players a map of lands and homes that is powered by blockchain technology. Explore a universe filled with a variety of worlds, each offering a unique experience. From The City to Rainbowhill, Cartoonville to Medieval, and everything in between, there is something for everyone.",
+        "avatar": "/img/collections/rainbowland-lands/avatar.webp",
+        "card": "/img/collections/rainbowland-lands/card.webp",
+        "banner": "/img/collections/rainbowland-lands/banner.webp",
+        "website": "https://rainbowland.org/",
+        "twitter": "https://twitter.com/TheRainbowland",
+        "discord": "https://discord.gg/uMhJT6p6v7",
+        "medium": "https://the-rainbowland-metaverse.medium.com/",
+        "telegram": "https://t.me/newsrainbowland",
+        "categories": [
+          "metaverse",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "JAFC-Comics",
+      "slug": "jafc-comics",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/jafc-comics/avatar.webp",
+        "card": "/img/collections/jafc-comics/card.webp",
+        "banner": "/img/collections/jafc-comics/banner.webp",
+        "website": "https://medium.com/@jungleanimalfc",
+        "twitter": "https://twitter.com/JAFC_nft",
+        "discord": "https://discord.gg/W3HwbZUwfr",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -30102,9 +30201,9 @@
       "cost": "590",
       "memberCost": "525",
       "whitelistCost": "525",
-      "erc20Cost": "995",
-      "erc20MemberCost": "900",
-      "erc20WhitelistCost": "900",
+      "erc20Cost": "775",
+      "erc20MemberCost": "750",
+      "erc20WhitelistCost": "700",
       "erc20Token": "frtn",
       "foundersOnly": false,
       "start": 1692648000000,
@@ -30170,6 +30269,43 @@
         "doxx": false,
         "kyc": true,
         "escrow": false
+      }
+    },
+    {
+      "id": 177,
+      "slug": "jafc-comics",
+      "title": "JAFC-Comics",
+      "subtitle": "Introducing ROAD TO GOAT - a comic by JAFC COMICS on the cronos chain. The covers come as a free mint. Enjoy the stunning hand-drawn art of Keeve Neo,  read our medium article and join our community.",
+      "description": "JAFC COMICS is a brand by JAFC, a pure art NFT project on the cronos chain. ROAD TO GOAT is the first comic and is about the last fight of the Black Panther to get the \"Greatest of all Time\"\nThe covers of this comic come as a free mint. There are 5 different editions which also differ in their rarity. Like all JAFC collections, this cover comes as a pure art project and without any other utilities. However, certain editions may allow a discount on the following comic chapters. Please read our medium article and feel free to join our community in discord for the latest infos.",
+      "author": {
+        "name": "JAFC Comics",
+        "website": "https://medium.com/@jungleanimalfc",
+        "twitter": "https://twitter.com/JAFC_nft",
+        "discord": "https://discord.gg/W3HwbZUwfr"
+      },
+      "address": "",
+      "maxMintPerTx": 1,
+      "maxMintPerAddress": 1,
+      "totalSupply": 2500,
+      "freeMint": true,
+      "foundersOnly": false,
+      "start": 1693944000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/jafc-comics/drop.webp",
+        "banner": "/img/collections/jafc-comics/banner.webp",
+        "avatar": "/img/collections/jafc-comics/avatar.webp",
+        "preview": "/img/collections/jafc-comics/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]

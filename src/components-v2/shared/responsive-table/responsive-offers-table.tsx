@@ -16,7 +16,7 @@ import {
   Th,
   Thead,
   Tr,
-  useBreakpointValue, useColorModeValue
+  useBreakpointValue, useColorModeValue, VStack
 } from "@chakra-ui/react";
 import React from "react";
 import {AxiosResponse} from "axios";
@@ -94,15 +94,14 @@ const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveOffersTableProp
                       />
                     </Box>
                   </Td>
-                  <Td fontWeight='bold'>
-                    {offer.nftId ? (
-                      <Link href={`/collection/${offer.collection.slug}/${offer.nftId}`}>
-                        {offer.nft.name}
-                      </Link>
+                  <Td>
+                    {!!offer.nft?.name ? (
+                      <VStack align='start'>
+                        <Box fontSize='xs' className='color'>{offer.collection.name}</Box>
+                        <Box fontWeight='bold'>{offer.nft.name}</Box>
+                      </VStack>
                     ) : (
-                      <Link href={`/collection/${offer.collection.slug}`}>
-                        {offer.collection.name}
-                      </Link>
+                      <Box fontWeight='bold'>{offer.collection.name}</Box>
                     )}
                   </Td>
                   <Td>
@@ -177,7 +176,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveOffersTable
             {page.data.map((offer: Offer) => (
               <AccordionItem key={offer.offerId}>
                 <Flex w='100%' my={2}>
-                  <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
+                  <Box flex='1' textAlign='left' my='auto'>
                     <HStack>
                       <Box
                         width='40px'
@@ -193,14 +192,13 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveOffersTable
                       </Box>
 
                       <Box flex='1' fontSize='sm'>
-                        {offer.nftId ? (
-                          <Link href={`/collection/${offer.collection.slug}/${offer.nftId}`}>
-                            {offer.nft.name}
-                          </Link>
+                        {!!offer.nft?.name ? (
+                          <VStack align='start'>
+                            <Box fontSize='xs' className='color'>{offer.collection.name}</Box>
+                            <Box fontWeight='bold'>{offer.nft.name}</Box>
+                          </VStack>
                         ) : (
-                          <Link href={`/collection/${offer.collection.slug}`}>
-                            {offer.collection.name}
-                          </Link>
+                          <Box fontWeight='bold'>{offer.collection.name}</Box>
                         )}
                       </Box>
                     </HStack>

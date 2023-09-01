@@ -77,6 +77,11 @@ export enum OfferType {
     COLLECTION = 'collection'
 }
 
+export enum ReceivedOfferType {
+    ERC721 = '721',
+    ERC1155 = '1155'
+}
+
 export interface BankStakeNft {
     nftAddress: string;
     nftId: string;

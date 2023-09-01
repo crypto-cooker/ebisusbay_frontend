@@ -9194,8 +9194,8 @@
         "avatar": "/img/collections/crodoo/avatar.webp",
         "card": "/img/collections/crodoo/card.webp",
         "banner": "/img/collections/crodoo/banner.webp",
-        "website": "https://crodoonft.com/",
-        "twitter": "https://twitter.com/CroDooNFT",
+        "website": "https://cro.doonft.com/",
+        "twitter": "https://twitter.com/TheDooNFT",
         "discord": "https://discord.gg/W43dReVMq5",
         "rankings": {
           "source": "provided"
@@ -14228,7 +14228,7 @@
       "multiToken": false,
       "address": "0xE97e0636abA2A02E7aB523fc6dE726C3525DBc39",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Brought to you by CROugar Kingdom! Weekly Twitter and Discord giveaways for an entire year!  Maybe you will be a big winner! Get your Wetland Razzle Tix and tune in for the fun!",
         "avatar": "/img/collections/wetland-razzles/avatar.webp",
@@ -22312,7 +22312,7 @@
       "name": "Time Commanders",
       "slug": "time-commanders",
       "multiToken": false,
-      "address": "0xBE6B2d035289A90987781026732C4B6BB47F7686",
+      "address": "0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -22773,7 +22773,7 @@
       "multiToken": false,
       "address": "0x902b49b97Ab03bcF5095e3439422f4a9351cAe82",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "A collection consisting of 5,000 Plush Foot Print (PFP) NFTs. There will be 20 different Foot Prints with different rarities and no Foot Print will have the same amount.",
         "avatar": "/img/collections/y-plush-foot-print/avatar.webp",
@@ -22889,6 +22889,261 @@
         "doxx": true,
         "kyc": "hidden",
         "verified": true
+      }
+    },
+    {
+      "name": "Trusted Cases",
+      "slug": "trusted-cases",
+      "multiToken": false,
+      "address": "0x5e8f23c596BB2B665046b697001524a89C689413",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "\"With Cronos new to the game. I've seen tons of projects fail, give up, or just straight out rug. So many paper hands expecting to get rich overnight.\"  \"Investing is a long-term decision\"  -Trusted Founder and project lead  Here at Trusted we're in it for the Long haul. A majority of sales generated from mint will be forever locked. A small portion will be used to develop the project. Distributing 1/2 of returns to holders of this NFT. The other half will be locked used to grow the pool. We are also taking a percentage of secondary sales that will also go directly to the pool and remain locked. Consistently growing our pool which in turn will bring us the most profitable long-term returns. Utility is our goal.",
+        "avatar": "/img/collections/trusted-cases/avatar.webp",
+        "card": "/img/collections/trusted-cases/card.webp",
+        "banner": "/img/collections/trusted-cases/banner.webp",
+        "website": "https://cronossteakhouse.com/launchpad/trusted",
+        "twitter": "https://www.twitter.com/CroShop_Trade",
+        "discord": "https://discord.gg/S6TzckDQtz",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "The Liberators",
+      "slug": "the-liberators",
+      "multiToken": false,
+      "address": "0xC0D28282A4780e099884f344A9746A2D75A1BAF7",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Ever wanted to own the libs? Now you can! The Liberators, Cronos Steakhouse's 4th of July Special collection! First minted during 2023 Independence week, These feisty fellows will liberate you from FEEdom across the steakhouse ecosystem! Structured fee discounts on all future smart contracts based on amount held/time consumed",
+        "avatar": "/img/collections/the-liberators/avatar.webp",
+        "card": "/img/collections/the-liberators/card.webp",
+        "banner": "/img/collections/the-liberators/banner.webp",
+        "website": "https://www.cronossteakhouse.com/",
+        "twitter": "https://www.twitter.com/CronoSteakHouse",
+        "discord": "https://discord.gg/fpTgAReDyN",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Chefz Army",
+      "slug": "chefz-army",
+      "multiToken": false,
+      "address": "0x724900a57ED516ba023b1F5F86A92E222BC32D02",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/chefz-army/avatar.webp",
+        "card": "/img/collections/chefz-army/card.webp",
+        "banner": "/img/collections/chefz-army/banner.webp",
+        "website": "https://www.cronossteakhouse.com/",
+        "twitter": "https://www.twitter.com/CronoSteakHouse",
+        "discord": "https://discord.gg/fpTgAReDyN",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Alpha Invitations",
+      "slug": "alpha-invitations",
+      "multiToken": false,
+      "address": "0x257f30fbD890840FA00c2e0f043cF5Ad9A631546",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "We are a group of hustlers, fighting everyday to make Cronos a better place.    We Hyenas have a mission. A Mission to make Cronos a better place to be! To bring back the promise of solidity in projects.  Our objective is to demonstrate that Cronos is not only a great chain to be on, but also a home for amazing and profitable projects. To show what a strong team of dedicated DeFi enthusiats can achieve working together with the community always in mind  We're bringing together all of the things that make NFT projects great, NFT Staking, Effective tokenomics, GameFi, a strong and integrated ecosystem for our community to earn that ROI and more.   Goals:  1) Make a sustainable project from one collection. 2) Put the best Cronos utilities into one collection.",
+        "avatar": "/img/collections/alpha-invitations/avatar.webp",
+        "card": "/img/collections/alpha-invitations/card.webp",
+        "banner": "/img/collections/alpha-invitations/banner.webp",
+        "website": "https://hyenahustlers.xyz/",
+        "twitter": "https://twitter.com/hyenahustlers",
+        "discord": "https://discord.gg/dkvVXHvJ",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Dragon Warriors Booster",
+      "slug": "dragon-warriors-booster",
+      "multiToken": false,
+      "address": "0x73cc8C969090441B0b3B880f2642A07eFB08D562",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dragon warrior gen1booster 50% funds to staking for holders 40% to gen 1 staking for holders 10% project",
+        "avatar": "/img/collections/dragon-warriors-booster/avatar.webp",
+        "card": "/img/collections/dragon-warriors-booster/card.webp",
+        "twitter": "https://twitter.com/DragonW2307",
+        "discord": "https://discord.gg/9gEa38Aqcs",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Veno Unstaked ATOM",
+      "slug": "veno-unstaked-atom",
+      "multiToken": false,
+      "address": "0x10a1d7d9abefbc84f4ebe9daa546f50eb9e5d191",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Each Veno Unstaked ATOM NFT enables the holder to claim the ATOM amount stated on the NFT after the given unlock date on https://veno.finance",
+        "avatar": "/img/collections/veno-unstaked-cro/avatar.webp",
+        "card": "/img/collections/veno-unstaked-cro/card.webp",
+        "banner": "/img/collections/veno-unstaked-cro/banner.webp",
+        "website": "https://veno.finance/",
+        "twitter": "https://twitter.com/VenoFinance",
+        "discord": "https://discord.gg/xQK8f8wu26",
+        "telegram": "https://t.me/VenoFinance",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "DegenzSkulls",
+      "slug": "degenzskulls",
+      "multiToken": false,
+      "address": "0xE46837d6Bf5b6F6C90C1B170aECBFDEc0E4425ea",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "​​​DegenzSkulls is a gambling platform which providing numerous utilities to our NFT members, such as revenue-share, staking rewards, royalties rewards, P2E games, Raffle lottery, Multichain NFT airdrop and more.",
+        "avatar": "/img/collections/degenzskulls/avatar.webp",
+        "card": "/img/collections/degenzskulls/card.webp",
+        "banner": "/img/collections/degenzskulls/banner.webp",
+        "website": "https://degenzskullsnft.com/",
+        "twitter": "https://twitter.com/DegenzSkulls",
+        "discord": "https://discord.gg/3BxwqCmU96",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "KillaKoinZ",
+      "slug": "killakoinz",
+      "multiToken": false,
+      "address": "0xBE41a5df790e76C505CC72B51987cf6287D743ac",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "KillaKoinZ are your ticket into a discount for the KillaKatZ side of the KatZ N KidZ ecosystem.",
+        "avatar": "/img/collections/killakoinz/avatar.webp",
+        "card": "/img/collections/killakoinz/card.webp",
+        "banner": "/img/collections/killakoinz/banner.webp",
+        "website": "https://katznkidz.com/",
+        "twitter": "https://twitter.com/KatZNKidZ",
+        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Mythical Mafia",
+      "slug": "mythical-mafia",
+      "multiToken": false,
+      "address": "0x9ac290d92ba63e3e741e5afd0b9da3b78c50fbb7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Exclusive nft dropped to holders of a Mane City Mythical Blocked Chain plot.  Holding this nft not only represents that you are among the elite builders in Mane City, but also shows that your are part of the family.",
+        "avatar": "/img/collections/mythical-mafia/avatar.webp",
+        "card": "/img/collections/mythical-mafia/card.webp",
+        "banner": "/img/collections/mythical-mafia/banner.webp",
+        "twitter": "https://x.com/mythicalmafia",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Time Ship Blueprints",
+      "slug": "time-ship-blueprints",
+      "multiToken": false,
+      "address": "0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Time Ship Blueprints are the first, OG collection of Time Ship hull blueprints for the Time Machine Ecosystem's web3 game in the making. Time Wars, These Blueprints will come with a few ship components, some of our in house token $tatastwistedtime ($TTT) and 1 blueprint, per box minted. Be on the lookout for the best hull skins/prints!!",
+        "avatar": "/img/collections/time-ship-blueprints/avatar.webp",
+        "website": "https://time-dapp.netlify.app/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/8whpvt3WEr",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Time Creature Ships",
+      "slug": "time-creature-ships",
+      "multiToken": false,
+      "address": "0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Time Creature Ships is partly a free drop for holding matching ID numbers of Time Creatures during the snapshot, The remaining will be sold for TTT only and 100% of the TTT will be BURNED!! Time Creature Ships will be required to send your Time Creatures off to gather resources in order to build your Time Ships for the Time Wars web3 game coming soon, Resources will start to be gathered for war BEFORE war!!",
+        "avatar": "/img/collections/time-creature-ships/avatar.webp",
+        "website": "https://time-dapp.netlify.app/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/8whpvt3WEr",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
@@ -28408,8 +28663,8 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
-      "complete": false,
+      "published": true,
+      "complete": true,
       "images": {
         "drop": "/img/drops/wetland-razzles/drop.webp",
         "banner": "/img/collections/wetland-razzles/banner.webp",
@@ -29324,8 +29579,8 @@
       "id": 166,
       "slug": "cronosverse-in-game-assets",
       "title": "The CronosVerse In-Game Assets",
-      "subtitle": "The CronosVerse is offering 143 Unique In-Game Furniture and Decorative Items for you to place on your Land or in your Suite.  With 12 multiples of each item available, there will be a total of 1716 NFTs available in this drop. ",
-      "description": "The CronosVerse is the first true metaverse project on the Cronos Blockchain.  Offering users a piece of digital real estate where they can build their own immersive, virtual reality and metaverse experience.  \n\n      The CronosVerse In-Game items are the first of their kind on The Cronos Blockchain.  Owners are able to spawn 1 of each their In-Game NFTs on their property and show it off however they see fit.  In-Game NFTs are also linked straight back to the marketplace so that you can buy and sell your In-Game Assets from within the CronosVerse.  \n\n      There are 1716 total NFTs available in this drop, minting exclusively with the CronosVerse Native Token:  $VRSE \n\n      $VRSE can be purchased at Crodex:  https://swap.crodex.app/#/swap",
+      "subtitle": "Each Digital Asset NFT represents ownership of a Digital Asset within The CronosVerse. By owning a Digital Asset NFT, users are able to decorate their CronosVerse property and customize their metaverse experience inside of their digital property.",
+      "description": "1200 New In-Game Assets are available which include in-game character armor, knifes, swords, guns and various other weapons to participate in player vs player and player vs environment battles.",
       "author": {
         "name": "CronosVerse",
         "website": "https://thecronosverse.com/",
@@ -29333,18 +29588,18 @@
         "discord": "https://discord.gg/E9Mzzy9Hex"
       },
       "address": "0xaf038d14905409de31fb5577c460d18b1013e4f1",
-      "maxMintPerTx": 5,
-      "maxMintPerAddress": 200,
-      "totalSupply": 1716,
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 250,
+      "totalSupply": 1200,
       "erc20Cost": "1500",
       "erc20Token": "vrse",
       "foundersOnly": false,
-      "start": 1692907200000,
+      "start": 1692918000000,
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/cronosverse-in-game-assets/drop2.webp",
         "banner": "/img/drops/cronosverse-in-game-assets/banner.webp",
@@ -29893,9 +30148,9 @@
       "cost": "590",
       "memberCost": "525",
       "whitelistCost": "525",
-      "erc20Cost": "995",
-      "erc20MemberCost": "900",
-      "erc20WhitelistCost": "900",
+      "erc20Cost": "775",
+      "erc20MemberCost": "750",
+      "erc20WhitelistCost": "700",
       "erc20Token": "frtn",
       "foundersOnly": false,
       "start": 1692648000000,

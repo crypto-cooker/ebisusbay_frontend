@@ -16,7 +16,7 @@ import {
   Th,
   Thead,
   Tr,
-  useBreakpointValue, useColorModeValue
+  useBreakpointValue, useColorModeValue, VStack
 } from "@chakra-ui/react";
 import React, {useCallback} from "react";
 import {AxiosResponse} from "axios";
@@ -100,10 +100,10 @@ const DataTable = ({data, onAccept, onReject, canReject, onSort}: ResponsiveRece
           </Tr>
         </Thead>
         <Tbody>
-          {data.pages.map((page: any, pageIndex: any) => (
+          {data.pages.map((page, pageIndex) => (
             <React.Fragment key={pageIndex}>
-              {page.map((offer: any) => (
-                <Tr key={`${offer.id}`} _hover={{bg: hoverBackground}}>
+              {page.data.map((offer) => (
+                <Tr key={`${offer.offerId}`} _hover={{bg: hoverBackground}}>
                   <Td w='50px'>
                     <Box
                       width={50}
@@ -113,19 +113,21 @@ const DataTable = ({data, onAccept, onReject, canReject, onSort}: ResponsiveRece
                       overflow='hidden'
                     >
                       <AnyMedia
-                        image={getCollectionAvatar(offer.nftAddress, offer.nftId)}
+                        image={offer.metadata.image ?? offer.collection.metadata.avatar}
                         video=""
-                        title={getCollectionName(offer.nftAddress, offer.nftId)}
+                        title={offer.metadata.name ?? offer.collection.name}
                         className=""
                       />
                     </Box>
                   </Td>
-                  <Td fontWeight='bold'>
-                    {getCollectionName(offer.nftAddress, offer.nftId)}{' '}
-                    {offer.nftId && (
-                      <Link href={`/collection/${offer.nftAddress}/${offer.nftId}`}>
-                        #{offer.nftId}
-                      </Link>
+                  <Td>
+                    {!!offer.metadata.name ? (
+                      <VStack align='start'>
+                        <Box fontSize='xs' className='color'>{offer.collection.name}</Box>
+                        <Box fontWeight='bold'>{offer.metadata.name}</Box>
+                      </VStack>
+                    ) : (
+                      <Box fontWeight='bold'>{offer.collection.name}</Box>
                     )}
                   </Td>
                   <Td>
@@ -137,10 +139,10 @@ const DataTable = ({data, onAccept, onReject, canReject, onSort}: ResponsiveRece
                       <Box>{commify(offer.price)}</Box>
                     </HStack>
                   </Td>
-                  <Td>{getOfferDate(offer.timeCreated)} ago</Td>
+                  <Td>{getOfferDate(offer.listingTime)} ago</Td>
                   <Td>
                     <Flex>
-                      {offer.state === OfferState.ACTIVE.toString() && (
+                      {offer.state === OfferState.ACTIVE && (
                         <>
                           <Button
                             type="legacy"
@@ -190,29 +192,29 @@ const DataAccordion = ({data, onSort, onAccept, onReject, canReject}: Responsive
 
   return (
     <>
-      {/*<Box mb={2} textAlign='center'>*/}
-      {/*  <HStack>*/}
-      {/*    <Text fontSize='sm'>Sort:</Text>*/}
-      {/*    <ButtonGroup>*/}
-      {/*      <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('rank')}>*/}
-      {/*        Rank*/}
-      {/*      </ChakraButton>*/}
-      {/*      <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('price')}>*/}
-      {/*        Price*/}
-      {/*      </ChakraButton>*/}
-      {/*      <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('listingTime')}>*/}
-      {/*        Sale Time*/}
-      {/*      </ChakraButton>*/}
-      {/*    </ButtonGroup>*/}
-      {/*  </HStack>*/}
-      {/*</Box>*/}
+      <Box mb={2} textAlign='center'>
+        <HStack>
+          <Text fontSize='sm'>Sort:</Text>
+          <ButtonGroup>
+            <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('rank')}>
+              Rank
+            </ChakraButton>
+            <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('price')}>
+              Price
+            </ChakraButton>
+            <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('listingTime')}>
+              Sale Time
+            </ChakraButton>
+          </ButtonGroup>
+        </HStack>
+      </Box>
       <Accordion w='full' allowMultiple>
-        {data.pages.map((page: any, pageIndex: any) => (
+        {data.pages.map((page, pageIndex) => (
           <React.Fragment key={pageIndex}>
-            {page.map((offer: any) => (
-              <AccordionItem key={offer.id}>
+            {page.data.map((offer) => (
+              <AccordionItem key={offer.offerId}>
                 <Flex w='100%' my={2}>
-                  <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
+                  <Box flex='1' textAlign='left' my='auto'>
                     <HStack>
                       <Box
                         width='40px'
@@ -229,14 +231,13 @@ const DataAccordion = ({data, onSort, onAccept, onReject, canReject}: Responsive
                       </Box>
 
                       <Box flex='1' fontSize='sm'>
-                        {offer.nftId ? (
-                          <Link href={`/collection/${offer.nftAddress}/${offer.nftId}`}>
-                            {offer.nftId}
-                          </Link>
+                        {!!offer.metadata.name ? (
+                          <VStack align='start'>
+                            <Box fontSize='xs' className='color'>{offer.collection.name}</Box>
+                            <Box fontWeight='bold'>{offer.metadata.name}</Box>
+                          </VStack>
                         ) : (
-                          <Link href={`/collection/${offer.nftAddress}`}>
-                            {getCollectionName(offer.nftAddress, offer.nftId)}
-                          </Link>
+                          <Box fontWeight='bold'>{offer.collection.name}</Box>
                         )}
                       </Box>
                     </HStack>
@@ -261,10 +262,10 @@ const DataAccordion = ({data, onSort, onAccept, onReject, canReject}: Responsive
                     {/*)}*/}
                     <Stack direction="row" spacing={2}>
                       <Text fontWeight="bold">Offer Time:</Text>
-                      <Text>{getOfferDate(offer.timeCreated)} ago</Text>
+                      <Text>{getOfferDate(offer.listingTime)} ago</Text>
                     </Stack>
                   </Flex>
-                  {offer.state === OfferState.ACTIVE.toString() && (
+                  {offer.state === OfferState.ACTIVE && (
                     <Flex mt={2}>
                       <Button
                         type="legacy"
