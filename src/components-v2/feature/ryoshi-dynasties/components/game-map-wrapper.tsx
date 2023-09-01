@@ -5,20 +5,11 @@ import {useAppSelector} from "@src/Store/hooks";
 
 const GameMapWrapper = () => {
   const user = useAppSelector((state) => state.user);
-
-  const [currentPage, setCurrentPage] = useState<string>('village');
-  const [previousPage, setPreviousPage] = useState<string>();
-  const [firstRun, setFirstRun] = useState<boolean>(false);
   const [currentModalRef, setCurrentModalRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
   const ref = useRef(null);
 
-  const navigate = (page: string) => {
-    setPreviousPage(currentPage)
-    setCurrentPage(page)
-  };
 
-  const returnToPreviousPage = () => {
-    setCurrentPage(previousPage ?? 'village')
+  const empty = () => {
   };
 
   useEffect(() => {
@@ -27,7 +18,7 @@ const GameMapWrapper = () => {
 
   return (
     <Box ref={currentModalRef} position='relative'>
-        <BattleMap onChange={returnToPreviousPage}/>
+        <BattleMap onChange={empty} showActiveGame={false}/>
     </Box>
   )
 }

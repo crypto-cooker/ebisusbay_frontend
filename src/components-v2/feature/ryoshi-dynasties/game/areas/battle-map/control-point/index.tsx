@@ -31,10 +31,11 @@ interface ControlPointFormProps {
   skirmishPrice: number;
   conquestPrice: number;
   regionName: string;
-  allFactions: any[]
+  allFactions: any[];
+  showActiveGame: boolean;
 }
 
-const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint, skirmishPrice, conquestPrice, regionName, allFactions}: ControlPointFormProps) => {
+const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint, skirmishPrice, conquestPrice, regionName, allFactions, showActiveGame}: ControlPointFormProps) => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const [isLoading, setIsLoading] = useState(true);
@@ -146,24 +147,28 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
                       >
                         Leaders
                       </RdTabButton>
-                      <RdTabButton
-                        isActive={currentTab === tabs.deploy}
-                        onClick={() => setCurrentTab(tabs.deploy)}
-                        fontSize={{base: '12', sm: '14'}}
-                        padding={{base: '0 10px', sm: '0 20px'}}
-                        margin={{base: '0 5px', sm: '0 10px'}}
-                      >
-                        Dispatch
-                      </RdTabButton>
-                      <RdTabButton
-                        isActive={currentTab === tabs.attack}
-                        onClick={() => setCurrentTab(tabs.attack)}
-                        fontSize={{base: '12', sm: '14'}}
-                        padding={{base: '0 10px', sm: '0 20px'}}
-                        margin={{base: '0 5px', sm: '0 10px'}}
-                      >
-                        Attack
-                      </RdTabButton>
+                      {showActiveGame && (
+                        <RdTabButton
+                          isActive={currentTab === tabs.deploy}
+                          onClick={() => setCurrentTab(tabs.deploy)}
+                          fontSize={{base: '12', sm: '14'}}
+                          padding={{base: '0 10px', sm: '0 20px'}}
+                          margin={{base: '0 5px', sm: '0 10px'}}
+                        >
+                          Dispatch
+                        </RdTabButton>
+                      )}
+                      {showActiveGame && (
+                        <RdTabButton
+                          isActive={currentTab === tabs.attack}
+                          onClick={() => setCurrentTab(tabs.attack)}
+                          fontSize={{base: '12', sm: '14'}}
+                          padding={{base: '0 10px', sm: '0 20px'}}
+                          margin={{base: '0 5px', sm: '0 10px'}}
+                        >
+                          Attack
+                        </RdTabButton>
+                      )}
                     </Flex>
                   </Center>
 

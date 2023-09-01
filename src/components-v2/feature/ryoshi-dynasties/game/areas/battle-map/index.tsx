@@ -14,7 +14,7 @@ import {
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
-import {getAllFactions, getControlPoint, getAllFactionsSeasonId} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getControlPoint, getAllFactionsSeasonId} from "@src/core/api/RyoshiDynastiesAPICalls";
 import ControlPointModal from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point';
 import ImageService from '@src/core/services/image';
 import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/hud";
@@ -43,42 +43,42 @@ const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Bla
 
 interface BattleMapProps {
   onChange: () => void;
+  showActiveGame: boolean;
+}
+interface MapProps {
+  scale: number;
+  initialPosition: { x: number; y: number };
+  minScale: number;
+}
+interface Icon {
+  name: string;
+  image: string;
 }
 
-const BattleMap = ({onChange}: BattleMapProps) => {
+const BattleMap = ({onChange, showActiveGame}: BattleMapProps) => {
   const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
-
   const user = useAppSelector(state => state.user);
   const config = appConfig();
   const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [elementToZoomTo, setElementToZoomTo] = useState("");
   const transformComponentRef = useRef<any>(null)
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [controlPoint, setControlPoint] = useState([]);
+  const [skirmishPrice, setSkirmishPrice] = useState(0);
+  const [conquestPrice, setConquestPrice] = useState(0);
+  const [selectedControlPoint, setSelectedControlPoint] = useState(0);
+  const [area, setAreas] = useState([]);
+  const [flags, setFlags] = useState([]);
+  const [explosion, setExplosion] = useState<ReactElement>();
+  const { isOpen: isResetModalOpen, onOpen: onOpenResetModal, onClose: onCloseResetModal } = useDisclosure();
+  const [allFactions, setAllFactions] = useState<any>([]);
+  const[allIconsAqcuired, setAllIconsAqcuired] = useState(false);
+  const[icons, setIcons] = useState<Icon[]>([]);
   const [zoomState, setZoomState] = useState({
     offsetX: 0,
     offsetY: 0,
     scale: 1,
   });
-
-  const [skirmishPrice, setSkirmishPrice] = useState(0);
-  const [conquestPrice, setConquestPrice] = useState(0);
-
-  const [area, setAreas] = useState([]);
-  const [flags, setFlags] = useState([]);
-
-  const [selectedControlPoint, setSelectedControlPoint] = useState(0);
-  const [explosion, setExplosion] = useState<ReactElement>();
-  const { isOpen: isResetModalOpen, onOpen: onOpenResetModal, onClose: onCloseResetModal } = useDisclosure();
-
-
-  useEffect(() => {
-    if (transformComponentRef.current) {
-      const { zoomToElement } = transformComponentRef.current as any;
-      zoomToElement(elementToZoomTo);
-    }
-  }, [elementToZoomTo]);
 
   const changeCanvasState = (ReactZoomPanPinchRef: any, event: any) => {
     setZoomState({
@@ -89,54 +89,9 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     // console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
 
-  const randomlyPlayExplosion = async () => {
-
-    // if(area.length === 0) return;
-
-    // //get random area
-    // var randomArea = area[Math.floor(Math.random() * area.length)];
-    // var left = randomArea.props.coords.split(",")[0];
-    // var top = randomArea.props.coords.split(",")[1];
-
-    // setExplosion(
-    //   <Flex position="absolute" zIndex="9" width="100%" height="100%">
-    //   <Image
-    //    position="relative"
-    //     src='/img/battle-bay/explosion.png' 
-    //     width={250*5}
-    //     height={207*5}
-    //     left={left-(250*2.5)}
-    //     top={top-(207*2.5)}
-    //     zIndex="9"
-    //     />
-    //   </Flex>
-    //   )
-
-    // await new Promise(r => setTimeout(r, 1000));
-
-    // setExplosion(
-    //   <Flex position="absolute" zIndex="9" width="100%" height="100%">
-    //   <Image
-    //    position="relative"
-    //     src='/img/battle-bay/explosion.png' 
-    //     width={0}
-    //     height={0}
-    //     left={left-(250*2.5)}
-    //     top={top-(207*2.5)}
-    //     zIndex="9"
-    //     />
-    //   </Flex>
-    // )
-    // setPlayExplosion(!playExlplosion);
-  }
   const [regionName, setRegionName] = useState('');
 
   const [explosionOnPoint, setExplosionOnPoint] = useState(0);
-
-  useEffect(() => {
-    PlayExplosion(explosionOnPoint);
-  }, [explosionOnPoint]);
-
 
   const PlayExplosion = async (controlPointId : number) => {
 
@@ -182,7 +137,6 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
     setExplosionOnPoint(0);
   }
-  //#endregion
 
   function selectRegion(x: any) {
     GetControlPointInfo(x);
@@ -199,52 +153,9 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   }
 
   useEffect(() => {
-    if(area.length === 0) return;
-
-    // setFlags(area.map((a: any) => {
-    //   // console.log('controlPoint.id', a.props.alt);
-    //   const left = a.props.coords.split(",")[0];
-    //   const top = a.props.coords.split(",")[1];
-    //   // console.log('left', left, 'top', top);
-    //   <Image
-    //     position="relative"
-    //     src='/img/battle-bay/fire.gif' 
-    //     width={1000}
-    //     height={1000}
-    //     left={left-(250*2.5)}
-    //     top={top-(207*2.5)}
-    //     zIndex="10"
-    //     />
-    // }));
-  }, [area]);
-
-  useEffect(() => {
     if(!transformComponentRef?.current) return;
     setElementToZoomTo('fancyMenu'); 
   }, [transformComponentRef?.current]);
-
-  //Temporarily turning off to use new process with opperator's new images
-  const SetUpMap = async () => {
-    if(!rdGameContext) return;
-    // getMap(rdGameContext?.season.id).then((data) => {
-    // setAreas(rdGameContext?.game.parent.map.regions.map((region:any) =>
-    //   region.controlPoints.map((controlPoint: any, i: any) => (
-    //     <area 
-    //       onClick={() => {
-    //         console.log('controlPoint.id', controlPoint.id),
-    //         setSelectedControlPoint(controlPoint.id); 
-    //         selectRegion(controlPoint.id); 
-    //         onOpen();
-    //       }}
-    //       coords={controlPoint.name=="Classy Keep" ? "1471,1106,211" :controlPoint.coordinates} 
-    //       shape="circle" 
-    //       alt= {controlPoint.id}
-    //       className='cursor-pointer'
-    //       title={controlPoint.name}
-    //       />
-    //     ))))
-    // console.log(area);
-  }
 
   const GetAttackPrices = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -257,9 +168,8 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     setConquestPrice(Number(ethers.utils.hexValue(BigNumber.from(conquest))));
   }
 
-  const [allFactions, setAllFactions] = useState<any>([]);
+
   const GetFactions = async () => {
-    // console.log('rdGameContext', rdGameContext);
     const factions = await getAllFactionsSeasonId(rdGameContext?.game.id, rdGameContext?.season.id);
     // console.log('factions', factions);
     setAllFactions(factions);
@@ -307,54 +217,6 @@ const BattleMap = ({onChange}: BattleMapProps) => {
     }
   );
 
-  useEffect(() => {
-    setMapInitialized(true);
-    GetAttackPrices();
-  }, []);
-
-  useEffect(() => {
-    if(!rdGameContext) return;
-    GetFactions();
-  }, [rdGameContext]);
-
-  //socket stuff
-  const [isSocketConnected, setIsSocketConnected] = useState(false);
-  useEffect(() => {
-    if (!user.address) return;
-  
-    console.log('connecting to socket...');
-    const socket = io(`${config.urls.cmsSocket}ryoshi-dynasties/battles?walletAddress=${user.address.toLowerCase()}`);
-  
-    function onConnect() {
-      setIsSocketConnected(true);
-      console.log('connected')
-    }
-  
-    function onDisconnect() {
-      setIsSocketConnected(false);
-      console.log('disconnected')
-    }
-  
-    function onBattleFinishedEvent(data: any) {
-      console.log('BATTLE_FINISHED', data)
-      const parsedAtack = JSON.parse(data);
-      // console.log('parsedAtack', parsedAtack)
-      // console.log('parsedAtack.controlPointId', parsedAtack.controlPointId)
-      // PlayExplosion(parsedAtack.controlPointId);
-      setExplosionOnPoint(parsedAtack.controlPointId);
-    }
-  
-    socket.on('connect', onConnect);
-    socket.on('disconnect', onDisconnect);
-    socket.on('BATTLE_FINISHED', onBattleFinishedEvent);
-  
-    return () => {
-      socket.off('connect', onConnect);
-      socket.off('disconnect', onDisconnect);
-      socket.off('BATTLE_FINISHED', onBattleFinishedEvent);
-    };
-  }, [!!user.address]);
-
   const SelectControlPoint = (id: any, regionName: string) => {
     setRegionName(regionName);
     setSelectedControlPoint(id);
@@ -371,12 +233,6 @@ const BattleMap = ({onChange}: BattleMapProps) => {
          : null
       )))
   }
-  interface Icon {
-    name: string;
-    image: string;
-  }
-  const[allIconsAqcuired, setAllIconsAqcuired] = useState(false);
-  const[icons, setIcons] = useState<Icon[]>([]);
 
   const GetAllIcons = async() => {
     if(allIconsAqcuired)return;
@@ -396,6 +252,12 @@ const BattleMap = ({onChange}: BattleMapProps) => {
       setIcons(newIcons);
       setAllIconsAqcuired(true);
   }
+  
+  const GetLeaderIcon = (name: any) => {
+    if(!allIconsAqcuired) return 'img/avatar.jpg';
+    let icon = icons.find((icon) => icon.name === name);
+    if(icon) return icon.image;
+  }
 
   useEffect(() => {
     if(!rdGameContext) return;
@@ -406,15 +268,61 @@ const BattleMap = ({onChange}: BattleMapProps) => {
   }, [rdGameContext]);
 
   useEffect(() => {
-    if(!allIconsAqcuired) return;
-    // console.log('icons', icons);
-  }, [allIconsAqcuired]);
+    if (transformComponentRef.current) {
+      const { zoomToElement } = transformComponentRef.current as any;
+      zoomToElement(elementToZoomTo);
+    }
+  }, [elementToZoomTo]);
 
-  const GetLeaderIcon = (name: any) => {
-    if(!allIconsAqcuired) return 'img/avatar.jpg';
-    let icon = icons.find((icon) => icon.name === name);
-    if(icon) return icon.image;
-  }
+  
+  useEffect(() => {
+    setMapInitialized(true);
+    GetAttackPrices();
+  }, []);
+
+  useEffect(() => {
+    if(!rdGameContext) return;
+    GetFactions();
+  }, [rdGameContext]);
+
+  
+  useEffect(() => {
+    PlayExplosion(explosionOnPoint);
+  }, [explosionOnPoint]);
+
+  useEffect(() => {
+    if (!user.address) return;
+  
+    console.log('connecting to socket...');
+    const socket = io(`${config.urls.cmsSocket}ryoshi-dynasties/battles?walletAddress=${user.address.toLowerCase()}`);
+  
+    function onConnect() {
+      // setIsSocketConnected(true);
+      console.log('connected')
+    }
+  
+    function onDisconnect() {
+      // setIsSocketConnected(false);
+      console.log('disconnected')
+    }
+  
+    function onBattleFinishedEvent(data: any) {
+      console.log('BATTLE_FINISHED', data)
+      const parsedAtack = JSON.parse(data);
+      setExplosionOnPoint(parsedAtack.controlPointId);
+    }
+  
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on('BATTLE_FINISHED', onBattleFinishedEvent);
+  
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off('BATTLE_FINISHED', onBattleFinishedEvent);
+    };
+  }, [!!user.address]);
+
 
   return (
     <section>
@@ -427,6 +335,7 @@ const BattleMap = ({onChange}: BattleMapProps) => {
         conquestPrice={conquestPrice}
         regionName={regionName}
         allFactions={allFactions}
+        showActiveGame={showActiveGame}
         />
       <Box
         position='relative' h='calc(100vh - 74px)'
@@ -436,13 +345,12 @@ const BattleMap = ({onChange}: BattleMapProps) => {
         {mapInitialized && (
           <TransformWrapper
             // centerOnInit={true}
+            // disablePadding={true}
             ref={transformComponentRef}
             onZoom={changeCanvasState}
             onPinching={changeCanvasState}
             onPinchingStop={changeCanvasState}
             onPanningStop={changeCanvasState}
-            // centerOnInit={true}
-            // disablePadding={true}
             initialScale={mapProps?.scale}
             initialPositionX={mapProps?.initialPosition.x}
             initialPositionY={mapProps?.initialPosition.y}
@@ -456,7 +364,6 @@ const BattleMap = ({onChange}: BattleMapProps) => {
               <MapFrame gridHeight={'50px 1fr 50px'} gridWidth={'50px 1fr 50px'} w='2930px' h='2061px'>
                 <Box
                   as='img'
-                  //  src={'/img/battle-bay/imgs/world_map_background.jpg'}
                    src={getPreloadedImage(ImageService.translate('/img/ryoshi-dynasties/battle/world-map-background.jpg').custom({width: 2880, height: 2021}))}
                    maxW='none'
                    useMap="#imageMap" 
@@ -539,7 +446,8 @@ const BattleMap = ({onChange}: BattleMapProps) => {
               )}
             </TransformWrapper>
         )}
-        <BattleMapHUD onBack={onChange}/>
+        {showActiveGame && (<BattleMapHUD onBack={onChange}/>)
+      }
       </Box>
       <RdModal
         isOpen={isResetModalOpen}
@@ -558,9 +466,3 @@ const BattleMap = ({onChange}: BattleMapProps) => {
 
 
 export default BattleMap;
-
-interface MapProps {
-  scale: number;
-  initialPosition: { x: number; y: number };
-  minScale: number;
-}

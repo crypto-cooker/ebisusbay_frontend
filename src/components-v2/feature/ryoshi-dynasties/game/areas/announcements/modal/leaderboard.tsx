@@ -1,49 +1,15 @@
 import React, {useEffect, useContext, useState, ReactElement} from 'react';
-import {
-  Center,
-  Flex,
-  Spinner,
-  Stack,
-  Table,
-  TableContainer,
-  Tbody,
-  Th,
-  Thead,
-  Tr,
-  Select,
-  Td,
-  Text,
-  Tabs,
-  TabList,
-  Tab,
-  VStack,
-  Box,
-  Grid,
-  GridItem,
-  Avatar,
-  useBreakpointValue,
-  HStack,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon
-} from "@chakra-ui/react"
-
+import { Center, Flex, Spinner, Stack,Table,TableContainer,Tbody,Th,Thead,Tr,Select,Td,Text,Tabs,TabList,Tab,VStack,Box,Grid,GridItem, Avatar,useBreakpointValue,HStack,Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import {getLeaderBoard, getSeasonDate} from "@src/core/api/RyoshiDynastiesAPICalls";
 import moment from 'moment';
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
-import {
-  RyoshiDynastiesContext,
-  RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
+import { RyoshiDynastiesContext, RyoshiDynastiesContextProps} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import ImageService from "@src/core/services/image";
-import { isMobile } from 'web3modal';
-import GameMapWrapper from '@src/components-v2/feature/ryoshi-dynasties/components/game-map';
+import GameMapWrapper from '@src/components-v2/feature/ryoshi-dynasties/components/game-map-wrapper';
+const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
 interface leaderBoardProps {
   onReturn: () => void;
@@ -121,10 +87,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     ))
     return x;
   }
-  function limit (string = '') {  
-    return string.substring(0, 10) + (string.length > 10 ? '...' : '');
-  }
-
+  
   const LoadControlPointLeaderBoard = async () => {
     if(!rdGameContext || !selectedControlPoint) return;
 
@@ -305,7 +268,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                         <AccordionIcon />
                       </AccordionButton>
                     </h2>
-                    <AccordionPanel pb={4} maxH={'300px'}>
+                    <AccordionPanel pb={4} maxH={'400px'}>
 
                       <GameMapWrapper/>
 
