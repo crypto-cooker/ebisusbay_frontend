@@ -43,6 +43,7 @@ import {
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 import ImageService from "@src/core/services/image";
 import { isMobile } from 'web3modal';
+import GameMapWrapper from '@src/components-v2/feature/ryoshi-dynasties/components/game-map';
 
 interface leaderBoardProps {
   onReturn: () => void;
@@ -304,13 +305,10 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                         <AccordionIcon />
                       </AccordionButton>
                     </h2>
-                    <AccordionPanel pb={4}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                      commodo consequat.
+                    <AccordionPanel pb={4} maxH={'300px'}>
 
-                      
+                      <GameMapWrapper/>
+
                     </AccordionPanel>
                   </AccordionItem>
                 </Accordion>
