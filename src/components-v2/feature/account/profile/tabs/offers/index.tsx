@@ -1,13 +1,13 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
-import styled from "styled-components";
 import {useAppSelector} from "@src/Store/hooks";
 import {
   Box,
   Button,
   ButtonGroup,
-  CloseButton, Collapse,
+  CloseButton,
+  Collapse,
   Icon,
   IconButton,
   Input,
@@ -21,53 +21,6 @@ import ReceivedOffers from "./received-offers";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {getTheme} from "@src/Theme/theme";
 
-const StyledNav = styled.div`
-  .nav-link {
-    color: ${({ theme }) => theme.colors.textColor3}
-  }
-  .nav-link.active {
-    background: #218cff;
-    color: ${({ theme }) => theme.colors.white}
-  }
-  .nav-item {
-    cursor: pointer
-  }
-`;
-
-type OfferTab = {
-  key: string;
-  title: string;
-  description: string;
-}
-
-const tabs: {[key: string]: OfferTab} = {
-  madeDirect: {
-    key: 'made-direct',
-    title: 'Made Direct Offers',
-    description: 'Offers made directly to NFTs'
-  },
-  madeCollection: {
-    key: 'made-collection',
-    title: 'Made Collection Offers',
-    description: 'Offers made on an entire collection'
-  },
-  receivedDirect: {
-    key: 'received-direct',
-    title: 'Received Direct Offers',
-    description: 'Offers received on your NFTs'
-  },
-  receivedPublic: {
-    key: 'received-public',
-    title: 'Received Public Offers',
-    description: 'Offers received on your CRC-1155 NFTs'
-  },
-  receivedCollection: {
-    key: 'received-collection',
-    title: 'Received Collection Offers',
-    description: 'Offers received directly on collections you own'
-  },
-}
-
 interface OffersProps {
   address: string;
 }
@@ -76,7 +29,6 @@ export default function Offers({ address }: OffersProps) {
   const userTheme = useAppSelector((state) => state.user.theme);
 
   const [filtersVisible, setFiltersVisible] = useState(true);
-  const [activeTab, setActiveTab] = useState(tabs.madeDirect);
   const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
   const [searchTerms, setSearchTerms] = useState<string>();
   const debouncedSearch = useDebounce(searchTerms, 500);
@@ -101,22 +53,11 @@ export default function Offers({ address }: OffersProps) {
     setFiltersVisible(!filtersVisible)
   };
 
-  const setTab = (key: any) => {
-    const tabKey = Object.entries(tabs).find(([k, v]) =>  v.key === key);
-    if (!!tabKey) setActiveTab(tabKey[1]);
-  };
-
-  const setMobileTab = (tab: string) => {
-    setTab(tab);
-    setFiltersVisible(false);
-  };
-
   useEffect(() => {
     if (!hasManuallyToggledFilters) {
       setFiltersVisible(!useMobileMenu);
     }
   }, [useMobileMenu]);
-
 
   return (
     <Box>

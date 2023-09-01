@@ -99,7 +99,7 @@ const MadeOffersFilterContainer = ({queryParams, onFilter, filtersVisible, useMo
       <RadioFilter
         title='Status'
         items={[
-          {label: 'Active', key: 'status-active', isSelected: filteredItems.some((fi) => fi.key === 'status-active')},
+          {label: 'Active', key: 'status-active', isSelected: filteredItems.some((fi) => fi.key === 'status-active') || !filteredItems.some((fi) => fi.key.startsWith('status-'))},
           {label: 'Accepted', key: 'status-accepted', isSelected: filteredItems.some((fi) => fi.key === 'status-accepted')},
           {label: 'Rejected', key: 'status-rejected', isSelected: filteredItems.some((fi) => fi.key === 'status-rejected')}
         ]}
@@ -108,7 +108,7 @@ const MadeOffersFilterContainer = ({queryParams, onFilter, filtersVisible, useMo
       <RadioFilter
         title='Type'
         items={[
-          {label: 'Direct', key: 'type-direct', isSelected: filteredItems.some((fi) => fi.key === 'type-direct')},
+          {label: 'Direct', key: 'type-direct', isSelected: filteredItems.some((fi) => fi.key === 'type-direct') || !filteredItems.some((fi) => fi.key.startsWith('type-'))},
           {label: 'Collection', key: 'type-collection', isSelected: filteredItems.some((fi) => fi.key === 'type-collection')},
         ]}
         onSelect={handleTypeFilter}
