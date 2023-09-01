@@ -109,6 +109,10 @@ export class ApiService implements Api {
     return await this.mapi.getReceivedOffers(query);
   }
 
+  async getOffersOverview(address: string): Promise<any> {
+    return await this.mapi.getOffersOverview(address);
+  }
+
   async getRewardedEntities(gameId: number): Promise<any> {
     const pointsByAddress = await this.cms.getGameWinners(gameId);
     // const ids = rewardedCollections.map((collection: any) => collection.id);

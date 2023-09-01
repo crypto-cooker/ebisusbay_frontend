@@ -192,29 +192,29 @@ const DataAccordion = ({data, onSort, onAccept, onReject, canReject}: Responsive
 
   return (
     <>
-      {/*<Box mb={2} textAlign='center'>*/}
-      {/*  <HStack>*/}
-      {/*    <Text fontSize='sm'>Sort:</Text>*/}
-      {/*    <ButtonGroup>*/}
-      {/*      <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('rank')}>*/}
-      {/*        Rank*/}
-      {/*      </ChakraButton>*/}
-      {/*      <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('price')}>*/}
-      {/*        Price*/}
-      {/*      </ChakraButton>*/}
-      {/*      <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('listingTime')}>*/}
-      {/*        Sale Time*/}
-      {/*      </ChakraButton>*/}
-      {/*    </ButtonGroup>*/}
-      {/*  </HStack>*/}
-      {/*</Box>*/}
+      <Box mb={2} textAlign='center'>
+        <HStack>
+          <Text fontSize='sm'>Sort:</Text>
+          <ButtonGroup>
+            <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('rank')}>
+              Rank
+            </ChakraButton>
+            <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('price')}>
+              Price
+            </ChakraButton>
+            <ChakraButton size={{base: 'xs', sm: 'sm'}} onClick={() => onSort('listingTime')}>
+              Sale Time
+            </ChakraButton>
+          </ButtonGroup>
+        </HStack>
+      </Box>
       <Accordion w='full' allowMultiple>
         {data.pages.map((page, pageIndex) => (
           <React.Fragment key={pageIndex}>
             {page.data.map((offer) => (
               <AccordionItem key={offer.offerId}>
                 <Flex w='100%' my={2}>
-                  <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
+                  <Box flex='1' textAlign='left' my='auto'>
                     <HStack>
                       <Box
                         width='40px'
@@ -231,14 +231,13 @@ const DataAccordion = ({data, onSort, onAccept, onReject, canReject}: Responsive
                       </Box>
 
                       <Box flex='1' fontSize='sm'>
-                        {offer.nftId ? (
-                          <Link href={`/collection/${offer.nftAddress}/${offer.nftId}`}>
-                            {offer.nftId}
-                          </Link>
+                        {!!offer.metadata.name ? (
+                          <VStack align='start'>
+                            <Box fontSize='xs' className='color'>{offer.collection.name}</Box>
+                            <Box fontWeight='bold'>{offer.metadata.name}</Box>
+                          </VStack>
                         ) : (
-                          <Link href={`/collection/${offer.nftAddress}`}>
-                            {getCollectionName(offer.nftAddress, offer.nftId)}
-                          </Link>
+                          <Box fontWeight='bold'>{offer.collection.name}</Box>
                         )}
                       </Box>
                     </HStack>

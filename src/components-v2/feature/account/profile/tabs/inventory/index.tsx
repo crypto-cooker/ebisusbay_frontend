@@ -24,7 +24,7 @@ import {
 } from "@src/GlobalState/user-batch";
 import {MobileBatchPreview} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-batch-preview";
 import {
-  Box,
+  Box, Center,
   CloseButton,
   Collapse,
   HStack,
@@ -422,13 +422,9 @@ export default function Inventory({ address }: InventoryProps) {
           hasMore={hasNextPage ?? false}
           style={{ overflow: 'hidden' }}
           loader={
-            <div className="row">
-              <div className="col-lg-12 text-center">
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div>
-            </div>
+            <Center>
+              <Spinner />
+            </Center>
           }
         >
           {historyContent}

@@ -1,16 +1,25 @@
-import {Collapse, Offcanvas} from "react-bootstrap";
-import React, {useEffect, useState} from "react";
-import Button from "@src/Components/components/Button";
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
-import Nav from 'react-bootstrap/Nav';
-import Tab from 'react-bootstrap/Tab';
-import MadeOffers from "./made-offers";
-import ReceivedOffers2 from "./received-offers2";
 import styled from "styled-components";
-import {OfferType, ReceivedOfferType} from "@src/core/services/api-service/types";
 import {useAppSelector} from "@src/Store/hooks";
-import {useBreakpointValue} from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  CloseButton, Collapse,
+  Icon,
+  IconButton,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Stack,
+  useBreakpointValue
+} from "@chakra-ui/react";
+import MadeOffers from "@src/components-v2/feature/account/profile/tabs/offers/made-offers";
+import ReceivedOffers from "./received-offers";
+import useDebounce from "@src/core/hooks/useDebounce";
+import {getTheme} from "@src/Theme/theme";
 
 const StyledNav = styled.div`
   .nav-link {
@@ -69,18 +78,25 @@ export default function Offers({ address }: OffersProps) {
   const [filtersVisible, setFiltersVisible] = useState(true);
   const [activeTab, setActiveTab] = useState(tabs.madeDirect);
   const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);
+  const [searchTerms, setSearchTerms] = useState<string>();
+  const debouncedSearch = useDebounce(searchTerms, 500);
+  const [offerDirection, setOfferDirection] = useState<'made' | 'received'>('made');
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
+
   const useMobileMenu = useBreakpointValue(
     { base: true, md: false },
     { fallback: 'md', ssr: false },
   );
 
-  useEffect(() => {
-    if (!hasManuallyToggledFilters) {
-      setFiltersVisible(!useMobileMenu);
-    }
-  }, [useMobileMenu]);
+  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerms(e.target.value);
+  }, []);
 
-  const toggleFilterVisibility = () => {
+  const handleClearSearch = useCallback(() => {
+    setSearchTerms('');
+  }, []);
+
+  const handleToggleFilter = () => {
     setHasManuallyToggledFilters(true);
     setFiltersVisible(!filtersVisible)
   };
@@ -95,130 +111,105 @@ export default function Offers({ address }: OffersProps) {
     setFiltersVisible(false);
   };
 
+  useEffect(() => {
+    if (!hasManuallyToggledFilters) {
+      setFiltersVisible(!useMobileMenu);
+    }
+  }, [useMobileMenu]);
+
+
   return (
-    <div className="d-flex">
-      <Tab.Container id="left-tabs-example" defaultActiveKey={tabs.madeDirect.key} activeKey={activeTab.key} onSelect={setTab}>
-        <Collapse in={filtersVisible && !useMobileMenu} dimension="width">
-          <div className="m-0 p-0">
-            <div className="me-4 px-2" style={{width: 250}}>
-              <StyledNav>
-                <Nav id="offer-nav" variant="pills" className="flex-column">
-                  <div className="text-muted fw-bold">
-                    Made Offers
-                  </div>
-                  <Nav.Item>
-                    <Nav.Link eventKey={tabs.madeDirect.key}>Direct Offers</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey={tabs.madeCollection.key}>Collection Offers</Nav.Link>
-                  </Nav.Item>
-                  <div className="text-muted fw-bold">
-                    Received Offers
-                  </div>
-                  <Nav.Item>
-                    <Nav.Link eventKey={tabs.receivedDirect.key}>Direct Offers</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey={tabs.receivedPublic.key}>Public Offers</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey={tabs.receivedCollection.key}>Collection Offers</Nav.Link>
-                  </Nav.Item>
-                </Nav>
-              </StyledNav>
-            </div>
-          </div>
+    <Box>
+      <Stack direction='row' mb={2} align='center'>
+        <IconButton
+          aria-label={'Toggle Filter'}
+          onClick={handleToggleFilter}
+          variant='outline'
+          icon={<Icon as={FontAwesomeIcon} icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />}
+        />
+        <ButtonGroup isAttached variant='outline'>
+          <Button
+            isActive={offerDirection === 'made'}
+            _active={{
+              bg: getTheme(userTheme).colors.textColor4,
+              color: 'light'
+            }}
+            onClick={() => setOfferDirection('made')}
+          >
+            Made
+          </Button>
+          <Button
+            isActive={offerDirection === 'received'}
+            _active={{
+              bg: getTheme(userTheme).colors.textColor4,
+              color: 'light'
+            }}
+            onClick={() => setOfferDirection('received')}
+          >
+            Received
+          </Button>
+        </ButtonGroup>
+        {useMobileMenu ? (
+          <IconButton
+            aria-label={'Toggle Search'}
+            onClick={() => setShowMobileSearch(!showMobileSearch)}
+            variant='outline'
+            className={showMobileSearch ? 'active' : ''}
+            icon={<Icon as={FontAwesomeIcon} icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />}
+          />
+        ) : (
+          <InputGroup>
+            <Input
+              placeholder="Search by name"
+              w="100%"
+              onChange={handleSearch}
+              value={searchTerms}
+              color="white"
+              _placeholder={{ color: 'gray.300' }}
+            />
+            {searchTerms?.length && (
+              <InputRightElement
+                children={<CloseButton onClick={handleClearSearch} />}
+              />
+            )}
+          </InputGroup>
+        )}
+      </Stack>
+      <Box w='full' mb={2}>
+        <Collapse in={useMobileMenu && showMobileSearch} animateOpacity>
+          <InputGroup>
+            <Input
+              placeholder="Search by name"
+              w="100%"
+              onChange={handleSearch}
+              value={searchTerms}
+              color="white"
+              _placeholder={{ color: 'gray.300' }}
+            />
+            {searchTerms?.length && (
+              <InputRightElement
+                children={<CloseButton onClick={handleClearSearch} />}
+              />
+            )}
+          </InputGroup>
         </Collapse>
-        <div className="flex-fill">
-          <div className="d-flex mb-2">
-            <div>
-              <Button
-                type="legacy-outlined"
-                onClick={toggleFilterVisibility}
-              >
-                <FontAwesomeIcon icon={filtersVisible ? faAngleLeft : faFilter} />
-              </Button>
-            </div>
-            <div className="fs-6 fw-bold my-auto ms-2 flex-fill text-end">
-              {activeTab.description}
-            </div>
-          </div>
-          <Tab.Content>
-            <Tab.Pane eventKey={tabs.madeDirect.key}>
-              <MadeOffers address={address} type={OfferType.DIRECT} filterVisible={filtersVisible} />
-            </Tab.Pane>
-            <Tab.Pane eventKey={tabs.madeCollection.key}>
-              <MadeOffers address={address} type={OfferType.COLLECTION} filterVisible={filtersVisible} />
-            </Tab.Pane>
-            <Tab.Pane eventKey={tabs.receivedDirect.key}>
-              <ReceivedOffers2
-                type={ReceivedOfferType.ERC721}
-                group='nft'
-                address={address}
-                filterVisible={filtersVisible}
-              />
-            </Tab.Pane>
-            <Tab.Pane eventKey={tabs.receivedPublic.key}>
-              <ReceivedOffers2
-                type={ReceivedOfferType.ERC1155}
-                group={undefined}
-                address={address}
-                filterVisible={filtersVisible}
-              />
-            </Tab.Pane>
-            <Tab.Pane eventKey={tabs.receivedCollection.key}>
-              <ReceivedOffers2
-                type={ReceivedOfferType.ERC721}
-                group='collection'
-                address={address}
-                filterVisible={filtersVisible}
-              />
-            </Tab.Pane>
-          </Tab.Content>
-        </div>
-      </Tab.Container>
-      <Offcanvas show={filtersVisible && useMobileMenu} placement="bottom" onHide={() => setFiltersVisible(false)} className="filter-pane">
-        <Offcanvas.Header closeButton closeVariant={userTheme === 'dark' ? 'white': 'dark'}>
-          <Offcanvas.Title>Filter Offers</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <Button
-            type="legacy-outlined"
-            className="mb-2 w-100"
-            onClick={() => setMobileTab(tabs.madeDirect.key)}
-          >
-            Made Direct Offers
-          </Button>
-          <Button
-            type="legacy-outlined"
-            className="mb-2 w-100"
-            onClick={() => setMobileTab(tabs.madeCollection.key)}
-          >
-            Made Collection Offers
-          </Button>
-          <Button
-            type="legacy-outlined"
-            className="mb-2 w-100"
-            onClick={() => setMobileTab(tabs.receivedDirect.key)}
-          >
-            Received Direct Offers
-          </Button>
-          <Button
-            type="legacy-outlined"
-            className="mb-2 w-100"
-            onClick={() => setMobileTab(tabs.receivedPublic.key)}
-          >
-            Received Public Offers
-          </Button>
-          <Button
-            type="legacy-outlined"
-            className="mb-2 w-100"
-            onClick={() => setMobileTab(tabs.receivedCollection.key)}
-          >
-            Received Collection Offers
-          </Button>
-        </Offcanvas.Body>
-      </Offcanvas>
-    </div>
-  )
+      </Box>
+
+      {offerDirection === 'received' ? (
+        <ReceivedOffers
+          address={address}
+          filtersVisible={filtersVisible}
+          setFiltersVisible={setFiltersVisible}
+          search={debouncedSearch}
+        />
+      ) : (
+        <MadeOffers
+          address={address}
+          filtersVisible={filtersVisible}
+          setFiltersVisible={setFiltersVisible}
+          search={debouncedSearch}
+        />
+      )}
+    </Box>
+  );
 }

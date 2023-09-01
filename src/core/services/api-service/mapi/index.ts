@@ -94,6 +94,10 @@ class Mapi {
     )
   }
 
+  async getOffersOverview(address: string): Promise<any> {
+    return await this.offers.getOffersOverview(address);
+  }
+
   async getWallet(query?: WalletsQueryParams): Promise<PagedList<WalletNft>> {
     const response = await this.wallets.get(new WalletsQuery(query));
 

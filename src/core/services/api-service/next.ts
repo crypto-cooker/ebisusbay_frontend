@@ -118,6 +118,11 @@ class NextApiService implements Api {
     return response.data;
   }
 
+  async getOffersOverview(address: string): Promise<any> {
+    const response = await this.next.get(`users/${address}/offers/overview`);
+    return response.data;
+  }
+
   getCollectionTraits(address: string): Promise<any> {
     throw new Error("Method not implemented.");
   }

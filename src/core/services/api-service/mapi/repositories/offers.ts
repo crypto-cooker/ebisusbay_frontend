@@ -23,6 +23,13 @@ class OffersRepository extends MapiRepository {
       params: {...query.defaultParams(), ...query.toQuery()}
     });
   }
+
+  async getOffersOverview(address: string) {
+
+    return await this.api.get(`v2/offersOverview`, {
+      params: {wallet: address}
+    });
+  }
 }
 
 export default OffersRepository;
