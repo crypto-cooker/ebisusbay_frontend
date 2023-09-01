@@ -44,7 +44,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const [runAuthedFunction] = useAuthedFunction();
 
   const authCheckBeforeClaim = async () => {
-    await runAuthedFunction(() => claimDailyRewards());
+    await runAuthedFunction(claimDailyRewards);
   };
 
   const claimDailyRewards = async () => {

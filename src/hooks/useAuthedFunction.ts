@@ -9,7 +9,7 @@ const useAuthedFunction = () => {
   const user = useAppSelector((state) => state.user);
 
   const runAuthedFunction = async (fn: Function) => {
-    if (user.address) {
+    if (user.address && user.correctChain) {
       try {
         await fn();
       } catch (error: any) {
