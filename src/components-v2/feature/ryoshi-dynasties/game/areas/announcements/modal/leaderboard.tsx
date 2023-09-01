@@ -70,7 +70,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   const [noGameActive, setNoGameActive] = useState(false);
   const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false, '2xl': false })
 
-  const [attackerOptions, setLeaderboardDropDown] = useState<ReactElement[]>([]);
+  const [controlPointDropDown, setControlPointDropDown] = useState<ReactElement[]>([]);
   const [dataForm, setDataForm] = useState({selectedFaction: "" ?? null,})
 
   const onChangeSelectedControlPoint = (e : any) => {
@@ -165,6 +165,30 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
       </Tr>
     )))
   }
+  const LoadControlPointDropDown = () => {
+    if(!rdGameContext) return;
+
+    //pull all control points from game context and place in new array
+    let controlPoints: any[] = [];
+    rdGameContext.game.parent.map.regions.map((region: any) =>
+      region.controlPoints.map((controlPoint: any, i: any) => (
+        controlPoints.push(controlPoint)
+      ))
+    )
+    //sort control points alphabetically
+    controlPoints = controlPoints.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1)
+
+    //set control points to dropdown
+    setControlPointDropDown(controlPoints.map((controlPoint: any) =>
+        <>
+          <option
+            value={controlPoint.name}
+            key={controlPoint.id}>
+            {controlPoint.name}
+          </option>
+        </>
+      ))
+  }
 
   useEffect(() => {
     LoadControlPointLeaderBoard();
@@ -174,18 +198,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     if(!rdGameContext) return;
 
     GetGameDates();
-
-    setLeaderboardDropDown(rdGameContext.game.parent.map.regions.map((region: any) =>
-      region.controlPoints.map((controlPoint: any, i: any) => (
-        <>
-          <option
-            value={controlPoint.name}
-            key={controlPoint.id}>
-            {controlPoint.name}
-          </option>
-        </>
-      ))
-    ))
+    LoadControlPointDropDown();
   }, [rdGameContext]);
 
   useEffect(() => {
@@ -230,7 +243,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                     value={value}
                     onChange={onChangeSelectedControlPoint}
                     >
-                      {attackerOptions}
+                      {controlPointDropDown}
                     </Select>
                 </GridItem>
 
