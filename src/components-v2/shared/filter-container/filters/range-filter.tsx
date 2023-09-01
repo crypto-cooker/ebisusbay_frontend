@@ -24,8 +24,8 @@ const RangeFilter = ({field, label, onChange, currentMin, currentMax}: RangeFilt
   const handleMinChange = (event: ChangeEvent<HTMLInputElement>) => setMin(event.target.value)
   const handleMaxChange = (event: ChangeEvent<HTMLInputElement>) => setMax(event.target.value)
   const handleApply = () => {
-    const minVal = isNaN(Number(min)) ? undefined : Number(min);
-    const maxVal = isNaN(Number(max)) ? undefined : Number(max);
+    const minVal = min === '' || isNaN(Number(min)) ? undefined : Number(min);
+    const maxVal = max === '' || isNaN(Number(max)) ? undefined : Number(max);
     onChange(field, minVal, maxVal);
   };
 

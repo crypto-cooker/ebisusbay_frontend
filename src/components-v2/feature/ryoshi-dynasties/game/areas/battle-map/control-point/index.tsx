@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {Box, Center, Flex, Text,} from "@chakra-ui/react"
+import {Box, Center, Flex, Spacer, Text, VStack,} from "@chakra-ui/react"
 import {Spinner} from 'react-bootstrap';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
@@ -106,12 +106,30 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
         <HelpPage />
       ) : (
         <>
-          <Center>
+          <VStack marginBottom={4} spacing={0} alignItems="left" pl={2}>
+            <Flex>
+            <Text textColor={'#aaa'}
+            > Region:
+            </Text>
             <Text
-              as='i'
-              marginBottom='2'
-            > Region: {regionName}, Total Control Bonus: {regionBonus} </Text>
-          </Center>
+              as='b'
+              ml={1}
+              > {regionName} 
+            </Text>
+            </Flex>
+
+            <Flex>
+            <Text textColor={'#aaa'}
+            > Total Control Bonus:
+            </Text>
+            <Text
+              as='b'
+              ml={1}
+            > {regionBonus} 
+            </Text>
+            </Flex>
+            
+          </VStack>
 
           {!isLoading ? (
             <>

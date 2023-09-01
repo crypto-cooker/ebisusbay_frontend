@@ -269,6 +269,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                     rounded='3px'
                     variant='tab'
                     size={{base: 'sm', sm: 'md'}}
+                    color={currentTab === key ? 'white' : getTheme(user.theme).colors.textColor3}
                   >
                     {tab.label}
                   </ChakraButton>

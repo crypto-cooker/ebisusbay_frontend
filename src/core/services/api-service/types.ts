@@ -32,12 +32,15 @@ export interface RyoshiDynastiesApi {
     getErc20Account(address: string): Promise<Erc20Account | null>;
     getStakedTokens(address: string, type: StakedTokenType): Promise<StakedToken[]>;
     requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
+    requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
     getDailyRewards(address: string): Promise<any>
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
     claimDailyRewards(address: string, signature: string): Promise<any>
-    requestSeasonalRewardsClaimAuthorization(address: string, amount: number, seasonId: number, signature: string): Promise<any>;
+    requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string): Promise<any>;
+    requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string): Promise<any>;
+    getPendingFortuneAuthorizations(address: string, signature: string): Promise<any>;
     getGlobalContext(): Promise<RyoshiConfig>;
     getUserContext(address: string, signature: string): Promise<RdUserContext>;
     getGameContext(): Promise<RdGameContext>;
@@ -72,6 +75,11 @@ export enum InvalidState {
 export enum OfferType {
     DIRECT = 'direct',
     COLLECTION = 'collection'
+}
+
+export enum ReceivedOfferType {
+    ERC721 = '721',
+    ERC1155 = '1155'
 }
 
 export interface BankStakeNft {

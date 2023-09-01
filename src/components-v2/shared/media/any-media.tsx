@@ -113,13 +113,13 @@ export const AnyMedia = ({
             setVideoThumbNail(makeThumb(transformedImage));
           }
         }
-        if (format === 'gif') {
-          setTransformedImage(ImageService.gif(imageURL.toString()).gifToMp4());
-          setVideoThumbNail(thumbnail ?? null);
-          setDynamicType(MediaType.video);
-        } else {
+        // if (format === 'gif') {
+        //   setTransformedImage(ImageService.gif(imageURL.toString()).gifToMp4());
+        //   setVideoThumbNail(thumbnail ?? null);
+        //   setDynamicType(MediaType.video);
+        // } else {
           setDynamicType(type);
-        }
+        // }
       }
     } catch (e) {
       console.log('Unable to determine media type', e, image);

@@ -18,6 +18,7 @@ import {
   CollectionInfoQuery,
   CollectionInfoQueryParams
 } from "@src/core/services/api-service/mapi/queries/collectioninfo";
+import OffersV2Query, {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 import {
   FullCollectionsQuery,
   FullCollectionsQueryParams
@@ -95,6 +96,20 @@ class Mapi {
       response.data.page,
       response.data.page < response.data.totalPages
     )
+  }
+
+  async getReceivedOffers(query?: OffersV2QueryParams): Promise<PagedList<Offer>> {
+    const response = await this.offers.getReceivedOffers(new OffersV2Query(query));
+
+    return new PagedList<Offer>(
+      response.data.offers,
+      response.data.page,
+      response.data.page < response.data.totalPages
+    )
+  }
+
+  async getOffersOverview(address: string): Promise<any> {
+    return await this.offers.getOffersOverview(address);
   }
 
   async getWallet(query?: WalletsQueryParams): Promise<PagedList<WalletNft>> {

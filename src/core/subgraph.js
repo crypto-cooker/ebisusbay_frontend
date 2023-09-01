@@ -1,6 +1,7 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import {appConfig} from "../Config";
 import {caseInsensitiveCompare} from "@src/utils";
+import axios from "axios";
 
 const config = appConfig();
 const APIURL = `${config.urls.subgraph}${config.chain.id === '25' ? 'offers2' : 'offers-testnet'}`;
@@ -262,3 +263,46 @@ export const getOffersForSingleNFT = async (nftAddress, nftId) => {
     data: offers,
   };
 };
+
+export async function getSubgraphData(subgraph, query, variables, dataName) {
+  let lastId = "";
+  let foundData = [];
+  // console.log("getSubgraphData", subgraph, query, variables, dataName)
+  if (query.includes("$lastID: String")) { 
+    while (true) {
+        variables["lastID"] = lastId
+        let response = await axios.post(subgraph, {'query': query, 'variables': variables})
+        let data = response.data.data[dataName];
+        if (data.length == 0) break
+        foundData.push(...data);
+        lastId = data.slice(-1)[0]['id']
+    }
+} else {
+    let response = await axios.post(subgraph, {'query': query, 'variables': variables});
+    return response.data.data[dataName];
+}
+return foundData;
+}
+
+export async function getOwners() {
+  const SUBGRAPH = "https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/staked-owners";
+  let query = `
+      query owners($lastID: String) {
+        erc721Tokens(where: {contract: "0xd87838a982a401510255ec27e603b0f5fea98d24", id_gt: $lastID}, first: 1000) {
+              id
+              owner {
+                    id
+              }
+              identifier
+        }
+  }
+  `
+  try {
+      let data = await getSubgraphData(SUBGRAPH, query, {lastID: ""}, "erc721Tokens")
+      if (data) {
+          // DATA HERE
+          return data;
+      }
+  } catch {}
+  return undefined
+}

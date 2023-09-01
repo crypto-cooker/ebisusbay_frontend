@@ -218,14 +218,14 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
             <Flex direction='column' w='full' align='start'>
               <Flex w='full' align='center'>
                 <Box flex='1' textAlign='left' my='auto'>
-                  <Text fontSize='xs' color="#aaa">Vault {index + 1}</Text>
+                  <Text fontSize='xs' color="#aaa">Vault {Number(vault.index) + 1}</Text>
                   <Box fontWeight='bold'>{daysToAdd} days</Box>
                 </Box>
                 <Box>
                   <VStack align='end' spacing={2} fontSize='sm'>
                     <HStack fontWeight='bold'>
                       <FortuneIcon boxSize={6} />
-                      <Box>{commify(balance)}</Box>
+                      <Box>{commify(round(balance))}</Box>
                     </HStack>
                     <Flex>
                       <Tag variant='outline'>

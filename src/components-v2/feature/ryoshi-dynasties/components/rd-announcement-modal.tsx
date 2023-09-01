@@ -1,4 +1,4 @@
-import {Box, BoxProps, Button, Flex, Portal, Image, useMediaQuery, Center, SimpleGrid} from "@chakra-ui/react";
+import {Box,useBreakpointValue, BoxProps, Button, Flex, Portal, Image, useMediaQuery, Center, SimpleGrid} from "@chakra-ui/react";
 import {ReactNode, useContext, useEffect, useState} from "react";
 import localFont from "next/font/local";
 import {CloseIcon} from "@chakra-ui/icons";
@@ -60,6 +60,11 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
     return isFAQ  ?'/img/ryoshi-dynasties/announcements/base/modal_back_button_HOVER_1200.png' :
                       '/img/ryoshi-dynasties/announcements/base/modal_question_mark_button_HOVER_1200.png'
   }
+  const src = useBreakpointValue<string>(
+    {
+    base:'/img/ryoshi-dynasties/announcements/base/ryoshi_logo_for_modal_small.png', 
+    md:'/img/ryoshi-dynasties/announcements/base/ryoshi_logo_for_modal_1200.png',
+    }); 
 
   return (
     <Portal containerRef={isOpen ? globalRef! : undefined} 
@@ -209,9 +214,10 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
                     <Image 
                       position='absolute' 
                       zIndex={2} 
-                      w={isMobile ? '180px' : '240px'}
-                      h={isMobile ? '109px' : '142px'}
-                      src='/img/ryoshi-dynasties/announcements/base/ryoshi_logo_for_modal_small.png'
+                      w={{base:'180px',sm:'271px', md:'461.4px', lg:'576.75px'}}
+                      h={{base:'109px', sm:'120px',md:'126px', lg:'157.5px'}}
+                      // h={isMobile ? '109px' : '142px'}
+                      src={src}
                     />
                     </Flex>
                   </Box>

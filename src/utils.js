@@ -557,6 +557,10 @@ export const isLandDeedsCollection = (address) => {
   );
 };
 
+export const isPlayingCardsCollection = (address) => {
+  return isCollection(address, 'ryoshi-playing-cards', '0xd87838a982a401510255ec27e603b0f5fea98d24');
+}
+
 export const isBundle = (addressOrSlug) => {
   return caseInsensitiveCompare(addressOrSlug, config.contracts.bundle) || addressOrSlug === 'nft-bundles';
 }
