@@ -30,9 +30,10 @@ interface SelectedPlot {
 
 interface BattleMapProps {
   onBack: () => void;
+  showBackButton: boolean;
 }
 
-const DynastiesLands = ({onBack}: BattleMapProps) => {
+const DynastiesLands = ({onBack, showBackButton}: BattleMapProps) => {
   const user = useAppSelector(state => state.user);
   const transformComponentRef = useRef<any>(null)
 
@@ -360,7 +361,7 @@ const DynastiesLands = ({onBack}: BattleMapProps) => {
         {selectedPlot && (
           <LandModal isOpen={isOpen} onClose={onCloseResetElement} plot={selectedPlot} />
         )}
-        <LandsHUD onBack={onBack} traitTypes={traitTypes} setElementToZoomTo={setElementToZoomTo} showBack={false} FilterByTraitCallback={handleFilterByTrait}/>
+        <LandsHUD onBack={onBack} showBackButton={showBackButton} traitTypes={traitTypes} setElementToZoomTo={setElementToZoomTo} FilterByTraitCallback={handleFilterByTrait}/>
       </Box>
     </section>
   )

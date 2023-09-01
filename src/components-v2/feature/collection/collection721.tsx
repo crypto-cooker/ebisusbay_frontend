@@ -412,7 +412,7 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
             )}
             {openMenu === tabs.dynastiesMap && (
               <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
-                <DynastiesLands onBack={emptyFunction} />
+                <DynastiesLands onBack={emptyFunction} showBackButton={false}/>
               </NegativeMargin>
             )}
             {openMenu === tabs.pokerRanks && (
