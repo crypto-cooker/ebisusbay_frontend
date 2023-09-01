@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAngleLeft, faFilter} from "@fortawesome/free-solid-svg-icons";
+import {faAngleLeft, faFilter, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {useAppSelector} from "@src/Store/hooks";
 import {
   Box,
@@ -61,7 +61,7 @@ export default function Offers({ address }: OffersProps) {
 
   return (
     <Box>
-      <Stack direction='row' mb={2} align='center'>
+      <Stack direction='row' mb={2} align='center' justify='space-between'>
         <IconButton
           aria-label={'Toggle Filter'}
           onClick={handleToggleFilter}
@@ -73,7 +73,7 @@ export default function Offers({ address }: OffersProps) {
             isActive={offerDirection === 'made'}
             _active={{
               bg: getTheme(userTheme).colors.textColor4,
-              color: 'light'
+              color: 'white'
             }}
             onClick={() => setOfferDirection('made')}
           >
@@ -83,7 +83,7 @@ export default function Offers({ address }: OffersProps) {
             isActive={offerDirection === 'received'}
             _active={{
               bg: getTheme(userTheme).colors.textColor4,
-              color: 'light'
+              color: 'white'
             }}
             onClick={() => setOfferDirection('received')}
           >
@@ -96,13 +96,12 @@ export default function Offers({ address }: OffersProps) {
             onClick={() => setShowMobileSearch(!showMobileSearch)}
             variant='outline'
             className={showMobileSearch ? 'active' : ''}
-            icon={<Icon as={FontAwesomeIcon} icon={filtersVisible ? faAngleLeft : faFilter} className="py-1" />}
+            icon={<Icon as={FontAwesomeIcon} icon={faSearch} className="py-1" />}
           />
         ) : (
-          <InputGroup>
+          <InputGroup flex='1'>
             <Input
               placeholder="Search by name"
-              w="100%"
               onChange={handleSearch}
               value={searchTerms}
               color="white"
