@@ -16,7 +16,7 @@ interface OffersTabProps {
 
 const OffersTab = ({nftAddress, nftId, type}: OffersTabProps) => {
   const [queryParams, setQueryParams] = useState<OffersQueryParams>({
-    collection: nftAddress,
+    collection: [nftAddress],
     tokenId: nftId,
     type: type,
     state: OfferState.ACTIVE,
