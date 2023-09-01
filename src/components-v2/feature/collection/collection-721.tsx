@@ -1,8 +1,8 @@
-import React, {useMemo, useState} from "react";
+import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import nextApiService from "@src/core/services/api-service/next";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
-import {Box, Button, Center, Flex, Heading, Spinner, Text, useBreakpointValue} from "@chakra-ui/react";
+import {Box, Button, Center, Flex, Heading, Spinner, Text, useBreakpointValue, useDisclosure} from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
@@ -16,7 +16,8 @@ import CollectionInfoBar from "@src/Components/components/CollectionInfoBar";
 import {
   caseInsensitiveCompare,
   isBundle,
-  isCnsCollection, isCronosGorillaBusinessCollection,
+  isCnsCollection,
+  isCronosGorillaBusinessCollection,
   isCronosVerseCollection,
   isCrosmocraftsCollection,
   isLandDeedsCollection
@@ -35,6 +36,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {CollectionNftsGroup} from "@src/components-v2/feature/collection/collection-groups";
 import {getCollectionMetadata, getCollectionPowertraits, getCollectionTraits} from "@src/core/api";
 import {getCollections} from "@src/core/api/next/collectioninfo";
+import useDebounce from "@src/core/hooks/useDebounce";
+import Taskbar from "@src/components-v2/feature/collection/taskbar";
+import MakeCollectionOfferDialog from "@src/components-v2/shared/dialogs/make-collection-offer";
+import InstantSellDialog from "@src/Components/Offer/Dialogs/InstantSellDialog";
+import SweepFloorDialog from "@src/Components/Collection/CollectionTaskBar/SweepFloorDialog";
 
 const tabs = {
   items: 'items',
@@ -75,6 +81,15 @@ const Collection721 = ({ collection, initialQuery, activeDrop = null}: Collectio
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [openMenu, setOpenMenu] = useState(tabs.items);
   const [filtersVisible, setFiltersVisible] = useState(true);
+  const [mobileSortVisible, setMobileSortVisible] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
+  const [searchTerms, setSearchTerms] = useState<string>();
+  const debouncedSearch = useDebounce(searchTerms, 500);
+
+  const { isOpen: isOpenCollectionOfferDialog, onOpen: onOpenCollectionOfferDialog, onClose: onCloseCollectionOfferDialog } = useDisclosure();
+  const { isOpen: isOpenInstantSellDialog, onOpen: onOpenInstantSellDialog, onClose: onCloseInstantSellDialog } = useDisclosure();
+  const { isOpen: isOpenSweepDialog, onOpen: onOpenSweepDialog, onClose: onCloseSweepDialog } = useDisclosure();
+
   const useMobileMenu = useBreakpointValue(
     { base: true, lg: false },
     { fallback: 'lg' },
@@ -83,13 +98,16 @@ const Collection721 = ({ collection, initialQuery, activeDrop = null}: Collectio
   const emptyFunction = () => {};
 
   const { data: items, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
-    ['Collection', collection.address, initialQuery],
+    ['Collection', collection.address, queryParams],
     async ({ pageParam = 1 }) => {
       const params: FullCollectionsQueryParams = {
         page: pageParam,
         ...queryParams
       }
-      return nextApiService.getCollectionItems(collection.address, params);
+      const data = await nextApiService.getCollectionItems(collection.address, params);
+      setTotalCount(data.totalCount!);
+
+      return data;
     },
     {
       getNextPageParam: (lastPage, pages) => {
@@ -127,11 +145,23 @@ const Collection721 = ({ collection, initialQuery, activeDrop = null}: Collectio
 
   const resetFilters = (preservedQuery?: any) => {
     setQueryParams({
-      ...defaultQueryParams,
+      ...defaultQueryParams as { sortBy: 'price', direction: 'asc' },
       address: collection.address,
     });
   }
-console.log('items', items);
+
+  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerms(e.target.value);
+  }, []);
+
+  const handleClearSearch = useCallback(() => {
+    setSearchTerms('');
+  }, []);
+
+  useEffect(() => {
+    setQueryParams({...queryParams, search: debouncedSearch});
+  }, [debouncedSearch]);
+
   const content = useMemo(() => {
     return status === 'loading' ? (
       <Center>
@@ -141,7 +171,7 @@ console.log('items', items);
       <Box textAlign='center'>
         Error: {(error as any).message}
       </Box>
-    ) : (
+    ) : items?.pages.map((page) => page.data).flat().length > 0 ? (
       <>
         {isUsingListingsFallback ? (
           <CollectionListingsGroup
@@ -163,8 +193,12 @@ console.log('items', items);
           />
         )}
       </>
-    )
-  }, []);
+    ) : (
+      <Box textAlign='center' mt={8}>
+        <Text>No results found</Text>
+      </Box>
+    );
+  }, [items, error, status, collection, hasNextPage]);
 
   return (
     <Box>
@@ -303,30 +337,48 @@ console.log('items', items);
           )}
         </ul>
 
-        <div className="de_tab_content">
+        <Box className="de_tab_content" px={2}>
           {openMenu === tabs.items && (
-            <CollectionFilterContainer
-              queryParams={queryParams}
-              collection={collection}
-              onFilter={(newParams) => setQueryParams(newParams)}
-              filtersVisible={filtersVisible}
-              useMobileMenu={false}
-              onMobileMenuClose={emptyFunction}
-            >
-              <InfiniteScroll
-                dataLength={items?.pages ? items.pages.flat().length : 0}
-                next={fetchNextPage}
-                hasMore={hasNextPage ?? false}
-                style={{ overflow: 'hidden' }}
-                loader={
-                  <Center>
-                    <Spinner />
-                  </Center>
-                }
+            <>
+              <ThemedBackground className="row position-sticky pt-2" style={{top: 74, zIndex: 5}}>
+                <Taskbar
+                  collection={collection}
+                  onFilterToggle={() => setFiltersVisible(!filtersVisible)}
+                  onSortToggle={() => setMobileSortVisible(!mobileSortVisible)}
+                  onSearch={(search: string) => setSearchTerms(search)}
+                  onSort={(sort: string, direction: string) => setQueryParams({...queryParams, sortBy: sort as any, direction: direction as any})}
+                  filtersVisible={filtersVisible}
+                  onChangeViewType={() => {}}
+                  viewType={'grid-sm'}
+                  onOpenCollectionOfferDialog={onOpenCollectionOfferDialog}
+                  onOpenInstantSellDialog={onOpenInstantSellDialog}
+                  onOpenSweepDialog={onOpenSweepDialog}
+                />
+              </ThemedBackground>
+              <CollectionFilterContainer
+                queryParams={queryParams}
+                collection={collection}
+                onFilter={(newParams) => setQueryParams(newParams)}
+                filtersVisible={filtersVisible}
+                useMobileMenu={useMobileMenu ?? false}
+                onMobileMenuClose={() => setFiltersVisible(false)}
+                totalCount={totalCount}
               >
-                {content}
-              </InfiniteScroll>
-            </CollectionFilterContainer>
+                <InfiniteScroll
+                  dataLength={items?.pages ? items.pages.flat().length : 0}
+                  next={fetchNextPage}
+                  hasMore={hasNextPage ?? false}
+                  style={{ overflow: 'hidden' }}
+                  loader={
+                    <Center>
+                      <Spinner />
+                    </Center>
+                  }
+                >
+                  {content}
+                </InfiniteScroll>
+              </CollectionFilterContainer>
+            </>
           )}
           {openMenu === tabs.bundles && (
             <div className="tab-2 onStep fadeIn container">
@@ -353,8 +405,34 @@ console.log('items', items);
           {openMenu === tabs.cns && (
             <CnsRegistration />
           )}
-        </div>
+        </Box>
       </Box>
+
+      {isOpenCollectionOfferDialog && (
+        <MakeCollectionOfferDialog
+          isOpen={isOpenCollectionOfferDialog}
+          onClose={onCloseCollectionOfferDialog}
+          collection={collection}
+        />
+      )}
+
+      {isOpenInstantSellDialog && (
+        <InstantSellDialog
+          isOpen={isOpenInstantSellDialog}
+          onClose={onCloseInstantSellDialog}
+          collection={collection}
+        />
+      )}
+
+      {isOpenSweepDialog && (
+        <SweepFloorDialog
+          isOpen={isOpenSweepDialog}
+          onClose={onCloseSweepDialog}
+          collection={collection}
+          activeFilters={queryParams}
+          fullscreen={useMobileMenu}
+        />
+      )}
     </Box>
   );
 

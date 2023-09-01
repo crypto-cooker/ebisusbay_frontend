@@ -16,10 +16,11 @@ interface CollectionFilterContainerProps {
   filtersVisible: boolean;
   useMobileMenu: boolean;
   onMobileMenuClose: () => void;
+  totalCount: number;
   children: ReactNode;
 }
 
-const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, children}: CollectionFilterContainerProps) => {
+const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, totalCount, children}: CollectionFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
@@ -116,6 +117,7 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
         filters={FilterAccordion}
         filteredItems={filteredItems}
         onRemoveFilters={handleRemoveFilters}
+        totalCount={totalCount}
       >
         {children}
       </DesktopFilterContainer>
