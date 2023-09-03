@@ -23198,6 +23198,32 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "AxOl Elites",
+      "slug": "axol-elites",
+      "multiToken": false,
+      "address": "0x1220b4E081c04f345C572536EA531Ed2AdE691BD",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "1/1 AI generated pieces to celebrate Gaia ecosystem and AxOl cro",
+        "avatar": "/img/collections/axol-elites/avatar.webp",
+        "card": "/img/collections/axol-elites/card.webp",
+        "banner": "/img/collections/axol-elites/banner.webp",
+        "website": "https://gaia-eco.netlify.app/",
+        "twitter": "https://twitter.com/GaiaEcoNFT",
+        "discord": "https://discord.gg/gaiaeconft",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
