@@ -271,6 +271,7 @@ export const configData = {
           '0xc5B294B557402f8706aED487e155773756A9c400': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Window
           '0x4AA9F792b51954A8903967375e854Ed7EE4bCBf0': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Cosmetics
           '0xccE7B3067765FfbA74744C8dB4C1Cd58Bf8D77e7': ['cro', 'frtn', 'scratch'], // Zoomer Squad - Playground Game Tokens: Season 2
+          '0x1220b4E081c04f345C572536EA531Ed2AdE691BD': ['cro', 'frtn', 'bcro'], // AxOl Elites
         }
       }
     }
