@@ -1,21 +1,25 @@
 import {
   Box,
   ButtonGroup,
-  CloseButton, HStack,
+  CloseButton,
+  HStack,
   Icon,
   IconButton,
   Input,
   InputGroup,
   InputRightElement,
   Select,
-  Stack, useBreakpointValue
+  Stack,
+  useBreakpointValue
 } from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faAngleLeft,
-  faBoltLightning, faBroom,
-  faFilter, faHand,
-  faList, faSort,
+  faBoltLightning,
+  faBroom,
+  faFilter,
+  faHand,
+  faSort,
   faTableCells,
   faTableCellsLarge
 } from "@fortawesome/free-solid-svg-icons";
@@ -31,6 +35,7 @@ interface TaskbarProps {
   collection: any;
   onFilterToggle: () => void;
   onSortToggle: () => void;
+  initialSearch?: string;
   onSearch: (search: string) => void;
   onSort: (sort: string, direction: string) => void;
   filtersVisible: boolean;
@@ -41,21 +46,30 @@ interface TaskbarProps {
   onOpenSweepDialog: () => void;
 }
 
-const Taskbar = ({collection, onFilterToggle, onSortToggle, onSearch, onSort, filtersVisible, onChangeViewType, viewType, onOpenCollectionOfferDialog, onOpenInstantSellDialog, onOpenSweepDialog}: TaskbarProps) => {
-  const [searchTerms, setSearchTerms] = useState<string>();
-  const debouncedSearch = useDebounce(searchTerms, 500);
+const Taskbar = ({collection, onFilterToggle, onSortToggle, initialSearch, onSearch, onSort, filtersVisible, onChangeViewType, viewType, onOpenCollectionOfferDialog, onOpenInstantSellDialog, onOpenSweepDialog}: TaskbarProps) => {
+  const [searchTerms, setSearchTerms] = useState<{ value: string, isManuallySet: boolean }>({
+    value: initialSearch ?? '',
+    isManuallySet: false
+  });
+  const debouncedSearch = useDebounce(searchTerms.value, 500);
   const userTheme = useAppSelector((state) => state.user.theme);
   const useMobileMenu = useBreakpointValue(
     {base: true, lg: false},
     {fallback: 'lg'},
-  )
+  );
 
   const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerms(e.target.value);
+    setSearchTerms({
+      value: e.target.value,
+      isManuallySet: true
+    });
   }, []);
 
   const handleClearSearch = useCallback(() => {
-    setSearchTerms('');
+    setSearchTerms({
+      value: '',
+      isManuallySet: true
+    });
   }, []);
 
   const handleSort = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
@@ -64,7 +78,9 @@ const Taskbar = ({collection, onFilterToggle, onSortToggle, onSearch, onSort, fi
   }, []);
 
   useEffect(() => {
-    onSearch(debouncedSearch);
+    if (searchTerms.isManuallySet) {
+      onSearch(debouncedSearch);
+    }
   }, [debouncedSearch]);
 
   const FilterButton = useMemo(() => (
@@ -81,11 +97,11 @@ const Taskbar = ({collection, onFilterToggle, onSortToggle, onSearch, onSort, fi
       <Input
         placeholder="Search by name"
         onChange={handleSearch}
-        value={searchTerms}
+        value={searchTerms.value}
         color="white"
         _placeholder={{ color: 'gray.300' }}
       />
-      {searchTerms?.length && (
+      {searchTerms.value.length && (
         <InputRightElement
           children={<CloseButton onClick={handleClearSearch} />}
         />
@@ -110,7 +126,7 @@ const Taskbar = ({collection, onFilterToggle, onSortToggle, onSearch, onSort, fi
         </Select>
       )}
     </>
-  ), [sortOptions, useMobileMenu]);
+  ), [sortOptions, useMobileMenu, handleSort]);
 
   const ViewButtons = useMemo(() => (
     <ButtonGroup isAttached variant='outline'>

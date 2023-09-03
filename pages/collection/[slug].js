@@ -51,7 +51,7 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }) => {
               )}
             </>
           ) : (
-            <Collection721 collection={ssrCollection} query={query} activeDrop={activeDrop} />
+            <Collection721 collection={ssrCollection} ssrQuery={query} activeDrop={activeDrop} />
           )}
         </>
       )}

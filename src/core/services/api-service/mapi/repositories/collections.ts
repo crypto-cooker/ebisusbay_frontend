@@ -41,7 +41,6 @@ class CollectionsRepository extends MapiRepository {
       pageSize: 50,
     };
 
-    console.log('GOT HERE', {...defaultQuery, ...query?.toQuery()})
     return await this.api.get(`fullcollections`, {
       params: {...defaultQuery, ...query?.toQuery()}
     });

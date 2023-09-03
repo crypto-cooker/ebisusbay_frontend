@@ -6,6 +6,8 @@ import DesktopFilterContainer, {FilteredItem} from "@src/components-v2/shared/fi
 import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-filters";
 import {appConfig} from '@src/Config';
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
+import AttributeFilter from "@src/components-v2/shared/filter-container/filters/attribute-filter";
+import {stripSpaces} from "@src/utils";
 
 const config = appConfig();
 
@@ -17,10 +19,12 @@ interface CollectionFilterContainerProps {
   useMobileMenu: boolean;
   onMobileMenuClose: () => void;
   totalCount: number;
+  traits?: { [key: string]: { [key: string]: any } };
+  powertraits?: { [key: string]: { [key: string]: any } };
   children: ReactNode;
 }
 
-const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, totalCount, children}: CollectionFilterContainerProps) => {
+const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, totalCount, traits, powertraits, children}: CollectionFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
@@ -32,6 +36,18 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
       if (item.key === 'range-max-rank') delete params.maxRank;
       if (item.key === 'range-min-price') delete params.minPrice;
       if (item.key === 'range-max-price') delete params.maxPrice;
+      if (item.key.startsWith('trait-')) {
+        const [_, category, value] = item.key.split('-');
+        const categoryKey = stripSpaces(category);
+        const valueKey = stripSpaces(value);
+        if (params.traits) {
+          let traits = JSON.parse(params.traits);
+          traits[categoryKey] = traits[categoryKey].filter((v: string) => stripSpaces(v) !== valueKey);
+
+          if (traits[categoryKey].length === 0) delete traits[categoryKey];
+          params.traits = JSON.stringify(traits);
+        }
+      }
     }
     onFilter({...queryParams, ...params});
     setFilteredItems(filteredItems.filter((fi) => !items.map(i => i.key).includes(fi.key)));
@@ -76,6 +92,18 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
 
   }, [queryParams, filteredItems]);
 
+  const handleAttributeFilter = useCallback((attributeFilters: { [key: string]: string[] }, attributeFilteredItems: FilteredItem[]) => {
+    onFilter({...queryParams, traits: JSON.stringify(attributeFilters)});
+
+    let newFilteredItems = filteredItems.filter((fi) => !fi.key.startsWith('trait-') || attributeFilteredItems.map(afi => afi.key).includes(fi.key));
+    let addedFilterItems = attributeFilteredItems.filter((afi) => !filteredItems.some((fi) => fi.key === afi.key));
+
+    console.log('handleFilter3', attributeFilters, filteredItems, newFilteredItems, addedFilterItems);
+
+    setFilteredItems([...newFilteredItems, ...addedFilterItems]);
+
+  }, [queryParams, filteredItems]);
+
   const FilterAccordion = useMemo(() => (
     <Accordion defaultIndex={[0]} allowMultiple>
       <CheckboxFilter
@@ -107,8 +135,15 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
         currentMax={queryParams.maxPrice}
         onChange={handlePriceFilter}
       />
+      {!!traits && (
+        <AttributeFilter
+          attributes={traits}
+          currentFilters={queryParams.traits ? JSON.parse(queryParams.traits) : {}}
+          onChange={handleAttributeFilter}
+        />
+      )}
     </Accordion>
-  ), [queryParams, filteredItems, handleStatusFilter, handleRankFilter, handlePriceFilter]);
+  ), [queryParams, filteredItems, handleStatusFilter, handleRankFilter, handlePriceFilter, traits, powertraits]);
 
   return (
     <>

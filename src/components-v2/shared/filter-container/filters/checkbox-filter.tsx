@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {
   AccordionButton,
   AccordionIcon,
@@ -22,10 +22,10 @@ interface CheckboxFilterProps {
 }
 
 const CheckboxFilter = ({title, items, onCheck}: CheckboxFilterProps) => {
-  const handleCheck = (event: any, item: CheckboxItem) => {
+  const handleCheck = useCallback((event: any, item: CheckboxItem) => {
     const { id, checked } = event.target;
     onCheck(item, !!checked)
-  };
+  }, [items, onCheck]);
 
   return (
     <AccordionItem border='none'>
@@ -39,10 +39,7 @@ const CheckboxFilter = ({title, items, onCheck}: CheckboxFilterProps) => {
         <CheckboxGroup colorScheme='blue' value={items.filter(i => i.isChecked).map(i => i.key)}>
           {items.map((item) => (
             <Box key={item.key}>
-              <Checkbox
-                value={item.key}
-                onChange={(t) => handleCheck(t, item)}
-              >
+              <Checkbox value={item.key} onChange={(t) => handleCheck(t, item)}>
                 {item.label}
               </Checkbox>
             </Box>

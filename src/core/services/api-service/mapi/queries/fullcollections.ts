@@ -4,8 +4,8 @@ export interface FullCollectionsQueryParams {
   address?: string;
   token?: string;
   listed?: number;
-  traits?: object;
-  powertraits?: object;
+  traits?: string; // [key: string]: string[]
+  powertraits?: string; // [key: string]: string[]
   page?: number;
   pageSize?: number;
   sortBy?: 'id' | 'name' | 'rank' | 'price' | 'listingId' | 'listingTime' | 'expirationDate';
