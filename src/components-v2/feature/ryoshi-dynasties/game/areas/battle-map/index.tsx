@@ -44,8 +44,10 @@ const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Bla
 interface BattleMapProps {
   onChange: () => void;
   showActiveGame: boolean;
+  mapProps?: MapProps;
+  height: string;
 }
-interface MapProps {
+export interface MapProps {
   scale: number;
   initialPosition: { x: number; y: number };
   minScale: number;
@@ -55,7 +57,7 @@ interface Icon {
   image: string;
 }
 
-const BattleMap = ({onChange, showActiveGame}: BattleMapProps) => {
+const BattleMap = ({onChange, showActiveGame, mapProps, height}: BattleMapProps) => {
   const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
   const user = useAppSelector(state => state.user);
   const config = appConfig();
@@ -86,7 +88,7 @@ const BattleMap = ({onChange, showActiveGame}: BattleMapProps) => {
       offsetY: ReactZoomPanPinchRef.state.positionY,
       scale: ReactZoomPanPinchRef.state.scale,
     });
-    // console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
+    console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
 
   const [regionName, setRegionName] = useState('');
@@ -176,46 +178,6 @@ const BattleMap = ({onChange, showActiveGame}: BattleMapProps) => {
   }
 
   const [mapInitialized, setMapInitialized] = useState(false);
-
-  const mapProps = useBreakpointValue<MapProps>(
-    {
-      base: {
-        scale: 0.40,
-        initialPosition: { x: -400, y: -127 },
-        minScale: 0.15
-      },
-      sm: {
-        scale: 0.41,
-        initialPosition: { x: -335, y: -113 },
-        minScale: 0.2
-      },
-      md: {
-        scale: 0.42,
-        initialPosition: { x: -185, y: -163 },
-        minScale: 0.3
-      },
-      lg: {
-        scale: 0.43,
-        initialPosition: { x: 281, y: -33 },
-        minScale: 0.45
-      },
-      xl: {
-        scale: 0.44,
-        initialPosition: { x: 0.78, y: -123 },
-        minScale: 0.44
-      },
-      '2xl': {
-        scale: 0.45,
-        initialPosition: { x: 268, y: -33 },
-        minScale: 0.45
-      },
-      xxl: { //doesnt apply to any screen larger than 1920px
-        scale: 1.0,
-        initialPosition: { x: -20, y: -35 },
-        minScale: 1.1
-      }
-    }
-  );
 
   const SelectControlPoint = (id: any, regionName: string) => {
     setRegionName(regionName);
@@ -338,7 +300,8 @@ const BattleMap = ({onChange, showActiveGame}: BattleMapProps) => {
         showActiveGame={showActiveGame}
         />
       <Box
-        position='relative' h='calc(100vh - 74px)'
+        position='relative' 
+        h={height}
         backgroundImage={ImageService.translate(`/img/ryoshi-dynasties/village/background-${user.theme}.png`).convert()}
         backgroundSize='cover'
       >

@@ -257,8 +257,9 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                       </Center>
                     </Box>
                   )}
-            </Center>
-                <Accordion allowToggle={true}  w={{base: '95%', sm:'100%'}}>
+            </Center >
+
+                <Accordion allowToggle={true} w={{base: '95%', sm:'100%'}}>
                   <AccordionItem>
                     <h2>
                       <AccordionButton>
@@ -268,13 +269,14 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                         <AccordionIcon />
                       </AccordionButton>
                     </h2>
-                    <AccordionPanel pb={4} maxH={'400px'}>
+                    <AccordionPanel pb={4} h={'450px'} w={'100%'}>
 
                       <GameMapWrapper/>
 
                     </AccordionPanel>
                   </AccordionItem>
                 </Accordion>
+
           </Stack>
         </>
       )}

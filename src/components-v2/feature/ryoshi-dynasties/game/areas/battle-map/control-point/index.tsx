@@ -137,6 +137,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
               <div className="row mt-2 mt-sm-2">
                 <div className="">
                   <Center>
+                  {showActiveGame && (
                     <Flex direction='row' justify='center' mb={2}>
                       <RdTabButton
                         isActive={currentTab === tabs.info}
@@ -147,29 +148,26 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
                       >
                         Leaders
                       </RdTabButton>
-                      {showActiveGame && (
-                        <RdTabButton
-                          isActive={currentTab === tabs.deploy}
-                          onClick={() => setCurrentTab(tabs.deploy)}
-                          fontSize={{base: '12', sm: '14'}}
-                          padding={{base: '0 10px', sm: '0 20px'}}
-                          margin={{base: '0 5px', sm: '0 10px'}}
-                        >
-                          Dispatch
-                        </RdTabButton>
-                      )}
-                      {showActiveGame && (
-                        <RdTabButton
-                          isActive={currentTab === tabs.attack}
-                          onClick={() => setCurrentTab(tabs.attack)}
-                          fontSize={{base: '12', sm: '14'}}
-                          padding={{base: '0 10px', sm: '0 20px'}}
-                          margin={{base: '0 5px', sm: '0 10px'}}
-                        >
-                          Attack
-                        </RdTabButton>
-                      )}
+                      <RdTabButton
+                        isActive={currentTab === tabs.deploy}
+                        onClick={() => setCurrentTab(tabs.deploy)}
+                        fontSize={{base: '12', sm: '14'}}
+                        padding={{base: '0 10px', sm: '0 20px'}}
+                        margin={{base: '0 5px', sm: '0 10px'}}
+                      >
+                        Dispatch
+                      </RdTabButton>
+                      <RdTabButton
+                        isActive={currentTab === tabs.attack}
+                        onClick={() => setCurrentTab(tabs.attack)}
+                        fontSize={{base: '12', sm: '14'}}
+                        padding={{base: '0 10px', sm: '0 20px'}}
+                        margin={{base: '0 5px', sm: '0 10px'}}
+                      >
+                        Attack
+                      </RdTabButton>
                     </Flex>
+                  )}
                   </Center>
 
                   <Box mt={4}>
