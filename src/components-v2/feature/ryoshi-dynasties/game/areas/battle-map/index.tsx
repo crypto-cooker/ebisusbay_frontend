@@ -280,7 +280,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
   }, [transformComponentRef?.current]);
 
   useEffect(() => {
-    console.log('useCurrentGameId', useCurrentGameId);
+    // console.log('useCurrentGameId', useCurrentGameId);
   }, [useCurrentGameId]);
 
   return (
