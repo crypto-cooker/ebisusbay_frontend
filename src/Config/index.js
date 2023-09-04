@@ -142,7 +142,7 @@ export const configData = {
           '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5': ['frtn'],        // EB FM/VIP
           '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'],        // Fortune Guards
           '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],        // FortuneTeller
-          '0xd87838a982a401510255ec27e603b0f5fea98d24': ['frtn'],
+          '0xd87838a982a401510255ec27e603b0f5fea98d24': ['frtn'],        // Ryoshi Playing Cards
           '0xf54abdcba21e7a740f98307a561b605cb3fdcf63': ['cro', 'frtn'], // Legacy VIP Art
           '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506': ['cro', 'frtn'], // SeaShrine VIP
           '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29': ['cro', 'frtn'], // Valentine

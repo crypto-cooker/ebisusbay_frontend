@@ -99,6 +99,7 @@ interface RyoshiConfigFactions {
 interface RyoshiConfigFactionsRegistration {
   cost: number;
   troopsCost: number;
+  forbiddenAddresses: string[];
 }
 
 interface RyoshiConfigArmies {
