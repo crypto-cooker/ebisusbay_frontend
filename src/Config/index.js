@@ -132,7 +132,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
           '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],        // Ryoshi Halloween
@@ -142,7 +142,7 @@ export const configData = {
           '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5': ['frtn'],        // EB FM/VIP
           '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'],        // Fortune Guards
           '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],        // FortuneTeller
-          '0xd87838a982a401510255ec27e603b0f5fea98d24': ['frtn'],
+          '0xd87838a982a401510255ec27e603b0f5fea98d24': ['frtn'],        // Ryoshi Playing Cards
           '0xf54abdcba21e7a740f98307a561b605cb3fdcf63': ['cro', 'frtn'], // Legacy VIP Art
           '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506': ['cro', 'frtn'], // SeaShrine VIP
           '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29': ['cro', 'frtn'], // Valentine
@@ -271,6 +271,9 @@ export const configData = {
           '0xc5B294B557402f8706aED487e155773756A9c400': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Window
           '0x4AA9F792b51954A8903967375e854Ed7EE4bCBf0': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Cosmetics
           '0xccE7B3067765FfbA74744C8dB4C1Cd58Bf8D77e7': ['cro', 'frtn', 'scratch'], // Zoomer Squad - Playground Game Tokens: Season 2
+          '0x1220b4E081c04f345C572536EA531Ed2AdE691BD': ['cro', 'frtn', 'bcro'], // AxOl Elites
+          '0x3fe29ffa527d712a5b202ddaeff714c12cb6aff5': ['cro', 'frtn'], // Snap!
+          '0x1368a855545724B165F8c3e466ec30e1fB2A3683': ['cro', 'frtn', 'bcro'], // Football Squares S2
         }
       }
     }
@@ -395,7 +398,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
           '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],        // Ryoshi Halloween
@@ -752,7 +755,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
           '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],        // Ryoshi Halloween

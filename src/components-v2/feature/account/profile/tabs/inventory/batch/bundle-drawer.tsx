@@ -100,7 +100,7 @@ export const BundleDrawer = () => {
   const canSubmit = () => {
     return !executingCreateBundle &&
       batchListingCart.items.length > 0 &&
-      !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
+      !Object.values(batchListingCart.extras).some((o) => !o.approval || !o.canList) &&
       !batchListingCart.items.some((o) => o.nft.isStaked || isBundle(o.nft.nftAddress));
   }
 
