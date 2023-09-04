@@ -122,7 +122,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
         />
         <Text
         isTruncated={isMobile}
-        maxW={'200px'}
+        maxW={isMobile ?'150px': '200px'}
         >
         {faction.name} 
         </Text>
@@ -259,7 +259,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                   )}
             </Center >
 
-                <Accordion allowToggle={true} w={{base: '95%', sm:'100%'}}>
+                <Accordion allowToggle={true} w={{base: '100%', sm:'100%'}}>
                   <AccordionItem>
                     <h2>
                       <AccordionButton>
@@ -269,9 +269,12 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                         <AccordionIcon />
                       </AccordionButton>
                     </h2>
-                    <AccordionPanel pb={4} h={'450px'} w={'100%'}>
-
-                      <GameMapWrapper/>
+                    <AccordionPanel 
+                      pb={4} 
+                      h={isMobile ?'525px': '450px'}
+                      w={isMobile ?'350px': '100%'}
+                      >
+                      <GameMapWrapper showActiveGame={showCurrentGame} height={isMobile ?'525px': '450px'}/>
 
                     </AccordionPanel>
                   </AccordionItem>

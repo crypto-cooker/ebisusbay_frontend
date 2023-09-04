@@ -30,6 +30,8 @@ const AnnouncementBoardModal = ({isOpen, onClose, onOpenDailyCheckin}: Announcem
     onClose();
   };
 
+
+
   const handleBack = () => {
     // console.log('handleBack?', !!page, page);
     if (!!page) {

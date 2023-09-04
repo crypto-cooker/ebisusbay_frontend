@@ -43,9 +43,10 @@ const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Bla
 
 interface BattleMapProps {
   onChange: () => void;
-  showActiveGame: boolean;
+  showFullBattlePage: boolean;
   mapProps?: MapProps;
   height: string;
+  useCurrentGameId: boolean;
 }
 export interface MapProps {
   scale: number;
@@ -57,7 +58,7 @@ interface Icon {
   image: string;
 }
 
-const BattleMap = ({onChange, showActiveGame, mapProps, height}: BattleMapProps) => {
+const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, height, useCurrentGameId}: BattleMapProps) => {
   const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
   const user = useAppSelector(state => state.user);
   const config = appConfig();
@@ -76,11 +77,10 @@ const BattleMap = ({onChange, showActiveGame, mapProps, height}: BattleMapProps)
   const [allFactions, setAllFactions] = useState<any>([]);
   const[allIconsAqcuired, setAllIconsAqcuired] = useState(false);
   const[icons, setIcons] = useState<Icon[]>([]);
-  const [zoomState, setZoomState] = useState({
-    offsetX: 0,
-    offsetY: 0,
-    scale: 1,
-  });
+  const [zoomState, setZoomState] = useState({ offsetX: 0, offsetY: 0, scale: 1 });
+  const [regionName, setRegionName] = useState('');
+  const [explosionOnPoint, setExplosionOnPoint] = useState(0);
+  const [mapInitialized, setMapInitialized] = useState(false);
 
   const changeCanvasState = (ReactZoomPanPinchRef: any, event: any) => {
     setZoomState({
@@ -90,10 +90,6 @@ const BattleMap = ({onChange, showActiveGame, mapProps, height}: BattleMapProps)
     });
     console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
-
-  const [regionName, setRegionName] = useState('');
-
-  const [explosionOnPoint, setExplosionOnPoint] = useState(0);
 
   const PlayExplosion = async (controlPointId : number) => {
 
@@ -139,26 +135,23 @@ const BattleMap = ({onChange, showActiveGame, mapProps, height}: BattleMapProps)
 
     setExplosionOnPoint(0);
   }
-
   function selectRegion(x: any) {
     GetControlPointInfo(x);
   }
+  const GetGameId = () => {
+    if(!rdGameContext) return;
+    return useCurrentGameId ? rdGameContext.game.id : rdGameContext.history.previousGameId;
+  }
   const GetControlPointInfo = async (x: any) => {
-    getControlPoint(x, rdGameContext?.game.id).then((data) => {
+    getControlPoint(x, GetGameId()).then((data) => {
       setControlPoint(data);
   }); 
   }
   const RefreshControlPoint = async () => {
-    getControlPoint(selectedControlPoint, rdGameContext?.game.id).then((data) => {
+    getControlPoint(selectedControlPoint, GetGameId()).then((data) => {
       setControlPoint(data);
   });
   }
-
-  useEffect(() => {
-    if(!transformComponentRef?.current) return;
-    setElementToZoomTo('fancyMenu'); 
-  }, [transformComponentRef?.current]);
-
   const GetAttackPrices = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const resourceContract = new Contract(config.contracts.battleField, Battlefield, readProvider);
@@ -169,23 +162,16 @@ const BattleMap = ({onChange, showActiveGame, mapProps, height}: BattleMapProps)
     setSkirmishPrice(Number(ethers.utils.hexValue(BigNumber.from(skirmish))));
     setConquestPrice(Number(ethers.utils.hexValue(BigNumber.from(conquest))));
   }
-
-
   const GetFactions = async () => {
-    const factions = await getAllFactionsSeasonId(rdGameContext?.game.id, rdGameContext?.season.id);
-    // console.log('factions', factions);
+    const factions = await getAllFactionsSeasonId(GetGameId(), rdGameContext?.season.id);
     setAllFactions(factions);
   }
-
-  const [mapInitialized, setMapInitialized] = useState(false);
-
   const SelectControlPoint = (id: any, regionName: string) => {
     setRegionName(regionName);
     setSelectedControlPoint(id);
     selectRegion(id);
     onOpen();
   }
-
   const GetControlPointId = (name: any) => {
     if(!rdGameContext) return 0;
     rdGameContext.game.parent.map.regions.map((region: any) =>
@@ -197,37 +183,36 @@ const BattleMap = ({onChange, showActiveGame, mapProps, height}: BattleMapProps)
   }
 
   const GetAllIcons = async() => {
-    if(allIconsAqcuired)return;
+    // if(allIconsAqcuired)return;
     if(!rdGameContext) return;
 
     let newIcons: Icon[] = [];
+
     rdGameContext.game.parent.map.regions.map((region: any) =>
       region.controlPoints.map((controlPoint: any) => (
         newIcons.push({name: controlPoint.name, image: 'img/avatar.jpg'})
-      )))
-        //overwrites the image with the leader image
-        newIcons.forEach((newIcons: any) => (
-          rdGameContext.gameLeaders.forEach((controlPointWithLeader: any) => (
-            newIcons.name === controlPointWithLeader.name ? newIcons.image = controlPointWithLeader.factions[0].image : null
-          ))))
+    )))
 
-      setIcons(newIcons);
-      setAllIconsAqcuired(true);
+    //overwrites the image with the leader image
+    newIcons.forEach((newIcons: any) => (
+      rdGameContext.gameLeaders.forEach((controlPointWithLeader: any) => (
+        newIcons.name === controlPointWithLeader.name ? newIcons.image = controlPointWithLeader.factions[0].image : null
+    ))))
+
+    console.log('rdGameContext.gameLeaders', rdGameContext.gameLeaders);
+
+    setIcons(newIcons);
+    setAllIconsAqcuired(true);
+    console.log('allIconsAqcuired', allIconsAqcuired);
   }
   
   const GetLeaderIcon = (name: any) => {
     if(!allIconsAqcuired) return 'img/avatar.jpg';
+
     let icon = icons.find((icon) => icon.name === name);
+    // console.log('GetLeaderIcon', icon);
     if(icon) return icon.image;
   }
-
-  useEffect(() => {
-    if(!rdGameContext) return;
-    GetAllIcons();
-    if (rdGameContext.state === RdGameState.RESET) {
-      onOpenResetModal();
-    }
-  }, [rdGameContext]);
 
   useEffect(() => {
     if (transformComponentRef.current) {
@@ -245,7 +230,11 @@ const BattleMap = ({onChange, showActiveGame, mapProps, height}: BattleMapProps)
   useEffect(() => {
     if(!rdGameContext) return;
     GetFactions();
-  }, [rdGameContext]);
+    GetAllIcons();
+    if (rdGameContext.state === RdGameState.RESET) {
+      onOpenResetModal();
+    }
+  }, [rdGameContext, useCurrentGameId]);
 
   
   useEffect(() => {
@@ -285,6 +274,14 @@ const BattleMap = ({onChange, showActiveGame, mapProps, height}: BattleMapProps)
     };
   }, [!!user.address]);
 
+  useEffect(() => {
+    if(!transformComponentRef?.current) return;
+    setElementToZoomTo('fancyMenu'); 
+  }, [transformComponentRef?.current]);
+
+  useEffect(() => {
+    console.log('useCurrentGameId', useCurrentGameId);
+  }, [useCurrentGameId]);
 
   return (
     <section>

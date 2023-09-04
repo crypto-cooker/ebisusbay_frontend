@@ -93,7 +93,13 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
               <Barracks onBack={returnToPreviousPage} />
             ) : currentPage === 'battleMap' ? (
               // <Suspense fallback={<Center><Spinner/></Center>}>
-              <BattleMap onChange={returnToPreviousPage} showActiveGame={true} mapProps={mapProps} height={'calc(100vh - 74px)'}/>
+              <BattleMap 
+                onChange={returnToPreviousPage} 
+                showFullBattlePage={true} 
+                mapProps={mapProps} 
+                height={'calc(100vh - 74px)'} 
+                useCurrentGameId={true}
+              />
               // </Suspense>
               // ) : currentPage === 'leaderboard' ? (
               //   <Leaderboard onBack={returnToPreviousPage}/>

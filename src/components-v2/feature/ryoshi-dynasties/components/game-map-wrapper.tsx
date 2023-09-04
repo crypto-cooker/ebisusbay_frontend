@@ -4,23 +4,28 @@ import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/ba
 import {useAppSelector} from "@src/Store/hooks";
 import {MapProps} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/index";
 
-const GameMapWrapper = () => {
+interface BattleMapWrapperProps {
+  showActiveGame: boolean;
+  height: string;
+}
+
+const GameMapWrapper = ({showActiveGame, height}: BattleMapWrapperProps) => {
   const user = useAppSelector((state) => state.user);
   const [currentModalRef, setCurrentModalRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
   const ref = useRef(null);
 
   const mapProps = useBreakpointValue<MapProps>(
     {
-      // base: {
-      //   scale: 0.40,
-      //   initialPosition: { x: -400, y: -127 },
-      //   minScale: 0.15
-      // },
-      // sm: {
-      //   scale: 0.41,
-      //   initialPosition: { x: -335, y: -113 },
-      //   minScale: 0.2
-      // },
+      base: {
+        scale: 0.40,
+        initialPosition: { x: -400, y: -127 },
+        minScale: 0.25
+      },
+      sm: {
+        scale: 0.41,
+        initialPosition: { x: -335, y: -113 },
+        minScale: 0.2
+      },
       md: {
         scale: 0.42,
         initialPosition: { x: -185, y: -163 },
@@ -58,7 +63,13 @@ const GameMapWrapper = () => {
 
   return (
     <Box ref={currentModalRef} position='relative'>
-        <BattleMap onChange={empty} showActiveGame={false} mapProps={mapProps} height={'450px'}/>
+        <BattleMap 
+        onChange={empty} 
+        showFullBattlePage={false} 
+        mapProps={mapProps} 
+        height={height}
+        useCurrentGameId={showActiveGame}
+        />
     </Box>
   )
 }
