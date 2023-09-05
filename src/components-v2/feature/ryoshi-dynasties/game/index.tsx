@@ -63,7 +63,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
             ) : currentPage === 'academy' ? (
               <Academy onBack={returnToPreviousPage} />
             ) : currentPage === 'lands' ? (
-              <DynastiesLands onBack={returnToPreviousPage} />
+              <DynastiesLands onBack={returnToPreviousPage} showBackButton={true}/>
               // ): currentPage === 'announcementBoard' ? (
               // <AnnouncementBoard onBack={returnToPreviousPage} />
             ) : (!currentPage || currentPage === 'village') && (

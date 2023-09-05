@@ -322,7 +322,7 @@ export const ListingDrawer = () => {
   const canSubmit = () => {
     return !executingCreateListing &&
       batchListingCart.items.length > 0 &&
-      !Object.values(batchListingCart.extras).some((o) => !o.approval) &&
+      !Object.values(batchListingCart.extras).some((o) => !o.approval || !o.canList) &&
       (isBundling || !batchListingCart.items.some((o) => !o.price || !(o.price > 0))) &&
       (isBundling || !batchListingCart.items.some((o) => !o.expiration || !(o.expiration > 0))) &&
       !batchListingCart.items.some((o) => !o.nft.listable || o.nft.isStaked || (isBundling && isBundle(o.nft.nftAddress)));

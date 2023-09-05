@@ -70,7 +70,7 @@ docker system prune -a --volumes
 ```
 
 ## Connecting to EC2 instance(s)
-Instructions: https://ebisusbay.atlassian.net/wiki/spaces/IN/pages/32112641/Accessing+EC2+instance
+Instructions: https://www.notion.so/ebisusbay/Accessing-EC2-instance-with-SSM-primary-c1fcb8401f604b44b7e7c8701065ab95
 
 Retrieve an AWS SSO access token for CLI usage:
 ```

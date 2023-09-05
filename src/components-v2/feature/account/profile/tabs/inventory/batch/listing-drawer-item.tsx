@@ -41,7 +41,7 @@ import {
 import {Contract, ethers} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
-import {ciEquals, createSuccessfulTransactionToastContent, isBundle, round} from "@src/utils";
+import {ciEquals, createSuccessfulTransactionToastContent, isBundle, isKoban, round} from "@src/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {Button as ChakraButton} from "@chakra-ui/button";
@@ -269,7 +269,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
         }
 
         newExtras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId);
-        newExtras.canList = item.nft.listable && !item.nft.isStaked;
+        newExtras.canList = item.nft.listable && !item.nft.isStaked && (!isBundling || !isKoban(item.nft.nftAddress, item.nft.nftId));
 
         type CurrencyEntry = {
           [key: string]: string[];
@@ -287,7 +287,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
       }
     }
     func();
-  }, []);
+  }, [isBundling]);
 
   useEffect(() => {
     const safePrice = Number(price ?? 0);

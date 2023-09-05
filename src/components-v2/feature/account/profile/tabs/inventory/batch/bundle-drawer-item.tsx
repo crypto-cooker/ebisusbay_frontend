@@ -40,7 +40,7 @@ import {
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
-import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle, isKoban} from "@src/utils";
 import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
@@ -66,6 +66,7 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }: BundleDrawerItemP
   // Approvals
   const extras = useAppSelector((state) => state.batchListing.extras[item.nft.nftAddress.toLowerCase()] ?? {});
   const { approval: approvalStatus, canList } = extras;
+  
   const [executingApproval, setExecutingApproval] = useState(false);
   const [initializing, setInitializing] = useState(false);
 
@@ -112,9 +113,9 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }: BundleDrawerItemP
         const newExtras: UserBatchExtras = { address: item.nft.nftAddress, approval: false };
 
         newExtras.approval = await checkApproval();
-        newExtras.canList = !item.nft.isStaked;
+        newExtras.canList = !item.nft.isStaked && !isKoban(item.nft.nftAddress, item.nft.nftId);
 
-        dispatch(setExtras(extras));
+        dispatch(setExtras(newExtras));
       } finally {
         setInitializing(false);
       }

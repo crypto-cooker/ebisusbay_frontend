@@ -23034,9 +23034,9 @@
       "multiToken": false,
       "address": "0xE46837d6Bf5b6F6C90C1B170aECBFDEc0E4425ea",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "​​​DegenzSkulls is a gambling platform which providing numerous utilities to our NFT members, such as revenue-share, staking rewards, royalties rewards, P2E games, Raffle lottery, Multichain NFT airdrop and more.",
+        "description": "DegenzSkulls is a gambling platform which providing numerous utilities to our NFT members, such as revenue-share, staking rewards, royalties rewards, P2E games, Raffle lottery, Multichain NFT airdrop and more.",
         "avatar": "/img/collections/degenzskulls/avatar.webp",
         "card": "/img/collections/degenzskulls/card.webp",
         "banner": "/img/collections/degenzskulls/banner.webp",
@@ -23197,6 +23197,131 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "AxOl Elites",
+      "slug": "axol-elites",
+      "multiToken": false,
+      "address": "0x1220b4E081c04f345C572536EA531Ed2AdE691BD",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "1/1 AI generated pieces to celebrate Gaia ecosystem and AxOl cro",
+        "avatar": "/img/collections/axol-elites/avatar.webp",
+        "card": "/img/collections/axol-elites/card.webp",
+        "banner": "/img/collections/axol-elites/banner.webp",
+        "website": "https://gaia-eco.netlify.app/",
+        "twitter": "https://twitter.com/GaiaEcoNFT",
+        "discord": "https://discord.gg/gaiaeconft",
+        "categories": [
+          "art",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Snap!",
+      "slug": "snap",
+      "multiToken": false,
+      "address": "0x3fe29ffa527d712a5b202ddaeff714c12cb6aff5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Each NFT represents one football team, when that teams wins the NFT receives a payout which can be claimed through a website.",
+        "avatar": "/img/collections/snap/avatar.webp",
+        "card": "/img/collections/snap/card.webp",
+        "banner": "/img/collections/snap/banner.webp",
+        "website": "https://degen-consortium.netlify.app/",
+        "twitter": "https://twitter.com/degenapecroclub",
+        "discord": "https://discord.gg/6RFUgTxgnR",
+        "medium": "https://medium.com/@foxsae/introducing-snap-the-football-rewards-nft-add9d09bae6f",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Football Squares S2",
+      "slug": "football-squares-s2",
+      "multiToken": false,
+      "address": "0x1368a855545724B165F8c3e466ec30e1fB2A3683",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Introducing Cronos Football Squares: a unique series of 100 AI-generated NFTs on the Cronos blockchain. These exclusive NFTs will reserve your slot on the Football Squares card, guaranteeing your participation in every Monday Night Football (NFL) game. By holding one of these NFTs, you'll be eligible for exciting weekly payouts! Join us buy minting one, and joining us every Monday during regular season",
+        "avatar": "/img/collections/football-squares-s2/avatar.webp",
+        "card": "/img/collections/football-squares-s2/card.webp",
+        "banner": "/img/collections/football-squares-s2/banner.webp",
+        "website": "https://croarmy.app/",
+        "twitter": "https://twitter.com/FootballSquaresNFT",
+        "discord": "https://discord.gg/hdcAGEz8bg",
+        "categories": [
+          "sports"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Emotional Damage",
+      "slug": "emotional-damage",
+      "multiToken": false,
+      "address": "0x01274419C5Ef11D3C035136Ad451293B3aCF0CB9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Survivors of the baby joeys and cronk We will not be restrained to cages or hid under rugs we must be free and lucky.  OGs and Halloween are WL   Emotional Damage Nfts  -Corgi holders get 25Cro mint   -WL( OG baby Joey & Halloween Joey) gets .1 cro mint - max 20 claim per wallet   -Public 50 cro   -50% mint out funds to a staking pool on corgi for WCRO  -40% goes to OEP holders   -10% to ARTIST  -90% secondaries to pool   -10% secondaries to OEP holders rug",
+        "avatar": "/img/collections/emotional-damage/avatar.webp",
+        "card": "/img/collections/emotional-damage/card.webp",
+        "banner": "/img/collections/emotional-damage/banner.webp",
+        "twitter": "https://twitter.com/oddlingnfts",
+        "discord": "https://discord.gg/PEvV29vSnm",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ODDPEPE",
+      "slug": "oddpepe",
+      "multiToken": false,
+      "address": "0x65E25cb1bBC8e0b0b355bfB2B42a1A96a4cAd7b3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "7000 PEPE stumbled across the ODDling ecosystem and they opened up the box and got touched by weirdly odd energy that are the ODDlings. thus the degens named ODDPEPES were born , actuve burns in progress mint has been cut Per community vote ",
+        "avatar": "/img/collections/oddpepe/avatar.webp",
+        "card": "/img/collections/oddpepe/card.webp",
+        "banner": "/img/collections/oddpepe/banner.webp",
+        "twitter": "https://twitter.com/oddlingnfts",
+        "discord": "https://discord.gg/czgdcv6R8T",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
