@@ -58,6 +58,7 @@ import {ApiService} from "@src/core/services/api-service";
 import {commify, isAddress} from "ethers/lib/utils";
 import {parseErrorMessage} from "@src/helpers/validator";
 import ImageService from "@src/core/services/image";
+import {motion} from "framer-motion";
 
 const config = appConfig();
 const gothamBook = localFont({
@@ -85,6 +86,13 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
       }
     }
   }
+  const item = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1,
+      transition: {
+      }
+     }
+  }
 
   return (
     <Box
@@ -92,6 +100,11 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
       h='calc(100vh - 74px)'
       overflow='hidden'
     >
+              <motion.div
+          variants={item}
+          initial="hidden"
+          animate="show"
+          >
          <AspectRatio ratio={1920/1080} overflow='visible' >
           <Image
           position={'absolute'}
@@ -118,6 +131,7 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
         className={gothamBook.className}
         position='absolute'
         >
+
       <Flex justify='space-between'>
         <Box
           left={6}
@@ -170,6 +184,7 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
 
     </Flex>
     </Box>
+      </motion.div>
     </Box>
   )
 }

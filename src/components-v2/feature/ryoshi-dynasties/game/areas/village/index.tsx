@@ -44,6 +44,7 @@ import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import { RdGameState } from "@src/core/services/api-service/types";
 import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
+import {motion} from "framer-motion";
 
 interface VillageProps {
   onChange: (value: string) => void;
@@ -664,6 +665,15 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     onChange(area);
   }, [rdGameContext]);
 
+  const item = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1,
+      transition: {
+      }
+     }
+  }
+
+
   return (
     <section>
       <Box
@@ -671,6 +681,11 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         backgroundImage={ImageService.translate(`/img/ryoshi-dynasties/village/background-${user.theme}.png`).convert()}
         backgroundSize='cover'
       >
+      <motion.div
+          variants={item}
+          initial="hidden"
+          animate="show"
+          >
         {mapInitialized && (
           <TransformWrapper
             // limitToBounds={true}
@@ -839,6 +854,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
             )}
           </TransformWrapper>
         )}
+      </motion.div>
 
         {!allianceCenterOpen && !barracksOpen && !portalOpen && !marketOpen && (
           <VillageHud onOpenBuildings={onOpenBuildings} onOpenDailyCheckin={onOpenDailyCheckin} 
