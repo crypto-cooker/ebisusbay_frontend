@@ -6,7 +6,11 @@ import {
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
+  Fade,
   Flex,
+  Modal,
+  ModalContent,
+  ModalOverlay,
   Text,
   useBreakpointValue,
   useDisclosure
@@ -47,9 +51,10 @@ interface VillageProps {
   onFirstRun: () => void;
 }
 const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
-  const { config: rdConfig, game: rdGameContext, user: rdUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, game: rdGameContext, user: rdUser, refreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
   const config = appConfig();
+  const { isOpen:isOpenOverlay, onToggle } = useDisclosure()
 
   const [isLoading, getSigner] = useCreateSigner();
 
@@ -227,7 +232,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     setPortalOpen(false);
     setMarketOpen(false);
     setElementToZoomTo('Alliance Center');
-    setAllianceCenterOpen(true);
+    // setAllianceCenterOpen(true);
+    OpenInOneSecondasync('allianceCenter');
   }
   const CloseAllianceCenter = () => {
     setElementToZoomTo('fancyMenu');
@@ -265,6 +271,32 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const CloseMarket = () => {
     setElementToZoomTo('fancyMenu');
     setMarketOpen(false);
+  }
+  const OpenBank = () => {
+    setAllianceCenterOpen(false);
+    setPortalOpen(false);
+    setMarketOpen(false);
+    setBarracksOpen(false);
+    setElementToZoomTo('Bank');
+    OpenInOneSecondasync('Bank');
+  }
+  function timeout(delay: number) {
+    return new Promise( res => setTimeout(res, delay) );
+}
+  const OpenInOneSecondasync = async (thingToOpen:string) => {
+    onToggle();
+    await timeout(500); //for 0.5 sec delay
+    if(thingToOpen == 'allianceCenter') {
+      onChange('allianceCenter')
+    } else if(thingToOpen == 'Barracks') {
+      // OpenBarracks();
+    } else if(thingToOpen == 'Moongate') {
+      // OpenPortal();
+    } else if(thingToOpen == 'Market') {
+      // OpenMarket();
+    } else if(thingToOpen == 'Bank') {
+      onChange('bank');
+    }
   }
 
 //#region all resizing stuff
@@ -594,6 +626,20 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   }, [user.mitamaBalance]);
 
 
+  useEffect(() => {
+    // config.reg
+    if(!rdGameContext) return;
+    if(!rdUser) return;
+
+    // console.log(rdGameContext)
+    console.log(rdUser)
+    // console.log(rdConfig)
+    // console.log(rdGameContext)
+    // refreshUser();
+    // console.log(refreshUser()) 
+     
+  }, [rdGameContext, rdUser, rdConfig])
+
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
   const { isOpen: isResetModalOpen, onOpen: onOpenResetModal, onClose: onCloseResetModal } = useDisclosure();
   const handleSceneChange = useCallback((area: string) => {
@@ -716,7 +762,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       id="Bank" 
                       className={styles.enlarge} 
                       style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}}
-                      onClick={() => onChange('bank')}
+                      // onClick={() => onChange('bank')}
+                      onClick={() => OpenBank()}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/bank_day.png').convert()} />
                       {/* <div className={[styles.bank_label]} > */}
@@ -800,7 +847,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
         <Box  position='absolute' top={0} left={0} p={4} zIndex={1}>
           <Flex direction='row' justify='space-between' >
-            {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>}
+            {/* {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>} */}
             {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>}
             {portalOpen ? <PortalModal onBack={() => ClosePortal()}/> : <></>}
             {marketOpen ? <FishMarketModal onBack={() => CloseMarket()}/> : <></>}
@@ -828,6 +875,23 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
       <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
       <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
+
+      <Fade in={isOpenOverlay} 
+        >
+        <Modal
+          onClose={() => {}}
+          isOpen={isOpenOverlay}
+          >
+          <ModalOverlay 
+          bg='rgba(0,0,0,1)'
+          pointerEvents={'auto'}
+          transitionDuration={'0.5s'}
+          />
+          <ModalContent>
+
+          </ModalContent>
+          </Modal>
+        </Fade>
       
       <RdModal
         isOpen={isBlockingModalOpen}

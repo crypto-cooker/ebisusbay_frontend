@@ -155,6 +155,7 @@ export interface RdUserContext {
         nextClaim: string;
         nextReward: number;
     }
+    reputation: RdReputation;
 }
 
 interface RdUserContextSeason {
@@ -307,6 +308,43 @@ interface RdSeasonRegionControlPoint {
 
 interface RdGameRewards {
     burnPercentage: number;
+}
+
+interface RdReputation {
+    profileId: number;
+    otherFactionId: number;
+    playerFactionId: number;
+    points: number;
+    level: ReputationLevel;
+}
+      
+export enum ReputationLevel {
+    Nefarious = "Nefarious",
+    Infamous = "Infamous",
+    Defamed = "Defamed",
+    Outcast = "Outcast",
+    Scorned = "Scorned",
+    Vilified = "Vilified",
+    Hated = "Hated",
+    Spurned = "Spurned",
+    Disliked = "Disliked",
+    Unfriendly = "Unfriendly",
+    Neutral = "Neutral",
+    Friendly = "Friendly",
+    Respected = "Respected",
+    Admired = "Admired",
+    Esteemed = "Esteemed",
+    Honored = "Honored",
+    Praised = "Praised",
+    Revered = "Revered",
+    Acclaimed = "Acclaimed",
+    Notorious = "Notorious",
+    Exalted = "Exalted"
+}
+    
+interface Experience {
+    points: number;
+    level: number;
 }
 
 export enum RdGameState {

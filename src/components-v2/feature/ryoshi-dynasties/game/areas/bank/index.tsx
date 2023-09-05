@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {AspectRatio, Box, Icon, Image, Text, useDisclosure, useMediaQuery, VStack} from '@chakra-ui/react';
+import {AspectRatio, Box, Icon, Image, Modal, ModalContent, ModalOverlay, Text, useDisclosure, useMediaQuery, VStack} from '@chakra-ui/react';
 
 import StakeFortune from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune';
 import StakeNFTs from './stake-nft';
@@ -42,6 +42,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
   const windowSize = useWindowSize();
   const [shouldAbbreviateHorizontal] = useMediaQuery('(max-width: 800px)');
   const [abbreviateButtonText, setAbbreviateButtonText] = useState(false);
+  const { isOpen:isOpenOverlay, onToggle } = useDisclosure()
 
   useEffect(() => {
     const shouldAbbreviateVertical = !!windowSize.height && windowSize.height < 800;

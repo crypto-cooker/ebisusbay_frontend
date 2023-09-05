@@ -27,7 +27,7 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton, useClipboard,
+  ModalCloseButton, useClipboard, AspectRatio,
 } from "@chakra-ui/react";
 import {ArrowBackIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
@@ -87,18 +87,37 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
   }
 
   return (
-    <Flex
-      border='1px solid #FFD700'
-      backgroundColor='#292626'
-      flexDirection='column'
-      textAlign='center'
-      borderRadius={'10px'}
-      justifyContent='space-around'
-      padding={4}
-      minW={{base: '100%', xl: '450px' }}
-      boxShadow='0px 0px 10px 0px #000000'
-      className={gothamBook.className}
+    <Box
+      position='relative'
+      h='calc(100vh - 74px)'
+      overflow='hidden'
     >
+         <AspectRatio ratio={1920/1080} overflow='visible' >
+          <Image
+          position={'absolute'}
+            src={'/img/ryoshi-dynasties/village/allianceCenter.png'}
+            opacity={0.2}
+            zIndex={0}
+            // src={ImageService.translate('/img/ryoshi-dynasties/village/allianceCenter.png').convert()}
+            minH='calc(100vh - 74px)'
+          />
+        </AspectRatio>
+      <Box opacity={1}>
+
+      <Flex
+        border='1px solid #FFD700'
+        backgroundColor='#292626'
+        flexDirection='column'
+        textAlign='center'
+        borderRadius={'10px'}
+        justifyContent='space-around'
+        padding={4}
+        // minW={{base: '100%', xl: '450px' }}
+        w={{base: '450px', xl: '450px' }}
+        boxShadow='0px 0px 10px 0px #000000'
+        className={gothamBook.className}
+        position='absolute'
+        >
       <Flex justify='space-between'>
         <Box
           left={6}
@@ -150,6 +169,8 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
       </Box>
 
     </Flex>
+    </Box>
+    </Box>
   )
 }
 
