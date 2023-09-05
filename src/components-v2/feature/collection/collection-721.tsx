@@ -31,7 +31,7 @@ import {pushQueryString} from "@src/helpers/query";
 import styled from "styled-components";
 import {getCollectionMetadata, getCollectionPowertraits, getCollectionTraits} from "@src/core/api";
 import {getCollections} from "@src/core/api/next/collectioninfo";
-import Items from "@src/components-v2/feature/collection/tabs/items/items";
+import Items from "@src/components-v2/feature/collection/tabs/items";
 
 const tabs = {
   items: 'items',

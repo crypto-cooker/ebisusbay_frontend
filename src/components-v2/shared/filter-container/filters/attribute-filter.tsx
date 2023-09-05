@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import {stripSpaces} from "@src/utils";
 import {FilteredItem} from "@src/components-v2/shared/filter-container";
+import {TableVirtuoso} from "react-virtuoso";
 
 type AttributeFilterProps = {
   attributes: { [key: string]: { [key: string]: any } };
@@ -18,13 +19,9 @@ type AttributeFilterProps = {
   onChange: (filters: { [key: string]: string[] }, filteredItems: FilteredItem[]) => void;
 }
 const AttributeFilter = ({attributes, currentFilters, onChange}: AttributeFilterProps) => {
-  console.log('ATTRIBVUTES', attributes, currentFilters);
-  // const groupedAttributes = attributes ? Object.entries(groupByKey(attributes, (i) => i.trait_type!)) : [];
-  const [filters, setFilters] = useState<any>(currentFilters);
+  const [filters, setFilters] = useState(currentFilters);
 
   const handleFilter = useCallback(async (e: any, group: string, attribute: string) => {
-    console.log('handleFilter1', filters, currentFilters, group, attribute, e.target.checked);
-
     let metadataFilters = filters ?? {};
     if (e.target.checked) {
       metadataFilters[group] = metadataFilters[group] ? [...metadataFilters[group], attribute] : [attribute];
@@ -43,15 +40,13 @@ const AttributeFilter = ({attributes, currentFilters, onChange}: AttributeFilter
         }))
     );
 
-    console.log('handleFilter2', metadataFilters, transformedArray);
     setFilters(metadataFilters);
     onChange(metadataFilters, transformedArray);
   }, [onChange, filters, currentFilters]);
 
-  // useEffect(() => {
-  //   console.log('handleFilter-setting-new', currentFilters);
-  //   setFilters(currentFilters);
-  // }, [currentFilters]);
+  useEffect(() => {
+    setFilters(currentFilters);
+  }, [currentFilters]);
 
   return (
     <>
@@ -66,45 +61,29 @@ const AttributeFilter = ({attributes, currentFilters, onChange}: AttributeFilter
             <AccordionIcon />
           </AccordionButton>
           <AccordionPanel pb={4}>
-            <CheckboxGroup colorScheme='blue' value={filters?.[group[0]] ? filters[group[0]].map((value) => stripSpaces(`trait-${group[0]}-${value}`)) : []}>
-              {Object.entries(group[1])
-                .sort((a, b) => a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1)
-                .map((item: any, itemKey: any) => (
-                  <Flex w='full' pe={1} key={stripSpaces(`trait-${group[0]}-${item[0]}`)} justify='space-between'>
-                    <Checkbox
-                      value={stripSpaces(`trait-${group[0]}-${item[0]}`)}
-                      onChange={(e) => handleFilter(e, group[0], item[0])}
-                    >
-                      {item[0]}
-                    </Checkbox>
-                    <Text color='gray.500'>({item[1].count})</Text>
-                  </Flex>
-              ))}
+            <CheckboxGroup
+              colorScheme='blue'
+              value={filters?.[group[0]] ? filters[group[0]].map((value) => stripSpaces(`trait-${group[0]}-${value}`)) : []}
+            >
+              <TableVirtuoso
+                style={{ height: Math.min(Object.entries(group[1]).length * 24, 200), width: '100%' }}
+                data={Object.entries(group[1]).sort((a, b) => a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1)}
+                itemContent={(index, item: [string, any]) => {
+                  const checked = filters?.[group[0]]?.includes(item[0]);
+                  return (
+                    <Flex w='100%' pe={1} key={stripSpaces(`trait-${group[0]}-${item[0]}`)} justify='space-between'>
+                      <Checkbox
+                        value={stripSpaces(`trait-${group[0]}-${item[0]}`)}
+                        onChange={(e) => handleFilter(e, group[0], item[0])}
+                      >
+                        {item[0]}
+                      </Checkbox>
+                      <Text color='gray.500'>({item[1].count})</Text>
+                    </Flex>
+                  )
+                }}
+              />
             </CheckboxGroup>
-            {/*<TableVirtuoso*/}
-            {/*  style={{ height: 200 }}*/}
-            {/*  totalCount={group[1].length}*/}
-            {/*  itemContent={(index) => {*/}
-            {/*    const item = group[1].sort((a: any, b: any) => a.value > b.value ? 1 : -1)[index]*/}
-            {/*    let checked = false;*/}
-            {/*    if (!!filters.metadata) {*/}
-            {/*      checked = filters.metadata.some(*/}
-            {/*        (o) => o.trait_type === group[0] && o.value?.includes(item.value)*/}
-            {/*      )*/}
-            {/*    }*/}
-            {/*    return (*/}
-            {/*      <Flex w='full' pe={1} key={`${group[0]}-${item.value}`} justify='space-between'>*/}
-            {/*        <Checkbox*/}
-            {/*          onChange={(e) => handleFilter(item, e)}*/}
-            {/*          isChecked={checked}*/}
-            {/*        >*/}
-            {/*          {item.value}*/}
-            {/*        </Checkbox>*/}
-            {/*        <Text color='gray.500'>({item.count})</Text>*/}
-            {/*      </Flex>*/}
-            {/*    )*/}
-            {/*  }}*/}
-            {/*/>*/}
           </AccordionPanel>
         </AccordionItem>
       ))}

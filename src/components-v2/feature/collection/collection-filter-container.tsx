@@ -1,4 +1,4 @@
-import {Accordion} from "@chakra-ui/react";
+import {Accordion, Box} from "@chakra-ui/react";
 import CheckboxFilter, {CheckboxItem} from "@src/components-v2/shared/filter-container/filters/checkbox-filter";
 import RangeFilter from "@src/components-v2/shared/filter-container/filters/range-filter";
 import React, {ReactNode, useCallback, useMemo, useState} from "react";
@@ -29,6 +29,7 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
     const params = queryParams;
+
     for (const item of items) {
       if (item.key === 'status-buy-now') delete params.listed;
       // if (item.key === 'status-has-offers') delete params.offered;
@@ -46,9 +47,12 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
 
           if (traits[categoryKey].length === 0) delete traits[categoryKey];
           params.traits = JSON.stringify(traits);
+
+          if (Object.keys(traits).length === 0) delete params.traits;
         }
       }
     }
+
     onFilter({...queryParams, ...params});
     setFilteredItems(filteredItems.filter((fi) => !items.map(i => i.key).includes(fi.key)));
   }, [queryParams, filteredItems]);
@@ -92,14 +96,20 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
 
   }, [queryParams, filteredItems]);
 
-  const handleAttributeFilter = useCallback((attributeFilters: { [key: string]: string[] }, attributeFilteredItems: FilteredItem[]) => {
+  const handleTraitsFilter = useCallback((attributeFilters: { [key: string]: string[] }, attributeFilteredItems: FilteredItem[]) => {
     onFilter({...queryParams, traits: JSON.stringify(attributeFilters)});
 
     let newFilteredItems = filteredItems.filter((fi) => !fi.key.startsWith('trait-') || attributeFilteredItems.map(afi => afi.key).includes(fi.key));
     let addedFilterItems = attributeFilteredItems.filter((afi) => !filteredItems.some((fi) => fi.key === afi.key));
+    setFilteredItems([...newFilteredItems, ...addedFilterItems]);
 
-    console.log('handleFilter3', attributeFilters, filteredItems, newFilteredItems, addedFilterItems);
+  }, [queryParams, filteredItems]);
 
+  const handlePowertraitsFilter = useCallback((attributeFilters: { [key: string]: string[] }, attributeFilteredItems: FilteredItem[]) => {
+    onFilter({...queryParams, powertraits: JSON.stringify(attributeFilters)});
+
+    let newFilteredItems = filteredItems.filter((fi) => !fi.key.startsWith('trait-') || attributeFilteredItems.map(afi => afi.key).includes(fi.key));
+    let addedFilterItems = attributeFilteredItems.filter((afi) => !filteredItems.some((fi) => fi.key === afi.key));
     setFilteredItems([...newFilteredItems, ...addedFilterItems]);
 
   }, [queryParams, filteredItems]);
@@ -136,11 +146,22 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
         onChange={handlePriceFilter}
       />
       {!!traits && (
-        <AttributeFilter
-          attributes={traits}
-          currentFilters={queryParams.traits ? JSON.parse(queryParams.traits) : {}}
-          onChange={handleAttributeFilter}
-        />
+        <Box mt={6}>
+          <AttributeFilter
+            attributes={traits}
+            currentFilters={queryParams.traits ? JSON.parse(queryParams.traits) : {}}
+            onChange={handleTraitsFilter}
+          />
+        </Box>
+      )}
+      {!!powertraits && (
+        <Box mt={6}>
+          <AttributeFilter
+            attributes={powertraits}
+            currentFilters={queryParams.powertraits ? JSON.parse(queryParams.powertraits) : {}}
+            onChange={handlePowertraitsFilter}
+          />
+        </Box>
       )}
     </Accordion>
   ), [queryParams, filteredItems, handleStatusFilter, handleRankFilter, handlePriceFilter, traits, powertraits]);

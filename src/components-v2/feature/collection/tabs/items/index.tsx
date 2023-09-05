@@ -68,7 +68,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
         address: collection.address,
         ...fixedQueryParams
       }
-      console.log('params', params);
+
       const data = await nextApiService.getCollectionItems(collection.address, params);
       setTotalCount(data.totalCount!);
 
@@ -96,6 +96,10 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
     setQueryParams({...queryParams, sortBy: sort as any, direction: direction as any})
   }, [queryParams]);
 
+  const handleFilter = useCallback((filter: FullCollectionsQueryParams) => {
+    setQueryParams({...queryParams, ...filter});
+  }, [queryParams]);
+
   const content = useMemo(() => {
     return status === 'loading' ? (
       <Center>
@@ -121,7 +125,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
             data={items}
             canLoadMore={hasNextPage ?? false}
             loadMore={fetchNextPage}
-            fullWidth={false}
+            fullWidth={!filtersVisible || (useMobileMenu ?? false)}
             listable={collection.listable}
             is1155={collection.is1155}
           />
@@ -132,7 +136,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
         <Text>No results found</Text>
       </Box>
     );
-  }, [items, error, status, collection, hasNextPage]);
+  }, [items, error, status, collection, hasNextPage, filtersVisible, useMobileMenu]);
 
   return (
     <>
@@ -155,10 +159,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
       <CollectionFilterContainer
         queryParams={queryParams}
         collection={collection}
-        onFilter={(newParams) => {
-          console.log('onFilter', newParams, queryParams);
-          setQueryParams(newParams)
-        }}
+        onFilter={handleFilter}
         filtersVisible={filtersVisible}
         useMobileMenu={useMobileMenu ?? false}
         onMobileMenuClose={() => setFiltersVisible(false)}

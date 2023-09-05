@@ -5798,3 +5798,10 @@ iframe.metaverse {
   -webkit-mask: var(--mask);
   mask: var(--mask);
 }
+
+/* Fix Virtuoso scroller width in attribute filters */
+[data-test-id="virtuoso-scroller"] {
+  table {
+    width: 100%
+  }
+}
