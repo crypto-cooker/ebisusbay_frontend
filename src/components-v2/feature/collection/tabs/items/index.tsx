@@ -3,7 +3,6 @@ import CollectionFilterContainer from "@src/components-v2/feature/collection/col
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Box, Center, Spinner, Text, useBreakpointValue, useDisclosure} from "@chakra-ui/react";
 import React, {useCallback, useMemo, useState} from "react";
-import CollectionListingsGroup from "@src/Components/components/CollectionListingsGroup";
 import {CollectionNftsGroup} from "@src/components-v2/feature/collection/collection-groups";
 import {useRouter} from "next/router";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
@@ -38,7 +37,6 @@ const defaultQueryParams = {
 
 // TODO fix
 const hasRank = false;
-const isUsingListingsFallback = false;
 
 const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
   const router = useRouter();
@@ -110,27 +108,14 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
         Error: {(error as any).message}
       </Box>
     ) : items?.pages.map((page) => page.data).flat().length > 0 ? (
-      <>
-        {isUsingListingsFallback ? (
-          <CollectionListingsGroup
-            listings={items}
-            canLoadMore={hasNextPage ?? false}
-            loadMore={fetchNextPage}
-            showLoadMore={true}
-            address={null}
-            collectionMetadata={null}
-          />
-        ) : (
-          <CollectionNftsGroup
-            data={items}
-            canLoadMore={hasNextPage ?? false}
-            loadMore={fetchNextPage}
-            fullWidth={!filtersVisible || (useMobileMenu ?? false)}
-            listable={collection.listable}
-            is1155={collection.is1155}
-          />
-        )}
-      </>
+      <CollectionNftsGroup
+        data={items}
+        canLoadMore={hasNextPage ?? false}
+        loadMore={fetchNextPage}
+        fullWidth={!filtersVisible || (useMobileMenu ?? false)}
+        listable={collection.listable}
+        is1155={collection.is1155}
+      />
     ) : (
       <Box textAlign='center' mt={8}>
         <Text>No results found</Text>
@@ -140,7 +125,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
 
   return (
     <>
-      <ThemedBackground className="row position-sticky pt-2" style={{top: 74, zIndex: 5}}>
+      <ThemedBackground className="position-sticky pt-2 pb-1" style={{top: 74, zIndex: 5}}>
         <Taskbar
           collection={collection}
           onFilterToggle={() => setFiltersVisible(!filtersVisible)}

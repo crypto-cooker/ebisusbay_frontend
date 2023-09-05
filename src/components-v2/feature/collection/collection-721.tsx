@@ -158,7 +158,7 @@ const Collection721 = ({ collection, ssrQuery, activeDrop = null}: Collection721
 
       <Box mt={8}>
         {collectionStats && (
-          <div className="row">
+          <>
             {hasRank && collection.metadata.rarity === 'rarity_sniper' && (
               <div className="row">
                 <div className="col-lg-8 col-sm-10 mx-auto text-center mb-3" style={{ fontSize: '0.8em' }}>
@@ -201,7 +201,7 @@ const Collection721 = ({ collection, ssrQuery, activeDrop = null}: Collection721
                 </div>
               </div>
             )}
-          </div>
+          </>
         )}
       </Box>
       <Box className="de_tab">
