@@ -17,7 +17,7 @@ const config = appConfig();
 
 const Collection = ({ ssrCollection, query, redirect, activeDrop }) => {
   const router = useRouter();
-  const { slug } = router.query;
+  const { slug, remainingQuery } = router.query;
 
   const [type, setType] = useState(collectionTypes.ERC721);
   const [initialized, setInitialized] = useState(false);
@@ -51,7 +51,7 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }) => {
               )}
             </>
           ) : (
-            <Collection721 collection={ssrCollection} ssrQuery={query} activeDrop={activeDrop} />
+            <Collection721 collection={ssrCollection} ssrQuery={remainingQuery} activeDrop={activeDrop} />
           )}
         </>
       )}

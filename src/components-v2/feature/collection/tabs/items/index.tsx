@@ -44,6 +44,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
   const [filtersVisible, setFiltersVisible] = useState(true);
   const [mobileSortVisible, setMobileSortVisible] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
+  const [viewType, setViewType] = useState('grid-sm');
 
   const { isOpen: isOpenCollectionOfferDialog, onOpen: onOpenCollectionOfferDialog, onClose: onCloseCollectionOfferDialog } = useDisclosure();
   const { isOpen: isOpenInstantSellDialog, onOpen: onOpenInstantSellDialog, onClose: onCloseInstantSellDialog } = useDisclosure();
@@ -134,7 +135,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
           onSearch={(search: string) => handleSearch(search)}
           onSort={handleSort}
           filtersVisible={filtersVisible}
-          onChangeViewType={() => {}}
+          onChangeViewType={setViewType}
           viewType={'grid-sm'}
           onOpenCollectionOfferDialog={onOpenCollectionOfferDialog}
           onOpenInstantSellDialog={onOpenInstantSellDialog}
