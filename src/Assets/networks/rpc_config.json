@@ -23178,7 +23178,7 @@
       "name": "JAFC-Comics",
       "slug": "jafc-comics",
       "multiToken": false,
-      "address": "0x206f8Ca5FF9F69aa296269e2061d43ED95814d2f",
+      "address": "",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -30408,7 +30408,7 @@
         "twitter": "https://twitter.com/JAFC_nft",
         "discord": "https://discord.gg/W3HwbZUwfr"
       },
-      "address": "0x206f8Ca5FF9F69aa296269e2061d43ED95814d2f",
+      "address": "",
       "maxMintPerTx": 1,
       "maxMintPerAddress": 1,
       "totalSupply": 2500,
