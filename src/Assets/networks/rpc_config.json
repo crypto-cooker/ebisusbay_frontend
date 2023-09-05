@@ -30414,7 +30414,7 @@
       "totalSupply": 2500,
       "freeMint": true,
       "foundersOnly": false,
-      "start": 1693944000000,
+      "start": null,
       "end": null,
       "referral": false,
       "is1155": false,
