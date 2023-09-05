@@ -116,13 +116,14 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
         fullWidth={!filtersVisible || (useMobileMenu ?? false)}
         listable={collection.listable}
         is1155={collection.is1155}
+        viewType={viewType}
       />
     ) : (
       <Box textAlign='center' mt={8}>
         <Text>No results found</Text>
       </Box>
     );
-  }, [items, error, status, collection, hasNextPage, filtersVisible, useMobileMenu]);
+  }, [items, error, status, collection, hasNextPage, filtersVisible, useMobileMenu, viewType]);
 
   return (
     <>
@@ -135,8 +136,8 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
           onSearch={(search: string) => handleSearch(search)}
           onSort={handleSort}
           filtersVisible={filtersVisible}
-          onChangeViewType={setViewType}
-          viewType={'grid-sm'}
+          onChangeViewType={(type: string) => setViewType(type)}
+          viewType={viewType}
           onOpenCollectionOfferDialog={onOpenCollectionOfferDialog}
           onOpenInstantSellDialog={onOpenInstantSellDialog}
           onOpenSweepDialog={onOpenSweepDialog}

@@ -5,6 +5,7 @@ import {isBundle, isNftBlacklisted} from "@src/utils";
 import React from "react";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
 import {NftCard} from "@src/components-v2/shared/nft-card";
+import {ResponsiveValue} from "@chakra-ui/system";
 
 interface CollectionGroupsProps {
   data: InfiniteData<PagedList<any>>;
@@ -18,14 +19,20 @@ interface CollectionGroupsProps {
 
 export const CollectionNftsGroup = ({data, canLoadMore, loadMore, fullWidth, listable, is1155, viewType}: CollectionGroupsProps) => {
 
-  const gridSizes = {
-    'grid-sm': {base: 2, sm: 3, md: 4, lg: 5, xl: 6, '2xl': 7},
-    'grid-lg': {base: 1, sm: 2, lg: 3, xl: 4, '2xl': 6}
+  const gridSizes: {[key: string]: ResponsiveValue<number>} = {
+    'grid-sm': {base: 2, sm: 3, md: 4, lg: 5, xl: 6, '2xl': 8},
+    'grid-lg': {base: 2, sm: 2, lg: 3, xl: 4, '2xl': 6}
   }
+
+  const adjustedGridSize: ResponsiveValue<number> = Object.fromEntries(
+    Object.entries(gridSizes[viewType]).map(
+      ([key, value]) => [key, fullWidth ? value : Math.max(1, value - 1)]
+    )
+  );
 
   return (
     <SimpleGrid
-      columns={!fullWidth ? {base: 1, sm: 2, lg: 3, xl: 4, '2xl': 6} : {base: 2, sm: 3, md: 4, lg: 5, xl: 6, '2xl': 7}}
+      columns={adjustedGridSize}
       gap={3}
     >
 
