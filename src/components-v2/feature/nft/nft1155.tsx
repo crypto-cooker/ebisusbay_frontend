@@ -41,7 +41,6 @@ import {toast} from "react-toastify";
 import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
 import {Menu} from '@src/Components/components/chakra-components';
 import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-svg-icons';
-import {getStats} from '@src/GlobalState/collectionSlice';
 import NextLink from 'next/link';
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 import {Button as ChakraButton} from "@chakra-ui/button";
@@ -52,6 +51,7 @@ import {OfferType} from "@src/core/services/api-service/types";
 import ImageService from "@src/core/services/image";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
+import {getStats} from "@src/components-v2/feature/collection/collection-721";
 
 const config = appConfig();
 const tabs = {

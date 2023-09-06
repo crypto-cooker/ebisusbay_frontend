@@ -1,40 +1,41 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
+import React, {useEffect, useRef, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {useRouter} from 'next/router';
 import styled from 'styled-components';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { commify } from 'ethers/lib/utils';
-import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
-
-import { init, fetchListings } from '@src/GlobalState/collectionSlice';
-import { devLog } from '@src/utils';
-import Button from '../../../components/Button';
-import { chainConnect, connectAccount } from '@src/GlobalState/User';
+import {commify} from 'ethers/lib/utils';
+import {TransformComponent, TransformWrapper} from 'react-zoom-pan-pinch';
+import {devLog} from '@src/utils';
+import Button from '../../../../../Components/components/Button';
+import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 
-import styles from './CollectionCronosverse.module.scss';
-import {CollectionFilters} from "../../../Models/collection-filters.model";
+import styles from './cronosverse.module.scss';
+import nextApiService from "@src/core/services/api-service/next";
+import {useQuery} from "@tanstack/react-query";
+import {useAppSelector} from "@src/Store/hooks";
 
-const CollectionCronosverse = ({ collection }) => {
+const CollectionCronosverse = ({ collection }: {collection: any}) => {
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const user = useSelector((state) => state.user);
-  const items = useSelector((state) => state.collection.listings);
-  const listings = useSelector((state) => state.collection.listings.filter((item) => item.market.id));
+  const user = useAppSelector((state) => state.user);
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
-  const [nftOffer, setNftOffer] = useState(null);
+  const [nftOffer, setNftOffer] = useState<any>(null);
 
-  useEffect(() => {
-    const filterOption = CollectionFilters.default();
-    filterOption.address = collection.address;
-    dispatch(init(filterOption));
-    dispatch(fetchListings(true));
-    // eslint-disable-next-line
-  }, [dispatch]);
+  const { data: nfts } = useQuery({
+    queryKey: ['CronosverseMap'],
+    queryFn: () => nextApiService.getCollectionItems(collection.address, {
+      pageSize: 1208,
+      address: collection.address
+    }),
+    enabled: !!collection.address,
+    initialData: {
+      data: [],
+    } as any
+  });
 
-  const handleMakeOffer = (nft) => {
+  const handleMakeOffer = (nft: any) => {
     if (user.address) {
       setNftOffer(nft);
       setOpenMakeOfferDialog(!openMakeOfferDialog);
@@ -50,7 +51,7 @@ const CollectionCronosverse = ({ collection }) => {
     }
   };
 
-  const handleBuy = (listing) => {
+  const handleBuy = (listing: any) => {
     // if (listing.market?.id) {
     //   history.push(`/listing/${listing.market?.id}`);
     // } else {
@@ -60,8 +61,8 @@ const CollectionCronosverse = ({ collection }) => {
 
   return (
     <div>
-      <CronosverseCollectionBoard onBuy={handleBuy} onOffer={handleMakeOffer} listings={listings} nfts={items} />
-      {openMakeOfferDialog && (
+      <CronosverseCollectionBoard onBuy={handleBuy} onOffer={handleMakeOffer} nfts={nfts.data} listings={nfts.data.filter((nft: any) => !!nft.market?.id)} />
+      {openMakeOfferDialog && !!nftOffer && (
         <MakeOfferDialog
           isOpen={openMakeOfferDialog}
           onClose={() => setOpenMakeOfferDialog(false)}
@@ -93,10 +94,17 @@ const tiles = [
 ];
 const tileType = ['Plain', 'Suburban', 'Commercial'];
 
-const CronosverseCollectionBoard = ({ onBuy, onOffer, listings = [], nfts = [] }) => {
-  const ref0 = useRef();
-  const ref2 = useRef();
-  const [tileInfo, setTileInfo] = useState({});
+interface CronosverseCollectionBoardProps {
+  onBuy: (listing: any) => void;
+  onOffer: (nft: any) => void;
+  listings: any[];
+  nfts: any[];
+}
+
+const CronosverseCollectionBoard = ({ onBuy, onOffer, listings = [], nfts = [] }: CronosverseCollectionBoardProps) => {
+  const ref0 = useRef<any>(null);
+  const ref2 = useRef<HTMLCanvasElement>(null);
+  const [tileInfo, setTileInfo] = useState<any>({});
   const [modalFlag, setModalFlag] = useState('none');
   // const [canvasDown, setCanvasDown] = useState(false);
   const [zoomState, setZoomState] = useState({
@@ -115,7 +123,7 @@ const CronosverseCollectionBoard = ({ onBuy, onOffer, listings = [], nfts = [] }
   const [subDistanceX, setSubDistanceX] = useState(0);
   const [subDistanceY, setSubDistanceY] = useState(0);
   let sub = 0;
-  const getTileType = (xPos, yPos) => {
+  const getTileType = (xPos: number, yPos: number) => {
     if (yPos >= 9 && xPos >= 19 && yPos <= 17 && xPos <= 34) {
       return 4;
     } else if (yPos >= 7 && xPos >= 17 && yPos <= 19 && xPos <= 36) {
@@ -129,7 +137,7 @@ const CronosverseCollectionBoard = ({ onBuy, onOffer, listings = [], nfts = [] }
     }
   };
 
-  const getTokenId = (j, i) => {
+  const getTokenId = (j: number, i: number) => {
     let id;
     let temp = 52 * (i - 1) + j;
     if (i <= 8 || (i === 9 && j <= 18)) {
@@ -150,7 +158,7 @@ const CronosverseCollectionBoard = ({ onBuy, onOffer, listings = [], nfts = [] }
     }
   };
 
-  const getPosFromTokenId = (tokenId) => {
+  const getPosFromTokenId = (tokenId: number) => {
     if (tokenId >= 1 && tokenId <= 434) {
       return [((tokenId - 1) % 52) + 1, Math.floor((tokenId - 1) / 52) + 1];
     }
@@ -165,15 +173,15 @@ const CronosverseCollectionBoard = ({ onBuy, onOffer, listings = [], nfts = [] }
     return [0, 0];
   };
 
-  const listingForToken = (tokenId) => {
+  const listingForToken = (tokenId: any) => {
     return listings.find((listing) => parseInt(tokenId) === parseInt(listing.id));
   };
 
-  const nftForToken = (tokenId) => {
+  const nftForToken = (tokenId: any) => {
     return nfts.find((nft) => parseInt(tokenId) === parseInt(nft.id));
   };
 
-  const changeCanvasState = (ReactZoomPanPinchRef, event) => {
+  const changeCanvasState = (ReactZoomPanPinchRef: any, event: any) => {
     setZoomState({
       offsetX: ReactZoomPanPinchRef.state.positionX,
       offsetY: ReactZoomPanPinchRef.state.positionY,
@@ -181,7 +189,7 @@ const CronosverseCollectionBoard = ({ onBuy, onOffer, listings = [], nfts = [] }
     });
   };
 
-  const getMousePos = (e) => {
+  const getMousePos = (e: any) => {
     var rect = e.target.getBoundingClientRect();
     devLog('mouse', e.clientX, e.clientY, rect.left, rect.top);
     return {
@@ -190,16 +198,16 @@ const CronosverseCollectionBoard = ({ onBuy, onOffer, listings = [], nfts = [] }
     };
   };
 
-  const handleClick = (e) => {
+  const handleClick = (e: any) => {
     const mPos = getMousePos(e);
     let scale = zoomState.scale;
-    const tileWidth = ref2.current.width / 54;
-    const tileHeight = ref2.current.height / 28;
+    const tileWidth = ref2.current!.width / 54;
+    const tileHeight = ref2.current!.height / 28;
     const xPos = Math.floor(mPos.x / (tileWidth * scale));
     const yPos = Math.floor(mPos.y / (tileHeight * scale));
     const type = getTileType(xPos, yPos);
     devLog(type, xPos, yPos, tileInfo);
-    let ctx = ref2.current.getContext('2d');
+    let ctx = ref2.current!.getContext('2d')!;
     ctx.clearRect(tileWidth * tileInfo.xPos - 1, tileHeight * tileInfo.yPos - 1, tileWidth + 1, tileHeight + 2);
 
     const prevTokenId = getTokenId(tileInfo.xPos, tileInfo.yPos);
@@ -242,32 +250,32 @@ const CronosverseCollectionBoard = ({ onBuy, onOffer, listings = [], nfts = [] }
       // getModalPosition(e.clientX, e.clientY, globalX, globalY)
     });
 
-    ctx.fillStyle = 'rgba(250, 10, 10, 0.5)';
+    ctx!.fillStyle = 'rgba(250, 10, 10, 0.5)';
     devLog('tileWidth: ', tileWidth, tileWidth * xPos);
-    ctx.fillRect(tileWidth * xPos, tileHeight * yPos + 1, tileWidth - 1, tileHeight - 1);
+    ctx!.fillRect(tileWidth * xPos, tileHeight * yPos + 1, tileWidth - 1, tileHeight - 1);
     setModalFlag('flex');
     setSubDistanceX(0);
     setSubDistanceY(0);
   };
 
   useEffect(() => {
-    ref0.current.height = (ref0.current.clientWidth * 2703) / 4532;
-    let canvas_width = (ref0.current.clientWidth * 3.65) / 6;
+    ref0.current!.height = (ref0.current!.clientWidth * 2703) / 4532;
+    let canvas_width = (ref0.current!.clientWidth * 3.65) / 6;
     let canvas_height = (canvas_width * 620) / 1189;
-    ref2.current.width = canvas_width;
-    ref2.current.height = canvas_height;
+    ref2.current!.width = canvas_width;
+    ref2.current!.height = canvas_height;
 
-    setTempWidth(ref2.current.width);
-    setTempHeight(ref2.current.height);
+    setTempWidth(ref2.current!.width);
+    setTempHeight(ref2.current!.height);
   }, []);
 
   // Fill all tiles that have a listing
   useEffect(() => {
-    const tileWidth = ref2.current.width / 54;
-    const tileHeight = ref2.current.height / 28;
+    const tileWidth = ref2.current!.width / 54;
+    const tileHeight = ref2.current!.height / 28;
 
-    let ctx = ref2.current.getContext('2d');
-    ctx.clearRect(0, 0, ref2.current.width, ref2.current.height);
+    let ctx = ref2.current!.getContext('2d')!;
+    ctx.clearRect(0, 0, ref2.current!.width, ref2.current!.height);
     ctx.fillStyle = 'rgba(50, 50, 50, 0.5)';
     if (listings?.length === 0) {
       return;

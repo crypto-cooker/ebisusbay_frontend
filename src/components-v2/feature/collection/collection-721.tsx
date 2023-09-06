@@ -24,7 +24,7 @@ import {
 import useGetStakingPlatform from "@src/hooks/useGetStakingPlatform";
 import CollectionBundlesGroup from "@src/Components/components/CollectionBundlesGroup";
 import SalesCollection from "@src/Components/components/SalesCollection";
-import CollectionCronosverse from "@src/Components/Collection/Custom/Cronosverse";
+import CollectionCronosverse from "@src/components-v2/feature/collection/tabs/cronosverse";
 import DynastiesLands from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands";
 import {CnsRegistration} from "@src/Components/Collection/Custom/CnsRegistration";
 import {pushQueryString} from "@src/helpers/query";
@@ -37,7 +37,7 @@ const tabs = {
   items: 'items',
   bundles: 'bundles',
   activity: 'activity',
-  map: 'map',
+  cronosverseMap: 'cronosverseMap',
   dynastiesMap: 'dynastiesMap',
   cns: 'cns'
 };
@@ -219,8 +219,8 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
             <span onClick={handleBtnClick(tabs.activity)}>Activity</span>
           </li>
           {isCronosVerseCollection(collection.address) && (
-            <li className={`tab ${openMenu === tabs.map ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.map)}>Map</span>
+            <li className={`tab ${openMenu === tabs.cronosverseMap ? 'active' : ''} my-1`}>
+              <span onClick={handleBtnClick(tabs.cronosverseMap)}>Map</span>
             </li>
           )}
           {isCnsCollection(collection.address) && (
@@ -256,7 +256,7 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
               <SalesCollection cacheName="collection" collectionId={collection.address} />
             </div>
           )}
-          {openMenu === tabs.map && (
+          {openMenu === tabs.cronosverseMap && (
             <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
               <CollectionCronosverse collection={collection} />
             </NegativeMargin>

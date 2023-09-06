@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 import Blockies from 'react-blockies';
 import LayeredIcon from '../../../Components/components/LayeredIcon';
-import {getStats} from '@src/GlobalState/collectionSlice';
 import {isBundle, isCrosmocraftsPartsCollection} from '@src/utils';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import CollectionInfoBar from '@src/Components/components/CollectionInfoBar';
@@ -19,6 +18,7 @@ import CollectionBundlesGroup from "@src/Components/components/CollectionBundles
 import Items from "@src/components-v2/feature/collection/tabs/items";
 import {useQuery} from "@tanstack/react-query";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
+import {getStats} from "@src/components-v2/feature/collection/collection-721";
 
 
 const tabs = {
