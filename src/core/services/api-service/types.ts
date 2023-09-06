@@ -155,7 +155,7 @@ export interface RdUserContext {
         nextClaim: string;
         nextReward: number;
     }
-    reputation: RdReputation;
+    reputations: RdReputation;
 }
 
 interface RdUserContextSeason {

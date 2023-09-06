@@ -105,19 +105,17 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
           initial="hidden"
           animate="show"
           >
-         <AspectRatio ratio={1920/1080} overflow='visible' >
-          <Image
-          position={'absolute'}
-            src={'/img/ryoshi-dynasties/village/allianceCenter.png'}
-            opacity={0.2}
-            zIndex={0}
-            // src={ImageService.translate('/img/ryoshi-dynasties/village/allianceCenter.png').convert()}
-            minH='calc(100vh - 74px)'
-          />
-        </AspectRatio>
-      <Box opacity={1}>
-
-      <Flex
+            <Box 
+              position='absolute'
+              top={0}
+              left={0}
+              zIndex={1}
+              w='100%'
+              h='100%'
+              // bg={'#000000'}
+              overflow='hidden'
+            >
+              <Flex
         border='1px solid #FFD700'
         backgroundColor='#292626'
         flexDirection='column'
@@ -183,7 +181,21 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
       </Box>
 
     </Flex>
-    </Box>
+
+              </Box>
+         <AspectRatio ratio={1920/1080} overflow='visible' >
+          <Image
+          position={'absolute'}
+            src={'/img/ryoshi-dynasties/village/allianceCenter.png'}
+            opacity={0.2}
+            zIndex={0}
+            // src={ImageService.translate('/img/ryoshi-dynasties/village/allianceCenter.png').convert()}
+            minH='calc(100vh - 74px)'
+          />
+        </AspectRatio>
+      {/* <Box opacity={1}>
+
+    </Box> */}
       </motion.div>
     </Box>
   )

@@ -111,87 +111,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     // console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
 
-  // const GetGameTokens = async () => {
-  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-  //   if (!signatureInStorage) {
-  //     const { signature } = await getSigner();
-  //     signatureInStorage = signature;
-  //   }
-  //   if (signatureInStorage) {
-  //     try {
-  //       const data = await getGameTokens(user?.address?.toLowerCase(), signatureInStorage);
-  //
-  //       if(data.data.data.length > 0) {
-  //
-  //       }
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }
-  // const ClaimDailyRewards = async () => {
-  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-  //   if (!signatureInStorage) {
-  //     const { signature } = await getSigner();
-  //     signatureInStorage = signature;
-  //   }
-  //   if (signatureInStorage) {
-  //     try {
-  //       const data = await getDailyRewards(user!.address!.toLowerCase(), signatureInStorage);
-  //
-  //       const sig = data.data.data.signature;
-  //       const profileId = data.data.data.profileId;
-  //       const quantity = data.data.data.quantity;
-  //       const timestamp = data.data.data.timestamp;
-  //
-  //       var claimRewardsTuple = {
-  //         address: user!.address!.toLowerCase(),
-  //         profileId: [profileId],
-  //         quantity: [quantity],
-  //         timestamp: timestamp,
-  //       };
-  //
-  //       const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-  //       const tx = await resourcesContract.mintWithSig(claimRewardsTuple, sig);
-  //       const receipt = await tx.wait();
-  //       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-  //
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }
-  // const CheckForGameTokens = async () => {
-  //   if (!user.address) return;
-  
-  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-  //   if (!signatureInStorage) {
-  //     const { signature } = await getSigner();
-  //     signatureInStorage = signature;
-  //   }
-  //   if (signatureInStorage) {
-  //     try {
-  //       const data = await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
-  //       setBattleRewards(data.data.data);
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }
-
-  // function nFormatter(num: any, digits: number) {
-  //   const lookup = [
-  //     { value: 1, symbol: "" },
-  //     { value: 1e3, symbol: "k" },
-  //     { value: 1e6, symbol: "M" }
-  //   ];
-  //   const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-  //   var item = lookup.slice().reverse().find(function(item) {
-  //     return num >= item.value;
-  //   });
-  //   return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
-  // }
-
   const buildings ={ "allianceCenter" : {height:438, width:554, top:'7%', left:'55%'},
     "townhall" : {height:607, width:707, top:'13.25%', left:'36.25%'},
     "academy" : {height: 792, width: 744, top: '4%', left: '74%'},
@@ -578,10 +497,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     setElementToZoomTo('fancyMenu'); 
   }, [transformComponentRef?.current, mapInitialized, dimensionsLoaded]);
   
-  // const mapScale = useBreakpointValue(
-  //   {base: 0.4, sm: 0.6, md: 0.7, lg: 0.8, xl: 0.9, '2xl': 1},
-  //   {fallback: 'lg'}
-  // )
   const mapProps = useBreakpointValue<MapProps>(
     {
       base: {
@@ -634,6 +549,12 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
     // console.log(rdGameContext)
     console.log(rdUser)
+
+
+
+
+
+
     // console.log(rdConfig)
     // console.log(rdGameContext)
     // refreshUser();
