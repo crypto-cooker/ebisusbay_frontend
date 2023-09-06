@@ -64,13 +64,13 @@ return (
       <VStack>
         <Text>Directory</Text>
         <Grid templateColumns={{base:'repeat(1, 1fr)', sm:'repeat(5, 1fr)'}} gap={6} marginBottom='4'>
-                  <GridItem w='100%' h='5' >
-                    <FormLabel> Faction:</FormLabel>
-                  </GridItem>
-                  <GridItem colSpan={{base:5, sm:4}} w='100%' >
-                    <SearchFaction handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"lrg"}/>
-                  </GridItem>
-                </Grid>
+            <GridItem w='100%' h='5' >
+            <FormLabel> Faction:</FormLabel>
+            </GridItem>
+            <GridItem colSpan={{base:5, sm:4}} w='100%' >
+            <SearchFaction handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"lrg"}/>
+            </GridItem>
+        </Grid>
       </VStack>
     </Flex>
   );
