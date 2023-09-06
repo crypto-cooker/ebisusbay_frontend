@@ -59,6 +59,7 @@ import {commify, isAddress} from "ethers/lib/utils";
 import {parseErrorMessage} from "@src/helpers/validator";
 import ImageService from "@src/core/services/image";
 import {motion} from "framer-motion";
+import FactionDirectoryComponent from "@src/components-v2/feature/ryoshi-dynasties/components/faction-directory";
 
 const config = appConfig();
 const gothamBook = localFont({
@@ -115,6 +116,7 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
               // bg={'#000000'}
               overflow='hidden'
             >
+              <FactionDirectoryComponent />
               <Flex
         border='1px solid #FFD700'
         backgroundColor='#292626'

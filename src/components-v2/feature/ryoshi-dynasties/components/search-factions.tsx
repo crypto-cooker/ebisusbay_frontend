@@ -41,7 +41,7 @@ import {
     imgSize: string;
   }
   
-  const Search = ({handleSelectCollectionCallback, allFactions, imgSize} : SearchProps) => {
+  const SearchFaction = ({handleSelectCollectionCallback, allFactions, imgSize} : SearchProps) => {
     const router = useRouter();
     const headingColor = useColorModeValue('black', 'gray.300');
     const searchIconColor = useColorModeValue('white', 'gray.300');
@@ -345,4 +345,4 @@ import {
     )
   };
   
-  export default Search;
+  export default SearchFaction;
