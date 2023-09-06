@@ -154,7 +154,7 @@ export interface RdUserContext {
         streak: number;
         nextClaim: string;
         nextReward: number;
-    }
+    },
     reputations: RdReputation;
 }
 

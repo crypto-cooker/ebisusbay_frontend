@@ -47,7 +47,7 @@ interface VillageHudProps {
 
 export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog, forceRefresh}: VillageHudProps) => {
   const user = useAppSelector((state) => state.user);
-  const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, user:rdUser, game: rdGameContext, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const config = appConfig();
 
   const[isLoading, setIsLoading] = useState(false);
@@ -125,6 +125,8 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
 
   useEffect(() => {
     getRewardsStreakData();
+    console.log('rdUser', rdUser);
+    refreshUser(); 
   }, [user.address, rdUser])
 
   useEffect(() => {
@@ -138,9 +140,10 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     <Box position='absolute' top={0} left={0} p={4} pointerEvents='none' w='100%'>
       <Flex justifyContent='space-between' w='100%'>
         <SimpleGrid spacing={2}
-        paddingLeft={2}
-        paddingRight={2}
-        paddingTop={2}
+        paddingLeft={3}
+        paddingRight={3}
+        paddingTop={3}
+        paddingBottom={1}
         rounded='md'
         bg='linear-gradient(to left, #272523EE, #151418 )' 
         >
