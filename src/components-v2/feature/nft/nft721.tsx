@@ -121,8 +121,6 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
   const currentListing = useAppSelector((state) => state.nft.currentListing);
   const powertraits = useAppSelector((state) => state.nft.nft?.powertraits);
 
-  const collectionStats = useAppSelector((state) => state.collection.stats);
-
   const { isLoading: isLoadingCollection, error, data, status } = useQuery(['Collections', address], () =>
     getCollections({ address }),
   )
@@ -713,7 +711,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                       isVerified={collection.verification?.verified}
                       onOfferSelected={() => handleMakeOffer()}
                       isOwner={caseInsensitiveCompare(user.address, nft.owner)}
-                      collectionStats={collectionStats} />
+                    />
                   )}
 
                   <div className="row" style={{ gap: '2rem 0' }}>

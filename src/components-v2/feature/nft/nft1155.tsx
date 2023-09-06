@@ -193,9 +193,6 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
     return nft.original_image;
   };
 
-
-  const collectionStats = useAppSelector((state) => state.collection.stats);
-
   useEffect(() => {
     async function asyncFunc() {
       dispatch(getStats(collection));
@@ -375,17 +372,14 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                   )}
 
                   {collection.listable && (
-                    <>
-                      <PriceActionBar
-                        offerType={offerType}
-                        onOfferSelected={() => handleMakeOffer()}
-                        label="Floor Price"
-                        collectionName={collectionName}
-                        isVerified={collection.verification?.verified}
-                        collectionStats={collectionStats}
-                        isOwner={false}
-                      />
-                    </>
+                    <PriceActionBar
+                      offerType={offerType}
+                      onOfferSelected={() => handleMakeOffer()}
+                      label="Floor Price"
+                      collectionName={collectionName}
+                      isVerified={collection.verification?.verified}
+                      isOwner={false}
+                    />
                   )}
                   <div className="row" style={{ gap: '2rem 0' }}>
                     <ProfilePreview
