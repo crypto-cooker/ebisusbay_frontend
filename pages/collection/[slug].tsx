@@ -34,7 +34,9 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }: CollectionPr
 
   useEffect(() => {
     if (redirect && typeof window !== 'undefined') {
-      router.push(`/collection/${ssrCollection.slug}`, undefined, { shallow: true });
+      const queryString = new URLSearchParams(query).toString();
+      const url = `/collection/${ssrCollection.slug}${queryString ? `?${queryString}` : ''}`;
+      router.push(url, undefined, { shallow: true });
     }
 
     setType(ssrCollection.multiToken ? collectionTypes.ERC1155 : collectionTypes.ERC721);
