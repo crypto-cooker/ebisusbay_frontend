@@ -14,6 +14,7 @@ import MakeCollectionOfferDialog from "@src/components-v2/shared/dialogs/make-co
 import InstantSellDialog from "@src/Components/Offer/Dialogs/InstantSellDialog";
 import SweepFloorDialog from "@src/Components/Collection/CollectionTaskBar/SweepFloorDialog";
 import {CollectionPageContext, CollectionPageContextProps} from "@src/components-v2/feature/collection/context";
+import {isFoundingMemberCollection} from "@src/utils";
 
 interface ItemsProps {
   collection: any;
@@ -69,6 +70,11 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
 
       const data = await nextApiService.getCollectionItems(collection.address, params);
       setTotalCount(data.totalCount!);
+
+      if (isFoundingMemberCollection(collection.address)) {
+        data.data = data.data.filter((nft) => nft.id !== '3');
+      }
+      console.log('ITEMS', data);
 
       return data;
     },

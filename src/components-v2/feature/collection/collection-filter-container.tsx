@@ -179,13 +179,15 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
         ]}
         onCheck={handleStatusFilter}
       />
-      <RangeFilter
-        field='rank'
-        label='Rank'
-        currentMin={queryParams.minRank}
-        currentMax={queryParams.maxRank}
-        onChange={handleRankFilter}
-      />
+      {!collection.multiToken && (
+        <RangeFilter
+          field='rank'
+          label='Rank'
+          currentMin={queryParams.minRank}
+          currentMax={queryParams.maxRank}
+          onChange={handleRankFilter}
+        />
+      )}
       <RangeFilter
         field='price'
         label='Price'

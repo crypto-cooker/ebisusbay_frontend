@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {Box, Button, Flex, Heading, Text} from "@chakra-ui/react";
@@ -53,6 +53,7 @@ const ThemedBackground = styled.div`
 
 interface Collection721Props {
   collection: any;
+  ssrTab?: string;
   ssrQuery: FullCollectionsQueryParams;
   activeDrop?: any;
 }
@@ -60,14 +61,13 @@ interface Collection721Props {
 // TODO fix
 const hasRank = false;
 
-const Collection721 = ({ collection, ssrQuery, activeDrop = null}: Collection721Props) => {
+const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Collection721Props) => {
   const router = useRouter();
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const { stakingPlatform } = useGetStakingPlatform(collection.address);
   const [openMenu, setOpenMenu] = useState(tabs.items);
 
-  const { stakingPlatform } = useGetStakingPlatform(collection.address);
   const emptyFunction = () => {};
-
 
   const { data: collectionStats } = useQuery({
     queryKey: ['CollectionStats', collection.address],
@@ -92,15 +92,21 @@ const Collection721 = ({ collection, ssrQuery, activeDrop = null}: Collection721
     }
   }
 
+  useEffect(() => {
+    setOpenMenu(ssrTab ?? tabs.items);
+    // eslint-disable-next-line
+  }, [collection.address]);
+
   return (
     <Box>
-      <Box as='section'
-         id="profile_banner"
-         className="jumbotron breadcumb no-bg"
-         style={{
-           backgroundImage: `url(${!!collection.metadata.banner ? ImageService.translate(collection.metadata.banner).banner() : ''})`,
-           backgroundPosition: '50% 50%',
-         }}
+      <Box
+        as='section'
+        id="profile_banner"
+        className="jumbotron breadcumb no-bg"
+        style={{
+          backgroundImage: `url(${!!collection.metadata.banner ? ImageService.translate(collection.metadata.banner).banner() : ''})`,
+          backgroundPosition: '50% 50%',
+        }}
       >
         <Box className='mainbreadcumb'></Box>
       </Box>

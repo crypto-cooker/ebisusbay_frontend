@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
-import Collection1155 from '@src/components-v2/feature/collection/collection1155';
+import Collection1155 from '@src/components-v2/feature/collection/collection-1155';
 // import Collection721 from '@src/components-v2/feature/collection/collection721';
 import Collection721 from '@src/components-v2/feature/collection/collection-721';
 import {appUrl, cacheBustingKey, caseInsensitiveCompare} from '@src/utils';
@@ -55,13 +55,13 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }: CollectionPr
           {type === collectionTypes.ERC1155 ? (
             <>
               {ssrCollection.split ? (
-                <Collection1155 collection={ssrCollection} tokenId={ssrCollection.id} query={query} activeDrop={activeDrop} />
+                <Collection1155 collection={ssrCollection} tokenId={ssrCollection.id} ssrQuery={query} activeDrop={activeDrop} />
               ) : (
-                <Collection1155 collection={ssrCollection} query={query} activeDrop={activeDrop} />
+                <Collection1155 collection={ssrCollection} ssrQuery={query} activeDrop={activeDrop} />
               )}
             </>
           ) : (
-            <Collection721  collection={ssrCollection} ssrQuery={remainingQuery} activeDrop={activeDrop} />
+            <Collection721 collection={ssrCollection} ssrTab={tab} ssrQuery={remainingQuery} activeDrop={activeDrop} />
           )}
         </CollectionPageContext.Provider>
       )}
