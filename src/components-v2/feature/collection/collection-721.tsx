@@ -257,7 +257,7 @@ const Collection721 = ({ collection, ssrQuery, activeDrop = null}: Collection721
           )}
           {openMenu === tabs.dynastiesMap && (
             <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
-              <DynastiesLands onBack={emptyFunction} />
+              <DynastiesLands showBackButton={false} onBack={emptyFunction} />
             </NegativeMargin>
           )}
           {openMenu === tabs.cns && (
