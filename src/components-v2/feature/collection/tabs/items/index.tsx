@@ -2,7 +2,7 @@ import Taskbar from "@src/components-v2/feature/collection/taskbar";
 import CollectionFilterContainer from "@src/components-v2/feature/collection/collection-filter-container";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Box, Center, Spinner, Text, useBreakpointValue, useDisclosure} from "@chakra-ui/react";
-import React, {useCallback, useMemo, useState} from "react";
+import React, {useCallback, useContext, useMemo, useState} from "react";
 import {CollectionNftsGroup} from "@src/components-v2/feature/collection/collection-groups";
 import {useRouter} from "next/router";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
@@ -13,6 +13,7 @@ import styled from "styled-components";
 import MakeCollectionOfferDialog from "@src/components-v2/shared/dialogs/make-collection-offer";
 import InstantSellDialog from "@src/Components/Offer/Dialogs/InstantSellDialog";
 import SweepFloorDialog from "@src/Components/Collection/CollectionTaskBar/SweepFloorDialog";
+import {CollectionPageContext, CollectionPageContextProps} from "@src/components-v2/feature/collection/context";
 
 interface ItemsProps {
   collection: any;
@@ -30,17 +31,11 @@ const ThemedBackground = styled.div`
   background: ${({ theme }) => theme.colors.bgColor1}
 `;
 
-const defaultQueryParams = {
-  sortBy: 'price',
-  direction: 'asc'
-};
-
 // TODO fix
 const hasRank = false;
 
 const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
   const router = useRouter();
-  const [queryParams, setQueryParams] = useState<FullCollectionsQueryParams>(initialQuery ?? defaultQueryParams);
   const [filtersVisible, setFiltersVisible] = useState(true);
   const [mobileSortVisible, setMobileSortVisible] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
@@ -55,6 +50,8 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
     { fallback: 'lg' },
   );
 
+  const { queryParams, setQueryParams  } = useContext(CollectionPageContext) as CollectionPageContextProps;
+
   const { data: items, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
     ['Collection', collection.address, queryParams],
     async ({ pageParam = 1 }) => {
@@ -63,6 +60,8 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
       delete (fixedQueryParams as any).tab;
 
       const params: FullCollectionsQueryParams = {
+        sortBy: 'price',
+        direction: 'asc',
         page: pageParam,
         address: collection.address,
         ...fixedQueryParams
@@ -96,10 +95,11 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
   }, [queryParams]);
 
   const handleFilter = useCallback((filter: FullCollectionsQueryParams) => {
-    setQueryParams({...queryParams, ...filter});
+    const newQueryParams = {...queryParams, ...filter}
+    setQueryParams(newQueryParams);
     pushQueryString(router, {
       slug: router.query.slug,
-      ...{...queryParams, ...filter}
+      ...Object.keys(newQueryParams).length > 0 ? newQueryParams : undefined
     });
   }, [queryParams]);
 

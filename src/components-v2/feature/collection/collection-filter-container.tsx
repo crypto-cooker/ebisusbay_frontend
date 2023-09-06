@@ -1,13 +1,14 @@
 import {Accordion, Box} from "@chakra-ui/react";
 import CheckboxFilter, {CheckboxItem} from "@src/components-v2/shared/filter-container/filters/checkbox-filter";
 import RangeFilter from "@src/components-v2/shared/filter-container/filters/range-filter";
-import React, {ReactNode, useCallback, useEffect, useMemo, useState} from "react";
+import React, {ReactNode, useCallback, useContext, useEffect, useMemo, useState} from "react";
 import DesktopFilterContainer, {FilteredItem} from "@src/components-v2/shared/filter-container";
 import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-filters";
 import {appConfig} from '@src/Config';
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import AttributeFilter from "@src/components-v2/shared/filter-container/filters/attribute-filter";
-import {isNumeric, mapAttributeString, stripSpaces} from "@src/utils";
+import {stripSpaces} from "@src/utils";
+import {CollectionPageContext, CollectionPageContextProps} from "@src/components-v2/feature/collection/context";
 
 const config = appConfig();
 
@@ -24,8 +25,9 @@ interface CollectionFilterContainerProps {
   children: ReactNode;
 }
 
-const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, totalCount, traits, powertraits, children}: CollectionFilterContainerProps) => {
+const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, totalCount, traits, powertraits, children}: CollectionFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
+  const { queryParams, setQueryParams  } = useContext(CollectionPageContext) as CollectionPageContextProps;
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
     const params = queryParams;
@@ -37,7 +39,8 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
       if (item.key === 'range-max-rank') delete params.maxRank;
       if (item.key === 'range-min-price') delete params.minPrice;
       if (item.key === 'range-max-price') delete params.maxPrice;
-      if (item.key.startsWith('trait-')) {
+      if (item.key === 'search') delete params.search;
+      if (item.key.startsWith('trait')) {
         const [_, category, value] = item.key.split('-');
         const categoryKey = stripSpaces(category);
         const valueKey = stripSpaces(value);
@@ -97,7 +100,11 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
   }, [queryParams, filteredItems]);
 
   const handleTraitsFilter = useCallback((attributeFilters: { [key: string]: string[] }, attributeFilteredItems: FilteredItem[]) => {
-    onFilter({...queryParams, traits: JSON.stringify(attributeFilters)});
+    let newQueryParams = queryParams;
+    if (Object.keys(attributeFilters).length > 0) newQueryParams.traits = JSON.stringify(attributeFilters);
+    else delete newQueryParams.traits;
+
+    onFilter(newQueryParams);
 
     let newFilteredItems = filteredItems.filter((fi) => !fi.key.startsWith('trait-') || attributeFilteredItems.map(afi => afi.key).includes(fi.key));
     let addedFilterItems = attributeFilteredItems.filter((afi) => !filteredItems.some((fi) => fi.key === afi.key));
@@ -114,6 +121,8 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
 
   }, [queryParams, filteredItems]);
 
+
+  // Fill the UI with the current filters when the page loads with a query string
   useEffect(() => {
     const ret: FilteredItem[] = [];
 
@@ -145,46 +154,13 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
       ret.push(...powertraitFilters);
     }
 
-    // if (queryParams.minPrice || queryParams.maxPrice) {
-    //   ret.push({
-    //     type: 'price',
-    //     label: priceLabel(currentFilter.minPrice, currentFilter.maxPrice)
-    //   })
-    // }
-    //
-    // if (currentFilter.minRank || currentFilter.maxRank) {
-    //   returnArray.push({
-    //     type: 'rank',
-    //     label: rankLabel(currentFilter.minRank, currentFilter.maxRank)
-    //   })
-    // }
-    //
-    // if (currentFilter.search) {
-    //   returnArray.push({
-    //     type: 'search',
-    //     label: currentFilter.search
-    //   })
-    // }
-    //
-    // if (currentFilter.listed) {
-    //   returnArray.push({
-    //     type: 'status',
-    //     key: 'status-buynow',
-    //     label: 'Buy Now'
-    //   })
-    // }
+    if (queryParams.minPrice) ret.push({key: 'range-min-price', label: `Min ${queryParams.minPrice} CRO`});
+    if (queryParams.maxPrice) ret.push({key: 'range-max-price', label: `Max ${queryParams.maxPrice} CRO`});
+    if (queryParams.search) ret.push({key: 'search', label: queryParams.search});
+    if (queryParams.listed) ret.push({key: 'status-buy-now', label: 'Buy Now'});
 
     setFilteredItems(ret);
-  }, [
-    queryParams.traits,
-    queryParams.powertraits,
-    // currentFilter.minPrice,
-    // currentFilter.maxPrice,
-    // currentFilter.minRank,
-    // currentFilter.maxRank,
-    // currentFilter.search,
-    // currentFilter.listed,
-  ]);
+  }, [queryParams]);
 
   const FilterAccordion = useMemo(() => (
     <Accordion defaultIndex={[0]} allowMultiple>

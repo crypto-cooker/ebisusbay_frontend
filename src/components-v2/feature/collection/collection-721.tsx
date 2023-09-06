@@ -42,11 +42,6 @@ const tabs = {
   cns: 'cns'
 };
 
-const defaultQueryParams = {
-  sortBy: 'price',
-  direction: 'asc'
-};
-
 const NegativeMargin = styled.div`
   margin-left: -1.75rem !important;
   margin-right: -1.75rem !important;
