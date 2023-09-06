@@ -8,7 +8,6 @@ import LayeredIcon from '../../../Components/components/LayeredIcon';
 import CollectionInfoBar from '../../../Components/components/CollectionInfoBar';
 import SalesCollection from '../../../Components/components/SalesCollection';
 import CollectionNftsGroup from '../../../Components/components/CollectionNftsGroup';
-import CollectionListingsGroup from '../../../Components/components/CollectionListingsGroup';
 import {fetchListings, getStats, init, updateTab} from '@src/GlobalState/collectionSlice';
 import {
   isBundle,
@@ -363,23 +362,12 @@ const Collection721 = ({ collection, query, activeDrop = null}: Collection721Pro
                   </Collapse>
                   <div className="flex-fill">
                     <FilterResultsBar collection={collection} />
-                    {isUsingListingsFallback ? (
-                      <CollectionListingsGroup
-                        listings={listings}
-                        canLoadMore={canLoadMore}
-                        loadMore={loadMore}
-                        showLoadMore={true}
-                        address={null}
-                        collectionMetadata={null}
-                      />
-                    ) : (
-                      <CollectionNftsGroup
-                        listings={listings}
-                        canLoadMore={canLoadMore}
-                        loadMore={loadMore}
-                        collection={collection}
-                      />
-                    )}
+                    <CollectionNftsGroup
+                      listings={listings}
+                      canLoadMore={canLoadMore}
+                      loadMore={loadMore}
+                      collection={collection}
+                    />
                     {!initialLoadComplete && (
                       <div className="row mt-5">
                         <div className="col-lg-12 text-center">

@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 import Blockies from 'react-blockies';
-
-import CollectionListingsGroup from '../../../Components/components/CollectionListingsGroup';
 import LayeredIcon from '../../../Components/components/LayeredIcon';
 import {fetchListings, getStats, init, updateTab} from '@src/GlobalState/collectionSlice';
 import {isBundle, isCrosmocraftsPartsCollection} from '@src/utils';
@@ -250,24 +248,13 @@ const Collection1155 = ({ collection, tokenId, query, activeDrop = null }: Colle
               <div className="tab-1 onStep fadeIn">
                 <div className="row">
                   <div className="col-md-12">
-                    {isUsingListingsFallback ? (
-                      <CollectionListingsGroup
-                        listings={listings}
-                        canLoadMore={canLoadMore}
-                        loadMore={loadMore}
-                        showLoadMore={true}
-                        address={null}
-                        collectionMetadata={null}
-                      />
-                    ) : (
-                      <CollectionNftsGroup
-                        listings={listings}
-                        canLoadMore={canLoadMore}
-                        loadMore={loadMore}
-                        collection={collection}
-                        showLoadMore={true}
-                      />
-                    )}
+                    <CollectionNftsGroup
+                      listings={listings}
+                      canLoadMore={canLoadMore}
+                      loadMore={loadMore}
+                      collection={collection}
+                      showLoadMore={true}
+                    />
                     {!initialLoadComplete && (
                       <div className="row mt-5">
                         <div className="col-lg-12 text-center">

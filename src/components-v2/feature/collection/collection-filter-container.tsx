@@ -1,13 +1,13 @@
 import {Accordion, Box} from "@chakra-ui/react";
 import CheckboxFilter, {CheckboxItem} from "@src/components-v2/shared/filter-container/filters/checkbox-filter";
 import RangeFilter from "@src/components-v2/shared/filter-container/filters/range-filter";
-import React, {ReactNode, useCallback, useMemo, useState} from "react";
+import React, {ReactNode, useCallback, useEffect, useMemo, useState} from "react";
 import DesktopFilterContainer, {FilteredItem} from "@src/components-v2/shared/filter-container";
 import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-filters";
 import {appConfig} from '@src/Config';
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import AttributeFilter from "@src/components-v2/shared/filter-container/filters/attribute-filter";
-import {stripSpaces} from "@src/utils";
+import {isNumeric, mapAttributeString, stripSpaces} from "@src/utils";
 
 const config = appConfig();
 
@@ -113,6 +113,78 @@ const CollectionFilterContainer = ({queryParams, collection, onFilter, filtersVi
     setFilteredItems([...newFilteredItems, ...addedFilterItems]);
 
   }, [queryParams, filteredItems]);
+
+  useEffect(() => {
+    const ret: FilteredItem[] = [];
+
+    if (!!queryParams.traits && JSON.parse(queryParams.traits)) {
+      const traits: { [key: string]: string[] } = JSON.parse(queryParams.traits);
+      const traitFilters: FilteredItem[] = Object.entries(traits).reduce((p, c) => {
+        p.push(...c[1].map((t) => {
+          return {
+            key: `trait-${c[0]}-${t}`,
+            label: `${c[0]}: ${t}`
+          }
+        }));
+        return p;
+      }, [] as FilteredItem[]);
+      ret.push(...traitFilters);
+    }
+
+    if (!!queryParams.powertraits && JSON.parse(queryParams.powertraits)) {
+      const traits: { [key: string]: string[] } = JSON.parse(queryParams.powertraits);
+      const powertraitFilters: FilteredItem[] = Object.entries(traits).reduce((p, c) => {
+        p.push(...c[1].map((t) => {
+          return {
+            key: `trait-${c[0]}-${t}`,
+            label: `${c[0]}: ${t}`
+          }
+        }));
+        return p;
+      }, [] as FilteredItem[]);
+      ret.push(...powertraitFilters);
+    }
+
+    // if (queryParams.minPrice || queryParams.maxPrice) {
+    //   ret.push({
+    //     type: 'price',
+    //     label: priceLabel(currentFilter.minPrice, currentFilter.maxPrice)
+    //   })
+    // }
+    //
+    // if (currentFilter.minRank || currentFilter.maxRank) {
+    //   returnArray.push({
+    //     type: 'rank',
+    //     label: rankLabel(currentFilter.minRank, currentFilter.maxRank)
+    //   })
+    // }
+    //
+    // if (currentFilter.search) {
+    //   returnArray.push({
+    //     type: 'search',
+    //     label: currentFilter.search
+    //   })
+    // }
+    //
+    // if (currentFilter.listed) {
+    //   returnArray.push({
+    //     type: 'status',
+    //     key: 'status-buynow',
+    //     label: 'Buy Now'
+    //   })
+    // }
+
+    setFilteredItems(ret);
+  }, [
+    queryParams.traits,
+    queryParams.powertraits,
+    // currentFilter.minPrice,
+    // currentFilter.maxPrice,
+    // currentFilter.minRank,
+    // currentFilter.maxRank,
+    // currentFilter.search,
+    // currentFilter.listed,
+  ]);
 
   const FilterAccordion = useMemo(() => (
     <Accordion defaultIndex={[0]} allowMultiple>

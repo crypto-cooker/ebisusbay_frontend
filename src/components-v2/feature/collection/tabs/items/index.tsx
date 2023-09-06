@@ -97,6 +97,10 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
 
   const handleFilter = useCallback((filter: FullCollectionsQueryParams) => {
     setQueryParams({...queryParams, ...filter});
+    pushQueryString(router, {
+      slug: router.query.slug,
+      ...{...queryParams, ...filter}
+    });
   }, [queryParams]);
 
   const content = useMemo(() => {
