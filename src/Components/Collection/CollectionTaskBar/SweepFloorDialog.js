@@ -46,6 +46,8 @@ import {
 import {getTheme} from "@src/Theme/theme";
 import useBuyGaslessListings from "@src/hooks/useBuyGaslessListings";
 import ImageService from "@src/core/services/image";
+import {FilteredItem} from "@src/components-v2/shared/filter-container";
+import {appConfig} from "@src/Config";
 
 const numberRegexValidation = /[^0-9]/g;
 const sweepType = {
@@ -533,68 +535,52 @@ const AutoSwapItemsField = ({onChange, disabled}) => {
 
 const ActiveFiltersField = memo(({collection, activeFilters}) => {
   const user = useSelector((state) => state.user);
-  const [filterLabels, setFilterLabels] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
 
   useEffect(() => {
-    const traitFilters = Object.entries(activeFilters.traits).reduce((p, c) => {
-      p.push(...c[1].map((t) => {
-        const label = isNumeric(t) || t.toLowerCase().includes('none') ? `${c[0]}: ${t}`: t;
-        return {
-          type: 'trait',
-          key: stripSpaces(`trait-${c[0]}-${t}`),
-          category: c[0],
-          label: mapAttributeString(label, collection.address),
-          value: t
-        }
-      }));
-      return p;
-    }, []);
-    const powertraitFilters = Object.entries(activeFilters.powertraits).reduce((p, c) => {
-      p.push(...c[1].map((t) => {
-        const label = isNumeric(t) || t.toLowerCase().includes('none') ? `${c[0]}: ${t}`: t;
-        return {
-          type: 'powertrait',
-          key: stripSpaces(`powertrait-${c[0]}-${t}`),
-          category: c[0],
-          label: mapAttributeString(label, collection.address),
-          value: t
-        }
-      }));
-      return p;
-    }, []);
+    const ret = [];
 
-    const returnArray = [...traitFilters, ...powertraitFilters];
-
-    if (activeFilters.minPrice || activeFilters.maxPrice) {
-      returnArray.push({
-        type: 'price',
-        label: priceLabel(activeFilters.minPrice, activeFilters.maxPrice)
-      })
+    if (!!activeFilters.traits && JSON.parse(activeFilters.traits)) {
+      const traits = JSON.parse(activeFilters.traits);
+      const traitFilters = Object.entries(traits).reduce((p, c) => {
+        p.push(...c[1].map((t) => {
+          return {
+            key: `trait-${c[0]}-${t}`,
+            label: `${c[0]}: ${t}`
+          }
+        }));
+        return p;
+      });
+      ret.push(...traitFilters);
     }
 
-    if (activeFilters.minRank || activeFilters.maxRank) {
-      returnArray.push({
-        type: 'rank',
-        label: rankLabel(activeFilters.minRank, activeFilters.maxRank)
-      })
+    if (!!activeFilters.powertraits && JSON.parse(activeFilters.powertraits)) {
+      const traits = JSON.parse(activeFilters.powertraits);
+      const powertraitFilters = Object.entries(traits).reduce((p, c) => {
+        p.push(...c[1].map((t) => {
+          return {
+            key: `trait-${c[0]}-${t}`,
+            label: `${c[0]}: ${t}`
+          }
+        }));
+        return p;
+      });
+      ret.push(...powertraitFilters);
     }
 
-    if (activeFilters.search) {
-      returnArray.push({
-        type: 'search',
-        label: activeFilters.search
-      })
+    if (activeFilters.minPrice) ret.push({key: 'range-min-price', label: `Min ${activeFilters.minPrice} CRO`});
+    if (activeFilters.maxPrice) ret.push({key: 'range-max-price', label: `Max ${activeFilters.maxPrice} CRO`});
+    if (activeFilters.search) ret.push({key: 'search', label: activeFilters.search});
+    if (activeFilters.listed) ret.push({key: 'status-buy-now', label: 'Buy Now'});
+    if (activeFilters.currency) {
+      if (activeFilters.currency === ethers.constants.AddressZero) ret.push({key: 'currency-cro', label: 'CRO'});
+      else {
+        const currency = Object.entries(appConfig('tokens')).find((t) => t[1].address === activeFilters.currency);
+        if (currency) ret.push({key: `currency-${currency[0]}`, label: currency[1].symbol});
+      }
     }
 
-    if (activeFilters.listed) {
-      returnArray.push({
-        type: 'status',
-        key: 'status-buynow',
-        label: 'Buy Now'
-      })
-    }
-
-    setFilterLabels(returnArray);
+    setFilteredItems(ret);
   }, [activeFilters]);
 
   const priceLabel = (min, max) => {
@@ -637,10 +623,10 @@ const ActiveFiltersField = memo(({collection, activeFilters}) => {
   return (
     <>
       <div className="formLabel mt-3">Selected Filters</div>
-      {filterLabels && filterLabels.length > 0 ? (
+      {filteredItems && filteredItems.length > 0 ? (
         <>
           <div className="d-flex flex-wrap">
-            {filterLabels.map((filter) => (
+            {filteredItems.map((filter) => (
               <div className="mx-1">
                 <ThemedBadge>
                   <span>{filter.label}</span>
