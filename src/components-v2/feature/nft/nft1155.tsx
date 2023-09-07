@@ -41,7 +41,6 @@ import {toast} from "react-toastify";
 import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
 import {Menu} from '@src/Components/components/chakra-components';
 import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-svg-icons';
-import {getStats} from '@src/GlobalState/collectionSlice';
 import NextLink from 'next/link';
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 import {Button as ChakraButton} from "@chakra-ui/button";
@@ -52,6 +51,7 @@ import {OfferType} from "@src/core/services/api-service/types";
 import ImageService from "@src/core/services/image";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
+import {getStats} from "@src/components-v2/feature/collection/collection-721";
 
 const config = appConfig();
 const tabs = {
@@ -192,9 +192,6 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
 
     return nft.original_image;
   };
-
-
-  const collectionStats = useAppSelector((state) => state.collection.stats);
 
   useEffect(() => {
     async function asyncFunc() {
@@ -375,17 +372,14 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                   )}
 
                   {collection.listable && (
-                    <>
-                      <PriceActionBar
-                        offerType={offerType}
-                        onOfferSelected={() => handleMakeOffer()}
-                        label="Floor Price"
-                        collectionName={collectionName}
-                        isVerified={collection.verification?.verified}
-                        collectionStats={collectionStats}
-                        isOwner={false}
-                      />
-                    </>
+                    <PriceActionBar
+                      offerType={offerType}
+                      onOfferSelected={() => handleMakeOffer()}
+                      label="Floor Price"
+                      collectionName={collectionName}
+                      isVerified={collection.verification?.verified}
+                      isOwner={false}
+                    />
                   )}
                   <div className="row" style={{ gap: '2rem 0' }}>
                     <ProfilePreview

@@ -6,7 +6,7 @@ import { Form, ProgressBar, Spinner } from 'react-bootstrap';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
-import { createSuccessfulTransactionToastContent, humanize, percentage } from '@src/utils';
+import {createSuccessfulTransactionToastContent, humanizeAdvanced, percentage} from '@src/utils';
 import ShipABI from '../src/Contracts/Ship.json';
 import ShipItemABI from '../src/Contracts/ShipItem.json';
 import {appConfig} from '@src/Config';
@@ -265,7 +265,7 @@ const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected }:
   return (
     <div className="card eb-nft__card h-100 w-100 shadow">
       <div className="card-body d-flex flex-column">
-        <h5>{humanize(type)} Parts</h5>
+        <h5>{humanizeAdvanced(type)} Parts</h5>
         <div className="row row-cols-1 row-cols-sm-3 row-cols-md-4 g-3">
           <div className="border-0">
             {quantityCollected[0] > 0 ? (
@@ -315,7 +315,7 @@ const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected }:
           <div className="border-0">
             <div className="card-body d-flex justify-content-center">
               <div className="align-self-center">
-                <h5 className="card-title d-flex text-center">Build {humanize(type)} Ship</h5>
+                <h5 className="card-title d-flex text-center">Build {humanizeAdvanced(type)} Ship</h5>
                 <div className="row row-cols-1 g-3 mt-2 d-block">
                   {quantityCollected[0] > 0 && quantityCollected[1] > 0 && quantityCollected[2] > 0 ? (
                     <>

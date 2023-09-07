@@ -103,11 +103,12 @@ const tabs = {
 interface Nft721Props {
   address: string;
   id: string;
+  slug?: string;
   nft: any;
   isBundle?: boolean;
 }
 
-const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
+const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
   const { refreshing, favorites, loading:isLoading } = useAppSelector((state) => state.nft);
@@ -120,8 +121,6 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
 
   const currentListing = useAppSelector((state) => state.nft.currentListing);
   const powertraits = useAppSelector((state) => state.nft.nft?.powertraits);
-
-  const collectionStats = useAppSelector((state) => state.collection.stats);
 
   const { isLoading: isLoadingCollection, error, data, status } = useQuery(['Collections', address], () =>
     getCollections({ address }),
@@ -713,7 +712,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                       isVerified={collection.verification?.verified}
                       onOfferSelected={() => handleMakeOffer()}
                       isOwner={caseInsensitiveCompare(user.address, nft.owner)}
-                      collectionStats={collectionStats} />
+                    />
                   )}
 
                   <div className="row" style={{ gap: '2rem 0' }}>
@@ -805,7 +804,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                               {nft.attributes && Array.isArray(nft.attributes) && (
                                 <Properties
                                   address={address}
-                                  slug={nft.collectionSlug}
+                                  slug={slug}
                                   attributes={nft.attributes}
                                   queryKey='traits'
                                 />
@@ -813,7 +812,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                               {nft.attributes && Array.isArray(nft.properties) && (
                                 <Properties
                                   address={address}
-                                  slug={nft.collectionSlug}
+                                  slug={slug}
                                   attributes={nft.properties}
                                   queryKey='traits'
                                 />
@@ -833,7 +832,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                               {powertraits && powertraits.length > 0 && (
                                 <Properties
                                   address={address}
-                                  slug={nft.collectionSlug}
+                                  slug={slug}
                                   attributes={powertraits}
                                   queryKey='powertraits'
                                 />
@@ -841,7 +840,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                               {onChainPowertraits && Array.isArray(onChainPowertraits) && (
                                 <Properties
                                   address={address}
-                                  slug={nft.collectionSlug}
+                                  slug={slug}
                                   attributes={onChainPowertraits}
                                   queryKey='powertraits'
                                 />
@@ -850,7 +849,7 @@ const Nft721 = ({ address, id, nft, isBundle = false }: Nft721Props) => {
                                 <Box mt={3}>
                                   <Properties
                                     address={address}
-                                    slug={nft.collectionSlug}
+                                    slug={slug}
                                     attributes={lazyHorseTraits}
                                     queryKey='powertraits'
                                   />
