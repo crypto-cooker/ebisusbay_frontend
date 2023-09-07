@@ -33,9 +33,10 @@ interface ControlPointFormProps {
   regionName: string;
   allFactions: any[];
   showActiveGame: boolean;
+  useCurrentGameId: boolean;
 }
 
-const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint, skirmishPrice, conquestPrice, regionName, allFactions, showActiveGame}: ControlPointFormProps) => {
+const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint, skirmishPrice, conquestPrice, regionName, allFactions, showActiveGame, useCurrentGameId}: ControlPointFormProps) => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const [isLoading, setIsLoading] = useState(true);
@@ -172,7 +173,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
 
                   <Box mt={4}>
                     {currentTab === tabs.info && (
-                      <InfoTab controlPoint={controlPoint} refreshControlPoint={refreshControlPoint}/>
+                      <InfoTab controlPoint={controlPoint} refreshControlPoint={refreshControlPoint} useCurrentGameId={useCurrentGameId}/>
                     )}
                     {currentTab === tabs.deploy && (
                       battleEnabled ? (

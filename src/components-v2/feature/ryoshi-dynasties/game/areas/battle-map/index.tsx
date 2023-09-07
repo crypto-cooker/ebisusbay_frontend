@@ -319,6 +319,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
         regionName={regionName}
         allFactions={allFactions}
         showActiveGame={showActiveGame}
+        useCurrentGameId={useCurrentGameId}
         />
       <Box
         position='relative' 

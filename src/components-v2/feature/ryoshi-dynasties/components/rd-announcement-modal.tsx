@@ -168,41 +168,9 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
                       bgImage:'/img/ryoshi-dynasties/announcements/base/modal_close_button_HOVER_1200.png',
                     }}
                   >
-                    {/* <CloseIcon /> */}
                   </Button>
                 </Box>
               )}
-              {/* <Box
-                bg='#564D4A'
-                h='full'
-                my={4}
-                roundedBottom='2xl'
-                roundedTopLeft={hasUtilBtn ? 'none' : '2xl'}
-                roundedTopRight={!!onClose ? 'none' : '2xl'}
-                className={maskOuterClass}
-              > */}
-                {/* <Box
-                  color='#FFF'
-                  textAlign='center'
-                  verticalAlign='middle'
-                  className={maskInnerClass}
-                  p={1}
-                >
-                  <Flex
-                    roundedTopLeft={hasUtilBtn ? 'none' : '2xl'}
-                    roundedTopRight={!!onClose ? 'none' : '2xl'}
-                    // bg='#272523'
-                    h='55px'
-                    px={12}
-                    fontSize={{base: 'lg', sm: '2xl', md: '3xl'}}
-                    my='auto'
-                    justify='center'
-                    direction='column'
-                  >
-                  
-                    {title}
-                  </Flex>
-                </Box> */}
                 <Box  rounded='md' pt={55} pb={6} fontSize='sm' >
                     <Flex justifyItems={'center'} justifyContent={'center'} alignItems={'center'} >
                     <Image 
@@ -222,7 +190,6 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
                     </Flex>
                   </Box>
                 {children}
-              {/* </Box> */}
               <Center>
                 <Image 
                   position='relative' 
