@@ -165,6 +165,7 @@ export function classList(classes) {
  *
  * @param str
  * @returns {string}
+ * @deprecated Use humanizeAdvanced instead
  */
 export function humanize(str) {
   if (str === null || str === undefined) return '';
@@ -187,6 +188,16 @@ export function humanize(str) {
   return frags.join(' ');
 }
 
+export function humanizeAdvanced(s) {
+  // Split string by space, hyphen, underscore, or camelCase
+  const words = s.split(/[\s\-_]|(?<=[a-z])(?=[A-Z])/);
+
+  // Capitalize first letter of each word and make rest lowercase
+  const formattedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+
+  return formattedWords.join(' ').trim();
+}
+
 /**
  * Extra formatting for collection attributes not caught by humanize(str)
  *
@@ -207,12 +218,12 @@ export function mapAttributeString(str, address, category, makeHuman = false) {
 
     if (Object.keys(mappings).includes(category) &&
       typeof mappings[category] === 'object' &&
-      Object.keys(mappings[category]).includes(str)) {
+      Object.keys(mappings[category]).includes(str.toString())) {
       return mappings[category][str];
     }
   }
 
-  return makeHuman ? humanize(newStr) : newStr;
+  return makeHuman ? humanizeAdvanced(newStr) : newStr;
 }
 
 /**

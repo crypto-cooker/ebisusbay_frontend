@@ -274,6 +274,7 @@ export const configData = {
           '0x1220b4E081c04f345C572536EA531Ed2AdE691BD': ['cro', 'frtn', 'bcro'], // AxOl Elites
           '0x3fe29ffa527d712a5b202ddaeff714c12cb6aff5': ['cro', 'frtn'], // Snap!
           '0x1368a855545724B165F8c3e466ec30e1fB2A3683': ['cro', 'frtn', 'bcro'], // Football Squares S2
+          '0x09ddC7d0535a4f59f62eC7eCBc85265b0513480e': ['cro', 'frtn'], // JAFC Comics
         }
       }
     }

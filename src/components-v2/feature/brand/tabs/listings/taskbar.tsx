@@ -202,7 +202,6 @@ interface SearchBarProps {
 }
 
 export const SearchBar = ({onSearch}: SearchBarProps) => {
-  const currentFilter = useAppSelector((state) => state.collection.query.filter);
   const [value, setValue] = useState('');
   const debouncedSearch = useDebounce(value, 500);
 
@@ -222,7 +221,6 @@ export const SearchBar = ({onSearch}: SearchBarProps) => {
       placeholder="Search by name"
       onChange={handleSearch}
       style={{ marginBottom: 0, marginTop: 0 }}
-      defaultValue={currentFilter.search ?? ''}
     />
   )
 }

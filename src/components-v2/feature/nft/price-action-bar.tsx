@@ -45,7 +45,7 @@ interface PriceActionBarProps {
   collectionName: string;
   isVerified: boolean;
   isOwner: boolean;
-  collectionStats: any;
+  collectionStats?: any;
 }
 
 const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }: PriceActionBarProps) => {

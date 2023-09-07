@@ -18,7 +18,8 @@ export const walletsQuerySchema: Yup.SchemaOf<WalletsQueryParams> = Yup.object()
   maxPrice: Yup.number().optional(),
   minListingTime: Yup.number().optional(),
   maxListingTime: Yup.number().optional(),
-  search: Yup.string().optional()
+  search: Yup.string().optional(),
+  currency: Yup.string().optional()
 }).noUnknown();
 
 export interface WalletsQueryParams {
@@ -38,6 +39,7 @@ export interface WalletsQueryParams {
   minListingTime?: number;
   maxListingTime?: number;
   search?: string;
+  currency?: string;
 }
 
 class WalletsQuery extends Query<WalletsQueryParams> {

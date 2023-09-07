@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import Collection1155 from '@src/components-v2/feature/collection/collection1155';
-import Collection721 from '@src/components-v2/feature/collection/collection721';
+import React, {useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
+import Collection1155 from '@src/components-v2/feature/collection/collection-1155';
+// import Collection721 from '@src/components-v2/feature/collection/collection721';
+import Collection721 from '@src/components-v2/feature/collection/collection-721';
 import {appUrl, cacheBustingKey, caseInsensitiveCompare} from '@src/utils';
 import {appConfig} from "@src/Config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import {hostedImage} from "@src/helpers/image";
+import {CollectionPageContext} from "@src/components-v2/feature/collection/context";
+import {GetServerSidePropsContext} from "next";
+import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 
 const collectionTypes = {
   UNSET: -1,
@@ -14,20 +17,34 @@ const collectionTypes = {
 };
 const config = appConfig();
 
-const Collection = ({ ssrCollection, query, redirect, activeDrop }) => {
+interface CollectionProps {
+  ssrCollection: any;
+  query: any;
+  redirect: boolean;
+  activeDrop: any;
+}
+
+const Collection = ({ ssrCollection, query, redirect, activeDrop }: CollectionProps) => {
   const router = useRouter();
-  const { slug } = router.query;
+  const { slug, tab, ...remainingQuery }: Partial<{ slug: string; tab: string }> & FullCollectionsQueryParams = router.query;
+  const [queryParams, setQueryParams] = useState(remainingQuery);
 
   const [type, setType] = useState(collectionTypes.ERC721);
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     if (redirect && typeof window !== 'undefined') {
-      router.push(`/collection/${ssrCollection.slug}`, undefined, { shallow: true });
+      let hackedQuery = {} as any;
+      if (tab) hackedQuery.tab = tab;
+      if (remainingQuery) hackedQuery = { ...hackedQuery, ...remainingQuery };
+
+      const queryString = new URLSearchParams(hackedQuery).toString();
+      const url = `/collection/${ssrCollection.slug}${queryString ? `?${queryString}` : ''}`;
+      router.push(url, undefined, { shallow: true });
     }
 
     setType(ssrCollection.multiToken ? collectionTypes.ERC1155 : collectionTypes.ERC721);
-
+    setQueryParams(remainingQuery);
     setInitialized(true);
   }, [slug]);
 
@@ -37,28 +54,28 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }) => {
         title={ssrCollection.name}
         description={ssrCollection.metadata.description}
         url={`/collection/${ssrCollection.slug}`}
-        image={appUrl(`api/collection/${ssrCollection.slug}/og?${cacheBustingKey()}`)}
+        image={appUrl(`api/collection/${ssrCollection.slug}/og?${cacheBustingKey()}`).toString()}
       />
       {initialized && ssrCollection && (
-        <>
+        <CollectionPageContext.Provider value={{ queryParams, setQueryParams}}>
           {type === collectionTypes.ERC1155 ? (
             <>
               {ssrCollection.split ? (
-                <Collection1155 collection={ssrCollection} tokenId={ssrCollection.id} query={query} activeDrop={activeDrop} />
+                <Collection1155 collection={ssrCollection} tokenId={ssrCollection.id} ssrQuery={query} activeDrop={activeDrop} />
               ) : (
-                <Collection1155 collection={ssrCollection} query={query} activeDrop={activeDrop} />
+                <Collection1155 collection={ssrCollection} ssrQuery={query} activeDrop={activeDrop} />
               )}
             </>
           ) : (
-            <Collection721 collection={ssrCollection} query={query} activeDrop={activeDrop} />
+            <Collection721 collection={ssrCollection} ssrTab={tab} ssrQuery={remainingQuery} activeDrop={activeDrop} />
           )}
-        </>
+        </CollectionPageContext.Provider>
       )}
     </>
   );
 };
 
-export const getServerSideProps = async ({ params, query }) => {
+export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
   const slug = params?.slug;
 
   // @todo fix with autolistings
@@ -79,7 +96,7 @@ export const getServerSideProps = async ({ params, query }) => {
   // }
 
   const collection = appConfig('collections')
-    .find((c) => caseInsensitiveCompare(c.slug, slug) || caseInsensitiveCompare(c.address, slug));
+    .find((c: any) => caseInsensitiveCompare(c.slug, slug) || caseInsensitiveCompare(c.address, slug));
 
   if (!collection) {
     return {
@@ -107,7 +124,7 @@ export const getServerSideProps = async ({ params, query }) => {
   if (collection.slug === 'beta-mascots') collection.mergedAddresses = ['0x19317B3fc2F1Add6b7E17a0A03A5a269Ed5ce48b'];
 
   const activeDrop = appConfig('drops')
-    .find((drop) => !!collection.address && caseInsensitiveCompare(collection.address, drop.address) && !drop.complete);
+    .find((drop: any) => !!collection.address && caseInsensitiveCompare(collection.address, drop.address) && !drop.complete);
 
   return {
     props: {

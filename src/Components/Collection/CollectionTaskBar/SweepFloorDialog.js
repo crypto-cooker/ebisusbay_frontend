@@ -59,7 +59,7 @@ const maxSweepCount = 40;
 export default function SweepFloorDialog({ isOpen, collection, onClose, activeFilters, fullscreen = false }) {
   const [sweepError, setSweepError] = useState(null);
   const [formErrors, setFormErrors] = useState({});
-  const [tab, setTab] = useState(activeFilters.isEmpty() ? sweepType.quantity : sweepType.custom);
+  const [tab, setTab] = useState(activeFilters && Object.keys(activeFilters).length === 0 ? sweepType.quantity : sweepType.custom);
   const [adjustLayout, setAdjustLayout] = useState(false);
 
   // Workflow

@@ -1,7 +1,8 @@
 import React, {ReactNode} from "react";
-import {Box, Grid, GridItem, Tag, TagCloseButton, TagLabel, Wrap, WrapItem} from "@chakra-ui/react";
+import {Box, Grid, GridItem, Stack, Tag, TagCloseButton, TagLabel, Wrap, WrapItem} from "@chakra-ui/react";
 import {motion, Variants} from "framer-motion";
 import {useAppSelector} from "@src/Store/hooks";
+import {commify} from "ethers/lib/utils";
 
 const MotionGrid = motion(Grid)
 
@@ -11,6 +12,7 @@ interface DesktopFilterContainerProps {
   filteredItems: FilteredItem[];
   children: ReactNode
   onRemoveFilters: (items: FilteredItem[]) => void;
+  totalCount?: number;
 }
 
 export interface FilteredItem {
@@ -18,7 +20,7 @@ export interface FilteredItem {
   label: string;
 }
 
-const DesktopFilterContainer = ({visible, filters, filteredItems, children, onRemoveFilters}: DesktopFilterContainerProps) => {
+const DesktopFilterContainer = ({visible, filters, filteredItems, children, totalCount, onRemoveFilters}: DesktopFilterContainerProps) => {
   const userTheme = useAppSelector((state) => state.user.theme);
 
   const variants: Variants = {
@@ -44,26 +46,31 @@ const DesktopFilterContainer = ({visible, filters, filteredItems, children, onRe
           {filters}
         </Box>
       </GridItem>
-      <GridItem overflow='hidden' py={filteredItems.length > 0 ? 4 : 0}>
-        <Wrap>
-          {filteredItems.map((item) => (
-            <WrapItem>
-              <Tag
-                variant='solid'
-                bgColor={userTheme === 'dark' ? 'gray.100' : 'gray.800'}
-                color={userTheme === 'dark' ? 'gray.800' : 'gray.100'}
-              >
-                <TagLabel>{item.label}</TagLabel>
-                <TagCloseButton onClick={() => onRemoveFilters([item])}/>
-              </Tag>
-            </WrapItem>
-          ))}
-          {filteredItems.length > 0 && (
-            <Box fontWeight='bold' onClick={() => onRemoveFilters(filteredItems)} cursor='pointer'>
-              Clear all
-            </Box>
+      <GridItem overflow='hidden' py={4}>
+        <Stack direction='row' justify='space-between'>
+          <Wrap>
+            {filteredItems.map((item) => (
+              <WrapItem>
+                <Tag
+                  variant='solid'
+                  bgColor={userTheme === 'dark' ? 'gray.100' : 'gray.800'}
+                  color={userTheme === 'dark' ? 'gray.800' : 'gray.100'}
+                >
+                  <TagLabel>{item.label}</TagLabel>
+                  <TagCloseButton onClick={() => onRemoveFilters([item])}/>
+                </Tag>
+              </WrapItem>
+            ))}
+            {filteredItems.length > 0 && (
+              <Box fontWeight='bold' onClick={() => onRemoveFilters(filteredItems)} cursor='pointer'>
+                Clear all
+              </Box>
+            )}
+          </Wrap>
+          {!!totalCount && (
+            <Box fontWeight='bold' pe={1}>{commify(totalCount)} Items</Box>
           )}
-        </Wrap>
+        </Stack>
       </GridItem>
       <GridItem>
         <Box>
