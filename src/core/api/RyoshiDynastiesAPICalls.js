@@ -461,3 +461,13 @@ export const disbandFaction = async (address, signature, action) => {
     throw error;
   }
 }
+export const getLeadersForSeason = async (gameId) => {
+  try{
+    var data = await api.get("ryoshi-dynasties/control-points",
+      {params: {gameId}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
