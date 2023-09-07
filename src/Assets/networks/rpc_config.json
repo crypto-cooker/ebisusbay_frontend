@@ -23182,7 +23182,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "",
+        "description": "Comic Cover for the first Comic by JAFC COMICS. It is the Cover for the following Comic ROAD TO GOAT, the last fight of the Black Panther to become the Greatest of all Time.",
         "avatar": "/img/collections/jafc-comics/avatar.webp",
         "card": "/img/collections/jafc-comics/card.webp",
         "banner": "/img/collections/jafc-comics/banner.webp",
@@ -30419,7 +30419,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/jafc-comics/drop.webp",
         "banner": "/img/collections/jafc-comics/banner.webp",
