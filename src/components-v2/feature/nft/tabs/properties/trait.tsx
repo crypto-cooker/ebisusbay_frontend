@@ -1,4 +1,4 @@
-import {humanize, mapAttributeString, millisecondTimestamp, relativePrecision} from "@src/utils";
+import {humanizeAdvanced, mapAttributeString, millisecondTimestamp, relativePrecision} from "@src/utils";
 import Link from "next/link";
 import React from "react";
 import {Box, Heading} from "@chakra-ui/react";
@@ -47,7 +47,7 @@ const Trait = ({
   return (
     <Box h='full'>
       <Box className="nft_attr">
-        <Heading as='h5'>{humanize(title)}</Heading>
+        <Heading as='h5'>{humanizeAdvanced(title)}</Heading>
         {(collectionSlug || collectionAddress) && queryKey && value ? (
           <Link
             href={{

@@ -2,7 +2,7 @@ import Taskbar from "@src/components-v2/feature/collection/taskbar";
 import CollectionFilterContainer from "@src/components-v2/feature/collection/collection-filter-container";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Box, Center, Spinner, Text, useBreakpointValue, useDisclosure} from "@chakra-ui/react";
-import React, {useCallback, useContext, useMemo, useState} from "react";
+import React, {useCallback, useContext, useEffect, useMemo, useState} from "react";
 import {CollectionNftsGroup} from "@src/components-v2/feature/collection/collection-groups";
 import {useRouter} from "next/router";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
@@ -50,6 +50,14 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
     { base: true, lg: false },
     { fallback: 'lg' },
   );
+
+  const [mobileFirstRender, setMobileFirstRender] = useState(false);
+  useEffect(() => {
+    if (useMobileMenu && !mobileFirstRender) {
+      setMobileFirstRender(true);
+      setFiltersVisible(false);
+    }
+  }, [useMobileMenu]);
 
   const { queryParams, setQueryParams  } = useContext(CollectionPageContext) as CollectionPageContextProps;
 

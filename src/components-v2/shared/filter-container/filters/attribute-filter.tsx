@@ -5,11 +5,12 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Checkbox, CheckboxGroup,
+  Checkbox,
+  CheckboxGroup,
   Flex,
   Text
 } from "@chakra-ui/react";
-import {stripSpaces} from "@src/utils";
+import {humanizeAdvanced, stripSpaces} from "@src/utils";
 import {FilteredItem} from "@src/components-v2/shared/filter-container";
 import {TableVirtuoso} from "react-virtuoso";
 
@@ -56,7 +57,7 @@ const AttributeFilter = ({attributes, currentFilters, onChange}: AttributeFilter
         <AccordionItem key={`${group[0]}-${groupKey}`} border='none'>
           <AccordionButton>
             <Box as="span" flex='1' textAlign='left' fontWeight='bold' fontSize='lg'>
-              {group[0]}
+              {humanizeAdvanced(group[0])}
             </Box>
             <AccordionIcon />
           </AccordionButton>
@@ -76,7 +77,7 @@ const AttributeFilter = ({attributes, currentFilters, onChange}: AttributeFilter
                         value={stripSpaces(`trait-${group[0]}-${item[0]}`)}
                         onChange={(e) => handleFilter(e, group[0], item[0])}
                       >
-                        {item[0]}
+                        {humanizeAdvanced(item[0])}
                       </Checkbox>
                       <Text color='gray.500'>({item[1].count})</Text>
                     </Flex>

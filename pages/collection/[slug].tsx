@@ -34,7 +34,11 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }: CollectionPr
 
   useEffect(() => {
     if (redirect && typeof window !== 'undefined') {
-      const queryString = new URLSearchParams(query).toString();
+      let hackedQuery = {} as any;
+      if (tab) hackedQuery.tab = tab;
+      if (remainingQuery) hackedQuery = { ...hackedQuery, ...remainingQuery };
+
+      const queryString = new URLSearchParams(hackedQuery).toString();
       const url = `/collection/${ssrCollection.slug}${queryString ? `?${queryString}` : ''}`;
       router.push(url, undefined, { shallow: true });
     }

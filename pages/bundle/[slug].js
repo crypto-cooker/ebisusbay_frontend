@@ -12,7 +12,7 @@ const Bundle = ({ bundle }) => {
         url={`/collection/${bundle.address}/${bundle.id}`}
       />
       {useHasHydrated() && (
-        <Nft721 address={bundle.address} id={bundle.id} isBundle={true} />
+        <Nft721 address={bundle.address} slug={bundle.slug} id={bundle.id} isBundle={true} />
       )}
     </>
   );
