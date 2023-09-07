@@ -148,28 +148,29 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   }
 
   const OpenAllianceCenter = () => {
-    setBarracksOpen(false);
-    setPortalOpen(false);
-    setMarketOpen(false);
+    // setBarracksOpen(false);
+    // setPortalOpen(false);
+    // setMarketOpen(false);
     setElementToZoomTo('Alliance Center');
+    DelayedOpen('Alliance Center');
     // setAllianceCenterOpen(true);
-    OpenInOneSecondasync('allianceCenter');
   }
-  const CloseAllianceCenter = () => {
-    setElementToZoomTo('fancyMenu');
-    setAllianceCenterOpen(false);
-  }
+  // const CloseAllianceCenter = () => {
+  //   setElementToZoomTo('fancyMenu');
+  //   // setAllianceCenterOpen(false);
+  // }
   const OpenBarracks = () => {
-    setAllianceCenterOpen(false);
-    setPortalOpen(false);
-    setMarketOpen(false);
+    // setAllianceCenterOpen(false);
+    // setPortalOpen(false);
+    // setMarketOpen(false);
     setElementToZoomTo('Barracks');
-    setBarracksOpen(true);
+    DelayedOpen('Barracks');
+    // setBarracksOpen(true);
   }
-  const CloseBarracks = () => {
-    setElementToZoomTo('fancyMenu');
-    setBarracksOpen(false);
-  }
+  // const CloseBarracks = () => {
+  //   setElementToZoomTo('fancyMenu');
+  //   setBarracksOpen(false);
+  // }
   const OpenPortal = () => {
     setBarracksOpen(false);
     setAllianceCenterOpen(false);
@@ -193,29 +194,35 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     setMarketOpen(false);
   }
   const OpenBank = () => {
-    setAllianceCenterOpen(false);
-    setPortalOpen(false);
-    setMarketOpen(false);
-    setBarracksOpen(false);
+    // setAllianceCenterOpen(false);
+    // setPortalOpen(false);
+    // setMarketOpen(false);
+    // setBarracksOpen(false);
     setElementToZoomTo('Bank');
-    OpenInOneSecondasync('Bank');
+    DelayedOpen('Bank');
+  }
+  const OpenBattleMap = () => {
+    setElementToZoomTo('Battle Map');
+    DelayedOpen('Battle Map');
   }
   function timeout(delay: number) {
     return new Promise( res => setTimeout(res, delay) );
 }
-  const OpenInOneSecondasync = async (thingToOpen:string) => {
+  const DelayedOpen = async (thingToOpen:string) => {
     onToggle();
     await timeout(500); //for 0.5 sec delay
-    if(thingToOpen == 'allianceCenter') {
+    if(thingToOpen == 'Alliance Center') {
       onChange('allianceCenter')
     } else if(thingToOpen == 'Barracks') {
-      // OpenBarracks();
+      onChange('barracks');
     } else if(thingToOpen == 'Moongate') {
       // OpenPortal();
     } else if(thingToOpen == 'Market') {
       // OpenMarket();
     } else if(thingToOpen == 'Bank') {
       onChange('bank');
+    } else if(thingToOpen == 'Battle Map') {
+      handleSceneChange('battleMap');
     }
   }
 
@@ -553,8 +560,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
 
 
-
-
     // console.log(rdConfig)
     // console.log(rdGameContext)
     // refreshUser();
@@ -597,16 +602,17 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
   return (
     <section>
+        <motion.div
+          variants={item}
+          initial="hidden"
+          animate="show"
+          >
       <Box
         position='relative' h='calc(100vh - 74px)'
         backgroundImage={ImageService.translate(`/img/ryoshi-dynasties/village/background-${user.theme}.png`).convert()}
         backgroundSize='cover'
       >
-      <motion.div
-          variants={item}
-          initial="hidden"
-          animate="show"
-          >
+    
         {mapInitialized && (
           <TransformWrapper
             // limitToBounds={true}
@@ -673,7 +679,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                     </Box>
 
                     <Box id="Battle Map" className={styles.enlarge} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
-                         onClick={() => handleSceneChange('battleMap')}
+                         onClick={() => OpenBattleMap()}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/boat_day.apng').convert()} />
                     </Box>
@@ -702,11 +708,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       onClick={() => OpenBank()}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/bank_day.png').convert()} />
-                      {/* <div className={[styles.bank_label]} > */}
-                      {/* <img className={[styles.bank_label]}  src='/img/battle-bay/building_labels/bank_label.png'
-                      // width={bank_labelWidth} height={bank_labelHeight}
-                      /> */}
-                      {/* </div> */}
                     </Box>
 
                     <Box id="Announcements" className={styles.enlarge} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}}
@@ -775,7 +776,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
             )}
           </TransformWrapper>
         )}
-      </motion.div>
 
         {!allianceCenterOpen && !barracksOpen && !portalOpen && !marketOpen && (
           <VillageHud onOpenBuildings={onOpenBuildings} onOpenDailyCheckin={onOpenDailyCheckin} 
@@ -785,7 +785,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         <Box  position='absolute' top={0} left={0} p={4} zIndex={1}>
           <Flex direction='row' justify='space-between' >
             {/* {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>} */}
-            {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>}
+            {/* {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>} */}
             {portalOpen ? <PortalModal onBack={() => ClosePortal()}/> : <></>}
             {marketOpen ? <FishMarketModal onBack={() => CloseMarket()}/> : <></>}
         
@@ -793,20 +793,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         </Box>
 
       </Box>
-      {/* <Drawer
-        isOpen={isOpenBuildings}
-        placement='right'
-        onClose={onCloseBuildings}
-        finalFocusRef={buildingButtonRef}
-      >
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Zoom to Building</DrawerHeader>
-          <DrawerBody gridColumn={1}>
-            {pins}
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer> */}
 
       <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin}/>
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
@@ -848,6 +834,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
           <Text>The current game has ended and rewards are being calculated. A new game will begin shortly!</Text>
         </RdModalAlert>
       </RdModal>
+      </motion.div>
     </section>
   )
 };

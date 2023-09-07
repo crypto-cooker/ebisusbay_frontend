@@ -100,70 +100,71 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
       position='relative'
       h='calc(100vh - 74px)'
       overflow='hidden'
-    >
-              <motion.div
-          variants={item}
-          initial="hidden"
-          animate="show"
-          >
-            <Box 
-              position='absolute'
-              top={0}
-              left={0}
-              zIndex={1}
-              w='100%'
-              h='100%'
-              // bg={'#000000'}
-              overflow='hidden'
-            >
-              <FactionDirectoryComponent />
-              <Flex
-        border='1px solid #FFD700'
-        backgroundColor='#292626'
-        flexDirection='column'
-        textAlign='center'
-        borderRadius={'10px'}
-        justifyContent='space-around'
-        padding={4}
-        // minW={{base: '100%', xl: '450px' }}
-        w={{base: '450px', xl: '450px' }}
-        boxShadow='0px 0px 10px 0px #000000'
-        className={gothamBook.className}
-        position='absolute'
-        >
-
-      <Flex justify='space-between'>
-        <Box
-          left={6}
-          top={6}
-          rounded='full'
+      minH={{base: '900px', xl: '100vh' }}
+      >
+     <motion.div
+        variants={item}
+        initial="hidden"
+        animate="show"
+      >
+        <Box 
+          position='absolute'
+          top={0}
+          left={0}
           zIndex={1}
-          _groupHover={{
-            cursor: 'pointer'
-          }}
-          data-group
+          w='100%'
+          h='100%'
+          // bg={'#000000'}
+          overflow='hidden'
         >
-          <Button
-            bg='#C17109'
-            rounded='full'
-            border='8px solid #F48F0C'
-            w={14}
-            h={14}
-            onClick={onClose}
-            _groupHover={{
-              bg: '#de8b08',
-              borderColor: '#f9a50b',
-            }}
-          >
-            <ArrowBackIcon boxSize={8} />
-          </Button>
-        </Box>
-        <Box textAlign='end' ms={2}>
-          <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} fontWeight='bold'>Alliance Center</Text>
-          <Text textColor='#ffffffeb' fontSize='sm' fontStyle='italic'>Manage your Faction, Delegate your troops</Text>
-        </Box>
-      </Flex>
-      <Box>
+          {/* <FactionDirectoryComponent /> */}
+          <Flex
+            // border='1px solid #FFD700'
+            // backgroundColor='#292626'
+            flexDirection='column'
+            textAlign='center'
+            // borderRadius={'10px'}
+            justifyContent='space-around'
+            padding={4}
+            // minW={{base: '100%', xl: '450px' }}
+            // w={{base: '450px', xl: '450px' }}
+            w={{base: '100%', xl: '450px' }}
+            // boxShadow='0px 0px 10px 0px #000000'
+            className={gothamBook.className}
+            position='absolute'
+            >
+          <Flex justify='space-between'>
+            <Box
+              left={6}
+              top={6}
+              rounded='full'
+              zIndex={1}
+              _groupHover={{
+                cursor: 'pointer'
+              }}
+              data-group
+            >
+              <Button
+                bg='#C17109'
+                rounded='full'
+                border='8px solid #F48F0C'
+                w={14}
+                h={14}
+                onClick={onClose}
+                _groupHover={{
+                  bg: '#de8b08',
+                  borderColor: '#f9a50b',
+                }}
+              >
+                <ArrowBackIcon boxSize={8} />
+              </Button>
+            </Box>
+            <Box textAlign='end' ms={2}>
+              <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} fontWeight='bold'>Alliance Center</Text>
+              <Text textColor='#ffffffeb' fontSize='sm' fontStyle='italic'>Manage your Faction, Delegate your troops</Text>
+            </Box>
+          </Flex>
+        <Box>
         {!!user.address ? (
           <CurrentFaction />
         ) : (
@@ -184,7 +185,7 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
 
     </Flex>
 
-              </Box>
+        </Box>
          <AspectRatio ratio={1920/1080} overflow='visible' >
           <Image
           position={'absolute'}
@@ -195,9 +196,6 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
             minH='calc(100vh - 74px)'
           />
         </AspectRatio>
-      {/* <Box opacity={1}>
-
-    </Box> */}
       </motion.div>
     </Box>
   )
