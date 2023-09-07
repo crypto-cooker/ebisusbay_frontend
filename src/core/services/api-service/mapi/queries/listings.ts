@@ -2,7 +2,7 @@ import {InvalidState, ListingState} from "@src/core/services/api-service/types";
 import Query from "@src/core/services/api-service/mapi/queries/index";
 import * as Yup from "yup";
 
-export const listingsQuerySchema: Yup.ObjectSchema<ListingsQueryParams> = Yup.object().shape({
+export const listingsQuerySchema: Yup.SchemaOf<ListingsQueryParams> = Yup.object().shape({
     listingId: Yup.array().of(Yup.string()).optional(),
     collection: Yup.array().of(Yup.string()).optional(),
     tokenId: Yup.array().of(Yup.string()).optional(),
