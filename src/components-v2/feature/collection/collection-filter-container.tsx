@@ -184,7 +184,7 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
     if (queryParams.currency) {
       if (queryParams.currency === ethers.constants.AddressZero) ret.push({key: 'currency-cro', label: 'CRO'});
       else {
-        const currency = Object.entries(config.tokens).find((t: [string, any]) => t[1].address === queryParams.currency);
+        const currency: [string, any] | undefined = Object.entries(config.tokens).find((t: [string, any]) => t[1].address === queryParams.currency);
         if (currency) ret.push({key: `currency-${currency[0]}`, label: currency[1].symbol});
       }
     }
