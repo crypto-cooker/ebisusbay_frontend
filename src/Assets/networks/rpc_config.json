@@ -23323,6 +23323,81 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Heroes University",
+      "slug": "heroes-university",
+      "multiToken": false,
+      "address": "0x12b06594134bA6967c29e140675532D493cA1AF0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A 10,000 collection of our Heroes of Cronoxity going to school! An era before becoming the heroes of cronos this nft has a 1% of playable heroes in our game, the token is stakeable for Pepecro and used for future burns to future drops.",
+        "avatar": "/img/collections/heroes-university/avatar.webp",
+        "card": "/img/collections/heroes-university/card.webp",
+        "banner": "/img/collections/heroes-university/banner.webp",
+        "website": "https://heroes-cronoxity.netlify.app/",
+        "twitter": "https://twitter.com/CronoxityHeroes",
+        "discord": "https://discord.gg/gVFn9stFQJ",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Ballies: The Gear v2",
+      "slug": "ballies-the-gear-v2",
+      "multiToken": false,
+      "address": "0x5c18d5eb211203eb80b591aa71a269b1e16e9eba",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "“The Gear v2” is the result of Ballies merge functionality in the Ballies game. Gear items are wearables that will have an important role in Ballies play-and-earn game since each gear item directly boosts Ballies performance - enhances either attack points, defence points or both. The Gear v2 is dynamically generated from merging two gear items either from v1 or v2 collections in order to obtain more powerful item. Gear Collection is broken up into 4 categories - neck items, arm items, body items and hand items. The latter gives the strongest boost. It’s time to power up your Ballie!",
+        "avatar": "/img/collections/ballies-the-gear-v2/avatar.webp",
+        "card": "/img/collections/ballies-the-gear-v2/card.webp",
+        "banner": "/img/collections/ballies-the-gear-v2/banner.webp",
+        "website": "https://ballies.gg/",
+        "twitter": "https://twitter.com/Ballies_NFT",
+        "discord": "https://discord.gg/ballies-nft-903875114133753887",
+        "instagram": "https://instagram.com/ballies_nft",
+        "medium": "https://medium.com/@BalliesNFT",
+        "telegram": "https://t.me/balliesnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Possessed Chests",
+      "slug": "possessed-chests",
+      "multiToken": false,
+      "address": "0x50f5d303103E55ECfe67333060361c90cC8B2D14",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Gold chests are legendary earning double rewards. Blue chests are common. Migrated from our 2k collection Trippy Treasure Chests, this reduced supply lowers claim fees for faster ROI's for investors.",
+        "avatar": "/img/collections/possessed-pirates/avatar.webp",
+        "card": "/img/collections/possessed-pirates/card.png",
+        "banner": "/img/collections/possessed-pirates/banner.png",
+        "twitter": "https://twitter.com/PossessedPirate",
+        "discord": "https://discord.gg/J9gWcJBZJh",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
