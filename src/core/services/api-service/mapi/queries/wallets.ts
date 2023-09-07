@@ -2,7 +2,7 @@ import {isEmptyObj} from "@src/utils";
 import Query from "@src/core/services/api-service/mapi/queries/index";
 import * as Yup from 'yup';
 
-export const walletsQuerySchema: Yup.SchemaOf<WalletsQueryParams> = Yup.object().shape({
+export const walletsQuerySchema: Yup.ObjectSchema<WalletsQueryParams> = Yup.object().shape({
   wallet: Yup.string().optional(),
   collection: Yup.array().of(Yup.string()).optional(),
   pageSize: Yup.number().optional().default(50),

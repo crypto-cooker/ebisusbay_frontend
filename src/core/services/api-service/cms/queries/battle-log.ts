@@ -9,7 +9,7 @@ export interface GetBattleLog {
   orderBy?: string;
 }
 
-export const getBattleLogSchema: Yup.SchemaOf<GetBattleLog> = Yup.object().shape({
+export const getBattleLogSchema: Yup.ObjectSchema<GetBattleLog> = Yup.object().shape({
   address: Yup.string().required(),
   signature: Yup.string().required(),
   gameId: Yup.number().required(),

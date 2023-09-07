@@ -1,7 +1,7 @@
 import Query from "@src/core/services/api-service/mapi/queries/index";
 import * as Yup from "yup";
 
-export const collectionInfoQuerySchema: Yup.SchemaOf<CollectionInfoQueryParams> = Yup.object().shape({
+export const collectionInfoQuerySchema: Yup.ObjectSchema<CollectionInfoQueryParams> = Yup.object().shape({
   address: Yup.array().of(Yup.string()).optional(),
   page: Yup.number().optional().default(1),
   pageSize: Yup.number().optional().default(50),

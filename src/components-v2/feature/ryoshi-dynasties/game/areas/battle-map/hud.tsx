@@ -104,13 +104,13 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   }
   const clearTimer = (e:any) => {
     startTimer(e);
-    if (Ref.current) clearInterval(Ref.current);
+    if (Ref.current) clearInterval(Ref.current as any);
     const id = setInterval(() => { startTimer(e); }, 1000) 
     Ref.current = id;
   }
   const clearTroopTimer = (e:any) => {
     startTroopTimer(e);
-    if (Ref2.current) clearInterval(Ref2.current);
+    if (Ref2.current) clearInterval(Ref2.current as any);
     const id = setInterval(() => { startTroopTimer(e); }, 1000) 
     Ref2.current = id;
   }
