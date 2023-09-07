@@ -55,6 +55,9 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
   const[fortune, setFortune] = useState<number | string>(0);
   const[mitama, setMitama] = useState<number | string>(0);
 
+  const[playerLevel, setPlayerLevel] = useState<number>(0);
+  const[currentLevelProgress, setCurrentLevelProgress] = useState<number>(0);
+
   //timer
   const Ref = useRef<NodeJS.Timer | null>(null);
   const [timer, setTimer] = useState('00:00:00');
@@ -122,6 +125,46 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
       setIsLoading(false);
     }
   };
+  
+  const reputationDict = [
+    { max: 100, value: 0},
+    { max: 500, value: 1},
+    { max: 1500, value: 2},
+    { max: 3500, value: 3},
+    { max: 7000, value: 4},
+    { max: 14000, value: 5},
+    { max: 30000, value: 6},
+    { max: 50000, value: 7},
+    { max: 80000, value: 8},
+    { max: 140000, value: 9},
+    { max: 9999999, value: 10},
+  ]
+  const GetReputationLevel = (reputation: number) => {
+    let level = 0;
+    reputationDict.forEach((item) => {
+      if (reputation >= item.max) {
+        level = item.value;
+      }
+    })
+    return level;
+  }
+
+  const calculateCurrentValue = () => {
+    if (!rdUser) return;
+
+    const currentExp = rdUser.reputations.points;
+    setPlayerLevel(GetReputationLevel(currentExp));
+    const currentLevelStart = reputationDict[GetReputationLevel(currentExp)].max;
+    const currentLevelEnd = reputationDict[GetReputationLevel(currentExp) + 1].max;
+    const currentLevelExp = currentLevelEnd - currentLevelStart;
+    const currentExpProgress = currentExp - currentLevelStart;
+    const currentLevelProgress = currentExpProgress / currentLevelExp;
+    setCurrentLevelProgress(currentLevelProgress * 100);
+  };
+
+  useEffect(() => {
+    calculateCurrentValue();
+  }, [rdUser])
 
   useEffect(() => {
     getRewardsStreakData();
@@ -181,11 +224,11 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             <Text 
               fontSize={{base: '12', sm: '14'}} 
               as={'b'}
-              color='white'>Lvl: 3
+              color='white'>Lvl: {playerLevel}
             </Text>
           </Flex>
           <Progress mt={-2} w={{base: '200px', sm: '200px'}}
-            colorScheme='ryoshiDynasties' size='md' value={40} 
+            colorScheme='ryoshiDynasties' size='md' value={currentLevelProgress} 
           />
           <CurrencyDisplay2
             isLoading={isLoading}
