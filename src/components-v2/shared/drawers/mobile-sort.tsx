@@ -1,9 +1,7 @@
 import {Form} from "react-bootstrap";
 import React from "react";
 import {getTheme} from "@src/Theme/theme";
-import {sortOptions} from "./sort-options";
 import {useAppSelector} from "@src/Store/hooks";
-import {SortOption} from "@src/components-v2/feature/account/profile/tabs/inventory/sort-options";
 import {
   Box,
   Drawer,
@@ -16,14 +14,21 @@ import {
 } from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 
+export type SortOption = {
+  key: string;
+  direction: string;
+  label: string;
+}
+
 interface MobileSortProps {
   show: boolean;
   onHide: () => void;
+  sortOptions: SortOption[];
   currentSort?: SortOption;
-  onSort: (sortOption: SortOption) => void;
+  onSort: (sort: string, direction: string) => void;
 }
 
-export const MobileSort = ({show, onHide, currentSort, onSort}: MobileSortProps) => {
+export const MobileSort = ({show, onHide, sortOptions, currentSort, onSort}: MobileSortProps) => {
   const theme = useAppSelector((state) => state.user.theme);
 
   return (
@@ -42,7 +47,7 @@ export const MobileSort = ({show, onHide, currentSort, onSort}: MobileSortProps)
                 >
                   <Form.Check.Input type={'radio'}
                                     value={`${option.key}-${option.direction}`}
-                                    onChange={() => onSort(option)}
+                                    onChange={() => onSort(option.key, option.direction)}
                                     checked={!!currentSort && currentSort.key === option.key && currentSort.direction === option.direction}
                   />
                   <Form.Check.Label className="w-100">

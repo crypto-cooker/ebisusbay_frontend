@@ -15,6 +15,8 @@ import InstantSellDialog from "@src/Components/Offer/Dialogs/InstantSellDialog";
 import SweepFloorDialog from "@src/Components/Collection/CollectionTaskBar/SweepFloorDialog";
 import {CollectionPageContext, CollectionPageContextProps} from "@src/components-v2/feature/collection/context";
 import {isFoundingMemberCollection} from "@src/utils";
+import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
+import {sortOptions} from "@src/Components/components/constants/collection-sort-options";
 
 interface ItemsProps {
   collection: any;
@@ -104,7 +106,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
   }, [queryParams, router]);
 
   const handleSort = useCallback((sort: string, direction: string) => {
-    setQueryParams({...queryParams, sortBy: sort as any, direction: direction as any})
+    setQueryParams({...queryParams, sortBy: sort as any, direction: direction as any});
   }, [queryParams]);
 
   const handleFilter = useCallback((filter: FullCollectionsQueryParams) => {
@@ -185,6 +187,14 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
           {content}
         </InfiniteScroll>
       </CollectionFilterContainer>
+
+      <MobileSort
+        show={!!useMobileMenu && mobileSortVisible}
+        sortOptions={sortOptions}
+        currentSort={sortOptions.find((option) => option.key === queryParams.sortBy && option.direction === queryParams.direction)}
+        onSort={handleSort}
+        onHide={() => setMobileSortVisible(false)}
+      />
 
       {isOpenCollectionOfferDialog && (
         <MakeCollectionOfferDialog
