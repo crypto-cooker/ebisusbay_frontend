@@ -9,6 +9,9 @@ import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/qu
 import AttributeFilter from "@src/components-v2/shared/filter-container/filters/attribute-filter";
 import {stripSpaces} from "@src/utils";
 import {CollectionPageContext, CollectionPageContextProps} from "@src/components-v2/feature/collection/context";
+import {ethers} from "ethers";
+import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container/filters/radio-filter";
+import {OfferState} from "@src/core/services/api-service/types";
 
 const config = appConfig();
 
@@ -40,6 +43,7 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
       if (item.key === 'range-min-price') delete params.minPrice;
       if (item.key === 'range-max-price') delete params.maxPrice;
       if (item.key === 'search') delete params.search;
+      if (item.key.startsWith('currency')) delete params.currency;
       if (item.key.startsWith('trait')) {
         const [_, category, value] = item.key.split('-');
         const categoryKey = stripSpaces(category);
@@ -70,6 +74,25 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
     if (i !== -1) {
       setFilteredItems(filteredItems.filter((fi) => fi.key !== item.key))
     } else setFilteredItems([...filteredItems, item])
+
+  }, [queryParams, filteredItems]);
+
+  const handleCurrencyFilter = useCallback((item: RadioItem) => {
+    const params = queryParams;
+
+    const symbol = item.key.split('-')[1];
+    if (item.key === 'currency-cro') params.currency = ethers.constants.AddressZero;
+    else if (config.tokens[symbol]) params.currency = config.tokens[symbol].address;
+
+    onFilter({...queryParams, ...params});
+
+    const i = filteredItems.findIndex((fi) => fi.key === item.key);
+    if (i === -1) {
+      setFilteredItems([
+        ...filteredItems.filter((fi) => !fi.key.startsWith('currency')),
+        {label: item.label, key: item.key}
+      ])
+    }
 
   }, [queryParams, filteredItems]);
 
@@ -158,6 +181,13 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
     if (queryParams.maxPrice) ret.push({key: 'range-max-price', label: `Max ${queryParams.maxPrice} CRO`});
     if (queryParams.search) ret.push({key: 'search', label: queryParams.search});
     if (queryParams.listed) ret.push({key: 'status-buy-now', label: 'Buy Now'});
+    if (queryParams.currency) {
+      if (queryParams.currency === ethers.constants.AddressZero) ret.push({key: 'currency-cro', label: 'CRO'});
+      else {
+        const currency = Object.entries(config.tokens).find((t: [string, any]) => t[1].address === queryParams.currency);
+        if (currency) ret.push({key: `currency-${currency[0]}`, label: currency[1].symbol});
+      }
+    }
 
     setFilteredItems(ret);
   }, [queryParams]);
@@ -172,12 +202,24 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
         ]}
         onCheck={handleStatusFilter}
       />
-      <CheckboxFilter
-        title='Quantity'
+      {/*<CheckboxFilter*/}
+      {/*  title='Quantity'*/}
+      {/*  items={[*/}
+      {/*    {label: 'Bundles', key: 'status-bundles', isChecked: filteredItems.some((fi) => fi.key === `collection-${config.contracts.bundle}`)}*/}
+      {/*  ]}*/}
+      {/*  onCheck={handleStatusFilter}*/}
+      {/*/>*/}
+      <RadioFilter
+        title='Currency'
         items={[
-          {label: 'Bundles', key: 'status-bundles', isChecked: filteredItems.some((fi) => fi.key === `collection-${config.contracts.bundle}`)}
+          {label: 'CRO', key: 'currency-cro', isSelected: filteredItems.some((fi) => fi.key === 'currency-cro')},
+          {label: 'FRTN', key: 'currency-frtn', isSelected: filteredItems.some((fi) => fi.key === 'currency-frtn')},
+          {label: 'bCRO', key: 'currency-bcro', isSelected: filteredItems.some((fi) => fi.key === 'currency-bcro')},
+          {label: 'MAD', key: 'currency-mad', isSelected: filteredItems.some((fi) => fi.key === 'currency-mad')},
+          {label: 'SCRATCH', key: 'currency-scratch', isSelected: filteredItems.some((fi) => fi.key === 'currency-scratch')},
+          {label: 'VRSE', key: 'currency-vrse', isSelected: filteredItems.some((fi) => fi.key === 'currency-vrse')},
         ]}
-        onCheck={handleStatusFilter}
+        onSelect={handleCurrencyFilter}
       />
       {!collection.multiToken && (
         <RangeFilter

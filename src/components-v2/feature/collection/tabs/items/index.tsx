@@ -82,7 +82,6 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
       if (isFoundingMemberCollection(collection.address)) {
         data.data = data.data.filter((nft) => nft.id !== '3');
       }
-      console.log('ITEMS', data);
 
       return data;
     },
