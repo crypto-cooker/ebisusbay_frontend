@@ -93,7 +93,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
       offsetY: ReactZoomPanPinchRef.state.positionY,
       scale: ReactZoomPanPinchRef.state.scale,
     });
-    console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
+    // console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
 
   const PlayExplosion = async (controlPointId : number) => {
@@ -214,18 +214,18 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
         newData.name === prevIcons.name ? prevIcons.image = newData.factions[0].image : null
     ))))
     
-    console.log('newIcons', newIcons);
-    console.log('prevIcons', prevIcons);
+    // console.log('newIcons', newIcons);
+    // console.log('prevIcons', prevIcons);
     
     setCurrentIcons(newIcons);
     setPreviousIcons(prevIcons);
     setAllIconsAqcuired(true);
 
-    console.log('allIconsAqcuired', allIconsAqcuired);
+    // console.log('allIconsAqcuired', allIconsAqcuired);
   }
   useEffect(() => {
     setIcons(useCurrentGameId ? currentIcons : previousIcons);
-    console.log('showActiveGame', showActiveGame);
+    // console.log('showActiveGame', showActiveGame);
   }, [useCurrentGameId, currentIcons, previousIcons]);
   
   const GetLeaderIcon = (name: any) => {
@@ -268,21 +268,21 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
   useEffect(() => {
     if (!user.address) return;
   
-    console.log('connecting to socket...');
+    // console.log('connecting to socket...');
     const socket = io(`${config.urls.cmsSocket}ryoshi-dynasties/battles?walletAddress=${user.address.toLowerCase()}`);
   
     function onConnect() {
       // setIsSocketConnected(true);
-      console.log('connected')
+      // console.log('connected')
     }
   
     function onDisconnect() {
       // setIsSocketConnected(false);
-      console.log('disconnected')
+      // console.log('disconnected')
     }
   
     function onBattleFinishedEvent(data: any) {
-      console.log('BATTLE_FINISHED', data)
+      // console.log('BATTLE_FINISHED', data)
       const parsedAtack = JSON.parse(data);
       setExplosionOnPoint(parsedAtack.controlPointId);
     }
