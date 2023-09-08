@@ -121,7 +121,7 @@ const Taskbar = ({collection, onFilterToggle, onSortToggle, initialSearch, onSea
       ) : (
         <Select w='225px' onChange={handleSort}>
           {sortOptions.map((option) => (
-            <option value={`${option.key}-${option.direction}`}>{option.label}</option>
+            <option key={`${option.key}-${option.direction}`} value={`${option.key}-${option.direction}`}>{option.label}</option>
           ))}
         </Select>
       )}

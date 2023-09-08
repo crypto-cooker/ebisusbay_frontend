@@ -7,13 +7,16 @@ import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inv
 import {appConfig} from '@src/Config';
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import AttributeFilter from "@src/components-v2/shared/filter-container/filters/attribute-filter";
-import {stripSpaces} from "@src/utils";
+import {ciEquals, stripSpaces} from "@src/utils";
 import {CollectionPageContext, CollectionPageContextProps} from "@src/components-v2/feature/collection/context";
 import {ethers} from "ethers";
 import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container/filters/radio-filter";
-import {OfferState} from "@src/core/services/api-service/types";
 
 const config = appConfig();
+
+type CurrencyEntry = {
+  [key: string]: string[];
+}
 
 interface CollectionFilterContainerProps {
   queryParams: FullCollectionsQueryParams;
@@ -28,9 +31,17 @@ interface CollectionFilterContainerProps {
   children: ReactNode;
 }
 
+const collectionCurrencies = Object.entries(config.listings.currencies.nft as CurrencyEntry);
 const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, totalCount, traits, powertraits, children}: CollectionFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
   const { queryParams, setQueryParams  } = useContext(CollectionPageContext) as CollectionPageContextProps;
+
+  const currencies = Object.entries(config.tokens)
+    .filter(([key, token]: [string, any]) => config.listings.currencies.available.includes(key))
+    .filter(([key, token]: [string, any]) => collectionCurrencies
+      .find(([k, v]) => ciEquals(k, collection.address))?.[1].includes(key)
+    )
+    .map(token => token[1]) as {name: string, symbol: string, address: string}[] ?? [];
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
     const params = queryParams;
@@ -211,13 +222,12 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
       {/*/>*/}
       <RadioFilter
         title='Currency'
-        items={[
+        items={
+        [
           {label: 'CRO', key: 'currency-cro', isSelected: filteredItems.some((fi) => fi.key === 'currency-cro')},
-          {label: 'FRTN', key: 'currency-frtn', isSelected: filteredItems.some((fi) => fi.key === 'currency-frtn')},
-          {label: 'bCRO', key: 'currency-bcro', isSelected: filteredItems.some((fi) => fi.key === 'currency-bcro')},
-          {label: 'MAD', key: 'currency-mad', isSelected: filteredItems.some((fi) => fi.key === 'currency-mad')},
-          {label: 'SCRATCH', key: 'currency-scratch', isSelected: filteredItems.some((fi) => fi.key === 'currency-scratch')},
-          {label: 'VRSE', key: 'currency-vrse', isSelected: filteredItems.some((fi) => fi.key === 'currency-vrse')},
+          ...currencies.map((c) => (
+            {label: c.name, key: `currency-${c.symbol.toLowerCase()}`, isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)}
+          )),
         ]}
         onSelect={handleCurrencyFilter}
       />
