@@ -167,7 +167,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
         collection={collection}
         onFilter={handleFilter}
         filtersVisible={filtersVisible}
-        useMobileMenu={useMobileMenu ?? false}
+        useMobileMenu={!!useMobileMenu && mobileFirstRender}
         onMobileMenuClose={() => setFiltersVisible(false)}
         totalCount={totalCount}
         traits={traits}
