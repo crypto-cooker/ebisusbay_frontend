@@ -23398,6 +23398,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Aiko Legends",
+      "slug": "aiko-legends",
+      "multiToken": false,
+      "address": "0xFD90697db5D40B37B86C958106A342088f11AA84",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Aiko Legends is the Main Collection of AikoSociety in CronosChain. Each Aiko Legends contains a story in the Art and future benefits to discover. The Aiko Legend Collection includes 3333 pfp generated with different traits and rarities. Become a Legend & join the AikoSociety!",
+        "avatar": "/img/collections/aiko-legends/avatar.webp",
+        "banner": "/img/collections/aiko-legends/banner.webp",
+        "card": "/img/collections/aiko-legends/card.webp",
+        "website": "https://www.aikosociety.com/",
+        "twitter": "https://twitter.com/AikoSociety",
+        "discord": "https://discord.gg/e7AybbEYwg",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
