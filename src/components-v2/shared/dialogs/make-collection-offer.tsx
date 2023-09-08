@@ -25,6 +25,7 @@ import {
 import {getTheme} from "@src/Theme/theme";
 import {useAppSelector} from "@src/Store/hooks";
 import {parseErrorMessage} from "@src/helpers/validator";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 25;
@@ -48,6 +49,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
   const windowSize = useWindowSize();
   const user = useAppSelector((state) => state.user);
   const {contractService} = user;
+  const [runAuthedFunction] = useAuthedFunction();
 
   const isAboveFloorPrice = (price: string | number) => {
     const floor = Number(floorPrice);
@@ -106,37 +108,39 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
     e.preventDefault();
     if (!validateInput()) return;
 
-    try {
-      if (!offerPrice) throw 'Invalid offer price';
+    runAuthedFunction(async () => {
+      try {
+        if (!offerPrice) throw 'Invalid offer price';
 
-      const collectionAddress = collection.address;
-      const price = ethers.utils.parseEther(offerPrice.toString());
+        const collectionAddress = collection.address;
+        const price = ethers.utils.parseEther(offerPrice.toString());
 
-      setExecutingCreateListing(true);
-      Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: collectionAddress, price}});
-      const contract = contractService!.offer;
+        setExecutingCreateListing(true);
+        Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: collectionAddress, price}});
+        const contract = contractService!.offer;
 
-      let tx;
-      if (existingOffer) {
-        const newPrice = Number(offerPrice) - parseInt(existingOffer.price)
-        tx = await contract.uppdateCollectionOffer(existingOffer.nftAddress, existingOffer.offerIndex, {
-          value: ethers.utils.parseEther(newPrice.toString())
-        });
-      } else {
-        tx = await contract.makeCollectionOffer(collectionAddress, {
-          value: ethers.utils.parseEther(offerPrice.toString())
-        });
+        let tx;
+        if (existingOffer) {
+          const newPrice = Number(offerPrice) - parseInt(existingOffer.price)
+          tx = await contract.uppdateCollectionOffer(existingOffer.nftAddress, existingOffer.offerIndex, {
+            value: ethers.utils.parseEther(newPrice.toString())
+          });
+        } else {
+          tx = await contract.makeCollectionOffer(collectionAddress, {
+            value: ethers.utils.parseEther(offerPrice.toString())
+          });
+        }
+
+        let receipt = await tx.wait();
+        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        setExecutingCreateListing(false);
+        onClose();
+      } catch (error) {
+        toast.error(parseErrorMessage(error));
+      } finally {
+        setExecutingCreateListing(false);
       }
-
-      let receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      setExecutingCreateListing(false);
-      onClose();
-    } catch (error) {
-      toast.error(parseErrorMessage(error));
-    } finally {
-      setExecutingCreateListing(false);
-    }
+    });
   };
 
   const processCreateListingRequest = async (e: any) => {

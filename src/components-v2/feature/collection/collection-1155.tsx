@@ -189,7 +189,7 @@ const Collection1155 = ({ collection, tokenId, ssrTab, ssrQuery, activeDrop = nu
           </li>
         </ul>
 
-        <Box className="de_tab_content">
+        <Box className="de_tab_content" px={2}>
           {openMenu === tabs.items && (
             <Items
               collection={collection}
