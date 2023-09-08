@@ -189,6 +189,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/collection/jafc-comics',
+        destination: '/collection/jafc-comic-rtg-covers',
+        permanent: true,
+      },
+      {
+        source: '/collection/jafc-comics/:id',
+        destination: '/collection/jafc-comic-rtg-covers/:id',
+        permanent: true,
+      },
+      {
         source: '/drops/crypto-hodlem',
         destination: '/drops/ryoshi-playing-cards',
         permanent: true,
