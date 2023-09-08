@@ -189,8 +189,11 @@ export function humanize(str) {
 }
 
 export function humanizeAdvanced(s) {
-  // Split string by space, hyphen, underscore, or camelCase
-  const words = s.split(/[\s\-_]|(?<=[a-z])(?=[A-Z])/);
+  // Insert spaces before uppercase letters that follow lowercase letters
+  const spacedString = s.replace(/([a-z])([A-Z])/g, '$1 $2');
+
+  // Split string by space, hyphen, underscore
+  const words = spacedString.split(/[\s\-_]/);
 
   // Capitalize first letter of each word and make rest lowercase
   const formattedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
