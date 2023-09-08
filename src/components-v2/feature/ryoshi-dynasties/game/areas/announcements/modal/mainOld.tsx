@@ -107,12 +107,12 @@ const MainPageOld = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
           {isMobile ? (
             <Image
               alt="Buy FRTN on VVS"
-              src={ImageService.translate('/img/ryoshi-dynasties/announcements/vvs-sm.gif').convert()}
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/ads/vvs-sm.gif').convert()}
             />
           ) : (
             <Image
               alt="Buy FRTN on VVS"
-              src={ImageService.translate('/img/ryoshi-dynasties/announcements/vvs.webp').convert()}
+              src={ImageService.translate('/img/ryoshi-dynasties/announcements/ads/vvs.webp').convert()}
             />
           )}
         </Link>

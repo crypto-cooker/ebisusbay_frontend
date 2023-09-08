@@ -96,8 +96,8 @@ const imageUrls = [
   '/img/battle-bay/imgs/verdant_forest.png',
   '/img/battle-bay/imgs/explosion.png',
   ImageService.translate('/img/battle-bay/mapImages/boat_day.apng').convert(),
-  ImageService.translate('/img/ryoshi-dynasties/announcements/vvs.webp').convert(),
-  ImageService.translate('/img/ryoshi-dynasties/announcements/vvs-sm.gif').convert(),
-  ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines.webp').convert(),
-  ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines-sm.webp').convert()
+  ImageService.translate('/img/ryoshi-dynasties/announcements/ads/vvs.webp').convert(),
+  ImageService.translate('/img/ryoshi-dynasties/announcements/ads/vvs-sm.gif').convert(),
+  ImageService.translate('/img/ryoshi-dynasties/announcements/ads/ryoshi-clubs-lg.webp').convert(),
+  ImageService.translate('/img/ryoshi-dynasties/announcements/ads/ryoshi-clubs-sm.webp').convert()
 ];

@@ -1,15 +1,30 @@
 [
   {
-    "name": "Crypto Hodl'em",
+    "name": "Ryoshi Clubs",
+    "start": 1694211854,
+    "end": 1694995199,
+    "placement": "rd-board",
+    "details": {
+      "weight": 2,
+      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-clubs-lg.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-clubs-sm.webp",
+      "link": {
+        "url": "/drops/ryoshi-clubs",
+        "external": false
+      }
+    }
+  },
+  {
+    "name": "Ryoshi Diamonds",
     "start": 1692654452,
     "end": 1692770399,
     "placement": "rd-board",
     "details": {
       "weight": 2,
-      "imageLg": "/img/ryoshi-dynasties/announcements/ads/crypto-hodlem-lg.webp",
-      "imageSm": "/img/ryoshi-dynasties/announcements/ads/crypto-hodlem-sm.webp",
+      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-diamonds-lg.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-diamonds-sm.webp",
       "link": {
-        "url": "/drops/crypto-hodlem",
+        "url": "/drops/ryoshi-diamonds",
         "external": false
       }
     }
@@ -21,8 +36,8 @@
     "placement": "rd-board",
     "details": {
       "weight": 1,
-      "imageLg": "/img/ryoshi-dynasties/announcements/time-machines.webp",
-      "imageSm": "/img/ryoshi-dynasties/announcements/time-machines-sm.webp",
+      "imageLg": "/img/ryoshi-dynasties/announcements/ads/time-machines-lg.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/ads/time-machines-sm.webp",
       "link": {
         "url": "https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan",
         "external": true
@@ -60,6 +75,21 @@
         "verified": true,
         "doxx": false,
         "kyc": false
+      }
+    }
+  },
+  {
+    "name": "Buy FRTN on VVS",
+    "start": 1687219200,
+    "end": 1718841600,
+    "placement": "rd-board",
+    "details": {
+      "weight": 1,
+      "imageLg": "/img/ryoshi-dynasties/announcements/vvs.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/vvs.webp",
+      "link": {
+        "url": "https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
+        "external": true
       }
     }
   }
