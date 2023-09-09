@@ -36,6 +36,7 @@ export interface Drop {
   redirect?: string;
   erc20Only: boolean;
   memberMitama: number;
+  collection?: string;
   [key: string]: any;
 }
 
