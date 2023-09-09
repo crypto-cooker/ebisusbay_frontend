@@ -562,7 +562,7 @@
       "telegram": "https://t.me/thelaboratoryio",
       "gitbook": "https://dapps.thelaboratory.io/exchange"
     },
-    "featured": true,
+    "featured": false,
     "categories": [],
     "style": {}
   },
