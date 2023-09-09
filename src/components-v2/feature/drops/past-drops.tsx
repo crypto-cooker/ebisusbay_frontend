@@ -36,7 +36,7 @@ const PastDrops = () => {
               title={drop.title}
               subtitle={null}
               collectionId={drop.slug}
-              url={`/collection/${drop.slug}`}
+              url={`/collection/${drop.collection ?? drop.slug}`}
               verified={drop.verification.verified}
               contextComponent={null}
             />

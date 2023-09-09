@@ -53,17 +53,6 @@ const Drop = ({ssrDrop, ssrCollection}: DropProps) => {
 export const getServerSideProps = async ({ params }: {params: any}) => {
   const slug = params?.slug;
   const drop = localDataService.getDrop(slug);
-  let collection = config.collections.find((c: any) => c.slug === slug);
-
-  try {
-    const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`)
-    const json = await res.json();
-    if (json.collections.length > 0) {
-      collection = json.collections[0];
-    }
-  } catch (e) {
-    // ignore
-  }
 
   if (!drop) {
     return {
@@ -71,11 +60,27 @@ export const getServerSideProps = async ({ params }: {params: any}) => {
     }
   }
 
+  const collectionSlug = drop.collection ?? slug;
+  let collection = config.collections.find((c: any) => c.slug === collectionSlug);
+
+  try {
+    const res = await fetch(`${config.urls.api}collectioninfo?slug=${collectionSlug}`)
+    const json = await res.json();
+    if (json.collections.length > 0) {
+      collection = json.collections[0];
+    }
+  } catch (e) {
+    return {
+      notFound: true
+    }
+  }
+
+
   return {
     props: {
       slug: drop.slug,
       ssrDrop: drop,
-      ssrCollection: collection
+      ssrCollection: collection ?? null
     },
   };
 };
