@@ -51,7 +51,6 @@ import {OfferType} from "@src/core/services/api-service/types";
 import ImageService from "@src/core/services/image";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
-import {getStats} from "@src/components-v2/feature/collection/collection-721";
 
 const config = appConfig();
 const tabs = {
@@ -192,14 +191,6 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
 
     return nft.original_image;
   };
-
-  useEffect(() => {
-    async function asyncFunc() {
-      dispatch(getStats(collection));
-    }
-    asyncFunc();
-    // eslint-disable-next-line
-  }, [dispatch, collection]);
 
   const [currentTab, setCurrentTab] = useState(tabs.properties);
   const handleTabChange = useCallback((tab: string) => {
