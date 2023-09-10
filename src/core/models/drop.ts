@@ -105,7 +105,8 @@ export function mapDrop(drop: any): Drop {
     featured: drop.featured,
     redirect: drop.redirect,
     erc20Only: drop.erc20Only ?? false,
-    memberMitama: drop.memberMitama ?? 0
+    memberMitama: drop.memberMitama ?? 0,
+    collection: drop.collection
   }
 
   if (!!drop.memberCost) obj.memberCost = Number(drop.memberCost);
