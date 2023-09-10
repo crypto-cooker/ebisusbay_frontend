@@ -1,11 +1,22 @@
-import {CloseButton, Flex, Grid, GridItem, GridProps, Select, Spacer} from "@chakra-ui/react";
+import {
+  CloseButton,
+  Flex,
+  Grid,
+  GridItem,
+  GridProps,
+  Select,
+  Spacer,
+  useBreakpointValue,
+  useColorModeValue
+} from "@chakra-ui/react";
 import React, {ChangeEvent} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {ListingDrawer} from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-drawer";
 import TransferDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/transfer-drawer";
 import BundleDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/bundle-drawer";
 import {setBatchType} from "@src/GlobalState/user-batch";
 import {useAppSelector} from "@src/Store/hooks";
+import {getTheme} from "@src/Theme/theme";
 
 const MAX_NFTS_IN_CART = 40;
 
@@ -22,6 +33,12 @@ interface BatchDrawerProps {
 const BatchDrawer = ({ onClose, ...gridProps }: BatchDrawerProps & GridProps) => {
   const dispatch = useDispatch();
   const batchListingCart = useAppSelector((state) => state.batchListing);
+  const userTheme = useAppSelector((state) => state.user.theme);
+  const batchListingBorderColor = useColorModeValue('#000', '#FFF');
+  const useMobileCartView = useBreakpointValue(
+    {base: true, lg: false},
+    {fallback: 'lg'},
+  );
 
   const gridTemplateRows = {
     [actions.listing]: '60px 1fr auto',
@@ -39,7 +56,15 @@ const BatchDrawer = ({ onClose, ...gridProps }: BatchDrawerProps & GridProps) =>
   };
 
   return (
-    <Grid templateRows={gridTemplateRows[batchListingCart.type]} {...gridProps}>
+    <Grid
+      templateRows={gridTemplateRows[batchListingCart.type]}
+      bgColor={getTheme(userTheme).colors.bgColor1}
+      borderLeftWidth={useMobileCartView ? 'none' : '1px'}
+      borderLeftStyle='solid'
+      borderLeftColor={batchListingBorderColor}
+      zIndex={1}
+      {...gridProps}
+    >
       <GridItem p={4}>
         <Flex align="center">
           {/*TODO update*/}
