@@ -98,7 +98,6 @@ export const ListingDrawer = () => {
   const { tokenToCroValue } = useExchangeRate();
 
   const currencies = useMemo(() => {
-    console.log('====curren', ['cro', ...new Set(batchListingCart.items.map((item) => item.currency?.toLowerCase()))]);
     return  ['cro', ...new Set(batchListingCart.items.map((item) => item.currency?.toLowerCase()))]
       .filter((currencySymbol) => !!currencySymbol && config.listings.currencies.available.includes(currencySymbol));
   }, [batchListingCart.items]);
