@@ -122,7 +122,7 @@ interface ListingDrawerItemProps {
   item: UserBatchItem;
   onCascadePriceSelected: (startingItem: UserBatchItem, startingPrice: number) => void;
   onApplyAllSelected: (price: number, currencySymbol: string, expirationDate: number) => void;
-  onAddCollection: (address: string) => void;
+  onAddCollection: (address: string, unlistedOnly: boolean) => void;
   disabled: boolean;
   isBundling?: boolean;
 }
@@ -459,7 +459,8 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
             <MenuList textAlign="right">
               <MenuItem onClick={() => onApplyAllSelected(Number(price), currency, Number(expirationDate))}>Apply values to all</MenuItem>
               <MenuItem onClick={() => onCascadePriceSelected(item, Number(price))}>Cascade price</MenuItem>
-              <MenuItem onClick={() => onAddCollection(item.nft.nftAddress)}>Add entire collection</MenuItem>
+              <MenuItem onClick={() => onAddCollection(item.nft.nftAddress, false)}>Add entire collection</MenuItem>
+              <MenuItem onClick={() => onAddCollection(item.nft.nftAddress, true)}>Add entire collection (unlisted only)</MenuItem>
               {item.nft.balance && item.nft.balance > 1 && (
                 <MenuItem onClick={() => handlePriceTypeChange(priceType === 'each' ? 'total' : 'each')}>Toggle price type</MenuItem>
               )}

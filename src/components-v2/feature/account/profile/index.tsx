@@ -32,7 +32,6 @@ import {
   Spacer,
   Text,
   useBreakpointValue,
-  useColorModeValue,
   useMediaQuery,
   Wrap
 } from "@chakra-ui/react";

@@ -624,10 +624,10 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn'],
+        available: ['cro', 'frtn', 'vrse'],
         nft: {
-          '0xCF7aedEbC5223c4C620625A560300582B77D8719': ['frtn'],
-          '0xe51377a260043381b8B525D33B9fFBC601A1469b': ['frtn'],
+          '0xCF7aedEbC5223c4C620625A560300582B77D8719': ['cro', 'frtn'], // Ryoshi VIP
+          '0xe51377a260043381b8B525D33B9fFBC601A1469b': ['frtn', 'vrse'],
           '0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad': ['frtn'],
           '0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5': ['frtn'],
           '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad': ['frtn'],
