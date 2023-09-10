@@ -16,9 +16,9 @@ import {
   NumberInputStepper,
   Select,
   Spacer,
+  Button,
   Text,
 } from "@chakra-ui/react";
-
 import React, {ChangeEvent, useContext, useEffect, useState} from "react";
 import {getAuthSignerInStorage} from '@src/helpers/storage';
 import {useAppSelector} from "@src/Store/hooks";
@@ -42,7 +42,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/searchFactions";
-// import Select from "react-select";
+
 const tabs = {
   recall: 'recall',
   deploy: 'deploy',
@@ -55,7 +55,6 @@ interface DeployTabProps {
 
 const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabProps) => {
   const dispatch = useDispatch();
-
   const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
   const [currentTab, setCurrentTab] = useState(tabs.deploy);
@@ -63,20 +62,12 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
   const [troopsError, setTroopsError] = useState('');
   const [factionError, setFactionError] = useState('');
   const [isExecuting, setIsExecuting] = useState(false);
-
-  // const [factionOption, setFactionOption] = useState<ReactElement[] | ReactElement>();
-  const [dataForm, setDataForm] = useState({
-    faction: "" ?? null,
-    quantity: 0,
-  })
-
+  const [dataForm, setDataForm] = useState({ faction: "" ?? null, quantity: 0, })
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [selectedFaction, setSelectedFaction] = useState<string>(dataForm.faction);
   const handleQuantityChange = (stringValue: string, numValue: number) => setSelectedQuantity(numValue)
-
   const [playerFaction, setPlayerFaction] = useState<RdFaction>();
   const [hasFaction, setHasFaction] = useState(false);
-
   const [troopsAvailable, setTroopsAvailable] = useState(0);
   const[troopsDeployed, setTroopsDeployed] = useState(0);
 
@@ -142,23 +133,6 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
       }
     }
   }
-
-  useEffect(() => {
-    if(!rdContext?.user) return;
-
-    if(rdContext.user.season.troops.available.total !== undefined) {
-      setTroopsAvailable(rdContext.user.season.troops.available.total);
-    }
-    // if(rdContext.user?.season?.troops?.deployed !== undefined && 
-    //    rdContext.user?.season?.troops?.undeployed !== undefined){
-    //   setTroopsAvailable(rdContext.user?.season?.troops?.deployed + rdContext.user?.season?.troops?.undeployed);
-    // }
-  }, [rdContext]);
-
-  useEffect(() => {
-    rdContext.refreshUser();
-  }, []);
-
   const HandleSelectCollectionCallback = (factionName: string) => {
     setSelectedFaction(factionName);
   }
@@ -293,21 +267,27 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
   useEffect(() => {
     GetTroopsOnPoint();
   }, [selectedFaction])
-
   useEffect(() => {
     GetPlayerTroops();
   }, [user.address])
   useEffect(() => {
-    // console.log('allFactions', allFactions);
   }, [allFactions]);
+  useEffect(() => {
+    if(!rdContext?.user) return;
+
+    if(rdContext.user.season.troops.available.total !== undefined) {
+      setTroopsAvailable(rdContext.user.season.troops.available.total);
+    }
+  }, [rdContext]);
+  useEffect(() => {
+    rdContext.refreshUser();
+  }, []);
+
   return (
     <Flex flexDirection='column' textAlign='center'justifyContent='space-around'>
       {!!user.address ? (
         <Flex direction='row' justify='space-between' justifyContent='center'>
-
           <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
-
-                  {/* <CollectionsComponent /> */}
             <Center>
               <Flex direction='row' justify='center' mb={2}>
                 <RdTabButton
@@ -339,13 +319,13 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
                 </Grid>
               </>)}
 
-              <Select me={2}
-                      bg='none'
-                // placeholder='Please select a faction'
-                      style={{ background: '#272523' }}
-                      value={selectedFaction}
-                      name="faction"
-                      onChange={onChangeInputsFaction}
+              <Select 
+                me={2}
+                bg='none'
+                style={{ background: '#272523' }}
+                value={selectedFaction}
+                name="faction"
+                onChange={onChangeInputsFaction}
               >
                 <option selected hidden disabled value="">Please select a faction</option>
                 {hasFaction ? (
@@ -398,16 +378,30 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
                 </HStack>
 
               </FormLabel>
-              <NumberInput defaultValue={1} min={1} max={GetMaxTroops()} name="quantity"
-                           onChange={handleQuantityChange}
-                           value={selectedQuantity}
-              >
-                <NumberInputField />
-                <NumberInputStepper >
-                  <NumberIncrementStepper color='#ffffff'/>
-                  <NumberDecrementStepper color='#ffffff'/>
-                </NumberInputStepper>
-              </NumberInput>
+              <Flex justifyContent='center' w={'100%'}>
+                <NumberInput 
+                  defaultValue={1} 
+                  min={1} 
+                  max={GetMaxTroops()} 
+                  name="quantity"
+                  onChange={handleQuantityChange}
+                  value={selectedQuantity}
+                  w='85%'
+                  >
+                  <NumberInputField />
+                  <NumberInputStepper >
+                    <NumberIncrementStepper color='#ffffff'/>
+                    <NumberDecrementStepper color='#ffffff'/>
+                  </NumberInputStepper>
+                </NumberInput>
+
+                <Spacer />
+                <Button 
+                  variant={'outline'}
+                  onClick={() => setSelectedQuantity(GetMaxTroops())}
+                  > Max </Button>
+              </Flex>
+
               <FormErrorMessage>{troopsError}</FormErrorMessage>
             </FormControl>
 
