@@ -1,43 +1,15 @@
 import React, {useEffect, useContext, useState, ReactElement} from 'react';
-import {
-  Center,
-  Flex,
-  Spinner,
-  Stack,
-  Table,
-  TableContainer,
-  Tbody,
-  Th,
-  Thead,
-  Tr,
-  Select,
-  Td,
-  Text,
-  Tabs,
-  TabList,
-  Tab,
-  VStack,
-  Box,
-  Grid,
-  GridItem,
-  Avatar,
-  useBreakpointValue,
-  HStack
-} from "@chakra-ui/react"
-
+import { Center, Flex, Spinner, Stack,Table,TableContainer,Tbody,Th,Thead,Tr,Select,Td,Text,Tabs,TabList,Tab,VStack,Box,Grid,GridItem, Avatar,useBreakpointValue,HStack,Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import {getLeaderBoard, getSeasonDate} from "@src/core/api/RyoshiDynastiesAPICalls";
 import moment from 'moment';
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
-import {
-  RyoshiDynastiesContext,
-  RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
+import { RyoshiDynastiesContext, RyoshiDynastiesContextProps} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import ImageService from "@src/core/services/image";
-import { isMobile } from 'web3modal';
+import GameMapWrapper from '@src/components-v2/feature/ryoshi-dynasties/components/game-map-wrapper';
+const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
 interface leaderBoardProps {
   onReturn: () => void;
@@ -115,10 +87,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     ))
     return x;
   }
-  function limit (string = '') {  
-    return string.substring(0, 10) + (string.length > 10 ? '...' : '');
-  }
-
+  
   const LoadControlPointLeaderBoard = async () => {
     if(!rdGameContext || !selectedControlPoint) return;
 
@@ -153,7 +122,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
         />
         <Text
         isTruncated={isMobile}
-        maxW={'200px'}
+        maxW={isMobile ?'150px': '200px'}
         >
         {faction.name} 
         </Text>
@@ -301,7 +270,29 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                       </Center>
                     </Box>
                   )}
-            </Center>
+            </Center >
+
+                <Accordion allowToggle={true} w={{base: '100%', sm:'100%'}}>
+                  <AccordionItem>
+                    <h2>
+                      <AccordionButton>
+                        <Box as="span" flex='1' textAlign='left'>
+                          Map
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel 
+                      pb={4} 
+                      h={isMobile ?'525px': '320px'}
+                      w={{base:'350px', sm:'500px', md:'100%'}}
+                      >
+                      <GameMapWrapper showActiveGame={showCurrentGame} height={isMobile ?'525px': '450px'}/>
+
+                    </AccordionPanel>
+                  </AccordionItem>
+                </Accordion>
+
           </Stack>
         </>
       )}

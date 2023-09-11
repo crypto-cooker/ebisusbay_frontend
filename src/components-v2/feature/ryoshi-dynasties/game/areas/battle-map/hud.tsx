@@ -26,9 +26,11 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 //for showing koban
-import {siPrefixedNumber} from "@src/utils";
+import {round, siPrefixedNumber} from "@src/utils";
 import NextApiService from "@src/core/services/api-service/next";
 import {appConfig} from "@src/Config";
+import {Contract, ethers} from "ethers";
+import {ERC1155} from "@src/Contracts/Abis";
 
 const config = appConfig();
 
@@ -59,10 +61,21 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
         collection: config.contracts.resources,
       });
       // const fortuneAndMitama = await ApiService.withoutKey().ryoshiDynasties.getErc20Account(user!.address!);
-      const kobanToken = nfts.data.find((token) => token.nftId === '1');
-      if (kobanToken) {
-        setKoban(siPrefixedNumber(kobanToken.balance));
+
+      let kobanBalance = 0;
+      if (nfts.data.length > 0) {
+        const kobanToken = nfts.data.find((token) => token.nftId === '1');
+        if (kobanToken) {
+          kobanBalance = kobanToken.balance ?? 0;
+        }
+      } else {
+        const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+        const contract = new Contract(config.contracts.resources, ERC1155, readProvider);
+        kobanBalance = await contract.balanceOf(user!.address!, 1);
+        kobanBalance = Number(kobanBalance);
       }
+      setKoban(siPrefixedNumber(round(kobanBalance)));
+
     } catch (error) {
       console.log(error);
     } finally {
@@ -104,13 +117,13 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   }
   const clearTimer = (e:any) => {
     startTimer(e);
-    if (Ref.current) clearInterval(Ref.current);
+    if (Ref.current) clearInterval(Ref.current as any);
     const id = setInterval(() => { startTimer(e); }, 1000) 
     Ref.current = id;
   }
   const clearTroopTimer = (e:any) => {
     startTroopTimer(e);
-    if (Ref2.current) clearInterval(Ref2.current);
+    if (Ref2.current) clearInterval(Ref2.current as any);
     const id = setInterval(() => { startTroopTimer(e); }, 1000) 
     Ref2.current = id;
   }

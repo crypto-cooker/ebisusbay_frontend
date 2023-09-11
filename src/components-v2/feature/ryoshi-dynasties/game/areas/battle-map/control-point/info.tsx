@@ -23,9 +23,11 @@ import ImageService from "@src/core/services/image";
 interface InfoTabProps {
   controlPoint: RdControlPoint;
   refreshControlPoint: () => void;
+  useCurrentGameId: boolean;
 }
+import {getLeaderBoard, getSeasonDate} from "@src/core/api/RyoshiDynastiesAPICalls";
 
-const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
+const InfoTab = ({controlPoint, refreshControlPoint, useCurrentGameId}: InfoTabProps) => {
   
   const [leaderboard, setLeaderboard] = useState<ReactElement[]>([]);
   const {game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
@@ -35,8 +37,13 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
   
   const GetWeekEndDate = async () => {
     if(!rdGameContext) return;
-    const timestamp = rdGameContext?.game?.endAt;
-    setWeekEndDate(formatDate(timestamp));
+
+    if(useCurrentGameId){
+      setWeekEndDate(formatDate(rdGameContext?.game?.endAt));
+  } else {
+    const previousGame = await getSeasonDate(rdGameContext.history.previousGameId);
+    setWeekEndDate(formatDate(previousGame.endAt));
+    }
   }
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric"}
@@ -137,9 +144,14 @@ const InfoTab = ({controlPoint, refreshControlPoint}: InfoTabProps) => {
                marginTop='8'
                marginBottom='8'
                >
+                {useCurrentGameId ? (
                 <Text as='i' textColor={'#aaa'}>
-                  The faction with the highest troop count on {weekEndDate} will receive {controlPoint.points} points
+                  The faction with the highest troop count on {weekEndDate} will receive <b>{controlPoint.points}</b> points
+                </Text>) : (
+                <Text as='i' textColor={'#aaa'}>
+                  Final standings at {weekEndDate}. <b>{controlPoint.points}</b> points were awarded to <b>{controlPoint?.leaderBoard[0]?.name}</b>
                 </Text>
+                )}
               </Flex>
             </Flex>
           </>

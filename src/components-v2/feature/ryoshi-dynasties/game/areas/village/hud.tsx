@@ -19,7 +19,7 @@ import RdButton from "../../../components/rd-button";
 import React, {useEffect, useRef, useState, useContext, Attributes} from "react";
 import NextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
-import {ethers} from "ethers";
+import {Contract, ethers} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
 import {round, siPrefixedNumber} from "@src/utils";
 import ImageService from "@src/core/services/image";
@@ -37,6 +37,7 @@ import {faBuilding, faClipboardList, faBlog} from "@fortawesome/free-solid-svg-i
 
 import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 import { random, range } from "lodash";
+import {ERC1155} from "@src/Contracts/Abis";
 
 interface VillageHudProps {
   onOpenBuildings: () => void;
@@ -87,7 +88,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
   }
   const clearTimer = (e:any) => {
     startTimer(e);
-    if (Ref.current) clearInterval(Ref.current);
+    if (Ref.current) clearInterval(Ref.current as any);
     const id = setInterval(() => { startTimer(e); }, 1000) 
     Ref.current = id;
   }
@@ -112,9 +113,17 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
       });
       const fortuneAndMitama = await ApiService.withoutKey().ryoshiDynasties.getErc20Account(user!.address!)
 
+      let kobanBalance = 0;
       if (nfts.data.length > 0) {
-        setKoban(siPrefixedNumber(round(Number(nfts.data[0].balance))));
+        kobanBalance = Number(nfts.data[0].balance);
+      } else {
+        const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+        const contract = new Contract(config.contracts.resources, ERC1155, readProvider);
+        kobanBalance = await contract.balanceOf(user!.address!, 1);
+        kobanBalance = Number(kobanBalance);
       }
+      setKoban(siPrefixedNumber(round(kobanBalance)));
+
       if (!!fortuneAndMitama) {
         setFortune(siPrefixedNumber(round(Number(ethers.utils.formatEther(fortuneAndMitama.fortuneBalance)))));
         setMitama(siPrefixedNumber(round(Number(fortuneAndMitama.mitamaBalance))));

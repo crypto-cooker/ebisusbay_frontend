@@ -24,6 +24,7 @@ import {
 } from "@src/GlobalState/user-batch";
 import {MobileBatchPreview} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-batch-preview";
 import {
+  Alert, AlertDescription, AlertTitle,
   Box, Center,
   CloseButton,
   Collapse,
@@ -48,7 +49,7 @@ import Select from "react-select";
 import {getTheme} from "@src/Theme/theme";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import {SortOption, sortOptions} from "@src/components-v2/feature/account/profile/tabs/inventory/sort-options";
-import {MobileSort} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-sort";
+import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 import InventoryFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
 import useDebounce from "@src/core/hooks/useDebounce";
@@ -255,12 +256,8 @@ export default function Inventory({ address }: InventoryProps) {
     setSortVisible(!sortVisible)
   };
 
-  const handleSort = useCallback((sortOption: any) => {
-    const sort: WalletsQueryParams = {
-      sortBy: sortOption.key,
-      direction: sortOption.direction
-    }
-    setQueryParams({...queryParams, ...sort});
+  const handleSort = useCallback((sort: string, direction: string) => {
+    setQueryParams({...queryParams, sortBy: sort as any, direction: direction as any});
   }, [queryParams]);
 
   const userTheme = useAppSelector((state) => state.user.theme);
@@ -399,7 +396,7 @@ export default function Inventory({ address }: InventoryProps) {
                     getOptionLabel={(option: SortOption) => option.label}
                     getOptionValue={(option: SortOption) => option.id}
                     defaultValue={sortOptions[0]}
-                    onChange={handleSort}
+                    onChange={(sortOption) => handleSort(sortOption!.key, sortOption!.direction)}
                   />
                 </Box>
               </Box>
@@ -407,6 +404,11 @@ export default function Inventory({ address }: InventoryProps) {
           </HStack>
         )}
       </Stack>
+
+      <Alert fontSize='sm' status='warning'>
+        <AlertTitle>Please Note:</AlertTitle>
+        <AlertDescription>CRC-1155 NFTs such as Ryoshi Resources are currently unavailable for viewing. We apologize for ths inconvenience and hope to have this resolved as soon as possible.</AlertDescription>
+      </Alert>
 
       <InventoryFilterContainer
         queryParams={queryParams}
@@ -432,6 +434,7 @@ export default function Inventory({ address }: InventoryProps) {
       </InventoryFilterContainer>
       <MobileSort
         show={!!useMobileMenu && sortVisible}
+        sortOptions={sortOptions}
         currentSort={sortOptions.find((option) => option.key === queryParams.sortBy && option.direction === queryParams.direction)}
         onSort={handleSort}
         onHide={() => setSortVisible(false)}

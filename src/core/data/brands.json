@@ -562,7 +562,7 @@
       "telegram": "https://t.me/thelaboratoryio",
       "gitbook": "https://dapps.thelaboratory.io/exchange"
     },
-    "featured": true,
+    "featured": false,
     "categories": [],
     "style": {}
   },
@@ -1043,6 +1043,30 @@
       "website": "https://deadbeatdadscronos.com/",
       "twitter": "https://twitter.com/zolape01",
       "discord": "https://discord.gg/KnRmEA4u8v"
+    },
+    "featured": false,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "the-rainbowland-metaverse",
+    "name": "The Rainbowland Metaverse",
+    "description": "Introducing the Rainbowland Metaverse: A World of Infinite Possibilities\n\nWelcome to the Rainbowland Metaverse, a groundbreaking digital realm where endless adventures, lucrative opportunities, and artistic creativity converge. Our metaverse comprises three remarkable collections, all proudly listed on EbisusBay, each offering a unique experience that invites you to be part of something extraordinary.",
+    "images": {
+      "banner": "/img/brands/the-rainbowland-metaverse/banner.webp",
+      "preview": "/img/brands/the-rainbowland-metaverse/preview.webp"
+    },
+    "collections": [
+      "0x3720cde69E4E997bbDeaEc7b4e7b5f8c3C406869",
+      "0xf37A3686800A9fb19625c05e1A7ACf2D232e8aa4",
+      "0x3fF260ce7A8dFCaDAF5E880137ee1750ceae9889"
+    ],
+    "socials": {
+      "website": "https://rainbowland.org/",
+      "twitter": "https://twitter.com/TheRainbowland",
+      "discord": "https://discord.gg/vPrsBGEngd",
+      "telegram": "https://t.me/newsrainbowland",
+      "medium": "https://medium/.com/@the-rainbowland-metaverse"
     },
     "featured": false,
     "categories": [],

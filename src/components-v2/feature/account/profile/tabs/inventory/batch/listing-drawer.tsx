@@ -31,9 +31,10 @@ import {
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import {Spinner} from "react-bootstrap";
-import React, {ChangeEvent, useCallback, useRef, useState} from "react";
+import React, {ChangeEvent, useCallback, useMemo, useRef, useState} from "react";
 import {
   addToBatchListingCart,
+  applyCurrencyToAll,
   applyExpirationToAll,
   applyFloorPctToAll,
   applyFloorPriceToAll,
@@ -71,6 +72,7 @@ import ListingBundleDrawerForm, {
 import {parseErrorMessage} from "@src/helpers/validator";
 import {getPrices} from "@src/core/api/endpoints/prices";
 import {useExchangeRate} from "@src/hooks/useGlobalPrices";
+import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 
 const config = appConfig();
 const MAX_NFTS_IN_GAS_CART = 100;
@@ -89,10 +91,16 @@ export const ListingDrawer = () => {
   const [expressMode, setExpressMode] = useState(false);
   const [sortAllOption, setSortAllOption] = useState<string>();
   const [expirationDateAllOption, setExpirationDateAllOption] = useState<string>();
+  const [currencyAllOption, setCurrencyAllOption] = useState<string>();
 
   const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings();
   const [cancelGaslessListing, response] = useCancelGaslessListing();
   const { tokenToCroValue } = useExchangeRate();
+
+  const currencies = useMemo(() => {
+    return  ['cro', ...new Set(batchListingCart.items.map((item) => item.currency?.toLowerCase() ?? 'cro'))]
+      .filter((currencySymbol) => !!currencySymbol && config.listings.currencies.available.includes(currencySymbol));
+  }, [batchListingCart.items]);
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -137,14 +145,16 @@ export const ListingDrawer = () => {
       }, {} as Record<string, number>);
   }
 
-  const handleAddCollection = async (address: string) => {
+  const handleAddCollection = async (address: string, unlistedOnly?: boolean) => {
     if (!address) return;
-    const nfts = await nextApiService.getWallet(user.address!, {
+    let params: WalletsQueryParams = {
       page: 1,
       collection: [address],
-      pageSize: 100,
-      listed: 0
-    });
+      pageSize: 100
+    }
+    if (!!unlistedOnly) params.listed = 0;
+
+    const nfts = await nextApiService.getWallet(user.address!, params);
     for (const nft of nfts.data) {
       dispatch(addToBatchListingCart(nft));
     }
@@ -179,11 +189,18 @@ export const ListingDrawer = () => {
       dispatch(cascadePricesPercent({ startingPrice: value, currencyRates, step }));
     }
   }
-  const handleApplyExpirationDateToAll = (value?: string) => {
+  const handleApplyCurrencyToAll = (value?: string) => {
     if (!value) return;
     
+    dispatch(applyCurrencyToAll(value));
+  }
+
+  const handleApplyExpirationDateToAll = (value?: string) => {
+    if (!value) return;
+
     dispatch(applyExpirationToAll(Number(value)));
   }
+
   const handleSortAll = (value?: string) => {
     if (!value) return;
 
@@ -416,6 +433,28 @@ export const ListingDrawer = () => {
                   <HStack mt={1}>
                     <CustomCascadeRow
                       onChange={handleCascadePriceToAll}
+                    />
+                  </HStack>
+                </Box>
+                <Box w="full">
+                  <Text fontSize="sm" fontWeight="bold">Apply currency:</Text>
+                  <HStack mt={1}>
+                    <Select
+                      placeholder='Select currency'
+                      size="sm"
+                      bg="transparent !important"
+                      onChange={(e) => setCurrencyAllOption(e.target.value)}
+                    >
+                      {currencies.map((currency) => (
+                        <option key={currency.toLowerCase()} value={currency.toLowerCase()}>{currency.toUpperCase()}</option>
+                      ))}
+                    </Select>
+                    <IconButton
+                      aria-label='Apply Currency'
+                      icon={<FontAwesomeIcon icon={faArrowRight}/>}
+                      size='sm'
+                      mt={1}
+                      onClick={() => handleApplyCurrencyToAll(currencyAllOption)}
                     />
                   </HStack>
                 </Box>

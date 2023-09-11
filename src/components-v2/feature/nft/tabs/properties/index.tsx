@@ -3,16 +3,11 @@ import React from "react";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {Box, SimpleGrid} from "@chakra-ui/react";
-import {
-  isCrosmocraftsPartsDrop,
-  isEvoSkullCollection,
-  isLazyHorseCollection,
-  isLazyHorsePonyCollection
-} from "@src/utils";
+import {isEvoSkullCollection, isLazyHorseCollection, isLazyHorsePonyCollection} from "@src/utils";
 
 interface PropertiesProps {
   address: string;
-  slug: string;
+  slug?: string;
   attributes: any;
   queryKey: string;
 }

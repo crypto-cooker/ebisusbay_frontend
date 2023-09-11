@@ -19,6 +19,10 @@ import {
   CollectionInfoQueryParams
 } from "@src/core/services/api-service/mapi/queries/collectioninfo";
 import OffersV2Query, {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
+import {
+  FullCollectionsQuery,
+  FullCollectionsQueryParams
+} from "@src/core/services/api-service/mapi/queries/fullcollections";
 
 const config = appConfig();
 
@@ -41,7 +45,19 @@ class Mapi {
     return new PagedList<Listing>(
       response.data.listings,
       response.data.page,
-      response.data.page < response.data.totalPages
+      response.data.page < response.data.totalPages,
+      response.data.totalCount
+    )
+  }
+
+  async getCollectionItems(query: FullCollectionsQueryParams): Promise<PagedList<any>> {
+    const response = await this.collections.getFullCollections(new FullCollectionsQuery(query));
+
+    return new PagedList<any>(
+      response.data.nfts,
+      response.data.page,
+      response.data.page < response.data.totalPages,
+      response.data.totalCount
     )
   }
 
@@ -65,7 +81,8 @@ class Mapi {
     return new PagedList<OwnerListing>(
       listings,
       response.data.page,
-      response.data.page < response.data.totalPages
+      response.data.page < response.data.totalPages,
+      response.data.totalCount
     )
   }
 
@@ -80,7 +97,8 @@ class Mapi {
     return new PagedList<Offer>(
       response.data.offers,
       response.data.page,
-      response.data.page < response.data.totalPages
+      response.data.page < response.data.totalPages,
+      response.data.totalCount
     )
   }
 
@@ -90,7 +108,8 @@ class Mapi {
     return new PagedList<Offer>(
       response.data.offers,
       response.data.page,
-      response.data.page < response.data.totalPages
+      response.data.page < response.data.totalPages,
+      response.data.totalCount
     )
   }
 
@@ -113,7 +132,8 @@ class Mapi {
     return new PagedList<WalletNft>(
       nfts,
       response.data.page,
-      response.data.page < response.data.totalPages
+      response.data.page < response.data.totalPages,
+      response.data.totalCount
     )
   }
 
@@ -130,7 +150,8 @@ class Mapi {
     return new PagedList<Listing>(
       response.data.collections,
       response.data.page,
-      response.data.page < response.data.totalPages
+      response.data.page < response.data.totalPages,
+      response.data.totalCount
     )
   }
 

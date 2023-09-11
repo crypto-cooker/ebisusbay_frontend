@@ -186,6 +186,12 @@ const batchListingSlice = createSlice({
         return obj;
       });
     },
+    applyCurrencyToAll: (state, action) => {
+      const currency = action.payload;
+      state.items = state.items.map((o) => {
+        return {...o, currency};
+      });
+    },
     applyExpirationToAll: (state, action) => {
       const expiration = action.payload;
       state.items = state.items.map((o) => {
@@ -283,6 +289,7 @@ export const {
   cascadePrices,
   cascadePricesPercent,
   applyPriceToAll,
+  applyCurrencyToAll,
   applyExpirationToAll,
   applyFloorPriceToAll,
   applyFloorPctToAll,

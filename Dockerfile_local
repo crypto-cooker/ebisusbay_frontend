@@ -23,6 +23,7 @@ COPY .husky ./.husky
 COPY pages ./pages
 COPY public ./public
 COPY src ./src
+COPY types ./types
 COPY next.config.js ./
 COPY jsconfig.json ./
 COPY tsconfig.json ./
@@ -52,6 +53,7 @@ COPY --from=build /usr/src/app/.husky ./.husky
 COPY --from=build /usr/src/app/pages ./pages
 COPY --from=build /usr/src/app/public ./public
 COPY --from=build /usr/src/app/src ./src
+COPY --from=build /usr/src/app/types ./types
 COPY --from=build /usr/src/app/next.config.js ./
 
 COPY --from=build /usr/src/app/package*.json ./

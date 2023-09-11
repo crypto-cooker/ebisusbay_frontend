@@ -274,6 +274,12 @@ export const configData = {
           '0x1220b4E081c04f345C572536EA531Ed2AdE691BD': ['cro', 'frtn', 'bcro'], // AxOl Elites
           '0x3fe29ffa527d712a5b202ddaeff714c12cb6aff5': ['cro', 'frtn'], // Snap!
           '0x1368a855545724B165F8c3e466ec30e1fB2A3683': ['cro', 'frtn', 'bcro'], // Football Squares S2
+          '0x09ddC7d0535a4f59f62eC7eCBc85265b0513480e': ['cro', 'frtn'], // JAFC Comics
+          '0x35f23199d7063bf897C692a6f1151BE88f4a58DD': ['cro', 'frtn'], // Heroes of Cronoxity
+          '0x12b06594134bA6967c29e140675532D493cA1AF0': ['cro', 'frtn'], // Heroes University
+          '0x8eD66bbF8B3B0577443c3fB3c712f69165515376': ['cro', 'frtn'], // Rare Pepe Cult
+          '0x5c18d5eb211203eb80b591aa71a269b1e16e9eba': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Ballies: The Gear v2
+          '0x50f5d303103E55ECfe67333060361c90cC8B2D14': ['cro', 'frtn'], // Possessed Chests
         }
       }
     }
@@ -618,10 +624,10 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn'],
+        available: ['cro', 'frtn', 'vrse'],
         nft: {
-          '0xCF7aedEbC5223c4C620625A560300582B77D8719': ['frtn'],
-          '0xe51377a260043381b8B525D33B9fFBC601A1469b': ['frtn'],
+          '0xCF7aedEbC5223c4C620625A560300582B77D8719': ['cro', 'frtn'], // Ryoshi VIP
+          '0xe51377a260043381b8B525D33B9fFBC601A1469b': ['frtn', 'vrse'],
           '0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad': ['frtn'],
           '0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5': ['frtn'],
           '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad': ['frtn'],

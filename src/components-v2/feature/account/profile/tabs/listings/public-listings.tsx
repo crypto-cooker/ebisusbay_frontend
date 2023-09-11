@@ -24,7 +24,7 @@ import Select from "react-select";
 import {SortOption, sortOptions} from "@src/components-v2/feature/account/profile/tabs/listings/sort-options";
 import {getTheme} from "@src/Theme/theme";
 import {useAppSelector} from "@src/Store/hooks";
-import {MobileSort} from "@src/components-v2/feature/account/profile/tabs/listings/mobile-sort";
+import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 
 interface UserPrivateListingsProps {
   walletAddress: string
@@ -53,12 +53,8 @@ const UserPublicListings = ({ walletAddress }: UserPrivateListingsProps) => {
     setSortVisible(!sortVisible)
   };
 
-  const handleSort = useCallback((sortOption: any) => {
-    let sort: ListingsQueryParams = {
-      sortBy: sortOption.key,
-      direction: sortOption.direction
-    }
-    setQueryParams({...queryParams, ...sort});
+  const handleSort = useCallback((sort: string, direction: string) => {
+    setQueryParams({...queryParams, sortBy: sort as any, direction: direction as any});
   }, [queryParams]);
 
   const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -175,7 +171,7 @@ const UserPublicListings = ({ walletAddress }: UserPrivateListingsProps) => {
                     getOptionLabel={(option: SortOption) => option.label}
                     getOptionValue={(option: SortOption) => option.id}
                     defaultValue={sortOptions[0]}
-                    onChange={handleSort}
+                    onChange={(sortOption) => handleSort(sortOption!.key, sortOption!.direction)}
                   />
                 </Box>
               </Box>
@@ -199,6 +195,7 @@ const UserPublicListings = ({ walletAddress }: UserPrivateListingsProps) => {
 
       <MobileSort
         show={!!useMobileMenu && sortVisible}
+        sortOptions={sortOptions}
         currentSort={sortOptions.find((option) => option.key === queryParams.sortBy && option.direction === queryParams.direction)}
         onSort={handleSort}
         onHide={() => setSortVisible(false)}

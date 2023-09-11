@@ -41,7 +41,6 @@ import {toast} from "react-toastify";
 import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
 import {Menu} from '@src/Components/components/chakra-components';
 import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-svg-icons';
-import {getStats} from '@src/GlobalState/collectionSlice';
 import NextLink from 'next/link';
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 import {Button as ChakraButton} from "@chakra-ui/button";
@@ -192,17 +191,6 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
 
     return nft.original_image;
   };
-
-
-  const collectionStats = useAppSelector((state) => state.collection.stats);
-
-  useEffect(() => {
-    async function asyncFunc() {
-      dispatch(getStats(collection));
-    }
-    asyncFunc();
-    // eslint-disable-next-line
-  }, [dispatch, collection]);
 
   const [currentTab, setCurrentTab] = useState(tabs.properties);
   const handleTabChange = useCallback((tab: string) => {
@@ -375,17 +363,14 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                   )}
 
                   {collection.listable && (
-                    <>
-                      <PriceActionBar
-                        offerType={offerType}
-                        onOfferSelected={() => handleMakeOffer()}
-                        label="Floor Price"
-                        collectionName={collectionName}
-                        isVerified={collection.verification?.verified}
-                        collectionStats={collectionStats}
-                        isOwner={false}
-                      />
-                    </>
+                    <PriceActionBar
+                      offerType={offerType}
+                      onOfferSelected={() => handleMakeOffer()}
+                      label="Floor Price"
+                      collectionName={collectionName}
+                      isVerified={collection.verification?.verified}
+                      isOwner={false}
+                    />
                   )}
                   <div className="row" style={{ gap: '2rem 0' }}>
                     <ProfilePreview

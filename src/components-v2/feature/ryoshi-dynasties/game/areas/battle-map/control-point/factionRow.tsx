@@ -58,7 +58,7 @@ const ResultFaction = ({collection, faction, onClick, onRemove, useCloseButton =
             {faction.type === 'COLLECTION' && (
               <>
               {collectionNames.map((collectionName: any) => (
-                <Text fontWeight="l" color='#aaaa' fontSize={12} noOfLines={1}>{collectionName}</Text>
+                <Text key={collectionName} fontWeight="l" color='#aaaa' fontSize={12} noOfLines={1}>{collectionName}</Text>
               ))}
               </>
             )}

@@ -22,11 +22,13 @@ export class PagedList<TData> implements IPaginatedList<TData> {
   public nextPage: number;
   public hasNextPage: boolean;
   public page: number;
+  public totalCount?: number;
 
-  constructor(data: TData[], page: number, hasNextPage: boolean) {
+  constructor(data: TData[], page: number, hasNextPage: boolean, totalCount?: number) {
     this.data = data;
     this.page = page;
     this.nextPage = page + 1;
     this.hasNextPage = hasNextPage;
+    this.totalCount = totalCount;
   }
 }

@@ -32,7 +32,6 @@ import {
   Spacer,
   Text,
   useBreakpointValue,
-  useColorModeValue,
   useMediaQuery,
   Wrap
 } from "@chakra-ui/react";
@@ -88,7 +87,6 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
   const user = useAppSelector((state) => state.user);
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const router = useRouter();
-  const batchListingBorderColor = useColorModeValue('#000', '#FFF');
   const variants = {
     expand: { gridTemplateColumns: '1fr 358px' },
     collapse: { gridTemplateColumns: '1fr 0px' },
@@ -333,7 +331,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
             </div>
           </section>
         </GridItem>
-        <GridItem borderLeft={useMobileCartView ? 'none' : '0.5px solid'} borderLeftColor={batchListingBorderColor}>
+        <GridItem>
           <BatchDrawer
             onClose={() => dispatch(closeBatchListingCart())}
             position="fixed"

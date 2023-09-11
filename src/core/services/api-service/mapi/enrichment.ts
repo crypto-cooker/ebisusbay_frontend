@@ -64,7 +64,6 @@ export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
       }
     } catch (e) {
       image = fallbackImageUrl();
-      console.log(e);
     }
     if (!image) image = fallbackImageUrl();
     nft.image = image;

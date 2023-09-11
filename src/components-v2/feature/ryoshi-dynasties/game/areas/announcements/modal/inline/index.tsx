@@ -19,6 +19,7 @@ const AnnouncementBoardModal = ({isOpen, onClose, onOpenDailyCheckin}: Announcem
   const [page, setPage] = useState<ReactElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [title, setTitle] = useState<string>('RYOSHI DYNASTIES');
+  // const scrollRef = React.useRef<HTMLDivElement>(null);
 
   const returnHome = () => {
     setPage(null);
@@ -29,6 +30,16 @@ const AnnouncementBoardModal = ({isOpen, onClose, onOpenDailyCheckin}: Announcem
     returnHome();
     onClose();
   };
+
+  // const scrollToTop = () => {
+  //   console.log('scrollToTop');
+  //   console.log('scrollRef', scrollRef.current);
+  //   scrollRef.current?.scrollTo({
+  //     top: 0,
+  //     behavior: 'smooth',
+  //     });
+    
+  // }
 
   const handleBack = () => {
     // console.log('handleBack?', !!page, page);
@@ -43,6 +54,7 @@ const AnnouncementBoardModal = ({isOpen, onClose, onOpenDailyCheckin}: Announcem
   const handleShowLeaderboard = useCallback(() => {
     setPage(<LeaderboardPage onReturn={returnHome} />)
     setTitle('Leaderboard');
+    // scrollToTop();
   }, [returnHome]);
 
   const handleShowPatchNotes = useCallback((changeDate:string, patchNumer:string, notes:string[]) => {
