@@ -25503,7 +25503,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/succubus/drop.gif",
@@ -26516,7 +26516,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/cyber-squad/drop.png",
@@ -29077,7 +29077,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/murder-birdz/drop.webp",
@@ -29692,7 +29692,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": true,
+      "published": false,
       "complete": false,
       "images": {
         "drop": "/img/drops/fallen-angels-demons/drop.webp",
