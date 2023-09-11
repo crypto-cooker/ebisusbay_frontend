@@ -5,7 +5,7 @@ import ListingCard from '@src/Components/components/ListingCard';
 import {isMetapixelsCollection} from '@src/utils';
 import ListingBundleCard from '@src/Components/components/ListingBundleCard';
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
-import {Box, SimpleGrid} from "@chakra-ui/react";
+import {Box, Center, SimpleGrid, Spinner} from "@chakra-ui/react";
 import nextApiService from "@src/core/services/api-service/next";
 import {useInfiniteQuery} from "@tanstack/react-query";
 
@@ -37,11 +37,9 @@ const ListingsGroup = ({limitSize, showLoadMore = true, queryParams, smallWindow
 
   const memoizedContent = useMemo(() => {
     return status === "loading" ? (
-      <div className="col-lg-12 text-center">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
+      <Center>
+        <Spinner />
+      </Center>
     ) : status === "error" ? (
       <p>Error: {(error as any).message}</p>
     ) : (
@@ -89,13 +87,9 @@ const ListingsGroup = ({limitSize, showLoadMore = true, queryParams, smallWindow
         hasMore={hasNextPage ?? false}
         style={{ overflow: 'hidden' }}
         loader={
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          </div>
+          <Center>
+            <Spinner />
+          </Center>
         }
       >
         {memoizedContent}
