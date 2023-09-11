@@ -207,24 +207,24 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     ))))
 
     // console.log('rdGameContext.gameLeaders', rdGameContext.gameLeaders);
-
-    const newData = await getLeadersForSeason(rdGameContext.history.previousGameId);
-    newData.forEach((newData: any) => (
-      prevIcons.forEach((prevIcons: any) => (
-        newData.name === prevIcons.name ? prevIcons.image = newData.factions[0].image : null
-    ))))
+    
+    if(!useCurrentGameId) {
+      const newData = await getLeadersForSeason(rdGameContext.history.previousGameId);
+      newData.forEach((newData: any) => (
+        prevIcons.forEach((prevIcons: any) => (
+          newData.name === prevIcons.name ? prevIcons.image = newData.factions[0].image : null
+      ))))
+      // console.log('prevIcons', prevIcons);
+      setPreviousIcons(prevIcons);
+    }
     
     // console.log('newIcons', newIcons);
-    // console.log('prevIcons', prevIcons);
-    
     setCurrentIcons(newIcons);
-    setPreviousIcons(prevIcons);
     setAllIconsAqcuired(true);
-
-    // console.log('allIconsAqcuired', allIconsAqcuired);
   }
   useEffect(() => {
     setIcons(useCurrentGameId ? currentIcons : previousIcons);
+    // console.log('useCurrentGameId', useCurrentGameId);
     // console.log('showActiveGame', showActiveGame);
   }, [useCurrentGameId, currentIcons, previousIcons]);
   

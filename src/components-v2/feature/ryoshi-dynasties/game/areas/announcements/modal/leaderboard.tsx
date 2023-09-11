@@ -219,7 +219,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                 <GridItem colSpan={{base:2, sm:1}} maxW={{base: '300px', sm: '500px'}}
                   justifySelf={{base:'center', sm:'right'}}
                 >
-                <Tabs > 
+                <Tabs isLazy> 
                   <TabList>
                     <Tab onClick={() => setShowCurrentGame(true)}>
                       <VStack>
