@@ -8,20 +8,14 @@
 // - Total points earned all time
 // - delegation controls
 
-import { Center, Spinner, Box, HStack, useMediaQuery, VStack, Text, Flex,
-Grid, GridItem, FormLabel,
-} from "@chakra-ui/react";
-import { useEffect, useState, Fragment, useContext } from "react";
+import {Flex, FormLabel, Grid, GridItem, Text, useMediaQuery, VStack,} from "@chakra-ui/react";
+import {useContext, useEffect, useState} from "react";
 import {appConfig} from "@src/Config";
-import { getAllFactionsSeasonId} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getAllFactionsSeasonId} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {
-    RyoshiDynastiesContext,
-    RyoshiDynastiesContextProps
-  } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-  import {
-    RyoshiDynastiesPreloaderContext,
-    RyoshiDynastiesPreloaderProps
-  } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/preloader-context";
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import SearchFaction from "@src/components-v2/feature/ryoshi-dynasties/components/search-factions";
 
 const FactionDirectoryComponent = () => {
