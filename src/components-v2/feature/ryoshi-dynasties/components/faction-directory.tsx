@@ -25,8 +25,6 @@ import {
 import SearchFaction from "@src/components-v2/feature/ryoshi-dynasties/components/search-factions";
 
 const FactionDirectoryComponent = () => {
-
-  const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
   const isMobile = useMediaQuery("(max-width: 768px)")[0];
     const config = appConfig();
     const [factions, setFactions] = useState<string[]>([])
