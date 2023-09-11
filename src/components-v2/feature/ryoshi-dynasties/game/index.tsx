@@ -13,8 +13,9 @@ import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/typ
 import GameSync from "@src/components-v2/feature/ryoshi-dynasties/game/game-sync";
 import ImagePreloader from "@src/components-v2/feature/ryoshi-dynasties/game/image-preloader";
 import {InlineModalContext} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/inline-modal-context";
+import { Box, Fade, ScaleFade, Slide, SlideFade, Collapse, useDisclosure} from '@chakra-ui/react'
 import DynastiesLands from "./areas/lands";
-import { Fade, ScaleFade, Slide, SlideFade, Collapse, Box, useDisclosure} from '@chakra-ui/react'
+
 const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | null}) => {
   const user = useAppSelector((state) => state.user);
 
@@ -27,7 +28,6 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
   const navigate = (page: string) => {
     setPreviousPage(currentPage)
     setCurrentPage(page)
-    console.log('navigate', page)
   };
 
   const returnToPreviousPage = () => {
@@ -55,6 +55,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
               <BattleMap onChange={returnToPreviousPage}/>
               // </Suspense>
               // ) : currentPage === 'leaderboard' ? (
+              //   <Leaderboard onBack={returnToPreviousPage}/>
             ) : currentPage === 'bank' ? (
               <Bank address={user.address ?? ''} onBack={returnToPreviousPage} />
             ) : currentPage === 'allianceCenter' ? (
@@ -63,8 +64,11 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
               <Academy onBack={returnToPreviousPage} />
             ) : currentPage === 'lands' ? (
               <DynastiesLands onBack={returnToPreviousPage} showBackButton={true}/>
+               // ): currentPage === 'announcementBoard' ? (
+               // <AnnouncementBoard onBack={returnToPreviousPage} />
             ) : (!currentPage || currentPage === 'village') && (
               <Village onChange={navigate} firstRun={firstRun} onFirstRun={() => setFirstRun(true)}/>
+              // <BattleMap onChange={navigate} />
             )}
           </Box>
         </ImagePreloader>
