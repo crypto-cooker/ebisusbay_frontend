@@ -67,11 +67,11 @@ const gothamBook = localFont({
   fallback: ['Roboto', 'system-ui', 'arial'],
 })
 
-interface AllianceCenterInlineProps {
+interface AllianceCenterProps {
   onClose: () => void;
 }
 
-const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
+const AllianceCenter = ({onClose}: AllianceCenterProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
 
@@ -201,7 +201,7 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
   )
 }
 
-export default AllianceCenterInline;
+export default AllianceCenter;
 
 
 const CurrentFaction = () => {

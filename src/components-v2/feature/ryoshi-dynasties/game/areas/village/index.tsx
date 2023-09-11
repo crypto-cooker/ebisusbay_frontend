@@ -34,7 +34,7 @@ import BattleLog from "@src/components-v2/feature/ryoshi-dynasties/game/modals/b
 import Buildings from "@src/components-v2/feature/ryoshi-dynasties/game/modals/buildings";
 
 import ImageService from "@src/core/services/image";
-import AllianceCenterInline from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
+import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 import {
   RyoshiDynastiesContext,

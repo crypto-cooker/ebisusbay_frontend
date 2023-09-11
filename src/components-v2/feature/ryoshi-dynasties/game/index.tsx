@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
-import AllianceCenterInline from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
+import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 // import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
 import Academy from "@src/components-v2/feature/ryoshi-dynasties/game/areas/academy";
 // import UserPage from "@src/Components/BattleBay/Areas/UserPage";
@@ -58,7 +58,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
             ) : currentPage === 'bank' ? (
               <Bank address={user.address ?? ''} onBack={returnToPreviousPage} />
             ) : currentPage === 'allianceCenter' ? (
-              <AllianceCenterInline onClose={returnToPreviousPage} />
+              <AllianceCenter onClose={returnToPreviousPage} />
             ) : currentPage === 'academy' ? (
               <Academy onBack={returnToPreviousPage} />
             ) : currentPage === 'lands' ? (
