@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Contract, ethers } from 'ethers';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import Blockies from 'react-blockies';
 import { faCrow, faExternalLinkAlt, faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -38,6 +37,7 @@ import {getListing} from "@src/core/api";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferType} from "@src/core/services/api-service/types";
 import ImageService from "@src/core/services/image";
+import {Center, Spinner} from "@chakra-ui/react";
 
 const config = appConfig();
 const tabs = {
@@ -235,15 +235,9 @@ const Listing = () => {
         image={listing?.nft?.image}
       />
       {isLoading ? (
-        <section className="gl-legacy container">
-          <div className="row mt-4">
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          </div>
-        </section>
+        <Center>
+          <Spinner />
+        </Center>
       ) : (
         <section className="gl-legacy container">
           <div className="row mt-md-5 pt-md-4">

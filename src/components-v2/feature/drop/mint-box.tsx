@@ -3,7 +3,7 @@ import {Box, Button, Flex, Heading, HStack, Input, Skeleton, Stack, Text, useNum
 import {dropState as statuses} from "@src/core/api/enums";
 import {constants, ethers} from "ethers";
 import {createSuccessfulTransactionToastContent, percentage, round} from "@src/utils";
-import {ProgressBar, Spinner} from "react-bootstrap";
+import {ProgressBar} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";

@@ -6,24 +6,16 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
-  Text,
-  Flex,
-  HStack,
-  Box
+  ModalOverlay, Spinner
 } from "@chakra-ui/react";
 import React, {useState} from 'react';
 import Button from "@src/Components/components/Button";
-import { getTheme } from "@src/Theme/theme";
-import { Card, Form, Spinner } from 'react-bootstrap';
-import { useSelector, useDispatch } from "react-redux";
+import {getTheme} from "@src/Theme/theme";
+import {useDispatch, useSelector} from "react-redux";
 import useUnwrapBundle from "../Account/Settings/hooks/useUnwrapBundle";
-import { toast } from 'react-toastify';
-import {
-  setRefetchNfts,
-} from "@src/GlobalState/user-batch";
+import {toast} from 'react-toastify';
+import {setRefetchNfts,} from "@src/GlobalState/user-batch";
 import ImageContainer from "../Bundle/ImagesContainer";
-
 
 
 const UnwrapBundleDialog = ({ isOpen, onClose, nftBundle }) => {
@@ -75,9 +67,7 @@ const UnwrapBundleDialog = ({ isOpen, onClose, nftBundle }) => {
                 {isLoading ? (
                   <>
                     Unwrapping
-                    <Spinner animation="border" role="status" size="sm" className="ms-1">
-                      <span className="visually-hidden">Loading...</span>
-                    </Spinner>
+                    <Spinner size='sm' ms={1} />
                   </>
                 ) : (
                   <>Unwrap</>

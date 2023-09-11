@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { auctionState } from '@src/core/api/enums';
 import { Auction } from '@src/core/models/auction';
 import { commify } from 'ethers/lib/utils';
-import {Form, Spinner} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import {
   caseInsensitiveCompare,
   createSuccessfulTransactionToastContent,
@@ -19,6 +19,7 @@ import {toast} from "react-toastify";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {appConfig} from "@src/Config";
+import {Spinner} from "@chakra-ui/react";
 
 const config = appConfig();
 
@@ -322,9 +323,7 @@ const ManageAuctionList = () => {
               {executingStart ? (
                 <>
                   Starting...
-                  <Spinner animation="border" role="status" size="sm" className="ms-1">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
+                  <Spinner size='sm' ms={1} />
                 </>
               ) : (
                 <>Start Auction</>

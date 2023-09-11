@@ -1,6 +1,5 @@
 import React, {memo, useMemo} from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {Spinner} from 'react-bootstrap';
 
 import ListingCard from '@src/Components/components/ListingCard';
 import {isMetapixelsCollection} from '@src/utils';

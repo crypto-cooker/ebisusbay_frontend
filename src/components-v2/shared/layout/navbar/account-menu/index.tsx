@@ -22,7 +22,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {toast} from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import {Modal, ModalTitle, Spinner} from 'react-bootstrap';
+import {Modal, ModalTitle} from 'react-bootstrap';
 import styled from 'styled-components';
 import {ethers} from 'ethers';
 import {round, shortAddress, useInterval} from '@src/utils';
@@ -54,6 +54,7 @@ import {
   DrawerOverlay,
   Heading,
   SimpleGrid,
+  Spinner,
   Text,
   useBreakpointValue,
   useClipboard,
@@ -61,7 +62,6 @@ import {
   useMediaQuery,
   Wrap
 } from "@chakra-ui/react";
-import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
 import CronosIconFlat from "@src/components-v2/shared/icons/cronos";
 import {useAppSelector} from "@src/Store/hooks";
@@ -469,9 +469,7 @@ const Index = function () {
                       </span>
                     ) : (
                       <span>
-                        <Spinner animation="border" role="status" size={'sm'}>
-                          <span className="visually-hidden">Loading...</span>
-                        </Spinner>
+                        <Spinner size='sm' />
                       </span>
                     )}
                   </div>
@@ -501,10 +499,8 @@ const Index = function () {
                     </span>
                     ) : (
                       <span>
-                      <Spinner animation="border" role="status" size={'sm'}>
-                        <span className="visually-hidden">Loading...</span>
-                      </Spinner>
-                    </span>
+                        <Spinner size='sm' />
+                      </span>
                     )}
                   </div>
                 </div>
@@ -536,10 +532,8 @@ const Index = function () {
                     </div>
                   ) : (
                     <span>
-                    <Spinner animation="border" role="status" size={'sm'}>
-                      <span className="visually-hidden">Loading...</span>
-                    </Spinner>
-                  </span>
+                      <Spinner size='sm' />
+                    </span>
                   )}
                 </div>
                 <div className="my-auto">
@@ -597,10 +591,8 @@ const Index = function () {
                       </>
                     ) : (
                       <span>
-                      <Spinner animation="border" role="status" size={'sm'}>
-                        <span className="visually-hidden">Loading...</span>
-                      </Spinner>
-                    </span>
+                        <Spinner size='sm' />
+                      </span>
                     )}
                   </div>
                 </div>

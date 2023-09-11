@@ -1,10 +1,10 @@
 import {getUserFavorites} from "@src/core/cms/next/favorites";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Spinner} from "react-bootstrap";
 import {useQuery} from "@tanstack/react-query";
 import {isNftBlacklisted} from "@src/utils";
 import {NftCard} from "@src/components-v2/shared/nft-card";
+import {Center, Spinner} from "@chakra-ui/react";
 
 export default function Favorites({ address }) {
 
@@ -13,13 +13,9 @@ export default function Favorites({ address }) {
   )
 
   return status === "loading" ? (
-    <div className="row mt-4">
-      <div className="col-lg-12 text-center">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
-    </div>
+    <Center>
+      <Spinner />
+    </Center>
   ) : status === "error" ? (
     <p className="text-center">Error: {error.message}</p>
   ) : nfts.length < 1 ? (

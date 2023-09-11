@@ -1,9 +1,9 @@
 import React, {memo, useCallback, useState} from 'react';
-import {Spinner} from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {getNftSalesForAddress} from "@src/core/api";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import ResponsiveSalesTable from "@src/components-v2/shared/responsive-table/responsive-sales-table";
+import {Center, Spinner} from "@chakra-ui/react";
 
 
 const MySoldNftCollection = ({ walletAddress = null }) => {
@@ -54,21 +54,15 @@ const MySoldNftCollection = ({ walletAddress = null }) => {
       hasMore={hasNextPage}
       style={{ overflow: 'hidden' }}
       loader={
-        <div className="row">
-          <div className="col-lg-12 text-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </div>
-        </div>
+        <Center>
+          <Spinner />
+        </Center>
       }
     >
       {status === "loading" ? (
-        <div className="col-lg-12 text-center">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
+        <Center>
+          <Spinner />
+        </Center>
       ) : status === "error" ? (
         <p>Error: {error.message}</p>
       ) : (

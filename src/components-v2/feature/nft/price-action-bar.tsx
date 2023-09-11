@@ -13,7 +13,7 @@ import {
   timeSince,
   usdFormat
 } from '@src/utils';
-import {Card, Spinner} from 'react-bootstrap';
+import {Card} from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {listingUpdated} from '@src/GlobalState/listingSlice';
@@ -25,7 +25,20 @@ import useFeatureFlag from "@src/hooks/useFeatureFlag";
 import Constants from "@src/constants";
 import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useCancelGaslessListing';
 
-import {Box, Flex, Heading, Stack, Table, TableContainer, Tbody, Td, Text, Tr, useDisclosure,} from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  Spinner,
+  Stack,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Tr,
+  useDisclosure,
+} from '@chakra-ui/react';
 import PurchaseConfirmationDialog from "@src/components-v2/shared/dialogs/purchase-confirmation";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {TransactionReceipt} from "@ethersproject/abstract-provider";
@@ -181,9 +194,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
               ) : (
                 <Tr>
                   <Td className="text-center">
-                    <Spinner animation="border" role="status" size="sm" className="ms-1">
-                      <span className="visually-hidden">Loading...</span>
-                    </Spinner>
+                    <Spinner size='sm' ms={1} />
                   </Td>
                 </Tr>
               )

@@ -1,19 +1,18 @@
 import Link from 'next/link';
 import React from 'react';
-import { createGlobalStyle } from 'styled-components';
-import { Spinner } from 'react-bootstrap';
+import {createGlobalStyle} from 'styled-components';
 import {useRouter} from "next/router";
 
 import useFeatureFlag from '@src/hooks/useFeatureFlag';
-import { CdnImage } from "@src/components-v2/shared/media/cdn-image";
-import { hostedImage } from "@src/helpers/image";
+import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
 
 import Constants from '@src/constants';
 import {useQuery} from "@tanstack/react-query";
 import {getOwnerCollections} from "@src/core/cms/next/collections";
-import {Text, VStack} from "@chakra-ui/react";
+import {Center, Text, Spinner, VStack} from "@chakra-ui/react";
 import {shortAddress} from "@src/utils";
 import ImageService from "@src/core/services/image";
+
 const { Features } = Constants;
 
 const mobileListBreakpoint = 1000;
@@ -49,13 +48,9 @@ export default function Collections({ address }) {
   }
 
   return status === "loading" ? (
-      <div className="row mt-4">
-        <div className="col-lg-12 text-center">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      </div>
+    <Center>
+      <Spinner />
+    </Center>
     ) : status === "error" ? (
       <p className="text-center">Error: {error.message}</p>
     ) : data.data.data.length < 1 ? (

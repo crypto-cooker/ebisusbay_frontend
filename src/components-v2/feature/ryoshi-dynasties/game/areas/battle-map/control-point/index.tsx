@@ -1,6 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {Box, Center, Flex, Spacer, Text, VStack,} from "@chakra-ui/react"
-import {Spinner} from 'react-bootstrap';
+import {Box, Center, Flex, Spinner, Text, VStack,} from "@chakra-ui/react"
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
@@ -215,9 +214,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
               </div>
             </>
           ) : (
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' ms={1} />
           )}
         </>
       )}

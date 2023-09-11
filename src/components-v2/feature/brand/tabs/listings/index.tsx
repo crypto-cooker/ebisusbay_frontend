@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {Center, Flex, Grid, GridItem, useBreakpointValue} from "@chakra-ui/react";
+import {Center, Flex, Grid, GridItem, Spinner, useBreakpointValue} from "@chakra-ui/react";
 import {motion} from "framer-motion";
-import {Spinner} from "react-bootstrap";
 import Filters from "@src/components-v2/feature/brand/tabs/listings/filters";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -108,21 +107,15 @@ const ListingsTab = ({brand, collections}: ListingsTabProps) => {
             hasMore={hasNextPage ?? false}
             style={{ overflow: 'hidden' }}
             loader={
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </div>
-              </div>
+              <Center>
+                <Spinner />
+              </Center>
             }
           >
             {status === "loading" ? (
-              <div className="col-lg-12 text-center">
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div>
+              <Center>
+                <Spinner />
+              </Center>
             ) : status === "error" ? (
               <p>Error: {(error as any).message}</p>
             ) : (

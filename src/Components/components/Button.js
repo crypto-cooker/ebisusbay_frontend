@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Spinner } from 'react-bootstrap';
+import {Spinner} from "@chakra-ui/react";
 
 const DefaultButton = styled.button`
   font-size: 18px;
@@ -121,9 +121,7 @@ export default function Button({ type = 'default', isLoading = false, children, 
         <OutlinedButton {...props}>
           {isLoading && (
             <SpinnerContainer>
-              <Spinner animation="border" role="status" size="sm">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
+              <Spinner size='sm' />
             </SpinnerContainer>
           )}
           {children}
@@ -137,9 +135,7 @@ export default function Button({ type = 'default', isLoading = false, children, 
       <LegacyButton {...props}>
         {isLoading && (
           <SpinnerContainer>
-            <Spinner animation="border" role="status" size="sm">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' />
           </SpinnerContainer>
         )}
         {children}
@@ -160,9 +156,7 @@ export default function Button({ type = 'default', isLoading = false, children, 
       <DefaultButton {...props}>
         {isLoading && (
           <SpinnerContainer>
-            <Spinner animation="border" role="status" size="sm">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' />
           </SpinnerContainer>
         )}
         {children}

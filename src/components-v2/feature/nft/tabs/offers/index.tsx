@@ -1,8 +1,7 @@
 import {useInfiniteQuery} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
 import {OfferState, OfferType} from "@src/core/services/api-service/types";
-import {Spinner} from "react-bootstrap";
-import {Box} from "@chakra-ui/react";
+import {Box, Center, Spinner} from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ResponsiveNftOffersTable from "@src/components-v2/shared/responsive-table/responsive-nft-offers-table";
 import React, {useCallback, useState} from "react";
@@ -72,11 +71,9 @@ const OffersTab = ({nftAddress, nftId, type}: OffersTabProps) => {
 
     <div className="listing-tab">
       {status === "loading" ? (
-        <div className="col-lg-12 text-center">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
+        <Center>
+          <Spinner />
+        </Center>
       ) : status === "error" ? (
         <p>Error: {(error as any).message}</p>
       ) : (
@@ -87,13 +84,9 @@ const OffersTab = ({nftAddress, nftId, type}: OffersTabProps) => {
             hasMore={hasNextPage ?? false}
             style={{ overflow: 'hidden' }}
             loader={
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </div>
-              </div>
+              <Center>
+                <Spinner />
+              </Center>
             }
           >
             <ResponsiveNftOffersTable

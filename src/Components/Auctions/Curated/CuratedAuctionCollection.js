@@ -1,12 +1,11 @@
 import React, {memo, useEffect, useState} from 'react';
-import { Spinner } from 'react-bootstrap';
 
-import {sortAndFetchAuctions} from "../../../core/api";
+import {sortAndFetchAuctions} from "@src/core/api";
 import AuctionCard from "../../components/AuctionCard";
-import {caseInsensitiveCompare} from "../../../utils";
-import {auctionState} from "../../../core/api/enums";
-import {Auction} from "../../../core/models/auction";
-import {Heading} from "@chakra-ui/react";
+import {caseInsensitiveCompare} from "@src/utils";
+import {auctionState} from "@src/core/api/enums";
+import {Auction} from "@src/core/models/auction";
+import {Center, Heading, Spinner} from "@chakra-ui/react";
 
 const testAuctions = [];
 
@@ -45,11 +44,9 @@ const CuratedAuctionCollection = ({ collectionId = null}) => {
   return (
     <>
       {isLoading ? (
-        <div className="text-center">
-          <Spinner animation="border" role="status" size="sm" className="ms-1">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
+        <Center>
+          <Spinner />
+        </Center>
       ) : (
         <>
           <div className="col-lg-12">

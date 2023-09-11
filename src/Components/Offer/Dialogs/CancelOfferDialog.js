@@ -3,7 +3,6 @@ import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
-import {Spinner} from "react-bootstrap";
 import Button from "@src/Components/components/Button";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {specialImageTransform} from "@src/hacks";
@@ -19,7 +18,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay
+  ModalOverlay, Spinner
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "../../Bundle/ImagesContainer";
@@ -86,9 +85,7 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
         {status === "loading" ? (
           <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' ms={1} />
           </EmptyData>
         ) : status === "error" ? (
           <p>Error: {error.message}</p>

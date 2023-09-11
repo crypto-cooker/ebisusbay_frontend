@@ -1,7 +1,6 @@
 import React, {memo, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {Spinner} from 'react-bootstrap';
-import {Box, Center, Heading, Text, VStack} from "@chakra-ui/react";
+import {Box, Center, Heading, Spinner, Text, VStack} from "@chakra-ui/react";
 import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {getStakedRyoshi} from "@src/core/subgraph/staking";
 import {appConfig} from "@src/Config";
@@ -151,21 +150,15 @@ const UnstakedRyoshiNftList = () => {
           hasMore={hasNextPage ?? false}
           style={{ overflow: 'hidden' }}
           loader={
-            <div className="row">
-              <div className="col-lg-12 text-center">
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div>
-            </div>
+            <Center>
+              <Spinner />
+            </Center>
           }
         >
           {status === "loading" ? (
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
+            <Center>
+              <Spinner />
+            </Center>
           ) : status === "error" ? (
             <p>Error: {(error as any).message}</p>
           ) : (
@@ -269,21 +262,15 @@ const StakedRyoshiList = () => {
           hasMore={hasNextPage ?? false}
           style={{ overflow: 'hidden' }}
           loader={
-            <div className="row">
-              <div className="col-lg-12 text-center">
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div>
-            </div>
+            <Center>
+              <Spinner />
+            </Center>
           }
         >
           {status === "loading" ? (
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
+            <Center>
+              <Spinner />
+            </Center>
           ) : status === "error" ? (
             <p>Error: {(error as any).message}</p>
           ) : (

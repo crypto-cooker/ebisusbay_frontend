@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
-import {Badge, Form, Spinner} from "react-bootstrap";
+import {Badge, Form} from "react-bootstrap";
 import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {getCollectionMetadata} from "@src/core/api";
@@ -20,7 +20,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay
+  ModalOverlay, Spinner
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import {useAppSelector} from "@src/Store/hooks";
@@ -322,9 +322,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
           </>
         ) : (
           <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' ms={1} />
           </EmptyData>
         )}
       </ModalContent>

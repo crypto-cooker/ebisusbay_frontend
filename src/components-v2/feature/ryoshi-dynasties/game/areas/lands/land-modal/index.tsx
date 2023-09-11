@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {Box, Center, Flex, HStack, SimpleGrid, Spacer, Text, useMediaQuery, VStack} from "@chakra-ui/react"
-import {Spinner} from 'react-bootstrap';
+import {Box, Center, Flex, HStack, SimpleGrid, Spacer, Spinner, Text, useMediaQuery, VStack} from "@chakra-ui/react"
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {useAppSelector} from "@src/Store/hooks";
@@ -187,9 +186,7 @@ const LandModal = ({ isOpen, onClose, plot}: LandModalFormProps) => {
               </div>
             </>
           ) : (
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' ms={1} />
           )}
         </>
       )}

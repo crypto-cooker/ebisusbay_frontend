@@ -5,11 +5,11 @@ import CustomizedDialogs from '../Dialog';
 import { useEffect, useState } from 'react';
 import useSetOwner from '../hooks/useSetOwner';
 import { useSelector } from 'react-redux';
-import { Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import {useQuery} from "@tanstack/react-query";
 import {getOwnerCollections} from "@src/core/api/next/collectioninfo";
 import { useRouter } from "next/router";
+import {Spinner} from "@chakra-ui/react";
 
 const SetOwnerForm = ({ address: collectionAddress }) => {
 
@@ -78,9 +78,7 @@ const SetOwnerForm = ({ address: collectionAddress }) => {
         <button form='ownership' className="btn-main" type="submit">
           Accept
           {(isLoading) && (
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' ms={1} />
           )}
         </button>
       </div>

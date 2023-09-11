@@ -3,18 +3,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ethers } from 'ethers';
-import { Spinner } from 'react-bootstrap';
 import Blockies from 'react-blockies';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { getAuctionDetails } from '../../GlobalState/auctionSlice';
-import { caseInsensitiveCompare, humanize, newlineText, shortAddress, timeSince } from '../../utils';
+import { getAuctionDetails } from '@src/GlobalState/auctionSlice';
+import { caseInsensitiveCompare, humanize, newlineText, shortAddress, timeSince } from '@src/utils';
 import BuyerActionBar from '../Auctions/BuyerActionBar';
 import ProfilePreview from '../components/ProfilePreview';
-import { appConfig } from '../../Config';
+import { appConfig } from '@src/Config';
 import { hostedImage } from '../../helpers/image';
-import {Heading} from "@chakra-ui/react";
+import {Center, Heading, Spinner} from "@chakra-ui/react";
 import {useQuery} from "@tanstack/react-query";
 import { getCollections } from "@src/core/api/next/collectioninfo";
 import ImageService from "@src/core/services/image";
@@ -77,14 +76,10 @@ const AuctionComponent = (props) => {
       <div>
         {isLoading && isLoadingCollection? (
           <section className="gl-legacy container">
-        
-
             <div className="row mt-4">
-              <div className="col-lg-12 text-center">
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div>
+              <Center>
+                <Spinner />
+              </Center>
             </div>
           </section>
         ) : (

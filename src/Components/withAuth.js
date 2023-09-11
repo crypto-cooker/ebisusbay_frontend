@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
-import { Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import {Center, Spinner} from "@chakra-ui/react";
+import React from "react";
 
 const withAuth = (Component) => {
   const Auth = (props) => {
@@ -10,11 +11,9 @@ const withAuth = (Component) => {
 
     if (!authInitFinished) {
       return (
-        <div className="col-lg-12 text-center justify-content-center align-items-center">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
+        <Center>
+          <Spinner />
+        </Center>
       );
     }
 

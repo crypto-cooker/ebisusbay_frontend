@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
-import {Form, Spinner} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import {Contract} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
@@ -20,7 +20,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
+  ModalOverlay, Spinner,
   useNumberInput
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
@@ -278,9 +278,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
           </>
         ) : (
           <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' ms={1} />
           </EmptyData>
         )}
       </ModalContent>

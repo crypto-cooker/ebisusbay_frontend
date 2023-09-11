@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Spinner } from 'react-bootstrap';
-import { Contract, ethers } from 'ethers';
+import React, {useEffect, useState} from 'react';
+import {Contract, ethers} from 'ethers';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import {useDispatch, useSelector} from 'react-redux';
+import {toast} from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import styles from './rugsurance.module.scss';
 import {getCRC721NftsFromIds, getCRC721NftsFromWallet} from "@src/core/api/chain";
@@ -12,6 +11,7 @@ import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {
+  Center,
   Heading,
   Modal,
   ModalBody,
@@ -19,7 +19,8 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay
+  ModalOverlay,
+  Spinner
 } from "@chakra-ui/react";
 import RugsuranceAbi from "@src/Contracts/SlothtyRugsurance.json";
 import {getTheme} from "@src/Theme/theme";
@@ -300,11 +301,9 @@ const Rugsurance = () => {
                 )}
               </>
             ) : (
-              <div className="text-center">
-                <Spinner animation="border" role="status" className="ms-1">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div>
+              <Center>
+                <Spinner />
+              </Center>
             )}
           </div>
         </div>
@@ -483,9 +482,7 @@ const ActionButton = ({
       {isWorking ? (
         <>
           {workingTitle}...
-          <Spinner animation="border" role="status" size="sm" className="ms-1">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <Spinner size='sm' />
         </>
       ) : (
         <>{title}</>

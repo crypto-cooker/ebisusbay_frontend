@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {specialImageTransform} from "@src/hacks";
-import {Spinner} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {Contract, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
@@ -23,7 +22,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay
+  ModalOverlay, Spinner
 } from "@chakra-ui/react";
 import Image from "next/image";
 import {commify} from "ethers/lib/utils";
@@ -330,9 +329,7 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
           </>
         ) : (
           <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' ms={1} />
           </EmptyData>
         )}
       </ModalContent>

@@ -5,13 +5,14 @@ import {
     Grid,
     GridItem,
     HStack,
-    SimpleGrid, Stack,
+    SimpleGrid,
+    Spinner,
+    Stack,
     Text,
     useBreakpointValue,
     VStack
 } from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Spinner} from "react-bootstrap";
 import React, {useCallback, useEffect, useState} from "react";
 import {caseInsensitiveCompare, round} from "@src/utils";
 import {motion} from "framer-motion";
@@ -158,21 +159,15 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
                                 hasMore={false}
                                 style={{ overflow: 'hidden' }}
                                 loader={
-                                    <div className="row">
-                                        <div className="col-lg-12 text-center">
-                                            <Spinner animation="border" role="status">
-                                                <span className="visually-hidden">Loading...</span>
-                                            </Spinner>
-                                        </div>
-                                    </div>
+                                    <Center>
+                                        <Spinner />
+                                    </Center>
                                 }
                             >
                                 {status === "loading" ? (
-                                    <div className="col-lg-12 text-center">
-                                        <Spinner animation="border" role="status">
-                                            <span className="visually-hidden">Loading...</span>
-                                        </Spinner>
-                                    </div>
+                                  <Center>
+                                      <Spinner />
+                                  </Center>
                                 ) : status === "error" ? (
                                     <p>Error: {(error as Error).message}</p>
                                 ) : (
@@ -396,11 +391,9 @@ const RewardsComponent = ({staker}: {staker: StakerWithRewards}) => {
             <Stack px={4} py={2} align='center' w='full' direction={{base: 'column', sm: 'row'}} className='card eb-nft__card'>
                 <Box fontWeight='bold'>Pending Rewards:</Box>
                 {status === "loading" ? (
-                    <div className="col-lg-12 text-center">
-                        <Spinner animation="border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </Spinner>
-                    </div>
+                  <Center>
+                      <Spinner />
+                  </Center>
                 ) : status === "error" ? (
                     <Box>N/A</Box>
                 ) : (

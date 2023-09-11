@@ -10,13 +10,13 @@ import useUpdate from '../hooks/useUpdate';
 import { useQuery } from "@tanstack/react-query";
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { Spinner } from 'react-bootstrap';
 import Bio from './Bio';
 import Banner from './Banner';
 import Card from './Card';
 import Pfp from './Pfp';
 import * as DOMPurify from 'dompurify';
 import CustomizedDialogs from '../Dialog';
+import {Spinner} from "@chakra-ui/react";
 
 const EditCollection = ({ address: collectionAddress }) => {
 
@@ -247,9 +247,7 @@ const EditCollection = ({ address: collectionAddress }) => {
         <button form='updateCollection' className="btn-main" type="submit">
           Accept
           {(isLoadingRequest) && (
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' className='ms-1' />
           )}
         </button>
       </div>

@@ -1,6 +1,6 @@
 import React, {memo, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {Form, Spinner} from 'react-bootstrap';
+import {Form} from 'react-bootstrap';
 import {toast} from 'react-toastify';
 import {createSuccessfulTransactionToastContent} from '@src/utils';
 import {ethers} from 'ethers';
@@ -13,7 +13,7 @@ import {
   faBatteryThreeQuarters,
   faBolt,
 } from '@fortawesome/free-solid-svg-icons';
-import {Box, Center, Heading, HStack, Link, Tag, Text} from "@chakra-ui/react";
+import {Box, Center, Heading, HStack, Link, Spinner, Tag, Text} from "@chakra-ui/react";
 import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
@@ -225,11 +225,9 @@ const LegacyStaking = () => {
             )}
 
             {isInitializing && (
-              <div className="text-center">
-                <Spinner animation="border" role="status" className="ms-1">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div>
+              <Center>
+                <Spinner />
+              </Center>
             )}
           </div>
         </div>

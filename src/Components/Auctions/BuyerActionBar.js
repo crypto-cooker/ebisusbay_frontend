@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { constants, Contract, ethers } from 'ethers';
-import { Card, Form, Spinner } from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {constants, Contract, ethers} from 'ethers';
+import {Card, Form} from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import Countdown from 'react-countdown';
 
 import AuctionContract from '../../Contracts/DegenAuction.json';
@@ -14,6 +14,7 @@ import {chainConnect, connectAccount} from '../../GlobalState/User';
 import {ERC20} from "../../Contracts/Abis";
 import Button from "../components/Button";
 import {appConfig} from "../../Config";
+import {Spinner} from "@chakra-ui/react";
 
 const config = appConfig();
 
@@ -277,9 +278,7 @@ const BuyerActionBar = () => {
                 {executingAcceptBid ? (
                   <>
                     Accepting
-                    <Spinner animation="border" role="status" size="sm" className="ms-1">
-                      <span className="visually-hidden">Loading...</span>
-                    </Spinner>
+                    <Spinner size='sm' ms={1} />
                   </>
                 ) : (
                   <>Accept Auction</>
@@ -294,9 +293,7 @@ const BuyerActionBar = () => {
                   {executingCancelBid ? (
                     <>
                       Cancelling
-                      <Spinner animation="border" role="status" size="sm" className="ms-1">
-                        <span className="visually-hidden">Loading...</span>
-                      </Spinner>
+                      <Spinner size='sm' ms={1} />
                     </>
                   ) : (
                     <>Cancel Auction</>
@@ -336,9 +333,7 @@ const BuyerActionBar = () => {
               {executingWithdraw ? (
                 <>
                   Withdrawing
-                  <Spinner animation="border" role="status" size="sm" className="ms-1">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
+                  <Spinner size='sm' ms={1} />
                 </>
               ) : (
                 <>Withdraw Bid</>
@@ -418,9 +413,7 @@ const BuyerActionBar = () => {
                                     {executingApproveContract ? (
                                       <>
                                         Approving...
-                                        <Spinner animation="border" role="status" size="sm" className="ms-1">
-                                          <span className="visually-hidden">Loading...</span>
-                                        </Spinner>
+                                        <Spinner size='sm' ms={1} />
                                       </>
                                     ) : (
                                       <>Approve MAD</>
@@ -511,9 +504,7 @@ const BuyerActionBar = () => {
               {executingBid ? (
                 <>
                   Confirming Bid...
-                  <Spinner animation="border" role="status" size="sm" className="ms-1">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
+                  <Spinner size='sm' ms={1} />
                 </>
               ) : (
                 <>Confirm Bid</>
@@ -573,9 +564,7 @@ const BuyerActionBar = () => {
               {executingBid ? (
                 <>
                   Confirming Bid...
-                  <Spinner animation="border" role="status" size="sm" className="ms-1">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
+                  <Spinner size='sm' ms={1} />
                 </>
               ) : (
                 <>Confirm Bid</>

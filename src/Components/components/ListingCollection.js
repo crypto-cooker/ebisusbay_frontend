@@ -1,15 +1,15 @@
-import React, { memo, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {memo, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Spinner } from 'react-bootstrap';
 
 import ListingCard from './ListingCard';
-import { init, fetchListings } from '../../GlobalState/marketplaceSlice';
-import { SortOption } from '../Models/sort-option.model';
+import {fetchListings, init} from '@src/GlobalState/marketplaceSlice';
+import {SortOption} from '../Models/sort-option.model';
 
-import { isMetapixelsCollection } from '../../utils';
+import {isMetapixelsCollection} from '@src/utils';
 import {MarketFilters} from "../Models/market-filters.model";
 import ListingBundleCard from './ListingBundleCard';
+import {Center, Spinner} from "@chakra-ui/react";
 
 const ListingCollection = ({
   limitSize = 0,
@@ -79,13 +79,9 @@ const ListingCollection = ({
         hasMore={canLoadMore}
         style={{ overflow: 'hidden' }}
         loader={
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          </div>
+          <Center>
+            <Spinner />
+          </Center>
         }
         endMessage={!listings.length ? (
           <div className="row mt-4">

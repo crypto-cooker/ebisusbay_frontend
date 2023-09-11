@@ -1,12 +1,11 @@
-import React, { memo, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Spinner } from 'react-bootstrap';
+import React, {memo, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 // import InfiniteScroll from 'react-infinite-scroll-component';
-
 import AuctionCard from './AuctionCard';
-import { init, fetchListings } from '../../GlobalState/auctionsSlice';
-import { auctionState } from '../../core/api/enums';
-import {caseInsensitiveCompare} from "../../utils";
+import {fetchListings, init} from '@src/GlobalState/auctionsSlice';
+import {auctionState} from '@src/core/api/enums';
+import {caseInsensitiveCompare} from "@src/utils";
+import {Center, Spinner} from "@chakra-ui/react";
 // import ListingCard from './ListingCard';
 // import Clock from './Clock';
 // import auction from '../pages/auction';
@@ -81,11 +80,9 @@ const AuctionCollection = ({ showLoadMore = true, collectionId = null, sellerId 
     return (
       <>
         {isLoading ? (
-          <div className="text-center">
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </div>
+          <Center>
+            <Spinner />
+          </Center>
         ) : (
           <>
             <div className="col-lg-12">

@@ -6,7 +6,7 @@ import {
   faDollarSign,
   faStairs, faStar
 } from "@fortawesome/free-solid-svg-icons";
-import {Accordion, Badge, Form, Spinner} from "react-bootstrap";
+import {Accordion, Badge, Form} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
@@ -41,7 +41,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, Tooltip
+  ModalOverlay, Spinner, Tooltip
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import useBuyGaslessListings from "@src/hooks/useBuyGaslessListings";
@@ -391,9 +391,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
           </>
         ) : (
           <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' ms={1} />
           </EmptyData>
         )}
       </ModalContent>

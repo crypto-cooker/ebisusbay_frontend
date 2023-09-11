@@ -1,13 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import { useFormik } from 'formik';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
+import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import { toast } from 'react-toastify';
-import { Spinner } from 'react-bootstrap';
+import {toast} from 'react-toastify';
 import * as Filter from 'bad-words';
 
-import Messages, { getDynamicMessage } from '../../../../languages';
-import { initialValues, editProfileFormFields } from './Form/constants';
+import Messages, {getDynamicMessage} from '../../../../languages';
+import {editProfileFormFields, initialValues} from './Form/constants';
 import useCreateSettings from '../hooks/useCreateSettings';
 import useUpdateSettings from '../hooks/useUpdateSettings';
 import useResendEmailVerification from '../hooks/useResendEmailVerification'
@@ -17,7 +16,9 @@ import Bio from './Bio';
 import Form from './Form';
 import Pfp from './Pfp';
 import useGetSettings from '../hooks/useGetSettings';
-import { getCnsInfo, getCnsName } from '@src/helpers/cns';
+import {getCnsInfo} from '@src/helpers/cns';
+import {Flex} from "@chakra-ui/react";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 export default function EditProfile() {
   const user = useSelector((state) => state.user);
@@ -277,16 +278,16 @@ export default function EditProfile() {
           </div>
         </div>
       </form>
-      <div className="d-flex justify-content-end mt-5">
-        <button form="userSettings" type="submit" className="btn-main" onClick={validationForm}>
+      <Flex justify='end' mt={5}>
+        <PrimaryButton
+          form='userSettings'
+          type='submit'
+          onClick={validationForm}
+          isLoading={(loading || updateLoading)}
+        >
           {settings?.data?.walletAddress ? 'Update Profile' : 'Create Profile'}
-          {(loading || updateLoading) && (
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          )}
-        </button>
-      </div>
+        </PrimaryButton>
+      </Flex>
     </>
   );
 }

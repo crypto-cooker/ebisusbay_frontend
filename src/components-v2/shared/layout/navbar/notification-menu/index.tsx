@@ -1,26 +1,25 @@
 import React, {memo, useCallback, useState} from 'react';
-import { useRouter } from 'next/router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {useRouter} from 'next/router';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBell, faCog, faTrash} from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 
 import styles from './notificationmenu.module.scss';
 import {timeSince} from '@src/utils';
-import {Offcanvas, Spinner} from "react-bootstrap";
 import {useQuery} from "@tanstack/react-query";
 import useDeleteNotifications from "@src/hooks/useDeleteNotifications";
 import {getNotifications} from "@src/core/cms/next/notifications";
 import Button from "@src/Components/components/Button";
 import {useAppSelector} from "@src/Store/hooks";
 import {
+  Center,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
-  DrawerOverlay,
-  Text,
-  useBreakpointValue
+  DrawerOverlay, Spinner,
+  Text
 } from "@chakra-ui/react";
 
 const NotificationMenu = function () {
@@ -100,11 +99,9 @@ const NotificationMenu = function () {
                   </Button>
                 </>
               ) : (
-                <div className="col-lg-12 text-center">
-                  <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </div>
+                <Center>
+                  <Spinner />
+                </Center>
               )
             ) : isError ? (
               <>

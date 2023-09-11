@@ -1,7 +1,6 @@
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Spinner} from "react-bootstrap";
 import MyNftCard from "@src/Components/components/MyNftCard";
 import {caseInsensitiveCompare, findCollectionByAddress, isBundle, isNftBlacklisted} from "@src/utils";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
@@ -35,7 +34,7 @@ import {
   InputGroup,
   InputRightElement,
   ListItem,
-  SimpleGrid,
+  SimpleGrid, Spinner,
   Stack,
   UnorderedList,
   useBreakpointValue,
@@ -151,11 +150,9 @@ export default function Inventory({ address }: InventoryProps) {
 
   const historyContent = useMemo(() => {
     return status === "loading" ? (
-      <div className="col-lg-12 text-center">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
+      <Center>
+        <Spinner />
+      </Center>
     ) : status === "error" ? (
       <p>Error: {(error as any).message}</p>
     ) : (

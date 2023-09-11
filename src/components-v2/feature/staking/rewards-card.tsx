@@ -3,11 +3,10 @@ import React, {useEffect, useState} from "react";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, round, siPrefixedNumber, useInterval} from "@src/utils";
-import {Spinner} from "react-bootstrap";
 import {getTheme} from "@src/Theme/theme";
 import StakeABI from "@src/Contracts/Stake.json";
 import {appConfig} from "@src/Config";
-import {Box, SimpleGrid} from "@chakra-ui/react";
+import {Box, Center, SimpleGrid, Spinner} from "@chakra-ui/react";
 import {useAppSelector} from "@src/Store/hooks";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 
@@ -128,9 +127,9 @@ const RewardsCard = () => {
       <div className="card eb-nft__card h-100 shadow px-4">
         <div className="card-body d-flex flex-column">
           {rewardsInfoLoading ? (
-            <Spinner animation="border" role="status" size="sm" className="mx-auto">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Center>
+              <Spinner size='sm' />
+            </Center>
           ) : (
             <>
               <Box>

@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react';
 import { useRouter } from 'next/router';
 import { appConfig } from "@src/Config";
-import { Spinner } from "react-bootstrap";
 import axios from 'axios';
+import {Center, Spinner} from "@chakra-ui/react";
 
 const VerificationEmail = () => {
   const router = useRouter();
@@ -43,13 +43,9 @@ const VerificationEmail = () => {
       </div>
     </div>
   ) : (
-    <div className="row">
-      <div className="col-lg-12 text-center">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
-    </div>
+    <Center>
+      <Spinner />
+    </Center>
   );
 }
 

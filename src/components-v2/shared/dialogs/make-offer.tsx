@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Badge, Form, Spinner} from "react-bootstrap";
+import {Badge, Form} from "react-bootstrap";
 import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
@@ -20,7 +20,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay
+  ModalOverlay, Spinner
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import {getCollection} from "@src/core/api/next/collectioninfo";
@@ -353,9 +353,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
           </>
         ) : (
           <EmptyData>
-            <Spinner animation="border" role="status" size="sm" className="ms-1">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' ms={1} />
           </EmptyData>
         )}
       </ModalContent>

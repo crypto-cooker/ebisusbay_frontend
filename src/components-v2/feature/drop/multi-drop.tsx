@@ -7,7 +7,7 @@ import {getAnalytics, logEvent} from '@firebase/analytics';
 import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 import {useRouter} from 'next/router';
-import {Form, ProgressBar, Spinner} from 'react-bootstrap';
+import {Form, ProgressBar} from 'react-bootstrap';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
@@ -19,6 +19,7 @@ import {EbisuDropAbi} from '@src/Contracts/Abis';
 import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
 import {formatEther} from "ethers/lib/utils";
+import {Spinner} from "@chakra-ui/react";
 
 const config = appConfig();
 const drops = config.drops;
@@ -590,9 +591,7 @@ const MultiDropCard = ({ title, img, canMintQuantity, mintNow, currentSupply, ma
                     {minting ? (
                       <>
                         Minting...
-                        <Spinner animation="border" role="status" size="sm" className="ms-1">
-                          <span className="visually-hidden">Loading...</span>
-                        </Spinner>
+                        <Spinner size='sm' ms={1} />
                       </>
                     ) : (
                       <>Mint {numToMint}</>

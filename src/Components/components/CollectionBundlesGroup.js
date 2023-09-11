@@ -1,10 +1,9 @@
 import React, {memo} from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {Spinner} from 'react-bootstrap';
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {appConfig} from "@src/Config";
 import {caseInsensitiveCompare} from "@src/utils";
-import {Center, Text} from "@chakra-ui/react";
+import {Center, Spinner, Text} from "@chakra-ui/react";
 import ListingBundleCard from "@src/Components/components/ListingBundleCard";
 import NextApiService from "@src/core/services/api-service/next";
 import {ListingsQuery} from "@src/core/services/api-service/mapi/queries/listings";
@@ -55,21 +54,15 @@ const CollectionBundlesGroup = ({collection}) => {
       hasMore={hasNextPage}
       style={{ overflow: 'hidden' }}
       loader={
-        <div className="row">
-          <div className="col-lg-12 text-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </div>
-        </div>
+        <Center>
+          <Spinner />
+        </Center>
       }
     >
       {status === "loading" ? (
-        <div className="col-lg-12 text-center">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
+        <Center>
+          <Spinner />
+        </Center>
       ) : status === "error" ? (
         <p>Error: {error.message}</p>
       ) : (

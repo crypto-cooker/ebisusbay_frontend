@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { ethers } from 'ethers';
-import AuctionContract from '../../Contracts/DegenAuction.json';
-import { toast } from 'react-toastify';
-import { createSuccessfulTransactionToastContent } from '../../utils';
-import { Spinner } from 'react-bootstrap';
-import { auctionState } from '../../core/api/enums';
-import { getAuctionDetails } from '../../GlobalState/auctionSlice';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {toast} from 'react-toastify';
+import {createSuccessfulTransactionToastContent} from '@src/utils';
+import {auctionState} from '@src/core/api/enums';
+import {getAuctionDetails} from '@src/GlobalState/auctionSlice';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { chainConnect, connectAccount } from '../../GlobalState/User';
-import {appConfig} from "../../Config";
+import {chainConnect, connectAccount} from '@src/GlobalState/User';
+import {appConfig} from "@src/Config";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 const config = appConfig();
 
@@ -24,7 +21,7 @@ const SellerActionBar = () => {
   const [executingAcceptBid, setExecutingAcceptBid] = useState(false);
   const listing = useSelector((state) => state.auction.auction);
 
-  const executeStartAuction = () => async () => {
+  const executeStartAuction = async () => {
     setExecutingStart(true);
     await runFunction(async (writeContract) => {
       console.log('starting auction...', listing.getAuctionIndex, listing.auctionHash);
@@ -33,7 +30,7 @@ const SellerActionBar = () => {
     setExecutingStart(false);
   };
 
-  const executeCancelAuction = () => async () => {
+  const executeCancelAuction = async () => {
     setExecutingCancel(true);
     await runFunction(async (writeContract) => {
       console.log('cancelling auction...', listing.getAuctionIndex, listing.auctionHash);
@@ -42,7 +39,7 @@ const SellerActionBar = () => {
     setExecutingCancel(false);
   };
 
-  const executeAcceptBid = () => async () => {
+  const executeAcceptBid = async () => {
     setExecutingAcceptBid(true);
     await runFunction(async (writeContract) => {
       console.log('accepting highest bid...', listing.getAuctionIndex, listing.auctionHash, listing.getHighestBidder);
@@ -51,7 +48,7 @@ const SellerActionBar = () => {
     setExecutingAcceptBid(false);
   };
 
-  const executeIncreaseAuctionTime = (minutes) => async () => {
+  const executeIncreaseAuctionTime = async (minutes) => {
     await runFunction(async (writeContract) => {
       console.log(`adding ${minutes}m to the auction time...`, listing.getAuctionIndex, listing.auctionHash);
       return (await writeContract.updateRuntime(listing.auctionHash, minutes)).wait();
@@ -99,51 +96,46 @@ const SellerActionBar = () => {
         {user.address ? (
           <>
             {listing.state === auctionState.NOT_STARTED && (
-              <button className="btn-main lead mb-5 mr15" onClick={executeStartAuction()} disabled={executingStart}>
-                {executingStart ? (
-                  <>
-                    Starting
-                    <Spinner animation="border" role="status" size="sm" className="ms-1">
-                      <span className="visually-hidden">Loading...</span>
-                    </Spinner>
-                  </>
-                ) : (
-                  <>Start Auction</>
-                )}
-              </button>
+              <PrimaryButton
+                onClick={executeStartAuction}
+                isLoading={executingStart}
+                loadingText='Starting'
+                mb={5}
+                me={15}
+              >
+                Start Auction
+              </PrimaryButton>
             )}
             {!awaitingAcceptace && !isComplete && (
               <>
-                <button className="btn-main lead mb-5 mr15" onClick={executeCancelAuction()} disabled={executingCancel}>
-                  {executingCancel ? (
-                    <>
-                      Cancelling
-                      <Spinner animation="border" role="status" size="sm" className="ms-1">
-                        <span className="visually-hidden">Loading...</span>
-                      </Spinner>
-                    </>
-                  ) : (
-                    <>Cancel</>
-                  )}
-                </button>
-                <button className="btn-main lead mb-5 mr15" onClick={executeIncreaseAuctionTime(5)}>
+                <PrimaryButton
+                  onClick={executeCancelAuction}
+                  isLoading={executingCancel}
+                  loadingText='Cancelling'
+                  mb={5}
+                  me={15}
+                >
+                  Cancel
+                </PrimaryButton>
+                <PrimaryButton
+                  onClick={() => executeIncreaseAuctionTime(5)}
+                  mb={5}
+                  me={15}
+                >
                   Increase Time (5m)
-                </button>
+                </PrimaryButton>
               </>
             )}
             {awaitingAcceptace && !isComplete && (
-              <button className="btn-main lead mb-5 mr15" onClick={executeAcceptBid()} disabled={executingAcceptBid}>
-                {executingAcceptBid ? (
-                  <>
-                    Accepting Bid
-                    <Spinner animation="border" role="status" size="sm" className="ms-1">
-                      <span className="visually-hidden">Loading...</span>
-                    </Spinner>
-                  </>
-                ) : (
-                  <>Accept Bid</>
-                )}
-              </button>
+              <PrimaryButton
+                onClick={executeAcceptBid}
+                isLoading={executingAcceptBid}
+                loadingText='Accepting Bid'
+                mb={5}
+                me={15}
+              >
+                Accept Bid
+              </PrimaryButton>
             )}
           </>
         ) : (

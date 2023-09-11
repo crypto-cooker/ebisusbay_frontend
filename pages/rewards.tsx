@@ -1,10 +1,9 @@
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import PageHeader from "@src/components-v2/shared/layout/page-header";
 import React, {useMemo} from "react";
-import {Box, Card, CardBody, Center, Flex, Heading, HStack, Image, Link, Text} from "@chakra-ui/react";
+import {Box, Card, CardBody, Center, Flex, Heading, HStack, Image, Link, Spinner, Text} from "@chakra-ui/react";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
-import {Spinner} from "react-bootstrap";
 import ResponsiveRewardsCollectionsTable
   from "@src/components-v2/shared/responsive-table/responsive-rewards-collections-table";
 import {round} from "@src/utils";

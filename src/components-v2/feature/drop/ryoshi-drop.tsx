@@ -7,7 +7,7 @@ import {getAnalytics, logEvent} from '@firebase/analytics';
 import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 import {useRouter} from 'next/router';
-import {ProgressBar, Spinner} from 'react-bootstrap';
+import {ProgressBar} from 'react-bootstrap';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
@@ -28,7 +28,7 @@ import {
   Heading,
   HStack,
   Input,
-  ListItem,
+  ListItem, Spinner,
   Stack,
   Text,
   UnorderedList,
@@ -473,9 +473,7 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
                               {minting ? (
                                 <>
                                   {mintingState ?? 'Swapping...'}
-                                  <Spinner animation="border" role="status" size="sm" className="ms-1">
-                                    <span className="visually-hidden">Loading...</span>
-                                  </Spinner>
+                                  <Spinner size='sm' ms={1} />
                                 </>
                               ) : (
                                 <>{drop.maxMintPerTx && drop.maxMintPerTx > 1 ? <>Swap {numToMint}</> : <>Swap</>}</>

@@ -30,7 +30,6 @@ import {
   VStack
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
-import {Spinner} from "react-bootstrap";
 import React, {ChangeEvent, useCallback, useMemo, useRef, useState} from "react";
 import {
   addToBatchListingCart,
@@ -73,6 +72,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {getPrices} from "@src/core/api/endpoints/prices";
 import {useExchangeRate} from "@src/hooks/useGlobalPrices";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 const config = appConfig();
 const MAX_NFTS_IN_GAS_CART = 100;
@@ -580,23 +580,15 @@ export const ListingDrawer = () => {
                 Please check your wallet for confirmation
               </Text>
             )}
-            <Button
-              type="legacy"
-              className="w-100"
+            <PrimaryButton
               onClick={prepareListing}
-              disabled={!canSubmit()}
+              isDisabled={!canSubmit()}
+              isLoading={executingCreateListing}
+              loadingText={`Creating ${pluralize(batchListingCart.items.length, 'Listing')}...`}
+              w='full'
             >
-              {executingCreateListing ? (
-                <>
-                  Creating {pluralize(batchListingCart.items.length, 'Listing')}...
-                  <Spinner animation="border" role="status" size="sm" className="ms-1">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </>
-              ) : (
-                <>Create {pluralize(batchListingCart.items.length, 'Listing')}</>
-              )}
-            </Button>
+              Create {pluralize(batchListingCart.items.length, 'Listing')}
+            </PrimaryButton>
           </>
         )
         }

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
 
-import { ethers } from 'ethers';
-import { toast } from 'react-toastify';
-import { createSuccessfulTransactionToastContent } from '../../utils';
-import { ERC721 } from '../../Contracts/Abis';
-import { Spinner } from 'react-bootstrap';
+import {ethers} from 'ethers';
+import {toast} from 'react-toastify';
+import {createSuccessfulTransactionToastContent} from '@src/utils';
+import {ERC721} from '@src/Contracts/Abis';
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 const CreateAuction = () => {
   const user = useSelector((state) => state.user);
@@ -95,18 +95,13 @@ const CreateAuction = () => {
           />
         </form>
         <br />
-        <button id="mintButton" className="btn-main" onClick={onCreatePressed} disabled={executing}>
-          {executing ? (
-            <>
-              Creating
-              <Spinner animation="border" role="status" size="sm" className="ms-1">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </>
-          ) : (
-            <>Create</>
-          )}
-        </button>
+        <PrimaryButton
+          onClick={onCreatePressed}
+          loadingText='Creating...'
+          isLoading={executing}
+        >
+          Create
+        </PrimaryButton>
       </div>
     </div>
   );

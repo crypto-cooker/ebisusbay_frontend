@@ -13,7 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import {Badge, Spinner} from 'react-bootstrap';
+import {Badge} from 'react-bootstrap';
 
 import ProfilePreview from '@src/Components/components/ProfilePreview';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
@@ -65,7 +65,7 @@ import {
   Center,
   Flex,
   Heading,
-  MenuButton as MenuButtonCK,
+  MenuButton as MenuButtonCK, Spinner,
   Stack,
   Text,
   useBreakpointValue,
@@ -564,13 +564,9 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     <div>
       {isLoading || isLoadingCollection || !collection ? (
         <section className="gl-legacy container">
-          <div className="row mt-4">
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          </div>
+          <Center>
+            <Spinner />
+          </Center>
         </section>
       ) : (
         <section className="gl-legacy container">

@@ -1,6 +1,5 @@
 import {Alert, AlertDescription, AlertIcon, Box, Center, Flex, GridItem, Spacer, Text} from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
-import {Spinner} from "react-bootstrap";
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts} from "@src/GlobalState/user-batch";
@@ -14,6 +13,8 @@ import {useFormik} from "formik";
 import {getCnsAddress, isCnsName} from "@src/helpers/cns";
 import {useAppSelector} from "@src/Store/hooks";
 import nextApiService from "@src/core/services/api-service/next";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const MAX_NFTS_IN_CART = 100;
 
@@ -77,14 +78,7 @@ const TransferDrawer = () => {
       resetDrawer();
       dispatch(setRefetchNfts(true))
     } catch (error: any) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        console.log(error);
-        toast.error('Unknown Error');
-      }
+      toast.error(parseErrorMessage(error));
     } finally {
       setExecutingTransfer(false);
     }
@@ -109,14 +103,7 @@ const TransferDrawer = () => {
 
       setShowConfirmButton(true);
     } catch (error: any) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        console.log(error);
-        toast.error('Unknown Error');
-      }
+      toast.error(parseErrorMessage(error));
     }
   }
 
@@ -254,23 +241,16 @@ const TransferDrawer = () => {
                 Please check your wallet for confirmation
               </Text>
             )}
-            <Button
-              type="legacy"
-              className="w-100"
-              onClick={handleSubmit}
-              disabled={!canSubmit()}
+
+            <PrimaryButton
+              onClick={() => handleSubmit()}
+              isDisabled={!canSubmit()}
+              isLoading={executingTransfer}
+              loadingText={`Transferring ${pluralize(batchListingCart.items.length, 'Item')}...`}
+              w='full'
             >
-              {executingTransfer ? (
-                <>
-                  Transferring {pluralize(batchListingCart.items.length, 'Item')}...
-                  <Spinner animation="border" role="status" size="sm" className="ms-1">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </>
-              ) : (
-                <>Transfer {pluralize(batchListingCart.items.length, 'Item')}</>
-              )}
-            </Button>
+              Transfer {pluralize(batchListingCart.items.length, 'Item')}
+            </PrimaryButton>
           </>
         )
         }

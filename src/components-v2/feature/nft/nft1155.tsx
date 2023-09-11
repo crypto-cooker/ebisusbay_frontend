@@ -9,7 +9,6 @@ import {
   faSync
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {Spinner} from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 import ProfilePreview from '@src/Components/components/ProfilePreview';
@@ -36,7 +35,18 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {appConfig} from "@src/Config";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
-import {Box, ButtonGroup, Flex, Heading, Link, MenuButton as MenuButtonCK, Text, useClipboard} from "@chakra-ui/react";
+import {
+  Box,
+  ButtonGroup,
+  Center,
+  Flex,
+  Heading,
+  Link,
+  MenuButton as MenuButtonCK,
+  Spinner,
+  Text,
+  useClipboard
+} from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
 import {Menu} from '@src/Components/components/chakra-components';
@@ -282,13 +292,9 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
       )}
       {isLoading ? (
         <section className="gl-legacy container">
-          <div className="row mt-4">
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          </div>
+          <Center>
+            <Spinner />
+          </Center>
         </section>
       ) : (
         <section className="gl-legacy container">

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Spinner } from 'react-bootstrap';
+import {Spinner} from "@chakra-ui/react";
 
 const LegacyButton = styled.button`
   display: flex;
@@ -84,9 +84,7 @@ export default function Button({ styleType = 'default', isLoading = false, child
       <LegacyButton {...props}>
         {isLoading && (
           <SpinnerContainer>
-            <Spinner animation="border" role="status" size="sm">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Spinner size='sm' />
           </SpinnerContainer>
         )}
         {children}

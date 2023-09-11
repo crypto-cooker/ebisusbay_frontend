@@ -1,13 +1,9 @@
-import React, {useCallback, useState, ReactElement} from "react";
-import {Spinner} from 'react-bootstrap';
-import {ArrowBackIcon} from "@chakra-ui/icons";
+import React, {ReactElement, useCallback, useState} from "react";
 import MainPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/main";
 import LeaderboardPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/leaderboard";
 import PatchNotes from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/patch-notes-page";
-import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/faq-page";
 import RdAnnouncementModal from "@src/components-v2/feature/ryoshi-dynasties/components/rd-announcement-modal";
-import PatchNoteProps from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/patch-notes-page";
 
 interface AnnouncementBoardModalProps {
   isOpen: boolean;

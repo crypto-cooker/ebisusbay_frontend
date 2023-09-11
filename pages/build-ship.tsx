@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {Contract, ethers} from 'ethers';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { Form, ProgressBar, Spinner } from 'react-bootstrap';
+import { Form, ProgressBar } from 'react-bootstrap';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
@@ -12,7 +12,7 @@ import ShipItemABI from '../src/Contracts/ShipItem.json';
 import {appConfig} from '@src/Config';
 import {hostedImage} from '@src/helpers/image';
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import {Heading} from "@chakra-ui/react";
+import {Center, Heading, Spinner} from "@chakra-ui/react";
 
 import { getCollections } from "@src/core/api/next/collectioninfo";
 import {useAppSelector} from "@src/Store/hooks";
@@ -172,13 +172,9 @@ const Drop = () => {
 
       <section className="gl-legacy container no-top">
         {isLoading ? (
-          <div className="row mt-4" style={{ marginTop: '220px' }}>
-            <div className="col-lg-12 text-center">
-              <Spinner animation="border" role="status" className="ms-1">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          </div>
+          <Center>
+            <Spinner />
+          </Center>
         ) : (
           <>
             <div className="mb-4">

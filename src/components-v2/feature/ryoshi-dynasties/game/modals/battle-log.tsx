@@ -18,6 +18,7 @@ import {
   Grid,
   HStack,
   SimpleGrid,
+  Spinner,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -36,7 +37,6 @@ import {isAddress, pluralize, shortAddress} from "@src/utils";
 
 import localFont from 'next/font/local';
 import {useInfiniteQuery} from "@tanstack/react-query";
-import {Spinner} from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
