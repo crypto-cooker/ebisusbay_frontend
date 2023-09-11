@@ -176,7 +176,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
 
   useEffect(() => {
     getRewardsStreakData();
-    console.log('rdUser', rdUser);
+    // console.log('rdUser', rdUser);
     refreshUser(); 
   }, [user.address, rdUser])
 

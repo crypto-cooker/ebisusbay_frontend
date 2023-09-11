@@ -135,7 +135,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     if(e.target.value !== ''){
       const faction = combinedArmies.filter((faction:any)=> faction?.name === e.target.value)[0];
-      console.log("faction", faction)
+      // console.log("faction", faction)
       setAttackerTroopsAvailable(faction.troops);
       setAttackerImage(faction.image);
     } else { 

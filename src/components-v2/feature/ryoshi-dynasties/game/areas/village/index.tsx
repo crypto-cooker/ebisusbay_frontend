@@ -555,7 +555,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     if(!rdUser) return;
 
     // console.log(rdGameContext)
-    console.log(rdUser)
+    // console.log(rdUser)
 
 
 

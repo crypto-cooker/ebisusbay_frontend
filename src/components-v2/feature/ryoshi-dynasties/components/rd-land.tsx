@@ -235,7 +235,7 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
     zIndex={20}
     borderRadius='20px'
     >
-    <Image h={size} position={'absolute'} src={ImageService.translate(landsBackgroundRef).custom(2000, 2000)} borderRadius='20px' zIndex={0}/>
+    <Image h={size} position={'absolute'} src={ImageService.translate(landsBackgroundRef).fixedWidth(2000, 2000)} borderRadius='20px' zIndex={0}/>
     <Image h={size} position={'absolute'} src={landsBaseRef} zIndex={0}/>
     <Image h={size} position={'absolute'} src={landTypeRef} zIndex={1}/>
     <Image h={size} position={'absolute'} src={legendaryRef} zIndex={2}/>
