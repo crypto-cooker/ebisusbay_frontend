@@ -155,6 +155,10 @@ export interface RdUserContext {
         nextClaim: string;
         nextReward: number;
     },
+    experience: {
+        level: number;
+        points: number;
+    }
     reputations: RdReputation;
 }
 
@@ -311,11 +315,12 @@ interface RdGameRewards {
 }
 
 interface RdReputation {
-    profileId: number;
+    id: number;
+    level: ReputationLevel;
     otherFactionId: number;
     playerFactionId: number;
     points: number;
-    level: ReputationLevel;
+    profileId: number;
 }
       
 export enum ReputationLevel {

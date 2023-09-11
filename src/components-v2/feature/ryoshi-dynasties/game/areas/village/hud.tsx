@@ -161,13 +161,12 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
   const calculateCurrentValue = () => {
     if (!rdUser) return;
 
-    const currentExp = rdUser.reputations.points;
-    setPlayerLevel(GetReputationLevel(currentExp));
-    const currentLevelStart = reputationDict[GetReputationLevel(currentExp)].max;
-    const currentLevelEnd = reputationDict[GetReputationLevel(currentExp) + 1].max;
-    const currentLevelExp = currentLevelEnd - currentLevelStart;
-    const currentExpProgress = currentExp - currentLevelStart;
-    const currentLevelProgress = currentExpProgress / currentLevelExp;
+    const currentExp = rdUser.experience.points;
+    const currentLevelStart = reputationDict[GetReputationLevel(rdUser.experience.points)].max;
+    const currentLevelEnd = reputationDict[GetReputationLevel(rdUser.experience.points) + 1].max;
+    const currentLevelProgress = (currentExp - currentLevelStart) / (currentLevelEnd - currentLevelStart);
+
+    setPlayerLevel(rdUser.experience.level);
     setCurrentLevelProgress(currentLevelProgress * 100);
   };
 
