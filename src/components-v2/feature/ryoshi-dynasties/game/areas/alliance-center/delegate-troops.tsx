@@ -1,6 +1,7 @@
 import {ChangeEvent, useContext, useEffect, useState} from "react";
 import {
   Box,
+  Button,
   Center,
   Flex,
   FormControl,
@@ -15,6 +16,7 @@ import {
   NumberInputField,
   NumberInputStepper,
   Select,
+  Spacer,
   Text
 } from "@chakra-ui/react"
 import {getAuthSignerInStorage} from '@src/helpers/storage';
@@ -199,20 +201,32 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsForm
 
         <FormControl isInvalid={!!troopsError}>
           <FormLabel>Quantity: (Max {troopsAvailable})</FormLabel>
-          <NumberInput
-            defaultValue={0}
-            min={0}
-            max={troopsAvailable}
-            name="quantity"
-            onChange={handleChange}
-            value={troopsToDelegate}
-          >
-          <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
+          <Flex justifyContent='center' w={'100%'}>
+            <NumberInput 
+              w='80%'
+              defaultValue={0}
+              min={0}
+              max={troopsAvailable}
+              name="quantity"
+              onChange={handleChange}
+              value={troopsToDelegate}
+            >
+            <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+            <Spacer />
+            <Button 
+              variant={'outline'}
+              onClick={() => setTroopsToDelegate(troopsAvailable)}
+            >
+              Max
+            </Button>
+          </Flex>
+       
+          
           <FormErrorMessage>{troopsError}</FormErrorMessage>
         </FormControl>
         <Flex mt='16px'>

@@ -44,7 +44,7 @@ const BlackListedWallets = [
 export const GetActualEditionNumber = (edition: number) => {
   let actualEdition = -1;
   cardValueDict.forEach((cardValue) => {
-    if(cardValue.max <= edition) {
+    if(cardValue.max < edition) {
       actualEdition = edition - cardValue.max;
     }
   })
@@ -354,15 +354,17 @@ export const RankPlayers = async (data : any) => {
   }
   const SetSecondaryCardEdition = (rankedPlayers: Player[]) => {
     rankedPlayers.forEach((player) => {
+
       player.cards.sort((a, b) => b - a);
-      if(player.bestHand.secondaryValue < 2){
-        player.bestHand.secondaryCardEdition = -1;
-      }
-      else{
-        let edition = player.cards.find((card) => 
-          cardValueDict.find((cardValue) => cardValue.value === player.bestHand.secondaryValue && cardValue.max >= card) !== undefined) as never;
-          player.bestHand.secondaryCardEdition = GetActualEditionNumber(edition);
-      }
+      player.cardRanks.sort((a, b) => b - a);
+
+      player.bestHand.secondaryCardEdition = -1;
+        for(let i = 0; i < player.cards.length; i++) {
+          if(player.cardRanks[i] === player.bestHand.secondaryValue) {
+            player.bestHand.secondaryCardEdition = GetActualEditionNumber(player.cards[i]);
+            // console.log("New best hand", player.bestHand.secondaryCardEdition);
+          }
+        }
     })
     return rankedPlayers;
   }
