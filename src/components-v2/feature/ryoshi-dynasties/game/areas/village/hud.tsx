@@ -12,7 +12,8 @@ import {
   SimpleGrid,
   Spacer,
   Stack,
-  Text
+  Text,
+  Avatar
 } from "@chakra-ui/react";
 import RdButton from "../../../components/rd-button";
 import React, {useEffect, useRef, useState, useContext, Attributes} from "react";
@@ -47,22 +48,21 @@ interface VillageHudProps {
 
 export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog, forceRefresh}: VillageHudProps) => {
   const user = useAppSelector((state) => state.user);
-  const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, user:rdUser, game: rdGameContext, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const config = appConfig();
 
   const[isLoading, setIsLoading] = useState(false);
   const[koban, setKoban] = useState<number | string>(0);
   const[fortune, setFortune] = useState<number | string>(0);
   const[mitama, setMitama] = useState<number | string>(0);
-  const [isLoading2, getSigner] = useCreateSigner();
+
+  const[playerLevel, setPlayerLevel] = useState<number>(0);
+  const[currentLevelProgress, setCurrentLevelProgress] = useState<number>(0);
 
   //timer
   const Ref = useRef<NodeJS.Timer | null>(null);
   const [timer, setTimer] = useState('00:00:00');
   const [canClaim, setCanClaim] = useState(true);
-
-  //nft metadata
-  const[selectedNFT, setSelectedNFT] = useState<any>(null);
 
   //timer functions
   const getTimeRemaining = (e:any) => {
@@ -92,7 +92,6 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     const id = setInterval(() => { startTimer(e); }, 1000) 
     Ref.current = id;
   }
-
   const getRewardsStreakData = async () => {
     if (!user.address || !rdUser) return;
       const dt = Date.parse(rdUser.dailyRewards.nextClaim)
@@ -106,10 +105,6 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
         clearTimer(rdUser.dailyRewards.nextClaim)
       }
   }
-  useEffect(() => {
-      getRewardsStreakData();
-  }, [user.address, rdUser])
-  
   const getResources = async () => {
     try {
       setIsLoading(true);
@@ -139,56 +134,51 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
       setIsLoading(false);
     }
   };
+  
+  const reputationDict = [
+    { max: 100, value: 0},
+    { max: 500, value: 1},
+    { max: 1500, value: 2},
+    { max: 3500, value: 3},
+    { max: 7000, value: 4},
+    { max: 14000, value: 5},
+    { max: 30000, value: 6},
+    { max: 50000, value: 7},
+    { max: 80000, value: 8},
+    { max: 140000, value: 9},
+    { max: 9999999, value: 10},
+  ]
+  const GetReputationLevel = (reputation: number) => {
+    let level = 0;
+    reputationDict.forEach((item) => {
+      if (reputation >= item.max) {
+        level = item.value;
+      }
+    })
+    return level;
+  }
 
-  let metaData = {
-    "image": "",
-    "name": "1",
-    "attributes": [
-      {
-        "trait_type": "landType",
-        "value": "Plains",
-        "display_type": "LandType"
-    },
-    {
-        "trait_type": "underlandLeft",
-        "value": "Fortune-Chest",
-        "display_type": "Resource"
-    },
-    {
-        "trait_type": "underlandRight",
-        "value": "Emerald",
-        "display_type": "Resource"
-    },
-    {
-        "trait_type": "northSpot",
-        "value": "Lotus",
-        "display_type": "Resource"
-    },
-    {
-        "trait_type": "southSpot",
-        "value": "Rock",
-        "display_type": "Resource"
-    },
-    {
-        "trait_type": "eastSpot",
-        "value": "Red-Yucca",
-        "display_type": "Resource"
-    },
-    {
-        "trait_type": "westSpot",
-        "value": "Paddy-Field",
-        "display_type": "Resource"
-    },
-    {
-      "trait_type": "road",
-      "value": "Dirt-Path",
-      "display_type": "Road"
-  }
-    ]
-}
-  const UpdateMetaData = (id: number) => {
-    setSelectedNFT(id)
-  }
+  const calculateCurrentValue = () => {
+    if (!rdUser) return;
+
+    const currentExp = rdUser.experience.points;
+    const currentLevelStart = reputationDict[GetReputationLevel(rdUser.experience.points)].max;
+    const currentLevelEnd = reputationDict[GetReputationLevel(rdUser.experience.points) + 1].max;
+    const currentLevelProgress = (currentExp - currentLevelStart) / (currentLevelEnd - currentLevelStart);
+
+    setPlayerLevel(rdUser.experience.level);
+    setCurrentLevelProgress(currentLevelProgress * 100);
+  };
+
+  useEffect(() => {
+    calculateCurrentValue();
+  }, [rdUser])
+
+  useEffect(() => {
+    getRewardsStreakData();
+    console.log('rdUser', rdUser);
+    refreshUser(); 
+  }, [user.address, rdUser])
 
   useEffect(() => {
     // get all resources
@@ -198,28 +188,67 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
   }, [user.address, forceRefresh])
 
   return (
-    <Box position='absolute' top={0} left={0} p={4}  pointerEvents='none' w='100%'>
+    <Box position='absolute' top={0} left={0} p={4} pointerEvents='none' w='100%'>
       <Flex justifyContent='space-between' w='100%'>
-        <SimpleGrid spacing={2} 
+        <SimpleGrid spacing={2}
+        paddingLeft={3}
+        paddingRight={3}
+        paddingTop={3}
+        paddingBottom={1}
+        rounded='md'
+        bg='linear-gradient(to left, #272523EE, #151418 )' 
         >
-          <RdButton
-                pointerEvents='auto'
-                size='sm'
-                hoverIcon={false}
-                onClick={onOpenDailyCheckin}
-                fontSize={{base: '12', sm: '14'}}
-                w={{base: '150px', sm: '200px'}}
-                h={{base: '40px', sm: '40px'}}
-                lineHeight={'1.2'}
-              >
-                {canClaim ? (
-                  "Claim Rewards!"
-                ) : (
-                  "Claim in "+ timer
-                )}
-          </RdButton>
-            
-          <CurrencyDisplay
+          <HStack spacing={1} >
+            <Avatar 
+              size='md'
+              src={ImageService.translate(user.profile.profilePicture).avatar()}
+            />
+            <RdButton
+              pointerEvents='auto'
+              size='sm'
+              hoverIcon={false}
+              onClick={onOpenDailyCheckin}
+              fontSize={{base: '12', sm: '14'}}
+              w={{base: '150px', sm: '150px'}}
+              h={{base: '40px', sm: '40px'}}
+              lineHeight={'1.2'}
+            >
+              {canClaim ? (
+                "Claim Rewards!"
+              ) : (
+                "Claim in "+ timer
+              )}
+            </RdButton>
+          </HStack>
+
+          <Flex mt={-2} justifyContent={'space-between'}  w={{base: '200px', sm: '200px'}}>
+            <Text 
+            maxW={{base: '150px', sm: '150px'}}
+            isTruncated
+              fontSize={{base: '12', sm: '14'}} 
+              as={'b'}
+              color='white'>{user.profile.username}
+            </Text>
+            <Text 
+              fontSize={{base: '12', sm: '14'}} 
+              as={'b'}
+              color='white'>Lvl: {playerLevel}
+            </Text>
+          </Flex>
+          <Progress mt={-2} w={{base: '200px', sm: '200px'}}
+            colorScheme='ryoshiDynasties' size='md' value={currentLevelProgress} 
+          />
+          <CurrencyDisplay2
+            isLoading={isLoading}
+            icon1 ='/img/ryoshi-dynasties/icons/fortune.svg'
+            icon2 ='/img/ryoshi-dynasties/icons/mitama.png'
+            icon3 ='/img/ryoshi-dynasties/icons/koban.png'
+            address={user.address}
+            amount1={fortune}
+            amount2={mitama}
+            amount3={koban}
+            />
+          {/* <CurrencyDisplay
             isLoading={isLoading}
             icon ='/img/ryoshi-dynasties/icons/fortune.svg'
             address={user.address}
@@ -236,7 +265,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             icon ='/img/ryoshi-dynasties/icons/koban.png'
             address={user.address}
             amount={koban}
-            />
+            /> */}
         </SimpleGrid>
 
         <Box >
@@ -267,7 +296,6 @@ interface ButtonProps {
   onClick: () => void;
   icon?: any;
 }
-
 const DarkButton = ({onClick, icon}: ButtonProps) => {
   return (
     <>
@@ -306,40 +334,126 @@ const DarkButton = ({onClick, icon}: ButtonProps) => {
     </>
   )
 }
-interface CurrencyProps {
+// interface CurrencyProps {
+//   isLoading: boolean;
+//   icon: string;
+//   address: string | null;
+//   amount: string | number;
+// }
+// const CurrencyDisplay = ({isLoading, icon, address, amount}: CurrencyProps) => {
+//   return (
+//     <>
+//       <Box
+//           bg={'#272523EE'}
+//           rounded='md' 
+//           w={{base: '150px', sm: '200px'}}
+//           h={{base: '24px', sm: '24px'}}
+//           borderColor='#4c4859'
+//           borderRadius='6px'
+//           position='relative'
+//           borderWidth='4px 4px 4px 4px'
+//           >
+//           {!isLoading ? (
+//             <>
+//               {!!address ? (
+//                   <Flex justifyContent='space-between'
+//                  h={{base: '14px', sm: '12px'}}>
+//                     <Image src={ImageService.translate(icon).convert()} alt="walletIcon" 
+//                     boxSize={6}
+//                     marginY={-1}
+//                     marginX={-1}/>
+//                     <Text
+//                     fontSize={{base: '12', sm: '14'}}
+//                       textColor={'#ffffff'}
+//                       >{amount}</Text>
+//                   </Flex>
+//               ) : (
+//                 <Text align='center'>Connect wallet for stats</Text>
+//               )}
+//               <Spacer />
+//             </>
+//           ) : (
+//             <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>
+//           )}
+//           </Box>
+//     </>
+//   )
+// }
+interface CurrencyProps2 {
   isLoading: boolean;
-  icon: string;
+  icon1: string;
+  icon2: string;
+  icon3: string;
   address: string | null;
-  amount: string | number;
+  amount1: string | number;
+  amount2: string | number;
+  amount3: string | number;
 }
-
-const CurrencyDisplay = ({isLoading, icon, address, amount}: CurrencyProps) => {
+const CurrencyDisplay2 = ({isLoading, icon1, icon2, icon3, address, amount1,amount2, amount3}: CurrencyProps2) => {
   return (
     <>
       <Box
-          bg={'#272523EE'}
+          // bg={'#272523EE'}
           rounded='md' 
-          w={{base: '150px', sm: '200px'}}
-          h={{base: '24px', sm: '24px'}}
-          borderColor='#4c4859'
-          borderRadius='6px'
-          position='relative'
-          borderWidth='4px 4px 4px 4px'
+          w={{base: '200px', sm: '200px'}}
+          h={{base: '24px', sm: '26px'}}
+          // borderColor='#4c4859'
+          // borderRadius='6px'
+          // position='relative'
+          // borderWidth='2px 2px 2px 2px'
+          alignContent={'center'}
           >
           {!isLoading ? (
             <>
               {!!address ? (
-                  <Flex justifyContent='space-between'
-                 h={{base: '14px', sm: '12px'}}>
-                    <Image src={ImageService.translate(icon).convert()} alt="walletIcon" 
-                    boxSize={6}
-                    marginY={-1}
-                    marginX={-1}/>
+                <HStack justifyContent={'space-between'} 
+                align={'center'}
+                >
+                  <Flex align={'center'}
+                  >
+                    <Image src={ImageService.translate(icon1).convert()} alt="walletIcon" 
+                        mr={1}
+                        boxSize={4}
+                    // marginY={-1}
+                    // marginX={-1}
+                    />
                     <Text
-                    fontSize={{base: '12', sm: '14'}}
+                        as={'b'}
+                        fontSize={{base: '12', sm: '14'}}
                       textColor={'#ffffff'}
-                      >{amount}</Text>
+                      >{amount1}</Text>
                   </Flex>
+                   <Flex 
+                   align={'center'}
+                  >
+                      <Image src={ImageService.translate(icon2).convert()} alt="walletIcon" 
+                        mr={1}
+                        boxSize={4}
+                      // marginY={-1}
+                      // marginX={-1}
+                      />
+                      <Text
+                        as={'b'}
+                        fontSize={{base: '12', sm: '14'}}
+                        textColor={'#ffffff'}
+                        >{amount2}</Text>
+                    </Flex>
+                     <Flex 
+                     align={'center'}
+                     >
+                        <Image src={ImageService.translate(icon3).convert()} alt="walletIcon" 
+                        boxSize={4}
+                      
+                        // marginY={-1}
+                        // marginX={-1}
+                        />
+                        <Text
+                        as={'b'}
+                        fontSize={{base: '12', sm: '14'}}
+                          textColor={'#ffffff'}
+                          >{amount3}</Text>
+                      </Flex>
+                      </HStack>
               ) : (
                 <Text align='center'>Connect wallet for stats</Text>
               )}

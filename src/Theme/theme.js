@@ -154,7 +154,12 @@ const customTheme = extendTheme({
     body: `DM Sans, Helvetica, Arial, sans-serif`,
   },
   colors: {
-    gray: grayColor
+    gray: grayColor,
+    ryoshiDynasties: {
+      100: "#f7fafc",
+      200: "#FDAB1A",
+      900: "#1a202c",
+    },
   },
   breakpoints,
   components: {

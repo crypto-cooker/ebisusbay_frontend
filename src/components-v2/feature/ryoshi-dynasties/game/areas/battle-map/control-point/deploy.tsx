@@ -41,8 +41,8 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
-import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/searchFactions";
-
+import SearchFaction from "@src/components-v2/feature/ryoshi-dynasties/components/search-factions";
+// import Select from "react-select";
 const tabs = {
   recall: 'recall',
   deploy: 'deploy',
@@ -314,7 +314,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
                     <FormLabel> Faction:</FormLabel>
                   </GridItem>
                   <GridItem colSpan={{base:5, sm:4}} w='100%' >
-                    <Search handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"lrg"}/>
+                    <SearchFaction handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"lrg"}/>
                   </GridItem>
                 </Grid>
               </>)}

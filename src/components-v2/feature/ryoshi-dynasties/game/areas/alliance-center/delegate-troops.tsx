@@ -25,7 +25,7 @@ import {delegateTroops, getAllFactionsSeasonId} from "@src/core/api/RyoshiDynast
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {useAppSelector} from "@src/Store/hooks";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/searchFactions";
+import SearchFaction from "@src/components-v2/feature/ryoshi-dynasties/components/search-factions";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {
@@ -168,7 +168,7 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsForm
             <FormLabel> Faction:</FormLabel>
           </GridItem>
           <GridItem colSpan={{base:5, sm:4}} w='100%' >
-            <Search handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"md"}/>
+            <SearchFaction handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"md"}/>
           </GridItem>
         </Grid>
               

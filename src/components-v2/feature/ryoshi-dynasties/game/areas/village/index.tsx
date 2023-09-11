@@ -6,7 +6,11 @@ import {
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
+  Fade,
   Flex,
+  Modal,
+  ModalContent,
+  ModalOverlay,
   Text,
   useBreakpointValue,
   useDisclosure
@@ -30,7 +34,7 @@ import BattleLog from "@src/components-v2/feature/ryoshi-dynasties/game/modals/b
 import Buildings from "@src/components-v2/feature/ryoshi-dynasties/game/modals/buildings";
 
 import ImageService from "@src/core/services/image";
-import AllianceCenterInline from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
+import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 import {
   RyoshiDynastiesContext,
@@ -40,6 +44,7 @@ import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import { RdGameState } from "@src/core/services/api-service/types";
 import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
+import {motion} from "framer-motion";
 
 interface VillageProps {
   onChange: (value: string) => void;
@@ -47,9 +52,10 @@ interface VillageProps {
   onFirstRun: () => void;
 }
 const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
-  const { config: rdConfig, game: rdGameContext, user: rdUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, game: rdGameContext, user: rdUser, refreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
   const config = appConfig();
+  const { isOpen:isOpenOverlay, onToggle } = useDisclosure()
 
   const [isLoading, getSigner] = useCreateSigner();
 
@@ -105,87 +111,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     // console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
 
-  // const GetGameTokens = async () => {
-  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-  //   if (!signatureInStorage) {
-  //     const { signature } = await getSigner();
-  //     signatureInStorage = signature;
-  //   }
-  //   if (signatureInStorage) {
-  //     try {
-  //       const data = await getGameTokens(user?.address?.toLowerCase(), signatureInStorage);
-  //
-  //       if(data.data.data.length > 0) {
-  //
-  //       }
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }
-  // const ClaimDailyRewards = async () => {
-  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-  //   if (!signatureInStorage) {
-  //     const { signature } = await getSigner();
-  //     signatureInStorage = signature;
-  //   }
-  //   if (signatureInStorage) {
-  //     try {
-  //       const data = await getDailyRewards(user!.address!.toLowerCase(), signatureInStorage);
-  //
-  //       const sig = data.data.data.signature;
-  //       const profileId = data.data.data.profileId;
-  //       const quantity = data.data.data.quantity;
-  //       const timestamp = data.data.data.timestamp;
-  //
-  //       var claimRewardsTuple = {
-  //         address: user!.address!.toLowerCase(),
-  //         profileId: [profileId],
-  //         quantity: [quantity],
-  //         timestamp: timestamp,
-  //       };
-  //
-  //       const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-  //       const tx = await resourcesContract.mintWithSig(claimRewardsTuple, sig);
-  //       const receipt = await tx.wait();
-  //       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-  //
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }
-  // const CheckForGameTokens = async () => {
-  //   if (!user.address) return;
-  
-  //   let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-  //   if (!signatureInStorage) {
-  //     const { signature } = await getSigner();
-  //     signatureInStorage = signature;
-  //   }
-  //   if (signatureInStorage) {
-  //     try {
-  //       const data = await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
-  //       setBattleRewards(data.data.data);
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }
-
-  // function nFormatter(num: any, digits: number) {
-  //   const lookup = [
-  //     { value: 1, symbol: "" },
-  //     { value: 1e3, symbol: "k" },
-  //     { value: 1e6, symbol: "M" }
-  //   ];
-  //   const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-  //   var item = lookup.slice().reverse().find(function(item) {
-  //     return num >= item.value;
-  //   });
-  //   return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
-  // }
-
   const buildings ={ "allianceCenter" : {height:438, width:554, top:'7%', left:'55%'},
     "townhall" : {height:607, width:707, top:'13.25%', left:'36.25%'},
     "academy" : {height: 792, width: 744, top: '4%', left: '74%'},
@@ -223,27 +148,29 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   }
 
   const OpenAllianceCenter = () => {
-    setBarracksOpen(false);
-    setPortalOpen(false);
-    setMarketOpen(false);
+    // setBarracksOpen(false);
+    // setPortalOpen(false);
+    // setMarketOpen(false);
     setElementToZoomTo('Alliance Center');
-    setAllianceCenterOpen(true);
+    DelayedOpen('Alliance Center');
+    // setAllianceCenterOpen(true);
   }
-  const CloseAllianceCenter = () => {
-    setElementToZoomTo('fancyMenu');
-    setAllianceCenterOpen(false);
-  }
+  // const CloseAllianceCenter = () => {
+  //   setElementToZoomTo('fancyMenu');
+  //   // setAllianceCenterOpen(false);
+  // }
   const OpenBarracks = () => {
-    setAllianceCenterOpen(false);
-    setPortalOpen(false);
-    setMarketOpen(false);
+    // setAllianceCenterOpen(false);
+    // setPortalOpen(false);
+    // setMarketOpen(false);
     setElementToZoomTo('Barracks');
-    setBarracksOpen(true);
+    DelayedOpen('Barracks');
+    // setBarracksOpen(true);
   }
-  const CloseBarracks = () => {
-    setElementToZoomTo('fancyMenu');
-    setBarracksOpen(false);
-  }
+  // const CloseBarracks = () => {
+  //   setElementToZoomTo('fancyMenu');
+  //   setBarracksOpen(false);
+  // }
   const OpenPortal = () => {
     setBarracksOpen(false);
     setAllianceCenterOpen(false);
@@ -265,6 +192,38 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const CloseMarket = () => {
     setElementToZoomTo('fancyMenu');
     setMarketOpen(false);
+  }
+  const OpenBank = () => {
+    // setAllianceCenterOpen(false);
+    // setPortalOpen(false);
+    // setMarketOpen(false);
+    // setBarracksOpen(false);
+    setElementToZoomTo('Bank');
+    DelayedOpen('Bank');
+  }
+  const OpenBattleMap = () => {
+    setElementToZoomTo('Battle Map');
+    DelayedOpen('Battle Map');
+  }
+  function timeout(delay: number) {
+    return new Promise( res => setTimeout(res, delay) );
+}
+  const DelayedOpen = async (thingToOpen:string) => {
+    onToggle();
+    await timeout(500); //for 0.5 sec delay
+    if(thingToOpen == 'Alliance Center') {
+      onChange('allianceCenter')
+    } else if(thingToOpen == 'Barracks') {
+      onChange('barracks');
+    } else if(thingToOpen == 'Moongate') {
+      // OpenPortal();
+    } else if(thingToOpen == 'Market') {
+      // OpenMarket();
+    } else if(thingToOpen == 'Bank') {
+      onChange('bank');
+    } else if(thingToOpen == 'Battle Map') {
+      handleSceneChange('battleMap');
+    }
   }
 
 //#region all resizing stuff
@@ -545,10 +504,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     setElementToZoomTo('fancyMenu'); 
   }, [transformComponentRef?.current, mapInitialized, dimensionsLoaded]);
   
-  // const mapScale = useBreakpointValue(
-  //   {base: 0.4, sm: 0.6, md: 0.7, lg: 0.8, xl: 0.9, '2xl': 1},
-  //   {fallback: 'lg'}
-  // )
   const mapProps = useBreakpointValue<MapProps>(
     {
       base: {
@@ -594,6 +549,24 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   }, [user.mitamaBalance]);
 
 
+  useEffect(() => {
+    // config.reg
+    if(!rdGameContext) return;
+    if(!rdUser) return;
+
+    // console.log(rdGameContext)
+    console.log(rdUser)
+
+
+
+
+    // console.log(rdConfig)
+    // console.log(rdGameContext)
+    // refreshUser();
+    // console.log(refreshUser()) 
+     
+  }, [rdGameContext, rdUser, rdConfig])
+
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
   const { isOpen: isResetModalOpen, onOpen: onOpenResetModal, onClose: onCloseResetModal } = useDisclosure();
   const handleSceneChange = useCallback((area: string) => {
@@ -618,13 +591,28 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     onChange(area);
   }, [rdGameContext]);
 
+  const item = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1,
+      transition: {
+      }
+     }
+  }
+
+
   return (
     <section>
+        <motion.div
+          variants={item}
+          initial="hidden"
+          animate="show"
+          >
       <Box
         position='relative' h='calc(100vh - 74px)'
         backgroundImage={ImageService.translate(`/img/ryoshi-dynasties/village/background-${user.theme}.png`).convert()}
         backgroundSize='cover'
       >
+    
         {mapInitialized && (
           <TransformWrapper
             // limitToBounds={true}
@@ -691,7 +679,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                     </Box>
 
                     <Box id="Battle Map" className={styles.enlarge} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
-                         onClick={() => handleSceneChange('battleMap')}
+                         onClick={() => OpenBattleMap()}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/boat_day.apng').convert()} />
                     </Box>
@@ -716,14 +704,10 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       id="Bank" 
                       className={styles.enlarge} 
                       style={{position:"absolute", marginTop: bankTop, marginLeft: bankLeft, zIndex:"8"}}
-                      onClick={() => onChange('bank')}
+                      // onClick={() => onChange('bank')}
+                      onClick={() => OpenBank()}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/bank_day.png').convert()} />
-                      {/* <div className={[styles.bank_label]} > */}
-                      {/* <img className={[styles.bank_label]}  src='/img/battle-bay/building_labels/bank_label.png'
-                      // width={bank_labelWidth} height={bank_labelHeight}
-                      /> */}
-                      {/* </div> */}
                     </Box>
 
                     <Box id="Announcements" className={styles.enlarge} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}}
@@ -800,8 +784,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
         <Box  position='absolute' top={0} left={0} p={4} zIndex={1}>
           <Flex direction='row' justify='space-between' >
-            {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>}
-            {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>}
+            {/* {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>} */}
+            {/* {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>} */}
             {portalOpen ? <PortalModal onBack={() => ClosePortal()}/> : <></>}
             {marketOpen ? <FishMarketModal onBack={() => CloseMarket()}/> : <></>}
         
@@ -809,25 +793,28 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         </Box>
 
       </Box>
-      {/* <Drawer
-        isOpen={isOpenBuildings}
-        placement='right'
-        onClose={onCloseBuildings}
-        finalFocusRef={buildingButtonRef}
-      >
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Zoom to Building</DrawerHeader>
-          <DrawerBody gridColumn={1}>
-            {pins}
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer> */}
 
       <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin}/>
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
       <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
       <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
+
+      <Fade in={isOpenOverlay} 
+        >
+        <Modal
+          onClose={() => {}}
+          isOpen={isOpenOverlay}
+          >
+          <ModalOverlay 
+          bg='rgba(0,0,0,1)'
+          pointerEvents={'auto'}
+          transitionDuration={'0.5s'}
+          />
+          <ModalContent>
+
+          </ModalContent>
+          </Modal>
+        </Fade>
       
       <RdModal
         isOpen={isBlockingModalOpen}
@@ -847,6 +834,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
           <Text>The current game has ended and rewards are being calculated. A new game will begin shortly!</Text>
         </RdModalAlert>
       </RdModal>
+      </motion.div>
     </section>
   )
 };

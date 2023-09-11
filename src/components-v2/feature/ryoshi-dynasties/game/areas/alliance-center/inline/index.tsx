@@ -27,7 +27,7 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton, useClipboard,
+  ModalCloseButton, useClipboard, AspectRatio,
 } from "@chakra-ui/react";
 import {ArrowBackIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
@@ -58,6 +58,8 @@ import {ApiService} from "@src/core/services/api-service";
 import {commify, isAddress} from "ethers/lib/utils";
 import {parseErrorMessage} from "@src/helpers/validator";
 import ImageService from "@src/core/services/image";
+import {motion} from "framer-motion";
+import FactionDirectoryComponent from "@src/components-v2/feature/ryoshi-dynasties/components/faction-directory";
 
 const config = appConfig();
 const gothamBook = localFont({
@@ -65,11 +67,11 @@ const gothamBook = localFont({
   fallback: ['Roboto', 'system-ui', 'arial'],
 })
 
-interface AllianceCenterInlineProps {
+interface AllianceCenterProps {
   onClose: () => void;
 }
 
-const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
+const AllianceCenter = ({onClose}: AllianceCenterProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
 
@@ -85,52 +87,84 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
       }
     }
   }
+  const item = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1,
+      transition: {
+      }
+     }
+  }
 
   return (
-    <Flex
-      border='1px solid #FFD700'
-      backgroundColor='#292626'
-      flexDirection='column'
-      textAlign='center'
-      borderRadius={'10px'}
-      justifyContent='space-around'
-      padding={4}
-      minW={{base: '100%', xl: '450px' }}
-      boxShadow='0px 0px 10px 0px #000000'
-      className={gothamBook.className}
-    >
-      <Flex justify='space-between'>
-        <Box
-          left={6}
-          top={6}
-          rounded='full'
+    <Box
+      position='relative'
+      h='calc(100vh - 74px)'
+      overflow='hidden'
+      minH={{base: '900px', xl: '100vh' }}
+      >
+     <motion.div
+        variants={item}
+        initial="hidden"
+        animate="show"
+      >
+        <Box 
+          position='absolute'
+          top={0}
+          left={0}
           zIndex={1}
-          _groupHover={{
-            cursor: 'pointer'
-          }}
-          data-group
+          w='100%'
+          h='100%'
+          // bg={'#000000'}
+          overflow='hidden'
         >
-          <Button
-            bg='#C17109'
-            rounded='full'
-            border='8px solid #F48F0C'
-            w={14}
-            h={14}
-            onClick={onClose}
-            _groupHover={{
-              bg: '#de8b08',
-              borderColor: '#f9a50b',
-            }}
-          >
-            <ArrowBackIcon boxSize={8} />
-          </Button>
-        </Box>
-        <Box textAlign='end' ms={2}>
-          <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} fontWeight='bold'>Alliance Center</Text>
-          <Text textColor='#ffffffeb' fontSize='sm' fontStyle='italic'>Manage your Faction, Delegate your troops</Text>
-        </Box>
-      </Flex>
-      <Box>
+          {/* <FactionDirectoryComponent /> */}
+          <Flex
+            // border='1px solid #FFD700'
+            // backgroundColor='#292626'
+            flexDirection='column'
+            textAlign='center'
+            // borderRadius={'10px'}
+            justifyContent='space-around'
+            padding={4}
+            // minW={{base: '100%', xl: '450px' }}
+            // w={{base: '450px', xl: '450px' }}
+            w={{base: '100%', xl: '450px' }}
+            // boxShadow='0px 0px 10px 0px #000000'
+            className={gothamBook.className}
+            position='absolute'
+            >
+          <Flex justify='space-between'>
+            <Box
+              left={6}
+              top={6}
+              rounded='full'
+              zIndex={1}
+              _groupHover={{
+                cursor: 'pointer'
+              }}
+              data-group
+            >
+              <Button
+                bg='#C17109'
+                rounded='full'
+                border='8px solid #F48F0C'
+                w={14}
+                h={14}
+                onClick={onClose}
+                _groupHover={{
+                  bg: '#de8b08',
+                  borderColor: '#f9a50b',
+                }}
+              >
+                <ArrowBackIcon boxSize={8} />
+              </Button>
+            </Box>
+            <Box textAlign='end' ms={2}>
+              <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} fontWeight='bold'>Alliance Center</Text>
+              <Text textColor='#ffffffeb' fontSize='sm' fontStyle='italic'>Manage your Faction, Delegate your troops</Text>
+            </Box>
+          </Flex>
+        <Box>
         {!!user.address ? (
           <CurrentFaction />
         ) : (
@@ -150,10 +184,24 @@ const AllianceCenterInline = ({onClose}: AllianceCenterInlineProps) => {
       </Box>
 
     </Flex>
+
+        </Box>
+         <AspectRatio ratio={1920/1080} overflow='visible' >
+          <Image
+          position={'absolute'}
+            src={'/img/ryoshi-dynasties/village/allianceCenter.png'}
+            opacity={0.2}
+            zIndex={0}
+            // src={ImageService.translate('/img/ryoshi-dynasties/village/allianceCenter.png').convert()}
+            minH='calc(100vh - 74px)'
+          />
+        </AspectRatio>
+      </motion.div>
+    </Box>
   )
 }
 
-export default AllianceCenterInline;
+export default AllianceCenter;
 
 
 const CurrentFaction = () => {

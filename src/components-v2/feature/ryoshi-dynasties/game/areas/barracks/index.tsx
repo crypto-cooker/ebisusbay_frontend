@@ -1,4 +1,4 @@
-import {Box, Button, Center, Container, Flex, Spacer, Text, useDisclosure, VStack,} from '@chakra-ui/react';
+import {Box, Button, Center, Container, Flex, Spacer, Text, useDisclosure, VStack,AspectRatio, Image,} from '@chakra-ui/react';
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import StakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft";
 import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
@@ -12,6 +12,7 @@ import {getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import React, {useState} from 'react';
 import {ArrowBackIcon} from "@chakra-ui/icons";
+import {motion} from "framer-motion";
 
 const gothamBook = localFont({
   src: '../../../../../../fonts/Gotham-Book.woff2',
@@ -32,7 +33,7 @@ const Barracks = ({onBack}: BarracksProps) => {
   const claimedRewards = () => {
     setBattleRewardsClaimed(true);
     onCloseClaimRewards();
-    console.log("claimedRewards")
+    // console.log("claimedRewards")
   }
   const checkForBattleRewards = async () => {
     if (!user.address) return;
@@ -45,10 +46,8 @@ const Barracks = ({onBack}: BarracksProps) => {
     if (signatureInStorage) {
       return await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
     }
-
     return null;
   }
-
   const { data: battleRewards } = useQuery(
     ['BattleRewards', user.address],
     checkForBattleRewards,
@@ -57,21 +56,46 @@ const Barracks = ({onBack}: BarracksProps) => {
       refetchOnWindowFocus: false,
     }
   );
-  //
-  // console.log('BATTLE', battleRewards);
-
+  const item = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1,
+      transition: {
+      }
+     }
+  }
   return (
+    <Box
+    position='relative'
+    h='calc(100vh - 74px)'
+    overflow='hidden'
+  >
+   <motion.div
+      variants={item}
+      initial="hidden"
+      animate="show"
+    >
+      <Box 
+          position='absolute'
+          top={0}
+          left={0}
+          zIndex={1}
+          w='100%'
+          h='100%'
+          // bg={'#000000'}
+          overflow='hidden'
+        >
     <Flex
-      border='1px solid #FFD700'
-      backgroundColor='#292626'
+      // border='1px solid #FFD700'
+      // backgroundColor='#292626'
       flexDirection='column'
       textAlign='center'
-      borderRadius={'10px'}
+      // borderRadius={'10px'}
       justifyContent='space-around'
       padding={4}
       minW={{base: '100%', xl: '450px' }}
-      boxShadow='0px 0px 10px 0px #000000'
+      // boxShadow='0px 0px 10px 0px #000000'
       className={gothamBook.className}
+
     >
       <Flex justify='space-between'>
         <Box
@@ -102,7 +126,6 @@ const Barracks = ({onBack}: BarracksProps) => {
         <Box textAlign='end' ms={2}>
           <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} fontWeight='bold'>Barracks</Text>
           <Text textColor='#ffffffeb' fontSize='sm' fontStyle='italic'>
-            {/* Stake Ryoshi NFTs to receive bonus troops */}
             Claim rewards from your battles
             </Text>
         </Box>
@@ -122,8 +145,8 @@ const Barracks = ({onBack}: BarracksProps) => {
         <VStack
           spacing={4}
           align='stretch'
+          mt={'400px'}
         >
-        <Spacer h='20'/>
            <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
           {(!!battleRewards && !battleRewardsClaimed) &&  (
             <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
@@ -136,6 +159,21 @@ const Barracks = ({onBack}: BarracksProps) => {
       </VStack>
       </Box>
     </Flex>
+    </Box>
+
+    <AspectRatio ratio={1920/1080} overflow='visible' >
+          <Image
+          position={'absolute'}
+            src={'/img/ryoshi-dynasties/village/barracksBackground.png'}
+            opacity={0.2}
+            zIndex={0}
+            // src={ImageService.translate('/img/ryoshi-dynasties/village/barracksBackground.png').convert()}
+            minH='calc(100vh - 74px)'
+          />
+        </AspectRatio>
+
+    </motion.div>
+  </Box>
   )
 };
 

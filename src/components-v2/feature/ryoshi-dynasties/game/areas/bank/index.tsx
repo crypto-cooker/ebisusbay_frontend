@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {AspectRatio, Box, Icon, Image, Text, useDisclosure, useMediaQuery, VStack} from '@chakra-ui/react';
+import {AspectRatio, Box, Icon, Image, Modal, ModalContent, ModalOverlay, Text, useDisclosure, useMediaQuery, VStack} from '@chakra-ui/react';
 
 import StakeFortune from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune';
 import StakeNFTs from './stake-nft';
@@ -18,6 +18,7 @@ import {useDispatch} from 'react-redux';
 import ImageService from "@src/core/services/image";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {motion} from "framer-motion";
 
 interface BankerSceneProps {
   address: string;
@@ -42,6 +43,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
   const windowSize = useWindowSize();
   const [shouldAbbreviateHorizontal] = useMediaQuery('(max-width: 800px)');
   const [abbreviateButtonText, setAbbreviateButtonText] = useState(false);
+  const { isOpen:isOpenOverlay, onToggle } = useDisclosure()
 
   useEffect(() => {
     const shouldAbbreviateVertical = !!windowSize.height && windowSize.height < 800;
@@ -75,6 +77,14 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
     }
   }, [user.address]);
 
+  const item = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1,
+      transition: {
+      }
+     }
+  }
+
   return (
     <Box
       position='relative'
@@ -95,6 +105,11 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
             <Text>This area is currently unavailable, either due to maintenance, or a game that has yet to be started. Check back again soon!</Text>
           </RdModalAlert>
         </RdModal>
+        <motion.div
+          variants={item}
+          initial="hidden"
+          animate="show"
+          >
 
         <AspectRatio ratio={1920/1080} overflow='visible'>
           <Image
@@ -109,6 +124,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
           bottom={0}
           left={0}
         />
+     
         <Box
           position='absolute'
           top={{base: 5, md: 10, lg: 16}}
@@ -130,6 +146,10 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
             )}
           </BankerBubbleBox>
         </Box>
+
+
+          </motion.div>
+
         <Box
           position='absolute'
           right={-1}
