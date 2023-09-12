@@ -106,6 +106,28 @@ export class ApiService implements Api {
       page < totalPages
     );
   }
+  async getRyoshiDiamondsLeaderboardAtBlock(page: number, pageSize: number, blockNumber: number): Promise<any> {
+    //info from subgraph
+
+    const owners = await getOwners(blockNumber);
+    //rank the info
+    
+    const response = await RankPlayers(owners);
+
+    function paginate(array : any, page_size:number, page_number:number) {
+      return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    //convert response to paged list
+    const paginatedResponse = paginate(response, pageSize, page);
+    const totalPages = Math.ceil(response.length / pageSize);
+
+    return new PagedList<Player>(
+      paginatedResponse,
+      page,
+      page < totalPages
+    );
+  }
 
   async getReceivedOffersByUser(address: string, query?: OffersV2QueryParams): Promise<PagedList<Offer>> {
     if (!query) query = {};

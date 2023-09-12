@@ -284,7 +284,7 @@ export async function getSubgraphData(subgraph, query, variables, dataName) {
 return foundData;
 }
 
-export async function getOwners() {
+export async function getOwners(blockNumber) {
   const SUBGRAPH = "https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/staked-owners";
   let query = `
       query owners($lastID: String) {
@@ -297,8 +297,25 @@ export async function getOwners() {
         }
   }
   `
+  let queryBlockNumber = `
+      query owners($lastID: String) {
+        erc721Tokens(where: {contract: "0xd87838a982a401510255ec27e603b0f5fea98d24", id_gt: $lastID}, first: 1000, block: {number: 10176588}) {
+              id
+              owner {
+                    id
+              }
+              identifier
+        }
+  }
+  `
   try {
-      let data = await getSubgraphData(SUBGRAPH, query, {lastID: ""}, "erc721Tokens")
+    let data;
+      if(!blockNumber) {
+        data = await getSubgraphData(SUBGRAPH, query, {}, "erc721Tokens");
+      } else {
+        console.log("blockNumber", blockNumber)
+        data = await getSubgraphData(SUBGRAPH, queryBlockNumber, {}, "erc721Tokens");
+      }
       if (data) {
           // DATA HERE
           return data;

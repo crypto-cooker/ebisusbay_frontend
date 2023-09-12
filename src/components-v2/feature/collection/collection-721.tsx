@@ -32,7 +32,7 @@ import styled from "styled-components";
 import {getCollectionMetadata, getCollectionPowertraits, getCollectionTraits} from "@src/core/api";
 import {getCollections} from "@src/core/api/next/collectioninfo";
 import Items from "@src/components-v2/feature/collection/tabs/items";
-import PokerLeaderboardComponent from "@src/components-v2/feature/poker/poker-leaderboard";
+import PokerLeaderboardComponent from "@src/components-v2/feature/poker/poker-leaderboard-past";
 
 const tabs = {
   items: 'items',
