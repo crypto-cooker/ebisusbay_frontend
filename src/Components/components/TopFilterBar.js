@@ -1,14 +1,14 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, {memo} from 'react';
 import Select from 'react-select';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
-import { SortOption } from '../Models/sort-option.model';
-import { getTheme } from '../../Theme/theme';
-import { Form } from 'react-bootstrap';
+import {SortOption} from '../Models/sort-option.model';
+import {getTheme} from '../../Theme/theme';
 import styled from 'styled-components';
 import Switch from './common/Switch';
 import useFeatureFlag from '@src/hooks/useFeatureFlag';
 import Constants from '@src/constants';
+import {Input, InputGroup} from "@chakra-ui/react";
 
 const CollectionFilterBarContainer = styled.div`
   margin: 0 0 22px;
@@ -115,13 +115,16 @@ const TopFilterBar = ({
 
   const Search = () => {
     return (
-      <Form.Control
-        type="text"
-        placeholder="Search"
-        onChange={onSearch}
-        style={{ marginBottom: 0, marginTop: 0 }}
-        defaultValue={defaultSearchValue}
-      />
+      <InputGroup flex='1'>
+        <Input
+          placeholder="Search by name"
+          onChange={onSearch}
+          defaultValue={defaultSearchValue}
+          color="white"
+          _placeholder={{ color: 'gray.300' }}
+          style={{ marginBottom: 0, marginTop: 0 }}
+        />
+      </InputGroup>
     );
   };
 

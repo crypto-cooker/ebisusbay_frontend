@@ -201,7 +201,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
           <HStack spacing={1} >
             <Avatar 
               size='md'
-              src={ImageService.translate(user.profile.profilePicture).avatar()}
+              src={user.profile.profilePicture ? ImageService.translate(user.profile.profilePicture).avatar() : undefined}
             />
             <RdButton
               pointerEvents='auto'
