@@ -23,26 +23,26 @@ const FactionDirectoryComponent = () => {
     const config = appConfig();
     const [factions, setFactions] = useState<string[]>([])
     const [allFactions, setAllFactions] = useState<any>([]);
-    const {game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+    // const {game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
     const [selectedFaction, setSelectedFaction] = useState<string>('');
     const HandleSelectCollectionCallback = (factionName: string) => {
         setSelectedFaction(factionName);
       }
 
-    const GetFactions = async () => {
-		if(!rdGameContext) return; 
+    // const GetFactions = async () => {
+		// if(!rdGameContext) return;
+    //
+    //     console.log('rdGameContext', rdGameContext);
+    //     const factions = await getAllFactionsSeasonId(rdGameContext.game.id, rdGameContext.season.id);
+    //     // console.log('factions', factions);
+    //     setAllFactions(factions);
+    // }
 
-        console.log('rdGameContext', rdGameContext);
-        const factions = await getAllFactionsSeasonId(rdGameContext.game.id, rdGameContext.season.id);
-        // console.log('factions', factions);
-        setAllFactions(factions);
-    }
-
-	useEffect(() => {
-		if(!rdGameContext) return; 
-        GetFactions();
-        console.log('rdGameContext', rdGameContext);
-	}, [rdGameContext])
+	// useEffect(() => {
+	// 	if(!rdGameContext) return;
+  //       GetFactions();
+  //       console.log('rdGameContext', rdGameContext);
+	// }, [rdGameContext])
 
     useEffect(() => {
         if(allFactions.length > 0) {
@@ -60,7 +60,7 @@ return (
             <FormLabel> Faction:</FormLabel>
             </GridItem>
             <GridItem colSpan={{base:5, sm:4}} w='100%' >
-            <SearchFaction handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"lrg"}/>
+            {/*<SearchFaction handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"lrg"}/>*/}
             </GridItem>
         </Grid>
       </VStack>
