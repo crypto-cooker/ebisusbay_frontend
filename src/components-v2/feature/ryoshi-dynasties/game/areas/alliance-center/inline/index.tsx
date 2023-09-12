@@ -29,15 +29,15 @@ import {
   ModalBody,
   ModalCloseButton, useClipboard, AspectRatio,
 } from "@chakra-ui/react";
+import React, {useContext, useEffect, useState} from "react";
 import {ArrowBackIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
 import RdButton from "../../../../components/rd-button";
-import React, {useContext, useEffect, useState} from "react";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import {useQuery} from "@tanstack/react-query";
-import {addTroops, getRegistrationCost} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getRegistrationCost} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdUserContextNoOwnerFactionTroops, RdUserContextOwnerFactionTroops} from "@src/core/services/api-service/types";
@@ -119,17 +119,21 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
         >
           {/* <FactionDirectoryComponent /> */}
           <Flex
-            // border='1px solid #FFD700'
-            // backgroundColor='#292626'
+          justifyContent={'center'}
+          alignItems={'center'}
+          h='100%'
+            >
+          <Flex
+            maxW={'500px'}
+            border='1px solid #FFD700'
+            backgroundColor='#292626'
             flexDirection='column'
             textAlign='center'
-            // borderRadius={'10px'}
+            borderRadius={'10px'}
             justifyContent='space-around'
             padding={4}
-            // minW={{base: '100%', xl: '450px' }}
-            // w={{base: '450px', xl: '450px' }}
             w={{base: '100%', xl: '450px' }}
-            // boxShadow='0px 0px 10px 0px #000000'
+            boxShadow='0px 0px 10px 0px #000000'
             className={gothamBook.className}
             position='absolute'
             >
@@ -184,6 +188,7 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
       </Box>
 
     </Flex>
+    </Flex>
 
         </Box>
          <AspectRatio ratio={1920/1080} overflow='visible' >
@@ -203,7 +208,6 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
 
 export default AllianceCenter;
 
-
 const CurrentFaction = () => {
   const user = useAppSelector((state) => state.user);
   const [_, getSigner] = useCreateSigner();
@@ -213,16 +217,13 @@ const CurrentFaction = () => {
   const { isOpen: isOpenCreateFaction, onOpen: onOpenCreateFaction, onClose: onCloseCreateFaction } = useDisclosure();
   const { isOpen: isOpenDelegate, onOpen: onOpenDelegate, onClose: onCloseDelegate } = useDisclosure();
   const { isOpen: noEditsModalisOpen, onOpen: noEditsModalOnOpen, onClose: noEditsModalonClose } = useDisclosure()
-
   const getDaysSinceGameStart = () => {
     if(!rdContext.game) return 0;
     const startDate = new Date(rdContext.game.game.startAt);
     const timeSinceStart = Date.now() - startDate.getTime();
     const daysSinceStart = timeSinceStart / (1000 * 3600 * 24);
-    // console.log(daysSinceStart);
     return daysSinceStart;
   }
-
   const OpenEditFaction = () => {
     onOpenFaction();
     if(getDaysSinceGameStart() >= rdContext.config.factions.editableDays-1){
@@ -232,7 +233,6 @@ const CurrentFaction = () => {
     }
   }
   const [isExecutingRegister, setIsExecutingRegister] = useState(false);
-  // const [totalTroops, setTotalTroops] = useState(rdContext.user?.season.troops.undeployed ?? 0);
   const {data: allFactions, status, error} = useQuery({
     queryKey: ['GetAllFactions'],
     queryFn: () => ApiService.withoutKey().ryoshiDynasties.getFactions(rdContext.game?.game.id),
@@ -247,25 +247,6 @@ const CurrentFaction = () => {
     onCloseDelegate();
     await rdContext.refreshUser();
     // queryClient.invalidateQueries(['GetAllFactions']);
-  }
-  const handleAddTroops = async () => {
-    if (!user.address) return;
-
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const res = await addTroops(user.address!.toLowerCase(), signatureInStorage, 8);
-        // console.log(res)
-        await rdContext.refreshUser();
-        // await queryClient.invalidateQueries(['GetFactionData', user.address]);
-      } catch (error) {
-        console.log(error)
-      }
-    }
   }
   const checkForApproval = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -328,7 +309,10 @@ const CurrentFaction = () => {
   useEffect(() => {
     if(!rdContext.user) return;
 
-    // console.log(rdContext.user?.armiesInfo);
+    // console.log(rdContext.user);
+    // console.log(rdContext.game?.season);
+    // console.log(rdContext.config);
+
     // console.log(getAuthSignerInStorage()?.signature)
     // console.log(user.address)
     if(rdContext.user?.faction?.id !== undefined && rdContext.user?.faction.isEnabled){
