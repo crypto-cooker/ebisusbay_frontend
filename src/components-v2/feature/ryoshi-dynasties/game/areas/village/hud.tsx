@@ -209,7 +209,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
               hoverIcon={false}
               onClick={onOpenDailyCheckin}
               fontSize={{base: '12', sm: '14'}}
-              w={{base: '150px', sm: '150px'}}
+              w={{base: '150px', sm: '160px'}}
               h={{base: '40px', sm: '40px'}}
               lineHeight={'1.2'}
             >
@@ -221,7 +221,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             </RdButton>
           </HStack>
 
-          <Flex mt={-2} justifyContent={'space-between'}  w={{base: '200px', sm: '200px'}}>
+          <Flex mt={-2} justifyContent={'space-between'}  w={{base: '200px', sm: '210px'}}>
             <Text 
             maxW={{base: '150px', sm: '150px'}}
             isTruncated
@@ -235,7 +235,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
               color='white'>Lvl: {playerLevel}
             </Text>
           </Flex>
-          <Progress mt={-2} w={{base: '200px', sm: '200px'}}
+          <Progress mt={-2} w={{base: '200px', sm: '210px'}}
             colorScheme='ryoshiDynasties' size='md' value={currentLevelProgress} 
           />
           <CurrencyDisplay2
@@ -395,7 +395,7 @@ const CurrencyDisplay2 = ({isLoading, icon1, icon2, icon3, address, amount1,amou
       <Box
           // bg={'#272523EE'}
           rounded='md' 
-          w={{base: '200px', sm: '200px'}}
+          w={{base: '200px', sm: '210px'}}
           h={{base: '24px', sm: '26px'}}
           // borderColor='#4c4859'
           // borderRadius='6px'
