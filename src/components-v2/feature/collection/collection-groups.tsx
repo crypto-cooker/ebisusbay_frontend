@@ -40,7 +40,7 @@ export const CollectionNftsGroup = ({data, canLoadMore, loadMore, fullWidth, lis
         <React.Fragment key={index}>
           {items.data?.map((nft, index) => (
             <Box key={`${nft.name}`}>
-              {isBundle(nft.nftAddress) ? (
+              {isBundle(nft.address ?? nft.nftAddress) ? (
                 <NftBundleCard
                   listing={nft}
                   imgClass="collection"
@@ -49,7 +49,7 @@ export const CollectionNftsGroup = ({data, canLoadMore, loadMore, fullWidth, lis
                 <NftCard
                   nft={nft}
                   imgClass="collection"
-                  canBuy={!isNftBlacklisted(nft.nftAddress, nft.nftId) && listable}
+                  canBuy={!isNftBlacklisted(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId) && listable}
                   is1155={is1155}
                 />
               )}
