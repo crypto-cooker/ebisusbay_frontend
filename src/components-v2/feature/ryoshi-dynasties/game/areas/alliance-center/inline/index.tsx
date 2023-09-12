@@ -217,6 +217,11 @@ const CurrentFaction = () => {
   const { isOpen: isOpenCreateFaction, onOpen: onOpenCreateFaction, onClose: onCloseCreateFaction } = useDisclosure();
   const { isOpen: isOpenDelegate, onOpen: onOpenDelegate, onClose: onCloseDelegate } = useDisclosure();
   const { isOpen: noEditsModalisOpen, onOpen: noEditsModalOnOpen, onClose: noEditsModalonClose } = useDisclosure()
+
+  const [factionCreatedAndEnabled, setFactionCreatedAndEnabled] = useState(false);
+  const [isRegisteredForSeason1, setIsRegisteredForSeason1] = useState(false);
+  const [isRegisteredForSeason2, setIsRegisteredForSeason2] = useState(false);
+  
   const getDaysSinceGameStart = () => {
     if(!rdContext.game) return 0;
     const startDate = new Date(rdContext.game.game.startAt);
@@ -240,7 +245,6 @@ const CurrentFaction = () => {
     initialData: [],
     refetchOnWindowFocus: false,
   });
-
   const handleActionComplete = async ()=> {
     onCloseFaction();
     onCloseCreateFaction();
@@ -254,10 +258,11 @@ const CurrentFaction = () => {
     const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.allianceCenter);
     return totalApproved as BigNumber;
   }
-  const handleRegister = async () => {
+  const handleRegister = async (seasonNumber : number) => {
     if (!user.address) return;
 
-    if(!!rdContext.user?.season.faction) {
+    if(isRegisteredForSeason1 && seasonNumber === 1 ||
+      isRegisteredForSeason2 && seasonNumber === 2) {
       console.log('Already Registered');
     } else {
       try {
@@ -268,13 +273,17 @@ const CurrentFaction = () => {
           signatureInStorage = signature;
         }
         if (signatureInStorage) {
-          // console.log(rdContext);
-          const data = await getRegistrationCost(user.address?.toLowerCase(), signatureInStorage, 
-            rdContext.game?.season.blockId, rdContext.game?.game.id, rdContext.user?.faction.id)
+          
+          let blockId = seasonNumber === 1 ? rdContext.game?.season.blockId : 5;
+          const data = await getRegistrationCost(
+                                user.address?.toLowerCase(), 
+                                signatureInStorage, 
+                                blockId, 
+                                rdContext.game?.game.id, 
+                                rdContext.user?.faction.id)
 
           const totalApproved = await checkForApproval();
-          if(totalApproved.lt(data.cost))
-          {
+          if(totalApproved.lt(data.cost)) {
             toast.error('Please approve the contract to spend your tokens');
             const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
             const tx1 = await fortuneContract.approve(config.contracts.allianceCenter, data.cost);
@@ -282,13 +291,14 @@ const CurrentFaction = () => {
             toast.success(createSuccessfulTransactionToastContent(receipt1.transactionHash));
           }
 
+          let cost = seasonNumber === 1 ? data.cost : 3000;
           const registrationStruct = {
             leader: user.address?.toLowerCase(),
-            cost: data.cost,
-            season: rdContext.game?.season.blockId
+            cost: cost,
+            season: blockId
           }
           console.log(registrationStruct);
-          console.log(Number(ethers.utils.formatEther(data.cost)));
+
           const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
           const tx = await registerFactionContract.registerFaction(registrationStruct, data.signature)
           const receipt = await tx.wait();
@@ -304,8 +314,6 @@ const CurrentFaction = () => {
     }
   }
 
-  const [factionCreatedAndEnabled, setFactionCreatedAndEnabled] = useState(false);
-
   useEffect(() => {
     if(!rdContext.user) return;
 
@@ -315,6 +323,7 @@ const CurrentFaction = () => {
 
     // console.log(getAuthSignerInStorage()?.signature)
     // console.log(user.address)
+    
     if(rdContext.user?.faction?.id !== undefined && rdContext.user?.faction.isEnabled){
       console.log('Faction Created and Enabled');
       setFactionCreatedAndEnabled(true);
@@ -324,8 +333,12 @@ const CurrentFaction = () => {
       setFactionCreatedAndEnabled(false);
     }
   }, [rdContext]); 
+  
+  useEffect(() => {
+    if(!rdContext.user?.season.faction) return;
 
-
+    setIsRegisteredForSeason1(!!rdContext.user?.season.faction);
+  }, [!!rdContext]); 
 
   return (
     <Box mt={4}>
@@ -363,7 +376,8 @@ const CurrentFaction = () => {
                 />
               </Stack>
               {factionCreatedAndEnabled && (
-              <Box bg='#564D4A' p={2} rounded='lg' w='full'>
+            <>
+            <Box bg='#564D4A' p={2} rounded='lg' w='full'>
                 <SimpleGrid columns={2}>
                   <VStack align='start' spacing={0} my='auto'>
                     <Text fontSize='sm'>Current Season</Text>
@@ -372,7 +386,7 @@ const CurrentFaction = () => {
                   {!rdContext.user.season.faction && (
                     <RdButton
                       hoverIcon={false}
-                      onClick={handleRegister}
+                      onClick={() => handleRegister(1)}
                       isLoading={isExecutingRegister}
                       isDisabled={isExecutingRegister}
                     >
@@ -387,6 +401,31 @@ const CurrentFaction = () => {
                   </Box>
                 )}
               </Box>
+              <Box bg='#564D4A' p={2} rounded='lg' w='full'>
+              <SimpleGrid columns={2}>
+                <VStack align='start' spacing={0} my='auto'>
+                  <Text fontSize='sm'>Register For Season 2!</Text>
+                  <Text fontSize='lg' fontWeight='bold'>{isRegisteredForSeason2 ? 'Registered' : 'Unregistered'}</Text>
+                </VStack>
+                {!isRegisteredForSeason2 && (
+                  <RdButton
+                    hoverIcon={false}
+                    onClick={() => handleRegister(2)}
+                    isLoading={isExecutingRegister}
+                    isDisabled={isExecutingRegister}
+                  >
+                    Register S2
+                  </RdButton>
+                )}
+              </SimpleGrid>
+              {!rdContext.user.season.faction && (
+                <Box textAlign='start' mt={2} fontSize='sm'>
+                  <Text>Regular Cost: {commify(rdContext.config.factions.registration.cost)} Fortune + {rdContext.config.factions.registration.troopsCost} Troops</Text>
+                  <Text >Presale Users: Free for first season</Text>
+                </Box>
+              )}
+            </Box>
+            </>
               )}
             </VStack>
           ) : (
