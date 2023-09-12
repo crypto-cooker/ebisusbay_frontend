@@ -38,7 +38,8 @@ const BlackListedWallets = [
   "0xb67abc8e8c64c35f7dd0ba76f54420e935335b32",
   "0x24cb7600f7d631982c072536c8f602f54282d2ef",
   "0x358758277ce0785104ea72acadc1de7e7af7aecd",
-  "0x708d93ac77262d8b911174447b919076ab6ce08a"
+  "0x708d93ac77262d8b911174447b919076ab6ce08a",
+  "0x40874f18922267cc2ca7933828594ab5078c1065"
 ]
 
 export const GetActualEditionNumber = (edition: number) => {
