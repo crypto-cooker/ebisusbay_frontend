@@ -31,7 +31,7 @@ const FaqPage = () => {
         <Text fontSize='lg' fontWeight='bold'>Fortune Rewards</Text>
         <Text>
           Fortune rewards accumulate from Fortune staking, marketplace listings, and from playing the game and can be withdrawn at any time.
-          However, only withdrawing at the end of a season will allow you to claim the full amount of rewards.
+          However, only withdrawing after 90-days will allow you to claim the full amount of rewards.
         </Text>
         <Accordion fontSize='sm' mt={4}>
           <AccordionItem>
@@ -43,18 +43,7 @@ const FaqPage = () => {
             </AccordionButton>
             <AccordionPanel pb={4}>
               <Text>The Fortune tab will contain all seasons with pending rewards, including the current season. Click <strong>Claim</strong> to receive your current season rewards.</Text>
-              <Text mt={4}>* Note that, the current season is subject to a burn malus, known here as the <strong>Karmic Debt</strong>. A percentage of the current rewards will be burned proportional to the time left in the season. The Karmic Debt starts at {rdConfig.bank.staking.fortune.startingDebt}% at the start of a season. That value will decrease to 0% as the current time gets closer to the end of the season.</Text>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton fontSize='sm' fontWeight='bold'>
-              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Can I claim rewards from past seasons?
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text>Any seasons with unclaimed rewards will be displayed under the <strong>Fortune</strong> tab. Click the <strong>Claim</strong> button to receive the season rewards.</Text>
+              <Text mt={4}>* Note that, the current season is subject to <strong>Karmic Debt</strong>. A percentage of the current rewards will be burned proportional to 90-day intervals since a user's last claim. The Karmic Debt starts at {rdConfig.bank.staking.fortune.startingDebt}%. That value will decrease to 0% as the current time gets closer to the end of the season and will reset after a successful claim.</Text>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>
@@ -65,7 +54,7 @@ const FaqPage = () => {
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text>Yes, your current season rewards can be automatically compounded into an existing Fortune vault to maximize rewards. If the vault ends later than 90 days, then there is no Karmic Debt fee to compound.</Text>
+              <Text>Yes, your rewards can be automatically compounded into an existing Fortune vault to maximize rewards, and will not reset the Karmic Debt. Only vaults ending later than 90 days are eligible.</Text>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>
@@ -76,7 +65,7 @@ const FaqPage = () => {
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text>The Karmic Debt, also known as a burn malus, represents the percentage of rewards that will be burned if a user decides to withdraw before the end of season. At the start of the season, this value starts at {rdConfig.bank.staking.fortune.startingDebt}% and decreases linearly until the end of the season when it becomes 0%</Text>
+              <Text>The Karmic Debt, represents the percentage of rewards that will be burned if a user decides to claim their rewards. This value starts at {rdConfig.bank.staking.fortune.startingDebt}% and will decrease proportionally in 90-day intervals since a user's last claim.</Text>
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
