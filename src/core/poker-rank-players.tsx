@@ -199,21 +199,29 @@ export const RankPlayers = async (data : any) => {
       } else {
         cardCountDict[card] = 1;
       }
-    }
-    )
+    }) 
     let threeOfAKind = false;
     let threeOfAKindValue = 0;
     let twoOfAKind = false;
     let twoOfAKindValue = 0;
+    
     Object.keys(cardCountDict).forEach((card) => {
       if(cardCountDict[card] === 3) {
-        threeOfAKind = true;
-        threeOfAKindValue = parseInt(card);
+        if(threeOfAKind) {
+          twoOfAKind = true;
+          threeOfAKind = true;
+          twoOfAKindValue = threeOfAKindValue;
+          threeOfAKindValue = parseInt(card);
+        } else {
+          threeOfAKindValue = parseInt(card);
+          threeOfAKind = true;
+        }
       } else if(cardCountDict[card] === 2) {
         twoOfAKind = true;
         twoOfAKindValue = parseInt(card);
       }
     })
+
     if(threeOfAKind && twoOfAKind) {
       return {
         handRef: 2,
