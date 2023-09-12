@@ -76,7 +76,8 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
   const [explosion, setExplosion] = useState<ReactElement>();
   const { isOpen: isResetModalOpen, onOpen: onOpenResetModal, onClose: onCloseResetModal } = useDisclosure();
   const [allFactions, setAllFactions] = useState<any>([]);
-  const[allIconsAqcuired, setAllIconsAqcuired] = useState(false);
+  const[currentIconsAquired, setCurrentIconsAqcuired] = useState(false);
+  const[prevIconsAquired, setPrevIconsAqcuired] = useState(false);
 
   const[icons, setIcons] = useState<Icon[]>([]);
   const[currentIcons, setCurrentIcons] = useState<Icon[]>([]);
@@ -95,7 +96,6 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     });
     // console.log(ReactZoomPanPinchRef.state.positionX, ReactZoomPanPinchRef.state.positionY, ReactZoomPanPinchRef.state.scale)
   };
-
   const PlayExplosion = async (controlPointId : number) => {
 
     if(controlPointId === 0) return;
@@ -186,55 +186,62 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
          : null
       )))
   }
-
-  const GetAllIcons = async() => {
-    // if(allIconsAqcuired)return;
-    if(!rdGameContext) return;
-
-    let newIcons: Icon[] = [];
-    let prevIcons: Icon[] = [];
-
-    rdGameContext.game.parent.map.regions.map((region: any) =>
-      region.controlPoints.map((controlPoint: any) => (
-        newIcons.push({name: controlPoint.name, image: 'img/avatar.jpg'}),
-        prevIcons.push({name: controlPoint.name, image: 'img/avatar.jpg'})
-    )))
-
-    //overwrites the image with the leader image
-    newIcons.forEach((newIcons: any) => (
-      rdGameContext.gameLeaders.forEach((controlPointWithLeader: any) => (
-        newIcons.name === controlPointWithLeader.name ? newIcons.image = controlPointWithLeader.factions[0].image : null
-    ))))
-
-    // console.log('rdGameContext.gameLeaders', rdGameContext.gameLeaders);
-    
-    if(!useCurrentGameId) {
-      const newData = await getLeadersForSeason(rdGameContext.history.previousGameId);
-      newData.forEach((newData: any) => (
-        prevIcons.forEach((prevIcons: any) => (
-          newData.name === prevIcons.name ? prevIcons.image = newData.factions[0].image : null
-      ))))
-      // console.log('prevIcons', prevIcons);
-      setPreviousIcons(prevIcons);
-    }
-    
-    // console.log('newIcons', newIcons);
-    setCurrentIcons(newIcons);
-    setAllIconsAqcuired(true);
-  }
-  useEffect(() => {
-    setIcons(useCurrentGameId ? currentIcons : previousIcons);
-    // console.log('useCurrentGameId', useCurrentGameId);
-    // console.log('showActiveGame', showActiveGame);
-  }, [useCurrentGameId, currentIcons, previousIcons]);
-  
   const GetLeaderIcon = (name: any) => {
-    if(!allIconsAqcuired) return 'img/avatar.jpg';
+    if(!currentIconsAquired) return 'img/avatar.jpg';
 
     let icon = icons.find((icon) => icon.name === name);
     // console.log('GetLeaderIcon', icon);
     if(icon) return icon.image;
   }
+  const GetCurrentIcons = async() => {
+    if(!rdGameContext) return;
+    if(currentIconsAquired) return;
+
+    let newIcons: Icon[] = [];
+    rdGameContext.game.parent.map.regions.map((region: any) =>
+      region.controlPoints.map((controlPoint: any) => (
+        newIcons.push({name: controlPoint.name, image: 'img/avatar.jpg'})
+    )))
+
+    try {
+      newIcons.forEach((newIcons: any) => (
+        rdGameContext.gameLeaders.forEach((controlPointWithLeader: any) => (
+          newIcons.name === controlPointWithLeader.name ? newIcons.image = controlPointWithLeader.factions[0].image : null
+      ))))
+
+      setCurrentIcons(newIcons);
+      setCurrentIconsAqcuired(true);
+    } catch (error: any) {
+      console.log(error.response.data.message);
+    }
+  }
+  const GetPreviousIcons = async() => {
+    if(!rdGameContext) return;
+    if(prevIconsAquired) return;
+
+    let prevIcons: Icon[] = [];
+    rdGameContext.game.parent.map.regions.map((region: any) =>
+      region.controlPoints.map((controlPoint: any) => (
+        prevIcons.push({name: controlPoint.name, image: 'img/avatar.jpg'})
+    )))
+
+    try {
+      const newData = await getLeadersForSeason(rdGameContext.history.previousGameId);
+      newData.forEach((newData: any) => (
+        prevIcons.forEach((prevIcons: any) => (
+          newData.name === prevIcons.name ? prevIcons.image = newData.factions[0].image : null
+      ))))
+      
+      setPreviousIcons(prevIcons);
+      setPrevIconsAqcuired(true);
+    } catch (error: any) {
+      console.log(error.response.data.message);
+    }
+  }
+
+  useEffect(() => {
+    setIcons(useCurrentGameId ? currentIcons : previousIcons);
+  }, [useCurrentGameId, currentIcons, previousIcons]);
 
   useEffect(() => {
     if (transformComponentRef.current) {
@@ -243,22 +250,27 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     }
   }, [elementToZoomTo]);
 
-  
   useEffect(() => {
     setMapInitialized(true);
     GetAttackPrices();
   }, []);
 
   useEffect(() => {
+    if(useCurrentGameId) {
+      GetCurrentIcons();
+    } else {
+      GetPreviousIcons();
+    }
+  }, [rdGameContext, useCurrentGameId]);
+
+  useEffect(() => {
     if(!rdGameContext) return;
-    if(allIconsAqcuired) return;
 
     GetFactions();
-    GetAllIcons();
     if (rdGameContext.state === RdGameState.RESET) {
       onOpenResetModal();
     }
-  }, [rdGameContext, useCurrentGameId]);
+  }, [rdGameContext]);
 
   
   useEffect(() => {
