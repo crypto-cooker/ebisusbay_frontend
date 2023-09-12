@@ -1,19 +1,5 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-  Box,
-  Center,
-  Flex,
-  Grid,
-  GridItem,
-  Image,
-  Link,
-  Text,
-  useMediaQuery,
-  VStack
-} from "@chakra-ui/react"
+import {Box, Center, Flex, Grid, GridItem, Image, Link, Text, useMediaQuery, VStack} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
@@ -190,10 +176,6 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
         <Text mt={4} textColor={'#fefaee'} >
           Users wishing to visit the <b>Ebisu's Bay</b> marketplace experience can still do so by <b>using the links at the top of the page.</b>
         </Text>
-        <Alert fontSize='sm' status='warning' mt={2}>
-          <AlertTitle>Note:</AlertTitle>
-          <AlertDescription>CRC-1155 NFTs such as Koban, Battle Cards, and Fortune Guards, are currently unavailable for viewing. We apologize for ths inconvenience and hope to have resolved as soon as possible.</AlertDescription>
-        </Alert>
       </Box>
 
       {adSpot}

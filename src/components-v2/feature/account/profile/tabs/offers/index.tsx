@@ -3,7 +3,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {useAppSelector} from "@src/Store/hooks";
 import {
-  Alert, AlertDescription, AlertTitle,
   Box,
   Button,
   ButtonGroup,
@@ -135,11 +134,6 @@ export default function Offers({ address }: OffersProps) {
           </InputGroup>
         </Collapse>
       </Box>
-
-      <Alert fontSize='sm' status='warning'>
-        <AlertTitle>Please Note:</AlertTitle>
-        <AlertDescription>Received public/CRC-1155 offers are currently unavailable for viewing. We apologize for ths inconvenience and hope to have this resolved as soon as possible.</AlertDescription>
-      </Alert>
 
       {offerDirection === 'received' ? (
         <ReceivedOffers

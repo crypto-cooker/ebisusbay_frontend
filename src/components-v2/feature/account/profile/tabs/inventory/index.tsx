@@ -23,7 +23,6 @@ import {
 } from "@src/GlobalState/user-batch";
 import {MobileBatchPreview} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-batch-preview";
 import {
-  Alert, AlertDescription, AlertTitle,
   Box, Center,
   CloseButton,
   Collapse,
@@ -401,11 +400,6 @@ export default function Inventory({ address }: InventoryProps) {
           </HStack>
         )}
       </Stack>
-
-      <Alert fontSize='sm' status='warning'>
-        <AlertTitle>Please Note:</AlertTitle>
-        <AlertDescription>CRC-1155 NFTs such as Ryoshi Resources are currently unavailable for viewing. We apologize for ths inconvenience and hope to have this resolved as soon as possible.</AlertDescription>
-      </Alert>
 
       <InventoryFilterContainer
         queryParams={queryParams}
