@@ -1,9 +1,20 @@
 import {getTheme} from "@src/Theme/theme";
-import {Box, Button, Flex, Heading, HStack, Input, Skeleton, Stack, Text, useNumberInput} from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  HStack,
+  Input,
+  Progress,
+  Skeleton,
+  Stack,
+  Text,
+  useNumberInput
+} from "@chakra-ui/react";
 import {dropState as statuses} from "@src/core/api/enums";
 import {constants, ethers} from "ethers";
 import {createSuccessfulTransactionToastContent, percentage, round} from "@src/utils";
-import {ProgressBar} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
@@ -13,7 +24,6 @@ import {toast} from "react-toastify";
 import {getAnalytics, logEvent} from "@firebase/analytics";
 import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/Config";
-import Image from "next/image";
 import {useAppSelector} from "@src/Store/hooks";
 import {Drop} from "@src/core/models/drop";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
@@ -358,9 +368,10 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                   {percentage(totalSupply.toString(), maxSupply.toString())}% minted (
                   {ethers.utils.commify(totalSupply.toString())} / {ethers.utils.commify(maxSupply.toString())})
                 </div>
-                <ProgressBar
-                  now={percentage(totalSupply.toString(), maxSupply.toString())}
-                  style={{ height: '4px' }}
+                <Progress
+                  size='xs'
+                  value={percentage(totalSupply.toString(), maxSupply.toString())}
+                  bg='white'
                 />
               </div>
             )}

@@ -7,7 +7,6 @@ import {getAnalytics, logEvent} from '@firebase/analytics';
 import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 import {useRouter} from 'next/router';
-import {ProgressBar} from 'react-bootstrap';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
@@ -28,7 +27,9 @@ import {
   Heading,
   HStack,
   Input,
-  ListItem, Spinner,
+  ListItem,
+  Progress,
+  Spinner,
   Stack,
   Text,
   UnorderedList,
@@ -449,9 +450,10 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
                           {percentage(totalSupply.toString(), maxSupply.toString())}% swapped (
                           {ethers.utils.commify(totalSupply.toString())} / {ethers.utils.commify(maxSupply.toString())})
                         </div>
-                        <ProgressBar
-                          now={percentage(totalSupply.toString(), maxSupply.toString())}
-                          style={{ height: '4px' }}
+                        <Progress
+                          size='xs'
+                          value={percentage(totalSupply.toString(), maxSupply.toString())}
+                          bg='white'
                         />
                       </div>
                     )}

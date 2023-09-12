@@ -28,6 +28,7 @@ import {
   HStack,
   Image,
   Input,
+  Progress,
   SimpleGrid,
   Stack,
   Text,
@@ -38,7 +39,6 @@ import {Drop} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
 import {ArrowForwardIcon} from '@chakra-ui/icons';
 import {getTheme} from "@src/Theme/theme";
-import {ProgressBar} from "react-bootstrap";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
@@ -476,9 +476,10 @@ const LandDrop = ({drop}: LandDropProps) => {
                           <Box fontWeight='bold'>{percentage(totalSupply.toString(), maxSupply.toString())}% minted</Box>
                           <Box>{ethers.utils.commify(totalSupply.toString())} / {ethers.utils.commify(maxSupply.toString())}</Box>
                         </Flex>
-                        <ProgressBar
-                          now={percentage(totalSupply.toString(), maxSupply.toString())}
-                          style={{ height: '4px' }}
+                        <Progress
+                          size='xs'
+                          value={percentage(totalSupply.toString(), maxSupply.toString())}
+                          bg='white'
                         />
                       </Box>
                     )}

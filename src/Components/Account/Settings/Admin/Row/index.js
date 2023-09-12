@@ -1,5 +1,3 @@
-import { Form } from 'react-bootstrap';
-
 import styles from './item.module.scss';
 
 export default function AdminRow({ title, date, blacklistedBy }) {

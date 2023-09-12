@@ -1,25 +1,12 @@
-import React, {useState, useCallback, useEffect, memo} from 'react';
-import {
-  faCheck,
-  faCircle,
-  faCircleQuestion,
-  faDollarSign,
-  faStairs, faStar
-} from "@fortawesome/free-solid-svg-icons";
+import React, {memo, useCallback, useEffect, useState} from 'react';
+import {faCheck, faCircle, faCircleQuestion, faDollarSign, faStairs, faStar} from "@fortawesome/free-solid-svg-icons";
 import {Accordion, Badge, Form} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {
-  createSuccessfulTransactionToastContent, isBundle, isNftBlacklisted,
-  isNumeric,
-  mapAttributeString,
-  round,
-  shortString,
-  stripSpaces
-} from "@src/utils";
+import {isBundle, isNftBlacklisted, round, shortString} from "@src/utils";
 import * as Sentry from '@sentry/react';
 import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
@@ -27,7 +14,7 @@ import LayeredIcon from "@src/Components/components/LayeredIcon";
 import DotIcon from "@src/Components/components/DotIcon";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {ListingsQuery} from "@src/core/api/queries/listings";
-import {commify, parseUnits} from "ethers/lib/utils";
+import {commify} from "ethers/lib/utils";
 import useBreakpoint from "use-breakpoint";
 import {getListings} from "@src/core/api/endpoints/listings";
 import {specialImageTransform} from "@src/hacks";
@@ -41,12 +28,13 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, Spinner, Tooltip
+  ModalOverlay,
+  Spinner,
+  Tooltip
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import useBuyGaslessListings from "@src/hooks/useBuyGaslessListings";
 import ImageService from "@src/core/services/image";
-import {FilteredItem} from "@src/components-v2/shared/filter-container";
 import {appConfig} from "@src/Config";
 
 const numberRegexValidation = /[^0-9]/g;

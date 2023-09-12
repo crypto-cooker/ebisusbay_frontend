@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Contract, ethers} from 'ethers';
-import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import { Form, ProgressBar } from 'react-bootstrap';
+import {toast} from 'react-toastify';
+import {Form} from 'react-bootstrap';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
@@ -12,9 +11,9 @@ import ShipItemABI from '../src/Contracts/ShipItem.json';
 import {appConfig} from '@src/Config';
 import {hostedImage} from '@src/helpers/image';
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import {Center, Heading, Spinner} from "@chakra-ui/react";
+import {Center, Heading, Progress, Spinner} from "@chakra-ui/react";
 
-import { getCollections } from "@src/core/api/next/collectioninfo";
+import {getCollections} from "@src/core/api/next/collectioninfo";
 import {useAppSelector} from "@src/Store/hooks";
 
 const Drop = () => {
@@ -182,7 +181,11 @@ const Drop = () => {
                 {percentage(totalSupply.toString(), maxSupply.toString())}% minted (
                 {ethers.utils.commify(totalSupply.toString())} / {ethers.utils.commify(maxSupply.toString())})
               </div>
-              <ProgressBar now={percentage(totalSupply.toString(), maxSupply.toString())} style={{ height: '4px' }} />
+              <Progress
+                size='xs'
+                value={percentage(totalSupply.toString(), maxSupply.toString())}
+                bg='white'
+              />
             </div>
             <div className="row row-cols-1 g-4">
               {ships[0] && (

@@ -80,6 +80,10 @@ const grayColor = {
   // 900: '#888888',
 }
 
+const blueColor = {
+  200: '#0d6efd'
+}
+
 const Button = defineStyleConfig({
   variants: {
     primary: {
@@ -155,6 +159,7 @@ const customTheme = extendTheme({
   },
   colors: {
     gray: grayColor,
+    blue: blueColor,
     ryoshiDynasties: {
       100: "#f7fafc",
       200: "#FDAB1A",
