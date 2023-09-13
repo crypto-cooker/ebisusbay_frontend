@@ -130,34 +130,18 @@ const Barracks = ({onBack}: BarracksProps) => {
             </Text>
         </Box>
       </Flex>
-      <Box>
-      <VStack>
-        <Spacer h='20'/>
 
-          <div style={{ margin: '8px 24px' }}>
-          <Center>
-          <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
-          {!!battleRewards && (
-            <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards}/>
-          )}
-        <Container>
+      <Flex align={'center'} minH={'calc(100vh - 175px)'} justifyContent={'center'}>
+        <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
+        {!!battleRewards && ( <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards}/> )}
+        <VStack spacing={4} align='stretch'>
+          <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
 
-        <VStack
-          spacing={4}
-          align='stretch'
-          mt={'400px'}
-        >
-           <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
           {(!!battleRewards && !battleRewardsClaimed) &&  (
             <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
           )}
         </VStack>
-        </Container>
-          </Center>
-          </div>
-        <Spacer h='4'/>
-      </VStack>
-      </Box>
+      </Flex>
     </Flex>
     </Box>
 
