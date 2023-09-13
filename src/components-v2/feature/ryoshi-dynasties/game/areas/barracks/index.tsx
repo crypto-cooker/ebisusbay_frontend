@@ -13,6 +13,7 @@ import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSig
 import React, {useState} from 'react';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {motion} from "framer-motion";
+import ImageService from "@src/core/services/image";
 
 const gothamBook = localFont({
   src: '../../../../../../fonts/Gotham-Book.woff2',
@@ -85,17 +86,12 @@ const Barracks = ({onBack}: BarracksProps) => {
           overflow='hidden'
         >
     <Flex
-      // border='1px solid #FFD700'
-      // backgroundColor='#292626'
       flexDirection='column'
       textAlign='center'
-      // borderRadius={'10px'}
       justifyContent='space-around'
       padding={4}
       minW={{base: '100%', xl: '450px' }}
-      // boxShadow='0px 0px 10px 0px #000000'
       className={gothamBook.className}
-
     >
       <Flex justify='space-between'>
         <Box
@@ -148,10 +144,9 @@ const Barracks = ({onBack}: BarracksProps) => {
     <AspectRatio ratio={1920/1080} overflow='visible' >
           <Image
           position={'absolute'}
-            src={'/img/ryoshi-dynasties/village/barracksBackground.png'}
             opacity={0.2}
             zIndex={0}
-            // src={ImageService.translate('/img/ryoshi-dynasties/village/barracksBackground.png').convert()}
+            src={ImageService.translate('/img/ryoshi-dynasties/village/barracksBackground.png').convert()}
             minH='calc(100vh - 74px)'
           />
         </AspectRatio>

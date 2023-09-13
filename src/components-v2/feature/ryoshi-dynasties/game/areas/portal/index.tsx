@@ -8,6 +8,8 @@ import {
     Text,
     useDisclosure,
     VStack,
+    AspectRatio,
+    Image,
   } from '@chakra-ui/react';
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import StakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft";
@@ -17,6 +19,8 @@ import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useAppSelector} from "@src/Store/hooks";
 import {useDispatch} from "react-redux";
 import {ArrowBackIcon} from "@chakra-ui/icons";
+import {motion} from "framer-motion";
+import ImageService from "@src/core/services/image";
   
 import localFont from 'next/font/local';
 const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' })
@@ -27,9 +31,15 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
   
   const PortalModal = ({onBack}: PortalProps) => {
     const dispatch = useDispatch();
-    const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
     const user = useAppSelector((state) => state.user);
-  
+
+    const item = {
+      hidden: { opacity: 0 },
+      show: { opacity: 1,
+        transition: {
+        }
+       }
+    }
     const handleAuthedNavigation = useCallback((fn: () => void) => {
       if (!!user.address) {
         fn();
@@ -46,16 +56,33 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
     }, [user.address]);
   
     return (
+      <Box
+      position='relative'
+      h='calc(100vh - 74px)'
+      overflow='hidden'
+    >
+     <motion.div
+        variants={item}
+        initial="hidden"
+        animate="show"
+      >
+        <Box 
+            position='absolute'
+            top={0}
+            left={0}
+            zIndex={1}
+            w='100%'
+            h='100%'
+            // bg={'#000000'}
+            overflow='hidden'
+          >
+
       <Flex
-      border='1px solid #FFD700'
-      backgroundColor='#292626'
       flexDirection='column'
       textAlign='center'
-      borderRadius={'10px'}
       justifyContent='space-around'
       padding={4}
       minW={{base: '100%', xl: '450px' }}
-      boxShadow='0px 0px 10px 0px #000000'
       className={gothamBook.className}
     >
       <Flex justify='space-between'>
@@ -89,23 +116,9 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
           <Text textColor='#ffffffeb' fontSize='sm' fontStyle='italic'>Join in the quest for sea treasures on Seashrine!</Text>
         </Box>
       </Flex>
-      <Box>
 
-
-
-      <VStack>
-
-        <Spacer h='4'/>
-  
-          <div style={{ margin: '8px 24px' }}>
-          <Center>
-        <Container>
-  
-        <VStack
-          spacing={4}
-          align='stretch'
-        >
-  
+      <Flex align={'center'} minH={'calc(100vh - 175px)'} justifyContent={'center'}>
+        <VStack spacing={4} align='stretch' >
         <RdButton onClick={(e) => {
             window.open('https://seashrine.ebisusbay.com/','_blank');
             }}
@@ -115,13 +128,23 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
             }}
             >Bridge VIPs</RdButton>
         </VStack>
-        </Container>
-          </Center>
-          </div>
-        <Spacer h='4'/>
-      </VStack>
-      </Box>
       </Flex>
+
+      </Flex>
+    </Box>
+
+    <AspectRatio ratio={1920/1080} overflow='visible' >
+      <Image
+        position={'absolute'}
+        opacity={0.2}
+        zIndex={0}
+        src={ImageService.translate('/img/ryoshi-dynasties/village/portal.png').convert()}
+        minH='calc(100vh - 74px)'
+      />
+    </AspectRatio>
+
+    </motion.div>
+  </Box>
     )
   };
   
