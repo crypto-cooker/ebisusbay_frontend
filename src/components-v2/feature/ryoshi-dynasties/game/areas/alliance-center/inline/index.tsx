@@ -327,10 +327,10 @@ const CurrentFaction = () => {
   }, [rdContext]); 
   
   useEffect(() => {
-    if(!rdContext.user?.season.faction) return;
+    if(!rdContext.user) return;
 
-    setIsRegisteredCurrentSeason(!!rdContext.user?.season.registrations.current);
-    setIsRegisteredNextSeason(!!rdContext.user?.season.registrations.next);
+    setIsRegisteredCurrentSeason(rdContext.user.season.registrations.current);
+    setIsRegisteredNextSeason(rdContext.user.season.registrations.next);
   }, [!!rdContext]);
 
   return (
