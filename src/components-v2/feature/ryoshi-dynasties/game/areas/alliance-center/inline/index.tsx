@@ -219,8 +219,8 @@ const CurrentFaction = () => {
   const { isOpen: noEditsModalisOpen, onOpen: noEditsModalOnOpen, onClose: noEditsModalonClose } = useDisclosure()
 
   const [factionCreatedAndEnabled, setFactionCreatedAndEnabled] = useState(false);
-  const [isRegisteredForSeason1, setIsRegisteredForSeason1] = useState(false);
-  const [isRegisteredForSeason2, setIsRegisteredForSeason2] = useState(false);
+  const [isRegisteredCurrentSeason, setIsRegisteredCurrentSeason] = useState(false);
+  const [isRegisteredNextSeason, setIsRegisteredNextSeason] = useState(false);
   
   const getDaysSinceGameStart = () => {
     if(!rdContext.game) return 0;
@@ -261,8 +261,7 @@ const CurrentFaction = () => {
   const handleRegister = async (seasonNumber : number) => {
     if (!user.address) return;
 
-    if(isRegisteredForSeason1 && seasonNumber === 1 ||
-      isRegisteredForSeason2 && seasonNumber === 2) {
+    if(isRegisteredCurrentSeason || isRegisteredNextSeason) {
       console.log('Already Registered');
     } else {
       try {
@@ -274,7 +273,7 @@ const CurrentFaction = () => {
         }
         if (signatureInStorage) {
           
-          let blockId = seasonNumber === 1 ? rdContext.game?.season.blockId : 5;
+          let blockId = seasonNumber === 1 ? rdContext.game?.season.blockId : 2;
           const { signature, ...registrationStruct } = await getRegistrationCost(
                                 user.address?.toLowerCase(), 
                                 signatureInStorage, 
@@ -329,8 +328,9 @@ const CurrentFaction = () => {
   useEffect(() => {
     if(!rdContext.user?.season.faction) return;
 
-    setIsRegisteredForSeason1(!!rdContext.user?.season.faction);
-  }, [!!rdContext]); 
+    setIsRegisteredCurrentSeason(!!rdContext.user?.season.registrations.current);
+    setIsRegisteredNextSeason(!!rdContext.user?.season.registrations.next);
+  }, [!!rdContext]);
 
   return (
     <Box mt={4}>
@@ -395,10 +395,10 @@ const CurrentFaction = () => {
               <Box bg='#564D4A' p={2} rounded='lg' w='full'>
               <SimpleGrid columns={2}>
                 <VStack align='start' spacing={0} my='auto'>
-                  <Text fontSize='sm'>Preregister For Season 2!</Text>
-                  <Text fontSize='lg' fontWeight='bold'>{isRegisteredForSeason2 ? 'Registered' : 'Unregistered'}</Text>
+                  <Text fontSize='sm'>Preregister For Season 2</Text>
+                  <Text fontSize='lg' fontWeight='bold'>{isRegisteredNextSeason ? 'Registered' : 'Unregistered'}</Text>
                 </VStack>
-                {!isRegisteredForSeason2 && (
+                {!isRegisteredNextSeason && (
                   <RdButton
                     hoverIcon={false}
                     onClick={() => handleRegister(2)}

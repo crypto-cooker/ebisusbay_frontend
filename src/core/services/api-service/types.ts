@@ -165,6 +165,7 @@ export interface RdUserContext {
 interface RdUserContextSeason {
     faction: RdFaction;
     troops: RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops;
+    registrations: RdUserContextSeasonRegistration;
 }
 
 export interface RdUserContextOwnerFactionTroops {
@@ -252,6 +253,10 @@ interface RdUserContextArmies {
     redeploymentDelay: number;
 }
 
+interface RdUserContextSeasonRegistration {
+    current: boolean;
+    next: boolean;
+}
 export interface RdGameContext {
     season: RdSeason;
     game: RdGame;
