@@ -97,8 +97,8 @@ interface RyoshiConfigFactions {
 }
 
 interface RyoshiConfigFactionsRegistration {
-  cost: number;
-  troopsCost: number;
+  fortuneCost: number;
+  mitamaCost: number;
   forbiddenAddresses: string[];
 }
 

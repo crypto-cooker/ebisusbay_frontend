@@ -724,13 +724,8 @@ const CreateFactionForm = ({ isOpen, onClose, handleClose}: FactionRegistrationF
               <Box p='3'>
               <SimpleGrid columns={2} my={4} px={1} marginBottom={0}>
                   <Box>Season Subscription Fee:</Box>
-                  <Box textAlign='end' fontWeight='bold'>{rdContext.config.factions.registration.cost} $Fortune</Box>
+                  <Box textAlign='end' fontWeight='bold'>{rdContext.config.factions.registration.fortuneCost} $Fortune</Box>
               </SimpleGrid>
-              <Text
-                as='i'
-                fontSize={{base: '14', md: '14'}}
-                textColor={'#cfcfcf'}
-              > Wallets that participated in the fortune presale will have their season 1 fee waived</Text>
       
               <Spacer my={8} />
               <Text>

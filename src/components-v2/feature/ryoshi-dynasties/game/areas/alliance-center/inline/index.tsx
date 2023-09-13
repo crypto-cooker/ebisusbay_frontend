@@ -275,7 +275,7 @@ const CurrentFaction = () => {
         if (signatureInStorage) {
           
           let blockId = seasonNumber === 1 ? rdContext.game?.season.blockId : 5;
-          const data = await getRegistrationCost(
+          const { signature, ...registrationStruct } = await getRegistrationCost(
                                 user.address?.toLowerCase(), 
                                 signatureInStorage, 
                                 blockId, 
@@ -283,24 +283,16 @@ const CurrentFaction = () => {
                                 rdContext.user?.faction.id)
 
           const totalApproved = await checkForApproval();
-          if(totalApproved.lt(data.cost)) {
+          if(totalApproved.lt(registrationStruct.cost)) {
             toast.error('Please approve the contract to spend your tokens');
             const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
-            const tx1 = await fortuneContract.approve(config.contracts.allianceCenter, data.cost);
+            const tx1 = await fortuneContract.approve(config.contracts.allianceCenter, registrationStruct.cost);
             const receipt1 = await tx1.wait();
             toast.success(createSuccessfulTransactionToastContent(receipt1.transactionHash));
           }
 
-          let cost = seasonNumber === 1 ? data.cost : 3000;
-          const registrationStruct = {
-            leader: user.address?.toLowerCase(),
-            cost: cost,
-            season: blockId
-          }
-          console.log(registrationStruct);
-
           const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
-          const tx = await registerFactionContract.registerFaction(registrationStruct, data.signature)
+          const tx = await registerFactionContract.registerFaction(registrationStruct, signature)
           const receipt = await tx.wait();
           rdContext.refreshUser();
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -396,15 +388,14 @@ const CurrentFaction = () => {
                 </SimpleGrid>
                 {!rdContext.user.season.faction && (
                   <Box textAlign='start' mt={2} fontSize='sm'>
-                    <Text>Regular Cost: {commify(rdContext.config.factions.registration.cost)} Fortune + {rdContext.config.factions.registration.troopsCost} Troops</Text>
-                    <Text >Presale Users: Free for first season</Text>
+                    <Text>Regular Cost: {commify(rdContext.config.factions.registration.fortuneCost)} Fortune + {rdContext.config.factions.registration.mitamaCost} Mitama</Text>
                   </Box>
                 )}
               </Box>
               <Box bg='#564D4A' p={2} rounded='lg' w='full'>
               <SimpleGrid columns={2}>
                 <VStack align='start' spacing={0} my='auto'>
-                  <Text fontSize='sm'>Register For Season 2!</Text>
+                  <Text fontSize='sm'>Preregister For Season 2!</Text>
                   <Text fontSize='lg' fontWeight='bold'>{isRegisteredForSeason2 ? 'Registered' : 'Unregistered'}</Text>
                 </VStack>
                 {!isRegisteredForSeason2 && (
@@ -414,14 +405,13 @@ const CurrentFaction = () => {
                     isLoading={isExecutingRegister}
                     isDisabled={isExecutingRegister}
                   >
-                    Register S2
+                    Register
                   </RdButton>
                 )}
               </SimpleGrid>
               {!rdContext.user.season.faction && (
                 <Box textAlign='start' mt={2} fontSize='sm'>
-                  <Text>Regular Cost: {commify(rdContext.config.factions.registration.cost)} Fortune + {rdContext.config.factions.registration.troopsCost} Troops</Text>
-                  <Text >Presale Users: Free for first season</Text>
+                  <Text>Regular Cost: {commify(rdContext.config.factions.registration.fortuneCost)} Fortune + {rdContext.config.factions.registration.mitamaCost} Troops</Text>
                 </Box>
               )}
             </Box>
