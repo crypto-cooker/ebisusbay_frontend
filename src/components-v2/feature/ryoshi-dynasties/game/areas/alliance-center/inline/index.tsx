@@ -261,7 +261,8 @@ const CurrentFaction = () => {
   const handleRegister = async (seasonNumber : number) => {
     if (!user.address) return;
 
-    if(isRegisteredCurrentSeason || isRegisteredNextSeason) {
+    if(isRegisteredCurrentSeason && seasonNumber === 1 ||
+      isRegisteredNextSeason && seasonNumber === 2) {
       console.log('Already Registered');
     } else {
       try {
