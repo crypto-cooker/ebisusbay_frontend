@@ -506,7 +506,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.18.9"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.17.2", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.7", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.17.2", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.7", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.21.0"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.21.0.tgz"
   integrity sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==
@@ -1500,6 +1500,18 @@
   resolved "https://registry.npmjs.org/@cosmjs/utils/-/utils-0.26.6.tgz"
   integrity sha512-Zx60MMI1vffX8c2UbUMlszrGIug3TWa25bD7NF3blJ5k/MVCZFsPafEZ+jEi7kcqoxdhMhgJTI6AmUhnMfq9SQ==
 
+"@cronosid/croidjs@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@cronosid/croidjs/-/croidjs-1.0.0.tgz"
+  integrity sha512-y8m7BLkHh4XmM6CmxDCsJLp0j1xb7+zlXc60EAgaPWvjKFCx1EqFrvWyaSPLaRKwM595DY6EWPxBy4+JD2CdXQ==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    "@ensdomains/address-encoder" "^0.1.7"
+    content-hash "^2.5.2"
+    eth-ens-namehash "^2.0.8"
+    ethers "^5.0.13"
+    js-sha3 "^0.8.0"
+
 "@deficonnect/browser-utils@^1.6.13":
   version "1.6.13"
   resolved "https://registry.npmjs.org/@deficonnect/browser-utils/-/browser-utils-1.6.13.tgz"
@@ -1728,6 +1740,19 @@
   version "0.3.0"
   resolved "https://registry.npmjs.org/@emotion/weak-memoize/-/weak-memoize-0.3.0.tgz"
   integrity sha512-AHPmaAx+RYfZz0eYu6Gviiagpmiyw98ySSlQvCUhVGDRtDFe4DBS0x1bSjdF3gqUDYOczB+yYvBTtEylYSdRhg==
+
+"@ensdomains/address-encoder@^0.1.7":
+  version "0.1.9"
+  resolved "https://registry.npmjs.org/@ensdomains/address-encoder/-/address-encoder-0.1.9.tgz"
+  integrity sha512-E2d2gP4uxJQnDu2Kfg1tHNspefzbLT8Tyjrm5sEuim32UkU2sm5xL4VXtgc2X33fmPEw9+jUMpGs4veMbf+PYg==
+  dependencies:
+    bech32 "^1.1.3"
+    blakejs "^1.1.0"
+    bn.js "^4.11.8"
+    bs58 "^4.0.1"
+    crypto-addr-codec "^0.1.7"
+    nano-base32 "^1.0.1"
+    ripemd160 "^2.0.2"
 
 "@ensdomains/address-encoder@^0.2.18":
   version "0.2.18"
@@ -4875,6 +4900,11 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+bech32@^1.1.3:
+  version "1.1.4"
+  resolved "https://registry.npmjs.org/bech32/-/bech32-1.1.4.tgz"
+  integrity sha512-s0IrSOzLlbvX7yp4WBfPITzpAU8sqQcpsmwXDiKwrG4r491vwCO/XpejasRNl0piBMe/DvP4Tz0mIS/X1DPJBQ==
+
 bech32@^1.1.4:
   version "1.1.4"
   resolved "https://registry.npmjs.org/bech32/-/bech32-1.1.4.tgz"
@@ -6208,6 +6238,14 @@ eth-block-tracker@^4.4.2:
     pify "^3.0.0"
     safe-event-emitter "^1.0.1"
 
+eth-ens-namehash@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.npmjs.org/eth-ens-namehash/-/eth-ens-namehash-2.0.8.tgz"
+  integrity sha512-VWEI1+KJfz4Km//dadyvBBoBeSQ0MHTXPvr8UIXiLW6IanxvAV+DmlZAijZwAyggqGUfwQBeHf7tc9wzc1piSw==
+  dependencies:
+    idna-uts46-hx "^2.3.1"
+    js-sha3 "^0.5.7"
+
 eth-json-rpc-filters@^4.2.1:
   version "4.2.2"
   resolved "https://registry.npmjs.org/eth-json-rpc-filters/-/eth-json-rpc-filters-4.2.2.tgz"
@@ -6411,7 +6449,7 @@ ethereumjs-vm@^2.3.4:
     rustbn.js "~0.2.0"
     safe-buffer "^5.1.1"
 
-ethers@^5.7.2:
+ethers@^5.0.13, ethers@^5.7.2:
   version "5.7.2"
   resolved "https://registry.npmjs.org/ethers/-/ethers-5.7.2.tgz"
   integrity sha512-wswUsmWo1aOK8rR7DIKiWSw9DbLWe6x98Jrn8wcTflTVvaXhAMaB5zGAXy0GYQEQp9iO1iSHWVyARQm11zUtyg==
@@ -7243,6 +7281,13 @@ idb@7.0.1:
   resolved "https://registry.npmjs.org/idb/-/idb-7.0.1.tgz"
   integrity sha512-UUxlE7vGWK5RfB/fDwEGgRf84DY/ieqNha6msMV99UsEMQhJ1RwbCd8AYBj3QMgnE3VZnfQvm4oKVCJTYlqIgg==
 
+idna-uts46-hx@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/idna-uts46-hx/-/idna-uts46-hx-2.3.1.tgz"
+  integrity sha512-PWoF9Keq6laYdIRwwCdhTPl60xRqAloYNMQLiyUnG42VjT53oW07BXIRM+NK7eQjzXjAk2gUvX9caRxlnF9TAA==
+  dependencies:
+    punycode "2.1.0"
+
 ieee754@^1.1.13, ieee754@^1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz"
@@ -7631,6 +7676,11 @@ js-sha256@^0.9.0:
   version "0.9.0"
   resolved "https://registry.npmjs.org/js-sha256/-/js-sha256-0.9.0.tgz"
   integrity sha512-sga3MHh9sgQN2+pJ9VYZ+1LPwXOxuBJBA5nrR5/ofPfuiJBE2hnjsaN8se8JznOmGLN2p49Pe5U/ttafcs/apA==
+
+js-sha3@^0.5.7:
+  version "0.5.7"
+  resolved "https://registry.npmjs.org/js-sha3/-/js-sha3-0.5.7.tgz"
+  integrity sha512-GII20kjaPX0zJ8wzkTbNDYMY7msuZcTWk8S5UOh6806Jq/wz1J8/bnr8uGU0DAUmYDjj2Mr4X1cW8v/GLYnR+g==
 
 js-sha3@^0.8.0, js-sha3@0.8.0:
   version "0.8.0"
@@ -9084,6 +9134,11 @@ punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.1.1.tgz"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
+
+punycode@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/punycode/-/punycode-2.1.0.tgz"
+  integrity sha512-Yxz2kRwT90aPiWEMHVYnEf4+rhwF1tBmmZ4KepCP+Wkium9JxtWnUm1nqGwpiAHr/tnTSeHqr3wb++jgSkXjhA==
 
 pvtsutils@^1.3.2:
   version "1.3.2"

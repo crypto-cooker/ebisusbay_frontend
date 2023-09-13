@@ -10,11 +10,11 @@ import TransferDrawerItem from "@src/components-v2/feature/account/profile/tabs/
 import {FormControl as FormControlCK} from "@src/Components/components/chakra-components";
 import * as Yup from "yup";
 import {useFormik} from "formik";
-import {getCnsAddress, isCnsName} from "@src/helpers/cns";
 import {useAppSelector} from "@src/Store/hooks";
 import nextApiService from "@src/core/services/api-service/next";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {getCroidAddressFromName, isCroName} from "@src/helpers/croid";
 
 const MAX_NFTS_IN_CART = 100;
 
@@ -90,11 +90,11 @@ const TransferDrawer = () => {
       if (anyErrors) return;
 
       setRecipient(values.recipient);
-      if (isCnsName(values.recipient)) {
-        const cnsAddress = await getCnsAddress(values.recipient);
-        if (cnsAddress) {
-          setMappedCnsAddress(`Found ${shortAddress(cnsAddress)}`)
-          setRecipient(cnsAddress);
+      if (isCroName(values.recipient)) {
+        const croidAddress = await getCroidAddressFromName(values.recipient);
+        if (croidAddress) {
+          setMappedCnsAddress(`Found ${shortAddress(croidAddress)}`)
+          setRecipient(croidAddress);
         } else {
           setFieldError('recipient', 'Invalid CNS name');
           return;

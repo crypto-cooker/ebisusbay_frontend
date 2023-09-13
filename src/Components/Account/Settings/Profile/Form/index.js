@@ -24,7 +24,7 @@ export default function Form({
     <div>
       <Heading as="h2" size="xl">Edit Profile</Heading>
       <div className="d-flex flex-row mb-3">
-        <div className="my-auto me-2">Sync profile information from Cronos Domain Service</div>
+        <div className="my-auto me-2">Sync profile information from Cronos ID</div>
         <Button type="button" className="px-3 py-1 my-auto" onClick={handleCnsSync} isLoading={isCnsSync}>
           Sync
         </Button>

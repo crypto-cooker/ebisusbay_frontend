@@ -16,9 +16,9 @@ import Bio from './Bio';
 import Form from './Form';
 import Pfp from './Pfp';
 import useGetSettings from '../hooks/useGetSettings';
-import {getCnsInfo} from '@src/helpers/cns';
 import {Flex} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {getCroidInfo} from "@src/helpers/croid";
 
 export default function EditProfile() {
   const user = useSelector((state) => state.user);
@@ -131,7 +131,7 @@ export default function EditProfile() {
 
   const handleCnsSync = async () => {
     setIsFetchCns(true);
-    const cnsInfo = await getCnsInfo(user?.address);
+    const cnsInfo = await getCroidInfo(user?.address);
     if (!cnsInfo) {
       setIsFetchCns(false);
       return;
