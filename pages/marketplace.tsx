@@ -1,47 +1,49 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-
-import ListingCollection from '../src/Components/components/ListingCollection';
-import TopFilterBar from '../src/Components/components/TopFilterBar';
-import {sortOptions} from '@src/Components/components/constants/sort-options';
-import {marketPlaceCollectionFilterOptions} from '@src/Components/components/constants/filter-options';
 import SalesCollection from '../src/Components/components/SalesCollection';
-import {
-  filterListings,
-  filterListingsByVerification,
-  getMarketData,
-  searchListings,
-  sortListings
-} from '../src/GlobalState/marketplaceSlice';
-import {debounce, siPrefixedNumber} from '@src/utils';
-import {SortOption} from '@src/Components/Models/sort-option.model';
-import {MarketFilterCollection} from "@src/Components/Models/market-filters.model";
+import {getMarketData} from '../src/GlobalState/marketplaceSlice';
+import {siPrefixedNumber} from '@src/utils';
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import {Heading} from "@chakra-ui/react";
+import {Box} from "@chakra-ui/react";
 import {useAppSelector} from "@src/Store/hooks";
+import Listings from "@src/components-v2/feature/marketplace/tabs/listings";
+import {MarketplacePageContext} from "@src/components-v2/feature/marketplace/context";
+import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
+import {useRouter} from "next/router";
+import PageHeader from "@src/components-v2/shared/layout/page-header";
+import {pushQueryString} from "@src/helpers/query";
+import {useQuery} from "@tanstack/react-query";
+import {getStats} from "@src/components-v2/feature/collection/collection-721";
+import {getMarketMetadata} from "@src/core/api";
+
+
+const tabs = {
+  listings: 'listings',
+  activity: 'activity'
+};
 
 const Marketplace = () => {
-  const cacheName = 'marketplace';
+  const router = useRouter();
+  const { slug, tab, ...remainingQuery }: Partial<{ slug: string; tab: string }> & ListingsQueryParams = router.query;
+  const [queryParams, setQueryParams] = useState(remainingQuery);
 
   const dispatch = useDispatch();
 
-  const marketplace = useAppSelector((state) => {
-    return state.marketplace;
+  const { data: marketData } = useQuery({
+    queryKey: ['MarketData'],
+    queryFn: () => getMarketMetadata(),
+    refetchOnWindowFocus: false
   });
 
-  const marketData = useAppSelector((state) => {
-    return state.marketplace.marketData;
-  });
+  const [openMenu, setOpenMenu] = useState(tabs.listings);
 
-  const [openMenu, setOpenMenu] = React.useState(0);
-  const handleBtnClick = (index: number) => (element: any) => {
-    var elements = document.querySelectorAll('.tab');
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].classList.remove('active');
-    }
-    element.target.parentElement.classList.add('active');
+  const handleBtnClick = (key: string) => (e: any) => {
+    setOpenMenu(key);
 
-    setOpenMenu(index);
+    pushQueryString(router, {
+      slug: router.query.slug,
+      tab: key
+    });
   };
 
   useEffect(() => {
@@ -49,37 +51,17 @@ const Marketplace = () => {
     // eslint-disable-next-line
   }, []);
 
-  const selectDefaultFilterValue = marketplace.query.filter.collection ?? MarketFilterCollection.default();
-  const selectDefaultSortValue = marketplace.query.sort ?? SortOption.default();
-  const selectDefaultSearchValue = marketplace.query.filter.search ?? '';
-
-  const selectFilterOptions = marketPlaceCollectionFilterOptions;
-  const selectSortOptions = useAppSelector((state) => {
-    if (state.marketplace.hasRank) {
-      return sortOptions;
-    }
-
-    return sortOptions.filter((s) => s.key !== 'rank');
-  });
-
-  const [onlyVerified, setOnlyVerified] = useState(false)
+  // const [onlyVerified, setOnlyVerified] = useState(false)
+  //
+  // useEffect(() => {
+  //   dispatch(filterListingsByVerification(false, onlyVerified));
+  // }, [onlyVerified])
 
   useEffect(() => {
-    dispatch(filterListingsByVerification(false, onlyVerified));
-  }, [onlyVerified])
-
-  const onFilterChange = useCallback((filterOption: any) => {
-      dispatch(filterListings(filterOption, cacheName));
-  }, [dispatch]);
-
-  const onSortChange = useCallback((sortOption: any) => {
-      dispatch(sortListings(sortOption, cacheName));
-    }, [dispatch]);
-
-  const onSearch = debounce((event: any) => {
-    const { value } = event.target;
-    dispatch(searchListings(value, cacheName, false));
-  }, 300);
+    if (router.query) {
+      setQueryParams(router.query as any);
+    }
+  }, [router.query]);
 
   return (
     <div>
@@ -88,86 +70,56 @@ const Marketplace = () => {
         description="View the hottest NFTs for sale on Ebisu's Bay Marketplace"
         url="/marketplace"
       />
-      <section className="jumbotron breadcumb no-bg tint">
-        <div className="mainbreadcumb">
-          <div className="container">
-            <div className="row m-10-hor">
-              <div className="col-12">
-                <Heading as="h1" size="2xl" className="text-center">Marketplace</Heading>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="gl-legacy container">
-        <div className="row">
-          {marketData && (
-            <div className="d-item col-lg-6 col-sm-10 mb-4 mx-auto">
-              <div className="nft_attr">
-                <div className="row">
-                  <div className="col-4">
-                    <h5>Volume</h5>
-                    <h4>{siPrefixedNumber(Number(marketData.totalVolume).toFixed(0))} CRO</h4>
-                  </div>
-                  <div className="col-4">
-                    <h5>Sales</h5>
-                    <h4>{siPrefixedNumber(Number(marketData.totalSales).toFixed(0))}</h4>
-                  </div>
-                  <div className="col-4">
-                    <h5>Active</h5>
-                    <h4>{siPrefixedNumber(marketData.totalActive)}</h4>
+      <MarketplacePageContext.Provider value={{ queryParams, setQueryParams}}>
+        <PageHeader title={'Marketplace'} />
+
+        <Box mt={4} className="gl-legacy container">
+          <div className="row">
+            {marketData && (
+              <div className="d-item col-lg-6 col-sm-10 mb-4 mx-auto">
+                <div className="nft_attr">
+                  <div className="row">
+                    <div className="col-4">
+                      <h5>Volume</h5>
+                      <h4>{siPrefixedNumber(Number(marketData.totalVolume).toFixed(0))} CRO</h4>
+                    </div>
+                    <div className="col-4">
+                      <h5>Sales</h5>
+                      <h4>{siPrefixedNumber(Number(marketData.totalSales).toFixed(0))}</h4>
+                    </div>
+                    <div className="col-4">
+                      <h5>Active</h5>
+                      <h4>{siPrefixedNumber(marketData.totalActive)}</h4>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-        <div className="de_tab">
+            )}
+          </div>
+        </Box>
+        <Box className="de_tab">
           <ul className="de_nav mb-2">
-            <li id="Mainbtn0" className="tab active">
-              <span onClick={handleBtnClick(0)}>Listings</span>
+            <li id="Mainbtn0" className={`tab ${openMenu === tabs.listings ? 'active' : ''}`}>
+              <span onClick={handleBtnClick(tabs.listings)}>Listings</span>
             </li>
-            <li id="Mainbtn1" className="tab">
-              <span onClick={handleBtnClick(1)}>Activity</span>
+            <li id="Mainbtn1" className={`tab ${openMenu === tabs.activity ? 'active' : ''}`}>
+              <span onClick={handleBtnClick(tabs.activity)}>Activity</span>
             </li>
           </ul>
 
-          <div className="de_tab_content">
-            {openMenu === 0 && (
-              <div className="tab-1 onStep fadeIn">
-                <div className="row">
-                  <div className="col-lg-12">
-                    <TopFilterBar
-                      showFilter={true}
-                      showSort={true}
-                      showSwitch={true}
-                      sortOptions={[SortOption.default(), ...selectSortOptions]}
-                      filterOptions={[{ value: null, label: 'All' }, ...selectFilterOptions]}
-                      defaultSortValue={selectDefaultSortValue}
-                      defaultFilterValue={selectDefaultFilterValue}
-                      defaultSearchValue={selectDefaultSearchValue}
-                      filterPlaceHolder="Filter Collection..."
-                      sortPlaceHolder="Sort Listings..."
-                      onFilterChange={onFilterChange}
-                      onSortChange={onSortChange}
-                      onSearch={onSearch}
-                      onlyVerified={onlyVerified}
-                      setOnlyVerified={setOnlyVerified}
-                    />
-                  </div>
-                </div>
-                <ListingCollection cacheName="marketplace" />
-              </div>
+          <Box className="de_tab_content" px={2}>
+            {openMenu === tabs.listings && (
+              <Listings />
             )}
-            {openMenu === 1 && (
+            {openMenu === tabs.activity && (
               <div className="tab-2 onStep fadeIn">
                 <SalesCollection cacheName="marketplace" />
               </div>
             )}
-          </div>
-        </div>
-      </section>
+          </Box>
+        </Box>
+      </MarketplacePageContext.Provider>
     </div>
   );
 };

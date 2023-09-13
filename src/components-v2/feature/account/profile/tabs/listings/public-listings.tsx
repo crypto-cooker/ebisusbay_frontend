@@ -189,7 +189,11 @@ const UserPublicListings = ({ walletAddress }: UserPrivateListingsProps) => {
           useMobileMenu={!!useMobileMenu}
           onMobileMenuClose={() => setFiltersVisible(false)}
         >
-          <ListingsGroup queryParams={{...queryParams, seller: walletAddress}} />
+          <ListingsGroup
+            queryParams={{...queryParams, seller: walletAddress}}
+            fullWidth={!filtersVisible || (useMobileMenu ?? false)}
+            viewType='grid-sm'
+          />
         </ListingsFilterContainer>
       </Box>
 

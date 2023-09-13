@@ -2,7 +2,7 @@ export class SortOption {
   label = 'None';
   id = null;
   key = '';
-  direction = null;
+  direction = '';
 
   get getOptionLabel() {
     return this.label;
