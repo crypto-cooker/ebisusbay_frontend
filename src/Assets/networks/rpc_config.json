@@ -20465,7 +20465,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -20880,7 +20880,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": true
+        "kyc": false
       }
     },
     {
@@ -23519,6 +23519,29 @@
         "doxx": false,
         "kyc": false,
         "verified": true
+      }
+    },
+    {
+      "name": "Origami Legends",
+      "slug": "origami-legends",
+      "multiToken": false,
+      "address": "0x690B7743c8A5ae50882B8829650a9CF3F2e84f91",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Embodying ancient wisdom through the art of paper folding, Origami Legends guides rebels towards a more just society, inspires simplicity, patience, adaptability, and resilience, weaving a future where cultural heritage, balance, and harmony flourish.",
+        "avatar": "/img/collections/origami-legends/avatar.webp",
+        "card": "/img/collections/origami-legends/card.webp",
+        "banner": "/img/collections/origami-legends/banner.webp",
+        "website": "https://thecronosclub.com/",
+        "twitter": "https://twitter.com/The_Cronos_Club",
+        "discord": "https://discord.gg/rvtB8gYSGU",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
