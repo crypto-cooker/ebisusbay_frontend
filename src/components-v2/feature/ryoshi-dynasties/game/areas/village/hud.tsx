@@ -21,7 +21,7 @@ import NextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import {Contract, ethers} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
-import {round, siPrefixedNumber} from "@src/utils";
+import {round, shortAddress, siPrefixedNumber} from "@src/utils";
 import ImageService from "@src/core/services/image";
 // import {getAuthSignerInStorage} from "@src/helpers/storage";
 // import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
@@ -170,6 +170,18 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     setCurrentLevelProgress(currentLevelProgress * 100);
   };
 
+  const username = () => {
+    const identifier = user.profile.username;
+    try {
+      if (identifier.startsWith('0x')) {
+        return shortAddress(ethers.utils.getAddress(identifier));
+      }
+      return identifier;
+    } catch (e) {
+      return identifier;
+    }
+  }
+
   useEffect(() => {
     calculateCurrentValue();
   }, [rdUser])
@@ -227,7 +239,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             isTruncated
               fontSize={{base: '12', sm: '14'}} 
               as={'b'}
-              color='white'>{user.profile.username}
+              color='white'>{username()}
             </Text>
             <Text 
               fontSize={{base: '12', sm: '14'}} 
