@@ -5,7 +5,6 @@ import {getMarketData} from '../src/GlobalState/marketplaceSlice';
 import {siPrefixedNumber} from '@src/utils';
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Box} from "@chakra-ui/react";
-import {useAppSelector} from "@src/Store/hooks";
 import Listings from "@src/components-v2/feature/marketplace/tabs/listings";
 import {MarketplacePageContext} from "@src/components-v2/feature/marketplace/context";
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
@@ -13,7 +12,6 @@ import {useRouter} from "next/router";
 import PageHeader from "@src/components-v2/shared/layout/page-header";
 import {pushQueryString} from "@src/helpers/query";
 import {useQuery} from "@tanstack/react-query";
-import {getStats} from "@src/components-v2/feature/collection/collection-721";
 import {getMarketMetadata} from "@src/core/api";
 
 
@@ -24,7 +22,7 @@ const tabs = {
 
 const Marketplace = () => {
   const router = useRouter();
-  const { slug, tab, ...remainingQuery }: Partial<{ slug: string; tab: string }> & ListingsQueryParams = router.query;
+  const { tab, ...remainingQuery }: Partial<{ tab: string }> & ListingsQueryParams = router.query;
   const [queryParams, setQueryParams] = useState(remainingQuery);
 
   const dispatch = useDispatch();
@@ -41,7 +39,6 @@ const Marketplace = () => {
     setOpenMenu(key);
 
     pushQueryString(router, {
-      slug: router.query.slug,
       tab: key
     });
   };
@@ -59,7 +56,8 @@ const Marketplace = () => {
 
   useEffect(() => {
     if (router.query) {
-      setQueryParams(router.query as any);
+      const { tab, ...remainingQuery } = router.query;
+      setQueryParams(remainingQuery as any);
     }
   }, [router.query]);
 
