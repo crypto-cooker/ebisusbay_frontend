@@ -30,7 +30,7 @@ import {getAllCollectionOffers} from "@src/core/subgraph";
 import {getCollectionMetadata} from "@src/core/api";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
-
+import NextApiService from "@src/core/services/api-service/next";
 const config = appConfig();
 const floorThreshold = 5;
 
@@ -85,7 +85,7 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
       const marketContractAddress = config.contracts.market;
       const marketContract = contractService.market;
 
-      const walletNfts = await getQuickWallet(user.address, {pageSize: 1000, collection:collection.address});
+      const walletNfts = await NextApiService.getWallet(user.address, {pageSize: 100, collection:collection.address, sortBy: 'rank', direction: 'desc'});
       setCollectionNfts(walletNfts.data.filter((nft) => !isNftBlacklisted(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId)));
 
       const offers = await getAllCollectionOffers([collection.address], '0', 0);

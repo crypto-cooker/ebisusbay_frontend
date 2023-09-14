@@ -11,7 +11,7 @@ import ImagePreloader from "@src/components-v2/feature/ryoshi-dynasties/game/ima
 import {InlineModalContext} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/inline-modal-context";
 import {Box, useBreakpointValue} from "@chakra-ui/react";
 import DynastiesLands from "./areas/lands";
-import {MapProps} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/index";
+import {MapProps} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
 
 import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
