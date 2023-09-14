@@ -1,11 +1,12 @@
 import {useCallback, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import {setAuthSignerInStorage} from '@src/helpers/storage';
+import {getAuthSignerInStorage, setAuthSignerInStorage} from '@src/helpers/storage';
 import {setAuthSigner} from '@src/GlobalState/User';
 import {useAppSelector} from "@src/Store/hooks";
 import {JsonRpcProvider} from "@ethersproject/providers";
 import * as Sentry from '@sentry/react';
+import useLocalStorage from "@src/Components/Account/Settings/hooks/useLocalStorage";
 
 const message = (address: string) => {
   return "Welcome to Ebisu's Bay!\n\n" +
@@ -22,9 +23,8 @@ type SignerProps = {
 
 const useSignature = () => {
   const user = useAppSelector((state) => state.user);
-  const signer: SignerProps | null = user.authSignature;
+  const [_, setSignatureInStorage] = useLocalStorage<SignerProps | null>('AUTH_SIGNATURE', null);
 
-  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
   const signMessage = useCallback(
@@ -43,7 +43,7 @@ const useSignature = () => {
     [user.provider]
   );
 
-  const createSigner = useCallback(async () => {
+  const createSigner = async () => {
     setIsLoading(true);
     const address = user.address!;
 
@@ -56,8 +56,7 @@ const useSignature = () => {
         address,
       };
 
-      dispatch(setAuthSigner(signer));
-      setAuthSignerInStorage(signer);
+      setSignatureInStorage(signer);
       setIsLoading(false);
 
       return [signature, address];
@@ -68,21 +67,22 @@ const useSignature = () => {
     setIsLoading(false);
 
     return [null, address];
-  }, [signMessage]);
+  };
 
-  const getSigner = useCallback(async () => {
+  const getSigner = async () => {
     let signature: string | null = null;
     let address: string | null = null;
 
-    if (signer) {
-      signature = (signer as SignerProps).signature;
-      address = (signer as SignerProps).address;
+    const signerInStorage = getAuthSignerInStorage();
+    if (signerInStorage) {
+      signature = (signerInStorage as SignerProps).signature;
+      address = (signerInStorage as SignerProps).address;
     } else {
       [signature, address] = await createSigner();
     }
 
     return { signature, address };
-  }, [signer, user]);
+  };
 
   return [isLoading, getSigner] as const;
 };

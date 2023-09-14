@@ -19,11 +19,11 @@ import {RyoshiDynastiesContext} from "@src/components-v2/feature/ryoshi-dynastie
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import {io} from "socket.io-client";
 import {appConfig} from "@src/Config";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import useLocalStorage from "@src/Components/Account/Settings/hooks/useLocalStorage";
 
 const config = appConfig();
 
@@ -47,6 +47,10 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   const [_, getSigner] = useCreateSigner();
   const [signature, setSignature] = useState<string | null>(null);
 
+  const [storedValue] = useLocalStorage('AUTH_SIGNATURE');
+  useEffect(() => {
+    console.log('storedValue', storedValue);
+  }, [storedValue]);
   const { data: rdConfig, status: rdConfigFetchStatus, error: rdFetchError} = useQuery(
     ['RyoshiDynastiesContext'],
     () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
@@ -135,21 +139,26 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   //   }
   // }, [user.address]);
 
+  const {isSignedIn, requestSignature} = useEnforceSignature();
+
   useEffect(() => {
     async function getSig() {
-      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
+      if (!isSignedIn) {
+        try {
+          const sig = await requestSignature();
+          setSignature(sig ?? null);
+        } catch  (e) {
+          console.log('sig failed', e);
+        }
       }
-      setSignature(signatureInStorage);
+      else console.log('already signed in');
     }
     if (!!user.address) {
       getSig();
     } else {
       setSignature(null);
     }
-  }, [user.address]);
+  }, [user.address, isSignedIn]);
 
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [isInMaintenanceMode, setIsInMaintenanceMode] = useState(false);

@@ -21,6 +21,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {parseErrorMessage} from "@src/helpers/validator";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const config = appConfig();
 
@@ -33,6 +34,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const dispatch = useDispatch();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector(state => state.user);
+
   const [_, getSigner] = useCreateSigner();
   const [streak, setStreak] = useState(0);
   const [streakIndex, setStreakIndex] = useState(0);
@@ -42,10 +44,18 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const [executingClaim, setExecutingClaim] = useState(false);
 
   const [runAuthedFunction] = useAuthedFunction();
+  const {isSignedIn, signin} = useEnforceSigner();
 
   const authCheckBeforeClaim = async () => {
     await runAuthedFunction(claimDailyRewards);
   };
+
+  const handleSignin = async () => {
+    await signin();
+  }
+  useEffect(() => {
+    console.log('daily checkin', isSignedIn);
+  }, [isSignedIn]);
 
   const claimDailyRewards = async () => {
     if (!user.address) return;
@@ -129,41 +139,55 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
         </Text>
         {!!user.address ? (
           <>
-            <SimpleGrid columns={{base: 4, sm: rdContext.config.rewards.daily.length}} gap={1} padding={2} my={4}>
-              {rdContext.config.rewards.daily.map((reward, index) => (
-                <Box key={index} w='100%' h='55' rounded="lg" color={'#FFD700'}  border={streakIndex == index + 1 ? '2px' : ''}>
-                  <Text fontSize={16} color='#aaa' textAlign={'center'}>Day {index + 1}</Text>
-                  <HStack justifyContent={'center'} spacing={0.5}>
-                    <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >{reward}</Text>
-                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
-                  </HStack>
+            {isSignedIn ? (
+              <>
+                <SimpleGrid columns={{base: 4, sm: rdContext.config.rewards.daily.length}} gap={1} padding={2} my={4}>
+                  {rdContext.config.rewards.daily.map((reward, index) => (
+                    <Box key={index} w='100%' h='55' rounded="lg" color={'#FFD700'}  border={streakIndex == index + 1 ? '2px' : ''}>
+                      <Text fontSize={16} color='#aaa' textAlign={'center'}>Day {index + 1}</Text>
+                      <HStack justifyContent={'center'} spacing={0.5}>
+                        <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >{reward}</Text>
+                        <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
+                      </HStack>
+                    </Box>
+                  ))}
+                </SimpleGrid>
+
+                <Box textAlign='center'>
+                  <Text as='span'>Your current streak is <strong>{streak} {pluralize(streak, 'day')}</strong>. </Text>
+                  {canClaim ? (
+                    <Text as='span'>
+                      Claim now to increase your streak and earn {rdContext.config.rewards.daily[streakIndex]} Koban
+                    </Text>
+                  ) : (
+                    <Text as='span'>
+                      Claim again {nextClaim}
+                    </Text>
+                  )}
                 </Box>
-              ))}
-            </SimpleGrid>
 
-            <Box textAlign='center'>
-              <Text as='span'>Your current streak is <strong>{streak} {pluralize(streak, 'day')}</strong>. </Text>
-              {canClaim ? (
-                <Text as='span'>
-                  Claim now to increase your streak and earn {rdContext.config.rewards.daily[streakIndex]} Koban
-                </Text>
-              ) : (
-                <Text as='span'>
-                  Claim again {nextClaim}
-                </Text>
-              )}
-            </Box>
-
-            {canClaim && (
+                {canClaim && (
+                  <Box textAlign='center' mt={4}>
+                    <RdButton
+                      stickyIcon={true}
+                      onClick={authCheckBeforeClaim}
+                      isLoading={executingClaim}
+                      disabled={executingClaim}
+                      loadingText='Claiming'
+                    >
+                      Claim Koban
+                    </RdButton>
+                  </Box>
+                )}
+              </>
+            ) : (
               <Box textAlign='center' mt={4}>
+                <Text mb={2}>Sign in to claim your daily reward</Text>
                 <RdButton
                   stickyIcon={true}
-                  onClick={authCheckBeforeClaim}
-                  isLoading={executingClaim}
-                  disabled={executingClaim}
-                  loadingText='Claiming'
+                  onClick={handleSignin}
                 >
-                  Claim Koban
+                  Sign in
                 </RdButton>
               </Box>
             )}
