@@ -3701,6 +3701,32 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "Ryoshi Playing Cards",
+      "slug": "ryoshi-playing-cards",
+      "multiToken": false,
+      "address": "0x75524C8c0509223A9F4B81FF34901FC132ce32f3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Collectable playing cards allowing you participation in several different ongoing card games on EbisusBay.com\n\nCollect them all and join in on the fun!",
+        "avatar": "/img/collections/ryoshi-playing-cards/avatar.webp",
+        "banner": "/img/collections/ryoshi-playing-cards/banner.webp",
+        "card": "/img/collections/ryoshi-playing-cards/card.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -8902,7 +8928,7 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "",
+      "address": "0x75524C8c0509223A9F4B81FF34901FC132ce32f3",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 100,
       "totalSupply": 4000,
