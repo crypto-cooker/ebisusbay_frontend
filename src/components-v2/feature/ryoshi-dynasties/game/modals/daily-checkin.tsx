@@ -53,9 +53,6 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const handleSignin = async () => {
     await signin();
   }
-  useEffect(() => {
-    console.log('daily checkin', isSignedIn);
-  }, [isSignedIn]);
 
   const claimDailyRewards = async () => {
     if (!user.address) return;
@@ -125,7 +122,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
           moment(new Date(date)).format("MMM") + " "+ date.getDate()+ " " + date.getFullYear());
       }
     }
-  }, [user.address, isOpen, rdContext.user])
+  }, [user.address, isOpen, rdContext.user, isSignedIn])
 
   return (
     <RdModal

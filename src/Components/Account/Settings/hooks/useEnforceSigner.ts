@@ -21,7 +21,6 @@ const useEnforceSignature = () => {
     let signatureInStorage: string | null | undefined = authSignature?.signature;
     const sigMatchesUser = !!authSignature?.address && ciEquals(authSignature?.address, user.address);
 
-    console.log('HELP', !!signatureInStorage, sigMatchesUser);
     return !!signatureInStorage && sigMatchesUser;
   }
 
@@ -49,20 +48,16 @@ const useEnforceSignature = () => {
   };
 
   const signin = async () => {
-    // await connectWallet(async () => {
-    //   await retrieveSignature();
-    // });
-    await retrieveSignature();
+    await connectWallet(async () => {
+      await retrieveSignature();
+    });
   }
 
   useEffect(() => {
     async function refreshSignin() {
-      console.log('refreshSignin1')
       const signedIn = await checkSigninStatus();
-      console.log('refreshSignin2', signedIn);
       setIsSignedIn(signedIn);
     }
-    console.log('signature changed, check signin...')
     refreshSignin();
   }, [signer, user.address]);
 

@@ -47,10 +47,6 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   const [_, getSigner] = useCreateSigner();
   const [signature, setSignature] = useState<string | null>(null);
 
-  const [storedValue] = useLocalStorage('AUTH_SIGNATURE');
-  useEffect(() => {
-    console.log('storedValue', storedValue);
-  }, [storedValue]);
   const { data: rdConfig, status: rdConfigFetchStatus, error: rdFetchError} = useQuery(
     ['RyoshiDynastiesContext'],
     () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
@@ -151,7 +147,6 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
           console.log('sig failed', e);
         }
       }
-      else console.log('already signed in');
     }
     if (!!user.address) {
       getSig();

@@ -1,59 +1,75 @@
 import { useState, useEffect } from 'react';
 
-const useLocalStorage = <T>(key: string, initialValue: T): [T, React.Dispatch<React.SetStateAction<T>>] => {
-  const [storedValue, setStoredValue] = useState<T>(initialValue);
+const useLocalStorage = <T>(key: string, initialValue?: T): [T | undefined, React.Dispatch<React.SetStateAction<T | undefined>>] => {
+  const [storedValue, setStoredValue] = useState<T | undefined>(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      if (item === null) return initialValue;
+
+      // Try parsing, if it's not a string, it should be JSON
+      try {
+        return JSON.parse(item);
+      } catch {
+        return item as T;
+      }
+    } catch (error) {
+      console.error('Error reading localStorage:', error);
+      return initialValue;
+    }
+  });
+
+  const handleCustomStorageChange = () => {
+    const value = window.localStorage.getItem(key);
+    if (value) {
+      try {
+        setStoredValue(JSON.parse(value));
+      } catch {
+        setStoredValue(value as T);
+      }
+    }
+  };
+
+  const handleNativeStorageChange = (e: StorageEvent) => {
+    if (e.key === key) {
+      try {
+        const newValue = e.newValue ? JSON.parse(e.newValue) : initialValue;
+        setStoredValue(newValue);
+      } catch {
+        setStoredValue(e.newValue as T);
+      }
+    }
+  };
 
   useEffect(() => {
-    // Set state to current value of localStorage on mount
-    const currentValue = window.localStorage.getItem(key);
-    if (currentValue !== null) {
-      try {
-        console.log('setting stored value1', JSON.parse(currentValue))
-        setStoredValue(JSON.parse(currentValue));
-      } catch {
-        console.log('setting stored value2', currentValue)
-        setStoredValue(currentValue as T);
-      }
-    }
+    // Listen for custom events (from same tab/window)
+    window.addEventListener('custom-storage-event', handleCustomStorageChange);
+    // Listen for native storage events (from other tabs/windows)
+    window.addEventListener('storage', handleNativeStorageChange);
 
-    // Listen for changes in localStorage
-    const handleStorageChange = (e: StorageEvent) => {
-      console.log('handleStorageChange0', e)
-      if (e.key === key) {
-        try {
-          console.log('handleStorageChange1')
-          const newValue = e.newValue ? JSON.parse(e.newValue) : initialValue;
-          console.log('handleStorageChange2', newValue);
-          setStoredValue(newValue);
-        } catch {
-          console.log('handleStorageChange3', e)
-          setStoredValue(e.newValue as T);
-          console.log('handleStorageChange4', e.newValue)
-        }
-      }
-      console.log('handleStorageChange5')
+    return () => {
+      window.removeEventListener('custom-storage-event', handleCustomStorageChange);
+      window.removeEventListener('storage', handleNativeStorageChange);
     };
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('storage', handleStorageChange);
-
-      return () => {
-        window.removeEventListener('storage', handleStorageChange);
-      };
-    }
   }, [key, initialValue]);
 
-  const setValue = (value: T | ((val: T) => T)) => {
-    const valueToStore = value instanceof Function ? value(storedValue) : value;
-    console.log('setValue', valueToStore)
-    setStoredValue(prevValue => value instanceof Function ? value(prevValue) : value);
+  const setValue: React.Dispatch<React.SetStateAction<T | undefined>> = (value) => {
+    const valueToStore = (typeof value === "function")
+      ? (value as (prevValue: T | undefined) => T)(storedValue)
+      : value;
+
+    setStoredValue(valueToStore);
 
     if (typeof valueToStore === 'string') {
       window.localStorage.setItem(key, valueToStore as string);
     } else {
       window.localStorage.setItem(key, JSON.stringify(valueToStore));
     }
+
+    // Dispatch a custom event to notify of the change within the same tab/window
+    const event = new Event('custom-storage-event');
+    window.dispatchEvent(event);
   };
+
 
   return [storedValue, setValue];
 };
