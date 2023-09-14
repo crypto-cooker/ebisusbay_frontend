@@ -23543,6 +23543,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Crypto.com Expedition Gear",
+      "slug": "cdc-expedition-gear",
+      "multiToken": false,
+      "address": "0xae50f345502ad3395db0099d38692f609f829b58",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "When there's land to explore, there's gear to help you out on your travels. Introducing the first series in the 'Crypto.com Expedition Gear' collection: 50,000 backpack NFTs divided into five rarities. Each rarity boasts a unique design, but that's not all.\n\nThese collectibles grant you a world of additional benefits while enhancing your in-game experience for Loaded Lions: Mane City. Keep them handy because the backpacks are ever-evolving too, just like our land NFTs.",
+        "avatar": "/img/collections/cdc-expedition-gear/avatar.webp",
+        "card": "/img/collections/cdc-expedition-gear/card.webp",
+        "banner": "/img/collections/cdc-expedition-gear/banner.webp",
+        "website": "https://crypto.com/nft",
+        "twitter": "https://www.twitter.com/cryptocom",
+        "discord": "https://discord.gg/cryptocom",
+        "instagram": "https://instagram.com/cryptocomnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
