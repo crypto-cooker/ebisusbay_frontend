@@ -43,10 +43,10 @@ const Marketplace = () => {
     });
   };
 
-  useEffect(() => {
-    dispatch(getMarketData());
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getMarketData());
+  //   // eslint-disable-next-line
+  // }, []);
 
   // const [onlyVerified, setOnlyVerified] = useState(false)
   //
