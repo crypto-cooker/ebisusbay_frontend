@@ -35,7 +35,13 @@ const ListingsGroup = ({limitSize, showLoadMore = true, queryParams, fullWidth, 
   const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['Listings', queryParams],
     ({ pageParam = 1 }) => {
-      return nextApiService.getListings({...queryParams, page: pageParam})
+      const params: ListingsQueryParams = {
+        sortBy: 'listingTime',
+        direction: 'desc',
+        page: pageParam,
+        ...queryParams
+      }
+      return nextApiService.getListings(params)
     },
     {
       getNextPageParam: (lastPage, pages) => {
