@@ -96,9 +96,9 @@ export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyP
         </InputGroup>
         <CheckboxGroup colorScheme='blue' value={filteredAddresses.map((address: any) => `collection-${address}`)}>
           <TableVirtuoso
-            style={{ height: Math.min(visibleCollections.length * 24, 200), width: '100%' }}
+            style={{ height: Math.min(visibleCollections.length * 33, 200), width: '100%' }}
             data={visibleCollections.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)}
-            itemContent={(index, collection: Collection) => (
+            itemContent={(_, collection: Collection) => (
               <Flex pe={1} key={collection.address} w='full' justify='space-between' my={1}>
                 <Checkbox
                   value={`collection-${collection.address}`}

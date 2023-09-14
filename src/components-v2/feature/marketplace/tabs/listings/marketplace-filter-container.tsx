@@ -15,7 +15,7 @@ const config = appConfig();
 const collections = config.collections
   .filter((c: any) => c.listable)
   .sort((a: any, b: any) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
-  .map((x: any) => ({avatar: x.avatar, name: x.name, address: x.address}));
+  .map((x: any) => ({avatar: x.metadata.avatar, name: x.name, address: x.address}));
 
 interface MarketplaceFilterContainerProps {
   queryParams: ListingsQueryParams;
