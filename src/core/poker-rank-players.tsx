@@ -41,7 +41,7 @@ const BlackListedWallets = [
   "0x40874f18922267cc2ca7933828594ab5078c1065"
 ]
 const game2clubsThreshold = 3;
-let gameNumber = 2;
+let gameNumber = 1;
 
 export const GetActualEditionNumber = (edition: number) => {
   let actualEdition = -1;
@@ -85,9 +85,9 @@ export const getHandName = (handRef: number) => {
     case 8: return "N/A";
   }
 }
-
-export const RankPlayers = async (data : any, testcases:boolean=false) => {
+export const RankPlayers = async (data : any, testcases:boolean=false, gameId:number) => {
   let rankedPlayers : Player[] = [];
+  gameNumber = gameId;
 
   if(testcases) {
     // 4 of a kind club kicker card
@@ -220,7 +220,6 @@ export const RankPlayers = async (data : any, testcases:boolean=false) => {
 }
 
   const MeetsGameRequriements = (clubCards: number[], cardInHand : string[]) => {
-    let gameNumber = 2;
     if(gameNumber === 1) {
       return true;
     } else if(gameNumber === 2) {
@@ -240,10 +239,6 @@ export const RankPlayers = async (data : any, testcases:boolean=false) => {
       }}}
 
       let cardsNeeded = game2clubsThreshold - clubsUsedInHand;
-      // console.log("clubsUsedInHand", clubsUsedInHand);
-      // console.log("additionalSpaceForCards", additionalSpaceForCards);
-      // console.log("cardsForGame2", cardsForGame2);
-      // console.log("cardsNeeded", cardsNeeded);
 
       //meets game requirements in just main cards
       if(clubsUsedInHand >= game2clubsThreshold) {
@@ -372,10 +367,6 @@ export const RankPlayers = async (data : any, testcases:boolean=false) => {
     return secondaryCardEdition;
   }
   const checkForFourOfAKind = (cardRanks: number[], cardsFromGame2:number[], cards:number[]) => {
-    // console.log("cardRanks", cardRanks);
-    // console.log("cardsFromGame2", cardsFromGame2);
-    // console.log("cards", cards);
-
     const cardCountDict: any = {};
     cardRanks.forEach((card) => {
       if(cardCountDict[card]) {
