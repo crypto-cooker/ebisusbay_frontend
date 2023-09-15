@@ -103,10 +103,10 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
   }
 
   return (
-    <Box
+<Box
       position='relative'
       h='calc(100vh - 74px)'
-      overflow='hidden'
+      overflow={'scroll'}
       minH={{base: '900px', xl: '100vh' }}
       >
      <motion.div
@@ -121,8 +121,6 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
           zIndex={1}
           w='100%'
           h='100%'
-          // bg={'#000000'}
-          overflow='hidden'
         >
           {/* <FactionDirectoryComponent /> */}
           <Flex
