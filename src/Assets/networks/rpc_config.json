@@ -23569,6 +23569,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Fe00ts",
+      "slug": "fe00ts",
+      "multiToken": false,
+      "address": "0x02A739a00fB553d939Be47518C1Bb94e3401B566",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "3333 powerful and beautiful females ready to rock your world.  A collection drawn by some of the most talented digital artist around cronos, collaborations with the biggest projects on the chain, GameFi and Music driven to give the community the best NFT experience.",
+        "avatar": "/img/collections/fe00ts/avatar.webp",
+        "card": "/img/collections/fe00ts/card.webp",
+        "banner": "/img/collections/fe00ts/banner.webp",
+        "website": "https://fe00ts.netlify.app/",
+        "twitter": "https://www.twitter.com/Fe00ts",
+        "discord": "https://discord.gg/G8PxJvfEAf",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
