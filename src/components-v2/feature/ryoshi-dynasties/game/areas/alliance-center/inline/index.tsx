@@ -396,7 +396,7 @@ const CurrentFaction = () => {
               <Box bg='#564D4A' p={2} rounded='lg' w='full'>
               <SimpleGrid columns={2}>
                 <VStack align='start' spacing={0} my='auto'>
-                  <Text fontSize='sm'>Preregister For Season 2</Text>
+                  <Text fontSize='sm' align='start'>Preregister For Season 2</Text>
                   <Text fontSize='lg' fontWeight='bold'>{isRegisteredNextSeason ? 'Registered' : 'Unregistered'}</Text>
                 </VStack>
                 {!isRegisteredNextSeason && (
