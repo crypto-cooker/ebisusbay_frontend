@@ -41,7 +41,7 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   const authInitFinished = useAppSelector((state) => state.appInitialize.authInitFinished);
 
   const [_, getSigner] = useCreateSigner();
-  const [signature, setSignature] = useState<string | null>(null);
+  const {signature, isSignedIn, requestSignature} = useEnforceSignature();
 
   const { data: rdConfig, status: rdConfigFetchStatus, error: rdFetchError} = useQuery(
     ['RyoshiDynastiesContext'],
@@ -56,16 +56,16 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   );
 
   const { data: rdUserContext, refetch: refetchUserContext} = useQuery(
-    ['RyoshiDynastiesUserContext', user.address],
+    ['RyoshiDynastiesUserContext', user.address, isSignedIn],
     async () => {
-      if (signature) {
+      if (!!signature) {
         return await ApiService.withoutKey().ryoshiDynasties.getUserContext(user.address!, signature)
       }
       throw 'Please sign message in wallet to continue'
     },
     {
       refetchOnWindowFocus: false,
-      enabled: !!user.address && !!signature,
+      enabled: !!user.address && isSignedIn,
       refetchInterval: 1000 * 60,
     }
   );
@@ -130,26 +130,6 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   //     onOpenWelcomeModal();
   //   }
   // }, [user.address]);
-
-  const {isSignedIn, requestSignature} = useEnforceSignature();
-
-  useEffect(() => {
-    async function getSig() {
-      if (!isSignedIn) {
-        try {
-          const sig = await requestSignature();
-          setSignature(sig ?? null);
-        } catch  (e) {
-          console.log('sig failed', e);
-        }
-      }
-    }
-    if (!!user.address) {
-      getSig();
-    } else {
-      setSignature(null);
-    }
-  }, [user.address, isSignedIn]);
 
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [isInMaintenanceMode, setIsInMaintenanceMode] = useState(false);

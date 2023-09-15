@@ -75,7 +75,7 @@ interface AllianceCenterProps {
 const AllianceCenter = ({onClose}: AllianceCenterProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
-  const {isSignedIn, signin} = useEnforceSigner();
+  const {isSignedIn, isSigningIn, signin} = useEnforceSigner();
 
   const handleConnect = async () => {
     if (!user.address) {
@@ -186,6 +186,7 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
                 <RdButton
                   stickyIcon={true}
                   onClick={handleSignin}
+                  isLoading={isSigningIn}
                 >
                   Sign in
                 </RdButton>

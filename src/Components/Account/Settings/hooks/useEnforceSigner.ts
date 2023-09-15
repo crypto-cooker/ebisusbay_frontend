@@ -13,6 +13,7 @@ const useEnforceSignature = () => {
   const [connectWallet] = useAuthedFunction();
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [signer, setSigner] = useAtom(storageSignerAtom);
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
   const checkSigninStatus = async () => {
     if (!user.address) return false;
@@ -48,9 +49,14 @@ const useEnforceSignature = () => {
   };
 
   const signin = async () => {
-    await connectWallet(async () => {
-      await retrieveSignature();
-    });
+    try {
+      setIsSigningIn(true);
+      await connectWallet(async () => {
+        await retrieveSignature();
+      });
+    } finally {
+      setIsSigningIn(false);
+    }
   }
 
   useEffect(() => {
@@ -61,7 +67,7 @@ const useEnforceSignature = () => {
     refreshSignin();
   }, [signer, user.address]);
 
-  return {isSignedIn, signin, requestSignature} as const;
+  return {isSignedIn, isSigningIn, signin, requestSignature, signature: signer.signature} as const;
 };
 
 export default useEnforceSignature;

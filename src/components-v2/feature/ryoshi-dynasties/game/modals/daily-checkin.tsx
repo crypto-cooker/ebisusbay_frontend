@@ -44,7 +44,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const [executingClaim, setExecutingClaim] = useState(false);
 
   const [runAuthedFunction] = useAuthedFunction();
-  const {isSignedIn, signin} = useEnforceSigner();
+  const {isSignedIn, signin, isSigningIn} = useEnforceSigner();
 
   const authCheckBeforeClaim = async () => {
     await runAuthedFunction(claimDailyRewards);
@@ -183,6 +183,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
                 <RdButton
                   stickyIcon={true}
                   onClick={handleSignin}
+                  isLoading={isSigningIn}
                 >
                   Sign in
                 </RdButton>
