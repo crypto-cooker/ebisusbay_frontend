@@ -1,11 +1,8 @@
 import {Contract, ContractTransaction, ethers} from "ethers";
-import {BoosterStaker,
-    StakePayload,
-    StakerWithRewards
-} from "@src/components-v2/feature/brand/tabs/staking/types";
-import {getQuickWallet} from "@src/core/api/endpoints/wallets";
+import {BoosterStaker, StakePayload, StakerWithRewards} from "@src/components-v2/feature/brand/tabs/staking/types";
 import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
+import NextApiService from "@src/core/services/api-service/next";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -40,11 +37,11 @@ export class WeirdApesStaker implements StakerWithRewards {
     }
 
     async getAll(userAddress: string, collectionAddress: string): Promise<any> {
-        const quickWallet = await getQuickWallet(userAddress, {collection: collectionAddress, pageSize: 1000});
-        if (!quickWallet.data) return [];
+        const walletNfts = await NextApiService.getWallet(userAddress, {pageSize: 100, collection: [collectionAddress]});
+        if (!walletNfts.data) return [];
 
         const readContract = new Contract(this.collections[0], ERC721, readProvider);
-        return Promise.all(quickWallet.data.map(async (nft: any) =>{
+        return Promise.all(walletNfts.data.map(async (nft: any) =>{
             const isStaked = await readContract.stakedApes(nft.nftId);
             return {...nft, isStaked}
         }));

@@ -32,7 +32,6 @@ import {
   AccountMenuActions,
   balanceUpdated,
   chainConnect,
-  checkForOutstandingOffers,
   connectAccount,
   onLogout,
   setShowWrongChainModal,
@@ -122,8 +121,6 @@ const Index = function () {
   const needsOnboard = useAppSelector((state) => {
     return state.user.needsOnboard;
   });
-  const collectionsStats = useAppSelector((state) => state.collections.collections);
-  const myNFTs = useAppSelector((state) => state.offer.myNFTs);
 
   const { data: balance } = useQuery(['getBalance', walletAddress, 'latest'], async () =>
     await readProvider.getBalance(walletAddress!),
@@ -188,13 +185,6 @@ const Index = function () {
     }
     // eslint-disable-next-line
   }, [walletAddress]);
-
-  useEffect(() => {
-    if (collectionsStats && collectionsStats.length > 0 && myNFTs && myNFTs.length > 0) {
-      dispatch(checkForOutstandingOffers());
-    }
-    // eslint-disable-next-line
-  }, [collectionsStats, myNFTs]);
 
   const connectWalletPressed = async () => {
     if (needsOnboard) {

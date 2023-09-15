@@ -602,49 +602,6 @@ export const chainConnect = () => async (dispatch: any) => {
   }
 };
 
-export const checkForOutstandingOffers = () => async (dispatch: any, getState: any) => {
-  const state = getState();
-  const collectionsStats = state.collections.collections;
-  const nfts = state.offer.myNFTs;
-
-  const collectionAddresses = nfts.map((nft: any) => nft.nftAddress.toLowerCase());
-  const offers = await getAllOffers(collectionAddresses, offerState.ACTIVE.toString());
-
-  const findCollectionFloor = (knownContract: any) => {
-    const collectionStats = collectionsStats.find((o: any) => {
-      if (knownContract.multiToken && o.collection.indexOf('-') !== -1) {
-        let parts = o.collection.split('-');
-        return caseInsensitiveCompare(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
-      } else {
-        return caseInsensitiveCompare(knownContract.address, o.collection);
-      }
-    });
-
-    return collectionStats ? collectionStats.floorPrice : null;
-  };
-
-  const receivedOffers = offers.data.filter((offer: any) => {
-    const nft = nfts.find(
-      (c: any) => caseInsensitiveCompare(c.nftAddress, offer.nftAddress) && parseInt(c.nftId) === parseInt(offer.nftId)
-    );
-
-    const knownContract = findCollectionByAddress(offer.nftAddress, offer.nftId);
-    if (!knownContract) return false;
-
-    const floorPrice = findCollectionFloor(knownContract);
-    const offerPrice = parseInt(offer.price);
-    const isAboveOfferThreshold = floorPrice ? offerPrice >= floorPrice / 2 : true;
-    const canShowCompletedOffers = !knownContract.multiToken || parseInt(offer.state) === offerState.ACTIVE;
-
-    if (nft && isAboveOfferThreshold && canShowCompletedOffers && !nft.is1155) {
-      return true;
-    }
-    return false;
-  });
-
-  dispatch(onOutstandingOffersFound(receivedOffers.length > 0));
-};
-
 export const setTheme = (theme: string) => async (dispatch: any) => {
   setThemeInStorage(theme);
   dispatch(onThemeChanged(theme));
