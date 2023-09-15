@@ -19,13 +19,9 @@ import {RyoshiDynastiesContext} from "@src/components-v2/feature/ryoshi-dynastie
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import {io} from "socket.io-client";
-import {appConfig} from "@src/Config";
-
-const config = appConfig();
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 interface GameSyncProps {
   initialRdConfig: RyoshiConfig | null;
@@ -135,21 +131,25 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   //   }
   // }, [user.address]);
 
+  const {isSignedIn, requestSignature} = useEnforceSignature();
+
   useEffect(() => {
     async function getSig() {
-      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
+      if (!isSignedIn) {
+        try {
+          const sig = await requestSignature();
+          setSignature(sig ?? null);
+        } catch  (e) {
+          console.log('sig failed', e);
+        }
       }
-      setSignature(signatureInStorage);
     }
     if (!!user.address) {
       getSig();
     } else {
       setSignature(null);
     }
-  }, [user.address]);
+  }, [user.address, isSignedIn]);
 
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [isInMaintenanceMode, setIsInMaintenanceMode] = useState(false);
