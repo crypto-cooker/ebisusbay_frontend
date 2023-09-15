@@ -391,7 +391,7 @@ const combineStats = (collectionStats: any, anchor: string) => {
       sales7d: parseInt(a.sales7d) + parseInt(b.sales7d),
       sales30d: parseInt(a.sales30d) + parseInt(b.sales30d),
       totalRoyalties: parseInt(a.totalRoyalties) + parseInt(b.totalRoyalties),
-      floorPrice: parseInt(a.floorPrice) < parseInt(b.floorPrice) ? parseInt(a.floorPrice) : parseInt(b.floorPrice),
+      floorPrice: parseInt(a.floorPrice) > parseInt(b.floorPrice) ? parseInt(a.floorPrice) : parseInt(b.floorPrice),
       averageSalePrice: (parseInt(a.averageSalePrice) + parseInt(b.averageSalePrice)) / 2,
     };
   });
