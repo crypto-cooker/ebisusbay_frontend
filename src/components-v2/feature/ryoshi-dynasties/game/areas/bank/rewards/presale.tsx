@@ -36,6 +36,7 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import Link from "next/link";
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -166,7 +167,7 @@ const PresaleVaultTab = () => {
       refetch();
     } catch (error: any) {
       console.log(error);
-      toast.error(error);
+      toast.error(parseErrorMessage(error));
     } finally {
       setExecutingExchangeTellers(false);
     }

@@ -29741,7 +29741,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "images": {
         "drop": "/img/drops/fallen-angels-demons/drop.webp",
