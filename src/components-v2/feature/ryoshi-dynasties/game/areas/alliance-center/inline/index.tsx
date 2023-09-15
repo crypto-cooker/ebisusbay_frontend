@@ -60,6 +60,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import ImageService from "@src/core/services/image";
 import {motion} from "framer-motion";
 import FactionDirectoryComponent from "@src/components-v2/feature/ryoshi-dynasties/components/faction-directory";
+import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const config = appConfig();
 const gothamBook = localFont({
@@ -74,6 +75,7 @@ interface AllianceCenterProps {
 const AllianceCenter = ({onClose}: AllianceCenterProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
+  const {isSignedIn, signin} = useEnforceSigner();
 
   const handleConnect = async () => {
     if (!user.address) {
@@ -87,6 +89,11 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
       }
     }
   }
+
+  const handleSignin = async () => {
+    await signin();
+  }
+
   const item = {
     hidden: { opacity: 0 },
     show: { opacity: 1,
@@ -170,7 +177,21 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
           </Flex>
         <Box>
         {!!user.address ? (
-          <CurrentFaction />
+          <>
+            {isSignedIn ? (
+              <CurrentFaction />
+            ) : (
+              <Box textAlign='center' mt={4}>
+                <Text mb={2}>Sign in to view faction information</Text>
+                <RdButton
+                  stickyIcon={true}
+                  onClick={handleSignin}
+                >
+                  Sign in
+                </RdButton>
+              </Box>
+            )}
+          </>
         ) : (
           <Box textAlign='center' pt={8} pb={4} px={2}>
             <Box ps='20px'>
