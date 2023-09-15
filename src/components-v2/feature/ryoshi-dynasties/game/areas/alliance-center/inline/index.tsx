@@ -410,6 +410,9 @@ const CurrentFaction = () => {
                   </RdButton>
                 )}
               </SimpleGrid>
+              <Box textAlign='start' mt={2} fontSize='sm'>
+                <Text>Cost: 1500 FRTN + 1500 Mitama</Text>
+              </Box>
               {!rdContext.user.season.faction && (
                 <Box textAlign='start' mt={2} fontSize='sm'>
                   <Text>Regular Cost: {commify(rdContext.config.factions.registration.fortuneCost)} Fortune + {rdContext.config.factions.registration.mitamaCost} Troops</Text>
