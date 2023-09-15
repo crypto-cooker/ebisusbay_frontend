@@ -31,7 +31,7 @@ const Drop = ({ssrDrop, ssrCollection}: DropProps) => {
         title={`${ssrDrop.title} - Drop`}
         description={ssrDrop.subtitle}
         url={`/drops/${ssrDrop.slug}`}
-        image={hostedImage(ssrDrop.images.preview ?? ssrDrop.images.drop ?? ssrCollection?.metadata?.card)}
+        image={hostedImage(ssrDrop.images.preview ?? ssrDrop.images.drop ?? ssrCollection?.metadata.card)}
       />
       {ssrDrop && (
         <>
@@ -52,64 +52,16 @@ const Drop = ({ssrDrop, ssrCollection}: DropProps) => {
 
 export const getServerSideProps = async ({ params }: {params: any}) => {
   const slug = params?.slug;
-
-  let drop = null;
-  if (slug === 'ryoshi-clubs') {
-    drop = {
-      "id": 182,
-      "slug": "ryoshi-clubs",
-      "collection": "ryoshi-playing-cards",
-      "title": "Ryoshi Clubs",
-      "subtitle": "Ryoshi Clubs: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #2 Ryoshi Clubs, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
-      "description": "Ebisu’s Bay recognizes the importance of nurturing a vibrant and supportive community. As the contest unfolds, members of the Crofam will have the opportunity to engage with the captivating NFTs and partake in an event that not only celebrates creativity but also reinforces the symbiotic relationship between art and technology.\n\nThe upcoming Playing Cards Collection marks yet another pivotal moment in the history of the Bay, bringing together individuals who are not just collectors, but pioneers in the new era of Cronos.",
-      "author": {
-        "name": "Ebisu's Bay",
-        "website": "https://app.ebisusbay.com/",
-        "twitter": "https://twitter.com/EbisusBay",
-        "discord": "https://discord.gg/ynrBrSkAFG",
-        "medium": "https://blog.ebisusbay.com/",
-        "instagram": "https://www.instagram.com/ebisusbayofficial",
-        "telegram": "https://t.me/ebisusbay"
-      },
-      "address": "0xd87838a982a401510255ec27e603b0f5fea98d24",
-      "maxMintPerTx": 25,
-      "maxMintPerAddress": 100,
-      "totalSupply": 4000,
-      "erc20Cost": "250",
-      "erc20MemberCost": "200",
-      "erc20Token": "frtn",
-      "erc20Only": true,
-      "memberMitama": 1000,
-      "foundersOnly": false,
-      "start": 1694808000000,
-      "end": null,
-      "referral": false,
-      "is1155": false,
-      "published": true,
-      "complete": false,
-      "featured": true,
-      "images": {
-        "drop": "/img/drops/ryoshi-clubs/drop.webp",
-        "avatar": "/img/drops/ryoshi-clubs/avatar.webp",
-        "banner": "/img/drops/ryoshi-clubs/banner.webp",
-        "preview": "/img/drops/ryoshi-clubs/preview.webp"
-      },
-      "verification": {
-        "verified": true,
-        "doxx": false,
-        "kyc": true,
-        "escrow": false
-      }
-    }
-  } else {
-    drop = localDataService.getDrop(slug);
-  }
+  const drop = localDataService.getDrop(slug);
 
   if (!drop) {
     return {
       notFound: true
     }
   }
+
+  const collectionSlug = slug === 'ryoshi-clubs' ? 'ryoshi-playing-cards' : (drop.collection ?? slug);
+  let collection = config.collections.find((c: any) => c.slug === collectionSlug);
 
   // try {
   //   const res = await fetch(`${config.urls.api}collectioninfo?slug=${collectionSlug}`)
@@ -128,7 +80,7 @@ export const getServerSideProps = async ({ params }: {params: any}) => {
     props: {
       slug: drop.slug,
       ssrDrop: drop,
-      ssrCollection: null
+      ssrCollection: collection ?? null
     },
   };
 };
