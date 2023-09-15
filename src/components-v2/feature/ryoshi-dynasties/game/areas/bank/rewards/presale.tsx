@@ -131,7 +131,7 @@ const PresaleVaultTab = () => {
 
     const fortuneTellerContract = new Contract(fortuneTellerCollection.address, ERC1155, user.provider.getSigner());
 
-    const isApproved = await fortuneTellerContract.isApprovedForAll(config.contracts.presaleVaults, user.address);
+    const isApproved = await fortuneTellerContract.isApprovedForAll(user.address, config.contracts.presaleVaults);
     if (!isApproved) {
       let tx = await fortuneTellerContract.setApprovalForAll(config.contracts.presaleVaults, true);
       await tx.wait();
