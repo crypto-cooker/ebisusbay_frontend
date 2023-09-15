@@ -60,7 +60,7 @@ export const getServerSideProps = async ({ params }: {params: any}) => {
     }
   }
 
-  const collectionSlug = drop.collection ?? slug;
+  const collectionSlug = slug === 'ryoshi-clubs' ? 'ryoshi-playing-cards' : (drop.collection ?? slug);
   let collection = config.collections.find((c: any) => c.slug === collectionSlug);
 
   try {
