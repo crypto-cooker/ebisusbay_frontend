@@ -1,12 +1,9 @@
 import {useCallback, useState} from 'react';
-import {useDispatch} from 'react-redux';
-
-import {getAuthSignerInStorage, setAuthSignerInStorage} from '@src/helpers/storage';
-import {setAuthSigner} from '@src/GlobalState/User';
 import {useAppSelector} from "@src/Store/hooks";
 import {JsonRpcProvider} from "@ethersproject/providers";
 import * as Sentry from '@sentry/react';
-import useLocalStorage from "@src/Components/Account/Settings/hooks/useLocalStorage";
+import {useAtom} from "jotai/index";
+import {storageSignerAtom} from "@src/jotai/atoms/storage";
 
 const message = (address: string) => {
   return "Welcome to Ebisu's Bay!\n\n" +
@@ -23,7 +20,7 @@ type SignerProps = {
 
 const useSignature = () => {
   const user = useAppSelector((state) => state.user);
-  const [_, setSignatureInStorage] = useLocalStorage<SignerProps | null>('AUTH_SIGNATURE', null);
+  const [getSignatureInStorage, setSignatureInStorage] = useAtom(storageSignerAtom);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -73,10 +70,9 @@ const useSignature = () => {
     let signature: string | null = null;
     let address: string | null = null;
 
-    const signerInStorage = getAuthSignerInStorage();
-    if (signerInStorage) {
-      signature = (signerInStorage as SignerProps).signature;
-      address = (signerInStorage as SignerProps).address;
+    if (getSignatureInStorage && !!getSignatureInStorage.signature) {
+      signature = getSignatureInStorage.signature;
+      address = getSignatureInStorage.address;
     } else {
       [signature, address] = await createSigner();
     }

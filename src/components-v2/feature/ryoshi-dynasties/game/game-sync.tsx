@@ -21,11 +21,7 @@ import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import {appConfig} from "@src/Config";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import useLocalStorage from "@src/Components/Account/Settings/hooks/useLocalStorage";
-
-const config = appConfig();
 
 interface GameSyncProps {
   initialRdConfig: RyoshiConfig | null;
