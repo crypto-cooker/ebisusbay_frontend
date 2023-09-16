@@ -11990,7 +11990,7 @@
       "multiToken": false,
       "address": "0x4C107A367Fe3A209c8E54be4f8B1AE57C0Cf0e14",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Devil Loves Cro Fam is a pfp project only with no roadmap or utility. Unless you call going to hell a utility!",
         "avatar": "/img/collections/devil-loves-crofam/avatar.webp",
