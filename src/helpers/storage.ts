@@ -16,17 +16,9 @@ export const getThemeInStorage = () => {
   return localStorage.getItem(LOCAL_STORAGE_ITEMS.theme);
 };
 
-export const setAuthSignerInStorage = (signer: { date: Date, signature: string, address: string }) => {
-  localStorage.setItem(LOCAL_STORAGE_ITEMS.authSignature, JSON.stringify(signer));
-};
-
 export const getAuthSignerInStorage = (): { date: Date, signature: string, address: string } | null => {
   const item = localStorage.getItem(LOCAL_STORAGE_ITEMS.authSignature);
   return item ? JSON.parse(item) : null;
-};
-
-export const removeAuthSignerInStorage = () => {
-  return localStorage.removeItem(LOCAL_STORAGE_ITEMS.authSignature);
 };
 
 export const getCartInStorage = () => {

@@ -56,7 +56,7 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   );
 
   const { data: rdUserContext, refetch: refetchUserContext} = useQuery(
-    ['RyoshiDynastiesUserContext', user.address, isSignedIn],
+    ['RyoshiDynastiesUserContext', user.address, signature],
     async () => {
       if (!!signature) {
         return await ApiService.withoutKey().ryoshiDynasties.getUserContext(user.address!, signature)
@@ -130,6 +130,21 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   //     onOpenWelcomeModal();
   //   }
   // }, [user.address]);
+
+  useEffect(() => {
+    async function getSig() {
+      if (!isSignedIn) {
+        try {
+          await requestSignature();
+        } catch  (e) {
+          console.log('sig failed', e);
+        }
+      }
+    }
+    if (!!user.address) {
+      getSig();
+    }
+  }, [user.address, isSignedIn]);
 
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [isInMaintenanceMode, setIsInMaintenanceMode] = useState(false);
