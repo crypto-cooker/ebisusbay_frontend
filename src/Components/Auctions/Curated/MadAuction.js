@@ -1,7 +1,4 @@
 import React from 'react';
-
-import AuctionCollection from '../../components/AuctionCollection';
-import MetaverseModal from '../../components/MetaverseModal';
 import CuratedAuctionCollection from "./CuratedAuctionCollection";
 import {hostedImage} from "../../../helpers/image";
 
@@ -19,7 +16,6 @@ const MadAuction = () => {
             <div className="card eb-nft__card h-100 shadow">
               <img className="card-img-top" src={hostedImage('/img/metaverse_gallery.png')} alt="metaverse gallery" />
               <div className="card-body d-flex flex-column align-middle">
-                <MetaverseModal />
               </div>
             </div>
           </div>
