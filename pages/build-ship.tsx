@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Contract, ethers} from 'ethers';
 import {toast} from 'react-toastify';
-import {Form} from 'react-bootstrap';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
@@ -11,7 +10,7 @@ import ShipItemABI from '../src/Contracts/ShipItem.json';
 import {appConfig} from '@src/Config';
 import {hostedImage} from '@src/helpers/image';
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import {Center, Heading, Progress, Spinner} from "@chakra-ui/react";
+import {Center, FormLabel, Heading, Input, Progress, Spinner} from "@chakra-ui/react";
 
 import {getCollections} from "@src/core/api/next/collectioninfo";
 import {useAppSelector} from "@src/Store/hooks";
@@ -319,10 +318,10 @@ const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected }:
                   {quantityCollected[0] > 0 && quantityCollected[1] > 0 && quantityCollected[2] > 0 ? (
                     <>
                       <div className="col d-flex justify-content-center">
-                        <Form.Label>Quantity</Form.Label>
+                        <FormLabel>Quantity</FormLabel>
                       </div>
                       <div className="col d-flex justify-content-center mt-0">
-                        <Form.Control
+                        <Input
                           type="number"
                           placeholder="Input the amount"
                           onChange={(e) => onQuantityChange('regular', e)}

@@ -7,7 +7,6 @@ import {getAnalytics, logEvent} from '@firebase/analytics';
 import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 import {useRouter} from 'next/router';
-import {Form} from 'react-bootstrap';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
@@ -19,7 +18,7 @@ import {EbisuDropAbi} from '@src/Contracts/Abis';
 import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
 import {formatEther} from "ethers/lib/utils";
-import {Progress, Spinner} from "@chakra-ui/react";
+import {FormLabel, Progress, Spinner} from "@chakra-ui/react";
 
 const config = appConfig();
 const drops = config.drops;
@@ -573,13 +572,13 @@ const MultiDropCard = ({ title, img, canMintQuantity, mintNow, currentSupply, ma
             {user.address ? (
               <>
                 <div>
-                  <Form.Label>Quantity</Form.Label>
-                  <Form.Range
-                    value={numToMint}
-                    min="1"
-                    max={canMintQuantity}
-                    onChange={(e) => setNumToMint(Number(e.target.value))}
-                  />
+                  <FormLabel>Quantity</FormLabel>
+                  {/*<Form.Range*/}
+                  {/*  value={numToMint}*/}
+                  {/*  min="1"*/}
+                  {/*  max={canMintQuantity}*/}
+                  {/*  onChange={(e) => setNumToMint(Number(e.target.value))}*/}
+                  {/*/>*/}
                 </div>
                 <div className="text-center">
                   <button

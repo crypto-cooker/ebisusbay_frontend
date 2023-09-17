@@ -1,6 +1,6 @@
 export class SortOption {
   label = 'None';
-  id = null;
+  id = '';
   key = '';
   direction = '';
 

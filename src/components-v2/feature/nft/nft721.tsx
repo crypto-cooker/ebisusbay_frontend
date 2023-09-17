@@ -13,7 +13,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import {Badge} from 'react-bootstrap';
 
 import ProfilePreview from '@src/Components/components/ProfilePreview';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
@@ -65,8 +64,10 @@ import {
   Center,
   Flex,
   Heading,
-  MenuButton as MenuButtonCK, Spinner,
+  MenuButton as MenuButtonCK,
+  Spinner,
   Stack,
+  Tag,
   Text,
   useBreakpointValue,
   useClipboard
@@ -628,14 +629,14 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
             </div>
             <div className="col-md-6">
               {nft && (
-                <div className="item_info">
+                <Box className="item_info">
                   {isNftBlacklisted(address, id) ? (
-                    <div className="mb-4">
-                      <Heading className="mb-0">{customProfile.name ?? nft.name}</Heading>
-                      <div className="d-flex">
-                        <Badge bg="danger">Blacklisted</Badge>
-                      </div>
-                    </div>
+                    <Box mb={4}>
+                      <Heading mb={0}>{customProfile.name ?? nft.name}</Heading>
+                      <Flex>
+                        <Tag size='sm' colorScheme='red' variant='solid'>Blacklisted</Tag>
+                      </Flex>
+                    </Box>
                   ) : (
                     <Heading>{customProfile.name ?? nft.name}</Heading>
                   )}
@@ -992,7 +993,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
 
                     </div>
                   </div>
-                </div>
+                </Box>
               )}
             </div>
           </div>

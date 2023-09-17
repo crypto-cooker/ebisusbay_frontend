@@ -13,7 +13,6 @@ import {
   timeSince,
   usdFormat
 } from '@src/utils';
-import {Card} from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {listingUpdated} from '@src/GlobalState/listingSlice';
@@ -27,6 +26,8 @@ import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useC
 
 import {
   Box,
+  Card,
+  CardBody,
   Flex,
   Heading,
   Spinner,
@@ -223,12 +224,12 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
 
 
   return (
-    <div className="price-action-bar">
-      <Card className="mb-4 border-1 shadow pab-card">
-        <Card.Body>
-          <div id={`lid-${listing?.listingId}`}>
+    <Box className="price-action-bar">
+      <Card mb={4} border='1px solid' shadow='lg' className=" pab-card">
+        <CardBody>
+          <Box id={`lid-${listing?.listingId}`}>
             <Flex direction="column" justify="space-between">
-              <div className={`my-auto`}>
+              <Box my='auto'>
                 <>
                   <Flex justify="space-between">
                     <Heading size="sm">{label ?? 'Listing Price'}:</Heading>
@@ -259,9 +260,9 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                     )}
                   </span>
                 </>
-              </div>
+              </Box>
             </Flex>
-          </div>
+          </Box>
 
           <div className="d-flex">
             {isOwner ? (
@@ -314,7 +315,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
               </>
             )}
           </div>
-        </Card.Body>
+        </CardBody>
       </Card>
       {isSellDialogOpen && (
         <CreateListingDialog
@@ -334,7 +335,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
       {/*<div className='nftSaleForm'>*/}
       {/*  <Modal isCentered title={'This is an unverified collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose} />*/}
       {/*</div>*/}
-    </div>
+    </Box>
   );
 };
 export default PriceActionBar;

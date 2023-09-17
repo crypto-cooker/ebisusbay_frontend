@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {Form} from "react-bootstrap";
 import {caseInsensitiveCompare, debounce} from "@src/utils";
 import Blockies from "react-blockies";
 import {
@@ -12,6 +11,7 @@ import {
   CheckboxGroup,
   Flex,
   HStack,
+  Input,
   VStack
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
@@ -70,7 +70,7 @@ export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyP
         <AccordionIcon />
       </AccordionButton>
       <AccordionPanel maxH='350px' overflowY='scroll'>
-        <Form.Control type="text" placeholder="Filter" onChange={onTextFilterChange}/>
+        <Input type="text" placeholder="Filter" onChange={onTextFilterChange} mb={2} />
         <CheckboxGroup colorScheme='blue' value={filteredAddresses.map((address: any) => `collection-${address}`)}>
           <VStack align='start' w='full' spacing={2}>
             {visibleCollections.map((collection: any) => (

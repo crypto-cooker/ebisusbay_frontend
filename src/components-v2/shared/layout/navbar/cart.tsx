@@ -39,7 +39,6 @@ import useBuyGaslessListings from '@src/hooks/useBuyGaslessListings';
 import Market from "@src/Contracts/Marketplace.json";
 import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
-import {AnchorProps} from "react-bootstrap";
 import ImageService from "@src/core/services/image";
 import {specialImageTransform} from "@src/hacks";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
@@ -159,7 +158,7 @@ const Cart = function () {
     }
   }
 
-  const NftLink = forwardRef<HTMLAnchorElement, AnchorProps & {name: string}>(({ onClick, href, name }, ref) => {
+  const NftLink = forwardRef<HTMLAnchorElement, any & {name: string}>(({ onClick, href, name }, ref) => {
     const closeAndGo = (event: any) => {
       setShowMenu(false);
       if (!!onClick) {

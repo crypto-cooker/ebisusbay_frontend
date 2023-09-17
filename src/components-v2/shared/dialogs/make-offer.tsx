@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Badge, Form} from "react-bootstrap";
 import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
@@ -14,13 +13,21 @@ import {collectionRoyaltyPercent} from "@src/core/chain";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {
+  Box,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, Spinner
+  ModalOverlay,
+  Spinner,
+  Tag
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import {getCollection} from "@src/core/api/next/collectioninfo";
@@ -225,73 +232,60 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
                 <div className="col-12 col-sm-6">
                   {existingOffer && (
                     <div className="d-flex justify-content-between">
-                      <Form.Label className="formLabel">
+                      <FormLabel className="formLabel">
                         Previous Offer:
-                      </Form.Label>
+                      </FormLabel>
                       <div>
                         {existingOffer.price} CRO
                       </div>
                     </div>
                   )}
-                  <Form.Group className="form-field">
-                    <Form.Label className="formLabel w-100">
-                      <div className="d-flex">
-                        <div className="flex-grow-1">Offer Amount</div>
-                        <div className="my-auto">
-                          <Badge
-                            pill
-                            bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                            text={user.theme === 'dark' ? 'dark' : 'light'}
-                            className="ms-2"
-                          >
+                  <FormControl className="form-field" isInvalid={!!priceError}>
+                    <FormLabel w='full' className="formLabel">
+                      <Flex>
+                        <Box flex='1'>Offer Amount</Box>
+                        <Box>
+                          <Tag size='sm' colorScheme='gray' variant='solid' ms={2}>
                             Floor: {round(floorPrice)} CRO
-                          </Badge>
-                        </div>
-                      </div>
-                    </Form.Label>
-                    <Form.Control
-                      className="input"
+                          </Tag>
+                        </Box>
+                      </Flex>
+                    </FormLabel>
+                    <Input
                       type="number"
                       placeholder="Enter Amount"
                       value={offerPrice ?? ''}
                       onChange={costOnChange}
                       disabled={showConfirmButton || executingCreateListing}
                     />
-                    <Form.Text className="field-description textError">
-                      {priceError}
-                    </Form.Text>
-                  </Form.Group>
+                    <FormErrorMessage className="field-description textError">{priceError}</FormErrorMessage>
+                  </FormControl>
 
-                  <div className="d-flex flex-wrap justify-content-between mb-3">
+                  <Flex justify='space-between' mb={3} mt={2}>
                     {windowSize?.width && windowSize.width > 377 && (
-                      <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
+                      <Tag size='sm' colorScheme='red' variant='solid' cursor='pointer' onClick={() => onQuickCost(-0.25)}>
                         -25%
-                      </Badge>
+                      </Tag>
                     )}
-                    <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
+                    <Tag size='sm' colorScheme='red' variant='solid' cursor='pointer' onClick={() => onQuickCost(-0.1)}>
                       -10%
-                    </Badge>
-                    <Badge
-                      bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                      text={user.theme === 'dark' ? 'dark' : 'light'}
-                      className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
-                    >
+                    </Tag>
+                    <Tag size='sm' colorScheme='gray' variant='solid' cursor='pointer' onClick={() => onQuickCost(0)}>
                       Floor
-                    </Badge>
-                    <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
+                    </Tag>
+                    <Tag size='sm' colorScheme='green' variant='solid' cursor='pointer' onClick={() => onQuickCost(0.1)}>
                       +10%
-                    </Badge>
-
+                    </Tag>
                     {windowSize?.width && windowSize.width > 377 && (
-                      <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
+                      <Tag size='sm' colorScheme='green' variant='solid' cursor='pointer' onClick={() => onQuickCost(0.25)}>
                         +25%
-                      </Badge>
+                      </Tag>
                     )}
-                  </div>
+                  </Flex>
 
-                  <div className="text-center my-3" style={{fontSize: '14px'}}>
+                  <Box textAlign='center' my={3} fontSize='sm'>
                     Offer amount will be held in escrow until the offer is either accepted, rejected, or cancelled
-                  </div>
+                  </Box>
                   {!isBundle(nft.address ?? nft.nftAddress) && (
                     <div>
                       <h3 className="feeTitle">Fees</h3>
@@ -306,7 +300,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
               </div>
             </ModalBody>
             <ModalFooter className="border-0">
-              <div className="w-100">
+              <Box w='full'>
                 {showConfirmButton ? (
                   <>
                     <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
@@ -348,7 +342,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
                     </div>
                   </>
                 )}
-              </div>
+              </Box>
             </ModalFooter>
           </>
         ) : (
