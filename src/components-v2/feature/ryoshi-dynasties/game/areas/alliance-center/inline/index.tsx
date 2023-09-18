@@ -278,11 +278,18 @@ const CurrentFaction = () => {
     const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.allianceCenter);
     return totalApproved as BigNumber;
   }
-  const handleRegister = async (seasonNumber : number) => {
+  const handleRegister = async (seasonBlockId : number) => {
     if (!user.address) return;
 
-    if(isRegisteredCurrentSeason && seasonNumber === 1 ||
-      isRegisteredNextSeason && seasonNumber === 2) {
+    const currentSeasonBlockId = rdContext.game?.season.blockId;
+    if (!currentSeasonBlockId) {
+      console.log('No active season');
+      return;
+    }
+    const nextSeasonBlockId = currentSeasonBlockId + 1;
+
+    if(isRegisteredCurrentSeason && seasonBlockId === currentSeasonBlockId ||
+      isRegisteredNextSeason && seasonBlockId === nextSeasonBlockId) {
       console.log('Already Registered');
     } else {
       try {
@@ -293,14 +300,13 @@ const CurrentFaction = () => {
           signatureInStorage = signature;
         }
         if (signatureInStorage) {
-          
-          let blockId = seasonNumber === 1 ? rdContext.game?.season.blockId : 2;
           const { signature, ...registrationStruct } = await getRegistrationCost(
-                                user.address?.toLowerCase(), 
-                                signatureInStorage, 
-                                blockId, 
-                                rdContext.game?.game.id, 
-                                rdContext.user?.faction.id)
+            user.address?.toLowerCase(),
+            signatureInStorage,
+            seasonBlockId,
+            rdContext.game?.game.id,
+            rdContext.user?.faction.id
+          );
 
           const totalApproved = await checkForApproval();
           if(totalApproved.lt(registrationStruct.cost)) {
@@ -393,13 +399,13 @@ const CurrentFaction = () => {
             <Box bg='#564D4A' p={2} rounded='lg' w='full'>
                 <SimpleGrid columns={2}>
                   <VStack align='start' spacing={0} my='auto'>
-                    <Text fontSize='sm'>Current Season (2)</Text>
+                    <Text fontSize='sm'>Current Season {!!rdContext.game?.season && <>({rdContext.game?.season.blockId})</>}</Text>
                     <Text fontSize='lg' fontWeight='bold'>{!!rdContext.user.season.faction ? 'Registered' : 'Unregistered'}</Text>
                   </VStack>
-                  {!rdContext.user.season.faction && (
+                  {!rdContext.user.season.faction && !!rdContext.game?.season && (
                     <RdButton
                       hoverIcon={false}
-                      onClick={() => handleRegister(2)}
+                      onClick={() => handleRegister(rdContext.game!.season.blockId)}
                       isLoading={isExecutingRegister}
                       isDisabled={isExecutingRegister}
                     >
