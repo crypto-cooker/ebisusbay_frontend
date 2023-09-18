@@ -123,7 +123,9 @@ const LandModal = ({ isOpen, onClose, plot}: LandModalFormProps) => {
       ) : (
         <>
             <VStack w='full' align='center'>
-              <RdLand nftId={plot.id.toString()} boxSize={199} rounded='xl' />
+              <Box mb={2}>
+                <RdLand nftId={plot.id.toString()} boxSize={199} rounded='xl' forceBoxSize={true}/>
+              </Box>
               {plot.forSale && (
                 <Text as='i' textAlign='center'>
                   Price: {plot.price} $Fortune
