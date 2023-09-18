@@ -1,11 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 
-import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
-import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
-// import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
 import Academy from "@src/components-v2/feature/ryoshi-dynasties/game/areas/academy";
-// import UserPage from "@src/Components/BattleBay/Areas/UserPage";
 import Bank from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank";
 import Village from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village";
 import {useAppSelector} from "@src/Store/hooks";
@@ -15,8 +11,12 @@ import ImagePreloader from "@src/components-v2/feature/ryoshi-dynasties/game/ima
 import {InlineModalContext} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/inline-modal-context";
 import {Box, useBreakpointValue} from "@chakra-ui/react";
 import DynastiesLands from "./areas/lands";
-import {MapProps} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/index";
+import {MapProps} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
 
+import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
+import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
+import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/portal";
+import FishMarketModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/fish-market";
 const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | null}) => {
   const user = useAppSelector((state) => state.user);
 
@@ -109,6 +109,10 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
               <AllianceCenter onClose={returnToPreviousPage} />
             ) : currentPage === 'academy' ? (
               <Academy onBack={returnToPreviousPage} />
+            ) : currentPage === 'market' ? (
+              <FishMarketModal onBack={returnToPreviousPage} />
+            ) : currentPage === 'moongate' ? (
+                <PortalModal onBack={returnToPreviousPage} />
             ) : currentPage === 'lands' ? (
               <DynastiesLands onBack={returnToPreviousPage} showBackButton={true}/>
               // ): currentPage === 'announcementBoard' ? (

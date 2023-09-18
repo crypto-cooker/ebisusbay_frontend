@@ -1,7 +1,6 @@
 import React, {ChangeEvent, memo, useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {MyListingsCollectionPageActions, MyNftPageActions,} from '@src/GlobalState/User';
-import {Form, Spinner} from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listing";
 import {useInfiniteQuery} from "@tanstack/react-query";
@@ -11,15 +10,15 @@ import {
   AlertDescription,
   AlertIcon,
   AlertTitle,
-  Box,
+  Box, Center,
   CloseButton,
   HStack,
   Icon,
   IconButton,
   Input,
   InputGroup,
-  InputRightElement,
-  Stack,
+  InputRightElement, Spinner,
+  Stack, Switch,
   Text,
   useBreakpointValue
 } from "@chakra-ui/react";
@@ -192,9 +191,8 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
       <div className="row pt-3">
         <div className="col-12 col-sm-6 col-md-4 m-0 text-nowrap d-flex align-items-center">
           <div className="items_filter">
-            <Form.Switch
-              className=""
-              label={'Only invalid'}
+            <Switch
+              title='Only invalid'
               checked={showInvalidOnly}
               onChange={() => setShowInvalidOnly(!showInvalidOnly)}
             />
@@ -255,21 +253,15 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
             hasMore={hasNextPage ?? false}
             style={{ overflow: 'hidden' }}
             loader={
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </div>
-              </div>
+              <Center>
+                <Spinner />
+              </Center>
             }
           >
             {status === "loading" ? (
-              <div className="col-lg-12 text-center">
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div>
+              <Center>
+                <Spinner />
+              </Center>
             ) : status === "error" ? (
               <p>Error: {(error as any).message}</p>
             ) : (

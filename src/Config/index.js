@@ -104,6 +104,11 @@ export const configData = {
         name: 'Scratch',
         symbol: 'SCRATCH',
         address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66'
+      },
+      candy: {
+        name: 'Candy',
+        symbol: 'CANDY',
+        address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977'
       }
     },
     collections: rpcConfig.known_contracts,
@@ -132,7 +137,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
           '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],        // Ryoshi Halloween
@@ -280,6 +285,7 @@ export const configData = {
           '0x8eD66bbF8B3B0577443c3fB3c712f69165515376': ['cro', 'frtn'], // Rare Pepe Cult
           '0x5c18d5eb211203eb80b591aa71a269b1e16e9eba': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Ballies: The Gear v2
           '0x50f5d303103E55ECfe67333060361c90cC8B2D14': ['cro', 'frtn'], // Possessed Chests
+          '0xE1049178296ce004996AFb16B0816c5A95aC8482': ['cro', 'frtn', 'candy'], // Bored Candy
         }
       }
     }
@@ -376,6 +382,11 @@ export const configData = {
         name: 'Scratch',
         symbol: 'SCRATCH',
         address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66'
+      },
+      candy: {
+        name: 'Candy',
+        symbol: 'CANDY',
+        address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977'
       }
     },
     collections: rpcConfigDev.known_contracts,
@@ -599,6 +610,11 @@ export const configData = {
         name: 'Scratch',
         symbol: 'SCRATCH',
         address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66'
+      },
+      candy: {
+        name: 'Candy',
+        symbol: 'CANDY',
+        address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977'
       }
     },
     collections: rpcConfigTestnet.known_contracts,

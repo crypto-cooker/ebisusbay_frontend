@@ -211,7 +211,7 @@ const LandDrop = ({drop}: LandDropProps) => {
 
         const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
         const allowance = await fortuneContract.allowance(user.address, drop.address);
-        if (allowance.sub(finalCost) < 0) {
+        if (allowance.sub(finalCost) <= 0) {
           const approvalTx = await fortuneContract.approve(drop.address, constants.MaxUint256);
           await approvalTx.wait();
         }

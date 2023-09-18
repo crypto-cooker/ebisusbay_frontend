@@ -1,11 +1,5 @@
 import {
   Box,
-  Button,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerHeader,
   Fade,
   Flex,
   Modal,
@@ -16,7 +10,7 @@ import {
   useDisclosure
 } from "@chakra-ui/react"
 
-import React, {ReactElement, useCallback, useContext, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
@@ -26,15 +20,11 @@ import {appConfig} from "@src/Config";
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
 import {useAppSelector} from "@src/Store/hooks";
 import AnnouncementBoardModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/inline";
-import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
-import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/portal";
-import FishMarketModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/fish-market";
 import {VillageHud} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/hud";
 import BattleLog from "@src/components-v2/feature/ryoshi-dynasties/game/modals/battle-log";
 import Buildings from "@src/components-v2/feature/ryoshi-dynasties/game/modals/buildings";
 
 import ImageService from "@src/core/services/image";
-import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 import {
   RyoshiDynastiesContext,
@@ -70,11 +60,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const [sizeMultiplier, setSizeMultiplier] = useState(1);
   const [initialPositionX, setInitialPositionX] = useState(-906);
   const [initialPositionY, setInitialPositionY] = useState(-414);
-  const [dailyRewardClaimed, setDailyRewardClaimed] = useState(false);
-  const [allianceCenterOpen, setAllianceCenterOpen] = useState(false);
-  const [barracksOpen, setBarracksOpen] = useState(false);
-  const [portalOpen, setPortalOpen] = useState(false);
-  const [marketOpen, setMarketOpen] = useState(false);
   const [dimensionsLoaded, setDimensionsLoaded] = useState(false);
 
   // const [buildingOpen, setBuildingOpen] = useState(false);
@@ -89,7 +74,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const [forceRefreshBool, setForceRefreshBool] = useState(false);
   const { isOpen: isOpenBattleLog, onOpen: onOpenBattleLog, onClose: onCloseBattleLog } = useDisclosure();
   const forceRefresh = () => {
-    // console.log("force refresh")
     setForceRefreshBool(!forceRefreshBool);
   }
 
@@ -148,56 +132,22 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   }
 
   const OpenAllianceCenter = () => {
-    // setBarracksOpen(false);
-    // setPortalOpen(false);
-    // setMarketOpen(false);
     setElementToZoomTo('Alliance Center');
     DelayedOpen('Alliance Center');
-    // setAllianceCenterOpen(true);
   }
-  // const CloseAllianceCenter = () => {
-  //   setElementToZoomTo('fancyMenu');
-  //   // setAllianceCenterOpen(false);
-  // }
   const OpenBarracks = () => {
-    // setAllianceCenterOpen(false);
-    // setPortalOpen(false);
-    // setMarketOpen(false);
     setElementToZoomTo('Barracks');
     DelayedOpen('Barracks');
-    // setBarracksOpen(true);
   }
-  // const CloseBarracks = () => {
-  //   setElementToZoomTo('fancyMenu');
-  //   setBarracksOpen(false);
-  // }
   const OpenPortal = () => {
-    setBarracksOpen(false);
-    setAllianceCenterOpen(false);
-    setMarketOpen(false);
     setElementToZoomTo('Moongate');
-    setPortalOpen(true);
-  }
-  const ClosePortal = () => {
-    setElementToZoomTo('fancyMenu');
-    setPortalOpen(false);
+    DelayedOpen('Moongate');
   }
   const OpenMarket = () => {
-    setBarracksOpen(false);
-    setAllianceCenterOpen(false);
-    setPortalOpen(false);
     setElementToZoomTo('Market');
-    setMarketOpen(true);
-  }
-  const CloseMarket = () => {
-    setElementToZoomTo('fancyMenu');
-    setMarketOpen(false);
+    DelayedOpen('Market');
   }
   const OpenBank = () => {
-    // setAllianceCenterOpen(false);
-    // setPortalOpen(false);
-    // setMarketOpen(false);
-    // setBarracksOpen(false);
     setElementToZoomTo('Bank');
     DelayedOpen('Bank');
   }
@@ -216,9 +166,9 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     } else if(thingToOpen == 'Barracks') {
       onChange('barracks');
     } else if(thingToOpen == 'Moongate') {
-      // OpenPortal();
+      onChange('moongate');
     } else if(thingToOpen == 'Market') {
-      // OpenMarket();
+      onChange('market');
     } else if(thingToOpen == 'Bank') {
       onChange('bank');
     } else if(thingToOpen == 'Battle Map') {
@@ -777,21 +727,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
           </TransformWrapper>
         )}
 
-        {!allianceCenterOpen && !barracksOpen && !portalOpen && !marketOpen && (
           <VillageHud onOpenBuildings={onOpenBuildings} onOpenDailyCheckin={onOpenDailyCheckin} 
             onOpenBattleLog={onOpenBattleLog} forceRefresh={forceRefreshBool} />
-        )}
-
-        <Box  position='absolute' top={0} left={0} p={4} zIndex={1}>
-          <Flex direction='row' justify='space-between' >
-            {/* {allianceCenterOpen ? <AllianceCenterInline onClose={() => CloseAllianceCenter()}/> : <></>} */}
-            {/* {barracksOpen ? <Barracks onBack={() => CloseBarracks()}/> : <></>} */}
-            {portalOpen ? <PortalModal onBack={() => ClosePortal()}/> : <></>}
-            {marketOpen ? <FishMarketModal onBack={() => CloseMarket()}/> : <></>}
-        
-        </Flex>
-        </Box>
-
       </Box>
 
       <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin}/>

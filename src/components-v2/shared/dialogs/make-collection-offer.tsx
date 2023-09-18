@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
-import {Badge, Form} from "react-bootstrap";
 import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {getCollectionMetadata} from "@src/core/api";
@@ -14,13 +13,21 @@ import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {getMyCollectionOffers} from "@src/core/subgraph";
 import {
+  Box,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, Spinner
+  ModalOverlay,
+  Spinner,
+  Tag
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import {useAppSelector} from "@src/Store/hooks";
@@ -205,76 +212,63 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
                 <div className="col-12 col-sm-6 my-auto">
                   <div className="mt-4 mt-sm-0 mb-3 mb-sm-0">
                     {existingOffer && (
-                      <div className="d-flex justify-content-between">
-                        <Form.Label className="formLabel">
+                      <Flex justify='space-between'>
+                        <FormLabel className="formLabel">
                           Previous Offer:
-                        </Form.Label>
-                        <div>
+                        </FormLabel>
+                        <Box>
                           {existingOffer.price} CRO
-                        </div>
-                      </div>
+                        </Box>
+                      </Flex>
                     )}
-                    <Form.Group className="form-field">
-                      <Form.Label className="formLabel w-100">
-                        <div className="d-flex">
-                          <div className="flex-grow-1">Offer Amount</div>
-                          <div className="my-auto">
-                            <Badge
-                              pill
-                              bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                              text={user.theme === 'dark' ? 'dark' : 'light'}
-                              className="ms-2"
-                            >
+                    <FormControl className="form-field" isInvalid={!!priceError}>
+                      <FormLabel w='full' className="formLabel">
+                        <Flex>
+                          <Box flex='1'>Offer Amount</Box>
+                          <Box>
+                            <Tag size='sm' colorScheme='gray' variant='solid' ms={2}>
                               Floor: {round(floorPrice)} CRO
-                            </Badge>
-                          </div>
-                        </div>
-                      </Form.Label>
-                      <Form.Control
-                        className="input"
+                            </Tag>
+                          </Box>
+                        </Flex>
+                      </FormLabel>
+                      <Input
                         type="number"
                         placeholder="Enter Amount"
                         value={offerPrice?.toString()}
                         onChange={costOnChange}
                         disabled={showConfirmButton || executingCreateListing}
                       />
-                      <Form.Text className="field-description textError">
-                        {priceError}
-                      </Form.Text>
-                    </Form.Group>
+                      <FormErrorMessage className="field-description textError">{priceError}</FormErrorMessage>
+                    </FormControl>
 
-                    <div className="d-flex flex-wrap justify-content-between">
+                    <Flex justify='space-between' mb={3} mt={2}>
                       {windowSize?.width && windowSize.width > 377 && (
-                        <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
+                        <Tag size='sm' colorScheme='red' variant='solid' cursor='pointer' onClick={() => onQuickCost(-0.25)}>
                           -25%
-                        </Badge>
+                        </Tag>
                       )}
-                      <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
+                      <Tag size='sm' colorScheme='red' variant='solid' cursor='pointer' onClick={() => onQuickCost(-0.1)}>
                         -10%
-                      </Badge>
-                      <Badge
-                        bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                        text={user.theme === 'dark' ? 'dark' : 'light'}
-                        className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
-                      >
+                      </Tag>
+                      <Tag size='sm' colorScheme='gray' variant='solid' cursor='pointer' onClick={() => onQuickCost(0)}>
                         Floor
-                      </Badge>
-                      <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
+                      </Tag>
+                      <Tag size='sm' colorScheme='green' variant='solid' cursor='pointer' onClick={() => onQuickCost(0.1)}>
                         +10%
-                      </Badge>
-
+                      </Tag>
                       {windowSize?.width && windowSize.width > 377 && (
-                        <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
+                        <Tag size='sm' colorScheme='green' variant='solid' cursor='pointer' onClick={() => onQuickCost(0.25)}>
                           +25%
-                        </Badge>
+                        </Tag>
                       )}
-                    </div>
+                    </Flex>
                   </div>
                 </div>
               </div>
             </ModalBody>
             <ModalFooter className="border-0">
-              <div className="w-100">
+              <Box w='full'>
                 {showConfirmButton ? (
                   <>
                     <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
@@ -317,7 +311,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
                     </div>
                   </>
                 )}
-              </div>
+              </Box>
             </ModalFooter>
           </>
         ) : (

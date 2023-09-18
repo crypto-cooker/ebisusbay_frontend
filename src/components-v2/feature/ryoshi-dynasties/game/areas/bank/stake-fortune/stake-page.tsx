@@ -41,6 +41,7 @@ import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types"
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery} from "@tanstack/react-query";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 
@@ -169,18 +170,13 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
     try {
       setIsExecutingClose(true);
       const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
-      const tx = await bank.emergencyClose(vault.index);
+      const tx = await bank.closeVault(vault.index);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       onClosed();
     } catch (error: any) {
       console.log(error)
-      if(error.response !== undefined) {
-        toast.error(error.response.data.error.metadata.message)
-      }
-      else {
-        toast.error(error);
-      }
+      toast.error(parseErrorMessage(error));
     } finally {
       setIsExecutingClose(false);
     }

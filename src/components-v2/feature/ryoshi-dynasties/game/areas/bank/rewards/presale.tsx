@@ -36,6 +36,7 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import Link from "next/link";
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -130,7 +131,7 @@ const PresaleVaultTab = () => {
 
     const fortuneTellerContract = new Contract(fortuneTellerCollection.address, ERC1155, user.provider.getSigner());
 
-    const isApproved = await fortuneTellerContract.isApprovedForAll(config.contracts.presaleVaults, user.address);
+    const isApproved = await fortuneTellerContract.isApprovedForAll(user.address, config.contracts.presaleVaults);
     if (!isApproved) {
       let tx = await fortuneTellerContract.setApprovalForAll(config.contracts.presaleVaults, true);
       await tx.wait();
@@ -166,7 +167,7 @@ const PresaleVaultTab = () => {
       refetch();
     } catch (error: any) {
       console.log(error);
-      toast.error(error);
+      toast.error(parseErrorMessage(error));
     } finally {
       setExecutingExchangeTellers(false);
     }

@@ -13,7 +13,6 @@ import metaverseReducer from '../GlobalState/metaverseSlice';
 import nftReducer from '../GlobalState/nftSlice';
 import collectionsReducer from '../GlobalState/collectionsSlice';
 import { appInitializeStateReducer } from '../GlobalState/InitSlice';
-import offerReducer from '../GlobalState/offerSlice';
 import leaderBoardReducer from '../GlobalState/leaderBoardSlice';
 import cartReducer from '../GlobalState/cartSlice';
 import batchListingReducer from '../GlobalState/user-batch';
@@ -30,7 +29,6 @@ const rootReducer = combineReducers({
   user: user,
   appInitialize: appInitializeStateReducer,
   collections: collectionsReducer,
-  offer: offerReducer,
   metaverse: metaverseReducer,
   leaderBoard: leaderBoardReducer,
   cart: cartReducer,

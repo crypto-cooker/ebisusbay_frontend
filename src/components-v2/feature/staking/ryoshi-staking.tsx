@@ -212,6 +212,7 @@ const StakedRyoshiList = () => {
 
     const query = FullCollectionsQuery.createApiQuery({address: ryoshiCollectionAddress, token: ids});
     const sort = CollectionSortOption.fromJson({
+      id: 'rank-asc',
       key: 'rank',
       direction: 'asc',
       label: 'Rare to Common',

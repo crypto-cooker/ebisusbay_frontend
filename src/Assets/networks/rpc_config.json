@@ -11990,7 +11990,7 @@
       "multiToken": false,
       "address": "0x4C107A367Fe3A209c8E54be4f8B1AE57C0Cf0e14",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Devil Loves Cro Fam is a pfp project only with no roadmap or utility. Unless you call going to hell a utility!",
         "avatar": "/img/collections/devil-loves-crofam/avatar.webp",
@@ -20465,9 +20465,9 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -22292,7 +22292,7 @@
       "multiToken": false,
       "address": "0xe2cAB6655F33192F174781206c123C5B605480f4",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Night Owls offer an enchanting and engaging experience for NFT collectors and Web3 explorers alike. Each Night Owl from the 5555 piece collection, possesses a distinct attribute, artistic story, and irresistible visuals making them highly valuable and sought after within the digital art realm. On top of their artwork they individually come with their own utility and perks that you can benefit from by holding Night Owl NFTs and being a part of the community.",
         "avatar": "/img/collections/the-cronos-night-owls/avatar.webp",
@@ -23519,6 +23519,80 @@
         "doxx": false,
         "kyc": false,
         "verified": true
+      }
+    },
+    {
+      "name": "Origami Legends",
+      "slug": "origami-legends",
+      "multiToken": false,
+      "address": "0x690B7743c8A5ae50882B8829650a9CF3F2e84f91",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Embodying ancient wisdom through the art of paper folding, Origami Legends guides rebels towards a more just society, inspires simplicity, patience, adaptability, and resilience, weaving a future where cultural heritage, balance, and harmony flourish.",
+        "avatar": "/img/collections/origami-legends/avatar.webp",
+        "card": "/img/collections/origami-legends/card.webp",
+        "banner": "/img/collections/origami-legends/banner.webp",
+        "website": "https://thecronosclub.com/",
+        "twitter": "https://twitter.com/The_Cronos_Club",
+        "discord": "https://discord.gg/rvtB8gYSGU",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Crypto.com Expedition Gear",
+      "slug": "cdc-expedition-gear",
+      "multiToken": false,
+      "address": "0xae50f345502ad3395db0099d38692f609f829b58",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "When there's land to explore, there's gear to help you out on your travels. Introducing the first series in the 'Crypto.com Expedition Gear' collection: 50,000 backpack NFTs divided into five rarities. Each rarity boasts a unique design, but that's not all.\n\nThese collectibles grant you a world of additional benefits while enhancing your in-game experience for Loaded Lions: Mane City. Keep them handy because the backpacks are ever-evolving too, just like our land NFTs.",
+        "avatar": "/img/collections/cdc-expedition-gear/avatar.webp",
+        "card": "/img/collections/cdc-expedition-gear/card.webp",
+        "banner": "/img/collections/cdc-expedition-gear/banner.webp",
+        "website": "https://crypto.com/nft",
+        "twitter": "https://www.twitter.com/cryptocom",
+        "discord": "https://discord.gg/cryptocom",
+        "instagram": "https://instagram.com/cryptocomnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Fe00ts",
+      "slug": "fe00ts",
+      "multiToken": false,
+      "address": "0x02A739a00fB553d939Be47518C1Bb94e3401B566",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "3333 powerful and beautiful females ready to rock your world.  A collection drawn by some of the most talented digital artist around cronos, collaborations with the biggest projects on the chain, GameFi and Music driven to give the community the best NFT experience.",
+        "avatar": "/img/collections/fe00ts/avatar2.webp",
+        "card": "/img/collections/fe00ts/card.webp",
+        "banner": "/img/collections/fe00ts/banner2.webp",
+        "website": "https://fe00ts.netlify.app/",
+        "twitter": "https://www.twitter.com/Fe00ts",
+        "discord": "https://discord.gg/G8PxJvfEAf",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -29692,7 +29766,7 @@
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "images": {
         "drop": "/img/drops/fallen-angels-demons/drop.webp",
@@ -30647,7 +30721,7 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "",
+      "address": "0xd87838a982a401510255ec27e603b0f5fea98d24",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 100,
       "totalSupply": 4000,

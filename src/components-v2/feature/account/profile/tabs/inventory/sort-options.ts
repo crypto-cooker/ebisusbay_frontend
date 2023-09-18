@@ -7,13 +7,13 @@ export type SortOption = {
 
 export const sortOptions: SortOption[] = [
   {
-    id: 'receivedTimestamp',
+    id: 'receivedTimestamp-desc',
     key: 'receivedTimestamp',
     direction: 'desc',
     label: 'Recently Received',
   },
   {
-    id: 'receivedTimestamp',
+    id: 'receivedTimestamp-asc',
     key: 'receivedTimestamp',
     direction: 'asc',
     label: 'Oldest Received',

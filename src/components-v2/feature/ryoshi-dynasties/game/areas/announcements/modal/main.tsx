@@ -15,6 +15,8 @@ import {useQuery} from "@tanstack/react-query";
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Autoplay} from "swiper";
 import NextLink from "next/link";
+import Countdown, {zeroPad} from "react-countdown";
+import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -28,6 +30,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
   const router = useRouter();
   const { user: rdUserContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [isMobile] = useMediaQuery("(max-width: 750px)");
+  const {isSignedIn} = useEnforceSigner();
   
   const user = useAppSelector((state) => state.user);
 
@@ -38,39 +41,9 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
     initialData: []
   });
 
-  //timer
-  const Ref = useRef<NodeJS.Timer | null>(null);
-  const [timer, setTimer] = useState('00:00:00');
   const [canClaim, setCanClaim] = useState(false);
+  const [nextClaim, setNextClaim] = useState<number>();
 
-  //timer functions
-  const getTimeRemaining = (e:any) => {
-    const total = Date.parse(e) - Date.now();
-    const days = Math.floor(total / (1000 * 60 * 60 * 24));
-    const seconds = Math.floor((total / 1000) % 60);
-    const minutes = Math.floor((total / 1000 / 60) % 60);
-    const hours = Math.floor((total / 1000 / 60 / 60) % 24);
-    return {
-        total, days, hours, minutes, seconds
-    };
-  }
-  const startTimer = (e:any) => {
-      let { total, hours, days, minutes, seconds } = getTimeRemaining(e);
-      if (total >= 0) {
-          setTimer(
-              ((days) > 0 ? (days + ' days ') : (
-              (hours > 9 ? hours : '0' + hours) + ':' +
-              (minutes > 9 ? minutes : '0' + minutes) + ':' +
-              (seconds > 9 ? seconds : '0' + seconds)))
-          )
-      }
-  }
-  const clearTimer = (e:any) => {
-    startTimer(e);
-    if (Ref.current) clearInterval(Ref.current as any);
-    const id = setInterval(() => { startTimer(e); }, 1000)
-    Ref.current = id;
-  }
 
   useEffect(() => {
       if (!user.address || !rdUserContext) {
@@ -85,7 +58,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
         setCanClaim(true);
       } else {
         setCanClaim(false);
-        clearTimer(claimData.nextClaim);
+        setNextClaim(new Date(claimData.nextClaim).getTime());
       }
   }, [user.address, rdUserContext])
 
@@ -356,8 +329,21 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
                   bottom={'10px'}
                   fontSize={{base: 'lg', sm: 'lg'}}
                   onClick={onOpenDailyCheckin}
-                  >
-                  {canClaim ? 'Claim Now!' : 'Claim in ' + timer}
+                >
+                  {user.address && isSignedIn && nextClaim ? (
+                    <Countdown
+                      date={nextClaim ?? 0}
+                      renderer={({ hours, minutes, seconds, completed }) => {
+                        if (completed && canClaim) {
+                          return <span>Claim Now!</span>;
+                        } else {
+                          return <span>Claim in {hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>;
+                        }
+                      }}
+                    />
+                  ) : (
+                    <>Claim Koban!</>
+                  )}
                 </RdButton>
               </Flex>
             </MapFrame>

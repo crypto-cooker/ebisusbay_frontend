@@ -1,6 +1,5 @@
 import React, {memo, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {Form} from 'react-bootstrap';
 import {toast} from 'react-toastify';
 import {createSuccessfulTransactionToastContent} from '@src/utils';
 import {ethers} from 'ethers';
@@ -13,7 +12,7 @@ import {
   faBatteryThreeQuarters,
   faBolt,
 } from '@fortawesome/free-solid-svg-icons';
-import {Box, Center, Heading, HStack, Link, Spinner, Tag, Text} from "@chakra-ui/react";
+import {Box, Center, FormLabel, Heading, HStack, Input, Link, Spinner, Tag, Text} from "@chakra-ui/react";
 import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
@@ -279,9 +278,9 @@ const StakeCard = ({ stake, threshold, buttonName, buttonActionName }: StakeCard
       <div className="card-body d-flex flex-column text-center">
         <Heading as="h5" size="md" className="mb-2">{buttonName}</Heading>
         <div className="row row-cols-1 g-3">
-          <div>
-            <Form.Label>Quantity</Form.Label>
-            <Form.Control
+          <Box>
+            <FormLabel>Quantity</FormLabel>
+            <Input
               type="number"
               placeholder="Input the amount"
               className="mx-auto"
@@ -289,7 +288,7 @@ const StakeCard = ({ stake, threshold, buttonName, buttonActionName }: StakeCard
               value={quantity}
               style={{ width: '80px', marginBottom: 0, appearance: 'none' }}
             />
-          </div>
+          </Box>
 
           <Center>
             <PrimaryButton

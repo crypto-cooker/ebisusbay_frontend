@@ -1,6 +1,5 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
 import {faCheck, faCircle, faCircleQuestion, faDollarSign, faStairs, faStar} from "@fortawesome/free-solid-svg-icons";
-import {Accordion, Badge, Form} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
@@ -22,6 +21,9 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {Lazy, Navigation} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {
+  Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex,
+  FormControl, FormErrorMessage,
+  FormLabel, Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -29,13 +31,14 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spinner,
+  Spinner, Switch, Tag,
   Tooltip
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import useBuyGaslessListings from "@src/hooks/useBuyGaslessListings";
 import ImageService from "@src/core/services/image";
 import {appConfig} from "@src/Config";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const numberRegexValidation = /[^0-9]/g;
 const sweepType = {
@@ -92,14 +95,8 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
       setSweepError(null);
       setIsLoading(false);
     } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
       console.log(error);
+      toast.error(parseErrorMessage(error));
     }
   };
 
@@ -227,7 +224,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
     setTab(newTab);
   };
 
-  if (!collection) return <></>;
+  if (!collection) return <>ss</>;
 
   return (
     <Modal onClose={onClose} isOpen={isOpen} size={fullscreen ? 'full' : '2xl'} isCentered>
@@ -400,33 +397,25 @@ const BudgetSweeperField = ({onChange, disabled, error}) => {
   }, [setBudget, user.balance]);
 
   return (
-    <Form.Group className="form-field">
-      <Form.Label className="formLabel w-100">
-        <div className="d-flex">
+    <FormControl className="form-field" isInvalid={!!error}>
+      <FormLabel className="formLabel w-100">
+        <Flex>
           <div className="flex-grow-1">Budget</div>
           <div className="my-auto">
-            <Badge
-              pill
-              bg={user.theme === 'dark' ? 'light' : 'secondary'}
-              text={user.theme === 'dark' ? 'dark' : 'light'}
-              className="ms-2"
-            >
+            <Tag size='sm' colorScheme='gray' variant='solid' ms={2}>
               Balance: {round(user.balance, 2)} CRO
-            </Badge>
+            </Tag>
           </div>
-        </div>
-      </Form.Label>
-      <Form.Control
-        className="input"
+        </Flex>
+      </FormLabel>
+      <Input
         type="number"
         value={budget}
         onChange={onFieldChange}
         disabled={disabled}
       />
-      <Form.Text className="field-description textError">
-        {error}
-      </Form.Text>
-    </Form.Group>
+      <FormErrorMessage className="field-description textError">{error}</FormErrorMessage>
+    </FormControl>
   )
 }
 
@@ -442,21 +431,18 @@ const QuantitySweeperField = ({onChange, disabled, error}) => {
   }, [setQuantity, quantity]);
 
   return (
-    <Form.Group className="form-field">
-      <Form.Label className="formLabel w-100">
+    <FormControl className="form-field" isInvalid={!!error}>
+      <FormLabel className="formLabel w-100">
         Max Quantity
-      </Form.Label>
-      <Form.Control
-        className="input"
+      </FormLabel>
+      <Input
         type="number"
         value={quantity}
         onChange={onFieldChange}
         disabled={disabled}
       />
-      <Form.Text className="field-description textError">
-        {error}
-      </Form.Text>
-    </Form.Group>
+      <FormErrorMessage className="field-description textError">{error}</FormErrorMessage>
+    </FormControl>
   )
 }
 
@@ -473,21 +459,18 @@ const MaxPricePerItemField = ({onChange, disabled}) => {
   }, [setPrice]);
 
   return (
-    <Form.Group className="form-field">
-      <Form.Label className="formLabel w-100">
+    <FormControl className="form-field" isInvalid={!!error}>
+      <FormLabel className="formLabel w-100">
         Max Price Per Item
-      </Form.Label>
-      <Form.Control
-        className="input"
+      </FormLabel>
+      <Input
         type="number"
         value={price}
         onChange={onFieldChange}
         disabled={disabled}
       />
-      <Form.Text className="field-description textError">
-        {error}
-      </Form.Text>
-    </Form.Group>
+      <FormErrorMessage className="field-description textError">{error}</FormErrorMessage>
+    </FormControl>
   )
 }
 
@@ -502,8 +485,8 @@ const AutoSwapItemsField = ({onChange, disabled}) => {
   }, [setIsChecked, isChecked]);
 
   return (
-    <Form.Group className="form-field d-flex">
-      <Form.Label className="formLabel w-100">
+    <FormControl className="form-field d-flex">
+      <FormLabel className="formLabel w-100">
         <span>Auto Swap Items</span>
         <span>
           <Tooltip
@@ -513,13 +496,13 @@ const AutoSwapItemsField = ({onChange, disabled}) => {
             <FontAwesomeIcon icon={faCircleQuestion} className="ms-1" />
           </Tooltip>
         </span>
-      </Form.Label>
-      <Form.Switch
-        checked={isChecked}
+      </FormLabel>
+      <Switch
+        isChecked={isChecked}
         onChange={onFieldChange}
-        disabled={disabled}
+        isDisabled={disabled}
       />
-    </Form.Group>
+    </FormControl>
   )
 }
 
@@ -600,12 +583,9 @@ const ActiveFiltersField = memo(({collection, activeFilters}) => {
   const ThemedBadge = (props) => {
     return (
       <div className="fs-5">
-        <Badge
-          bg={user.theme === 'dark' ? 'light' : 'dark'}
-          text={user.theme === 'dark' ? 'dark' : 'light'}
-        >
+        <Tag size='sm' colorScheme='gray' variant='solid'>
           {props.children}
-        </Badge>
+        </Tag>
       </div>
     )
   }
@@ -634,12 +614,17 @@ const ActiveFiltersField = memo(({collection, activeFilters}) => {
 
 const Results = ({listings, cost, isMobile}) => {
   return (
-    <Accordion>
-      <Accordion.Item eventKey="0">
-        <Accordion.Header as="div">
-          Found {listings.length} {listings.length === 1 ? 'listing' : 'listings'} ({commify(cost)} CRO)
-        </Accordion.Header>
-        <Accordion.Body className="px-1">
+    <Accordion allowToggle>
+      <AccordionItem>
+        <h2>
+          <AccordionButton>
+            <Box as="span" flex='1' textAlign='left'>
+              Found {listings.length} {listings.length === 1 ? 'listing' : 'listings'} ({commify(cost)} CRO)
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+        </h2>
+        <AccordionPanel className="px-1">
           <Swiper
             className={isMobile ? '' :  'mySwiper'}
             spaceBetween={0}
@@ -682,8 +667,8 @@ const Results = ({listings, cost, isMobile}) => {
               </SwiperSlide>
             ))}
           </Swiper>
-        </Accordion.Body>
-      </Accordion.Item>
+        </AccordionPanel>
+      </AccordionItem>
     </Accordion>
   )
 }

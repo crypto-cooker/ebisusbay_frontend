@@ -60,6 +60,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import ImageService from "@src/core/services/image";
 import {motion} from "framer-motion";
 import FactionDirectoryComponent from "@src/components-v2/feature/ryoshi-dynasties/components/faction-directory";
+import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const config = appConfig();
 const gothamBook = localFont({
@@ -74,6 +75,7 @@ interface AllianceCenterProps {
 const AllianceCenter = ({onClose}: AllianceCenterProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
+  const {isSignedIn, isSigningIn, signin} = useEnforceSigner();
 
   const handleConnect = async () => {
     if (!user.address) {
@@ -87,6 +89,11 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
       }
     }
   }
+
+  const handleSignin = async () => {
+    await signin();
+  }
+
   const item = {
     hidden: { opacity: 0 },
     show: { opacity: 1,
@@ -96,10 +103,10 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
   }
 
   return (
-    <Box
+<Box
       position='relative'
       h='calc(100vh - 74px)'
-      overflow='hidden'
+      overflow={'scroll'}
       minH={{base: '900px', xl: '100vh' }}
       >
      <motion.div
@@ -114,8 +121,6 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
           zIndex={1}
           w='100%'
           h='100%'
-          // bg={'#000000'}
-          overflow='hidden'
         >
           {/* <FactionDirectoryComponent /> */}
           <Flex
@@ -170,7 +175,22 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
           </Flex>
         <Box>
         {!!user.address ? (
-          <CurrentFaction />
+          <>
+            {isSignedIn ? (
+              <CurrentFaction />
+            ) : (
+              <Box textAlign='center' mt={4}>
+                <Text mb={2}>Sign in to view faction information</Text>
+                <RdButton
+                  stickyIcon={true}
+                  onClick={handleSignin}
+                  isLoading={isSigningIn}
+                >
+                  Sign in
+                </RdButton>
+              </Box>
+            )}
+          </>
         ) : (
           <Box textAlign='center' pt={8} pb={4} px={2}>
             <Box ps='20px'>
@@ -327,10 +347,10 @@ const CurrentFaction = () => {
   }, [rdContext]); 
   
   useEffect(() => {
-    if(!rdContext.user?.season.faction) return;
+    if(!rdContext.user) return;
 
-    setIsRegisteredCurrentSeason(!!rdContext.user?.season.registrations.current);
-    setIsRegisteredNextSeason(!!rdContext.user?.season.registrations.next);
+    setIsRegisteredCurrentSeason(rdContext.user.season.registrations.current);
+    setIsRegisteredNextSeason(rdContext.user.season.registrations.next);
   }, [!!rdContext]);
 
   return (
@@ -396,7 +416,7 @@ const CurrentFaction = () => {
               <Box bg='#564D4A' p={2} rounded='lg' w='full'>
               <SimpleGrid columns={2}>
                 <VStack align='start' spacing={0} my='auto'>
-                  <Text fontSize='sm'>Preregister For Season 2</Text>
+                  <Text fontSize='sm' align='start'>Preregister For Season 2</Text>
                   <Text fontSize='lg' fontWeight='bold'>{isRegisteredNextSeason ? 'Registered' : 'Unregistered'}</Text>
                 </VStack>
                 {!isRegisteredNextSeason && (
@@ -410,6 +430,9 @@ const CurrentFaction = () => {
                   </RdButton>
                 )}
               </SimpleGrid>
+              <Box textAlign='start' mt={2} fontSize='sm'>
+                <Text>Cost: 1500 FRTN + 1500 Mitama</Text>
+              </Box>
               {!rdContext.user.season.faction && (
                 <Box textAlign='start' mt={2} fontSize='sm'>
                   <Text>Regular Cost: {commify(rdContext.config.factions.registration.fortuneCost)} Fortune + {rdContext.config.factions.registration.mitamaCost} Troops</Text>

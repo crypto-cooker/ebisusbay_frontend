@@ -4,12 +4,11 @@ import {
     BoosterStaker,
     BoosterUnstakePayload
 } from "@src/components-v2/feature/brand/tabs/staking/types";
-import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import {appConfig} from "@src/Config";
 import {getNfts} from "@src/core/api/endpoints/nft";
 import abi from "@src/Assets/abis/cro-crow-forest.json";
 import {caseInsensitiveCompare} from "@src/utils";
-import {ERC721} from "@src/Contracts/Abis";
+import NextApiService from "@src/core/services/api-service/next";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -61,10 +60,10 @@ export class CroCrowBoosterStaker implements BoosterStaker {
     }
 
     async getUnstaked(userAddress: string, collectionAddress: string) {
-        const quickWallet = await getQuickWallet(userAddress, {collection: collectionAddress, pageSize: 1000});
-        if (!quickWallet.data) return [];
+        const walletNfts = await NextApiService.getWallet(userAddress, {pageSize: 100, collection: [collectionAddress]});
+        if (!walletNfts.data) return [];
 
-        return quickWallet.data.map((item: any) => ({...item, isStaked: false}));
+        return walletNfts.data.map((item: any) => ({...item, isStaked: false}));
     }
 
     async getSlots(userAddress: string) {

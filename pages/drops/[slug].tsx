@@ -60,20 +60,20 @@ export const getServerSideProps = async ({ params }: {params: any}) => {
     }
   }
 
-  const collectionSlug = drop.collection ?? slug;
+  const collectionSlug = slug === 'ryoshi-clubs' ? 'ryoshi-playing-cards' : (drop.collection ?? slug);
   let collection = config.collections.find((c: any) => c.slug === collectionSlug);
 
-  try {
-    const res = await fetch(`${config.urls.api}collectioninfo?slug=${collectionSlug}`)
-    const json = await res.json();
-    if (json.collections.length > 0) {
-      collection = json.collections[0];
-    }
-  } catch (e) {
-    return {
-      notFound: true
-    }
-  }
+  // try {
+  //   const res = await fetch(`${config.urls.api}collectioninfo?slug=${collectionSlug}`)
+  //   const json = await res.json();
+  //   if (json.collections.length > 0) {
+  //     collection = json.collections[0];
+  //   }
+  // } catch (e) {
+  //   return {
+  //     notFound: true
+  //   }
+  // }
 
 
   return {

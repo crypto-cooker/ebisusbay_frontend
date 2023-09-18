@@ -1,10 +1,6 @@
 import React from 'react';
-
-import AuctionCollection from '../../components/AuctionCollection';
-import MetaverseModal from '../../components/MetaverseModal';
 import CuratedAuctionCollection from "./CuratedAuctionCollection";
-import Head from "next/head";
-import {hostedImage} from "../../../helpers/image";
+import {hostedImage} from "@src/helpers/image";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 
 const Blood4NftAuction = () => {

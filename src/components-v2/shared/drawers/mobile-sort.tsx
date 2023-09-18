@@ -1,5 +1,4 @@
-import {Form} from "react-bootstrap";
-import React from "react";
+import React, {useCallback} from "react";
 import {getTheme} from "@src/Theme/theme";
 import {useAppSelector} from "@src/Store/hooks";
 import {
@@ -10,11 +9,14 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  Flex
+  Flex,
+  Radio,
+  RadioGroup
 } from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 export type SortOption = {
+  id: string;
   key: string;
   direction: string;
   label: string;
@@ -31,6 +33,13 @@ interface MobileSortProps {
 export const MobileSort = ({show, onHide, sortOptions, currentSort, onSort}: MobileSortProps) => {
   const theme = useAppSelector((state) => state.user.theme);
 
+  const handleSort = useCallback((id: string) => {
+    const option = sortOptions.find(i => i.id === id);
+    if (!option) return;
+
+    onSort(option.key, option.direction);
+  },[onSort]);
+
   return (
     <Drawer isOpen={show} placement="bottom" onClose={onHide}>
       <DrawerOverlay />
@@ -39,25 +48,19 @@ export const MobileSort = ({show, onHide, sortOptions, currentSort, onSort}: Mob
         <DrawerHeader>Sort By</DrawerHeader>
         <DrawerBody>
           <Box className="pb-5 overflow-hidden">
-            {sortOptions.map((option, key) => (
-              <div key={key} className="my-2">
-                <Form.Check
-                  type="radio"
-                  id={`${option.key}-${option.direction}`}
-                >
-                  <Form.Check.Input type={'radio'}
-                                    value={`${option.key}-${option.direction}`}
-                                    onChange={() => onSort(option.key, option.direction)}
-                                    checked={!!currentSort && currentSort.key === option.key && currentSort.direction === option.direction}
-                  />
-                  <Form.Check.Label className="w-100">
-                    <div className="d-flex justify-content-between cursor-pointer w-100">
-                      <div>{option.label}</div>
-                    </div>
-                  </Form.Check.Label>
-                </Form.Check>
-              </div>
-            ))}
+            <RadioGroup
+              colorScheme='blue'
+              value={sortOptions.find(i => i.id === currentSort?.id)?.id}
+              onChange={handleSort}
+            >
+              {sortOptions.map((option, key) => (
+                <Box key={key} my={2}>
+                  <Radio value={option.id}>
+                    {option.label}
+                  </Radio>
+                </Box>
+              ))}
+            </RadioGroup>
           </Box>
           <Flex className="fixed-bottom px-2 py-2" style={{backgroundColor: getTheme(theme).colors.bgColor1}}>
             <PrimaryButton w='full' onClick={onHide}>
