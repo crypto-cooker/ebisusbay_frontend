@@ -1,7 +1,8 @@
-import {Box, Image, Text, Flex} from "@chakra-ui/react";
-import ImageService from "@src/core/services/image";
-import React, {use, useEffect, useState, useRef} from "react";
+import {Flex, Image} from "@chakra-ui/react";
+import React, {memo, useEffect, useRef, useState} from "react";
 import landsMetadata from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-metadata.json";
+import {ResponsiveValue} from "@chakra-ui/styled-system";
+import * as CSS from "csstype";
 
 interface NFTMetaData{
   image : string;
@@ -17,9 +18,10 @@ interface RdLandProps {
   nftId: string;
   boxSize: number;
   forceBoxSize?: boolean;
+  rounded?: ResponsiveValue<CSS.Property.BorderRadius>
 }
 
-const RdLand = ({nftId, boxSize, forceBoxSize}: RdLandProps) => {
+const RdLand = ({nftId, boxSize, forceBoxSize, rounded}: RdLandProps) => {
 
   const [landTypeRef, setLandTypeRef] = useState<any>(null);
   const [landsBaseRef, setLandsBaseRef] = useState<any>(null);
@@ -247,10 +249,11 @@ const RdLand = ({nftId, boxSize, forceBoxSize}: RdLandProps) => {
       ref={ref}
       h={size}
       // minW={size}
-      borderRadius='20px' 
+      // borderRadius='20px'
+      rounded={rounded}
     >
   
-    <Image h={size} w={size}  position={'absolute'} src={landsBackgroundRef} borderRadius='20px'  zIndex={0}/>
+    <Image h={size} w={size}  position={'absolute'} src={landsBackgroundRef} rounded={rounded} zIndex={0}/>
     {/* <Text zIndex={3} position={'absolute'} >{size}</Text> */}
 
     <Image h={size} position={'absolute'} src={landsBaseRef} zIndex={0}/>
@@ -288,4 +291,4 @@ const RdLand = ({nftId, boxSize, forceBoxSize}: RdLandProps) => {
   )
 }
 
-export default RdLand;
+export default memo(RdLand);
