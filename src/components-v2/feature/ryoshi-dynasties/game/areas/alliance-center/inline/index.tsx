@@ -399,7 +399,7 @@ const CurrentFaction = () => {
                   {!rdContext.user.season.faction && (
                     <RdButton
                       hoverIcon={false}
-                      onClick={() => handleRegister(1)}
+                      onClick={() => handleRegister(2)}
                       isLoading={isExecutingRegister}
                       isDisabled={isExecutingRegister}
                     >
