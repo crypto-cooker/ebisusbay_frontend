@@ -127,7 +127,7 @@ const LandModal = ({ isOpen, onClose, plot}: LandModalFormProps) => {
           padding='10'
           justifyItems={'center'}
           >
-            <RdLand nftId={plot.id.toString()} boxSize={199} />
+            <RdLand nftId={plot.id.toString()} boxSize={199}/>
               <Flex justifyContent={'center'}>
                 <VStack>
                   <Text mt={2} as='i' textAlign='center'>

@@ -31,12 +31,9 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import { CalendarIcon } from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBuilding, faClipboardList, faBlog} from "@fortawesome/free-solid-svg-icons";
 
-import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
-import { random, range } from "lodash";
 import {ERC1155} from "@src/Contracts/Abis";
 
 interface VillageHudProps {
