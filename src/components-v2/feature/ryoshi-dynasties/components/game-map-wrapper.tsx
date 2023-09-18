@@ -7,9 +7,10 @@ import {MapProps} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/b
 interface BattleMapWrapperProps {
   showActiveGame: boolean;
   height: string;
+  blockDeployments: boolean;
 }
 
-const GameMapWrapper = ({showActiveGame, height}: BattleMapWrapperProps) => {
+const GameMapWrapper = ({showActiveGame, height, blockDeployments}: BattleMapWrapperProps) => {
   const user = useAppSelector((state) => state.user);
   const [currentModalRef, setCurrentModalRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
   const ref = useRef(null);
@@ -69,6 +70,7 @@ const GameMapWrapper = ({showActiveGame, height}: BattleMapWrapperProps) => {
         mapProps={mapProps} 
         height={height}
         useCurrentGameId={showActiveGame}
+        blockDeployments={blockDeployments}
         />
     </Box>
   )

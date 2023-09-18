@@ -287,7 +287,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                       h={isMobile ?'525px': '320px'}
                       w={{base:'350px', sm:'500px', md:'100%'}}
                       >
-                      <GameMapWrapper showActiveGame={showCurrentGame} height={isMobile ?'525px': '450px'}/>
+                      <GameMapWrapper showActiveGame={showCurrentGame} height={isMobile ?'525px': '450px'} blockDeployments={true}/>
 
                     </AccordionPanel>
                   </AccordionItem>

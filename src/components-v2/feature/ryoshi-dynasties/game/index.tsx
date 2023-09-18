@@ -99,6 +99,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
                 mapProps={mapProps} 
                 height={'calc(100vh - 74px)'} 
                 useCurrentGameId={true}
+                blockDeployments={false}
               />
               // </Suspense>
               // ) : currentPage === 'leaderboard' ? (
