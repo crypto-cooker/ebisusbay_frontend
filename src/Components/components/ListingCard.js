@@ -9,10 +9,9 @@ import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
-import {appUrl, createSuccessfulAddCartContent, round, timeSince} from '@src/utils';
+import {appUrl, createSuccessfulAddCartContent, isLandDeedsCollection, round, timeSince} from '@src/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
-import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
-import Image from "next/image";
+import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useBreakpointValue, useClipboard} from "@chakra-ui/react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -31,8 +30,8 @@ import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
 import {appConfig} from "@src/Config";
 import ImageService from "@src/core/services/image";
-import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 
 const config = appConfig();
 
@@ -63,6 +62,10 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = cart.nfts.map((o) => o.listingId).includes(listing.listingId);
   const { onCopy } = useClipboard(nftUrl.toString());
+  const izanamiImageSize = useBreakpointValue(
+    {base: 250, sm: 368, lg: 456},
+    {fallback: 'md'}
+  );
 
   const getOptions = () => {
     const options = [];
@@ -223,6 +226,8 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                       width={440}
                     />
                   </Watermarked>
+                ) : isLandDeedsCollection(listing.nftAddress) ? (
+                  <RdLand nftId={listing.nftId} boxSize={izanamiImageSize ?? 368} />
                 ) : (
                   <AnyMedia
                     image={nftCardUrl(listing.nftAddress, listing.nft.image)}
