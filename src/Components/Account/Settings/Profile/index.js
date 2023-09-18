@@ -12,7 +12,7 @@ import useUpdateSettings from '../hooks/useUpdateSettings';
 import useResendEmailVerification from '../hooks/useResendEmailVerification'
 
 import Banner from './Banner';
-import Bio from './Bio';
+import Bio from '../../../../components-v2/feature/account/settings/fields';
 import Form from './Form';
 import Pfp from './Pfp';
 import useGetSettings from '../hooks/useGetSettings';

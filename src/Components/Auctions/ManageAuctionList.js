@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import {BigNumber, constants, ethers} from 'ethers';
-import AuctionContract from '../../Contracts/DegenAuction.json';
-import { sortAndFetchAuctions } from '@src/core/api';
+import React, {useEffect, useState} from 'react';
+import {BigNumber} from 'ethers';
+import {sortAndFetchAuctions} from '@src/core/api';
 import Clock from '../components/Clock';
 import Link from 'next/link';
-import { auctionState } from '@src/core/api/enums';
-import { Auction } from '@src/core/models/auction';
-import { commify } from 'ethers/lib/utils';
-import {Form} from "react-bootstrap";
+import {auctionState} from '@src/core/api/enums';
+import {Auction} from '@src/core/models/auction';
+import {commify} from 'ethers/lib/utils';
 import {
   caseInsensitiveCompare,
   createSuccessfulTransactionToastContent,
@@ -19,7 +17,7 @@ import {toast} from "react-toastify";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {appConfig} from "@src/Config";
-import {Spinner} from "@chakra-ui/react";
+import {Input, Spinner} from "@chakra-ui/react";
 
 const config = appConfig();
 
@@ -285,9 +283,8 @@ const ManageAuctionList = () => {
             <div className="heading mt-3">
               <p>Run Time (in seconds)</p>
               <div className="subtotal">
-                <Form.Control
+                <Input
                   className="mb-0"
-                  type="text"
                   placeholder="Enter Bid"
                   onChange={handleChangeRunTime}
                   onKeyDown={(e) => {

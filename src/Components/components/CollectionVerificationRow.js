@@ -1,9 +1,9 @@
-import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAddressCard, faLock, faUserShield} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import kycPartners from '../../core/data/kyc-partners.json';
 import {faCreativeCommons} from "@fortawesome/free-brands-svg-icons";
+import {Box, Icon, Tooltip} from "@chakra-ui/react";
 
 export const CollectionVerificationRow = ({doxx, kyc, escrow, creativeCommons, center = false}) => {
 
@@ -33,48 +33,32 @@ export const CollectionVerificationRow = ({doxx, kyc, escrow, creativeCommons, c
   return (
     <div className={`d-flex ${center ? 'justify-content-center' : ''}`}>
       {(doxx === true || doxx === 'public') && (
-        <OverlayTrigger
-          placement="top"
-          delay={{ show: 100, hide: 100 }}
-          overlay={(props) => renderTooltip(props, doxxStatus())}
-        >
-          <div className="eb-de_countdown text-center" style={{width: '100px'}}>
-            <FontAwesomeIcon icon={faAddressCard} /> Doxxed
-          </div>
-        </OverlayTrigger>
+        <Tooltip hasArrow label={doxxStatus()} bg='gray.300' color='black'>
+          <Box w='100px' className="eb-de_countdown text-center">
+            <Icon as={FontAwesomeIcon} icon={faAddressCard} /> Doxxed
+          </Box>
+        </Tooltip>
       )}
       {kyc && (
-        <OverlayTrigger
-          placement="top"
-          delay={{ show: 100, hide: 100 }}
-          overlay={(props) => renderTooltip(props, kycStatus())}
-        >
-          <div className="eb-de_countdown text-center" style={{width: '100px'}}>
-            <FontAwesomeIcon icon={faUserShield} /> KYC
-          </div>
-        </OverlayTrigger>
+        <Tooltip hasArrow label={kycStatus()} bg='gray.300' color='black'>
+          <Box w='100px' className="eb-de_countdown text-center">
+            <Icon as={FontAwesomeIcon} icon={faUserShield} /> KYC
+          </Box>
+        </Tooltip>
       )}
       {escrow && (
-        <OverlayTrigger
-          placement="top"
-          delay={{ show: 100, hide: 100 }}
-          overlay={(props) => renderTooltip(props, 'Funds are held by Ebisu\'s Bay until roadmap milestones are met')}
-        >
-          <div className="eb-de_countdown text-center" style={{width: '100px'}}>
-            <FontAwesomeIcon icon={faLock} /> Escrow
-          </div>
-        </OverlayTrigger>
+        <Tooltip hasArrow label="Funds are held by Ebisu\'s Bay until roadmap milestones are met" bg='gray.300' color='black'>
+          <Box w='100px' className="eb-de_countdown text-center">
+            <Icon as={FontAwesomeIcon} icon={faLock} /> Escrow
+          </Box>
+        </Tooltip>
       )}
       {creativeCommons && (
-        <OverlayTrigger
-          placement="top"
-          delay={{ show: 100, hide: 100 }}
-          overlay={(props) => renderTooltip(props, 'Images for this collection are under the Creative Commons (CC0) license')}
-        >
-          <div className="eb-de_countdown text-center" style={{width: '100px'}}>
-            <FontAwesomeIcon icon={faCreativeCommons} /> CC0
-          </div>
-        </OverlayTrigger>
+        <Tooltip hasArrow label='Images for this collection are under the Creative Commons (CC0) license' bg='gray.300' color='black'>
+          <Box w='100px' className="eb-de_countdown text-center">
+            <Icon as={FontAwesomeIcon} icon={faCreativeCommons} /> CC0
+          </Box>
+        </Tooltip>
       )}
     </div>
   )
