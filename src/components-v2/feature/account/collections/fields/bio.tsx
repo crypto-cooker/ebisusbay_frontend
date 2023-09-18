@@ -22,9 +22,9 @@ export default function Bio({ value, handleChange, error }:  BioProps) {
             name="collectionInfo.description"
             className="mb-0"
           />
+          <FormHelperText className="field-description text-muted">Max 100 characters</FormHelperText>
+          <FormErrorMessage>{error}</FormErrorMessage>
         </FormControl>
-        <FormHelperText className="field-description text-muted">Max 100 characters</FormHelperText>
-        <FormErrorMessage>{error}</FormErrorMessage>
       </Box>
     </Box>
   );
