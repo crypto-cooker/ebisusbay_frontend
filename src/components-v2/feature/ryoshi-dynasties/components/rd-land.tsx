@@ -1,7 +1,8 @@
-import {Box, Image} from "@chakra-ui/react";
-import ImageService from "@src/core/services/image";
-import React, {useEffect, useState} from "react";
+import {Flex, Image} from "@chakra-ui/react";
+import React, {memo, useEffect, useRef, useState} from "react";
 import landsMetadata from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-metadata.json";
+import {ResponsiveValue} from "@chakra-ui/styled-system";
+import * as CSS from "csstype";
 
 interface NFTMetaData{
   image : string;
@@ -16,9 +17,11 @@ interface Attribute{
 interface RdLandProps {
   nftId: string;
   boxSize: number;
+  forceBoxSize?: boolean;
+  rounded?: ResponsiveValue<CSS.Property.BorderRadius>
 }
 
-const RdLand = ({nftId, boxSize}: RdLandProps) => {
+const RdLand = ({nftId, boxSize, forceBoxSize, rounded}: RdLandProps) => {
 
   const [landTypeRef, setLandTypeRef] = useState<any>(null);
   const [landsBaseRef, setLandsBaseRef] = useState<any>(null);
@@ -33,6 +36,7 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
   const [westImageRef, setWestImageRef] = useState<any>(null);
   const [waterSourceRef, setWaterSourceRef] = useState<any>(null);
   const [legendaryRef, setLegendaryRef] = useState<any>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const mainFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/'
   const rockFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/ROCKS/'
@@ -101,7 +105,6 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
     console.log("broken")
     return "broken";
   }
-
   const GenerateLandPNG = (nftId : string) => {
     let nft : NFTMetaData = landsMetadata.finalMetadata.find((nft) => nft.id == nftId) as NFTMetaData;
     let isCliffs = IsCliffs(nft.attributes);
@@ -140,10 +143,31 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
   },[nftId])
 
   useEffect(() => {
-    if(boxSize){
-      setSize(boxSize)
+    // if(boxSize){
+    //   setSize(boxSize)
+    // }
+  },[boxSize]) 
+
+
+  useEffect(() => {
+    function handleResize(){
+      // console.log('resized to: ', window.innerWidth, 'x', window.innerHeight)
+      if(!ref.current) return;
+      setSize(ref.current.offsetWidth===0?boxSize:ref.current.offsetWidth);
     }
-  },[boxSize])
+    window.addEventListener('resize', handleResize)
+  })
+
+  useEffect(() => {
+    // console.log('size', size);
+    if(!ref.current) return;
+    setSize(ref.current.offsetWidth===0?boxSize:ref.current.offsetWidth);
+
+    if(forceBoxSize){
+      ref.current.style.width = boxSize + 'px';
+    }
+
+  }, [size, ref.current])
 
   const GetMarginLeft = (directional:string) => {
     switch(landType){
@@ -220,22 +244,18 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
     }
   }
   return (
-
-    <Box
-    outline='4px #4c4859 solid'
-    w={size}
-    h={size}
-    borderRadius='20px'
+    <>
+    <Flex
+      ref={ref}
+      h={size}
+      // minW={size}
+      // borderRadius='20px'
+      rounded={rounded}
     >
+  
+    <Image h={size} w={size}  position={'absolute'} src={landsBackgroundRef} rounded={rounded} zIndex={0}/>
+    {/* <Text zIndex={3} position={'absolute'} >{size}</Text> */}
 
-    <Box
-    bg='black'
-    w={size}
-    h={size}
-    zIndex={20}
-    borderRadius='20px'
-    >
-    <Image h={size} position={'absolute'} src={ImageService.translate(landsBackgroundRef).fixedWidth(2000, 2000)} borderRadius='20px' zIndex={0}/>
     <Image h={size} position={'absolute'} src={landsBaseRef} zIndex={0}/>
     <Image h={size} position={'absolute'} src={landTypeRef} zIndex={1}/>
     <Image h={size} position={'absolute'} src={legendaryRef} zIndex={2}/>
@@ -266,9 +286,9 @@ const RdLand = ({nftId, boxSize}: RdLandProps) => {
 
     <Image h={size} position={'absolute'} src={pathsImageRef} zIndex={3}/>
     <Image h={size} position={'absolute'} src={waterSourceRef} zIndex={3}/>
-    </Box>
-</Box>
+    </Flex> 
+    </>
   )
 }
 
-export default RdLand;
+export default memo(RdLand);
