@@ -152,8 +152,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     DelayedOpen('Bank');
   }
   const OpenBattleMap = () => {
-    setElementToZoomTo('Battle Map');
-    DelayedOpen('Battle Map');
+    handleSceneChange('battleMap');
   }
   function timeout(delay: number) {
     return new Promise( res => setTimeout(res, delay) );
@@ -172,7 +171,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     } else if(thingToOpen == 'Bank') {
       onChange('bank');
     } else if(thingToOpen == 'Battle Map') {
-      handleSceneChange('battleMap');
+      onChange('battleMap');
     }
   }
 
@@ -519,6 +518,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
   const { isOpen: isResetModalOpen, onOpen: onOpenResetModal, onClose: onCloseResetModal } = useDisclosure();
+
   const handleSceneChange = useCallback((area: string) => {
     if (area === 'battleMap') {
       const blockableStates = [RdGameState.IN_MAINTENANCE, RdGameState.NOT_STARTED];
@@ -530,6 +530,9 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         onOpenResetModal();
         return;
       }
+      // console.log('not blocked');
+      setElementToZoomTo('Battle Map');
+      DelayedOpen('Battle Map');
     }
 
     if (area === 'barracks') {
@@ -538,7 +541,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       return;
     }
 
-    onChange(area);
+    
+    
   }, [rdGameContext]);
 
   const item = {
