@@ -393,7 +393,7 @@ const CurrentFaction = () => {
             <Box bg='#564D4A' p={2} rounded='lg' w='full'>
                 <SimpleGrid columns={2}>
                   <VStack align='start' spacing={0} my='auto'>
-                    <Text fontSize='sm'>Current Season</Text>
+                    <Text fontSize='sm'>Current Season (2)</Text>
                     <Text fontSize='lg' fontWeight='bold'>{!!rdContext.user.season.faction ? 'Registered' : 'Unregistered'}</Text>
                   </VStack>
                   {!rdContext.user.season.faction && (
@@ -413,32 +413,6 @@ const CurrentFaction = () => {
                   </Box>
                 )}
               </Box>
-              <Box bg='#564D4A' p={2} rounded='lg' w='full'>
-              <SimpleGrid columns={2}>
-                <VStack align='start' spacing={0} my='auto'>
-                  <Text fontSize='sm' align='start'>Preregister For Season 2</Text>
-                  <Text fontSize='lg' fontWeight='bold'>{isRegisteredNextSeason ? 'Registered' : 'Unregistered'}</Text>
-                </VStack>
-                {!isRegisteredNextSeason && (
-                  <RdButton
-                    hoverIcon={false}
-                    onClick={() => handleRegister(2)}
-                    isLoading={isExecutingRegister}
-                    isDisabled={isExecutingRegister}
-                  >
-                    Register
-                  </RdButton>
-                )}
-              </SimpleGrid>
-              <Box textAlign='start' mt={2} fontSize='sm'>
-                <Text>Cost: 1500 FRTN + 1500 Mitama</Text>
-              </Box>
-              {!rdContext.user.season.faction && (
-                <Box textAlign='start' mt={2} fontSize='sm'>
-                  <Text>Regular Cost: {commify(rdContext.config.factions.registration.fortuneCost)} Fortune + {rdContext.config.factions.registration.mitamaCost} Troops</Text>
-                </Box>
-              )}
-            </Box>
             </>
               )}
             </VStack>
