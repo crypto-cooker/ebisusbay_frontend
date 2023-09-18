@@ -343,6 +343,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
 
   const userTheme = useAppSelector((state) => state.user.theme);
   const customStyles = {
+    menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
     option: (base: any, state: any) => ({
       ...base,
       background: getTheme(userTheme).colors.bgColor2,
@@ -486,6 +487,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                               disabled={showConfirmButton || executingCreateListing}
                             />
                             <ReactSelect
+                              menuPortalTarget={document.body} menuPosition={'fixed'}
                               styles={customStyles}
                               options={allowedCurrencies}
                               formatOptionLabel={({ name, image }) => (
@@ -549,7 +551,6 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                                   maxWidth: '54px',
                                   visibility: expirationDate.type === 'dropdown' ? 'visible' : 'hidden',
                                 }}
-                                className="input"
                                 type="datetime-local"
                                 onChange={handleExpirationDateChange}
                               />
