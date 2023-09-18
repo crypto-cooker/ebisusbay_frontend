@@ -313,7 +313,7 @@ export async function getOwners(blockNumber) {
       if(!blockNumber) {
         data = await getSubgraphData(SUBGRAPH, query, {}, "erc721Tokens");
       } else {
-        console.log("blockNumber", blockNumber)
+        // console.log("blockNumber", blockNumber)
         data = await getSubgraphData(SUBGRAPH, queryBlockNumber, {}, "erc721Tokens");
       }
       if (data) {
