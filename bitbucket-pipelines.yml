@@ -69,6 +69,7 @@ pipelines:
   custom:
     when-shit-hits-the-fan-prod:
       - stage:
+          name: Build & deploy
           deployment: Production
           steps:
             - step: *test
