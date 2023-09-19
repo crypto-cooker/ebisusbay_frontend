@@ -15,7 +15,6 @@ import {
 } from '@src/utils';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
-import {listingUpdated} from '@src/GlobalState/listingSlice';
 import {listingState} from '@src/core/api/enums';
 import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
 import Button from "@src/Components/components/Button";
@@ -49,6 +48,7 @@ import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {commify} from "ethers/lib/utils";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 
@@ -114,25 +114,9 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     if (user.address) {
       try {
         const receipt = await fn((user.contractService! as ContractService).market);
-        dispatch(
-          listingUpdated({
-            listing: {
-              ...listing,
-              state: 1,
-              purchaser: user.address,
-            },
-          })
-        );
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       } catch (error: any) {
-        if (error.data) {
-          toast.error(error.data.message);
-        } else if (error.message) {
-          toast.error(error.message);
-        } else {
-          console.log(error);
-          toast.error('Unknown Error');
-        }
+        toast.error(parseErrorMessage(error));
       }
     } else {
       if (user.needsOnboard) {
