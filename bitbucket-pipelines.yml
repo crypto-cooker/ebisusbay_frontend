@@ -67,6 +67,65 @@ definitions:
           - node_modules/**
 pipelines:
   custom:
+    when-shit-hits-the-fan-prod:
+      - step: *test
+      - step:
+          name: Build
+          image: node:18
+          deployment: ProductionBuildStep
+          runs-on:
+            - 'self.hosted'
+            - 'linux'
+            - 'web'
+          script:
+            - *update
+            - *upgradenpm
+            - *version
+            # Build frontend
+            - *build
+          artifacts:
+            - .next/**
+      - step:
+          name: Upload to S3
+          image: amazon/aws-cli
+          runs-on:
+            - 'self.hosted'
+            - 'linux'
+            - 'web'
+          # Copy RPC config to Admin S3 Bucket
+          script:
+            - aws s3 cp ./src/Assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
+      - step:
+          name: Build containers
+          image: amazon/aws-cli
+          deployment: Production
+          services:
+            - docker
+          runs-on:
+            - 'self.hosted'
+            - 'linux'
+            - 'web'
+          script:
+            # Install and configure Docker Buildx
+            - *buildx
+            # Login to ECR
+            - *ecrlogin
+            # Build container images and push to ECR repositorys and push to ECR repository
+            - *appcontainer
+            - *proxywebcontainer
+      - step:
+         name: Deploy
+         image: alpine:latest
+         runs-on:
+           - 'self.hosted'
+           - 'linux'
+           - 'web'
+         clone:
+           enabled: false
+         script:
+           # deploy prod-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.com
+           - apk add --no-cache curl
+           - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"type\":\"pipeline_ref_target\",\"ref_type\":\"branch\",\"ref_name\":\"prod\",\"selector\":{\"type\":\"custom\",\"pattern\":\"fast_hotfix_deployment_prod\"}}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     deploy-to-testnet:
       - step: *test
       - step:
