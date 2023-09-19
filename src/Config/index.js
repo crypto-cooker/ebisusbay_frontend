@@ -286,6 +286,13 @@ export const configData = {
           '0x5c18d5eb211203eb80b591aa71a269b1e16e9eba': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Ballies: The Gear v2
           '0x50f5d303103E55ECfe67333060361c90cC8B2D14': ['cro', 'frtn'], // Possessed Chests
           '0xE1049178296ce004996AFb16B0816c5A95aC8482': ['cro', 'frtn', 'candy'], // Bored Candy
+          '0x28238122BECBE1D727F2D23631eD83d6cbe833Bc': ['cro', 'frtn'], // Dr Dao
+          '0x1C7F4fE849e52B013242CDCb0C88f6A3c2Ea28aF': ['cro', 'frtn'], // Daolist Pass 3D
+          '0x44aa4cB2efF7167A306449EDe9b550e57Ca33036': ['cro', 'frtn'], // AI Labs
+          '0x51eaf8c081Cca683A5542c438f9429CE46D238e4': ['cro', 'frtn'], // AI Experiments
+          '0x72c97F79867219381EFA83127534710D559a2220': ['cro', 'frtn'], // Dr Dao X Mutant
+          '0xe0160145ec09f98fb3Dbc03b2b5da08D16871e3f': ['cro', 'frtn'], // Ghost OG
+          '0x21037397bDA5CF87c17b5Ec7A07f6935B6c6EA65': ['cro', 'frtn'], // Ultimate Mutants
         }
       }
     }
