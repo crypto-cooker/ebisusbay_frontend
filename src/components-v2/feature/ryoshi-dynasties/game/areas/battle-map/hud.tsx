@@ -107,10 +107,18 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   const startTroopTimer = (e:any) => {
     let { total, hours, days, minutes, seconds } = getTimeRemaining(e);
       if (total >= 0) {
-        setTroopTimer(
+        if(hours > 0){
+          setTroopTimer(
+            (hours) + ':' +
             (minutes > 9 ? minutes : '0' + minutes) + ':' +
             (seconds > 9 ? seconds : '0' + seconds)
-        )
+          )
+        } else {
+          setTroopTimer(
+            (minutes > 9 ? minutes : '0' + minutes) + ':' +
+            (seconds > 9 ? seconds : '0' + seconds)
+          )
+        }
     }else {
       setTroopTimer('');
     }
