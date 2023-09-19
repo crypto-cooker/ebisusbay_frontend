@@ -1,22 +1,6 @@
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Flex,
-  HStack,
-  Image,
-  Progress,
-  SimpleGrid,
-  Spacer,
-  Stack,
-  Text,
-  Avatar
-} from "@chakra-ui/react";
+import {Avatar, Box, Flex, HStack, Image, Progress, SimpleGrid, Spacer, Text} from "@chakra-ui/react";
 import RdButton from "../../../components/rd-button";
-import React, {useEffect, useRef, useState, useContext, Attributes} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import NextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import {Contract, ethers} from "ethers";
@@ -25,14 +9,13 @@ import {round, shortAddress, siPrefixedNumber} from "@src/utils";
 import ImageService from "@src/core/services/image";
 // import {getAuthSignerInStorage} from "@src/helpers/storage";
 // import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {appConfig} from "@src/Config";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBuilding, faClipboardList, faBlog} from "@fortawesome/free-solid-svg-icons";
+import {faBuilding, faClipboardList} from "@fortawesome/free-solid-svg-icons";
 
 import {ERC1155} from "@src/Contracts/Abis";
 
@@ -132,7 +115,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     }
   };
   
-  const reputationDict = [
+  const xpLevelMaxs = [
     { max: 100, value: 0},
     { max: 500, value: 1},
     { max: 1500, value: 2},
@@ -145,9 +128,9 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     { max: 140000, value: 9},
     { max: 9999999, value: 10},
   ]
-  const GetReputationLevel = (reputation: number) => {
+  const getXpLevel = (reputation: number) => {
     let level = 0;
-    reputationDict.forEach((item) => {
+    xpLevelMaxs.forEach((item) => {
       if (reputation >= item.max) {
         level = item.value;
       }
@@ -159,8 +142,9 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     if (!rdUser) return;
 
     const currentExp = rdUser.experience.points;
-    const currentLevelStart = reputationDict[GetReputationLevel(rdUser.experience.points)].max;
-    const currentLevelEnd = reputationDict[GetReputationLevel(rdUser.experience.points) + 1].max;
+    const xpLevel = getXpLevel(rdUser.experience.points);
+    const currentLevelStart = xpLevel > 0 ? xpLevelMaxs[xpLevel-1].max : 0;
+    const currentLevelEnd = xpLevelMaxs[xpLevel].max;
     const currentLevelProgress = (currentExp - currentLevelStart) / (currentLevelEnd - currentLevelStart);
 
     setPlayerLevel(rdUser.experience.level);
@@ -199,15 +183,16 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
   return (
     <Box position='absolute' top={0} left={0} p={4} pointerEvents='none' w='100%'>
       <Flex justifyContent='space-between' w='100%'>
-        <SimpleGrid spacing={2}
-        paddingLeft={3}
-        paddingRight={3}
-        paddingTop={3}
-        paddingBottom={1}
-        rounded='md'
-        bg='linear-gradient(to left, #272523EE, #151418 )' 
+        <SimpleGrid
+          spacing={2}
+          paddingLeft={3}
+          paddingRight={3}
+          paddingTop={3}
+          paddingBottom={1}
+          rounded='md'
+          bg='linear-gradient(to left, #272523EE, #151418 )'
         >
-          <HStack spacing={1} >
+          <HStack spacing={1}>
             <Avatar 
               size='md'
               src={user.profile.profilePicture ? ImageService.translate(user.profile.profilePicture).avatar() : undefined}
@@ -230,13 +215,15 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             </RdButton>
           </HStack>
 
-          <Flex mt={-2} justifyContent={'space-between'}  w={{base: '200px', sm: '210px'}}>
-            <Text 
-            maxW={{base: '150px', sm: '150px'}}
-            isTruncated
+          <Flex mt={2} justifyContent={'space-between'}  w={{base: '200px', sm: '210px'}}>
+            <Text
+              maxW={{base: '150px', sm: '150px'}}
+              isTruncated
               fontSize={{base: '12', sm: '14'}} 
               as={'b'}
-              color='white'>{username()}
+              color='white'
+            >
+              {username()}
             </Text>
             <Text 
               fontSize={{base: '12', sm: '14'}} 
@@ -245,7 +232,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             </Text>
           </Flex>
           <Progress mt={-2} w={{base: '200px', sm: '210px'}}
-            colorScheme='ryoshiDynasties' size='md' value={currentLevelProgress} 
+            colorScheme='ryoshiDynasties' size='md' value={currentLevelProgress}
           />
           <CurrencyDisplay2
             isLoading={isLoading}
