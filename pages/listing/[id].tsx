@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
-import {getListing} from "@src/core/api";
 import {GetServerSidePropsContext} from "next";
+import {ApiService} from "@src/core/services/api-service";
 
 
 const Listing = () => {
@@ -8,19 +8,23 @@ const Listing = () => {
 };
 
 export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
-
   if (!query.id) {
     return {
       notFound: true
     }
   }
-  let listing = await getListing(query.id);
 
-  if (!listing) {
+  let listings = await ApiService.withKey(process.env.EB_API_KEY as string).getListings({
+    listingId: [query.id as string]
+  });
+
+  if (listings.data.length < 1) {
     return {
       notFound: true
     }
   }
+
+  const listing = listings.data[0];
 
   return {
     redirect: {
