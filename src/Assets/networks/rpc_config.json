@@ -23594,6 +23594,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Trusted Founder Edition",
+      "slug": "trusted-founder-edition",
+      "multiToken": false,
+      "address": "0xC8E1932e829804C1358310191516e2a329416cd3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This founding member case will receive a 1:1 airdrop of all future collections of our \"Trusted ecosystem\"",
+        "avatar": "/img/collections/trusted-founder-edition/avatar.webp",
+        "card": "/img/collections/trusted-founder-edition/card.webp",
+        "banner": "/img/collections/trusted-founder-edition/banner.webp",
+        "website": "https://cronossteakhouse.com/launchpad/trusted",
+        "twitter": "https://www.twitter.com/CroShop_Trade",
+        "discord": "https://discord.gg/S6TzckDQtz",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
