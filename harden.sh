@@ -31,9 +31,9 @@ while IFS=: read -r username _; do passwd -l "$username"; done < /etc/passwd || 
 find /bin /etc /lib /usr -xdev -type f -regex '.*-$' -exec rm -f {} +
 
 # Ensure system dirs are owned by root and not writable by anybody else.
-find /bin /etc /lib /usr -path /usr/src/app/apminsightdata -prune -o -print -xdev -type d \
-  -exec chown root:root {} \; \
-  -exec chmod 0755 {} \;
+# find /bin /etc /lib /usr -path /usr/src/app/apminsightdata -prune -o -print -xdev -type d \
+#   -exec chown root:root {} \; \
+#   -exec chmod 0755 {} \;
 
 # Remove suid & sgid files
 find /bin /etc /lib /usr -xdev -type f -a \( -perm /4000 -o -perm /2000 \) -delete
