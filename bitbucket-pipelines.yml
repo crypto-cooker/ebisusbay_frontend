@@ -39,9 +39,9 @@ definitions:
   proxy_container_build: &proxy_container_build
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
-    docker buildx build --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f proxy/Dockerfile ./proxy
+    docker buildx build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f proxy/Dockerfile ./proxy
   container_build: &container_build
-    docker buildx build --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
+    docker buildx build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
 
 pipelines:
   custom:
@@ -57,6 +57,9 @@ pipelines:
                   - 'self.hosted'
                   - 'linux'
                   - 'web'
+                caches:
+                  - node
+                  - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -79,6 +82,7 @@ pipelines:
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./src/Assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
                   # Build current/latest container image
+                  - export DOCKER_BUILDKIT=1
                   - *container_build
                   - *proxy_container_build
             - step:
@@ -106,6 +110,9 @@ pipelines:
                   - 'self.hosted'
                   - 'linux'
                   - 'web'
+                caches:
+                  - node
+                  - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -128,6 +135,7 @@ pipelines:
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
                   # Build current/latest container image
+                  - export DOCKER_BUILDKIT=1
                   - *container_build
                   - *proxy_container_build
             - step:
@@ -142,7 +150,7 @@ pipelines:
                 script:
                   # deploy sandbox-ebisusbay-web-amd64-us-east-1 / sandboxapp.ebisusbay.biz
                   - apk add --no-cache curl
-                  - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"sandbox\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
+                  # - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"sandbox\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     when-shit-hits-the-fan-prod:
       - stage:
           name: Build & deploy
@@ -155,6 +163,9 @@ pipelines:
                   - 'self.hosted'
                   - 'linux'
                   - 'web'
+                caches:
+                  - node
+                  - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -177,6 +188,7 @@ pipelines:
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./src/Assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
                   # Build current/latest container image
+                  - export DOCKER_BUILDKIT=1
                   - *container_build
                   - *proxy_container_build
             - step:
@@ -205,6 +217,9 @@ pipelines:
                   - 'self.hosted'
                   - 'linux'
                   - 'web'
+                caches:
+                  - node
+                  - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -227,6 +242,7 @@ pipelines:
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
                   # Build current/latest container image
+                  - export DOCKER_BUILDKIT=1
                   - *container_build
                   - *proxy_container_build
             - step:
@@ -254,6 +270,9 @@ pipelines:
                   - 'self.hosted'
                   - 'linux'
                   - 'web'
+                caches:
+                  - node
+                  - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -276,6 +295,7 @@ pipelines:
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./src/Assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
                   # Build current/latest container image
+                  - export DOCKER_BUILDKIT=1
                   - *container_build
                   - *proxy_container_build
             - step:
