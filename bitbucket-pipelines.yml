@@ -86,16 +86,6 @@ pipelines:
           artifacts:
             - .next/**
       - step:
-          name: Upload to S3
-          image: amazon/aws-cli
-          runs-on:
-            - 'self.hosted'
-            - 'linux'
-            - 'web'
-          # Copy RPC config to Admin S3 Bucket
-          script:
-            - aws s3 cp ./src/Assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
-      - step:
           name: Build containers
           image: amazon/aws-cli
           deployment: Production
@@ -110,6 +100,8 @@ pipelines:
             - *buildx
             # Login to ECR
             - *ecrlogin
+            # Copy RPC config to Admin S3 Bucket
+            - aws s3 cp ./src/Assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
             # Build container images and push to ECR repositorys and push to ECR repository
             - *appcontainer
             - *proxywebcontainer
@@ -147,18 +139,6 @@ pipelines:
           artifacts:
             - .next/**
       - step:
-          name: Upload to S3
-          image: amazon/aws-cli
-          runs-on:
-            - 'self.hosted'
-            - 'linux'
-            - 'web'
-          artifacts:
-            download: false
-          # Copy RPC config to Admin S3 Bucket
-          script:
-            - aws s3 cp ./src/Assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
-      - step:
           name: Build containers
           image: amazon/aws-cli
           deployment: Testnet
@@ -173,6 +153,8 @@ pipelines:
             - *buildx
             # Login to ECR
             - *ecrlogin
+            # Copy RPC config to Admin S3 Bucket
+            - aws s3 cp ./src/Assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
             # Build container images and push to ECR repositorys and push to ECR repository
             - *appcontainer
             - *proxywebcontainer
@@ -191,71 +173,6 @@ pipelines:
             # deploy test-ebisusbay-web-amd64-us-east-1 / testapp.ebisusbay.biz
             - apk add --no-cache curl
             - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
-    deploy-to-testnet-with-arm:
-      - step: *testarm
-      - step:
-          name: Build
-          image: node:18
-          deployment: TestnetBuildStep
-          runs-on:
-            - 'self.hosted'
-            - 'linux.arm64'
-            - 'web'
-          script:
-            - *update
-            - *upgradenpm
-            - *version
-            # RPC config
-            - cp -p ./src/Assets/networks/rpc_config_testnet.json ./src/Assets/networks/rpc_config.json
-            # Build frontend
-            - *build
-          artifacts:
-            - .next/**
-      - step:
-          name: Upload to S3
-          image: amazon/aws-cli
-          runs-on:
-            - 'self.hosted'
-            - 'linux.arm64'
-            - 'web'
-          artifacts:
-            download: false
-          # Copy RPC config to Admin S3 Bucket
-          script:
-            - aws s3 cp ./src/Assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
-      - step:
-          name: Build containers
-          image: amazon/aws-cli
-          deployment: Testnet
-          services:
-            - docker
-          runs-on:
-            - 'self.hosted'
-            - 'linux.arm64'
-            - 'web'
-          script:
-            # Install and configure Docker Buildx
-            - *buildx
-            # Login to ECR
-            - *ecrlogin
-            # Build container images and push to ECR repositorys and push to ECR repository
-            - *appcontainerarm
-            - *proxywebcontainerarm
-      - step:
-          name: Deploy
-          image: alpine:latest
-          runs-on:
-            - 'self.hosted'
-            - 'linux.arm64'
-            - 'web'
-          artifacts:
-            download: false
-          clone:
-            enabled: false
-          script:
-            # deploy test-ebisusbay-web-arm64-us-east-1 / testapp.ebisusbay.biz
-            - apk add --no-cache curl
-            - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet-with-arm\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     deploy-to-sandbox:
       - step: *test
       - step:
@@ -277,18 +194,6 @@ pipelines:
           artifacts:
             - .next/**
       - step:
-          name: Upload to S3
-          image: amazon/aws-cli
-          runs-on:
-            - 'self.hosted'
-            - 'linux'
-            - 'web'
-          artifacts:
-            download: false
-          # Copy RPC config to Admin S3 Bucket
-          script:
-            - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
-      - step:
           name: Build containers
           image: amazon/aws-cli
           deployment: Sandbox
@@ -303,6 +208,8 @@ pipelines:
             - *buildx
             # Login to ECR
             - *ecrlogin
+            # Copy RPC config to Admin S3 Bucket
+            - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
             # Build container images and push to ECR repositorys and push to ECR repository
             - *appcontainer
             - *proxywebcontainer
@@ -343,16 +250,6 @@ pipelines:
           artifacts:
             - .next/**
       - step:
-          name: Upload to S3
-          image: amazon/aws-cli
-          runs-on:
-            - 'self.hosted'
-            - 'linux'
-            - 'web'
-          # Copy RPC config to Admin S3 Bucket
-          script:
-            - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
-      - step:
           name: Build containers
           image: amazon/aws-cli
           deployment: Development
@@ -367,6 +264,8 @@ pipelines:
             - *buildx
             # Login to ECR
             - *ecrlogin
+            # Copy RPC config to Admin S3 Bucket
+            - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
             # Build container images and push to ECR repositorys and push to ECR repository
             - *appcontainer
             - *proxywebcontainer
@@ -402,16 +301,6 @@ pipelines:
           artifacts:
             - .next/**
       - step:
-          name: Upload to S3
-          image: amazon/aws-cli
-          runs-on:
-            - 'self.hosted'
-            - 'linux'
-            - 'web'
-          # Copy RPC config to Admin S3 Bucket
-          script:
-            - aws s3 cp ./src/Assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
-      - step:
           name: Build containers
           image: amazon/aws-cli
           deployment: Production
@@ -426,6 +315,8 @@ pipelines:
             - *buildx
             # Login to ECR
             - *ecrlogin
+            # Copy RPC config to Admin S3 Bucket
+            - aws s3 cp ./src/Assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
             # Build container images and push to ECR repositorys and push to ECR repository
             - *appcontainer
             - *proxywebcontainer
