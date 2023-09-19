@@ -10,6 +10,8 @@ definitions:
       # default memory is 1024MB
       memory: 3072
       image: public.ecr.aws/docker/library/docker:dind
+  caches:
+    nextcache: .next/cache
 
   install_tools: &install_tools
     apt-get update &&
@@ -27,31 +29,24 @@ definitions:
     aws ecr get-login-password | docker login --password-stdin --username AWS "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
   app_build: &app_build
     CI=false NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN npm run build
-  docker_buildx: &docker_buildx
-    docker --version &&
-    docker pull docker/buildx-bin:latest &&
-    docker container create --name buildx docker/buildx-bin:latest docker buildx version &&
-    mkdir -p /usr/libexec/docker/cli-plugins/ &&
-    docker container cp buildx:/buildx /usr/libexec/docker/cli-plugins/docker-buildx &&
-    docker run --rm --privileged multiarch/qemu-user-static --reset -p yes &&
-    docker buildx create --use &&
-    docker buildx version
   proxy_container_build: &proxy_container_build
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
-    docker buildx build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f proxy/Dockerfile ./proxy
+    docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} -f proxy/Dockerfile ./proxy &&
+    docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}
   container_build: &container_build
-    docker buildx build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
+    docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile . &&
+    docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}
 
 pipelines:
   custom:
     deploy-to-testnet:
       - stage:
-          name: Build & deploy
+          name: testapp.ebisusbay.biz
           deployment: Testnet
           steps:
             - step:
-                name: Build
+                name: Build & deploy
                 image: public.ecr.aws/docker/library/node:18
                 runs-on:
                   - 'self.hosted'
@@ -59,12 +54,14 @@ pipelines:
                   - 'web'
                 caches:
                   - node
+                  - nextcache
                   - docker
                 script:
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
+                  # Upgrade to latest stable version of npm
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
@@ -75,8 +72,6 @@ pipelines:
                   - cp -p ./src/Assets/networks/rpc_config_testnet.json ./src/Assets/networks/rpc_config.json
                   # Build frontend
                   - *app_build
-                  # Install and configure Docker Buildx
-                  - *docker_buildx
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
@@ -85,26 +80,15 @@ pipelines:
                   - export DOCKER_BUILDKIT=1
                   - *container_build
                   - *proxy_container_build
-            - step:
-                name: Deploy
-                image: alpine:latest
-                runs-on:
-                  - 'self.hosted'
-                  - 'linux'
-                  - 'web'
-                clone:
-                  enabled: false
-                script:
                   # deploy test-ebisusbay-web-amd64-us-east-1 / testapp.ebisusbay.biz
-                  - apk add --no-cache curl
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     deploy-to-sandbox:
       - stage:
-          name: Build & deploy
+          name: sandboxapp.ebisusbay.biz
           deployment: Sandbox
           steps:
             - step:
-                name: Build
+                name: Build & deploy
                 image: public.ecr.aws/docker/library/node:18
                 runs-on:
                   - 'self.hosted'
@@ -112,12 +96,14 @@ pipelines:
                   - 'web'
                 caches:
                   - node
+                  - nextcache
                   - docker
                 script:
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
+                  # Upgrade to latest stable version of npm
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
@@ -128,8 +114,6 @@ pipelines:
                   - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
                   # Build frontend
                   - *app_build
-                  # Install and configure Docker Buildx
-                  - *docker_buildx
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
@@ -138,26 +122,15 @@ pipelines:
                   - export DOCKER_BUILDKIT=1
                   - *container_build
                   - *proxy_container_build
-            - step:
-                name: Deploy
-                image: alpine:latest
-                runs-on:
-                  - 'self.hosted'
-                  - 'linux'
-                  - 'web'
-                clone:
-                  enabled: false
-                script:
                   # deploy sandbox-ebisusbay-web-amd64-us-east-1 / sandboxapp.ebisusbay.biz
-                  - apk add --no-cache curl
-                  # - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"sandbox\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
+                  - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"sandbox\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     when-shit-hits-the-fan-prod:
       - stage:
-          name: Build & deploy
+          name: app.ebisusbay.com
           deployment: Production
           steps:
             - step:
-                name: Build
+                name: Build & deploy
                 image: public.ecr.aws/docker/library/node:18
                 runs-on:
                   - 'self.hosted'
@@ -165,12 +138,14 @@ pipelines:
                   - 'web'
                 caches:
                   - node
+                  - nextcache
                   - docker
                 script:
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
+                  # Upgrade to latest stable version of npm
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
@@ -181,8 +156,6 @@ pipelines:
                   # - cp -p ./src/Assets/networks/rpc_config.json ./src/Assets/networks/rpc_config.json
                   # Build frontend
                   - *app_build
-                  # Install and configure Docker Buildx
-                  - *docker_buildx
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
@@ -191,27 +164,16 @@ pipelines:
                   - export DOCKER_BUILDKIT=1
                   - *container_build
                   - *proxy_container_build
-            - step:
-                name: Deploy
-                image: alpine:latest
-                runs-on:
-                  - 'self.hosted'
-                  - 'linux'
-                  - 'web'
-                clone:
-                  enabled: false
-                script:
                   # deploy prod-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.com
-                  - apk add --no-cache curl
-                  - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"type\":\"pipeline_ref_target\",\"ref_type\":\"branch\",\"ref_name\":\"prod\",\"selector\":{\"type\":\"custom\",\"pattern\":\"fast_hotfix_deployment_prod\"}}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
+                  # - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"type\":\"pipeline_ref_target\",\"ref_type\":\"branch\",\"ref_name\":\"prod\",\"selector\":{\"type\":\"custom\",\"pattern\":\"fast_hotfix_deployment_prod\"}}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
   branches:
     dev:
       - stage:
-          name: Build & deploy
+          name: app.ebisusbay.biz
           deployment: Development
           steps:
             - step:
-                name: Build
+                name: Build & deploy
                 image: public.ecr.aws/docker/library/node:18
                 runs-on:
                   - 'self.hosted'
@@ -219,12 +181,14 @@ pipelines:
                   - 'web'
                 caches:
                   - node
+                  - nextcache
                   - docker
                 script:
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
+                  # Upgrade to latest stable version of npm
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
@@ -235,8 +199,6 @@ pipelines:
                   - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
                   # Build frontend
                   - *app_build
-                  # Install and configure Docker Buildx
-                  - *docker_buildx
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
@@ -245,26 +207,15 @@ pipelines:
                   - export DOCKER_BUILDKIT=1
                   - *container_build
                   - *proxy_container_build
-            - step:
-                name: Deploy
-                image: alpine:latest
-                runs-on:
-                  - 'self.hosted'
-                  - 'linux'
-                  - 'web'
-                clone:
-                  enabled: false
-                script:
                   # deploy dev-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.biz
-                  - apk add --no-cache curl
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"dev\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     prod:
       - stage:
-          name: Build & deploy
+          name: app.ebisusbay.com
           deployment: Production
           steps:
             - step:
-                name: Build
+                name: Build & deploy
                 image: public.ecr.aws/docker/library/node:18
                 runs-on:
                   - 'self.hosted'
@@ -272,12 +223,14 @@ pipelines:
                   - 'web'
                 caches:
                   - node
+                  - nextcache
                   - docker
                 script:
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
+                  # Upgrade to latest stable version of npm
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
@@ -288,8 +241,6 @@ pipelines:
                   # - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
                   # Build frontend
                   - *app_build
-                  # Install and configure Docker Buildx
-                  - *docker_buildx
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
@@ -298,16 +249,5 @@ pipelines:
                   - export DOCKER_BUILDKIT=1
                   - *container_build
                   - *proxy_container_build
-            - step:
-                name: Deploy
-                image: alpine:latest
-                runs-on:
-                  - 'self.hosted'
-                  - 'linux'
-                  - 'web'
-                clone:
-                  enabled: false
-                script:
                   # deploy prod-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.com
-                  - apk add --no-cache curl
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"prod\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
