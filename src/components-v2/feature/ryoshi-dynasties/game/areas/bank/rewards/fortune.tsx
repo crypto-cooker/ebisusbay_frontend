@@ -407,7 +407,7 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
   return (
     <Accordion index={isExpanded ? [0] : undefined} allowToggle>
       <AccordionItem style={{borderWidth:'0'}}>
-        <Flex justify='space-between' mt={2}>
+        <Flex justify='space-between' mt={2} direction={{base: 'column', md: 'row'}}>
           <VStack align='start' spacing={0}>
             <Text fontSize='xl' fontWeight='bold'>
               Current Rewards
@@ -421,12 +421,22 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
               <Text fontSize='sm' color='#aaa'>{round(reward.aprRewards, 3)} staking + {round(reward.listingRewards, 3)} listing rewards</Text>
             )}
           </VStack>
-          <Flex direction='column'>
+          <Flex direction='column' mt={{base: 2, md: 0}}>
             <Spacer />
             <Stack direction={{base: 'column', sm: 'row'}}>
+              <RdButton
+                size='sm'
+                w='full'
+                onClick={onClaim}
+                isLoading={isExecutingClaim}
+                loadingText='Claiming...'
+              >
+                Claim
+              </RdButton>
               {!isExecutingClaim && (
                 <AccordionButton w='full' p={0}>
                   <RdButton
+                    w='full'
                     size='sm'
                     onClick={handleExpandCompound}
                   >
@@ -434,18 +444,6 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
                   </RdButton>
                 </AccordionButton>
               )}
-              <Flex direction='column'>
-                <Spacer />
-                <RdButton
-                  size='sm'
-                  onClick={onClaim}
-                  isLoading={isExecutingClaim}
-                  loadingText='Claiming...'
-                >
-                  Claim
-                </RdButton>
-                <Spacer />
-              </Flex>
             </Stack>
             <Spacer />
           </Flex>
