@@ -1,4 +1,4 @@
-import {Avatar, Box, Flex, HStack, Image, Progress, SimpleGrid, Spacer, Text} from "@chakra-ui/react";
+import {Avatar, Box, Flex, HStack, Image, Progress, SimpleGrid, Spacer, Text, Tooltip, useMediaQuery} from "@chakra-ui/react";
 import RdButton from "../../../components/rd-button";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import NextApiService from "@src/core/services/api-service/next";
@@ -18,6 +18,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBuilding, faClipboardList} from "@fortawesome/free-solid-svg-icons";
 
 import {ERC1155} from "@src/Contracts/Abis";
+import Button from "@src/Components/components/Button";
 
 interface VillageHudProps {
   onOpenBuildings: () => void;
@@ -35,6 +36,9 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
   const[koban, setKoban] = useState<number | string>(0);
   const[fortune, setFortune] = useState<number | string>(0);
   const[mitama, setMitama] = useState<number | string>(0);
+  const[levelProgressString, setLevelProgressString] = useState<string>('0%');
+  const [isLabelOpen, setIsLabelOpen] = useState(false)
+  const isMobile = useMediaQuery("(max-width: 768px)")[0];
 
   const[playerLevel, setPlayerLevel] = useState<number>(0);
   const[currentLevelProgress, setCurrentLevelProgress] = useState<number>(0);
@@ -143,10 +147,11 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
 
     const currentExp = rdUser.experience.points;
     const xpLevel = getXpLevel(rdUser.experience.points);
-    const currentLevelStart = xpLevel > 0 ? xpLevelMaxs[xpLevel-1].max : 0;
-    const currentLevelEnd = xpLevelMaxs[xpLevel].max;
+    const currentLevelStart = xpLevelMaxs[xpLevel].max;
+    const currentLevelEnd = xpLevelMaxs[xpLevel+1].max;
     const currentLevelProgress = (currentExp - currentLevelStart) / (currentLevelEnd - currentLevelStart);
 
+    setLevelProgressString((currentExp - currentLevelStart) +"/" +(currentLevelEnd - currentLevelStart));
     setPlayerLevel(rdUser.experience.level);
     setCurrentLevelProgress(currentLevelProgress * 100);
   };
@@ -179,6 +184,12 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
       getResources();
     }
   }, [user.address, forceRefresh])
+
+  const changeBackground = () => {
+    if(!isMobile) return;
+
+    setIsLabelOpen(!isLabelOpen);
+  }
 
   return (
     <Box position='absolute' top={0} left={0} p={4} pointerEvents='none' w='100%'>
@@ -230,10 +241,27 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
               as={'b'}
               color='white'>Lvl: {playerLevel}
             </Text>
+
           </Flex>
-          <Progress mt={-2} w={{base: '200px', sm: '210px'}}
-            colorScheme='ryoshiDynasties' size='md' value={currentLevelProgress}
-          />
+          <Tooltip 
+            isOpen={isLabelOpen} 
+            label={levelProgressString} 
+            placement='right' 
+            bg='linear-gradient(to left, #272523EE, #151418 )' 
+            textColor={'white'}>
+            <Flex 
+              pointerEvents='auto' 
+              mt={-2} h={'12px'} as={'button'} 
+              onClick={changeBackground} 
+              onMouseEnter={() =>setIsLabelOpen(true)}
+              onMouseLeave={() =>setIsLabelOpen(false)}
+              >
+              <Progress w={{base: '200px', sm: '210px'}}
+                colorScheme='ryoshiDynasties' size='md' value={currentLevelProgress}
+              />
+            </Flex>
+          </Tooltip>
+
           <CurrencyDisplay2
             isLoading={isLoading}
             icon1 ='/img/ryoshi-dynasties/icons/fortune.svg'
