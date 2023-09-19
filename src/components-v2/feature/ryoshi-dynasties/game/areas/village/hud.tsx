@@ -120,22 +120,22 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
   };
   
   const xpLevelMaxs = [
-    { max: 100, value: 0},
-    { max: 500, value: 1},
-    { max: 1500, value: 2},
-    { max: 3500, value: 3},
-    { max: 7000, value: 4},
-    { max: 14000, value: 5},
-    { max: 30000, value: 6},
-    { max: 50000, value: 7},
-    { max: 80000, value: 8},
-    { max: 140000, value: 9},
-    { max: 9999999, value: 10},
+    { min: 0, value: 0},
+    { min: 100, value: 1},
+    { min: 500, value: 2},
+    { min: 1500, value: 3},
+    { min: 3500, value: 4},
+    { min: 7000, value: 5},
+    { min: 14000, value: 6},
+    { min: 30000, value: 7},
+    { min: 50000, value: 8},
+    { min: 80000, value: 9},
+    { min: 140000, value: 10},
   ]
   const getXpLevel = (reputation: number) => {
     let level = 0;
     xpLevelMaxs.forEach((item) => {
-      if (reputation >= item.max) {
+      if (reputation >= item.min) {
         level = item.value;
       }
     })
@@ -146,9 +146,9 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     if (!rdUser) return;
 
     const currentExp = rdUser.experience.points;
-    const xpLevel = getXpLevel(rdUser.experience.points);
-    const currentLevelStart = xpLevelMaxs[xpLevel].max;
-    const currentLevelEnd = xpLevelMaxs[xpLevel+1].max;
+    const xpLevel = getXpLevel(currentExp);
+    const currentLevelStart = xpLevelMaxs[xpLevel].min;
+    const currentLevelEnd = xpLevelMaxs[xpLevel + 1].min;
     const currentLevelProgress = (currentExp - currentLevelStart) / (currentLevelEnd - currentLevelStart);
 
     setLevelProgressString((currentExp - currentLevelStart) +"/" +(currentLevelEnd - currentLevelStart));
