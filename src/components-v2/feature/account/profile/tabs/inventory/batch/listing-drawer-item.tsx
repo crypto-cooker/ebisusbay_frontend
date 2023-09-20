@@ -277,11 +277,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
         const availableCurrencySymbols: CurrencyEntry | undefined = Object.entries(config.listings.currencies.nft)
           .find(([key]) => ciEquals(key, item.nft.nftAddress)) as CurrencyEntry | undefined;
         newExtras.availableCurrencies = currencyOptions.filter(({symbol}: { symbol: string }) => {
-          if (availableCurrencySymbols) {
-            return availableCurrencySymbols[1].includes(symbol.toLowerCase());
-          } else {
-            return config.listings.currencies.global.includes(symbol.toLowerCase())
-          }
+          return availableCurrencySymbols ? availableCurrencySymbols[1].includes(symbol.toLowerCase()) : symbol === 'cro';
         });
 
         setCurrency(newExtras.availableCurrencies[0].symbol);
