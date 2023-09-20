@@ -537,41 +537,20 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                         )}
                       </Flex>
 
-                      <FormControl className="form-field mb-3">
+                      <FormControl
+                        maxW='188px'
+                        className="form-field mb-3"
+                      >
                         <FormLabel w='full' className="formLabel">Expiration Date</FormLabel>
                         <Box style={{ display: 'flex', gap: '8px' }}>
-                          {expirationDate.type === 'dropdown' ? (
-                            <>
-                              <Select
-                                defaultValue={2592000000}
-                                onChange={handleExpirationDateChange}
-                              >
-                                {expirationDatesValues.map((time) => (
-                                  <option value={time.value}>{time.label}</option>
-                                ))}
-                              </Select>
-                              <Input
-                                style={{
-                                  maxWidth: '54px',
-                                  visibility: expirationDate.type === 'dropdown' ? 'visible' : 'hidden',
-                                }}
-                                type="datetime-local"
-                                onChange={handleExpirationDateChange}
-                              />
-                            </>
-                          ) : (
-                            <>
-                              <Input
-                                className="input"
-                                type="text"
-                                value={moment(new Date(expirationDate.value)).format('DD/MM/YYYY HH:mm:ss a')}
-                                disabled
-                              />
-                              <SecondaryButton style={{ maxWidth: '38px', height: '40px' }} className="simple-button" onClick={() => { setExpirationDate({ value: new Date().getTime() + 2592000000, type: 'dropdown' }) }}>
-                                <CloseButton />
-                              </SecondaryButton>
-                            </>
-                          )}
+                          <Select
+                            defaultValue={2592000000}
+                            onChange={handleExpirationDateChange}
+                          >
+                            {expirationDatesValues.map((time) => (
+                              <option value={time.value}>{time.label}</option>
+                            ))}
+                          </Select>
                         </Box>
                       </FormControl>
                     </Box>
