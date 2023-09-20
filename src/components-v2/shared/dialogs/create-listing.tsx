@@ -235,7 +235,11 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         .find(([key]) => ciEquals(key, nftAddress)) as CurrencyEntry | undefined;
 
       const allowed = currencyOptions.filter(({symbol}: { symbol: string }) => {
-        return availableCurrencySymbols ? availableCurrencySymbols[1].includes(symbol.toLowerCase()) : symbol === 'cro';
+        if (availableCurrencySymbols) {
+          return availableCurrencySymbols[1].includes(symbol.toLowerCase());
+        } else {
+          return config.listings.currencies.global.includes(symbol.toLowerCase())
+        }
       });
       setAllowedCurrencies(allowed);
       setSelectedCurrency(allowed[0]);
