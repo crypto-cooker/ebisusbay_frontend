@@ -75,7 +75,7 @@ pipelines:
                 caches:
                   - node
                   - nextcache
-                  - docker
+                  # - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -116,7 +116,7 @@ pipelines:
                 caches:
                   - node
                   - nextcache
-                  - docker
+                  # - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -157,7 +157,7 @@ pipelines:
                 caches:
                   - node
                   - nextcache
-                  - docker
+                  # - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -198,7 +198,7 @@ pipelines:
                 caches:
                   - node
                   - nextcache
-                  - docker
+                  # - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -240,7 +240,7 @@ pipelines:
                 caches:
                   - node
                   - nextcache
-                  - docker
+                  # - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -281,7 +281,7 @@ pipelines:
                 caches:
                   - node
                   - nextcache
-                  - docker
+                  # - docker
                 script:
                   # Install required tools
                   - *install_tools
