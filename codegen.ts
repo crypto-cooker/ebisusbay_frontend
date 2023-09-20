@@ -1,7 +1,10 @@
 import { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
-  schema: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/ryoshi-dynasties',
+  schema: [
+    'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/ryoshi-dynasties',
+    'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/ryoshi-presale',
+  ],
   documents: ['src/**/*.tsx'],
   ignoreNoDocuments: true,
   generates: {

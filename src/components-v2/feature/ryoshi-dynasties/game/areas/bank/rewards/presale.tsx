@@ -4,7 +4,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {Contract, ethers} from "ethers";
 import PresaleVaults from "@src/Contracts/PresaleVaults.json";
@@ -12,20 +12,7 @@ import VestingWallet from "@src/Contracts/VestingWallet.json";
 import {ERC1155, ERC20} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, round} from "@src/utils";
-import {
-  Alert,
-  AlertIcon,
-  Box,
-  Center,
-  Flex,
-  HStack,
-  Image,
-  SimpleGrid,
-  Spacer,
-  Spinner,
-  Stack,
-  Text
-} from "@chakra-ui/react";
+import {Box, Center, Flex, HStack, SimpleGrid, Spacer, Spinner, Stack, Text} from "@chakra-ui/react";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import ImageService from "@src/core/services/image";
 import RdButton from "../../../../components/rd-button";
@@ -33,7 +20,6 @@ import {commify} from "ethers/lib/utils";
 import RdProgressBar from "@src/components-v2/feature/ryoshi-dynasties/components/rd-progress-bar";
 import moment from "moment";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import Link from "next/link";
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {parseErrorMessage} from "@src/helpers/validator";
@@ -47,6 +33,9 @@ const PresaleVaultTab = () => {
   const [executingOpenVault, setExecutingOpenVault] = useState(false);
   const [executingExchangeTellers, setExecutingExchangeTellers] = useState(false);
   const [executingClaimFortune, setExecutingClaimFortune] = useState(false);
+  const [executingReleaseTellers, setExecutingReleaseTellers] = useState(false);
+
+  const queryClient = useQueryClient();
 
   // const { activeStep } = useSteps({
   //   index: 1,
@@ -58,7 +47,7 @@ const PresaleVaultTab = () => {
   // );
 
   const { data, status, error, refetch } = useQuery({
-    queryKey: ['PresaleVault'],
+    queryKey: ['PresaleVault', user.address],
     queryFn: async () => {
       const totalPresaleBalance = await ApiService.withoutKey().ryoshiDynasties.userTotalPurchased(user.address!);
       const isPresaleParticipant = totalPresaleBalance > 0;
@@ -67,11 +56,16 @@ const PresaleVaultTab = () => {
       const hasStarted = Number(await presaleVaultsContract.startTime()) > 0;
       const vaultAddress = await presaleVaultsContract.vaults(user.address);
 
+      let tradedTokens = [];
+      for (let i = 1; i <= 5; i++) {
+        tradedTokens.push(await presaleVaultsContract.tradedTokens(user.address, i));
+      }
+
       let ret = {
         hasVault: false,
         hasStarted,
         vault: {
-          address: null,
+          address: '',
           balance: 0,
           releasable: 0,
           released: 0,
@@ -83,8 +77,27 @@ const PresaleVaultTab = () => {
         vaultBalance: 0,
         vestedAmount: 0,
         isPresaleParticipant,
-        totalPresaleBalance
+        totalPresaleBalance,
+        tradedTokens,
+        tradedTokensTotal: tradedTokens.reduce((sum, num) => sum + Number(num), 0)
       }
+
+      // const presaleVault = await ApiService.withoutKey().ryoshiDynasties.presaleVault(user.address!);
+      // if (!!presaleVault) {
+      //   ret = {
+      //     ...ret,
+      //     hasVault: true,
+      //     vault: {
+      //       address: presaleVault.address,
+      //       balance: Number(ethers.utils.formatEther(presaleVault.currentBalance)),
+      //       releasable: Number(ethers.utils.formatEther(presaleVault.releasedBalance)),
+      //       released: Number(ethers.utils.formatEther(presaleVault.releasedBalance)),
+      //       completionDate: Number(presaleVault.endTime) * 1000,
+      //       start: Number(presaleVault.startTime) * 1000,
+      //       duration: Number(presaleVault.duration) * 1000,
+      //     }
+      //   }
+      // }
 
       if (vaultAddress !== ethers.constants.AddressZero) {
         const vaultAddress = await presaleVaultsContract.vaults(user.address);
@@ -113,9 +126,12 @@ const PresaleVaultTab = () => {
       }
 
       const fortuneTellerCollection = config.collections.find((collection: any) => collection.slug === 'fortuneteller');
-      const fortuneTellers = await ApiService.withoutKey().getWallet(user.address!, {
-        collection: [fortuneTellerCollection.address]
-      })
+      const fortuneTellers = await ApiService.withoutKey().getCollectionItems({
+        address: fortuneTellerCollection.address,
+        sortBy: 'id',
+        direction: 'asc',
+        pageSize: 5
+      });
 
       return {
         ...ret,
@@ -190,6 +206,31 @@ const PresaleVaultTab = () => {
     }
   }, [user, data]);
 
+  const releaseTellers = async () => {
+    setExecutingReleaseTellers(true);
+    try {
+      const tx = await user.contractService!.ryoshiPresaleVaults.retrieveTellers();
+      await tx.wait();
+      toast.success('Fortune Tellers have returned to your wallet!');
+    } finally {
+      setExecutingReleaseTellers(false);
+    }
+  };
+
+  const handleReleaseTellers = useMutation(releaseTellers, {
+    onSuccess: data => {
+      queryClient.setQueryData(['PresaleVault', user.address], (old: any) => ({
+        ...old,
+        tradedTokens: [],
+        tradedTokensTotal: 0
+      }));
+    },
+    onError: error => {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    }
+  });
+
   return (
     <Box>
       <RdModalBox>
@@ -263,74 +304,116 @@ const PresaleVaultTab = () => {
                           </RdButton>
                         </Box>
                       </>
-                    ) : data.fortuneTellers.length > 0 ? (
-                      <Text>You did not participate in the presale. However, you can still trade-in your Fortune Tellers in exchange for bonus Fortune tokens and Fortune Guards.</Text>
                     ) : (
                       <Text>You did not participate in the presale.</Text>
                     )}
                   </Box>
                 )}
               </RdModalBox>
-              {(data.hasVault || !data.isPresaleParticipant) && (
+              {(data.hasVault) && (
                 <RdModalBox mt={2}>
                   <Text fontWeight='bold' fontSize='lg' mb={4}>Fortune Teller Bonus</Text>
-                  <Text>Exchange your Fortune Tellers to receive bonus Fortune tokens and Fortune Guards. These Fortune Guards are the key to minting Heroes.</Text>
-                  <Text mt={2}>Exchanged Fortune Tellers will be returned after 90 days.</Text>
-                  {data.fortuneTellers && data.fortuneTellers.length > 0 ? (
+                  <Text>Season 1 has ended! Users who have exchanged their Fortune Tellers are now able to have them returned. Additional APR opportunities by staking in the <Text as='span' color='#F48F0C' fontWeight='bold'>Bank</Text> may soon be available for these returned Fortune Tellers.</Text>
+                  <Text mt={4}>We thank you for your ongoing support!</Text>
+                  {data.tradedTokensTotal > 0 ? (
                     <Box mt={2}>
                       <Box my={4}><hr /></Box>
                       <Stack justify='space-between' direction={{base: 'column', sm: 'row'}}>
                         <Box mx={{base: 'auto', sm: 'inherit'}} w='full' maxW='180px'>
                           <AnyMedia
-                            image={ImageService.gif(data.fortuneTellers[0].image).fixedWidth(180, 180)}
-                            title={data.fortuneTellers[0].name}
+                            image={ImageService.gif(data.fortuneTellers[data.fortuneTellers.length - 1].image).fixedWidth(180, 180)}
+                            title={data.fortuneTellers[data.fortuneTellers.length - 1].name}
                           />
                         </Box>
                         <Box>
                           <SimpleGrid templateColumns='1fr max-content' gap={2} alignItems='baseline'>
                             <Box fontWeight={'bold'} textAlign='end'>Teller</Box>
-                            <Box fontWeight={'bold'} textAlign='end'>Bonus</Box>
-                            {data.fortuneTellers.map((teller: any) => (
+                            <Box fontWeight={'bold'} textAlign='end'>Amount</Box>
+                            {data.fortuneTellers.map((teller) => (
                               <>
-                                <Box textAlign='end'>{teller.name} (x{teller.balance}):</Box>
-                                <Box textAlign='end'>{commify(teller.balance * rdConfig.presale.bonus[Number(teller.nftId) - 1])}</Box>
+                                <Box textAlign='end'>{teller.name}</Box>
+                                <Box textAlign='end'>{data.tradedTokens[Number(teller.id) - 1].toString()}</Box>
                               </>
                             ))}
                             <Box textAlign='end'>Total:</Box>
                             <Box textAlign='end' fontWeight='bold' fontSize='lg'>
-                              {commify(data.fortuneTellers.reduce((value: number, teller: any) => {
-                                return value + teller.balance * rdConfig.presale.bonus[Number(teller.nftId) - 1];
-                              }, 0))}
+                              {commify(data.tradedTokensTotal)}
                             </Box>
                           </SimpleGrid>
                         </Box>
                       </Stack>
 
-                      {data.fortuneTellers.find((teller: any) => teller.nftId === '3') && (
-                        <Alert status='warning' my={2}>
-                          <AlertIcon />
-                          *Note that Cedric "Ceddy" Biscuitworth is only eligible for the Fortune rewards.
-                        </Alert>
-                      )}
-
                       <Box textAlign='end' mt={2}>
                         <RdButton
                           size='md'
                           hoverIcon={false}
-                          isLoading={executingExchangeTellers}
-                          isDisabled={executingExchangeTellers}
-                          onClick={handleExchangeTellers}
-                          loadingText='Exchanging'
+                          isLoading={executingReleaseTellers}
+                          isDisabled={executingReleaseTellers}
+                          onClick={() => handleReleaseTellers.mutate()}
+                          loadingText='Returning'
                         >
-                          Exchange
+                          Return
                         </RdButton>
                       </Box>
                     </Box>
                   ) : (
-                    <Box mt={4}>
-                      No Fortune Tellers in wallet. Pick some up in the <Link href='/collection/fortuneteller' style={{color: '#F48F0C', fontWeight: 'bold'}}>marketplace</Link>.
-                    </Box>
+                    <Box textAlign='center' mt={6}>No Fortune Tellers found</Box>
                   )}
+                  {/*{data.fortuneTellers && data.fortuneTellers.length > 0 ? (*/}
+                  {/*  <Box mt={2}>*/}
+                  {/*    <Box my={4}><hr /></Box>*/}
+                  {/*    <Stack justify='space-between' direction={{base: 'column', sm: 'row'}}>*/}
+                  {/*      <Box mx={{base: 'auto', sm: 'inherit'}} w='full' maxW='180px'>*/}
+                  {/*        <AnyMedia*/}
+                  {/*          image={ImageService.gif(data.fortuneTellers[0].image).fixedWidth(180, 180)}*/}
+                  {/*          title={data.fortuneTellers[0].name}*/}
+                  {/*        />*/}
+                  {/*      </Box>*/}
+                  {/*      <Box>*/}
+                  {/*        <SimpleGrid templateColumns='1fr max-content' gap={2} alignItems='baseline'>*/}
+                  {/*          <Box fontWeight={'bold'} textAlign='end'>Teller</Box>*/}
+                  {/*          <Box fontWeight={'bold'} textAlign='end'>Bonus</Box>*/}
+                  {/*          {data.fortuneTellers.map((teller: any) => (*/}
+                  {/*            <>*/}
+                  {/*              <Box textAlign='end'>{teller.name} (x{teller.balance}):</Box>*/}
+                  {/*              <Box textAlign='end'>{commify(teller.balance * rdConfig.presale.bonus[Number(teller.nftId) - 1])}</Box>*/}
+                  {/*            </>*/}
+                  {/*          ))}*/}
+                  {/*          <Box textAlign='end'>Total:</Box>*/}
+                  {/*          <Box textAlign='end' fontWeight='bold' fontSize='lg'>*/}
+                  {/*            {commify(data.fortuneTellers.reduce((value: number, teller: any) => {*/}
+                  {/*              return value + teller.balance * rdConfig.presale.bonus[Number(teller.nftId) - 1];*/}
+                  {/*            }, 0))}*/}
+                  {/*          </Box>*/}
+                  {/*        </SimpleGrid>*/}
+                  {/*      </Box>*/}
+                  {/*    </Stack>*/}
+
+                  {/*    {data.fortuneTellers.find((teller: any) => teller.nftId === '3') && (*/}
+                  {/*      <Alert status='warning' my={2}>*/}
+                  {/*        <AlertIcon />*/}
+                  {/*        *Note that Cedric "Ceddy" Biscuitworth is only eligible for the Fortune rewards.*/}
+                  {/*      </Alert>*/}
+                  {/*    )}*/}
+
+                  {/*    <Box textAlign='end' mt={2}>*/}
+                  {/*      <RdButton*/}
+                  {/*        size='md'*/}
+                  {/*        hoverIcon={false}*/}
+                  {/*        isLoading={executingExchangeTellers}*/}
+                  {/*        isDisabled={executingExchangeTellers}*/}
+                  {/*        onClick={handleExchangeTellers}*/}
+                  {/*        loadingText='Exchanging'*/}
+                  {/*      >*/}
+                  {/*        Exchange*/}
+                  {/*      </RdButton>*/}
+                  {/*    </Box>*/}
+                  {/*  </Box>*/}
+                  {/*) : (*/}
+                  {/*  <Box mt={4}>*/}
+                  {/*    No Fortune Tellers in wallet. Pick some up in the <Link href='/collection/fortuneteller' style={{color: '#F48F0C', fontWeight: 'bold'}}>marketplace</Link>.*/}
+                  {/*  </Box>*/}
+                  {/*)}*/}
                 </RdModalBox>
               )}
             </>

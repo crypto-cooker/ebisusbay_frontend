@@ -23,6 +23,7 @@ import {getOwners} from "@src/core/subgraph"
 import {Player, RankPlayers} from "@src/core/poker-rank-players"
 import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
+import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -202,6 +203,10 @@ export class ApiService implements Api {
   async getCollectionTraits(address: string) {
     return await this.mapi.getCollectionTraits(address);
   }
+
+  async getCollections(query?: CollectionInfoQueryParams) {
+    return await this.mapi.getCollections(query);
+  }
 }
 
 class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
@@ -219,6 +224,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async userTotalPurchased(address: string) {
     return this.graph.userTotalPurchased(address);
+  }
+
+  async presaleVault(address: string) {
+    return this.graph.getPresaleVault(address);
   }
 
   async getUserStakedFortune(address: string) {

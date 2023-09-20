@@ -7,7 +7,7 @@ import WalletNft from "@src/core/models/wallet-nft";
 import {Listing} from "@src/core/models/listing";
 import {
     Erc20Account,
-    FortuneStakingAccount,
+    FortuneStakingAccount, PresaleVault,
     StakedToken,
     StakingAccount
 } from "@src/core/services/api-service/graph/types";
@@ -28,6 +28,7 @@ export interface Api {
 export interface RyoshiDynastiesApi {
     globalTotalPurchased(): Promise<number>;
     userTotalPurchased(address: string): Promise<any>;
+    presaleVault(address: string): Promise<PresaleVault | null>
     getUserStakedFortune(address: string): Promise<FortuneStakingAccount | null>;
     getErc20Account(address: string): Promise<Erc20Account | null>;
     getStakedTokens(address: string, type: StakedTokenType): Promise<StakedToken[]>;
