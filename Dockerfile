@@ -6,11 +6,10 @@
 
 FROM node:18-slim
 
-# Update/install packages
+# Allow to cache package downloads (BuildKit cache mount)
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
-RUN --mount=type=cache,target=/var/cache/apt \
-	apt-get update && apt-get install -yqq --no-install-recommends \
-    git curl procps htop net-tools dnsutils dumb-init && rm -rf /var/lib/apt/lists/*
+# Update/install packages
+RUN --mount=type=cache,target=/var/cache/apt apt-get update && apt-get --no-install-recommends install -y git curl procps htop net-tools dnsutils dumb-init
 
 RUN npm install -g npm@latest
 
