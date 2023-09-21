@@ -3,7 +3,7 @@ export interface Hand {
   primaryValue: number;
   handDescription: string;
   secondaryValue: number;
-  secondaryCardEdition?: number;
+  secondaryCardEdition: number;
 }
 export interface Player {
   address: string;
@@ -27,7 +27,6 @@ export const cardValueDict = [
   { max: 3900, value: 13 },//King
   { max: 4000, value: 14 },//Ace
 ]
-
 const BlackListedWallets = [
   "0x358758277ce0785104ea72acadc1de7e7af7aecd",
   "0x0f5a35dd7bbc94734139dc8a145c320d46594404",
@@ -41,9 +40,14 @@ const BlackListedWallets = [
   "0x708d93ac77262d8b911174447b919076ab6ce08a",
   "0x40874f18922267cc2ca7933828594ab5078c1065"
 ]
+const game2clubsThreshold = 3;
+let gameNumber = 1;
 
 export const GetActualEditionNumber = (edition: number) => {
   let actualEdition = -1;
+
+  edition = edition > 4000 ? edition - 4000 : edition;
+  
   cardValueDict.forEach((cardValue) => {
     if(cardValue.max < edition) {
       actualEdition = edition - cardValue.max;
@@ -51,7 +55,6 @@ export const GetActualEditionNumber = (edition: number) => {
   })
   return actualEdition;
 }
-
 export const getCardName = (card: number) => {
   switch(card) {
     case 2: return "2";
@@ -79,22 +82,238 @@ export const getHandName = (handRef: number) => {
     case 5: return "Two Pair";
     case 6: return "One Pair";
     case 7: return "High Card";
+    case 8: return "N/A";
   }
 }
-
-export const RankPlayers = async (data : any) => {
-
+export const RankPlayers = async (data : any, testcases:boolean=false, gameId:number) => {
   let rankedPlayers : Player[] = [];
-  rankedPlayers = CreateRankedPlayersFromData(data);
+  gameNumber = gameId;
+
+  if(testcases) {
+    // 4 of a kind club kicker card
+    rankedPlayers.push({ 
+      address: "4:A(2C) Secondary:2(C)",
+      cards: [3903, 3902, 1960, 1728, 222, 4210, 7999, 7998],
+      cardRanks: [],
+      bestHand: {
+        handRef: 0,
+        primaryValue: 0,
+        secondaryValue: 0,
+        handDescription: "",
+        secondaryCardEdition: 0
+      },
+    })
+    //4 of a kind diamond kicker card
+    rankedPlayers.push({ 
+      address: "4:A(3C) Secondary:A(D)",
+      cards: [3903, 3902, 1960, 1728, 222, 2710, 7999, 7998, 7997],
+      cardRanks: [],
+      bestHand: {
+        handRef: 0,
+        primaryValue: 0,
+        secondaryValue: 0,
+        handDescription: "",
+        secondaryCardEdition: 0
+      },
+    })
+    //full house
+    rankedPlayers.push({ 
+      address: "3:A(2C) 2:5s(1C+1D)",
+      cards: [3903, 7998, 1110, 5110, 7999],
+      cardRanks: [],
+      bestHand: {
+        handRef: 0,
+        primaryValue: 0,
+        secondaryValue: 0,
+        handDescription: "",
+        secondaryCardEdition: 0
+      },
+    })
+    //Three of a kind with club kicker
+    rankedPlayers.push({ 
+      address: "3:A(2C) 1:5s(1C)",
+      cards: [3903, 7998, 2, 5110, 7999],
+      cardRanks: [],
+      bestHand: {
+        handRef: 0,
+        primaryValue: 0,
+        secondaryValue: 0,
+        handDescription: "",
+        secondaryCardEdition: 0
+      },
+    })
+    //Three of a kind with diamond kicker
+    rankedPlayers.push({ 
+      address: "3:A(3C) 1:Q(D)",
+      cards: [7997, 7998, 3799, 5110, 7999],
+      cardRanks: [],
+      bestHand: {
+        handRef: 0,
+        primaryValue: 0,
+        secondaryValue: 0,
+        handDescription: "",
+        secondaryCardEdition: 0
+      },
+    })
+    //fails because it doesn't have enough cards for the game
+    rankedPlayers.push({ 
+      address: "3:A(1C) 2:2s(1C,1D)",
+      cards: [3903, 3902, 1110, 5110, 7999],
+      cardRanks: [],
+      bestHand: {
+        handRef: 0,
+        primaryValue: 0,
+        secondaryValue: 0,
+        handDescription: "",
+        secondaryCardEdition: 0
+      },
+    })
+    //Straight with 5 clubs
+    rankedPlayers.push({ 
+      address: "Straight:5-9 (5C)",
+      cards: [5600, 6000, 6400, 6800, 7200],
+      cardRanks: [],
+      bestHand: {
+        handRef: 0,
+        primaryValue: 0,
+        secondaryValue: 0,
+        handDescription: "",
+        secondaryCardEdition: 0
+      },
+    })
+    //Straight with 3 clubs
+    rankedPlayers.push({ 
+      address: "Straight:5-9 (3C)",
+      cards: [5600, 2000, 6400, 2800, 7200],
+      cardRanks: [],
+      bestHand: {
+        handRef: 0,
+        primaryValue: 0,
+        secondaryValue: 0,
+        handDescription: "",
+        secondaryCardEdition: 0
+      },
+    })
+     //Straight with 2 clubs
+     rankedPlayers.push({ 
+      address: "Straight:5-9 (2C)",
+      cards: [5600, 2000, 2400, 2800, 7200],
+      cardRanks: [],
+      bestHand: {
+        handRef: 0,
+        primaryValue: 0,
+        secondaryValue: 0,
+        handDescription: "",
+        secondaryCardEdition: 0
+      },
+    })
+  } else {
+    rankedPlayers = CreateRankedPlayersFromData(data);
+  }
+  
+  rankedPlayers = rankedPlayers.filter((player) => player.cards.length >= 5);
   rankedPlayers = RemoveBlackListedPlayers(rankedPlayers);
   rankedPlayers = CreateCardRanks(rankedPlayers);
   rankedPlayers = FindBestHand(rankedPlayers);
-  rankedPlayers = SetSecondaryCardEdition(rankedPlayers);
   rankedPlayers = RankPlayersByCards(rankedPlayers);
-  rankedPlayers = rankedPlayers.filter((player) => player.cards.length >= 5);
   return rankedPlayers;
 }
 
+  const MeetsGameRequriements = (clubCards: number[], cardInHand : string[]) => {
+    if(gameNumber === 1) {
+      return true;
+    } else if(gameNumber === 2) {
+
+      let additionalSpaceForCards = 5 - cardInHand.length;
+      let clubsUsedInHand = 0;
+      let cardsForGame2 = new Array(...clubCards);
+      
+      //check if there is a club card with the same value as the card in hand
+      for(let i = 0; i < cardInHand.length; i++) {
+        let cardValue = parseInt(cardInHand[i]);
+        for(let j = 0; j < cardsForGame2.length; j++) {
+          if(cardsForGame2[j] == cardValue) {
+            clubsUsedInHand ++;
+            cardsForGame2.splice(j, 1);
+            j--;
+      }}}
+
+      let cardsNeeded = game2clubsThreshold - clubsUsedInHand;
+
+      //meets game requirements in just main cards
+      if(clubsUsedInHand >= game2clubsThreshold) {
+        return true;
+      }
+
+      //doesn't have enough cards to meet game requirements
+      if(cardsNeeded > cardsForGame2.length){
+        return false;
+      }
+
+      //if you need more cards in the new suite than you have space for, you can't meet the game requirements
+      if(cardsNeeded >= additionalSpaceForCards){
+        return false;
+      }
+
+      return true;
+    }
+  }
+  const ClubNeededInKicker = (clubCards: number[], cardInHand: number[]) => {
+    if(gameNumber === 2) {
+      let clubsUsedInHand = 0;
+      let cardsForGame2 = new Array(...clubCards);
+      
+      //check if there is a club card with the same value as the card in hand
+      for(let i = 0; i < cardInHand.length; i++) {
+        let cardValue = cardInHand[i];
+        for(let j = 0; j < cardsForGame2.length; j++) {
+          if(cardsForGame2[j] == cardValue) {
+            clubsUsedInHand ++;
+            cardsForGame2.splice(j, 1);
+            j--;
+      }}}
+
+      //meets game requirements in just main cards
+      return clubsUsedInHand >= game2clubsThreshold ? false : true;
+    }
+    else{
+      return false;
+    }
+  }
+  const GetSecondaryCardRank = (clubCards: number[], cardInHand: number[], bestCard:number) => {
+    if(gameNumber === 2) {
+      let clubsUsedInHand = 0;
+      let cardsForGame2 = new Array(...clubCards);
+      
+      //check if there is a club card with the same value as the card in hand
+      for(let i = 0; i < cardInHand.length; i++) {
+        let cardValue = cardInHand[i];
+        for(let j = 0; j < cardsForGame2.length; j++) {
+          if(cardsForGame2[j] == cardValue) {
+            clubsUsedInHand ++;
+            cardsForGame2.splice(j, 1);
+            j--;
+      }}}
+
+      //meets game requirements in just main cards
+      if(clubsUsedInHand >= game2clubsThreshold) {
+        return bestCard;
+      }
+
+      //go through the remaining cards and find the best card to add
+      let bestClubCard = 0;
+      cardsForGame2.sort((a, b) => b - a);
+      for(let i = 0; i < cardsForGame2.length; i++) {
+        if(cardsForGame2[i] > bestClubCard) {
+          bestClubCard = cardsForGame2[i];
+        }
+      }
+      return bestClubCard;
+    }
+    else{
+      return bestCard;
+    }
+  }
   const CreateRankedPlayersFromData = (data: any) => {
     const rankedPlayers: Player[] = [];
     data.forEach((owner:any) => {
@@ -107,7 +326,8 @@ export const RankPlayers = async (data : any) => {
             handRef: 0,
             primaryValue: 0,
             secondaryValue: 0,
-            handDescription: ""
+            handDescription: "",
+            secondaryCardEdition: 0
           }
         })
       }
@@ -124,9 +344,31 @@ export const RankPlayers = async (data : any) => {
     })
     return rankedPlayers;
   }
-  const checkForFourOfAKind = (cards: number[]) => {
+  const GetSecondaryCardEdition = (cardRanks: number[], cardsFromGame2: number[], cards: number[], secondaryValue:number, valuesUsedInHand: number[]) => {
+      let secondaryCardEdition = -1;
+      let filteredCards = cards.sort((a, b) => b - a);
+      let filteredRanks = cardRanks;
+      cardsFromGame2.sort((a, b) => b - a);
+
+      if(ClubNeededInKicker(cardsFromGame2, valuesUsedInHand)) {
+        // console.log("club needed in kicker");
+        filteredCards = cards.filter((card) => card > 4000)
+        filteredCards = filteredCards.map((card) => card - 4000);
+        filteredRanks = cardsFromGame2;
+      }
+      // console.log("filteredCards", filteredCards);
+      // console.log("filteredRanks", filteredRanks);
+      // console.log("secondaryValue", secondaryValue);
+
+      for(let i = 0; i < filteredCards.length; i++) {
+        if(filteredRanks[i] === secondaryValue) {
+          secondaryCardEdition = GetActualEditionNumber(filteredCards[i]);
+      }}
+    return secondaryCardEdition;
+  }
+  const checkForFourOfAKind = (cardRanks: number[], cardsFromGame2:number[], cards:number[]) => {
     const cardCountDict: any = {};
-    cards.forEach((card) => {
+    cardRanks.forEach((card) => {
       if(cardCountDict[card]) {
         cardCountDict[card]++;
       } else {
@@ -138,11 +380,11 @@ export const RankPlayers = async (data : any) => {
     let secondaryValue = 0;
     let previousCard = 0;
     Object.keys(cardCountDict).forEach((card) => {
-      if(cardCountDict[card] === 4) {
+      if(cardCountDict[card] === 4 && MeetsGameRequriements(cardsFromGame2, [card, card, card, card])) {
         fourOfAKind = true;
         fourOfAKindValue = parseInt(card);
         secondaryValue = previousCard;
-      } else if (cardCountDict[card] >= 4){
+      } else if (cardCountDict[card] >= 4 && MeetsGameRequriements(cardsFromGame2, [card, card, card, card])){
         fourOfAKind = true;
         fourOfAKindValue = parseInt(card);
         secondaryValue = parseInt(card);
@@ -151,20 +393,26 @@ export const RankPlayers = async (data : any) => {
       }
       previousCard = parseInt(card);
     })
+
     if(fourOfAKind) {
+      let valuesUsedInHand = [fourOfAKindValue, fourOfAKindValue, fourOfAKindValue, fourOfAKindValue];
+      secondaryValue = GetSecondaryCardRank(cardsFromGame2, valuesUsedInHand, secondaryValue)
+      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame2, cards, secondaryValue, valuesUsedInHand);
+
       return {
         handRef: 1,
         primaryValue: fourOfAKindValue,
         secondaryValue: secondaryValue,
-        handDescription: getCardName(fourOfAKindValue) + "s"
+        handDescription: getCardName(fourOfAKindValue) + "s",
+        secondaryCardEdition: secondaryCardEdition
       }
     }
     return null;
   }
-  const checkForStraight = (cards: number[]) => {
+  const checkForStraight = (cardRanks: number[], cardsFromGame2:number[], cards:number[]) => {
     //sort and remove any duplicates
-    cards.sort((a, b) => b - a);
-    const uniqueCards = [...new Set(cards)];
+    cardRanks.sort((a, b) => b - a);
+    const uniqueCards = [...new Set(cardRanks)];
     if(uniqueCards.length < 5) return null;
 
     let straight = false;
@@ -174,27 +422,34 @@ export const RankPlayers = async (data : any) => {
       if(uniqueCards[i] - 1 === uniqueCards[i + 1] &&
         uniqueCards[i + 1] - 1 === uniqueCards[i + 2] &&
         uniqueCards[i + 2] - 1 === uniqueCards[i + 3] &&
-        uniqueCards[i + 3] - 1 === uniqueCards[i + 4]) {
+        uniqueCards[i + 3] - 1 === uniqueCards[i + 4] &&
+        MeetsGameRequriements(cardsFromGame2, [uniqueCards[i].toString(), uniqueCards[i+1].toString(), uniqueCards[i+2].toString(), uniqueCards[i+3].toString(), uniqueCards[i+4].toString()])
+        ) {
           straight = true;
           straightValue = uniqueCards[i + 4];
           straightStartIndex = i;
         }
     }
-    cards.sort((a, b) => a - b);
+    cardRanks.sort((a, b) => a - b);
 
     if(straight) {
+      let valuesUsedInHand = [straightValue, straightValue-1, straightValue-2, straightValue-3];
+      let secondaryValue = GetSecondaryCardRank(cardsFromGame2, valuesUsedInHand, uniqueCards[uniqueCards.length - 1])
+      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame2, cards, secondaryValue, valuesUsedInHand);
+
       return {
         handRef: 3,
         primaryValue: straightValue,
-        secondaryValue: uniqueCards[uniqueCards.length - 1],
-        handDescription: getCardName(uniqueCards[straightStartIndex+ 4]) + " - " + getCardName(uniqueCards[straightStartIndex])
+        secondaryValue: secondaryValue,
+        handDescription: getCardName(uniqueCards[straightStartIndex+ 4]) + " - " + getCardName(uniqueCards[straightStartIndex]),
+        secondaryCardEdition: secondaryCardEdition
       }
     }
     return null;
   }
-  const checkForFullHouse = (cards: number[]) => {
+  const checkForFullHouse = (cardRanks: number[], cardsFromGame2:number[], cards:number[]) => {
     const cardCountDict: any = {};
-    cards.forEach((card) => {
+    cardRanks.forEach((card) => {
       if(cardCountDict[card]) {
         cardCountDict[card]++;
       } else {
@@ -208,12 +463,12 @@ export const RankPlayers = async (data : any) => {
     
     Object.keys(cardCountDict).forEach((card) => {
       if(cardCountDict[card] === 3) {
-        if(threeOfAKind) {
+        if(threeOfAKind && MeetsGameRequriements(cardsFromGame2, [card, card, card])) {
           twoOfAKind = true;
           threeOfAKind = true;
           twoOfAKindValue = threeOfAKindValue;
           threeOfAKindValue = parseInt(card);
-        } else {
+        } else if(MeetsGameRequriements(cardsFromGame2, [card, card, card])) {
           threeOfAKindValue = parseInt(card);
           threeOfAKind = true;
         }
@@ -224,18 +479,23 @@ export const RankPlayers = async (data : any) => {
     })
 
     if(threeOfAKind && twoOfAKind) {
+      let valuesUsedInHand = [threeOfAKindValue, threeOfAKindValue, threeOfAKindValue, twoOfAKindValue, twoOfAKindValue];
+      twoOfAKindValue = GetSecondaryCardRank(cardsFromGame2, valuesUsedInHand, twoOfAKindValue)
+      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame2, cards, twoOfAKindValue, valuesUsedInHand);
+
       return {
         handRef: 2,
         primaryValue: threeOfAKindValue,
         secondaryValue: twoOfAKindValue,
-        handDescription: getCardName(threeOfAKindValue) + "s " + getCardName(twoOfAKindValue)+ "s"
+        handDescription: getCardName(threeOfAKindValue) + "s " + getCardName(twoOfAKindValue)+ "s",
+        secondaryCardEdition: secondaryCardEdition
       }
     }
     return null;
   }
-  const checkForThreeOfAKind = (cards: number[]) => {
+  const checkForThreeOfAKind = (cardRanks: number[], cardsFromGame2:number[], cards:number[]) => {
     const cardCountDict: any = {};
-    cards.forEach((card) => {
+    cardRanks.forEach((card) => {
       if(cardCountDict[card]) {
         cardCountDict[card]++;
       } else {
@@ -247,7 +507,7 @@ export const RankPlayers = async (data : any) => {
     let threeOfAKindValue = 0;
     let secondaryValue = 0;
     Object.keys(cardCountDict).forEach((card) => {
-      if(cardCountDict[card] === 3) {
+      if(cardCountDict[card] === 3 && MeetsGameRequriements(cardsFromGame2, [card, card, card]) ) {
         threeOfAKind = true;
         threeOfAKindValue = parseInt(card);
       } else {
@@ -256,19 +516,24 @@ export const RankPlayers = async (data : any) => {
     }
     )
     if(threeOfAKind) {
+      let valuesUsedInHand = [threeOfAKindValue, threeOfAKindValue, threeOfAKindValue, secondaryValue, secondaryValue];
+      secondaryValue = GetSecondaryCardRank(cardsFromGame2, valuesUsedInHand, secondaryValue)
+      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame2, cards, secondaryValue, valuesUsedInHand);
+
       return {
         handRef: 4,
         primaryValue: threeOfAKindValue,
         secondaryValue: secondaryValue,
-        handDescription: getCardName(threeOfAKindValue) + "s"
+        handDescription: getCardName(threeOfAKindValue) + "s",
+        secondaryCardEdition: secondaryCardEdition
       }
     }
     return null;
   }
-  const checkForTwoPair = (cards: number[]) => {
+  const checkForTwoPair = (cardRanks: number[], cardsFromGame2: number[], cards: number[]) => {
     const cardCountDict: any = {};
-    cards.sort((a, b) => a - b);
-    cards.forEach((card) => {
+    cardRanks.sort((a, b) => a - b);
+    cardRanks.forEach((card) => {
       if(cardCountDict[card]) {
         cardCountDict[card]++;
       } else {
@@ -283,7 +548,7 @@ export const RankPlayers = async (data : any) => {
     let largerPair = 0;
 
     Object.keys(cardCountDict).forEach((card) => {
-      if(cardCountDict[card] === 2) {
+      if(cardCountDict[card] === 2 && MeetsGameRequriements(cardsFromGame2, [card, card])) {
         if(!onePair) {
           onePair = true;
           smallerPairValue = parseInt(card);
@@ -298,20 +563,25 @@ export const RankPlayers = async (data : any) => {
       }  
     }
     )
-    // cards.sort((a, b) => b - a);
+
     if(twoPair) {
+      let valuesUsedInHand = [smallerPairValue, smallerPairValue, largerPair, largerPair];
+      smallerPairValue = GetSecondaryCardRank(cardsFromGame2, valuesUsedInHand, smallerPairValue)
+      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame2, cards, smallerPairValue, valuesUsedInHand);
+
       return {
         handRef: 5,
         primaryValue: largerPair,
         secondaryValue: smallerPairValue,
-        handDescription: getCardName(largerPair) + " " + getCardName(smallerPairValue)
+        handDescription: getCardName(largerPair) + " " + getCardName(smallerPairValue),
+        secondaryCardEdition: secondaryCardEdition
       }
     }
     return null;
   }
-  const checkForOnePair = (cards: number[]) => {
+  const checkForOnePair = (cardRanks: number[], cardsFromGame2: number[], cards: number[]) => {
     const cardCountDict: any = {};
-    cards.forEach((card) => {
+    cardRanks.forEach((card) => {
       if(cardCountDict[card]) {
         cardCountDict[card]++;
       } else {
@@ -323,7 +593,7 @@ export const RankPlayers = async (data : any) => {
     let onePairValue = 0;
     let secondaryValue = 0;
     Object.keys(cardCountDict).forEach((card) => {
-      if(cardCountDict[card] === 2) {
+      if(cardCountDict[card] === 2 && MeetsGameRequriements(cardsFromGame2, [card, card])) {
         onePair = true;
         onePairValue = parseInt(card);
       } else {
@@ -332,27 +602,48 @@ export const RankPlayers = async (data : any) => {
     }
     )
     if(onePair) {
+      let valuesUsedInHand = [onePairValue, onePairValue];
+      secondaryValue = GetSecondaryCardRank(cardsFromGame2, valuesUsedInHand, secondaryValue)
+      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame2, cards, secondaryValue, valuesUsedInHand);
+
       return {
         handRef: 6,
         primaryValue: onePairValue,
         secondaryValue: secondaryValue,
-        handDescription: getCardName(onePairValue) + "s"
+        handDescription: getCardName(onePairValue) + "s",
+        secondaryCardEdition: secondaryCardEdition
       }
     }
     return null;
   }
   const FindBestHand = (rankedPlayers: Player[]) => {
     rankedPlayers.forEach((player) => {
-      player.bestHand = SearchForBestHand(player.cardRanks);
+      let clubsCards = RankClubCards(player.cards.filter((card) => card > 4000));
+      player.bestHand = SearchForBestHand(player.cardRanks, clubsCards, player.cards);
     })
     return rankedPlayers;
+  }
+  const RankClubCards = (clubsCards: number[]) => {
+    let rankedClubsCards: number[] = [];
+    clubsCards.forEach((card) => {
+      let cardNumber = card > 4000 ? card - 4000 : card;
+      let cardFound = false;
+      cardValueDict.forEach((cardValue) => {
+        if (cardNumber <= cardValue.max && !cardFound) {
+          rankedClubsCards.push(cardValue.value as never);
+          cardFound = true;
+        }
+      })
+    })
+    return rankedClubsCards;
   }
   const CreateCardRanks = (rankedPlayers: Player[]) => {
     rankedPlayers.forEach((player) => {
       player.cards.forEach((card) => {
+        let cardNumber = card > 4000 ? card - 4000 : card;
         let cardFound = false;
         cardValueDict.forEach((cardValue) => {
-          if (card <= cardValue.max && !cardFound) {
+          if (cardNumber <= cardValue.max && !cardFound) {
             player.cardRanks.push(cardValue.value as never);
             cardFound = true;
           }
@@ -361,57 +652,52 @@ export const RankPlayers = async (data : any) => {
     })
     return rankedPlayers;
   }
-  const SetSecondaryCardEdition = (rankedPlayers: Player[]) => {
-    rankedPlayers.forEach((player) => {
-
-      player.cards.sort((a, b) => b - a);
-      player.cardRanks.sort((a, b) => b - a);
-
-      player.bestHand.secondaryCardEdition = -1;
-        for(let i = 0; i < player.cards.length; i++) {
-          if(player.cardRanks[i] === player.bestHand.secondaryValue) {
-            player.bestHand.secondaryCardEdition = GetActualEditionNumber(player.cards[i]);
-            // console.log("New best hand", player.bestHand.secondaryCardEdition);
-          }
-        }
-    })
-    return rankedPlayers;
-  }
-  const SearchForBestHand = (cards: number[]) => {
+  const SearchForBestHand = (cardRanks: number[], cardsForGame2: number[], cards: number[]) => {
 
     //check for 4 of a kind
-    const fourOfAKind = checkForFourOfAKind(cards);
+    const fourOfAKind = checkForFourOfAKind(cardRanks, cardsForGame2, cards);
     if(fourOfAKind) return fourOfAKind;
 
     //check for full house
-    const fullHouse = checkForFullHouse(cards);
+    const fullHouse = checkForFullHouse(cardRanks, cardsForGame2, cards);
     if(fullHouse) return fullHouse;
 
     //check for straight
-    const straight = checkForStraight(cards);
+    const straight = checkForStraight(cardRanks, cardsForGame2, cards);
     if(straight) return straight;
 
     //check for three of a kind
-    const threeOfAKind = checkForThreeOfAKind(cards);
+    const threeOfAKind = checkForThreeOfAKind(cardRanks, cardsForGame2, cards);
     if(threeOfAKind) return threeOfAKind;
 
     //check for two pair
-    const twoPair = checkForTwoPair(cards);
+    const twoPair = checkForTwoPair(cardRanks, cardsForGame2, cards);
     if(twoPair) return twoPair;
 
     //check for one pair
-    const onePair = checkForOnePair(cards);
+    const onePair = checkForOnePair(cardRanks, cardsForGame2, cards);
     if(onePair) return onePair;
 
     let cardsToIgnore: number[] = [];
-    let highestCard = GetScoreOfHighestCards(cards.length, cards, cardsToIgnore);
-    //high card
-    return {
-      handRef: 7,
-      primaryValue: highestCard,
-      secondaryValue: GetScoreOfHighestCards(cards.length, cards, [highestCard]),
-      handDescription: getCardName(highestCard)
+    let highestCard = GetScoreOfHighestCards(cardRanks.length, cardRanks, cardsToIgnore);
+    if(MeetsGameRequriements(cardsForGame2,[])){
+      //high card
+      return {
+        handRef: 7,
+        primaryValue: highestCard,
+        secondaryValue: GetScoreOfHighestCards(cardRanks.length, cardRanks, [highestCard]),
+        handDescription: getCardName(highestCard),
+        secondaryCardEdition: -1
+      }
     }
+    return{
+      handRef: 8,
+      primaryValue: 0,
+      secondaryValue: 0,
+      handDescription: "Hand doesn't meet game requirements",
+      secondaryCardEdition: -1
+    }
+    
   }
   const GetScoreOfHighestCards = (numberOfCards: number, cards: number[], cardsToIgnore: number[]) => {
     let score = 0;
