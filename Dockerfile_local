@@ -4,7 +4,7 @@
 ### Build image ###
 ###################
 
-FROM node:18 as build
+FROM node:18 as build-image
 
 # Install build dependencies for underlying OS
 RUN apt-get update && apt-get install -y g++ build-essential
@@ -37,7 +37,7 @@ RUN NEXT_PUBLIC_ENV=development npm run build
 ### Runtime image ###
 #####################
 
-FROM node:18-slim
+FROM node:18-slim AS runtime-image
 
 # Update/install packages
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
@@ -54,16 +54,16 @@ RUN npm --version
 # Copy the required files from the build step
 WORKDIR /usr/src/app
 
-COPY --from=build --link /usr/src/app/.husky ./.husky
-COPY --from=build --link /usr/src/app/pages ./pages
-COPY --from=build --link /usr/src/app/public ./public
-COPY --from=build --link /usr/src/app/src ./src
-COPY --from=build --link /usr/src/app/types ./types
-COPY --from=build --link /usr/src/app/next.config.js ./
+COPY --from=build-image --link /usr/src/app/.husky ./.husky
+COPY --from=build-image --link /usr/src/app/pages ./pages
+COPY --from=build-image --link /usr/src/app/public ./public
+COPY --from=build-image --link /usr/src/app/src ./src
+COPY --from=build-image --link /usr/src/app/types ./types
+COPY --from=build-image --link /usr/src/app/next.config.js ./
 
-COPY --from=build --link /usr/src/app/package*.json ./
-COPY --from=build --link /usr/src/app/.next ./.next
-COPY --from=build --link /usr/src/app/node_modules ./node_modules
+COPY --from=build-image --link /usr/src/app/package*.json ./
+COPY --from=build-image --link /usr/src/app/.next ./.next
+COPY --from=build-image --link /usr/src/app/node_modules ./node_modules
 
 # Enable APM Insight Node.js Agent
 RUN mkdir -p /usr/src/app/apminsightdata && chown -R node:node /usr/src/app/apminsightdata
@@ -71,11 +71,11 @@ RUN mkdir -p /usr/src/app/apminsightdata && chown -R node:node /usr/src/app/apmi
 # Enable logging
 RUN mkdir -p /var/log/nodejs && touch /var/log/nodejs/nodejs.log && chown -R node:node /var/log/nodejs
 
-# # Harden Image
-# COPY ./harden.sh .
-# RUN chmod +x harden.sh && \
-#     sh harden.sh && \
-#     rm -f harden.sh
+# Harden Image
+COPY --link ./harden.sh .
+RUN chmod +x harden.sh && \
+    sh harden.sh && \
+    rm -f harden.sh
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["/bin/bash", "-c", "exec npm run start-web >> /var/log/nodejs/nodejs.log 2>&1"]

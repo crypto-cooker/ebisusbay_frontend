@@ -4,7 +4,7 @@
 ### Runtime image ###
 #####################
 
-FROM node:18-slim
+FROM node:18-slim AS runtime-image
 
 # Allow to cache package downloads (BuildKit cache mount)
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
