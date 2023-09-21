@@ -30,19 +30,17 @@ definitions:
   app_build: &app_build
     CI=false NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN npm run build
 
-  # Native version
+  # Docker BuildKit version
   proxy_container_build: &proxy_container_build
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
-    export DOCKER_BUILDKIT=1 &&
     docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} -f proxy/Dockerfile ./proxy &&
     docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}
   container_build: &container_build
-    export DOCKER_BUILDKIT=1 &&
     docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile . &&
     docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}
 
-  # Buildx version
+  # Docker Buildx version
   docker_buildx: &docker_buildx
     docker --version &&
     docker pull docker/buildx-bin:latest &&
@@ -55,9 +53,9 @@ definitions:
   proxy_container_buildx: &proxy_container_buildx
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
-    docker buildx build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f proxy/Dockerfile ./proxy
+    docker buildx build --push --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f proxy/Dockerfile ./proxy
   container_buildx: &container_buildx
-    docker buildx build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --push --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
+    docker buildx build --push --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
 pipelines:
   custom:
     deploy-to-testnet:
@@ -75,7 +73,7 @@ pipelines:
                 caches:
                   - node
                   - nextcache
-                  - docker
+                  # - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -85,7 +83,7 @@ pipelines:
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
-                  - npm install --no-audit
+                  - npm ci --no-audit
                   # Run tests
                   # - npm run test
                   # RPC config
@@ -116,7 +114,7 @@ pipelines:
                 caches:
                   - node
                   - nextcache
-                  - docker
+                  # - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -126,7 +124,7 @@ pipelines:
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
-                  - npm install --no-audit
+                  - npm ci --no-audit
                   # Run tests
                   # - npm run test
                   # RPC config
@@ -142,9 +140,9 @@ pipelines:
                   - *proxy_container_build
                   # deploy sandbox-ebisusbay-web-amd64-us-east-1 / sandboxapp.ebisusbay.biz
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"sandbox\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
-    buildx-deploy-to-dev:
+    buildx-testing:
       - stage:
-          name: app.ebisusbay.biz
+          name: buildx-testing
           deployment: Sandbox
           steps:
             - step:
@@ -157,7 +155,7 @@ pipelines:
                 caches:
                   - node
                   - nextcache
-                  - docker
+                  # - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -167,11 +165,11 @@ pipelines:
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
-                  - npm install --no-audit
+                  - npm ci --no-audit
                   # Run tests
                   # - npm run test
                   # RPC config
-                  - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
+                  # - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
                   # Build frontend
                   - *app_build
                   # Install and configure Docker Buildx
@@ -179,12 +177,10 @@ pipelines:
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
-                  - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
+                  # - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
                   # Build current/latest container image
                   - *container_buildx
                   - *proxy_container_buildx
-                  # deploy dev-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.biz
-                  # - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"dev\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     when-shit-hits-the-fan-prod:
       - stage:
           name: app.ebisusbay.com
@@ -200,7 +196,7 @@ pipelines:
                 caches:
                   - node
                   - nextcache
-                  - docker
+                  # - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -210,7 +206,7 @@ pipelines:
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
-                  - npm install --no-audit
+                  - npm ci --no-audit
                   # Run tests
                   # - npm run test
                   # RPC config
@@ -225,7 +221,7 @@ pipelines:
                   - *container_build
                   - *proxy_container_build
                   # deploy prod-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.com
-                  # - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"type\":\"pipeline_ref_target\",\"ref_type\":\"branch\",\"ref_name\":\"prod\",\"selector\":{\"type\":\"custom\",\"pattern\":\"fast_hotfix_deployment_prod\"}}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
+                  - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"type\":\"pipeline_ref_target\",\"ref_type\":\"branch\",\"ref_name\":\"prod\",\"selector\":{\"type\":\"custom\",\"pattern\":\"fast_hotfix_deployment_prod\"}}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
   branches:
     dev:
       - stage:
@@ -242,7 +238,7 @@ pipelines:
                 caches:
                   - node
                   - nextcache
-                  - docker
+                  # - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -252,7 +248,7 @@ pipelines:
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
-                  - npm install --no-audit
+                  - npm ci --no-audit
                   # Run tests
                   # - npm run test
                   # RPC config
@@ -283,7 +279,7 @@ pipelines:
                 caches:
                   - node
                   - nextcache
-                  - docker
+                  # - docker
                 script:
                   # Install required tools
                   - *install_tools
@@ -293,7 +289,7 @@ pipelines:
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
-                  - npm install --no-audit
+                  - npm ci --no-audit
                   # Run tests
                   # - npm run test
                   # RPC config
