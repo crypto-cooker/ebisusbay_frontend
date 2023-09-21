@@ -85,7 +85,7 @@ pipelines:
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
-                  - npm install --no-audit
+                  - npm ci --no-audit
                   # Run tests
                   # - npm run test
                   # RPC config
@@ -126,7 +126,7 @@ pipelines:
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
-                  - npm install --no-audit
+                  - npm ci --no-audit
                   # Run tests
                   # - npm run test
                   # RPC config
@@ -167,7 +167,7 @@ pipelines:
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
-                  - npm install --no-audit
+                  - npm ci --no-audit
                   # Run tests
                   # - npm run test
                   # RPC config
@@ -208,7 +208,7 @@ pipelines:
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
-                  - npm install --no-audit
+                  - npm ci --no-audit
                   # Run tests
                   # - npm run test
                   # RPC config
@@ -250,7 +250,7 @@ pipelines:
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
-                  - npm install --no-audit
+                  - npm ci --no-audit
                   # Run tests
                   # - npm run test
                   # RPC config
@@ -291,7 +291,7 @@ pipelines:
                   - *upgrade_npm
                   - *print_versions
                   # Install dependencies
-                  - npm install --no-audit
+                  - npm ci --no-audit
                   # Run tests
                   # - npm run test
                   # RPC config
