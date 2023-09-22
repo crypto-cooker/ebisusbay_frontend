@@ -3520,15 +3520,15 @@
   resolved "https://registry.npmjs.org/@multiformats/base-x/-/base-x-4.0.1.tgz"
   integrity sha512-eMk0b9ReBbV23xXU693TAIrLyeO5iTgBZGSJfpqriG8UkYvr/hC9u9pyMlAakDNHWmbhMZCDs6KQO0jzKD8OTw==
 
-"@next/env@13.5.1":
-  version "13.5.1"
-  resolved "https://registry.npmjs.org/@next/env/-/env-13.5.1.tgz"
-  integrity sha512-CIMWiOTyflFn/GFx33iYXkgLSQsMQZV4jB91qaj/TfxGaGOXxn8C1j72TaUSPIyN7ziS/AYG46kGmnvuk1oOpg==
+"@next/env@13.5.2":
+  version "13.5.2"
+  resolved "https://registry.npmjs.org/@next/env/-/env-13.5.2.tgz"
+  integrity sha512-dUseBIQVax+XtdJPzhwww4GetTjlkRSsXeQnisIJWBaHsnxYcN2RGzsPHi58D6qnkATjnhuAtQTJmR1hKYQQPg==
 
-"@next/swc-win32-x64-msvc@13.5.1":
-  version "13.5.1"
-  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.5.1.tgz"
-  integrity sha512-+9XBQizy7X/GuwNegq+5QkkxAPV7SBsIwapVRQd9WSvvU20YO23B3bZUpevdabi4fsd25y9RJDDncljy/V54ww==
+"@next/swc-win32-x64-msvc@13.5.2":
+  version "13.5.2"
+  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.5.2.tgz"
+  integrity sha512-LfTHt+hTL8w7F9hnB3H4nRasCzLD/fP+h4/GUVBTxrkMJOnh/7OZ0XbYDKO/uuWwryJS9kZjhxcruBiYwc5UDw==
 
 "@noble/hashes@^1.0.0":
   version "1.0.0"
@@ -4527,11 +4527,6 @@ ajv@^6.10.0, ajv@^6.12.3, ajv@^6.12.4:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
-
-animate.css@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.npmjs.org/animate.css/-/animate.css-4.1.1.tgz"
-  integrity sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==
 
 ansi-escapes@^4.2.1, ansi-escapes@^4.3.0:
   version "4.3.2"
@@ -8311,11 +8306,6 @@ multihashes@^4.0.1, multihashes@^4.0.2:
     uint8arrays "^3.0.0"
     varint "^5.0.2"
 
-multiselect-react-dropdown@^2.0.16:
-  version "2.0.22"
-  resolved "https://registry.npmjs.org/multiselect-react-dropdown/-/multiselect-react-dropdown-2.0.22.tgz"
-  integrity sha512-Oc6Y/Rl1U3XSyp2Hb5utTvqtHeFTMJf5+PHrmxvk06yT02KLivqXUhmqsmDnLfMZm3UC6Hnh4NnpoNxj/z+5gg==
-
 mute-stream@0.0.8:
   version "0.0.8"
   resolved "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.8.tgz"
@@ -8340,7 +8330,7 @@ nanoclone@^0.2.1:
   resolved "https://registry.npmjs.org/nanoclone/-/nanoclone-0.2.1.tgz"
   integrity sha512-wynEP02LmIbLpcYw8uBKpcfF6dmg2vcpKqxeH5UcoKEYdExslsdUA4ugFauuaeYdTB76ez6gJW8XAZ6CgkXYxA==
 
-nanoid@^3.1.30, nanoid@^3.3.4:
+nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.4.tgz"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
@@ -8365,12 +8355,12 @@ negotiator@0.6.3:
   resolved "https://registry.npmjs.org/negotiator/-/negotiator-0.6.3.tgz"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-"next@^10.0.8 || ^11.0 || ^12.0 || ^13.0", next@^13.5.1:
-  version "13.5.1"
-  resolved "https://registry.npmjs.org/next/-/next-13.5.1.tgz"
-  integrity sha512-GIudNR7ggGUZoIL79mSZcxbXK9f5pwAIPZxEM8+j2yLqv5RODg4TkmUlaKSYVqE1bPQueamXSqdC3j7axiTSEg==
+"next@^10.0.8 || ^11.0 || ^12.0 || ^13.0", next@^13.5.2:
+  version "13.5.2"
+  resolved "https://registry.npmjs.org/next/-/next-13.5.2.tgz"
+  integrity sha512-vog4UhUaMYAzeqfiAAmgB/QWLW7p01/sg+2vn6bqc/CxHFYizMzLv6gjxKzl31EVFkfl/F+GbxlKizlkTE9RdA==
   dependencies:
-    "@next/env" "13.5.1"
+    "@next/env" "13.5.2"
     "@swc/helpers" "0.5.2"
     busboy "1.6.0"
     caniuse-lite "^1.0.30001406"
@@ -8379,15 +8369,15 @@ negotiator@0.6.3:
     watchpack "2.4.0"
     zod "3.21.4"
   optionalDependencies:
-    "@next/swc-darwin-arm64" "13.5.1"
-    "@next/swc-darwin-x64" "13.5.1"
-    "@next/swc-linux-arm64-gnu" "13.5.1"
-    "@next/swc-linux-arm64-musl" "13.5.1"
-    "@next/swc-linux-x64-gnu" "13.5.1"
-    "@next/swc-linux-x64-musl" "13.5.1"
-    "@next/swc-win32-arm64-msvc" "13.5.1"
-    "@next/swc-win32-ia32-msvc" "13.5.1"
-    "@next/swc-win32-x64-msvc" "13.5.1"
+    "@next/swc-darwin-arm64" "13.5.2"
+    "@next/swc-darwin-x64" "13.5.2"
+    "@next/swc-linux-arm64-gnu" "13.5.2"
+    "@next/swc-linux-arm64-musl" "13.5.2"
+    "@next/swc-linux-x64-gnu" "13.5.2"
+    "@next/swc-linux-x64-musl" "13.5.2"
+    "@next/swc-win32-arm64-msvc" "13.5.2"
+    "@next/swc-win32-ia32-msvc" "13.5.2"
+    "@next/swc-win32-x64-msvc" "13.5.2"
 
 no-case@^2.2.0, no-case@^2.3.2:
   version "2.3.2"
@@ -8516,11 +8506,6 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/number-is-nan/-/number-is-nan-1.0.1.tgz"
   integrity sha512-4jbtZXNAsfZbAHiiqjLPBiCl16dES1zI4Hpzzxw61Tk+loF+sBDBKx1ICKKKwIqQ7M0mFn1TmkN7euSncWgHiQ==
-
-number-to-words@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.npmjs.org/number-to-words/-/number-to-words-1.2.4.tgz"
-  integrity sha512-/fYevVkXRcyBiZDg6yzZbm0RuaD6i0qRfn8yr+6D0KgBMOndFPxuW10qCHpzs50nN8qKuv78k8MuotZhcVX6Pw==
 
 oauth-sign@~0.9.0:
   version "0.9.0"
@@ -9423,7 +9408,7 @@ react-zoom-pan-pinch@^3.0.8:
   resolved "https://registry.npmjs.org/react-zoom-pan-pinch/-/react-zoom-pan-pinch-3.0.8.tgz"
   integrity sha512-z6O5SV5X+XBo/LLO59PgzNE2WT+tp8lw1w3M0y138jCXViwHWKK1MqorICbmSVSOOD5Fa2o6pcg1ppJj9vzqJA==
 
-"react@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^0.14.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.7.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^16.8.3 || ^17 || ^18", "react@^16.9.0 || ^17.0.0 || ^18", "react@^16.9.0 || ^17.0.0 || ^18.0.0", "react@^17.x || ^18.x", react@^18.0.0, react@^18.2.0, "react@>= 15", "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", react@>=0.14.0, react@>=15.0.0, react@>=16, "react@>=16 || >=17 || >= 18", react@>=16.0.0, react@>=16.14.0, react@>=16.3, react@>=16.6.0, react@>=16.8, react@>=16.8.0, react@>=17.0.0, react@>=18, "react@15.x || 16.x || 17.x || 18.x":
+"react@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^0.14.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^16.8.3 || ^17 || ^18", "react@^16.9.0 || ^17.0.0 || ^18", "react@^16.9.0 || ^17.0.0 || ^18.0.0", "react@^17.x || ^18.x", react@^18.0.0, react@^18.2.0, "react@>= 15", "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", react@>=0.14.0, react@>=15.0.0, react@>=16, "react@>=16 || >=17 || >= 18", react@>=16.0.0, react@>=16.14.0, react@>=16.3, react@>=16.6.0, react@>=16.8, react@>=16.8.0, react@>=17.0.0, react@>=18, "react@15.x || 16.x || 17.x || 18.x":
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==

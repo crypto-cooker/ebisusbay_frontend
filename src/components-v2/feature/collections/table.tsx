@@ -2,7 +2,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import useGetCollections from './hooks/useGetCollections';
-import {filter} from 'lodash';
 import {appConfig} from "@src/Config";
 import ResponsiveCollectionsTable, {
   SortKeys
@@ -77,11 +76,11 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
   }, [timeFrame, typeSort])
 
   useEffect(() => {
-    changeFilters({ ...filter, search: searchTerms })
+    changeFilters({ ...filters, search: searchTerms })
   }, [searchTerms])
 
   useEffect(() => {
-    changeFilters({ ...filter, verified: onlyVerified ? 1 : null })
+    changeFilters({ ...filters, verified: onlyVerified ? 1 : null })
   }, [onlyVerified]);
 
   const content = useMemo(() => {
