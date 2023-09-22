@@ -35,16 +35,6 @@ const FaqPage = () => {
 
       <Box p={4}>
       <Text>Meeple are your fearless troops! Your ability to amass Meeple warriors is tied to your account level and the NFT power-ups you've unlocked along the way. Time to level up and equip those power-ups to assemble the mightiest Meeple army the Cronos Chain has ever seen! </Text>
-        {/* <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={4}>
-          <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
-          <Text
-            fontSize='14'
-            color='#333'
-            fontWeight='bold'
-          >
-            Warning: Once staked, NFTs can only be unstaked if you have neither deployed nor delegated any troops. If troops have been deployed or delegated, then the staked NFTs are locked until the next game.
-          </Text>
-        </Stack> */}
         <Accordion fontSize='sm' mt={4}>
 
           <AccordionItem>
@@ -122,7 +112,7 @@ const FaqPage = () => {
             <AccordionPanel pb={4}>
               <Text  mb={4}>Once per week upkeep needs to be paid by the holder for any on-chain <b>Meeple</b>. For every week upkeep goes unpaid there will be a 10% decay of all on chain <b>Meeple</b>. Upkeep prices increase at a faster rate as more <b>Meeple</b> are accumulated. Upkeep is paid in Koban weekly</Text>
               <UnorderedList>
-                  <ListItem>1-200 troops → free</ListItem>
+                  <ListItem>1-200 Meeple → free</ListItem>
                   <ListItem>201-999 → x</ListItem>
                   <ListItem>1000-4999 → 2x</ListItem>
                   <ListItem>5000+ → 3x</ListItem>
