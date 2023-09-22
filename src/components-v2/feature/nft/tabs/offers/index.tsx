@@ -30,21 +30,11 @@ const OffersTab = ({nftAddress, nftId, type}: OffersTabProps) => {
     });
   }
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery(
-    ['MadeOffers', queryParams],
-    fetchProjects,
-    {
-      getNextPageParam: (lastPage, pages) => lastPage.hasNextPage,
-    }
-  )
+  const {data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status} = useInfiniteQuery({
+    queryKey: ['MadeOffers', queryParams],
+    queryFn: fetchProjects,
+    getNextPageParam: (lastPage, pages) => lastPage.hasNextPage,
+  });
 
   const loadMore = () => {
     fetchNextPage();

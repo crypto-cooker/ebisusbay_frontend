@@ -16,21 +16,14 @@ const MySoldNftCollection = ({ walletAddress = null }) => {
     return await getNftSalesForAddress(walletAddress, pageParam, sort);
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-    refetch,
-  } = useInfiniteQuery(['MySoldNftCollection', walletAddress, sort], fetcher, {
+  const {data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, refetch} = useInfiniteQuery({
+    queryKey: ['MySoldNftCollection', walletAddress, sort],
+    queryFn: fetcher,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
     },
     refetchOnWindowFocus: false
-  })
+  });
 
   const loadMore = () => {
     fetchNextPage();

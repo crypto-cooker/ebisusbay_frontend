@@ -49,14 +49,13 @@ const Barracks = ({onBack}: BarracksProps) => {
     }
     return null;
   }
-  const { data: battleRewards } = useQuery(
-    ['BattleRewards', user.address],
-    checkForBattleRewards,
-    {
-      enabled: !!user.address,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const { data: battleRewards } = useQuery({
+    queryKey: ['BattleRewards', user.address],
+    queryFn: checkForBattleRewards,
+    enabled: !!user.address,
+    refetchOnWindowFocus: false
+  });
+
   const item = {
     hidden: { opacity: 0 },
     show: { opacity: 1,

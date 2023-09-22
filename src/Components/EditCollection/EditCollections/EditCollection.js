@@ -36,9 +36,10 @@ const EditCollection = ({ address: collectionAddress }) => {
     }
   }
 
-  const { data, status, isLoading, refetch } = useQuery(['Collections', collectionAddress], () =>
-    getCollections({ address: collectionAddress }), true
-  )
+  const { data, status, isLoading, refetch } = useQuery({
+    queryKey: ['Collections', collectionAddress],
+    queryFn: () => getCollections({address: collectionAddress})
+  })
 
   const [initialValues, setInitialValues] = useState({ ...initialValuesDefault })
 

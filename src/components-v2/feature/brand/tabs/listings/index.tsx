@@ -39,16 +39,9 @@ const ListingsTab = ({brand, collections}: ListingsTabProps) => {
     });
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-    refetch,
-  } = useInfiniteQuery(['BrandListings', brand.slug, queryParams], fetcher, {
+  const {data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, refetch,} = useInfiniteQuery({
+    queryKey: ['BrandListings', brand.slug, queryParams],
+    queryFn: fetcher,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },

@@ -29,22 +29,14 @@ const HistoryTab = ({address, tokenId}: HistoryTabProps) => {
     });
   }
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    status,
-  } = useInfiniteQuery(
-    ['NftHistory', filters],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    }
-  );
+  const {data, error, fetchNextPage, hasNextPage, status,} = useInfiniteQuery({
+    queryKey: ['NftHistory', filters],
+    queryFn: fetcher,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
   const sortCollections = (sortBy: string) => {
     let direction = 'desc';

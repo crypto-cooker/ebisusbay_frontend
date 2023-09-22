@@ -89,16 +89,14 @@ export default function Inventory({ address }: InventoryProps) {
     return nextApiService.getWallet(address, params);
   };
 
-  const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
-    ['Inventory', address, queryParams],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    }
-  )
+  const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery({
+    queryKey: ['Inventory', address, queryParams],
+    queryFn: fetcher,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
   const loadMore = () => {
     fetchNextPage();

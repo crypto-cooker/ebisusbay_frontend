@@ -55,13 +55,11 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault}: StakePageProps
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
 
-  const { data: account, status, error, refetch } = useQuery(
-    ['UserStakeAccount', user.address],
-    () => ApiService.withoutKey().ryoshiDynasties.getBankStakingAccount(user.address!),
-    {
-      enabled: !!user.address,
-    }
-  )
+  const { data: account, status, error, refetch } = useQuery({
+    queryKey: ['UserStakeAccount', user.address],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getBankStakingAccount(user.address!),
+    enabled: !!user.address,
+  });
 
   const handleConnect = async () => {
     if (!user.address) {

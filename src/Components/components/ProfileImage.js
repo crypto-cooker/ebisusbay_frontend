@@ -26,9 +26,10 @@ const VerifiedIcon = styled.span`
 
 const ProfileImage = ({ title, displayName, address = '' }) => {
 
-  const { isLoading, data } = useQuery(['user', address], () =>
-    getProfile(address)
-  )
+  const { isLoading, data } = useQuery({
+    queryKey: ['user', address],
+    queryFn: () => getProfile(address)
+  })
 
   return (
     <div className="col">

@@ -217,7 +217,8 @@ const PresaleVaultTab = () => {
     }
   };
 
-  const handleReleaseTellers = useMutation(releaseTellers, {
+  const handleReleaseTellers = useMutation({
+    mutationFn: releaseTellers,
     onSuccess: data => {
       queryClient.setQueryData(['PresaleVault', user.address], (old: any) => ({
         ...old,

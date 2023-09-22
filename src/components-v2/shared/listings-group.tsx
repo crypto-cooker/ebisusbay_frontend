@@ -32,9 +32,9 @@ const ListingsGroup = ({limitSize, showLoadMore = true, queryParams, fullWidth, 
     )
   );
 
-  const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['Listings', queryParams],
-    ({ pageParam = 1 }) => {
+  const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['Listings', queryParams],
+    queryFn: ({ pageParam = 1 }) => {
       const params: ListingsQueryParams = {
         sortBy: 'listingTime',
         direction: 'desc',
@@ -43,13 +43,11 @@ const ListingsGroup = ({limitSize, showLoadMore = true, queryParams, fullWidth, 
       }
       return nextApiService.getListings(params)
     },
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    }
-  )
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
   const loadMore = () => {
     fetchNextPage();

@@ -76,14 +76,12 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
         return target?.getAll(user.address!, address);
     }
 
-    const { data, error, status } = useQuery(
-        [queryKey, user.address, selectedAddress?.toLowerCase(), filterType],
-        () => fetcher(selectedAddress!),
-        {
-            refetchOnWindowFocus: false,
-            enabled: !!user.address && !!selectedAddress
-        }
-    );
+    const { data, error, status } = useQuery({
+        queryKey: [queryKey, user.address, selectedAddress?.toLowerCase(), filterType],
+        queryFn: () => fetcher(selectedAddress!),
+        refetchOnWindowFocus: false,
+        enabled: !!user.address && !!selectedAddress
+    });
 
     const handleConnect = () => {
         if (!user.address) {
@@ -365,14 +363,12 @@ const RewardsComponent = ({staker}: {staker: StakerWithRewards}) => {
         return rewards;
     }
 
-    const { data, error, status, refetch } = useQuery(
-        ['StakingRewards', user.address, staker.address.toLowerCase()],
-        fetcher,
-        {
-            refetchOnWindowFocus: false,
-            enabled: !!user.address && !!staker
-        }
-    );
+    const { data, error, status, refetch } = useQuery({
+        queryKey: ['StakingRewards', user.address, staker.address.toLowerCase()],
+        queryFn: fetcher,
+        refetchOnWindowFocus: false,
+        enabled: !!user.address && !!staker
+    });
 
     const handleClaimRewards = useCallback(async () => {
         try {

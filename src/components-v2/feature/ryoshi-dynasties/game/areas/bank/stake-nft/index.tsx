@@ -543,21 +543,19 @@ interface UnstakedNftsProps {
 }
 
 const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedNftsProps) => {
-  const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['BankUnstakedNfts', address, collection],
-    () => nextApiService.getWallet(address!, {
+  const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['BankUnstakedNfts', address, collection],
+    queryFn: () => nextApiService.getWallet(address!, {
       collection: [collection],
       sortBy: 'rank',
       direction: 'asc'
     }),
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false,
-      enabled: !!address && isReady && !!collection
-    }
-  );
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false,
+    enabled: !!address && isReady && !!collection
+  });
 
   return (
     <>

@@ -28,11 +28,11 @@ const NotificationMenu = function () {
   const [showMenu, setShowMenu] = useState(false);
   const [requestDeleteNotifications] = useDeleteNotifications();
 
-  const { isLoading, isError, error, data:notifications, refetch } = useQuery(
-    ['Notifications', address],
-    () => getNotifications(address),
-    {enabled: !!profile?.id}
-  )
+  const { isLoading, isError, error, data:notifications, refetch } = useQuery({
+    queryKey: ['Notifications', address],
+    queryFn: () => getNotifications(address),
+    enabled: !!profile?.id
+  });
 
   const handleClose = () => {
     setShowMenu(false);

@@ -39,9 +39,10 @@ export default function Collections({ address }) {
 
   const router = useRouter();
 
-  const { isLoading, error, data, status } = useQuery(['Collections', address], () =>
-    getOwnerCollections(address), isCollectionEnabled
-  )
+  const { isLoading, error, data, status } = useQuery({
+    queryKey: ['Collections', address],
+    queryFn: () => getOwnerCollections(address), isCollectionEnabled
+  });
 
   if (!isCollectionEnabled) {
     return <>Coming Soon...</>

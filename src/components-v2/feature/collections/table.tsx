@@ -28,18 +28,14 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
     return result.filter((collection: any) => knownContracts.includes(collection.collection.toLowerCase()));
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    status,
-  } = useInfiniteQuery(['Collections', filters], fetcher, {
+  const {data, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery({
+    queryKey: ['Collections', filters],
+    queryFn: fetcher,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
     },
     staleTime: 1
-  })
+  });
 
   const loadMore = () => {
     fetchNextPage();

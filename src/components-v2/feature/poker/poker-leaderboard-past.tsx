@@ -19,22 +19,20 @@ const PokerLeaderboardComponent = () => {
 	const [updatedAt, setUpdatedAt] = useState<string>();
 
 
-	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt} = useInfiniteQuery(
-		['RyoshiDiamondsLeaderboard'],
-	  ({pageParam = 1}) => ApiService.withoutKey().getRyoshiDiamondsLeaderboardAtBlock(pageParam, 500, 10176588),
-		{
-			getNextPageParam: (lastPage, pages) => {
-				return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-			},
+	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt} = useInfiniteQuery({
+		queryKey: ['RyoshiDiamondsLeaderboard'],
+	  queryFn: ({pageParam = 1}) => ApiService.withoutKey().getRyoshiDiamondsLeaderboardAtBlock(pageParam, 500, 10176588),
+		getNextPageParam: (lastPage, pages) => {
+			return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+		},
 		// onSuccess: (data) => {
 		// 	const [refreshTime, setRefreshTime] = useState('00:00:00');
 		// 	setRefreshTime(new Date().toLocaleTimeString())
 		// },
-	    refetchOnWindowFocus: false,
-	    staleTime: 60,
-	    cacheTime: 65
-	  }
-	)
+		refetchOnWindowFocus: false,
+		staleTime: 60,
+		cacheTime: 65
+	});
 
 	const loadMore = () => {
 		fetchNextPage();

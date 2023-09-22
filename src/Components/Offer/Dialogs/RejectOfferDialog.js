@@ -37,14 +37,12 @@ export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
     return tmpNft.nft;
   }
 
-  const { error, data: nft, status } = useQuery(
-    ['RejectOffer', user.address, offer.nftAddress, offer.nftId],
-    fetchNft,
-    {
-      enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
-      refetchOnWindowFocus: false
-    }
-  );
+  const { error, data: nft, status } = useQuery({
+    queryKey: ['RejectOffer', user.address, offer.nftAddress, offer.nftId],
+    queryFn: fetchNft,
+    enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
+    refetchOnWindowFocus: false
+  });
 
   const handleRejectOffer = async (e) => {
     e.preventDefault();

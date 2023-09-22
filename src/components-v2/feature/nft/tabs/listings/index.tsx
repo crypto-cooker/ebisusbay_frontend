@@ -47,22 +47,14 @@ const ListingsTab = ({ nft }: ListingsProps) => {
     return getNftListings({page: pageParam});
   }
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    status,
-  } = useInfiniteQuery(
-    ['NftListings', filters],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    }
-  );
+  const {data, error, fetchNextPage, hasNextPage, status,} = useInfiniteQuery({
+    queryKey: ['NftListings', filters],
+    queryFn: fetcher,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
   const sortCollections = (sortBy: string) => {
     let direction = 'desc';

@@ -64,14 +64,14 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const handleClose = () => {
     onClose();
   }
-  const {data} = useQuery(
-    ['RyoshiDailyCheckin', user.address],
-    fetcher,
-    {
-      enabled: !!user.address,
-      refetchOnWindowFocus: false,
-    }
-  );
+
+  const {data} = useQuery({
+    queryKey: ['RyoshiDailyCheckin', user.address],
+    queryFn: fetcher,
+    enabled: !!user.address,
+    refetchOnWindowFocus: false,
+  });
+
   const checkForBattleRewards = async () => {
     if (!user.address) return;
 

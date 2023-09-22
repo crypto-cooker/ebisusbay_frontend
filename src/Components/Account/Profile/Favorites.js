@@ -8,9 +8,10 @@ import {Center, Spinner} from "@chakra-ui/react";
 
 export default function Favorites({ address }) {
 
-  const { isLoading, error, data:nfts, status } = useQuery(['Favorites', address], () =>
-    getUserFavorites(address)
-  )
+  const { isLoading, error, data:nfts, status } = useQuery({
+    queryKey: ['Favorites', address],
+    queryFn: () => getUserFavorites(address)
+  })
 
   return status === "loading" ? (
     <Center>

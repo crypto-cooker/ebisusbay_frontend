@@ -43,41 +43,35 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   const [_, getSigner] = useCreateSigner();
   const {signature, isSignedIn, requestSignature} = useEnforceSignature();
 
-  const { data: rdConfig, status: rdConfigFetchStatus, error: rdFetchError} = useQuery(
-    ['RyoshiDynastiesContext'],
-    () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
-    {
-      initialData: initialRdConfig,
-      // staleTime: 1000 * 60 * 25,
-      // cacheTime: 1000 * 60 * 30,
-      refetchInterval: 1000 * 60,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const { data: rdConfig, status: rdConfigFetchStatus, error: rdFetchError} = useQuery({
+    queryKey: ['RyoshiDynastiesContext'],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
+    initialData: initialRdConfig,
+    // staleTime: 1000 * 60 * 25,
+    // cacheTime: 1000 * 60 * 30,
+    refetchInterval: 1000 * 60,
+    refetchOnWindowFocus: false,
+  });
 
-  const { data: rdUserContext, refetch: refetchUserContext} = useQuery(
-    ['RyoshiDynastiesUserContext', user.address, signature],
-    async () => {
+  const { data: rdUserContext, refetch: refetchUserContext} = useQuery({
+    queryKey: ['RyoshiDynastiesUserContext', user.address, signature],
+    queryFn: async () => {
       if (!!signature) {
         return await ApiService.withoutKey().ryoshiDynasties.getUserContext(user.address!, signature)
       }
       throw 'Please sign message in wallet to continue'
     },
-    {
-      refetchOnWindowFocus: false,
-      enabled: !!user.address && isSignedIn,
-      refetchInterval: 1000 * 60,
-    }
-  );
+    refetchOnWindowFocus: false,
+    enabled: !!user.address && isSignedIn,
+    refetchInterval: 1000 * 60,
+  });
 
-  const { data: rdGameContext, refetch: refetchGameContext} = useQuery(
-    ['RyoshiDynastiesGameContext', user.address],
-    () => ApiService.withoutKey().ryoshiDynasties.getGameContext(),
-    {
-      refetchOnWindowFocus: false,
-      refetchInterval: 1000 * 60,
-    }
-  );
+  const { data: rdGameContext, refetch: refetchGameContext} = useQuery({
+    queryKey: ['RyoshiDynastiesGameContext', user.address],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getGameContext(),
+    refetchOnWindowFocus: false,
+    refetchInterval: 1000 * 60,
+  });
 
   const navigate = (page: string) => {
     setPreviousPage(currentPage)

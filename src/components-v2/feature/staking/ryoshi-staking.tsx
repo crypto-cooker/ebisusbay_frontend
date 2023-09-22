@@ -27,13 +27,11 @@ const RyoshiStaking = () => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
   const [displayType, setDisplayType] = useState(displayTypes.staked)
-  const { data, status, refetch } = useQuery(
-    ['RyoshiStaking', user.address],
-    () => getStakedRyoshi(user.address),
-    {
-      enabled: !!user.address
-    }
-  )
+  const { data, status, refetch } = useQuery({
+    queryKey: ['RyoshiStaking', user.address],
+    queryFn: () => getStakedRyoshi(user.address),
+    enabled: !!user.address
+  })
 
   const handleDisplayTypeClick = (value: string) => {
     setDisplayType(value);
@@ -117,24 +115,14 @@ const UnstakedRyoshiNftList = () => {
     });
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-    refetch,
-  } = useInfiniteQuery(
-    ['UserUnstakedRyoshiNfts', user.address],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    })
+  const {data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, refetch} = useInfiniteQuery({
+    queryKey: ['UserUnstakedRyoshiNfts', user.address],
+    queryFn: fetcher,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
 
   const loadMore = () => {
