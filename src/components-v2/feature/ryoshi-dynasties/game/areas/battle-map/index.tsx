@@ -176,6 +176,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     setRegionName(regionName);
     setSelectedControlPoint(id);
     selectRegion(id);
+    if(blockDeployments) return;
     onOpen();
   }
   const GetControlPointId = (name: any) => {
