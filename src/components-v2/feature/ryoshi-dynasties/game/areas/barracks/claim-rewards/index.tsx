@@ -1,6 +1,6 @@
-import {Box, Center, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Spacer, Text, Wrap, WrapItem, Heading} from "@chakra-ui/react"
+import {Box, Center, Flex, Heading, Image, Spacer, Text, Wrap, WrapItem} from "@chakra-ui/react"
 
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {appConfig} from "@src/Config";
@@ -9,9 +9,6 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {toast} from "react-toastify";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAward} from "@fortawesome/free-solid-svg-icons";
-import {CloseIcon} from "@chakra-ui/icons";
 import ShrineIcon from "@src/components-v2/shared/icons/shrine";
 import Resources from "@src/Contracts/Resources.json";
 import {getAuthSignerInStorage} from "@src/helpers/storage";
@@ -21,17 +18,12 @@ import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery} from "@tanstack/react-query";
 import {getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
-import ImageService from "@src/core/services/image";
-import {nftCardUrl} from "@src/helpers/image";
-import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
-import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
+import axios from "axios";
+
 const config = appConfig();
 
-import axios from "axios";
-import { set } from "lodash";
 // const ryoshiCollectionAddress = appConfig('collections').find((c: any) => c.slug === 'koban').address;
 const api = axios.create({
   baseURL: config.urls.api,
