@@ -210,6 +210,9 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
   } else {
     rankedPlayers = CreateRankedPlayersFromData(data);
   }
+  //filter out only the entry with the address that we want
+  // rankedPlayers = rankedPlayers.filter((player) => player.address === ("0x58f4a38f80192e4739B10508E3d225B830a21663").toLowerCase());
+  // console.log("rankedPlayers", rankedPlayers);
   
   rankedPlayers = rankedPlayers.filter((player) => player.cards.length >= 5);
   rankedPlayers = RemoveBlackListedPlayers(rankedPlayers);
@@ -239,6 +242,12 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
       }}}
 
       let cardsNeeded = game2clubsThreshold - clubsUsedInHand;
+      // console.log("cardsNeeded", cardsNeeded);
+      // console.log("cardsForGame2", cardsForGame2);
+      // console.log("additionalSpaceForCards", additionalSpaceForCards);
+      // console.log("clubsUsedInHand", clubsUsedInHand);
+      // console.log("cardInHand", cardInHand);
+      // console.log("clubCards", clubCards);
 
       //meets game requirements in just main cards
       if(clubsUsedInHand >= game2clubsThreshold) {
@@ -251,7 +260,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
       }
 
       //if you need more cards in the new suite than you have space for, you can't meet the game requirements
-      if(cardsNeeded >= additionalSpaceForCards){
+      if(cardsNeeded > additionalSpaceForCards){
         return false;
       }
 
@@ -347,23 +356,41 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
   const GetSecondaryCardEdition = (cardRanks: number[], cardsFromGame2: number[], cards: number[], secondaryValue:number, valuesUsedInHand: number[]) => {
       let secondaryCardEdition = -1;
       let filteredCards = cards.sort((a, b) => b - a);
-      let filteredRanks = cardRanks;
+      // let filteredRanks = cardRanks;
       cardsFromGame2.sort((a, b) => b - a);
 
       if(ClubNeededInKicker(cardsFromGame2, valuesUsedInHand)) {
         // console.log("club needed in kicker");
         filteredCards = cards.filter((card) => card > 4000)
         filteredCards = filteredCards.map((card) => card - 4000);
-        filteredRanks = cardsFromGame2;
+        // filteredRanks = cardsFromGame2;
+      } else { 
+        filteredCards = filteredCards.map((card) => card > 4000 ? card - 4000 : card);
       }
+      
       // console.log("filteredCards", filteredCards);
-      // console.log("filteredRanks", filteredRanks);
+      // console.log("filteredRanks", filteredRanks); 
       // console.log("secondaryValue", secondaryValue);
 
+      ///get the range of cards that are the same as the secondary value
+      let min = 0;
+      let max = 0;
+      cardValueDict.forEach((cardValue) => {
+        if (cardValue.value === secondaryValue) {
+          max = cardValue.max;
+        } else if (cardValue.value === secondaryValue - 1) {
+          min = cardValue.max;
+        }
+      })
+      filteredCards = filteredCards.filter((card) => card >= min && card <= max);
+      // console.log("final filteredCards", filteredCards);
+      // console.log("min", min);
+      // console.log("max", max);
+      let lowestCard = Infinity;
       for(let i = 0; i < filteredCards.length; i++) {
-        if(filteredRanks[i] === secondaryValue) {
-          secondaryCardEdition = GetActualEditionNumber(filteredCards[i]);
-      }}
+        filteredCards[i] < lowestCard ? lowestCard = filteredCards[i] : null;
+      }
+      secondaryCardEdition = GetActualEditionNumber(lowestCard);
     return secondaryCardEdition;
   }
   const checkForFourOfAKind = (cardRanks: number[], cardsFromGame2:number[], cards:number[]) => {
@@ -380,6 +407,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     let secondaryValue = 0;
     let previousCard = 0;
     Object.keys(cardCountDict).forEach((card) => {
+      // console.log("card", card," cardCountDict[card]", cardCountDict[card]);
       if(cardCountDict[card] === 4 && MeetsGameRequriements(cardsFromGame2, [card, card, card, card])) {
         fourOfAKind = true;
         fourOfAKindValue = parseInt(card);
