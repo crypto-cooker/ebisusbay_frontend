@@ -17,7 +17,7 @@ import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/are
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/portal";
 import FishMarketModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/fish-market";
-const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | null}) => {
+const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig}) => {
   const user = useAppSelector((state) => state.user);
 
   const [currentPage, setCurrentPage] = useState<string>('village');

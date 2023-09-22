@@ -24,7 +24,7 @@ import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/compone
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 interface GameSyncProps {
-  initialRdConfig: RyoshiConfig | null;
+  initialRdConfig: RyoshiConfig;
   children: ReactNode;
 }
 const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
@@ -47,7 +47,7 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
     ['RyoshiDynastiesContext'],
     () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
     {
-      initialData: initialRdConfig ?? undefined,
+      initialData: initialRdConfig,
       // staleTime: 1000 * 60 * 25,
       // cacheTime: 1000 * 60 * 30,
       refetchInterval: 1000 * 60,
@@ -211,7 +211,7 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
       ) : !!rdConfig ? (
         <RyoshiDynastiesContext.Provider
           value={{
-            config: rdConfig!,
+            config: rdConfig ?? initialRdConfig,
             user: rdUserContext,
             refreshUser: refreshUserContext,
             game: rdGameContext,
