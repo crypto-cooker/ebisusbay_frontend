@@ -71,7 +71,7 @@ const Rewards = () => {
         <Card variant='outline' mt={2}>
           <CardBody>
             <Flex direction='column'>
-              <Text fontSize='26px' fontWeight='bold'>Season 1 Rewards</Text>
+              <Text fontSize='26px' fontWeight='bold'>My Rewards</Text>
               <Text fontSize='sm'>Unlock epic Fortune rewards by listing NFTs on Ebisu's Bay. Rewards are calculated at the end of every game of <Link href='/ryoshi'>Ryoshi Dynasties</Link> and accumulate daily.</Text>
             </Flex>
             {user.address ? (
