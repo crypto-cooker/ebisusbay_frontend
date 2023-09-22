@@ -293,6 +293,9 @@ export const configData = {
           '0x72c97F79867219381EFA83127534710D559a2220': ['cro', 'frtn'], // Dr Dao X Mutant
           '0xe0160145ec09f98fb3Dbc03b2b5da08D16871e3f': ['cro', 'frtn'], // Ghost OG
           '0x21037397bDA5CF87c17b5Ec7A07f6935B6c6EA65': ['cro', 'frtn'], // Ultimate Mutants
+          '0xb7bcDfcae4fA1A1b39660C03440FCf3E85AE878C': ['cro', 'frtn'], // Beta Mascots
+          '0x750bd33b39cee357983f1cdafd2cee51dfb03a62': ['cro', 'frtn'], // Mascot Booster Bags
+          '0xF4C80B77AA1F73E09348693a81d744Fcd1263A2D': ['cro', 'frtn'], // Gold Partner
         }
       }
     }
