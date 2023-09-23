@@ -181,34 +181,36 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
 
   return (
     <>
-      {rdConfigFetchStatus === "loading" ? (
-        <>
-          {dummyVillage}
-          <RdModal isOpen={true} title='Initializing Game...'>
-            <Center>
-              <Box p={8}>
-                <Spinner />
-              </Box>
-            </Center>
-          </RdModal>
-        </>
-      ) : rdConfigFetchStatus === "error" ? (
-        <>
-          {dummyVillage}
-          <RdModal isOpen={true} title='Error'>
-            <Center>
-              <Box p={4} textAlign='center'>
-                <Text>
-                  Whoops! Looks like something went wrong attempting to retrieve the latest game configuration. Please refresh the page and try again. If the issue persists, please contact support.
-                </Text>
-                <Text mt={8} fontSize='xs'>
-                  Error: {(rdFetchError as any).message}
-                </Text>
-              </Box>
-            </Center>
-          </RdModal>
-        </>
-      ) : !!rdConfig ? (
+      {/*{rdConfigFetchStatus === "loading" ? (*/}
+      {/*  <>*/}
+      {/*    /!*{dummyVillage}*!/*/}
+      {/*    <RdModal isOpen={true} title='Initializing Game...'>*/}
+      {/*      <Center>*/}
+      {/*        <Box p={8}>*/}
+      {/*          <Spinner />*/}
+      {/*        </Box>*/}
+      {/*      </Center>*/}
+      {/*    </RdModal>*/}
+      {/*  </>*/}
+      {/*) : rdConfigFetchStatus === "error" ? (*/}
+      {/*  <>*/}
+      {/*    /!*{dummyVillage}*!/*/}
+      {/*    <RdModal isOpen={true} title='Error'>*/}
+      {/*      <Center>*/}
+      {/*        <Box p={4} textAlign='center'>*/}
+      {/*          <Text>*/}
+      {/*            Whoops! Looks like something went wrong attempting to retrieve the latest game configuration. Please refresh the page and try again. If the issue persists, please contact support.*/}
+      {/*          </Text>*/}
+      {/*          <Text mt={8} fontSize='xs'>*/}
+      {/*            Error: {(rdFetchError as any).message}*/}
+      {/*          </Text>*/}
+      {/*        </Box>*/}
+      {/*      </Center>*/}
+      {/*    </RdModal>*/}
+      {/*  </>*/}
+      {/*) : */}
+
+      {!!rdConfig ? (
         <RyoshiDynastiesContext.Provider
           value={{
             config: rdConfig ?? initialRdConfig,

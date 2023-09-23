@@ -23687,6 +23687,31 @@
         "doxx": true,
         "kyc": true
       }
+    },
+    {
+      "name": "Cronos Chickens",
+      "slug": "cronos-chickens",
+      "multiToken": false,
+      "address": "0x6A7808f1e84bB173D6fC53Efd9Ebc6E56380AB5E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Cronos Chickens are a collection of 5,555 fun-loving chickens that live on the Cronos blockchain.",
+        "avatar": "/img/collections/cronos-chickens/avatar.webp",
+        "banner": "/img/collections/cronos-chickens/banner.webp",
+        "card": "/img/collections/cronos-chickens/card.webp",
+        "website": "https://cronos-chickens.netlify.app/",
+        "twitter": "https://twitter.com/CROChickens",
+        "discord": "https://discord.gg/wRFe2cVF8m",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
