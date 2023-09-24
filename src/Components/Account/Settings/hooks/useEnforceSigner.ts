@@ -31,7 +31,7 @@ const useEnforceSignature = () => {
       return signerAddressMatches && signerSigMatches;
     } catch (e) {
       // Malformed signature will throw an exception
-      
+
       return false;
     }
   }
