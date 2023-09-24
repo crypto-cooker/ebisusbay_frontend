@@ -23129,7 +23129,7 @@
       "multiToken": false,
       "address": "0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Time Creature Ships is partly a free drop for holding matching ID numbers of Time Creatures during the snapshot, The remaining will be sold for TTT only and 100% of the TTT will be BURNED!! Time Creature Ships will be required to send your Time Creatures off to gather resources in order to build your Time Ships for the Time Wars web3 game coming soon, Resources will start to be gathered for war BEFORE war!!",
         "avatar": "/img/collections/time-creature-ships/avatar.webp",
