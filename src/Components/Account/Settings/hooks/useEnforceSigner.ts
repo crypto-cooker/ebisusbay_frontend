@@ -23,11 +23,17 @@ const useEnforceSignature = () => {
     let signatureInStorage: string | null | undefined = authSigner?.signature;
     if (!signatureInStorage) return false;
 
-    const signerAddressMatches = !!authSigner?.address && ciEquals(authSigner?.address, user.address);
-    const sigOwnerAddress = ethers.utils.verifyMessage(signinMessage(user.address), signatureInStorage);
-    const signerSigMatches = ciEquals(sigOwnerAddress, user.address);
+    try {
+      const signerAddressMatches = !!authSigner?.address && ciEquals(authSigner?.address, user.address);
+      const sigOwnerAddress = ethers.utils.verifyMessage(signinMessage(user.address), signatureInStorage);
+      const signerSigMatches = ciEquals(sigOwnerAddress, user.address);
 
-    return signerAddressMatches && signerSigMatches;
+      return signerAddressMatches && signerSigMatches;
+    } catch (e) {
+      // Malformed signature will throw an exception
+      
+      return false;
+    }
   }
 
   const retrieveSignature = useCallback(async () => {
