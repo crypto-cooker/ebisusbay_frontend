@@ -100,7 +100,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
       }
 
       setExecutingTransferNft(true);
-      Sentry.captureEvent({message: 'handleTransfer', extra: {address: nftAddress, targetAddress}});
+      // Sentry.captureEvent({message: 'handleTransfer', extra: {address: nftAddress, targetAddress}});
 
       let tx;
       if (await is1155(nftAddress)) {

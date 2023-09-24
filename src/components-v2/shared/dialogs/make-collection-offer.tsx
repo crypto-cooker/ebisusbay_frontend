@@ -123,7 +123,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
         const price = ethers.utils.parseEther(offerPrice.toString());
 
         setExecutingCreateListing(true);
-        Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: collectionAddress, price}});
+        // Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: collectionAddress, price}});
         const contract = contractService!.offer;
 
         let tx;

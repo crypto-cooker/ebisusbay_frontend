@@ -152,7 +152,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
       const collectionAddress = collection.address;
 
       setExecutingSweepFloor(true);
-      Sentry.captureEvent({message: 'handleSweepFloor', extra: {address: collectionAddress}});
+      // Sentry.captureEvent({message: 'handleSweepFloor', extra: {address: collectionAddress}});
 
       let filteredListings = confirmationItems;
       if (autoSwapItems) {
