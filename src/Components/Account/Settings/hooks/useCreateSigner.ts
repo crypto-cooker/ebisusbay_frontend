@@ -5,7 +5,7 @@ import * as Sentry from '@sentry/react';
 import {useAtom} from "jotai/index";
 import {storageSignerAtom} from "@src/jotai/atoms/storage";
 
-const message = (address: string) => {
+export const signinMessage = (address: string) => {
   return "Welcome to Ebisu's Bay!\n\n" +
     "Click to sign in and accept the Ebisu's Bay Terms of Service: https://app.ebisusbay.com/terms-of-service.html\n\n" +
     "This request will not trigger a blockchain transaction or cost any gas fees.\n\n" +
@@ -45,7 +45,7 @@ const useSignature = () => {
     const address = user.address!;
 
     try {
-      const signature = await signMessage(message(address));
+      const signature = await signMessage(signinMessage(address));
       const date = new Date();
       const signer: SignerProps = {
         date,
