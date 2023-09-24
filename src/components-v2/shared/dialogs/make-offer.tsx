@@ -144,7 +144,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
         const price = ethers.utils.parseEther(offerPrice.toString());
 
         setExecutingCreateListing(true);
-        Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: nftAddress, price}});
+        // Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: nftAddress, price}});
         const contract = contractService!.offer;
         let tx;
         if (existingOffer) {

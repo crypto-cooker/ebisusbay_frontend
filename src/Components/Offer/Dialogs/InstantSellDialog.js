@@ -166,7 +166,7 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
       const price = ethers.utils.parseEther(salePrice.toString());
 
       setExecutingAcceptOffer(true);
-      Sentry.captureEvent({message: 'handleInstantSell', extra: {nftAddress: collection.address, price}});
+      // Sentry.captureEvent({message: 'handleInstantSell', extra: {nftAddress: collection.address, price}});
       const tx = await contractService.offer.acceptCollectionOffer(offer.nftAddress, offer.offerIndex, chosenCollectionNft.nftId);
 
       let receipt = await tx.wait();
