@@ -1,5 +1,4 @@
 import {useAppSelector} from "@src/Store/hooks";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {
@@ -125,7 +124,6 @@ const FortuneRewardsTab = () => {
 const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: number, onRefresh: () => void}) => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
-  const [_, getSigner] = useCreateSigner();
   const [executingClaim, setExecutingClaim] = useState(false);
   const [executingCompound, setExecutingCompound] = useState(false);
   const [executingCancelCompound, setExecutingCancelCompound] = useState(false);
@@ -513,7 +511,6 @@ interface VaultIndexWarningDialogProps {
 
 const PendingAuthorizationWarningDialog = ({isOpen, onClose, onExecuteCancel, onCancelComplete, type}: VaultIndexWarningDialogProps) => {
   const [executingCancel, setExecutingCancel] = useState(false);
-  const [_, getSigner] = useCreateSigner();
 
   const handleExecuteCancel = async () => {
     try {

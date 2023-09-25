@@ -6,6 +6,7 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  AspectRatio,
   Avatar,
   Box,
   Button,
@@ -14,20 +15,21 @@ import {
   HStack,
   IconButton,
   Image,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   SimpleGrid,
   SkeletonCircle,
   SkeletonText,
   Stack,
   Text,
+  useClipboard,
   useDisclosure,
   VStack,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton, useClipboard, AspectRatio,
 } from "@chakra-ui/react";
 import React, {useContext, useEffect, useState} from "react";
 import {ArrowBackIcon, EditIcon} from "@chakra-ui/icons";
@@ -38,8 +40,6 @@ import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import {useQuery} from "@tanstack/react-query";
 import {getRegistrationCost} from "@src/core/api/RyoshiDynastiesAPICalls";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdUserContextNoOwnerFactionTroops, RdUserContextOwnerFactionTroops} from "@src/core/services/api-service/types";
 import EditFactionForm from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/edit-faction";
 import CreateFactionForm from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/create-faction";
@@ -59,8 +59,8 @@ import {commify, isAddress} from "ethers/lib/utils";
 import {parseErrorMessage} from "@src/helpers/validator";
 import ImageService from "@src/core/services/image";
 import {motion} from "framer-motion";
-import FactionDirectoryComponent from "@src/components-v2/feature/ryoshi-dynasties/components/faction-directory";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const config = appConfig();
 const gothamBook = localFont({
@@ -230,7 +230,7 @@ export default AllianceCenter;
 
 const CurrentFaction = () => {
   const user = useAppSelector((state) => state.user);
-  const [_, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const { isOpen: isOpenFaction, onOpen: onOpenFaction, onClose: onCloseFaction } = useDisclosure();
@@ -294,35 +294,29 @@ const CurrentFaction = () => {
     } else {
       try {
         setIsExecutingRegister(true);
-        let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-        if (!signatureInStorage) {
-          const { signature } = await getSigner();
-          signatureInStorage = signature;
-        }
-        if (signatureInStorage) {
-          const { signature, ...registrationStruct } = await getRegistrationCost(
-            user.address?.toLowerCase(),
-            signatureInStorage,
-            seasonBlockId,
-            rdContext.game?.game.id,
-            rdContext.user?.faction.id
-          );
+        const signinSignature = await requestSignature();
+        const { signature, ...registrationStruct } = await getRegistrationCost(
+          user.address?.toLowerCase(),
+          signinSignature,
+          seasonBlockId,
+          rdContext.game?.game.id,
+          rdContext.user?.faction.id
+        );
 
-          const totalApproved = await checkForApproval();
-          if(totalApproved.lt(registrationStruct.cost)) {
-            toast.error('Please approve the contract to spend your tokens');
-            const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
-            const tx1 = await fortuneContract.approve(config.contracts.allianceCenter, registrationStruct.cost);
-            const receipt1 = await tx1.wait();
-            toast.success(createSuccessfulTransactionToastContent(receipt1.transactionHash));
-          }
-
-          const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
-          const tx = await registerFactionContract.registerFaction(registrationStruct, signature)
-          const receipt = await tx.wait();
-          rdContext.refreshUser();
-          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        const totalApproved = await checkForApproval();
+        if(totalApproved.lt(registrationStruct.cost)) {
+          toast.error('Please approve the contract to spend your tokens');
+          const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
+          const tx1 = await fortuneContract.approve(config.contracts.allianceCenter, registrationStruct.cost);
+          const receipt1 = await tx1.wait();
+          toast.success(createSuccessfulTransactionToastContent(receipt1.transactionHash));
         }
+
+        const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
+        const tx = await registerFactionContract.registerFaction(registrationStruct, signature)
+        const receipt = await tx.wait();
+        rdContext.refreshUser();
+        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       } catch (error: any) {
         console.log(error);
         toast.error(parseErrorMessage(error));

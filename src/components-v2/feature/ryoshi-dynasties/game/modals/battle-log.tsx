@@ -1,8 +1,6 @@
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {
   Avatar,
   Box,
@@ -38,6 +36,7 @@ import {isAddress, pluralize, shortAddress} from "@src/utils";
 import localFont from 'next/font/local';
 import {useInfiniteQuery} from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
@@ -70,9 +69,8 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   const dispatch = useDispatch();
   const { config: rdConfig, game: rdGameContext, user: rdUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector(state => state.user);
-  const [_, getSigner] = useCreateSigner();
   const [sortOrder, setSortOrder] = useState("desc" as "asc" | "desc");
-  const [signature, setSignature] = useState<string | null>(null);
+  const {signature, isSignedIn, requestSignature} = useEnforceSignature();
 
   const connectWalletPressed = async () => {
     if (user.needsOnboard) {
@@ -120,20 +118,10 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   useEffect(() => {
     if (!isOpen) return;
 
-    async function getSig() {
-      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
-      }
-      setSignature(signatureInStorage);
+    if (!isSignedIn) {
+      requestSignature();
     }
-    if (!!user.address) {
-      getSig();
-    } else {
-      setSignature(null);
-    }
-  }, [user.address, isOpen]);
+  }, [isOpen, isSignedIn]);
 
   return (
     <Drawer
