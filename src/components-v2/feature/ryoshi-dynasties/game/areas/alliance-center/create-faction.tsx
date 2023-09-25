@@ -729,7 +729,7 @@ const CreateFactionForm = ({ isOpen, onClose, handleClose}: FactionRegistrationF
       
               <Spacer my={8} />
               <Text>
-                  NFT collections MUST register as a faction each season in order to participate in battle and be considered for listing rewards. Must be holding at least 20 $Mitama in your wallet.
+                  NFT collections MUST register as a faction each season in order to participate in battle and be considered for listing rewards. Must be holding at least 1500 $Mitama in your wallet.
               </Text>
       
       
