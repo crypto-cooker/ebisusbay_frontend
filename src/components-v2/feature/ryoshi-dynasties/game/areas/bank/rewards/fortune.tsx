@@ -2,7 +2,6 @@ import {useAppSelector} from "@src/Store/hooks";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
 import {
   Accordion,
   AccordionButton,
@@ -43,6 +42,7 @@ import {ethers} from "ethers";
 import {commify} from "ethers/lib/utils";
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
 import moment from 'moment';
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const config = appConfig();
 
@@ -135,6 +135,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 
   const isCurrentSeason = rdGameContext?.season.blockId === reward.blockId;
   const queryClient = useQueryClient();
+  const {requestSignature} = useEnforceSignature();
 
   const handleClaim = async (amountAsString: string, seasonId: number, force = false) => {
     try {
@@ -142,54 +143,48 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       onCloseConfirmation();
       const flooredAmount = Math.floor(Number(amountAsString));
 
-      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
+      const signature = await requestSignature();
+      const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signature);
+      const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+      const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+      const mustCancelClaim = !!pendingClaim && pendingClaim.seasonId !== seasonId;
+
+      if (!force && (pendingCompound || mustCancelClaim)) {
+        setExistingAuthWarningOpenWithProps({
+          type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
+          onCancel: async () => {
+            if (pendingClaim) await handleCancelClaim(pendingClaim.seasonId);
+            else await handleCancelCompound(Number(pendingCompound.vaultIndex), pendingCompound.seasonId);
+          },
+          onCancelComplete: () => {
+            setExistingAuthWarningOpenWithProps(false);
+            handleClaim(amountAsString, seasonId, true);
+          }
+        });
+        return;
       }
-      if (signatureInStorage) {
-        const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signatureInStorage);
-        const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
-        const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
-        const mustCancelClaim = !!pendingClaim && pendingClaim.seasonId !== seasonId;
 
-        if (!force && (pendingCompound || mustCancelClaim)) {
-          setExistingAuthWarningOpenWithProps({
-            type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
-            onCancel: async () => {
-              if (pendingClaim) await handleCancelClaim(pendingClaim.seasonId);
-              else await handleCancelCompound(Number(pendingCompound.vaultIndex), pendingCompound.seasonId);
-            },
-            onCancelComplete: () => {
-              setExistingAuthWarningOpenWithProps(false);
-              handleClaim(amountAsString, seasonId, true);
-            }
-          });
-          return;
-        }
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signature)
+      const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+      await tx.wait();
 
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signatureInStorage)
-        const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
-        await tx.wait();
-
-        queryClient.setQueryData(
-          ['BankSeasonalRewards', user.address],
-          (oldData: any) => {
-            return {
-              ...oldData,
-              data: {
-                ...oldData.data,
-                rewards: {
-                  ...oldData.data.rewards,
-                  currentRewards: '0'
-                }
+      queryClient.setQueryData(
+        ['BankSeasonalRewards', user.address],
+        (oldData: any) => {
+          return {
+            ...oldData,
+            data: {
+              ...oldData.data,
+              rewards: {
+                ...oldData.data.rewards,
+                currentRewards: '0'
               }
             }
           }
-        );
+        }
+      );
 
-        toast.success('Withdraw success!');
-      }
+      toast.success('Withdraw success!');
     } catch (e) {
       console.log(e);
     } finally {
@@ -202,17 +197,11 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       setExecutingClaim(true);
       const flooredAmount = Math.floor(Number(reward.currentRewards));
 
-      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
-      }
-      if (signatureInStorage) {
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signatureInStorage)
-        const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
-        await tx.wait();
-        toast.success('Previous request cancelled');
-      }
+      const signature = await requestSignature();
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signature)
+      const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+      await tx.wait();
+      toast.success('Previous request cancelled');
     }
     // catch (e) {
     //   console.log(e);
@@ -227,55 +216,49 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       setExecutingCompound(true);
       const flooredAmount = convertToNumberAndRoundDown(reward.currentRewards);
 
-      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
+      const signature = await requestSignature();
+      const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signature);
+      const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+      const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+      const mustCancelCompound = !!pendingCompound && Number(pendingCompound.vaultIndex) !== Number(vault.index);
+
+      if (!force && (pendingClaim || mustCancelCompound)) {
+        setExistingAuthWarningOpenWithProps({
+          type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
+          onCancel: async () => {
+            if (pendingClaim) await handleCancelClaim(pendingClaim.seasonId);
+            else await handleCancelCompound(vault.index, pendingCompound.seasonId);
+          },
+          onCancelComplete: () => {
+            setExistingAuthWarningOpenWithProps(false);
+            handleCompound(vault, seasonId, true);
+          }
+        });
+        return;
       }
-      if (signatureInStorage) {
-        const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signatureInStorage);
-        const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
-        const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
-        const mustCancelCompound = !!pendingCompound && Number(pendingCompound.vaultIndex) !== Number(vault.index);
 
-        if (!force && (pendingClaim || mustCancelCompound)) {
-          setExistingAuthWarningOpenWithProps({
-            type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
-            onCancel: async () => {
-              if (pendingClaim) await handleCancelClaim(pendingClaim.seasonId);
-              else await handleCancelCompound(vault.index, pendingCompound.seasonId);
-            },
-            onCancelComplete: () => {
-              setExistingAuthWarningOpenWithProps(false);
-              handleCompound(vault, seasonId, true);
-            }
-          });
-          return;
-        }
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vault.index, signature)
 
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vault.index, signatureInStorage)
+      const tx = await user.contractService?.ryoshiPlatformRewards.compound(auth.data.reward, auth.data.signature);
+      await tx.wait();
 
-        const tx = await user.contractService?.ryoshiPlatformRewards.compound(auth.data.reward, auth.data.signature);
-        await tx.wait();
-
-        queryClient.setQueryData(
-          ['BankSeasonalRewards', user.address],
-        (oldData: any) => {
-            return {
-              ...oldData,
-              data: {
-                ...oldData.data,
-                rewards: {
-                  ...oldData.data.rewards,
-                  currentRewards: '0'
-                }
+      queryClient.setQueryData(
+        ['BankSeasonalRewards', user.address],
+      (oldData: any) => {
+          return {
+            ...oldData,
+            data: {
+              ...oldData.data,
+              rewards: {
+                ...oldData.data.rewards,
+                currentRewards: '0'
               }
             }
           }
-        );
+        }
+      );
 
-        toast.success('Compound complete!');
-      }
+      toast.success('Compound complete!');
     } catch (e) {
       console.log(e);
     } finally {
@@ -288,17 +271,11 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       setExecutingCancelCompound(true);
       const flooredAmount = convertToNumberAndRoundDown(reward.currentRewards);
 
-      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
-      }
-      if (signatureInStorage) {
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vaultIndex, signatureInStorage)
-        const tx = await user.contractService?.ryoshiPlatformRewards.cancelCompound(auth.data.reward, auth.data.signature);
-        await tx.wait();
-        toast.success('Previous request cancelled');
-      }
+      const signature = await requestSignature();
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vaultIndex, signature)
+      const tx = await user.contractService?.ryoshiPlatformRewards.cancelCompound(auth.data.reward, auth.data.signature);
+      await tx.wait();
+      toast.success('Previous request cancelled');
     }
     // catch (e) {
     //   console.log(e);

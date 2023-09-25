@@ -1,9 +1,8 @@
-import { useCallback, useState } from 'react';
-import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {useCallback, useState} from 'react';
 
-import { updateCollection } from "@src/core/cms/next/collections";
-import { updateAvatar, updateBanner, updateCard} from "@src/core/cms/endpoints/collections";
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+import {updateCollection} from "@src/core/cms/next/collections";
+import {updateAvatar, updateBanner, updateCard} from "@src/core/cms/endpoints/collections";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 export const useUpdate = () => {
   const [response, setResponse] = useState({
@@ -12,7 +11,7 @@ export const useUpdate = () => {
     error: null
   });
 
-  const [isLoading, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
 
   const update = useCallback(async (address, newData, collectionAddress) => {
 
@@ -24,30 +23,25 @@ export const useUpdate = () => {
       error: null,
     });
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
     try {
-      const payload = await updateCollection({ signature: signatureInStorage, address, collectionAddress }, collectionInfo); 
+      const signature = await requestSignature();
+      const payload = await updateCollection({ signature: signature, address, collectionAddress }, collectionInfo);
       if (collectionAvatar.collectionPicture[0]?.file?.name) {
         const formData = new FormData();
         formData.append('avatar', collectionAvatar.collectionPicture[0].file);
-        await updateAvatar({ signature: signatureInStorage, address, collectionAddress}, formData);
+        await updateAvatar({ signature: signature, address, collectionAddress}, formData);
       }
       
       if (collectionBanner.banner[0]?.file?.name) {
         const formData = new FormData();
         formData.append('banner', collectionBanner.banner[0].file);
-        await updateBanner({ signature: signatureInStorage, address, collectionAddress}, formData);
+        await updateBanner({ signature: signature, address, collectionAddress}, formData);
       }
 
       if (collectionCard.card[0]?.file?.name) {
         const formData = new FormData();
         formData.append('card', collectionCard.card[0].file);
-        await updateCard({ signature: signatureInStorage, address, collectionAddress}, formData);
+        await updateCard({ signature: signature, address, collectionAddress}, formData);
       }
 
       setResponse({
@@ -62,17 +56,7 @@ export const useUpdate = () => {
         error: e,
       });
     }
-  } else {
-    setResponse({
-      isLoading: false,
-      response: [],
-      error: { message: 'Something went wrong' },
-    });
-  }
-
-  },
-    [response, getSigner]
-  );
+  }, [response, requestSignature]);
 
   return [response, update];
 };
