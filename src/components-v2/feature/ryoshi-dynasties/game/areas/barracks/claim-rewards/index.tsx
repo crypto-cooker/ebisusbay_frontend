@@ -11,8 +11,6 @@ import {
 import {toast} from "react-toastify";
 import ShrineIcon from "@src/components-v2/shared/icons/shrine";
 import Resources from "@src/Contracts/Resources.json";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {Contract} from "ethers";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {ApiService} from "@src/core/services/api-service";
@@ -21,6 +19,7 @@ import {getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
 import axios from "axios";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const config = appConfig();
 
@@ -45,9 +44,9 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [executingLabel, setExecutingLabel] = useState('');
   const [isExecutingClaim, setIsExecutingClaim] = useState(false);
-  const [isLoading, getSigner] = useCreateSigner();
   const [nftImages, setNftImages] = useState<any[]>([]);
   const [isHovered, setIsHovered] = useState(false);
+  const {requestSignature} = useEnforceSignature();
   const fetcher = async () => {
     // let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
     //
@@ -72,56 +71,43 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
       refetchOnWindowFocus: false,
     }
   );
+
   const checkForBattleRewards = async () => {
     if (!user.address) return;
 
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      return await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
-    }
-
-    return null;
+    const signature = await requestSignature();
+    return await getBattleRewards(user.address.toLowerCase(), signature);
   }
+
   const claimBattleRewards = async () => {
     if (!user.address) return;
 
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        setIsExecutingClaim(true);
-        // console.log('===claimBattleRewards', battleRewards);
-        // const mintRequest = {
-        //   address: user.address.toLowerCase(), 
-        //   ids: battleRewards.tokenIds, 
-        //   amounts: battleRewards.quantity, 
-        //   expire: battleRewards.expiresAt, 
-        //   nonce: battleRewards.id};
-        const battleRewards3 = await checkForBattleRewards();
-        const mintRequest = [user.address.toLowerCase(), battleRewards3.tokenIds, battleRewards3.quantity, battleRewards3.expiresAt, battleRewards3.nonce];
-        setExecutingLabel('Claiming...')
-        // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
-        const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-        const tx = await resourcesContract.mintWithSig(mintRequest, battleRewards3.signature);
+    try {
+      setIsExecutingClaim(true);
+      // console.log('===claimBattleRewards', battleRewards);
+      // const mintRequest = {
+      //   address: user.address.toLowerCase(),
+      //   ids: battleRewards.tokenIds,
+      //   amounts: battleRewards.quantity,
+      //   expire: battleRewards.expiresAt,
+      //   nonce: battleRewards.id};
+      const battleRewards3 = await checkForBattleRewards();
+      const mintRequest = [user.address.toLowerCase(), battleRewards3.tokenIds, battleRewards3.quantity, battleRewards3.expiresAt, battleRewards3.nonce];
+      setExecutingLabel('Claiming...')
+      // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
+      const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
+      const tx = await resourcesContract.mintWithSig(mintRequest, battleRewards3.signature);
 
-        const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-        setExecutingLabel('Done!')
-        battleRewards = null;
-        setIsExecutingClaim(false)
-        onClose();
-      } catch (error) {
-        console.log(error)
-        setExecutingLabel('Claim')
-        setIsExecutingClaim(false)
-      }
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      setExecutingLabel('Done!')
+      battleRewards = null;
+      setIsExecutingClaim(false)
+      onClose();
+    } catch (error) {
+      console.log(error)
+      setExecutingLabel('Claim')
+      setIsExecutingClaim(false)
     }
   }
   const GetTokenImage = (tokenId: number) => {

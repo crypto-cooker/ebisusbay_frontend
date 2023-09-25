@@ -1,8 +1,7 @@
-import { useCallback, useState } from 'react';
-import { getAuthSignerInStorage } from '@src/helpers/storage';
+import {useCallback, useState} from 'react';
 
-import { setOwner } from "@src/core/api/next/collectioninfo";
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+import {setOwner} from "@src/core/api/next/collectioninfo";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 export const useSetOwner = () => {
   const [response, setResponse] = useState({
@@ -11,7 +10,7 @@ export const useSetOwner = () => {
     error: null
   });
 
-  const [isLoading, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
 
   const setNewOwner = useCallback(async (address, collectionAddress, ownerAddress) => {
     setResponse({
@@ -20,14 +19,9 @@ export const useSetOwner = () => {
       error: null,
     });
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
     try {
-      const payload = await setOwner({ signature: signatureInStorage, address }, collectionAddress, ownerAddress);
+      const signature = await requestSignature();
+      const payload = await setOwner({ signature: signature, address }, collectionAddress, ownerAddress);
 
       setResponse({
         isLoading: false,
@@ -40,17 +34,8 @@ export const useSetOwner = () => {
         error: e,
       });
     }
-  } else {
-    setResponse({
-      isLoading: false,
-      response: [],
-      error: { message: 'Something went wrong' },
-    });
-  }
 
-  },
-    [setNewOwner, response, getSigner]
-  );
+  }, [response, requestSignature]);
 
   return [response, setNewOwner];
 };

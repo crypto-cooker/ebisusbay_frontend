@@ -1,8 +1,6 @@
-import { useCallback, useState } from 'react';
-import { clearOwner } from "@src/core/api/next/collectioninfo";
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
+import {useCallback, useState} from 'react';
+import {clearOwner} from "@src/core/api/next/collectioninfo";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 export const useClearOwner = () => {
   const [response, setResponse] = useState({
@@ -11,7 +9,7 @@ export const useClearOwner = () => {
     error: null
   });
 
-  const [isLoading, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
 
   const clearCollectionOwner = useCallback(async (address, collectionAddress) => {
     setResponse({
@@ -20,35 +18,23 @@ export const useClearOwner = () => {
       error: null,
     });
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const payload = await clearOwner({ signature: signatureInStorage, address }, collectionAddress);
+    try {
+      const signature = await requestSignature();
+      const payload = await clearOwner({ signature: signature, address }, collectionAddress);
 
-        setResponse({
-          isLoading: false,
-          response: payload,
-        });
-      } catch (e) {
-        setResponse({
-          isLoading: false,
-          response: null,
-          error: e,
-        });
-      }
-    } else {
       setResponse({
         isLoading: false,
-        response: [],
-        error: { message: 'Something went wrong' },
+        response: payload,
+      });
+    } catch (e) {
+      setResponse({
+        isLoading: false,
+        response: null,
+        error: e,
       });
     }
   },
-    [clearCollectionOwner, response, getSigner]
+    [response, requestSignature]
   );
 
   return [response, clearCollectionOwner];

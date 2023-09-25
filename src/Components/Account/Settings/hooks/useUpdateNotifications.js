@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-import useCreateSigner from './useCreateSigner';
+import {useState} from 'react';
 import {updateNotifications} from "@src/core/cms/endpoints/profile";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const useUpdateNotifications = () => {
   const [response, setResponse] = useState({
@@ -9,7 +8,7 @@ const useUpdateNotifications = () => {
     error: null,
   });
 
-  const [isLoading, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
 
   const requestUpdateNotifications = async (address, notificationMethods, notificationTypes) => {
     setResponse({
@@ -18,34 +17,22 @@ const useUpdateNotifications = () => {
       error: null,
     });
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const fetchResponse = await updateNotifications(notificationMethods, notificationTypes, signatureInStorage, address);
-        
-        setResponse({
-          ...response,
-          loading: false,
-          error: null,
-        });
+    try {
+      const signature = await requestSignature();
+      const fetchResponse = await updateNotifications(notificationMethods, notificationTypes, signature, address);
 
-        return fetchResponse.data;
-      } catch (error) {
-        setResponse({
-          ...response,
-          loading: false,
-          error: error,
-        });
-      }
-    } else {
       setResponse({
-        isLoading: false,
-        response: [],
-        error: { message: 'Something went wrong' },
+        ...response,
+        loading: false,
+        error: null,
+      });
+
+      return fetchResponse.data;
+    } catch (error) {
+      setResponse({
+        ...response,
+        loading: false,
+        error: error,
       });
     }
   };
