@@ -1,7 +1,6 @@
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {Box, HStack, Image, SimpleGrid, Text} from "@chakra-ui/react";
 import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
@@ -44,7 +43,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const [executingClaim, setExecutingClaim] = useState(false);
 
   const [runAuthedFunction] = useAuthedFunction();
-  const {isSignedIn, signin, isSigningIn} = useEnforceSigner();
+  const {isSignedIn, signin, isSigningIn, requestSignature} = useEnforceSigner();
 
   const authCheckBeforeClaim = async () => {
     await runAuthedFunction(claimDailyRewards);
@@ -58,29 +57,23 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
     if (!user.address) return;
       try {
         setExecutingClaim(true);
-        let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-        if (!signatureInStorage) {
-          const { signature } = await getSigner();
-          signatureInStorage = signature;
-        }
-        if (signatureInStorage) {
-          const authorization = await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signatureInStorage);
+        const signature = await requestSignature();
+        const authorization = await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signature);
 
-          const sig = authorization.data.signature;
-          const mintRequest = JSON.parse(authorization.data.metadata);
+        const sig = authorization.data.signature;
+        const mintRequest = JSON.parse(authorization.data.metadata);
 
-          // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
-          const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-          // console.log('===request', mintRequest, sig, authorization);
-          const tx = await resourcesContract.mintWithSig(mintRequest, sig);
+        // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
+        const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
+        // console.log('===request', mintRequest, sig, authorization);
+        const tx = await resourcesContract.mintWithSig(mintRequest, sig);
 
-          const receipt = await tx.wait();
-          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-          setCanClaim(false);
-          setNextClaim('in 24 hours');
-          rdContext.refreshUser();
-          forceRefresh();
-        }
+        const receipt = await tx.wait();
+        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        setCanClaim(false);
+        setNextClaim('in 24 hours');
+        rdContext.refreshUser();
+        forceRefresh();
       } catch (error: any) {
         console.log(error);
         toast.error(parseErrorMessage(error));
