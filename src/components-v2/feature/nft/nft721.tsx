@@ -47,10 +47,8 @@ import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/Us
 import {specialImageTransform} from '@src/hacks';
 import PriceActionBar from './price-action-bar';
 import {ERC721} from '@src/Contracts/Abis';
-import {getFilteredOffers} from '@src/core/subgraph';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
-import {offerState} from '@src/core/api/enums';
 import {commify} from 'ethers/lib/utils';
 import {appConfig} from '@src/Config';
 import Link from 'next/link';
@@ -85,10 +83,11 @@ import {useAppSelector} from "@src/Store/hooks";
 import {ContractInterface} from "@ethersproject/contracts";
 import ImageService from "@src/core/services/image";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
-import {OfferType} from "@src/core/services/api-service/types";
+import {OfferState, OfferType} from "@src/core/services/api-service/types";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
 import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
+import {ApiService} from "@src/core/services/api-service";
 
 const config = appConfig();
 const tabs = {
@@ -524,14 +523,13 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
 
   useEffect(() => {
     async function func() {
-      const filteredOffers = await getFilteredOffers(nft.address, nft.id.toString(), user.address);
-      const data = filteredOffers ? filteredOffers.data.filter((o: any) => o.state === offerState.ACTIVE.toString()) : [];
-      if (data && data.length > 0) {
-        setOfferType(OFFER_TYPE.update);
-        setOfferData(data[0]);
-      } else {
-        setOfferType(OFFER_TYPE.make);
-      }
+      const existingOffer = await ApiService.withoutKey().getMadeOffersByUser(user.address!, {
+        collection: [nft.address],
+        tokenId: nft.id,
+        state: OfferState.ACTIVE,
+        pageSize: 1
+      });
+      setOfferType(existingOffer.data.length > 0 ? OFFER_TYPE.update : OFFER_TYPE.make);
     }
     if (!offerType && user.address && nft && nft.address && nft.id) {
       func();

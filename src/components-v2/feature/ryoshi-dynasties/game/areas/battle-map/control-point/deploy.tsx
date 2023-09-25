@@ -50,10 +50,10 @@ const tabs = {
 interface DeployTabProps {
   controlPoint: RdControlPoint;
   refreshControlPoint: () => void;
-  allFactions: any[];
+  factionsSubscribedToSeason: any[];
 }
 
-const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabProps) => {
+const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeason}: DeployTabProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
   const [isLoading, getSigner] = useCreateSigner();
@@ -69,7 +69,8 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
   const [playerFaction, setPlayerFaction] = useState<RdFaction>();
   const [hasFaction, setHasFaction] = useState(false);
   const [troopsAvailable, setTroopsAvailable] = useState(0);
-  const[troopsDeployed, setTroopsDeployed] = useState(0);
+  const [troopsDeployed, setTroopsDeployed] = useState(0);
+  const [factionSubscribed, setFactionSubscribed] = useState(false);
 
   const handleConnect = async () => {
     if (!user.address) {
@@ -115,18 +116,12 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
       try {
         const data = await getFactionOwned(user.address.toLowerCase(), signatureInStorage);
         // console.log("data.data.data", data.data.data)
-        if(data.data.data?.isEnabled)
-        {
+        if(data.data.data?.isEnabled) {
           setHasFaction(true)
           setPlayerFaction(data.data.data)
-          // const factionTroopsData = await getFactionUndeployedArmies(user.address.toLowerCase(), signatureInStorage);
-          // setTroopsAvailable(factionTroopsData)
         }
-        else
-        {
+        else {
           setHasFaction(false)
-          // const troops = await getProfileTroops(user.address.toLowerCase(), signatureInStorage);
-          // setTroopsAvailable(troops)
         }
       } catch (error) {
         console.log(error)
@@ -148,7 +143,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
       setFactionError(`You must select a faction`);
       return;
     }
-    if(allFactions.filter(faction => faction.name === selectedFaction)[0].addresses.length === 0){
+    if(factionsSubscribedToSeason.filter(faction => faction.name === selectedFaction)[0].addresses.length === 0){
       setFactionError(`Faction must have addresses to participate`);
       return;
     }
@@ -190,7 +185,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
       try {
         setIsExecuting(true);
         // console.log("deploying troops")
-        var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
+        var factionId = factionsSubscribedToSeason.filter(faction => faction.name === selectedFaction)[0].id
         // console.log("factionId", factionId)
         // console.log("selectedQuantity", selectedQuantity)
         // console.log("controlPoint.id", controlPoint.id)
@@ -228,7 +223,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
           setIsExecuting(true);
           // console.log("recalling troops")
           // console.log("rdContext", rdContext?.game?.game.id)
-          var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
+          var factionId = factionsSubscribedToSeason.filter(faction => faction.name === selectedFaction)[0].id
           // console.log("user.address", user.address?.toLowerCase())
           // console.log("signatureInStorage", signatureInStorage)
           // console.log("factionId", factionId)
@@ -263,15 +258,20 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
     }
     return 0;
   }
+  const CheckIfFactionSubscribed = () => {
+    //check if allfactions (which contains factions subscribed to the season) contains selected faction
+    setFactionSubscribed(factionsSubscribedToSeason.filter(faction => faction.name === selectedFaction).length > 0);
+  }
 
   useEffect(() => {
     GetTroopsOnPoint();
+    CheckIfFactionSubscribed();
   }, [selectedFaction])
   useEffect(() => {
     GetPlayerTroops();
   }, [user.address])
   useEffect(() => {
-  }, [allFactions]);
+  }, [factionsSubscribedToSeason]);
   useEffect(() => {
     if(!rdContext?.user) return;
 
@@ -314,7 +314,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
                     <FormLabel> Faction:</FormLabel>
                   </GridItem>
                   <GridItem colSpan={{base:5, sm:4}} w='100%' >
-                    <SearchFaction handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"lrg"}/>
+                    <SearchFaction handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={factionsSubscribedToSeason} imgSize={"lrg"}/>
                   </GridItem>
                 </Grid>
               </>)}
@@ -339,7 +339,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
                       height='20px' />
                     {playerFaction!.name}
                   </option>
-                ) : allFactions.map((faction, index) => (
+                ) : factionsSubscribedToSeason.map((faction, index) => (
                   <option 
                     style={{ background: '#272523' }} 
                     value={faction.name} 
@@ -408,14 +408,22 @@ const DeployTab = ({controlPoint, refreshControlPoint, allFactions}: DeployTabPr
             <Spacer h='8'/>
 
             <Center>
-              <RdButton
-                w='250px'
-                fontSize={{base: 'lg', sm: 'lg'}}
-                onClick={DeployOrRecallTroops}
-                disabled={isExecuting}
-              >
-                {currentTab === tabs.deploy ? "Deploy" :"Recall" }
-              </RdButton>
+              {selectedFaction ? (
+                factionSubscribed ? (
+                    <RdButton
+                      w='250px'
+                      fontSize={{base: 'lg', sm: 'lg'}}
+                      onClick={DeployOrRecallTroops}
+                      disabled={isExecuting}
+                    >
+                      {currentTab === tabs.deploy ? "Deploy" :"Recall" }
+                    </RdButton>
+                ) : (
+                  <Text as={'i'} textColor={'#aaa'}> {selectedFaction} is not subscribed to current season</Text>
+                )
+              ) : (
+                <></>
+              )}
             </Center>
 
           </Box>
