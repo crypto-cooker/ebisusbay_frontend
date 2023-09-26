@@ -3,7 +3,7 @@ version: '3'
 services:
   ebisusbay-web:
     container_name: ebisusbay-web
-    restart: always
+    restart: no
     read_only: true
     build:
       context: .
@@ -34,7 +34,7 @@ services:
 
   ebisusbay-web-nginx:
     container_name: ebisusbay-web-nginx
-    restart: always
+    restart: no
     read_only: true
     build:
       context: .
