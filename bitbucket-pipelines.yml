@@ -8,7 +8,7 @@ definitions:
   services:
     docker:
       # default memory is 1024MB
-      memory: 3072
+      memory: 7168
       image: public.ecr.aws/docker/library/docker:dind
   caches:
     nextcache: .next/cache
