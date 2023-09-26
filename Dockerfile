@@ -6,9 +6,6 @@
 
 FROM node:18-slim AS runtime-image
 
-# Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
-RUN set -e
-
 # Allow to cache package downloads (BuildKit cache mount)
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
@@ -20,14 +17,13 @@ RUN npm install -g npm@latest
 RUN node --version
 RUN npm --version
 
-# Copy the required files from the build step
+# Copy the required files
 WORKDIR /usr/src/app
 
 COPY --link .husky ./.husky
 COPY --link pages ./pages
 COPY --link public ./public
 COPY --link src ./src
-COPY --link types ./types
 COPY --link next.config.js ./
 
 COPY --link package*.json ./
