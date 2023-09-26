@@ -1,6 +1,5 @@
 options:
   docker: true
-  size: 4x
   # maximum amount of minutes a step can execute at a global level or at a step level
   max-time: 15
 
@@ -179,6 +178,7 @@ pipelines:
                   - 'self.hosted'
                   - 'linux'
                   - 'web'
+                size: 2x
                 script:
                   # Install required tools
                   - *install_tools
