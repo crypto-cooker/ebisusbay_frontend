@@ -188,23 +188,29 @@ pipelines:
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
-                  # Upgrade to latest stable version of npm
-                  - *upgrade_npm
-                  - *print_versions
-                  # Install dependencies
-                  - npm install --no-audit
-                  # Run tests
-                  # - npm run test
                   # RPC config
                   - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
-                  # Build frontend
-                  - *app_build
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
-                  # Build current/latest container image
-                  - *container_build
+                  # Build application container
+                  - |
+                      set +e # turn off error-trapping
+
+                      docker build --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile_testing .
+                      RETURN_CODE=$?
+
+                      if [ $RETURN_CODE -eq 0 ]; then
+                        echo ""************BUILD OK, pushing container image..."************"
+                        docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}
+                      else
+                        echo "************BUILD FAILED************"
+                        exit 1
+                      fi
+
+                      set -e # turn on error-trapping
+                  # Build proxy container
                   - *proxy_container_build
                   # deploy dev-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.biz
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"dev\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
