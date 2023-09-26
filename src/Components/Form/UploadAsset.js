@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 
-import { Card } from 'react-bootstrap';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
-import {Stack} from "@chakra-ui/react";
+import {Card, CardBody, Stack, Text} from "@chakra-ui/react";
 
 const UploadAsset = ({ id, value, accept = 'image/png, image/gif, image/jpeg, image/jpg', onChange, onClose }) => {
   const [file, setFile] = useState(null);
@@ -61,7 +59,7 @@ const UploadAsset = ({ id, value, accept = 'image/png, image/gif, image/jpeg, im
     <Stack direction="row" alignItems="center" spacing={2} className="upload-asset">
       <label htmlFor={id}>
         <Card>
-          <Card.Body>
+          <CardBody>
             <input
               id={id}
               ref={inputFile}
@@ -81,10 +79,10 @@ const UploadAsset = ({ id, value, accept = 'image/png, image/gif, image/jpeg, im
             ) : (
               <>
                 <FontAwesomeIcon icon={faImage} className="icon" />
-                <Card.Text>+ Asset</Card.Text>
+                <Text>+ Asset</Text>
               </>
             )}
-          </Card.Body>
+          </CardBody>
         </Card>
       </label>
       {onClose && (

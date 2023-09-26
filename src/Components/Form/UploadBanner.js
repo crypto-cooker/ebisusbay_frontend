@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { Form } from 'react-bootstrap';
-
 import { deepValidation } from '../../helpers/validator';
 
 import UploadAssetBanner from './UploadAssetBanner';
+import {FormControl, FormErrorMessage} from "@chakra-ui/react";
 
 const UploadBanner = ({
   value = [],
@@ -42,7 +41,7 @@ const UploadBanner = ({
   };
 
   return (
-    <Form.Group className={`form-field mb-3 ${error ? 'field-message-error' : ''}`}>
+    <FormControl className={`form-field mb-3 ${error ? 'field-message-error' : ''}`} isInvalid={!!error}>
       <div className="upload-container pt-0 overflow-auto justify-content-center">
         {[...Array(numberOfAssets).keys()].map((_, i) => {
           const asset = value.find(({ position }) => position === i);
@@ -59,10 +58,10 @@ const UploadBanner = ({
           );
         })}
       </div>
-      <Form.Text className="field-description text-muted">
+      <FormErrorMessage className="field-description text-muted">
         {error ? (typeof error === 'string' ? error : getErrorMessage(error[error.length - 1])) : description}
-      </Form.Text>
-    </Form.Group>
+      </FormErrorMessage>
+    </FormControl>
   );
 };
 

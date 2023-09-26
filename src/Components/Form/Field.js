@@ -1,8 +1,15 @@
 import React from 'react';
 
-import {Form, InputGroup} from 'react-bootstrap';
-
 import { deepValidation } from '../../helpers/validator';
+import {
+  FormControl,
+  FormErrorMessage,
+  FormHelperText,
+  FormLabel,
+  Input,
+  InputGroup,
+  InputLeftAddon
+} from "@chakra-ui/react";
 
 const Field = ({
   type,
@@ -19,17 +26,17 @@ const Field = ({
   addOn
 }) => {
   return (
-    <Form.Group className={`form-field mb-3 ${error ? 'field-message-error' : ''}`}>
+    <FormControl className={`form-field mb-3 ${error ? 'field-message-error' : ''}`} isInvalid={!!error}>
       <div className="label-container">
-        <Form.Label className="title">{title}</Form.Label>
-        {isRequired ? <Form.Label className="required-label">*Required</Form.Label> : <Form.Label>Optional</Form.Label>}
+        <FormLabel className="title">{title}</FormLabel>
+        {isRequired ? <FormLabel className="required-label">*Required</FormLabel> : <FormLabel>Optional</FormLabel>}
       </div>
 
       <InputGroup>
           {addOn && (
-            <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+            <InputLeftAddon id="basic-addon1">@</InputLeftAddon>
           )}
-          <Form.Control
+          <Input
             type={type}
             name={name}
             value={value}
@@ -39,8 +46,9 @@ const Field = ({
             onBlur={onBlur}
           />
       </InputGroup>
-      <Form.Text className="field-description text-muted">{error ? error : description}</Form.Text>
-    </Form.Group>
+      <FormHelperText className="field-description text-muted">{description}</FormHelperText>
+      <FormErrorMessage className="field-description text-muted">{error}</FormErrorMessage>
+    </FormControl>
   );
 };
 
