@@ -178,7 +178,7 @@ pipelines:
                   - 'self.hosted'
                   - 'linux'
                   - 'web'
-                size: 4x
+                size: 1x
                 script:
                   # Install required tools
                   - *install_tools
