@@ -92,10 +92,10 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (user.provider && (nft || nftId) && nftAddress) {
+    if (user.provider && (initialNft || nftId) && nftAddress) {
       asyncFunc();
     }
-  }, [user.provider, nft, nftId, nftAddress]);
+  }, [user.provider, initialNft, nftId, nftAddress]);
 
   const getInitialProps = async () => {
     try {
@@ -116,10 +116,9 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
         setFloorPrice(collection.stats.total.floorPrice ?? 0);
       }
 
-      const myOffers = await ApiService.withoutKey().getOffers({
+      const myOffers = await ApiService.withoutKey().getMadeOffersByUser(walletAddress!, {
         collection: [nftAddress!],
-        tokenId: nftId,
-        purchaser: walletAddress!,
+        tokenId: nftId ?? fetchedNft.id ?? fetchedNft.nftId,
         pageSize: 1,
         state: OfferState.ACTIVE
       });
