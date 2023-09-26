@@ -1,6 +1,6 @@
 options:
   docker: true
-  size: 3x
+  size: 4x
   # maximum amount of minutes a step can execute at a global level or at a step level
   max-time: 15
 
