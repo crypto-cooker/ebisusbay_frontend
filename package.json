@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "codegen": "graphql-codegen",
+    "codegen": "graphql-codegen --config dev/codegen.ts",
     "predev": "npm run codegen",
     "start": "next start",
     "start-web": "NODE_OPTIONS=\"--max_old_space_size=1408\" next start",
