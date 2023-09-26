@@ -1,7 +1,6 @@
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {Box, HStack, Image, SimpleGrid, Text} from "@chakra-ui/react";
 import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
 import {useContext, useEffect, useState} from "react";
@@ -34,7 +33,6 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector(state => state.user);
 
-  const [_, getSigner] = useCreateSigner();
   const [streak, setStreak] = useState(0);
   const [streakIndex, setStreakIndex] = useState(0);
   const [nextClaim, setNextClaim] = useState("");

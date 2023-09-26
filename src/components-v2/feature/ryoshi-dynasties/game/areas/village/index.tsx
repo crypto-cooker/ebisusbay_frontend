@@ -1,22 +1,10 @@
-import {
-  Box,
-  Fade,
-  Flex,
-  Modal,
-  ModalContent,
-  ModalOverlay,
-  Text,
-  useBreakpointValue,
-  useDisclosure
-} from "@chakra-ui/react"
+import {Box, Fade, Modal, ModalContent, ModalOverlay, Text, useBreakpointValue, useDisclosure} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 
 //contracts
-import {appConfig} from "@src/Config";
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
 import {useAppSelector} from "@src/Store/hooks";
 import AnnouncementBoardModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/inline";
@@ -32,7 +20,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import { RdGameState } from "@src/core/services/api-service/types";
+import {RdGameState} from "@src/core/services/api-service/types";
 import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
 import {motion} from "framer-motion";
 
@@ -44,10 +32,7 @@ interface VillageProps {
 const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const { config: rdConfig, game: rdGameContext, user: rdUser, refreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
-  const config = appConfig();
   const { isOpen:isOpenOverlay, onToggle } = useDisclosure()
-
-  const [isLoading, getSigner] = useCreateSigner();
 
   const transformComponentRef = useRef<any>(null)
   const [elementToZoomTo, setElementToZoomTo] = useState("");

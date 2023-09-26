@@ -2,11 +2,22 @@ import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {appConfig} from "@src/Config";
 import {CNS, CNSNameAvailability, CNSPriceCurrency, constants} from "@cnsdomains/core";
-import {Alert, Collapse, Form} from "react-bootstrap";
 import Button from "@src/Components/components/common/Button";
 import {ethers} from "ethers";
 import {devLog} from "@src/utils";
-import {Box, Flex, Heading, Skeleton, Text} from "@chakra-ui/react";
+import {
+  Alert,
+  AlertIcon,
+  Box, Collapse,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  Heading,
+  Input,
+  Select,
+  Skeleton,
+  Text
+} from "@chakra-ui/react";
 import styled from 'styled-components';
 import Link from "next/link";
 
@@ -131,7 +142,7 @@ export const CnsRegistration = () => {
             <>
               <Heading as="h3" size="md" className="mb-2">Find Your Domain</Heading>
               <div className="d-flex justify-content-start">
-                <Form.Control
+                <Input
                   className="mb-0"
                   type="text"
                   placeholder="Search Domain Here"
@@ -150,30 +161,29 @@ export const CnsRegistration = () => {
 
               <div className="my-1">
                 {searchResult === CNSNameAvailability.AVAIL && (
-                  <Alert variant="success">
-                    <div className="d-flex justify-content-between">
-                      <span>
-                        This name is available!
-                        {!user.address && (
-                          <span>{' '}Connect your wallet to register</span>
-                        )}
-                      </span>
-                      <a href={`https://www.cronos.domains/domains/${targetDomain}/register`} target="_blank">Details</a>
-                    </div>
+                  <Alert status="success">
+                    <AlertIcon />
+                    <Text as='span'>This name is available!</Text>
+                    {!user.address && (
+                      <Text as='span' ms={1}>Connect your wallet to register.</Text>
+                    )}
+                    <Text as='span' ms={1}>
+                      <Link href={`https://www.cronos.domains/domains/${targetDomain}/register`} target="_blank">
+                        Details
+                      </Link>
+                    </Text>
                   </Alert>
                 )}
                 {searchResult === CNSNameAvailability.NOT_AVAIL && (
-                  <Alert variant="danger">
-                    <div className="d-flex justify-content-between">
-                      <span>This name is not available</span>
-                    </div>
+                  <Alert status="danger">
+                    <AlertIcon />
+                    This name is not available
                   </Alert>
                 )}
                 {searchResult === CNSNameAvailability.INVALID && (
-                  <Alert variant="danger">
-                    <div className="d-flex justify-content-between">
-                      <span>Invalid</span>
-                    </div>
+                  <Alert status="danger">
+                    <AlertIcon />
+                    Invalid
                   </Alert>
                 )}
               </div>
@@ -379,77 +389,77 @@ const Registration = ({domain, readKit, onRegistrationComplete}) => {
   return (
     <div className="row nftSaleForm">
       <div className="col">
-        <div>
-          <Heading as="h3" size="md">Register {domain}.cro</Heading>
-          <hr />
-          <div className="fee">
-            <span>Registration Period: </span>
-            <Form.Select
-              aria-label="Choose Registration Period"
-              style={{maxWidth: 130}}
-              onChange={onSelectRegistrationPeriod}
-            >
-              <option value="1">1 Year</option>
-              <option value="2">2 Year</option>
-              <option value="3">3 Year</option>
-              <option value="4">4 Year</option>
-              <option value="5">5 Year</option>
-              <option value="10">10 Year</option>
-            </Form.Select>
-          </div>
-          <div className="fee">
-            <span>Fee Token: </span>
-            <Form.Select
-              aria-label="Choose Fee Token"
-              style={{maxWidth: 130}}
-              onChange={onSelectFeeToken}
-            >
-              <option value={CNSPriceCurrency.USDC}>USDC</option>
-              <option value={CNSPriceCurrency.CNSUSD}>CNSUSD</option>
-            </Form.Select>
-          </div>
-          <div className="fee">
-            <span className='label'>Registration Cost: </span>
-            <Skeleton width="130px" isLoaded={!executingCalculate}>
-              <Text align="right">{registrationPrice} {feeToken}</Text>
-            </Skeleton>
-          </div>
-          {user.address && (
+        <FormControl isInvalid={!!error}>
+          <div>
+            <Heading as="h3" size="md">Register {domain}.cro</Heading>
+            <hr />
+            <Flex mt={2}>
+              <span>Registration Period: </span>
+              <Select
+                aria-label="Choose Registration Period"
+                onChange={onSelectRegistrationPeriod}
+              >
+                <option value="1">1 Year</option>
+                <option value="2">2 Year</option>
+                <option value="3">3 Year</option>
+                <option value="4">4 Year</option>
+                <option value="5">5 Year</option>
+                <option value="10">10 Year</option>
+              </Select>
+            </Flex>
+            <Flex mt={2}>
+              <span>Fee Token: </span>
+              <Select
+                aria-label="Choose Fee Token"
+                onChange={onSelectFeeToken}
+              >
+                <option value={CNSPriceCurrency.USDC}>USDC</option>
+                <option value={CNSPriceCurrency.CNSUSD}>CNSUSD</option>
+              </Select>
+            </Flex>
             <div className="fee">
-              <span className='label'>Wallet Balance ({feeToken}): </span>
+              <span className='label'>Registration Cost: </span>
               <Skeleton width="130px" isLoaded={!executingCalculate}>
-                <Text align="right">{walletBalance?.balance} {feeToken}</Text>
+                <Text align="right">{registrationPrice} {feeToken}</Text>
               </Skeleton>
             </div>
-          )}
-        </div>
-        <div className="d-flex justify-content-end">
-          <div className="my-auto fst-italic" style={{fontSize: '13px'}}>
-            {executingApproval && (
-              <>{registrationStage.approval}</>
-            )}
-            {executingCommitment && (
-              <>{registrationStage.commitment}</>
-            )}
-            {executingRegistration && (
-              <>{registrationStage.registration}</>
+            {user.address && (
+              <div className="fee">
+                <span className='label'>Wallet Balance ({feeToken}): </span>
+                <Skeleton width="130px" isLoaded={!executingCalculate}>
+                  <Text align="right">{walletBalance?.balance} {feeToken}</Text>
+                </Skeleton>
+              </div>
             )}
           </div>
-          {walletBalance?.sufficient && (
-            <Button
-              type="legacy"
-              className="ms-2"
-              onClick={() => onRegister(domain)}
-              isLoading={executingWorkflow}
-              disabled={executingWorkflow}
-            >
-              Register
-            </Button>
-          )}
-        </div>
-        <Form.Text className="field-description textError">
-          {error}
-        </Form.Text>
+          <div className="d-flex justify-content-end">
+            <div className="my-auto fst-italic" style={{fontSize: '13px'}}>
+              {executingApproval && (
+                <>{registrationStage.approval}</>
+              )}
+              {executingCommitment && (
+                <>{registrationStage.commitment}</>
+              )}
+              {executingRegistration && (
+                <>{registrationStage.registration}</>
+              )}
+            </div>
+            {walletBalance?.sufficient && (
+              <Button
+                type="legacy"
+                className="ms-2"
+                onClick={() => onRegister(domain)}
+                isLoading={executingWorkflow}
+                disabled={executingWorkflow}
+              >
+                Register
+              </Button>
+            )}
+          </div>
+          <FormErrorMessage className="field-description textError">
+            {error}
+          </FormErrorMessage>
+        </FormControl>
       </div>
     </div>
   )

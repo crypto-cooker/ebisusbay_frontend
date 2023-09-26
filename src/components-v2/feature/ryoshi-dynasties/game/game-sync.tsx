@@ -1,13 +1,7 @@
 import React, {ReactNode, useCallback, useEffect, useMemo, useState} from "react";
-
-import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
-import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
-import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 // import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
-import Academy from "@src/components-v2/feature/ryoshi-dynasties/game/areas/academy";
 // import UserPage from "@src/Components/BattleBay/Areas/UserPage";
 import {useDispatch} from 'react-redux';
-import Bank from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank";
 import Village from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village";
 import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
@@ -19,7 +13,6 @@ import {RyoshiDynastiesContext} from "@src/components-v2/feature/ryoshi-dynastie
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
@@ -40,7 +33,6 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   const { isOpen: isOpenErrorModal, onOpen: onOpenErrorModal, onClose: onCloseErrorModal } = useDisclosure();
   const authInitFinished = useAppSelector((state) => state.appInitialize.authInitFinished);
 
-  const [_, getSigner] = useCreateSigner();
   const {signature, isSignedIn, requestSignature} = useEnforceSignature();
 
   const { data: rdConfig, status: rdConfigFetchStatus, error: rdFetchError} = useQuery(

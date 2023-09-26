@@ -1,13 +1,9 @@
 import {Box, Center, Flex, Heading, Image, Spacer, Text, Wrap, WrapItem} from "@chakra-ui/react"
 
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {appConfig} from "@src/Config";
-import {
-  RyoshiDynastiesContext,
-  RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {toast} from "react-toastify";
 import ShrineIcon from "@src/components-v2/shared/icons/shrine";
 import Resources from "@src/Contracts/Resources.json";
@@ -41,31 +37,18 @@ interface StakeNftsProps {
 
 const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const user = useAppSelector((state) => state.user);
-  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [executingLabel, setExecutingLabel] = useState('');
   const [isExecutingClaim, setIsExecutingClaim] = useState(false);
   const [nftImages, setNftImages] = useState<any[]>([]);
   const [isHovered, setIsHovered] = useState(false);
   const {requestSignature} = useEnforceSignature();
-  const fetcher = async () => {
-    // let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    //
-    // if (!signatureInStorage) {
-    //   const { signature } = await getSigner();
-    //   signatureInStorage = signature;
-    // }
-    // if (signatureInStorage) {
-      return await ApiService.withoutKey().ryoshiDynasties.getDailyRewards(user.address!)
-    // }
-
-  }
 
   const handleClose = () => {
     onClose();
   }
   const {data} = useQuery(
     ['RyoshiDailyCheckin', user.address],
-    fetcher,
+    () => ApiService.withoutKey().ryoshiDynasties.getDailyRewards(user.address!),
     {
       enabled: !!user.address,
       refetchOnWindowFocus: false,

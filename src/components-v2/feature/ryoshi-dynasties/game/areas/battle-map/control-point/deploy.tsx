@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Center,
   Flex,
   FormControl,
@@ -16,13 +17,10 @@ import {
   NumberInputStepper,
   Select,
   Spacer,
-  Button,
   Text,
 } from "@chakra-ui/react";
 import React, {ChangeEvent, useContext, useEffect, useState} from "react";
-import {getAuthSignerInStorage} from '@src/helpers/storage';
 import {useAppSelector} from "@src/Store/hooks";
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {toast} from "react-toastify";
 import {
   deployTroops,
@@ -42,6 +40,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import SearchFaction from "@src/components-v2/feature/ryoshi-dynasties/components/search-factions";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 // import Select from "react-select";
 const tabs = {
   recall: 'recall',
@@ -56,7 +55,7 @@ interface DeployTabProps {
 const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeason}: DeployTabProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
-  const [isLoading, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
   const [currentTab, setCurrentTab] = useState(tabs.deploy);
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [troopsError, setTroopsError] = useState('');
@@ -89,43 +88,32 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
   }
   const GetTroopsOnPoint = async () => {
     if (!user.address) return;
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getTroopsOnControlPoint(user.address.toLowerCase(), signatureInStorage, 
-          controlPoint.id, rdContext?.game?.game.id);
-        setTroopsDeployed(data)
-      } catch (error) {
-        console.log(error)
-      }
+
+    try {
+      const signature = await requestSignature();
+      const data = await getTroopsOnControlPoint(user.address.toLowerCase(), signature,
+        controlPoint.id, rdContext?.game?.game.id);
+      setTroopsDeployed(data)
+    } catch (error) {
+      console.log(error)
     }
   }
   const GetPlayerTroops = async () => {
     if (!user.address) return;
 
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getFactionOwned(user.address.toLowerCase(), signatureInStorage);
-        // console.log("data.data.data", data.data.data)
-        if(data.data.data?.isEnabled) {
-          setHasFaction(true)
-          setPlayerFaction(data.data.data)
-        }
-        else {
-          setHasFaction(false)
-        }
-      } catch (error) {
-        console.log(error)
+    try {
+      const signature = await requestSignature();
+      const data = await getFactionOwned(user.address.toLowerCase(), signature);
+      // console.log("data.data.data", data.data.data)
+      if(data.data.data?.isEnabled) {
+        setHasFaction(true)
+        setPlayerFaction(data.data.data)
       }
+      else {
+        setHasFaction(false)
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
   const HandleSelectCollectionCallback = (factionName: string) => {
@@ -176,79 +164,65 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
     }
   }
   const Deploy = async () => {
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        setIsExecuting(true);
-        // console.log("deploying troops")
-        var factionId = factionsSubscribedToSeason.filter(faction => faction.name === selectedFaction)[0].id
-        // console.log("factionId", factionId)
-        // console.log("selectedQuantity", selectedQuantity)
-        // console.log("controlPoint.id", controlPoint.id)
-        // console.log("user.address", user.address?.toLowerCase())
-        // console.log("signatureInStorage", signatureInStorage)
-        // console.log("rdContext?.game?.game.id", rdContext?.game?.game.id)
+    try {
+      setIsExecuting(true);
+      const signature = await requestSignature();
+      // console.log("deploying troops")
+      var factionId = factionsSubscribedToSeason.filter(faction => faction.name === selectedFaction)[0].id
+      // console.log("factionId", factionId)
+      // console.log("selectedQuantity", selectedQuantity)
+      // console.log("controlPoint.id", controlPoint.id)
+      // console.log("user.address", user.address?.toLowerCase())
+      // console.log("rdContext?.game?.game.id", rdContext?.game?.game.id)
 
 
-        var data = await deployTroops(user.address?.toLowerCase(), signatureInStorage,
-            rdContext?.game?.game.id, selectedQuantity, controlPoint.id, factionId)
+      var data = await deployTroops(user.address?.toLowerCase(), signature,
+          rdContext?.game?.game.id, selectedQuantity, controlPoint.id, factionId)
 
-        await GetPlayerTroops();
-        setSelectedQuantity(0);
-        await rdContext.refreshUser();
+      await GetPlayerTroops();
+      setSelectedQuantity(0);
+      await rdContext.refreshUser();
 
-        toast.success("You deployed "+ selectedQuantity+ " troops to on behalf of " + selectedFaction)
+      toast.success("You deployed "+ selectedQuantity+ " troops to on behalf of " + selectedFaction)
 
-      } catch (error: any) {
-        console.log(error);
-        toast.error(parseErrorMessage(error));
-      }
-      finally {
-        setIsExecuting(false);
-      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } finally {
+      setIsExecuting(false);
     }
   }
+
   const Recall = async () => {
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-          setIsExecuting(true);
-          // console.log("recalling troops")
-          // console.log("rdContext", rdContext?.game?.game.id)
-          var factionId = factionsSubscribedToSeason.filter(faction => faction.name === selectedFaction)[0].id
-          // console.log("user.address", user.address?.toLowerCase())
-          // console.log("signatureInStorage", signatureInStorage)
-          // console.log("factionId", factionId)
-          // console.log("selectedQuantity", selectedQuantity)
-          // console.log("controlPoint.id", controlPoint.id)
+    try {
+      setIsExecuting(true);
+      const signature = await requestSignature();
+      // console.log("recalling troops")
+      // console.log("rdContext", rdContext?.game?.game.id)
+      var factionId = factionsSubscribedToSeason.filter(faction => faction.name === selectedFaction)[0].id
+      // console.log("user.address", user.address?.toLowerCase())
+      // console.log("factionId", factionId)
+      // console.log("selectedQuantity", selectedQuantity)
+      // console.log("controlPoint.id", controlPoint.id)
 
-          var data = await recallTroops(user.address?.toLowerCase(), signatureInStorage, 
-            rdContext?.game?.game.id, selectedQuantity, controlPoint.id, factionId)
+      var data = await recallTroops(user.address?.toLowerCase(), signature,
+        rdContext?.game?.game.id, selectedQuantity, controlPoint.id, factionId)
 
-          await GetPlayerTroops();
-          setSelectedQuantity(0);
-          await rdContext.refreshUser();
-          refreshControlPoint();
+      await GetPlayerTroops();
+      setSelectedQuantity(0);
+      await rdContext.refreshUser();
+      refreshControlPoint();
 
-          toast.success("You recalled "+ selectedQuantity + " troops from "+ controlPoint.name +" on behalf of "+ selectedFaction)
-      } catch (error: any) {
-        console.log(error);
-        toast.error(parseErrorMessage(error));
-        // toast.error(error.response.data.error.metadata.message)
-      }
-      finally {
-        setIsExecuting(false);
-      }
+      toast.success("You recalled "+ selectedQuantity + " troops from "+ controlPoint.name +" on behalf of "+ selectedFaction)
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+      // toast.error(error.response.data.error.metadata.message)
+    } finally {
+      setIsExecuting(false);
     }
   }
+
   const GetMaxTroops = () => {
     if(currentTab === tabs.deploy) {
       return troopsAvailable > 0 ? troopsAvailable : 0;
