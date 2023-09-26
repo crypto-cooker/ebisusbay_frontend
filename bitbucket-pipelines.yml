@@ -175,6 +175,7 @@ pipelines:
             - step:
                 name: Build & deploy
                 image: public.ecr.aws/docker/library/node:18
+                size: 2x
                 runs-on:
                   - 'self.hosted'
                   - 'linux'
