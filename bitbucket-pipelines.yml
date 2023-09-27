@@ -45,7 +45,6 @@ definitions:
     docker container create --name buildx docker/buildx-bin:latest docker buildx version &&
     mkdir -p /usr/libexec/docker/cli-plugins/ &&
     docker container cp buildx:/buildx /usr/libexec/docker/cli-plugins/docker-buildx &&
-    docker run --rm --privileged multiarch/qemu-user-static --reset -p yes &&
     docker buildx create --name custom-builder --driver=docker-container --use --bootstrap &&
     docker buildx version
   proxy_container_buildx: &proxy_container_buildx
