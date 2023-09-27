@@ -4,6 +4,7 @@ const config: CodegenConfig = {
   schema: [
     'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/ryoshi-dynasties',
     'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/ryoshi-presale',
+    'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/staked-owners',
   ],
   documents: ['src/**/*.tsx'],
   ignoreNoDocuments: true,

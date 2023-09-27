@@ -13,7 +13,6 @@ RUN set -e
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
 RUN --mount=type=cache,target=/var/cache/apt apt-get update
-    # && apt-get install --no-install-recommends -y <PACKAGE>
 
 RUN npm install -g npm@latest
 
@@ -25,7 +24,7 @@ RUN npm --version
 WORKDIR /usr/src/app
 
 COPY --link package*.json ./
-RUN --mount=type=cache,target=/root/.npm npm install --no-audit
+RUN --mount=type=cache,target=/root/.npm npm ci --omit dev
 
 COPY --link .husky ./.husky
 COPY --link pages ./pages
