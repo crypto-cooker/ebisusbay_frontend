@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile_local
     environment:
       PORT: '3000'
-      NEXT_PUBLIC_ENV: development
+      NEXT_PUBLIC_ENV: production
       # APMINSIGHT_ENABLED: 'false'
       # APMINSIGHT_LICENSE_KEY: us_25e4846c624d0af156763484be1e7e31
       # APMINSIGHT_APP_NAME: local-ebisusbay-web-arm64-us-east-1

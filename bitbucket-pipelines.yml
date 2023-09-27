@@ -31,19 +31,13 @@ definitions:
   app_build: &app_build
     CI=false NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN npm run build
 
-  # Docker Buildx version
-  docker_buildx: &docker_buildx
-    docker pull docker/buildx-bin:latest &&
-    docker container create --name buildx docker/buildx-bin:latest docker buildx version &&
-    mkdir -p /usr/libexec/docker/cli-plugins/ &&
-    docker container cp buildx:/buildx /usr/libexec/docker/cli-plugins/docker-buildx &&
-    docker run --rm --privileged multiarch/qemu-user-static --reset -p yes &&
-    docker buildx create --name custom-builder --driver=docker-container --use --bootstrap &&
-    docker buildx version
-  proxy_container_buildx: &proxy_container_buildx
+  # Docker BuildKit version
+  # https://support.atlassian.com/bitbucket-cloud/docs/run-docker-commands-in-bitbucket-pipelines/#Docker-BuildKit-restrictions
+  proxy_container_build: &proxy_container_build
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
-    docker buildx build --builder=custom-builder --push --platform linux/amd64 --cache-to type=inline --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f proxy/Dockerfile ./proxy
+    docker build --build-arg BUILDKIT_INLINE_CACHE=1 --platform linux/amd64 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} -f proxy/Dockerfile ./proxy &&
+    docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}
 
 pipelines:
   custom:
@@ -59,6 +53,8 @@ pipelines:
                   - 'self.hosted'
                   - 'linux'
                   - 'web'
+                services:
+                  - docker
                 script:
                   # Enable Docker Buildkit
                   - export DOCKER_BUILDKIT=1
@@ -73,15 +69,11 @@ pipelines:
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./src/Assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
-                  # Install and configure Docker Buildx
-                  - *docker_buildx
-                  - docker buildx ls
-                  - docker buildx inspect custom-builder
                   - |
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker buildx build --builder=custom-builder --push --platform linux/amd64 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:cache --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
+                      docker build --platform linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -94,7 +86,7 @@ pipelines:
 
                       set -e # turn on error-trapping
                   # Build proxy container
-                  - *proxy_container_buildx
+                  - *proxy_container_build
                   # deploy test-ebisusbay-web-amd64-us-east-1 / testapp.ebisusbay.biz
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     deploy-to-sandbox:
@@ -109,6 +101,8 @@ pipelines:
                   - 'self.hosted'
                   - 'linux'
                   - 'web'
+                services:
+                  - docker
                 script:
                   # Enable Docker Buildkit
                   - export DOCKER_BUILDKIT=1
@@ -123,16 +117,11 @@ pipelines:
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
-                  # Install and configure Docker Buildx
-                  - *docker_buildx
-                  - docker buildx ls
-                  - docker buildx inspect custom-builder
                   - |
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker buildx build --builder=custom-builder --push --platform linux/amd64 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:cache --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
-
+                      docker build --platform linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -145,7 +134,7 @@ pipelines:
 
                       set -e # turn on error-trapping
                   # Build proxy container
-                  - *proxy_container_buildx
+                  - *proxy_container_build
                   # deploy sandbox-ebisusbay-web-amd64-us-east-1 / sandboxapp.ebisusbay.biz
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"sandbox\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     when-shit-hits-the-fan-prod:
@@ -160,6 +149,8 @@ pipelines:
                   - 'self.hosted'
                   - 'linux'
                   - 'web'
+                services:
+                  - docker
                 script:
                   # Enable Docker Buildkit
                   - export DOCKER_BUILDKIT=1
@@ -174,15 +165,11 @@ pipelines:
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./src/Assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
-                  # Install and configure Docker Buildx
-                  - *docker_buildx
-                  - docker buildx ls
-                  - docker buildx inspect custom-builder
                   - |
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker buildx build --builder=custom-builder --push --platform linux/amd64 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:cache --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
+                      docker build --platform linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -195,59 +182,10 @@ pipelines:
 
                       set -e # turn on error-trapping
                   # Build proxy container
-                  - *proxy_container_buildx
+                  - *proxy_container_build
                   # deploy prod-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.com
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"type\":\"pipeline_ref_target\",\"ref_type\":\"branch\",\"ref_name\":\"prod\",\"selector\":{\"type\":\"custom\",\"pattern\":\"fast_hotfix_deployment_prod\"}}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
   branches:
-    master:
-      - stage:
-          name: container-cache-build
-          deployment: Development
-          steps:
-            - step:
-                name: Build container cache image
-                image: public.ecr.aws/docker/library/node:18
-                runs-on:
-                  - 'self.hosted'
-                  - 'linux'
-                  - 'web'
-                script:
-                  # Enable Docker Buildkit
-                  - export DOCKER_BUILDKIT=1
-                  # Install required tools
-                  - *install_tools
-                  # Install AWS CLI
-                  - *install_aws_cli
-                  # RPC config
-                  - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
-                  # Login to ECR
-                  - *aws_ecr_login
-                  # Copy RPC config to Admin S3 Bucket
-                  - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
-                  # Build application container
-                  # Install and configure Docker Buildx
-                  - *docker_buildx
-                  - docker buildx ls
-                  - docker buildx inspect custom-builder
-                  - |
-                      set +e # turn off error-trapping
-
-                      # Inline cache
-                      docker buildx build --builder=custom-builder --push --platform linux/amd64 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:cache --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:cache -f Dockerfile .
-
-                      RETURN_CODE=$?
-
-                      if [ $RETURN_CODE -eq 0 ]; then
-                        echo ""************BUILD OK, pushing container image..."************"
-                        docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}
-                      else
-                        echo "************BUILD FAILED************"
-                        exit 1
-                      fi
-
-                      set -e # turn on error-trapping
-                  # Build proxy container
-                  - *proxy_container_buildx
     dev:
       - stage:
           name: app.ebisusbay.biz
@@ -260,6 +198,8 @@ pipelines:
                   - 'self.hosted'
                   - 'linux'
                   - 'web'
+                services:
+                  - docker
                 script:
                   # Enable Docker Buildkit
                   - export DOCKER_BUILDKIT=1
@@ -274,16 +214,11 @@ pipelines:
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
-                  # Install and configure Docker Buildx
-                  - *docker_buildx
-                  - docker buildx ls
-                  - docker buildx inspect custom-builder
                   - |
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker buildx build --builder=custom-builder --push --platform linux/amd64 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:cache --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
-
+                      docker build --platform linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -296,7 +231,7 @@ pipelines:
 
                       set -e # turn on error-trapping
                   # Build proxy container
-                  - *proxy_container_buildx
+                  - *proxy_container_build
                   # deploy dev-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.biz
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"dev\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     prod:
@@ -311,6 +246,8 @@ pipelines:
                   - 'self.hosted'
                   - 'linux'
                   - 'web'
+                services:
+                  - docker
                 script:
                   # Enable Docker Buildkit
                   - export DOCKER_BUILDKIT=1
@@ -325,15 +262,11 @@ pipelines:
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./src/Assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
-                  # Install and configure Docker Buildx
-                  - *docker_buildx
-                  - docker buildx ls
-                  - docker buildx inspect custom-builder
                   - |
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker buildx build --builder=custom-builder --push --platform linux/amd64 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:cache --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
+                      docker build --platform linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -346,6 +279,6 @@ pipelines:
 
                       set -e # turn on error-trapping
                   # Build proxy container
-                  - *proxy_container_buildx
+                  - *proxy_container_build
                   # deploy prod-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.com
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"prod\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'

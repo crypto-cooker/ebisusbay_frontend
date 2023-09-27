@@ -150,8 +150,10 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     const currentLevelStart = xpLevelMaxs[xpLevel].min;
     const currentLevelEnd = xpLevelMaxs[xpLevel + 1].min;
     const currentLevelProgress = (currentExp - currentLevelStart) / (currentLevelEnd - currentLevelStart);
+    const toFixedWithoutZeros = (num:number, precision:number) =>
+      num.toFixed(precision).replace(/\.0+$/, '');
 
-    setLevelProgressString((currentExp - currentLevelStart) +"/" +(currentLevelEnd - currentLevelStart));
+    setLevelProgressString(toFixedWithoutZeros(currentExp - currentLevelStart, 1) +"/" +(currentLevelEnd - currentLevelStart));
     setPlayerLevel(rdUser.experience.level);
     setCurrentLevelProgress(currentLevelProgress * 100);
   };
