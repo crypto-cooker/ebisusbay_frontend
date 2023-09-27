@@ -223,8 +223,11 @@ pipelines:
                   - |
                       set +e # turn off error-trapping
 
-                      docker buildx build --builder=custom-builder --push --platform linux/amd64 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
-                      
+                      # Inline cache
+                      # docker buildx build --builder=custom-builder --push --platform linux/amd64 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
+                      # Registry cache
+                      docker buildx build --builder=custom-builder --push --platform linux/amd64 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to mode=max,image-manifest=true,type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
+
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
