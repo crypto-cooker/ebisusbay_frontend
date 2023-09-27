@@ -9,7 +9,7 @@ import {
   AspectRatio,
   Avatar,
   Box,
-  Button,
+  Button, ButtonProps,
   Center,
   Flex,
   HStack,
@@ -32,7 +32,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, {useContext, useEffect, useState} from "react";
-import {ArrowBackIcon, EditIcon} from "@chakra-ui/icons";
+import {ArrowBackIcon, DownloadIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
 import RdButton from "../../../../components/rd-button";
 import MetaMaskOnboarding from "@metamask/onboarding";
@@ -505,19 +505,36 @@ const CurrentFaction = () => {
                       <>
                         <Text color='#ccc' textAlign='start' pb={2}>Troops received from users</Text>
                         {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.length > 0 ? (
-                          <SimpleGrid columns={2} w='full'>
-                            {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => (
-                              <>
-                                <Box textAlign='start'>
-                                  <CopyableText
-                                    text={user.profileWalletAddress}
-                                    label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
-                                  />
-                                </Box>
-                                <Box textAlign='end'>{commify(user.troops)}</Box>
-                              </>
-                            ))}
-                          </SimpleGrid>
+                          <>
+                            <SimpleGrid columns={2} w='full'>
+                              {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => (
+                                <>
+                                  <Box textAlign='start'>
+                                    <CopyableText
+                                      text={user.profileWalletAddress}
+                                      label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
+                                    />
+                                  </Box>
+                                  <Box textAlign='end'>{commify(user.troops)}</Box>
+                                </>
+                              ))}
+                            </SimpleGrid>
+                            <Box textAlign='end' mt={2}>
+                              <DownloadButton
+                                filename='delegations'
+                                data={(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
+                                  address: user.profileWalletAddress,
+                                  name: user.profileName,
+                                  troops: user.troops
+                                }))}
+                                variant='link'
+                                fontSize='xs'
+                                leftIcon={<DownloadIcon />}
+                              >
+                                Export Data
+                              </DownloadButton>
+                            </Box>
+                          </>
                         ) : (
                           <>None</>
                         )}
@@ -769,4 +786,58 @@ const CopyableText = ({text, label}: {text: string, label: string}) => {
   return (
     <Text cursor='pointer' onClick={onCopy}>{label}</Text>
   )
+}
+
+interface DownloadButtonProps extends ButtonProps {
+  data: Array<{ [key: string]: any }>;
+  filename?: string;
+}
+const DownloadButton = ({filename, data, ...props}: DownloadButtonProps) => {
+  // JSON download
+  // const dataToDownload = JSON.stringify(data, null, 2);
+  // const blob = new Blob([dataToDownload], { type: 'application/json' });
+  // const downloadLink = URL.createObjectURL(blob);
+  // const extension = 'json';
+
+  // CSV download
+  const csvData = convertToCSV(data);
+  const blob = new Blob([csvData], { type: 'text/csv' });
+  const downloadLink = URL.createObjectURL(blob);
+  const extension = 'csv';
+
+  return (
+    <Button
+      as="a"
+      href={downloadLink}
+      download={filename} // This specifies the name of the downloaded file
+      {...props}
+      _hover={{
+        color:'#F48F0C'
+      }}
+    >
+      Export Data
+    </Button>
+  );
+}
+
+function convertToCSV(objArray: Array<{ [key: string]: any }>) {
+  const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
+  let str = '';
+
+  // headers
+  const headers = Object.keys(array[0]);
+  str += headers.join(',') + '\r\n';
+
+  for (let i = 0; i < array.length; i++) {
+    let line = '';
+    for (let index in array[i]) {
+      if (line !== '') line += ',';
+
+      // Handle values that contain comma or newline
+      let value = array[i][index] ?? '';
+      line += '"' + value.toString().replace(/"/g, '""') + '"';
+    }
+    str += line + '\r\n';
+  }
+  return str;
 }
