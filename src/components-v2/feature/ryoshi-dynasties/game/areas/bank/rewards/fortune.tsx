@@ -93,7 +93,7 @@ const FortuneRewardsTab = () => {
       <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' mt={4}>
         <Box textAlign='center'>
           Fortune rewards accumulate from Fortune staking, marketplace listings, and from playing the game and can be withdrawn at any time.
-          Compound to an existing vault to multiply your rewards!
+          However, only withdrawing at the end of a season will allow you to claim the full amount of rewards.
         </Box>
         {status === "loading" ? (
           <Center py={4}>
