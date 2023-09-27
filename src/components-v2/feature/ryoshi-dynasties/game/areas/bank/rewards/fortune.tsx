@@ -427,7 +427,7 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
           {!!account && account.vaults.length > 0 ? (
             <>
               <Box mb={2}>
-                <Box fontWeight='bold'>Compound to Vault Vaults</Box>
+                <Box fontWeight='bold'>Compound to Vault</Box>
                 <Box fontSize='sm' color="#aaa">Only vaults that expire later than 90 days are eligible for compounding and will cost zero Karmic Debt</Box>
               </Box>
               {noFeeCompoundVaults.length > 0 ? (

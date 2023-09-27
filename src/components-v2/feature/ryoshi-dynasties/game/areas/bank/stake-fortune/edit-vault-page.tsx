@@ -77,6 +77,7 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
   const [currentTroops, setCurrentTroops] = useState(0);
   const [newApr, setNewApr] = useState(0);
   const [newTroops, setNewTroops] = useState(0);
+  const [newMitama, setNewMitama] = useState(0);
   const [newWithdrawDate, setNewWithdrawDate] = useState(vault.endTime);
 
   const handleChangeFortuneAmount = (valueAsString: string, valueAsNumber: number) => {
@@ -210,9 +211,11 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
     const sumDays = Number(vault.length / (86400)) + (type === 'duration' ? daysToStake : 0);
     const sumAmount = Number(ethers.utils.formatEther(vault.balance)) + (type === 'amount' ? fortuneToStake : 0);
-    let newTroops = Math.floor(((sumAmount * sumDays) / 1080) / mitamaTroopsRatio);
+    const mitama = Math.floor((sumAmount * sumDays) / 1080);
+    let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && sumAmount > 0) newTroops = 1;
     setNewTroops(newTroops);
+    setNewMitama(mitama);
 
     if (isAddingDuration) {
       setNewWithdrawDate((Number(vault.endTime) + (daysToStake * 86400)) * 1000);
@@ -345,7 +348,9 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
             <Box>APR</Box>
             <Box textAlign='end' fontWeight='bold'>{newApr * 100}%</Box>
             <Box>Troops</Box>
-            <Box textAlign='end' fontWeight='bold'>{newTroops}</Box>
+            <Box textAlign='end' fontWeight='bold'>{commify(newTroops)}</Box>
+            <Box>Mitama</Box>
+            <Box textAlign='end' fontWeight='bold'>{commify(newMitama)}</Box>
             <Box>End Date</Box>
             <Box textAlign='end' fontWeight='bold'>{moment(newWithdrawDate).format("MMM D yyyy")}</Box>
           </SimpleGrid>
