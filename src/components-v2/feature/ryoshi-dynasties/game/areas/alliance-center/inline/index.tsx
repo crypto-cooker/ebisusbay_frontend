@@ -788,56 +788,31 @@ const CopyableText = ({text, label}: {text: string, label: string}) => {
   )
 }
 
+import axios from 'axios';
 interface DownloadButtonProps extends ButtonProps {
   data: Array<{ [key: string]: any }>;
   filename?: string;
 }
 const DownloadButton = ({filename, data, ...props}: DownloadButtonProps) => {
-  // JSON download
-  // const dataToDownload = JSON.stringify(data, null, 2);
-  // const blob = new Blob([dataToDownload], { type: 'application/json' });
-  // const downloadLink = URL.createObjectURL(blob);
-  // const extension = 'json';
-
-  // CSV download
-  const csvData = convertToCSV(data);
-  const blob = new Blob([csvData], { type: 'text/csv' });
-  const downloadLink = URL.createObjectURL(blob);
-  const extension = 'csv';
+  const handleDownload = async () => {
+    const response = await axios.post('/api/downloadCSV', { data }, { responseType: 'blob' });
+    const url = window.URL.createObjectURL(new Blob([response.data], { type: 'text/csv' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `${filename}.csv`);
+    document.body.appendChild(link);
+    link.click();
+  }
 
   return (
     <Button
-      as="a"
-      href={downloadLink}
-      download={filename} // This specifies the name of the downloaded file
-      {...props}
+      onClick={handleDownload}
       _hover={{
         color:'#F48F0C'
       }}
+      {...props}
     >
       Export Data
     </Button>
   );
-}
-
-function convertToCSV(objArray: Array<{ [key: string]: any }>) {
-  const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
-  let str = '';
-
-  // headers
-  const headers = Object.keys(array[0]);
-  str += headers.join(',') + '\r\n';
-
-  for (let i = 0; i < array.length; i++) {
-    let line = '';
-    for (let index in array[i]) {
-      if (line !== '') line += ',';
-
-      // Handle values that contain comma or newline
-      let value = array[i][index] ?? '';
-      line += '"' + value.toString().replace(/"/g, '""') + '"';
-    }
-    str += line + '\r\n';
-  }
-  return str;
 }
