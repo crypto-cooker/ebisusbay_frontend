@@ -112,6 +112,7 @@
     "**/*.tsx"
 , "src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/leaderboard.js"  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dev"
   ]
 }
