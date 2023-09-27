@@ -71,7 +71,7 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -117,7 +117,7 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -163,7 +163,7 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -210,7 +210,7 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -256,7 +256,7 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
