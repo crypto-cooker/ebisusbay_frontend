@@ -32,11 +32,26 @@ definitions:
     CI=false NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN npm run build
 
   # Docker BuildKit version
+  # https://support.atlassian.com/bitbucket-cloud/docs/run-docker-commands-in-bitbucket-pipelines/#Docker-BuildKit-restrictions
   proxy_container_build: &proxy_container_build
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
-    docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} -f proxy/Dockerfile ./proxy &&
+    docker build --build-arg BUILDKIT_INLINE_CACHE=1 --platform linux/amd64 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} -f proxy/Dockerfile ./proxy &&
     docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}
+
+  # Docker Buildx version
+  docker_buildx: &docker_buildx
+    docker pull docker/buildx-bin:latest &&
+    docker container create --name buildx docker/buildx-bin:latest docker buildx version &&
+    mkdir -p /usr/libexec/docker/cli-plugins/ &&
+    docker container cp buildx:/buildx /usr/libexec/docker/cli-plugins/docker-buildx &&
+    docker run --rm --privileged multiarch/qemu-user-static --reset -p yes &&
+    docker buildx create --use &&
+    docker buildx version
+  proxy_container_buildx: &proxy_container_buildx
+    sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
+    sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
+    docker buildx build --push --platform linux/amd64 --cache-to type=inline --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f proxy/Dockerfile ./proxy
 
 pipelines:
   custom:
@@ -53,6 +68,8 @@ pipelines:
                   - 'linux'
                   - 'web'
                 script:
+                  # Enable Docker Buildkit
+                  - export DOCKER_BUILDKIT=1
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
@@ -96,6 +113,8 @@ pipelines:
                   - 'linux'
                   - 'web'
                 script:
+                  # Enable Docker Buildkit
+                  - export DOCKER_BUILDKIT=1
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
@@ -139,6 +158,8 @@ pipelines:
                   - 'linux'
                   - 'web'
                 script:
+                  # Enable Docker Buildkit
+                  - export DOCKER_BUILDKIT=1
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
@@ -183,6 +204,8 @@ pipelines:
                   - 'linux'
                   - 'web'
                 script:
+                  # Enable Docker Buildkit
+                  - export DOCKER_BUILDKIT=1
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
@@ -194,10 +217,13 @@ pipelines:
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
+                  # Install and configure Docker Buildx
+                  - *docker_buildx
                   - |
                       set +e # turn off error-trapping
 
-                      docker build --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --platform linux/amd64 --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker buildx build --push --platform linux/amd64 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --cache-to type=inline --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} -f Dockerfile .
+                      
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -210,7 +236,7 @@ pipelines:
 
                       set -e # turn on error-trapping
                   # Build proxy container
-                  - *proxy_container_build
+                  - *proxy_container_buildx
                   # deploy dev-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.biz
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"dev\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     prod:
@@ -226,6 +252,8 @@ pipelines:
                   - 'linux'
                   - 'web'
                 script:
+                  # Enable Docker Buildkit
+                  - export DOCKER_BUILDKIT=1
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
