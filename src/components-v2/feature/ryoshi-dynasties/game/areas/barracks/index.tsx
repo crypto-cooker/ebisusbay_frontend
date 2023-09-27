@@ -1,17 +1,16 @@
-import {Box, Button, Center, Container, Flex, Spacer, Text, useDisclosure, VStack,AspectRatio, Image,} from '@chakra-ui/react';
+import {AspectRatio, Box, Button, Flex, Image, Text, useDisclosure, VStack,} from '@chakra-ui/react';
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useAppSelector} from "@src/Store/hooks";
 
 import localFont from 'next/font/local';
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {useQuery} from "@tanstack/react-query";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
 import {getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import React, {useState} from 'react';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {motion} from "framer-motion";
 import ImageService from "@src/core/services/image";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 import StakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft";
 import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
@@ -29,8 +28,9 @@ interface BarracksProps {
 const Barracks = ({onBack}: BarracksProps) => {
   const [handleAuthedNavigation] = useAuthedFunction();
   const user = useAppSelector((state) => state.user);
-  const [_, getSigner] = useCreateSigner();
   const [battleRewardsClaimed, setBattleRewardsClaimed] = useState(false);
+  const {requestSignature} = useEnforceSignature();
+
   const claimedRewards = () => {
     setBattleRewardsClaimed(true);
     onCloseClaimRewards();
@@ -44,16 +44,10 @@ const Barracks = ({onBack}: BarracksProps) => {
   const checkForBattleRewards = async () => {
     if (!user.address) return;
 
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      return await getBattleRewards(user.address.toLowerCase(), signatureInStorage);
-    }
-    return null;
+    const signature = await requestSignature();
+    return await getBattleRewards(user.address.toLowerCase(), signature);
   }
+
   const { data: battleRewards } = useQuery(
     ['BattleRewards', user.address],
     checkForBattleRewards,

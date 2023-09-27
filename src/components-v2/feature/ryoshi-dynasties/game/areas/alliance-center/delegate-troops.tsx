@@ -19,8 +19,6 @@ import {
   Spacer,
   Text
 } from "@chakra-ui/react"
-import {getAuthSignerInStorage} from '@src/helpers/storage';
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {delegateTroops, getAllFactionsSeasonId} from "@src/core/api/RyoshiDynastiesAPICalls";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {useAppSelector} from "@src/Store/hooks";
@@ -32,6 +30,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 interface DelegateTroopsFormProps {
   isOpen: boolean;
@@ -40,12 +39,12 @@ interface DelegateTroopsFormProps {
 }
 
 const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsFormProps) => {
-  
+
+  const {requestSignature} = useEnforceSignature();
   const [dataForm, setDataForm] = useState({
     faction: "" ?? null,
   })
   const user = useAppSelector((state) => state.user);
-  const [_, getSigner] = useCreateSigner();
   const [troopsAvailable, setTroopsAvailable] = useState(0);
   const [selectedFaction, setSelectedFaction] = useState<string>(dataForm.faction);
 
@@ -94,30 +93,21 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsForm
     setTroopsError('');
     setFactionError('');
 
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        setIsExecuting(true);
-        var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
-        const res = await delegateTroops(user.address.toLowerCase(), 
-                                        signatureInStorage, 
-                                        troopsToDelegate, 
-                                        factionId);
-        await rdContext.refreshUser();
-        setTroopsToDelegate(0);
-        toast.success("You delegated "+ troopsToDelegate+ " troops to on behalf of " + selectedFaction)
+    try {
+      setIsExecuting(true);
+      const signature = await requestSignature();
+      var factionId = allFactions.filter(faction => faction.name === selectedFaction)[0].id
+      await delegateTroops(user.address.toLowerCase(), signature, troopsToDelegate, factionId);
+      await rdContext.refreshUser();
+      setTroopsToDelegate(0);
+      toast.success("You delegated "+ troopsToDelegate+ " troops to on behalf of " + selectedFaction)
 
-      } catch (error: any) {
-        console.log(error);
-        toast.error(parseErrorMessage(error));
-      }
-      finally {
-        setIsExecuting(false);
-      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    }
+    finally {
+      setIsExecuting(false);
     }
   }
 

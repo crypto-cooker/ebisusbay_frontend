@@ -293,6 +293,14 @@ export const configData = {
           '0x72c97F79867219381EFA83127534710D559a2220': ['cro', 'frtn'], // Dr Dao X Mutant
           '0xe0160145ec09f98fb3Dbc03b2b5da08D16871e3f': ['cro', 'frtn'], // Ghost OG
           '0x21037397bDA5CF87c17b5Ec7A07f6935B6c6EA65': ['cro', 'frtn'], // Ultimate Mutants
+          '0xb7bcDfcae4fA1A1b39660C03440FCf3E85AE878C': ['cro', 'frtn'], // Beta Mascots
+          '0x750bd33b39cee357983f1cdafd2cee51dfb03a62': ['cro', 'frtn'], // Mascot Booster Bags
+          '0xF4C80B77AA1F73E09348693a81d744Fcd1263A2D': ['cro', 'frtn'], // Gold Partner
+          '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44': ['cro', 'frtn'], // Weird Apes Club
+          '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1': ['cro', 'frtn'], // Lady Weird Apes
+          '0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9': ['cro', 'frtn'], // Baby Weird Apes
+          '0x490A0b87191f678af7926043c59f040D4968033c': ['cro', 'frtn'], // Romantic Wapes
+          '0xe02A74813053e96C5C98F817C0949E0B00728Ef6': ['cro', 'frtn'], // Voxel Weird Apes
         }
       }
     }

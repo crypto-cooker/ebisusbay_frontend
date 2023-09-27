@@ -13,6 +13,7 @@ const NotificationItems = [
   { key: 'SOLD', title: 'Item Sold', description: 'When someone purchases one of your items' },
   { key: 'OFFER_MADE', title: 'Offer Received', description: 'When someone makes an offer on one of your items' },
   { key: 'OFFER_ACCEPTED', title: 'Offer Accepted', description: 'When one of your offers gets accepted' },
+  { key: 'XP_GAINED', title: 'XP Gains', description: 'When you perform an action that gains you XP' },
 ];
 
 export default function Notification() {

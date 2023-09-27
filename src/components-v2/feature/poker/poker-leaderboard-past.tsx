@@ -17,6 +17,57 @@ const PokerLeaderboardComponent = () => {
   	const params = {} // whatever needed
 	const isMobile = useMediaQuery("(max-width: 768px)")[0];
 	const [updatedAt, setUpdatedAt] = useState<string>();
+	
+	const GenerateJson = () => {
+		if(!data) return;
+
+		interface Reward {
+			address: string;
+			amount: number;
+		}
+
+		const rewards: Reward[] = [];
+
+		const GetRewardAmount = (index: number) => {
+			if(index <= 15) return 8500;
+			if(index <= 35) return 6500;
+			if(index <= 65) return 5000;
+			if(index <= 115) return 1700;
+			if(index <= 215) return 350;
+			if(index <= 315) return 200;
+			return 0;
+		}
+
+		data.pages[0].data.forEach((player: any, i: number) => {
+			if(i < 315){
+				console.log(i, player)
+				rewards.push({
+					address: player.address,
+					amount:	GetRewardAmount(i+1),
+				})
+			}
+		})
+
+		// data.pages[0].data.forEach((player: any, i: number) =>  {
+		// 	if(i >= 314 && i < 400){
+		// 		rewards.push({
+		// 			address: player.address,
+		// 			amount:	1
+		// 		})
+		// 	}
+		// })
+
+		function download(content:any, fileName:any, contentType:any ){
+			const a = document.createElement("a");
+			const file = new Blob([content], { type: contentType });
+			a.href = URL.createObjectURL(file);
+			a.download = fileName;
+			a.click();
+		} 
+
+		// console.log(JSON.stringify(rewards));
+		download(JSON.stringify(rewards), "diamondsRankedPlayersNFTS.json", "text/plain");
+	}
 
 
 	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt} = useInfiniteQuery(
@@ -42,7 +93,7 @@ const PokerLeaderboardComponent = () => {
 
 	useEffect(() => {
 		if(!data) return; 
-
+		// GenerateJson();
 	}, [data])
 
 	useEffect(() => {

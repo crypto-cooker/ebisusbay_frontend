@@ -4,9 +4,9 @@ import RyoshiDynasties from "@src/components-v2/feature/ryoshi-dynasties/game";
 import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import ImageService from "@src/core/services/image";
+import fallbackConfig from "@src/core/configs/fallbacks/rd-config";
 
-
-const BattleBay = ({rdConfig}: {rdConfig: RyoshiConfig | null}) => {
+const BattleBay = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
   return (
     <>
       <PageHead
@@ -39,7 +39,7 @@ export const getStaticProps = async () => {
   } catch (e) {
     return {
       props: {
-        rdConfig: null
+        rdConfig: fallbackConfig
       },
     }
   }

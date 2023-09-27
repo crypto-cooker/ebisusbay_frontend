@@ -1,11 +1,12 @@
 import {useCallback, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
+import useCreateSigner, {signinMessage} from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {ciEquals} from "@src/utils";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {useAtom} from "jotai";
 import {storageSignerAtom} from "@src/jotai/atoms/storage";
 import {RESET} from "jotai/utils";
+import {ethers} from "ethers";
 
 const useEnforceSignature = () => {
   const user = useAppSelector((state) => state.user);
@@ -18,11 +19,21 @@ const useEnforceSignature = () => {
   const checkSigninStatus = async () => {
     if (!user.address) return false;
 
-    let authSignature = signer;
-    let signatureInStorage: string | null | undefined = authSignature?.signature;
-    const sigMatchesUser = !!authSignature?.address && ciEquals(authSignature?.address, user.address);
+    let authSigner = signer;
+    let signatureInStorage: string | null | undefined = authSigner?.signature;
+    if (!signatureInStorage) return false;
 
-    return !!signatureInStorage && sigMatchesUser;
+    try {
+      const signerAddressMatches = !!authSigner?.address && ciEquals(authSigner?.address, user.address);
+      const sigOwnerAddress = ethers.utils.verifyMessage(signinMessage(user.address), signatureInStorage);
+      const signerSigMatches = ciEquals(sigOwnerAddress, user.address);
+
+      return signerAddressMatches && signerSigMatches;
+    } catch (e) {
+      // Malformed signature will throw an exception
+
+      return false;
+    }
   }
 
   const retrieveSignature = useCallback(async () => {

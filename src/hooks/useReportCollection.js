@@ -1,8 +1,6 @@
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-import { useState } from 'react';
-
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner';
-import { reportCollection } from "@src/core/cms/endpoints/collections";
+import {useState} from 'react';
+import {reportCollection} from "@src/core/cms/endpoints/collections";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const useReportCollection = () => {
   const [response, setResponse] = useState({
@@ -10,7 +8,7 @@ const useReportCollection = () => {
     error: null,
   });
 
-  const [isLoading, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
 
   const createNewReport = async (address, data) => {
     setResponse({
@@ -19,34 +17,22 @@ const useReportCollection = () => {
       error: null,
     });
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const fetchResponse = await reportCollection( address, signatureInStorage, data);
+    try {
+      const signature = await requestSignature();
+      const fetchResponse = await reportCollection(address, signature, data);
 
-        setResponse({
-          ...response,
-          loading: false,
-          error: null,
-        });
-
-        return fetchResponse;
-      } catch (error) {
-        setResponse({
-          ...response,
-          loading: false,
-          error: error,
-        });
-      }
-    } else {
       setResponse({
-        isLoading: false,
-        response: [],
-        error: { message: 'Something went wrong' },
+        ...response,
+        loading: false,
+        error: null,
+      });
+
+      return fetchResponse;
+    } catch (error) {
+      setResponse({
+        ...response,
+        loading: false,
+        error: error,
       });
     }
   };

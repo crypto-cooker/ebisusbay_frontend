@@ -12,13 +12,14 @@ import {getNotifications} from "@src/core/cms/next/notifications";
 import Button from "@src/Components/components/Button";
 import {useAppSelector} from "@src/Store/hooks";
 import {
+  Box,
   Center,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
-  DrawerOverlay, Spinner,
+  DrawerOverlay, Flex, Spinner,
   Text
 } from "@chakra-ui/react";
 
@@ -136,8 +137,8 @@ const NotificationMenu = function () {
                   <div className="flex-fill h-auto">
                     {notifications.length > 0 && (
                       notifications.map((item: any) => (
-                        <div key={item.createdAt} className={classnames('card eb-nft__card px-3 py-2 mb-2', styles.card)}>
-                          <div className="d-flex">
+                        <Box key={item.createdAt} className={classnames('card eb-nft__card px-3 py-2 mb-2', styles.card)}>
+                          <Flex>
                             <div className="flex-fill">
                               <div className="text-muted fst-italic">
                                 <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
@@ -149,8 +150,8 @@ const NotificationMenu = function () {
                             <div className="cursor-pointer my-auto ms-4" onClick={handleDeleteNotification(item)}>
                               <FontAwesomeIcon icon={faTrash} />
                             </div>
-                          </div>
-                        </div>
+                          </Flex>
+                        </Box>
                       ))
                     )}
                   </div>

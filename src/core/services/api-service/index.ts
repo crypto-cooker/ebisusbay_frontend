@@ -91,7 +91,7 @@ export class ApiService implements Api {
     const owners = await getOwners();
     //rank the info
     
-    const response = await RankPlayers(owners);
+    const response = await RankPlayers(owners, false, 2);
 
     function paginate(array : any, page_size:number, page_number:number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
@@ -113,7 +113,7 @@ export class ApiService implements Api {
     const owners = await getOwners(blockNumber);
     //rank the info
     
-    const response = await RankPlayers(owners);
+    const response = await RankPlayers(owners, false, 1);
 
     function paginate(array : any, page_size:number, page_number:number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);

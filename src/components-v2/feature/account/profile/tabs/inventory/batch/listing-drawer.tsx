@@ -253,7 +253,7 @@ export const ListingDrawer = () => {
     const nftIds = items.map((o) => o.nft.nftId);
     const nftPrices = items.map((o) => ethers.utils.parseEther(o.price!.toString()));
 
-    Sentry.captureEvent({ message: 'handleBatchListings', extra: { nftAddresses, nftIds, nftPrices } });
+    // Sentry.captureEvent({ message: 'handleBatchListings', extra: { nftAddresses, nftIds, nftPrices } });
 
     await upsertGaslessListings(items.map((item) => ({
       collectionAddress: item.nft.nftAddress,

@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import {Contract} from "ethers";
-import useCreateSigner from './useCreateSigner';
 import {appConfig} from "@src/Config";
 import Bundle from "@src/Contracts/Bundle.json";
 import {useAppSelector} from "@src/Store/hooks";
@@ -17,8 +16,6 @@ const useCreateBundle = () => {
   });
 
   const config = appConfig();
-
-  const [isLoading, getSigner] = useCreateSigner();
 
   const user = useAppSelector((state) => state.user);
 

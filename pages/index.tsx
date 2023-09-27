@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 import styled, {createGlobalStyle} from 'styled-components';
-import {faBullhorn, faFire} from '@fortawesome/free-solid-svg-icons';
+import {faFire} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import ListingCollection from '../src/Components/components/ListingCollection';
@@ -19,15 +19,14 @@ import LegacyButton from '../src/Components/components/Button';
 import {hostedImage} from "@src/helpers/image";
 import {appConfig} from "@src/Config";
 import Head from "next/head";
-import {AspectRatio, Box, Button, Center, Heading, Image, SimpleGrid, VStack} from "@chakra-ui/react";
+import {Center, Heading, SimpleGrid} from "@chakra-ui/react";
 import ads from "@src/core/data/ads.json";
 import ImageService from "@src/core/services/image";
 import {useAppSelector} from "@src/Store/hooks";
-import TokenSale from "@src/components-v2/feature/ryoshi-dynasties/token-sale";
-import Countdown from "react-countdown";
 import RyoshiDynasties from "@src/components-v2/feature/ryoshi-dynasties/game";
 import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
+import fallbackConfig from "@src/core/configs/fallbacks/rd-config";
 
 const fadeInUp = keyframes`
   0% {
@@ -133,7 +132,7 @@ const featuredAd = ads
     return now > millisecondTimestamp(ad.start) && (!ad.end || now < millisecondTimestamp(ad.end));
   });
 
-const Home = ({rdConfig}: {rdConfig: RyoshiConfig | null}) => {
+const Home = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
   const history = useRouter();
   const dispatch = useDispatch();
 
@@ -468,7 +467,7 @@ export const getStaticProps = async () => {
   } catch (e) {
     return {
       props: {
-        rdConfig: null
+        rdConfig: fallbackConfig
       },
     }
   }

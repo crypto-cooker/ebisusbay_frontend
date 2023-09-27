@@ -5,6 +5,22 @@ export interface RyoshiConfig {
   factions: RyoshiConfigFactions;
   presale: RyoshiConfigPresale;
   armies: RyoshiConfigArmies;
+  reputations: RyoshiConfigReputation;
+}
+
+interface RyoshiConfigReputation {
+  points: RyoshiConfigReputationPoints
+}
+
+interface RyoshiConfigReputationPoints {
+  battle: {
+    kill: number;
+    attacker: number;
+    defender: number;
+  };
+  deploy: number;
+  delegated: number;
+  recall: number;
 }
 
 interface RyoshiConfigBank {
@@ -21,7 +37,7 @@ interface RyoshiConfigBankStakingFortune {
   termLength: number;
   maxTerms: number;
   mitamaTroopsRatio: number;
-  startingDebt: string;
+  startingDebt: number;
   apr: {[key: number]: number};
 }
 

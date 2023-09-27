@@ -19,6 +19,7 @@ import useGetSettings from '../hooks/useGetSettings';
 import {getCnsInfo} from '@src/helpers/cns';
 import {Flex} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 export default function EditProfile() {
   const user = useSelector((state) => state.user);
@@ -163,12 +164,11 @@ export default function EditProfile() {
 
   const onSubmit = async (values) => {
     try {
-
       const response = settings?.data?.walletAddress
         ? await requestUpdateSettings(user.address, values)
         : await requestNewSettings(user.address, values);
-      if (!response || response?.message?.error) {
-        toast.error('Something went wrong!');
+      if (response?.message?.error) {
+        toast.error(parseErrorMessage(response.message.error));
       } else {
         toast.success('Your profile was saved successfully');
         updateProfileSettings();

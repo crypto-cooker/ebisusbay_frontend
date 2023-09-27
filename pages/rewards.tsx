@@ -14,7 +14,7 @@ import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
-const currentGameId = 52;
+const currentGameId = 53;
 
 const Rewards = () => {
   const user = useAppSelector(state => state.user);
@@ -71,7 +71,7 @@ const Rewards = () => {
         <Card variant='outline' mt={2}>
           <CardBody>
             <Flex direction='column'>
-              <Text fontSize='26px' fontWeight='bold'>Season 1 Rewards</Text>
+              <Text fontSize='26px' fontWeight='bold'>My Rewards</Text>
               <Text fontSize='sm'>Unlock epic Fortune rewards by listing NFTs on Ebisu's Bay. Rewards are calculated at the end of every game of <Link href='/ryoshi'>Ryoshi Dynasties</Link> and accumulate daily.</Text>
             </Flex>
             {user.address ? (

@@ -5,9 +5,6 @@ import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {createSuccessfulTransactionToastContent, isBundle, round} from "@src/utils";
 import {useWindowSize} from "@src/hooks/useWindowSize";
-import * as Sentry from '@sentry/react';
-import {getFilteredOffers} from "@src/core/subgraph";
-import {offerState} from "@src/core/api/enums";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
@@ -35,6 +32,8 @@ import ImagesContainer from "../../../Components/Bundle/ImagesContainer";
 import {useAppSelector} from "@src/Store/hooks";
 import {parseErrorMessage} from "@src/helpers/validator";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {ApiService} from "@src/core/services/api-service";
+import {OfferState} from "@src/core/services/api-service/types";
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 25;
@@ -93,10 +92,10 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (user.provider && (nft || nftId) && nftAddress) {
+    if (user.provider && (initialNft || nftId) && nftAddress) {
       asyncFunc();
     }
-  }, [user.provider, nft, nftId, nftAddress]);
+  }, [user.provider, initialNft, nftId, nftAddress]);
 
   const getInitialProps = async () => {
     try {
@@ -117,12 +116,14 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
         setFloorPrice(collection.stats.total.floorPrice ?? 0);
       }
 
-      const filteredOffers = await getFilteredOffers(
-        fetchedNft.address ?? fetchedNft.nftAddress,
-        fetchedNft.id ?? fetchedNft.nftId,
-        walletAddress
-      );
-      setExistingOffer(filteredOffers.data?.find((o: any) => o.state.toString() === offerState.ACTIVE.toString()))
+      const myOffers = await ApiService.withoutKey().getMadeOffersByUser(walletAddress!, {
+        collection: [nftAddress!],
+        tokenId: nftId ?? fetchedNft.id ?? fetchedNft.nftId,
+        pageSize: 1,
+        state: OfferState.ACTIVE
+      });
+
+      setExistingOffer(myOffers.data.length > 0 ? myOffers.data[0] : undefined);
       const royalties = await collectionRoyaltyPercent(nftAddress, fetchedNft.id ?? fetchedNft.nftId);
       setRoyalty(royalties);
 
@@ -144,7 +145,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
         const price = ethers.utils.parseEther(offerPrice.toString());
 
         setExecutingCreateListing(true);
-        Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: nftAddress, price}});
+        // Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: nftAddress, price}});
         const contract = contractService!.offer;
         let tx;
         if (existingOffer) {

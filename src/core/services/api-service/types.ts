@@ -156,11 +156,8 @@ export interface RdUserContext {
         nextClaim: string;
         nextReward: number;
     },
-    experience: {
-        level: number;
-        points: number;
-    }
-    reputations: RdReputation;
+    reputations: Reputation[];
+    experience: Experience;
 }
 
 interface RdUserContextSeason {
@@ -320,15 +317,18 @@ interface RdGameRewards {
     burnPercentage: number;
 }
 
-interface RdReputation {
-    id: number;
-    level: ReputationLevel;
-    otherFactionId: number;
-    playerFactionId: number;
-    points: number;
+interface Reputation {
     profileId: number;
+    otherFactionId: number;
+    points: number;
+    level: ReputationLevel;
 }
-      
+
+interface Experience {
+    points: number;
+    level: number;
+}
+
 export enum ReputationLevel {
     Nefarious = "Nefarious",
     Infamous = "Infamous",
@@ -352,7 +352,7 @@ export enum ReputationLevel {
     Notorious = "Notorious",
     Exalted = "Exalted"
 }
-    
+
 interface Experience {
     points: number;
     level: number;
