@@ -5,11 +5,10 @@ import {Box, Center, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Spacer, 
   NumberIncrementStepper,
   NumberDecrementStepper,
   Button,
-  FormControl,
-  FormLabel,
-  Checkbox,
   Grid,
-
+  Tabs,
+  TabList,
+  Tab,
   } from "@chakra-ui/react"
 import React, {useCallback, useContext, useEffect, useState, useRef} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
@@ -21,18 +20,26 @@ import {getAuthSignerInStorage} from "@src/helpers/storage";
 import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {ApiService} from "@src/core/services/api-service";
 import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
-import {BigNumber, Contract, ethers} from "ethers";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import localFont from "next/font/local";
-import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/meeple/faq-page";
 import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
 import {RdModalAlert, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import { getTimeDifference } from "@src/utils";
+import {useQuery} from "@tanstack/react-query";
+import NextApiService from "@src/core/services/api-service/next";
 
 const config = appConfig();
-const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-const gothamBook = localFont({ src: '../../../../../../../../src/fonts/Gotham-Book.woff2' });
+
+import axios from "axios";
+const api = axios.create({
+  baseURL: config.urls.api,
+});
+
+interface LocationData{
+  location: string;
+  tier: number;
+  id: number;
+  playerCards: number;
+}
 
 interface MeepleProps {
   isOpen: boolean;
@@ -41,13 +48,11 @@ interface MeepleProps {
 
 const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const user = useAppSelector((state) => state.user);
+  const collectionAddress = config.contracts.resources
   const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const fetcher = async () => {
-    return await ApiService.withoutKey().ryoshiDynasties.getDailyRewards(user.address!)
-  }
   const [page, setPage] = useState<string>();
-  const [meepleOnDuty, setMeepleOnDuty] = useState<number>(0);
-  const [meepleOffDuty, setMeepleOffDuty] = useState<number>(0);
+
+  //upkeep
   const [needsToPayUpkeep, setNeedsToPayUpkeep] = useState<boolean>(false);
   const [upkeepCost, setUpkeepCost] = useState<number>(0);
   const [upkeepModifirer, setUpkeepModifirer] = useState<number>(0);
@@ -55,14 +60,36 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const [upkeepPrice, setUpkeepPrice] = useState<number>(1);
   const [totalUpkeepRequired, setTotalUpkeepRequired] = useState<number>(0);
   const [upkeepRemaining, setUpkeepRemaining] = useState<number>(0);
-
-  const { isOpen: isOpenUpkeepModal, onOpen: onOpenUpkeepModal, onClose: onCloseUpkeepModal } = useDisclosure();
-  const { isOpen: isOpenTurnInCardsModal, onOpen: onOpenTurnInCardsModal, onClose: onCloseTurnInCardsModal } = useDisclosure();
-  const { isOpen: isOpenWithdrawModal, onOpen: onOpenWithdrawModal, onClose: onCloseWithdrawModal } = useDisclosure();
+  const [meepleOnDuty, setMeepleOnDuty] = useState<number>(0);
+  const [meepleOffDuty, setMeepleOffDuty] = useState<number>(0);
 
   //withdraw meeple
   const [meepleToWithdraw, setMeepleToWithdraw] = useState(0);
   const handleQuantityChange = (stringValue: string, numValue: number) => setMeepleToWithdraw(numValue)
+
+  //turn in cards
+  const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [locationData, setLocationData] = useState<LocationData[]>([]);
+  const [filteredCards, setFilteredCards] = useState<LocationData[]>([]);
+  const [cardsInWallet, setCardsInWallet] = useState<LocationData[]>([]);
+  const [cardsToTurnIn, setCardsToTurnIn] = useState<LocationData[]>([]);
+
+  //modals
+  const { isOpen: isOpenUpkeepModal, onOpen: onOpenUpkeepModal, onClose: onCloseUpkeepModal } = useDisclosure();
+  const { isOpen: isOpenTurnInCardsModal, onOpen: onOpenTurnInCardsModal, onClose: onCloseTurnInCardsModal } = useDisclosure();
+  const { isOpen: isOpenWithdrawModal, onOpen: onOpenWithdrawModal, onClose: onCloseWithdrawModal } = useDisclosure();
+
+  const {data: walletData} = useQuery({
+    queryKey: ['TJTest', user.address],
+    queryFn: () => NextApiService.getWallet(user.address!, {
+      page: 1,
+      pageSize: 100,
+      collection: collectionAddress
+    }),
+    refetchOnWindowFocus: false,
+    enabled: !!user.address && !!collectionAddress,
+    initialData: {data: [], hasNextPage: false, nextPage: 2, page: 1}
+  });
 
   //timer
   const Ref = useRef<NodeJS.Timer | null>(null);
@@ -148,24 +175,31 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
 
     setUpkeepModifirer(cost);
   }
-  const SelectCard = (card:string) => {
-    console.log(card);
+ 
+  const RefreshFilteredCards = () => {
+    const filtered = locationData.filter((location) => location.tier == selectedTab+1);
+    setFilteredCards(filtered);
   }
-  const dummyCards = [
-    "Ebisus Bay Tier 1",
-    "Ebisus Bay Tier 2",
-    "Ebisus Bay Tier 3",
-    "Izanami's Cradle Tier 1",
-    "Izanami's Cradle Tier 1",
-    "Iron Reach Tier 1",
-    "Iron Reach Tier 2",
-    "Iron Reach Tier 2",
-    "Iron Reach Tier 2",
-    "Iron Reach Tier 2",
-    "Iron Reach Tier 2",
-    "Iron Reach Tier 2",
-    "Iron Reach Tier 2",
-  ]
+
+  const GetLocationData = async () => {
+    let data = await api.get("fullcollections?address=" + collectionAddress);
+    let locations:LocationData[] = [];
+
+    //filter out only locations 
+    for(let i = 0; i < data.data.nfts.length; i++){
+      for(let j=0; j < data.data.nfts[i].attributes?.length; j++){
+        if(data.data.nfts[i].attributes[j].trait_type == "Location"){
+          locations.push({
+            location: data.data.nfts[i].attributes[j].value,
+            tier: data.data.nfts[i].attributes[1].value,
+            id: data.data.nfts[i].id,
+            playerCards: 0,
+          })
+        }
+      }
+    }
+    setLocationData(locations);
+  }
 
   const CalculateUpkeepCost = (meepleAmount:number) => {
     //cost will be marginal, 0-200 free, 201-999 1x, 1000-4999 2x, 5000+ 3x
@@ -185,14 +219,71 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
         break;
       }
     }
-    console.log("Upkeep Cost for " + meepleAmount + " is " + cost + "x");
+    // console.log("Upkeep Cost for " + meepleAmount + " is " + cost + "x");
     return cost;
   }
+  const SetUpCardsInWallet = () => {
+    console.log("Wallet data");
+    let cards:LocationData[] = [];
+    walletData.data.forEach((card) => {
+      cards.push({
+        location: card.name,
+        tier: card.attributes[1].value,
+        id: Number(card.nftId),
+        playerCards: card.balance === undefined ? 0 : card.balance,
+      })
+    })
+    setCardsInWallet(cards)
+    setCardsToTurnIn([])
+  }
+  const SelectCardsToTurnIn = (nftId:number) => {
+    let cards:LocationData[] = [];
+    cardsInWallet.forEach((card) => {
+      if(card.id == nftId){
+        console.log("Set " + card.location + " to be turned in");
+        cards.push(card);
+      }
+    })
+    //remove 3 of EACH CARD selected from player wallet
+    let cardsInWalletCopy = [...cardsInWallet];
+    cardsInWalletCopy.forEach((card) => {
+      cards.forEach((selectedCard) => {
+        if(card.id == selectedCard.id){
+          card.playerCards -= 3;
+        }
+      })
+    })
+    setCardsInWallet(cardsInWalletCopy);
+    setCardsToTurnIn([...cardsToTurnIn, ...cards]);
+  }
+
+  useEffect(() => {
+    RefreshFilteredCards();
+
+  }, [selectedTab])
+
+  useEffect(() => {
+    if(!walletData) return;
+
+    SetUpCardsInWallet();
+  }, [walletData])
+
+  useEffect(() => {
+    locationData.forEach((location) => {
+      cardsInWallet.forEach((card) => {
+        if(Number(card.id) === Number(location.id)){
+          locationData[locationData.indexOf(location)].playerCards = card.playerCards;
+        }
+      })
+    })
+    RefreshFilteredCards();
+  } , [locationData, cardsInWallet])
  
   useEffect(() => {
     GetMeepleCount();
     GetUpkeepPaymentStatus();
     GetUpkeepDeadline();
+    GetLocationData();
   }, [rdGameContext])
 
   useEffect(() => {
@@ -203,7 +294,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     // CalculateUpkeepCost(9000);
     // CalculateUpkeepCost(200);
     // CalculateUpkeepCost(201);
-
   }, [meepleOnDuty])
 
   const handleBack = () => {
@@ -347,16 +437,46 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
 
           <RdModal isOpen={isOpenTurnInCardsModal} onClose={onCloseTurnInCardsModal} title={'Turn In Cards'} >
             <RdModalAlert>
-              <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
-              <Grid gridTemplateColumns={{sm: '225px 50px 225px 50px'}} w={'100%'}>
-                {dummyCards.map((card, index) => (
+              <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' minH={'300px'}>
+              <Tabs isFitted variant='enclosed' onChange={(index) => setSelectedTab(index)}>
+                  <TabList  mb='1em'>
+                    <Tab>Tier 1</Tab>
+                    <Tab>Tier 2</Tab>
+                    <Tab>Tier 3</Tab>
+                  </TabList>
+                </Tabs>
+              <Grid gridTemplateColumns={{base: '50px 225px', md: '50px 225px 50px 225px'}} w={'100%'} p={0}>
+                {filteredCards.map((card) => (
                   <>
-                  <Text color={'#aaa'} textAlign={'left'} p={2}> {card}</Text>
-                  <Checkbox maxW={10} colorScheme="yellow" onClick={() => SelectCard(card)}/>
+                  <HStack>
+                    {card.playerCards >= 3 && (
+                      <>
+                      {/* <Checkbox p={0} maxW={10} colorScheme="yellow" onClick={() => SelectCard(card.id)}/> */}
+                      <Button onClick={() => SelectCardsToTurnIn(card.id)} border={1} h={{base:8,md:4}}>+</Button>
+                      {/* <Button w={4} h={4}>-</Button> */}
+                      </>
+                    )}
+                  </HStack>
+                  <HStack p={{base:2, md:0}}>
+                    <Text p={0} 
+                      color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}
+                      as={card.playerCards >= 3 ? 'b' :'a'} 
+                      textAlign={'left'}> {card.location}</Text> 
+                    <Text p={0} 
+                      color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}
+                      as={card.playerCards >= 3 ? 'b' :'a'} 
+                      >x {card.playerCards}</Text></HStack>
                   </>
                 ))}
               </Grid>
-
+            </Box>
+            <Box bgColor='#292626' rounded='md' mt={4} p={4} fontSize='sm' minH={'100px'}>
+              {cardsToTurnIn?.map((card) => (
+                <HStack>
+                  <Text p={0} color={'#aaa'} textAlign={'left'}> {card.location}</Text>
+                  <Text p={0} color={'#aaa'}>x 3</Text>
+                </HStack>
+              ))}
             </Box>
             </RdModalAlert>
             <RdModalFooter>
