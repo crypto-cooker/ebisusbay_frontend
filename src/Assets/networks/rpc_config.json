@@ -23712,6 +23712,56 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "CroSkull Pets - Season 5",
+      "slug": "croskull-pets-s5",
+      "multiToken": false,
+      "address": "0xed9BDf3E103332C853DDb9933BA3B45acfDB9B2e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Underworld is full of all kinds of creatures. During the CroSkulls adventures to the different regions of the Underworld, the CroSkulls often find regional eggs. Each season of CroSkulls explore new regions of the Underworld. Each season will have different seasonal pets. Once the eggs hatch, you will acquire a seasonal pet from that egg's region of the Underworld.",
+        "avatar": "/img/collections/croskull-pets-s5/avatar.webp",
+        "card": "/img/collections/croskull-pets-s5/card.webp",
+        "banner": "/img/collections/croskull-pets-s5/banner.webp",
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/gPCawZBQMF",
+        "medium": "https://medium.com/@croskullnft",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroSkull Pets Eggs - Season 5",
+      "slug": "croskull-pets-eggs-s5",
+      "multiToken": false,
+      "address": "0x27fE0fA269DeAC471aC07014d6ED9973ce69bd96",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A Mysterious Egg found by a CroSkull during his adventure! \"I.... never seen an egg like that, it may hatch in a some mysterious creature.\" Hatching Available on https://app.croskull.com/",
+        "avatar": "/img/collections/croskull-pets-eggs-s5/avatar.webp",
+        "card": "/img/collections/croskull-pets-eggs-s5/card.webp",
+        "banner": "/img/collections/croskull-pets-eggs-s5/banner.webp",
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/gPCawZBQMF",
+        "medium": "https://medium.com/@croskullnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
