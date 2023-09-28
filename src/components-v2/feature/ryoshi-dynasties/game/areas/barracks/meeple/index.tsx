@@ -226,12 +226,17 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     console.log("Wallet data");
     let cards:LocationData[] = [];
     walletData.data.forEach((card) => {
-      cards.push({
-        location: card.name,
-        tier: card.attributes[1].value,
-        id: Number(card.nftId),
-        playerCards: card.balance === undefined ? 0 : card.balance,
-      })
+      {
+        card.attributes !== undefined && card.attributes[1].trait_type === "Tier" ? 
+        cards.push({
+          location: card.name,
+          tier: card.attributes[1].value,
+          id: Number(card.nftId),
+          playerCards: card.balance === undefined ? 0 : card.balance,
+        })
+        : <></>
+      }
+      
     })
     setCardsInWallet(cards)
     setCardsToTurnIn([])
@@ -265,7 +270,12 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   useEffect(() => {
     if(!walletData) return;
 
-    SetUpCardsInWallet();
+    // console.log("Wallet data: ", walletData);
+
+    if(walletData.data.length > 0){
+      SetUpCardsInWallet();
+    }
+
   }, [walletData])
 
   useEffect(() => {
