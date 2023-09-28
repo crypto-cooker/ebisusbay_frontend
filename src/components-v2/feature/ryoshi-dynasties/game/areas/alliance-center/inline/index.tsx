@@ -9,12 +9,14 @@ import {
   AspectRatio,
   Avatar,
   Box,
-  Button, ButtonProps,
+  Button,
   Center,
+  Collapse,
   Flex,
   HStack,
   IconButton,
   Image,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -32,7 +34,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, {useContext, useEffect, useState} from "react";
-import {ArrowBackIcon, DownloadIcon, EditIcon} from "@chakra-ui/icons";
+import {ArrowBackIcon, CopyIcon, DownloadIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
 import RdButton from "../../../../components/rd-button";
 import MetaMaskOnboarding from "@metamask/onboarding";
@@ -61,6 +63,7 @@ import ImageService from "@src/core/services/image";
 import {motion} from "framer-motion";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import axios from 'axios';
 
 const config = appConfig();
 const gothamBook = localFont({
@@ -230,7 +233,7 @@ export default AllianceCenter;
 
 const CurrentFaction = () => {
   const user = useAppSelector((state) => state.user);
-  const {requestSignature} = useEnforceSignature();
+  const {requestSignature, signature} = useEnforceSignature();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const { isOpen: isOpenFaction, onOpen: onOpenFaction, onClose: onCloseFaction } = useDisclosure();
@@ -519,21 +522,15 @@ const CurrentFaction = () => {
                                 </>
                               ))}
                             </SimpleGrid>
-                            <Box textAlign='end' mt={2}>
-                              <DownloadButton
-                                filename='delegations'
-                                data={(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
-                                  address: user.profileWalletAddress,
-                                  name: user.profileName,
-                                  troops: user.troops
-                                }))}
-                                variant='link'
-                                fontSize='xs'
-                                leftIcon={<DownloadIcon />}
-                              >
-                                Export Data
-                              </DownloadButton>
-                            </Box>
+                            <ExportDataComponent
+                              data={(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
+                                address: user.profileWalletAddress,
+                                name: user.profileName,
+                                troops: user.troops
+                              }))}
+                              address={user.address!}
+                              signature={signature}
+                            />
                           </>
                         ) : (
                           <>None</>
@@ -788,31 +785,96 @@ const CopyableText = ({text, label}: {text: string, label: string}) => {
   )
 }
 
-import axios from 'axios';
-interface DownloadButtonProps extends ButtonProps {
-  data: Array<{ [key: string]: any }>;
-  filename?: string;
-}
-const DownloadButton = ({filename, data, ...props}: DownloadButtonProps) => {
-  const handleDownload = async () => {
-    const response = await axios.post('/api/downloadCSV', { data }, { responseType: 'blob' });
-    const url = window.URL.createObjectURL(new Blob([response.data], { type: 'text/csv' }));
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', `${filename}.csv`);
-    document.body.appendChild(link);
-    link.click();
+const ExportDataComponent = ({data, address, signature}: {data: any, address: string, signature: string}) => {
+  const csvData = convertToCSV(data);
+  const blob = new Blob([csvData], { type: 'text/csv' });
+  const downloadLink = URL.createObjectURL(blob);
+  const [token, setToken] = useState('');
+  const { onCopy, value, setValue, hasCopied } = useClipboard("");
+  const {isOpen, onOpen} = useDisclosure();
+
+  const handleAlternative = async () => {
+    const response = await axios.get('/api/export/request-token', {
+      params: {
+        address,
+        signature,
+        gameId: 52,
+        type: 'ryoshi-dynasties/delegations'
+      }
+    });
+    if (response.data.token) {
+      setValue(`${config.urls.app}ryoshi/export?token=${response.data.token}`)
+    }
+    setToken(response.data.token);
   }
 
+  useEffect(() => {
+    if (!!value) {
+      onCopy();
+    }
+  }, [value]);
+
   return (
-    <Button
-      onClick={handleDownload}
-      _hover={{
-        color:'#F48F0C'
-      }}
-      {...props}
-    >
-      Export Data
-    </Button>
-  );
+    <Box textAlign='end' mt={2}>
+      <Button
+        variant='link'
+        size='xs'
+        onClick={onOpen}
+      >
+        Export Options
+      </Button>
+
+      <Collapse in={isOpen} animateOpacity>
+        <Stack direction='row' justify='center' my={2}>
+          <Link
+            href={downloadLink}
+            download='delegations.csv'
+          >
+            <Button
+              leftIcon={<DownloadIcon />}
+              size='xs'
+              _hover={{
+                color:'#F48F0C'
+              }}
+            >
+              Export Data
+            </Button>
+          </Link>
+          <Box>
+            <Button
+              leftIcon={<CopyIcon />}
+              size='xs'
+              onClick={handleAlternative}
+            >
+              {hasCopied ? "Copied!" : "Copy Download link"}
+            </Button>
+          </Box>
+        </Stack>
+      </Collapse>
+    </Box>
+  )
+}
+
+
+function convertToCSV(objArray: Array<{ [key: string]: any }>) {
+  const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
+  if (array.length === 0) return '';
+  let str = '';
+
+  // headers
+  const headers = Object.keys(array[0]);
+  str += headers.join(',') + '\r\n';
+
+  for (let i = 0; i < array.length; i++) {
+    let line = '';
+    for (let index in array[i]) {
+      if (line !== '') line += ',';
+
+      // Handle values that contain comma or newline
+      let value = array[i][index] ?? '';
+      line += '"' + value.toString().replace(/"/g, '""') + '"';
+    }
+    str += line + '\r\n';
+  }
+  return str;
 }
