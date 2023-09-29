@@ -10318,7 +10318,7 @@
       "multiToken": false,
       "address": "0xf884647dfa84696d9373f36ee413ccc48093f924",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cronos ID is an identity and communication layer built on Cronos. Our goal is to enable a deeper and more interconnected web3 community, where everyone is able to share and receive information and cryptocurrency in a safe and verifiable manner. Every user will now get to own a unique username and use it across many services!",
         "avatar": "/img/collections/cronos-id/avatar.webp",
