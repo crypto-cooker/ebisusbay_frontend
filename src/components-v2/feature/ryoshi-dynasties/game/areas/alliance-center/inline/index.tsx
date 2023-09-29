@@ -819,6 +819,7 @@ const ExportDataComponent = ({data, address, signature}: {data: any, address: st
       <Button
         variant='link'
         size='xs'
+        leftIcon={<DownloadIcon />}
         onClick={onOpen}
       >
         Export Options
@@ -832,7 +833,7 @@ const ExportDataComponent = ({data, address, signature}: {data: any, address: st
           >
             <Button
               leftIcon={<DownloadIcon />}
-              size='xs'
+              size='sm'
               _hover={{
                 color:'#F48F0C'
               }}
@@ -843,7 +844,7 @@ const ExportDataComponent = ({data, address, signature}: {data: any, address: st
           <Box>
             <Button
               leftIcon={<CopyIcon />}
-              size='xs'
+              size='sm'
               onClick={handleAlternative}
             >
               {hasCopied ? "Copied!" : "Copy Download link"}
