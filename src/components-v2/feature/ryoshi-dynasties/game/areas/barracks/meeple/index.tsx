@@ -26,6 +26,12 @@ import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
 import {RdModalAlert, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {useQuery} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
+import {MeepleUpkeep, MeepleMint, MeepleTradeInCards} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {BigNumber, Contract, ethers} from "ethers";
+import {commify, isAddress} from "ethers/lib/utils";
+import Resources from "@src/Contracts/Resources.json";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 
@@ -41,16 +47,27 @@ interface LocationData{
   playerCards: number;
 }
 
+const upKeepModifier = [
+  { min: 0, value: 0},
+  { min: 201, value: 1},
+  { min: 1000, value: 2},
+  { min: 5000, value: 3},
+]
+
 interface MeepleProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 const Meeple = ({isOpen, onClose}: MeepleProps) => {
+
   const user = useAppSelector((state) => state.user);
-  const collectionAddress = config.contracts.resources
   const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [page, setPage] = useState<string>();
+
+  const collectionAddress = config.contracts.resources
+  const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+  const {requestSignature} = useEnforceSignature();
 
   //upkeep
   const [needsToPayUpkeep, setNeedsToPayUpkeep] = useState<boolean>(false);
@@ -121,28 +138,72 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     const id = setInterval(() => { startTimer(e); }, 1000) 
     Ref.current = id;
   }
-
   const handleClose = () => {
     onClose();
   }
 
-  const upKeepModifier = [
-    { min: 0, value: 0},
-    { min: 201, value: 1},
-    { min: 1000, value: 2},
-    { min: 5000, value: 3},
-  ]
+  const PayUpkeep = async (upkeepPayment:number) => {
+    if (!user.address) return;
+    const signature = await requestSignature();
+    try {
+      // const signature = await admin._signTypedData(domain, typeUpkeepRequest, upkeepRequest);
+      // const tx = await resources.connect(user1).upkeep(upkeepRequest, signature);
 
-  const PayUpkeep = () => {
-    //add function to play Upkeep
+      const cmsResponse = await MeepleUpkeep(user.address, signature, upkeepPayment);
+      console.log("CMS Response: ", cmsResponse);
+      //signarure, costamounts, exipires, nonce
+
+      const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
+      // const tx = await resourcesContract.upkeep(user.address?.toLowerCase(), );
+      // const receipt = await tx.wait();
+
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } 
   }
+  const WithdrawMeeple = async (amountToMint:number) => {
+    if (!user.address) return;
+    const signature = await requestSignature();
+    try {
 
-  const TurnInCards = () => {
-    //add function to turn in cards
+      const cmsResponse = await MeepleMint(user.address, signature, amountToMint);
+      console.log("CMS Response: ", cmsResponse);
+
+      const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
+      // resosources.connect(user1).deposit([2], [amount_to_deposit]);
+
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } 
   }
+  const TurnInCards = async () => {
+    if (!user.address) return;
+    const signature = await requestSignature();
 
-  const WithdrawMeeple = () => {
-    //add function to withdraw Meeple
+    let ids:number[] = [];
+    let amounts:number[] = [];
+    cardsToTurnIn.forEach((card) => {
+      for(let i = 0; i < 3; i++){
+        ids.push(card.id);
+        amounts.push(3);
+      }
+    })
+
+    try {
+
+      const cmsResponse = await MeepleTradeInCards(user.address, signature, ids, amounts);
+      console.log("CMS Response: ", cmsResponse);
+
+      const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
+      //const signature2 = await signer1._signTypedData(domain, typeCraftRequest, request2);
+      // const tx = await resources.connect(user1).craftItems(request2, signature2);
+
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } 
   }
 
   const GetMeepleCount = () => {
@@ -150,12 +211,10 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     setMeepleOnDuty(3520);
     setMeepleOffDuty(9000);
   }
-
   const GetUpkeepCost = () => {
     //add function to get Upkeep Cost
     setUpkeepCost(50);
   }
-
   const GetUpkeepPaymentStatus = () => {
     //add function to get Upkeep Payment Status
     setNeedsToPayUpkeep(true);
@@ -164,7 +223,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     if(!rdGameContext) return;
     clearTimer(rdGameContext.game.endAt)
   }
-  
   const GetUpkeepModifier = () => {
     let cost = 0;
     upKeepModifier.forEach((item) => {
@@ -175,12 +233,10 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
 
     setUpkeepModifirer(cost);
   }
- 
   const RefreshFilteredCards = () => {
     const filtered = locationData.filter((location) => location.tier == selectedTab+1);
     setFilteredCards(filtered);
   }
-
   const GetLocationData = async () => {
     let data = await api.get("fullcollections?address=" + collectionAddress);
     let locations:LocationData[] = [];
@@ -200,7 +256,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     }
     setLocationData(locations);
   }
-
   const CalculateUpkeepCost = (meepleAmount:number) => {
     //cost will be marginal, 0-200 free, 201-999 1x, 1000-4999 2x, 5000+ 3x
     let cost = 0;
@@ -439,7 +494,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
             <RdModalFooter>
               <Stack justifyContent={'space-between'} direction='row' spacing={6}>
                   <RdButton onClick={onCloseUpkeepModal} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-                  <RdButton onClick={() => PayUpkeep()} size='lg' fontSize={{base: '18', sm: '24'}}> Pay Upkeep </RdButton>
+                  <RdButton onClick={() => PayUpkeep(10)} size='lg' fontSize={{base: '18', sm: '24'}}> Pay Upkeep </RdButton>
               </Stack>
             </RdModalFooter>
           </RdModal>
@@ -537,7 +592,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
             <RdModalFooter>
               <Stack justifyContent={'space-between'} direction='row'>
                 <RdButton onClick={onCloseWithdrawModal} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-                <RdButton onClick={() => WithdrawMeeple()} size='lg' fontSize={{base: '18', sm: '24'}}> Withdraw </RdButton>
+                <RdButton onClick={() => WithdrawMeeple(10)} size='lg' fontSize={{base: '18', sm: '24'}}> Withdraw </RdButton>
               </Stack>
             </RdModalFooter>
           </RdModal>

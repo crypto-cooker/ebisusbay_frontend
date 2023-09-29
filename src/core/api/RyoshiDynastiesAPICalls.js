@@ -471,3 +471,39 @@ export const getLeadersForSeason = async (gameId) => {
     throw error;
   }
 }
+//testing-upkeep
+export const MeepleUpkeep = async (address, signature, amount) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/upkeep?", 
+      {amount},
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+//mint meeple
+export const MeepleMint = async (address, signature, amount) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/minting?", 
+      {amount},
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+//turn in cards
+export const MeepleTradeInCards = async (address, signature, nftIds, nftCounts) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/trading-card?", 
+      {nftIds, nftCounts},
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
