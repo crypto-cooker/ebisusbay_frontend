@@ -23785,6 +23785,57 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Ryoshi Beta Mascots",
+      "slug": "ryoshi-beta-mascots",
+      "multiToken": false,
+      "address": "0x02c520d720fc9CFBcf7D67C2903309Dc95F2269f",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "This collection is themed around the Ryoshi Dynasties game by Ebisu's Bay. It will consist of 10,000 unique items, each focused on the concept of Kamiyo-nanayo, \"Seven Generations of the Age of the Gods.\" This collection aims to offer a simple yet exciting experience, featuring elements like ranks and properties that will make them highly appealing for trading and minting. Primary intention behind introducing this collection is to maximize the benefits for the current holders of The Sports NFT, also known as the Beta Mascots ecosystem. The utility of this collection will be within the Ryoshi Dynasties game within Ebisu's Bay.",
+        "avatar": "/img/collections/ryoshi-beta-mascots/avatar.webp",
+        "card": "/img/collections/ryoshi-beta-mascots/card.webp",
+        "banner": "/img/collections/ryoshi-beta-mascots/banner.webp",
+        "website": "https://www.betamascots.com/",
+        "twitter": "https://twitter.com/TheSportsNFT",
+        "discord": "https://discord.gg/PGn2jNQf6g",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ChiVerse Ryoshi Pass",
+      "slug": "chiverse-ryoshi-pass",
+      "multiToken": false,
+      "address": "0xF66e736E3C4C5A8DA2773FafA570E53567010827",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The first free ChiVerse airdrop including a pass to the Ryoshi Dynasties by Ebisus game",
+        "avatar": "/img/collections/chiverse-ryoshi-pass/avatar.webp",
+        "card": "/img/collections/chiverse-ryoshi-pass/card.webp",
+        "banner": "/img/collections/chiverse-ryoshi-pass/banner.webp",
+        "website": "https://chiverse.online/",
+        "twitter": "https://twitter.com/ChiVerseOnline",
+        "discord": "https://discord.gg/tWmKk7Htq3",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
