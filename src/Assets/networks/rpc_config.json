@@ -23697,8 +23697,8 @@
       "listable": true,
       "metadata": {
         "description": "The Cronos Chickens are a collection of 5,555 fun-loving chickens that live on the Cronos blockchain.",
-        "avatar": "/img/collections/cronos-chickens/avatar.webp",
-        "banner": "/img/collections/cronos-chickens/banner.webp",
+        "avatar": "/img/collections/cronos-chickens/avatar2.webp",
+        "banner": "/img/collections/cronos-chickens/banner2.webp",
         "card": "/img/collections/cronos-chickens/card.webp",
         "website": "https://cronos-chickens.netlify.app/",
         "twitter": "https://twitter.com/CROChickens",
@@ -23759,6 +23759,29 @@
       },
       "verification": {
         "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Loaded Innovators",
+      "slug": "loaded-innovators",
+      "multiToken": false,
+      "address": "0x99e758498E891A9e27C7e8c49259224d4073B53D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "222 extremely striking charged lions make their way through Cronos for the best possible passive income",
+        "avatar": "/img/collections/loaded-innovators/avatar.webp",
+        "website": "https://liquor-token-cronos.com/",
+        "twitter": "https://twitter.com/LiquorTokenCro",
+        "discord": "https://discord.gg/NqqFZsvMJE",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
         "doxx": false,
         "kyc": false
       }
