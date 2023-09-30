@@ -23762,6 +23762,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Loaded Innovators",
+      "slug": "loaded-innovators",
+      "multiToken": false,
+      "address": "0x99e758498E891A9e27C7e8c49259224d4073B53D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "222 extremely striking charged lions make their way through Cronos for the best possible passive income",
+        "avatar": "/img/collections/loaded-innovators/avatar.webp",
+        "website": "https://liquor-token-cronos.com/",
+        "twitter": "https://twitter.com/LiquorTokenCro",
+        "discord": "https://discord.gg/NqqFZsvMJE",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
