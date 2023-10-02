@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import SalesCollection from '../src/Components/components/SalesCollection';
-import {getMarketData} from '../src/GlobalState/marketplaceSlice';
 import {siPrefixedNumber} from '@src/utils';
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Box} from "@chakra-ui/react";
@@ -25,8 +23,6 @@ const Marketplace = () => {
   const { tab, ...remainingQuery }: Partial<{ tab: string }> & ListingsQueryParams = router.query;
   const [queryParams, setQueryParams] = useState(remainingQuery);
 
-  const dispatch = useDispatch();
-
   const { data: marketData } = useQuery({
     queryKey: ['MarketData'],
     queryFn: () => getMarketMetadata(),
@@ -42,17 +38,6 @@ const Marketplace = () => {
       tab: key
     });
   };
-
-  // useEffect(() => {
-  //   dispatch(getMarketData());
-  //   // eslint-disable-next-line
-  // }, []);
-
-  // const [onlyVerified, setOnlyVerified] = useState(false)
-  //
-  // useEffect(() => {
-  //   dispatch(filterListingsByVerification(false, onlyVerified));
-  // }, [onlyVerified])
 
   useEffect(() => {
     if (router.query) {
