@@ -9,6 +9,7 @@ import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 import {MarketplacePageContext, MarketplacePageContextProps} from "@src/components-v2/feature/marketplace/context";
 import {CollectionFilter} from "@src/components-v2/shared/filter-container/filters/collection-filter";
+import {ciEquals} from "@src/utils";
 
 const config = appConfig();
 
@@ -46,6 +47,14 @@ const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, on
       if (item.key === 'range-max-price') delete params.maxPrice;
       if (item.key === 'search') delete params.search;
       if (item.key.startsWith('currency')) delete params.currency;
+      if (item.key.startsWith('collection')) {
+        const [_, address] = item.key.split('-');
+        if (params.collection) {
+          const collections = Array.isArray(params.collection) ? params.collection : [params.collection];
+          params.collection = collections.filter((c: string) => !ciEquals(c, address));
+          if (params.collection.length === 0) delete params.collection;
+        }
+      }
     }
 
     onFilter({...queryParams, ...params});
@@ -112,6 +121,13 @@ const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, on
         if (currency) ret.push({key: `currency-${currency[0]}`, label: currency[1].symbol});
       }
     }
+    if (queryParams.collection) {
+      const collections = Array.isArray(queryParams.collection) ? queryParams.collection : [queryParams.collection];
+      for (const collectionAddress of collections) {
+        const collection = config.collections.find((c: any) => ciEquals(c.address, collectionAddress));
+        if (collection) ret.push({key: `collection-${collection.address}`, label: collection.name});
+      }
+    }
 
     setFilteredItems(ret);
   }, [queryParams]);
@@ -123,7 +139,7 @@ const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, on
       .filter(c => !c.key.startsWith('collection'))
       .concat(collections.map((c: any) => ({label: c.name, key: `collection-${c.address}`})));
 
-    setFilteredItems([...curFilters]);
+    setFilteredItems(curFilters);
   }, [queryParams, filteredItems]);
 
   const FilterAccordion = useMemo(() => (
