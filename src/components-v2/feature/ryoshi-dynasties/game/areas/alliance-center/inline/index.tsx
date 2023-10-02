@@ -11,10 +11,12 @@ import {
   Box,
   Button,
   Center,
+  Collapse,
   Flex,
   HStack,
   IconButton,
   Image,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -32,7 +34,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, {useContext, useEffect, useState} from "react";
-import {ArrowBackIcon, EditIcon} from "@chakra-ui/icons";
+import {ArrowBackIcon, CopyIcon, DownloadIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
 import RdButton from "../../../../components/rd-button";
 import MetaMaskOnboarding from "@metamask/onboarding";
@@ -61,6 +63,7 @@ import ImageService from "@src/core/services/image";
 import {motion} from "framer-motion";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import axios from 'axios';
 
 const config = appConfig();
 const gothamBook = localFont({
@@ -230,7 +233,7 @@ export default AllianceCenter;
 
 const CurrentFaction = () => {
   const user = useAppSelector((state) => state.user);
-  const {requestSignature} = useEnforceSignature();
+  const {requestSignature, signature} = useEnforceSignature();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const { isOpen: isOpenFaction, onOpen: onOpenFaction, onClose: onCloseFaction } = useDisclosure();
@@ -505,19 +508,30 @@ const CurrentFaction = () => {
                       <>
                         <Text color='#ccc' textAlign='start' pb={2}>Troops received from users</Text>
                         {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.length > 0 ? (
-                          <SimpleGrid columns={2} w='full'>
-                            {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => (
-                              <>
-                                <Box textAlign='start'>
-                                  <CopyableText
-                                    text={user.profileWalletAddress}
-                                    label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
-                                  />
-                                </Box>
-                                <Box textAlign='end'>{commify(user.troops)}</Box>
-                              </>
-                            ))}
-                          </SimpleGrid>
+                          <>
+                            <SimpleGrid columns={2} w='full'>
+                              {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => (
+                                <>
+                                  <Box textAlign='start'>
+                                    <CopyableText
+                                      text={user.profileWalletAddress}
+                                      label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
+                                    />
+                                  </Box>
+                                  <Box textAlign='end'>{commify(user.troops)}</Box>
+                                </>
+                              ))}
+                            </SimpleGrid>
+                            <ExportDataComponent
+                              data={(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
+                                address: user.profileWalletAddress,
+                                name: user.profileName,
+                                troops: user.troops
+                              }))}
+                              address={user.address!}
+                              signature={signature}
+                            />
+                          </>
                         ) : (
                           <>None</>
                         )}
@@ -769,4 +783,99 @@ const CopyableText = ({text, label}: {text: string, label: string}) => {
   return (
     <Text cursor='pointer' onClick={onCopy}>{label}</Text>
   )
+}
+
+const ExportDataComponent = ({data, address, signature}: {data: any, address: string, signature: string}) => {
+  const csvData = convertToCSV(data);
+  const blob = new Blob([csvData], { type: 'text/csv' });
+  const downloadLink = URL.createObjectURL(blob);
+  const [token, setToken] = useState('');
+  const { onCopy, value, setValue, hasCopied } = useClipboard("");
+  const {isOpen, onOpen} = useDisclosure();
+
+  const handleAlternative = async () => {
+    const response = await axios.get('/api/export/request-token', {
+      params: {
+        address,
+        signature,
+        gameId: 52,
+        type: 'ryoshi-dynasties/delegations'
+      }
+    });
+    if (response.data.token) {
+      setValue(`${config.urls.app}ryoshi/export?token=${response.data.token}`)
+    }
+    setToken(response.data.token);
+  }
+
+  useEffect(() => {
+    if (!!value) {
+      onCopy();
+    }
+  }, [value]);
+
+  return (
+    <Box textAlign='end' mt={2}>
+      <Button
+        variant='link'
+        size='xs'
+        leftIcon={<DownloadIcon />}
+        onClick={onOpen}
+      >
+        Export Options
+      </Button>
+
+      <Collapse in={isOpen} animateOpacity>
+        <Stack direction='row' justify='center' my={2}>
+          <Link
+            href={downloadLink}
+            download='delegations.csv'
+          >
+            <Button
+              leftIcon={<DownloadIcon />}
+              size='sm'
+              _hover={{
+                color:'#F48F0C'
+              }}
+            >
+              Export Data
+            </Button>
+          </Link>
+          <Box>
+            <Button
+              leftIcon={<CopyIcon />}
+              size='sm'
+              onClick={handleAlternative}
+            >
+              {hasCopied ? "Copied!" : "Copy Download link"}
+            </Button>
+          </Box>
+        </Stack>
+      </Collapse>
+    </Box>
+  )
+}
+
+
+function convertToCSV(objArray: Array<{ [key: string]: any }>) {
+  const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
+  if (array.length === 0) return '';
+  let str = '';
+
+  // headers
+  const headers = Object.keys(array[0]);
+  str += headers.join(',') + '\r\n';
+
+  for (let i = 0; i < array.length; i++) {
+    let line = '';
+    for (let index in array[i]) {
+      if (line !== '') line += ',';
+
+      // Handle values that contain comma or newline
+      let value = array[i][index] ?? '';
+      line += '"' + value.toString().replace(/"/g, '""') + '"';
+    }
+    str += line + '\r\n';
+  }
+  return str;
 }

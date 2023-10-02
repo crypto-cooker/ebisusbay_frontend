@@ -199,17 +199,14 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
               px={4}
               py={1}
             >
-              <div className="d-flex justify-content-between">
-                <Box
-                  // _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
-                  // visibility="hidden"
+                <Box 
+                  maxW={'100%'} 
                   justifyContent='space-between'
                 >
-                  <Heading  as="h6" size="sm" className="card-title mt-auto mb-1">{GetTokenName(battleRewards.tokenIds[index])}</Heading>
+                  <Heading isTruncated width={140} as="h6" size="sm" className="card-title mt-auto mb-1">{GetTokenName(battleRewards.tokenIds[index])}</Heading>
                   <Heading  as="h6" size="sm" className="card-title mt-auto mb-1">x{battleRewards.quantity[index]}</Heading>
                 </Box>
                 
-              </div>
             </Box>
           </Flex>
         </Box>

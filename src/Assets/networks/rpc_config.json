@@ -7994,7 +7994,7 @@
         "banner": "/img/collections/fury-mouse-gang/banner.png",
         "website": "https://furymousegang.com/",
         "twitter": "https://twitter.com/FuryMouseGang",
-        "discord": "https://discord.gg/fmg",
+        "discord": "https://discord.gg/ZsRuMGAqCZ",
         "categories": [
           "collectibles"
         ]
@@ -10318,7 +10318,7 @@
       "multiToken": false,
       "address": "0xf884647dfa84696d9373f36ee413ccc48093f924",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cronos ID is an identity and communication layer built on Cronos. Our goal is to enable a deeper and more interconnected web3 community, where everyone is able to share and receive information and cryptocurrency in a safe and verifiable manner. Every user will now get to own a unique username and use it across many services!",
         "avatar": "/img/collections/cronos-id/avatar.webp",
@@ -11773,7 +11773,7 @@
         "banner": "/img/collections/fury-quack-gang/banner.webp",
         "website": "https://furymousegang.com/",
         "twitter": "https://twitter.com/FuryMouseGang",
-        "discord": "https://discord.gg/fmg",
+        "discord": "https://discord.gg/ZsRuMGAqCZ",
         "categories": [
           "collectibles"
         ]
@@ -23697,8 +23697,8 @@
       "listable": true,
       "metadata": {
         "description": "The Cronos Chickens are a collection of 5,555 fun-loving chickens that live on the Cronos blockchain.",
-        "avatar": "/img/collections/cronos-chickens/avatar.webp",
-        "banner": "/img/collections/cronos-chickens/banner.webp",
+        "avatar": "/img/collections/cronos-chickens/avatar2.webp",
+        "banner": "/img/collections/cronos-chickens/banner2.webp",
         "card": "/img/collections/cronos-chickens/card.webp",
         "website": "https://cronos-chickens.netlify.app/",
         "twitter": "https://twitter.com/CROChickens",
@@ -23711,6 +23711,130 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "CroSkull Pets - Season 5",
+      "slug": "croskull-pets-s5",
+      "multiToken": false,
+      "address": "0xed9BDf3E103332C853DDb9933BA3B45acfDB9B2e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Underworld is full of all kinds of creatures. During the CroSkulls adventures to the different regions of the Underworld, the CroSkulls often find regional eggs. Each season of CroSkulls explore new regions of the Underworld. Each season will have different seasonal pets. Once the eggs hatch, you will acquire a seasonal pet from that egg's region of the Underworld.",
+        "avatar": "/img/collections/croskull-pets-s5/avatar.webp",
+        "card": "/img/collections/croskull-pets-s5/card.webp",
+        "banner": "/img/collections/croskull-pets-s5/banner.webp",
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/gPCawZBQMF",
+        "medium": "https://medium.com/@croskullnft",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroSkull Pets Eggs - Season 5",
+      "slug": "croskull-pets-eggs-s5",
+      "multiToken": false,
+      "address": "0x27fE0fA269DeAC471aC07014d6ED9973ce69bd96",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A Mysterious Egg found by a CroSkull during his adventure! \"I.... never seen an egg like that, it may hatch in a some mysterious creature.\" Hatching Available on https://app.croskull.com/",
+        "avatar": "/img/collections/croskull-pets-eggs-s5/avatar.webp",
+        "card": "/img/collections/croskull-pets-eggs-s5/card.webp",
+        "banner": "/img/collections/croskull-pets-eggs-s5/banner.webp",
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/gPCawZBQMF",
+        "medium": "https://medium.com/@croskullnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Loaded Innovators",
+      "slug": "loaded-innovators",
+      "multiToken": false,
+      "address": "0x99e758498E891A9e27C7e8c49259224d4073B53D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "222 extremely striking charged lions make their way through Cronos for the best possible passive income",
+        "avatar": "/img/collections/loaded-innovators/avatar.webp",
+        "website": "https://liquor-token-cronos.com/",
+        "twitter": "https://twitter.com/LiquorTokenCro",
+        "discord": "https://discord.gg/NqqFZsvMJE",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ryoshi Beta Mascots",
+      "slug": "ryoshi-beta-mascots",
+      "multiToken": false,
+      "address": "0x02c520d720fc9CFBcf7D67C2903309Dc95F2269f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This collection is themed around the Ryoshi Dynasties game by Ebisu's Bay. It will consist of 10,000 unique items, each focused on the concept of Kamiyo-nanayo, \"Seven Generations of the Age of the Gods.\" This collection aims to offer a simple yet exciting experience, featuring elements like ranks and properties that will make them highly appealing for trading and minting. Primary intention behind introducing this collection is to maximize the benefits for the current holders of The Sports NFT, also known as the Beta Mascots ecosystem. The utility of this collection will be within the Ryoshi Dynasties game within Ebisu's Bay.",
+        "avatar": "/img/collections/ryoshi-beta-mascots/avatar.webp",
+        "card": "/img/collections/ryoshi-beta-mascots/card.webp",
+        "banner": "/img/collections/ryoshi-beta-mascots/banner.webp",
+        "website": "https://www.betamascots.com/",
+        "twitter": "https://twitter.com/TheSportsNFT",
+        "discord": "https://discord.gg/PGn2jNQf6g",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ChiVerse Ryoshi Pass",
+      "slug": "chiverse-ryoshi-pass",
+      "multiToken": false,
+      "address": "0xF66e736E3C4C5A8DA2773FafA570E53567010827",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The first free ChiVerse airdrop including a pass to the Ryoshi Dynasties by Ebisus game",
+        "avatar": "/img/collections/chiverse-ryoshi-pass/avatar.webp",
+        "card": "/img/collections/chiverse-ryoshi-pass/card.webp",
+        "banner": "/img/collections/chiverse-ryoshi-pass/banner.webp",
+        "website": "https://chiverse.online/",
+        "twitter": "https://twitter.com/ChiVerseOnline",
+        "discord": "https://discord.gg/tWmKk7Htq3",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
       }
     }
   ],
@@ -26931,7 +27055,7 @@
         "name": "Fury Mouse Gang",
         "website": "https://furymousegang.com/",
         "twitter": "https://twitter.com/FuryMouseGang",
-        "discord": "https://discord.gg/fmg"
+        "discord": "https://discord.gg/ZsRuMGAqCZ"
       },
       "address": "0xb0A48BDCBb08A1817C8eDf51E940bd3e74572A14",
       "maxMintPerTx": 10,
@@ -28141,7 +28265,7 @@
         "name": "Fury Mouse Gang",
         "website": "https://furymousegang.com/",
         "twitter": "https://twitter.com/FuryMouseGang",
-        "discord": "https://discord.gg/fmg"
+        "discord": "https://discord.gg/ZsRuMGAqCZ"
       },
       "address": "0xFe320bB9830f6f62a3C7dd7F9B55c8609D0aDe35",
       "maxMintPerTx": 10,

@@ -529,6 +529,7 @@ export const configData = {
           '0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14': ['cro', 'frtn'], // World of Cats: Seasonal
           '0x28Fc9DaCa33E0a3Ada666064F54B400E63596c6C': ['cro', 'frtn'], // Hidden Avatars
           '0xFd14Cb97102eC422ADF507138580798cb2e6B824': ['cro', 'frtn'], // World of Cats: MILK
+          '0x1eca64187AD00A86360D62f1CD4409Dc1A136B45': ['cro', 'frtn'], // Everybody's Not Friends
         }
       }
     }
