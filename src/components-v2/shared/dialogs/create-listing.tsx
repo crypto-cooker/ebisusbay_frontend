@@ -47,7 +47,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import {useExchangeRate, useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
-import ReactSelect from "react-select";
+import ReactSelect, {components, OptionProps} from "react-select";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -398,6 +398,23 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     }
   }, [salePrice, quantity, priceType]);
 
+  // Hack to fix mobile event propagation from preventing desired selection
+  function Option({ innerProps, children, ...props }: OptionProps<any, any>) {
+    const onClick = (e: any) => {
+      e.nativeEvent.stopImmediatePropagation();
+      if (innerProps && innerProps.onClick) {
+        innerProps.onClick(e);
+      }
+    };
+
+    const newInnerProps = { ...innerProps, onClick };
+    return <components.Option {...props} innerProps={newInnerProps}>{children}</components.Option>;
+  }
+
+  const defaultComponents = {
+    Option
+  };
+
   if (!nft) return <></>;
 
   return (
@@ -491,6 +508,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                               disabled={showConfirmButton || executingCreateListing}
                             />
                             <ReactSelect
+                              components={defaultComponents}
                               menuPortalTarget={document.body} menuPosition={'fixed'}
                               styles={customStyles}
                               options={allowedCurrencies}
