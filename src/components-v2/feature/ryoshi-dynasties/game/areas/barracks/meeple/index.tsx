@@ -9,6 +9,12 @@ import {Box, Center, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Spacer, 
   Tabs,
   TabList,
   Tab,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderMark,
+  GridItem,
   } from "@chakra-ui/react"
 import React, {useCallback, useContext, useEffect, useState, useRef} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
@@ -32,6 +38,7 @@ import {commify, isAddress} from "ethers/lib/utils";
 import Resources from "@src/Contracts/Resources.json";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 
@@ -79,10 +86,14 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const [upkeepRemaining, setUpkeepRemaining] = useState<number>(0);
   const [meepleOnDuty, setMeepleOnDuty] = useState<number>(0);
   const [meepleOffDuty, setMeepleOffDuty] = useState<number>(0);
+  const [sliderValue, setSliderValue] = useState(100)
+  const [upkeepPayment, setUpkeepPayment] = useState<number>(0);
+  const upkeepDue = totalUpkeepRequired - upkeepPaid;
+  const paymentAmount = upkeepDue * (sliderValue/100);
 
-  //withdraw meeple
-  const [meepleToWithdraw, setMeepleToWithdraw] = useState(0);
-  const handleQuantityChange = (stringValue: string, numValue: number) => setMeepleToWithdraw(numValue)
+  //Mint meeple
+  const [meepleToMint, setMeepleToMint] = useState(0);
+  const handleQuantityChange = (stringValue: string, numValue: number) => setMeepleToMint(numValue)
 
   //turn in cards
   const [selectedTab, setSelectedTab] = useState<number>(0);
@@ -94,7 +105,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   //modals
   const { isOpen: isOpenUpkeepModal, onOpen: onOpenUpkeepModal, onClose: onCloseUpkeepModal } = useDisclosure();
   const { isOpen: isOpenTurnInCardsModal, onOpen: onOpenTurnInCardsModal, onClose: onCloseTurnInCardsModal } = useDisclosure();
-  const { isOpen: isOpenWithdrawModal, onOpen: onOpenWithdrawModal, onClose: onCloseWithdrawModal } = useDisclosure();
+  const { isOpen: isOpenMintModal, onOpen: onOpenMintModal, onClose: onCloseMintModal } = useDisclosure();
 
   const {data: walletData} = useQuery({
     queryKey: ['TJTest', user.address],
@@ -149,7 +160,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
       // const signature = await admin._signTypedData(domain, typeUpkeepRequest, upkeepRequest);
       // const tx = await resources.connect(user1).upkeep(upkeepRequest, signature);
 
-      const cmsResponse = await MeepleUpkeep(user.address, signature, upkeepPayment);
+      const cmsResponse = await MeepleUpkeep(user.address, signature, Number(upkeepPayment.toFixed(0)));
       console.log("CMS Response: ", cmsResponse);
       //signarure, costamounts, exipires, nonce
 
@@ -162,7 +173,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
       toast.error(parseErrorMessage(error));
     } 
   }
-  const WithdrawMeeple = async (amountToMint:number) => {
+  const MintMeeple = async (amountToMint:number) => {
     if (!user.address) return;
     const signature = await requestSignature();
     try {
@@ -182,21 +193,29 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     if (!user.address) return;
     const signature = await requestSignature();
 
-    let ids:number[] = [];
-    let amounts:number[] = [];
+    // let ids:number[] = [];
+    // let amounts:number[] = [];
+    // cardsToTurnIn.forEach((card) => {
+    //   for(let i = 0; i < 3; i++){
+    //     ids.push(card.id);
+    //     amounts.push(3);
+    //   }
+    // })
+    let id;
+    let amount = 0;
     cardsToTurnIn.forEach((card) => {
-      for(let i = 0; i < 3; i++){
-        ids.push(card.id);
-        amounts.push(3);
+      for(let i = 0; i < 3; i+=3){
+        id = card.id;
+        amount+=3;
       }
     })
 
     try {
-
-      const cmsResponse = await MeepleTradeInCards(user.address, signature, ids, amounts);
+      console.log("Turn in cards: ", id, amount);
+      const cmsResponse = await MeepleTradeInCards(user.address, signature, id, amount);
       console.log("CMS Response: ", cmsResponse);
 
-      const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
+      // const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
       //const signature2 = await signer1._signTypedData(domain, typeCraftRequest, request2);
       // const tx = await resources.connect(user1).craftItems(request2, signature2);
 
@@ -206,10 +225,15 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     } 
   }
 
-  const GetMeepleCount = () => {
+  const GetMeepleCount = async () => {
     //add function to get Meeple Count
     setMeepleOnDuty(3520);
     setMeepleOffDuty(9000);
+
+    const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
+    const data = await resourcesContract.activeMeeples(user.address)
+ 
+    console.log("Meeple Count: ", BigNumber.from(data).toNumber());
   }
   const GetUpkeepCost = () => {
     //add function to get Upkeep Cost
@@ -240,6 +264,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const GetLocationData = async () => {
     let data = await api.get("fullcollections?address=" + collectionAddress);
     let locations:LocationData[] = [];
+    // console.log("Location Data: ", data.data);
 
     //filter out only locations 
     for(let i = 0; i < data.data.nfts.length; i++){
@@ -345,7 +370,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   } , [locationData, cardsInWallet])
  
   useEffect(() => {
-    GetMeepleCount();
+    // GetMeepleCount();
     GetUpkeepPaymentStatus();
     GetUpkeepDeadline();
     GetLocationData();
@@ -360,6 +385,11 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     // CalculateUpkeepCost(200);
     // CalculateUpkeepCost(201);
   }, [meepleOnDuty])
+
+  useEffect(() => {
+    GetMeepleCount();
+  }, [])
+
 
   const handleBack = () => {
     if (!!page) {
@@ -385,7 +415,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
       ) : (
         <>
           <Box p={4}>
-            {/* Withdraw */}
+            {/* Mint */}
             <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' mt={4}>
               <Box textAlign='left' as="b" fontSize={18}>
                 Meeple Management
@@ -397,11 +427,11 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                 </HStack>
                 <RdButton
                   h={12}
-                  onClick={() => onOpenWithdrawModal()}
+                  onClick={() => onOpenMintModal()}
                   size='lg'
                   fontSize={{base: '12', sm: '18'}}
                   >
-                  Withdraw Meeple
+                  Mint Meeple
                 </RdButton> 
               </Flex>
               {meepleOnDuty > 3000 && (
@@ -412,7 +442,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                       color='#333'
                       fontWeight='bold'
                   >
-                    Warning: Should you hold more than the current limt (3000 Meeple) at the end of the week, they will be lost. Withdraw them from the platform <b> or </b> spend them in battles and resource gathering.
+                    Warning: Should you hold more than the current limt (3000 Meeple) at the end of the week, you will not recieve Meeple at the start of the next week. Turn them into tokens to take them off duty <b> or </b> spend them in battles and resource gathering.
                   </Text>
                 </Stack>
               )}
@@ -485,8 +515,36 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                   <Text as={'b'} textAlign={'right'} p={2}> {totalUpkeepRequired} </Text>
                   <Text color={'#aaa'} textAlign={'left'} p={2}> Upkeep paid this week </Text>
                   <Text as={'b'} textAlign={'right'} p={2}> -{upkeepPaid} </Text>
-                  <Text color={'#aaa'} pt={10} pl={2} textAlign={'left'} > Remaining Upkeep to be paid: </Text>
-                  <Text as={'b'} textAlign={'right'} fontSize='28'pt={10} > {totalUpkeepRequired - upkeepPaid} </Text>
+                  <Text color={'#aaa'} textAlign={'left'} p={2}> Upkeep due</Text>
+                  <Text as={'b'} textAlign={'right'} p={2}> {upkeepDue} </Text>
+                  <Text color={'#aaa'} pt={12} pl={2} textAlign={'left'} > Payment Amount </Text>
+                  <HStack   pt={10} spacing={0} justifyContent={'right'} w={'100%'}>
+                    <Text as={'b'} textAlign={'right'} fontSize='28' > {paymentAmount.toFixed(0)} </Text>
+                    <Image  src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/> 
+                  </HStack>
+                  
+                  <GridItem colSpan={2} pl={4} pr={4} pt={10}>
+                    <Slider aria-label='slider-ex-4' defaultValue={100} onChange={(val) => setSliderValue(val)}>
+                      <SliderMark
+                      value={sliderValue}
+                      textAlign='center'
+                      color='white'
+                      mt='-10'
+                      ml='-5'
+                      w='12'
+                    >
+                      {sliderValue}%
+                    </SliderMark>
+                      <SliderTrack bg='red.100'>
+                        <SliderFilledTrack bg='tomato' />
+                      </SliderTrack>
+                      <SliderThumb boxSize={6}>
+                        {/* <Box color='tomato' as={'/img/ryoshi-dynasties/icons/koban.png'} /> */}
+                        {/* <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/> */}
+                      </SliderThumb>
+                    </Slider>
+                  </GridItem>
+
               </SimpleGrid>
 
             </Box>
@@ -494,7 +552,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
             <RdModalFooter>
               <Stack justifyContent={'space-between'} direction='row' spacing={6}>
                   <RdButton onClick={onCloseUpkeepModal} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-                  <RdButton onClick={() => PayUpkeep(10)} size='lg' fontSize={{base: '18', sm: '24'}}> Pay Upkeep </RdButton>
+                  <RdButton onClick={() => PayUpkeep(paymentAmount)} size='lg' fontSize={{base: '18', sm: '24'}}> Pay Upkeep </RdButton>
               </Stack>
             </RdModalFooter>
           </RdModal>
@@ -552,11 +610,11 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
             </RdModalFooter>
           </RdModal>
           
-          <RdModal isOpen={isOpenWithdrawModal} onClose={onCloseWithdrawModal} title={'Withdraw'} >
+          <RdModal isOpen={isOpenMintModal} onClose={onCloseMintModal} title={'Mint'} >
             <RdModalAlert>
               <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
           
-              <Text color={'#aaa'} w={'100%'} textAlign={'left'} p={2}> Select Meeple to Withdraw: </Text>
+              <Text color={'#aaa'} w={'100%'} textAlign={'left'} p={2}> Select Meeple to Mint: </Text>
               <Flex justifyContent='center' w={'100%'}>
                 <NumberInput 
                   defaultValue={0} 
@@ -564,7 +622,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                   max={meepleOnDuty} 
                   name="quantity"
                   onChange={handleQuantityChange}
-                  value={meepleToWithdraw}
+                  value={meepleToMint}
                   clampValueOnBlur={true}
                   w='85%'
                   >
@@ -578,21 +636,21 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                 <Spacer />
                 <Button 
                   variant={'outline'}
-                  onClick={() => setMeepleToWithdraw(meepleOnDuty)}
+                  onClick={() => setMeepleToMint(meepleOnDuty)}
                   > Max </Button>
               </Flex>
 
               <Flex justifyContent={'space-between'} align={'center'} mt={'8'}>
                 <Text color={'#aaa'} alignContent={'baseline'} p={2}> Remaining Meeple On Duty: </Text>
-                <Text as={'b'} fontSize='28' p={2}>{meepleOnDuty - meepleToWithdraw}</Text>
+                <Text as={'b'} fontSize='28' p={2}>{meepleOnDuty - meepleToMint}</Text>
               </Flex>
 
             </Box>
             </RdModalAlert>
             <RdModalFooter>
               <Stack justifyContent={'space-between'} direction='row'>
-                <RdButton onClick={onCloseWithdrawModal} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-                <RdButton onClick={() => WithdrawMeeple(10)} size='lg' fontSize={{base: '18', sm: '24'}}> Withdraw </RdButton>
+                <RdButton onClick={onCloseMintModal} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
+                <RdButton onClick={() => MintMeeple(10)} size='lg' fontSize={{base: '18', sm: '24'}}> Mint </RdButton>
               </Stack>
             </RdModalFooter>
           </RdModal>

@@ -471,7 +471,7 @@ export const getLeadersForSeason = async (gameId) => {
     throw error;
   }
 }
-//testing-upkeep
+//meeple
 export const MeepleUpkeep = async (address, signature, amount) => {
   try{
     var data = await api.post("ryoshi-dynasties/meeple/upkeep?", 
@@ -483,7 +483,6 @@ export const MeepleUpkeep = async (address, signature, amount) => {
     throw error;
   }
 }
-//mint meeple
 export const MeepleMint = async (address, signature, amount) => {
   try{
     var data = await api.post("ryoshi-dynasties/meeple/minting?", 
@@ -495,11 +494,55 @@ export const MeepleMint = async (address, signature, amount) => {
     throw error;
   }
 }
-//turn in cards
-export const MeepleTradeInCards = async (address, signature, nftIds, nftCounts) => {
+export const MeepleTradeInCards = async (address, signature, nftId, amount) => {
   try{
     var data = await api.post("ryoshi-dynasties/meeple/trading-card?", 
-      {nftIds, nftCounts},
+      {nftId, amount},
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+
+//tests
+export const MeepleTradeInCardsTest = async (address, signature) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/trading-card-testing?", 
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const MeepleMintTest = async (address, signature, amount) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/minting-testing?", 
+      {amount},
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const MeepleUpkeepTest = async (address, signature, amount) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/upkeep-testing?", 
+      {amount},
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const MeepleBurnTest = async (address, signature, amount) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/burn-testing?", 
+      {amount},
       {params: {address, signature}});
     return data.data.data;
   }
