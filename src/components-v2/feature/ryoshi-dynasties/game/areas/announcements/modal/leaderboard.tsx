@@ -1,15 +1,49 @@
-import React, {useEffect, useContext, useState, ReactElement} from 'react';
-import { Center, Flex, Spinner, Stack,Table,TableContainer,Tbody,Th,Thead,Tr,Select,Td,Text,Tabs,TabList,Tab,VStack,Box,Grid,GridItem, Avatar,useBreakpointValue,HStack,Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon} from "@chakra-ui/react"
+import React, {ReactElement, useContext, useEffect, useState} from 'react';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Avatar,
+  Box,
+  Center,
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Select,
+  Spinner,
+  Stack,
+  Tab,
+  Table,
+  TableContainer,
+  TabList,
+  Tabs,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  useBreakpointValue,
+  VStack
+} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
 import moment from 'moment';
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
-import { RyoshiDynastiesContext, RyoshiDynastiesContextProps} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import ImageService from "@src/core/services/image";
 import GameMapWrapper from '@src/components-v2/feature/ryoshi-dynasties/components/game-map-wrapper';
-const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 import {getLeadersForSeason, getSeasonDate} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {commify} from "ethers/lib/utils";
+
+const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
 interface leaderBoardProps {
   onReturn: () => void;
@@ -99,33 +133,25 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     setLeaderBoard(
       allFactionsOnPoint.slice(0, 5).map((faction:any, index:any) => (
       <Tr key={index}>
-        <Td textAlign='center' w={16}>{index+1}</Td>
-        
+        <Td w={16}>{index+1}</Td>
         <Td textAlign='left' alignSelf={'center'}
           alignContent={'center'}
           alignItems={'center'}
           display={'flex'}
           h={43.5}
         >
-         <HStack>
-        <Avatar
-          width='40px'
-          height='40px'
-          padding={1}
-          src={ImageService.translate(faction.image).avatar()}
-          rounded='xs'
-        />
-        <Text
-        isTruncated={isMobile}
-        maxW={isMobile ?'150px': '200px'}
-        >
-        {faction.name} 
-        </Text>
-        </HStack>
+          <HStack>
+            <Avatar
+              width='40px'
+              height='40px'
+              padding={1}
+              src={ImageService.translate(faction.image).avatar()}
+              rounded='xs'
+            />
+            <Text isTruncated={isMobile} maxW={isMobile ?'150px': '200px'}>{faction.name}</Text>
+          </HStack>
         </Td>
-        <Td textAlign='left' 
-          maxW={'200px'}
-          >{faction.totalTroops}</Td>
+        <Td textAlign='left' maxW={'200px'} isNumeric>{commify(faction.totalTroops)}</Td>
       </Tr>
     )))
   }
@@ -254,7 +280,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                             <Tr>
                               <Th textAlign='left'>Rank</Th>
                               <Th textAlign='left'>Faction</Th>
-                              <Th textAlign='left'>Troops</Th>
+                              <Th textAlign='left' isNumeric>Troops</Th>
                             </Tr>
                           </Thead>
                           <Tbody>
