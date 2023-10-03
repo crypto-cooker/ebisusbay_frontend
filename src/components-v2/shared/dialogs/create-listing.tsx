@@ -15,7 +15,6 @@ import {
   Button as ChakraButton,
   ButtonGroup,
   Center,
-  CloseButton,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -39,15 +38,13 @@ import {
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
-
-import moment from 'moment';
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useAppSelector} from "@src/Store/hooks";
 import {useExchangeRate, useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
-import ReactSelect, {components, OptionProps} from "react-select";
+import ReactSelect from "react-select";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
