@@ -200,6 +200,7 @@ export const configData = {
           '0x1368a855545724B165F8c3e466ec30e1fB2A3683': ['cro', 'frtn', 'bcro'], // Football Squares S2
           '0x5c18d5eb211203eb80b591aa71a269b1e16e9eba': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Ballies: The Gear v2
           '0xE1049178296ce004996AFb16B0816c5A95aC8482': ['cro', 'frtn', 'candy'], // Bored Candy
+
         }
       }
     }
@@ -340,6 +341,7 @@ export const configData = {
           '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5': ['frtn'],        // EB FM/VIP
           '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'],        // Fortune Guards
           '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],        // FortuneTeller
+          '0x1eca64187AD00A86360D62f1CD4409Dc1A136B45': ['cro', 'frtn'], // Everybody's Not Friends
         }
       }
     }

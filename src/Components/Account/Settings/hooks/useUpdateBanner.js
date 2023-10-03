@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-import useCreateSigner from './useCreateSigner';
+import {useState} from 'react';
 import {updateBanner} from "@src/core/cms/endpoints/profile";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const useUpdateBanner = () => {
   const [response, setResponse] = useState({
@@ -9,7 +8,7 @@ const useUpdateBanner = () => {
     error: null,
   });
 
-  const [isLoading, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
 
   const requestUpdateBanner = async (formData, address) => {
     setResponse({
@@ -18,34 +17,22 @@ const useUpdateBanner = () => {
       error: null,
     });
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const fetchResponse = await updateBanner(formData, signatureInStorage, address);
+    try {
+      const signature = await requestSignature();
+      const fetchResponse = await updateBanner(formData, signature, address);
 
-        setResponse({
-          ...response,
-          loading: false,
-          error: null,
-        });
-
-        return fetchResponse.data;
-      } catch (error) {
-        setResponse({
-          ...response,
-          loading: false,
-          error: error,
-        });
-      }
-    } else {
       setResponse({
-        isLoading: false,
-        response: [],
-        error: { message: 'Something went wrong' },
+        ...response,
+        loading: false,
+        error: null,
+      });
+
+      return fetchResponse.data;
+    } catch (error) {
+      setResponse({
+        ...response,
+        loading: false,
+        error: error,
       });
     }
   };

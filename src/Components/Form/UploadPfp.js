@@ -1,8 +1,8 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
 
 import { deepValidation } from '../../helpers/validator';
 import UploadAssetPfp from './UploadAssetPfp';
+import {FormControl, FormErrorMessage} from "@chakra-ui/react";
 
 const UploadPfp = ({
   value = [],
@@ -40,7 +40,7 @@ const UploadPfp = ({
   };
 
   return (
-    <Form.Group className={`form-field mb-3 ${error ? 'field-message-error' : ''}`}>
+    <FormControl className={`form-field mb-3 ${error ? 'field-message-error' : ''}`} invalid={!!error}>
       <div className="upload-container overflow-auto justify-content-center">
         {[...Array(numberOfAssets).keys()].map((_, i) => {
           const asset = value.find(({ position }) => position === i);
@@ -58,10 +58,10 @@ const UploadPfp = ({
           );
         })}
       </div>
-      <Form.Text className="field-description text-muted">
+      <FormErrorMessage className="field-description text-muted">
         {error ? (typeof error === 'string' ? error : getErrorMessage(error[error.length - 1])) : description}
-      </Form.Text>
-    </Form.Group>
+      </FormErrorMessage>
+    </FormControl>
   );
 };
 

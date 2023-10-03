@@ -32,7 +32,8 @@ import styled from "styled-components";
 import {getCollectionMetadata, getCollectionPowertraits, getCollectionTraits} from "@src/core/api";
 import {getCollections} from "@src/core/api/next/collectioninfo";
 import Items from "@src/components-v2/feature/collection/tabs/items";
-import PokerLeaderboardComponent from "@src/components-v2/feature/poker/poker-leaderboard-past";
+import PokerLeaderboardComponentPast from "@src/components-v2/feature/poker/poker-leaderboard-past";
+import PokerLeaderboardComponent from "@src/components-v2/feature/poker/poker-leaderboard";
 
 const tabs = {
   items: 'items',
@@ -40,7 +41,8 @@ const tabs = {
   activity: 'activity',
   cronosverseMap: 'cronosverseMap',
   dynastiesMap: 'dynastiesMap',
-  pokerRanks: 'pokerRanks',
+  previousPokerGame: 'previousPokerGame',
+  currentPokerGame: 'currentPokerGame',
   cns: 'cns'
 };
 
@@ -236,8 +238,13 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
             </li>
           )}
           {isPlayingCardsCollection(collection.address) && (
-            <li className={`tab ${openMenu === tabs.pokerRanks ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.pokerRanks)}>Leaderboard</span>
+            <li className={`tab ${openMenu === tabs.previousPokerGame ? 'active' : ''} my-1`}>
+              <span onClick={handleBtnClick(tabs.previousPokerGame)}>Past Game</span>
+            </li>
+          )}
+          {isPlayingCardsCollection(collection.address) && (
+            <li className={`tab ${openMenu === tabs.currentPokerGame ? 'active' : ''} my-1`}>
+              <span onClick={handleBtnClick(tabs.currentPokerGame)}>Leaderboard</span>
             </li>
           )}
         </ul>
@@ -273,7 +280,12 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
               <DynastiesLands showBackButton={false} onBack={emptyFunction} />
             </NegativeMargin>
           )}
-          {openMenu === tabs.pokerRanks && (
+          {openMenu === tabs.previousPokerGame && (
+            <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
+              <PokerLeaderboardComponentPast />
+            </NegativeMargin>
+          )}
+          {openMenu === tabs.currentPokerGame && (
             <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
               <PokerLeaderboardComponent />
             </NegativeMargin>

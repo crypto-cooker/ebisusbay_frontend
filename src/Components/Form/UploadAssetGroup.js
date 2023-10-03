@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { Form } from 'react-bootstrap';
-
-import { deepValidation } from '../../helpers/validator';
+import { deepValidation } from '@src/helpers/validator';
 
 import UploadAsset from './UploadAsset';
+import {FormControl, FormErrorMessage, FormLabel} from "@chakra-ui/react";
 
 const UploadAssetGroup = ({
   value = [],
@@ -42,10 +41,10 @@ const UploadAssetGroup = ({
   };
 
   return (
-    <Form.Group className={`form-field mb-3 ${error ? 'field-message-error' : ''}`}>
+    <FormControl className={`form-field mb-3 ${error ? 'field-message-error' : ''}`} isInvalid={!!error}>
       <div className="label-container">
-        <Form.Label className="title">{title}</Form.Label>
-        {isRequired ? <Form.Label className="required-label">*Required</Form.Label> : <Form.Label>Optional</Form.Label>}
+        <FormLabel className="title">{title}</FormLabel>
+        {isRequired ? <FormLabel className="required-label">*Required</FormLabel> : <FormLabel>Optional</FormLabel>}
       </div>
       <div className="upload-container">
         {[...Array(numberOfAssets).keys()].map((_, i) => {
@@ -63,10 +62,10 @@ const UploadAssetGroup = ({
           );
         })}
       </div>
-      <Form.Text className="field-description text-muted">
+      <FormErrorMessage className="field-description text-muted">
         {error ? (typeof error === 'string' ? error : getErrorMessage(error[error.length - 1])) : description}
-      </Form.Text>
-    </Form.Group>
+      </FormErrorMessage>
+    </FormControl>
   );
 };
 

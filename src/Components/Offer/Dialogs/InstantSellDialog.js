@@ -9,7 +9,6 @@ import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
 import {createSuccessfulTransactionToastContent, isBundle, isNftBlacklisted} from "@src/utils";
 import {appConfig} from "@src/Config";
-import * as Sentry from '@sentry/react';
 import Select from "react-select";
 import {getTheme} from "@src/Theme/theme";
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -25,11 +24,12 @@ import {
   Spinner
 } from "@chakra-ui/react";
 import {commify} from "ethers/lib/utils";
-import {getAllCollectionOffers} from "@src/core/subgraph";
 import {getCollectionMetadata} from "@src/core/api";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import NextApiService from "@src/core/services/api-service/next";
+import {ApiService} from "@src/core/services/api-service";
+import {OfferState, ReceivedOfferType} from "@src/core/services/api-service/types";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -88,7 +88,14 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
       const walletNfts = await NextApiService.getWallet(user.address, {pageSize: 100, collection:collection.address, sortBy: 'rank', direction: 'desc'});
       setCollectionNfts(walletNfts.data.filter((nft) => !isNftBlacklisted(nft.address ?? nft.nftAddress, nft.id ?? nft.nftId)));
 
-      const offers = await getAllCollectionOffers([collection.address], '0', 0);
+      const offers = await ApiService.withoutKey().getReceivedOffersByUser(user.address, {
+        collection: [collection.address],
+        state: OfferState.ACTIVE,
+        sortBy: 'price',
+        direction: 'desc',
+        type: ReceivedOfferType.ERC721,
+        offertype: 'collection',
+      });
 
       if (offers.data.length < 1) {
         setError('No offers were found on this collection');
@@ -166,7 +173,7 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
       const price = ethers.utils.parseEther(salePrice.toString());
 
       setExecutingAcceptOffer(true);
-      Sentry.captureEvent({message: 'handleInstantSell', extra: {nftAddress: collection.address, price}});
+      // Sentry.captureEvent({message: 'handleInstantSell', extra: {nftAddress: collection.address, price}});
       const tx = await contractService.offer.acceptCollectionOffer(offer.nftAddress, offer.offerIndex, chosenCollectionNft.nftId);
 
       let receipt = await tx.wait();

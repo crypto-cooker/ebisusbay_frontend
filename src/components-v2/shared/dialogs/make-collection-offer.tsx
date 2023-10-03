@@ -7,11 +7,9 @@ import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {createSuccessfulTransactionToastContent, round} from "@src/utils";
 import {useWindowSize} from "@src/hooks/useWindowSize";
-import * as Sentry from '@sentry/react';
 import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
-import {getMyCollectionOffers} from "@src/core/subgraph";
 import {
   Box,
   Flex,
@@ -33,6 +31,8 @@ import {getTheme} from "@src/Theme/theme";
 import {useAppSelector} from "@src/Store/hooks";
 import {parseErrorMessage} from "@src/helpers/validator";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {ApiService} from "@src/core/services/api-service";
+import {OfferState, OfferType} from "@src/core/services/api-service/types";
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 25;
@@ -101,8 +101,12 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
         setFloorPrice(floorPrice.collections[0].stats.total.floorPrice ?? 0);
       }
 
-      const collectionOffers = await getMyCollectionOffers(user.address, '0', '0', collection.address);
-      setExistingOffer(collectionOffers.data)
+      const collectionOffers = await ApiService.withoutKey().getMadeOffersByUser(user.address!, {
+        collection: [collectionAddress],
+        state: OfferState.ACTIVE,
+        type: OfferType.COLLECTION,
+      });
+      setExistingOffer(collectionOffers.data.length > 0 ? collectionOffers.data[0] : undefined);
 
       setIsLoading(false);
     } catch (error) {
@@ -123,7 +127,7 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
         const price = ethers.utils.parseEther(offerPrice.toString());
 
         setExecutingCreateListing(true);
-        Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: collectionAddress, price}});
+        // Sentry.captureEvent({message: 'handleCreateOffer', extra: {address: collectionAddress, price}});
         const contract = contractService!.offer;
 
         let tx;

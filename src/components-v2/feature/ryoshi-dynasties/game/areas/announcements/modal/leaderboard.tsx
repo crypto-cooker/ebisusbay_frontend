@@ -2,7 +2,6 @@ import React, {useEffect, useContext, useState, ReactElement} from 'react';
 import { Center, Flex, Spinner, Stack,Table,TableContainer,Tbody,Th,Thead,Tr,Select,Td,Text,Tabs,TabList,Tab,VStack,Box,Grid,GridItem, Avatar,useBreakpointValue,HStack,Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
-import {getLeaderBoard, getSeasonDate} from "@src/core/api/RyoshiDynastiesAPICalls";
 import moment from 'moment';
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
@@ -10,19 +9,13 @@ import { RyoshiDynastiesContext, RyoshiDynastiesContextProps} from "@src/compone
 import ImageService from "@src/core/services/image";
 import GameMapWrapper from '@src/components-v2/feature/ryoshi-dynasties/components/game-map-wrapper';
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
+import {getLeadersForSeason, getSeasonDate} from "@src/core/api/RyoshiDynastiesAPICalls";
 
 interface leaderBoardProps {
   onReturn: () => void;
 }
 
 const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
-
-  interface controlpoint{
-    coordinates: string;
-    id: number;
-    name: string;
-    uuid: string;
-  }
 
   const user = useAppSelector((state) => state.user);
   const {data: allFactions, status, error} = useQuery({
@@ -35,7 +28,8 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   const [previousSeasonTime, setPreviousSeasonTime] = useState('');
   const [currentSeasonTime, setCurrentSeasonTime] = useState('');
   const [value, setValue] = React.useState('')
-  const [selectedControlPoint, setSelectedControlPoint] = useState<controlpoint>();
+  const [selectedControlPointName, setSelectedControlPointName] = useState<string>();
+  const [previousGameLeaders, setPreviousGameLeaders] = useState<any[]>([]);
 
   const [leaderBoard, setLeaderBoard] = useState<ReactElement[]>([]);
   const [showCurrentGame, setShowCurrentGame] = useState(true);
@@ -48,7 +42,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   const onChangeSelectedControlPoint = (e : any) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     if(e.target.value !== ''){
-      setSelectedControlPoint(e.target.value)
+      setSelectedControlPointName(e.target.value)
       setValue(e.target.value.name)
       setRegionSelected(true);
     } else {
@@ -73,26 +67,27 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
       console.log(error)
     }
   }
-
-  const getControlPointId = (e : any) => {
+  const GetTopFactionsOnPoint = (pointName: string, showCurrentGame: boolean) => {
     if(!rdGameContext) return;
 
-    let x = 0;
-    rdGameContext.game.parent.map.regions.map((region: any) =>
-      region.controlPoints.map((controlPoint: any, i: any) => {
-        if(controlPoint.name === e){
-          x = controlPoint.id;
-        }
-      }
-    ))
-    return x;
-  }
-  
-  const LoadControlPointLeaderBoard = async () => {
-    if(!rdGameContext || !selectedControlPoint) return;
+    let allFactionsOnPoint: any[] = [];
 
-    const gameId = showCurrentGame ? rdGameContext.game.id : rdGameContext.history.previousGameId;
-    const allFactionsOnPoint = await getLeaderBoard(getControlPointId(selectedControlPoint), gameId);
+    if(showCurrentGame){
+      rdGameContext.gameLeaders.map((controlPoint: any) =>{
+        if(controlPoint.name === pointName){
+          allFactionsOnPoint = controlPoint.factions;
+    }})} else {
+      previousGameLeaders.map((controlPoint: any) =>{
+        if(controlPoint.name === pointName){
+          allFactionsOnPoint = controlPoint.factions;
+    }})}
+    return allFactionsOnPoint;
+  }
+  const LoadControlPointLeaderBoard = async () => {
+    if(!rdGameContext || !selectedControlPointName) return;
+
+    const allFactionsOnPoint = GetTopFactionsOnPoint(selectedControlPointName, showCurrentGame);
+    if(!allFactionsOnPoint) return;
 
     //if length less than 5, add empty rows
     if(allFactionsOnPoint.length < 5){
@@ -158,18 +153,25 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
         </>
       ))
   }
+  const GetLeadersForSeasonApiCall = async () => {
+    if(!rdGameContext) return;
+
+    const previousGameLeadersData = await getLeadersForSeason(rdGameContext.history.previousGameId);
+    setPreviousGameLeaders(previousGameLeadersData);
+  }
 
   useEffect(() => {
     LoadControlPointLeaderBoard();
-  }, [selectedControlPoint, showCurrentGame]);
-
+  }, [selectedControlPointName, showCurrentGame]);
   useEffect(() => {
     if(!rdGameContext) return;
 
     GetGameDates();
     LoadControlPointDropDown();
   }, [rdGameContext]);
-
+  useEffect(() => {
+    GetLeadersForSeasonApiCall();
+  } ,[]);
   useEffect(() => {
     if(status === 'success' && allFactions !== undefined) {
       allFactions.game !== null ? setNoGameActive(false) : setNoGameActive(true);

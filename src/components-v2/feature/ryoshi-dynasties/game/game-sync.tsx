@@ -1,13 +1,7 @@
 import React, {ReactNode, useCallback, useEffect, useMemo, useState} from "react";
-
-import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
-import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
-import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 // import AnnouncementBoard from "@src/Components/BattleBay/Areas/AnnouncementBoard";
-import Academy from "@src/components-v2/feature/ryoshi-dynasties/game/areas/academy";
 // import UserPage from "@src/Components/BattleBay/Areas/UserPage";
 import {useDispatch} from 'react-redux';
-import Bank from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank";
 import Village from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village";
 import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
@@ -19,12 +13,11 @@ import {RyoshiDynastiesContext} from "@src/components-v2/feature/ryoshi-dynastie
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 interface GameSyncProps {
-  initialRdConfig: RyoshiConfig | null;
+  initialRdConfig: RyoshiConfig;
   children: ReactNode;
 }
 const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
@@ -40,14 +33,13 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   const { isOpen: isOpenErrorModal, onOpen: onOpenErrorModal, onClose: onCloseErrorModal } = useDisclosure();
   const authInitFinished = useAppSelector((state) => state.appInitialize.authInitFinished);
 
-  const [_, getSigner] = useCreateSigner();
   const {signature, isSignedIn, requestSignature} = useEnforceSignature();
 
   const { data: rdConfig, status: rdConfigFetchStatus, error: rdFetchError} = useQuery(
     ['RyoshiDynastiesContext'],
     () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
     {
-      initialData: initialRdConfig ?? undefined,
+      initialData: initialRdConfig,
       // staleTime: 1000 * 60 * 25,
       // cacheTime: 1000 * 60 * 30,
       refetchInterval: 1000 * 60,
@@ -181,37 +173,39 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
 
   return (
     <>
-      {rdConfigFetchStatus === "loading" ? (
-        <>
-          {dummyVillage}
-          <RdModal isOpen={true} title='Initializing Game...'>
-            <Center>
-              <Box p={8}>
-                <Spinner />
-              </Box>
-            </Center>
-          </RdModal>
-        </>
-      ) : rdConfigFetchStatus === "error" ? (
-        <>
-          {dummyVillage}
-          <RdModal isOpen={true} title='Error'>
-            <Center>
-              <Box p={4} textAlign='center'>
-                <Text>
-                  Whoops! Looks like something went wrong attempting to retrieve the latest game configuration. Please refresh the page and try again. If the issue persists, please contact support.
-                </Text>
-                <Text mt={8} fontSize='xs'>
-                  Error: {(rdFetchError as any).message}
-                </Text>
-              </Box>
-            </Center>
-          </RdModal>
-        </>
-      ) : !!rdConfig ? (
+      {/*{rdConfigFetchStatus === "loading" ? (*/}
+      {/*  <>*/}
+      {/*    /!*{dummyVillage}*!/*/}
+      {/*    <RdModal isOpen={true} title='Initializing Game...'>*/}
+      {/*      <Center>*/}
+      {/*        <Box p={8}>*/}
+      {/*          <Spinner />*/}
+      {/*        </Box>*/}
+      {/*      </Center>*/}
+      {/*    </RdModal>*/}
+      {/*  </>*/}
+      {/*) : rdConfigFetchStatus === "error" ? (*/}
+      {/*  <>*/}
+      {/*    /!*{dummyVillage}*!/*/}
+      {/*    <RdModal isOpen={true} title='Error'>*/}
+      {/*      <Center>*/}
+      {/*        <Box p={4} textAlign='center'>*/}
+      {/*          <Text>*/}
+      {/*            Whoops! Looks like something went wrong attempting to retrieve the latest game configuration. Please refresh the page and try again. If the issue persists, please contact support.*/}
+      {/*          </Text>*/}
+      {/*          <Text mt={8} fontSize='xs'>*/}
+      {/*            Error: {(rdFetchError as any).message}*/}
+      {/*          </Text>*/}
+      {/*        </Box>*/}
+      {/*      </Center>*/}
+      {/*    </RdModal>*/}
+      {/*  </>*/}
+      {/*) : */}
+
+      {!!rdConfig ? (
         <RyoshiDynastiesContext.Provider
           value={{
-            config: rdConfig!,
+            config: rdConfig ?? initialRdConfig,
             user: rdUserContext,
             refreshUser: refreshUserContext,
             game: rdGameContext,

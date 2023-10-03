@@ -24,9 +24,6 @@ import {useFormik} from 'formik';
 import {disbandFaction, editFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {shortAddress} from "@src/utils";
 
-import {getAuthSignerInStorage} from '@src/helpers/storage';
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-
 //contracts
 import {toast} from "react-toastify";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
@@ -40,6 +37,7 @@ import AvatarEditor from 'react-avatar-editor'
 import Cropper from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline/Cropper';
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/search";
 import {parseErrorMessage} from "@src/helpers/validator";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 interface EditFactionProps {
   isOpen: boolean;
@@ -51,6 +49,7 @@ interface EditFactionProps {
 
 const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: EditFactionProps) => {
 
+  const {requestSignature} = useEnforceSignature();
   const addressInput = useRef<HTMLInputElement>(null);
   const [addresses, setAddresses] = useState<string[]>([])
   const handleAddChange = (event: ChangeEvent<HTMLInputElement>) =>  {
@@ -67,7 +66,6 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   const [alertMessage, setAlertMessage] = useState("")
 
   //other
-  const [isLoading, getSigner] = useCreateSigner();
   const user = useAppSelector((state) => state.user);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [isMobile] = useMediaQuery("(max-width: 768px)") 
@@ -116,65 +114,47 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     }
     setShowAlert(false)
 
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await editFaction(user.address!.toLowerCase(), signatureInStorage,
-          faction.id, formik.values.factionName, addresses, factionType);
-        // console.log(data);
-        //add payment code here
-        handleClose();
-        onClose();
-        toast.success("Changes Saved");
-      } catch (error:any) {
-        console.log(error)
-        toast.error(parseErrorMessage(error));
-      }
+    try {
+      const signature = await requestSignature();
+      await editFaction(user.address!.toLowerCase(), signature,
+        faction.id, formik.values.factionName, addresses, factionType);
+      // console.log(data);
+      //add payment code here
+      handleClose();
+      onClose();
+      toast.success("Changes Saved");
+    } catch (error:any) {
+      console.log(error)
+      toast.error(parseErrorMessage(error));
     }
   }
 
   const DisbandFaction = async() => {
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await disbandFaction(user.address!.toLowerCase(), signatureInStorage, "DEACTIVATE");
-        handleClose();
-        onClose();
-        setShowDeleteAlert(false)
-        rdContext.refreshUser();
-        toast.success("Faction disbanded");
-        
-      } catch (error: any) {
-        console.log(error);
-        toast.error(parseErrorMessage(error));
-      }
+    try {
+      const signature = await requestSignature();
+      await disbandFaction(user.address!.toLowerCase(), signature, "DEACTIVATE");
+      handleClose();
+      onClose();
+      setShowDeleteAlert(false)
+      rdContext.refreshUser();
+      toast.success("Faction disbanded");
+
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
     }
   }
   const ReenableFaction = async() => {
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await disbandFaction(user.address!.toLowerCase(), signatureInStorage, "ACTIVE");
-        handleClose();
-        onClose();
-        rdContext.refreshUser();
-        toast.success("Faction reenabled");
-      } catch (error: any) {
-        console.log(error);
-        toast.error(parseErrorMessage(error));
-      }
+    try {
+      const signature = await requestSignature();
+      await disbandFaction(user.address!.toLowerCase(), signature, "ACTIVE");
+      handleClose();
+      onClose();
+      rdContext.refreshUser();
+      toast.success("Faction reenabled");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
     }
   }
 
@@ -290,7 +270,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
       onClose={onClose}
       title='Edit Faction'
     >
-      {!isLoading ? (
+      {true ? (
         <Box pb={1}>
           <Box mx={1} mb={1} roundedBottom='lrg'>
             {user.address ? (

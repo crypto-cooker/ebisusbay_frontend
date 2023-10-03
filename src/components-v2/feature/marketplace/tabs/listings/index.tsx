@@ -26,6 +26,7 @@ const Listings = () => {
   const [mobileSortVisible, setMobileSortVisible] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [viewType, setViewType] = useState('grid-sm');
+  const { queryParams, setQueryParams  } = useContext(MarketplacePageContext) as MarketplacePageContextProps;
 
   const useMobileMenu = useBreakpointValue(
     { base: true, lg: false },
@@ -40,7 +41,6 @@ const Listings = () => {
     }
   }, [useMobileMenu]);
 
-  const { queryParams, setQueryParams  } = useContext(MarketplacePageContext) as MarketplacePageContextProps;
 
   const handleSearch = useCallback((value: string) => {
     const newQueryParams = {...queryParams, search: value};

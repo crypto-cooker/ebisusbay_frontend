@@ -72,7 +72,7 @@ const DataTable = ({data, onSort}: ResponsiveTableProps) => {
           {data.pages.map((page: any, pageIndex: any) => (
             <React.Fragment key={pageIndex}>
               {page.map((listing: any) => (
-                <Tr key={listing.listingId} _hover={{bg: listing.valid ? hoverBackground : 'red.600'}} bg={listing.valid ? 'auto' : 'red.500'}>
+                <Tr key={listing.listingId} _hover={{hoverBackground}}>
                   <Td w='50px'>
                     <Box
                       width={50}

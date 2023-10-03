@@ -7,17 +7,10 @@ import {DeFiWeb3Connector} from 'deficonnect';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import * as DefiWalletConnectProvider from '@deficonnect/web3-provider';
 import {toast} from 'react-toastify';
-import {
-  caseInsensitiveCompare,
-  createSuccessfulTransactionToastContent,
-  findCollectionByAddress,
-  isUserBlacklisted,
-} from '../utils';
+import {createSuccessfulTransactionToastContent, isUserBlacklisted,} from '../utils';
 import {appAuthInitFinished} from './InitSlice';
 import {captureException} from '@sentry/react';
 import {setThemeInStorage} from '../helpers/storage';
-import {getAllOffers} from '../core/subgraph';
-import {offerState} from '../core/api/enums';
 import {appConfig} from '../Config';
 import {MarketFilterCollection} from '../Components/Models/market-filters.model';
 import {getProfile} from "@src/core/cms/endpoints/profile";
