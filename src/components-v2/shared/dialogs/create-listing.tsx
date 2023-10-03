@@ -15,7 +15,6 @@ import {
   Button as ChakraButton,
   ButtonGroup,
   Center,
-  CloseButton,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -39,8 +38,6 @@ import {
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
-
-import moment from 'moment';
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useAppSelector} from "@src/Store/hooks";
@@ -235,7 +232,11 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         .find(([key]) => ciEquals(key, nftAddress)) as CurrencyEntry | undefined;
 
       const allowed = currencyOptions.filter(({symbol}: { symbol: string }) => {
-        return availableCurrencySymbols ? availableCurrencySymbols[1].includes(symbol.toLowerCase()) : symbol === 'cro';
+        if (availableCurrencySymbols) {
+          return availableCurrencySymbols[1].includes(symbol.toLowerCase());
+        } else {
+          return config.listings.currencies.global.includes(symbol.toLowerCase())
+        }
       });
       setAllowedCurrencies(allowed);
       setSelectedCurrency(allowed[0]);
@@ -487,6 +488,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                               disabled={showConfirmButton || executingCreateListing}
                             />
                             <ReactSelect
+                              isSearchable={false}
                               menuPortalTarget={document.body} menuPosition={'fixed'}
                               styles={customStyles}
                               options={allowedCurrencies}
@@ -533,41 +535,20 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                         )}
                       </Flex>
 
-                      <FormControl className="form-field mb-3">
+                      <FormControl
+                        maxW='188px'
+                        className="form-field mb-3"
+                      >
                         <FormLabel w='full' className="formLabel">Expiration Date</FormLabel>
                         <Box style={{ display: 'flex', gap: '8px' }}>
-                          {expirationDate.type === 'dropdown' ? (
-                            <>
-                              <Select
-                                defaultValue={2592000000}
-                                onChange={handleExpirationDateChange}
-                              >
-                                {expirationDatesValues.map((time) => (
-                                  <option value={time.value}>{time.label}</option>
-                                ))}
-                              </Select>
-                              <Input
-                                style={{
-                                  maxWidth: '54px',
-                                  visibility: expirationDate.type === 'dropdown' ? 'visible' : 'hidden',
-                                }}
-                                type="datetime-local"
-                                onChange={handleExpirationDateChange}
-                              />
-                            </>
-                          ) : (
-                            <>
-                              <Input
-                                className="input"
-                                type="text"
-                                value={moment(new Date(expirationDate.value)).format('DD/MM/YYYY HH:mm:ss a')}
-                                disabled
-                              />
-                              <SecondaryButton style={{ maxWidth: '38px', height: '40px' }} className="simple-button" onClick={() => { setExpirationDate({ value: new Date().getTime() + 2592000000, type: 'dropdown' }) }}>
-                                <CloseButton />
-                              </SecondaryButton>
-                            </>
-                          )}
+                          <Select
+                            defaultValue={2592000000}
+                            onChange={handleExpirationDateChange}
+                          >
+                            {expirationDatesValues.map((time) => (
+                              <option value={time.value}>{time.label}</option>
+                            ))}
+                          </Select>
                         </Box>
                       </FormControl>
                     </Box>
