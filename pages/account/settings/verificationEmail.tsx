@@ -8,7 +8,7 @@ const VerificationEmail = () => {
   const router = useRouter();
   const { verificationToken } = router.query;
   const config = appConfig();
-  const [success, setSuccess] = useState(null);
+  const [success, setSuccess] = useState<boolean | null>(null);
 
   const emailVerification = async () => {
     try {
