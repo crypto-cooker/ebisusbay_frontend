@@ -91,7 +91,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const upkeepDue = totalUpkeepRequired - upkeepPaid;
   const paymentAmount = upkeepDue * (sliderValue/100);
 
-  //Mint meeple
+  //Mint Ryoshi
   const [meepleToMint, setMeepleToMint] = useState(0);
   const handleQuantityChange = (stringValue: string, numValue: number) => setMeepleToMint(numValue)
 
@@ -164,7 +164,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
       console.log("CMS Response: ", cmsResponse);
       //signarure, costamounts, exipires, nonce
 
-      const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
+      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
       // const tx = await resourcesContract.upkeep(user.address?.toLowerCase(), );
       // const receipt = await tx.wait();
 
@@ -173,16 +173,67 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
       toast.error(parseErrorMessage(error));
     } 
   }
+  const TestingStuff = async () => {
+    if (!user.address) return;
+    const signature = await requestSignature();
+    try {
+
+      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
+      const tx = await resourcesContract.upkeepInterval();
+      // const tx = await resourcesContract.lastUpkeep(user.address);
+      console.log("Upkeep Interval: ",BigNumber.from(tx).toNumber());
+      // const date = new Date(BigNumber.from(tx).toNumber());
+      // console.log("Upkeep Interval: ", date);
+
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } 
+  }
+
+  const GetLastUpkeepPayment = async () => {
+    if (!user.address) return;
+    try {
+      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
+      const tx = await resourcesContract.lastUpkeep(user.address);
+      const timestamp = BigNumber.from(tx).toNumber();
+      if(timestamp == 1696420978) {
+        //upkeep has never been paid
+
+        //
+      };
+      const date = new Date(timestamp);
+      console.log("Last Upkeep Payment: ", date);
+
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } 
+  }
+  
+
+    //get upkeep time check subgraph for meeple active 
+    //or last upkeep time
+
+
   const MintMeeple = async (amountToMint:number) => {
     if (!user.address) return;
     const signature = await requestSignature();
     try {
 
       const cmsResponse = await MeepleMint(user.address, signature, amountToMint);
-      console.log("CMS Response: ", cmsResponse);
-
-      const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
-      // resosources.connect(user1).deposit([2], [amount_to_deposit]);
+      // console.log("CMS Response: ", cmsResponse.stakeApproval);
+      const response2 = {
+        amounts: cmsResponse.stakeApproval.amounts,
+        expire: cmsResponse.stakeApproval.expire,
+        ids: cmsResponse.stakeApproval.ids,
+        nonce: cmsResponse.stakeApproval.nonce,
+      }
+      console.log("modified Response: ", response2);
+      // console.log("CMS Response: ", cmsResponse);
+      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
+      const tx = await resourcesContract.deposit(cmsResponse.stakeApproval.ids, cmsResponse.stakeApproval.amounts);
+      console.log("Minting Response: ", tx);
 
     } catch (error: any) {
       console.log(error);
@@ -211,13 +262,13 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     })
 
     try {
-      console.log("Turn in cards: ", id, amount);
-      const cmsResponse = await MeepleTradeInCards(user.address, signature, id, amount);
-      console.log("CMS Response: ", cmsResponse);
 
-      // const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
-      //const signature2 = await signer1._signTypedData(domain, typeCraftRequest, request2);
-      // const tx = await resources.connect(user1).craftItems(request2, signature2);
+      // console.log("Turn in cards: ", id, amount);
+      const cmsResponse = await MeepleTradeInCards(user.address, signature, id, amount);
+      // console.log("CMS Response: ", cmsResponse.request);
+      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
+      const tx = await resourcesContract.craftItems(cmsResponse.request, cmsResponse.signature);
+      // console.log("Crafting Response: ", tx);
 
     } catch (error: any) {
       console.log(error);
@@ -227,13 +278,13 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
 
   const GetMeepleCount = async () => {
     //add function to get Meeple Count
-    setMeepleOnDuty(3520);
-    setMeepleOffDuty(9000);
+    // setMeepleOnDuty(3520);
+    // setMeepleOffDuty(9000);
 
     const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
     const data = await resourcesContract.activeMeeples(user.address)
- 
-    console.log("Meeple Count: ", BigNumber.from(data).toNumber());
+    // console.log("Meeple Count: ", BigNumber.from(data).toNumber());
+    setMeepleOffDuty(BigNumber.from(data).toNumber());
   }
   const GetUpkeepCost = () => {
     //add function to get Upkeep Cost
@@ -300,10 +351,9 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
       }
     }
     // console.log("Upkeep Cost for " + meepleAmount + " is " + cost + "x");
-    return cost;
+    return cost * rdConfig.barracks.meepleUpkeep;
   }
   const SetUpCardsInWallet = () => {
-    console.log("Wallet data");
     let cards:LocationData[] = [];
     walletData.data.forEach((card) => {
       {
@@ -320,6 +370,23 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     })
     setCardsInWallet(cards)
     setCardsToTurnIn([])
+  }
+  const GetMeepleOffDuty = () => {
+    console.log("Wallet data: ", walletData);
+    let cards:LocationData[] = [];
+    walletData.data.forEach((card) => {
+      {
+        card.attributes !== undefined && card.attributes[1].trait_type === "Tier" ? 
+        cards.push({
+          location: card.name,
+          tier: card.attributes[1].value,
+          id: Number(card.nftId),
+          playerCards: card.balance === undefined ? 0 : card.balance,
+        })
+        : <></>
+      }
+      
+    })
   }
   const SelectCardsToTurnIn = (nftId:number) => {
     let cards:LocationData[] = [];
@@ -354,6 +421,8 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
 
     if(walletData.data.length > 0){
       SetUpCardsInWallet();
+      GetMeepleOffDuty();
+      TestingStuff();
     }
 
   }, [walletData])
@@ -374,17 +443,17 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     GetUpkeepPaymentStatus();
     GetUpkeepDeadline();
     GetLocationData();
+    GetLastUpkeepPayment();
   }, [rdGameContext])
 
   useEffect(() => {
+    if(!rdGameContext) return;
+
     GetUpkeepCost();
     const totalUpkeep = CalculateUpkeepCost(meepleOffDuty);
     setTotalUpkeepRequired(totalUpkeep);
-    // CalculateUpkeepCost(1000);
-    // CalculateUpkeepCost(9000);
-    // CalculateUpkeepCost(200);
-    // CalculateUpkeepCost(201);
-  }, [meepleOnDuty])
+
+  }, [meepleOnDuty, rdConfig])
 
   useEffect(() => {
     GetMeepleCount();
@@ -404,7 +473,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   <RdModal
       isOpen={isOpen}
       onClose={handleClose}
-      title='Meeple Barracks'
+      title='Ryoshi Barracks'
       size='2xl'
       isCentered={false}
       utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
@@ -418,11 +487,11 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
             {/* Mint */}
             <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' mt={4}>
               <Box textAlign='left' as="b" fontSize={18}>
-                Meeple Management
+                Ryoshi Management
               </Box>
               <Flex justifyContent={'space-between'} align={'center'}>
                 <HStack spacing={1}>
-                  <Text color={'#aaa'} alignContent={'baseline'} pt={2}> Meeple On Duty: </Text>
+                  <Text color={'#aaa'} alignContent={'baseline'} pt={2}> Ryoshi On Duty: </Text>
                   <Text as={'b'} fontSize='28' p={2}>{meepleOnDuty}</Text>
                 </HStack>
                 <RdButton
@@ -431,7 +500,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                   size='lg'
                   fontSize={{base: '12', sm: '18'}}
                   >
-                  Mint Meeple
+                  Withdraw Ryoshi
                 </RdButton> 
               </Flex>
               {meepleOnDuty > 3000 && (
@@ -442,7 +511,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                       color='#333'
                       fontWeight='bold'
                   >
-                    Warning: Should you hold more than the current limt (3000 Meeple) at the end of the week, you will not recieve Meeple at the start of the next week. Turn them into tokens to take them off duty <b> or </b> spend them in battles and resource gathering.
+                    Warning: Should you hold more than the current limt (3000 Ryoshi) at the end of the week, you will not recieve Ryoshi at the start of the next week. Turn them into tokens to take them off duty <b> or </b> spend them in battles and resource gathering.
                   </Text>
                 </Stack>
               )}
@@ -457,7 +526,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
 
               <Flex justifyContent={'space-between'} align={'center'}>
                 <HStack spacing={1}>
-                  <Text color={'#aaa'} alignContent={'auto'} pt={2}> Meeple Off Duty: </Text>
+                  <Text color={'#aaa'} alignContent={'auto'} pt={2}> Ryoshi Off Duty: </Text>
                   <Text  as={'b'} fontSize='28' p={2}>{meepleOffDuty}</Text>
                 </HStack>
                 <VStack spacing={1} >
@@ -482,7 +551,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
               <Flex justifyContent={'space-between'} align={'center'}>
                 <VStack spacing={1} align='left' mb={10}>
                   <Box textAlign='left' as="b" fontSize={18}>
-                    Earn Additional Meeple
+                    Earn Additional Ryoshi
                   </Box>
                   <Text color={'#aaa'} as={'i'}>Card values can be found in FAQ</Text>
                 </VStack>
@@ -610,11 +679,11 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
             </RdModalFooter>
           </RdModal>
           
-          <RdModal isOpen={isOpenMintModal} onClose={onCloseMintModal} title={'Mint'} >
+          <RdModal isOpen={isOpenMintModal} onClose={onCloseMintModal} title={'Withdraw Meeple'} >
             <RdModalAlert>
               <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
           
-              <Text color={'#aaa'} w={'100%'} textAlign={'left'} p={2}> Select Meeple to Mint: </Text>
+              <Text color={'#aaa'} w={'100%'} textAlign={'left'} p={2}> Select Ryoshi to Withdraw (Mint): </Text>
               <Flex justifyContent='center' w={'100%'}>
                 <NumberInput 
                   defaultValue={0} 
@@ -641,7 +710,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
               </Flex>
 
               <Flex justifyContent={'space-between'} align={'center'} mt={'8'}>
-                <Text color={'#aaa'} alignContent={'baseline'} p={2}> Remaining Meeple On Duty: </Text>
+                <Text color={'#aaa'} alignContent={'baseline'} p={2}> Remaining Ryoshi On Duty: </Text>
                 <Text as={'b'} fontSize='28' p={2}>{meepleOnDuty - meepleToMint}</Text>
               </Flex>
 
@@ -650,7 +719,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
             <RdModalFooter>
               <Stack justifyContent={'space-between'} direction='row'>
                 <RdButton onClick={onCloseMintModal} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-                <RdButton onClick={() => MintMeeple(10)} size='lg' fontSize={{base: '18', sm: '24'}}> Mint </RdButton>
+                <RdButton onClick={() => MintMeeple(5)} size='lg' fontSize={{base: '18', sm: '24'}}> Withdraw </RdButton>
               </Stack>
             </RdModalFooter>
           </RdModal>

@@ -65,6 +65,7 @@ interface RyoshiConfigStakingIdMultiplier {
 
 interface RyoshiConfigBarracks {
   staking: RyoshiConfigBarracksStaking;
+  meepleUpkeep: number;
 }
 
 interface RyoshiConfigBarracksStaking {
