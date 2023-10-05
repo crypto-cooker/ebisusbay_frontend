@@ -22773,7 +22773,7 @@
       "multiToken": false,
       "address": "0x902b49b97Ab03bcF5095e3439422f4a9351cAe82",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection consisting of 5,000 Plush Foot Print (PFP) NFTs. There will be 20 different Foot Prints with different rarities and no Foot Print will have the same amount.",
         "avatar": "/img/collections/y-plush-foot-print/avatar.webp",
@@ -23835,6 +23835,55 @@
         "doxx": false,
         "kyc": true,
         "verified": true
+      }
+    },
+    {
+      "name": "Battle DBDs",
+      "slug": "battle-dbds",
+      "multiToken": false,
+      "address": "0x14769cebC0479e192A465A685844261F16109495",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dead Beat Dads came out of nowhere to claim victory in Ryoshi Dynasties Season 1. To show our appreciation we have created a small collection of unique Dead Beat Dads that are ready to fight. These 50 exclusive Battle DBDs are mainly for collection purposes, but who knows, maybe Fortune will find them.",
+        "avatar": "/img/collections/battle-dbds/avatar.webp",
+        "card": "/img/collections/battle-dbds/card.webp",
+        "banner": "/img/collections/battle-dbds/banner.webp",
+        "website": "https://deadbeatdadscronos.com/",
+        "twitter": "https://twitter.com/zolape01",
+        "discord": "https://discord.gg/KnRmEA4u8v",
+        "medium": "https://medium.com/@deadbeatdadscro/dead-beat-dads-army-53331d440025",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Time Cronos Planets",
+      "slug": "time-cronos-planets",
+      "multiToken": false,
+      "address": "0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Time Cronos Planets are a collection from the Time Machine Eco, To provide our Resource mining for Time Wars Web3 game, Minting a Time Planet guarantees you weekly passive resources (before mint out) AND a boost in Time Adventures for resources gathered on adventures.",
+        "avatar": "/img/collections/time-cronos-planets/avatar.webp",
+        "card": "/img/collections/time-cronos-planets/card.webp",
+        "banner": "/img/collections/time-cronos-planets/banner.webp",
+        "website": "https://time-dapp.netlify.app/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/yAP34R3kms",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
