@@ -39,6 +39,7 @@ import Resources from "@src/Contracts/Resources.json";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
 import ImageService from "@src/core/services/image";
+import {createSuccessfulTransactionToastContent} from '@src/utils';
 
 const config = appConfig();
 
@@ -233,31 +234,22 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     if (!user.address) return;
     const signature = await requestSignature();
 
-    // let ids:number[] = [];
-    // let amounts:number[] = [];
-    // cardsToTurnIn.forEach((card) => {
-    //   for(let i = 0; i < 3; i++){
-    //     ids.push(card.id);
-    //     amounts.push(3);
-    //   }
-    // })
-    let id;
-    let amount = 0;
+    let ids:number[] = [];
+    let amounts:number[] = [];
     cardsToTurnIn.forEach((card) => {
       for(let i = 0; i < 3; i+=3){
-        id = card.id;
-        amount+=3;
+        ids.push(card.id);
+        amounts.push(3);
       }
     })
-
     try {
-
-      // console.log("Turn in cards: ", id, amount);
-      const cmsResponse = await MeepleTradeInCards(user.address, signature, id, amount);
+      // console.log("Turn in cards: ", ids, amounts);
+      const cmsResponse = await MeepleTradeInCards(user.address, signature, ids, amounts);
       // console.log("CMS Response: ", cmsResponse.request);
       const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
       const tx = await resourcesContract.craftItems(cmsResponse.request, cmsResponse.signature);
       // console.log("Crafting Response: ", tx);
+      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
 
     } catch (error: any) {
       console.log(error);
