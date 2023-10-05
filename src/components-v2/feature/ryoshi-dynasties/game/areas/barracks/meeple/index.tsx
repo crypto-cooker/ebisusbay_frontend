@@ -196,7 +196,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     try {
       const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
       const tx = await resourcesContract.lastUpkeep(user.address);
-      const timestamp = BigNumber.from(tx).toNumber();
+      const timestamp = BigNumber.from(tx).toNumber() * 1000;
       if(timestamp == 1696420978) {
         //upkeep has never been paid
 
@@ -210,30 +210,19 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
       toast.error(parseErrorMessage(error));
     } 
   }
-  
 
     //get upkeep time check subgraph for meeple active 
     //or last upkeep time
 
-
-  const MintMeeple = async (amountToMint:number) => {
+  const MintMeeple = async () => {
     if (!user.address) return;
     const signature = await requestSignature();
     try {
 
-      const cmsResponse = await MeepleMint(user.address, signature, amountToMint);
-      // console.log("CMS Response: ", cmsResponse.stakeApproval);
-      const response2 = {
-        amounts: cmsResponse.stakeApproval.amounts,
-        expire: cmsResponse.stakeApproval.expire,
-        ids: cmsResponse.stakeApproval.ids,
-        nonce: cmsResponse.stakeApproval.nonce,
-      }
-      console.log("modified Response: ", response2);
+      const cmsResponse = await MeepleMint(user.address, signature, meepleToMint);
       // console.log("CMS Response: ", cmsResponse);
       const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
-      const tx = await resourcesContract.deposit(cmsResponse.stakeApproval.ids, cmsResponse.stakeApproval.amounts);
-      console.log("Minting Response: ", tx);
+      const tx = await resourcesContract.mintWithSig(cmsResponse.stakeApproval, cmsResponse.signature);
 
     } catch (error: any) {
       console.log(error);
@@ -277,14 +266,11 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   }
 
   const GetMeepleCount = async () => {
-    //add function to get Meeple Count
-    // setMeepleOnDuty(3520);
-    // setMeepleOffDuty(9000);
-
+    if(!rdUser) return;
     const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
     const data = await resourcesContract.activeMeeples(user.address)
-    // console.log("Meeple Count: ", BigNumber.from(data).toNumber());
     setMeepleOffDuty(BigNumber.from(data).toNumber());
+    setMeepleOnDuty(rdUser.season.troops.available.owned);
   }
   const GetUpkeepCost = () => {
     //add function to get Upkeep Cost
@@ -372,7 +358,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     setCardsToTurnIn([])
   }
   const GetMeepleOffDuty = () => {
-    console.log("Wallet data: ", walletData);
+    // console.log("Wallet data: ", walletData);
     let cards:LocationData[] = [];
     walletData.data.forEach((card) => {
       {
@@ -417,8 +403,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   useEffect(() => {
     if(!walletData) return;
 
-    // console.log("Wallet data: ", walletData);
-
     if(walletData.data.length > 0){
       SetUpCardsInWallet();
       GetMeepleOffDuty();
@@ -439,7 +423,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   } , [locationData, cardsInWallet])
  
   useEffect(() => {
-    // GetMeepleCount();
     GetUpkeepPaymentStatus();
     GetUpkeepDeadline();
     GetLocationData();
@@ -457,7 +440,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
 
   useEffect(() => {
     GetMeepleCount();
-  }, [])
+  }, [rdUser])
 
 
   const handleBack = () => {
@@ -679,7 +662,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
             </RdModalFooter>
           </RdModal>
           
-          <RdModal isOpen={isOpenMintModal} onClose={onCloseMintModal} title={'Withdraw Meeple'} >
+          <RdModal isOpen={isOpenMintModal} onClose={onCloseMintModal} title={'Withdraw Ryoshi'} >
             <RdModalAlert>
               <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
           
@@ -719,7 +702,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
             <RdModalFooter>
               <Stack justifyContent={'space-between'} direction='row'>
                 <RdButton onClick={onCloseMintModal} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-                <RdButton onClick={() => MintMeeple(5)} size='lg' fontSize={{base: '18', sm: '24'}}> Withdraw </RdButton>
+                <RdButton onClick={() => MintMeeple()} size='lg' fontSize={{base: '18', sm: '24'}}> Withdraw </RdButton>
               </Stack>
             </RdModalFooter>
           </RdModal>
