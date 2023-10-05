@@ -23888,6 +23888,31 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Lightwave Booster",
+      "slug": "lightwave-booster",
+      "multiToken": false,
+      "address": "0x4Ffca5C2790ef342c1EF25d48D1FFc8a2B4b1D9A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lightwave-Boosters are staked to increase the farm APR rewards for the Lighwave crypto currency",
+        "avatar": "/img/collections/lightwave-booster/avatar.webp",
+        "banner": "/img/collections/lightwave-booster/banner.webp",
+        "card": "/img/collections/lightwave-booster/card.webp",
+        "website": "https://degen-consortium.netlify.app/",
+        "twitter": "https://twitter.com/degenapecroclub",
+        "discord": "https://discord.gg/5gjqN7YpJn",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": true,
+        "kyc": true
+      }
     }
   ],
   "drops": [
