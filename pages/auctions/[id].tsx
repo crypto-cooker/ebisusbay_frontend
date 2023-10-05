@@ -1,13 +1,13 @@
-import React, {memo, useEffect, useState} from 'react';
-import { useRouter } from 'next/router';
+import React, {memo} from 'react';
 
 import AuctionComponent from '../../src/Components/components/AuctionComponent';
 import MadAuction from "../../src/Components/Auctions/Curated/MadAuction";
 import Blood4NftAuction from "../../src/Components/Auctions/Curated/Blood4NftAuction";
 import WorldOfCatsAuction from "@src/Components/Auctions/Curated/WorldOfCats";
 import CronosMutantApesAuction from "@src/Components/Auctions/Curated/CronosMutantApes";
+import {GetServerSidePropsContext} from "next";
 
-const Auction = ({id}) => {
+const Auction = ({id}: {id: string}) => {
   if (id === 'mad-auction') {
     return (<MadAuction />)
   } else if (id === 'blood-4-nft') {
@@ -21,7 +21,7 @@ const Auction = ({id}) => {
   }
 };
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }: GetServerSidePropsContext) => {
   return {
     props: {
       id: params?.id

@@ -5,10 +5,16 @@ import Nft721 from '@src/components-v2/feature/nft/nft721';
 import {appConfig} from "@src/Config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {getNft} from "@src/core/api/endpoints/nft";
+import {GetServerSidePropsContext} from "next";
 
-const config = appConfig();
+interface NftProps {
+  slug: string;
+  id: string;
+  nft: any;
+  collection: any;
+}
 
-const Nft = ({ slug, id, nft, collection }) => {
+const Nft = ({ slug, id, nft, collection }: NftProps) => {
   const [type, setType] = useState('721');
   const [initialized, setInitialized] = useState(false);
 
@@ -17,16 +23,16 @@ const Nft = ({ slug, id, nft, collection }) => {
     setInitialized(true);
   }, [slug, id]);
 
-  const getTraits = (anNFT) => {
+  const getTraits = (anNFT: any) => {
     if (
       (anNFT?.attributes && Array.isArray(anNFT.attributes) && anNFT.attributes.length > 0) ||
       (anNFT?.properties && Array.isArray(anNFT.properties) && anNFT.properties.length > 0)
     ) {
       let traits = [];
       if (anNFT?.attributes && Array.isArray(anNFT.attributes)) {
-        traits = anNFT.attributes.filter((a) => a.value !== 'None');
+        traits = anNFT.attributes.filter((a: any) => a.value !== 'None');
 
-        traits.sort((a, b) => {
+        traits.sort((a: any, b: any) => {
           if (a?.occurrence) {
             return a.occurrence - b.occurrence;
           } else if (a?.percent) {
@@ -36,7 +42,7 @@ const Nft = ({ slug, id, nft, collection }) => {
       }
       if (anNFT?.properties && Array.isArray(anNFT.properties)) {
         traits = anNFT.properties;
-        traits.sort((a, b) => {
+        traits.sort((a: any, b: any) => {
           if (a?.occurrence) {
             return a.occurrence - b.occurrence;
           } else if (a?.percent) {
@@ -73,7 +79,7 @@ const Nft = ({ slug, id, nft, collection }) => {
           {isBundle(collection.address) ? (
             <Nft721 address={collection.address} slug={collection.slug} id={id} nft={nft} isBundle={true} />
           ) : type === '1155' ? (
-            <Nft1155 address={collection.address} slug={collection.slug} id={id} nft={nft} collection={collection} />
+            <Nft1155 address={collection.address} id={id} collection={collection} />
           ) : (
             <Nft721 address={collection.address} slug={collection.slug} id={id} nft={nft} />
           )}
@@ -83,20 +89,20 @@ const Nft = ({ slug, id, nft, collection }) => {
   );
 };
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }: GetServerSidePropsContext) => {
   const slug = params?.slug;
   const tokenId = params?.id;
   let collection;
 
   // @todo fix in autolistings
   if (isAddress(slug)) {
-    collection = appConfig('collections').find((c) => caseInsensitiveCompare(c.address, slug));
+    collection = appConfig('collections').find((c: any) => caseInsensitiveCompare(c.address, slug));
 
     // const res = await fetch(`${config.urls.api}collectioninfo?address=${slug}`);
     // const json = await res.json();
     // collection = json.collections[0]
   } else {
-    collection = appConfig('collections').find((c) => caseInsensitiveCompare(c.slug, slug));
+    collection = appConfig('collections').find((c: any) => caseInsensitiveCompare(c.slug, slug));
 
     // const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`);
     // const json = await res.json();
