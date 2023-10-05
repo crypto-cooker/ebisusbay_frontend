@@ -22601,6 +22601,9 @@
       "tokens": [
         {
           "id": 0
+        },
+        {
+          "id": 1
         }
       ],
       "onChain": false,
@@ -23110,6 +23113,7 @@
       "metadata": {
         "description": "The Time Ship Blueprints are the first, OG collection of Time Ship hull blueprints for the Time Machine Ecosystem's web3 game in the making. Time Wars, These Blueprints will come with a few ship components, some of our in house token $tatastwistedtime ($TTT) and 1 blueprint, per box minted. Be on the lookout for the best hull skins/prints!!",
         "avatar": "/img/collections/time-ship-blueprints/avatar.webp",
+        "banner": "/img/collections/time-ship-blueprints/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
         "discord": "https://discord.gg/8whpvt3WEr",
@@ -23883,6 +23887,31 @@
       "verification": {
         "verified": true,
         "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Lightwave Booster",
+      "slug": "lightwave-booster",
+      "multiToken": false,
+      "address": "0x4Ffca5C2790ef342c1EF25d48D1FFc8a2B4b1D9A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lightwave-Boosters are staked to increase the farm APR rewards for the Lighwave crypto currency",
+        "avatar": "/img/collections/lightwave-booster/avatar.webp",
+        "banner": "/img/collections/lightwave-booster/banner.webp",
+        "card": "/img/collections/lightwave-booster/card.webp",
+        "website": "https://degen-consortium.netlify.app/",
+        "twitter": "https://twitter.com/degenapecroclub",
+        "discord": "https://discord.gg/5gjqN7YpJn",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": true,
         "kyc": true
       }
     }

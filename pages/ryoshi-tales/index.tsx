@@ -195,7 +195,7 @@ const RyoshiTales = () => {
                 {section.info && section.info.length > 0 && (
                 <Center w={['100%', '100%', (section.image && section.image.src)? '50%' : '800px']} flexDirection='column' p='16px 20px'>
                   {section.title && (
-                    <Heading as="h2" size="xl" textAlign='center' align={(section.image && section.image.src)? 'center': ''} mb='16px'>
+                    <Heading as="h2" size="xl" textAlign={(section.image && section.image.src)? 'center': 'inherit'} mb='16px'>
                       {section.title}
                     </Heading>)}
                   {
@@ -216,7 +216,7 @@ const RyoshiTales = () => {
                         case 'link':
                           return (
                             <Heading key={j} as="h2" size="md" mb='8px' mt='24px' color={primaryColor} textAlign='center'>
-                              <Link color={primaryColor} href={value.url} style={{ textDecoration: 'underline' }} textAlign='center'>
+                              <Link color={primaryColor} href={''} style={{ textDecoration: 'underline' }} textAlign='center'>
                               {value.data}
                               </Link> 
                             </Heading>
