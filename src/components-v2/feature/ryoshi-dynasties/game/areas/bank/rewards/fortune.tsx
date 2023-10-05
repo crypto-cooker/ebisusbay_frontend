@@ -42,6 +42,7 @@ import {commify} from "ethers/lib/utils";
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
 import moment from 'moment';
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 
@@ -185,6 +186,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       toast.success('Withdraw success!');
     } catch (e) {
       console.log(e);
+      toast.error(parseErrorMessage(e));
     } finally {
       setExecutingClaim(false);
     }
@@ -259,6 +261,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       toast.success('Compound complete!');
     } catch (e) {
       console.log(e);
+      toast.error(parseErrorMessage(e));
     } finally {
       setExecutingCompound(false);
     }

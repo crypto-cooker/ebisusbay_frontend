@@ -93,6 +93,11 @@ const expirationDatesValues = [
 ]
 
 const currencyOptions = [
+  {
+    name: 'CRO',
+    symbol: 'cro',
+    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
+  },
   ...config.listings.currencies.available
     .filter((symbol: string) => !!config.tokens[symbol.toLowerCase()])
     .map((symbol: string) => {
@@ -102,11 +107,6 @@ const currencyOptions = [
         image: <DynamicCurrencyIcon address={token.address} boxSize={6} />
       }
     }),
-  {
-    name: 'CRO',
-    symbol: 'cro',
-    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
-  }
 ];
 
 interface MakeGaslessListingDialogProps {

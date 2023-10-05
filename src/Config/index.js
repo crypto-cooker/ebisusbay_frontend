@@ -200,7 +200,6 @@ export const configData = {
           '0x1368a855545724B165F8c3e466ec30e1fB2A3683': ['cro', 'frtn', 'bcro'], // Football Squares S2
           '0x5c18d5eb211203eb80b591aa71a269b1e16e9eba': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Ballies: The Gear v2
           '0xE1049178296ce004996AFb16B0816c5A95aC8482': ['cro', 'frtn', 'candy'], // Bored Candy
-
         }
       }
     }
@@ -356,7 +355,7 @@ export const configData = {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
       subgraph: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
-      cms: 'https://testcms.ebisusbay.biz/api/',
+      cms: 'http://localhost:4000/api/',
       cmsSocket: 'wss://testcms.ebisusbay.biz/socket/',
       explorer: 'https://testnet.cronoscan.com/',
       cdn: {
