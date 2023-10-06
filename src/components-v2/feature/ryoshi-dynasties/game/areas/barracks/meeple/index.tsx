@@ -89,21 +89,15 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const [meepleOffDuty, setMeepleOffDuty] = useState<number>(0);
 
   //upkeep
+  const [meeplePaidFor, setMeeplePaidFor] = useState<number>(0);
   const [totalUpkeepRequired, setTotalUpkeepRequired] = useState<number>(0);
   const [upkeepPaid, setUpkeepPaid] = useState<number>(0);
-
-
-
-  const [upkeepCost, setUpkeepCost] = useState<number>(0);
-  const [upkeepPrice, setUpkeepPrice] = useState<number>(1);
-  const [upkeepRemaining, setUpkeepRemaining] = useState<number>(0);
-  const [upkeepPayment, setUpkeepPayment] = useState<number>(0);
   const [upkeepDueText, setUpkeepDueText] = useState<string>("");
   const [sliderValue, setSliderValue] = useState(100)
   const upkeepDue = totalUpkeepRequired - upkeepPaid;
   const paymentAmount = upkeepDue * (sliderValue/100);
   const needsToPayUpkeep = totalUpkeepRequired > upkeepPaid;
-  const remainingMeepleYouNeedToPayFor = meepleOffDuty - 200;
+  const remainingMeepleYouNeedToPayFor = meepleOffDuty - meeplePaidFor - 200;
   const troopsBeingPaidFor = remainingMeepleYouNeedToPayFor * (sliderValue/100);
 
   //Mint Ryoshi
@@ -253,9 +247,11 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     const balanceOf = await resourcesContract.balanceOf(user.address, 2);
     const meeples = await ApiService.withoutKey().ryoshiDynasties.getUserMeeples(user.address);
     const activeMeeples = meeples ? meeples.activeAmount : 0;
-
     console.log("balanceOf ", BigNumber.from(balanceOf).toNumber());
-    console.log("activeMeeples ", BigNumber.from(activeMeeples).toNumber());
+    // console.log("activeMeeples ", BigNumber.from(activeMeeples).toNumber());
+    //only works for first 800 will fix
+    setUpkeepPaid(BigNumber.from(activeMeeples).toNumber());
+    setMeeplePaidFor(BigNumber.from(activeMeeples).toNumber());
   }
   const RefreshFilteredCards = () => {
     const filtered = locationData.filter((location) => location.tier == selectedTab+1);
