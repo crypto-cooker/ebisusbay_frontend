@@ -17,7 +17,7 @@ const ManageAuctions = () => {
   // const [startingBid, setStartingBid] = useState('');
   const [openMenu, setOpenMenu] = React.useState(0);
 
-  const handleBtnClick = (index) => (element) => {
+  const handleBtnClick = (index: number) => (element: any) => {
     if (typeof window === 'undefined') {
       return;
     }

@@ -1,6 +1,7 @@
 import {getCollections} from "@src/core/cms/endpoints/collections";
+import {NextApiRequest, NextApiResponse} from "next";
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {query} = req;
   const response = await getCollections(query);
 

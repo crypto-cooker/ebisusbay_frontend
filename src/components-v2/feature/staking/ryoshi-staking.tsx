@@ -1,8 +1,7 @@
 import React, {memo, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {Box, Center, Heading, Spinner, Text, VStack} from "@chakra-ui/react";
-import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
-import {getStakedRyoshi} from "@src/core/subgraph/staking";
+import {useInfiniteQuery} from "@tanstack/react-query";
 import {appConfig} from "@src/Config";
 import InfiniteScroll from "react-infinite-scroll-component";
 import RyoshiStakingNftCard from "@src/components-v2/feature/staking/ryoshi-staking-nft-card";
@@ -16,6 +15,7 @@ import Link from "next/link";
 import nextApiService from "@src/core/services/api-service/next";
 import {useAppSelector} from "@src/Store/hooks";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {ApiService} from "@src/core/services/api-service";
 
 const ryoshiCollectionAddress = appConfig('collections').find((c: any) => c.slug === 'ryoshi-tales-vip').address;
 const displayTypes = {
@@ -27,13 +27,6 @@ const RyoshiStaking = () => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
   const [displayType, setDisplayType] = useState(displayTypes.staked)
-  const { data, status, refetch } = useQuery(
-    ['RyoshiStaking', user.address],
-    () => getStakedRyoshi(user.address),
-    {
-      enabled: !!user.address
-    }
-  )
 
   const handleDisplayTypeClick = (value: string) => {
     setDisplayType(value);
@@ -206,8 +199,8 @@ const StakedRyoshiList = () => {
   const user = useAppSelector((state) => state.user);
 
   const fetcher = async ({ pageParam = 1 }) => {
-    const stakedRyoshis = await getStakedRyoshi(user.address);
-    const ids = stakedRyoshis.data?.ryoshiStaked ?? [];
+    const stakedRyoshis = await ApiService.withoutKey().getStakedRyoshi(user.address!);
+    const ids = stakedRyoshis?.ryoshiStaked ?? [];
     if (ids.length === 0) return [];
 
     const query = FullCollectionsQuery.createApiQuery({address: ryoshiCollectionAddress, token: ids});
@@ -247,7 +240,8 @@ const StakedRyoshiList = () => {
       getNextPageParam: (lastPage, pages) => {
         return pages[pages.length - 1].nfts?.length > 0 ? pages.length + 1 : undefined;
       },
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
+      enabled: !!user.address
     })
 
   const loadMore = () => {

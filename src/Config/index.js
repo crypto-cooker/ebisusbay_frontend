@@ -679,6 +679,4 @@ export const featureFlags = {
   [Features.VERIFIED_SWITCH_MARKETPLACE]: false,   // Filter verified in marketplace
   [Features.UNVERIFIED_WARNING]: false,            // Warning when buying from unverified collection
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
-  [Features.NEW_CHAKRA_THEME]: false,             // Update theme
-  [Features.GASLESS_LISTING]: true,                //Gasless listings
 }

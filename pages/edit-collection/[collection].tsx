@@ -9,13 +9,13 @@ const tabs = {
   royalties: 'royalties'
 };
 
-const EditCollection = ({ tab }) => {
+const EditCollection = ({ tab }: { tab: string }) => {
 
   const router = useRouter();
   const { collection } = router.query;
 
-  const [currentTab, setCurrentTab] = React.useState(tab ?? tabs.editCollection);
-  const handleTabChange = useCallback((newTab) => {
+  const [currentTab, setCurrentTab] = React.useState<string>(tab ?? tabs.editCollection);
+  const handleTabChange = useCallback((newTab: string) => {
     setCurrentTab(newTab);
   }, []);
 
