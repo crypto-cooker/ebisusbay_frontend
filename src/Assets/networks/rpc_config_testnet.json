@@ -3727,6 +3727,31 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "BOB Headz",
+      "slug": "bob-headz",
+      "multiToken": false,
+      "address": "0x485B4fB0E252eF1695210a1254c2B6cDDa84053C",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "BOB Headz is super limited collection with unique utility to holders! There will be more than 200+ traits and multiple legendaries to be found!",
+        "avatar": "/img/collections/bob-headz/avatar.webp",
+        "card": "/img/collections/bob-headz/card.webp",
+        "banner": "/img/collections/bob-headz/banner.webp",
+        "website": "https://bob-adventures.netlify.app/",
+        "twitter": "https://twitter.com/CroBobAdventure",
+        "discord": "https://discord.gg/kemzRExMju",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -8956,6 +8981,45 @@
         "doxx": false,
         "kyc": true,
         "escrow": false
+      }
+    },
+    {
+      "id": 183,
+      "slug": "bob-headz",
+      "title": "BOB Headz",
+      "subtitle": "BOB Headz is super limited collection with unique utility to holders! There will be more than 200+ traits and multiple legendaries to be found!",
+      "description": "Our mission for this collection is to grow our community with more and more positive people who like Cronos and are looking for project who has different utilities. To get even more exposure and find new people, this collection we will launch on different platform where is a lot of traffic! You can already try to guess what is this platform, but full info will be announced in upcoming days.  GOAL As you know we like utility and each of our collections has different utilities to match everyone's taste. This collection goal is to make community more active, because it will have unique and fun utility.  UTILITY This collection will unlock our new game - Flappy BOB Game that everyone knows and are easy to play using PC or Mobile. BOB Headz will be used in our game and everyone who holds BOB Headz can play it! We will have online leaderboard where we will track players with best scores every week and we will reward them! But it will be harder than you think! Each NFT will be 1 life. Life resets every 24H, so if you hold 1x BOB Headz NFT, you can play 1 time per 24H. If you hold 10x BOB Headz, you can play 10 times per 24H and so on... The more Headz you own, the better chance to get better score. There also will be burn mechanism - part of secondary sale royalties we will use to sweep BOB Headz floor and burn them. This way we will reduce total supply from time to time. So this collection will be more and more valuable in the future. LEGENDARY BOB HEADz In our collection you can find 20 1/1 Legendaries and if you mint one of them, you can claim their bounty!",
+      "author": {
+        "name": "BOB Adventures",
+        "website": "https://bob-adventures.netlify.app/",
+        "twitter": "https://twitter.com/CroBobAdventure",
+        "discord": "https://discord.gg/kemzRExMju"
+      },
+      "address": "0x485B4fB0E252eF1695210a1254c2B6cDDa84053C",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 808,
+      "cost": "98",
+      "memberCost": "88",
+      "whitelistCost": "88",
+      "foundersOnly": false,
+      "start": 1696617247000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/bob-headz/drop.webp",
+        "banner": "/img/collections/bob-headz/banner.webp",
+        "avatar": "/img/collections/bob-headz/avatar.webp",
+        "preview": "/img/collections/bob-headz/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
