@@ -41,7 +41,7 @@ import {RdModalAlert, RdModalFooter} from "@src/components-v2/feature/ryoshi-dyn
 import {useQuery} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
 import {MeepleUpkeep, MeepleMint, MeepleTradeInCards} from "@src/core/api/RyoshiDynastiesAPICalls";
-import {BigNumber, Contract} from "ethers";
+import {BigNumber, Contract, ethers} from "ethers";
 import Resources from "@src/Contracts/Resources.json";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
@@ -81,6 +81,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const [page, setPage] = useState<string>();
   const collectionAddress = config.contracts.resources
   const {requestSignature} = useEnforceSignature();
+  const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
   //Ryoshi
   const [meepleOnDuty, setMeepleOnDuty] = useState<number>(0);
@@ -151,11 +152,8 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     try {
       const cmsResponse = await MeepleUpkeep(user.address, signature, Number(troopsBeingPaidFor.toFixed()));
       // console.log("CMS Response: ", cmsResponse);
-      // const request = [];
-      console.log("Upkeep Request: ", cmsResponse);
-      
       const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
-      const tx = await resourcesContract.upkeep(cmsResponse.request, cmsResponse.signature );
+      const tx = await resourcesContract.upkeep(cmsResponse.upkeepRequest, cmsResponse.signature);
       toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
 
     } catch (error: any) {
@@ -250,9 +248,12 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     if(!rdUser) return;
 
     setMeepleOnDuty(rdUser.season.troops.available.owned);
-    // const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
-    // const data = await resourcesContract.activeMeeples(user.address)
-    // setMeepleOffDuty(BigNumber.from(data).toNumber());
+    const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
+    const balanceOf = await resourcesContract.balanceOf(user.address, 2);
+    const activeMeeples = await resourcesContract.activeMeeples(user.address)
+
+    console.log("balanceOf ", BigNumber.from(balanceOf).toNumber());
+    console.log("activeMeeples ", BigNumber.from(activeMeeples).toNumber());
   }
   const RefreshFilteredCards = () => {
     const filtered = locationData.filter((location) => location.tier == selectedTab+1);
