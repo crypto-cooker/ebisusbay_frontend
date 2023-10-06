@@ -116,7 +116,7 @@ class RyoshiDynasties {
 
   async meeple(walletAddress: string) {
     const query = `
-      query StakingAccountsQuery($address: String) {
+      query UserMeeplesQuery($address: String) {
         meeple(id: $address) {
           id
           activeAmount
