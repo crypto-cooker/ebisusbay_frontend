@@ -473,9 +473,3 @@ export const getStaticProps = async () => {
   }
 
 }
-
-declare global {
-  interface Window {
-    logBadgeClick: any;
-  }
-}
