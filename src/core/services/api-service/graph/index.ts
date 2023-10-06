@@ -7,14 +7,17 @@ import {
   StakingAccount, VaultContract
 } from "@src/core/services/api-service/graph/types";
 import {StakedTokenType} from "@src/core/services/api-service/types";
+import Staking from "@src/core/services/api-service/graph/subgraphs/staking";
 
 class Graph {
   private ryoshiPresale;
   private ryoshiDynasties;
+  private staking;
 
   constructor(apiKey?: string) {
     this.ryoshiPresale = new RyoshiPresale();
     this.ryoshiDynasties = new RyoshiDynasties();
+    this.staking = new Staking();
   }
 
   async globalTotalPurchased() {
@@ -55,6 +58,11 @@ class Graph {
   async getBankStakingAccount(address: string) {
     const result = await this.ryoshiDynasties.stakingAccounts(address);
     return result.data.stakingAccounts.length > 0 ? result.data.stakingAccounts[0] as StakingAccount : null;
+  }
+
+  async getStakedRyoshi(address: string) {
+    const result = await this.staking.getStakedRyoshi(address);
+    return result.data.account;
   }
 }
 

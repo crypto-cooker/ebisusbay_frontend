@@ -207,6 +207,10 @@ export class ApiService implements Api {
   async getCollections(query?: CollectionInfoQueryParams) {
     return await this.mapi.getCollections(query);
   }
+
+  async getStakedRyoshi(address: string) {
+    return await this.graph.getStakedRyoshi(address);
+  }
 }
 
 class RyoshiDynastiesGroup implements RyoshiDynastiesApi {

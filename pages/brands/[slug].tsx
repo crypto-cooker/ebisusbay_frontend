@@ -15,7 +15,6 @@ import {
   useBreakpointValue
 } from "@chakra-ui/react";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
-import EndpointProxyService from "@src/services/endpoint-proxy.service";
 import {caseInsensitiveCompare, ciIncludes, siPrefixedNumber} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {appConfig} from "@src/Config";
@@ -27,6 +26,7 @@ import StakingTab from "@src/components-v2/feature/brand/tabs/staking";
 import {stakers} from "@src/components-v2/feature/brand/tabs/staking/config";
 import ImageService from "@src/core/services/image";
 import {GetServerSidePropsContext} from "next";
+import {ApiService} from "@src/core/services/api-service";
 
 const drops = appConfig('drops');
 const tabs = {
@@ -176,10 +176,9 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
   }
 
   const brandAddresses = brandKeyedAddresses.map((o) => o.address);
-  const endpointService = new EndpointProxyService();
-  const collections = await endpointService.getCollections({address: brandAddresses.join(',')});
+  const collections = await ApiService.withKey(process.env.EB_API_KEY as string).getCollections({address: brandAddresses});
   let splitCollections: any[] = [];
-  let sortedCollections = collections.data.collections
+  let sortedCollections = collections.data
     .filter((c: any) => !!c.metadata && Object.keys(c.metadata).length > 0)
     .map((c: any) => {
       c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address))?.position;
@@ -224,7 +223,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
     const weirdApes = '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44'
     const weirdApesV1 = '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'
     if (caseInsensitiveCompare(c.address, weirdApes)) {
-      const v1Collection = collections.data.collections.find((v1c: any) => caseInsensitiveCompare(v1c.address, weirdApesV1));
+      const v1Collection = collections.data.find((v1c: any) => caseInsensitiveCompare(v1c.address, weirdApesV1));
       c.stats.total.active = Number(c.stats.total.active) + Number(v1Collection.stats.total.active)
       c.stats.total.complete = Number(c.stats.total.complete) + Number(v1Collection.stats.total.complete)
       c.stats.total.volume = Number(c.stats.total.volume) + Number(v1Collection.stats.total.volume)

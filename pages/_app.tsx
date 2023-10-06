@@ -24,10 +24,6 @@ import "swiper/css/pagination";
 import '../src/Assets/styles/style.scss';
 import '../src/Assets/styles/override.scss';
 import customTheme from "@src/Theme/theme";
-import customThemeCK from "@src/Theme/themeCK";
-
-import useFeatureFlag from '@src/hooks/useFeatureFlag';
-import Constants from '@src/constants';
 import {AppProps} from "next/app";
 import App from "@src/components-v2/app";
 
@@ -38,16 +34,12 @@ const queryClient = new QueryClient()
 config.autoAddCss = false;
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-
-  const { Features } = Constants;
-  const useNewTheme = useFeatureFlag(Features.NEW_CHAKRA_THEME);
-
   return (
     <>
       <Provider store={store}>
         <Sentry.ErrorBoundary fallback={() => <ErrorPage />}>
           <QueryClientProvider client={queryClient} >
-            <ChakraProvider theme={useNewTheme? customThemeCK : customTheme}>
+            <ChakraProvider theme={customTheme}>
               <App Component={Component} {...pageProps} />
             </ChakraProvider>
           </QueryClientProvider>
