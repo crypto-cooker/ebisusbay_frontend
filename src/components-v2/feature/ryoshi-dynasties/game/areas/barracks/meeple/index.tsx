@@ -89,6 +89,9 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   //upkeep
   const [totalUpkeepRequired, setTotalUpkeepRequired] = useState<number>(0);
   const [upkeepPaid, setUpkeepPaid] = useState<number>(0);
+
+
+
   const [upkeepCost, setUpkeepCost] = useState<number>(0);
   const [upkeepPrice, setUpkeepPrice] = useState<number>(1);
   const [upkeepRemaining, setUpkeepRemaining] = useState<number>(0);
@@ -98,6 +101,8 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const upkeepDue = totalUpkeepRequired - upkeepPaid;
   const paymentAmount = upkeepDue * (sliderValue/100);
   const needsToPayUpkeep = totalUpkeepRequired > upkeepPaid;
+  const remainingMeepleYouNeedToPayFor = meepleOffDuty - 200;
+  const troopsBeingPaidFor = remainingMeepleYouNeedToPayFor * (sliderValue/100);
 
   //Mint Ryoshi
   const [meepleToMint, setMeepleToMint] = useState(0);
@@ -124,6 +129,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     data: walletData, 
     refetch:refetchWallet,
     isFetching: isFetchingWallet,
+    isLoading: isLoadingWallet
   } = useQuery({
     queryKey: ['MeepleManagementPage', user.address],
     queryFn: () => NextApiService.getWallet(user.address!, {
@@ -139,20 +145,18 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const handleClose = () => {
     onClose();
   }
-  const PayUpkeep = async (upkeepPayment:number) => {
+  const PayUpkeep = async () => {
     if (!user.address) return;
     const signature = await requestSignature();
     try {
-      // const signature = await admin._signTypedData(domain, typeUpkeepRequest, upkeepRequest);
-      // const tx = await resources.connect(user1).upkeep(upkeepRequest, signature);
-
-      const cmsResponse = await MeepleUpkeep(user.address, signature, Number(upkeepPayment.toFixed(0)));
-      console.log("CMS Response: ", cmsResponse);
-      //signarure, costamounts, exipires, nonce
-
+      const cmsResponse = await MeepleUpkeep(user.address, signature, Number(troopsBeingPaidFor.toFixed()));
+      // console.log("CMS Response: ", cmsResponse);
+      // const request = [];
+      console.log("Upkeep Request: ", cmsResponse);
+      
       const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
-      // const tx = await resourcesContract.upkeep(user.address?.toLowerCase(), );
-      // const receipt = await tx.wait();
+      const tx = await resourcesContract.upkeep(cmsResponse.request, cmsResponse.signature );
+      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
 
     } catch (error: any) {
       console.log(error);
@@ -250,10 +254,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     // const data = await resourcesContract.activeMeeples(user.address)
     // setMeepleOffDuty(BigNumber.from(data).toNumber());
   }
-  const GetUpkeepCost = () => {
-    //add function to get Upkeep Cost
-    setUpkeepCost(50);
-  }
   const RefreshFilteredCards = () => {
     const filtered = locationData.filter((location) => location.tier == selectedTab+1);
     setFilteredCards(filtered);
@@ -278,10 +278,10 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     }
     setLocationData(locations);
   }
-  const CalculateUpkeepCost = (meepleAmount:number) => {
+  const CalculateUpkeepCost = () => {
     //cost will be marginal, 0-200 free, 201-999 1x, 1000-4999 2x, 5000+ 3x
     let cost = 0;
-    for(let i = 0; i < meepleAmount; i++){
+    for(let i = 0; i < meepleOffDuty; i++){
       if(i < 200){
         cost += 0;
       }
@@ -292,13 +292,15 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
         cost += 2;
       }
       else{
-        cost += 3* (meepleAmount - 5000);
+        cost += 3 * (meepleOffDuty - 4999);
         break;
       }
     }
-    // console.log("Upkeep Cost for " + meepleAmount + " is " + cost + "x");
-    return cost * rdConfig.barracks.meepleUpkeep;
+    console.log("Upkeep Cost for " + meepleOffDuty + " is " + cost + "");
+    setTotalUpkeepRequired(cost);
   }
+  // active meeple
+  // ballance of
   const SetUpCardsInWallet = () => {
     let cards:LocationData[] = [];
     walletData.data.forEach((card) => {
@@ -394,12 +396,10 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   useEffect(() => {
     if(!rdGameContext) return;
 
-    GetUpkeepCost();
     GetLocationData();
-    const totalUpkeep = CalculateUpkeepCost(meepleOffDuty);
-    setTotalUpkeepRequired(totalUpkeep);
+    CalculateUpkeepCost();
 
-  }, [meepleOnDuty, rdConfig, rdGameContext])
+  }, [meepleOffDuty, rdConfig, rdGameContext])
 
   useEffect(() => {
     GetMeepleOnDuty();
@@ -439,7 +439,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
               <Flex justifyContent={'space-between'} align={'center'}>
                <HStack spacing={1} h={'60px'}>
                   <Text color={'#aaa'} alignContent={'baseline'} pt={2}> Ryoshi On Duty: </Text>
-                    { isFetchingWallet ? (
+                    { isFetchingWallet || isLoadingWallet ? (
                       <Spinner p={2} size='sm' />
                     ) : (
                     <Text as={'b'} fontSize='28' p={2}>{meepleOnDuty}</Text>
@@ -470,7 +470,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
               <Flex justifyContent={'space-between'} align={'center'}>
                 <HStack spacing={1} h={'60px'}>
                   <Text color={'#aaa'} alignContent={'baseline'} pt={2}> Ryoshi Off Duty: </Text>
-                  { isFetchingWallet ? (
+                  { isFetchingWallet || isLoadingWallet? (
                     <Spinner p={2} size='sm' />
                   ) : (
                   <Text as={'b'} fontSize='28' p={2}>{meepleOffDuty}</Text>
@@ -561,6 +561,10 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                   <HStack   pt={10} spacing={0} justifyContent={'right'} w={'100%'}>
                     <Text as={'b'} textAlign={'right'} fontSize='28' > {paymentAmount.toFixed(0)} </Text>
                     <Image  src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/> 
+                  </HStack >
+                  <HStack  pl={2}  spacing={0} justifyContent={'left'} w={'100%'}>
+                  <Text color={'#aaa'} textAlign={'left'} > Troops Being Paid For </Text>
+                  <Text as={'b'} textAlign={'left'} p={2}>  {troopsBeingPaidFor.toFixed()} </Text>
                   </HStack>
                   
                   <GridItem colSpan={2} pl={4} pr={4} pt={10}>
@@ -592,7 +596,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
             <RdModalFooter>
               <Stack justifyContent={'space-between'} direction='row' spacing={6}>
                   <RdButton onClick={onCloseUpkeepModal} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-                  <RdButton onClick={() => PayUpkeep(paymentAmount)} size='lg' fontSize={{base: '18', sm: '24'}}> Pay Upkeep </RdButton>
+                  <RdButton onClick={() => PayUpkeep()} size='lg' fontSize={{base: '18', sm: '24'}}> Pay Upkeep </RdButton>
               </Stack>
             </RdModalFooter>
           </RdModal>
