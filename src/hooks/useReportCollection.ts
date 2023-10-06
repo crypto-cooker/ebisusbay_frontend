@@ -10,7 +10,7 @@ const useReportCollection = () => {
 
   const {requestSignature} = useEnforceSignature();
 
-  const createNewReport = async (address, data) => {
+  const createNewReport = async (address: string, data: any) => {
     setResponse({
       ...response,
       loading: true,
@@ -28,7 +28,7 @@ const useReportCollection = () => {
       });
 
       return fetchResponse;
-    } catch (error) {
+    } catch (error: any) {
       setResponse({
         ...response,
         loading: false,

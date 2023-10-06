@@ -4,7 +4,7 @@ import Constants from '../constants';
 
 const { PARAM } = Constants.Variables;
 
-export const getDynamicMessage = (message, params) => {
+export const getDynamicMessage = (message: string, params: string[]) => {
   return params.reduce((text, param) => text.replace(PARAM, param), message);
 };
 

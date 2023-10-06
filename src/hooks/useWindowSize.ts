@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 
 export const useWindowSize = () => {
-  const [windowSize, setWindowSize] = useState({
+  const [windowSize, setWindowSize] = useState<{width?: number, height?: number}>({
     width: undefined,
     height: undefined,
   });
