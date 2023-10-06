@@ -3,7 +3,7 @@ export class Site24x7LoggingService {
     Site24x7LoggingService.enableSite24x7(process.env.NEXT_PUBLIC_SITE24X7_KEY);
   }
 
-  static site24x7ErrorHandler = function (error) {
+  static site24x7ErrorHandler = function (error: any) {
     if (typeof window !== 'undefined' && window.s247r) {
       window.s247r('captureException', error);
     }
@@ -13,7 +13,7 @@ export class Site24x7LoggingService {
    * @private
    * @param key
    */
-  static enableSite24x7(key) {
+  static enableSite24x7(key?: string) {
     if (
       typeof window !== 'undefined' &&
       window.performance &&
@@ -42,7 +42,7 @@ export class Site24x7LoggingService {
         if (windowError) {
           windowError(message, source, lineno, colno, error);
         }
-        if (!error) {
+        if (!error && typeof message === 'string') {
           error = new Error(message);
         }
         if (!window.s247r.q) {
