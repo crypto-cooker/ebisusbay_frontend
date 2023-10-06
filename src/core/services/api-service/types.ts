@@ -7,7 +7,7 @@ import WalletNft from "@src/core/models/wallet-nft";
 import {Listing} from "@src/core/models/listing";
 import {
     Erc20Account,
-    FortuneStakingAccount, PresaleVault,
+    FortuneStakingAccount, Meeple, PresaleVault,
     StakedToken,
     StakingAccount
 } from "@src/core/services/api-service/graph/types";
@@ -48,6 +48,7 @@ export interface RyoshiDynastiesApi {
     getBankStakingAccount(address: string): Promise<StakingAccount | null>;
     getFactions(gameId?: number): Promise<RdFaction[]>;
     getBattleLog(query: GetBattleLog): Promise<PagedList<RdBattleLog>>;
+    getUserMeeples(address: string): Promise<Meeple | null>;
 }
 
 export enum ListingState {

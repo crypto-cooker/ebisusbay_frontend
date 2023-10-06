@@ -2,7 +2,7 @@ import RyoshiPresale from "@src/core/services/api-service/graph/subgraphs/ryoshi
 import RyoshiDynasties from "@src/core/services/api-service/graph/subgraphs/ryoshi-dynasties";
 import {
   Erc20Account,
-  FortuneStakingAccount, PresaleVault,
+  FortuneStakingAccount, Meeple, PresaleVault,
   StakedToken,
   StakingAccount, VaultContract
 } from "@src/core/services/api-service/graph/types";
@@ -63,6 +63,11 @@ class Graph {
   async getStakedRyoshi(address: string) {
     const result = await this.staking.getStakedRyoshi(address);
     return result.data.account;
+  }
+
+  async getUserMeeples(address: string) {
+    const result = await this.ryoshiDynasties.meeple(address);
+    return result.data.meeple as Meeple;
   }
 }
 

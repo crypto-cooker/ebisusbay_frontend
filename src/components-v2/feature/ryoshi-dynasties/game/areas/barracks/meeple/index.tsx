@@ -51,6 +51,7 @@ import { Spinner } from "@chakra-ui/react";
 const config = appConfig();
 
 import axios from "axios";
+import {ApiService} from "@src/core/services/api-service";
 const api = axios.create({
   baseURL: config.urls.api,
 });
@@ -245,12 +246,13 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     } 
   }
   const GetMeepleOnDuty = async () => {
-    if(!rdUser) return;
+    if(!rdUser || !user.address) return;
 
     setMeepleOnDuty(rdUser.season.troops.available.owned);
     const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
     const balanceOf = await resourcesContract.balanceOf(user.address, 2);
-    const activeMeeples = await resourcesContract.activeMeeples(user.address)
+    const meeples = await ApiService.withoutKey().ryoshiDynasties.getUserMeeples(user.address);
+    const activeMeeples = meeples ? meeples.activeAmount : 0;
 
     console.log("balanceOf ", BigNumber.from(balanceOf).toNumber());
     console.log("activeMeeples ", BigNumber.from(activeMeeples).toNumber());

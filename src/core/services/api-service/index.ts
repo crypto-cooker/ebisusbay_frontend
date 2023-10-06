@@ -24,6 +24,7 @@ import {Player, RankPlayers} from "@src/core/poker-rank-players"
 import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
+import {Meeple} from "@src/core/services/api-service/graph/types";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -307,5 +308,9 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async getBattleLog(query: GetBattleLog) {
     return this.cms.getBattleLog(query);
+  }
+
+  async getUserMeeples(address: string) {
+    return await this.graph.getUserMeeples(address);
   }
 }
