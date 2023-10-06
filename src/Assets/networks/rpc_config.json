@@ -23939,6 +23939,33 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "The Luckl355",
+      "slug": "the-luckl355",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Where resilience meets opportunity. We are a diverse community of individuals who've faced setbacks and failures but now unite to support each other. Our name symbolizes our strength born from adversity. Through masks and specialized factions, we express our unique reflections and maintain our anonymous online identities.",
+        "avatar": "/img/collections/the-luckl355/avatar.webp",
+        "card": "/img/collections/the-luckl355/card.webp",
+        "banner": "/img/collections/the-luckl355/banner.webp",
+        "website": "https://0xluckless.com",
+        "twitter": "https://twitter.com/0xLuckless",
+        "discord": "https://discord.gg/y3Wv2gHjWZ",
+        "medium": "https://medium.com/@0xLuckless",
+        "instagram": "https://www.instagram.com/0xluckless/",
+        "categories": [
+          "art"
+        ]
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -31123,13 +31150,54 @@
       "published": true,
       "complete": false,
       "images": {
-        "drop": "/img/drops/bob-headz/drop.webp",
+        "drop": null,
         "banner": "/img/collections/bob-headz/banner.webp",
         "avatar": "/img/collections/bob-headz/avatar.webp",
         "preview": "/img/collections/bob-headz/card.webp"
       },
       "verification": {
         "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 184,
+      "slug": "the-luckl355",
+      "title": "The Luckl355",
+      "subtitle": "Where resilience meets opportunity. We are a diverse community of individuals who've faced setbacks and failures but now unite to support each other. Our name symbolizes our strength born from adversity. Through masks and specialized factions, we express our unique reflections and maintain our anonymous online identities.",
+      "description": "The Luckl355 community provides support, resources, and fosters collaboration for members facing a wide array of challenges, with a mission to build an inclusive, empowering community that helps members achieve success and fulfillment in their personal and professional lives.",
+      "author": {
+        "name": "0xLuckless",
+        "website": "https://0xLuckless.com",
+        "twitter": "https://twitter.com/0xLuckless",
+        "discord": "https://discord.gg/y3Wv2gHjWZ",
+        "medium": "https://medium.com/@0xLuckless",
+        "instagram": "https://www.instagram.com/0xluckless/"
+      },
+      "address": "",
+      "maxMintPerTx": 3,
+      "maxMintPerAddress": 3,
+      "totalSupply": 355,
+      "cost": "350",
+      "memberCost": "325",
+      "whitelistCost": "300",
+      "foundersOnly": false,
+      "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": null,
+        "banner": "/img/collections/the-luckl355/banner.webp",
+        "avatar": "/img/collections/the-luckl355/avatar.webp",
+        "preview": "/img/collections/the-luckl355/card.webp"
+      },
+      "verification": {
+        "doxx": true,
         "kyc": true,
         "escrow": false,
         "verified": true
