@@ -171,13 +171,7 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
       setExecutingSweepFloor(false);
       onClose();
     } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
+      toast.error(parseErrorMessage(error));
     } finally {
       setExecutingSweepFloor(false);
     }

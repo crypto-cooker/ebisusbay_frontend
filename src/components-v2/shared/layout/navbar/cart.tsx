@@ -43,6 +43,7 @@ import ImageService from "@src/core/services/image";
 import {specialImageTransform} from "@src/hacks";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {getPrices} from "@src/core/api/endpoints/prices";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -136,13 +137,7 @@ const Cart = function () {
         await executeBuy();
       } catch (error: any) {
         console.log('ERROR:: ', error)
-        if (error.data) {
-          toast.error(error.data.message);
-        } else if (error.message) {
-          toast.error(error.message);
-        } else {
-          toast.error('Unknown Error');
-        }
+        toast.error(parseErrorMessage(error));
       } finally {
         setExecutingBuy(false);
       }

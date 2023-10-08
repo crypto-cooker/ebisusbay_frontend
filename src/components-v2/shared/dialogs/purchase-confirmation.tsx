@@ -38,6 +38,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import PurchaseSuccessDialog from './purchase-success';
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -128,13 +129,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       }]);
       setIsComplete(true);
     } catch (error: any) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
+      toast.error(parseErrorMessage(error));
     } finally {
       setExecutingPurchase(false);
     }
