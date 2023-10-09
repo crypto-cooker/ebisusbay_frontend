@@ -40,9 +40,9 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
     () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
     {
       initialData: initialRdConfig,
-      // staleTime: 1000 * 60 * 25,
-      // cacheTime: 1000 * 60 * 30,
-      refetchInterval: 1000 * 60,
+      staleTime: 1000 * 60 * 10,
+      cacheTime: 1000 * 60 * 11,
+      refetchInterval: 1000 * 60 * 10,
       refetchOnWindowFocus: false,
     }
   );
@@ -66,8 +66,10 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
     ['RyoshiDynastiesGameContext', user.address],
     () => ApiService.withoutKey().ryoshiDynasties.getGameContext(),
     {
+      staleTime: 1000 * 60 * 1,
+      cacheTime: 1000 * 60 * 2,
+      refetchInterval: 1000 * 60 * 10,
       refetchOnWindowFocus: false,
-      refetchInterval: 1000 * 60,
     }
   );
 
