@@ -8,7 +8,6 @@ import * as Sentry from '@sentry/react';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {ERC1155, ERC721} from "@src/Contracts/Abis";
-import {getCnsAddress, isCnsName} from "@src/helpers/cns";
 import {
   Box,
   Button as ChakraButton,
@@ -31,6 +30,7 @@ import {getTheme} from "@src/Theme/theme";
 import {is1155} from "@src/helpers/chain";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useAppSelector} from "@src/Store/hooks";
+import {getCroidAddressFromName, isCroName} from "@src/helpers/croid";
 
 interface TransferNftDialogProps {
   isOpen: boolean;
@@ -86,11 +86,11 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
       const nftId = nft.id ?? nft.nftId;
 
       let targetAddress = recipientAddress;
-      if (isCnsName(recipientAddress)) {
+      if (!!recipientAddress && isCroName(recipientAddress)) {
         setExecutingCnsLookup(true);
-        const cnsAddress = await getCnsAddress(recipientAddress);
-        if (cnsAddress) {
-          targetAddress = cnsAddress;
+        const croidAddress = await getCroidAddressFromName(recipientAddress);
+        if (croidAddress) {
+          targetAddress = croidAddress;
           setExecutingCnsLookup(false);
         } else {
           setFieldError('No matching profiles for this CNS name');
