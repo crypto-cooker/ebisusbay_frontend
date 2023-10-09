@@ -5,7 +5,7 @@ import {Contract, ContractReceipt, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {isBundle, isErc20Token, isGaslessListing, knownErc20Token, round} from "@src/utils";
+import {caseInsensitiveCompare, isBundle, isErc20Token, isGaslessListing, knownErc20Token, round} from "@src/utils";
 import {getTheme} from "@src/Theme/theme";
 import {
   Box,
@@ -39,6 +39,7 @@ import PurchaseSuccessDialog from './purchase-success';
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {getPrices} from "@src/core/api/endpoints/prices";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -59,6 +60,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
 
   const [isComplete, setIsComplete] = useState(false);
   const [tx, setTx] = useState<ContractReceipt>();
+  const [finalCostValues, setFinalCostValues] = useState<[{ value: string, currency: string }, { value: string }]>();
 
   const getInitialProps = async () => {
     const listingsResponse = await NextApiService.getListingsByIds(listingId);
@@ -97,30 +99,8 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
     window.open(url, '_blank');
   }
 
-  const getYouReceiveViewValue = () => {
-    if (!listing) return;
-
-    if (isGaslessListing(listingId)) {
-      const youReceive = parseInt(listing.price) + (listing.price * (fee / 100));
-      try {
-        return ethers.utils.commify(youReceive.toFixed(2));
-      } catch (e) {
-        return youReceive
-      }
-    } else {
-      return parseInt(listing.price);
-    }
-  };
-
-
-
-
-
   const handleExecutePurchase = async () => {
     try {
-      // setIsComplete(true);
-      // return;
-
       setExecutingPurchase(true);
       await buyGaslessListings([{
         listingId: listing.listingId,
@@ -140,6 +120,36 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       setTx(response.tx);
     }
   }, [response]);
+
+  useEffect(() => {
+    async function func() {
+      const exchangeRates = await getPrices();
+      const numericPrice = parseInt(listing.price);
+      let amt = numericPrice;
+
+      let fee =  numericPrice * (user.fee / 100);
+      const erc20UsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, listing.currency));
+      if (!!erc20UsdRate && erc20UsdRate.currency !== ethers.constants.AddressZero) {
+        const croUsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, ethers.constants.AddressZero) && rate.chain === 25);
+        fee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice) * (user.fee / 100);
+      }
+      amt += listing.currency === ethers.constants.AddressZero ? fee : 0;
+
+      setFinalCostValues([
+        {
+          value: ethers.utils.commify(amt),
+          currency: listing.currency,
+        },
+        {
+          value: ethers.utils.commify(round(fee, 2))
+        }
+      ]);
+    }
+
+    if (listing) {
+      func();
+    }
+  }, [listing]);
 
   return isComplete ? (
     <PurchaseSuccessDialog onClose={onClose} isOpen={isOpen} listing={listing} tx={tx} />
@@ -193,9 +203,12 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       {isGaslessListing(listingId) && (
                         <Flex justify="space-between" fontSize="sm" mt={1}>
                           <Text className="text-muted">Service Fee</Text>
-                          <Text className="text-muted">
-                            {fee} %
-                          </Text>
+                          <Flex justify="space-between" align="center">
+                            <CronosIconBlue boxSize={4} me={1}/>
+                            <Text className="text-muted">
+                              {fee} %
+                            </Text>
+                          </Flex>
                         </Flex>
                       )}
                     </div>
@@ -223,12 +236,23 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                     <Flex justify="space-between" fontSize={18}>
                       <Text>Total:</Text>
                       <Box>
-                        <Flex justify="space-between" align="center">
-                          <DynamicCurrencyIcon address={listing.currency} boxSize={6} />
-                          <Text as="span" ms={1} fontWeight="bold">
-                            {getYouReceiveViewValue()} CRO
-                          </Text>
-                        </Flex>
+                        {!!finalCostValues && (
+                          <>
+                            <Flex justify="end" align="center">
+                              <DynamicCurrencyIcon address={listing.currency} boxSize={6} />
+                              <Text as="span" ms={1} fontWeight="bold">
+                                {finalCostValues[0].value}
+                              </Text>
+                            </Flex>
+                            {finalCostValues[0].currency !== ethers.constants.AddressZero && (
+                              <Flex justify="space-between" align="center" fontSize='sm' className='text-muted'>
+                                <Text as="span" ms={1}>
+                                  + {finalCostValues[1].value} CRO
+                                </Text>
+                              </Flex>
+                            )}
+                          </>
+                        )}
                       </Box>
                     </Flex>
                     {isErc20Token(listing.currency) && !!token ? (
