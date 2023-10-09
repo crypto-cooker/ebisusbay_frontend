@@ -23,6 +23,7 @@ import {getOwners} from "@src/core/subgraph"
 import {Player, RankPlayers} from "@src/core/poker-rank-players"
 import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
+import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -90,7 +91,7 @@ export class ApiService implements Api {
     const owners = await getOwners();
     //rank the info
     
-    const response = await RankPlayers(owners);
+    const response = await RankPlayers(owners, false, 2);
 
     function paginate(array : any, page_size:number, page_number:number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
@@ -112,7 +113,7 @@ export class ApiService implements Api {
     const owners = await getOwners(blockNumber);
     //rank the info
     
-    const response = await RankPlayers(owners);
+    const response = await RankPlayers(owners, false, 1);
 
     function paginate(array : any, page_size:number, page_number:number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
@@ -202,6 +203,14 @@ export class ApiService implements Api {
   async getCollectionTraits(address: string) {
     return await this.mapi.getCollectionTraits(address);
   }
+
+  async getCollections(query?: CollectionInfoQueryParams) {
+    return await this.mapi.getCollections(query);
+  }
+
+  async getStakedRyoshi(address: string) {
+    return await this.graph.getStakedRyoshi(address);
+  }
 }
 
 class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
@@ -219,6 +228,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async userTotalPurchased(address: string) {
     return this.graph.userTotalPurchased(address);
+  }
+
+  async presaleVault(address: string) {
+    return this.graph.getPresaleVault(address);
   }
 
   async getUserStakedFortune(address: string) {

@@ -11,13 +11,13 @@ import ImagePreloader from "@src/components-v2/feature/ryoshi-dynasties/game/ima
 import {InlineModalContext} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/inline-modal-context";
 import {Box, useBreakpointValue} from "@chakra-ui/react";
 import DynastiesLands from "./areas/lands";
-import {MapProps} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/index";
+import {MapProps} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
 
 import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/portal";
 import FishMarketModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/fish-market";
-const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | null}) => {
+const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig}) => {
   const user = useAppSelector((state) => state.user);
 
   const [currentPage, setCurrentPage] = useState<string>('village');
@@ -99,6 +99,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig | nul
                 mapProps={mapProps} 
                 height={'calc(100vh - 74px)'} 
                 useCurrentGameId={true}
+                blockDeployments={false}
               />
               // </Suspense>
               // ) : currentPage === 'leaderboard' ? (

@@ -39,11 +39,11 @@ import useBuyGaslessListings from '@src/hooks/useBuyGaslessListings';
 import Market from "@src/Contracts/Marketplace.json";
 import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
-import {AnchorProps} from "react-bootstrap";
 import ImageService from "@src/core/services/image";
 import {specialImageTransform} from "@src/hacks";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {getPrices} from "@src/core/api/endpoints/prices";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -137,13 +137,7 @@ const Cart = function () {
         await executeBuy();
       } catch (error: any) {
         console.log('ERROR:: ', error)
-        if (error.data) {
-          toast.error(error.data.message);
-        } else if (error.message) {
-          toast.error(error.message);
-        } else {
-          toast.error('Unknown Error');
-        }
+        toast.error(parseErrorMessage(error));
       } finally {
         setExecutingBuy(false);
       }
@@ -159,7 +153,7 @@ const Cart = function () {
     }
   }
 
-  const NftLink = forwardRef<HTMLAnchorElement, AnchorProps & {name: string}>(({ onClick, href, name }, ref) => {
+  const NftLink = forwardRef<HTMLAnchorElement, any & {name: string}>(({ onClick, href, name }, ref) => {
     const closeAndGo = (event: any) => {
       setShowMenu(false);
       if (!!onClick) {

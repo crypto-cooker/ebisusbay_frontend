@@ -13,7 +13,6 @@ import SocialsBar from "@src/Components/Collection/SocialsBar";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {pushQueryString} from "@src/helpers/query";
 import {ethers} from "ethers";
-import {Badge} from "react-bootstrap";
 import {
   Avatar,
   Box,
@@ -30,6 +29,7 @@ import {
   MenuItem,
   MenuList,
   Spacer,
+  Tag,
   Text,
   useBreakpointValue,
   useMediaQuery,
@@ -208,7 +208,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                     </Wrap>
                     {isUserBlacklisted(address) && (
                       <Flex>
-                        <Badge bg="danger">Blacklisted</Badge>
+                        <Tag size='sm' colorScheme='red' variant='solid'>Blacklisted</Tag>
                       </Flex>
                     )}
                     <Text className={styles.bio}>{profile.bio}</Text>
@@ -252,7 +252,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                   <Heading>{username()}</Heading>
                   {isUserBlacklisted(address) && (
                     <Flex>
-                      <Badge bg="danger">Blacklisted</Badge>
+                      <Tag size='sm' colorScheme='red' variant='solid'>Blacklisted</Tag>
                     </Flex>
                   )}
                   <Text className={styles.bio}>{profile.bio}</Text>

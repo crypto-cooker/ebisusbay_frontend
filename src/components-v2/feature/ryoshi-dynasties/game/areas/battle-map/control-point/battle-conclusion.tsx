@@ -1,52 +1,16 @@
-
-import {useEffect, useRef, useState, useContext} from 'react';
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  Box,
-  Center,
-  Flex,
-  Heading,
-  HStack,
-  Image,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  Select,
-  Spacer,
-  Text,
-  useDisclosure,
-  VStack,
-  Avatar
-} from "@chakra-ui/react";
-import {getAuthSignerInStorage} from '@src/helpers/storage';
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
-import {attack, getBattleRewards, getFactionOwned, getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
-import {createSuccessfulTransactionToastContent} from '@src/utils';
+import {useEffect, useRef, useState} from 'react';
+import {Avatar, Box, Center, Flex, Heading, HStack, Spacer, Text, useDisclosure, VStack} from "@chakra-ui/react";
+import {getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
 import {useAppSelector} from "@src/Store/hooks";
 
 //contracts
-import {BigNumber, Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
-import {toast} from "react-toastify";
-import Battlefield from "@src/Contracts/Battlefield.json";
-import Resources from "@src/Contracts/Resources.json";
-import {io} from "socket.io-client";
 
 import localFont from 'next/font/local';
 import ImageService from "@src/core/services/image";
-import {RdControlPoint} from "@src/core/services/api-service/types";
-import {parseErrorMessage} from "@src/helpers/validator";
-import {
-  RyoshiDynastiesContext,
-  RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -73,7 +37,7 @@ const BattleConclusion = ({attackerTroops, defenderTroops, battleAttack, display
 
   const [battleRewards, setBattleRewards] = useState([]);
   const [battleRewardsClaimed, setBattleRewardsClaimed] = useState(false);
-  const [isLoading, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
 
   const battleOutcome = useRef<any>();
   const battleContext = useRef<any>();
@@ -161,20 +125,15 @@ const BattleConclusion = ({attackerTroops, defenderTroops, battleAttack, display
     if(defendersSlain>0) CheckForBattleRewards();
   }
   const CheckForBattleRewards = async () => {
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
+    try {
+      const signature = await requestSignature();
+      const data = await getBattleRewards(user.address?.toLowerCase(), signature);
+      setBattleRewards(data);
+    } catch (error) {
+      console.log(error)
     }
-    if (signatureInStorage) {
-      try {
-        const data = await getBattleRewards(user.address?.toLowerCase(), signatureInStorage);
-        setBattleRewards(data);
-      } catch (error) {
-        console.log(error)
-      }
   }
-  }
+
   const claimedRewards = () => {
     setBattleRewardsClaimed(true);
     onCloseClaimRewards();

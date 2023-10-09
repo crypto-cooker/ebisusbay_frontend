@@ -10,7 +10,7 @@ import useUpdate from '../hooks/useUpdate';
 import { useQuery } from "@tanstack/react-query";
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import Bio from './Bio';
+import Bio from '@src/components-v2/feature/account/collections/fields/bio';
 import Banner from './Banner';
 import Card from './Card';
 import Pfp from './Pfp';

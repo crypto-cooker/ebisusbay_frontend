@@ -71,7 +71,8 @@ const TransferDrawer = () => {
       const nftAddresses = reducedNfts.map((o) => o.address);
       const nftIds = reducedNfts.map((o) => o.id);
 
-      Sentry.captureEvent({ message: 'handleBatchTransfer', extra: { nftAddresses, nftIds } });
+      // Sentry.captureEvent({ message: 'handleBatchTransfer', extra: { nftAddresses, nftIds } });
+
       let tx = await user.contractService!.market.bulkTransfer(nftAddresses, nftIds, recipient);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));

@@ -1,5 +1,4 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
-import {Form} from "react-bootstrap";
 import {Contract} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
@@ -10,7 +9,11 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {ERC1155, ERC721} from "@src/Contracts/Abis";
 import {
+  Box,
   Button as ChakraButton,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
   HStack,
   Input,
   Modal,
@@ -19,7 +22,8 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, Spinner,
+  ModalOverlay,
+  Spinner,
   useNumberInput
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
@@ -96,7 +100,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
       }
 
       setExecutingTransferNft(true);
-      Sentry.captureEvent({message: 'handleTransfer', extra: {address: nftAddress, targetAddress}});
+      // Sentry.captureEvent({message: 'handleTransfer', extra: {address: nftAddress, targetAddress}});
 
       let tx;
       if (await is1155(nftAddress)) {
@@ -189,10 +193,10 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
                 </div>
                 <div className="col-12 col-sm-8 my-auto">
                   {nft.balance > 1 && (
-                    <Form.Group className="mb-3">
-                      <Form.Label className="formLabel">
+                    <FormControl className="mb-3" isInvalid={!!quantityError}>
+                      <FormLabel className="formLabel">
                         Quantity (up to {nft.balance})
-                      </Form.Label>
+                      </FormLabel>
                       <HStack>
                         <ChakraButton {...dec}>-</ChakraButton>
                         <Input {...input} />
@@ -201,34 +205,29 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
                           Max
                         </ChakraButton>
                       </HStack>
-                      <Form.Text className="field-description textError">
-                        {quantityError}
-                      </Form.Text>
-                    </Form.Group>
+                      <FormErrorMessage className="field-description textError">{quantityError}</FormErrorMessage>
+                    </FormControl>
                   )}
-                  <div className="mt-4 mt-sm-0 mb-3 mb-sm-0">
-                    <Form.Group className="form-field">
-                      <Form.Label className="formLabel w-100">
+                  <Box className="mt-4 mt-sm-0 mb-3 mb-sm-0">
+                    <FormControl className="form-field" isInvalid={!!fieldError}>
+                      <FormLabel w='full' className="formLabel">
                         Recipient Address or CNS Name
-                      </Form.Label>
-                      <Form.Control
-                        className="input"
+                      </FormLabel>
+                      <Input
                         type="text"
                         placeholder="Address or CNS name"
                         value={recipientAddress}
                         onChange={onChangeAddress}
                         disabled={showConfirmButton || executingTransferNft}
                       />
-                      <Form.Text className="field-description textError">
-                        {fieldError}
-                      </Form.Text>
-                    </Form.Group>
-                  </div>
+                      <FormErrorMessage className="field-description textError">{fieldError}</FormErrorMessage>
+                    </FormControl>
+                  </Box>
                 </div>
               </div>
             </ModalBody>
             <ModalFooter className="border-0">
-              <div className="w-100">
+              <Box w='full'>
                 {showConfirmButton ? (
                   <>
                     <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
@@ -273,7 +272,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
                     </div>
                   </>
                 )}
-              </div>
+              </Box>
             </ModalFooter>
           </>
         ) : (

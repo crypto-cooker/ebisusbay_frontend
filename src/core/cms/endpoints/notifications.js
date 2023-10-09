@@ -16,7 +16,7 @@ export const getNotifications = async (address, query) => {
   return response.data?.data;
 }
 
-export const deleteNotifications = async (notificationId = null, address, signature) => {
+export const deleteNotifications = async (notificationId, address, signature) => {
   const response = await api.delete('notification', {
     params: {
       notificationId,

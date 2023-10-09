@@ -2,19 +2,22 @@ import RyoshiPresale from "@src/core/services/api-service/graph/subgraphs/ryoshi
 import RyoshiDynasties from "@src/core/services/api-service/graph/subgraphs/ryoshi-dynasties";
 import {
   Erc20Account,
-  FortuneStakingAccount,
+  FortuneStakingAccount, PresaleVault,
   StakedToken,
-  StakingAccount
+  StakingAccount, VaultContract
 } from "@src/core/services/api-service/graph/types";
 import {StakedTokenType} from "@src/core/services/api-service/types";
+import Staking from "@src/core/services/api-service/graph/subgraphs/staking";
 
 class Graph {
   private ryoshiPresale;
   private ryoshiDynasties;
+  private staking;
 
   constructor(apiKey?: string) {
     this.ryoshiPresale = new RyoshiPresale();
     this.ryoshiDynasties = new RyoshiDynasties();
+    this.staking = new Staking();
   }
 
   async globalTotalPurchased() {
@@ -25,6 +28,16 @@ class Graph {
   async userTotalPurchased(address: string) {
     const result = await this.ryoshiPresale.userTotalPurchased(address);
     return result.data.accounts.length > 0 ? Number(result.data.accounts[0].balance) : 0;
+  }
+
+  async getPresaleVault(address: string) {
+    const presaleVaults = await this.ryoshiPresale.presaleVaults(address);
+    if (presaleVaults.data.presaleVaults.length < 1) return null;
+
+    // const vaultContracts = await this.ryoshiPresale.vaultContracts(presaleVaults.data[0].id);
+    // if (vaultContracts.data.length < 1) return null;
+
+    return presaleVaults.data.presaleVaults[0] as PresaleVault;
   }
 
   async getUserStakedFortune(address: string) {
@@ -45,6 +58,11 @@ class Graph {
   async getBankStakingAccount(address: string) {
     const result = await this.ryoshiDynasties.stakingAccounts(address);
     return result.data.stakingAccounts.length > 0 ? result.data.stakingAccounts[0] as StakingAccount : null;
+  }
+
+  async getStakedRyoshi(address: string) {
+    const result = await this.staking.getStakedRyoshi(address);
+    return result.data.account;
   }
 }
 

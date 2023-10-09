@@ -2,13 +2,13 @@ import { SortOption } from '../../Models/sort-option.model';
 
 const sort = [
   {
-    id: 'listingTime',
+    id: 'listingTime-desc',
     key: 'listingTime',
     direction: 'desc',
     label: 'Latest Listings',
   },
   {
-    id: 'expirationDate',
+    id: 'expirationDate-asc',
     key: 'expirationDate',
     direction: 'asc',
     label: 'Ending Soon',

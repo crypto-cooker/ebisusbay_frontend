@@ -1,5 +1,6 @@
 import {appConfig} from "@src/Config";
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import {PresaleVault, VaultContract} from "@src/core/services/api-service/graph/types";
 
 const config = appConfig();
 
@@ -49,6 +50,54 @@ class RyoshiPresale {
     `;
 
     return this.apollo.query({
+      query: gql(query),
+      variables: {
+        id: address.toLowerCase()
+      }
+    });
+  }
+
+  async presaleVaults(address: string) {
+    const query = `
+      query RyoshiPresaleVaults($id: String) {
+        presaleVaults(where: {beneficiary_: {id: $id}}) {
+          startTime
+          releasedBalance
+          initalBalance
+          id
+          endTime
+          duration
+          currentBalance
+          address
+          beneficiary {
+            id
+            balance
+          }
+        }
+      }
+    `;
+
+    return this.apollo.query({
+      query: gql(query),
+      variables: {
+        id: address.toLowerCase()
+      }
+    });
+  }
+
+  async vaultContracts(address: string) {
+    const query = `
+      query RyoshiPresale ($id: String) {
+        vaultContracts(where: {id: $id}) {
+          startTime
+          id
+          duration
+          cutoff
+        }
+      }
+    `;
+
+    return this.apollo.query<VaultContract[]>({
       query: gql(query),
       variables: {
         id: address.toLowerCase()

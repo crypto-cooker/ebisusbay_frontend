@@ -1,23 +1,24 @@
-import {Box, Flex, Spacer, Text, Progress, HStack, Tag, Image, SimpleGrid, Center,
+import {
   Accordion,
   AccordionButton,
   AccordionItem,
   AccordionPanel,
-  useMediaQuery,
+  Box,
+  Divider,
+  Flex,
   NumberInput,
   NumberInputField,
-  VStack,
-  Divider,
   Select,
-  Input
+  Spacer,
+  Text,
+  useMediaQuery,
+  VStack
 } from "@chakra-ui/react";
 import {useAppSelector} from "@src/Store/hooks";
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 import {appConfig} from "@src/Config";
-import { RdButton } from "../../../components";
-import { Dropdown } from "react-bootstrap";
-import { NavigationEvents } from "swiper/types";
+import {RdButton} from "../../../components";
 
 const config = appConfig();
 

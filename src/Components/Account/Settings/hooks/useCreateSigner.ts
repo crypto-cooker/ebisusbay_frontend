@@ -1,13 +1,11 @@
 import {useCallback, useState} from 'react';
-import {useDispatch} from 'react-redux';
-
-import {setAuthSignerInStorage} from '@src/helpers/storage';
-import {setAuthSigner} from '@src/GlobalState/User';
 import {useAppSelector} from "@src/Store/hooks";
 import {JsonRpcProvider} from "@ethersproject/providers";
 import * as Sentry from '@sentry/react';
+import {useAtom} from "jotai/index";
+import {storageSignerAtom} from "@src/jotai/atoms/storage";
 
-const message = (address: string) => {
+export const signinMessage = (address: string) => {
   return "Welcome to Ebisu's Bay!\n\n" +
     "Click to sign in and accept the Ebisu's Bay Terms of Service: https://app.ebisusbay.com/terms-of-service.html\n\n" +
     "This request will not trigger a blockchain transaction or cost any gas fees.\n\n" +
@@ -22,9 +20,8 @@ type SignerProps = {
 
 const useSignature = () => {
   const user = useAppSelector((state) => state.user);
-  const signer: SignerProps | null = user.authSignature;
+  const [getSignatureInStorage, setSignatureInStorage] = useAtom(storageSignerAtom);
 
-  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
   const signMessage = useCallback(
@@ -43,12 +40,12 @@ const useSignature = () => {
     [user.provider]
   );
 
-  const createSigner = useCallback(async () => {
+  const createSigner = async () => {
     setIsLoading(true);
     const address = user.address!;
 
     try {
-      const signature = await signMessage(message(address));
+      const signature = await signMessage(signinMessage(address));
       const date = new Date();
       const signer: SignerProps = {
         date,
@@ -56,8 +53,7 @@ const useSignature = () => {
         address,
       };
 
-      dispatch(setAuthSigner(signer));
-      setAuthSignerInStorage(signer);
+      setSignatureInStorage(signer);
       setIsLoading(false);
 
       return [signature, address];
@@ -68,21 +64,21 @@ const useSignature = () => {
     setIsLoading(false);
 
     return [null, address];
-  }, [signMessage]);
+  };
 
-  const getSigner = useCallback(async () => {
+  const getSigner = async () => {
     let signature: string | null = null;
     let address: string | null = null;
 
-    if (signer) {
-      signature = (signer as SignerProps).signature;
-      address = (signer as SignerProps).address;
+    if (getSignatureInStorage && !!getSignatureInStorage.signature) {
+      signature = getSignatureInStorage.signature;
+      address = getSignatureInStorage.address;
     } else {
       [signature, address] = await createSigner();
     }
 
     return { signature, address };
-  }, [signer, user]);
+  };
 
   return [isLoading, getSigner] as const;
 };

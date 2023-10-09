@@ -13,10 +13,8 @@ import {
   timeSince,
   usdFormat
 } from '@src/utils';
-import {Card} from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
-import {listingUpdated} from '@src/GlobalState/listingSlice';
 import {listingState} from '@src/core/api/enums';
 import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
 import Button from "@src/Components/components/Button";
@@ -27,6 +25,8 @@ import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useC
 
 import {
   Box,
+  Card,
+  CardBody,
   Flex,
   Heading,
   Spinner,
@@ -48,6 +48,7 @@ import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {commify} from "ethers/lib/utils";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 
@@ -113,25 +114,9 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     if (user.address) {
       try {
         const receipt = await fn((user.contractService! as ContractService).market);
-        dispatch(
-          listingUpdated({
-            listing: {
-              ...listing,
-              state: 1,
-              purchaser: user.address,
-            },
-          })
-        );
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       } catch (error: any) {
-        if (error.data) {
-          toast.error(error.data.message);
-        } else if (error.message) {
-          toast.error(error.message);
-        } else {
-          console.log(error);
-          toast.error('Unknown Error');
-        }
+        toast.error(parseErrorMessage(error));
       }
     } else {
       if (user.needsOnboard) {
@@ -223,12 +208,12 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
 
 
   return (
-    <div className="price-action-bar">
-      <Card className="mb-4 border-1 shadow pab-card">
-        <Card.Body>
-          <div id={`lid-${listing?.listingId}`}>
+    <Box className="price-action-bar">
+      <Card mb={4} border='1px solid' shadow='lg' className=" pab-card">
+        <CardBody>
+          <Box id={`lid-${listing?.listingId}`}>
             <Flex direction="column" justify="space-between">
-              <div className={`my-auto`}>
+              <Box my='auto'>
                 <>
                   <Flex justify="space-between">
                     <Heading size="sm">{label ?? 'Listing Price'}:</Heading>
@@ -259,9 +244,9 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                     )}
                   </span>
                 </>
-              </div>
+              </Box>
             </Flex>
-          </div>
+          </Box>
 
           <div className="d-flex">
             {isOwner ? (
@@ -314,7 +299,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
               </>
             )}
           </div>
-        </Card.Body>
+        </CardBody>
       </Card>
       {isSellDialogOpen && (
         <CreateListingDialog
@@ -334,7 +319,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
       {/*<div className='nftSaleForm'>*/}
       {/*  <Modal isCentered title={'This is an unverified collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose} />*/}
       {/*</div>*/}
-    </div>
+    </Box>
   );
 };
 export default PriceActionBar;

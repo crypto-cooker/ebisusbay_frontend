@@ -7,13 +7,11 @@ import createSentryMiddleware from 'redux-sentry-middleware';
 import { memberships } from '../GlobalState/Memberships';
 import marketplaceReducer from '../GlobalState/marketplaceSlice';
 import auctionsReducer from '../GlobalState/auctionsSlice';
-import listingReducer from '../GlobalState/listingSlice';
 import auctionReducer from '../GlobalState/auctionSlice';
 import metaverseReducer from '../GlobalState/metaverseSlice';
 import nftReducer from '../GlobalState/nftSlice';
 import collectionsReducer from '../GlobalState/collectionsSlice';
 import { appInitializeStateReducer } from '../GlobalState/InitSlice';
-import offerReducer from '../GlobalState/offerSlice';
 import leaderBoardReducer from '../GlobalState/leaderBoardSlice';
 import cartReducer from '../GlobalState/cartSlice';
 import batchListingReducer from '../GlobalState/user-batch';
@@ -24,13 +22,11 @@ const rootReducer = combineReducers({
   memberships: memberships,
   marketplace: marketplaceReducer,
   auctions: auctionsReducer,
-  listing: listingReducer,
   auction: auctionReducer,
   nft: nftReducer,
   user: user,
   appInitialize: appInitializeStateReducer,
   collections: collectionsReducer,
-  offer: offerReducer,
   metaverse: metaverseReducer,
   leaderBoard: leaderBoardReducer,
   cart: cartReducer,

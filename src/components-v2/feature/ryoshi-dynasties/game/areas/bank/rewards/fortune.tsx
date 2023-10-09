@@ -1,8 +1,6 @@
 import {useAppSelector} from "@src/Store/hooks";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
 import {
   Accordion,
   AccordionButton,
@@ -43,6 +41,8 @@ import {ethers} from "ethers";
 import {commify} from "ethers/lib/utils";
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
 import moment from 'moment';
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 
@@ -94,7 +94,7 @@ const FortuneRewardsTab = () => {
       <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' mt={4}>
         <Box textAlign='center'>
           Fortune rewards accumulate from Fortune staking, marketplace listings, and from playing the game and can be withdrawn at any time.
-          However, only withdrawing at the end of a season will allow you to claim the full amount of rewards.
+          Compound to an existing vault to multiply your rewards!
         </Box>
         {status === "loading" ? (
           <Center py={4}>
@@ -125,7 +125,6 @@ const FortuneRewardsTab = () => {
 const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: number, onRefresh: () => void}) => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
-  const [_, getSigner] = useCreateSigner();
   const [executingClaim, setExecutingClaim] = useState(false);
   const [executingCompound, setExecutingCompound] = useState(false);
   const [executingCancelCompound, setExecutingCancelCompound] = useState(false);
@@ -135,6 +134,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 
   const isCurrentSeason = rdGameContext?.season.blockId === reward.blockId;
   const queryClient = useQueryClient();
+  const {requestSignature} = useEnforceSignature();
 
   const handleClaim = async (amountAsString: string, seasonId: number, force = false) => {
     try {
@@ -142,56 +142,51 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       onCloseConfirmation();
       const flooredAmount = Math.floor(Number(amountAsString));
 
-      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
+      const signature = await requestSignature();
+      const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signature);
+      const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+      const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+      const mustCancelClaim = !!pendingClaim && pendingClaim.seasonId !== seasonId;
+
+      if (!force && (pendingCompound || mustCancelClaim)) {
+        setExistingAuthWarningOpenWithProps({
+          type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
+          onCancel: async () => {
+            if (pendingClaim) await handleCancelClaim(pendingClaim.seasonId);
+            else await handleCancelCompound(Number(pendingCompound.vaultIndex), pendingCompound.seasonId);
+          },
+          onCancelComplete: () => {
+            setExistingAuthWarningOpenWithProps(false);
+            handleClaim(amountAsString, seasonId, true);
+          }
+        });
+        return;
       }
-      if (signatureInStorage) {
-        const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signatureInStorage);
-        const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
-        const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
-        const mustCancelClaim = !!pendingClaim && pendingClaim.seasonId !== seasonId;
 
-        if (!force && (pendingCompound || mustCancelClaim)) {
-          setExistingAuthWarningOpenWithProps({
-            type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
-            onCancel: async () => {
-              if (pendingClaim) await handleCancelClaim(pendingClaim.seasonId);
-              else await handleCancelCompound(Number(pendingCompound.vaultIndex), pendingCompound.seasonId);
-            },
-            onCancelComplete: () => {
-              setExistingAuthWarningOpenWithProps(false);
-              handleClaim(amountAsString, seasonId, true);
-            }
-          });
-          return;
-        }
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signature)
+      const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+      await tx.wait();
 
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signatureInStorage)
-        const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
-        await tx.wait();
-
-        queryClient.setQueryData(
-          ['BankSeasonalRewards', user.address],
-          (oldData: any) => {
-            return {
-              ...oldData,
-              data: {
-                ...oldData.data,
-                rewards: {
-                  ...oldData.data.rewards,
-                  currentRewards: '0'
-                }
+      queryClient.setQueryData(
+        ['BankSeasonalRewards', user.address],
+        (oldData: any) => {
+          return {
+            ...oldData,
+            data: {
+              ...oldData.data,
+              rewards: {
+                ...oldData.data.rewards,
+                currentRewards: '0'
               }
             }
           }
-        );
+        }
+      );
 
-        toast.success('Withdraw success!');
-      }
+      toast.success('Withdraw success!');
     } catch (e) {
       console.log(e);
+      toast.error(parseErrorMessage(e));
     } finally {
       setExecutingClaim(false);
     }
@@ -202,17 +197,11 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       setExecutingClaim(true);
       const flooredAmount = Math.floor(Number(reward.currentRewards));
 
-      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
-      }
-      if (signatureInStorage) {
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signatureInStorage)
-        const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
-        await tx.wait();
-        toast.success('Previous request cancelled');
-      }
+      const signature = await requestSignature();
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signature)
+      const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+      await tx.wait();
+      toast.success('Previous request cancelled');
     }
     // catch (e) {
     //   console.log(e);
@@ -227,57 +216,52 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       setExecutingCompound(true);
       const flooredAmount = convertToNumberAndRoundDown(reward.currentRewards);
 
-      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
+      const signature = await requestSignature();
+      const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signature);
+      const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+      const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
+      const mustCancelCompound = !!pendingCompound && Number(pendingCompound.vaultIndex) !== Number(vault.index);
+
+      if (!force && (pendingClaim || mustCancelCompound)) {
+        setExistingAuthWarningOpenWithProps({
+          type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
+          onCancel: async () => {
+            if (pendingClaim) await handleCancelClaim(pendingClaim.seasonId);
+            else await handleCancelCompound(vault.index, pendingCompound.seasonId);
+          },
+          onCancelComplete: () => {
+            setExistingAuthWarningOpenWithProps(false);
+            handleCompound(vault, seasonId, true);
+          }
+        });
+        return;
       }
-      if (signatureInStorage) {
-        const pendingAuths = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signatureInStorage);
-        const pendingCompound = pendingAuths.rewards.find((auth: any) => auth.type === 'COMPOUND' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
-        const pendingClaim = pendingAuths.rewards.find((auth: any) => auth.type === 'WITHDRAWAL' && moment().diff(moment(auth.timestamp), 'minutes') < 5);
-        const mustCancelCompound = !!pendingCompound && Number(pendingCompound.vaultIndex) !== Number(vault.index);
 
-        if (!force && (pendingClaim || mustCancelCompound)) {
-          setExistingAuthWarningOpenWithProps({
-            type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
-            onCancel: async () => {
-              if (pendingClaim) await handleCancelClaim(pendingClaim.seasonId);
-              else await handleCancelCompound(vault.index, pendingCompound.seasonId);
-            },
-            onCancelComplete: () => {
-              setExistingAuthWarningOpenWithProps(false);
-              handleCompound(vault, seasonId, true);
-            }
-          });
-          return;
-        }
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vault.index, signature)
 
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vault.index, signatureInStorage)
+      const tx = await user.contractService?.ryoshiPlatformRewards.compound(auth.data.reward, auth.data.signature);
+      await tx.wait();
 
-        const tx = await user.contractService?.ryoshiPlatformRewards.compound(auth.data.reward, auth.data.signature);
-        await tx.wait();
-
-        queryClient.setQueryData(
-          ['BankSeasonalRewards', user.address],
-        (oldData: any) => {
-            return {
-              ...oldData,
-              data: {
-                ...oldData.data,
-                rewards: {
-                  ...oldData.data.rewards,
-                  currentRewards: '0'
-                }
+      queryClient.setQueryData(
+        ['BankSeasonalRewards', user.address],
+      (oldData: any) => {
+          return {
+            ...oldData,
+            data: {
+              ...oldData.data,
+              rewards: {
+                ...oldData.data.rewards,
+                currentRewards: '0'
               }
             }
           }
-        );
+        }
+      );
 
-        toast.success('Compound complete!');
-      }
+      toast.success('Compound complete!');
     } catch (e) {
       console.log(e);
+      toast.error(parseErrorMessage(e));
     } finally {
       setExecutingCompound(false);
     }
@@ -288,17 +272,11 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       setExecutingCancelCompound(true);
       const flooredAmount = convertToNumberAndRoundDown(reward.currentRewards);
 
-      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
-      }
-      if (signatureInStorage) {
-        const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vaultIndex, signatureInStorage)
-        const tx = await user.contractService?.ryoshiPlatformRewards.cancelCompound(auth.data.reward, auth.data.signature);
-        await tx.wait();
-        toast.success('Previous request cancelled');
-      }
+      const signature = await requestSignature();
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vaultIndex, signature)
+      const tx = await user.contractService?.ryoshiPlatformRewards.cancelCompound(auth.data.reward, auth.data.signature);
+      await tx.wait();
+      toast.success('Previous request cancelled');
     }
     // catch (e) {
     //   console.log(e);
@@ -407,7 +385,7 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
   return (
     <Accordion index={isExpanded ? [0] : undefined} allowToggle>
       <AccordionItem style={{borderWidth:'0'}}>
-        <Flex justify='space-between' mt={2}>
+        <Flex justify='space-between' mt={2} direction={{base: 'column', md: 'row'}}>
           <VStack align='start' spacing={0}>
             <Text fontSize='xl' fontWeight='bold'>
               Current Rewards
@@ -421,12 +399,22 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
               <Text fontSize='sm' color='#aaa'>{round(reward.aprRewards, 3)} staking + {round(reward.listingRewards, 3)} listing rewards</Text>
             )}
           </VStack>
-          <Flex direction='column'>
+          <Flex direction='column' mt={{base: 2, md: 0}}>
             <Spacer />
             <Stack direction={{base: 'column', sm: 'row'}}>
+              <RdButton
+                size='sm'
+                w='full'
+                onClick={onClaim}
+                isLoading={isExecutingClaim}
+                loadingText='Claiming...'
+              >
+                Claim
+              </RdButton>
               {!isExecutingClaim && (
                 <AccordionButton w='full' p={0}>
                   <RdButton
+                    w='full'
                     size='sm'
                     onClick={handleExpandCompound}
                   >
@@ -434,18 +422,6 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
                   </RdButton>
                 </AccordionButton>
               )}
-              <Flex direction='column'>
-                <Spacer />
-                <RdButton
-                  size='sm'
-                  onClick={onClaim}
-                  isLoading={isExecutingClaim}
-                  loadingText='Claiming...'
-                >
-                  Claim
-                </RdButton>
-                <Spacer />
-              </Flex>
             </Stack>
             <Spacer />
           </Flex>
@@ -454,7 +430,7 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
           {!!account && account.vaults.length > 0 ? (
             <>
               <Box mb={2}>
-                <Box fontWeight='bold'>Compound to Vault Vaults</Box>
+                <Box fontWeight='bold'>Compound to Vault</Box>
                 <Box fontSize='sm' color="#aaa">Only vaults that expire later than 90 days are eligible for compounding and will cost zero Karmic Debt</Box>
               </Box>
               {noFeeCompoundVaults.length > 0 ? (
@@ -538,7 +514,6 @@ interface VaultIndexWarningDialogProps {
 
 const PendingAuthorizationWarningDialog = ({isOpen, onClose, onExecuteCancel, onCancelComplete, type}: VaultIndexWarningDialogProps) => {
   const [executingCancel, setExecutingCancel] = useState(false);
-  const [_, getSigner] = useCreateSigner();
 
   const handleExecuteCancel = async () => {
     try {

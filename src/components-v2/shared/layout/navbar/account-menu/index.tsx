@@ -22,8 +22,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {toast} from 'react-toastify';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import {Modal, ModalTitle} from 'react-bootstrap';
-import styled from 'styled-components';
 import {ethers} from 'ethers';
 import {round, shortAddress, useInterval} from '@src/utils';
 import styles from './accountmenu.module.scss';
@@ -32,7 +30,6 @@ import {
   AccountMenuActions,
   balanceUpdated,
   chainConnect,
-  checkForOutstandingOffers,
   connectAccount,
   onLogout,
   setShowWrongChainModal,
@@ -46,6 +43,7 @@ import {useWindowSize} from "@src/hooks/useWindowSize";
 import Button from "@src/Components/components/Button";
 import {
   Box,
+  ButtonGroup,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -53,6 +51,13 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Heading,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   SimpleGrid,
   Spinner,
   Text,
@@ -67,19 +72,10 @@ import CronosIconFlat from "@src/components-v2/shared/icons/cronos";
 import {useAppSelector} from "@src/Store/hooks";
 import GdcClaimConfirmation from "@src/components-v2/shared/dialogs/gdc-claim-confirmation";
 import ImageService from "@src/core/services/image";
-import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-
-const StyledModal = styled(Modal)`
-  .modal-content {
-    background: ${({ theme }) => theme.colors.bgColor1};
-  }
-`;
-
-const StyledModalTitle = styled(ModalTitle)`
-  color: ${({ theme }) => theme.colors.textColor3};
-`;
+import {getTheme} from "@src/Theme/theme";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -122,8 +118,6 @@ const Index = function () {
   const needsOnboard = useAppSelector((state) => {
     return state.user.needsOnboard;
   });
-  const collectionsStats = useAppSelector((state) => state.collections.collections);
-  const myNFTs = useAppSelector((state) => state.offer.myNFTs);
 
   const { data: balance } = useQuery(['getBalance', walletAddress, 'latest'], async () =>
     await readProvider.getBalance(walletAddress!),
@@ -188,13 +182,6 @@ const Index = function () {
     }
     // eslint-disable-next-line
   }, [walletAddress]);
-
-  useEffect(() => {
-    if (collectionsStats && collectionsStats.length > 0 && myNFTs && myNFTs.length > 0) {
-      dispatch(checkForOutstandingOffers());
-    }
-    // eslint-disable-next-line
-  }, [collectionsStats, myNFTs]);
 
   const connectWalletPressed = async () => {
     if (needsOnboard) {
@@ -311,26 +298,29 @@ const Index = function () {
         </Box>
       )}
 
-      <StyledModal show={user.showWrongChainModal} onHide={onWrongChainModalClose}>
-        <Modal.Header closeButton>
-          <StyledModalTitle>Wrong network!</StyledModalTitle>
-        </Modal.Header>
-        <Modal.Body>
-          To continue, you need to switch the network to{' '}
-          <span style={{ fontWeight: 'bold' }}>{appConfig('chain.name')}</span>.{' '}
-        </Modal.Body>
-        <Modal.Footer>
-          <button className="p-4 pt-2 pb-2 btn_menu inline white lead" onClick={onWrongChainModalClose}>
-            Close
-          </button>
-          <button
-            className="p-4 pt-2 pb-2 btn_menu inline white lead btn-outline"
-            onClick={onWrongChainModalChangeChain}
-          >
-            Switch
-          </button>
-        </Modal.Footer>
-      </StyledModal>
+      <Modal onClose={onWrongChainModalClose} isOpen={user.showWrongChainModal}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader className="text-center">
+            Wrong network
+          </ModalHeader>
+          <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
+          <ModalBody>
+            To continue, you need to switch the network to{' '}
+            <span style={{ fontWeight: 'bold' }}>{appConfig('chain.name')}</span>.{' '}
+          </ModalBody>
+          <ModalFooter>
+            <ButtonGroup>
+              <SecondaryButton onClick={onWrongChainModalClose}>
+                Close
+              </SecondaryButton>
+              <PrimaryButton onClick={onWrongChainModalChangeChain}>
+                Switch
+              </PrimaryButton>
+            </ButtonGroup>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
 
       {walletAddress && correctChain && (
         <Drawer

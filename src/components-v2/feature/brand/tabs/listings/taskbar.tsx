@@ -11,6 +11,7 @@ import {
   Flex,
   Grid,
   GridItem,
+  Input,
   Radio,
   RadioGroup,
   useBreakpointValue,
@@ -25,7 +26,6 @@ import {sortOptions} from "@src/Components/components/constants/sort-options";
 import Button from "@src/Components/components/Button";
 import {useAppSelector} from "@src/Store/hooks";
 import useDebounce from "@src/core/hooks/useDebounce";
-import {Form} from "react-bootstrap";
 import {SortOption} from "@src/Components/Models/sort-option.model";
 import {getTheme} from "@src/Theme/theme";
 import Select from "react-select";
@@ -215,7 +215,7 @@ export const SearchBar = ({onSearch}: SearchBarProps) => {
   }, [debouncedSearch]);
 
   return (
-    <Form.Control
+    <Input
       id="collection-search"
       type="text"
       placeholder="Search by name"

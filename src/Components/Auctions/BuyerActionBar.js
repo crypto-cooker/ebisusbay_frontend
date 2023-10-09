@@ -1,20 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {constants, Contract, ethers} from 'ethers';
-import {Card, Form} from 'react-bootstrap';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import {toast} from 'react-toastify';
 import Countdown from 'react-countdown';
 
 import AuctionContract from '../../Contracts/DegenAuction.json';
 import {caseInsensitiveCompare, createSuccessfulTransactionToastContent, devLog, isEventValidNumber} from '../../utils';
-import {auctionState} from '../../core/api/enums';
-import {getAuctionDetails, updateAuctionFromBidEvent} from '../../GlobalState/auctionSlice';
-import {chainConnect, connectAccount} from '../../GlobalState/User';
-import {ERC20} from "../../Contracts/Abis";
+import {auctionState} from '@src/core/api/enums';
+import {getAuctionDetails, updateAuctionFromBidEvent} from '@src/GlobalState/auctionSlice';
+import {chainConnect, connectAccount} from '@src/GlobalState/User';
+import {ERC20} from "@src/Contracts/Abis";
 import Button from "../components/Button";
-import {appConfig} from "../../Config";
-import {Spinner} from "@chakra-ui/react";
+import {appConfig} from "@src/Config";
+import {Card, CardBody, CardFooter, Input, Spinner} from "@chakra-ui/react";
 
 const config = appConfig();
 
@@ -356,7 +355,7 @@ const BuyerActionBar = () => {
             Ends in: <Countdown date={listing.getEndAt} />
           </div>
         )}
-        <Card.Body>
+        <CardBody>
           <div>
             <div className="my-auto fw-bold">
               {listing.state === auctionState.NOT_STARTED && (
@@ -445,16 +444,16 @@ const BuyerActionBar = () => {
               </>
             )}
           </div>
-        </Card.Body>
+        </CardBody>
         {user.address &&
           !isAuctionOwner &&
           !awaitingAcceptance &&
           ![auctionState.SOLD, auctionState.CANCELLED].includes(listing.state) && (
-            <Card.Footer className="text-center mx-auto border-0 bg-transparent">
+            <CardFooter className="text-center mx-auto border-0 bg-transparent">
               <div className="row auction-box-footer" style={{ fontSize: '12px' }}>
                 Available MAD to spend: {tokenBalance ?? 0} MAD
               </div>
-            </Card.Footer>
+            </CardFooter>
           )}
       </Card>
 
@@ -471,9 +470,8 @@ const BuyerActionBar = () => {
             <div className="heading mt-3">
               <p>Your bid (MAD)</p>
               <div className="subtotal">
-                <Form.Control
+                <Input
                   className="mb-0"
-                  type="text"
                   placeholder="Enter Bid"
                   onChange={handleChangeBidAmount}
                   onKeyDown={(e) => {
@@ -527,8 +525,7 @@ const BuyerActionBar = () => {
             <div className="heading mt-3">
               <p>Increase Bid By (MAD)</p>
               <div className="subtotal">
-                <Form.Control
-                  type="text"
+                <Input
                   placeholder="Enter Bid"
                   onChange={handleChangeRebidAmount}
                   onKeyDown={(e) => {

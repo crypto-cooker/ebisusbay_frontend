@@ -1,8 +1,6 @@
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {Box, HStack, Image, SimpleGrid, Text} from "@chakra-ui/react";
 import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
 import {useContext, useEffect, useState} from "react";
@@ -21,6 +19,8 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {parseErrorMessage} from "@src/helpers/validator";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
 
 const config = appConfig();
 
@@ -33,7 +33,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const dispatch = useDispatch();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector(state => state.user);
-  const [_, getSigner] = useCreateSigner();
+
   const [streak, setStreak] = useState(0);
   const [streakIndex, setStreakIndex] = useState(0);
   const [nextClaim, setNextClaim] = useState("");
@@ -42,38 +42,37 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const [executingClaim, setExecutingClaim] = useState(false);
 
   const [runAuthedFunction] = useAuthedFunction();
+  const {isSignedIn, signin, requestSignature} = useEnforceSigner();
 
   const authCheckBeforeClaim = async () => {
     await runAuthedFunction(claimDailyRewards);
   };
 
+  const handleSignin = async () => {
+    await signin();
+  }
+
   const claimDailyRewards = async () => {
     if (!user.address) return;
       try {
         setExecutingClaim(true);
-        let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-        if (!signatureInStorage) {
-          const { signature } = await getSigner();
-          signatureInStorage = signature;
-        }
-        if (signatureInStorage) {
-          const authorization = await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signatureInStorage);
+        const signature = await requestSignature();
+        const authorization = await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signature);
 
-          const sig = authorization.data.signature;
-          const mintRequest = JSON.parse(authorization.data.metadata);
+        const sig = authorization.data.signature;
+        const mintRequest = JSON.parse(authorization.data.metadata);
 
-          // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
-          const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-          // console.log('===request', mintRequest, sig, authorization);
-          const tx = await resourcesContract.mintWithSig(mintRequest, sig);
+        // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
+        const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
+        // console.log('===request', mintRequest, sig, authorization);
+        const tx = await resourcesContract.mintWithSig(mintRequest, sig);
 
-          const receipt = await tx.wait();
-          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-          setCanClaim(false);
-          setNextClaim('in 24 hours');
-          rdContext.refreshUser();
-          forceRefresh();
-        }
+        const receipt = await tx.wait();
+        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        setCanClaim(false);
+        setNextClaim('in 24 hours');
+        rdContext.refreshUser();
+        forceRefresh();
       } catch (error: any) {
         console.log(error);
         toast.error(parseErrorMessage(error));
@@ -115,7 +114,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
           moment(new Date(date)).format("MMM") + " "+ date.getDate()+ " " + date.getFullYear());
       }
     }
-  }, [user.address, isOpen, rdContext.user])
+  }, [user.address, isOpen, rdContext.user, isSignedIn])
 
   return (
     <RdModal
@@ -127,7 +126,10 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
         <Text align='center'>
           Earn Koban by checking in daily. Multiply your rewards by claiming multiple days in a row!
         </Text>
-        {!!user.address ? (
+        <AuthenticationRdButton
+          connectText='Connect and sign in to claim your daily reward'
+          signinText='Sign in to claim your daily reward'
+        >
           <>
             <SimpleGrid columns={{base: 4, sm: rdContext.config.rewards.daily.length}} gap={1} padding={2} my={4}>
               {rdContext.config.rewards.daily.map((reward, index) => (
@@ -168,11 +170,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
               </Box>
             )}
           </>
-        ) : (
-          <Box textAlign='center' mt={4}>
-            <RdButton onClick={connectWalletPressed}>Connect Wallet</RdButton>
-          </Box>
-        )}
+        </AuthenticationRdButton>
       </Box>
     </RdModal>
   )

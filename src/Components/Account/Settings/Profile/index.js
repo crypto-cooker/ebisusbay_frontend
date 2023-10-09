@@ -12,12 +12,13 @@ import useUpdateSettings from '../hooks/useUpdateSettings';
 import useResendEmailVerification from '../hooks/useResendEmailVerification'
 
 import Banner from './Banner';
-import Bio from './Bio';
+import Bio from '@src/components-v2/feature/account/settings/fields/bio';
 import Form from './Form';
 import Pfp from './Pfp';
 import useGetSettings from '../hooks/useGetSettings';
 import {Flex} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {parseErrorMessage} from "@src/helpers/validator";
 import {getCroidInfo} from "@src/helpers/croid";
 
 export default function EditProfile() {
@@ -163,12 +164,11 @@ export default function EditProfile() {
 
   const onSubmit = async (values) => {
     try {
-
       const response = settings?.data?.walletAddress
         ? await requestUpdateSettings(user.address, values)
         : await requestNewSettings(user.address, values);
-      if (!response || response?.message?.error) {
-        toast.error('Something went wrong!');
+      if (response?.message?.error) {
+        toast.error(parseErrorMessage(response.message.error));
       } else {
         toast.success('Your profile was saved successfully');
         updateProfileSettings();

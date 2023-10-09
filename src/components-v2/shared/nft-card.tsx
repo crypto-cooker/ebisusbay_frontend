@@ -14,11 +14,12 @@ import {
   isNftBlacklisted,
   round,
   siPrefixedNumber,
-  timeSince
+  timeSince,
+  isLandDeedsCollection
 } from '@src/utils';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
-import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
+import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard, Center, useBreakpointValue} from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faBoltLightning,
@@ -47,6 +48,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
@@ -81,6 +83,11 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { onCopy } = useClipboard(nftUrl.toString());
+
+  const izanamiImageSize = useBreakpointValue(
+    {base: 250, sm: 368, lg: 456},
+    {fallback: 'md'}
+  )
 
   const getListing = (): any => {
     if (nft.market?.price) {
@@ -217,6 +224,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                       usePlaceholder={true}
                     />
                   </Watermarked>
+                ) : isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
+                  <RdLand nftId={nft.id ?? nft.nftId} boxSize={izanamiImageSize ?? 368} />
                 ) : (
                   <AnyMedia
                     image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}

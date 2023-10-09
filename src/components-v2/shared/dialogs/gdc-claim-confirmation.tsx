@@ -4,7 +4,6 @@ import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import {getTheme} from "@src/Theme/theme";
 import {
-  Center,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -17,11 +16,9 @@ import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
 import {useAppSelector} from "@src/Store/hooks";
 import GdcClaimSuccess from "@src/components-v2/shared/dialogs/gdc-claim-success";
-import axios from "axios";
-import {getAuthSignerInStorage} from "@src/helpers/storage";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import Cms from "@src/core/services/api-service/cms";
 import {parseErrorMessage} from "@src/helpers/validator";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -36,27 +33,20 @@ export default function GdcClaimConfirmation({ onClose, isOpen}: GdcClaimConfirm
   const [executingClaim, setExecutingClaim] = useState(false);
 
   const user = useAppSelector((state) => state.user);
-  const [isLoadingSigner, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
 
   const [isComplete, setIsComplete] = useState(false);
   const [tx, setTx] = useState<ContractReceipt>();
 
   const handleExecuteClaim = async () => {
     try {
-      setExecutingClaim(true);
-      let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-      if (!signatureInStorage) {
-        const { signature } = await getSigner();
-        signatureInStorage = signature;
-      }
-      if (signatureInStorage) {
-        const service = new Cms();
-        const serverSig = await service.getGdcClaimSignature((user.profile as any).email, user.address!, signatureInStorage);
+      const signature = await requestSignature();
+      const service = new Cms();
+      const serverSig = await service.getGdcClaimSignature((user.profile as any).email, user.address!, signature);
 
-        const tx = await user.contractService!.gdc.mint((user.profile as any).email, serverSig.data);
-        const receipt = await tx.wait();
-        setTx(receipt);
-      }
+      const tx = await user.contractService!.gdc.mint((user.profile as any).email, serverSig.data);
+      const receipt = await tx.wait();
+      setTx(receipt);
       setIsComplete(true);
     } catch (error: any) {
       toast.error(parseErrorMessage(error));

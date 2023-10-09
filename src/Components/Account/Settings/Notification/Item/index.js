@@ -1,10 +1,10 @@
-import { Form } from 'react-bootstrap';
+import {Switch} from "@chakra-ui/react";
 
 export default function NotificationItem({ title, description, isChecked, onChange }) {
   return (
     <div className="d-flex">
       <div className="my-auto me-2">
-        <Form.Switch checked={isChecked} onClick={(e) => onChange(e.target.checked)}/>
+        <Switch isChecked={isChecked} onChange={(e) => onChange(e.target.checked)}/>
       </div>
       <div>
         <div className="fs-4 fw-bold">{title}</div>

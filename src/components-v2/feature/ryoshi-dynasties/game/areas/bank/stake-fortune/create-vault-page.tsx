@@ -16,6 +16,7 @@ import {
   SimpleGrid,
   Spacer,
   Spinner,
+  Stack,
   Text,
   VStack
 } from "@chakra-ui/react";
@@ -70,6 +71,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
 
   const [newApr, setNewApr] = useState(0);
   const [newTroops, setNewTroops] = useState(0);
+  const [newMitama, setNewMitama] = useState(0);
 
 
   const handleChangeFortuneAmount = (valueAsString: string, valueAsNumber: number) => {
@@ -184,9 +186,11 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
     setNewApr(availableAprs[aprKey] ?? availableAprs[1]);
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    let newTroops = Math.floor(((fortuneToStake * daysToStake) / 1080) / mitamaTroopsRatio);
+    const mitama = Math.floor((fortuneToStake * daysToStake) / 1080);
+    let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && fortuneToStake > 0) newTroops = 1;
     setNewTroops(newTroops);
+    setNewMitama(mitama);
   }, [daysToStake, fortuneToStake]);
 
 
@@ -260,13 +264,26 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
               </SimpleGrid>
 
               <Box bgColor='#292626' rounded='md' p={4} mt={4} textAlign='center'>
-                <SimpleGrid columns={2}>
-                  <Text>APR</Text>
-                  <Text>Troops</Text>
-                  <Text fontSize={24} fontWeight='bold'>{newApr * 100}%</Text>
-                  <Text fontSize={24} fontWeight='bold'>{commify(round(newTroops))}</Text>
-                  <Text fontSize={12} color='#aaa'>{commify(daysToStake)} day commitment</Text>
-                  <Text fontSize={12} color='#aaa'>{commify(fortuneToStake)} $Fortune stake</Text>
+                <SimpleGrid columns={{base:2, sm: 3}} gap={4}>
+                  <VStack spacing={0}>
+                    <FortuneIcon boxSize={6} />
+                    <Text>APR</Text>
+                    <Text fontSize={24} fontWeight='bold'>{newApr * 100}%</Text>
+                    <Text fontSize={12} color='#aaa'>{commify(daysToStake)} day commitment</Text>
+                  </VStack>
+                  <VStack spacing={0}>
+                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={6}/>
+                    <Text>Troops</Text>
+                    <Text fontSize={24} fontWeight='bold'>{commify(round(newTroops))}</Text>
+                    <Text fontSize={12} color='#aaa'>{commify(fortuneToStake)} $Fortune stake</Text>
+                  </VStack>
+                  <VStack spacing={0}>
+                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/mitama.png').convert()} alt="troopsIcon" boxSize={6}/>
+                    <Text>Mitama</Text>
+                    <Text fontSize={24} fontWeight='bold'>{commify(newMitama)}</Text>
+                    <Text fontSize={12} color='#aaa'>{commify(fortuneToStake)} $Fortune stake</Text>
+                  </VStack>
+
                 </SimpleGrid>
               </Box>
 

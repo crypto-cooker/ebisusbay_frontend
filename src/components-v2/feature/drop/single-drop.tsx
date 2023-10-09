@@ -7,7 +7,7 @@ import {useRouter} from 'next/router';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
-import {isFounderDrop, newlineText,} from '@src/utils';
+import {isFounderDrop, isPlayingCardsCollection, newlineText,} from '@src/utils';
 import {dropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi, ERC20} from '@src/Contracts/Abis';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
@@ -199,9 +199,9 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     setCanMintQuantity(Math.min(canMint, infos.maxMintPerTx));
 
 
-    if (drop.slug === 'cronosverse-in-game-assets') {
-      setTotalSupply(infos.totalSupply - 1716);
-      setMaxSupply(infos.maxSupply - 1716);
+    if (isPlayingCardsCollection(drop.collection)) {
+      setTotalSupply(infos.totalSupply - 4000);
+      setMaxSupply(infos.maxSupply - 4000);
     }
   };
 
@@ -309,7 +309,9 @@ const SingleDrop = ({drop}: SingleDropProps) => {
       <section id="drop_detail" className="gl-legacy container no-top">
         <div className="row mt-md-5 pt-md-4">
           <div className="col-md-6 text-center mt-4 md-md-0">
-            <img src={hostedImage(drop.images.drop)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
+            {!!drop.images.drop && (
+              <img src={hostedImage(drop.images.drop)} className="img-fluid img-rounded mb-sm-30" alt={drop.title} />
+            )}
           </div>
           <div className="col-md-6 mt-4 mt-md-0">
 

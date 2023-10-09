@@ -69,20 +69,17 @@ const AttributeFilter = ({attributes, currentFilters, onChange}: AttributeFilter
               <TableVirtuoso
                 style={{ height: Math.min(Object.entries(group[1]).length * 24, 200), width: '100%' }}
                 data={Object.entries(group[1]).sort((a, b) => a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1)}
-                itemContent={(index, item: [string, any]) => {
-                  const checked = filters?.[group[0]]?.includes(item[0]);
-                  return (
-                    <Flex w='100%' pe={1} key={stripSpaces(`trait-${group[0]}-${item[0]}`)} justify='space-between'>
-                      <Checkbox
-                        value={stripSpaces(`trait-${group[0]}-${item[0]}`)}
-                        onChange={(e) => handleFilter(e, group[0], item[0])}
-                      >
-                        {humanizeAdvanced(item[0])}
-                      </Checkbox>
-                      <Text color='gray.500'>({item[1].count})</Text>
-                    </Flex>
-                  )
-                }}
+                itemContent={(index, item: [string, any]) => (
+                  <Flex w='100%' pe={1} key={stripSpaces(`trait-${group[0]}-${item[0]}`)} justify='space-between'>
+                    <Checkbox
+                      value={stripSpaces(`trait-${group[0]}-${item[0]}`)}
+                      onChange={(e) => handleFilter(e, group[0], item[0])}
+                    >
+                      {humanizeAdvanced(item[0])}
+                    </Checkbox>
+                    <Text color='gray.500'>({item[1].count})</Text>
+                  </Flex>
+                )}
               />
             </CheckboxGroup>
           </AccordionPanel>

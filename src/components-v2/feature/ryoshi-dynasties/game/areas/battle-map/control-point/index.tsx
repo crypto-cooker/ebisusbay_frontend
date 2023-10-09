@@ -179,7 +179,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
                         <DeployTab
                           controlPoint={controlPoint}
                           refreshControlPoint={refreshControlPoint}
-                          allFactions={allFactions.sort((a:any, b:any) => a.name.localeCompare(b.name))}
+                          factionsSubscribedToSeason={allFactions.sort((a:any, b:any) => a.name.localeCompare(b.name))}
                         />) : (
                         <Box minH={'200px'}>
                           <Center>

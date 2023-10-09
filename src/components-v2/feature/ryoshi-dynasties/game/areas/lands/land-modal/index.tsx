@@ -122,48 +122,37 @@ const LandModal = ({ isOpen, onClose, plot}: LandModalFormProps) => {
         <HelpPage />
       ) : (
         <>
-          <SimpleGrid 
-          columns={isMobile ? 1 : 2} 
-          padding='10'
-          justifyItems={'center'}
-          >
-            <RdLand nftId={plot.id.toString()} boxSize={199} />
-              <Flex justifyContent={'center'}>
-                <VStack>
-                  <Text mt={2} as='i' textAlign='center'>
-                    Token Id: {plot.id.toString()}
-                  </Text>
-                  {plot.forSale && (
-                    <Text as='i' textAlign='center'>
-                      Price: {plot.price} $Fortune
-                    </Text>
-                  )}
-                  <Spacer h={8} />
-                  <HStack>
-                    <RdTabButton
-                      isActive={currentTab === tabs.info}
-                      onClick={() => GoToNFTPage()}
-                      fontSize={{base: '12', sm: '14'}}
-                      padding={{base: '0 10px', sm: '0 20px'}}
-                      margin={{base: '0 5px', sm: '0 10px'}}
-                    >
-                      {plot.forSale ? 'Buy Now' : 'Details'}
-                    </RdTabButton>
+            <VStack w='full' align='center'>
+              <Box mb={2}>
+                <RdLand nftId={plot.id.toString()} boxSize={199} rounded='xl' forceBoxSize={true}/>
+              </Box>
+              {plot.forSale && (
+                <Text as='i' textAlign='center'>
+                  Price: {plot.price} $Fortune
+                </Text>
+              )}
+              <HStack w='full' justify='center'>
+                <RdTabButton
+                  isActive={currentTab === tabs.info}
+                  onClick={() => GoToNFTPage()}
+                  fontSize={{base: '12', sm: '14'}}
+                  padding={{base: '0 10px', sm: '0 20px'}}
+                  margin={{base: '0 5px', sm: '0 10px'}}
+                >
+                  {plot.forSale ? 'Buy Now' : 'Details'}
+                </RdTabButton>
 
-                    <RdTabButton
-                      isActive={currentTab === tabs.info}
-                      onClick={() => handleMakeOffer(plot.nft)}
-                      fontSize={{base: '12', sm: '14'}}
-                      padding={{base: '0 10px', sm: '0 20px'}}
-                      margin={{base: '0 5px', sm: '0 10px'}}
-                    >
-                      Make Offer
-                    </RdTabButton>
-                  </HStack>
-                </VStack>
-              </Flex>
-           
-          </SimpleGrid>
+                <RdTabButton
+                  isActive={currentTab === tabs.info}
+                  onClick={() => handleMakeOffer(plot.nft)}
+                  fontSize={{base: '12', sm: '14'}}
+                  padding={{base: '0 10px', sm: '0 20px'}}
+                  margin={{base: '0 5px', sm: '0 10px'}}
+                >
+                  Make Offer
+                </RdTabButton>
+              </HStack>
+            </VStack>
 
           {!isLoading ? (
             <>

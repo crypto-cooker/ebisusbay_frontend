@@ -1,11 +1,7 @@
-import React, {ReactElement, useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Badge, Form} from "react-bootstrap";
 import {Contract, ethers} from "ethers";
-import Button from "@src/Components/components/common/Button";
 import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
@@ -33,24 +29,22 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
   Spinner,
   Stack,
+  Tag,
   Text,
   useNumberInput
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
-
-import moment from 'moment';
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useAppSelector} from "@src/Store/hooks";
-import Select from "react-select";
-import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
-import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {useExchangeRate, useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import ReactSelect from "react-select";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -99,6 +93,11 @@ const expirationDatesValues = [
 ]
 
 const currencyOptions = [
+  {
+    name: 'CRO',
+    symbol: 'cro',
+    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
+  },
   ...config.listings.currencies.available
     .filter((symbol: string) => !!config.tokens[symbol.toLowerCase()])
     .map((symbol: string) => {
@@ -108,11 +107,6 @@ const currencyOptions = [
         image: <DynamicCurrencyIcon address={token.address} boxSize={6} />
       }
     }),
-  {
-    name: 'CRO',
-    symbol: 'cro',
-    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
-  }
 ];
 
 interface MakeGaslessListingDialogProps {
@@ -238,7 +232,11 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         .find(([key]) => ciEquals(key, nftAddress)) as CurrencyEntry | undefined;
 
       const allowed = currencyOptions.filter(({symbol}: { symbol: string }) => {
-        return availableCurrencySymbols ? availableCurrencySymbols[1].includes(symbol.toLowerCase()) : symbol === 'cro';
+        if (availableCurrencySymbols) {
+          return availableCurrencySymbols[1].includes(symbol.toLowerCase());
+        } else {
+          return config.listings.currencies.global.includes(symbol.toLowerCase())
+        }
       });
       setAllowedCurrencies(allowed);
       setSelectedCurrency(allowed[0]);
@@ -346,6 +344,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
 
   const userTheme = useAppSelector((state) => state.user.theme);
   const customStyles = {
+    menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
     option: (base: any, state: any) => ({
       ...base,
       background: getTheme(userTheme).colors.bgColor2,
@@ -428,19 +427,19 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                   <Flex h="full" direction="column" justify="space-between">
                     <Box>
                       {nft.balance > 1 && (
-                        <Form.Group className="mb-3">
-                          <Form.Label className="formLabel">
+                        <FormControl className="mb-3" isInvalid={!!quantityError}>
+                          <FormLabel className="formLabel">
                             Quantity (up to {nft.balance})
-                          </Form.Label>
+                          </FormLabel>
                           <HStack minW="150px">
                             <ChakraButton {...dec}>-</ChakraButton>
                             <Input {...input} />
                             <ChakraButton {...inc}>+</ChakraButton>
                           </HStack>
-                          <Form.Text className="field-description textError">
+                          <FormErrorMessage className="field-description textError">
                             {quantityError}
-                          </Form.Text>
-                        </Form.Group>
+                          </FormErrorMessage>
+                        </FormControl>
                       )}
 
                       <FormControl isInvalid={!!priceError}>
@@ -488,7 +487,9 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                               onChange={costOnChange}
                               disabled={showConfirmButton || executingCreateListing}
                             />
-                            <Select
+                            <ReactSelect
+                              isSearchable={false}
+                              menuPortalTarget={document.body} menuPosition={'fixed'}
                               styles={customStyles}
                               options={allowedCurrencies}
                               formatOptionLabel={({ name, image }) => (
@@ -512,76 +513,44 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                         )}
                         <Text as='span'>{usdFormat(tokenToUsdValue(salePrice ?? 0))} USD</Text>
                       </Box>
-                      <div className="d-flex flex-wrap justify-content-between mb-3">
+                      <Flex justify='space-between' mb={3}>
                         {windowSize.width && windowSize.width > 377 && (
-                          <Badge bg="danger" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(-0.25)}>
+                          <Tag size='sm' colorScheme='red' variant='solid' cursor='pointer' onClick={() => onQuickCost(-0.25)}>
                             -25%
-                          </Badge>
+                          </Tag>
                         )}
-                        <Badge bg="danger" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(-0.1)}>
+                        <Tag size='sm' colorScheme='red' variant='solid' cursor='pointer' onClick={() => onQuickCost(-0.1)}>
                           -10%
-                        </Badge>
-                        <Badge
-                          bg={user.theme === 'dark' ? 'light' : 'secondary'}
-                          text={user.theme === 'dark' ? 'dark' : 'light'}
-                          className="cursor-pointer my-1" onClick={() => onQuickCost(0)}
-                        >
+                        </Tag>
+                        <Tag size='sm' colorScheme='gray' variant='solid' cursor='pointer' onClick={() => onQuickCost(0)}>
                           Floor
-                        </Badge>
-                        <Badge bg="success" text="light" className="cursor-pointer my-1" onClick={() => onQuickCost(0.1)}>
+                        </Tag>
+                        <Tag size='sm' colorScheme='green' variant='solid' cursor='pointer' onClick={() => onQuickCost(0.1)}>
                           +10%
-                        </Badge>
-
+                        </Tag>
                         {windowSize.width && windowSize.width > 377 && (
-                          <Badge bg="success" text="light" className="cursor-pointer my-1 d-sm-none d-md-block" onClick={() => onQuickCost(0.25)}>
+                          <Tag size='sm' colorScheme='green' variant='solid' cursor='pointer' onClick={() => onQuickCost(0.25)}>
                             +25%
-                          </Badge>
+                          </Tag>
                         )}
-                      </div>
+                      </Flex>
 
-                      <Form.Group className="form-field mb-3">
-                        <Form.Label className="formLabel w-100">
-                          <div className="d-flex">
-                            <div className="flex-grow-1">Expiration Date</div>
-                          </div>
-                        </Form.Label>
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          {expirationDate.type === 'dropdown' ? (
-                            <>
-                              <Form.Select
-                                defaultValue={2592000000}
-                                onChange={handleExpirationDateChange}
-                              >
-                                {expirationDatesValues.map((time) => (
-                                  <option value={time.value}>{time.label}</option>
-                                ))}
-                              </Form.Select>
-                            </>
-                          ) : (
-                            <>
-                              <Form.Control
-                                className="input"
-                                type="text"
-                                value={moment(new Date(expirationDate.value)).format('DD/MM/YYYY HH:mm:ss a')}
-                                disabled
-                              />
-                              <Button type='outlined' style={{ maxWidth: '38px', height: '40px' }} className="simple-button" onClick={() => { setExpirationDate({ value: new Date().getTime() + 2592000000, type: 'dropdown' }) }}>
-                                <FontAwesomeIcon className='icon-fa' icon={faTimes} />
-                              </Button>
-                            </>
-                          )}
-                          <Form.Control
-                            style={{
-                              maxWidth: '38px',
-                              visibility: expirationDate.type === 'dropdown' ? 'visible' : 'hidden',
-                            }}
-                            className="input"
-                            type="datetime-local"
+                      <FormControl
+                        maxW='188px'
+                        className="form-field mb-3"
+                      >
+                        <FormLabel w='full' className="formLabel">Expiration Date</FormLabel>
+                        <Box style={{ display: 'flex', gap: '8px' }}>
+                          <Select
+                            defaultValue={2592000000}
                             onChange={handleExpirationDateChange}
-                          />
-
-                        </div>
-                      </Form.Group>
+                          >
+                            {expirationDatesValues.map((time) => (
+                              <option value={time.value}>{time.label}</option>
+                            ))}
+                          </Select>
+                        </Box>
+                      </FormControl>
                     </Box>
                     <Box>
                       <Flex justify='space-between'>
@@ -636,7 +605,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
               </div>
             </ModalBody>
             <ModalFooter className="border-0">
-              <div className="w-100">
+              <Box w='full'>
                 {isTransferApproved ? (
                   <>
                     {showConfirmButton ? (
@@ -701,7 +670,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                     </div>
                   </>
                 )}
-              </div>
+              </Box>
             </ModalFooter>
           </>
         ) : (

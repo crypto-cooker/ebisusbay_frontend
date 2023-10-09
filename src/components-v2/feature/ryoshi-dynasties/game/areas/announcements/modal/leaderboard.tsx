@@ -1,14 +1,48 @@
-import React, {useEffect, useContext, useState, ReactElement} from 'react';
-import { Center, Flex, Spinner, Stack,Table,TableContainer,Tbody,Th,Thead,Tr,Select,Td,Text,Tabs,TabList,Tab,VStack,Box,Grid,GridItem, Avatar,useBreakpointValue,HStack,Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon} from "@chakra-ui/react"
+import React, {ReactElement, useContext, useEffect, useState} from 'react';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Avatar,
+  Box,
+  Center,
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Select,
+  Spinner,
+  Stack,
+  Tab,
+  Table,
+  TableContainer,
+  TabList,
+  Tabs,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  useBreakpointValue,
+  VStack
+} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {useAppSelector} from "@src/Store/hooks";
-import {getLeaderBoard, getSeasonDate} from "@src/core/api/RyoshiDynastiesAPICalls";
 import moment from 'moment';
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
-import { RyoshiDynastiesContext, RyoshiDynastiesContextProps} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import ImageService from "@src/core/services/image";
 import GameMapWrapper from '@src/components-v2/feature/ryoshi-dynasties/components/game-map-wrapper';
+import {getLeadersForSeason, getSeasonDate} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {commify} from "ethers/lib/utils";
+
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
 interface leaderBoardProps {
@@ -16,13 +50,6 @@ interface leaderBoardProps {
 }
 
 const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
-
-  interface controlpoint{
-    coordinates: string;
-    id: number;
-    name: string;
-    uuid: string;
-  }
 
   const user = useAppSelector((state) => state.user);
   const {data: allFactions, status, error} = useQuery({
@@ -35,7 +62,8 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   const [previousSeasonTime, setPreviousSeasonTime] = useState('');
   const [currentSeasonTime, setCurrentSeasonTime] = useState('');
   const [value, setValue] = React.useState('')
-  const [selectedControlPoint, setSelectedControlPoint] = useState<controlpoint>();
+  const [selectedControlPointName, setSelectedControlPointName] = useState<string>();
+  const [previousGameLeaders, setPreviousGameLeaders] = useState<any[]>([]);
 
   const [leaderBoard, setLeaderBoard] = useState<ReactElement[]>([]);
   const [showCurrentGame, setShowCurrentGame] = useState(true);
@@ -48,7 +76,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   const onChangeSelectedControlPoint = (e : any) => {
     setDataForm({...dataForm, [e.target.name]: e.target.value})
     if(e.target.value !== ''){
-      setSelectedControlPoint(e.target.value)
+      setSelectedControlPointName(e.target.value)
       setValue(e.target.value.name)
       setRegionSelected(true);
     } else {
@@ -73,26 +101,27 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
       console.log(error)
     }
   }
-
-  const getControlPointId = (e : any) => {
+  const GetTopFactionsOnPoint = (pointName: string, showCurrentGame: boolean) => {
     if(!rdGameContext) return;
 
-    let x = 0;
-    rdGameContext.game.parent.map.regions.map((region: any) =>
-      region.controlPoints.map((controlPoint: any, i: any) => {
-        if(controlPoint.name === e){
-          x = controlPoint.id;
-        }
-      }
-    ))
-    return x;
-  }
-  
-  const LoadControlPointLeaderBoard = async () => {
-    if(!rdGameContext || !selectedControlPoint) return;
+    let allFactionsOnPoint: any[] = [];
 
-    const gameId = showCurrentGame ? rdGameContext.game.id : rdGameContext.history.previousGameId;
-    const allFactionsOnPoint = await getLeaderBoard(getControlPointId(selectedControlPoint), gameId);
+    if(showCurrentGame){
+      rdGameContext.gameLeaders.map((controlPoint: any) =>{
+        if(controlPoint.name === pointName){
+          allFactionsOnPoint = controlPoint.factions;
+    }})} else {
+      previousGameLeaders.map((controlPoint: any) =>{
+        if(controlPoint.name === pointName){
+          allFactionsOnPoint = controlPoint.factions;
+    }})}
+    return allFactionsOnPoint;
+  }
+  const LoadControlPointLeaderBoard = async () => {
+    if(!rdGameContext || !selectedControlPointName) return;
+
+    const allFactionsOnPoint = GetTopFactionsOnPoint(selectedControlPointName, showCurrentGame);
+    if(!allFactionsOnPoint) return;
 
     //if length less than 5, add empty rows
     if(allFactionsOnPoint.length < 5){
@@ -104,33 +133,25 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     setLeaderBoard(
       allFactionsOnPoint.slice(0, 5).map((faction:any, index:any) => (
       <Tr key={index}>
-        <Td textAlign='center' w={16}>{index+1}</Td>
-        
+        <Td w={16}>{index+1}</Td>
         <Td textAlign='left' alignSelf={'center'}
           alignContent={'center'}
           alignItems={'center'}
           display={'flex'}
           h={43.5}
         >
-         <HStack>
-        <Avatar
-          width='40px'
-          height='40px'
-          padding={1}
-          src={ImageService.translate(faction.image).avatar()}
-          rounded='xs'
-        />
-        <Text
-        isTruncated={isMobile}
-        maxW={isMobile ?'150px': '200px'}
-        >
-        {faction.name} 
-        </Text>
-        </HStack>
+          <HStack>
+            <Avatar
+              width='40px'
+              height='40px'
+              padding={1}
+              src={ImageService.translate(faction.image).avatar()}
+              rounded='xs'
+            />
+            <Text isTruncated={isMobile} maxW={isMobile ?'150px': '200px'}>{faction.name}</Text>
+          </HStack>
         </Td>
-        <Td textAlign='left' 
-          maxW={'200px'}
-          >{faction.totalTroops}</Td>
+        <Td textAlign='left' maxW={'200px'} isNumeric>{commify(faction.totalTroops)}</Td>
       </Tr>
     )))
   }
@@ -158,18 +179,25 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
         </>
       ))
   }
+  const GetLeadersForSeasonApiCall = async () => {
+    if(!rdGameContext) return;
+
+    const previousGameLeadersData = await getLeadersForSeason(rdGameContext.history.previousGameId);
+    setPreviousGameLeaders(previousGameLeadersData);
+  }
 
   useEffect(() => {
     LoadControlPointLeaderBoard();
-  }, [selectedControlPoint, showCurrentGame]);
-
+  }, [selectedControlPointName, showCurrentGame]);
   useEffect(() => {
     if(!rdGameContext) return;
 
     GetGameDates();
     LoadControlPointDropDown();
   }, [rdGameContext]);
-
+  useEffect(() => {
+    GetLeadersForSeasonApiCall();
+  } ,[]);
   useEffect(() => {
     if(status === 'success' && allFactions !== undefined) {
       allFactions.game !== null ? setNoGameActive(false) : setNoGameActive(true);
@@ -252,7 +280,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                             <Tr>
                               <Th textAlign='left'>Rank</Th>
                               <Th textAlign='left'>Faction</Th>
-                              <Th textAlign='left'>Troops</Th>
+                              <Th textAlign='left' isNumeric>Troops</Th>
                             </Tr>
                           </Thead>
                           <Tbody>
@@ -287,7 +315,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                       h={isMobile ?'525px': '320px'}
                       w={{base:'350px', sm:'500px', md:'100%'}}
                       >
-                      <GameMapWrapper showActiveGame={showCurrentGame} height={isMobile ?'525px': '450px'}/>
+                      <GameMapWrapper showActiveGame={showCurrentGame} height={isMobile ?'525px': '450px'} blockDeployments={true}/>
 
                     </AccordionPanel>
                   </AccordionItem>

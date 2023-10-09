@@ -19,8 +19,6 @@ import {useAppSelector} from "@src/Store/hooks";
 import {AppProps} from "next/app";
 import {ExchangePricesContext} from "@src/components-v2/shared/contexts/exchange-prices";
 import {useGlobalPrices} from "@src/hooks/useGlobalPrices";
-import {useRouter} from "next/router";
-import LandDisplay from "../../pages/izanamiscradle/[slug]";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -52,16 +50,6 @@ const GlobalStyles = createGlobalStyle`
 const firebase = initializeApp(firebaseConfig);
 
 function App({ Component, ...pageProps }: AppProps) {
-
-  // Hack to get lands to display
-  const router = useRouter();
-  if (router.pathname.startsWith('/izanamiscradle/')) {
-    if (typeof window !== 'undefined') {
-      const loader = document.getElementById('initialLoader');
-      if (loader) loader.style.display = 'none';
-    }
-    return <LandDisplay slug={(pageProps as any).slug} {...pageProps} />;
-  }
 
   const dispatch = useDispatch();
   const { colorMode } = useColorMode()

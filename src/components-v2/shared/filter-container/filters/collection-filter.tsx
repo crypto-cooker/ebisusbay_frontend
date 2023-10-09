@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {Form} from "react-bootstrap";
-import {caseInsensitiveCompare, debounce} from "@src/utils";
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
+import {caseInsensitiveCompare} from "@src/utils";
 import Blockies from "react-blockies";
 import {
   AccordionButton,
@@ -10,16 +9,28 @@ import {
   Box,
   Checkbox,
   CheckboxGroup,
+  CloseButton,
   Flex,
   HStack,
-  VStack
+  Input,
+  InputGroup,
+  InputRightElement
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
+import useDebounce from "@src/core/hooks/useDebounce";
+import {TableVirtuoso} from "react-virtuoso";
+
+interface Collection {
+  avatar: string,
+  name: string,
+  address: string,
+  count?: number | string
+}
 
 interface CollectionFilterProps {
-  collections: { avatar: string, name: string, address: string, count?: number | string }[];
-  filteredAddresses: any;
-  onFilter: (collections: any) => void;
+  collections: Collection[];
+  filteredAddresses: string[];
+  onFilter: (collections: Collection[]) => void;
   keyPrefix?: string | null;
   showBalance?: boolean;
 }
@@ -40,26 +51,25 @@ export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyP
     onFilter(tmpSelectedCollections);
   };
 
-  const getKey = (collection: any) => {
-    let key = collection.address;
-    if (collection.id) {
-      key += `-${collection.id}`
-    }
-    if (keyPrefix) {
-      key = `${keyPrefix}-${key}`
-    }
-    return key;
-  };
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const debouncedSearch = useDebounce(searchTerm, 500);
 
-  const onTextFilterChange = debounce((event: any) => {
-    const { value } = event.target;
-    const list = value ? collections.filter((c: any) => c.name.toLowerCase().includes(value.toLowerCase())) : collections;
-    setVisibleCollections(list);
-  }, 300);
+  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  }, []);
+
+  const handleClearSearch = useCallback(() => {
+    setSearchTerm('');
+  }, []);
 
   useEffect(() => {
     setVisibleCollections(collections);
   }, [collections]);
+
+  useEffect(() => {
+    const list = debouncedSearch ? collections.filter((c: any) => c.name.toLowerCase().includes(debouncedSearch.toLowerCase())) : collections;
+    setVisibleCollections(list);
+  }, [debouncedSearch]);
 
   return (
     <AccordionItem border='none'>
@@ -69,12 +79,27 @@ export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyP
         </Box>
         <AccordionIcon />
       </AccordionButton>
-      <AccordionPanel maxH='350px' overflowY='scroll'>
-        <Form.Control type="text" placeholder="Filter" onChange={onTextFilterChange}/>
+      <AccordionPanel pb={4}>
+        <InputGroup flex='1' mb={2}>
+          <Input
+            placeholder="Search by name"
+            onChange={handleSearch}
+            value={searchTerm}
+            color="white"
+            _placeholder={{ color: 'gray.300' }}
+          />
+          {searchTerm.length && (
+            <InputRightElement
+              children={<CloseButton onClick={handleClearSearch} />}
+            />
+          )}
+        </InputGroup>
         <CheckboxGroup colorScheme='blue' value={filteredAddresses.map((address: any) => `collection-${address}`)}>
-          <VStack align='start' w='full' spacing={2}>
-            {visibleCollections.map((collection) => (
-              <Flex key={getKey(collection)} w='full' justify='space-between'>
+          <TableVirtuoso
+            style={{ height: Math.min(visibleCollections.length * 33, 200), width: '100%' }}
+            data={visibleCollections.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)}
+            itemContent={(_, collection: Collection) => (
+              <Flex pe={1} key={collection.address} w='full' justify='space-between' my={1}>
                 <Checkbox
                   value={`collection-${collection.address}`}
                   onChange={(t) => handleCheck(t, collection)}
@@ -100,8 +125,38 @@ export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyP
                   <Box className="text-muted">({collection.count})</Box>
                 )}
               </Flex>
-            ))}
-          </VStack>
+            )}
+          />
+          {/*<VStack align='start' w='full' spacing={2}>*/}
+          {/*  {visibleCollections.map((collection) => (*/}
+          {/*    <Flex key={collection.address} w='full' justify='space-between'>*/}
+          {/*      <Checkbox*/}
+          {/*        value={`collection-${collection.address}`}*/}
+          {/*        onChange={(t) => handleCheck(t, collection)}*/}
+          {/*      >*/}
+          {/*        <HStack>*/}
+          {/*          <Box>*/}
+          {/*            {collection.avatar ? (*/}
+          {/*              <img*/}
+          {/*                src={ImageService.translate(collection.avatar).avatar()}*/}
+          {/*                alt={collection?.name}*/}
+          {/*                width="25"*/}
+          {/*                height="25"*/}
+          {/*                className="rounded-circle my-auto"*/}
+          {/*              />*/}
+          {/*            ) : (*/}
+          {/*              <Blockies seed={collection.address.toLowerCase()} size={5} scale={5} />*/}
+          {/*            )}*/}
+          {/*          </Box>*/}
+          {/*          <Box ms={2}>{collection.name}</Box>*/}
+          {/*        </HStack>*/}
+          {/*      </Checkbox>*/}
+          {/*      {showBalance && (*/}
+          {/*        <Box className="text-muted">({collection.count})</Box>*/}
+          {/*      )}*/}
+          {/*    </Flex>*/}
+          {/*  ))}*/}
+          {/*</VStack>*/}
         </CheckboxGroup>
       </AccordionPanel>
     </AccordionItem>

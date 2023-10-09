@@ -48,6 +48,7 @@ interface BattleMapProps {
   mapProps?: MapProps;
   height: string;
   useCurrentGameId: boolean;
+  blockDeployments: boolean;
 }
 export interface MapProps {
   scale: number;
@@ -59,7 +60,7 @@ interface Icon {
   image: string;
 }
 
-const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, height, useCurrentGameId}: BattleMapProps) => {
+const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, height, useCurrentGameId, blockDeployments}: BattleMapProps) => {
   const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
   const user = useAppSelector(state => state.user);
   const config = appConfig();
@@ -175,6 +176,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     setRegionName(regionName);
     setSelectedControlPoint(id);
     selectRegion(id);
+    if(blockDeployments) return;
     onOpen();
   }
   const GetControlPointId = (name: any) => {
@@ -267,7 +269,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     if(!rdGameContext) return;
 
     GetFactions();
-    if (rdGameContext.state === RdGameState.RESET) {
+    if (rdGameContext.state === RdGameState.RESET && !blockDeployments) {
       onOpenResetModal();
     }
   }, [rdGameContext]);

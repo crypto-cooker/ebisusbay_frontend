@@ -1,8 +1,8 @@
 import {BigNumber, Contract, ContractTransaction, ethers} from "ethers";
 import {StakePayload, Staker, UnstakePayload} from "@src/components-v2/feature/brand/tabs/staking/types";
-import {getQuickWallet} from "@src/core/api/endpoints/wallets";
 import {appConfig} from "@src/Config";
 import {getNfts} from "@src/core/api/endpoints/nft";
+import NextApiService from "@src/core/services/api-service/next";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -53,12 +53,10 @@ export class TroopzStaker implements Staker {
     }
 
     async getUnstaked(userAddress: string, collectionAddress: string) {
-        // const readContract = new Contract(this.address, this.abi, readProvider);
-        // const stakedIds = await readContract.getNftsIdsbyAddress(walletAddress);
-        const quickWallet = await getQuickWallet(userAddress, {collection: collectionAddress, pageSize: 1000});
-        if (!quickWallet.data) return [];
+        const walletNfts = await NextApiService.getWallet(userAddress, {pageSize: 100, collection: [collectionAddress]});
+        if (!walletNfts.data) return [];
 
-        return quickWallet.data.map((item: any) => ({...item, isStaked: false}));
+        return walletNfts.data.map((item: any) => ({...item, isStaked: false}));
     }
 }
 

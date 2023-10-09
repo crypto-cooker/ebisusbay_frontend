@@ -1,9 +1,7 @@
-import { editProfileFormFields } from './constants';
-import { Field, RadioGroup, UploadAssetGroup } from '../../../../Form';
+import {editProfileFormFields} from './constants';
+import {Field, RadioGroup, UploadAssetGroup} from '../../../../Form';
 
 import Button from '@src/Components/components/common/Button';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCoffee, faSync} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import {Heading} from "@chakra-ui/react";
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {utils} from 'ethers';
 import Card from '../src/Components/Leaderboard/Card';
 import Table from '../src/Components/Leaderboard/Table';
@@ -7,11 +7,9 @@ import {getAllLeaderBoard} from '@src/GlobalState/leaderBoardSlice';
 import {shortAddress} from '@src/utils';
 import styles from '../src/Components/Leaderboard/styles.module.scss';
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import {Badge} from "react-bootstrap";
 import {Navigation, Pagination} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {Button, Heading, Link, Menu, MenuButton, MenuItem, MenuList} from "@chakra-ui/react";
-import {ChevronDownIcon} from "@chakra-ui/icons";
+import {Heading, Link, Tag} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {hostedImage} from "@src/helpers/image";
 import {useAppSelector} from "@src/Store/hooks";
@@ -125,7 +123,7 @@ export default function Stats({pageHead, initialTimeframe}: StatsProps) {
             <p>
               Daily prizes up for grabs for the top Bored Candy buyers and sellers! Competition runs from Nov 1st - 15th. &nbsp;
               <Link href="https://blog.ebisusbay.com/bored-candy-city-and-ebisus-bay-collaboration-5caa9f40cb64" isExternal>
-                <Badge bg="primary" className="cursor-pointer">More Info</Badge>
+                <Tag size='sm' colorScheme='blue' variant='solid' cursor='pointer'>More Info</Tag>
               </Link>
             </p>
           </div>
