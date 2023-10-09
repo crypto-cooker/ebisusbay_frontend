@@ -50,7 +50,7 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
   const { data: rdUserContext, refetch: refetchUserContext} = useQuery(
     ['RyoshiDynastiesUserContext', user.address, signature],
     async () => {
-      if (!!signature) {
+      if (!!signature && !!user.address) {
         return await ApiService.withoutKey().ryoshiDynasties.getUserContext(user.address!, signature)
       }
       throw 'Please sign message in wallet to continue'
