@@ -211,7 +211,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     rankedPlayers = CreateRankedPlayersFromData(data);
   }
   //filter out only the entry with the address that we want
-  // rankedPlayers = rankedPlayers.filter((player) => player.address === ("0x58f4a38f80192e4739B10508E3d225B830a21663").toLowerCase());
+  // rankedPlayers = rankedPlayers.filter((player) => player.address === ("0x9edd701aa926d1b689327d3afb9a259b1a04e69a").toLowerCase());
   // console.log("rankedPlayers", rankedPlayers);
   
   rankedPlayers = rankedPlayers.filter((player) => player.cards.length >= 5);
@@ -490,7 +490,8 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     let twoOfAKindValue = 0;
     
     Object.keys(cardCountDict).forEach((card) => {
-      if(cardCountDict[card] === 3) {
+      if(cardCountDict[card] >= 3) {
+        console.log("card", card);
         if(threeOfAKind && MeetsGameRequriements(cardsFromGame2, [card, card, card])) {
           twoOfAKind = true;
           threeOfAKind = true;
