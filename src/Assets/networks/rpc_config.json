@@ -22923,7 +22923,7 @@
       "multiToken": false,
       "address": "0xC0D28282A4780e099884f344A9746A2D75A1BAF7",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Ever wanted to own the libs? Now you can! The Liberators, Cronos Steakhouse's 4th of July Special collection! First minted during 2023 Independence week, These feisty fellows will liberate you from FEEdom across the steakhouse ecosystem! Structured fee discounts on all future smart contracts based on amount held/time consumed",
         "avatar": "/img/collections/the-liberators/avatar.webp",
