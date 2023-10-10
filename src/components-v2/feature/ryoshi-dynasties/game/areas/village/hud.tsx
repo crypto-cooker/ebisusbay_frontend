@@ -24,10 +24,11 @@ interface VillageHudProps {
   onOpenBuildings: () => void;
   onOpenDailyCheckin: () => void;
   onOpenBattleLog: () => void;
+  onOpenXPLeaderboard: () => void;
   forceRefresh: boolean;
 }
 
-export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog, forceRefresh}: VillageHudProps) => {
+export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog, onOpenXPLeaderboard, forceRefresh}: VillageHudProps) => {
   const user = useAppSelector((state) => state.user);
   const { config: rdConfig, user:rdUser, game: rdGameContext, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const config = appConfig();
@@ -303,6 +304,10 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
 
             <DarkButton
               onClick={onOpenBattleLog}
+              icon={faClipboardList}/>
+
+            <DarkButton
+              onClick={onOpenXPLeaderboard}
               icon={faClipboardList}/>
 
             {/* <DarkButton

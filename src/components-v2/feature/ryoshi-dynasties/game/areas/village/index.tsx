@@ -23,7 +23,7 @@ import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/componen
 import {RdGameState} from "@src/core/services/api-service/types";
 import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
 import {motion} from "framer-motion";
-
+import XPLeaderboard from "@src/components-v2/feature/ryoshi-dynasties/game/modals/xp-leaderboard";
 interface VillageProps {
   onChange: (value: string) => void;
   firstRun: boolean;
@@ -58,6 +58,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   // const [battleRewards, setBattleRewards] = useState<any[]>([]);
   const [forceRefreshBool, setForceRefreshBool] = useState(false);
   const { isOpen: isOpenBattleLog, onOpen: onOpenBattleLog, onClose: onCloseBattleLog } = useDisclosure();
+  const { isOpen: isOpenXPLeaderboard, onOpen: onOpenXPLeaderboard, onClose: onCloseXPLeaderboard } = useDisclosure();
+    
   const forceRefresh = () => {
     setForceRefreshBool(!forceRefreshBool);
   }
@@ -717,14 +719,14 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         )}
 
           <VillageHud onOpenBuildings={onOpenBuildings} onOpenDailyCheckin={onOpenDailyCheckin} 
-            onOpenBattleLog={onOpenBattleLog} forceRefresh={forceRefreshBool} />
+            onOpenBattleLog={onOpenBattleLog} onOpenXPLeaderboard={onOpenXPLeaderboard} forceRefresh={forceRefreshBool} />
       </Box>
 
       <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin}/>
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
       <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
       <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
-
+      <XPLeaderboard isOpen={isOpenXPLeaderboard} onClose={onCloseXPLeaderboard} />
       <Fade in={isOpenOverlay} 
         >
         <Modal
