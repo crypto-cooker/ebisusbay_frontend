@@ -53,6 +53,7 @@ import {
   import {shortAddress, } from "@src/utils";
   import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
   import Blockies from "react-blockies";
+  import {XPProfile} from "@src/core/services/api-service/types";
   
   interface ResponsiveFactionsTableProps {
     data: InfiniteData<IPaginatedList<XPProfile>>;
@@ -62,14 +63,6 @@ import {
     onCancel: (faction: any) => void;
   }
 
-  interface XPProfile {
-      profile: {
-        walletAddress: string;
-        username: string;
-        profileImage: string;
-      },
-      experience: number;
-    }
   
   interface MultiSelectProps {
     // onCheck: (faction: RdFaction, checked?: boolean) => void;

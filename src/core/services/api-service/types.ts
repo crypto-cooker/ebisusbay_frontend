@@ -376,3 +376,10 @@ export interface RdBattleLog {
     event: string;
     pastTroops: number;
 }
+
+export interface XPProfile {
+    walletAddress: string;
+    username: string;
+    profileImage: string;
+    experience: number;
+}

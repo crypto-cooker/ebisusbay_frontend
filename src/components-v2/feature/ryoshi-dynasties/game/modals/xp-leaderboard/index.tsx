@@ -33,6 +33,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import ResponsiveXPTable from "@src/components-v2/feature/ryoshi-dynasties/game/modals/xp-leaderboard/responsive-xp-table";
 import SearchFaction from "@src/components-v2/feature/ryoshi-dynasties/components/search-factions";
 import {useAppSelector} from "@src/Store/hooks";
+import {XPProfile} from "@src/core/services/api-service/types";
 
 interface AllianceCenterProps {
   isOpen: boolean;
@@ -50,15 +51,6 @@ interface QueryParams{
   // signature?: string;
   page?: number;
 }
-interface XPProfile {
-  profile: {
-    walletAddress: string;
-    username: string;
-    profileImage: string;
-  },
-  experience: number;
-}
- 
 
 const FactionDirectory = ({isOpen, onClose}: AllianceCenterProps) => {
 

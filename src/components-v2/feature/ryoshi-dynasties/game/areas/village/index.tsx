@@ -23,7 +23,7 @@ import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/componen
 import {RdGameState} from "@src/core/services/api-service/types";
 import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
 import {motion} from "framer-motion";
-import XPLeaderboard from "@src/components-v2/feature/ryoshi-dynasties/game/modals/xp-leaderboard";
+import FactionDirectory from "@src/components-v2/feature/ryoshi-dynasties/game/modals/xp-leaderboard";
 interface VillageProps {
   onChange: (value: string) => void;
   firstRun: boolean;
@@ -726,7 +726,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
       <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
       <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
-      <XPLeaderboard isOpen={isOpenXPLeaderboard} onClose={onCloseXPLeaderboard} />
+      <FactionDirectory isOpen={isOpenXPLeaderboard} onClose={onCloseXPLeaderboard} />
       <Fade in={isOpenOverlay} 
         >
         <Modal

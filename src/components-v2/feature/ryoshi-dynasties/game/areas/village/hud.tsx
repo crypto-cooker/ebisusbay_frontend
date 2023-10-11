@@ -306,9 +306,9 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
               onClick={onOpenBattleLog}
               icon={faClipboardList}/>
 
-            <DarkButton
+            {/* <DarkButton
               onClick={onOpenXPLeaderboard}
-              icon={faClipboardList}/>
+              icon={faClipboardList}/> */}
 
             {/* <DarkButton
               onClick={() => UpdateMetaData(Math.floor(Math.random() * 2500))}
