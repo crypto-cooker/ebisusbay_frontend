@@ -16,9 +16,23 @@ export const parseErrorMessage = (error: any) => {
     return error.data.message;
   }
 
+  // Contract errors
+  if (error.error?.message) {
+    try {
+      const parts = error.error.message.split(':');
+      return capitalizeFirstLetter(parts[parts.length - 1].trim());
+    } catch (e: any) {
+      console.log('Failed to parse error message', e, error.error.message);
+    }
+  }
+
   if (error.message) {
     return error.message;
   }
 
   return 'Unknown Error';
+}
+
+function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }

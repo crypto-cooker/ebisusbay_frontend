@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {constants, ContractReceipt, ethers} from "ethers";
+import {ContractReceipt, ethers} from "ethers";
 import {toast} from 'react-toastify';
 import {getServerSignature} from '@src/core/cms/endpoints/gaslessListing';
 import {pluralize} from "@src/utils";
@@ -72,7 +72,6 @@ const useBuyGaslessListings = () => {
       return true;
     } catch (error) {
       console.log(error)
-      toast.error('Error');
       setResponse({
         ...response,
         loading: false,

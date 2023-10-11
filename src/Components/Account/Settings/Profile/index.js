@@ -16,10 +16,10 @@ import Bio from '@src/components-v2/feature/account/settings/fields/bio';
 import Form from './Form';
 import Pfp from './Pfp';
 import useGetSettings from '../hooks/useGetSettings';
-import {getCnsInfo} from '@src/helpers/cns';
 import {Flex} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {getCroidInfo} from "@src/helpers/croid";
 
 export default function EditProfile() {
   const user = useSelector((state) => state.user);
@@ -131,27 +131,35 @@ export default function EditProfile() {
   });
 
   const handleCnsSync = async () => {
-    setIsFetchCns(true);
-    const cnsInfo = await getCnsInfo(user?.address);
-    if (!cnsInfo) {
-      setIsFetchCns(false);
-      return;
-    }
+    try {
+      setIsFetchCns(true);
+      const cnsInfo = await getCroidInfo(user?.address);
+      if (!cnsInfo) {
+        toast.error('No CID found');
+        return;
+      }
+      if (!cnsInfo.name) {
+        toast.error('No domain found. Make sure to claim and set a default domain on Cronos ID');
+        return;
+      }
 
-    const userInfo = values?.userInfo;
-    const tempData = {
-      userInfo: {
-        username: cnsInfo?.name || userInfo?.userInfo?.username,
-        twitter: cnsInfo?.twitter || userInfo?.userInfo?.twitter,
-        discord: cnsInfo?.discord || userInfo?.userInfo?.discord,
-        instagram: cnsInfo?.instagram || userInfo?.userInfo?.instagram,
-        website: cnsInfo?.url || userInfo?.userInfo?.website,
-        email: cnsInfo?.email || userInfo?.userInfo?.email,
-        bio: cnsInfo?.description || userInfo?.userInfo?.bio,
-      },
-    };
-    setMergedValues(tempData);
-    setIsFetchCns(false);
+
+      const userInfo = values?.userInfo;
+      const tempData = {
+        userInfo: {
+          username: cnsInfo?.name || userInfo?.userInfo?.username,
+          twitter: cnsInfo?.twitter || userInfo?.userInfo?.twitter,
+          discord: cnsInfo?.discord || userInfo?.userInfo?.discord,
+          instagram: cnsInfo?.instagram || userInfo?.userInfo?.instagram,
+          website: cnsInfo?.url || userInfo?.userInfo?.website,
+          email: cnsInfo?.email || userInfo?.userInfo?.email,
+          bio: cnsInfo?.description || userInfo?.userInfo?.bio,
+        },
+      };
+      setMergedValues(tempData);
+    } finally {
+      setIsFetchCns(false);
+    }
   };
 
   useEffect(() => {
