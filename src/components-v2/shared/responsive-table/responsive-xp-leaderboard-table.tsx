@@ -38,26 +38,52 @@ interface ResponsiveRewardsCollectionsTableProps {
   data: InfiniteData<IPaginatedList<XPProfile>>;
   onSort: (field: string) => void;
   breakpointValue?: string
+  tabCallback: (key: string) => void;
 }
 
-const ResponsiveXPLeaderboardTable = ({data, onSort, breakpointValue}: ResponsiveRewardsCollectionsTableProps) => {
-  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'lg'})
+const tabs = {
+  week: 'week',
+  month: 'month',
+  all: 'all'
+};
 
-  return shouldUseAccordion ? (
-    <DataAccordion data={data} onSort={onSort} />
-  ) : (
-    <DataTable data={data} onSort={onSort} />
+const ResponsiveXPLeaderboardTable = ({data, onSort, tabCallback, breakpointValue}: ResponsiveRewardsCollectionsTableProps) => {
+  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'lg'})
+  const [openMenu, setOpenMenu] = React.useState(tabs.week);
+
+  const handleBtnClick = (key: string) => (e: any) => {
+    setOpenMenu(key);
+    //filter data by key
+    tabCallback(key);
+  };
+
+  return (
+    <>
+      <ul className="de_nav mb-2">
+        <li id="Mainbtn0" className={`tab ${openMenu === tabs.week ? 'active' : ''}`}>
+          <span onClick={handleBtnClick(tabs.week)}> Week</span>
+        </li>
+        <li id="Mainbtn0"className={`tab ${openMenu === tabs.month ? 'active' : ''}`}>
+          <span onClick={handleBtnClick(tabs.month)}> Month</span>
+        </li>
+        <li id="Mainbtn1" className={`tab ${openMenu === tabs.all ? 'active' : ''}`}>
+          <span onClick={handleBtnClick(tabs.all)}>All Time</span>
+        </li>
+      </ul>
+      {shouldUseAccordion ? (
+        <DataAccordion data={data} onSort={onSort} tabCallback={tabCallback}/>
+      ) : (
+        <DataTable data={data} onSort={onSort} tabCallback={tabCallback}/>
+      )
+      }
+    </>
   )
 }
 
-const DataTable = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
+const DataTable = ({data, onSort, tabCallback}: ResponsiveRewardsCollectionsTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const textColor = useColorModeValue('#727272', '#a2a2a2');
-
-  const getTimeSince = (timestamp: number) => {
-    return timeSince(new Date(timestamp * 1000));
-  };
-
+  
   return (
     <TableContainer w='full'>
       <Table variant='simple' color={textColor}>
@@ -95,15 +121,22 @@ const DataTable = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
                 )}
               </Td>
               <Td fontWeight='bold'>
-                { entity.username === entity.walletAddress ? (
-                  <Text isTruncated maxW={'300px'}>
-                  {shortAddress(entity.username)}
-                  </Text>
-                  ) : (
-                    <Text isTruncated maxW={'300px'}>
-                      {entity.username}
+                <VStack 
+                  alignItems={'left'}
+                  >
+                  { entity.username === entity.walletAddress ? (
+                    <Text isTruncated maxW={'300px'} textAlign={'left'}>
+                    {shortAddress(entity.username)}
                     </Text>
+                    ) : (
+                      <Text isTruncated maxW={'300px'} textAlign={'left'}>
+                        {entity.username}
+                      </Text>
                   ) }
+                  <Text fontSize={'14px'} isTruncated maxW={'300px'} textAlign={'left'}>
+                    Lvl: {entity.level}
+                  </Text>
+                </VStack>
                 {/* {entity.type === 'COLLECTION' && (
                   <LinkOverlay href={`/collection/${entity.walletAddress}`} _hover={{color:'inherit'}}>
                     {entity.name}
@@ -128,12 +161,8 @@ const DataTable = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
   )
 };
 
-const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
+const DataAccordion = ({data, onSort, tabCallback}: ResponsiveRewardsCollectionsTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
-
-  const getTimeSince = (timestamp: number) => {
-    return timeSince(new Date(timestamp * 1000));
-  };
 
   return (
     <>
@@ -165,26 +194,18 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
                     )}
                   </Box>
                   <VStack align='start' spacing={0} flex='1' fontSize='sm'>
-                    { entity.username === entity.walletAddress ? (
-                        <Text isTruncated maxW={'200px'}>
-                        {shortAddress(entity.username)}
-                        </Text>
-                      ) : (
-                        <Text isTruncated maxW={'200px'}>
-                          {entity.username}
-                        </Text>
-                      ) }
-                    
-                    {/* {entity.type === 'COLLECTION' && (
-                      <Link href={`/collection/${entity.address}`}>
-                        {entity.name}
-                      </Link>
-                    )}
-                    {entity.type === 'WALLET' && (
-                      <Link href={`/account/${entity.address}`}>
-                        {shortAddress(entity.name)}
-                      </Link>
-                    )} */}
+                  { entity.username === entity.walletAddress ? (
+                    <Text isTruncated maxW={'300px'} textAlign={'left'}>
+                    {shortAddress(entity.username)}
+                    </Text>
+                    ) : (
+                      <Text isTruncated maxW={'300px'} textAlign={'left'}>
+                        {entity.username}
+                      </Text>
+                  ) }
+                  <Text fontSize={'12px'} isTruncated maxW={'300px'} textAlign={'left'}>
+                    Lvl: {entity.level}
+                  </Text>
                   </VStack>
                 </HStack>
               </Box>

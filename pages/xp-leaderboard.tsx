@@ -27,14 +27,22 @@ interface QueryParams{
   // addresss?: string;
   // signature?: string;
   page?: number;
+  timeframe: string;
 }
 
 const XPLeaderboard = () => {
   const user = useAppSelector(state => state.user);
-  const [queryParams, setQueryParams] = useState<QueryParams>({});
+  const [queryParams, setQueryParams] = useState<QueryParams>({
+    timeframe: 'week'
+  });
   const [playerProfile, setPlayerProfile] = useState<XPProfile | undefined>(undefined);
   const [playerRank, setPlayerRank] = useState<number>(0);
-
+  const queryCallback = (key: string) => {
+    setQueryParams({
+      ...queryParams,
+      timeframe: key
+    });
+  }
   const getFactions = async (query?: QueryParams): Promise<PagedList<XPProfile>> => {
     const response = await api.get(`ryoshi-dynasties/experience/leaderboard`, {
       params: query
@@ -47,7 +55,6 @@ const XPLeaderboard = () => {
       ...queryParams,
       page: pageParam,
     });
-
     return data;
   };
   const {
@@ -58,6 +65,7 @@ const XPLeaderboard = () => {
     status,
     isLoading: isLeaderboardLoading,
     isError: isLeaderboardError,
+    refetch
   } = useInfiniteQuery(
     ['Factions', queryParams],
     fetcher,
@@ -79,6 +87,7 @@ const XPLeaderboard = () => {
       </Box>
     ) : (
       <ResponsiveXPLeaderboardTable
+        tabCallback= {queryCallback} 
         data={data}
         onSort={() => {}}
       />
@@ -107,8 +116,14 @@ const XPLeaderboard = () => {
 
   useEffect(() => {
     GetPlayerRank();
+    console.log("data: ", data);
 
-  }, [data, user]);
+  }, [data, user]);   
+
+  useEffect(() => {
+    //need to add some logic to check if the query has already been fetched
+    refetch();
+  }, [queryParams]);
 
   return (
     <Box>
