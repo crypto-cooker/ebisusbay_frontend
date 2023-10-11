@@ -37,7 +37,7 @@ import {ArrowBackIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/meeple/faq-page";
 import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
-import {RdModalAlert, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {RdModalAlert, RdModalBody, RdModalBox, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {useQuery} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
 import {MeepleUpkeep, MeepleMint, MeepleTradeInCards} from "@src/core/api/RyoshiDynastiesAPICalls";
@@ -52,6 +52,7 @@ const config = appConfig();
 
 import axios from "axios";
 import {ApiService} from "@src/core/services/api-service";
+import {commify} from "ethers/lib/utils";
 const api = axios.create({
   baseURL: config.urls.api,
 });
@@ -99,10 +100,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const needsToPayUpkeep = totalUpkeepRequired > upkeepPaid;
   const remainingMeepleYouNeedToPayFor = meepleOffDuty - meeplePaidFor - 200;
   const troopsBeingPaidFor = remainingMeepleYouNeedToPayFor * (sliderValue/100);
-
-  //Mint Ryoshi
-  const [meepleToMint, setMeepleToMint] = useState(0);
-  const handleQuantityChangeMint = (stringValue: string, numValue: number) => setMeepleToMint(numValue)
 
   //Deposit Ryoshi
   const [meepleToDeposit, setMeepleToDeposit] = useState(0);
@@ -173,26 +170,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
       toast.error(parseErrorMessage(error));
     } 
   }
-  const MintMeeple = async () => {
-    if (!user.address) return;
-    const signature = await requestSignature();
-    try {
 
-      const cmsResponse = await MeepleMint(user.address, signature, meepleToMint);
-      // console.log("CMS Response: ", cmsResponse);
-      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
-      const tx = await resourcesContract.mintWithSig(cmsResponse.stakeApproval, cmsResponse.signature);
-      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
-      refetchWallet();
-      rdRefreshUser();
-      setMeepleToMint(0);
-      onCloseMintModal();
-
-    } catch (error: any) {
-      console.log(error);
-      toast.error(parseErrorMessage(error));
-    } 
-  }
   const DepositMeeple = async () => {
     if (!user.address) return;
 
@@ -429,20 +407,20 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
         <FaqPage />
       ) : (
         <>
-          <Box p={4}>
+          <RdModalBody>
             {/* Mint */}
-            <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' mt={4}>
+            <RdModalBox>
               <Box textAlign='left' as="b" fontSize={18}>
                 Ryoshi Management
               </Box>
               <Flex justifyContent={'space-between'} align={'center'}>
-               <HStack spacing={1} h={'60px'}>
-                  <Text color={'#aaa'} alignContent={'baseline'} pt={2}> Ryoshi On Duty: </Text>
-                    { isFetchingWallet || isLoadingWallet ? (
-                      <Spinner p={2} size='sm' />
-                    ) : (
-                    <Text as={'b'} fontSize='28' p={2}>{meepleOnDuty}</Text>
-                    )}
+                <HStack spacing={1} h={'60px'}>
+                  <Text color={'#aaa'} alignContent={'baseline'} pt={2}>On Duty:</Text>
+                  { isFetchingWallet || isLoadingWallet ? (
+                    <Spinner p={2} size='sm' />
+                  ) : (
+                    <Text as={'b'} fontSize='28' p={2}>{commify(meepleOnDuty)}</Text>
+                  )}
                 </HStack>
                 <RdButton
                   h={12}
@@ -450,23 +428,23 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                   size='lg'
                   fontSize={{base: '12', sm: '18'}}
                   w={{base: '160px', sm: '190px'}}
-                  >
-                  Withdraw Ryoshi
+                >
+                  Take Off Duty
                 </RdButton> 
               </Flex>
               {meepleOnDuty > 3000 && (
-                <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={4}>
+                <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm'>
                   <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
                   <Text
                       fontSize='14'
                       color='#333'
                       fontWeight='bold'
                   >
-                    Warning: Should you hold more than the current limt (3000 Ryoshi) at the end of the week, you will not recieve Ryoshi at the start of the next week. Turn them into tokens to take them off duty <b> or </b> spend them in battles and resource gathering.
+                    Amounts exceeding 3,000 Ryoshi by the end of the week will prevent receiving additional Ryoshi the following week. Take them off duty <b> or </b> use them for battles and resource gathering.
                   </Text>
                 </Stack>
               )}
-              <Flex justifyContent={'space-between'} align={'center'}>
+              <Flex justifyContent={'space-between'} align={'center'} mt={4}>
                 <HStack spacing={1} h={'60px'}>
                   <Text color={'#aaa'} alignContent={'baseline'} pt={2}> Ryoshi Off Duty: </Text>
                   { isFetchingWallet || isLoadingWallet? (
@@ -482,15 +460,13 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                   fontSize={{base: '12', sm: '18'}}
                   w={{base: '150px', sm: '190px'}}
                   >
-                  Deposit Ryoshi
+                  Put On Duty
                 </RdButton> 
               </Flex>
-            </Box>
+            </RdModalBox>
             
             {/* Upkeep */}
-            <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' mt={4}>
-             
-
+            <RdModalBox mt={2}>
               <Flex justifyContent={'space-between'} align={'center'}>
                 <VStack spacing={1} align={"left"} >
                   <Text textAlign='left' as="b" fontSize={18}> Weekly Upkeep </Text>
@@ -513,10 +489,10 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                   )}
                   </VStack>
               </Flex>
-            </Box>
+            </RdModalBox>
 
             {/* Cards */}
-            <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' mt={4}>
+            <RdModalBox mt={2}>
               <Flex justifyContent={'space-between'} align={'center'}>
                 <VStack spacing={1} align='left' mb={10}>
                   <Box textAlign='left' as="b" fontSize={18}>
@@ -535,16 +511,19 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                   Turn in Cards
                 </RdButton> 
               </Flex>
-            </Box>
+            </RdModalBox>
+          </RdModalBody>
 
-            <Box p={4}>
-              <Flex direction='row' justify='center' mb={2}>
-                <SimpleGrid columns={{base: 2, sm: 4}}>
-                
-                </SimpleGrid>
-              </Flex>
-            </Box>
-          </Box>
+          <WithdrawRyoshiModal
+            isOpen={isOpenMintModal}
+            onClose={onCloseMintModal}
+            onComplete={() => {
+              refetchWallet();
+              rdRefreshUser();
+              onCloseMintModal();
+            }}
+            onDutyAmount={meepleOnDuty}
+          />
 
           <RdModal isOpen={isOpenUpkeepModal} onClose={onCloseUpkeepModal} title={'Upkeep Cost Breakdown'} >
             <RdModalAlert>
@@ -652,55 +631,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
               </Stack>
             </RdModalFooter>
           </RdModal>
-          
-          <RdModal isOpen={isOpenMintModal} onClose={onCloseMintModal} title={'Withdraw Ryoshi'} >
-            <RdModalAlert>
-              <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
-          
-              <Text color={'#aaa'} w={'100%'} textAlign={'left'} p={2}> Select Ryoshi to Withdraw (Mint): </Text>
-              <Flex justifyContent='center' w={'100%'}>
-                <NumberInput 
-                  defaultValue={0} 
-                  min={0} 
-                  max={meepleOnDuty} 
-                  name="quantity"
-                  onChange={handleQuantityChangeMint}
-                  value={meepleToMint}
-                  clampValueOnBlur={true}
-                  w='85%'
-                  >
-                  <NumberInputField />
-                  <NumberInputStepper >
-                    <NumberIncrementStepper color='#ffffff'/>
-                    <NumberDecrementStepper color='#ffffff'/>
-                  </NumberInputStepper>
-                </NumberInput>
-
-                <Spacer />
-                <Button 
-                  variant={'outline'}
-                  onClick={() => setMeepleToMint(meepleOnDuty)}
-                  > Max </Button>
-              </Flex>
-
-              <Flex justifyContent={'space-between'} align={'center'} mt={'8'}>
-                <Text color={'#aaa'} alignContent={'baseline'} p={2}> Remaining Ryoshi On Duty: </Text>
-                { isFetchingWallet ? (
-                    <Spinner size='sm' />
-                  ) : (
-                  <Text as={'b'} fontSize='28' p={2}>{meepleOnDuty - meepleToMint}</Text>
-                ) }
-              </Flex>
-
-            </Box>
-            </RdModalAlert>
-            <RdModalFooter>
-              <Stack justifyContent={'space-between'} direction='row'>
-                <RdButton onClick={onCloseMintModal} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-                <RdButton onClick={() => MintMeeple()} size='lg' fontSize={{base: '18', sm: '24'}}> Withdraw </RdButton>
-              </Stack>
-            </RdModalFooter>
-          </RdModal>
 
           <RdModal isOpen={isOpenDepositModal} onClose={onCloseDepositModal} title={'Deposit Ryoshi'}  >
             <RdModalAlert>
@@ -754,3 +684,98 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
 }
 
 export default Meeple;
+
+interface WithdrawRyoshiModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onComplete: () => void;
+  onDutyAmount: number;
+}
+
+const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: WithdrawRyoshiModalProps) => {
+  const user = useAppSelector((state) => state.user);
+  const {requestSignature} = useEnforceSignature();
+  const [meepleToMint, setMeepleToMint] = useState(0);
+  const [isExecuting, setIsExecuting] = useState(false);
+
+  const handleQuantityChange = (stringValue: string, numValue: number) => setMeepleToMint(numValue)
+
+  const MintMeeple = async () => {
+    if (!user.address) return;
+    const signature = await requestSignature();
+    try {
+      setIsExecuting(true);
+      const cmsResponse = await MeepleMint(user.address, signature, meepleToMint);
+      const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
+      const tx = await resourcesContract.mintWithSig(cmsResponse.mintRequest, cmsResponse.signature);
+      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
+      setMeepleToMint(0);
+      onComplete();
+
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } finally {
+      setIsExecuting(false);
+    }
+  }
+
+  return (
+    <RdModal isOpen={isOpen} onClose={onClose} title='Withdraw Ryoshi'>
+      <RdModalBody>
+        <RdModalBox>
+          <Text>
+            Taking Ryoshi off-duty will store them on the blockchain for later use. They can be brought back on-duty at any time (upkeep costs may apply).
+          </Text>
+          <Box mt={2}>
+            <Text color={'#aaa'} w={'100%'} textAlign={'left'} py={2}> Select Ryoshi to Withdraw (Mint): </Text>
+            <Flex justifyContent='center' w={'100%'}>
+              <NumberInput
+                defaultValue={0}
+                min={0}
+                max={onDutyAmount}
+                name="quantity"
+                onChange={handleQuantityChange}
+                value={meepleToMint}
+                clampValueOnBlur={true}
+                w='85%'
+              >
+                <NumberInputField />
+                <NumberInputStepper >
+                  <NumberIncrementStepper color='#ffffff'/>
+                  <NumberDecrementStepper color='#ffffff'/>
+                </NumberInputStepper>
+              </NumberInput>
+
+              <Spacer />
+              <Button
+                variant={'outline'}
+                onClick={() => setMeepleToMint(onDutyAmount)}
+              >
+                Max
+              </Button>
+            </Flex>
+
+            <Flex justifyContent={'space-between'} align={'center'} mt={'8'}>
+              <Text color={'#aaa'} alignContent={'baseline'} py={2}> Remaining Ryoshi On Duty: </Text>
+              <Text as={'b'} fontSize='28' p={2}>{onDutyAmount - meepleToMint}</Text>
+            </Flex>
+          </Box>
+        </RdModalBox>
+      </RdModalBody>
+      <RdModalFooter>
+        <Stack justifyContent={'space-between'} direction='row'>
+          <RdButton onClick={onClose} size='lg' fontSize={{base: '18', sm: '24'}}>Cancel</RdButton>
+          <RdButton
+            onClick={MintMeeple}
+            size='lg'
+            fontSize={{base: '18', sm: '24'}}
+            isLoading={isExecuting}
+          >
+            Withdraw
+          </RdButton>
+        </Stack>
+      </RdModalFooter>
+    </RdModal>
+  )
+}
