@@ -33,7 +33,7 @@ const XPLeaderboard = () => {
   const user = useAppSelector(state => state.user);
   const [queryParams, setQueryParams] = useState<QueryParams>({});
   const [playerProfile, setPlayerProfile] = useState<XPProfile | undefined>(undefined);
-  const [playerRank, setPlayerRank] = useState<number>();
+  const [playerRank, setPlayerRank] = useState<number>(0);
 
   const getFactions = async (query?: QueryParams): Promise<PagedList<XPProfile>> => {
     const response = await api.get(`ryoshi-dynasties/experience/leaderboard`, {
@@ -89,14 +89,20 @@ const XPLeaderboard = () => {
     if(!data) return;
     if(!user.address) return;
     
-    const playerRank = data.pages.find((page) => {
-      return page.data.find((entity, index) => {
+    let playerFound = false;
+    data.pages.find((page) => {
+      page.data.find((entity, index) => {
         if(entity.walletAddress === user.address){
-            setPlayerProfile(entity);
-            setPlayerRank(index + 1);
+          setPlayerProfile(entity);
+          setPlayerRank(index + 1);
+          playerFound = true;
         }
       });
     });
+
+    if(!playerFound){
+      setPlayerProfile(undefined);
+    }
   }
 
   useEffect(() => {
@@ -156,14 +162,14 @@ const XPLeaderboard = () => {
                     ) : (
                       <Text fontSize='2xl' fontWeight='bold'>0</Text>
                     )}
-                <Heading size='md' fontWeight='normal' mt={4}>Your Current Rank : {playerRank}</Heading>
+                <Heading size='md' fontWeight='normal' mt={4}>Your Current Rank : { playerRank > 0 ? playerRank : "Unranked"}</Heading>
                   </>
                 ) : (
                   <Spinner />
                 )}
               </>
             ) : (
-              <Box mt={4}>Connect wallet to view pending rewards</Box>
+              <Box mt={4}>Connect wallet to view your ranking</Box>
             )}
             {/*<Button variant='primary'>*/}
             {/*  Claim*/}
