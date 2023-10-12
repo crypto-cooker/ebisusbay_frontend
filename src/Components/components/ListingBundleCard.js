@@ -9,7 +9,7 @@ import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
-import {appUrl, createSuccessfulAddCartContent, round, timeSince} from '@src/utils';
+import {appUrl, createSuccessfulAddCartContent, round, siPrefixedNumber, timeSince} from '@src/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
 import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
 import Image from "next/image";
@@ -32,6 +32,7 @@ import {specialImageTransform} from "@src/hacks";
 import Slider from '../Account/Profile/Inventory/components/Slider';
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 
 
 const Watermarked = styled.div`
@@ -61,6 +62,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = cart.nfts.map((o) => o.listingId).includes(listing.listingId);
   const { onCopy } = useClipboard(nftUrl.toString());
+  const {tokenUsdRate, tokenToUsdValue} = useTokenExchangeRate(listing.currency);
 
   const getOptions = () => {
     const options = [];
@@ -273,22 +275,31 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
               </Link>
 
               <Tooltip label="Listing Price" placement='top-start'>
-                <HStack w='full' fontSize='sm'>
-                  <Box w='16px'>
-                    <FontAwesomeIcon icon={faBoltLightning} />
-                  </Box>
-                  <Box>
-                    <Flex alignItems='center'>
-                      <CronosIconBlue boxSize={4} />
+                <Box fontSize='sm'>
+                  <HStack w='full' fontSize='sm'>
+                    <Box w='16px'>
+                      <FontAwesomeIcon icon={faBoltLightning} />
+                    </Box>
+                    <Box>
+                      <Flex alignItems='center'>
+                        <CronosIconBlue boxSize={4} />
+                        <Box as='span' ms={1}>
+                          {getCorrectPrice(listing.price)}
+                        </Box>
+                      </Flex>
+                    </Box>
+                    {listing.expirationDate && (
+                      <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(listing.expirationDate)}</Text>
+                    )}
+                  </HStack>
+                  {tokenUsdRate && (
+                    <Flex ps={5} className='text-muted'>
                       <Box as='span' ms={1}>
-                        {getCorrectPrice(listing.price)}
+                        ${tokenToUsdValue(listing.price) > 100000 ? siPrefixedNumber(tokenToUsdValue(listing.price)) : ethers.utils.commify(round(tokenToUsdValue(listing.price), 2))}
                       </Box>
                     </Flex>
-                  </Box>
-                  {listing.expirationDate && (
-                    <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(listing.expirationDate)}</Text>
                   )}
-                </HStack>
+                </Box>
               </Tooltip>
             </Flex>
             <Spacer />
