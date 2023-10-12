@@ -356,6 +356,7 @@ export const configData = {
       app: 'https://testapp.ebisusbay.biz/',
       subgraph: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://testcms.ebisusbay.biz/api/',
+      // cms: "http://localhost:4000/api/",
       cmsSocket: 'wss://testcms.ebisusbay.biz/socket/',
       explorer: 'https://testnet.cronoscan.com/',
       cdn: {
