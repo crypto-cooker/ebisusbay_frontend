@@ -4,8 +4,8 @@ import * as Sentry from '@sentry/react';
 
 import { ErrorPage } from '@src/Components/ErrorPage';
 import store from '../src/Store/store';
-import { SentryLoggingService } from '@src/services/sentry-logging.service';
-import { Site24x7LoggingService } from '@src/services/site24x7-logging.service';
+import { SentryLoggingService } from '@src/third-party/sentry';
+import { Site24x7LoggingService } from '@src/third-party/site24x7';
 import {
   QueryClient,
   QueryClientProvider,
