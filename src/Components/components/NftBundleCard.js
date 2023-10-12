@@ -1,4 +1,4 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {useRouter} from 'next/router';
@@ -33,6 +33,7 @@ import {specialImageTransform} from "@src/hacks";
 import Slider from '../Account/Profile/Inventory/components/Slider';
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import {useExchangeRate} from "@src/hooks/useGlobalPrices";
 
 const Watermarked = styled.div`
   position: relative;
@@ -62,6 +63,14 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = nft.market?.id && cart.nfts.map((o) => o.listingId).includes(nft.market.id);
   const { onCopy } = useClipboard(nftUrl.toString());
+  const {usdValueForToken} = useExchangeRate();
+
+  const marketUsdValue = () => {
+    if (nft.market?.price) {
+      return usdValueForToken(nft.market.price, nft.market.currency);
+    }
+    return 0;
+  };
 
   const getOptions = () => {
     const options = [];
@@ -236,22 +245,31 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
               </Link>
               {getIsNftListed() && (
                 <Tooltip label="Listing Price" placement='top-start'>
-                  <HStack w='full' fontSize='sm'>
-                    <Box w='16px'>
-                      <FontAwesomeIcon icon={faBoltLightning} />
-                    </Box>
-                    <Box>
-                      <Flex alignItems='center'>
-                        <CronosIconBlue boxSize={4} />
+                  <Box fontSize='sm'>
+                    <HStack w='full'>
+                      <Box w='16px'>
+                        <FontAwesomeIcon icon={faBoltLightning} />
+                      </Box>
+                      <Box>
+                        <Flex alignItems='center'>
+                          <CronosIconBlue boxSize={4} />
+                          <Box as='span' ms={1}>
+                            {nft.market?.price > 6 ? siPrefixedNumber(nft.market?.price) : ethers.utils.commify(round(nft.market?.price))}
+                          </Box>
+                        </Flex>
+                      </Box>
+                      {nft.market?.expirationDate && (
+                        <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(nft.market.expirationDate)}</Text>
+                      )}
+                    </HStack>
+                    {marketUsdValue() && (
+                      <Flex ps={5} className='text-muted'>
                         <Box as='span' ms={1}>
-                          {nft.market?.price > 6 ? siPrefixedNumber(nft.market?.price) : ethers.utils.commify(round(nft.market?.price))}
+                          ${marketUsdValue() > 100000 ? siPrefixedNumber(marketUsdValue()) : ethers.utils.commify(round(marketUsdValue(), 2))}
                         </Box>
                       </Flex>
-                    </Box>
-                    {nft.market?.expirationDate && (
-                      <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(nft.market.expirationDate)}</Text>
                     )}
-                  </HStack>
+                  </Box>
                 </Tooltip>
               )}
               {nft.offer?.id && (
