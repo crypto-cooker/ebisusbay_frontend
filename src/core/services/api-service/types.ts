@@ -377,6 +377,12 @@ export interface RdBattleLog {
     pastTroops: number;
 }
 
+export enum PokerCollection{
+    Diamonds = 'Diamonds', 
+    Clubs = 'Clubs',
+    Live = 'Live',
+}
+
 export interface XPProfile {
     walletAddress: string;
     username: string;
