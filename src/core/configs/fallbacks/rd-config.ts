@@ -191,7 +191,8 @@ export const ryoshiConfig: RyoshiConfig = {
           }
         ]
       }
-    }
+    },
+    meepleUpkeep: 0.1
   },
   factions: {
     registration: {
@@ -257,6 +258,59 @@ export const ryoshiConfig: RyoshiConfig = {
       deploy: 1,
       delegated: 5,
       recall: -1
+    }
+  },
+  experience: {
+    DAILY_CHECK_IN: {
+      points: 5,
+      coolDown: 0
+    },
+    DEPLOY_TROOPS: {
+      points: 5,
+      coolDown: 3600
+    },
+    TROOP_KILLED: {
+      points: 1,
+      coolDown: 0
+    },
+    STAKE_VIP: {
+      points: 2,
+      coolDown: 1
+    },
+    STAKE_MITAMA: {
+      points: 0.1,
+      coolDown: 1
+    },
+    ITEM_SOLD_SELLER: {
+      points: 1,
+      coolDown: 0,
+      usd: 3
+    },
+    OFFER_ACCEPTED_SELLER: {
+      points: 1,
+      coolDown: 0,
+      usd: 3
+    },
+    ITEM_SOLD_BUYER: {
+      points: 0.5,
+      coolDown: 0,
+      usd: 3
+    },
+    CLAIM_PLATFORM_REWARD: {
+      points: 50,
+      coolDown: 7,
+    },
+    COMPOUND_PLATFORM_REWARD: {
+      points: 75,
+      coolDown: 7,
+    },
+    CLAIM_MARKET_STAKING_REWARD: {
+      points: 5,
+      coolDown: 1,
+    },
+    VERIFY_EMAIL: {
+      points: 20,
+      coolDown: 0,
     }
   }
 }

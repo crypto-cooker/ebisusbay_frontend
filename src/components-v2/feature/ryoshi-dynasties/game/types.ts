@@ -6,6 +6,7 @@ export interface RyoshiConfig {
   presale: RyoshiConfigPresale;
   armies: RyoshiConfigArmies;
   reputations: RyoshiConfigReputation;
+  experience: RyoshiConfigExperience;
 }
 
 interface RyoshiConfigReputation {
@@ -121,4 +122,25 @@ interface RyoshiConfigFactionsRegistration {
 
 interface RyoshiConfigArmies {
   redeploymentDelay: number[];
+}
+
+export interface ExperienceEvent {
+  points: number;
+  coolDown: number;
+  usd?: number;
+}
+
+export interface RyoshiConfigExperience {
+  DAILY_CHECK_IN: ExperienceEvent;
+  DEPLOY_TROOPS: ExperienceEvent;
+  TROOP_KILLED: ExperienceEvent;
+  STAKE_VIP: ExperienceEvent;
+  STAKE_MITAMA: ExperienceEvent;
+  ITEM_SOLD_SELLER: ExperienceEvent;
+  OFFER_ACCEPTED_SELLER: ExperienceEvent;
+  ITEM_SOLD_BUYER: ExperienceEvent;
+  CLAIM_PLATFORM_REWARD: ExperienceEvent;
+  COMPOUND_PLATFORM_REWARD: ExperienceEvent;
+  CLAIM_MARKET_STAKING_REWARD: ExperienceEvent;
+  VERIFY_EMAIL: ExperienceEvent;
 }
