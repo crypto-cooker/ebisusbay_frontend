@@ -5,7 +5,7 @@ import {toast, ToastContainer} from 'react-toastify';
 import {initializeApp} from 'firebase/app';
 import {getAnalytics} from "@firebase/analytics";
 
-import ScrollToTopBtn from '@src/components-v2/shared/layout/ScrollToTop';
+import ScrollToTopBtn from '@src/components-v2/shared/layout/scroll-to-top';
 import Header from '@src/components-v2/shared/layout/navbar';
 import firebaseConfig from '../third-party/firebase';
 import {initProvider} from '../GlobalState/User';
