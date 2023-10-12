@@ -82,7 +82,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const { config: rdConfig, user:rdUser, game: rdGameContext, refreshUser: rdRefreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [page, setPage] = useState<string>();
   const collectionAddress = config.contracts.resources
-  const {requestSignature} = useEnforceSignature();
   const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
   //Ryoshi
@@ -91,26 +90,14 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
 
   //upkeep
   const [meeplePaidFor, setMeeplePaidFor] = useState<number>(0);
+  const [upkeepDueText, setUpkeepDueText] = useState<string>("");
   const [totalUpkeepRequired, setTotalUpkeepRequired] = useState<number>(0);
   const [upkeepPaid, setUpkeepPaid] = useState<number>(0);
-  const [upkeepDueText, setUpkeepDueText] = useState<string>("");
-  const [sliderValue, setSliderValue] = useState(100)
-  const upkeepDue = totalUpkeepRequired - upkeepPaid;
-  const paymentAmount = upkeepDue * (sliderValue/100);
   const needsToPayUpkeep = totalUpkeepRequired > upkeepPaid;
-  const remainingMeepleYouNeedToPayFor = meepleOffDuty - meeplePaidFor - 200;
-  const troopsBeingPaidFor = remainingMeepleYouNeedToPayFor * (sliderValue/100);
 
-  //Deposit Ryoshi
-  const [meepleToDeposit, setMeepleToDeposit] = useState(0);
-  const handleQuantityChangeDeposit= (stringValue: string, numValue: number) => setMeepleToDeposit(numValue)
-
-  //Turn in cards
-  const [selectedTab, setSelectedTab] = useState<number>(0);
+  //Turn in Cards
   const [locationData, setLocationData] = useState<LocationData[]>([]);
-  const [filteredCards, setFilteredCards] = useState<LocationData[]>([]);
   const [cardsInWallet, setCardsInWallet] = useState<LocationData[]>([]);
-  const [cardsToTurnIn, setCardsToTurnIn] = useState<LocationData[]>([]);
 
   //modals
   const { isOpen: isOpenUpkeepModal, onOpen: onOpenUpkeepModal, onClose: onCloseUpkeepModal } = useDisclosure();
@@ -138,21 +125,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const handleClose = () => {
     onClose();
   }
-  const PayUpkeep = async () => {
-    if (!user.address) return;
-    const signature = await requestSignature();
-    try {
-      const cmsResponse = await MeepleUpkeep(user.address, signature, Number(troopsBeingPaidFor.toFixed()));
-      // console.log("CMS Response: ", cmsResponse);
-      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
-      const tx = await resourcesContract.upkeep(cmsResponse.upkeepRequest, cmsResponse.signature);
-      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
 
-    } catch (error: any) {
-      console.log(error);
-      toast.error(parseErrorMessage(error));
-    } 
-  }
   const GetLastUpkeepPayment = async () => {
     if (!user.address) return;
     try {
@@ -171,52 +144,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     } 
   }
 
-  const DepositMeeple = async () => {
-    if (!user.address) return;
-
-    try {
-      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
-      const tx = await resourcesContract.deposit([2], [meepleToDeposit]);
-      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
-      refetchWallet();
-      rdRefreshUser();
-      setMeepleToDeposit(0);
-      onCloseDepositModal();
-
-    } catch (error: any) {
-      console.log(error);
-      toast.error(parseErrorMessage(error));
-    } 
-  }
-  const TurnInCards = async () => {
-    if (!user.address) return;
-    const signature = await requestSignature();
-
-    let ids:number[] = [];
-    let amounts:number[] = [];
-    cardsToTurnIn.forEach((card) => {
-      for(let i = 0; i < 3; i+=3){
-        ids.push(card.id);
-        amounts.push(3);
-      }
-    })
-    try {
-      // console.log("Turn in cards: ", ids, amounts);
-      const cmsResponse = await MeepleTradeInCards(user.address, signature, ids, amounts);
-      // console.log("CMS Response: ", cmsResponse.request);
-      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
-      const tx = await resourcesContract.craftItems(cmsResponse.request, cmsResponse.signature);
-      // console.log("Crafting Response: ", tx);
-      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
-      onCloseTurnInCardsModal();
-      rdRefreshUser();
-      refetchWallet();
-
-    } catch (error: any) {
-      console.log(error);
-      toast.error(parseErrorMessage(error));
-    } 
-  }
   const GetMeepleOnDuty = async () => {
     if(!rdUser || !user.address) return;
 
@@ -225,36 +152,14 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     const balanceOf = await resourcesContract.balanceOf(user.address, 2);
     const meeples = await ApiService.withoutKey().ryoshiDynasties.getUserMeeples(user.address);
     const activeMeeples = meeples ? meeples.activeAmount : 0;
-    console.log("balanceOf ", BigNumber.from(balanceOf).toNumber());
+
+    // console.log("balanceOf ", BigNumber.from(balanceOf).toNumber());
     // console.log("activeMeeples ", BigNumber.from(activeMeeples).toNumber());
     //only works for first 800 will fix
     setUpkeepPaid(BigNumber.from(activeMeeples).toNumber());
     setMeeplePaidFor(BigNumber.from(activeMeeples).toNumber());
   }
-  const RefreshFilteredCards = () => {
-    const filtered = locationData.filter((location) => location.tier == selectedTab+1);
-    setFilteredCards(filtered);
-  }
-  const GetLocationData = async () => {
-    let data = await api.get("fullcollections?address=" + collectionAddress);
-    let locations:LocationData[] = [];
-    // console.log("Location Data: ", data.data);
 
-    //filter out only locations 
-    for(let i = 0; i < data.data.nfts.length; i++){
-      for(let j=0; j < data.data.nfts[i].attributes?.length; j++){
-        if(data.data.nfts[i].attributes[j].trait_type == "Location"){
-          locations.push({
-            location: data.data.nfts[i].attributes[j].value,
-            tier: data.data.nfts[i].attributes[1].value,
-            id: data.data.nfts[i].id,
-            playerCards: 0,
-          })
-        }
-      }
-    }
-    setLocationData(locations);
-  }
   const CalculateUpkeepCost = () => {
     //cost will be marginal, 0-200 free, 201-999 1x, 1000-4999 2x, 5000+ 3x
     let cost = 0;
@@ -276,8 +181,25 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     console.log("Upkeep Cost for " + meepleOffDuty + " is " + cost + "");
     setTotalUpkeepRequired(cost);
   }
-  // active meeple
-  // ballance of
+ 
+  const GetMeepleOffDuty = () => {
+    console.log("Wallet data: ", walletData);
+    let cards:LocationData[] = [];
+    walletData.data.forEach((card) => {
+      card.attributes !== undefined && card.attributes[1].trait_type === "Tier" ? 
+      cards.push({
+        location: card.name,
+        tier: card.attributes[1].value,
+        id: Number(card.nftId),
+        playerCards: card.balance === undefined ? 0 : card.balance,
+      })
+      : <></>
+    })
+    walletData.data.forEach((card) => {
+      card.nftId == "2" ? setMeepleOffDuty(card.balance!) : <></>
+    })
+  }
+
   const SetUpCardsInWallet = () => {
     let cards:LocationData[] = [];
     walletData.data.forEach((card) => {
@@ -294,53 +216,31 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
       
     })
     setCardsInWallet(cards)
-    setCardsToTurnIn([])
   }
-  const GetMeepleOffDuty = () => {
-    // console.log("Wallet data: ", walletData);
-    let cards:LocationData[] = [];
-    walletData.data.forEach((card) => {
-      {
-        card.attributes !== undefined && card.attributes[1].trait_type === "Tier" ? 
-        cards.push({
-          location: card.name,
-          tier: card.attributes[1].value,
-          id: Number(card.nftId),
-          playerCards: card.balance === undefined ? 0 : card.balance,
-        })
-        : <></>
-      }
-      
-    })
-    walletData.data.forEach((card) => {
-      card.nftId == "2" ? setMeepleOffDuty(card.balance!) : <></>
-    })
-  }
-  const SelectCardsToTurnIn = (nftId:number) => {
-    let cards:LocationData[] = [];
-    cardsInWallet.forEach((card) => {
-      if(card.id == nftId){
-        console.log("Set " + card.location + " to be turned in");
-        cards.push(card);
-      }
-    })
-    //remove 3 of EACH CARD selected from player wallet
-    let cardsInWalletCopy = [...cardsInWallet];
-    cardsInWalletCopy.forEach((card) => {
-      cards.forEach((selectedCard) => {
-        if(card.id == selectedCard.id){
-          card.playerCards -= 3;
+
+  const GetLocationData = async () => {
+    let data = await api.get("fullcollections?address=" + collectionAddress);
+    let locations:LocationData[] = [];
+    // console.log("Location Data: ", data.data);
+
+    //filter out only locations 
+    for(let i = 0; i < data.data.nfts.length; i++){
+      for(let j=0; j < data.data.nfts[i].attributes?.length; j++){
+        if(data.data.nfts[i].attributes[j].trait_type == "Location"){
+          locations.push({
+            location: data.data.nfts[i].attributes[j].value,
+            tier: data.data.nfts[i].attributes[1].value,
+            id: data.data.nfts[i].id,
+            playerCards: 0,
+          })
         }
-      })
-    })
-    setCardsInWallet(cardsInWalletCopy);
-    setCardsToTurnIn([...cardsToTurnIn, ...cards]);
+      }
+    }
+    setLocationData(locations);
   }
-
-  useEffect(() => {
-    RefreshFilteredCards();
-
-  }, [selectedTab])
+  const onCompleteTurnInCards = () => {
+    GetMeepleOffDuty();
+  }
 
   useEffect(() => {
     if(!walletData) return;
@@ -360,17 +260,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   }, [rdUser])
 
   useEffect(() => {
-    locationData.forEach((location) => {
-      cardsInWallet.forEach((card) => {
-        if(Number(card.id) === Number(location.id)){
-          locationData[locationData.indexOf(location)].playerCards = card.playerCards;
-        }
-      })
-    })
-    RefreshFilteredCards();
-  } , [locationData, cardsInWallet])
- 
-  useEffect(() => {
     if(!rdGameContext) return;
 
     GetLocationData();
@@ -382,7 +271,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     GetMeepleOnDuty();
 
   }, [rdUser])
-
 
   const handleBack = () => {
     if (!!page) {
@@ -455,7 +343,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                 </HStack>
                 <RdButton
                   h={12}
-                  onClick={() => onOpenDepositModal()}
+                  onClick={onOpenDepositModal}
                   size='lg'
                   fontSize={{base: '12', sm: '18'}}
                   w={{base: '150px', sm: '190px'}}
@@ -470,7 +358,10 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
               <Flex justifyContent={'space-between'} align={'center'}>
                 <VStack spacing={1} align={"left"} >
                   <Text textAlign='left' as="b" fontSize={18}> Weekly Upkeep </Text>
-                  <Text color={'#aaa'}>Upkeep due in <b>{upkeepDueText}</b></Text>
+                  {meepleOffDuty > 0 ? (
+                    <Text color={'#aaa'}>Upkeep due in <b>{upkeepDueText}</b></Text>
+                    ):<></>
+                  }
                 </VStack>
 
                 <VStack spacing={1} >
@@ -485,7 +376,13 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                       Pay Upkeep
                     </RdButton> 
                   ) : (
-                    <Text color={'#aaa'}>Weekly Upkeep Paid</Text>
+                    <>
+                    {meepleOffDuty > 0 ? (
+                      <Text as={'i'} color={'#aaa'}>Weekly Upkeep Paid</Text>
+                      ):(
+                      <Text as={'i'} color={'#aaa'}>No Upkeep Due</Text>
+                    )}
+                    </>
                   )}
                   </VStack>
               </Flex>
@@ -525,157 +422,46 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
             onDutyAmount={meepleOnDuty}
           />
 
-          <RdModal isOpen={isOpenUpkeepModal} onClose={onCloseUpkeepModal} title={'Upkeep Cost Breakdown'} >
-            <RdModalAlert>
-              <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
-              <SimpleGrid columns={2} spacing={0} w={'100%'}>
-                  <Text color={'#aaa'} textAlign={'left'} p={2}> Upkeep cost for {meepleOffDuty} Off Duty</Text>
-                  <Text as={'b'} textAlign={'right'} p={2}> {totalUpkeepRequired} </Text>
-                  <Text color={'#aaa'} textAlign={'left'} p={2}> Upkeep paid this week </Text>
-                  <Text as={'b'} textAlign={'right'} p={2}> - {upkeepPaid} </Text>
-                  <Text color={'#aaa'} textAlign={'left'} p={2}> Upkeep due</Text>
-                  <Text as={'b'} textAlign={'right'} p={2}> {upkeepDue} </Text>
-                  <Text color={'#aaa'} pt={12} pl={2} textAlign={'left'} > Payment Amount </Text>
-                  <HStack   pt={10} spacing={0} justifyContent={'right'} w={'100%'}>
-                    <Text as={'b'} textAlign={'right'} fontSize='28' > {paymentAmount.toFixed(0)} </Text>
-                    <Image  src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/> 
-                  </HStack >
-                  <HStack  pl={2}  spacing={0} justifyContent={'left'} w={'100%'}>
-                  <Text color={'#aaa'} textAlign={'left'} > Troops Being Paid For </Text>
-                  <Text as={'b'} textAlign={'left'} p={2}>  {troopsBeingPaidFor.toFixed()} </Text>
-                  </HStack>
-                  
-                  <GridItem colSpan={2} pl={4} pr={4} pt={10}>
-                    <Slider aria-label='slider-ex-4' defaultValue={100} onChange={(val) => setSliderValue(val)}>
-                      <SliderMark
-                      value={sliderValue}
-                      textAlign='center'
-                      color='white'
-                      mt='-10'
-                      ml='-5'
-                      w='12'
-                    >
-                      {sliderValue}%
-                    </SliderMark>
-                      <SliderTrack bg='red.100'>
-                        <SliderFilledTrack bg='tomato' />
-                      </SliderTrack>
-                      <SliderThumb boxSize={6}>
-                        {/* <Box color='tomato' as={'/img/ryoshi-dynasties/icons/koban.png'} /> */}
-                        {/* <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/> */}
-                      </SliderThumb>
-                    </Slider>
-                  </GridItem>
+          <UpkeepModal
+            isOpen={isOpenUpkeepModal}
+            onClose={onCloseUpkeepModal}
+            onComplete={() => {
+              refetchWallet();
+              rdRefreshUser();
+              onCloseUpkeepModal();
+            }}
+            meepleOffDuty={meepleOffDuty}
+            meeplePaidFor={meeplePaidFor}
+            totalUpkeepRequired={totalUpkeepRequired}
+            upkeepPaid={upkeepPaid}
+          />
 
-              </SimpleGrid>
+          <TurnInCardsModal
+            isOpen={isOpenTurnInCardsModal}
+            onClose={onCloseTurnInCardsModal}
+            onComplete={() => {
+              rdRefreshUser();
+              refetchWallet();
+              onCompleteTurnInCards();
+              onCloseTurnInCardsModal();
+            }}
+            cardsInWallet={cardsInWallet}
+            locationData={locationData}
+            setCardsInWallet={setCardsInWallet}
+            ResetCardsInWallet={SetUpCardsInWallet}
+          />
 
-            </Box>
-            </RdModalAlert>
-            <RdModalFooter>
-              <Stack justifyContent={'space-between'} direction='row' spacing={6}>
-                  <RdButton onClick={onCloseUpkeepModal} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-                  <RdButton onClick={() => PayUpkeep()} size='lg' fontSize={{base: '18', sm: '24'}}> Pay Upkeep </RdButton>
-              </Stack>
-            </RdModalFooter>
-          </RdModal>
-
-
-          <RdModal isOpen={isOpenTurnInCardsModal} onClose={onCloseTurnInCardsModal} title={'Turn In Cards'} >
-            <RdModalAlert>
-              <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' minH={'300px'}>
-              <Tabs isFitted variant='enclosed' onChange={(index) => setSelectedTab(index)}>
-                  <TabList  mb='1em'>
-                    <Tab>Tier 1</Tab>
-                    <Tab>Tier 2</Tab>
-                    <Tab>Tier 3</Tab>
-                  </TabList>
-                </Tabs>
-              <Grid gridTemplateColumns={{base: '50px 225px', md: '50px 225px 50px 225px'}} w={'100%'} p={0}>
-                {filteredCards.map((card) => (
-                  <>
-                  <HStack>
-                    {card.playerCards >= 3 && (
-                      <>
-                      {/* <Checkbox p={0} maxW={10} colorScheme="yellow" onClick={() => SelectCard(card.id)}/> */}
-                      <Button onClick={() => SelectCardsToTurnIn(card.id)} border={1} h={{base:8,md:4}}>+</Button>
-                      {/* <Button w={4} h={4}>-</Button> */}
-                      </>
-                    )}
-                  </HStack>
-                  <HStack p={{base:2, md:0}}>
-                    <Text p={0} 
-                      color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}
-                      as={card.playerCards >= 3 ? 'b' :'a'} 
-                      textAlign={'left'}> {card.location}</Text> 
-                    <Text p={0} 
-                      color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}
-                      as={card.playerCards >= 3 ? 'b' :'a'} 
-                      >x {card.playerCards}</Text></HStack>
-                  </>
-                ))}
-              </Grid>
-            </Box>
-            <Box bgColor='#292626' rounded='md' mt={4} p={4} fontSize='sm' minH={'100px'}>
-              {cardsToTurnIn?.map((card) => (
-                <HStack>
-                  <Text p={0} color={'#aaa'} textAlign={'left'}> {card.location}</Text>
-                  <Text p={0} color={'#aaa'}>x 3</Text>
-                </HStack>
-              ))}
-            </Box>
-            </RdModalAlert>
-            <RdModalFooter>
-              <Stack justifyContent={'space-between'} direction='row' spacing={6}>
-                  <RdButton onClick={onCloseTurnInCardsModal} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-                  <RdButton onClick={() => TurnInCards()} size='lg' fontSize={{base: '18', sm: '24'}}>Turn In Selected Cards </RdButton>
-              </Stack>
-            </RdModalFooter>
-          </RdModal>
-
-          <RdModal isOpen={isOpenDepositModal} onClose={onCloseDepositModal} title={'Deposit Ryoshi'}  >
-            <RdModalAlert>
-              <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' >
+          <DepositRyoshiModal
+            isOpen={isOpenDepositModal}
+            onClose={onCloseDepositModal}
+            onComplete={() => {
+              refetchWallet();
+              rdRefreshUser();
+              onCloseDepositModal();
+            }}
+            offDutyAmount={meepleOffDuty}
+          />
           
-              <Text color={'#aaa'} w={'100%'} textAlign={'left'} p={2}> Select Ryoshi to : </Text>
-              <Flex justifyContent='center' w={'100%'}>
-                <NumberInput 
-                  defaultValue={0} 
-                  min={0} 
-                  max={meepleOffDuty} 
-                  name="quantity"
-                  onChange={handleQuantityChangeDeposit}
-                  value={meepleToDeposit}
-                  clampValueOnBlur={true}
-                  w='85%'
-                  >
-                  <NumberInputField />
-                  <NumberInputStepper >
-                    <NumberIncrementStepper color='#ffffff'/>
-                    <NumberDecrementStepper color='#ffffff'/>
-                  </NumberInputStepper>
-                </NumberInput>
-
-                <Spacer />
-                <Button 
-                  variant={'outline'}
-                  onClick={() => setMeepleToDeposit(meepleOffDuty)}
-                  > Max </Button>
-              </Flex>
-
-              <Flex justifyContent={'space-between'} align={'center'} mt={'8'}>
-                <Text color={'#aaa'} alignContent={'baseline'} p={2}> Remaining Ryoshi Off Duty: </Text>
-                <Text as={'b'} fontSize='28' p={2}>{meepleOffDuty - meepleToDeposit}</Text>
-              </Flex>
-
-            </Box>
-            </RdModalAlert>
-            <RdModalFooter>
-              <Stack justifyContent={'space-between'} direction='row'>
-                <RdButton onClick={onCloseDepositModal} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-                <RdButton onClick={() => DepositMeeple()} size='lg' fontSize={{base: '18', sm: '24'}}> Deposit </RdButton>
-              </Stack>
-            </RdModalFooter>
-          </RdModal>
         </>
       )}
     </RdModal>
@@ -774,6 +560,357 @@ const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: Withdr
           >
             Withdraw
           </RdButton>
+        </Stack>
+      </RdModalFooter>
+    </RdModal>
+  )
+}
+
+interface TurnInCardsModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onComplete: () => void;
+  cardsInWallet: LocationData[];
+  locationData: LocationData[];
+  setCardsInWallet: (cards:LocationData[]) => void;
+  ResetCardsInWallet: () => void;
+}
+
+const TurnInCardsModal = ({isOpen, onClose, onComplete, cardsInWallet, locationData, setCardsInWallet, ResetCardsInWallet}: TurnInCardsModalProps) => {
+  const user = useAppSelector((state) => state.user);
+  const {requestSignature} = useEnforceSignature();
+  const collectionAddress = config.contracts.resources
+  const [isExecuting, setIsExecuting] = useState(false);
+
+  //Turn in cards
+  const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [filteredCards, setFilteredCards] = useState<LocationData[]>([]);
+  const [cardsToTurnIn, setCardsToTurnIn] = useState<LocationData[]>([]);
+
+  const RefreshFilteredCards = () => {
+    const filtered = locationData.filter((location) => location.tier == selectedTab+1);
+    setFilteredCards(filtered);
+  }
+  const handleClose = () => {
+    setSelectedTab(0);
+    setCardsToTurnIn([]);
+    // SetUpCardsInWallet();
+    onClose();
+    ResetCardsInWallet();
+    console.log("Closed");
+  }
+
+  const TurnInCards = async () => {
+    if (!user.address) return;
+    const signature = await requestSignature();
+
+    let ids:number[] = [];
+    let amounts:number[] = [];
+    cardsToTurnIn.forEach((card) => {
+      for(let i = 0; i < 3; i+=3){
+        ids.push(card.id);
+        amounts.push(3);
+      }
+    })
+    try {
+      setIsExecuting(true);
+      const cmsResponse = await MeepleTradeInCards(user.address, signature, ids, amounts);
+      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
+      const tx = await resourcesContract.craftItems(cmsResponse.request, cmsResponse.signature);
+      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
+      onComplete();
+
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } finally {
+      setIsExecuting(false);
+    } 
+  }
+
+  const SelectCardsToTurnIn = (nftId:number) => {
+    let cards:LocationData[] = [];
+    cardsInWallet.forEach((card) => {
+      if(card.id == nftId){
+        console.log("Set " + card.location + " to be turned in");
+        cards.push(card);
+      }
+    })
+    //remove 3 of EACH CARD selected from player wallet
+    let cardsInWalletCopy = [...cardsInWallet];
+    cardsInWalletCopy.forEach((card) => {
+      cards.forEach((selectedCard) => {
+        if(card.id == selectedCard.id){
+          card.playerCards -= 3;
+        }
+      })
+    })
+    setCardsInWallet(cardsInWalletCopy);
+    setCardsToTurnIn([...cardsToTurnIn, ...cards]);
+  }
+
+  useEffect(() => {
+    locationData.forEach((location) => {
+      cardsInWallet.forEach((card) => {
+        if(Number(card.id) === Number(location.id)){
+          locationData[locationData.indexOf(location)].playerCards = card.playerCards;
+        }
+      })
+    })
+    RefreshFilteredCards();
+  } , [locationData, cardsInWallet])
+
+  useEffect(() => {
+    RefreshFilteredCards();
+
+  }, [selectedTab])
+  
+  return (
+    <RdModal isOpen={isOpen} onClose={handleClose} title={'Turn In Cards'} >
+      <RdModalAlert>
+        <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' minH={'300px'}>
+        <Tabs isFitted variant='enclosed' onChange={(index) => setSelectedTab(index)}>
+            <TabList  mb='1em'>
+              <Tab>Tier 1</Tab>
+              <Tab>Tier 2</Tab>
+              <Tab>Tier 3</Tab>
+            </TabList>
+          </Tabs>
+        <Grid gridTemplateColumns={{base: '50px 225px', md: '50px 225px 50px 225px'}} w={'100%'} p={0}>
+          {filteredCards.map((card) => (
+            <>
+            <HStack>
+              {card.playerCards >= 3 && (
+                <>
+                {/* <Checkbox p={0} maxW={10} colorScheme="yellow" onClick={() => SelectCard(card.id)}/> */}
+                <Button onClick={() => SelectCardsToTurnIn(card.id)} border={1} h={{base:8,md:4}}>+</Button>
+                {/* <Button w={4} h={4}>-</Button> */}
+                </>
+              )}
+            </HStack>
+            <HStack p={{base:2, md:0}}>
+              <Text p={0} 
+                color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}
+                as={card.playerCards >= 3 ? 'b' :'a'} 
+                textAlign={'left'}> {card.location}</Text> 
+              <Text p={0} 
+                color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}
+                as={card.playerCards >= 3 ? 'b' :'a'} 
+                >x {card.playerCards}</Text></HStack>
+            </>
+          ))}
+        </Grid>
+      </Box>
+      <Box bgColor='#292626' rounded='md' mt={4} p={4} fontSize='sm' minH={'100px'}>
+        {cardsToTurnIn?.map((card) => (
+          <HStack>
+            <Text p={0} color={'#aaa'} textAlign={'left'}> {card.location}</Text>
+            <Text p={0} color={'#aaa'}>x 3</Text>
+          </HStack>
+        ))}
+      </Box>
+      </RdModalAlert>
+      <RdModalFooter>
+        <Stack justifyContent={'space-between'} direction='row' spacing={6}>
+            <RdButton onClick={handleClose} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
+            <RdButton 
+              onClick={TurnInCards} 
+              size='lg' 
+              fontSize={{base: '18', sm: '24'}}
+              isLoading={isExecuting}
+            >Turn In Selected Cards </RdButton>
+        </Stack>
+      </RdModalFooter>
+    </RdModal>
+  )
+}
+
+interface DepositRyoshiModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onComplete: () => void;
+  offDutyAmount: number;
+}
+
+const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyAmount}: DepositRyoshiModalProps) => {
+  const user = useAppSelector((state) => state.user);
+  const collectionAddress = config.contracts.resources
+  const [isExecuting, setIsExecuting] = useState(false);
+
+  //Deposit Ryoshi
+  const [meepleToDeposit, setMeepleToDeposit] = useState(0);
+  const handleQuantityChangeDeposit= (stringValue: string, numValue: number) => setMeepleToDeposit(numValue)
+
+  const DepositMeeple = async () => {
+    if (!user.address) return;
+
+    try {
+      setIsExecuting(true);
+      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
+      const tx = await resourcesContract.deposit([2], [meepleToDeposit]);
+      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
+      setMeepleToDeposit(0);
+      onComplete();
+
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } finally {
+      setIsExecuting(false);
+    }
+  }
+
+  return (
+    <RdModal isOpen={isOpen} onClose={onClose} title={'Deposit Ryoshi'}  >
+      <RdModalAlert>
+        <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' >
+    
+        <Text color={'#aaa'} w={'100%'} textAlign={'left'} p={2}> Select Ryoshi to : </Text>
+        <Flex justifyContent='center' w={'100%'}>
+          <NumberInput 
+            defaultValue={0} 
+            min={0} 
+            max={offDutyAmount} 
+            name="quantity"
+            onChange={handleQuantityChangeDeposit}
+            value={meepleToDeposit}
+            clampValueOnBlur={true}
+            w='85%'
+            >
+            <NumberInputField />
+            <NumberInputStepper >
+              <NumberIncrementStepper color='#ffffff'/>
+              <NumberDecrementStepper color='#ffffff'/>
+            </NumberInputStepper>
+          </NumberInput>
+
+          <Spacer />
+          <Button 
+            variant={'outline'}
+            onClick={() => setMeepleToDeposit(offDutyAmount)}
+            > Max </Button>
+        </Flex>
+
+        <Flex justifyContent={'space-between'} align={'center'} mt={'8'}>
+          <Text color={'#aaa'} alignContent={'baseline'} p={2}> Remaining Ryoshi Off Duty: </Text>
+          <Text as={'b'} fontSize='28' p={2}>{offDutyAmount - meepleToDeposit}</Text>
+        </Flex>
+
+      </Box>
+      </RdModalAlert>
+      <RdModalFooter>
+        <Stack justifyContent={'space-between'} direction='row'>
+          <RdButton onClick={onClose} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
+          <RdButton 
+            onClick={DepositMeeple} 
+            size='lg' 
+            fontSize={{base: '18', sm: '24'}}
+            isLoading={isExecuting}
+            > Deposit </RdButton>
+        </Stack>
+      </RdModalFooter>
+    </RdModal>
+  )
+}
+
+interface UpkeepModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onComplete: () => void;
+  meepleOffDuty: number;
+  meeplePaidFor: number;
+  totalUpkeepRequired: number;
+  upkeepPaid: number;
+}
+
+const UpkeepModal = ({isOpen, onClose, onComplete, meepleOffDuty, meeplePaidFor, totalUpkeepRequired, upkeepPaid}: UpkeepModalProps) => {
+  const user = useAppSelector((state) => state.user);
+  const {requestSignature} = useEnforceSignature();
+  const collectionAddress = config.contracts.resources
+  const [isExecuting, setIsExecuting] = useState(false);
+
+  const [sliderValue, setSliderValue] = useState(100)
+  const upkeepDue = totalUpkeepRequired - upkeepPaid;
+  const paymentAmount = upkeepDue * (sliderValue/100);
+  const remainingMeepleYouNeedToPayFor = meepleOffDuty - meeplePaidFor - 200;
+  const troopsBeingPaidFor = remainingMeepleYouNeedToPayFor * (sliderValue/100);
+
+  const PayUpkeep = async () => {
+    if (!user.address) return;
+    const signature = await requestSignature();
+    try {
+      setIsExecuting(true);
+      const cmsResponse = await MeepleUpkeep(user.address, signature, Number(troopsBeingPaidFor.toFixed()));
+      // console.log("CMS Response: ", cmsResponse);
+      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
+      const tx = await resourcesContract.upkeep(cmsResponse.upkeepRequest, cmsResponse.signature);
+      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
+      onComplete();
+
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } finally {
+      setIsExecuting(false);
+    }
+  }
+
+  return (
+    <RdModal isOpen={isOpen} onClose={onClose} title={'Upkeep Cost Breakdown'} >
+      <RdModalAlert>
+        <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
+        <SimpleGrid columns={2} spacing={0} w={'100%'}>
+            <Text color={'#aaa'} textAlign={'left'} p={2}> Upkeep cost for {meepleOffDuty} Off Duty</Text>
+            <Text as={'b'} textAlign={'right'} p={2}> {totalUpkeepRequired} </Text>
+            <Text color={'#aaa'} textAlign={'left'} p={2}> Upkeep paid this week </Text>
+            <Text as={'b'} textAlign={'right'} p={2}> - {upkeepPaid} </Text>
+            <Text color={'#aaa'} textAlign={'left'} p={2}> Upkeep due</Text>
+            <Text as={'b'} textAlign={'right'} p={2}> {upkeepDue} </Text>
+            <Text color={'#aaa'} pt={12} pl={2} textAlign={'left'} > Payment Amount </Text>
+            <HStack   pt={10} spacing={0} justifyContent={'right'} w={'100%'}>
+              <Text as={'b'} textAlign={'right'} fontSize='28' > {paymentAmount.toFixed(0)} </Text>
+              <Image  src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/> 
+            </HStack >
+            <HStack  pl={2}  spacing={0} justifyContent={'left'} w={'100%'}>
+            <Text color={'#aaa'} textAlign={'left'} > Troops Being Paid For </Text>
+            <Text as={'b'} textAlign={'left'} p={2}>  {troopsBeingPaidFor.toFixed()} </Text>
+            </HStack>
+            
+            <GridItem colSpan={2} pl={4} pr={4} pt={10}>
+              <Slider aria-label='slider-ex-4' defaultValue={100} onChange={(val) => setSliderValue(val)}>
+                <SliderMark
+                value={sliderValue}
+                textAlign='center'
+                color='white'
+                mt='-10'
+                ml='-5'
+                w='12'
+              >
+                {sliderValue}%
+              </SliderMark>
+                <SliderTrack bg='red.100'>
+                  <SliderFilledTrack bg='tomato' />
+                </SliderTrack>
+                <SliderThumb boxSize={6}>
+                  {/* <Box color='tomato' as={'/img/ryoshi-dynasties/icons/koban.png'} /> */}
+                  {/* <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/> */}
+                </SliderThumb>
+              </Slider>
+            </GridItem>
+
+        </SimpleGrid>
+
+      </Box>
+      </RdModalAlert>
+      <RdModalFooter>
+        <Stack justifyContent={'space-between'} direction='row' spacing={6}>
+            <RdButton onClick={onClose} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
+            <RdButton 
+            onClick={PayUpkeep} 
+            size='lg' 
+            fontSize={{base: '18', sm: '24'}}
+            isLoading={isExecuting}
+            > Pay Upkeep </RdButton>
         </Stack>
       </RdModalFooter>
     </RdModal>
