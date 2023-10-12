@@ -31233,7 +31233,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "images": {
         "drop": "/img/drops/ryoshi-clubs/drop.webp",
@@ -31268,7 +31268,7 @@
       "memberCost": "88",
       "whitelistCost": "88",
       "foundersOnly": false,
-      "start": null,
+      "start": 1698343200000,
       "end": null,
       "referral": false,
       "is1155": false,
