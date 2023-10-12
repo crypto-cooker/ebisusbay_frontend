@@ -1,4 +1,5 @@
 import axios from "axios";
+import {PokerCollection} from "@src/core/services/api-service/types";
 
 
 export async function getSubgraphData(subgraph, query, variables, dataName) {
@@ -21,8 +22,9 @@ export async function getSubgraphData(subgraph, query, variables, dataName) {
 return foundData;
 }
 
-export async function getOwners(blockNumber) {
+export async function getOwners(collection) {
   const SUBGRAPH = "https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/staked-owners";
+
   let query = `
       query owners($lastID: String) {
         erc721Tokens(where: {contract: "0xd87838a982a401510255ec27e603b0f5fea98d24", id_gt: $lastID}, first: 1000) {
@@ -34,7 +36,7 @@ export async function getOwners(blockNumber) {
         }
   }
   `
-  let queryBlockNumber = `
+  let queryDiamonds = `
       query owners($lastID: String) {
         erc721Tokens(where: {contract: "0xd87838a982a401510255ec27e603b0f5fea98d24", id_gt: $lastID}, first: 1000, block: {number: 10176588}) {
               id
@@ -45,13 +47,25 @@ export async function getOwners(blockNumber) {
         }
   }
   `
+  let queryClubs = `
+      query owners($lastID: String) {
+        erc721Tokens(where: {contract: "0xd87838a982a401510255ec27e603b0f5fea98d24", id_gt: $lastID}, first: 1000, block: {number: 10636179}) {
+              id
+              owner {
+                    id
+              }
+              identifier
+        }
+  }
+  `
   try {
     let data;
-      if(!blockNumber) {
+      if(collection == "Live") {
         data = await getSubgraphData(SUBGRAPH, query, {}, "erc721Tokens");
-      } else {
-        // console.log("blockNumber", blockNumber)
-        data = await getSubgraphData(SUBGRAPH, queryBlockNumber, {}, "erc721Tokens");
+      } else if(collection == "Diamonds") {
+        data = await getSubgraphData(SUBGRAPH, queryDiamonds, {}, "erc721Tokens");
+      } else if(collection == "Clubs") {
+        data = await getSubgraphData(SUBGRAPH, queryClubs, {}, "erc721Tokens");
       }
       if (data) {
           // DATA HERE

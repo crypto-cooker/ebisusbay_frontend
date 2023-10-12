@@ -10,11 +10,13 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {shortAddress} from "@src/utils";
 import NextLink from "next/link";
 import { InfoIcon, LinkIcon } from "@chakra-ui/icons";
+import {PokerCollection} from "@src/core/services/api-service/types";
 
-const PokerLeaderboardComponent = () => {
+interface PokerLeaderboardProps {
+	pokerCollection: PokerCollection;
+}
 
-	const [rankedPlayers, setRankedPlayers] = useState<Player[]>([])
-  	const params = {} // whatever needed
+const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) => {
 	const isMobile = useMediaQuery("(max-width: 768px)")[0];
 	const [updatedAt, setUpdatedAt] = useState<string>();
 	
@@ -69,10 +71,9 @@ const PokerLeaderboardComponent = () => {
 		download(JSON.stringify(rewards), "diamondsRankedPlayersNFTS.json", "text/plain");
 	}
 
-
 	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt} = useInfiniteQuery(
 		['RyoshiDiamondsLeaderboard'],
-	  ({pageParam = 1}) => ApiService.withoutKey().getRyoshiDiamondsLeaderboardAtBlock(pageParam, 500, 10176588),
+	  ({pageParam = 1}) => ApiService.withoutKey().getRyoshiDiamondsLeaderboardAtBlock(pageParam, 500, pokerCollection),
 		{
 			getNextPageParam: (lastPage, pages) => {
 				return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
@@ -128,7 +129,9 @@ const PokerLeaderboardComponent = () => {
 		<Text fontSize={{base: 12, md:14}} textAlign='center'>Must be holding at least 5 cards to be ranked</Text>
 			<Link 
 				as={NextLink} 
-				href={'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'} 
+				href={pokerCollection === PokerCollection.Clubs ? 
+						'https://blog.ebisusbay.com/crypto-hodlem-round-2-ryoshi-clubs-playing-cards-collection-6e7d869f87ee' :
+						'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'} 
 				isExternal={true}>
 				<Button variant={'ghost'} maxW='250px' rightIcon={<InfoIcon/>}>Full Rules</Button>
 			</Link> 
@@ -233,7 +236,9 @@ const PokerLeaderboardComponent = () => {
 	return (
 	  <Flex w={'100%'} justifyContent={'center'} >
 		<VStack>
-			{updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Snapshot taken at Sep-12-2023 04:00:01 PM +UTC</Text>}
+			{pokerCollection === PokerCollection.Diamonds && updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Snapshot taken at Sep-12-2023 04:00:01 PM +UTC</Text>}
+			{pokerCollection === PokerCollection.Clubs && updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Snapshot taken at Oct-12-2023 04:00:01 PM +UTC</Text>}
+			{pokerCollection === PokerCollection.Live && updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Last refreshed at {updatedAt}</Text>}
 			{content}
 		</VStack>
 	  </Flex>
