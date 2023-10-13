@@ -154,15 +154,14 @@ const RdLand = ({nftId, rounded}: RdLandProps) => {
     console.log('size', size);
   },[size]) 
 
-  // useEffect(() => {
-  //   function handleResize(){
-  //     // console.log('resized to: ', window.innerWidth, 'x', window.innerHeight)
-  //     if(!ref.current) return;
-  //     // setSize(ref.current.offsetWidth===0?boxSize:ref.current.offsetWidth);
-
-  //   }
-  //   window.addEventListener('resize', handleResize)
-  // })
+  useEffect(() => {
+    function handleResize(){
+      if(!ref.current) return;
+      
+      setSize(ref.current.getBoundingClientRect().width);
+    }
+    window.addEventListener('resize', handleResize)
+  })
 
   const GetMarginLeft = (directional:string) => {
     switch(landType){
