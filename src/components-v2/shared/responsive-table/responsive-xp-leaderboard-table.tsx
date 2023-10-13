@@ -68,7 +68,7 @@ const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
           <Tr>
             <Th>Rank</Th>
             <Th cursor='pointer' colSpan={2}>Name</Th>
-            <Th onClick={() => onSort('price')} cursor='pointer'>XP Points</Th>
+            <Th cursor='pointer'>XP Points</Th>
           </Tr>
         </Thead>
         <Tbody>
