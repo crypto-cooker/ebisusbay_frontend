@@ -1,7 +1,6 @@
 import {
   Accordion,
   AccordionItem,
-  AccordionPanel,
   Box,
   Flex,
   HStack,
@@ -15,23 +14,24 @@ import {
   TableContainer,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
   useBreakpointValue,
   useColorModeValue,
   VStack,
-  Text,
 } from "@chakra-ui/react";
 import React from "react";
-import {shortAddress, timeSince} from "@src/utils";
+import {round, username} from "@src/utils";
 import Link from "next/link";
 import ImageService from "@src/core/services/image";
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
 import Blockies from "react-blockies";
-import { XPProfile } from "@src/core/services/api-service/types";
+import {XPProfile} from "@src/core/services/api-service/types";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
+import {commify} from "ethers/lib/utils";
 
 
 interface ResponsiveRewardsCollectionsTableProps {
@@ -47,9 +47,6 @@ const ResponsiveXPLeaderboardTable = ({data, breakpointValue}: ResponsiveRewards
 const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const textColor = useColorModeValue('#727272', '#a2a2a2');
-  const toFixedWithoutZeros = (num:number, precision:number) =>
-    num.toFixed(precision).replace(/\.0+$/, '');
-
   
   return (
     <TableContainer 
@@ -92,22 +89,14 @@ const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
                 )}
               </Td>
               <Td fontWeight='bold'>
-                <VStack 
-                  alignItems={'left'}
-                  >
-                  { entity.username === entity.walletAddress ? (
-                    <Text isTruncated maxW={'300px'} textAlign={'left'}>
-                    {shortAddress(entity.username)}
+                <LinkOverlay href={`/account/${entity.walletAddress}`} _hover={{color:'inherit'}}>
+                  <VStack alignItems={'left'}>
+                    <>{username(entity.username)}</>
+                    <Text fontSize={'14px'} isTruncated maxW={'300px'} textAlign={'left'}>
+                      Lvl: {entity.level}
                     </Text>
-                    ) : (
-                      <Text isTruncated maxW={'300px'} textAlign={'left'}>
-                        {entity.username}
-                      </Text>
-                  ) }
-                  <Text fontSize={'14px'} isTruncated maxW={'300px'} textAlign={'left'}>
-                    Lvl: {entity.level}
-                  </Text>
-                </VStack>
+                  </VStack>
+                </LinkOverlay>
                 {/* {entity.type === 'COLLECTION' && (
                   <LinkOverlay href={`/collection/${entity.walletAddress}`} _hover={{color:'inherit'}}>
                     {entity.name}
@@ -120,7 +109,7 @@ const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
                 )} */}
               </Td>
               <Td>
-                {toFixedWithoutZeros(entity.experience, 2)}
+                {commify(round(entity.experience, 2))}
               </Td>
             </LinkBox>
           ))}
@@ -133,11 +122,6 @@ const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
 };
 
 const DataAccordion = ({data}: ResponsiveRewardsCollectionsTableProps) => {
-  const hoverBackground = useColorModeValue('gray.100', '#424242');
-  const toFixedWithoutZeros = (num:number, precision:number) =>
-  num.toFixed(precision).replace(/\.0+$/, '');
-
-
   return (
     <>
       <Accordion w='full' allowMultiple>
@@ -168,18 +152,12 @@ const DataAccordion = ({data}: ResponsiveRewardsCollectionsTableProps) => {
                     )}
                   </Box>
                   <VStack align='start' spacing={0} flex='1' fontSize='sm'>
-                  { entity.username === entity.walletAddress ? (
-                    <Text isTruncated maxW={'300px'} textAlign={'left'}>
-                    {shortAddress(entity.username)}
+                    <Link href={`/account/${entity.walletAddress}`}>
+                      <>{username(entity.username)}</>
+                    </Link>
+                    <Text fontSize={'12px'} isTruncated maxW={'300px'} textAlign={'left'}>
+                      Lvl: {entity.level}
                     </Text>
-                    ) : (
-                      <Text isTruncated maxW={'300px'} textAlign={'left'}>
-                        {entity.username}
-                      </Text>
-                  ) }
-                  <Text fontSize={'12px'} isTruncated maxW={'300px'} textAlign={'left'}>
-                    Lvl: {entity.level}
-                  </Text>
                   </VStack>
                 </HStack>
               </Box>
@@ -188,18 +166,12 @@ const DataAccordion = ({data}: ResponsiveRewardsCollectionsTableProps) => {
                   <Stat size='sm' textAlign='end'>
                     <StatLabel>Points</StatLabel>
                     <StatNumber>
-                      <Box fontWeight='bold'>{toFixedWithoutZeros(entity.experience, 2)}</Box>
+                      <Box fontWeight='bold'>{commify(round(entity.experience, 2))}</Box>
                     </StatNumber>
                   </Stat>
                 </VStack>
               </Box>
-              {/*<AccordionButton w='auto'>*/}
-              {/*  <AccordionIcon />*/}
-              {/*</AccordionButton>*/}
             </Flex>
-            <AccordionPanel px={0}>
-              anything else?
-            </AccordionPanel>
           </AccordionItem>
             ))}
           </React.Fragment>
