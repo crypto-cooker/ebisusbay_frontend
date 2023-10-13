@@ -358,33 +358,28 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
               <Flex justifyContent={'space-between'} align={'center'}>
                 <VStack spacing={1} align={"left"} >
                   <Text textAlign='left' as="b" fontSize={18}> Weekly Upkeep </Text>
-                  {meepleOffDuty > 0 ? (
+                  {meepleOffDuty > 0 && (
                     <Text color={'#aaa'}>Upkeep due in <b>{upkeepDueText}</b></Text>
-                    ):<></>
-                  }
+                  )}
                 </VStack>
 
                 <VStack spacing={1} >
                   {needsToPayUpkeep ? (
                     <RdButton
                       h={12}
-                      onClick={() => onOpenUpkeepModal()}
+                      onClick={onOpenUpkeepModal}
                       size='lg'
                       fontSize={{base: '12', sm: '18'}}
                       w={{base: '150px', sm: '190px'}}
                       >
                       Pay Upkeep
                     </RdButton> 
+                  ) : meepleOffDuty > 0 ? (
+                    <Text as={'i'} color={'#aaa'}>Weekly Upkeep Paid</Text>
                   ) : (
-                    <>
-                    {meepleOffDuty > 0 ? (
-                      <Text as={'i'} color={'#aaa'}>Weekly Upkeep Paid</Text>
-                      ):(
-                      <Text as={'i'} color={'#aaa'}>No Upkeep Due</Text>
-                    )}
-                    </>
+                    <Text as={'i'} color={'#aaa'}>No Upkeep Due</Text>
                   )}
-                  </VStack>
+                </VStack>
               </Flex>
             </RdModalBox>
 
@@ -400,7 +395,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                 <RdButton
                   h={12}
                   mt={10}
-                  onClick={() => onOpenTurnInCardsModal()}
+                  onClick={onOpenTurnInCardsModal}
                   size='lg'
                   fontSize={{base: '12', sm: '18'}}
                   w={{base: '150px', sm: '190px'}}
@@ -859,7 +854,7 @@ const UpkeepModal = ({isOpen, onClose, onComplete, meepleOffDuty, meeplePaidFor,
     <RdModal isOpen={isOpen} onClose={onClose} title={'Upkeep Cost Breakdown'} >
       <RdModalAlert>
         <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
-        <SimpleGrid columns={2} spacing={0} w={'100%'}>
+          <SimpleGrid columns={2} spacing={0} w={'100%'}>
             <Text color={'#aaa'} textAlign={'left'} p={2}> Upkeep cost for {meepleOffDuty} Off Duty</Text>
             <Text as={'b'} textAlign={'right'} p={2}> {totalUpkeepRequired} </Text>
             <Text color={'#aaa'} textAlign={'left'} p={2}> Upkeep paid this week </Text>
@@ -872,8 +867,8 @@ const UpkeepModal = ({isOpen, onClose, onComplete, meepleOffDuty, meeplePaidFor,
               <Image  src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/> 
             </HStack >
             <HStack  pl={2}  spacing={0} justifyContent={'left'} w={'100%'}>
-            <Text color={'#aaa'} textAlign={'left'} > Troops Being Paid For </Text>
-            <Text as={'b'} textAlign={'left'} p={2}>  {troopsBeingPaidFor.toFixed()} </Text>
+              <Text color={'#aaa'} textAlign={'left'} > Troops Being Paid For </Text>
+              <Text as={'b'} textAlign={'left'} p={2}>  {troopsBeingPaidFor.toFixed()} </Text>
             </HStack>
             
             <GridItem colSpan={2} pl={4} pr={4} pt={10}>
@@ -897,9 +892,7 @@ const UpkeepModal = ({isOpen, onClose, onComplete, meepleOffDuty, meeplePaidFor,
                 </SliderThumb>
               </Slider>
             </GridItem>
-
-        </SimpleGrid>
-
+          </SimpleGrid>
       </Box>
       </RdModalAlert>
       <RdModalFooter>
