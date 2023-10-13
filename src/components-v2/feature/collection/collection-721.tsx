@@ -240,7 +240,7 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
           )}
           {isPlayingCardsCollection(collection.address) && (
             <li className={`tab ${openMenu === tabs.diamondsPokerGame ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.diamondsPokerGame)}>Diamond Game</span>
+              <span onClick={handleBtnClick(tabs.diamondsPokerGame)}>Diamonds Game</span>
             </li>
           )}
           {isPlayingCardsCollection(collection.address) && (

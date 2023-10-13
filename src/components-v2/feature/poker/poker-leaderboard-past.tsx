@@ -1,5 +1,5 @@
 import {useInfiniteQuery} from "@tanstack/react-query";
-import { Center, Spinner, Box, HStack, useMediaQuery, VStack, Link, Button} from "@chakra-ui/react";
+import { Center, Spinner, Box, HStack, useMediaQuery, VStack, Link, Button, useColorModeValue, Card,CardBody } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { ApiService } from "@src/core/services/api-service";
 import {Text,Grid, GridItem, Flex,SimpleGrid } from "@chakra-ui/react";
@@ -11,6 +11,8 @@ import {shortAddress} from "@src/utils";
 import NextLink from "next/link";
 import { InfoIcon, LinkIcon } from "@chakra-ui/icons";
 import {PokerCollection} from "@src/core/services/api-service/types";
+import ImageService from "@src/core/services/image";
+import {useAppSelector} from "@src/Store/hooks";
 
 interface PokerLeaderboardProps {
 	pokerCollection: PokerCollection;
@@ -19,6 +21,8 @@ interface PokerLeaderboardProps {
 const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) => {
 	const isMobile = useMediaQuery("(max-width: 768px)")[0];
 	const [updatedAt, setUpdatedAt] = useState<string>();
+	const user = useAppSelector(state => state.user);
+	const hoverBackground = useColorModeValue('gray.100', '#424242');
 	
 	const GenerateJson = () => {
 		if(!data) return;
@@ -78,10 +82,6 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 			getNextPageParam: (lastPage, pages) => {
 				return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
 			},
-		// onSuccess: (data) => {
-		// 	const [refreshTime, setRefreshTime] = useState('00:00:00');
-		// 	setRefreshTime(new Date().toLocaleTimeString())
-		// },
 	    refetchOnWindowFocus: false,
 	    staleTime: 60,
 	    cacheTime: 65
@@ -96,6 +96,28 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		if(!data) return; 
 		// GenerateJson();
 	}, [data])
+
+	const [playerProfile, setPlayerProfile] = useState<Player>();
+	const [playerRank, setPlayerRank] = useState<number>(0);
+
+	const FindPlayerInData = () => {
+		if(!data) return;
+		if(!user.address) return;
+
+		data.pages[0].data.map((player: Player, i : number) => (
+			player.address === user.address && (
+				setPlayerProfile(player),
+				setPlayerRank(i+1)
+			)
+		))
+	}
+
+	useEffect(() => {
+		if(!data) return;
+		if(!user.address) return;
+		FindPlayerInData();
+		
+	}, [data, user.address])
 
 	useEffect(() => {
 		if(!dataUpdatedAt) return; 
@@ -117,9 +139,16 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		  }
 
 	    return status === "loading" ? (
-	      <Center>
-	        <Spinner />
-	      </Center>
+
+		<Card variant='outline' mt={2}>
+           <CardBody textAlign='center'>
+             <Text fontSize='xl' fontWeight='bold'>Preparing Leaderboard...</Text>
+             <Text>Previous game winners will be available shortly!</Text>
+				<Center>
+					<Spinner />
+				</Center>
+           </CardBody>
+          </Card> 
 	    ) : status === "error" ? (
 	      <Box textAlign='center'>
 	        Error: {(error as any).message}
@@ -162,7 +191,6 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				spacingX={{base: 4, md: 12}}
 				gridTemplateColumns={{base: '15px 50px 125px 50px', md:'50px 350px 150px 100px'}}
 				rounded={'md'}
-				// justifyItems={'center'}
 			>
 				<GridItem  as='b' maxW='50px' >
 					<Text fontSize={{base: 12, md:14}}>Rank</Text>
@@ -176,10 +204,6 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 					<Text fontSize={{base: 12, md:14}}>Best Hand</Text>
 				</GridItem>
 		
-				{/* <GridItem >
-					<Text as='b'>Primary</Text>
-				</GridItem>
-		 */}
 				<GridItem as='b'>
 					<Text fontSize={{base: 12, md:14}}>Secondary</Text>
 				</GridItem>
@@ -187,6 +211,43 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				{/* <GridItem as='b'>
 					<Text>All Cards</Text>
 				</GridItem> */}
+				{user.address && (
+					<>
+					<GridItem backgroundColor={'gray.800'} colSpan ={4} _hover={{bg: hoverBackground}} rounded={'md'}>
+					<HStack minW={'100%'} backgroundColor={'blue.800'} spacing={{base: 4, md: 12}} justifyItems='left' pb={2} pt={2}>
+						<Text as={'b'} w={{base: '15px', md:'50px'}} fontSize={{base: 12, md:14}}>{playerRank === 0 ? "NA" : playerRank}</Text>
+						<GridItem w={{base: '50px', md:'350px'}} >
+							<Text fontSize={{base: 10, md:14}} noOfLines={1}>{isMobile ? shortAddress(user.address) : user.address}</Text>
+						</GridItem>
+						<GridItem w={{base: '125px', md:'150px'}}>
+							<Text as={'b'} fontSize={{base: 12, md:14}}>
+								{playerProfile ? 
+								( getHandName(playerProfile.bestHand.handRef) + " (" 
+								+ playerProfile.bestHand.handDescription + ")") : "NA"}
+							</Text>
+						</GridItem>
+				
+						{/* <GridItem>
+							<Text>{playerProfile ? getCardName(playerProfile.bestHand.primaryValue) : "NA"}</Text>
+						</GridItem> */}
+				
+						<GridItem w={{base: '50px', md:'100px'}}>
+							<HStack>
+								<Text as={'b'} >{ playerProfile ? getCardName(playerProfile.bestHand.secondaryValue) : "NA"}</Text>
+								{playerProfile?.bestHand?.secondaryCardEdition! >= 0 &&
+									<Text
+									as={'b'} 
+									fontSize={{base: 8, md:12}}
+									color={'gray.500'}
+								>id:{playerProfile && playerProfile.bestHand.secondaryCardEdition}</Text>
+								}
+							</HStack>
+						</GridItem>
+					</HStack>
+					</GridItem>
+					</>
+				)}
+				
 
 		
 				{data?.pages[0].data.map((player: Player, i : number) => (
@@ -195,7 +256,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				<Text fontSize={{base: 12, md:14}}> {i+1}</Text>
 				</GridItem>
 
-				<GridItem >
+				<GridItem _hover={{bg: hoverBackground}}>
 					<Text fontSize={{base: 12, md:14}}>{isMobile ? shortAddress(player.address) : player.address}</Text>
 				</GridItem>
 		
@@ -231,7 +292,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		  </InfiniteScroll>
 		</>
 	    )
-	  }, [data, status]);
+	  }, [data, status, playerProfile]);
 	
 	return (
 	  <Flex w={'100%'} justifyContent={'center'} >
