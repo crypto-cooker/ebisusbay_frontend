@@ -69,7 +69,7 @@ const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
             <LinkBox as={Tr} key={`${entity.walletAddress}`} _hover={{bg: hoverBackground}} textDecoration='none'>
               <Td>{entity.rank}</Td>
               <Td w='50px'>
-                {entity.profileImage ? (
+                {entity.avatar ? (
                   <Box
                     width={50}
                     height={50}
@@ -78,7 +78,7 @@ const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
                     overflow='hidden'
                   >
                     <CdnImage
-                      src={ImageService.translate(entity.profileImage).avatar()}
+                      src={ImageService.translate(entity.avatar).avatar()}
                       alt={entity.username}
                       width="50"
                       height="50"
@@ -134,7 +134,7 @@ const DataAccordion = ({data}: ResponsiveRewardsCollectionsTableProps) => {
               <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
                 <HStack>
                   <Box position='relative'>
-                    {entity.profileImage ? (
+                    {entity.avatar ? (
                       <Box
                         width='40px'
                         height='40px'
@@ -143,7 +143,7 @@ const DataAccordion = ({data}: ResponsiveRewardsCollectionsTableProps) => {
                         overflow='hidden'
                       >
                         <ChakraImage
-                          src={ImageService.translate(entity.profileImage).avatar()}
+                          src={ImageService.translate(entity.avatar).avatar()}
                           alt={entity.username}
                         />
                       </Box>

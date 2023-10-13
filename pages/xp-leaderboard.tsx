@@ -141,7 +141,7 @@ const XPLeaderboard = () => {
                     {status !== 'error' ? (
                       <>
                         <HStack>
-                        {userProfile.profileImage ? (
+                        {userProfile.avatar ? (
                             <Box
                               width='40px'
                               height='40px'
@@ -150,7 +150,7 @@ const XPLeaderboard = () => {
                               overflow='hidden'
                             >
                               <ChakraImage
-                                src={ImageService.translate(userProfile.profileImage).avatar()}
+                                src={ImageService.translate(userProfile.avatar).avatar()}
                                 alt={userProfile.username}
                               />
                             </Box>
@@ -184,7 +184,7 @@ const XPLeaderboard = () => {
             <Text fontSize='26px' fontWeight='bold'>Leading Players</Text>
             <Box fontSize='sm'>
               <Text as='span'>Users with the highest amount of Experience.{' '}</Text>
-              <Text as='span' fontWeight='bold' className='color'><Link href='https://ebisusbay.notion.site/Rewards-aa425cc2207c42a996e1a5e8b03fc00a' isExternal>Learn more</Link></Text>
+              <Text as='span' fontWeight='bold' className='color'><Link href='https://ebisusbay.notion.site/Levels-and-Experience-Points-91658dcfd1b64fcf93b7f5b3af8c069c' isExternal>Learn more</Link></Text>
             </Box>
           </Flex>
         </Box>
