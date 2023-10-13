@@ -56,6 +56,9 @@ const ResponsiveXPLeaderboardTable = ({data, breakpointValue}: ResponsiveRewards
 const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const textColor = useColorModeValue('#727272', '#a2a2a2');
+  const toFixedWithoutZeros = (num:number, precision:number) =>
+    num.toFixed(precision).replace(/\.0+$/, '');
+
   
   return (
     <TableContainer 
@@ -126,7 +129,7 @@ const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
                 )} */}
               </Td>
               <Td>
-                {entity.experience}
+                {toFixedWithoutZeros(entity.experience, 2)}
               </Td>
             </LinkBox>
           ))}
@@ -138,8 +141,11 @@ const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
   )
 };
 
-const DataAccordion = ({data, onSort, tabCallback}: ResponsiveRewardsCollectionsTableProps) => {
+const DataAccordion = ({data}: ResponsiveRewardsCollectionsTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
+  const toFixedWithoutZeros = (num:number, precision:number) =>
+  num.toFixed(precision).replace(/\.0+$/, '');
+
 
   return (
     <>
@@ -191,7 +197,7 @@ const DataAccordion = ({data, onSort, tabCallback}: ResponsiveRewardsCollections
                   <Stat size='sm' textAlign='end'>
                     <StatLabel>Points</StatLabel>
                     <StatNumber>
-                      <Box fontWeight='bold'>{entity.experience}</Box>
+                      <Box fontWeight='bold'>{toFixedWithoutZeros(entity.experience, 2)}</Box>
                     </StatNumber>
                   </Stat>
                 </VStack>
