@@ -41,16 +41,7 @@ interface ResponsiveRewardsCollectionsTableProps {
 
 const ResponsiveXPLeaderboardTable = ({data, breakpointValue}: ResponsiveRewardsCollectionsTableProps) => {
   const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'lg'})
-  return (
-    <>
-      {shouldUseAccordion ? (
-        <DataAccordion data={data} />
-      ) : (
-        <DataTable data={data} />
-      )
-      }
-    </>
-  )
+  return shouldUseAccordion ? <DataAccordion data={data} /> : <DataTable data={data} />;
 }
 
 const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
@@ -79,7 +70,7 @@ const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
           <React.Fragment key={pageIndex}>
             {page.data.map((entity, index) => (
             <LinkBox as={Tr} key={`${entity.walletAddress}`} _hover={{bg: hoverBackground}} textDecoration='none'>
-              <Td>{index + 1}</Td>
+              <Td>{entity.rank}</Td>
               <Td w='50px'>
                 {entity.profileImage ? (
                   <Box

@@ -389,4 +389,5 @@ export interface XPProfile {
     profileImage: string;
     experience: number;
     level: number;
+    rank: number;
 }
