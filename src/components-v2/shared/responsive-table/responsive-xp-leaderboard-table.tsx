@@ -36,26 +36,24 @@ import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
 
 interface ResponsiveRewardsCollectionsTableProps {
   data: InfiniteData<IPaginatedList<XPProfile>>;
-  onSort: (field: string) => void;
   breakpointValue?: string
-  tabCallback: (key: string) => void;
 }
 
-const ResponsiveXPLeaderboardTable = ({data, onSort, tabCallback, breakpointValue}: ResponsiveRewardsCollectionsTableProps) => {
+const ResponsiveXPLeaderboardTable = ({data, breakpointValue}: ResponsiveRewardsCollectionsTableProps) => {
   const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'lg'})
   return (
     <>
       {shouldUseAccordion ? (
-        <DataAccordion data={data} onSort={onSort} tabCallback={tabCallback}/>
+        <DataAccordion data={data} />
       ) : (
-        <DataTable data={data} onSort={onSort} tabCallback={tabCallback}/>
+        <DataTable data={data} />
       )
       }
     </>
   )
 }
 
-const DataTable = ({data, onSort, tabCallback}: ResponsiveRewardsCollectionsTableProps) => {
+const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const textColor = useColorModeValue('#727272', '#a2a2a2');
   

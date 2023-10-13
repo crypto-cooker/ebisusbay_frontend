@@ -74,43 +74,27 @@ const XPLeaderboard = () => {
     });
     return data;
   };
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    status,
-    isLoading: isLeaderboardLoading,
-    isError: isLeaderboardError,
-  } = useInfiniteQuery(
-    ['Factions', queryParams],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false,
-  }
-  );
+
+  const {data, error, status, isLoading: isLeaderboardLoading, isError: isLeaderboardError} = useInfiniteQuery({
+    queryKey: ['Factions', queryParams],
+    queryFn: fetcher,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false,
+  });
+
   const content = useMemo(() => {
     return status === "loading" ? (
-      <>
-      <Box textAlign='center' minH={'500px'}>
       <Center>
         <Spinner />
       </Center>
-      </Box>
-      </>
     ) : status === "error" ? (
       <Box textAlign='center'>
         Error: {(error as any).message}
       </Box>
     ) : (
-      <ResponsiveXPLeaderboardTable
-        tabCallback= {queryCallback} 
-        data={data}
-        onSort={() => {}}
-      />
+      <ResponsiveXPLeaderboardTable data={data} />
     )
   }, [data, status]);
 
@@ -137,14 +121,7 @@ const XPLeaderboard = () => {
   useEffect(() => {
     GetPlayerRank();
     console.log("data: ", data);
-
-  }, [data, user]);   
-
-  useEffect(() => {
-    //need to add some logic to check if the query has already been fetched
-    console.log("refetching");
-    // refetch();
-  }, [queryParams]);
+  }, [data, user]);
 
   return (
     <Box>
@@ -222,33 +199,23 @@ const XPLeaderboard = () => {
           </Flex>
         </Box>
         <Box mt={4}>
-          {/* <Card variant='outline' mt={2}>
-           <CardBody textAlign='center'>
-             <Text fontSize='xl' fontWeight='bold'>Preparing Leaderboard...</Text>
-             <Text>Previous game winners will be available shortly!</Text>
-           </CardBody>
-          </Card> */}
-            <ul className="de_nav mb-2">
+          <ul className="de_nav mb-2">
             <li id="Mainbtn0" className={`tab ${openMenu === tabs.week ? 'active' : ''}`}>
-              <span onClick={handleBtnClick(tabs.week)}> Week</span>
+              <span onClick={handleBtnClick(tabs.week)}>Week</span>
             </li>
             <li id="Mainbtn0"className={`tab ${openMenu === tabs.month ? 'active' : ''}`}>
-              <span onClick={handleBtnClick(tabs.month)}> Month</span>
+              <span onClick={handleBtnClick(tabs.month)}>Month</span>
             </li>
             <li id="Mainbtn1" className={`tab ${openMenu === tabs.all ? 'active' : ''}`}>
               <span onClick={handleBtnClick(tabs.all)}>All Time</span>
             </li>
           </ul>
-            <Center>
-            {isLeaderboardLoading ?
-            (
-            <>
-            <Flex minH={'500px'}>
-              <Spinner />
-            </Flex>
-            </>
-            )
-              : isLeaderboardError ?
+          <Center>
+            {isLeaderboardLoading ? (
+              <Flex minH={'500px'}>
+                <Spinner />
+              </Flex>
+            ) : isLeaderboardError ?
                 <Text fontSize='xl' fontWeight='bold'>Error loading leaderboard</Text>
                 : content
             }
