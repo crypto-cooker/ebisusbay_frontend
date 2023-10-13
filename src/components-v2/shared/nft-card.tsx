@@ -231,7 +231,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                     />
                   </Watermarked>
                 ) : isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
-                      <Box w="440" h="440">
+                      <Box w="440" h="100%">
                       <RdLand nftId={nft.id ?? nft.nftId} />
                       </Box>
                 ) : (

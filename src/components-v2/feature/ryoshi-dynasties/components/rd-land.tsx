@@ -151,7 +151,7 @@ const RdLand = ({nftId, rounded}: RdLandProps) => {
   },[ref.current]) 
 
   useEffect(() => {
-    console.log('size', size);
+    // console.log('size', size);
   },[size]) 
 
   useEffect(() => {
