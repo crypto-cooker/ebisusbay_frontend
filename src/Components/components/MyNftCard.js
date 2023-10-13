@@ -214,7 +214,10 @@ const MyNftCard = ({
               cursor="pointer"
             >
               {isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
-                <RdLand nftId={nft.id ?? nft.nftId} boxSize={izanamiImageSize ?? 368} />
+                <Box height={440} width={440}>
+                  <Text fontSize='sm' className='text-muted'>Land Deed</Text>
+                  <RdLand nftId={nft.id ?? nft.nftId}/>
+                </Box>
               ) : (
                   <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
                             title={nft.name}

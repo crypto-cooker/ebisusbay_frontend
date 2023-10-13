@@ -231,7 +231,9 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                     />
                   </Watermarked>
                 ) : isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
-                  <RdLand nftId={nft.id ?? nft.nftId} boxSize={izanamiImageSize ?? 368} />
+                      <Box w="440" h="440">
+                      <RdLand nftId={nft.id ?? nft.nftId} />
+                      </Box>
                 ) : (
                   <AnyMedia
                     image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}

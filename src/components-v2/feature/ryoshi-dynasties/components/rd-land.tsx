@@ -16,12 +16,12 @@ interface Attribute{
 }
 interface RdLandProps {
   nftId: string;
-  boxSize: number;
-  forceBoxSize?: boolean;
+  // boxSize: number;
+  // forceBoxSize?: boolean;
   rounded?: ResponsiveValue<CSS.Property.BorderRadius>
 }
 
-const RdLand = ({nftId, boxSize, forceBoxSize, rounded}: RdLandProps) => {
+const RdLand = ({nftId, rounded}: RdLandProps) => {
 
   const [landTypeRef, setLandTypeRef] = useState<any>(null);
   const [landsBaseRef, setLandsBaseRef] = useState<any>(null);
@@ -40,7 +40,7 @@ const RdLand = ({nftId, boxSize, forceBoxSize, rounded}: RdLandProps) => {
 
   const mainFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/'
   const rockFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/ROCKS/'
-  const [size, setSize] = useState(184);
+  const [size, setSize] = useState<number>(1);
   const [landType, setLandType] = useState('')
 
   const GetTraitType = (traitType:string, attributes:Attribute[], underlandSpot?:string, animVersion?:boolean) => {
@@ -143,31 +143,26 @@ const RdLand = ({nftId, boxSize, forceBoxSize, rounded}: RdLandProps) => {
   },[nftId])
 
   useEffect(() => {
-    // if(boxSize){
-    //   setSize(boxSize)
-    // }
-  },[boxSize]) 
-
-
-  useEffect(() => {
-    function handleResize(){
-      // console.log('resized to: ', window.innerWidth, 'x', window.innerHeight)
-      if(!ref.current) return;
-      setSize(ref.current.offsetWidth===0?boxSize:ref.current.offsetWidth);
-    }
-    window.addEventListener('resize', handleResize)
-  })
-
-  useEffect(() => {
-    // console.log('size', size);
+    //get width of this component
     if(!ref.current) return;
-    setSize(ref.current.offsetWidth===0?boxSize:ref.current.offsetWidth);
 
-    if(forceBoxSize){
-      ref.current.style.width = boxSize + 'px';
-    }
+    setSize(ref.current.getBoundingClientRect().width);
 
-  }, [size, ref.current])
+  },[ref.current]) 
+
+  useEffect(() => {
+    console.log('size', size);
+  },[size]) 
+
+  // useEffect(() => {
+  //   function handleResize(){
+  //     // console.log('resized to: ', window.innerWidth, 'x', window.innerHeight)
+  //     if(!ref.current) return;
+  //     // setSize(ref.current.offsetWidth===0?boxSize:ref.current.offsetWidth);
+
+  //   }
+  //   window.addEventListener('resize', handleResize)
+  // })
 
   const GetMarginLeft = (directional:string) => {
     switch(landType){
