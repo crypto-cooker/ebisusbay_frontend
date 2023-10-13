@@ -56,9 +56,6 @@ const ResponsiveXPLeaderboardTable = ({data, breakpointValue}: ResponsiveRewards
 const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const textColor = useColorModeValue('#727272', '#a2a2a2');
-  const toFixedWithoutZeros = (num:number, precision:number) =>
-    num.toFixed(precision).replace(/\.0+$/, '');
-
   
   return (
     <TableContainer 
@@ -71,7 +68,7 @@ const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
           <Tr>
             <Th>Rank</Th>
             <Th cursor='pointer' colSpan={2}>Name</Th>
-            <Th cursor='pointer'>XP Points</Th>
+            <Th onClick={() => onSort('price')} cursor='pointer'>XP Points</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -129,7 +126,7 @@ const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
                 )} */}
               </Td>
               <Td>
-                {toFixedWithoutZeros(entity.experience, 2)}
+                {entity.experience}
               </Td>
             </LinkBox>
           ))}
@@ -141,11 +138,8 @@ const DataTable = ({data}: ResponsiveRewardsCollectionsTableProps) => {
   )
 };
 
-const DataAccordion = ({data}: ResponsiveRewardsCollectionsTableProps) => {
+const DataAccordion = ({data, onSort, tabCallback}: ResponsiveRewardsCollectionsTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
-  const toFixedWithoutZeros = (num:number, precision:number) =>
-  num.toFixed(precision).replace(/\.0+$/, '');
-
 
   return (
     <>
@@ -197,7 +191,7 @@ const DataAccordion = ({data}: ResponsiveRewardsCollectionsTableProps) => {
                   <Stat size='sm' textAlign='end'>
                     <StatLabel>Points</StatLabel>
                     <StatNumber>
-                      <Box fontWeight='bold'>{toFixedWithoutZeros(entity.experience, 2)}</Box>
+                      <Box fontWeight='bold'>{entity.experience}</Box>
                     </StatNumber>
                   </Stat>
                 </VStack>
