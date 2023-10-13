@@ -1,4 +1,4 @@
-import React, {RefObject} from 'react';
+import React, {RefObject, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Link from 'next/link';
 import {createGlobalStyle} from 'styled-components';
@@ -31,6 +31,12 @@ import {ChevronDownIcon, CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
 import Search from "@src/components-v2/shared/layout/navbar/search";
 import MobileSearchDrawer from "@src/components-v2/shared/layout/navbar/search/drawer";
 import {useAppSelector} from "@src/Store/hooks";
+import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
+import {appConfig} from "@src/Config";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {round} from "@src/utils";
+
+const config = appConfig();
 
 const GlobalStyles = createGlobalStyle`
   header#myHeader {
@@ -57,6 +63,8 @@ const Header = function () {
     { base: true, lg: false },
     { fallback: 'lg'},
   );
+  const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, config.chain.id);
+  const [currentFrtnPrice, setCurrentFrtnPrice] = useState(0);
 
   const ref: RefObject<HTMLDivElement> = React.useRef(null)
   useOutsideClick({
@@ -69,6 +77,16 @@ const Header = function () {
     dispatch(setTheme(newTheme));
     setColorMode(newTheme);
   };
+
+  useEffect(() => {
+    try {
+      if (tokenUsdRate) {
+        setCurrentFrtnPrice(round(tokenUsdRate, 4));
+      }
+    } catch (e) {
+      console.error('Error setting global FRTN price', e);
+    }
+  }, [tokenUsdRate]);
 
   return (
     <>
@@ -100,8 +118,17 @@ const Header = function () {
                 <Search />
               </Box>
             )}
+
             <Spacer />
             <Flex alignItems={'center'} className="mainside">
+
+              {!!currentFrtnPrice && (
+                <HStack fontSize='sm' fontWeight='bold' me={4} >
+                  <FortuneIcon boxSize={6} />
+                  <Text as='span' className='col-white'>${currentFrtnPrice}</Text>
+                </HStack>
+              )}
+
               <HStack
                 as={'nav'}
                 spacing={3}

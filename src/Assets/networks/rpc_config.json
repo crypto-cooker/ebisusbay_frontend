@@ -23966,6 +23966,131 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Monkey Of Anarkey License NFT",
+      "slug": "monkey-of-anarkey-license-nft",
+      "multiToken": false,
+      "address": "0x8de18EB0bD2C6A6B66bf58e669aD010544937757",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The MoA License NFT is the ultimate key to unlocking hidden mysteries and secrets within the Monkey of Anarkey ecosystem. As a proud MoA License Holder, you will embark on a thrilling journey through time and space, gaining access to the most exclusive areas of the ecosystem.",
+        "avatar": "/img/collections/monkey-of-anarkey-license-nft/avatar.webp",
+        "card": "/img/collections/monkey-of-anarkey-license-nft/card.webp",
+        "banner": "/img/collections/monkey-of-anarkey-license-nft/banner.webp",
+        "website": "https://monkeyofanarkey.com/",
+        "twitter": "https://twitter.com/MonkeyOfAnarkey",
+        "discord": "https://discord.gg/wxYhYkVhNN",
+        "medium": "https://medium.com/@MonkeyOfAnarkey/introducing-the-moa-license-nft-revealing-secrets-and-exclusive-perks-cbbec8f74747",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": false
+      }
+    },
+    {
+      "name": "Sp00kies",
+      "slug": "sp00kies",
+      "multiToken": false,
+      "address": "0x0521217B36a1482E6798692687f836c68c7F3837",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collaborative collection featuring Cr00ts & Fe00ts to celebrate the spooky season.  This collection made out of 5566 NFTs, half from each character, will be a boost relayed directly to the Cr00ts/Fe00ts/Doo Faction on the Ryoshi game by Ebisus.",
+        "avatar": "/img/collections/sp00kies/avatar.webp",
+        "card": "/img/collections/sp00kies/card.webp",
+        "banner": "/img/collections/sp00kies/banner.webp",
+        "website": "https://fe00ts.netlify.app/sp00kies/mint",
+        "twitter": "https://www.twitter.com/Fe00ts",
+        "discord": "https://discord.gg/gRs6HjryEW",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Blumies Tickets",
+      "slug": "blumies-tickets",
+      "multiToken": false,
+      "address": "0x4Eeeb2684b51AbB93660C0EAFA98a9185EE46A3F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Engage with Blumies and don't miss a chance to win prizes, special bonuses, custom NFTs, airdrops throughout the seasons, and more.",
+        "avatar": "/img/collections/blumies-tickets/avatar.webp",
+        "banner": "/img/collections/blumies-tickets/banner.webp",
+        "card": "/img/collections/blumies-tickets/card.webp",
+        "website": "https://www.blumiesofficial.com/",
+        "twitter": "https://twitter.com/BlumiesNFT",
+        "discord": "https://discord.gg/SWanx5JTAa",
+        "medium": "https://blumies.gitbook.io/blumies-nft/",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Mutant Shinu",
+      "slug": "mutant-shinu",
+      "multiToken": false,
+      "address": "0x3D373F4887A7316f04a72Cc2162524e5A40C188c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "By trading Mutant Shinus, you can support your favorite Faction on Ryoshi Dynasty and receive daily rewards. Join us and earn FRTN today!",
+        "avatar": "/img/collections/mutant-shinu/avatar.webp",
+        "card": "/img/collections/mutant-shinu/card.webp",
+        "banner": "/img/collections/mutant-shinu/banner.webp",
+        "website": "https://shinudex.online/#/swap",
+        "twitter": "https://twitter.com/ShikokuInuCro",
+        "discord": "https://discord.gg/gx7E3v8vZT",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CronosBullFinance",
+      "slug": "cronosbullfinance",
+      "multiToken": false,
+      "address": "0x320EC6a9b6963670daAa13839bbE77D41af6f330",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CronosBullFinance collection, is our second drop and comes now to you as pointed on the roadmap from the beginning of the journey.The collection itself contains 8510 NFTs generated with more than 75 hand drawn traits, some of them tributes to Cronos chain and #Crofam members.Join us for the Bullrun",
+        "avatar": "/img/collections/cronosbullfinance/avatar.webp",
+        "banner": "/img/collections/cronosbullfinance/banner.webp",
+        "card": "/img/collections/cronosbullfinance/card.webp",
+        "website": "https://cronosbull.finance/",
+        "twitter": "https://twitter.com/CronosBullFi",
+        "discord": "https://discord.gg/cronosbullfinance",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -31108,7 +31233,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "images": {
         "drop": "/img/drops/ryoshi-clubs/drop.webp",
@@ -31128,7 +31253,7 @@
       "slug": "bob-headz",
       "title": "BOB Headz",
       "subtitle": "BOB Headz is super limited collection with unique utility to holders! There will be more than 200+ traits and multiple legendaries to be found!",
-      "description": "Our mission for this collection is to grow our community with more and more positive people who like Cronos and are looking for project who has different utilities. To get even more exposure and find new people, this collection we will launch on different platform where is a lot of traffic! You can already try to guess what is this platform, but full info will be announced in upcoming days.  GOAL As you know we like utility and each of our collections has different utilities to match everyone's taste. This collection goal is to make community more active, because it will have unique and fun utility.  UTILITY This collection will unlock our new game - Flappy BOB Game that everyone knows and are easy to play using PC or Mobile. BOB Headz will be used in our game and everyone who holds BOB Headz can play it! We will have online leaderboard where we will track players with best scores every week and we will reward them! But it will be harder than you think! Each NFT will be 1 life. Life resets every 24H, so if you hold 1x BOB Headz NFT, you can play 1 time per 24H. If you hold 10x BOB Headz, you can play 10 times per 24H and so on... The more Headz you own, the better chance to get better score. There also will be burn mechanism - part of secondary sale royalties we will use to sweep BOB Headz floor and burn them. This way we will reduce total supply from time to time. So this collection will be more and more valuable in the future. LEGENDARY BOB HEADz In our collection you can find 20 1/1 Legendaries and if you mint one of them, you can claim their bounty!",
+      "description": "BOB Headz is a new, super limited NFT collection from the BOB Adventures ecosystem.\n\nOur main mission for this collection is to grow our community with more and more positive people who like crypto, gaming, passive income and other activities.  If you want to join our community and enjoy different utilities, this is the right place!\n\nUTILITY This collection will unlock our new game - Flappy BOB Game that everyone knows and are easy to play using PC or Mobile. BOB Headz will be used in our game and everyone who holds BOB Headz can play it! We will have online leaderboard where we will track players with best scores every week and we will reward them! But it will be harder than you think! Each NFT will be 1 life. Life resets every 24H, so if you hold 1x BOB Headz NFT, you can play 1 time per 24H. If you hold 10x BOB Headz, you can play 10 times per 24H and so on... The more Headz you own, the better chance to get better score. There also will be burn mechanism - part of secondary sale royalties we will use to sweep BOB Headz floor and burn them. This way we will reduce total supply from time to time. So this collection will be more and more valuable in the future. \n\nLEGENDARY BOB HEADz In our collection you can find 20 1/1 Legendaries and if you mint one of them, you can claim their bounty!  Each legendary bounty is different, it can be free NFT, crypto coin and more!\n\n MINTING REWARDS Also there are minting rewards that will be distributed to random minters when 25%, 50%, 75% and 100% is minted! Join our Discord for more info!",
       "author": {
         "name": "BOB Adventures",
         "website": "https://bob-adventures.netlify.app/",
@@ -31143,14 +31268,14 @@
       "memberCost": "88",
       "whitelistCost": "88",
       "foundersOnly": false,
-      "start": null,
+      "start": 1698343200000,
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
       "complete": false,
       "images": {
-        "drop": null,
+        "drop": "/img/drops/bob-headz/drop.webp",
         "banner": "/img/collections/bob-headz/banner.webp",
         "avatar": "/img/collections/bob-headz/avatar.webp",
         "preview": "/img/collections/bob-headz/card.webp"
@@ -31191,7 +31316,7 @@
       "published": true,
       "complete": false,
       "images": {
-        "drop": null,
+        "drop": "/img/drops/the-luckl355/drop.webp",
         "banner": "/img/collections/the-luckl355/banner.webp",
         "avatar": "/img/collections/the-luckl355/avatar.webp",
         "preview": "/img/collections/the-luckl355/card.webp"

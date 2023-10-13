@@ -33,7 +33,7 @@ import {getCollectionMetadata, getCollectionPowertraits, getCollectionTraits} fr
 import {getCollections} from "@src/core/api/next/collectioninfo";
 import Items from "@src/components-v2/feature/collection/tabs/items";
 import PokerLeaderboardComponentPast from "@src/components-v2/feature/poker/poker-leaderboard-past";
-import PokerLeaderboardComponent from "@src/components-v2/feature/poker/poker-leaderboard";
+import {PokerCollection} from "@src/core/services/api-service/types";
 
 const tabs = {
   items: 'items',
@@ -41,8 +41,9 @@ const tabs = {
   activity: 'activity',
   cronosverseMap: 'cronosverseMap',
   dynastiesMap: 'dynastiesMap',
-  previousPokerGame: 'previousPokerGame',
-  currentPokerGame: 'currentPokerGame',
+  diamondsPokerGame: 'diamondsPokerGame',
+  clubsPokerGame: 'clubsPokerGame',
+  // currentPokerGame: 'currentPokerGame',
   cns: 'cns'
 };
 
@@ -238,13 +239,13 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
             </li>
           )}
           {isPlayingCardsCollection(collection.address) && (
-            <li className={`tab ${openMenu === tabs.previousPokerGame ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.previousPokerGame)}>Past Game</span>
+            <li className={`tab ${openMenu === tabs.diamondsPokerGame ? 'active' : ''} my-1`}>
+              <span onClick={handleBtnClick(tabs.diamondsPokerGame)}>Diamonds Game</span>
             </li>
           )}
           {isPlayingCardsCollection(collection.address) && (
-            <li className={`tab ${openMenu === tabs.currentPokerGame ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.currentPokerGame)}>Leaderboard</span>
+            <li className={`tab ${openMenu === tabs.clubsPokerGame ? 'active' : ''} my-1`}>
+              <span onClick={handleBtnClick(tabs.clubsPokerGame)}>Clubs Game</span>
             </li>
           )}
         </ul>
@@ -280,14 +281,15 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
               <DynastiesLands showBackButton={false} onBack={emptyFunction} />
             </NegativeMargin>
           )}
-          {openMenu === tabs.previousPokerGame && (
+          {openMenu === tabs.diamondsPokerGame && (
             <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
-              <PokerLeaderboardComponentPast />
+              <PokerLeaderboardComponentPast pokerCollection={PokerCollection.Diamonds} />
             </NegativeMargin>
           )}
-          {openMenu === tabs.currentPokerGame && (
+          {openMenu === tabs.clubsPokerGame && (
             <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
-              <PokerLeaderboardComponent />
+              {/* <PokerLeaderboardComponent /> */}
+              <PokerLeaderboardComponentPast pokerCollection={PokerCollection.Clubs} />
             </NegativeMargin>
           )}
           {openMenu === tabs.cns && (
