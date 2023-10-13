@@ -41,35 +41,10 @@ interface ResponsiveRewardsCollectionsTableProps {
   tabCallback: (key: string) => void;
 }
 
-const tabs = {
-  week: 'week',
-  month: 'month',
-  all: 'all'
-};
-
 const ResponsiveXPLeaderboardTable = ({data, onSort, tabCallback, breakpointValue}: ResponsiveRewardsCollectionsTableProps) => {
   const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'lg'})
-  const [openMenu, setOpenMenu] = React.useState(tabs.week);
-
-  const handleBtnClick = (key: string) => (e: any) => {
-    setOpenMenu(key);
-    //filter data by key
-    tabCallback(key);
-  };
-
   return (
     <>
-      <ul className="de_nav mb-2">
-        <li id="Mainbtn0" className={`tab ${openMenu === tabs.week ? 'active' : ''}`}>
-          <span onClick={handleBtnClick(tabs.week)}> Week</span>
-        </li>
-        <li id="Mainbtn0"className={`tab ${openMenu === tabs.month ? 'active' : ''}`}>
-          <span onClick={handleBtnClick(tabs.month)}> Month</span>
-        </li>
-        <li id="Mainbtn1" className={`tab ${openMenu === tabs.all ? 'active' : ''}`}>
-          <span onClick={handleBtnClick(tabs.all)}>All Time</span>
-        </li>
-      </ul>
       {shouldUseAccordion ? (
         <DataAccordion data={data} onSort={onSort} tabCallback={tabCallback}/>
       ) : (
@@ -85,7 +60,11 @@ const DataTable = ({data, onSort, tabCallback}: ResponsiveRewardsCollectionsTabl
   const textColor = useColorModeValue('#727272', '#a2a2a2');
   
   return (
-    <TableContainer w='full'>
+    <TableContainer 
+      w='full' 
+      maxW={'700px'} 
+      minH={'500px'}
+    >
       <Table variant='simple' color={textColor}>
         <Thead>
           <Tr>

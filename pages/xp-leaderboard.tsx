@@ -28,15 +28,24 @@ interface QueryParams{
   // signature?: string;
   page?: number;
   timeframe: string;
+  initialData: [];
 }
+const tabs = {
+  week: 'week',
+  month: 'month',
+  all: 'all'
+};
 
 const XPLeaderboard = () => {
   const user = useAppSelector(state => state.user);
   const [queryParams, setQueryParams] = useState<QueryParams>({
-    timeframe: 'week'
+    timeframe: 'week',
+    initialData: []
   });
   const [playerProfile, setPlayerProfile] = useState<XPProfile | undefined>(undefined);
   const [playerRank, setPlayerRank] = useState<number>(0);
+  const [openMenu, setOpenMenu] = React.useState(tabs.week);
+
   const queryCallback = (key: string) => {
     setQueryParams({
       ...queryParams,
@@ -50,9 +59,17 @@ const XPLeaderboard = () => {
 
     return response.data;
   }
+
+  const handleBtnClick = (key: string) => (e: any) => {
+    setOpenMenu(key);
+    //filter data by key
+    queryCallback(key);
+  };
+
   const fetcher = async ({ pageParam = 1 }) => {
     const data = await getFactions({
       ...queryParams,
+      initialData: [],
       page: pageParam,
     });
     return data;
@@ -65,7 +82,6 @@ const XPLeaderboard = () => {
     status,
     isLoading: isLeaderboardLoading,
     isError: isLeaderboardError,
-    refetch
   } = useInfiniteQuery(
     ['Factions', queryParams],
     fetcher,
@@ -73,14 +89,18 @@ const XPLeaderboard = () => {
       getNextPageParam: (lastPage, pages) => {
         return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
       },
-      refetchOnWindowFocus: false
-    }
+      refetchOnWindowFocus: false,
+  }
   );
   const content = useMemo(() => {
     return status === "loading" ? (
+      <>
+      <Box textAlign='center' minH={'500px'}>
       <Center>
         <Spinner />
       </Center>
+      </Box>
+      </>
     ) : status === "error" ? (
       <Box textAlign='center'>
         Error: {(error as any).message}
@@ -122,7 +142,8 @@ const XPLeaderboard = () => {
 
   useEffect(() => {
     //need to add some logic to check if the query has already been fetched
-    refetch();
+    console.log("refetching");
+    // refetch();
   }, [queryParams]);
 
   return (
@@ -138,7 +159,7 @@ const XPLeaderboard = () => {
       />
       <Box className="gl-legacy container no-top" mt={4}>
         <Card variant='outline' mt={2}>
-          <CardBody>
+          <CardBody minH={'130px'}>
             <Flex direction='column'>
               {/* <Text fontSize='26px' fontWeight='bold'>My XP</Text> */}
               {/* <Text fontSize='sm'>Unlock epic Fortune rewards by listing NFTs on Ebisu's Bay. Rewards are calculated at the end of every game of <Link href='/ryoshi'>Ryoshi Dynasties</Link> and accumulate daily.</Text> */}
@@ -201,13 +222,37 @@ const XPLeaderboard = () => {
           </Flex>
         </Box>
         <Box mt={4}>
-          {/*<Card variant='outline' mt={2}>*/}
-          {/*  <CardBody textAlign='center'>*/}
-          {/*    <Text fontSize='xl' fontWeight='bold'>Preparing Leaderboard...</Text>*/}
-          {/*    <Text>Previous game winners will be available shortly!</Text>*/}
-          {/*  </CardBody>*/}
-          {/*</Card>*/}
-          {content}
+          {/* <Card variant='outline' mt={2}>
+           <CardBody textAlign='center'>
+             <Text fontSize='xl' fontWeight='bold'>Preparing Leaderboard...</Text>
+             <Text>Previous game winners will be available shortly!</Text>
+           </CardBody>
+          </Card> */}
+            <ul className="de_nav mb-2">
+            <li id="Mainbtn0" className={`tab ${openMenu === tabs.week ? 'active' : ''}`}>
+              <span onClick={handleBtnClick(tabs.week)}> Week</span>
+            </li>
+            <li id="Mainbtn0"className={`tab ${openMenu === tabs.month ? 'active' : ''}`}>
+              <span onClick={handleBtnClick(tabs.month)}> Month</span>
+            </li>
+            <li id="Mainbtn1" className={`tab ${openMenu === tabs.all ? 'active' : ''}`}>
+              <span onClick={handleBtnClick(tabs.all)}>All Time</span>
+            </li>
+          </ul>
+            <Center>
+            {isLeaderboardLoading ?
+            (
+            <>
+            <Flex minH={'500px'}>
+              <Spinner />
+            </Flex>
+            </>
+            )
+              : isLeaderboardError ?
+                <Text fontSize='xl' fontWeight='bold'>Error loading leaderboard</Text>
+                : content
+            }
+          </Center>
         </Box>
       </Box>
     </Box>
