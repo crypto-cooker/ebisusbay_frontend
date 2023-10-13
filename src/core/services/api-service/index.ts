@@ -24,6 +24,7 @@ import {Player, RankPlayers} from "@src/core/poker-rank-players"
 import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
+import {PokerCollection} from "@src/core/services/api-service/types";
 import {Meeple} from "@src/core/services/api-service/graph/types";
 
 export class ApiService implements Api {
@@ -86,35 +87,21 @@ export class ApiService implements Api {
     return await this.getOffers(query);
   }
 
-  async getRyoshiDiamondsLeaderboard(page: number, pageSize: number): Promise<any> {
+  async getRyoshiDiamondsLeaderboardAtBlock(page: number, pageSize: number, pokerCollection: PokerCollection): Promise<any> {
     //info from subgraph
 
-    const owners = await getOwners();
+    const owners = await getOwners(pokerCollection);
     //rank the info
-    
-    const response = await RankPlayers(owners, false, 2);
 
-    function paginate(array : any, page_size:number, page_number:number) {
-      return array.slice((page_number - 1) * page_size, page_number * page_size);
+    let gameNumber = 2;
+
+    if (pokerCollection == PokerCollection.Diamonds) {
+      gameNumber = 1;
+    } else if (pokerCollection == PokerCollection.Clubs) {
+      gameNumber = 2;
     }
-
-    //convert response to paged list
-    const paginatedResponse = paginate(response, pageSize, page);
-    const totalPages = Math.ceil(response.length / pageSize);
-
-    return new PagedList<Player>(
-      paginatedResponse,
-      page,
-      page < totalPages
-    );
-  }
-  async getRyoshiDiamondsLeaderboardAtBlock(page: number, pageSize: number, blockNumber: number): Promise<any> {
-    //info from subgraph
-
-    const owners = await getOwners(blockNumber);
-    //rank the info
     
-    const response = await RankPlayers(owners, false, 1);
+    const response = await RankPlayers(owners, false, gameNumber);
 
     function paginate(array : any, page_size:number, page_number:number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);

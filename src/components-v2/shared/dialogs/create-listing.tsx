@@ -6,7 +6,14 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {ciEquals, createSuccessfulTransactionToastContent, isBundle, round, usdFormat} from "@src/utils";
+import {
+  ciEquals,
+  createSuccessfulTransactionToastContent,
+  isBundle,
+  isLandDeedsCollection,
+  round,
+  usdFormat
+} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -33,7 +40,7 @@ import {
   Spinner,
   Stack,
   Tag,
-  Text,
+  Text, useBreakpointValue,
   useNumberInput
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
@@ -45,6 +52,7 @@ import {useExchangeRate, useTokenExchangeRate} from "@src/hooks/useGlobalPrices"
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import ReactSelect from "react-select";
+import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -147,6 +155,11 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const [upsertGaslessListings, responseUpsert] = useUpsertGaslessListings();
   const { tokenToUsdValue, tokenToCroValue, croToTokenValue } = useTokenExchangeRate(selectedCurrency?.address);
   const { usdValueForToken, croValueForToken } = useExchangeRate();
+
+  const izanamiImageSize = useBreakpointValue(
+    {base: 250, sm: 368, lg: 456},
+    {fallback: 'md'}
+  )
 
   const isBelowFloorPrice = (price: number) => {
     const croPrice = tokenToCroValue(price);
@@ -412,6 +425,8 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                 <div className="col-12 col-sm-6 mb-2 mb-sm-0">
                   {isBundle(nft.address ?? nft.nftAddress) ? (
                     <ImagesContainer nft={nft} />
+                  ) : isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
+                    <RdLand nftId={nft.id ?? nft.nftId} boxSize={izanamiImageSize ?? 368} />
                   ) : (
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}

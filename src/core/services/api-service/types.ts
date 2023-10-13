@@ -377,3 +377,9 @@ export interface RdBattleLog {
     event: string;
     pastTroops: number;
 }
+
+export enum PokerCollection{
+    Diamonds = 'Diamonds', 
+    Clubs = 'Clubs',
+    Live = 'Live',
+}

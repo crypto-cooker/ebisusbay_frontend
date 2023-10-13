@@ -491,7 +491,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     
     Object.keys(cardCountDict).forEach((card) => {
       if(cardCountDict[card] >= 3) {
-        console.log("card", card);
+        // console.log("card", card);
         if(threeOfAKind && MeetsGameRequriements(cardsFromGame2, [card, card, card])) {
           twoOfAKind = true;
           threeOfAKind = true;

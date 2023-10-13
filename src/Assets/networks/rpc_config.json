@@ -31233,7 +31233,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "images": {
         "drop": "/img/drops/ryoshi-clubs/drop.webp",
@@ -31253,7 +31253,7 @@
       "slug": "bob-headz",
       "title": "BOB Headz",
       "subtitle": "BOB Headz is super limited collection with unique utility to holders! There will be more than 200+ traits and multiple legendaries to be found!",
-      "description": "Our mission for this collection is to grow our community with more and more positive people who like Cronos and are looking for project who has different utilities. To get even more exposure and find new people, this collection we will launch on different platform where is a lot of traffic! You can already try to guess what is this platform, but full info will be announced in upcoming days.  GOAL As you know we like utility and each of our collections has different utilities to match everyone's taste. This collection goal is to make community more active, because it will have unique and fun utility.  UTILITY This collection will unlock our new game - Flappy BOB Game that everyone knows and are easy to play using PC or Mobile. BOB Headz will be used in our game and everyone who holds BOB Headz can play it! We will have online leaderboard where we will track players with best scores every week and we will reward them! But it will be harder than you think! Each NFT will be 1 life. Life resets every 24H, so if you hold 1x BOB Headz NFT, you can play 1 time per 24H. If you hold 10x BOB Headz, you can play 10 times per 24H and so on... The more Headz you own, the better chance to get better score. There also will be burn mechanism - part of secondary sale royalties we will use to sweep BOB Headz floor and burn them. This way we will reduce total supply from time to time. So this collection will be more and more valuable in the future. LEGENDARY BOB HEADz In our collection you can find 20 1/1 Legendaries and if you mint one of them, you can claim their bounty!",
+      "description": "BOB Headz is a new, super limited NFT collection from the BOB Adventures ecosystem.\n\nOur main mission for this collection is to grow our community with more and more positive people who like crypto, gaming, passive income and other activities.  If you want to join our community and enjoy different utilities, this is the right place!\n\nUTILITY This collection will unlock our new game - Flappy BOB Game that everyone knows and are easy to play using PC or Mobile. BOB Headz will be used in our game and everyone who holds BOB Headz can play it! We will have online leaderboard where we will track players with best scores every week and we will reward them! But it will be harder than you think! Each NFT will be 1 life. Life resets every 24H, so if you hold 1x BOB Headz NFT, you can play 1 time per 24H. If you hold 10x BOB Headz, you can play 10 times per 24H and so on... The more Headz you own, the better chance to get better score. There also will be burn mechanism - part of secondary sale royalties we will use to sweep BOB Headz floor and burn them. This way we will reduce total supply from time to time. So this collection will be more and more valuable in the future. \n\nLEGENDARY BOB HEADz In our collection you can find 20 1/1 Legendaries and if you mint one of them, you can claim their bounty!  Each legendary bounty is different, it can be free NFT, crypto coin and more!\n\n MINTING REWARDS Also there are minting rewards that will be distributed to random minters when 25%, 50%, 75% and 100% is minted! Join our Discord for more info!",
       "author": {
         "name": "BOB Adventures",
         "website": "https://bob-adventures.netlify.app/",
@@ -31268,14 +31268,14 @@
       "memberCost": "88",
       "whitelistCost": "88",
       "foundersOnly": false,
-      "start": null,
+      "start": 1698343200000,
       "end": null,
       "referral": false,
       "is1155": false,
       "published": true,
       "complete": false,
       "images": {
-        "drop": null,
+        "drop": "/img/drops/bob-headz/drop.webp",
         "banner": "/img/collections/bob-headz/banner.webp",
         "avatar": "/img/collections/bob-headz/avatar.webp",
         "preview": "/img/collections/bob-headz/card.webp"
@@ -31316,7 +31316,7 @@
       "published": true,
       "complete": false,
       "images": {
-        "drop": null,
+        "drop": "/img/drops/the-luckl355/drop.webp",
         "banner": "/img/collections/the-luckl355/banner.webp",
         "avatar": "/img/collections/the-luckl355/avatar.webp",
         "preview": "/img/collections/the-luckl355/card.webp"
