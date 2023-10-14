@@ -23871,7 +23871,7 @@
       "multiToken": false,
       "address": "0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Time Cronos Planets are a collection from the Time Machine Eco, To provide our Resource mining for Time Wars Web3 game, Minting a Time Planet guarantees you weekly passive resources (before mint out) AND a boost in Time Adventures for resources gathered on adventures.",
         "avatar": "/img/collections/time-cronos-planets/avatar.webp",
