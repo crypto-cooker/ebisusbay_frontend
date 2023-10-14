@@ -10,21 +10,25 @@ import NotificationMenu from './notification-menu';
 import {setTheme} from '@src/GlobalState/User';
 import {
   Box,
-  Button, Divider,
-  Flex, Heading,
+  Button,
+  Divider,
+  Flex,
+  Heading,
   HStack,
   IconButton,
   Menu,
   MenuButton,
   MenuItem,
-  MenuList, SimpleGrid,
+  MenuList,
+  SimpleGrid,
   Spacer,
   Stack,
   Text,
   useBreakpointValue,
   useColorMode,
   useDisclosure,
-  useOutsideClick, VStack
+  useOutsideClick,
+  VStack
 } from "@chakra-ui/react";
 import Cart from "./cart";
 import {ChevronDownIcon, CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
@@ -189,28 +193,28 @@ const Header = function () {
               <SimpleGrid columns={2} p={2}>
                 <Box>
                   <VStack align='start' spacing={0} mb={2}>
-                    <Heading size='md' className='col-white'>GameFi</Heading>
-                    <Divider borderColor='white' w='150px' mb={2} />
-                  </VStack>
-                  <VStack align='start'>
-                    <NavLink name='Ryoshi Dynasties' to='/ryoshi' onClick={onClose} />
-                    <NavLink name='Izanami&apos;s Cradle' to='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' onClick={onClose} />
-                    <NavLink name='Crypto HODL&apos;em' to='/collection/ryoshi-playing-cards?tab=pokerRanks' onClick={onClose} />
-                    <NavLink name='XP Leaderboard' to='/xp-leaderboard' onClick={onClose} />
-                    <NavLink name='Rewards' to='/rewards' onClick={onClose} />
-                  </VStack>
-                </Box>
-                <Box>
-                  <VStack align='end' spacing={0} mb={2}>
                     <Heading size='md' className='col-white'>Marketplace</Heading>
                     <Divider borderColor='white' w='150px' />
                   </VStack>
-                  <VStack align='end'>
+                  <VStack align='start'>
                     <NavLink name='Marketplace' to='/marketplace' onClick={onClose} />
                     <NavLink name='Collections' to='/collections' onClick={onClose} />
                     <NavLink name='Brands' to='/brands' onClick={onClose} />
                     <NavLink name='Drops' to='/drops' onClick={onClose} />
                     <NavLink name='Become a Creator' to='/apply' onClick={onClose} />
+                  </VStack>
+                </Box>
+                <Box>
+                  <VStack align='end' spacing={0} mb={2}>
+                    <Heading size='md' className='col-white'>GameFi</Heading>
+                    <Divider borderColor='white' w='150px' mb={2} />
+                  </VStack>
+                  <VStack align='end'>
+                    <NavLink name='Ryoshi Dynasties' to='/ryoshi' onClick={onClose} />
+                    <NavLink name='Izanami&apos;s Cradle' to='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' onClick={onClose} />
+                    <NavLink name='Crypto HODL&apos;em' to='/collection/ryoshi-playing-cards?tab=pokerRanks' onClick={onClose} />
+                    <NavLink name='XP Leaderboard' to='/xp-leaderboard' onClick={onClose} />
+                    <NavLink name='Rewards' to='/rewards' onClick={onClose} />
                   </VStack>
                 </Box>
               </SimpleGrid>
