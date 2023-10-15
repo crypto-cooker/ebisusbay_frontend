@@ -11,7 +11,7 @@ import {marketPlaceCollectionFilterOptions} from './constants/filter-options';
 import {sortOptions} from './constants/sort-options';
 import {MarketFilters} from "../Models/market-filters.model";
 import ImageService from "@src/core/services/image";
-import {Center, Spinner, Table} from "@chakra-ui/react";
+import {Center, Spinner, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
 
 const SalesCollection = ({
   showLoadMore = true,
@@ -162,67 +162,67 @@ const SalesCollection = ({
           </div>
         ) : <></>}
       >
-        <Table responsive className="table de-table table-rank sales-table align-middle" data-mobile-responsive="true">
-          <thead>
-            <tr>
-              <th scope="col" colSpan="2">
+        <TableContainer>
+          <Table size={{base: 'sm', md: 'md'}} className="table-rank sales-table align-middle">
+            <Thead>
+            <Tr>
+              <Th scope="col" colSpan="2">
                 Item
-              </th>
-              <th scope="col">Rank</th>
-              <th scope="col">Price</th>
-              <th scope="col">From</th>
-              <th scope="col">To</th>
-              <th scope="col">Time</th>
-            </tr>
-            <tr />
-          </thead>
-          <tbody>
-            {listings &&
-              listings.map((listing, index) => (
-                <tr key={index}>
-                  <td style={{ width: '105px' }}>
-                    <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
-                      {isBundle(listing.nftAddress) ? (
-                        <img
-                          className="lazy rounded"
-                          src={ImageService.translate('/img/logos/bundle.webp').fixedWidth(75, 75)}
-                          alt={listing.nft.name}
-                          style={{ maxHeight: '75px' }}
-                        />
-                      ) : (
-                        <img
-                          className="lazy rounded"
-                          src={ImageService.translate(listing.nft.image).fixedWidth(75, 75)}
-                          alt={listing.nft.name}
-                          style={{ maxHeight: '75px' }}
-                        />
-                      )}
-                    </Link>
-                  </td>
-                  <th style={{ minWidth: '115px' }}>
-                    <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
-                      {listing.nft.name ?? 'Unknown'}
-                    </Link>
-                  </th>
-                  <td>{listing.nft.rank ?? '-'}</td>
-                  <td style={{ minWidth: '100px' }}>{ethers.utils.commify(Math.round(listing.price))} {knownErc20Token(listing.currency)?.symbol ?? 'CRO'}</td>
-                  <td>
-                    <Link href={`/account/${listing.seller}`}>
-                      {shortAddress(listing.seller)}
-                    </Link>
-                  </td>
-                  <td>
-                    <Link href={`/account/${listing.purchaser}`}>
-                      {shortAddress(listing.purchaser)}
-                    </Link>
-                  </td>
-                  <td className="px-2" style={{ minWidth: '115px' }}>
-                    {timeSince(listing.saleTime)} ago
-                  </td>
-                </tr>
+              </Th>
+              <Th scope="col">Rank</Th>
+              <Th scope="col">Price</Th>
+              <Th scope="col">From</Th>
+              <Th scope="col">To</Th>
+              <Th scope="col">Time</Th>
+            </Tr>
+            </Thead>
+            <Tbody>
+            {listings && listings.map((listing, index) => (
+              <Tr key={index}>
+                <Td minW={{base: '75px', md: '105px'}}>
+                  <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
+                    {isBundle(listing.nftAddress) ? (
+                      <img
+                        className="lazy rounded"
+                        src={ImageService.translate('/img/logos/bundle.webp').fixedWidth(75, 75)}
+                        alt={listing.nft.name}
+                        style={{ maxHeight: '75px' }}
+                      />
+                    ) : (
+                      <img
+                        className="lazy rounded"
+                        src={ImageService.translate(listing.nft.image).fixedWidth(75, 75)}
+                        alt={listing.nft.name}
+                        style={{ maxHeight: '75px' }}
+                      />
+                    )}
+                  </Link>
+                </Td>
+                <Td minW={{base: '100px', md: '115px'}}>
+                  <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
+                    {listing.nft.name ?? 'Unknown'}
+                  </Link>
+                </Td>
+                <Td>{listing.nft.rank ?? '-'}</Td>
+                <Td style={{ minWidth: '100px' }}>{ethers.utils.commify(Math.round(listing.price))} {knownErc20Token(listing.currency)?.symbol ?? 'CRO'}</Td>
+                <Td>
+                  <Link href={`/account/${listing.seller}`}>
+                    {shortAddress(listing.seller)}
+                  </Link>
+                </Td>
+                <Td>
+                  <Link href={`/account/${listing.purchaser}`}>
+                    {shortAddress(listing.purchaser)}
+                  </Link>
+                </Td>
+                <Td className="px-2" style={{ minWidth: '115px' }}>
+                  {timeSince(listing.saleTime)} ago
+                </Td>
+              </Tr>
               ))}
-          </tbody>
-        </Table>
+            </Tbody>
+          </Table>
+        </TableContainer>
       </InfiniteScroll>
     </>
   );
