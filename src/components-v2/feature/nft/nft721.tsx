@@ -577,10 +577,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                 ) : nft.useIframe ? (
                   <iframe width="100%" height="636" src={nft.iframeSource} title="nft" />
                 ) : isLandDeedsCollection(address) ? (
-                    //this is individual land deed
-                      <Box w={'100%'} h="636">
-                       <RdLand nftId={id} rounded='xl' />
-                      </Box>
+                    <RdLand nftId={id} rounded='xl' />
                 ) : (
                   <>
                     <AnyMedia
