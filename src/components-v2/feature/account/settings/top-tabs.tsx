@@ -1,18 +1,19 @@
 import { useRouter } from 'next/router';
-import { faUser, faMapPin, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import {faUser, faMapPin, faExclamation, faGlobe, faGem} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const tabs = [
-  { slug: 'profile', btn: 'Edit Profile', icon: faUser },
-  { slug: 'notification', btn: 'Notification Settings', icon: faExclamation },
-  { slug: 'offer', btn: 'Offer Settings', icon: faMapPin },
+  { slug: 'profile', btn: 'Profile', icon: faUser },
+  { slug: 'notification', btn: 'Notifications', icon: faExclamation },
+  { slug: 'collections', btn: 'Collections', icon: faGem }
+  // { slug: 'offer', btn: 'Offers', icon: faMapPin },
   // { slug: 'admin', btn: 'Admin Settings', icon: faUser },
 ];
 
 export default function TopTabs() {
   const router = useRouter();
 
-  const navigateTo = (link) => {
+  const navigateTo = (link: string) => {
     router.push(`/account/settings/${link}`);
   };
 

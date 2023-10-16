@@ -382,3 +382,12 @@ export enum PokerCollection{
     Clubs = 'Clubs',
     Live = 'Live',
 }
+
+export interface XPProfile {
+    walletAddress: string;
+    username: string;
+    avatar: string;
+    experience: number;
+    level: number;
+    rank: number;
+}
