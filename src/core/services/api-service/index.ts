@@ -184,7 +184,22 @@ export class ApiService implements Api {
       }
     });
 
-    return mappedCollections.concat(walletRecords).sort((a, b) => b.points - a.points);
+    const completeRankings = mappedCollections.concat(walletRecords).sort((a, b) => b.points - a.points);
+
+    let rank = 1;
+    let lastPoints = completeRankings[0]?.points;
+
+    return completeRankings.map((record, index) => {
+      if (index > 0 && record.points !== lastPoints) {
+        rank = index + 1;
+      }
+      lastPoints = record.points;
+
+      return {
+        ...record,
+        rank: rank
+      };
+    });
   }
 
   async getCollectionTraits(address: string) {
