@@ -1,7 +1,17 @@
-import {Box,useBreakpointValue, BoxProps, Button, Flex, Portal, Image, useMediaQuery, Center, SimpleGrid} from "@chakra-ui/react";
+import {
+  Box,
+  BoxProps,
+  Button,
+  Center,
+  Flex,
+  Image,
+  Portal,
+  useBreakpointValue,
+  useEventListener,
+  useMediaQuery
+} from "@chakra-ui/react";
 import {ReactNode, useContext, useEffect, useState} from "react";
 import localFont from "next/font/local";
-import {CloseIcon} from "@chakra-ui/icons";
 import {
   InlineModalContext,
   InlineModalContextProps
@@ -31,6 +41,12 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
   const [maskInnerClass, setMaskInnerClass] = useState('');
   const {ref: globalRef, setRef: setGlobalRef} = useContext(InlineModalContext) as InlineModalContextProps;
   const [isMobile] = useMediaQuery("(max-width: 750px)");
+
+  useEventListener('keydown', (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      handleClose();
+    }
+  });
 
   useEffect(() => {
     const _hasUtilBtn = !!utilBtnTitle && !!onUtilBtnClick;
@@ -64,12 +80,10 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
     {
     base:'/img/ryoshi-dynasties/announcements/base/ryoshi_logo_for_modal_small.png', 
     md:'/img/ryoshi-dynasties/announcements/base/ryoshi_logo_for_modal_1200.png',
-    }); 
+    });
 
   return (
-    <Portal containerRef={isOpen ? globalRef! : undefined} 
-      
-    >
+    <Portal containerRef={isOpen ? globalRef! : undefined}>
       <Box
         position='absolute'
         top={0}
