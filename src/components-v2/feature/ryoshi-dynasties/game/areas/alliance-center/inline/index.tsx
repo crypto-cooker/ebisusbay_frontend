@@ -308,7 +308,7 @@ const CurrentFaction = () => {
 
         const totalApproved = await checkForApproval();
         if(totalApproved.lt(registrationStruct.cost)) {
-          toast.error('Please approve the contract to spend your tokens');
+          toast.warning('Please approve the contract to spend your tokens');
           const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
           const tx1 = await fortuneContract.approve(config.contracts.allianceCenter, registrationStruct.cost);
           const receipt1 = await tx1.wait();
