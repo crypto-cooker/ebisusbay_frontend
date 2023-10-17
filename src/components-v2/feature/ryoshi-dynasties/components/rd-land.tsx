@@ -16,12 +16,12 @@ interface Attribute{
 }
 interface RdLandProps {
   nftId: string;
-  boxSize: number;
-  forceBoxSize?: boolean;
+  // boxSize: number;
+  // forceBoxSize?: boolean;
   rounded?: ResponsiveValue<CSS.Property.BorderRadius>
 }
 
-const RdLand = ({nftId, boxSize, forceBoxSize, rounded}: RdLandProps) => {
+const RdLand = ({nftId, rounded}: RdLandProps) => {
 
   const [landTypeRef, setLandTypeRef] = useState<any>(null);
   const [landsBaseRef, setLandsBaseRef] = useState<any>(null);
@@ -40,7 +40,7 @@ const RdLand = ({nftId, boxSize, forceBoxSize, rounded}: RdLandProps) => {
 
   const mainFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/'
   const rockFolderPath = '/img/ryoshi-dynasties/lands/izanamisCradle/ROCKS/'
-  const [size, setSize] = useState(184);
+  const [size, setSize] = useState<number>(1);
   const [landType, setLandType] = useState('')
 
   const GetTraitType = (traitType:string, attributes:Attribute[], underlandSpot?:string, animVersion?:boolean) => {
@@ -143,31 +143,25 @@ const RdLand = ({nftId, boxSize, forceBoxSize, rounded}: RdLandProps) => {
   },[nftId])
 
   useEffect(() => {
-    // if(boxSize){
-    //   setSize(boxSize)
-    // }
-  },[boxSize]) 
+    //get width of this component
+    if(!ref.current) return;
 
+    setSize(ref.current.getBoundingClientRect().width);
+
+  },[ref.current]) 
+
+  useEffect(() => {
+    // console.log('(size/5)', (size/5)/3);
+  },[size]) 
 
   useEffect(() => {
     function handleResize(){
-      // console.log('resized to: ', window.innerWidth, 'x', window.innerHeight)
       if(!ref.current) return;
-      setSize(ref.current.offsetWidth===0?boxSize:ref.current.offsetWidth);
+      
+      setSize(ref.current.getBoundingClientRect().width);
     }
     window.addEventListener('resize', handleResize)
   })
-
-  useEffect(() => {
-    // console.log('size', size);
-    if(!ref.current) return;
-    setSize(ref.current.offsetWidth===0?boxSize:ref.current.offsetWidth);
-
-    if(forceBoxSize){
-      ref.current.style.width = boxSize + 'px';
-    }
-
-  }, [size, ref.current])
 
   const GetMarginLeft = (directional:string) => {
     switch(landType){
@@ -243,6 +237,47 @@ const RdLand = ({nftId, boxSize, forceBoxSize, rounded}: RdLandProps) => {
         }
     }
   }
+  // const GetMarginTop = (directional:string) : string  => {
+  //   let margin =""
+  //   switch(landType){
+  //     case 'Highlands':
+  //       switch(directional){
+  //         case "North":
+  //           margin = (size/12).toString();
+  //         case "South":
+  //           margin = ( size/1.9).toString();
+  //         case "East":
+  //           margin = (size/2.65).toString();
+  //         case "West":
+  //           margin = (size/3.75).toString();
+  //       }
+  //     case 'Beach':
+  //       switch(directional){
+  //         case "North":
+  //           margin = (size/4.5).toString();
+  //         case "South":
+  //           margin = (size/2).toString();
+  //         case "East":
+  //           margin = (size/3).toString();
+  //         case "West":
+  //           margin = (size/2.75).toString();
+  //       }
+  //     default:
+  //       switch(directional){
+  //         case "North":
+  //           margin = (size/4).toString();
+  //         case "South":
+  //           margin = (size/2).toString();
+  //         case "East":
+  //           margin = (size/2.75).toString();
+  //         case "West":
+  //           margin = (size/2.75).toString();
+  //       }
+  //   }
+  //   margin +="px";
+  //   console.log(margin)
+  //   return margin;
+  // }
   return (
     <>
     <Flex
@@ -268,21 +303,21 @@ const RdLand = ({nftId, boxSize, forceBoxSize, rounded}: RdLandProps) => {
       src={underlandRightImageRef} zIndex={5}/>
     
     <Image 
-      ml={GetMarginLeft("North")} 
-      mt={GetMarginTop("North")}
-      src={northImageRef}zIndex={4} position={'absolute'} maxW={size/5} maxH={size/5} />
+      ml={GetMarginLeft("North")+"px"} 
+      mt={GetMarginTop("North")+"px"}
+      src={northImageRef} zIndex={4} position={'absolute'} maxW={(size/5)+"px"} maxH={(size/5)+"px"} />
     <Image
-      ml={GetMarginLeft("South")} 
-      mt={GetMarginTop("South")}
-      src={southImageRef} zIndex={4} position={'absolute'} maxW={size/5} maxH={size/5} />
+      ml={GetMarginLeft("South")+"px"} 
+      mt={GetMarginTop("South")+"px"}
+      src={southImageRef} zIndex={4} position={'absolute'} maxW={(size/5)+"px"} maxH={(size/5)+"px"} />
     <Image 
-      ml={GetMarginLeft("East")} 
-      mt={GetMarginTop("East")}
-      src={eastImageRef} zIndex={4} position={'absolute'} maxW={size/5} maxH={size/5} />
+      ml={GetMarginLeft("East")+"px"} 
+      mt={GetMarginTop("East")+"px"}
+      src={eastImageRef} zIndex={4} position={'absolute'} maxW={(size/5)+"px"} maxH={(size/5)+"px"} />
     <Image 
-      ml={GetMarginLeft("West")} 
-      mt={GetMarginTop("West")}
-      src={westImageRef} zIndex={4} position={'absolute'} maxW={size/5}  maxH={size/5} />
+      ml={GetMarginLeft("West")+"px"} 
+      mt={GetMarginTop("West")+"px"}
+      src={westImageRef} zIndex={4} position={'absolute'} maxW={(size/5)+"px"}  maxH={(size/5)+"px"} />
 
     <Image h={size} position={'absolute'} src={pathsImageRef} zIndex={3}/>
     <Image h={size} position={'absolute'} src={waterSourceRef} zIndex={3}/>

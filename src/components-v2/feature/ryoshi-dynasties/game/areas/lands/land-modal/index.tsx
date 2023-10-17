@@ -122,9 +122,9 @@ const LandModal = ({ isOpen, onClose, plot}: LandModalFormProps) => {
         <HelpPage />
       ) : (
         <>
-            <VStack w='full' align='center'>
-              <Box mb={2}>
-                <RdLand nftId={plot.id.toString()} boxSize={199} rounded='xl' forceBoxSize={true}/>
+            <VStack w='full' align='center' h="400">
+              <Box w="350px" h="350px">
+                <RdLand nftId={plot.id.toString()} rounded={'xl'}/>
               </Box>
               {plot.forSale && (
                 <Text as='i' textAlign='center'>
