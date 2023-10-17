@@ -181,7 +181,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
   }
   const GetControlPointId = (name: any) => {
     if(!rdGameContext) return 0;
-    rdGameContext.game.parent.map.regions.map((region: any) =>
+    rdGameContext.game.season.map.regions.map((region: any) =>
       region.controlPoints.map((controlPoint: any, i: any) => (
         controlPoint.name == name ? 
         SelectControlPoint(controlPoint.id, region.name)
@@ -200,7 +200,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     if(currentIconsAquired) return;
 
     let newIcons: Icon[] = [];
-    rdGameContext.game.parent.map.regions.map((region: any) =>
+    rdGameContext.game.season.map.regions.map((region: any) =>
       region.controlPoints.map((controlPoint: any) => (
         newIcons.push({name: controlPoint.name, image: 'img/avatar.jpg'})
     )))
@@ -222,7 +222,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     if(prevIconsAquired) return;
 
     let prevIcons: Icon[] = [];
-    rdGameContext.game.parent.map.regions.map((region: any) =>
+    rdGameContext.game.season.map.regions.map((region: any) =>
       region.controlPoints.map((controlPoint: any) => (
         prevIcons.push({name: controlPoint.name, image: 'img/avatar.jpg'})
     )))
