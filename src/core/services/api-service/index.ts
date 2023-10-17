@@ -187,18 +187,21 @@ export class ApiService implements Api {
     const completeRankings = mappedCollections.concat(walletRecords).sort((a, b) => b.points - a.points);
 
     let rank = 1;
-    let lastPoints = completeRankings[0]?.points;
-
     return completeRankings.map((record, index) => {
-      if (index > 0 && record.points !== lastPoints) {
-        rank = index + 1;
+      let thisRank;
+      if (index > 0 && completeRankings[index - 1].points !== record.points) {
+        thisRank = rank + 1;
+        rank++;
+      } else if (index === 0) {
+        thisRank = 1;
+      } else {
+        thisRank = '';
       }
-      lastPoints = record.points;
 
       return {
         ...record,
-        rank: rank
-      };
+        rank: thisRank
+      }
     });
   }
 
