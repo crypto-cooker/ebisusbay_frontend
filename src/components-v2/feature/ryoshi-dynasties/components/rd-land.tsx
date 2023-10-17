@@ -151,7 +151,7 @@ const RdLand = ({nftId, rounded}: RdLandProps) => {
   },[ref.current]) 
 
   useEffect(() => {
-    // console.log('size', size);
+    // console.log('(size/5)', (size/5)/3);
   },[size]) 
 
   useEffect(() => {
@@ -237,6 +237,47 @@ const RdLand = ({nftId, rounded}: RdLandProps) => {
         }
     }
   }
+  // const GetMarginTop = (directional:string) : string  => {
+  //   let margin =""
+  //   switch(landType){
+  //     case 'Highlands':
+  //       switch(directional){
+  //         case "North":
+  //           margin = (size/12).toString();
+  //         case "South":
+  //           margin = ( size/1.9).toString();
+  //         case "East":
+  //           margin = (size/2.65).toString();
+  //         case "West":
+  //           margin = (size/3.75).toString();
+  //       }
+  //     case 'Beach':
+  //       switch(directional){
+  //         case "North":
+  //           margin = (size/4.5).toString();
+  //         case "South":
+  //           margin = (size/2).toString();
+  //         case "East":
+  //           margin = (size/3).toString();
+  //         case "West":
+  //           margin = (size/2.75).toString();
+  //       }
+  //     default:
+  //       switch(directional){
+  //         case "North":
+  //           margin = (size/4).toString();
+  //         case "South":
+  //           margin = (size/2).toString();
+  //         case "East":
+  //           margin = (size/2.75).toString();
+  //         case "West":
+  //           margin = (size/2.75).toString();
+  //       }
+  //   }
+  //   margin +="px";
+  //   console.log(margin)
+  //   return margin;
+  // }
   return (
     <>
     <Flex
@@ -262,21 +303,21 @@ const RdLand = ({nftId, rounded}: RdLandProps) => {
       src={underlandRightImageRef} zIndex={5}/>
     
     <Image 
-      ml={GetMarginLeft("North")} 
-      mt={GetMarginTop("North")}
-      src={northImageRef}zIndex={4} position={'absolute'} maxW={size/5} maxH={size/5} />
+      ml={GetMarginLeft("North")+"px"} 
+      mt={GetMarginTop("North")+"px"}
+      src={northImageRef} zIndex={4} position={'absolute'} maxW={(size/5)+"px"} maxH={(size/5)+"px"} />
     <Image
-      ml={GetMarginLeft("South")} 
-      mt={GetMarginTop("South")}
-      src={southImageRef} zIndex={4} position={'absolute'} maxW={size/5} maxH={size/5} />
+      ml={GetMarginLeft("South")+"px"} 
+      mt={GetMarginTop("South")+"px"}
+      src={southImageRef} zIndex={4} position={'absolute'} maxW={(size/5)+"px"} maxH={(size/5)+"px"} />
     <Image 
-      ml={GetMarginLeft("East")} 
-      mt={GetMarginTop("East")}
-      src={eastImageRef} zIndex={4} position={'absolute'} maxW={size/5} maxH={size/5} />
+      ml={GetMarginLeft("East")+"px"} 
+      mt={GetMarginTop("East")+"px"}
+      src={eastImageRef} zIndex={4} position={'absolute'} maxW={(size/5)+"px"} maxH={(size/5)+"px"} />
     <Image 
-      ml={GetMarginLeft("West")} 
-      mt={GetMarginTop("West")}
-      src={westImageRef} zIndex={4} position={'absolute'} maxW={size/5}  maxH={size/5} />
+      ml={GetMarginLeft("West")+"px"} 
+      mt={GetMarginTop("West")+"px"}
+      src={westImageRef} zIndex={4} position={'absolute'} maxW={(size/5)+"px"}  maxH={(size/5)+"px"} />
 
     <Image h={size} position={'absolute'} src={pathsImageRef} zIndex={3}/>
     <Image h={size} position={'absolute'} src={waterSourceRef} zIndex={3}/>
