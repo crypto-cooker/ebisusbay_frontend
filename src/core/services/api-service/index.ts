@@ -266,6 +266,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.requestBarracksUnstakeAuthorization(nfts, address, signature);
   }
 
+  async requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string) {
+    return this.cms.requestRewardsSpendAuthorization(amount, address, signature);
+  }
+
   async getDailyRewards(address: string) {
     return this.cms.getDailyRewards(address);
   }

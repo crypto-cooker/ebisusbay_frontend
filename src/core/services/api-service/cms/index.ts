@@ -42,6 +42,10 @@ class Cms {
     return this.ryoshiDynasties.requestBarracksUnstakeAuthorization(nfts, address, signature);
   }
 
+  async requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string) {
+    return this.ryoshiDynasties.requestRewardsSpendAuthorization(amount, address, signature);
+  }
+
   async getDailyRewards(address: string) {
     return this.ryoshiDynasties.getDailyRewards(address);
   }

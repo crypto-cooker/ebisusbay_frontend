@@ -13,7 +13,7 @@ import {
   useNumberInput
 } from "@chakra-ui/react";
 import {dropState as statuses} from "@src/core/api/enums";
-import {constants, ethers} from "ethers";
+import {constants, Contract, ethers} from "ethers";
 import {createSuccessfulTransactionToastContent, percentage, round} from "@src/utils";
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
@@ -30,6 +30,9 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import Link from "next/link";
+import {ApiService} from "@src/core/services/api-service";
+import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -59,11 +62,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   const userTheme = useAppSelector((state) => {
     return state.user.theme;
   });
+  const {requestSignature} = useEnforceSigner();
   
   const [minting, setMinting] = useState(false);
   const [mintingERC20, setMintingERC20] = useState(false);
   const [numToMint, setNumToMint] = useState(1);
-  const [mintingState, setMintingState] = useState(null);
   const isReady = !!maxSupply;
   const [erc20Token, setErc20Token] = useState<{name: string, symbol: string, address: string} | null>(null);
 
@@ -127,72 +130,35 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     return `${fullDateString.split(', ')[1]} ${date.getUTCDate()} ${month} ${date.getUTCFullYear()} UTC`;
   };
 
-  const mintNow = async (isErc20 = false) => {
+  const mintNow = async (isErc20 = false, mintFromRewards = false) => {
     if (user.address) {
       if (!drop.writeContract) {
         console.log('missing write contract')
         return;
-      }
-      if (isErc20) {
-        setMintingERC20(true);
-      } else {
-        setMinting(true);
       }
       const contract = drop.writeContract;
       try {
         const cost = await calculateCost(user, isErc20);
         let finalCost = cost.mul(numToMint);
 
-        if (isErc20) {
-          const allowance = await drop.erc20ReadContract.allowance(user.address, drop.address);
-          if (allowance.sub(finalCost) <= 0) {
-            const approvalTx = await drop.erc20Contract.approve(drop.address, constants.MaxUint256);
-            await approvalTx.wait();
-          }
+        if (!isUsingDefaultDropAbi(drop.abi) && !isUsingAbiFile(drop.abi)) {
+          toast.error('Invalid ABI');
+          return;
         }
 
-        const gasPrice = parseUnits('5000', 'gwei');
-        const gasEstimate = isErc20 ? await contract.estimateGas.mintWithToken(numToMint):
-          await contract.estimateGas.mint(numToMint, {value: finalCost});
-        const gasLimit = gasEstimate.mul(2);
-        let extra = {
-          value: finalCost,
-          gasPrice,
-          gasLimit
-        };
-
-        var response;
-        if (drop.is1155) {
-          response = await contract.mint(numToMint, extra);
+        let response;
+        if (isErc20 && mintFromRewards) {
+          setMintingERC20(true);
+          response = await mintWithRewards(contract, finalCost);
+        } else if (isErc20) {
+          setMintingERC20(true);
+          response = await mintWithErc20(contract, finalCost);
         } else {
-          if (isUsingDefaultDropAbi(drop.abi) || isUsingAbiFile(drop.abi)) {
-            if (isErc20) {
-              delete extra['value']
-              response = await contract.mintWithToken(numToMint, extra);
-            } else {
-              response = await contract.mint(numToMint, extra);
-            }
-          } else {
-            let method;
-            for (const abiMethod of drop.abi!) {
-              if (abiMethod.includes('mint') && !abiMethod.includes('view')) method = abiMethod;
-            }
-
-            if (!!method && method.includes('address') && method.includes('uint256')) {
-              if (isErc20) {
-                response = await contract.mintWithLoot(user.address, numToMint);
-              } else {
-                response = await contract.mint(user.address, numToMint, extra);
-              }
-            } else {
-              if (isErc20) {
-                response = await contract.mintWithLoot(numToMint);
-              } else {
-                response = await contract.mint(numToMint, extra);
-              }
-            }
-          }
+          setMinting(true);
+          response = await mintWithCro(contract, finalCost);
         }
+        console.log('?hi?')
+
         const receipt = await response.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
@@ -217,30 +183,76 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
           logEvent(getAnalytics(), 'purchase', purchaseAnalyticParams);
         }
 
-        await onMintSuccess();
+        onMintSuccess();
       } catch (error: any) {
         Sentry.captureException(error);
-        if (error.data) {
-          console.log(error);
-          toast.error(error.data.message);
-        } else if (error.message) {
-          console.log(error);
-          toast.error(error.message);
-        } else {
-          console.log(error);
-          toast.error('Unknown Error');
-        }
+        console.log(error);
+        toast.error(parseErrorMessage(error));
       } finally {
-        if (isErc20) {
-          setMintingERC20(false);
-        } else {
-          setMinting(false);
-        }
+        setMintingERC20(false);
+        setMinting(false);
       }
     } else {
       dispatch(connectAccount());
     }
   };
+
+  const mintWithCro = async (contract: Contract, finalCost: number) => {
+    const gasPrice = parseUnits('5000', 'gwei');
+    const gasEstimate = await contract.estimateGas.mint(numToMint, {value: finalCost});
+    const gasLimit = gasEstimate.mul(2);
+    let extra = {
+      value: finalCost,
+      gasPrice,
+      gasLimit
+    };
+
+    await contract.mint(numToMint, extra);
+  }
+
+  const mintWithErc20 = async (contract: Contract, finalCost: number) => {
+    const allowance = await drop.erc20ReadContract.allowance(user.address, drop.address);
+    if (allowance.sub(finalCost) <= 0) {
+      const approvalTx = await drop.erc20Contract.approve(drop.address, constants.MaxUint256);
+      await approvalTx.wait();
+    }
+
+    console.log('estimate mint', numToMint)
+    const gasPrice = parseUnits('5000', 'gwei');
+    const gasEstimate = await contract.estimateGas.mintWithToken(numToMint);
+    const gasLimit = gasEstimate.mul(2);
+    let extra = {
+      value: finalCost,
+      gasPrice,
+      gasLimit
+    };
+
+    console.log('do mint', numToMint, extra)
+    return await contract.mintWithToken(numToMint, extra);
+  }
+
+  const mintWithRewards = async (contract: Contract, finalCost: number) => {
+    const allowance = await drop.erc20ReadContract.allowance(user.address, drop.address);
+    if (allowance.sub(finalCost) <= 0) {
+      const approvalTx = await drop.erc20Contract.approve(drop.address, constants.MaxUint256);
+      await approvalTx.wait();
+    }
+
+    const signature = await requestSignature();
+    const finalCostEth = ethers.utils.formatEther(finalCost);
+    const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(finalCostEth, user.address!, signature);
+
+    const gasPrice = parseUnits('5000', 'gwei');
+    const gasEstimate = await contract.estimateGas.mintWithRewards(numToMint, authorization.reward, authorization.signature);
+    const gasLimit = gasEstimate.mul(2);
+    let extra = {
+      value: finalCost,
+      gasPrice,
+      gasLimit
+    };
+
+    return await contract.mintWithRewards(numToMint, authorization.reward, authorization.signature, extra);
+  }
 
   useEffect(() => {
     const tokenKey = drop.erc20Token?.toLowerCase();
@@ -409,6 +421,17 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                         loadingText='Minting...'
                       >
                         Mint with {config.tokens[drop.erc20Token].symbol}
+                      </PrimaryButton>
+                    )}
+                    {drop.collection === 'ryoshi-playing-cards' && (
+                      <PrimaryButton
+                        w='full'
+                        onClick={() => mintNow(true, true)}
+                        disabled={mintingERC20}
+                        isLoading={mintingERC20}
+                        loadingText='Minting...'
+                      >
+                        Mint from FRTN rewards
                       </PrimaryButton>
                     )}
                   </Stack>
