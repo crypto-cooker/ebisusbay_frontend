@@ -426,7 +426,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                   {isBundle(nft.address ?? nft.nftAddress) ? (
                     <ImagesContainer nft={nft} />
                   ) : isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
-                    <RdLand nftId={nft.id ?? nft.nftId} boxSize={izanamiImageSize ?? 368} />
+                    <RdLand nftId={nft.id ?? nft.nftId} />
                   ) : (
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}

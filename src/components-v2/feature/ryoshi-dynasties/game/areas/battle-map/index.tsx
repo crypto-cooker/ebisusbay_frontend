@@ -180,7 +180,8 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     onOpen();
   }
   const GetControlPointId = (name: any) => {
-    if(!rdGameContext) return 0;
+    if(!rdGameContext || blockDeployments) return 0;
+
     rdGameContext.game.season.map.regions.map((region: any) =>
       region.controlPoints.map((controlPoint: any, i: any) => (
         controlPoint.name == name ? 

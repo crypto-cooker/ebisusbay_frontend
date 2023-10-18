@@ -236,7 +236,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                     />
                   </Watermarked>
                 ) : isLandDeedsCollection(listing.nftAddress) ? (
-                  <RdLand nftId={listing.nftId} boxSize={izanamiImageSize ?? 368} />
+                      <RdLand nftId={listing.nftId} />
                 ) : (
                   <AnyMedia
                     image={nftCardUrl(listing.nftAddress, listing.nft.image)}

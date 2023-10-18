@@ -30264,7 +30264,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/fallen-angels-demons/drop.webp",
         "banner": "/img/collections/fallen-angels-demons/banner.webp",
