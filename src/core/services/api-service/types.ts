@@ -281,7 +281,7 @@ interface RdGameBase {
 }
 
 interface RdGame extends RdGameBase {
-    parent: RdSeason;
+    season: RdSeason;
 }
 
 interface RdSeason extends RdGameBase {
