@@ -216,7 +216,6 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     const gasEstimate = await contract.estimateGas.mintWithToken(numToMint);
     const gasLimit = gasEstimate.mul(2);
     let extra = {
-      value: finalCost,
       gasPrice,
       gasLimit
     };
@@ -239,7 +238,6 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     const gasEstimate = await contract.estimateGas.mintWithRewards(numToMint, authorization.reward, authorization.signature);
     const gasLimit = gasEstimate.mul(2);
     let extra = {
-      value: finalCost,
       gasPrice,
       gasLimit
     };
