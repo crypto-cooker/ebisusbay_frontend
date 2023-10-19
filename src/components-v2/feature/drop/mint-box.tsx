@@ -36,6 +36,11 @@ import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+enum FundingType {
+  NATIVE = 'native',
+  ERC20 = 'erc20',
+  REWARDS = 'rewards',
+}
 
 interface MintBoxProps {
   drop: Drop;
@@ -63,9 +68,8 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     return state.user.theme;
   });
   const {requestSignature} = useEnforceSigner();
-  
-  const [minting, setMinting] = useState(false);
-  const [mintingERC20, setMintingERC20] = useState(false);
+
+  const [mintingWithType, setMintingWithType] = useState<FundingType>();
   const [numToMint, setNumToMint] = useState(1);
   const isReady = !!maxSupply;
   const [erc20Token, setErc20Token] = useState<{name: string, symbol: string, address: string} | null>(null);
@@ -104,23 +108,17 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     return typeof dropAbi === 'undefined' || dropAbi.length === 0;
   };
   
-  const calculateCost = async (user: any, isErc20: boolean) => {
-    if (isErc20) {
-      const regCost = ethers.utils.parseEther(drop.erc20Cost?.toString() ?? '0');
-      const memberCost = ethers.utils.parseEther(drop.erc20MemberCost?.toString() ?? '0');
-      return user.isMember && !!drop.erc20MemberCost ? memberCost : regCost;
-    } else {
-      if (isUsingDefaultDropAbi(drop.abi) || isUsingAbiFile(drop.abi)) {
-        let readContract = await new ethers.Contract(drop.address, abi, readProvider);
-        if (abi.find((m: any) => m.name === 'cost')) {
-          return await readContract.cost(user.address);
-        }
-        return await readContract.mintCost(user.address);
+  const calculateCost = async (user: any) => {
+    if (isUsingDefaultDropAbi(drop.abi) || isUsingAbiFile(drop.abi)) {
+      let readContract = await new ethers.Contract(drop.address, abi, readProvider);
+      if (abi.find((m: any) => m.name === 'cost')) {
+        return await readContract.cost(user.address);
       }
-      const regCost = ethers.utils.parseEther(regularCost.toString() ?? '0');
-      const mbrCost = ethers.utils.parseEther(memberCost?.toString() ?? '0');
-      return user.isMember && !!memberCost ? mbrCost : regCost;
+      return await readContract.mintCost(user.address);
     }
+    const regCost = ethers.utils.parseEther(regularCost.toString() ?? '0');
+    const mbrCost = ethers.utils.parseEther(memberCost?.toString() ?? '0');
+    return user.isMember && !!memberCost ? mbrCost : regCost;
   };
 
   const convertTime = (time: any) => {
@@ -130,15 +128,17 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     return `${fullDateString.split(', ')[1]} ${date.getUTCDate()} ${month} ${date.getUTCFullYear()} UTC`;
   };
 
-  const mintNow = async (isErc20 = false, mintFromRewards = false) => {
+  const mintNow = async (fundingType: FundingType) => {
     if (user.address) {
       if (!drop.writeContract) {
         console.log('missing write contract')
         return;
       }
+
+      setMintingWithType(fundingType)
       const contract = drop.writeContract;
       try {
-        const cost = await calculateCost(user, isErc20);
+        const cost = await calculateCost(user);
         let finalCost = cost.mul(numToMint);
 
         if (!isUsingDefaultDropAbi(drop.abi) && !isUsingAbiFile(drop.abi)) {
@@ -147,17 +147,13 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
         }
 
         let response;
-        if (isErc20 && mintFromRewards) {
-          setMintingERC20(true);
+        if (fundingType === FundingType.REWARDS) {
           response = await mintWithRewards(contract, finalCost);
-        } else if (isErc20) {
-          setMintingERC20(true);
+        } else if (fundingType === FundingType.ERC20) {
           response = await mintWithErc20(contract, finalCost);
         } else {
-          setMinting(true);
           response = await mintWithCro(contract, finalCost);
         }
-        console.log('?hi?')
 
         const receipt = await response.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -189,8 +185,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
         console.log(error);
         toast.error(parseErrorMessage(error));
       } finally {
-        setMintingERC20(false);
-        setMinting(false);
+        setMintingWithType(undefined);
       }
     } else {
       dispatch(connectAccount());
@@ -217,7 +212,6 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       await approvalTx.wait();
     }
 
-    console.log('estimate mint', numToMint)
     const gasPrice = parseUnits('5000', 'gwei');
     const gasEstimate = await contract.estimateGas.mintWithToken(numToMint);
     const gasLimit = gasEstimate.mul(2);
@@ -227,7 +221,6 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       gasLimit
     };
 
-    console.log('do mint', numToMint, extra)
     return await contract.mintWithToken(numToMint, extra);
   }
 
@@ -395,41 +388,43 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
             {status === statuses.LIVE && !drop.complete && (
               <Box mt={2}>
                 {canMintQuantity > 0 && (
-                  <Stack direction={{base:'column', lg:'row'}} spacing={2}>
+                  <Stack direction={{base:'column', xl:'row'}} spacing={2}>
                     <HStack minW="150px">
                       <Button {...dec}>-</Button>
                       <Input {...input} />
                       <Button {...inc}>+</Button>
                     </HStack>
-                    {(!!regularCost || drop.freeMint) && !drop.erc20Only && (
+                    {(!!regularCost || drop.freeMint) && !drop.erc20Only && (!mintingWithType || mintingWithType === FundingType.NATIVE) && (
                       <PrimaryButton
                         w='full'
-                        onClick={() => mintNow(false)}
-                        disabled={minting}
-                        isLoading={minting}
+                        onClick={() => mintNow(FundingType.NATIVE)}
+                        disabled={mintingWithType === FundingType.NATIVE}
+                        isLoading={mintingWithType === FundingType.NATIVE}
                         loadingText='Minting...'
                       >
                         Mint
                       </PrimaryButton>
                     )}
-                    {!!drop.erc20Cost && !!drop.erc20Token && (
+                    {!!drop.erc20Cost && !!drop.erc20Token && (!mintingWithType || mintingWithType === FundingType.ERC20) && (
                       <PrimaryButton
                         w='full'
-                        onClick={() => mintNow(true)}
-                        disabled={mintingERC20}
-                        isLoading={mintingERC20}
-                        loadingText='Minting...'
+                        onClick={() => mintNow(FundingType.ERC20)}
+                        disabled={mintingWithType === FundingType.ERC20}
+                        isLoading={mintingWithType === FundingType.ERC20}
+                        loadingText={`Minting with ${config.tokens[drop.erc20Token!].symbol}`}
+                        whiteSpace='initial'
                       >
-                        Mint with {config.tokens[drop.erc20Token].symbol}
+                        Mint with {config.tokens[drop.erc20Token!].symbol}
                       </PrimaryButton>
                     )}
-                    {drop.collection === 'ryoshi-playing-cards' && (
+                    {drop.collection === 'ryoshi-playing-cards' && (!mintingWithType || mintingWithType === FundingType.REWARDS) && (
                       <PrimaryButton
                         w='full'
-                        onClick={() => mintNow(true, true)}
-                        disabled={mintingERC20}
-                        isLoading={mintingERC20}
-                        loadingText='Minting...'
+                        onClick={() => mintNow(FundingType.REWARDS)}
+                        disabled={mintingWithType === FundingType.REWARDS}
+                        isLoading={mintingWithType === FundingType.REWARDS}
+                        loadingText='Minting from FRTN rewards'
+                        whiteSpace='initial'
                       >
                         Mint from FRTN rewards
                       </PrimaryButton>

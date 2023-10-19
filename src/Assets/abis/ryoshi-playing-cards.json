@@ -659,7 +659,7 @@
     ],
     "name": "mintWithRewards",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -672,7 +672,7 @@
     ],
     "name": "mintWithToken",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
