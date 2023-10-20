@@ -777,19 +777,6 @@ export const isAddress = (address) => {
   return /^(0x){1}[0-9a-fA-F]{40}$/i.test(address);
 };
 
-export const getUserDisplayName = async (address) => {
-  if (!address) return '';
-
-  try {
-    let profile = await getProfile(address);
-    if (profile?.data) return profile.data.username;
-  } catch (error) {
-    return shortAddress(address);
-  }
-
-  return shortAddress(address);
-};
-
 export const isEmptyObj = (obj) => {
   return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
 };

@@ -7,7 +7,7 @@ import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 import LayeredIcon from '../../../Components/components/LayeredIcon';
 import ImageService from "@src/core/services/image";
 import useGetProfilePreview from "@src/hooks/useGetUsername";
-import {Skeleton} from "@chakra-ui/react";
+import {shortAddress} from "@src/utils";
 
 const VerifiedIcon = styled.span`
   font-size: 8px;
@@ -48,7 +48,7 @@ const NftProfilePreview = ({ title, address }: NftProfilePreviewProps) => {
             )}
           </div>
           <div className="author_list_info">
-            <span>{isLoading ? <Skeleton /> : username}</span>
+            <span>{isLoading ? shortAddress(address) : username}</span>
           </div>
         </Link>
       </div>
