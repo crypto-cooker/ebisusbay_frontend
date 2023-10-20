@@ -10,13 +10,14 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { getAuctionDetails } from '@src/GlobalState/auctionSlice';
 import { caseInsensitiveCompare, humanize, newlineText, shortAddress, timeSince } from '@src/utils';
 import BuyerActionBar from '../Auctions/BuyerActionBar';
-import ProfilePreview from '../components/ProfilePreview';
+import NftPropertyLabel from '../../components-v2/feature/nft/property-label';
 import { appConfig } from '@src/Config';
 import { hostedImage } from '../../helpers/image';
 import {Center, Heading, Spinner} from "@chakra-ui/react";
 import {useQuery} from "@tanstack/react-query";
 import { getCollections } from "@src/core/api/next/collectioninfo";
 import ImageService from "@src/core/services/image";
+import NftProfilePreview from "@src/components-v2/feature/nft/profile-preview";
 
 const config = appConfig();
 
@@ -109,9 +110,9 @@ const AuctionComponent = (props) => {
                       <BuyerActionBar />
                     </div>
                     <div className="row" style={{ gap: '2rem 0' }}>
-                      <ProfilePreview type="Seller" address={listing.seller} to={`/account/${listing.seller}`} />
+                      <NftProfilePreview type="Seller" address={listing.seller} />
                       {collection && (
-                        <ProfilePreview
+                        <NftPropertyLabel
                           type="Collection"
                           title={collection.name}
                           avatar={ImageService.translate(collection.metadata.avatar).avatar()}
