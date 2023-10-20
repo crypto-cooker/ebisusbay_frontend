@@ -28,14 +28,12 @@ import {shortAddress, timeSince} from "@src/utils";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
 import {commify} from "ethers/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
 import Blockies from "react-blockies";
 import {useAppSelector} from "@src/Store/hooks";
-import {useQuery} from "@tanstack/react-query";
-import {getProfile} from "@src/core/cms/endpoints/profile";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import useGetProfilePreview from "@src/hooks/useGetUsername";
 
 interface ResponsiveNftOffersTableProps {
   data: InfiniteData<IPaginatedList<Offer>>;
@@ -173,10 +171,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel}: ResponsiveNftOffersTa
 export default ResponsiveNftOffersTable;
 
 const ProfileCell = ({ address = '' }) => {
-
-  const { isLoading, data } = useQuery(['user', address], () =>
-    getProfile(address)
-  )
+  const {username, avatar, verified, isLoading} = useGetProfilePreview(address);
 
   return (
     <LinkBox as={HStack}>
@@ -186,8 +181,8 @@ const ProfileCell = ({ address = '' }) => {
         position='relative'
       >
           <Box className="author_list_pp" ms={0} mt={0}>
-            {!isLoading && data?.data?.profilePicture ? (
-              <img src={ImageService.translate(data?.data?.profilePicture).avatar()} alt={data?.data?.username ? data?.data?.username : shortAddress(address)} />
+            {!isLoading && avatar ? (
+              <img src={ImageService.translate(avatar).avatar()} alt={username ?? address} />
             ) : (
               <Blockies seed={address} size={10} scale={5} />
             )}
@@ -195,9 +190,7 @@ const ProfileCell = ({ address = '' }) => {
       </Box>
       <Box fontWeight='bold'>
         <Link href={`/account/${address}`}>
-          {!!data?.data?.username ? (
-            data.data.username.length > 25 ? shortAddress(data.data.username) : data.data.username
-          ) : shortAddress(address)}
+          {isLoading ? shortAddress(address) : username}
         </Link>
       </Box>
     </LinkBox>
