@@ -16,33 +16,25 @@ export const getProfile = async (addressOrUsername) => {
 }
 
 export const createProfile = async (formData, signature, address) => {
-  try {
-    const response = await api.post('profile', formData, {
-      params: {
-        signature,
-        address
-      }
-    });
+  const response = await api.post('profile', formData, {
+    params: {
+      signature,
+      address
+    }
+  });
 
-    return response.data;
-  } catch (e) {
-    console.log('error', e);
-  }
+  return response.data;
 }
 
 export const updateProfile = async (data, signature, address) => {
-  try {
-    const response = await api.patch('profile', data, {
-      params: {
-        signature,
-        address
-      }
-    });
+  const response = await api.patch('profile', data, {
+    params: {
+      signature,
+      address
+    }
+  });
 
-    return response.data;
-  } catch (e) {
-    console.log('error', e);
-  }
+  return response.data;
 }
 
 export const updateAvatar = async (formData, signature, address) => {
