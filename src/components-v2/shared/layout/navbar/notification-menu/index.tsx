@@ -32,7 +32,10 @@ const NotificationMenu = function () {
   const { isLoading, isError, error, data:notifications, refetch } = useQuery(
     ['Notifications', address],
     () => getNotifications(address),
-    {enabled: !!profile?.id}
+    {
+      enabled: !!profile?.id,
+      staleTime: 1000 * 60,
+    }
   )
 
   const handleClose = () => {

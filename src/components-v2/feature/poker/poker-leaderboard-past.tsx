@@ -83,8 +83,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
 			},
 	    refetchOnWindowFocus: false,
-	    staleTime: 60,
-	    cacheTime: 65
+	    staleTime: 1000 * 60
 	  }
 	)
 

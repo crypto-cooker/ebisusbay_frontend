@@ -10,21 +10,21 @@ const config = appConfig();
 
 export const useGlobalPrices = () => {
   return useQuery(['GlobalPrices'], getPrices, {
-    staleTime: 2,
+    staleTime: 1000 * 60 * 2,
     initialData: []
   })
 };
 
 export const useGlobalPrice = (chainId: number | string) => {
   return useQuery(['GlobalPrice', chainId], () => getPrice(Number(chainId)), {
-    staleTime: 2
+    staleTime: 1000 * 60 * 2
   })
 };
 
 export const useFortunePrice = (chainId?: number | string) => {
   const address = config.contracts.fortune;
   return useQuery(['GlobalPrice', chainId, address], () => getPrice(Number(chainId), address), {
-    staleTime: 2
+    staleTime: 1000 * 60 * 2
   })
 };
 
