@@ -5,7 +5,7 @@ import NextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import {Contract, ethers} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
-import {round, shortAddress, siPrefixedNumber} from "@src/utils";
+import {round, shortAddress, siPrefixedNumber, username} from "@src/utils";
 import ImageService from "@src/core/services/image";
 // import {getAuthSignerInStorage} from "@src/helpers/storage";
 // import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
@@ -151,34 +151,15 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     const currentLevelStart = xpLevelTiers[xpLevel].min;
     const currentLevelEnd = xpLevelTiers[xpLevel + 1].min;
     const currentLevelProgress = (currentExp - currentLevelStart) / (currentLevelEnd - currentLevelStart);
-    const toFixedWithoutZeros = (num:number, precision:number) =>
-      num.toFixed(precision).replace(/\.0+$/, '');
 
-    setLevelProgressString(toFixedWithoutZeros(currentExp - currentLevelStart, 1) +"/" +(currentLevelEnd - currentLevelStart));
+    setLevelProgressString(round(currentExp - currentLevelStart, 1) +"/" +(currentLevelEnd - currentLevelStart));
     setPlayerLevel(rdUser.experience.level);
     setCurrentLevelProgress(currentLevelProgress * 100);
   };
 
-  const username = () => {
-    const identifier = user.profile.username;
-    try {
-      if (identifier.startsWith('0x')) {
-        return shortAddress(ethers.utils.getAddress(identifier));
-      }
-      return identifier;
-    } catch (e) {
-      return identifier;
-    }
-  }
-
-  useEffect(() => {
-    calculateCurrentValue();
-  }, [rdUser])
-
   useEffect(() => {
     getRewardsStreakData();
-    // console.log('rdUser', rdUser);
-    refreshUser(); 
+    calculateCurrentValue();
   }, [user.address, rdUser])
 
   useEffect(() => {

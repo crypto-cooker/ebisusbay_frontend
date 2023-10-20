@@ -253,9 +253,6 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
       setTroopsAvailable(rdContext.user.season.troops.available.total);
     }
   }, [rdContext]);
-  useEffect(() => {
-    rdContext.refreshUser();
-  }, []);
 
   return (
     <Flex flexDirection='column' textAlign='center'justifyContent='space-around'>
