@@ -14,10 +14,10 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
-import ProfilePreview from '@src/Components/components/ProfilePreview';
+import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
 import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
-import ProfileImage from '@src/Components/components/ProfileImage'
+import NftProfilePreview from '@src/components-v2/feature/nft/profile-preview'
 
 import {
   appUrl,
@@ -712,19 +712,14 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
 
                   <div className="row" style={{ gap: '2rem 0' }}>
                     {nft.owner ? (
-                      <ProfileImage address={nft.owner} title='Owner' displayName />
+                      <NftProfilePreview address={nft.owner} title='Owner' />
                     ) : (currentListing && collection.listable) && (
-                      <ProfilePreview
-                        type="Owner"
-                        address={currentListing.seller}
-                        to={`/account/${currentListing.seller}`}
-                        useCnsLookup={true}
-                      />
+                      <NftProfilePreview address={currentListing.seller} title='Owner' />
                     )}
 
-                    <ProfilePreview
-                      type="Collection"
-                      title={collectionName ?? 'View Collection'}
+                    <NftPropertyLabel
+                      label="Collection"
+                      value={collectionName ?? 'View Collection'}
                       avatar={ImageService.translate(collectionMetadata?.avatar).avatar()}
                       address={address}
                       verified={collection.verification?.verified}
@@ -732,9 +727,9 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                     />
 
                     {typeof nft.rank !== 'undefined' && nft.rank !== null && (
-                      <ProfilePreview
-                        type="Rarity Rank"
-                        title={nft.rank}
+                      <NftPropertyLabel
+                        label="Rarity Rank"
+                        value={nft.rank}
                         avatar={rankingsLogoForCollection(collection)}
                         hover={rankingsTitleForCollection(collection)}
                         to={rankingsLinkForCollection(collection, nft.id)}
