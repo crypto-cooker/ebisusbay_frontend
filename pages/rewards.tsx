@@ -24,8 +24,8 @@ const Rewards = () => {
     ['RewardsCollections', currentGameId],
     () => ApiService.withoutKey().getRewardedEntities(currentGameId),
     {
-      staleTime: 30,
-      cacheTime: 35,
+      staleTime: 1000 * 60 * 30,
+      cacheTime: 1000 * 60 * 35,
       refetchOnWindowFocus: false,
     }
   )
