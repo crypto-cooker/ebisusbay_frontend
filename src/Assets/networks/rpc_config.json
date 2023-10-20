@@ -24091,6 +24091,133 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Battle Roos",
+      "slug": "battle-roos",
+      "multiToken": false,
+      "address": "0xfD9B820f09B1f1f11b1537274e20FE257Dc0d3E4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crikey! Have you heard about Battle Roo, our fair dinkum NFT collection from Roo Finance? Here's why you should take the leap and hop on board! With our collection boasting over a thousand AI backgrounds, 30+ outback-inspired skins, 70+ bush-style outfits, and 30 true-blue weapons, we've got more unique combos than kangaroos at a watering hole! Now, let's get down to the nitty-gritty. We're not just about looking good; we're about doing good too. Our entire Battle Roo collection is backed by a whopping 24 million $Weedcoin for staking. ",
+        "avatar": "/img/collections/battle-roos/avatar.webp",
+        "banner": "/img/collections/battle-roos/banner.webp",
+        "card": "/img/collections/battle-roos/card.webp",
+        "website": "https://roo.finance/",
+        "twitter": "https://twitter.com/roofinance",
+        "discord": "https://discord.gg/4u5muHcdaJ",
+        "medium": "https://medium.com/@KangaDegens",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ROO OG",
+      "slug": "roo-og",
+      "multiToken": false,
+      "address": "0x1406904e110f9f51d3101a96627dddc80660780d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Roo Finance OG",
+        "avatar": "/img/collections/roo-og/avatar.webp",
+        "banner": "/img/collections/roo-og/banner.webp",
+        "card": "/img/collections/roo-og/card.webp",
+        "website": "https://roo.finance/",
+        "twitter": "https://twitter.com/roofinance",
+        "discord": "https://discord.gg/4u5muHcdaJ",
+        "medium": "https://medium.com/@KangaDegens",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Bored Punk Roo",
+      "slug": "bored-punk-roo",
+      "multiToken": false,
+      "address": "0xd94898C23C13341c4E5B5a054D07c400c8718E17",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "NFT Booster collection for Roo Finance",
+        "avatar": "/img/collections/bored-punk-roo/avatar.webp",
+        "banner": "/img/collections/bored-punk-roo/banner.webp",
+        "card": "/img/collections/bored-punk-roo/card.webp",
+        "website": "https://roo.finance/",
+        "twitter": "https://twitter.com/roofinance",
+        "discord": "https://discord.gg/4u5muHcdaJ",
+        "medium": "https://medium.com/@KangaDegens",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Hyena Hustlers",
+      "slug": "hyena-hustlers",
+      "multiToken": false,
+      "address": "0xA5353D17cC3F30DC07D6B0C5510a15Ce382B14A4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Step into the world of Hyena Hustlers, where each NFT is a masterpiece on the Cronos Network. With 3200 pieces, we're not just redefining the future of crypto - we're crafting it. Join the movement and seize the opportunity",
+        "avatar": "/img/collections/hyena-hustlers/avatar.webp",
+        "banner": "/img/collections/hyena-hustlers/banner.webp",
+        "card": "/img/collections/hyena-hustlers/card.webp",
+        "website": "https://hyenahustlers.xyz/launchpad",
+        "twitter": "https://twitter.com/hyenahustlers",
+        "discord": "https://discord.gg/s77g5FKjd6",
+        "medium": "https://medium.com/@hyenahustersnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crypto Money Makers - Money Bag",
+      "slug": "cmm-money-bag",
+      "multiToken": false,
+      "address": "0xAE798243f14A1fC202402D9F24e2ccA1a38A4cE5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Our goal is to create a simple investment project where funds from drops will be locked in few invest options and reinvested every month for bigger return. Half of income from all investments will be distributed for NFT holders. Easy way for passive income.  Mint! Hodl! Earn!",
+        "avatar": "/img/collections/cmm-money-bag/avatar.webp",
+        "card": "/img/collections/cmm-money-bag/card.webp",
+        "banner": "/img/collections/cmm-money-bag/banner.webp",
+        "website": "https://cryptomoneymakers.org/",
+        "twitter": "https://twitter.com/CronosMoney",
+        "discord": "https://discord.gg/bcjgNexUqz",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
