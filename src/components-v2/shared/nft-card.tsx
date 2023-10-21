@@ -271,7 +271,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                         <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(getListing().expirationDate)}</Text>
                       )}
                     </HStack>
-                    {getListing().usdPrice && (
+                    {!!getListing().usdPrice && (
                       <Flex ps={5} className='text-muted'>
                         <Box as='span' ms={1}>
                           ${getListing().usdPrice > 100000 ? siPrefixedNumber(getListing().usdPrice) : ethers.utils.commify(round(getListing().usdPrice, 2))}
