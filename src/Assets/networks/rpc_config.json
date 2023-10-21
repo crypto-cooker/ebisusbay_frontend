@@ -22877,9 +22877,9 @@
       "listable": true,
       "metadata": {
         "description": "Collectable playing cards allowing you participation in several different ongoing card games on EbisusBay.com\n\nCollect them all and join in on the fun!",
-        "avatar": "/img/collections/ryoshi-playing-cards/avatar.webp",
-        "banner": "/img/collections/ryoshi-playing-cards/banner.webp",
-        "card": "/img/collections/ryoshi-playing-cards/card.webp",
+        "avatar": "/img/collections/ryoshi-playing-cards/avatar2.webp",
+        "banner": "/img/collections/ryoshi-playing-cards/banner2.webp",
+        "card": "/img/collections/ryoshi-playing-cards/card2.webp",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
         "discord": "https://discord.gg/ebisusbay",
@@ -31453,6 +31453,52 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 183,
+      "slug": "ryoshi-hearts",
+      "collection": "ryoshi-playing-cards",
+      "title": "Ryoshi Hearts",
+      "subtitle": "Ryoshi Hearts: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #3 Ryoshi Hearts, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
+      "description": "Ebisu’s Bay recognizes the importance of nurturing a vibrant and supportive community. As the contest unfolds, members of the Crofam will have the opportunity to engage with the captivating NFTs and partake in an event that not only celebrates creativity but also reinforces the symbiotic relationship between art and technology.\n\nThe upcoming Playing Cards Collection marks yet another pivotal moment in the history of the Bay, bringing together individuals who are not just collectors, but pioneers in the new era of Cronos.",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 100,
+      "totalSupply": 6000,
+      "erc20Cost": "250",
+      "erc20MemberCost": "200",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "memberMitama": 1000,
+      "foundersOnly": false,
+      "start": 1698177600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-hearts/drop.webp",
+        "avatar": "/img/drops/ryoshi-hearts/avatar.webp",
+        "banner": "/img/drops/ryoshi-hearts/banner.webp",
+        "preview": "/img/drops/ryoshi-hearts/preview.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
       }
     }
   ]
