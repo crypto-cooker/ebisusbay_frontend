@@ -290,7 +290,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                       <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(listing.expirationDate)}</Text>
                     )}
                   </HStack>
-                  {tokenUsdRate && (
+                  {!!tokenUsdRate && (
                     <Flex ps={5} className='text-muted'>
                       <Box as='span' ms={1}>
                         ${tokenToUsdValue(listing.price) > 100000 ? siPrefixedNumber(tokenToUsdValue(listing.price)) : ethers.utils.commify(round(tokenToUsdValue(listing.price), 2))}

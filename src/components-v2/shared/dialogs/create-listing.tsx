@@ -441,7 +441,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                 <div className="col-12 col-sm-6">
                   <Flex h="full" direction="column" justify="space-between">
                     <Box>
-                      {nft.balance > 1 && (
+                      {(nft.balance > 1 || (listing && nft.multiToken)) && (
                         <FormControl className="mb-3" isInvalid={!!quantityError}>
                           <FormLabel className="formLabel">
                             Quantity (up to {nft.balance})
@@ -460,7 +460,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <FormControl isInvalid={!!priceError}>
                         <FormLabel className='formLabel' me={0} mb={1}>
                           <Flex justify='space-between' alignItems='center'>
-                            {nft.balance > 1 ? (
+                            {(nft.balance > 1 || (listing && nft.multiToken)) ? (
                               <>
                                 <Box>
                                   Listing Price ({priceType})
