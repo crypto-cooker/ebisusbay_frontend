@@ -10,8 +10,7 @@ const config = appConfig();
 
 export const useGlobalPrices = () => {
   return useQuery(['GlobalPrices'], getPrices, {
-    staleTime: 1000 * 60 * 2,
-    initialData: []
+    staleTime: 1000 * 60 * 2
   })
 };
 
