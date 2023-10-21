@@ -298,6 +298,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         expirationDate: expirationDate.value,
         is1155: nft.multiToken,
         currencySymbol: selectedCurrency.symbol,
+        listingId: listing?.listingId,
       });
       toast.success("Listing Successful");
 
