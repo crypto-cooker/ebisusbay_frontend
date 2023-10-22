@@ -527,7 +527,7 @@ const CurrentFaction = () => {
                                 address: user.profileWalletAddress,
                                 name: user.profileName,
                                 troops: user.troops
-                              }))}
+                              })).sort((a, b) => b.troops - a.troops)}
                               address={user.address!}
                               signature={signature}
                             />
