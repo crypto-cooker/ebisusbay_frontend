@@ -31474,7 +31474,7 @@
       "address": "",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 100,
-      "totalSupply": 6000,
+      "totalSupply": 4000,
       "erc20Cost": "250",
       "erc20MemberCost": "200",
       "erc20Token": "frtn",
