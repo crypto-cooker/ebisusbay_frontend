@@ -86,7 +86,7 @@ export const getServerSideProps = async ({query}: GetServerSidePropsContext) => 
       address: user.profileWalletAddress,
       name: user.profileName,
       troops: user.troops
-    }));
+    })).sort((a, b) => b.troops - a.troops);
 
 
     return {
