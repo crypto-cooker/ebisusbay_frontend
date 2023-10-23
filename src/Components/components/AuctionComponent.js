@@ -31,7 +31,7 @@ const AuctionComponent = (props) => {
   const powertraits = useSelector((state) => state.auction.powertraits);
   const isLoading = useSelector((state) => state.auction.loading);
 
-  const { isLoading : isLoadingCollection, error, data, status } = useQuery({
+  const { isPending: isLoadingCollection, error, data, status } = useQuery({
     queryKey: ['Collections', listing?.nftAddress.toLowerCase()],
     queryFn: () => getCollections({address: listing?.nftAddress.toLowerCase()})
   });

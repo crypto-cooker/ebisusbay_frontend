@@ -37,7 +37,7 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
     return tmpNft.nft;
   }
 
-  const { isLoading, error, data: nft, status } = useQuery({
+  const { isPending, error, data: nft, status } = useQuery({
     queryKey: ['CancelOffer', user.address, offer.nftAddress, offer.nftId],
     queryFn: fetchNft,
     enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
