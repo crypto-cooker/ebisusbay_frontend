@@ -175,11 +175,11 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
       setExecutingAcceptOffer(true);
       let tx;
       if (isCollectionOffer) {
-        Sentry.captureEvent({message: 'handleAcceptOffer', extra: {nftAddress, price}});
+        // Sentry.captureEvent({message: 'handleAcceptOffer', extra: {nftAddress, price}});
         tx = await contractService.offer.acceptCollectionOffer(offer.nftAddress, offer.offerIndex, chosenCollectionNft.nftId);
       } else {
         const nftId = nft.id ?? nft.nftId;
-        Sentry.captureEvent({message: 'handleAcceptOffer', extra: {nftAddress, nftId, price}});
+        // Sentry.captureEvent({message: 'handleAcceptOffer', extra: {nftAddress, nftId, price}});
         tx = await contractService.offer.acceptOffer(offer.hash, offer.offerIndex);
       }
       let receipt = await tx.wait();

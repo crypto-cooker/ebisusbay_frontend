@@ -158,6 +158,8 @@ const customTheme = extendTheme({
     body: `DM Sans, Helvetica, Arial, sans-serif`,
   },
   colors: {
+    light: lightTheme,
+    dark: darkTheme,
     gray: grayColor,
     blue: blueColor,
     ryoshiDynasties: {
@@ -173,7 +175,7 @@ const customTheme = extendTheme({
       baseStyle: {
         track: {
           _checked: {
-            background: mode(lightTheme.textColor4, darkTheme.textColor4)
+            background: (props) => `${props.colorMode}.textColor4`
           },
         },
       },

@@ -75,7 +75,7 @@ const Taskbar = ({collection, onFilterToggle, onSortToggle, initialSearch, onSea
   const handleSort = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
     const values = e.target.value.split('-');
     onSort(values[0], values[1]);
-  }, []);
+  }, [onSort]);
 
   useEffect(() => {
     if (searchTerms.isManuallySet) {

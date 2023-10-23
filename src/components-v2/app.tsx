@@ -5,9 +5,9 @@ import {toast, ToastContainer} from 'react-toastify';
 import {initializeApp} from 'firebase/app';
 import {getAnalytics} from "@firebase/analytics";
 
-import ScrollToTopBtn from '@src/modules/layout/navbar/ScrollToTop';
+import ScrollToTopBtn from '@src/components-v2/shared/layout/scroll-to-top';
 import Header from '@src/components-v2/shared/layout/navbar';
-import firebaseConfig from '../Firebase/firebase_config';
+import firebaseConfig from '../third-party/firebase';
 import {initProvider} from '../GlobalState/User';
 import {appInitializer} from '../GlobalState/InitSlice';
 import {getTheme} from '../Theme/theme';
@@ -19,8 +19,6 @@ import {useAppSelector} from "@src/Store/hooks";
 import {AppProps} from "next/app";
 import {ExchangePricesContext} from "@src/components-v2/shared/contexts/exchange-prices";
 import {useGlobalPrices} from "@src/hooks/useGlobalPrices";
-import {useRouter} from "next/router";
-import LandDisplay from "../../pages/izanamiscradle/[slug]";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -52,16 +50,6 @@ const GlobalStyles = createGlobalStyle`
 const firebase = initializeApp(firebaseConfig);
 
 function App({ Component, ...pageProps }: AppProps) {
-
-  // Hack to get lands to display
-  const router = useRouter();
-  if (router.pathname.startsWith('/izanamiscradle/')) {
-    if (typeof window !== 'undefined') {
-      const loader = document.getElementById('initialLoader');
-      if (loader) loader.style.display = 'none';
-    }
-    return <LandDisplay slug={(pageProps as any).slug} {...pageProps} />;
-  }
 
   const dispatch = useDispatch();
   const { colorMode } = useColorMode()
@@ -99,7 +87,7 @@ function App({ Component, ...pageProps }: AppProps) {
 
   return (
     <ThemeProvider theme={getTheme(userTheme)}>
-      <ExchangePricesContext.Provider value={{prices: exchangePrices.data}}>
+      <ExchangePricesContext.Provider value={{prices: exchangePrices.data ?? []}}>
         <DefaultHead />
         <div className="wraper">
           <GlobalStyles isDark={userTheme === 'dark'} />

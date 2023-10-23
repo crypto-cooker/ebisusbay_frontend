@@ -1,10 +1,6 @@
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-import { useState } from 'react';
-import axios from 'axios';
-
-import useCreateSigner from './useCreateSigner';
-import { appConfig } from "@src/Config";
+import {useState} from 'react';
 import {createProfile, updateAvatar, updateBanner} from "@src/core/cms/endpoints/profile";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const useCreateSettings = () => {
   const [response, setResponse] = useState({
@@ -12,7 +8,7 @@ const useCreateSettings = () => {
     error: null,
   });
 
-  const [isLoading, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
 
   const requestNewSettings = async (address, data) => {
     const { userInfo, userBanner, userAvatar } = data.userInfo;
@@ -23,48 +19,37 @@ const useCreateSettings = () => {
       error: null,
     });
 
-    let signatureInStorage = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const cleanedInput = removeNullAndUndefinedFields(userInfo);
-        const fetchResponse = await createProfile(cleanedInput, signatureInStorage, address);
+    try {
+      const signature = await requestSignature();
+      const cleanedInput = removeNullAndUndefinedFields(userInfo);
+      const fetchResponse = await createProfile(cleanedInput, signature, address);
 
-        if (userAvatar?.profilePicture[0]?.file?.name) {
-          const formData = new FormData();
-          formData.append('profilePicture', userAvatar?.profilePicture[0].file);
-          await updateAvatar(formData, signatureInStorage, address);
-        }
-        
-        if (userBanner?.banner[0]?.file?.name) {
-          const formData = new FormData();
-          formData.append('banner', userBanner?.banner[0].file);
-          await updateBanner(formData, signatureInStorage, address);
-        }
-
-        setResponse({
-          ...response,
-          loading: false,
-          error: null,
-        });
-
-        return fetchResponse;
-      } catch (error) {
-        setResponse({
-          ...response,
-          loading: false,
-          error: error,
-        });
+      if (userAvatar?.profilePicture[0]?.file?.name) {
+        const formData = new FormData();
+        formData.append('profilePicture', userAvatar?.profilePicture[0].file);
+        await updateAvatar(formData, signature, address);
       }
-    } else {
+
+      if (userBanner?.banner[0]?.file?.name) {
+        const formData = new FormData();
+        formData.append('banner', userBanner?.banner[0].file);
+        await updateBanner(formData, signature, address);
+      }
+
       setResponse({
-        isLoading: false,
-        response: [],
-        error: { message: 'Something went wrong' },
+        ...response,
+        loading: false,
+        error: null,
       });
+
+      return fetchResponse.data;
+    } catch (error) {
+      setResponse({
+        ...response,
+        loading: false,
+        error,
+      });
+      return { message: {error} }
     }
   };
 

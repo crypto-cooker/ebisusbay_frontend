@@ -3,6 +3,7 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  Avatar,
   Box,
   Center,
   Flex,
@@ -16,11 +17,8 @@ import {
   Spacer,
   Text,
   useDisclosure,
-  VStack,
-  Avatar
+  VStack
 } from "@chakra-ui/react";
-import {getAuthSignerInStorage} from '@src/helpers/storage';
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 import {attack, getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {createSuccessfulTransactionToastContent} from '@src/utils';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
@@ -48,6 +46,7 @@ import {
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 interface AttackTabProps {
   controlPoint: RdControlPoint;
@@ -61,7 +60,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   const dispatch = useDispatch();
   const config = appConfig();
   const user = useAppSelector((state) => state.user);
-  const [isLoading, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
   const {game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [displayConclusion, setDisplayConclusion] = useState(false);
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
@@ -141,108 +140,99 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       setDefenderTroops(0);
     }
   }
+
   const GetPlayerArmies = async () => {
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const data = await getProfileArmies(user.address?.toLowerCase(), signatureInStorage);
-        setPlayerArmies(
-          data.data.data.filter((army:any) => army.controlPointId == controlPoint.id)
-        );
-      } catch (error) {
-        console.log(error)
-      }
+    try {
+      const signature = await requestSignature();
+      const data = await getProfileArmies(user.address?.toLowerCase(), signature);
+      setPlayerArmies(
+        data.data.data.filter((army:any) => army.controlPointId == controlPoint.id)
+      );
+    } catch (error) {
+      console.log(error)
     }
   }
+
   const CheckForApproval = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const resourceContract = new Contract(config.contracts.resources, Resources, readProvider);
     const tx = await resourceContract.isApprovedForAll(user.address?.toLowerCase(), config.contracts.battleField);
     return tx;
   }
+
   const RealAttack = async () => {
     setIsExecuting(true);
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
+    try {
+      const signature = await requestSignature();
 
-        //check for approval
-        const approved = await CheckForApproval();
+      //check for approval
+      const approved = await CheckForApproval();
 
-        if(koban < (Number(getAttackCost())*Number(attackerTroops))){
-          toast.error("You need at least " +getAttackCost() + " Koban per troop to attack")
-          setIsExecuting(false);
-          return;
-        }
-
-        if(!approved){
-          toast.error("Please approve the pop up to allow the contract to spend your resources")
-          setExecutingLabel('Approving contract...');
-          const resourceContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-          const tx = await resourceContract.setApprovalForAll(config.contracts.battleField, true);
-          const receipt = await tx.wait();
-          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-        }
-
-        const controlPointId = controlPoint.id;
-        const attackerFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.attackersFaction)[0].id;
-        const defenderFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.defendersFaction)[0].id;
-        
-        // console.log("controlPointId", controlPointId);
-        // console.log("attackerFactionId", attackerFactionId + " " + dataForm.attackersFaction);
-        // console.log("defenderFactionId", defenderFactionId + " " + dataForm.defenderFaction);
-        // console.log("attackerTroops", attackerTroops);
-        // console.log("signatureInStorage", signatureInStorage);
-        setExecutingLabel('Attacking...');
-        const data = await attack(
-          user.address?.toLowerCase(), 
-          signatureInStorage, 
-          Number(attackerTroops), 
-          controlPointId, 
-          attackerFactionId, 
-          defenderFactionId,
-          attackType);
-        
-        // setAttackId(data.data.data.attackId);
-        
-        const timestamp = Number(data.data.data.timestampInSeconds);
-        const attacker = data.data.data.attacker;
-        const attackId = Number(data.data.data.attackId);
-        const troops = Number(data.data.data.troops);
-        const sig = data.data.data.signature;
-
-        var attackTuple = {timestamp: timestamp, 
-                          attacker: attacker, 
-                          attackId: attackId, 
-                          quantity: troops,
-                          battleType: attackType};
-        
-        // console.log("attackTuple", attackTuple);
-        // console.log("sig", sig);
-
-        const attackContract = new Contract(config.contracts.battleField, Battlefield, user.provider.getSigner());
-        const tx = await attackContract.attackFaction(attackTuple, sig);
-        // const receipt = await tx.wait();
-        // toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-        // ShowAttackConclusion();
-        // console.log("receipt", receipt);
-
-      } catch (error: any) {
-        console.log(error);
-        toast.error(parseErrorMessage(error));
-      } finally {
+      if(koban < (Number(getAttackCost())*Number(attackerTroops))){
+        toast.error("You need at least " +getAttackCost() + " Koban per troop to attack")
         setIsExecuting(false);
+        return;
       }
+
+      if(!approved){
+        toast.warning("Please approve the pop up to allow the contract to spend your resources")
+        setExecutingLabel('Approving contract...');
+        const resourceContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
+        const tx = await resourceContract.setApprovalForAll(config.contracts.battleField, true);
+        const receipt = await tx.wait();
+        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      }
+
+      const controlPointId = controlPoint.id;
+      const attackerFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.attackersFaction)[0].id;
+      const defenderFactionId = controlPoint.leaderBoard.filter(faction => faction.name === dataForm.defendersFaction)[0].id;
+
+      // console.log("controlPointId", controlPointId);
+      // console.log("attackerFactionId", attackerFactionId + " " + dataForm.attackersFaction);
+      // console.log("defenderFactionId", defenderFactionId + " " + dataForm.defenderFaction);
+      // console.log("attackerTroops", attackerTroops);
+      setExecutingLabel('Attacking...');
+      const data = await attack(
+        user.address?.toLowerCase(),
+        signature,
+        Number(attackerTroops),
+        controlPointId,
+        attackerFactionId,
+        defenderFactionId,
+        attackType);
+
+      // setAttackId(data.data.data.attackId);
+
+      const timestamp = Number(data.data.data.timestampInSeconds);
+      const attacker = data.data.data.attacker;
+      const attackId = Number(data.data.data.attackId);
+      const troops = Number(data.data.data.troops);
+      const sig = data.data.data.signature;
+
+      var attackTuple = {timestamp: timestamp,
+                        attacker: attacker,
+                        attackId: attackId,
+                        quantity: troops,
+                        battleType: attackType};
+
+      // console.log("attackTuple", attackTuple);
+      // console.log("sig", sig);
+
+      const attackContract = new Contract(config.contracts.battleField, Battlefield, user.provider.getSigner());
+      const tx = await attackContract.attackFaction(attackTuple, sig);
+      // const receipt = await tx.wait();
+      // toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      // ShowAttackConclusion();
+      // console.log("receipt", receipt);
+
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } finally {
+      setIsExecuting(false);
     }
   }
+
   function PreBattleChecks()
   {
     setShowAlert(false)

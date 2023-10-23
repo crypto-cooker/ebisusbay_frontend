@@ -14,7 +14,7 @@ import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
-const currentGameId = 52;
+const currentGameId = 57;
 
 const Rewards = () => {
   const user = useAppSelector(state => state.user);
@@ -23,8 +23,8 @@ const Rewards = () => {
   const {data, error, status,} = useQuery({
     queryKey: ['RewardsCollections', currentGameId],
     queryFn: () => ApiService.withoutKey().getRewardedEntities(currentGameId),
-    staleTime: 30,
-    cacheTime: 35,
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 35,
     refetchOnWindowFocus: false,
   });
 

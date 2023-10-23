@@ -1,22 +1,10 @@
-import {
-  Box,
-  Fade,
-  Flex,
-  Modal,
-  ModalContent,
-  ModalOverlay,
-  Text,
-  useBreakpointValue,
-  useDisclosure
-} from "@chakra-ui/react"
+import {Box, Fade, Modal, ModalContent, ModalOverlay, Text, useBreakpointValue, useDisclosure} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
-import useCreateSigner from '@src/Components/Account/Settings/hooks/useCreateSigner'
 
 //contracts
-import {appConfig} from "@src/Config";
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
 import {useAppSelector} from "@src/Store/hooks";
 import AnnouncementBoardModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/inline";
@@ -32,10 +20,10 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import { RdGameState } from "@src/core/services/api-service/types";
+import {RdGameState} from "@src/core/services/api-service/types";
 import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
 import {motion} from "framer-motion";
-
+// import FactionDirectory from "@src/components-v2/feature/ryoshi-dynasties/game/modals/xp-leaderboard";
 interface VillageProps {
   onChange: (value: string) => void;
   firstRun: boolean;
@@ -44,10 +32,7 @@ interface VillageProps {
 const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const { config: rdConfig, game: rdGameContext, user: rdUser, refreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
-  const config = appConfig();
   const { isOpen:isOpenOverlay, onToggle } = useDisclosure()
-
-  const [isLoading, getSigner] = useCreateSigner();
 
   const transformComponentRef = useRef<any>(null)
   const [elementToZoomTo, setElementToZoomTo] = useState("");
@@ -73,6 +58,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   // const [battleRewards, setBattleRewards] = useState<any[]>([]);
   const [forceRefreshBool, setForceRefreshBool] = useState(false);
   const { isOpen: isOpenBattleLog, onOpen: onOpenBattleLog, onClose: onCloseBattleLog } = useDisclosure();
+  const { isOpen: isOpenXPLeaderboard, onOpen: onOpenXPLeaderboard, onClose: onCloseXPLeaderboard } = useDisclosure();
+    
   const forceRefresh = () => {
     setForceRefreshBool(!forceRefreshBool);
   }
@@ -526,7 +513,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         onOpenBlockingModal();
         return;
       }
-      if (!!rdGameContext?.state && rdGameContext.state === RdGameState.RESET) {
+      const hasStopAtPassed = !!rdGameContext?.game?.stopAt && new Date > new Date(rdGameContext.game.stopAt);
+      if ((!!rdGameContext?.state && rdGameContext.state === RdGameState.RESET) || hasStopAtPassed) {
         onOpenResetModal();
         return;
       }
@@ -732,14 +720,14 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         )}
 
           <VillageHud onOpenBuildings={onOpenBuildings} onOpenDailyCheckin={onOpenDailyCheckin} 
-            onOpenBattleLog={onOpenBattleLog} forceRefresh={forceRefreshBool} />
+            onOpenBattleLog={onOpenBattleLog} onOpenXPLeaderboard={onOpenXPLeaderboard} forceRefresh={forceRefreshBool} />
       </Box>
 
       <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin}/>
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
       <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
       <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
-
+      {/* <FactionDirectory isOpen={isOpenXPLeaderboard} onClose={onCloseXPLeaderboard} /> */}
       <Fade in={isOpenOverlay} 
         >
         <Modal

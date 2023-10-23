@@ -1,4 +1,4 @@
-import React, {RefObject} from 'react';
+import React, {RefObject, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Link from 'next/link';
 import {createGlobalStyle} from 'styled-components';
@@ -11,26 +11,36 @@ import {setTheme} from '@src/GlobalState/User';
 import {
   Box,
   Button,
+  Divider,
   Flex,
+  Heading,
   HStack,
   IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  SimpleGrid,
   Spacer,
   Stack,
   Text,
   useBreakpointValue,
   useColorMode,
   useDisclosure,
-  useOutsideClick
+  useOutsideClick,
+  VStack
 } from "@chakra-ui/react";
 import Cart from "./cart";
 import {ChevronDownIcon, CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
 import Search from "@src/components-v2/shared/layout/navbar/search";
 import MobileSearchDrawer from "@src/components-v2/shared/layout/navbar/search/drawer";
 import {useAppSelector} from "@src/Store/hooks";
+import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
+import {appConfig} from "@src/Config";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {round} from "@src/utils";
+
+const config = appConfig();
 
 const GlobalStyles = createGlobalStyle`
   header#myHeader {
@@ -57,6 +67,8 @@ const Header = function () {
     { base: true, lg: false },
     { fallback: 'lg'},
   );
+  const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, config.chain.id);
+  const [currentFrtnPrice, setCurrentFrtnPrice] = useState(0);
 
   const ref: RefObject<HTMLDivElement> = React.useRef(null)
   useOutsideClick({
@@ -70,6 +82,16 @@ const Header = function () {
     setColorMode(newTheme);
   };
 
+  useEffect(() => {
+    try {
+      if (tokenUsdRate) {
+        setCurrentFrtnPrice(round(tokenUsdRate, 4));
+      }
+    } catch (e) {
+      console.error('Error setting global FRTN price', e);
+    }
+  }, [tokenUsdRate]);
+
   return (
     <>
       <GlobalStyles />
@@ -78,7 +100,7 @@ const Header = function () {
           <Flex h={16} alignItems={'center'}>
             <Link href="/">
               <HStack spacing={2}>
-                <Box w="44px" >
+                <Box w="44px" me={{base: 2, sm: 0}}>
                   <img
                     src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark.svg'}
                     alt="ebisus bay logo"
@@ -100,8 +122,19 @@ const Header = function () {
                 <Search />
               </Box>
             )}
+
             <Spacer />
             <Flex alignItems={'center'} className="mainside">
+
+              {!!currentFrtnPrice && (
+                <Link href='/rewards'>
+                  <HStack fontSize='sm' fontWeight='bold' me={{base: 2, sm: 4}}>
+                    <FortuneIcon boxSize={{base: 4, md: 6}} />
+                    <Text as='span' className='col-white'>${currentFrtnPrice}</Text>
+                  </HStack>
+                </Link>
+              )}
+
               <HStack
                 as={'nav'}
                 spacing={3}
@@ -131,6 +164,7 @@ const Header = function () {
                     <MenuItem as={Link} href='/ryoshi' _hover={{color: 'inherit'}} justifyContent='end'>Ryoshi Dynasties</MenuItem>
                     <MenuItem as={Link} href='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' _hover={{color: 'inherit'}} justifyContent='end'>Izanami&apos;s Cradle</MenuItem>
                     <MenuItem as={Link} href='/collection/ryoshi-playing-cards?tab=pokerRanks' _hover={{color: 'inherit'}} justifyContent='end'>Crypto HODL&apos;em</MenuItem>
+                    <MenuItem as={Link} href='/xp-leaderboard' _hover={{color: 'inherit'}} justifyContent='end'>XP Leaderboard</MenuItem>
                   </MenuList>
                 </Menu>
               </HStack>
@@ -155,15 +189,36 @@ const Header = function () {
           </Flex>
 
           {isOpen ? (
-            <Box pb={4} display={{md: 'none'}} textAlign="end">
-              <Stack as={'nav'} spacing={4}>
-                <NavLink name={'Rewards'} to={'/rewards'} onClick={onClose} />
-                <NavLink name={'Ryoshi Dynasties'} to={'/ryoshi'} onClick={onClose} />
-                <NavLink name={'Marketplace'} to={'/marketplace'} onClick={onClose} />
-                <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
-                <NavLink name={'Brands'} to={'/brands'} onClick={onClose} />
-                <NavLink name={'Drops'} to={'/drops'} onClick={onClose} />
-                <NavLink name={'Become a Creator'} to={'/apply'} onClick={onClose} />
+            <Box pb={2} display={{md: 'none'}}>
+              <SimpleGrid columns={2} p={2}>
+                <Box>
+                  <VStack align='start' spacing={0} mb={2}>
+                    <Heading size='md' className='col-white'>Marketplace</Heading>
+                    <Divider borderColor='white' w='150px' />
+                  </VStack>
+                  <VStack align='start'>
+                    <NavLink name='Marketplace' to='/marketplace' onClick={onClose} />
+                    <NavLink name='Collections' to='/collections' onClick={onClose} />
+                    <NavLink name='Brands' to='/brands' onClick={onClose} />
+                    <NavLink name='Drops' to='/drops' onClick={onClose} />
+                    <NavLink name='Become a Creator' to='/apply' onClick={onClose} />
+                  </VStack>
+                </Box>
+                <Box>
+                  <VStack align='end' spacing={0} mb={2}>
+                    <Heading size='md' className='col-white'>GameFi</Heading>
+                    <Divider borderColor='white' w='150px' mb={2} />
+                  </VStack>
+                  <VStack align='end'>
+                    <NavLink name='Ryoshi Dynasties' to='/ryoshi' onClick={onClose} />
+                    <NavLink name='Izanami&apos;s Cradle' to='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' onClick={onClose} />
+                    <NavLink name='Crypto HODL&apos;em' to='/collection/ryoshi-playing-cards?tab=pokerRanks' onClick={onClose} />
+                    <NavLink name='XP Leaderboard' to='/xp-leaderboard' onClick={onClose} />
+                    <NavLink name='Rewards' to='/rewards' onClick={onClose} />
+                  </VStack>
+                </Box>
+              </SimpleGrid>
+              <Stack mt={2} align='center'>
                 {/*<NavLink name={'Stats'} to={'/stats'} onClick={onClose} />*/}
                 {/*<NavLink name={'Auction'} to={'/auctions/mutant-serum'} />*/}
 

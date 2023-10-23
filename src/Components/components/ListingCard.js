@@ -9,7 +9,14 @@ import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
-import {appUrl, createSuccessfulAddCartContent, isLandDeedsCollection, round, timeSince} from '@src/utils';
+import {
+  appUrl,
+  createSuccessfulAddCartContent,
+  isLandDeedsCollection,
+  round,
+  siPrefixedNumber,
+  timeSince
+} from '@src/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
 import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useBreakpointValue, useClipboard} from "@chakra-ui/react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
@@ -32,6 +39,7 @@ import {appConfig} from "@src/Config";
 import ImageService from "@src/core/services/image";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
+import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 
 const config = appConfig();
 
@@ -66,6 +74,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
     {base: 250, sm: 368, lg: 456},
     {fallback: 'md'}
   );
+  const {tokenUsdRate, tokenToUsdValue} = useTokenExchangeRate(listing.currency);
 
   const getOptions = () => {
     const options = [];
@@ -227,7 +236,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                     />
                   </Watermarked>
                 ) : isLandDeedsCollection(listing.nftAddress) ? (
-                  <RdLand nftId={listing.nftId} boxSize={izanamiImageSize ?? 368} />
+                      <RdLand nftId={listing.nftId} />
                 ) : (
                   <AnyMedia
                     image={nftCardUrl(listing.nftAddress, listing.nft.image)}
@@ -264,22 +273,31 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
               </Link>
 
               <Tooltip label="Listing Price" placement='top-start'>
-                <HStack w='full' fontSize='sm'>
-                  <Box w='16px'>
-                    <FontAwesomeIcon icon={faBoltLightning} />
-                  </Box>
-                  <Box>
-                    <Flex alignItems='center'>
-                      <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
+                <Box fontSize='sm'>
+                  <HStack w='full'>
+                    <Box w='16px'>
+                      <FontAwesomeIcon icon={faBoltLightning} />
+                    </Box>
+                    <Box>
+                      <Flex alignItems='center'>
+                        <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
+                        <Box as='span' ms={1}>
+                          {getCorrectPrice(listing.price)}
+                        </Box>
+                      </Flex>
+                    </Box>
+                    {listing.expirationDate && (
+                      <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(listing.expirationDate)}</Text>
+                    )}
+                  </HStack>
+                  {!!tokenUsdRate && (
+                    <Flex ps={5} className='text-muted'>
                       <Box as='span' ms={1}>
-                        {getCorrectPrice(listing.price)}
+                        ${tokenToUsdValue(listing.price) > 100000 ? siPrefixedNumber(tokenToUsdValue(listing.price)) : ethers.utils.commify(round(tokenToUsdValue(listing.price), 2))}
                       </Box>
                     </Flex>
-                  </Box>
-                  {listing.expirationDate && (
-                    <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(listing.expirationDate)}</Text>
                   )}
-                </HStack>
+                </Box>
               </Tooltip>
             </Flex>
             <Spacer />

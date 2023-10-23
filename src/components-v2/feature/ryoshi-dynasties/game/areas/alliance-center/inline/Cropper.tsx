@@ -1,17 +1,34 @@
-import {useMediaQuery, Input, Box, Modal, ModalContent, ModalOverlay,Avatar, Text, VStack, Stack, Slider, Button, useDisclosure, Center, Image, SliderTrack, SliderFilledTrack, SliderThumb, Flex} from "@chakra-ui/react";
-import { RdModal } from "@src/components-v2/feature/ryoshi-dynasties/components";
-import { useRef, useState, useContext, ReactElement } from "react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Input,
+  Modal,
+  ModalContent,
+  ModalOverlay,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+  Stack,
+  Text,
+  useDisclosure,
+  VStack
+} from "@chakra-ui/react";
+import {ReactElement, useContext, useRef, useState} from "react";
 import AvatarEditor from "react-avatar-editor";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import {useAppSelector} from "@src/Store/hooks";
-import useCreateSigner from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import axios from "axios";
 import {appConfig} from "@src/Config";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 
@@ -28,27 +45,20 @@ const CropperModal = ({isOpen, onClose, src, setPreview}:CropperProps) => {
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const cropRef = useRef<any>(null);
   const user = useAppSelector((state) => state.user);
-  const [_, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
 
   const CallPatchFaction = async (newData:any, faction:any) => {
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        // console.log(faction.id, newData[0].result)
-        const res = await UploadFactionIconPfp(user.address?.toLowerCase(), signatureInStorage, 
-          faction.name, Number(faction.id), newData);
-        // console.log(res);
-        toast.success("Faction icon updated! Refreshing...");
-        // onSuccess();
+    try {
+      // console.log(faction.id, newData[0].result)
+      const signature = await requestSignature();
+      await UploadFactionIconPfp(user.address?.toLowerCase(), signature, faction.name, Number(faction.id), newData);
+      // console.log(res);
+      toast.success("Faction icon updated! Refreshing...");
+      // onSuccess();
 
-      } catch (error) {
-        console.log(error)
-        toast.error("Icon too large, please use a smaller image")
-      }
+    } catch (error) {
+      console.log(error)
+      toast.error(parseErrorMessage(error, 'Icon too large, please use a smaller image'));
     }
   }
 

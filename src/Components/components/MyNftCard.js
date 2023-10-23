@@ -31,7 +31,7 @@ import {
   useBreakpointValue,
   useClipboard
 } from "@chakra-ui/react";
-import {appUrl, caseInsensitiveCompare, round, siPrefixedNumber, timeSince} from "@src/utils";
+import {appUrl, caseInsensitiveCompare, isLandDeedsCollection, round, siPrefixedNumber, timeSince} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
 import {useSelector} from "react-redux";
@@ -39,6 +39,8 @@ import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
+import {useExchangeRate} from "@src/hooks/useGlobalPrices";
 
 const MyNftCard = ({
   nft,
@@ -65,6 +67,14 @@ const MyNftCard = ({
     {fallback: 'md'},
   );
   const { onCopy } = useClipboard(nftUrl.toString());
+  const {usdValueForToken} = useExchangeRate();
+
+  const marketUsdValue = () => {
+    if (nft.market?.price) {
+      return usdValueForToken(nft.market.price, nft.market.currency);
+    }
+    return 0;
+  };
 
   const navigateTo = (link) => {
     if (batchListingCart.isDrawerOpen) {
@@ -136,7 +146,10 @@ const MyNftCard = ({
   const isInBatchListingCart = () => {
     return batchListingCart.items.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
   };
-
+  const izanamiImageSize = useBreakpointValue(
+    {base: 250, sm: 368, lg: 456},
+    {fallback: 'md'}
+  )
   return (
     <Box
       className="card eb-nft__card h-100 shadow"
@@ -200,16 +213,20 @@ const MyNftCard = ({
               onClick={() => navigateTo(nftUrl)}
               cursor="pointer"
             >
-              <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
-                        title={nft.name}
-                        newTab={true}
-                        className="card-img-top marketplace"
-                        height={440}
-                        width={440}
-                        video={batchListingCart.items.length > 0 ? undefined : (nft.video ?? nft.animationUrl ?? nft.animation_url)}
-                        thumbnail={!!nft.video || !!nft.animationUrl || !!nft.animation_url ? ImageService.translate(nft.video ?? nft.animationUrl ?? nft.animation_url).thumbnail() : undefined}
-                        usePlaceholder={true}
-              />
+              {isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
+                <RdLand nftId={nft.id ?? nft.nftId}/>
+              ) : (
+                  <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
+                            title={nft.name}
+                            newTab={true}
+                            className="card-img-top marketplace"
+                            height={440}
+                            width={440}
+                            video={batchListingCart.items.length > 0 ? undefined : (nft.video ?? nft.animationUrl ?? nft.animation_url)}
+                            thumbnail={!!nft.video || !!nft.animationUrl || !!nft.animation_url ? ImageService.translate(nft.video ?? nft.animationUrl ?? nft.animation_url).thumbnail() : undefined}
+                            usePlaceholder={true}
+                  />
+              )}
             </Box>
           </div>
           {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
@@ -227,22 +244,31 @@ const MyNftCard = ({
             </div>
             {!!nft.listed && !!nft.market.price && (
               <Tooltip label="Listing Price" placement='top-start'>
-                <HStack w='full' fontSize='sm'>
-                  <Box w='16px'>
-                    <FontAwesomeIcon icon={faBoltLightning} />
-                  </Box>
-                  <Box>
-                    <Flex alignItems='center'>
-                      <DynamicCurrencyIcon address={nft.market.currency} boxSize={4} />
+                <Box fontSize='sm'>
+                  <HStack w='full'>
+                    <Box w='16px'>
+                      <FontAwesomeIcon icon={faBoltLightning} />
+                    </Box>
+                    <Box>
+                      <Flex alignItems='center'>
+                        <DynamicCurrencyIcon address={nft.market.currency} boxSize={4} />
+                        <Box as='span' ms={1}>
+                          {nft.market.price > 6 ? siPrefixedNumber(nft.market.price) : ethers.utils.commify(round(nft.market.price))}
+                        </Box>
+                      </Flex>
+                    </Box>
+                    {nft.market.expirationDate && (
+                      <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(nft.market.expirationDate)}</Text>
+                    )}
+                  </HStack>
+                  {!!marketUsdValue() && (
+                    <Flex ps={5} className='text-muted'>
                       <Box as='span' ms={1}>
-                        {nft.market.price > 6 ? siPrefixedNumber(nft.market.price) : ethers.utils.commify(round(nft.market.price))}
+                        ${marketUsdValue() > 100000 ? siPrefixedNumber(marketUsdValue()) : ethers.utils.commify(round(marketUsdValue(), 2))}
                       </Box>
                     </Flex>
-                  </Box>
-                  {nft.market.expirationDate && (
-                    <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(nft.market.expirationDate)}</Text>
                   )}
-                </HStack>
+                </Box>
               </Tooltip>
             )}
             {nft.offer?.id && (

@@ -3,12 +3,11 @@ import {Contract} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isLandDeedsCollection} from "@src/utils";
 import * as Sentry from '@sentry/react';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {ERC1155, ERC721} from "@src/Contracts/Abis";
-import {getCnsAddress, isCnsName} from "@src/helpers/cns";
 import {
   Box,
   Button as ChakraButton,
@@ -31,6 +30,8 @@ import {getTheme} from "@src/Theme/theme";
 import {is1155} from "@src/helpers/chain";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useAppSelector} from "@src/Store/hooks";
+import {getCroidAddressFromName, isCroName} from "@src/helpers/croid";
+import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 
 interface TransferNftDialogProps {
   isOpen: boolean;
@@ -86,11 +87,11 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
       const nftId = nft.id ?? nft.nftId;
 
       let targetAddress = recipientAddress;
-      if (isCnsName(recipientAddress)) {
+      if (!!recipientAddress && isCroName(recipientAddress)) {
         setExecutingCnsLookup(true);
-        const cnsAddress = await getCnsAddress(recipientAddress);
-        if (cnsAddress) {
-          targetAddress = cnsAddress;
+        const croidAddress = await getCroidAddressFromName(recipientAddress);
+        if (croidAddress) {
+          targetAddress = croidAddress;
           setExecutingCnsLookup(false);
         } else {
           setFieldError('No matching profiles for this CNS name');
@@ -100,7 +101,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
       }
 
       setExecutingTransferNft(true);
-      Sentry.captureEvent({message: 'handleTransfer', extra: {address: nftAddress, targetAddress}});
+      // Sentry.captureEvent({message: 'handleTransfer', extra: {address: nftAddress, targetAddress}});
 
       let tx;
       if (await is1155(nftAddress)) {
@@ -182,14 +183,18 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
             <ModalBody>
               <div className="nftSaleForm row gx-3">
                 <div className="col-12 col-sm-4 mb-sm-3">
-                  <AnyMedia
-                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
-                    video={nft.video ?? nft.animation_url}
-                    videoProps={{ height: 'auto', autoPlay: true }}
-                    title={nft.name}
-                    usePlaceholder={false}
-                    className="img-fluid img-rounded"
-                  />
+                  {isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
+                    <RdLand nftId={nft.id ?? nft.nftId} />
+                  ) : (
+                    <AnyMedia
+                      image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                      video={nft.video ?? nft.animation_url}
+                      videoProps={{ height: 'auto', autoPlay: true }}
+                      title={nft.name}
+                      usePlaceholder={false}
+                      className="img-fluid img-rounded"
+                    />
+                  )}
                 </div>
                 <div className="col-12 col-sm-8 my-auto">
                   {nft.balance > 1 && (

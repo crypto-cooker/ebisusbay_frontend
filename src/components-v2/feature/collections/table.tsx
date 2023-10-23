@@ -34,7 +34,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
     },
-    staleTime: 1
+    staleTime: 1000 * 60
   });
 
   const loadMore = () => {

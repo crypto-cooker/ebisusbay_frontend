@@ -49,6 +49,7 @@ import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
+import {useExchangeRate} from "@src/hooks/useGlobalPrices";
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
@@ -83,6 +84,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { onCopy } = useClipboard(nftUrl.toString());
+  const {usdValueForToken} = useExchangeRate();
 
   const izanamiImageSize = useBreakpointValue(
     {base: 250, sm: 368, lg: 456},
@@ -91,17 +93,21 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
 
   const getListing = (): any => {
     if (nft.market?.price) {
+      const usdPrice = usdValueForToken(nft.market.price, nft.market.currency);
       return {
         id: nft.market.id,
         price: nft.market.price,
+        usdPrice: usdPrice,
         expirationDate: nft.market.expirationDate,
         currency: nft.market.currency
       };
     }
     if (nft.listed) {
+      const usdPrice = usdValueForToken(nft.price, nft.currency);
       return {
         id: nft.listingId,
         price: nft.price,
+        usdPrice: usdPrice,
         expirationDate: nft.expirationDate,
         currency: nft.currency
       };
@@ -225,7 +231,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                     />
                   </Watermarked>
                 ) : isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
-                  <RdLand nftId={nft.id ?? nft.nftId} boxSize={izanamiImageSize ?? 368} />
+                  <RdLand nftId={nft.id ?? nft.nftId} />
                 ) : (
                   <AnyMedia
                     image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}
@@ -248,22 +254,31 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
               </Link>
               {getListing() && (
                 <Tooltip label="Listing Price" placement='top-start'>
-                  <HStack w='full' fontSize='sm'>
-                    <Box w='16px'>
-                      <FontAwesomeIcon icon={faBoltLightning} />
-                    </Box>
-                    <Box>
-                      <Flex alignItems='center'>
-                        <DynamicCurrencyIcon address={getListing().currency} boxSize={4} />
+                  <Box fontSize='sm'>
+                    <HStack w='full'>
+                      <Box w='16px'>
+                        <FontAwesomeIcon icon={faBoltLightning} />
+                      </Box>
+                      <Box>
+                        <Flex alignItems='center'>
+                          <DynamicCurrencyIcon address={getListing().currency} boxSize={4} />
+                          <Box as='span' ms={1}>
+                            {getListing().price > 6 ? siPrefixedNumber(getListing().price) : ethers.utils.commify(round(getListing().price))}
+                          </Box>
+                        </Flex>
+                      </Box>
+                      {getListing().expirationDate && (
+                        <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(getListing().expirationDate)}</Text>
+                      )}
+                    </HStack>
+                    {!!getListing().usdPrice && (
+                      <Flex ps={5} className='text-muted'>
                         <Box as='span' ms={1}>
-                          {getListing().price > 6 ? siPrefixedNumber(getListing().price) : ethers.utils.commify(round(getListing().price))}
+                          ${getListing().usdPrice > 100000 ? siPrefixedNumber(getListing().usdPrice) : ethers.utils.commify(round(getListing().usdPrice, 2))}
                         </Box>
                       </Flex>
-                    </Box>
-                    {getListing().expirationDate && (
-                      <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(getListing().expirationDate)}</Text>
                     )}
-                  </HStack>
+                  </Box>
                 </Tooltip>
               )}
               {nft.offer?.id && (

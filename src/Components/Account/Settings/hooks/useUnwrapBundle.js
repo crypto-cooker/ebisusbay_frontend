@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import {Contract} from "ethers";
-import useCreateSigner from './useCreateSigner';
 import {useSelector} from "react-redux";
 import {appConfig} from "@src/Config";
 import Bundle from "@src/Contracts/Bundle.json";
@@ -12,8 +11,6 @@ const useUnwrapBundle = () => {
   });
 
   const config = appConfig();
-
-  const [isLoading, getSigner] = useCreateSigner();
 
   const user = useSelector((state) => state.user);
 

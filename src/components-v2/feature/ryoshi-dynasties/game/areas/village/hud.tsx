@@ -5,7 +5,7 @@ import NextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import {Contract, ethers} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
-import {round, shortAddress, siPrefixedNumber} from "@src/utils";
+import {round, shortAddress, siPrefixedNumber, username} from "@src/utils";
 import ImageService from "@src/core/services/image";
 // import {getAuthSignerInStorage} from "@src/helpers/storage";
 // import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
@@ -24,10 +24,11 @@ interface VillageHudProps {
   onOpenBuildings: () => void;
   onOpenDailyCheckin: () => void;
   onOpenBattleLog: () => void;
+  onOpenXPLeaderboard: () => void;
   forceRefresh: boolean;
 }
 
-export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog, forceRefresh}: VillageHudProps) => {
+export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog, onOpenXPLeaderboard, forceRefresh}: VillageHudProps) => {
   const user = useAppSelector((state) => state.user);
   const { config: rdConfig, user:rdUser, game: rdGameContext, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const config = appConfig();
@@ -119,7 +120,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     }
   };
   
-  const xpLevelMaxs = [
+  const xpLevelTiers = [
     { min: 0, value: 0},
     { min: 100, value: 1},
     { min: 500, value: 2},
@@ -132,10 +133,10 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     { min: 80000, value: 9},
     { min: 140000, value: 10},
   ]
-  const getXpLevel = (reputation: number) => {
+  const getXpLevel = (xp: number) => {
     let level = 0;
-    xpLevelMaxs.forEach((item) => {
-      if (reputation >= item.min) {
+    xpLevelTiers.forEach((item) => {
+      if (xp >= item.min) {
         level = item.value;
       }
     })
@@ -147,35 +148,18 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
 
     const currentExp = rdUser.experience.points;
     const xpLevel = getXpLevel(currentExp);
-    const currentLevelStart = xpLevelMaxs[xpLevel].min;
-    const currentLevelEnd = xpLevelMaxs[xpLevel + 1].min;
+    const currentLevelStart = xpLevelTiers[xpLevel].min;
+    const currentLevelEnd = xpLevelTiers[xpLevel + 1].min;
     const currentLevelProgress = (currentExp - currentLevelStart) / (currentLevelEnd - currentLevelStart);
 
-    setLevelProgressString((currentExp - currentLevelStart) +"/" +(currentLevelEnd - currentLevelStart));
+    setLevelProgressString(round(currentExp - currentLevelStart, 1) +"/" +(currentLevelEnd - currentLevelStart));
     setPlayerLevel(rdUser.experience.level);
     setCurrentLevelProgress(currentLevelProgress * 100);
   };
 
-  const username = () => {
-    const identifier = user.profile.username;
-    try {
-      if (identifier.startsWith('0x')) {
-        return shortAddress(ethers.utils.getAddress(identifier));
-      }
-      return identifier;
-    } catch (e) {
-      return identifier;
-    }
-  }
-
-  useEffect(() => {
-    calculateCurrentValue();
-  }, [rdUser])
-
   useEffect(() => {
     getRewardsStreakData();
-    // console.log('rdUser', rdUser);
-    refreshUser(); 
+    calculateCurrentValue();
   }, [user.address, rdUser])
 
   useEffect(() => {
@@ -302,6 +286,10 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             <DarkButton
               onClick={onOpenBattleLog}
               icon={faClipboardList}/>
+
+            {/* <DarkButton
+              onClick={onOpenXPLeaderboard}
+              icon={faClipboardList}/> */}
 
             {/* <DarkButton
               onClick={() => UpdateMetaData(Math.floor(Math.random() * 2500))}

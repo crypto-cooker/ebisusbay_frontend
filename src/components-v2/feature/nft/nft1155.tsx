@@ -11,7 +11,7 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
-import ProfilePreview from '@src/Components/components/ProfilePreview';
+import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import {
   appUrl,
   caseInsensitiveCompare,
@@ -25,8 +25,6 @@ import {
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {specialImageTransform} from '@src/hacks';
 import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
-import {offerState} from '@src/core/api/enums';
-import {getFilteredOffers} from '@src/core/subgraph';
 import PriceActionBar from '@src/components-v2/feature/nft/price-action-bar';
 import ListingsTab from '@src/components-v2/feature/nft/tabs/listings';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
@@ -57,10 +55,11 @@ import {Button as ChakraButton} from "@chakra-ui/button";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {useAppSelector} from "@src/Store/hooks";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
-import {OfferType} from "@src/core/services/api-service/types";
+import {OfferState, OfferType} from "@src/core/services/api-service/types";
 import ImageService from "@src/core/services/image";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
+import {ApiService} from "@src/core/services/api-service";
 
 const config = appConfig();
 const tabs = {
@@ -209,7 +208,6 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
-  const [offerData, setOfferData] = useState();
 
   const handleMakeOffer = () => {
     if (user.address) {
@@ -232,14 +230,13 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
 
   useEffect(() => {
     async function func() {
-      const filteredOffers = await getFilteredOffers(nft.address, nft.id.toString(), user.address);
-      const data = filteredOffers ? filteredOffers.data.filter((o: any) => o.state === offerState.ACTIVE.toString()) : [];
-      if (data && data.length > 0) {
-        setOfferType(OFFER_TYPE.update);
-        setOfferData(data[0]);
-      } else {
-        setOfferType(OFFER_TYPE.make);
-      }
+      const existingOffer = await ApiService.withoutKey().getMadeOffersByUser(user.address!, {
+        collection: [nft.address],
+        tokenId: nft.id,
+        state: OfferState.ACTIVE,
+        pageSize: 1
+      });
+      setOfferType(existingOffer.data.length > 0 ? OFFER_TYPE.update : OFFER_TYPE.make);
     }
     if (!offerType && user.address && nft && nft.address && nft.id) {
       func();
@@ -379,9 +376,9 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                     />
                   )}
                   <div className="row" style={{ gap: '2rem 0' }}>
-                    <ProfilePreview
-                      type="Collection"
-                      title={collectionName ?? 'View Collection'}
+                    <NftPropertyLabel
+                      label="Collection"
+                      value={collectionName ?? 'View Collection'}
                       avatar={ImageService.translate(collectionMetadata?.avatar).avatar()}
                       address={address}
                       verified={collection.verification?.verified}
@@ -389,9 +386,9 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                     />
 
                     {typeof nft.rank !== 'undefined' && nft.rank !== null && (
-                      <ProfilePreview
-                        type="Rarity Rank"
-                        title={nft.rank}
+                      <NftPropertyLabel
+                        label="Rarity Rank"
+                        value={nft.rank}
                         avatar={rankingsLogoForCollection(collection)}
                         hover={rankingsTitleForCollection(collection)}
                         to={rankingsLinkForCollection(collection)}

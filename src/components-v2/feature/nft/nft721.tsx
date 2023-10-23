@@ -14,10 +14,10 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
-import ProfilePreview from '@src/Components/components/ProfilePreview';
+import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
 import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
-import ProfileImage from '@src/Components/components/ProfileImage'
+import NftProfilePreview from '@src/components-v2/feature/nft/profile-preview'
 
 import {
   appUrl,
@@ -47,10 +47,8 @@ import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/Us
 import {specialImageTransform} from '@src/hacks';
 import PriceActionBar from './price-action-bar';
 import {ERC721} from '@src/Contracts/Abis';
-import {getFilteredOffers} from '@src/core/subgraph';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
-import {offerState} from '@src/core/api/enums';
 import {commify} from 'ethers/lib/utils';
 import {appConfig} from '@src/Config';
 import Link from 'next/link';
@@ -85,10 +83,11 @@ import {useAppSelector} from "@src/Store/hooks";
 import {ContractInterface} from "@ethersproject/contracts";
 import ImageService from "@src/core/services/image";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
-import {OfferType} from "@src/core/services/api-service/types";
+import {OfferState, OfferType} from "@src/core/services/api-service/types";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
 import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
+import {ApiService} from "@src/core/services/api-service";
 
 const config = appConfig();
 const tabs = {
@@ -525,14 +524,13 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
 
   useEffect(() => {
     async function func() {
-      const filteredOffers = await getFilteredOffers(nft.address, nft.id.toString(), user.address);
-      const data = filteredOffers ? filteredOffers.data.filter((o: any) => o.state === offerState.ACTIVE.toString()) : [];
-      if (data && data.length > 0) {
-        setOfferType(OFFER_TYPE.update);
-        setOfferData(data[0]);
-      } else {
-        setOfferType(OFFER_TYPE.make);
-      }
+      const existingOffer = await ApiService.withoutKey().getMadeOffersByUser(user.address!, {
+        collection: [nft.address],
+        tokenId: nft.id,
+        state: OfferState.ACTIVE,
+        pageSize: 1
+      });
+      setOfferType(existingOffer.data.length > 0 ? OFFER_TYPE.update : OFFER_TYPE.make);
     }
     if (!offerType && user.address && nft && nft.address && nft.id) {
       func();
@@ -580,9 +578,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                 ) : nft.useIframe ? (
                   <iframe width="100%" height="636" src={nft.iframeSource} title="nft" />
                 ) : isLandDeedsCollection(address) ? (
-                  <Center>
-                      <RdLand nftId={id} boxSize={izanamiImageSize ?? 368} forceBoxSize={true} rounded='xl' />
-                  </Center>
+                    <RdLand nftId={id} rounded='xl' />
                 ) : (
                   <>
                     <AnyMedia
@@ -717,19 +713,14 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
 
                   <div className="row" style={{ gap: '2rem 0' }}>
                     {nft.owner ? (
-                      <ProfileImage address={nft.owner} title='Owner' displayName />
+                      <NftProfilePreview address={nft.owner} title='Owner' />
                     ) : (currentListing && collection.listable) && (
-                      <ProfilePreview
-                        type="Owner"
-                        address={currentListing.seller}
-                        to={`/account/${currentListing.seller}`}
-                        useCnsLookup={true}
-                      />
+                      <NftProfilePreview address={currentListing.seller} title='Owner' />
                     )}
 
-                    <ProfilePreview
-                      type="Collection"
-                      title={collectionName ?? 'View Collection'}
+                    <NftPropertyLabel
+                      label="Collection"
+                      value={collectionName ?? 'View Collection'}
                       avatar={ImageService.translate(collectionMetadata?.avatar).avatar()}
                       address={address}
                       verified={collection.verification?.verified}
@@ -737,9 +728,9 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                     />
 
                     {typeof nft.rank !== 'undefined' && nft.rank !== null && (
-                      <ProfilePreview
-                        type="Rarity Rank"
-                        title={nft.rank}
+                      <NftPropertyLabel
+                        label="Rarity Rank"
+                        value={nft.rank}
                         avatar={rankingsLogoForCollection(collection)}
                         hover={rankingsTitleForCollection(collection)}
                         to={rankingsLinkForCollection(collection, nft.id)}

@@ -38,9 +38,14 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
 
   const currencies = Object.entries(config.tokens)
     .filter(([key, token]: [string, any]) => config.listings.currencies.available.includes(key))
-    .filter(([key, token]: [string, any]) => collectionCurrencies
-      .find(([k, v]) => ciEquals(k, collection.address))?.[1].includes(key)
-    )
+    .filter(([key, token]: [string, any]) => {
+      const availableCurrencySymbols = collectionCurrencies.find(([k, v]) => ciEquals(k, collection.address))
+      if (availableCurrencySymbols) {
+        return availableCurrencySymbols[1].includes(key);
+      } else {
+        return config.listings.currencies.global.includes(key)
+      }
+    })
     .map(token => token[1]) as {name: string, symbol: string, address: string}[] ?? [];
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {

@@ -49,7 +49,7 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
 
     try {
       setExecutingCancelOffer(true);
-      Sentry.captureEvent({message: 'handleCancelOffer', extra: {address: offer.nftAddress}});
+      // Sentry.captureEvent({message: 'handleCancelOffer', extra: {address: offer.nftAddress}});
       let tx;
       if (isCollectionOffer) {
         tx = await offerContract.cancelCollectionOffer(offer.nftAddress, offer.offerIndex);

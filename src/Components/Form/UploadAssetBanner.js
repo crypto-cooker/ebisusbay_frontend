@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Card } from 'react-bootstrap';
 import useGetSettings from '../Account/Settings/hooks/useGetSettings';
 import useUpdateBanner from '../Account/Settings/hooks/useUpdateBanner';
-import {Stack} from "@chakra-ui/react";
+import {Card, CardBody, Stack} from "@chakra-ui/react";
+import {getTheme} from "@src/Theme/theme";
 
 const UploadAsset = ({ id, value, accept = 'image/png, image/jpeg, image/jpg', onChange, onClose }) => {
   const [file, setFile] = useState(null);
@@ -68,8 +68,8 @@ const UploadAsset = ({ id, value, accept = 'image/png, image/jpeg, image/jpg', o
   return (
     <Stack direction="row" alignItems="center" spacing={2} className="upload-asset me-0" style={{ width: '100%' }}>
       <label htmlFor={id} style={{ width: '100%' }}>
-        <Card style={{ width: '100%', height: value?.result? '100%' : '160px' }}>
-          <Card.Body>
+        <Card bg={getTheme(user.theme).colors.bgColor5} style={{ width: '100%', height: value?.result? '100%' : '160px' }}>
+          <CardBody>
             <input
               id={id}
               ref={inputFile}
@@ -89,7 +89,7 @@ const UploadAsset = ({ id, value, accept = 'image/png, image/jpeg, image/jpg', o
             ) : (
               <></>
             )}
-          </Card.Body>
+          </CardBody>
         </Card>
       </label>
       {/* {onClose && (

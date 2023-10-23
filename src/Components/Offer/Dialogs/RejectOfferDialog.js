@@ -49,7 +49,7 @@ export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
 
     try {
       setExecutingRejectOffer(true);
-      Sentry.captureEvent({message: 'handleRejectOffer', extra: {address: collection.address}});
+      // Sentry.captureEvent({message: 'handleRejectOffer', extra: {address: collection.address}});
       if (isCollectionOffer) {
         throw new Error('Cannot reject a collection offer');
       } else if (collection.multiToken) {

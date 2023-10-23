@@ -12,8 +12,7 @@ export const useGlobalPrices = () => {
   return useQuery({
     queryKey: ['GlobalPrices'],
     queryFn: getPrices,
-    staleTime: 2,
-    initialData: []
+    staleTime: 1000 * 60 * 2
   })
 };
 
@@ -21,7 +20,7 @@ export const useGlobalPrice = (chainId: number | string) => {
   return useQuery({
     queryKey: ['GlobalPrice', chainId],
     queryFn: () => getPrice(Number(chainId)),
-    staleTime: 2
+    staleTime: 1000 * 60 * 2
   })
 };
 
@@ -30,7 +29,7 @@ export const useFortunePrice = (chainId?: number | string) => {
   return useQuery({
     queryKey: ['GlobalPrice', chainId, address],
     queryFn: () => getPrice(Number(chainId), address),
-    staleTime: 2
+    staleTime: 1000 * 60 * 2
   })
 };
 

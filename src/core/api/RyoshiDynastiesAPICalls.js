@@ -51,7 +51,7 @@ export const getSeasonDate = async (seasonIdNumber) => {
 export const getSeasonGameId = async () => {
   try{
     var data = await api.get("ryoshi-dynasties/games/0");
-    return data.data.data.parent.id;
+    return data.data.data.season.id;
   }
   catch(error){
     throw error;
@@ -464,7 +464,7 @@ export const disbandFaction = async (address, signature, action) => {
 export const getLeadersForSeason = async (gameId) => {
   try{
     var data = await api.get("ryoshi-dynasties/control-points",
-      {params: {gameId}});
+      {params: {gameId, allowDisbanded: false}});
     return data.data.data;
   }
   catch(error){

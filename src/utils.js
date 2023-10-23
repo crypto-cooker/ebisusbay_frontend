@@ -8,6 +8,7 @@ import {getProfile} from "@src/core/cms/endpoints/profile";
 import {commify} from "ethers/lib/utils";
 import brands from '../src/core/data/brands.json';
 import ImageService from "@src/core/services/image";
+import {ethers} from "ethers";
 
 const config = appConfig();
 const drops = config.drops;
@@ -269,6 +270,17 @@ export function shortString(str, leftChars = 3, rightChars = 3) {
   if (str.length <= leftChars + rightChars) return str;
 
   return `${str.substring(0, leftChars)}...${str.substring(str.length - rightChars, str.length)}`;
+}
+
+export function username(identifier) {
+  try {
+    if (identifier.startsWith('0x')) {
+      return shortAddress(ethers.utils.getAddress(identifier));
+    }
+    return identifier;
+  } catch (e) {
+    return identifier;
+  }
 }
 
 export function timeSince(timestamp) {
@@ -763,19 +775,6 @@ export const getAddressFromSlug = (slug) => {
 // can use web3.utils.isAddress tho
 export const isAddress = (address) => {
   return /^(0x){1}[0-9a-fA-F]{40}$/i.test(address);
-};
-
-export const getUserDisplayName = async (address) => {
-  if (!address) return '';
-
-  try {
-    let profile = await getProfile(address);
-    if (profile?.data) return profile.data.username;
-  } catch (error) {
-    return shortAddress(address);
-  }
-
-  return shortAddress(address);
 };
 
 export const isEmptyObj = (obj) => {

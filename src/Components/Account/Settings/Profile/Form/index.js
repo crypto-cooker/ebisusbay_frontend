@@ -1,9 +1,7 @@
-import { editProfileFormFields } from './constants';
-import { Field, RadioGroup, UploadAssetGroup } from '../../../../Form';
+import {editProfileFormFields} from './constants';
+import {Field, RadioGroup, UploadAssetGroup} from '../../../../Form';
 
 import Button from '@src/Components/components/common/Button';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCoffee, faSync} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import {Heading} from "@chakra-ui/react";
 
@@ -24,7 +22,7 @@ export default function Form({
     <div>
       <Heading as="h2" size="xl">Edit Profile</Heading>
       <div className="d-flex flex-row mb-3">
-        <div className="my-auto me-2">Sync profile information from Cronos Domain Service</div>
+        <div className="my-auto me-2">Sync profile information from Cronos ID</div>
         <Button type="button" className="px-3 py-1 my-auto" onClick={handleCnsSync} isLoading={isCnsSync}>
           Sync
         </Button>

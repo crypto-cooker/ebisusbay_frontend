@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { Form } from 'react-bootstrap';
+import {FormLabel} from "@chakra-ui/react";
 
 const RadioGroup = ({ name, value, title, isRequired, options, onChange }) => {
   const onSelectOption = (value) => () => {
@@ -10,8 +9,8 @@ const RadioGroup = ({ name, value, title, isRequired, options, onChange }) => {
   return (
     <fieldset className="radio-group form-field">
       <div className="label-container">
-        <Form.Label className="title">{title}</Form.Label>
-        {isRequired ? <Form.Label className="required-label">*Required</Form.Label> : <Form.Label>Optional</Form.Label>}
+        <FormLabel className="title">{title}</FormLabel>
+        {isRequired ? <FormLabel className="required-label">*Required</FormLabel> : <FormLabel>Optional</FormLabel>}
       </div>
       {options.map((option) => (
         <div key={option.value}>

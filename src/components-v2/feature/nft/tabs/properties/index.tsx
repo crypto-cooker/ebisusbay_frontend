@@ -17,7 +17,7 @@ const Properties = ({ address, slug, attributes, queryKey }: PropertiesProps) =>
     queryKey: ['CollectionTraits', address],
     queryFn: () => ApiService.withoutKey().getCollectionTraits(address),
     refetchOnWindowFocus: false,
-    staleTime: 2,
+    staleTime: 1000 * 60 * 2,
     initialData: {}
   });
 

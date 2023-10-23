@@ -102,6 +102,11 @@ const expirationDatesValues = [
 
 const defaultExpiry = 2592000000;
 const currencyOptions = [
+  {
+    name: 'CRO',
+    symbol: 'cro',
+    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
+  },
   ...config.listings.currencies.available
     .filter((symbol: string) => !!config.tokens[symbol.toLowerCase()])
     .map((symbol: string) => {
@@ -110,12 +115,7 @@ const currencyOptions = [
         ...token,
         image: <DynamicCurrencyIcon address={token.address} boxSize={6} />
       }
-    }),
-  {
-    name: 'CRO',
-    symbol: 'cro',
-    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
-  }
+    })
 ];
 
 interface ListingDrawerItemProps {
@@ -277,7 +277,11 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
         const availableCurrencySymbols: CurrencyEntry | undefined = Object.entries(config.listings.currencies.nft)
           .find(([key]) => ciEquals(key, item.nft.nftAddress)) as CurrencyEntry | undefined;
         newExtras.availableCurrencies = currencyOptions.filter(({symbol}: { symbol: string }) => {
-          return availableCurrencySymbols ? availableCurrencySymbols[1].includes(symbol.toLowerCase()) : symbol === 'cro';
+          if (availableCurrencySymbols) {
+            return availableCurrencySymbols[1].includes(symbol.toLowerCase());
+          } else {
+            return config.listings.currencies.global.includes(symbol.toLowerCase())
+          }
         });
 
         setCurrency(newExtras.availableCurrencies[0].symbol);

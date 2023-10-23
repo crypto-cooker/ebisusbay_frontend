@@ -1,8 +1,6 @@
-import { useState } from 'react';
-import { getAuthSignerInStorage } from '@src/helpers/storage';
-import useCreateSigner from '../Components/Account/Settings/hooks/useCreateSigner';
+import {useState} from 'react';
 import {deleteNotifications} from "@src/core/cms/next/notifications";
-import {ContractReceipt} from "ethers";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 type ResponseProps = {
   loading: boolean;
@@ -15,7 +13,7 @@ const useDeleteNotifications = () => {
     error: undefined,
   });
 
-  const [isLoading, getSigner] = useCreateSigner();
+  const {requestSignature} = useEnforceSignature();
 
   const requestDeleteNotifications = async (address: string, notificationId?: string | number) => {
     setResponse({
@@ -24,33 +22,22 @@ const useDeleteNotifications = () => {
       error: undefined,
     });
 
-    let signatureInStorage: string | null | undefined = getAuthSignerInStorage()?.signature;
-    if (!signatureInStorage) {
-      const { signature } = await getSigner();
-      signatureInStorage = signature;
-    }
-    if (signatureInStorage) {
-      try {
-        const fetchResponse = await deleteNotifications(notificationId ?? null, address, signatureInStorage);
-        
-        setResponse({
-          ...response,
-          loading: false,
-          error: null,
-        });
+    try {
+      const signature = await requestSignature();
+      const fetchResponse = await deleteNotifications(notificationId ?? null, address, signature);
 
-        return fetchResponse.data;
-      } catch (error) {
-        setResponse({
-          ...response,
-          loading: false,
-          error: error,
-        });
-      }
-    } else {
       setResponse({
+        ...response,
         loading: false,
-        error: { message: 'Something went wrong' },
+        error: null,
+      });
+
+      return fetchResponse.data;
+    } catch (error) {
+      setResponse({
+        ...response,
+        loading: false,
+        error: error,
       });
     }
   };
