@@ -66,9 +66,7 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
     ['RyoshiDynastiesGameContext', user.address],
     () => ApiService.withoutKey().ryoshiDynasties.getGameContext(),
     {
-      staleTime: 1000 * 60 * 1,
-      cacheTime: 1000 * 60 * 2,
-      refetchInterval: 1000 * 60 * 10,
+      refetchInterval: 1000 * 60,
       refetchOnWindowFocus: false,
     }
   );
