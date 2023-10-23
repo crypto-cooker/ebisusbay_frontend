@@ -14960,7 +14960,7 @@
       "multiToken": false,
       "address": "0x5bB97B7D75Ce3151E413aa751F22FcD837703588",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Murder Birdz is a brand of 3000 PFP bird characters made for the crofam. The plan is to build the Murder Birdz DAO in order to build on top of art, thus granting holders utility and revenue sharing. Join our discord to share ideas!",
         "avatar": "/img/collections/murder-birdz/avatar.webp",
