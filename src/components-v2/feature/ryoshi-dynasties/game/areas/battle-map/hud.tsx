@@ -31,6 +31,7 @@ import NextApiService from "@src/core/services/api-service/next";
 import {appConfig} from "@src/Config";
 import {Contract, ethers} from "ethers";
 import {ERC1155} from "@src/Contracts/Abis";
+import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
 
 const config = appConfig();
 
@@ -49,7 +50,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   const {game: rdGameContext, user:rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const[koban, setKoban] = useState<number | string>(0);
   const[isLoading, setIsLoading] = useState(false);
-  const [isNotMobile] = useMediaQuery("(max-width: 768px)") 
+  const [isMobile] = useMediaQuery("(max-width: 750px)");
 
   const[availableTroops, setAvailableTroops] = useState(0);
   const[totalTroops, setTotalTroops] = useState(0);
@@ -168,34 +169,26 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
 
 }, [rdContext]); 
 
+const [accordionIndex, setAccordionIndex] = useState<number>(0);
+
   useEffect(() => {
     // get all resources
     if (!!user.address) {
       getResources();
     }
   }, [user.address])
-  const [accordionIndex, setAccordionIndex] = useState(-1);
+
   useEffect(() => {
-    if(isNotMobile){
-      setAccordionIndex(0);
-    }else{
-      setAccordionIndex(-1);
-    }
-}, [isNotMobile]); 
+    setAccordionIndex(isMobile ? -1 : 0);
+
+    console.log('isMobile', isMobile);
+}, [isMobile]); 
 
   return (
     <Box position='absolute' top={0} left={0}  w='100%' pointerEvents='none' >
       <Flex direction='row' justify='space-between' >
       <ReturnToVillageButton onBack={onBack} />
       <Spacer />
-{/* 
-      <Box mb={4} bg='#272523EE' p={2} rounded='md' 
-          w={{base: '200px', sm: '280px'}}
-          // w={{base: '200px', sm: '280px'}}
-          h={{base: '135px', sm: '135px'}}
-          // h={{base: '135px', sm: '135px'}}
-          >
-           */}
 
       <Box mb={4} mt={6} mr={2}
         justifyContent='right'
@@ -203,9 +196,18 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
         rounded='md' 
         w={{base: '200px', sm: '200px'}}
         >
-      <Accordion defaultIndex={[0]} allowToggle paddingRight={0} justifyContent='right'>
+      <Accordion 
+        // defaultIndex={[isMobile ? -1 : 0]} 
+        index={accordionIndex}
+        allowToggle
+        paddingRight={0} 
+        justifyContent='right'
+        >
         <AccordionItem border='none'>
-          <AccordionButton pointerEvents='auto'>
+          <AccordionButton 
+            pointerEvents='auto'
+            onClick={() => setAccordionIndex(accordionIndex === 0 ? -1 : 0)}
+            >
             {!isLoading ? (
               <>
                 {!!user.address ? (
@@ -230,7 +232,14 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
             )}
           </AccordionButton>
         
-          <AccordionPanel pb={4} alignItems={'right'}>
+          <AccordionPanel pb={4} alignItems={'right'} pointerEvents='auto'>
+
+          <AuthenticationRdButton
+            connectText=''
+            signinText=''
+            size={'sm'}
+          >
+          <>
 
           <Center>
             <Tag  variant='outline'>
@@ -264,7 +273,8 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
               </Box>
           </SimpleGrid>
           </Flex>
-
+          </>
+          </AuthenticationRdButton>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
