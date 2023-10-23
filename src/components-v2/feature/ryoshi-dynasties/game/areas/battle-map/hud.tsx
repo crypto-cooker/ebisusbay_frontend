@@ -42,27 +42,27 @@ interface BattleMapHUDProps {
 export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     
   const user = useAppSelector((state) => state.user);
+  const {game: rdGameContext, user:rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const[koban, setKoban] = useState<number | string>(0);
+  const[isLoading, setIsLoading] = useState(false);
+
   const Ref = useRef<NodeJS.Timer | null>(null);
   const Ref2 = useRef<NodeJS.Timer | null>(null);
   const [timer, setTimer] = useState('00:00:00');
   const [troopTimer, setTroopTimer] = useState('');
-  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const {game: rdGameContext, user:rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const[koban, setKoban] = useState<number | string>(0);
-  const[isLoading, setIsLoading] = useState(false);
+
   const [isMobile] = useMediaQuery("(max-width: 750px)");
+  const [accordionIndex, setAccordionIndex] = useState<number>(0);
 
   const[availableTroops, setAvailableTroops] = useState(0);
   const[totalTroops, setTotalTroops] = useState(0);
 
-  const getResources = async () => {
+  const GetKoban = async () => {
     try {
       setIsLoading(true);
       let nfts = await NextApiService.getWallet(user!.address!, {
         collection: config.contracts.resources,
       });
-      // const fortuneAndMitama = await ApiService.withoutKey().ryoshiDynasties.getErc20Account(user!.address!);
-
       let kobanBalance = 0;
       if (nfts.data.length > 0) {
         const kobanToken = nfts.data.find((token) => token.nftId === '1');
@@ -83,9 +83,10 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
       setIsLoading(false);
     }
   };
+
   //timer functions
-  const getTimeRemaining = (e:any, subtractTime: number = 0) => {
-    const total = Date.parse(e) - Date.now() - subtractTime;
+  const getTimeRemaining = (e:any) => {
+    const total = Date.parse(e) - Date.now();
     const days = Math.floor(total / (1000 * 60 * 60 * 24));
     const seconds = Math.floor((total / 1000) % 60);
     const minutes = Math.floor((total / 1000 / 60) % 60);
@@ -95,13 +96,15 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     };
   }
   const startTimer = (e:any) => {
-      let { total, hours, days, minutes, seconds } = getTimeRemaining(e, 3600000);
+      let { total, hours, days, minutes, seconds } = getTimeRemaining(e);
       if (total >= 0) {
           setTimer(
-              ((days) > 0 ? (days + ' days ') : (
+            days > 0 ? 
+              days + ' days ' 
+            : 
               (hours > 9 ? hours : '0' + hours) + ':' +
               (minutes > 9 ? minutes : '0' + minutes) + ':' +
-              (seconds > 9 ? seconds : '0' + seconds)))
+              (seconds > 9 ? seconds : '0' + seconds)
           )
       }
   }
@@ -136,12 +139,6 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     const id = setInterval(() => { startTroopTimer(e); }, 1000) 
     Ref2.current = id;
   }
- 
-  const getSeasonEndTime = async () => {
-      if(!rdGameContext) return;
-      const timestamp = rdGameContext?.game?.endAt;
-      clearTimer(timestamp);
-  } 
   const getTroopCooldown = () => {
     if(!rdUser) return;
 
@@ -149,40 +146,33 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     let deadline = new Date();
     deadline.setSeconds(deadline.getSeconds() + redeploymentDelay);
     clearTroopTimer(deadline);
-}
+  }
+
 
   useEffect(() => {
-      getSeasonEndTime();
-  }, [rdGameContext?.game?.endAt]); 
+    if(!rdUser) return;
 
-  useEffect(() => {
-    if(!rdContext?.user) return;
-
-    if(rdContext.user.season.troops.available.total !== undefined) {
-      setAvailableTroops(rdContext.user.season.troops.available.total);
-    }
-    if(rdContext.user.season.troops.overall.total !== undefined) {
-      setTotalTroops(rdContext.user.season.troops.overall.total);
-    }
+    setAvailableTroops(rdUser.season.troops.available.total);
+    setTotalTroops(rdUser.season.troops.overall.total);
     getTroopCooldown();
 
-
-}, [rdContext]); 
-
-const [accordionIndex, setAccordionIndex] = useState<number>(0);
+  }, [rdUser]); 
 
   useEffect(() => {
-    // get all resources
-    if (!!user.address) {
-      getResources();
-    }
-  }, [user.address])
+    if(!user) return;
+
+    GetKoban();
+  }, [user])
 
   useEffect(() => {
     setAccordionIndex(isMobile ? -1 : 0);
+  }, [isMobile]); 
 
-    console.log('isMobile', isMobile);
-}, [isMobile]); 
+  useEffect(() => {
+    if(!rdGameContext) return;
+
+    clearTimer(rdGameContext.game.stopAt);
+  }, [rdGameContext]);
 
   return (
     <Box position='absolute' top={0} left={0}  w='100%' pointerEvents='none' >
