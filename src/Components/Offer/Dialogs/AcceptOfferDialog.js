@@ -225,7 +225,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
           }
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
-        {status === "loading" || isLoading ? (
+        {status === 'pending' || isLoading ? (
           <EmptyData>
             <Spinner size='sm' ms={1} />
           </EmptyData>

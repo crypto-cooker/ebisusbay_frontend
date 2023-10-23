@@ -48,7 +48,7 @@ export default function Collections({ address }) {
     return <>Coming Soon...</>
   }
 
-  return status === "loading" ? (
+  return status === 'pending' ? (
     <Center>
       <Spinner />
     </Center>

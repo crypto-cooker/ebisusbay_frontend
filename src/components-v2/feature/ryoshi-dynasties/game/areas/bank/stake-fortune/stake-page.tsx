@@ -81,7 +81,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault}: StakePageProps
           <>
             <Text align='center' pt={2} px={2} fontSize='sm'>Stake & earn $Fortune and receive troops for battle. Stake more to receive more troops and higher APRs.</Text>
             <Box mt={4}>
-              {status === 'loading' ? (
+              {status === 'pending' ? (
                 <Center>
                   <Spinner size='lg' />
                 </Center>

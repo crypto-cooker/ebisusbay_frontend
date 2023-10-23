@@ -153,8 +153,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   }, [pendingNfts]);
 
   const handleStakeSuccess = useCallback(() => {
-    queryClient.invalidateQueries(['BankStakedNfts', user.address]);
-    queryClient.invalidateQueries(['BankUnstakedNfts', user.address, currentCollection]);
+    queryClient.invalidateQueries({queryKey: ['BankStakedNfts', user.address]});
+    queryClient.invalidateQueries({queryKey: ['BankUnstakedNfts', user.address, currentCollection]});
     queryClient.setQueryData(['BankUnstakedNfts', user.address, currentCollection], (old: any) => {
       if (!old) return [];
       old.pages = old.pages.map((page:  any) => {
@@ -193,10 +193,10 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   useEffect(() => {
     if (!isOpen) return;
 
-    queryClient.fetchQuery(
-      ['BankStakedNfts', user.address],
-      () => ApiService.withoutKey().ryoshiDynasties.getStakedTokens(user.address!, StakedTokenType.BANK)
-    ).then(async (data) => {
+    queryClient.fetchQuery({
+      queryKey: ['BankStakedNfts', user.address],
+      queryFn: () => ApiService.withoutKey().ryoshiDynasties.getStakedTokens(user.address!, StakedTokenType.BANK)
+    }).then(async (data) => {
       setStakedNfts(data);
 
       const nfts: PendingNft[] = [];
@@ -550,6 +550,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
       sortBy: 'rank',
       direction: 'asc'
     }),
+    initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
@@ -570,7 +571,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           </Center>
         }
       >
-        {status === "loading" ? (
+        {status === 'pending' ? (
           <Center>
             <Spinner />
           </Center>

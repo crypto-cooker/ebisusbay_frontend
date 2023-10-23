@@ -167,7 +167,7 @@ const MobileSearchDrawer = () => {
             )}
             {value.length >= minChars && (
               <Box fontSize="12px">
-                {status === "loading" ? (
+                {status === 'pending' ? (
                   <Center>
                     <Spinner />
                   </Center>

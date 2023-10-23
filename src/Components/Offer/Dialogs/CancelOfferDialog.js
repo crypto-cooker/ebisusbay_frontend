@@ -81,7 +81,7 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
           {isCollectionOffer ? <>Cancel Collection Offer</> : <>Cancel Offer</>}
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
-        {status === "loading" ? (
+        {status === 'pending' ? (
           <EmptyData>
             <Spinner size='sm' ms={1} />
           </EmptyData>

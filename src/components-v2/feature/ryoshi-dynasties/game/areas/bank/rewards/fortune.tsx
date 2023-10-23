@@ -94,7 +94,7 @@ const FortuneRewardsTab = () => {
           Fortune rewards accumulate from Fortune staking, marketplace listings, and from playing the game and can be withdrawn at any time.
           Compound to an existing vault to multiply your rewards!
         </Box>
-        {status === "loading" ? (
+        {status === 'pending' ? (
           <Center py={4}>
             <Spinner />
           </Center>

@@ -97,6 +97,7 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
   const {data, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery({
     queryKey: ['BattleLog', user.address, rdGameContext?.game.id, sortOrder],
     queryFn: GetBattleLog,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
@@ -158,7 +159,7 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
                   </Center>
                 }
               >
-                {status === "loading" ? (
+                {status === 'pending' ? (
                   <Center>
                     <Spinner />
                   </Center>

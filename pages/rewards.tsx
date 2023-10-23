@@ -24,7 +24,7 @@ const Rewards = () => {
     queryKey: ['RewardsCollections', currentGameId],
     queryFn: () => ApiService.withoutKey().getRewardedEntities(currentGameId),
     staleTime: 1000 * 60 * 30,
-    cacheTime: 1000 * 60 * 35,
+    gcTime: 1000 * 60 * 35,
     refetchOnWindowFocus: false,
   });
 
@@ -36,7 +36,7 @@ const Rewards = () => {
   });
 
   const content = useMemo(() => {
-    return status === "loading" ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>

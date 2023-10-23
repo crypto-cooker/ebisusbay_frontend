@@ -42,6 +42,7 @@ const ListingsTab = ({brand, collections}: ListingsTabProps) => {
   const {data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, refetch,} = useInfiniteQuery({
     queryKey: ['BrandListings', brand.slug, queryParams],
     queryFn: fetcher,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
@@ -105,7 +106,7 @@ const ListingsTab = ({brand, collections}: ListingsTabProps) => {
               </Center>
             }
           >
-            {status === "loading" ? (
+            {status === 'pending' ? (
               <Center>
                 <Spinner />
               </Center>

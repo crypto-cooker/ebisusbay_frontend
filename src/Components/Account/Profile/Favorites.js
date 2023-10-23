@@ -13,7 +13,7 @@ export default function Favorites({ address }) {
     queryFn: () => getUserFavorites(address)
   })
 
-  return status === "loading" ? (
+  return status === 'pending' ? (
     <Center>
       <Spinner />
     </Center>

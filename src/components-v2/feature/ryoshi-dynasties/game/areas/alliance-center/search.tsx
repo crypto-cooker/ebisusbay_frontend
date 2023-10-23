@@ -214,7 +214,7 @@ import {
                 </Box>
               )}
               <Box display={value?.length >= minChars ? 'inherit' : 'none'}>
-                {status === "loading" ? (
+                {status === 'pending' ? (
                   <Center>
                     <Spinner />
                   </Center>

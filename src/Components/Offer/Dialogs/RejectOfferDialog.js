@@ -82,7 +82,7 @@ export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
           Reject Offer
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
-        {status === "loading" ? (
+        {status === 'pending' ? (
           <EmptyData>
             <Spinner size='sm' ms={1} />
           </EmptyData>

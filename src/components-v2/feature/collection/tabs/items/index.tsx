@@ -87,6 +87,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
 
       return data;
     },
+    initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
@@ -117,7 +118,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
   }, [queryParams]);
 
   const content = useMemo(() => {
-    return status === 'loading' ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>

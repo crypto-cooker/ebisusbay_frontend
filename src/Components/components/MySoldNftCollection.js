@@ -19,6 +19,7 @@ const MySoldNftCollection = ({ walletAddress = null }) => {
   const {data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, refetch} = useInfiniteQuery({
     queryKey: ['MySoldNftCollection', walletAddress, sort],
     queryFn: fetcher,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
     },
@@ -52,7 +53,7 @@ const MySoldNftCollection = ({ walletAddress = null }) => {
         </Center>
       }
     >
-      {status === "loading" ? (
+      {status === 'pending' ? (
         <Center>
           <Spinner />
         </Center>

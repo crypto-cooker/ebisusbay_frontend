@@ -170,7 +170,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
           Buy {listing?.nft?.name}
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme)!.colors.textColor4} />
-        {status === "loading" ? (
+        {status === 'pending' ? (
           <EmptyData>
             <Spinner />
           </EmptyData>

@@ -92,6 +92,7 @@ export default function Inventory({ address }: InventoryProps) {
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery({
     queryKey: ['Inventory', address, queryParams],
     queryFn: fetcher,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
@@ -146,7 +147,7 @@ export default function Inventory({ address }: InventoryProps) {
   };
 
   const historyContent = useMemo(() => {
-    return status === "loading" ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>

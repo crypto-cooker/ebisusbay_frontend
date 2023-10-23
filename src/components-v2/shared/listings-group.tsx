@@ -43,6 +43,7 @@ const ListingsGroup = ({limitSize, showLoadMore = true, queryParams, fullWidth, 
       }
       return nextApiService.getListings(params)
     },
+    initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
@@ -54,7 +55,7 @@ const ListingsGroup = ({limitSize, showLoadMore = true, queryParams, fullWidth, 
   };
 
   const memoizedContent = useMemo(() => {
-    return status === "loading" ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>

@@ -239,7 +239,7 @@ const PresaleVaultTab = () => {
           Users who participated in the Fortune Token Presale can now begin vesting their tokens. Those also holding Fortune Teller NFTs can exchange them for bonus Fortune tokens and Fortune Guards.
         </Box>
       </RdModalBox>
-      {status === 'loading' ? (
+      {status === 'pending' ? (
         <Center mt={2}>
           <Spinner />
         </Center>

@@ -84,6 +84,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
   const {data, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery({
     queryKey: ['MyListingsCollection', walletAddress, queryParams, showInvalidOnly],
     queryFn: fetcher,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
@@ -253,7 +254,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
               </Center>
             }
           >
-            {status === "loading" ? (
+            {status === 'pending' ? (
               <Center>
                 <Spinner />
               </Center>

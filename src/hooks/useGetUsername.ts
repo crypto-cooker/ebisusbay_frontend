@@ -12,7 +12,7 @@ const useGetProfilePreview = (initialAddress?: string) => {
       queryFn: () => ApiService.withoutKey().getProfile(address!),
       enabled: !!address,
       staleTime: 1000 * 60 * 10,
-      cacheTime: 1000 * 60 * 11,
+      gcTime: 1000 * 60 * 11,
       // initialData: {}
     }
   );

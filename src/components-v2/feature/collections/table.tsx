@@ -31,6 +31,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
   const {data, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery({
     queryKey: ['Collections', filters],
     queryFn: fetcher,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
     },
@@ -80,7 +81,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
   }, [onlyVerified]);
 
   const content = useMemo(() => {
-    return status === "loading" ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>

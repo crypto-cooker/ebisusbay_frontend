@@ -78,6 +78,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt} = useInfiniteQuery({
 		queryKey: ['RyoshiDiamondsLeaderboard'],
 		queryFn: ({pageParam = 1}) => ApiService.withoutKey().getRyoshiDiamondsLeaderboardAtBlock(pageParam, 500, pokerCollection),
+		initialPageParam: 1,
 		getNextPageParam: (lastPage, pages) => {
 			return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
 		},
@@ -135,7 +136,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 			return cardRanksString;
 		  }
 
-	    return status === "loading" ? (
+	    return status === 'pending' ? (
 
 		<Card variant='outline' mt={2}>
            <CardBody textAlign='center'>

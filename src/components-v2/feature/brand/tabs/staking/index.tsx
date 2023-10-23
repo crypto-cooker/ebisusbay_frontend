@@ -162,7 +162,7 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
                                     </Center>
                                 }
                             >
-                                {status === "loading" ? (
+                                {status === 'pending' ? (
                                   <Center>
                                       <Spinner />
                                   </Center>
@@ -386,7 +386,7 @@ const RewardsComponent = ({staker}: {staker: StakerWithRewards}) => {
         <Box ps={{base:4, lg:0}} my={2} w='full'>
             <Stack px={4} py={2} align='center' w='full' direction={{base: 'column', sm: 'row'}} className='card eb-nft__card'>
                 <Box fontWeight='bold'>Pending Rewards:</Box>
-                {status === "loading" ? (
+                {status === 'pending' ? (
                   <Center>
                       <Spinner />
                   </Center>

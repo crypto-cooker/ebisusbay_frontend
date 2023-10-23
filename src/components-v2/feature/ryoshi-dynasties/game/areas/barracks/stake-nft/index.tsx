@@ -152,8 +152,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   }, [pendingNfts]);
 
   const handleStakeSuccess = useCallback(() => {
-    queryClient.invalidateQueries(['BarracksStakedNfts', user.address]);
-    queryClient.invalidateQueries(['BarracksUnstakedNfts', user.address, currentCollection]);
+    queryClient.invalidateQueries({queryKey: ['BarracksStakedNfts', user.address]});
+    queryClient.invalidateQueries({queryKey: ['BarracksUnstakedNfts', user.address, currentCollection]});
     queryClient.setQueryData(['BarracksUnstakedNfts', user.address, currentCollection], (old: any) => {
       if (!old) return [];
       old.pages = old.pages.map((page:  any) => {
@@ -193,10 +193,10 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   useEffect(() => {
     if (!isOpen) return;
 
-    queryClient.fetchQuery(
-      ['BarracksStakedNfts', user.address],
-      () => ApiService.withoutKey().ryoshiDynasties.getStakedTokens(user.address!, StakedTokenType.BARRACKS)
-    ).then(async (data) => {
+    queryClient.fetchQuery({
+      queryKey: ['BarracksStakedNfts', user.address],
+      queryFn: () => ApiService.withoutKey().ryoshiDynasties.getStakedTokens(user.address!, StakedTokenType.BARRACKS)
+    }).then(async (data) => {
       setStakedNfts(data);
 
       const nfts: PendingNft[] = [];
@@ -542,6 +542,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
       sortBy: 'rank',
       direction: 'asc'
     }),
+    initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
@@ -594,7 +595,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           </Center>
         }
       >
-        {status === "loading" ? (
+        {status === 'pending' ? (
           <Center>
             <Spinner />
           </Center>
