@@ -281,16 +281,21 @@ interface RdGameBase {
     endAt: string;
 }
 
-interface RdGame extends RdGameBase {
+interface RdGame {
+    id: number;
+    uuid: string;
+    startAt: string;
+    stopAt: string;
+    endAt: string;
     season: RdSeason;
 }
 
-interface RdSeason extends RdGameBase {
-    blockId: number;
-    endAt: string;
+interface RdSeason {
     id: number;
-    startAt: string;
     uuid: string;
+    startAt: string;
+    endAt: string;
+    blockId: number;
     map: RdSeasonMap;
 }
 
