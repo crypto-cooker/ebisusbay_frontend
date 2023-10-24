@@ -200,8 +200,8 @@ const SingleDrop = ({drop}: SingleDropProps) => {
 
 
     if (isPlayingCardsCollection(drop.collection)) {
-      setTotalSupply(infos.totalSupply - 4000);
-      setMaxSupply(infos.maxSupply - 4000);
+      setTotalSupply(infos.totalSupply - 8000);
+      setMaxSupply(infos.maxSupply - 8000);
     }
   };
 
