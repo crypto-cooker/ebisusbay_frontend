@@ -224,12 +224,6 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   }
 
   const mintWithRewards = async (contract: Contract, finalCost: number) => {
-    const allowance = await drop.erc20ReadContract.allowance(user.address, drop.address);
-    if (allowance.sub(finalCost) <= 0) {
-      const approvalTx = await drop.erc20Contract.approve(drop.address, constants.MaxUint256);
-      await approvalTx.wait();
-    }
-
     const signature = await requestSignature();
     const finalCostEth = ethers.utils.formatEther(finalCost);
     const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(finalCostEth, user.address!, signature);
