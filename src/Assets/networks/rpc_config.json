@@ -31481,6 +31481,7 @@
       "erc20Only": true,
       "memberMitama": 1000,
       "foundersOnly": false,
+      "abi": "ryoshi-playing-cards.json",
       "start": 1698177600000,
       "end": null,
       "referral": false,
