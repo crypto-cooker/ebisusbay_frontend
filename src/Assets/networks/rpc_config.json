@@ -31461,7 +31461,7 @@
       "collection": "ryoshi-playing-cards",
       "title": "Ryoshi Hearts",
       "subtitle": "Ryoshi Hearts: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #3 Ryoshi Hearts, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
-      "description": "Mint directly from your Rewards pool:\nUsers can mint from their Rewards Pool at the full price without altering or affecting their Karmic Debt \n\nEnter up to Two Hands:\nUsers will now have the opportunity to enter up to 2 hands in the third Crypto Hodl’em contest. The second hand can't be composed of the same cards used to compose a user's first hand \n\nThe Second Hand's reverse values: \nThe Second Hand is valued in reverse compared to the typical set of values, making the 2 of Hearts ❤\uFE0F the highest Card for this second submission.\n\nCrypto Hodl'em #3 eligibility criteria: \nUsers' first hand must be composed of a minimum of 5 “Ryoshi Playing Cards” collectibles. Of these, at least 3 out of 5 cards must belong to the Hearts Suit Collection. The remaining 2 out of 5 cards can belong to any available suit (Hearts, Diamonds, or Clubs)",
+      "description": "Mint directly from your Rewards pool:\nUsers can mint from their Rewards Pool at the full price without altering or affecting their Karmic Debt \n\nMaximum Mints per Wallet:\nThe maximum mint per wallet is now set at 30 NFTs\n\nEnter Ebisu's Crypto Hodl'em event with up to Two Hands:\nUsers will now have the opportunity to enter up to 2 hands in the third Crypto Hodl’em contest. The second hand can't be composed of the same cards used to compose a user's first hand \n\nThe Second Hand's reverse values: \nThe Second Hand is valued in reverse compared to the typical set of values, making the 2 of Hearts ❤\uFE0F the highest Card for this second submission.\n\nCrypto Hodl'em #3 eligibility criteria: \nUsers' first hand must be composed of a minimum of 5 “Ryoshi Playing Cards” collectibles. Of these, at least 3 out of 5 cards must belong to the Hearts Suit Collection. The remaining 2 out of 5 cards can belong to any available suit (Hearts, Diamonds, or Clubs)",
       "author": {
         "name": "Ebisu's Bay",
         "website": "https://app.ebisusbay.com/",
@@ -31473,7 +31473,7 @@
       },
       "address": "0xd87838a982a401510255ec27e603b0f5fea98d24",
       "maxMintPerTx": 25,
-      "maxMintPerAddress": 100,
+      "maxMintPerAddress": 40,
       "totalSupply": 4000,
       "erc20Cost": "250",
       "erc20MemberCost": "200",
