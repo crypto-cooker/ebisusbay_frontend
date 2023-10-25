@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from '
 import {useRouter} from 'next/router';
 import styles from './profile.module.scss';
 import {hostedImage} from "@src/helpers/image";
-import {caseInsensitiveCompare, isUserBlacklisted, shortAddress} from "@src/utils";
+import {caseInsensitiveCompare, isUserBlacklisted, shortAddress, username} from "@src/utils";
 import Inventory from "@src/components-v2/feature/account/profile/tabs/inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
 import Listings from "@src/components-v2/feature/account/profile/tabs/listings";
@@ -116,18 +116,6 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
     setIsProfileOwner(user && caseInsensitiveCompare(address, user.address));
   }, [user, address])
 
-  const identifier = profile.username ?? address;
-  const username = () => {
-    try {
-      if (identifier.startsWith('0x')) {
-        return shortAddress(ethers.utils.getAddress(identifier));
-      }
-      return identifier;
-    } catch (e) {
-      return identifier;
-    }
-  }
-
   const profilePicture = profile.profilePicture ?
     ImageService.translate(profile.profilePicture).custom({width: 200, height: 200}) :
     hostedImage('/img/profile-avatar.webp');
@@ -149,6 +137,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
     }, []);
   }
 
+  const identifier = profile.username ?? address;
 
   const [overflowTabKey, setOverflowTabKey] = useState<string>();
 
@@ -160,7 +149,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
   return (
     <div className={styles.profile} >
       <PageHead
-        title={username()}
+        title={username(identifier)}
         description={profile.bio}
         image={profilePicture}
         url={`/account/${address}`}
@@ -203,7 +192,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                 {!useMobileLayout && (
                   <Flex direction='column' ms={4} flex={1}>
                     <Wrap align='center'>
-                      <Heading>{username()}</Heading>
+                      <Heading>{username(identifier)}</Heading>
                       <SocialsBar socials={profile} address={address} />
                     </Wrap>
                     {isUserBlacklisted(address) && (
@@ -249,7 +238,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
               </Flex>
               {useMobileLayout && (
                 <Flex direction='column' flex={1}>
-                  <Heading>{username()}</Heading>
+                  <Heading>{username(identifier)}</Heading>
                   {isUserBlacklisted(address) && (
                     <Flex>
                       <Tag size='sm' colorScheme='red' variant='solid'>Blacklisted</Tag>
