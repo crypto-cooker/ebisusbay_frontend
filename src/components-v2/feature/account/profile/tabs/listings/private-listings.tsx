@@ -81,22 +81,15 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
     return listings;
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    status,
-  } = useInfiniteQuery(
-    ['MyListingsCollection', walletAddress, queryParams, showInvalidOnly],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    }
-  );
+  const {data, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery({
+    queryKey: ['MyListingsCollection', walletAddress, queryParams, showInvalidOnly],
+    queryFn: fetcher,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
   const toggleFilterVisibility = () => {
     setFiltersVisible(!filtersVisible)
@@ -261,7 +254,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
               </Center>
             }
           >
-            {status === "loading" ? (
+            {status === 'pending' ? (
               <Center>
                 <Spinner />
               </Center>

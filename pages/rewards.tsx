@@ -20,27 +20,23 @@ const Rewards = () => {
   const user = useAppSelector(state => state.user);
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
 
-  const {data, error, status,} = useQuery(
-    ['RewardsCollections', currentGameId],
-    () => ApiService.withoutKey().getRewardedEntities(currentGameId),
-    {
-      staleTime: 1000 * 60 * 30,
-      cacheTime: 1000 * 60 * 35,
-      refetchOnWindowFocus: false,
-    }
-  )
+  const {data, error, status,} = useQuery({
+    queryKey: ['RewardsCollections', currentGameId],
+    queryFn: () => ApiService.withoutKey().getRewardedEntities(currentGameId),
+    staleTime: 1000 * 60 * 30,
+    gcTime: 1000 * 60 * 35,
+    refetchOnWindowFocus: false,
+  });
 
-  const { data: rewards, isLoading: isRewardsLoading, isError: isRewardsError } = useQuery(
-    ['BankSeasonalRewards', user.address],
-    () => ApiService.withoutKey().ryoshiDynasties.getSeasonalRewards(user.address!, 1),
-    {
-      enabled: !!user.address,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const { data: rewards, isLoading: isRewardsLoading, isError: isRewardsError } = useQuery({
+    queryKey: ['BankSeasonalRewards', user.address],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getSeasonalRewards(user.address!, 1),
+    enabled: !!user.address,
+    refetchOnWindowFocus: false,
+  });
 
   const content = useMemo(() => {
-    return status === "loading" ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>

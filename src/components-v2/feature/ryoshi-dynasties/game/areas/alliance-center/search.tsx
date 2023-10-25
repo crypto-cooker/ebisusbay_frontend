@@ -61,23 +61,22 @@ import {
     const debouncedSearch = useDebounce(value, 500);
     const [cursor, setCursor] = useState(-1);
   
-    const { data, status, error, refetch } = useQuery(
-      ['Search', debouncedSearch],
-      () => search(debouncedSearch),
-      {
-        enabled: !!debouncedSearch && debouncedSearch.length >= minChars,
-        refetchOnWindowFocus: false,
-        select: (d) => {
-          return d.data.collections
-            .filter((collection: any) =>{
-              const knownContract = knownContracts.find((c: any) => caseInsensitiveCompare(c.address, collection.address));
-              if (!knownContract) return false;
-              return !knownContract.mergedWith;
-            })
-            .sort((a: any, b: any) => b.verification?.verified - a.verification?.verified)
-        }
+    const { data, status, error, refetch } = useQuery({
+      queryKey: ['Search', debouncedSearch],
+      queryFn: () => search(debouncedSearch),
+      enabled: !!debouncedSearch && debouncedSearch.length >= minChars,
+      refetchOnWindowFocus: false,
+      select: (d) => {
+        return d.data.collections
+          .filter((collection: any) =>{
+            const knownContract = knownContracts.find((c: any) => caseInsensitiveCompare(c.address, collection.address));
+            if (!knownContract) return false;
+            return !knownContract.mergedWith;
+          })
+          .sort((a: any, b: any) => b.verification?.verified - a.verification?.verified)
       }
-    );
+    });
+
     const hasDisplayableContent = searchVisits.length > 0 || (data && data.length > 0);
   
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -215,7 +214,7 @@ import {
                 </Box>
               )}
               <Box display={value?.length >= minChars ? 'inherit' : 'none'}>
-                {status === "loading" ? (
+                {status === 'pending' ? (
                   <Center>
                     <Spinner />
                   </Center>

@@ -47,22 +47,15 @@ const ListingsTab = ({ nft }: ListingsProps) => {
     return getNftListings({page: pageParam});
   }
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    status,
-  } = useInfiniteQuery(
-    ['NftListings', filters],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    }
-  );
+  const {data, error, fetchNextPage, hasNextPage, status,} = useInfiniteQuery({
+    queryKey: ['NftListings', filters],
+    queryFn: fetcher,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
   const sortCollections = (sortBy: string) => {
     let direction = 'desc';
@@ -75,7 +68,7 @@ const ListingsTab = ({ nft }: ListingsProps) => {
   }
 
   const content = useMemo(() => {
-    return status === "loading" ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>
@@ -93,7 +86,7 @@ const ListingsTab = ({ nft }: ListingsProps) => {
 
   return (
     <div className='listing-tab'>
-      {status === 'loading' || (data && data.pages[0]?.data.length > 0) ? (
+      {status === 'pending' || (data && data.pages[0]?.data.length > 0) ? (
         <InfiniteScroll
           dataLength={data?.pages ? data.pages.flat().length : 0}
           next={fetchNextPage}

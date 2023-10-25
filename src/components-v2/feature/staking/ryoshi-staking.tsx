@@ -110,24 +110,15 @@ const UnstakedRyoshiNftList = () => {
     });
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-    refetch,
-  } = useInfiniteQuery(
-    ['UserUnstakedRyoshiNfts', user.address],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    })
+  const {data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, refetch} = useInfiniteQuery({
+    queryKey: ['UserUnstakedRyoshiNfts', user.address],
+    queryFn: fetcher,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
 
   const loadMore = () => {
@@ -148,7 +139,7 @@ const UnstakedRyoshiNftList = () => {
             </Center>
           }
         >
-          {status === "loading" ? (
+          {status === 'pending' ? (
             <Center>
               <Spinner />
             </Center>
@@ -224,25 +215,16 @@ const StakedRyoshiList = () => {
     return data.response;
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-    refetch,
-  } = useInfiniteQuery(
-    ['UserStakedRyoshiNfts', user.address],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].nfts?.length > 0 ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false,
-      enabled: !!user.address
-    })
+  const {data, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery({
+    queryKey: ['UserStakedRyoshiNfts', user.address],
+    queryFn: fetcher,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].nfts?.length > 0 ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false,
+    enabled: !!user.address
+  });
 
   const loadMore = () => {
     fetchNextPage();
@@ -262,7 +244,7 @@ const StakedRyoshiList = () => {
             </Center>
           }
         >
-          {status === "loading" ? (
+          {status === 'pending' ? (
             <Center>
               <Spinner />
             </Center>
