@@ -274,7 +274,7 @@ export function shortString(str, leftChars = 3, rightChars = 3) {
 
 export function username(identifier) {
   try {
-    if (identifier.startsWith('0x')) {
+    if (identifier.startsWith('0x') && !identifier.endsWith('.cro')) {
       return shortAddress(ethers.utils.getAddress(identifier));
     }
     return identifier;
