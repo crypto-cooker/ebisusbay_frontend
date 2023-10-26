@@ -349,7 +349,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                 Limit: {maxMintPerAddress} per wallet
               </Text>
             )}
-            {drop.collection === 'ryoshi-playing-cards' && drop.memberMitama > 0 && (
+            {drop.memberMitama > 0 && (
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
                 Users must have {commify(drop.memberMitama)} Mitama for Mitama price. Earn more by staking $Fortune in <Link href='/ryoshi' className='color'>Ryoshi Dynasties</Link>
               </Text>
@@ -409,7 +409,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                         Mint with {config.tokens[drop.erc20Token!].symbol}
                       </PrimaryButton>
                     )}
-                    {drop.collection === 'ryoshi-playing-cards' && (!mintingWithType || mintingWithType === FundingType.REWARDS) && (
+                    {drop.abi === 'mint-from-rewards.json' && (!mintingWithType || mintingWithType === FundingType.REWARDS) && (
                       <PrimaryButton
                         w='full'
                         onClick={() => mintNow(FundingType.REWARDS)}
