@@ -46,14 +46,6 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const handleClose = () => {
     onClose();
   }
-  const {data} = useQuery(
-    ['RyoshiDailyCheckin', user.address],
-    () => ApiService.withoutKey().ryoshiDynasties.getDailyRewards(user.address!),
-    {
-      enabled: !!user.address,
-      refetchOnWindowFocus: false,
-    }
-  );
 
   const checkForBattleRewards = async () => {
     if (!user.address) return;

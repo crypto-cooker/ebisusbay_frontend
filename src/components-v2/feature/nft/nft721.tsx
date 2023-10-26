@@ -122,9 +122,10 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
   const currentListing = useAppSelector((state) => state.nft.currentListing);
   const powertraits = useAppSelector((state) => state.nft.nft?.powertraits);
 
-  const { isLoading: isLoadingCollection, error, data, status } = useQuery(['Collections', address], () =>
-    getCollections({ address }),
-  )
+  const { isPending: isLoadingCollection, error, data, status } = useQuery({
+    queryKey: ['Collections', address],
+    queryFn: () => getCollections({address})
+  });
 
   const [collection, setCollection] = useState<any>(null);
   const izanamiImageSize = useBreakpointValue(

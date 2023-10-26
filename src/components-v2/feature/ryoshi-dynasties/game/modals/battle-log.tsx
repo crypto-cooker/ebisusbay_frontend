@@ -94,15 +94,15 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
     })
   }
 
-  const {data, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery(
-    ['BattleLog', user.address, rdGameContext?.game.id, sortOrder],
-    GetBattleLog,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false,
-      enabled: isOpen && !!user.address && !!rdGameContext?.game.id && !!signature,
+  const {data, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery({
+    queryKey: ['BattleLog', user.address, rdGameContext?.game.id, sortOrder],
+    queryFn: GetBattleLog,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false,
+    enabled: isOpen && !!user.address && !!rdGameContext?.game.id && !!signature,
   });
 
   const ReloadBattleLog = () => {
@@ -159,7 +159,7 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
                   </Center>
                 }
               >
-                {status === "loading" ? (
+                {status === 'pending' ? (
                   <Center>
                     <Spinner />
                   </Center>

@@ -36,14 +36,15 @@ const EditCollection = ({ address: collectionAddress }) => {
     }
   }
 
-  const { data, status, isLoading, refetch } = useQuery(['Collections', collectionAddress], () =>
-    getCollections({ address: collectionAddress }), true
-  )
+  const { data, status, isPending, refetch } = useQuery({
+    queryKey: ['Collections', collectionAddress],
+    queryFn: () => getCollections({address: collectionAddress})
+  })
 
   const [initialValues, setInitialValues] = useState({ ...initialValuesDefault })
 
   useEffect(() => {
-    if (!isLoading && data.data?.collections) {
+    if (!isPending && data.data?.collections) {
       const { listable, slug, name, metadata } = data.data.collections[0];
       setInitialValues({
         collectionInfo: {

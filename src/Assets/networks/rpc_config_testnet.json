@@ -3784,7 +3784,7 @@
       "name": "Ryoshi Tales",
       "slug": "ryoshi-tales",
       "multiToken": false,
-      "address": "",
+      "address": "0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -9133,7 +9133,7 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "",
+      "address": "0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 40,
       "totalSupply": 500,

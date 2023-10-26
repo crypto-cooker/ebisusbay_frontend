@@ -24228,9 +24228,9 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "avatar": "/img/collections/ryoshi-tales/avatar0.webp",
-        "banner": "/img/collections/ryoshi-tales/banner0.webp",
-        "card": "/img/collections/ryoshi-tales/card0.webp",
+        "avatar": "/img/collections/ryoshi-tales/avatar.webp",
+        "banner": "/img/collections/ryoshi-tales/banner.webp",
+        "card": "/img/collections/ryoshi-tales/card.webp",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
         "discord": "https://discord.gg/ebisusbay",
@@ -31562,10 +31562,10 @@
       "complete": false,
       "featured": true,
       "images": {
-        "drop": "/img/drops/ryoshi-tales-goblin-gala/drop.webp",
-        "avatar": "/img/drops/ryoshi-tales-goblin-gala/avatar.webp",
-        "banner": "/img/drops/ryoshi-tales-goblin-gala/banner.webp",
-        "preview": "/img/drops/ryoshi-tales-goblin-gala/preview.webp"
+        "drop": "/img/drops/ryoshi-tales-goblin-gala/drop1.webp",
+        "avatar": "/img/drops/ryoshi-tales-goblin-gala/avatar1.webp",
+        "banner": "/img/drops/ryoshi-tales-goblin-gala/banner1.webp",
+        "preview": "/img/drops/ryoshi-tales-goblin-gala/preview1.webp"
       },
       "verification": {
         "verified": true,

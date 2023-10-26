@@ -7,12 +7,12 @@ import {ApiService} from "@src/core/services/api-service";
 const useGetProfilePreview = (initialAddress?: string) => {
   const [address, setAddress] = useState<string | null>(initialAddress ?? null);
 
-  const {data:profile, isLoading} = useQuery({
+  const {data:profile, isPending} = useQuery({
       queryKey: ['ProfilePreview', address],
       queryFn: () => ApiService.withoutKey().getProfile(address!),
       enabled: !!address,
       staleTime: 1000 * 60 * 10,
-      cacheTime: 1000 * 60 * 11,
+      gcTime: 1000 * 60 * 11,
       // initialData: {}
     }
   );
@@ -46,7 +46,7 @@ const useGetProfilePreview = (initialAddress?: string) => {
     avatar: profile?.data?.profilePicture,
     verified: profile?.data?.isVerified,
     address,
-    isLoading
+    isLoading: isPending
   };
 }
 

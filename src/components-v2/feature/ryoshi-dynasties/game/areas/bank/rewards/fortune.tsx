@@ -56,14 +56,12 @@ const FortuneRewardsTab = () => {
     return ApiService.withoutKey().ryoshiDynasties.getSeasonalRewards(user.address!);
   }
 
-  const { error, data: rewards, status, refetch } = useQuery(
-    ['BankSeasonalRewards', user.address],
-    checkForRewards,
-    {
-      enabled: !!user.address,
-      refetchOnWindowFocus: false
-    }
-  );
+  const { error, data: rewards, status, refetch } = useQuery({
+    queryKey: ['BankSeasonalRewards', user.address],
+    queryFn: checkForRewards,
+    enabled: !!user.address,
+    refetchOnWindowFocus: false
+  });
 
   useEffect(() => {
     if (rdGameContext) {
@@ -96,7 +94,7 @@ const FortuneRewardsTab = () => {
           Fortune rewards accumulate from Fortune staking, marketplace listings, and from playing the game and can be withdrawn at any time.
           Compound to an existing vault to multiply your rewards!
         </Box>
-        {status === "loading" ? (
+        {status === 'pending' ? (
           <Center py={4}>
             <Spinner />
           </Center>
@@ -343,13 +341,11 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
   const [feeCompoundVaults, setFeeCompoundVaults] = useState<any[]>([]);
   const [noFeeCompoundVaults, setNoFeeCompoundVaults] = useState<any[]>([]);
 
-  const { data: account, status, error, refetch } = useQuery(
-    ['UserStakeAccount', user.address],
-    () => ApiService.withoutKey().ryoshiDynasties.getBankStakingAccount(user.address!),
-    {
-      enabled: !!user.address,
-    }
-  )
+  const { data: account, status, error, refetch } = useQuery({
+    queryKey: ['UserStakeAccount', user.address],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getBankStakingAccount(user.address!),
+    enabled: !!user.address,
+  });
 
   const handleExpandCompound = useCallback(async () => {
     if (isExpanded) {

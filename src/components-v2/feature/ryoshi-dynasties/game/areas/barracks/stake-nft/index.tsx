@@ -152,8 +152,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   }, [pendingNfts]);
 
   const handleStakeSuccess = useCallback(() => {
-    queryClient.invalidateQueries(['BarracksStakedNfts', user.address]);
-    queryClient.invalidateQueries(['BarracksUnstakedNfts', user.address, currentCollection]);
+    queryClient.invalidateQueries({queryKey: ['BarracksStakedNfts', user.address]});
+    queryClient.invalidateQueries({queryKey: ['BarracksUnstakedNfts', user.address, currentCollection]});
     queryClient.setQueryData(['BarracksUnstakedNfts', user.address, currentCollection], (old: any) => {
       if (!old) return [];
       old.pages = old.pages.map((page:  any) => {
@@ -193,10 +193,10 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   useEffect(() => {
     if (!isOpen) return;
 
-    queryClient.fetchQuery(
-      ['BarracksStakedNfts', user.address],
-      () => ApiService.withoutKey().ryoshiDynasties.getStakedTokens(user.address!, StakedTokenType.BARRACKS)
-    ).then(async (data) => {
+    queryClient.fetchQuery({
+      queryKey: ['BarracksStakedNfts', user.address],
+      queryFn: () => ApiService.withoutKey().ryoshiDynasties.getStakedTokens(user.address!, StakedTokenType.BARRACKS)
+    }).then(async (data) => {
       setStakedNfts(data);
 
       const nfts: PendingNft[] = [];
@@ -535,53 +535,52 @@ interface UnstakedNftsProps {
 const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedNftsProps) => {
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
-  const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['BarracksUnstakedNfts', address, collection],
-    () => nextApiService.getWallet(address!, {
+  const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['BarracksUnstakedNfts', address, collection],
+    queryFn: () => nextApiService.getWallet(address!, {
       collection: [collection],
       sortBy: 'rank',
       direction: 'asc'
     }),
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false,
-      enabled: !!address && isReady && !!collection,
-      select: (data) => {
-        data.pages = data.pages.map((page) => {
-          return {
-            ...page,
-            data: page.data.filter((item) => {
-              return item.attributes?.some((attr: any) => {
-                const collection = config.collections.find((c: any) => caseInsensitiveCompare(c.address, item.nftAddress));
-                const eligibility = rdContext.config.barracks.staking.nft.collections.find((e) => e.slug === collection.slug);
-                if (!eligibility) return false;
-                const traitType = attr.trait_type.toLowerCase();
-                const value = attr.value.toString().toLowerCase();
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false,
+    enabled: !!address && isReady && !!collection,
+    select: (data) => {
+      data.pages = data.pages.map((page) => {
+        return {
+          ...page,
+          data: page.data.filter((item) => {
+            return item.attributes?.some((attr: any) => {
+              const collection = config.collections.find((c: any) => caseInsensitiveCompare(c.address, item.nftAddress));
+              const eligibility = rdContext.config.barracks.staking.nft.collections.find((e) => e.slug === collection.slug);
+              if (!eligibility) return false;
+              const traitType = attr.trait_type.toLowerCase();
+              const value = attr.value.toString().toLowerCase();
 
-                let found = eligibility.traits.length === 0;
-                for (let traitRule of eligibility.traits) {
-                  if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
-                    found = true;
-                    break;
-                  } else if (traitRule.inclusion === 'exclude' && traitRule.type === traitType && !traitRule.values.includes(value)) {
-                    found = true;
-                    break;
-                  }
+              let found = eligibility.traits.length === 0;
+              for (let traitRule of eligibility.traits) {
+                if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
+                  found = true;
+                  break;
+                } else if (traitRule.inclusion === 'exclude' && traitRule.type === traitType && !traitRule.values.includes(value)) {
+                  found = true;
+                  break;
                 }
+              }
 
-                return found;
-              })
+              return found;
+            })
 
-            }),
-          };
-        });
+          }),
+        };
+      });
 
-        return data;
-      }
+      return data;
     }
-  );
+  });
 
   return (
     <>
@@ -596,7 +595,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           </Center>
         }
       >
-        {status === "loading" ? (
+        {status === 'pending' ? (
           <Center>
             <Spinner />
           </Center>

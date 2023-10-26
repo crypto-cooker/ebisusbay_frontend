@@ -78,14 +78,12 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     return tmpNft.nft;
   }
 
-  const { error, data: nft, status } = useQuery(
-    ['AcceptOffer', user.address, offer.nftAddress, offer.nftId],
-    fetchNft,
-    {
-      enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
-      refetchOnWindowFocus: false
-    }
-  );
+  const { error, data: nft, status } = useQuery({
+    queryKey: ['AcceptOffer', user.address, offer.nftAddress, offer.nftId],
+    queryFn: fetchNft,
+    enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
+    refetchOnWindowFocus: false
+  });
 
   useEffect(() => {
     async function asyncFunc() {
@@ -227,7 +225,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
           }
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
-        {status === "loading" || isLoading ? (
+        {status === 'pending' || isLoading ? (
           <EmptyData>
             <Spinner size='sm' ms={1} />
           </EmptyData>

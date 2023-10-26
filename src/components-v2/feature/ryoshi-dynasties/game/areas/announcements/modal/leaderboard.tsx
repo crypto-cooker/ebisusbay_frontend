@@ -53,6 +53,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
 
   const user = useAppSelector((state) => state.user);
   const {data: allFactions, status, error} = useQuery({
+    queryKey: ['RyoshiDynastiesGameContext'],
     queryFn: () => ApiService.withoutKey().ryoshiDynasties.getGameContext(),
     enabled: !!user.address,
   });
