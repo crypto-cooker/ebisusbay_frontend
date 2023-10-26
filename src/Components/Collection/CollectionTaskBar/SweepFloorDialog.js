@@ -18,7 +18,7 @@ import useBreakpoint from "use-breakpoint";
 import {getListings} from "@src/core/api/endpoints/listings";
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {Lazy, Navigation} from "swiper";
+import {Lazy, Navigation} from "swiper/modules";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {
   Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex,
