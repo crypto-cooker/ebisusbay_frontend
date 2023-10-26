@@ -23919,7 +23919,7 @@
       "name": "BOB Headz",
       "slug": "bob-headz",
       "multiToken": false,
-      "address": "",
+      "address": "0x41C7874A2fE9D1ea126bfBD44597A1f96546152e",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -31413,7 +31413,7 @@
         "twitter": "https://twitter.com/CroBobAdventure",
         "discord": "https://discord.gg/kemzRExMju"
       },
-      "address": "",
+      "address": "0x41C7874A2fE9D1ea126bfBD44597A1f96546152e",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 808,
