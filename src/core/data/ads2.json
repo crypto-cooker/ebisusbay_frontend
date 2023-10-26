@@ -1,5 +1,20 @@
 [
   {
+    "name": "Ryoshi Tales: Goblin Gala",
+    "start": 1698275251,
+    "end": 1698825600,
+    "placement": "rd-board",
+    "details": {
+      "weight": 3,
+      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-tales-goblin-gala-lg.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-tales-goblin-gala-sm.webp",
+      "link": {
+        "url": "/drops/ryoshi-tales-goblin-gala",
+        "external": false
+      }
+    }
+  },
+  {
     "name": "Ryoshi Hearts",
     "start": 1697910565,
     "end": 1698710399,
