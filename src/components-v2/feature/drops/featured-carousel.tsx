@@ -10,7 +10,7 @@ import {dropState} from '@src/core/api/enums';
 import {appConfig} from "@src/Config";
 import {hostedImage} from "@src/helpers/image";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {Navigation, Pagination} from "swiper";
+import {Navigation, Pagination} from "swiper/modules";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {Box, Heading, HStack, Tag, Text} from "@chakra-ui/react";
 import Image from "next/image";

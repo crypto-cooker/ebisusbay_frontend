@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Navigation } from "swiper";
+import { Navigation } from "swiper/modules";
 import { Center, Box } from "@chakra-ui/react";
 
 export default function Slider({ children, size }) {

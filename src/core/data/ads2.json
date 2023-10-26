@@ -115,8 +115,8 @@
     "placement": "rd-board",
     "details": {
       "weight": 1,
-      "imageLg": "/img/ryoshi-dynasties/announcements/vvs.webp",
-      "imageSm": "/img/ryoshi-dynasties/announcements/vvs.webp",
+      "imageLg": "/img/ryoshi-dynasties/announcements/ads/vvs.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/ads/vvs-sm.gif",
       "link": {
         "url": "https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
         "external": true

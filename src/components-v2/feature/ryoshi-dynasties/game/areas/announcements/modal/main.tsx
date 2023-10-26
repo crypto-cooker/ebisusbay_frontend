@@ -13,7 +13,7 @@ import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map
 import LocalDataService from "@src/core/services/local-data-service";
 import {useQuery} from "@tanstack/react-query";
 import {Swiper, SwiperSlide} from 'swiper/react';
-import {Autoplay} from "swiper";
+import {Autoplay, Virtual} from "swiper/modules";
 import NextLink from "next/link";
 import Countdown, {zeroPad} from "react-countdown";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
@@ -74,11 +74,12 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
               delay: 10000,
               disableOnInteraction: false,
             }}
-            modules={[Autoplay]}
+            modules={[Autoplay, Virtual]}
             style={{maxWidth:'356px', height:'100%'}}
+            virtual
           >
-            {ads.map((ad) => (
-              <SwiperSlide>
+            {ads.map((ad, index) => (
+              <SwiperSlide key={ad.name} virtualIndex={index}>
                 <Center>
                   <Image
                     alt={ad.name}
@@ -106,11 +107,12 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
                 delay: 10000,
                 disableOnInteraction: false,
               }}
-              modules={[Autoplay]}
+              modules={[Autoplay, Virtual]}
               style={{width:'590px', height:'100%'}}
+              virtual
             >
-              {ads.map((ad) => (
-                <SwiperSlide>
+              {ads.map((ad, index) => (
+                <SwiperSlide key={ad.name} virtualIndex={index}>
                   <Box
                     rounded='md'
                     minWidth='100%'
