@@ -141,6 +141,28 @@ const FaqPage = () => {
               </UnorderedList>
             </AccordionPanel>
           </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                Ryoshi Tales (Goblin Gala) Information
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>Ryoshi Tales (Goblin Gala) NFTs must contain any value for the "Accessories" trait EXCEPT:</Text>
+              <UnorderedList>
+                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales')!.traits[0].values.map((value) => (
+                  <ListItem key={value}>{titleCase(value.toUpperCase())}</ListItem>
+                ))}
+              </UnorderedList>
+              <Text mt={4}>Eligible NFTs will then be calculated:</Text>
+              <UnorderedList>
+                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales')!.multipliers.map((multiplier, i) => (
+                  <ListItem key={i}>{multiplier.percentile}th percentile: {commify(multiplier.value)}</ListItem>
+                ))}
+              </UnorderedList>
+            </AccordionPanel>
+          </AccordionItem>
         </Accordion>
       </Box>
     </Stack>

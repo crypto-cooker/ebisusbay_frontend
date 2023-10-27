@@ -192,7 +192,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   };
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !user.address) return;
 
     queryClient.fetchQuery({
       queryKey: ['BankStakedNfts', user.address],
@@ -233,7 +233,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
     });
 
 
-  }, [isOpen]);
+  }, [isOpen, user.address]);
 
   useEffect(() => {
     setCurrentCollection(addressForTab);
