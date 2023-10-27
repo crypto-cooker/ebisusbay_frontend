@@ -110,6 +110,22 @@ const FaqPage = () => {
               </UnorderedList>
             </AccordionPanel>
           </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                Ryoshi Tales (Goblin Gala) Information
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>Ryoshi Tales (Goblin Gala) NFTs use the following rank-based <strong>adders</strong>:</Text>
+              <UnorderedList>
+                {rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales')!.adders.map((multiplier, i) => (
+                  <ListItem key={i}>{multiplier.percentile}th percentile: +{commify(multiplier.value)}%</ListItem>
+                ))}
+              </UnorderedList>
+            </AccordionPanel>
+          </AccordionItem>
         </Accordion>
       </Box>
     </Stack>

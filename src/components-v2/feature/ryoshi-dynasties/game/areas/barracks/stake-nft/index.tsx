@@ -192,7 +192,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   };
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !user.address) return;
 
     queryClient.fetchQuery({
       queryKey: ['BarracksStakedNfts', user.address],
@@ -227,7 +227,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       }
       setPendingNfts(nfts);
     });
-  }, [isOpen]);
+  }, [isOpen, user.address]);
 
   useEffect(() => {
     setCurrentCollection(addressForTab);
