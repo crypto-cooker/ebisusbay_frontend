@@ -624,8 +624,7 @@ const Results = ({listings, cost, isMobile}) => {
             spaceBetween={0}
             slidesPerView={3}
             slidesPerGroup={3}
-            navigation={true}
-            modules={[Lazy, Navigation]}
+            modules={[Navigation]}
             breakpoints={{
               600: {
                 slidesPerView: 4,
@@ -636,6 +635,7 @@ const Results = ({listings, cost, isMobile}) => {
                 slidesPerGroup: 5,
               },
             }}
+            navigation
           >
             {listings.map((listing) => (
               <SwiperSlide key={listing.listingId}>
