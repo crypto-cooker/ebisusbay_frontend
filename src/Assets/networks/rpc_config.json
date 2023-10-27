@@ -24244,6 +24244,54 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "CroTops",
+      "slug": "crotops",
+      "multiToken": false,
+      "address": "0x87e04f1d64619994a5320450E19C184a2dDE09c7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "⚡ Welcome to Cro Tops, This Project is based on the cartoon Bey-Blade's, Our Art will depict spin tops of various colors. themes, backgrounds, bonus item traits, and more!! so with that said, 25% of the mint funds goes to $Fortune token 25% of the mint funds goes to $TTT pairing 10% of the mint funds goes to Time Machine Launchpad 40% of the mint funds will be used to develop a staking site, and gamify CroTops \uD83D\uDE80LFG CROFAMM \uD83D\uDCAA",
+        "avatar": "/img/collections/crotops/avatar.webp",
+        "banner": "/img/collections/crotops/banner.webp",
+        "card": "/img/collections/crotops/card.webp",
+        "website": "https://time-launcher.com/drops/cro-tops",
+        "twitter": "https://twitter.com/PolyTops9000",
+        "discord": "https://discord.gg/MEquYDYUdB",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Crazzzy Ryoshi Monsterzzz",
+      "slug": "crazzzy-ryoshi-monsterzzz",
+      "multiToken": false,
+      "address": "0xe65FAA8791F25E9fB034f1C8913f14F6Db12C6C0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This collection is themed around the Ryoshi Dynasties game by Ebisu's Bay. It will consist of 10,000 NFTs with a heavy burn mechanism, 20 different Crazzzy Ryoshi Monsters with various quantities. Main focus of this collection is to maximise possible daily rewards for the current holders of our main Crazzzy NFT collections on Ebisu's Bay. Surprises will come for holders of the 20 different Crazzzy Ryoshi Monsterzzz.",
+        "avatar": "/img/collections/crazzzy-ryoshi-monsterzzz/avatar.webp",
+        "card": "/img/collections/crazzzy-ryoshi-monsterzzz/card.webp",
+        "banner": "/img/collections/crazzzy-ryoshi-monsterzzz/banner.webp",
+        "website": "https://crazzzymonsters.com/",
+        "twitter": "https://twitter.com/CrazzzyMonsters",
+        "discord": "https://discord.gg/6tR5TcHpBG",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
