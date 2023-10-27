@@ -10,7 +10,7 @@ import {
   BankStakeNft,
   BarracksStakeNft,
   RyoshiDynastiesApi,
-  StakedTokenType
+  StakedTokenType, TownHallStakeNft
 } from "@src/core/services/api-service/types";
 import {Offer} from "@src/core/models/offer";
 import {WalletsQueryParams} from "./mapi/queries/wallets";
@@ -264,6 +264,14 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
     return this.cms.requestBarracksUnstakeAuthorization(nfts, address, signature);
+  }
+
+  async requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
+    return this.cms.requestTownHallStakeAuthorization(nfts, address, signature);
+  }
+
+  async requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
+    return this.cms.requestTownHallUnstakeAuthorization(nfts, address, signature);
   }
 
   async requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string) {

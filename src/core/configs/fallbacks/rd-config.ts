@@ -24,6 +24,21 @@ const collections: RyoshiConfigCollections[] = [
     slug: 'fortune-guards',
     address: '0x013f83434356c0a20698605eBAb337aab966AF88',
     maxSupply: 4
+  },
+  {
+    slug: 'mad-meerkat',
+    address: '0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56',
+    maxSupply: 10000
+  },
+  {
+    slug: 'cowz',
+    address: '0xdbFDf81D1fDD2e79e8ffaDE50c219452587e9488',
+    maxSupply: 10000
+  },
+  {
+    slug: 'aiko-legends',
+    address: '0xFD90697db5D40B37B86C958106A342088f11AA84',
+    maxSupply: 3333
   }
 ];
 
@@ -188,6 +203,27 @@ export const ryoshiConfig: RyoshiConfig = {
               { id: 4, bonus: 300 },
               { id: 5, bonus: 400 },
             ],
+          }
+        ]
+      }
+    }
+  },
+  townHall: {
+    staking: {
+      nft: {
+        maxSlots: 5,
+        collections: [
+          {
+            ...collections.find(c => c.slug === 'cowz')!,
+            fortune: 35000
+          },
+          {
+            ...collections.find(c => c.slug === 'aiko-legends')!,
+            fortune: 25000
+          },
+          {
+            ...collections.find(c => c.slug === 'mad-meerkat')!,
+            fortune: 15000
           }
         ]
       }
