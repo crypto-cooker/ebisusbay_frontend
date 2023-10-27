@@ -16,6 +16,7 @@ import {
   Heading,
   HStack,
   IconButton,
+  Image,
   Menu,
   MenuButton,
   MenuItem,
@@ -27,6 +28,7 @@ import {
   useBreakpointValue,
   useColorMode,
   useDisclosure,
+  useMediaQuery,
   useOutsideClick,
   VStack
 } from "@chakra-ui/react";
@@ -39,6 +41,7 @@ import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {round} from "@src/utils";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 
@@ -67,6 +70,7 @@ const Header = function () {
     { base: true, lg: false },
     { fallback: 'lg'},
   );
+  const [shouldHideTitle] = useMediaQuery('(max-width: 516px)');
   const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, config.chain.id);
   const [currentFrtnPrice, setCurrentFrtnPrice] = useState(0);
 
@@ -85,7 +89,7 @@ const Header = function () {
   useEffect(() => {
     try {
       if (tokenUsdRate) {
-        setCurrentFrtnPrice(round(tokenUsdRate, 4));
+        setCurrentFrtnPrice(round(tokenUsdRate, 3));
       }
     } catch (e) {
       console.error('Error setting global FRTN price', e);
@@ -100,30 +104,32 @@ const Header = function () {
           <Flex h={16} alignItems={'center'}>
             <Link href="/">
               <HStack spacing={2}>
-                <Box w="44px" me={{base: 2, sm: 0}}>
-                  <img
-                    src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark.svg'}
-                    alt="ebisus bay logo"
+                <Image
+                  src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark.svg'}
+                  alt='ebisus bay logo'
+                  w='44px'
+                />
+                {!shouldHideTitle && shouldUseMobileSearch ? (
+                  <Image
+                    src={ImageService.translate('/img/logos/eb-title-sm.png').convert()}
+                    maxH='40px'
                   />
-                </Box>
-                <Text
-                  fontSize="lg"
-                  fontWeight="normal"
-                  color="white"
-                  minW="97px"
-                  display={{base: 'none', sm: 'block'}}
-                >
-                  Ebisu's Bay
-                </Text>
+                ) : !shouldHideTitle && (
+                  <Image
+                    src={ImageService.translate('/img/logos/eb-title-lg.png').convert()}
+                    maxH='40px'
+                  />
+                )}
               </HStack>
             </Link>
-            {!shouldUseMobileSearch && (
-              <Box w="100%" me={2} ms={4}>
+            {!shouldUseMobileSearch ? (
+              <Box flexGrow={1} me={2} ms={4}>
                 <Search />
               </Box>
+            ) : (
+              <Spacer />
             )}
 
-            <Spacer />
             <Flex alignItems={'center'} className="mainside">
 
               {!!currentFrtnPrice && (
