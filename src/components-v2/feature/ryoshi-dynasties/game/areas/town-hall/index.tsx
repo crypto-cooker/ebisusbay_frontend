@@ -23,7 +23,7 @@ const TownHall = ({onBack}: BarracksProps) => {
   const [handleAuthedNavigation] = useAuthedFunction();
 
 
-  const item = {
+  const motionDivVariant = {
     hidden: { opacity: 0 },
     show: { opacity: 1,
       transition: {
@@ -38,7 +38,7 @@ const TownHall = ({onBack}: BarracksProps) => {
       overflow='hidden'
     >
       <motion.div
-        variants={item}
+        variants={motionDivVariant}
         initial="hidden"
         animate="show"
       >
@@ -87,10 +87,10 @@ const TownHall = ({onBack}: BarracksProps) => {
               </Button>
             </Box>
             <Box textAlign='end' ms={2}>
-              <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} fontWeight='bold'>Barracks</Text>
+              <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} fontWeight='bold'>Town Hall</Text>
               <Text textColor='#ffffffeb' fontSize='sm' fontStyle='italic'>
-                Claim rewards from your battles
-                </Text>
+                The heart of the Community and its activities
+              </Text>
             </Box>
           </Flex>
 
@@ -108,7 +108,7 @@ const TownHall = ({onBack}: BarracksProps) => {
           position={'absolute'}
           opacity={0.2}
           zIndex={0}
-          src={ImageService.translate('/img/ryoshi-dynasties/village/barracksBackground.png').convert()}
+          src={ImageService.translate('/img/ryoshi-dynasties/village/background-town-hall.webp').convert()}
           minH='calc(100vh - 74px)'
         />
       </AspectRatio>

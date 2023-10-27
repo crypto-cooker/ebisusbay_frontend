@@ -138,7 +138,7 @@ const Barracks = ({onBack}: BarracksProps) => {
           position={'absolute'}
             opacity={0.2}
             zIndex={0}
-            src={ImageService.translate('/img/ryoshi-dynasties/village/barracksBackground.png').convert()}
+            src={ImageService.translate('/img/ryoshi-dynasties/village/background-barracks.webp').convert()}
             minH='calc(100vh - 74px)'
           />
         </AspectRatio>
