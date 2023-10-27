@@ -274,14 +274,14 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
                 <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
                   VIP
                 </RdTabButton>
-                <RdTabButton isActive={currentTab === tabs.ryoshiTales} onClick={handleBtnClick(tabs.ryoshiTales)}>
-                  Tales
-                </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.fortuneGuards} onClick={handleBtnClick(tabs.fortuneGuards)}>
                   Guards
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
                   Halloween
+                </RdTabButton>
+                <RdTabButton isActive={currentTab === tabs.ryoshiTales} onClick={handleBtnClick(tabs.ryoshiTales)}>
+                  Gala
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
                   Christmas
