@@ -625,7 +625,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           </SimpleGrid>
         ) : (
           <Box textAlign='center' mt={8}>
-            <Text>No NFTs available</Text>
+            <Text>No NFTs available. <br />Can't find your NFT? Check the FAQ at the top left for eligibility requirements</Text>
           </Box>
         )}
       </InfiniteScroll>
