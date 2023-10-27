@@ -63,6 +63,7 @@ const gothamBook = localFont({ src: '../../../../../../../../src/fonts/Gotham-Bo
 
 const tabs = {
   ryoshiVip: 'ryoshi-tales-vip',
+  ryoshiTales: 'ryoshi-tales',
   ryoshiHalloween: 'ryoshi-tales-halloween',
   ryoshiChristmas: 'ryoshi-tales-christmas',
   fortuneGuards: 'fortune-guards'
@@ -269,9 +270,12 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
           />
           <Box p={4}>
             <Flex direction='row' justify='center' mb={2}>
-              <SimpleGrid columns={{base: 2, sm: 4}}>
+              <SimpleGrid columns={{base: 2, sm: 3, md: 5}}>
                 <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
                   VIP
+                </RdTabButton>
+                <RdTabButton isActive={currentTab === tabs.ryoshiTales} onClick={handleBtnClick(tabs.ryoshiTales)}>
+                  Tales
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.fortuneGuards} onClick={handleBtnClick(tabs.fortuneGuards)}>
                   Guards
