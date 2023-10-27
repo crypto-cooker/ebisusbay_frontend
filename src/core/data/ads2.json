@@ -2,14 +2,14 @@
   {
     "name": "Ryoshi Tales: Goblin Gala",
     "start": 1698275251,
-    "end": 1698825600,
+    "end": 1698437220,
     "placement": "rd-board",
     "details": {
       "weight": 3,
       "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-tales-goblin-gala-lg.webp",
       "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-tales-goblin-gala-sm.webp",
       "link": {
-        "url": "/drops/ryoshi-tales-goblin-gala",
+        "url": "/collection/ryoshi-tales",
         "external": false
       }
     }
