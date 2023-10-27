@@ -31601,7 +31601,7 @@
       "erc20Only": true,
       "foundersOnly": false,
       "abi": "mint-from-rewards.json",
-      "start": 1688436800000,
+      "start": 1698436800000,
       "end": null,
       "referral": false,
       "is1155": false,
