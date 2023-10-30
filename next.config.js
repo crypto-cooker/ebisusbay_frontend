@@ -231,7 +231,8 @@ const sentryWebpackPluginOptions = {
   // Suppresses source map uploading logs during build
   silent: true,
   org: "ebisus-bay",
-  project: "eb-web"
+  project: "eb-web",
+  authToken: process.env.SENTRY_AUTH_TOKEN,
 };
 
 const sentryOptions = {
