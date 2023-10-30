@@ -59,6 +59,9 @@ COPY --link types ./types
 COPY --link next.config.js ./
 COPY --link jsconfig.json ./
 COPY --link tsconfig.json ./
+COPY --link sentry.client.config.ts ./
+COPY --link sentry.edge.config.ts ./
+COPY --link sentry.server.config.ts ./
 
 # Build the project
 RUN --mount=type=cache,target=/usr/src/app/.next/cache npm run build
