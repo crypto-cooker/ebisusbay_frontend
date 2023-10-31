@@ -24310,14 +24310,17 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "",
+        "description": "The Dooligans are designed to provide the DooNFT community with a limited sized collection that gives even more scarcity through classifications, making each Dooligan rare in itself.",
         "avatar": "/img/collections/dooligans/avatar.webp",
         "card": "/img/collections/dooligans/card.webp",
         "banner": "/img/collections/dooligans/banner.webp",
+        "website": "https://doonft.com/",
+        "twitter": "https://twitter.com/TheDooNFT",
+        "discord": "https://discord.gg/jWtZQmZGK5",
         "categories": []
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
