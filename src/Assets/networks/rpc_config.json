@@ -22604,6 +22604,15 @@
         },
         {
           "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
         }
       ],
       "onChain": false,
@@ -24291,6 +24300,26 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Dooligans",
+      "slug": "dooligans",
+      "multiToken": false,
+      "address": "0xdaacfab134836d72bbb798f0f5bb333384a58894",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/dooligans/avatar.webp",
+        "card": "/img/collections/dooligans/card.webp",
+        "banner": "/img/collections/dooligans/banner.webp",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
