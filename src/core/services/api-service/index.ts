@@ -88,7 +88,7 @@ export class ApiService implements Api {
 
   async getRyoshiDiamondsLeaderboardAtBlock(page: number, pageSize: number, pokerCollection: PokerCollection): Promise<any> {
     //info from subgraph
-
+    console.log("pokerCollection = " + pokerCollection);
     const owners = await getOwners(pokerCollection);
     //rank the info
 
@@ -98,6 +98,8 @@ export class ApiService implements Api {
       gameNumber = 1;
     } else if (pokerCollection == PokerCollection.Clubs) {
       gameNumber = 2;
+    } else if (pokerCollection == PokerCollection.Live) {
+      gameNumber = 3;
     }
     
     const response = await RankPlayers(owners, false, gameNumber);

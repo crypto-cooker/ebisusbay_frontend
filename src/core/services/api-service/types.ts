@@ -386,6 +386,8 @@ export interface RdBattleLog {
 export enum PokerCollection{
     Diamonds = 'Diamonds', 
     Clubs = 'Clubs',
+    Hearts = 'Hearts',
+    Spades = 'Spades',
     Live = 'Live',
 }
 

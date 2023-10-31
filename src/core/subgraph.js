@@ -62,10 +62,13 @@ export async function getOwners(collection) {
     let data;
       if(collection == "Live") {
         data = await getSubgraphData(SUBGRAPH, query, {}, "erc721Tokens");
+        console.log("Live: ", data)
       } else if(collection == "Diamonds") {
         data = await getSubgraphData(SUBGRAPH, queryDiamonds, {}, "erc721Tokens");
+        console.log("Diamonds: ", data)
       } else if(collection == "Clubs") {
         data = await getSubgraphData(SUBGRAPH, queryClubs, {}, "erc721Tokens");
+        console.log("Clubs: ", data)
       }
       if (data) {
           // DATA HERE

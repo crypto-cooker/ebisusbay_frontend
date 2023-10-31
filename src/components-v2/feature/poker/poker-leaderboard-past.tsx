@@ -23,6 +23,17 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 	const [updatedAt, setUpdatedAt] = useState<string>();
 	const user = useAppSelector(state => state.user);
 	const hoverBackground = useColorModeValue('gray.100', '#424242');
+
+	const GetRules = () => {
+		switch(pokerCollection){
+			case PokerCollection.Clubs:
+				return 'https://blog.ebisusbay.com/crypto-hodlem-round-2-ryoshi-clubs-playing-cards-collection-6e7d869f87ee'
+			case PokerCollection.Diamonds:
+				return'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'
+			case PokerCollection.Live:	
+				return 'https://blog.ebisusbay.com/crypto-hodlem-round-3-ryoshi-hearts-%EF%B8%8F-playing-cards-collection-e5ae3361c32e'
+		}
+	}
 	
 	const GenerateJson = () => {
 		if(!data) return;
@@ -156,9 +167,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		<Text fontSize={{base: 12, md:14}} textAlign='center'>Must be holding at least 5 cards to be ranked</Text>
 			<Link 
 				as={NextLink} 
-				href={pokerCollection === PokerCollection.Clubs ? 
-						'https://blog.ebisusbay.com/crypto-hodlem-round-2-ryoshi-clubs-playing-cards-collection-6e7d869f87ee' :
-						'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'} 
+				href={GetRules()} 
 				isExternal={true}>
 				<Button variant={'ghost'} maxW='250px' rightIcon={<InfoIcon/>}>Full Rules</Button>
 			</Link> 

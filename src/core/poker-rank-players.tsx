@@ -40,13 +40,14 @@ const BlackListedWallets = [
   "0x708d93ac77262d8b911174447b919076ab6ce08a",
   "0x40874f18922267cc2ca7933828594ab5078c1065"
 ]
-const game2clubsThreshold = 3;
+const activeGameCardsThreshold = 3;
 let gameNumber = 1;
+let activeGameStartIndex = 0;
 
 export const GetActualEditionNumber = (edition: number) => {
   let actualEdition = -1;
 
-  edition = edition > 4000 ? edition - 4000 : edition;
+  edition = edition > activeGameStartIndex ? edition - activeGameStartIndex : edition;
   
   cardValueDict.forEach((cardValue) => {
     if(cardValue.max < edition) {
@@ -88,6 +89,8 @@ export const getHandName = (handRef: number) => {
 export const RankPlayers = async (data : any, testcases:boolean=false, gameId:number) => {
   let rankedPlayers : Player[] = [];
   gameNumber = gameId;
+  activeGameStartIndex = (gameNumber - 1) * 4000;
+  console.log("activeGameStartIndex", activeGameStartIndex);
 
   if(testcases) {
     // 4 of a kind club kicker card
@@ -222,40 +225,40 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
   return rankedPlayers;
 }
 
-  const MeetsGameRequriements = (clubCards: number[], cardInHand : string[]) => {
+  const MeetsGameRequriements = (_cardsForGame: number[], cardInHand : string[]) => {
     if(gameNumber === 1) {
       return true;
-    } else if(gameNumber === 2) {
+    } else {
 
       let additionalSpaceForCards = 5 - cardInHand.length;
-      let clubsUsedInHand = 0;
-      let cardsForGame2 = new Array(...clubCards);
+      let gameCardsUsed = 0;
+      let cardsForGame = new Array(..._cardsForGame);
       
       //check if there is a club card with the same value as the card in hand
       for(let i = 0; i < cardInHand.length; i++) {
         let cardValue = parseInt(cardInHand[i]);
-        for(let j = 0; j < cardsForGame2.length; j++) {
-          if(cardsForGame2[j] == cardValue) {
-            clubsUsedInHand ++;
-            cardsForGame2.splice(j, 1);
+        for(let j = 0; j < cardsForGame.length; j++) {
+          if(cardsForGame[j] == cardValue) {
+            gameCardsUsed ++;
+            cardsForGame.splice(j, 1);
             j--;
       }}}
 
-      let cardsNeeded = game2clubsThreshold - clubsUsedInHand;
+      let cardsNeeded = activeGameCardsThreshold - gameCardsUsed;
       // console.log("cardsNeeded", cardsNeeded);
-      // console.log("cardsForGame2", cardsForGame2);
+      // console.log("cardsForGame", cardsForGame);
       // console.log("additionalSpaceForCards", additionalSpaceForCards);
       // console.log("clubsUsedInHand", clubsUsedInHand);
       // console.log("cardInHand", cardInHand);
       // console.log("clubCards", clubCards);
 
       //meets game requirements in just main cards
-      if(clubsUsedInHand >= game2clubsThreshold) {
+      if(gameCardsUsed >= activeGameCardsThreshold) {
         return true;
       }
 
       //doesn't have enough cards to meet game requirements
-      if(cardsNeeded > cardsForGame2.length){
+      if(cardsNeeded > cardsForGame.length){
         return false;
       }
 
@@ -267,54 +270,54 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
       return true;
     }
   }
-  const ClubNeededInKicker = (clubCards: number[], cardInHand: number[]) => {
+  const ActiveGameCardNeededInKicker = (_activeGameCards: number[], cardInHand: number[]) => {
     if(gameNumber === 2) {
       let clubsUsedInHand = 0;
-      let cardsForGame2 = new Array(...clubCards);
+      let activeGameCards = new Array(..._activeGameCards);
       
       //check if there is a club card with the same value as the card in hand
       for(let i = 0; i < cardInHand.length; i++) {
         let cardValue = cardInHand[i];
-        for(let j = 0; j < cardsForGame2.length; j++) {
-          if(cardsForGame2[j] == cardValue) {
+        for(let j = 0; j < activeGameCards.length; j++) {
+          if(activeGameCards[j] == cardValue) {
             clubsUsedInHand ++;
-            cardsForGame2.splice(j, 1);
+            activeGameCards.splice(j, 1);
             j--;
       }}}
 
       //meets game requirements in just main cards
-      return clubsUsedInHand >= game2clubsThreshold ? false : true;
+      return clubsUsedInHand >= activeGameCardsThreshold ? false : true;
     }
     else{
       return false;
     }
   }
-  const GetSecondaryCardRank = (clubCards: number[], cardInHand: number[], bestCard:number) => {
+  const GetSecondaryCardRank = (_activeGameCards: number[], cardInHand: number[], bestCard:number) => {
     if(gameNumber === 2) {
       let clubsUsedInHand = 0;
-      let cardsForGame2 = new Array(...clubCards);
+      let activeGameCards = new Array(..._activeGameCards);
       
       //check if there is a club card with the same value as the card in hand
       for(let i = 0; i < cardInHand.length; i++) {
         let cardValue = cardInHand[i];
-        for(let j = 0; j < cardsForGame2.length; j++) {
-          if(cardsForGame2[j] == cardValue) {
+        for(let j = 0; j < activeGameCards.length; j++) {
+          if(activeGameCards[j] == cardValue) {
             clubsUsedInHand ++;
-            cardsForGame2.splice(j, 1);
+            activeGameCards.splice(j, 1);
             j--;
       }}}
 
       //meets game requirements in just main cards
-      if(clubsUsedInHand >= game2clubsThreshold) {
+      if(clubsUsedInHand >= activeGameCardsThreshold) {
         return bestCard;
       }
 
       //go through the remaining cards and find the best card to add
       let bestClubCard = 0;
-      cardsForGame2.sort((a, b) => b - a);
-      for(let i = 0; i < cardsForGame2.length; i++) {
-        if(cardsForGame2[i] > bestClubCard) {
-          bestClubCard = cardsForGame2[i];
+      activeGameCards.sort((a, b) => b - a);
+      for(let i = 0; i < activeGameCards.length; i++) {
+        if(activeGameCards[i] > bestClubCard) {
+          bestClubCard = activeGameCards[i];
         }
       }
       return bestClubCard;
@@ -353,19 +356,19 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     })
     return rankedPlayers;
   }
-  const GetSecondaryCardEdition = (cardRanks: number[], cardsFromGame2: number[], cards: number[], secondaryValue:number, valuesUsedInHand: number[]) => {
+  const GetSecondaryCardEdition = (cardRanks: number[], cardsFromGame: number[], cards: number[], secondaryValue:number, valuesUsedInHand: number[]) => {
       let secondaryCardEdition = -1;
       let filteredCards = cards.sort((a, b) => b - a);
       // let filteredRanks = cardRanks;
-      cardsFromGame2.sort((a, b) => b - a);
+      cardsFromGame.sort((a, b) => b - a);
 
-      if(ClubNeededInKicker(cardsFromGame2, valuesUsedInHand)) {
+      if(ActiveGameCardNeededInKicker(cardsFromGame, valuesUsedInHand)) {
         // console.log("club needed in kicker");
-        filteredCards = cards.filter((card) => card > 4000)
-        filteredCards = filteredCards.map((card) => card - 4000);
-        // filteredRanks = cardsFromGame2;
+        filteredCards = cards.filter((card) => card > activeGameStartIndex)
+        filteredCards = filteredCards.map((card) => card - activeGameStartIndex);
+        // filteredRanks = cardsFromGame;
       } else { 
-        filteredCards = filteredCards.map((card) => card > 4000 ? card - 4000 : card);
+        filteredCards = filteredCards.map((card) => card > activeGameStartIndex ? card - activeGameStartIndex : card);
       }
       
       // console.log("filteredCards", filteredCards);
@@ -393,7 +396,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
       secondaryCardEdition = GetActualEditionNumber(lowestCard);
     return secondaryCardEdition;
   }
-  const checkForFourOfAKind = (cardRanks: number[], cardsFromGame2:number[], cards:number[]) => {
+  const checkForFourOfAKind = (cardRanks: number[], cardsFromGame:number[], cards:number[]) => {
     const cardCountDict: any = {};
     cardRanks.forEach((card) => {
       if(cardCountDict[card]) {
@@ -408,11 +411,11 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     let previousCard = 0;
     Object.keys(cardCountDict).forEach((card) => {
       // console.log("card", card," cardCountDict[card]", cardCountDict[card]);
-      if(cardCountDict[card] === 4 && MeetsGameRequriements(cardsFromGame2, [card, card, card, card])) {
+      if(cardCountDict[card] === 4 && MeetsGameRequriements(cardsFromGame, [card, card, card, card])) {
         fourOfAKind = true;
         fourOfAKindValue = parseInt(card);
         secondaryValue = previousCard;
-      } else if (cardCountDict[card] >= 4 && MeetsGameRequriements(cardsFromGame2, [card, card, card, card])){
+      } else if (cardCountDict[card] >= 4 && MeetsGameRequriements(cardsFromGame, [card, card, card, card])){
         fourOfAKind = true;
         fourOfAKindValue = parseInt(card);
         secondaryValue = parseInt(card);
@@ -424,8 +427,8 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
 
     if(fourOfAKind) {
       let valuesUsedInHand = [fourOfAKindValue, fourOfAKindValue, fourOfAKindValue, fourOfAKindValue];
-      secondaryValue = GetSecondaryCardRank(cardsFromGame2, valuesUsedInHand, secondaryValue)
-      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame2, cards, secondaryValue, valuesUsedInHand);
+      secondaryValue = GetSecondaryCardRank(cardsFromGame, valuesUsedInHand, secondaryValue)
+      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame, cards, secondaryValue, valuesUsedInHand);
 
       return {
         handRef: 1,
@@ -437,7 +440,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     }
     return null;
   }
-  const checkForStraight = (cardRanks: number[], cardsFromGame2:number[], cards:number[]) => {
+  const checkForStraight = (cardRanks: number[], cardsFromGame:number[], cards:number[]) => {
     //sort and remove any duplicates
     cardRanks.sort((a, b) => b - a);
     const uniqueCards = [...new Set(cardRanks)];
@@ -451,7 +454,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
         uniqueCards[i + 1] - 1 === uniqueCards[i + 2] &&
         uniqueCards[i + 2] - 1 === uniqueCards[i + 3] &&
         uniqueCards[i + 3] - 1 === uniqueCards[i + 4] &&
-        MeetsGameRequriements(cardsFromGame2, [uniqueCards[i].toString(), uniqueCards[i+1].toString(), uniqueCards[i+2].toString(), uniqueCards[i+3].toString(), uniqueCards[i+4].toString()])
+        MeetsGameRequriements(cardsFromGame, [uniqueCards[i].toString(), uniqueCards[i+1].toString(), uniqueCards[i+2].toString(), uniqueCards[i+3].toString(), uniqueCards[i+4].toString()])
         ) {
           straight = true;
           straightValue = uniqueCards[i + 4];
@@ -462,8 +465,8 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
 
     if(straight) {
       let valuesUsedInHand = [straightValue, straightValue-1, straightValue-2, straightValue-3];
-      let secondaryValue = GetSecondaryCardRank(cardsFromGame2, valuesUsedInHand, uniqueCards[uniqueCards.length - 1])
-      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame2, cards, secondaryValue, valuesUsedInHand);
+      let secondaryValue = GetSecondaryCardRank(cardsFromGame, valuesUsedInHand, uniqueCards[uniqueCards.length - 1])
+      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame, cards, secondaryValue, valuesUsedInHand);
 
       return {
         handRef: 3,
@@ -475,7 +478,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     }
     return null;
   }
-  const checkForFullHouse = (cardRanks: number[], cardsFromGame2:number[], cards:number[]) => {
+  const checkForFullHouse = (cardRanks: number[], cardsFromGame:number[], cards:number[]) => {
     const cardCountDict: any = {};
     cardRanks.forEach((card) => {
       if(cardCountDict[card]) {
@@ -492,12 +495,12 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     Object.keys(cardCountDict).forEach((card) => {
       if(cardCountDict[card] >= 3) {
         // console.log("card", card);
-        if(threeOfAKind && MeetsGameRequriements(cardsFromGame2, [card, card, card])) {
+        if(threeOfAKind && MeetsGameRequriements(cardsFromGame, [card, card, card])) {
           twoOfAKind = true;
           threeOfAKind = true;
           twoOfAKindValue = threeOfAKindValue;
           threeOfAKindValue = parseInt(card);
-        } else if(MeetsGameRequriements(cardsFromGame2, [card, card, card])) {
+        } else if(MeetsGameRequriements(cardsFromGame, [card, card, card])) {
           threeOfAKindValue = parseInt(card);
           threeOfAKind = true;
         }
@@ -509,8 +512,8 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
 
     if(threeOfAKind && twoOfAKind) {
       let valuesUsedInHand = [threeOfAKindValue, threeOfAKindValue, threeOfAKindValue, twoOfAKindValue, twoOfAKindValue];
-      twoOfAKindValue = GetSecondaryCardRank(cardsFromGame2, valuesUsedInHand, twoOfAKindValue)
-      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame2, cards, twoOfAKindValue, valuesUsedInHand);
+      twoOfAKindValue = GetSecondaryCardRank(cardsFromGame, valuesUsedInHand, twoOfAKindValue)
+      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame, cards, twoOfAKindValue, valuesUsedInHand);
 
       return {
         handRef: 2,
@@ -522,7 +525,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     }
     return null;
   }
-  const checkForThreeOfAKind = (cardRanks: number[], cardsFromGame2:number[], cards:number[]) => {
+  const checkForThreeOfAKind = (cardRanks: number[], cardsFromGame:number[], cards:number[]) => {
     const cardCountDict: any = {};
     cardRanks.forEach((card) => {
       if(cardCountDict[card]) {
@@ -536,7 +539,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     let threeOfAKindValue = 0;
     let secondaryValue = 0;
     Object.keys(cardCountDict).forEach((card) => {
-      if(cardCountDict[card] === 3 && MeetsGameRequriements(cardsFromGame2, [card, card, card]) ) {
+      if(cardCountDict[card] === 3 && MeetsGameRequriements(cardsFromGame, [card, card, card]) ) {
         threeOfAKind = true;
         threeOfAKindValue = parseInt(card);
       } else {
@@ -546,8 +549,8 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     )
     if(threeOfAKind) {
       let valuesUsedInHand = [threeOfAKindValue, threeOfAKindValue, threeOfAKindValue, secondaryValue, secondaryValue];
-      secondaryValue = GetSecondaryCardRank(cardsFromGame2, valuesUsedInHand, secondaryValue)
-      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame2, cards, secondaryValue, valuesUsedInHand);
+      secondaryValue = GetSecondaryCardRank(cardsFromGame, valuesUsedInHand, secondaryValue)
+      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame, cards, secondaryValue, valuesUsedInHand);
 
       return {
         handRef: 4,
@@ -559,7 +562,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     }
     return null;
   }
-  const checkForTwoPair = (cardRanks: number[], cardsFromGame2: number[], cards: number[]) => {
+  const checkForTwoPair = (cardRanks: number[], cardsFromGame: number[], cards: number[]) => {
     const cardCountDict: any = {};
     cardRanks.sort((a, b) => a - b);
     cardRanks.forEach((card) => {
@@ -577,7 +580,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     let largerPair = 0;
 
     Object.keys(cardCountDict).forEach((card) => {
-      if(cardCountDict[card] === 2 && MeetsGameRequriements(cardsFromGame2, [card, card])) {
+      if(cardCountDict[card] === 2 && MeetsGameRequriements(cardsFromGame, [card, card])) {
         if(!onePair) {
           onePair = true;
           smallerPairValue = parseInt(card);
@@ -595,8 +598,8 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
 
     if(twoPair) {
       let valuesUsedInHand = [smallerPairValue, smallerPairValue, largerPair, largerPair];
-      smallerPairValue = GetSecondaryCardRank(cardsFromGame2, valuesUsedInHand, smallerPairValue)
-      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame2, cards, smallerPairValue, valuesUsedInHand);
+      smallerPairValue = GetSecondaryCardRank(cardsFromGame, valuesUsedInHand, smallerPairValue)
+      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame, cards, smallerPairValue, valuesUsedInHand);
 
       return {
         handRef: 5,
@@ -608,7 +611,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     }
     return null;
   }
-  const checkForOnePair = (cardRanks: number[], cardsFromGame2: number[], cards: number[]) => {
+  const checkForOnePair = (cardRanks: number[], cardsFormGame: number[], cards: number[] ) => {
     const cardCountDict: any = {};
     cardRanks.forEach((card) => {
       if(cardCountDict[card]) {
@@ -622,7 +625,7 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     let onePairValue = 0;
     let secondaryValue = 0;
     Object.keys(cardCountDict).forEach((card) => {
-      if(cardCountDict[card] === 2 && MeetsGameRequriements(cardsFromGame2, [card, card])) {
+      if(cardCountDict[card] === 2 && MeetsGameRequriements(cardsFormGame, [card, card])) {
         onePair = true;
         onePairValue = parseInt(card);
       } else {
@@ -632,8 +635,8 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     )
     if(onePair) {
       let valuesUsedInHand = [onePairValue, onePairValue];
-      secondaryValue = GetSecondaryCardRank(cardsFromGame2, valuesUsedInHand, secondaryValue)
-      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame2, cards, secondaryValue, valuesUsedInHand);
+      secondaryValue = GetSecondaryCardRank(cardsFormGame, valuesUsedInHand, secondaryValue)
+      let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFormGame, cards, secondaryValue, valuesUsedInHand);
 
       return {
         handRef: 6,
@@ -647,29 +650,29 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
   }
   const FindBestHand = (rankedPlayers: Player[]) => {
     rankedPlayers.forEach((player) => {
-      let clubsCards = RankClubCards(player.cards.filter((card) => card > 4000));
-      player.bestHand = SearchForBestHand(player.cardRanks, clubsCards, player.cards);
+      let gameCards = RankGameCards(player.cards.filter((card) => card > activeGameStartIndex));
+      player.bestHand = SearchForBestHand(player.cardRanks, gameCards, player.cards);
     })
     return rankedPlayers;
   }
-  const RankClubCards = (clubsCards: number[]) => {
-    let rankedClubsCards: number[] = [];
+  const RankGameCards = (clubsCards: number[]) => {
+    let rankedCards: number[] = [];
     clubsCards.forEach((card) => {
-      let cardNumber = card > 4000 ? card - 4000 : card;
+      let cardNumber = card > activeGameStartIndex ? card - activeGameStartIndex : card;
       let cardFound = false;
       cardValueDict.forEach((cardValue) => {
         if (cardNumber <= cardValue.max && !cardFound) {
-          rankedClubsCards.push(cardValue.value as never);
+          rankedCards.push(cardValue.value as never);
           cardFound = true;
         }
       })
     })
-    return rankedClubsCards;
+    return rankedCards;
   }
   const CreateCardRanks = (rankedPlayers: Player[]) => {
     rankedPlayers.forEach((player) => {
       player.cards.forEach((card) => {
-        let cardNumber = card > 4000 ? card - 4000 : card;
+        let cardNumber = card > activeGameStartIndex ? card - activeGameStartIndex : card;
         let cardFound = false;
         cardValueDict.forEach((cardValue) => {
           if (cardNumber <= cardValue.max && !cardFound) {
@@ -681,35 +684,35 @@ export const RankPlayers = async (data : any, testcases:boolean=false, gameId:nu
     })
     return rankedPlayers;
   }
-  const SearchForBestHand = (cardRanks: number[], cardsForGame2: number[], cards: number[]) => {
+  const SearchForBestHand = (cardRanks: number[], cardsForGame: number[], cards: number[]) => {
 
     //check for 4 of a kind
-    const fourOfAKind = checkForFourOfAKind(cardRanks, cardsForGame2, cards);
+    const fourOfAKind = checkForFourOfAKind(cardRanks, cardsForGame, cards);
     if(fourOfAKind) return fourOfAKind;
 
     //check for full house
-    const fullHouse = checkForFullHouse(cardRanks, cardsForGame2, cards);
+    const fullHouse = checkForFullHouse(cardRanks, cardsForGame, cards);
     if(fullHouse) return fullHouse;
 
     //check for straight
-    const straight = checkForStraight(cardRanks, cardsForGame2, cards);
+    const straight = checkForStraight(cardRanks, cardsForGame, cards);
     if(straight) return straight;
 
     //check for three of a kind
-    const threeOfAKind = checkForThreeOfAKind(cardRanks, cardsForGame2, cards);
+    const threeOfAKind = checkForThreeOfAKind(cardRanks, cardsForGame, cards);
     if(threeOfAKind) return threeOfAKind;
 
     //check for two pair
-    const twoPair = checkForTwoPair(cardRanks, cardsForGame2, cards);
+    const twoPair = checkForTwoPair(cardRanks, cardsForGame, cards);
     if(twoPair) return twoPair;
 
     //check for one pair
-    const onePair = checkForOnePair(cardRanks, cardsForGame2, cards);
+    const onePair = checkForOnePair(cardRanks, cardsForGame, cards);
     if(onePair) return onePair;
 
     let cardsToIgnore: number[] = [];
     let highestCard = GetScoreOfHighestCards(cardRanks.length, cardRanks, cardsToIgnore);
-    if(MeetsGameRequriements(cardsForGame2,[])){
+    if(MeetsGameRequriements(cardsForGame,[])){
       //high card
       return {
         handRef: 7,
