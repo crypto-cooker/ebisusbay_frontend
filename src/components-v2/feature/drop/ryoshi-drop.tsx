@@ -13,7 +13,7 @@ import styled from 'styled-components';
 
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {createSuccessfulTransactionToastContent, isFounderDrop, percentage,} from '@src/utils';
-import {dropState as statuses} from '@src/core/api/enums';
+import {DropState as statuses} from '@src/core/api/enums';
 import {ERC1155} from '@src/Contracts/Abis';
 import {getTheme} from '@src/Theme/theme';
 import SocialsBar from '@src/Components/Collection/SocialsBar';

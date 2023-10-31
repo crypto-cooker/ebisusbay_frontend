@@ -6,7 +6,7 @@ import {faCheck, faCircle, faExternalLinkAlt} from '@fortawesome/free-solid-svg-
 
 import Clock from '@src/Components/components/Clock';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
-import {dropState} from '@src/core/api/enums';
+import {DropState} from '@src/core/api/enums';
 import {appConfig} from "@src/Config";
 import {hostedImage} from "@src/helpers/image";
 import {Swiper, SwiperSlide} from "swiper/react";
@@ -82,10 +82,10 @@ const FeaturedDrops = () => {
     const eTime = !!endDate ? new Date(endDate) : 0;
     const now = new Date();
 
-    if (sTime > now) return dropState.NOT_STARTED;
-    else if (!endDate || eTime > now) return dropState.LIVE;
-    else if (endDate && eTime < now) return dropState.EXPIRED;
-    else return dropState.NOT_STARTED;
+    if (sTime > now) return DropState.NOT_STARTED;
+    else if (!endDate || eTime > now) return DropState.LIVE;
+    else if (endDate && eTime < now) return DropState.EXPIRED;
+    else return DropState.NOT_STARTED;
   }
 
   useEffect(() => {
@@ -345,24 +345,24 @@ const FeaturedDrops = () => {
                           <div className="line my-auto"></div>
                           {drop.slug === 'izanamis-cradle-land-deeds' ? (
                             <div className="col my-auto">
-                              {calculateStatus(drop.salePeriods.public) > dropState.NOT_STARTED ? (
+                              {calculateStatus(drop.salePeriods.public) > DropState.NOT_STARTED ? (
                                 <>
-                                  {calculateStatus(drop.salePeriods.public) === dropState.LIVE && (
+                                  {calculateStatus(drop.salePeriods.public) === DropState.LIVE && (
                                     <Heading as="h3" size="lg">Drop is Live!</Heading>
                                   )}
-                                  {calculateStatus(drop.salePeriods.public) === dropState.EXPIRED && (
+                                  {calculateStatus(drop.salePeriods.public) === DropState.EXPIRED && (
                                     <Heading as="h3" size="lg">Drop Ended</Heading>
                                   )}
-                                  {calculateStatus(drop.salePeriods.public) === dropState.SOLD_OUT && (
+                                  {calculateStatus(drop.salePeriods.public) === DropState.SOLD_OUT && (
                                     <Heading as="h3" size="lg">Sold Out</Heading>
                                   )}
                                 </>
-                              ) : calculateStatus(drop.salePeriods.allowlist2) > dropState.NOT_STARTED ? (
+                              ) : calculateStatus(drop.salePeriods.allowlist2) > DropState.NOT_STARTED ? (
                                 <>
-                                  {calculateStatus(drop.salePeriods.allowlist2) === dropState.LIVE && (
+                                  {calculateStatus(drop.salePeriods.allowlist2) === DropState.LIVE && (
                                     <Heading as="h3" size="lg">Allowlist 2 Live!</Heading>
                                   )}
-                                  {calculateStatus(drop.salePeriods.public) < dropState.LIVE && (
+                                  {calculateStatus(drop.salePeriods.public) < DropState.LIVE && (
                                     <>
                                       <span className="d-title">Public starts in</span>
                                       <div className="de_countdown fs-4">
@@ -371,12 +371,12 @@ const FeaturedDrops = () => {
                                     </>
                                   )}
                                 </>
-                              ) : calculateStatus(drop.salePeriods.allowlist1) > dropState.NOT_STARTED ? (
+                              ) : calculateStatus(drop.salePeriods.allowlist1) > DropState.NOT_STARTED ? (
                                 <>
-                                  {calculateStatus(drop.salePeriods.allowlist1) === dropState.LIVE && (
+                                  {calculateStatus(drop.salePeriods.allowlist1) === DropState.LIVE && (
                                     <Heading as="h3" size="lg">Allowlist 1 Live!</Heading>
                                   )}
-                                  {calculateStatus(drop.salePeriods.allowlist2) < dropState.LIVE && (
+                                  {calculateStatus(drop.salePeriods.allowlist2) < DropState.LIVE && (
                                     <>
                                       <span className="d-title">Allowlist 2 starts in</span>
                                       <div className="de_countdown fs-4">
@@ -396,21 +396,21 @@ const FeaturedDrops = () => {
                             </div>
                           ) : drop.salePeriods ? (
                             <div className="col my-auto">
-                              {calculateStatus(drop.salePeriods.public) > dropState.NOT_STARTED ? (
+                              {calculateStatus(drop.salePeriods.public) > DropState.NOT_STARTED ? (
                                 <>
-                                  {calculateStatus(drop.salePeriods.public) === dropState.LIVE && (
+                                  {calculateStatus(drop.salePeriods.public) === DropState.LIVE && (
                                     <Heading as="h3" size="lg">Drop is Live!</Heading>
                                   )}
-                                  {calculateStatus(drop.salePeriods.public) === dropState.EXPIRED && (
+                                  {calculateStatus(drop.salePeriods.public) === DropState.EXPIRED && (
                                     <Heading as="h3" size="lg">Drop Ended</Heading>
                                   )}
-                                  {calculateStatus(drop.salePeriods.public) === dropState.SOLD_OUT && (
+                                  {calculateStatus(drop.salePeriods.public) === DropState.SOLD_OUT && (
                                     <Heading as="h3" size="lg">Sold Out</Heading>
                                   )}
                                 </>
                               ) : (
                                 <>
-                                  {calculateStatus(drop.salePeriods.presale) === dropState.NOT_STARTED && (
+                                  {calculateStatus(drop.salePeriods.presale) === DropState.NOT_STARTED && (
                                     <>
                                       <span className="d-title">Presale starts in</span>
                                       <div className="de_countdown">
@@ -418,10 +418,10 @@ const FeaturedDrops = () => {
                                       </div>
                                     </>
                                   )}
-                                  {calculateStatus(drop.salePeriods.presale) === dropState.LIVE && (
+                                  {calculateStatus(drop.salePeriods.presale) === DropState.LIVE && (
                                     <Heading as="h3" size="lg">Presale Live!</Heading>
                                   )}
-                                  {calculateStatus(drop.salePeriods.public) === dropState.NOT_STARTED && (
+                                  {calculateStatus(drop.salePeriods.public) === DropState.NOT_STARTED && (
                                     <>
                                       <span className="d-title">Public Sale starts in</span>
                                       <div className="de_countdown">
@@ -434,7 +434,7 @@ const FeaturedDrops = () => {
                             </div>
                           ) : (
                             <div className="col my-auto">
-                              {calculateStatus(drop.start) === dropState.NOT_STARTED && (
+                              {calculateStatus(drop.start) === DropState.NOT_STARTED && (
                                 <>
                                   <span className="d-title">Drop starts in</span>
                                   <div className="de_countdown">
@@ -445,9 +445,9 @@ const FeaturedDrops = () => {
                                   </h5>
                                 </>
                               )}
-                              {calculateStatus(drop.start) === dropState.LIVE && <Heading as="h3" size="lg">Drop is Live!</Heading>}
-                              {calculateStatus(drop.start) === dropState.EXPIRED && <Heading as="h3" size="lg">Drop Ended</Heading>}
-                              {calculateStatus(drop.start) === dropState.SOLD_OUT && <Heading as="h3" size="lg">Sold Out</Heading>}
+                              {calculateStatus(drop.start) === DropState.LIVE && <Heading as="h3" size="lg">Drop is Live!</Heading>}
+                              {calculateStatus(drop.start) === DropState.EXPIRED && <Heading as="h3" size="lg">Drop Ended</Heading>}
+                              {calculateStatus(drop.start) === DropState.SOLD_OUT && <Heading as="h3" size="lg">Sold Out</Heading>}
                             </div>
                           )}
                         </div>

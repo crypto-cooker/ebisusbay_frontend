@@ -5,12 +5,12 @@ export const auctionState = {
   NOT_STARTED: 3,
 };
 
-export const dropState = {
-  UNSET: -1,
-  NOT_STARTED: 0,
-  LIVE: 1,
-  EXPIRED: 2,
-  SOLD_OUT: 3,
+export enum DropState {
+  UNSET = -1,
+  NOT_STARTED,
+  LIVE,
+  EXPIRED,
+  SOLD_OUT,
 };
 
 export const listingState = {

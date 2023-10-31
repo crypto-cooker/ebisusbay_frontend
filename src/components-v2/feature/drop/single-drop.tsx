@@ -8,7 +8,7 @@ import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 import {isFounderDrop, isPlayingCardsCollection, newlineText,} from '@src/utils';
-import {dropState as statuses} from '@src/core/api/enums';
+import {DropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi, ERC20} from '@src/Contracts/Abis';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {appConfig} from "@src/Config";

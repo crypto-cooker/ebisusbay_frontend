@@ -12,7 +12,7 @@ import {
   Text,
   useNumberInput
 } from "@chakra-ui/react";
-import {dropState as statuses} from "@src/core/api/enums";
+import {DropState as statuses} from "@src/core/api/enums";
 import {constants, Contract, ethers} from "ethers";
 import {createSuccessfulTransactionToastContent, percentage, round} from "@src/utils";
 import React, {useEffect, useState} from "react";
