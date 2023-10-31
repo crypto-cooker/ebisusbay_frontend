@@ -1,4 +1,5 @@
-import {ImageResponse, NextRequest} from "next/server";
+import {NextRequest} from "next/server";
+import {ImageResponse} from "next/og";
 import {caseInsensitiveCompare, isAddress, round, siPrefixedNumber, urlify} from "@src/utils";
 import {appConfig} from "@src/Config";
 import imageSize from "image-size";
