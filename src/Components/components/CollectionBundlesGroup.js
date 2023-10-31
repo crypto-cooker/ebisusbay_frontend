@@ -24,24 +24,15 @@ const CollectionBundlesGroup = ({collection}) => {
     });
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-    refetch,
-  } = useInfiniteQuery(
-    ['CollectionBundleListings', collection.address],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-  })
+  const {data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, refetch} = useInfiniteQuery({
+    queryKey: ['CollectionBundleListings', collection.address],
+    queryFn: fetcher,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
   const loadMore = () => {
     fetchNextPage();
@@ -59,7 +50,7 @@ const CollectionBundlesGroup = ({collection}) => {
         </Center>
       }
     >
-      {status === "loading" ? (
+      {status === 'pending' ? (
         <Center>
           <Spinner />
         </Center>

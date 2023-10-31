@@ -36,6 +36,7 @@ export interface RyoshiDynastiesApi {
     requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
+    requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string): Promise<any>;
     getDailyRewards(address: string): Promise<any>
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
     claimDailyRewards(address: string, signature: string): Promise<any>
@@ -280,16 +281,21 @@ interface RdGameBase {
     endAt: string;
 }
 
-interface RdGame extends RdGameBase {
-    parent: RdSeason;
+interface RdGame {
+    id: number;
+    uuid: string;
+    startAt: string;
+    stopAt: string;
+    endAt: string;
+    season: RdSeason;
 }
 
-interface RdSeason extends RdGameBase {
-    blockId: number;
-    endAt: string;
+interface RdSeason {
     id: number;
-    startAt: string;
     uuid: string;
+    startAt: string;
+    endAt: string;
+    blockId: number;
     map: RdSeasonMap;
 }
 

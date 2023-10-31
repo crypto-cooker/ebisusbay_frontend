@@ -63,9 +63,9 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
 
   const { queryParams, setQueryParams  } = useContext(CollectionPageContext) as CollectionPageContextProps;
 
-  const { data: items, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
-    ['Collection', collection.address, queryParams],
-    async ({ pageParam = 1 }) => {
+  const { data: items, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery({
+    queryKey: ['Collection', collection.address, queryParams],
+    queryFn: async ({ pageParam = 1 }) => {
       const fixedQueryParams = {...queryParams};
       delete (fixedQueryParams as any).slug;
       delete (fixedQueryParams as any).tab;
@@ -87,13 +87,12 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
 
       return data;
     },
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    }
-  );
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
   const handleSearch = useCallback((value: string) => {
     const newQueryParams = {...queryParams, search: value};
@@ -119,7 +118,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
   }, [queryParams]);
 
   const content = useMemo(() => {
-    return status === 'loading' ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>

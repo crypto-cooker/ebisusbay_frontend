@@ -30,21 +30,14 @@ const OffersTab = ({nftAddress, nftId, type}: OffersTabProps) => {
     });
   }
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery(
-    ['MadeOffers', queryParams],
-    fetchProjects,
-    {
-      getNextPageParam: (lastPage, pages) => lastPage.hasNextPage,
+  const {data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status} = useInfiniteQuery({
+    queryKey: ['MadeOffers', queryParams],
+    queryFn: fetchProjects,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     }
-  )
+  });
 
   const loadMore = () => {
     fetchNextPage();
@@ -70,7 +63,7 @@ const OffersTab = ({nftAddress, nftId, type}: OffersTabProps) => {
   return (
 
     <div className="listing-tab">
-      {status === "loading" ? (
+      {status === 'pending' ? (
         <Center>
           <Spinner />
         </Center>

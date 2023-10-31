@@ -23,14 +23,14 @@ import {
   VStack
 } from "@chakra-ui/react";
 import React from "react";
-import {shortAddress, timeSince} from "@src/utils";
+import {shortAddress} from "@src/utils";
 import Link from "next/link";
 import ImageService from "@src/core/services/image";
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
 import Blockies from "react-blockies";
 
 interface ResponsiveRewardsCollectionsTableProps {
-  data: Array<{ name: string, address: string; points: number; type: string, avatar?: string }>;
+  data: Array<{ name: string, address: string; points: number; type: string, avatar?: string, rank: number }>;
   onSort: (field: string) => void;
   breakpointValue?: string
 }
@@ -49,10 +49,6 @@ const DataTable = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const textColor = useColorModeValue('#727272', '#a2a2a2');
 
-  const getTimeSince = (timestamp: number) => {
-    return timeSince(new Date(timestamp * 1000));
-  };
-
   return (
     <TableContainer w='full'>
       <Table variant='simple' color={textColor}>
@@ -64,9 +60,9 @@ const DataTable = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((entity, index) => (
+          {data.map((entity) => (
             <LinkBox as={Tr} key={`${entity.address}`} _hover={{bg: hoverBackground}} textDecoration='none'>
-              <Td>{index + 1}</Td>
+              <Td>{entity.rank}</Td>
               <Td w='50px'>
                 {entity.avatar ? (
                   <Box
@@ -111,19 +107,13 @@ const DataTable = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
 };
 
 const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
-  const hoverBackground = useColorModeValue('gray.100', '#424242');
-
-  const getTimeSince = (timestamp: number) => {
-    return timeSince(new Date(timestamp * 1000));
-  };
-
   return (
     <>
       <Accordion w='full' allowMultiple>
-        {data.map((entity, index) => (
+        {data.map((entity) => (
           <AccordionItem key={entity.address}>
             <Flex w='100%' my={2}>
-              <Box my="auto" fontWeight="bold" fontSize="sm" me={2}>{index + 1}</Box>
+              <Box my="auto" fontWeight="bold" fontSize="sm" me={2}>{entity.rank}</Box>
               <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
                 <HStack>
                   <Box position='relative'>
@@ -173,7 +163,6 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
               {/*</AccordionButton>*/}
             </Flex>
             <AccordionPanel px={0}>
-              anything else?
             </AccordionPanel>
           </AccordionItem>
         ))}

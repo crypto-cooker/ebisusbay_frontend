@@ -49,7 +49,8 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
   return (
     <>
       <Modal
-        onClose={() => {}}
+        onClose={onClose ?? (() => {})}
+        closeOnEsc={true}
         isOpen={isOpen}
         size={size ?? '2xl'}
         scrollBehavior={size === 'full' ? 'outside' : 'inside'}

@@ -52,9 +52,9 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
     onExit();
   }, []);
 
-  const { data: tokenSaleContractValues } = useQuery<TokenSaleContextProps>(
-    ['TokenSale', user.address],
-    async () => {
+  const { data: tokenSaleContractValues } = useQuery<TokenSaleContextProps>({
+    queryKey: ['TokenSale', user.address],
+    queryFn: async () => {
       const fortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, readProvider);
       const paused = await fortuneContract.paused();
       const exchangeRate = await fortuneContract.TOKEN_PRICE_USDC();
@@ -75,19 +75,17 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
         maxAllocation: Number(maxAllocation)
       } as TokenSaleContextProps;
     },
-    {
-      enabled: isVisible,
-      refetchOnWindowFocus: false,
-      refetchInterval: 10000,
-      initialData: () => ({
-        paused: false,
-        userFortunePurchased: 0,
-        totalFortunePurchased: 0,
-        exchangeRate: 30000,
-        maxAllocation: 10000000
-      })
-    }
-  )
+    enabled: isVisible,
+    refetchOnWindowFocus: false,
+    refetchInterval: 10000,
+    initialData: () => ({
+      paused: false,
+      userFortunePurchased: 0,
+      totalFortunePurchased: 0,
+      exchangeRate: 30000,
+      maxAllocation: 10000000
+    })
+  });
 
   return (
     <TokenSaleContext.Provider value={tokenSaleContractValues}>

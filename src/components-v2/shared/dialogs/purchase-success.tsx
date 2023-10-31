@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {toast} from "react-toastify";
-import {appUrl, isBundle} from "@src/utils";
+import {appUrl, isBundle, isLandDeedsCollection} from "@src/utils";
 import {getTheme} from "@src/Theme/theme";
 import {
   Box,
@@ -33,6 +33,7 @@ import {appConfig} from "@src/Config";
 import {ContractReceipt} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
+import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 
 const config = appConfig();
 
@@ -101,6 +102,8 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}: P
             <Box w="30%">
               {isBundle(listing.nftAddress) ? (
                 <ImagesContainer nft={listing.nft} />
+              ) : isLandDeedsCollection(listing.nft.nftAddress) ? (
+                <RdLand nftId={listing.nft.nftId} />
               ) : (
                 <AnyMedia
                   image={specialImageTransform(listing.nft.nftAddress, listing.nft.image)}

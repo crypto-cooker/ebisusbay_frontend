@@ -11,7 +11,7 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
-import ProfilePreview from '@src/Components/components/ProfilePreview';
+import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import {
   appUrl,
   caseInsensitiveCompare,
@@ -376,9 +376,9 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                     />
                   )}
                   <div className="row" style={{ gap: '2rem 0' }}>
-                    <ProfilePreview
-                      type="Collection"
-                      title={collectionName ?? 'View Collection'}
+                    <NftPropertyLabel
+                      label="Collection"
+                      value={collectionName ?? 'View Collection'}
                       avatar={ImageService.translate(collectionMetadata?.avatar).avatar()}
                       address={address}
                       verified={collection.verification?.verified}
@@ -386,9 +386,9 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                     />
 
                     {typeof nft.rank !== 'undefined' && nft.rank !== null && (
-                      <ProfilePreview
-                        type="Rarity Rank"
-                        title={nft.rank}
+                      <NftPropertyLabel
+                        label="Rarity Rank"
+                        value={nft.rank}
                         avatar={rankingsLogoForCollection(collection)}
                         hover={rankingsTitleForCollection(collection)}
                         to={rankingsLinkForCollection(collection)}

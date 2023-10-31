@@ -1,6 +1,6 @@
 export const deepValidation = (prevProps: any, nextProps: any) => JSON.stringify(prevProps) === JSON.stringify(nextProps);
 
-export const parseErrorMessage = (error: any) => {
+export const parseErrorMessage = (error: any, defaultError?: string) => {
   if (!error) return 'Unknown Error';
 
   if (error.name === 'AxiosError') {
@@ -30,7 +30,7 @@ export const parseErrorMessage = (error: any) => {
     return error.message;
   }
 
-  return 'Unknown Error';
+  return defaultError ?? 'Unknown Error';
 }
 
 function capitalizeFirstLetter(str: string): string {

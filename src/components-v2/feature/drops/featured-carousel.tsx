@@ -10,7 +10,7 @@ import {dropState} from '@src/core/api/enums';
 import {appConfig} from "@src/Config";
 import {hostedImage} from "@src/helpers/image";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {Navigation, Pagination} from "swiper";
+import {Navigation, Pagination} from "swiper/modules";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {Box, Heading, HStack, Tag, Text} from "@chakra-ui/react";
 import Image from "next/image";
@@ -296,9 +296,9 @@ const FeaturedDrops = () => {
                                       ))}
                                     {!!drop.erc20Cost && !!drop.erc20Token && (
                                       <HStack mt={2} mb={4}>
-                                        {drop.erc20Icon && <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />}
+                                        {drop.erc20Token === 'frtn' ? <FortuneIcon boxSize={10} /> : <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />}
                                         <Text fontSize="4xl" fontWeight="bold" lineHeight={1}>
-                                          {ethers.utils.commify(drop.erc20Cost)} {tokens[drop.erc20Token].symbol}
+                                          {ethers.utils.commify(drop.erc20Cost)}
                                         </Text>
                                       </HStack>
                                     )}
@@ -319,7 +319,7 @@ const FeaturedDrops = () => {
                                 {!!drop.erc20MemberCost && !!drop.erc20Token && (
                                   <HStack mt={2}>
                                     <Text fontSize="md" fontWeight="bold" lineHeight={1} className="ms-0" >
-                                      Members: {ethers.utils.commify(drop.erc20MemberCost)} {tokens[drop.erc20Token].symbol}
+                                      {drop.collection === 'ryoshi-playing-cards' ? 'Mitama Price' : 'Members'}: {ethers.utils.commify(drop.erc20MemberCost)} {tokens[drop.erc20Token].symbol}
                                     </Text>
                                   </HStack>
                                 )}

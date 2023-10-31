@@ -53,6 +53,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
 
   const user = useAppSelector((state) => state.user);
   const {data: allFactions, status, error} = useQuery({
+    queryKey: ['RyoshiDynastiesGameContext'],
     queryFn: () => ApiService.withoutKey().ryoshiDynasties.getGameContext(),
     enabled: !!user.address,
   });
@@ -160,7 +161,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
 
     //pull all control points from game context and place in new array
     let controlPoints: any[] = [];
-    rdGameContext.game.parent.map.regions.map((region: any) =>
+    rdGameContext.game.season.map.regions.map((region: any) =>
       region.controlPoints.map((controlPoint: any, i: any) => (
         controlPoints.push(controlPoint)
       ))

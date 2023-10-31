@@ -28,18 +28,15 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
     return result.filter((collection: any) => knownContracts.includes(collection.collection.toLowerCase()));
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    status,
-  } = useInfiniteQuery(['Collections', filters], fetcher, {
+  const {data, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery({
+    queryKey: ['Collections', filters],
+    queryFn: fetcher,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
     },
-    staleTime: 1
-  })
+    staleTime: 1000 * 60
+  });
 
   const loadMore = () => {
     fetchNextPage();
@@ -84,7 +81,7 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
   }, [onlyVerified]);
 
   const content = useMemo(() => {
-    return status === "loading" ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>

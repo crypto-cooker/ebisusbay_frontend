@@ -184,7 +184,25 @@ export class ApiService implements Api {
       }
     });
 
-    return mappedCollections.concat(walletRecords).sort((a, b) => b.points - a.points);
+    const completeRankings = mappedCollections.concat(walletRecords).sort((a, b) => b.points - a.points);
+
+    let rank = 1;
+    return completeRankings.map((record, index) => {
+      let thisRank;
+      if (index > 0 && completeRankings[index - 1].points !== record.points) {
+        thisRank = rank + 1;
+        rank++;
+      } else if (index === 0) {
+        thisRank = 1;
+      } else {
+        thisRank = '';
+      }
+
+      return {
+        ...record,
+        rank: thisRank
+      }
+    });
   }
 
   async getCollectionTraits(address: string) {
@@ -246,6 +264,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
     return this.cms.requestBarracksUnstakeAuthorization(nfts, address, signature);
+  }
+
+  async requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string) {
+    return this.cms.requestRewardsSpendAuthorization(amount, address, signature);
   }
 
   async getDailyRewards(address: string) {

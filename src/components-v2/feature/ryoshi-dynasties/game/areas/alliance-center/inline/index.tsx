@@ -261,19 +261,12 @@ const CurrentFaction = () => {
     }
   }
   const [isExecutingRegister, setIsExecutingRegister] = useState(false);
-  const {data: allFactions, status, error} = useQuery({
-    queryKey: ['GetAllFactions'],
-    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getFactions(rdContext.game?.game.id),
-    enabled: !!user.address && !!rdContext.game?.game.id,
-    initialData: [],
-    refetchOnWindowFocus: false,
-  });
+
   const handleActionComplete = async ()=> {
     onCloseFaction();
     onCloseCreateFaction();
     onCloseDelegate();
     await rdContext.refreshUser();
-    // queryClient.invalidateQueries(['GetAllFactions']);
   }
   const checkForApproval = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -308,7 +301,7 @@ const CurrentFaction = () => {
 
         const totalApproved = await checkForApproval();
         if(totalApproved.lt(registrationStruct.cost)) {
-          toast.error('Please approve the contract to spend your tokens');
+          toast.warning('Please approve the contract to spend your tokens');
           const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
           const tx1 = await fortuneContract.approve(config.contracts.allianceCenter, registrationStruct.cost);
           const receipt1 = await tx1.wait();
@@ -358,19 +351,6 @@ const CurrentFaction = () => {
 
   return (
     <Box mt={4}>
-      {status === 'loading' ? (
-        <Box padding={6}>
-          <Center><SkeletonCircle size='20' startColor='#ccc' /></Center>
-          <SkeletonText mt={4} noOfLines={2} spacing='4' skeletonHeight='2' startColor='#ccc' />
-          <SkeletonText mt={8} noOfLines={2} spacing='4' skeletonHeight='2' startColor='#ccc' />
-          <SkeletonText mt={8} noOfLines={2} spacing='4' skeletonHeight='2' startColor='#ccc' />
-        </Box>
-      ) : status === 'error' ? (
-        <Center>
-          <Text>{(error as any).message}</Text>
-        </Center>
-      ) : (
-        <>
           {!!rdContext.user?.faction ? (
             <VStack>
               <Avatar
@@ -392,31 +372,31 @@ const CurrentFaction = () => {
                 />
               </Stack>
               {factionCreatedAndEnabled && (
-            <>
-            <Box bg='#564D4A' p={2} rounded='lg' w='full'>
-                <SimpleGrid columns={2}>
-                  <VStack align='start' spacing={0} my='auto'>
-                    <Text fontSize='sm'>Current Season {!!rdContext.game?.season && <>({rdContext.game?.season.blockId})</>}</Text>
-                    <Text fontSize='lg' fontWeight='bold'>{!!rdContext.user.season.faction ? 'Registered' : 'Unregistered'}</Text>
-                  </VStack>
-                  {!rdContext.user.season.faction && !!rdContext.game?.season && (
-                    <RdButton
-                      hoverIcon={false}
-                      onClick={() => handleRegister(rdContext.game!.season.blockId)}
-                      isLoading={isExecutingRegister}
-                      isDisabled={isExecutingRegister}
-                    >
-                      Register
-                    </RdButton>
-                  )}
-                </SimpleGrid>
-                {!rdContext.user.season.faction && (
-                  <Box textAlign='start' mt={2} fontSize='sm'>
-                    <Text>Regular Cost: {commify(rdContext.config.factions.registration.fortuneCost)} Fortune + {rdContext.config.factions.registration.mitamaCost} Mitama</Text>
+                <>
+                  <Box bg='#564D4A' p={2} rounded='lg' w='full'>
+                    <SimpleGrid columns={2}>
+                      <VStack align='start' spacing={0} my='auto'>
+                        <Text fontSize='sm'>Current Season {!!rdContext.game?.season && <>({rdContext.game?.season.blockId})</>}</Text>
+                        <Text fontSize='lg' fontWeight='bold'>{!!rdContext.user.season.faction ? 'Registered' : 'Unregistered'}</Text>
+                      </VStack>
+                      {!rdContext.user.season.faction && !!rdContext.game?.season && (
+                        <RdButton
+                          hoverIcon={false}
+                          onClick={() => handleRegister(rdContext.game!.season.blockId)}
+                          isLoading={isExecutingRegister}
+                          isDisabled={isExecutingRegister}
+                        >
+                          Register
+                        </RdButton>
+                      )}
+                    </SimpleGrid>
+                    {!rdContext.user.season.faction && (
+                      <Box textAlign='start' mt={2} fontSize='sm'>
+                        <Text>Regular Cost: {commify(rdContext.config.factions.registration.fortuneCost)} Fortune + {rdContext.config.factions.registration.mitamaCost} Mitama</Text>
+                      </Box>
+                    )}
                   </Box>
-                )}
-              </Box>
-            </>
+                </>
               )}
             </VStack>
           ) : (
@@ -527,7 +507,7 @@ const CurrentFaction = () => {
                                 address: user.profileWalletAddress,
                                 name: user.profileName,
                                 troops: user.troops
-                              }))}
+                              })).sort((a, b) => b.troops - a.troops)}
                               address={user.address!}
                               signature={signature}
                             />
@@ -730,8 +710,6 @@ const CurrentFaction = () => {
               </Accordion>
             </>
           )}
-        </>
-      )}
 
       {!!rdContext.user && (
         <>

@@ -48,9 +48,9 @@ const useUpdateSettings = () => {
       setResponse({
         ...response,
         loading: false,
-        error: error,
+        error
       });
-      return { message: {error}}
+      return { message: {error} }
     }
   };
 

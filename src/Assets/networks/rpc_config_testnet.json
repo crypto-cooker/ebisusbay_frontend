@@ -2990,7 +2990,7 @@
         "card": "/img/collections/blumies/card.webp",
         "website": "https://www.blumiesofficial.com/",
         "twitter": "https://twitter.com/BlumiesNFT",
-        "discord": "https://discord.gg/d4HhNDTHSV",
+        "discord": "https://discord.gg/Fuy99WgGeq",
         "medium": "https://blumies.gitbook.io/blumies-nft/",
         "categories": []
       },
@@ -3777,6 +3777,32 @@
       "verification": {
         "doxx": true,
         "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Ryoshi Tales",
+      "slug": "ryoshi-tales",
+      "multiToken": false,
+      "address": "0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/ryoshi-tales/avatar0.webp",
+        "banner": "/img/collections/ryoshi-tales/banner0.webp",
+        "card": "/img/collections/ryoshi-tales/card0.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
         "verified": true
       }
     }
@@ -8988,8 +9014,8 @@
       "erc20MemberCost": "200",
       "erc20Token": "frtn",
       "erc20Only": true,
-      "memberMitama": 1000,
       "foundersOnly": false,
+      "abi": "mint-from-rewards.json",
       "start": 1694230211000,
       "end": null,
       "referral": false,
@@ -9088,6 +9114,52 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 186,
+      "slug": "ryoshi-tales-goblin-gala",
+      "collection": "ryoshi-tales",
+      "title": "Ryoshi Tales: Goblin Gala",
+      "subtitle": "Enter the World of Ryoshi Dynasties\n\nRumors have it that there are spooky creatures living beyond Felisgarde. Goblins and corrupted Ryoshis are seen wandering, gathering $FRTN from fallen Dynasties.\n\nPerhaps they could be friendly and might make valuable additions to the Bank or skilled fighters; after all, the Barracks will always welcome extra hands.\n\nJoin Ebisu at the Goblin Gala and contribute to yet another chapter in the Ryoshi Tales.",
+      "description": "Embrace Spooky Season!\n\nAs the lanterns cast an eerie glow and October 27th descends upon Felisgarde, a parade of strange creatures emerge across the region.\n\nRyoshi Tales: Goblin Gala Collection Details:\n\nSupply: Limited to 500 NFTs\nMint Per Wallet: 1 mint every 5 minutes until the collection reaches its limit\nAll $FRTN will be burned upon minting\nMint Directly from Your Rewards Pool:\n\nUsers can mint directly from their Rewards Pool at the full price without impacting their Karmic Debt.\n\nAcquire New NFTs for Staking:\n\nCollect these new NFTs and bolster your staking capabilities in the Barracks or the Bank, enhancing returns based on the rarity of your acquisitions:\n\nTop 5% Rarity: +0.25%\nTop 10% Rarity: +0.2%\nTop 20% Rarity: +0.15%\nOthers: +0.1%\n\nWishing the best of luck to everyone!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 500,
+      "erc20Cost": "300",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "memberMitama": 1000,
+      "foundersOnly": false,
+      "abi": "mint-from-rewards.json",
+      "start": 1698268155000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-goblin-gala/drop.webp",
+        "avatar": "/img/drops/ryoshi-tales-goblin-gala/avatar.webp",
+        "banner": "/img/drops/ryoshi-tales-goblin-gala/banner.webp",
+        "preview": "/img/drops/ryoshi-tales-goblin-gala/preview.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
       }
     }
   ]

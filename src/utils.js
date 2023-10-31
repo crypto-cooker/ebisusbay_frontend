@@ -274,7 +274,7 @@ export function shortString(str, leftChars = 3, rightChars = 3) {
 
 export function username(identifier) {
   try {
-    if (identifier.startsWith('0x')) {
+    if (identifier.startsWith('0x') && !identifier.endsWith('.cro')) {
       return shortAddress(ethers.utils.getAddress(identifier));
     }
     return identifier;
@@ -775,19 +775,6 @@ export const getAddressFromSlug = (slug) => {
 // can use web3.utils.isAddress tho
 export const isAddress = (address) => {
   return /^(0x){1}[0-9a-fA-F]{40}$/i.test(address);
-};
-
-export const getUserDisplayName = async (address) => {
-  if (!address) return '';
-
-  try {
-    let profile = await getProfile(address);
-    if (profile?.data) return profile.data.username;
-  } catch (error) {
-    return shortAddress(address);
-  }
-
-  return shortAddress(address);
 };
 
 export const isEmptyObj = (obj) => {

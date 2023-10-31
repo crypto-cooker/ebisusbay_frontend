@@ -3,7 +3,7 @@ import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {createSuccessfulTransactionToastContent, isBundle, round} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle, isLandDeedsCollection, round} from "@src/utils";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -34,6 +34,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {ApiService} from "@src/core/services/api-service";
 import {OfferState} from "@src/core/services/api-service/types";
+import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 25;
@@ -219,6 +220,8 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
                 <div className="col-12 col-sm-6 mb-2 mb-sm-0">
                   {isBundle(nft.address ?? nft.nftAddress) ? (
                     <ImagesContainer nft={nft} />
+                  ) : isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
+                    <RdLand nftId={nft.id ?? nft.nftId} />
                   ) : (
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}

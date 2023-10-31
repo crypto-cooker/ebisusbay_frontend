@@ -24,6 +24,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import Countdown, {zeroPad} from "react-countdown";
 
 //for showing koban
 import {round, siPrefixedNumber} from "@src/utils";
@@ -31,6 +32,8 @@ import NextApiService from "@src/core/services/api-service/next";
 import {appConfig} from "@src/Config";
 import {Contract, ethers} from "ethers";
 import {ERC1155} from "@src/Contracts/Abis";
+import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
+import { set } from "immer/dist/internal";
 
 const config = appConfig();
 
@@ -41,27 +44,27 @@ interface BattleMapHUDProps {
 export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     
   const user = useAppSelector((state) => state.user);
-  const Ref = useRef<NodeJS.Timer | null>(null);
-  const Ref2 = useRef<NodeJS.Timer | null>(null);
-  const [timer, setTimer] = useState('00:00:00');
-  const [troopTimer, setTroopTimer] = useState('');
-  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const {game: rdGameContext, user:rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const[koban, setKoban] = useState<number | string>(0);
   const[isLoading, setIsLoading] = useState(false);
-  const [isNotMobile] = useMediaQuery("(max-width: 768px)") 
+  const [showTimer, setShowTimer] = useState(false);
+
+  const [troopTimer, setTroopTimer] = useState('');
+  const [gameStopTime, setGameStopTime] = useState('');
+
+
+  const [isMobile] = useMediaQuery("(max-width: 750px)");
+  const [accordionIndex, setAccordionIndex] = useState<number>(0);
 
   const[availableTroops, setAvailableTroops] = useState(0);
   const[totalTroops, setTotalTroops] = useState(0);
 
-  const getResources = async () => {
+  const GetKoban = async () => {
     try {
       setIsLoading(true);
       let nfts = await NextApiService.getWallet(user!.address!, {
         collection: config.contracts.resources,
       });
-      // const fortuneAndMitama = await ApiService.withoutKey().ryoshiDynasties.getErc20Account(user!.address!);
-
       let kobanBalance = 0;
       if (nfts.data.length > 0) {
         const kobanToken = nfts.data.find((token) => token.nftId === '1');
@@ -82,120 +85,45 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
       setIsLoading(false);
     }
   };
-  //timer functions
-  const getTimeRemaining = (e:any, subtractTime: number = 0) => {
-    const total = Date.parse(e) - Date.now() - subtractTime;
-    const days = Math.floor(total / (1000 * 60 * 60 * 24));
-    const seconds = Math.floor((total / 1000) % 60);
-    const minutes = Math.floor((total / 1000 / 60) % 60);
-    const hours = Math.floor((total / 1000 / 60 / 60) % 24);
-    return {
-        total, days, hours, minutes, seconds
-    };
-  }
-  const startTimer = (e:any) => {
-      let { total, hours, days, minutes, seconds } = getTimeRemaining(e, 3600000);
-      if (total >= 0) {
-          setTimer(
-              ((days) > 0 ? (days + ' days ') : (
-              (hours > 9 ? hours : '0' + hours) + ':' +
-              (minutes > 9 ? minutes : '0' + minutes) + ':' +
-              (seconds > 9 ? seconds : '0' + seconds)))
-          )
-      }
-  }
-  const startTroopTimer = (e:any) => {
-    let { total, hours, days, minutes, seconds } = getTimeRemaining(e);
-      if (total >= 0) {
-        if(hours > 0){
-          setTroopTimer(
-            (hours) + ':' +
-            (minutes > 9 ? minutes : '0' + minutes) + ':' +
-            (seconds > 9 ? seconds : '0' + seconds)
-          )
-        } else {
-          setTroopTimer(
-            (minutes > 9 ? minutes : '0' + minutes) + ':' +
-            (seconds > 9 ? seconds : '0' + seconds)
-          )
-        }
-    }else {
-      setTroopTimer('');
-    }
-  }
-  const clearTimer = (e:any) => {
-    startTimer(e);
-    if (Ref.current) clearInterval(Ref.current as any);
-    const id = setInterval(() => { startTimer(e); }, 1000) 
-    Ref.current = id;
-  }
-  const clearTroopTimer = (e:any) => {
-    startTroopTimer(e);
-    if (Ref2.current) clearInterval(Ref2.current as any);
-    const id = setInterval(() => { startTroopTimer(e); }, 1000) 
-    Ref2.current = id;
-  }
- 
-  const getSeasonEndTime = async () => {
-      if(!rdGameContext) return;
-      const timestamp = rdGameContext?.game?.endAt;
-      clearTimer(timestamp);
-  } 
-  const getTroopCooldown = () => {
+
+  const CheckTroopCooldown = () => {
     if(!rdUser) return;
 
     const redeploymentDelay = rdUser?.armies.redeploymentDelay;
     let deadline = new Date();
     deadline.setSeconds(deadline.getSeconds() + redeploymentDelay);
-    clearTroopTimer(deadline);
-}
+    setTroopTimer(deadline.toISOString());
+    setShowTimer(redeploymentDelay > 0)
+  }
 
   useEffect(() => {
-      getSeasonEndTime();
-  }, [rdGameContext?.game?.endAt]); 
+    if(!rdUser) return;
+
+    setAvailableTroops(rdUser.season.troops.available.total);
+    setTotalTroops(rdUser.season.troops.overall.total);
+    CheckTroopCooldown();
+  }, [rdUser]); 
 
   useEffect(() => {
-    if(!rdContext?.user) return;
+    if(!user) return;
 
-    if(rdContext.user.season.troops.available.total !== undefined) {
-      setAvailableTroops(rdContext.user.season.troops.available.total);
-    }
-    if(rdContext.user.season.troops.overall.total !== undefined) {
-      setTotalTroops(rdContext.user.season.troops.overall.total);
-    }
-    getTroopCooldown();
-
-
-}, [rdContext]); 
+    GetKoban();
+  }, [user])
 
   useEffect(() => {
-    // get all resources
-    if (!!user.address) {
-      getResources();
-    }
-  }, [user.address])
-  const [accordionIndex, setAccordionIndex] = useState(-1);
+    setAccordionIndex(isMobile ? -1 : 0);
+  }, [isMobile]); 
+
   useEffect(() => {
-    if(isNotMobile){
-      setAccordionIndex(0);
-    }else{
-      setAccordionIndex(-1);
-    }
-}, [isNotMobile]); 
+    if(!rdGameContext) return;
+    setGameStopTime(rdGameContext.game.stopAt);
+  }, [rdGameContext]);
 
   return (
     <Box position='absolute' top={0} left={0}  w='100%' pointerEvents='none' >
       <Flex direction='row' justify='space-between' >
       <ReturnToVillageButton onBack={onBack} />
       <Spacer />
-{/* 
-      <Box mb={4} bg='#272523EE' p={2} rounded='md' 
-          w={{base: '200px', sm: '280px'}}
-          // w={{base: '200px', sm: '280px'}}
-          h={{base: '135px', sm: '135px'}}
-          // h={{base: '135px', sm: '135px'}}
-          >
-           */}
 
       <Box mb={4} mt={6} mr={2}
         justifyContent='right'
@@ -203,9 +131,18 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
         rounded='md' 
         w={{base: '200px', sm: '200px'}}
         >
-      <Accordion defaultIndex={[0]} allowToggle paddingRight={0} justifyContent='right'>
+      <Accordion 
+        // defaultIndex={[isMobile ? -1 : 0]} 
+        index={accordionIndex}
+        allowToggle
+        paddingRight={0} 
+        justifyContent='right'
+        >
         <AccordionItem border='none'>
-          <AccordionButton pointerEvents='auto'>
+          <AccordionButton 
+            pointerEvents='auto'
+            onClick={() => setAccordionIndex(accordionIndex === 0 ? -1 : 0)}
+            >
             {!isLoading ? (
               <>
                 {!!user.address ? (
@@ -213,7 +150,18 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
                   <Flex justify="right" align="right">
                   <HStack justifyContent='right' marginTop='0'>
                     <Text fontSize='xs' color="#aaa" zIndex='9'>Game End:</Text>
-                    <Text fontWeight='bold' zIndex='9'> {timer}</Text>
+                    <Text fontWeight='bold' zIndex='9'> 
+                    <Countdown
+                        date={gameStopTime ?? 0}
+                        renderer={({days, hours, minutes, seconds, completed }) => {
+                          return (days > 0 ?
+                            <span>{days} days</span>
+                            :
+                            <span>{hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>)
+                          }
+                        }
+                      />
+                    </Text>
                     <AccordionIcon 
                       color='#ffffff'/>
                   </HStack>
@@ -230,7 +178,14 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
             )}
           </AccordionButton>
         
-          <AccordionPanel pb={4} alignItems={'right'}>
+          <AccordionPanel pb={4} alignItems={'right'} pointerEvents='auto'>
+
+          <AuthenticationRdButton
+            connectText=''
+            signinText=''
+            size={'sm'}
+          >
+          <>
 
           <Center>
             <Tag  variant='outline'>
@@ -264,23 +219,35 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
               </Box>
           </SimpleGrid>
           </Flex>
-
+          </>
+          </AuthenticationRdButton>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-          
-        {troopTimer !== '' && (
-            <Box mt={-3} bg='#cc2828' p={2} roundedBottom='md' 
-              
-               w={{base: '200px', sm: '200px'}}
-               h={{base: '35px', sm: '35px'}}
-               >
-                <HStack justifyContent='space-between'>
+      {!isLoading ? (
+        <>
+        {showTimer &&  (
+          <Box 
+            mt={-3} bg='#cc2828' 
+            p={2} roundedBottom='md' 
+            w={{base: '200px', sm: '200px'}}
+            h={{base: '35px', sm: '35px'}}
+            >
+            <HStack justifyContent='space-between'>
               <Text fontSize='xs' >Troop Cooldown:</Text>
-              <Text verticalAlign='bottom' fontWeight='bold'>{troopTimer}</Text>
-                </HStack>
-              </Box>
-            )}
+              <Text verticalAlign='bottom' fontWeight='bold'>
+                <Countdown
+                  date={troopTimer ?? 0}
+                  onComplete={()=> setShowTimer(false)}
+                  renderer={({hours, minutes, seconds }) => {
+                    return (<span>{hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>)
+                    }
+                  }
+                />
+              </Text>
+            </HStack>
+          </Box>
+        )} </> ) : ( <></> )}
         </Box>
       </Flex>
     </Box>

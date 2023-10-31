@@ -42,13 +42,14 @@ const useCreateSettings = () => {
         error: null,
       });
 
-      return fetchResponse;
+      return fetchResponse.data;
     } catch (error) {
       setResponse({
         ...response,
         loading: false,
-        error: error,
+        error,
       });
+      return { message: {error} }
     }
   };
 

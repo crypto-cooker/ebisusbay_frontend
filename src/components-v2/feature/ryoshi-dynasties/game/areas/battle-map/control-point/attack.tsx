@@ -175,7 +175,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       }
 
       if(!approved){
-        toast.error("Please approve the pop up to allow the contract to spend your resources")
+        toast.warning("Please approve the pop up to allow the contract to spend your resources")
         setExecutingLabel('Approving contract...');
         const resourceContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
         const tx = await resourceContract.setApprovalForAll(config.contracts.battleField, true);

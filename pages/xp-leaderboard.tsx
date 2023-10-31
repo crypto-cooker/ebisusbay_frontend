@@ -89,6 +89,7 @@ const XPLeaderboard = () => {
   const {data, error, status, fetchNextPage, hasNextPage} = useInfiniteQuery({
     queryKey: ['XpLeaderboard', queryParams],
     queryFn: getXpProfiles,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
@@ -103,7 +104,7 @@ const XPLeaderboard = () => {
   });
 
   const content = useMemo(() => {
-    return status === "loading" ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>
@@ -136,7 +137,7 @@ const XPLeaderboard = () => {
             </Flex>
             {user.address ? (
               <>
-                {profileStatus !== 'loading' && !!userProfile ? (
+                {profileStatus !== 'pending' && !!userProfile ? (
                   <>
                     {status !== 'error' ? (
                       <>

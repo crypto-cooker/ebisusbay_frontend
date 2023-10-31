@@ -3,7 +3,7 @@ import {Contract} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isLandDeedsCollection} from "@src/utils";
 import * as Sentry from '@sentry/react';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
@@ -31,6 +31,7 @@ import {is1155} from "@src/helpers/chain";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useAppSelector} from "@src/Store/hooks";
 import {getCroidAddressFromName, isCroName} from "@src/helpers/croid";
+import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 
 interface TransferNftDialogProps {
   isOpen: boolean;
@@ -182,14 +183,18 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
             <ModalBody>
               <div className="nftSaleForm row gx-3">
                 <div className="col-12 col-sm-4 mb-sm-3">
-                  <AnyMedia
-                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
-                    video={nft.video ?? nft.animation_url}
-                    videoProps={{ height: 'auto', autoPlay: true }}
-                    title={nft.name}
-                    usePlaceholder={false}
-                    className="img-fluid img-rounded"
-                  />
+                  {isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
+                    <RdLand nftId={nft.id ?? nft.nftId} />
+                  ) : (
+                    <AnyMedia
+                      image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                      video={nft.video ?? nft.animation_url}
+                      videoProps={{ height: 'auto', autoPlay: true }}
+                      title={nft.name}
+                      usePlaceholder={false}
+                      className="img-fluid img-rounded"
+                    />
+                  )}
                 </div>
                 <div className="col-12 col-sm-8 my-auto">
                   {nft.balance > 1 && (

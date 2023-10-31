@@ -13,7 +13,7 @@ import {
   useNumberInput
 } from "@chakra-ui/react";
 import {dropState as statuses} from "@src/core/api/enums";
-import {constants, ethers} from "ethers";
+import {constants, Contract, ethers} from "ethers";
 import {createSuccessfulTransactionToastContent, percentage, round} from "@src/utils";
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
@@ -30,9 +30,17 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import Link from "next/link";
+import {ApiService} from "@src/core/services/api-service";
+import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+enum FundingType {
+  NATIVE = 'native',
+  ERC20 = 'erc20',
+  REWARDS = 'rewards',
+}
 
 interface MintBoxProps {
   drop: Drop;
@@ -59,11 +67,10 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   const userTheme = useAppSelector((state) => {
     return state.user.theme;
   });
-  
-  const [minting, setMinting] = useState(false);
-  const [mintingERC20, setMintingERC20] = useState(false);
+  const {requestSignature} = useEnforceSigner();
+
+  const [mintingWithType, setMintingWithType] = useState<FundingType>();
   const [numToMint, setNumToMint] = useState(1);
-  const [mintingState, setMintingState] = useState(null);
   const isReady = !!maxSupply;
   const [erc20Token, setErc20Token] = useState<{name: string, symbol: string, address: string} | null>(null);
 
@@ -101,23 +108,17 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     return typeof dropAbi === 'undefined' || dropAbi.length === 0;
   };
   
-  const calculateCost = async (user: any, isErc20: boolean) => {
-    if (isErc20) {
-      const regCost = ethers.utils.parseEther(drop.erc20Cost?.toString() ?? '0');
-      const memberCost = ethers.utils.parseEther(drop.erc20MemberCost?.toString() ?? '0');
-      return user.isMember && !!drop.erc20MemberCost ? memberCost : regCost;
-    } else {
-      if (isUsingDefaultDropAbi(drop.abi) || isUsingAbiFile(drop.abi)) {
-        let readContract = await new ethers.Contract(drop.address, abi, readProvider);
-        if (abi.find((m: any) => m.name === 'cost')) {
-          return await readContract.cost(user.address);
-        }
-        return await readContract.mintCost(user.address);
+  const calculateCost = async (user: any) => {
+    if (isUsingDefaultDropAbi(drop.abi) || isUsingAbiFile(drop.abi)) {
+      let readContract = await new ethers.Contract(drop.address, abi, readProvider);
+      if (abi.find((m: any) => m.name === 'cost')) {
+        return await readContract.cost(user.address);
       }
-      const regCost = ethers.utils.parseEther(regularCost.toString() ?? '0');
-      const mbrCost = ethers.utils.parseEther(memberCost?.toString() ?? '0');
-      return user.isMember && !!memberCost ? mbrCost : regCost;
+      return await readContract.mintCost(user.address);
     }
+    const regCost = ethers.utils.parseEther(regularCost.toString() ?? '0');
+    const mbrCost = ethers.utils.parseEther(memberCost?.toString() ?? '0');
+    return user.isMember && !!memberCost ? mbrCost : regCost;
   };
 
   const convertTime = (time: any) => {
@@ -127,72 +128,33 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     return `${fullDateString.split(', ')[1]} ${date.getUTCDate()} ${month} ${date.getUTCFullYear()} UTC`;
   };
 
-  const mintNow = async (isErc20 = false) => {
+  const mintNow = async (fundingType: FundingType) => {
     if (user.address) {
       if (!drop.writeContract) {
         console.log('missing write contract')
         return;
       }
-      if (isErc20) {
-        setMintingERC20(true);
-      } else {
-        setMinting(true);
-      }
+
+      setMintingWithType(fundingType)
       const contract = drop.writeContract;
       try {
-        const cost = await calculateCost(user, isErc20);
+        const cost = await calculateCost(user);
         let finalCost = cost.mul(numToMint);
 
-        if (isErc20) {
-          const allowance = await drop.erc20ReadContract.allowance(user.address, drop.address);
-          if (allowance.sub(finalCost) <= 0) {
-            const approvalTx = await drop.erc20Contract.approve(drop.address, constants.MaxUint256);
-            await approvalTx.wait();
-          }
+        if (!isUsingDefaultDropAbi(drop.abi) && !isUsingAbiFile(drop.abi)) {
+          toast.error('Invalid ABI');
+          return;
         }
 
-        const gasPrice = parseUnits('5000', 'gwei');
-        const gasEstimate = isErc20 ? await contract.estimateGas.mintWithToken(numToMint):
-          await contract.estimateGas.mint(numToMint, {value: finalCost});
-        const gasLimit = gasEstimate.mul(2);
-        let extra = {
-          value: finalCost,
-          gasPrice,
-          gasLimit
-        };
-
-        var response;
-        if (drop.is1155) {
-          response = await contract.mint(numToMint, extra);
+        let response;
+        if (fundingType === FundingType.REWARDS) {
+          response = await mintWithRewards(contract, finalCost);
+        } else if (fundingType === FundingType.ERC20) {
+          response = await mintWithErc20(contract, finalCost);
         } else {
-          if (isUsingDefaultDropAbi(drop.abi) || isUsingAbiFile(drop.abi)) {
-            if (isErc20) {
-              delete extra['value']
-              response = await contract.mintWithToken(numToMint, extra);
-            } else {
-              response = await contract.mint(numToMint, extra);
-            }
-          } else {
-            let method;
-            for (const abiMethod of drop.abi!) {
-              if (abiMethod.includes('mint') && !abiMethod.includes('view')) method = abiMethod;
-            }
-
-            if (!!method && method.includes('address') && method.includes('uint256')) {
-              if (isErc20) {
-                response = await contract.mintWithLoot(user.address, numToMint);
-              } else {
-                response = await contract.mint(user.address, numToMint, extra);
-              }
-            } else {
-              if (isErc20) {
-                response = await contract.mintWithLoot(numToMint);
-              } else {
-                response = await contract.mint(numToMint, extra);
-              }
-            }
-          }
+          response = await mintWithCro(contract, finalCost);
         }
+
         const receipt = await response.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
@@ -217,30 +179,65 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
           logEvent(getAnalytics(), 'purchase', purchaseAnalyticParams);
         }
 
-        await onMintSuccess();
+        onMintSuccess();
       } catch (error: any) {
         Sentry.captureException(error);
-        if (error.data) {
-          console.log(error);
-          toast.error(error.data.message);
-        } else if (error.message) {
-          console.log(error);
-          toast.error(error.message);
-        } else {
-          console.log(error);
-          toast.error('Unknown Error');
-        }
+        console.log(error);
+        toast.error(parseErrorMessage(error));
       } finally {
-        if (isErc20) {
-          setMintingERC20(false);
-        } else {
-          setMinting(false);
-        }
+        setMintingWithType(undefined);
       }
     } else {
       dispatch(connectAccount());
     }
   };
+
+  const mintWithCro = async (contract: Contract, finalCost: number) => {
+    const gasPrice = parseUnits('5000', 'gwei');
+    const gasEstimate = await contract.estimateGas.mint(numToMint, {value: finalCost});
+    const gasLimit = gasEstimate.mul(2);
+    let extra = {
+      value: finalCost,
+      gasPrice,
+      gasLimit
+    };
+
+    await contract.mint(numToMint, extra);
+  }
+
+  const mintWithErc20 = async (contract: Contract, finalCost: number) => {
+    const allowance = await drop.erc20ReadContract.allowance(user.address, drop.address);
+    if (allowance.sub(finalCost) <= 0) {
+      const approvalTx = await drop.erc20Contract.approve(drop.address, constants.MaxUint256);
+      await approvalTx.wait();
+    }
+
+    const gasPrice = parseUnits('5000', 'gwei');
+    const gasEstimate = await contract.estimateGas.mintWithToken(numToMint);
+    const gasLimit = gasEstimate.mul(2);
+    let extra = {
+      gasPrice,
+      gasLimit
+    };
+
+    return await contract.mintWithToken(numToMint, extra);
+  }
+
+  const mintWithRewards = async (contract: Contract, finalCost: number) => {
+    const signature = await requestSignature();
+    const finalCostEth = ethers.utils.formatEther(finalCost);
+    const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(finalCostEth, user.address!, signature);
+
+    const gasPrice = parseUnits('5000', 'gwei');
+    const gasEstimate = await contract.estimateGas.mintWithRewards(numToMint, authorization.reward, authorization.signature);
+    const gasLimit = gasEstimate.mul(2);
+    let extra = {
+      gasPrice,
+      gasLimit
+    };
+
+    return await contract.mintWithRewards(numToMint, authorization.reward, authorization.signature, extra);
+  }
 
   useEffect(() => {
     const tokenKey = drop.erc20Token?.toLowerCase();
@@ -352,7 +349,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                 Limit: {maxMintPerAddress} per wallet
               </Text>
             )}
-            {drop.collection === 'ryoshi-playing-cards' && drop.memberMitama > 0 && (
+            {drop.memberMitama > 0 && (
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
                 Users must have {commify(drop.memberMitama)} Mitama for Mitama price. Earn more by staking $Fortune in <Link href='/ryoshi' className='color'>Ryoshi Dynasties</Link>
               </Text>
@@ -383,32 +380,45 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
             {status === statuses.LIVE && !drop.complete && (
               <Box mt={2}>
                 {canMintQuantity > 0 && (
-                  <Stack direction={{base:'column', lg:'row'}} spacing={2}>
+                  <Stack direction={{base:'column', xl:'row'}} spacing={2}>
                     <HStack minW="150px">
                       <Button {...dec}>-</Button>
                       <Input {...input} />
                       <Button {...inc}>+</Button>
                     </HStack>
-                    {(!!regularCost || drop.freeMint) && !drop.erc20Only && (
+                    {(!!regularCost || drop.freeMint) && !drop.erc20Only && (!mintingWithType || mintingWithType === FundingType.NATIVE) && (
                       <PrimaryButton
                         w='full'
-                        onClick={() => mintNow(false)}
-                        disabled={minting}
-                        isLoading={minting}
+                        onClick={() => mintNow(FundingType.NATIVE)}
+                        disabled={mintingWithType === FundingType.NATIVE}
+                        isLoading={mintingWithType === FundingType.NATIVE}
                         loadingText='Minting...'
                       >
                         Mint
                       </PrimaryButton>
                     )}
-                    {!!drop.erc20Cost && !!drop.erc20Token && (
+                    {!!drop.erc20Cost && !!drop.erc20Token && (!mintingWithType || mintingWithType === FundingType.ERC20) && (
                       <PrimaryButton
                         w='full'
-                        onClick={() => mintNow(true)}
-                        disabled={mintingERC20}
-                        isLoading={mintingERC20}
-                        loadingText='Minting...'
+                        onClick={() => mintNow(FundingType.ERC20)}
+                        disabled={mintingWithType === FundingType.ERC20}
+                        isLoading={mintingWithType === FundingType.ERC20}
+                        loadingText={`Minting with ${config.tokens[drop.erc20Token!].symbol}`}
+                        whiteSpace='initial'
                       >
-                        Mint with {config.tokens[drop.erc20Token].symbol}
+                        Mint with {config.tokens[drop.erc20Token!].symbol}
+                      </PrimaryButton>
+                    )}
+                    {drop.abi === 'mint-from-rewards.json' && (!mintingWithType || mintingWithType === FundingType.REWARDS) && (
+                      <PrimaryButton
+                        w='full'
+                        onClick={() => mintNow(FundingType.REWARDS)}
+                        disabled={mintingWithType === FundingType.REWARDS}
+                        isLoading={mintingWithType === FundingType.REWARDS}
+                        loadingText='Minting from FRTN rewards'
+                        whiteSpace='initial'
+                      >
+                        Mint from FRTN rewards
                       </PrimaryButton>
                     )}
                   </Stack>

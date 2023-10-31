@@ -513,7 +513,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         onOpenBlockingModal();
         return;
       }
-      if (!!rdGameContext?.state && rdGameContext.state === RdGameState.RESET) {
+      const hasStopAtPassed = !!rdGameContext?.game?.stopAt && new Date > new Date(rdGameContext.game.stopAt);
+      if ((!!rdGameContext?.state && rdGameContext.state === RdGameState.RESET) || hasStopAtPassed) {
         onOpenResetModal();
         return;
       }

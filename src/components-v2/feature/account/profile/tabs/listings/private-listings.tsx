@@ -10,15 +10,18 @@ import {
   AlertDescription,
   AlertIcon,
   AlertTitle,
-  Box, Center,
+  Box,
+  Center,
   CloseButton,
   HStack,
   Icon,
   IconButton,
   Input,
   InputGroup,
-  InputRightElement, Spinner,
-  Stack, Switch,
+  InputRightElement,
+  Spinner,
+  Stack,
+  Switch,
   Text,
   useBreakpointValue
 } from "@chakra-ui/react";
@@ -44,7 +47,7 @@ interface UserPrivateListingsProps {
 const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
   const dispatch = useDispatch();
 
-  const [collections, setCollections] = useState([]);
+  const [collections, setCollections] = useState<any[]>([]);
   const [searchTerms, setSearchTerms] = useState<string>();
   const debouncedSearch = useDebounce(searchTerms, 500);
   const [showInvalidOnly, setShowInvalidOnly] = useState(false);
@@ -78,22 +81,15 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
     return listings;
   };
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    status,
-  } = useInfiniteQuery(
-    ['MyListingsCollection', walletAddress, queryParams, showInvalidOnly],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    }
-  );
+  const {data, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery({
+    queryKey: ['MyListingsCollection', walletAddress, queryParams, showInvalidOnly],
+    queryFn: fetcher,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
   const toggleFilterVisibility = () => {
     setFiltersVisible(!filtersVisible)
@@ -258,7 +254,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
               </Center>
             }
           >
-            {status === "loading" ? (
+            {status === 'pending' ? (
               <Center>
                 <Spinner />
               </Center>
@@ -268,7 +264,12 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
               <ResponsiveListingsTable
                 data={data}
                 onUpdate={(listing) => {
-                  dispatch(MyListingsCollectionPageActions.showMyNftPageListDialog(listing.nft, listing))
+                  const collection = collections.find((c: any) => caseInsensitiveCompare(c.address, listing.nftAddress));
+                  let nft = listing.nft;
+                  if (!!collection) {
+                    nft = {...listing.nft, multiToken: collection.multiToken};
+                  }
+                  dispatch(MyListingsCollectionPageActions.showMyNftPageListDialog(nft, listing))
                 }}
                 onCancel={(listing) => {
                   dispatch(MyListingsCollectionPageActions.showMyNftPageCancelDialog(listing))

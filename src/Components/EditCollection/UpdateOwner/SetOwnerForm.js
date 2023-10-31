@@ -18,9 +18,10 @@ const SetOwnerForm = ({ address: collectionAddress }) => {
   const user = useSelector((state) => state.user);
   const router = useRouter();
 
-  const { data, status, refetch } = useQuery(['Collections', user.address], () =>
-    getOwnerCollections(user.address), true
-  )
+  const { data, status, refetch } = useQuery({
+    queryKey: ['Collections', user.address],
+    queryFn: () => getOwnerCollections(user.address)
+  })
 
   useEffect(() => {
     if (!isLoading) {

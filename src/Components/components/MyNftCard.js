@@ -214,7 +214,7 @@ const MyNftCard = ({
               cursor="pointer"
             >
               {isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
-                <RdLand nftId={nft.id ?? nft.nftId} boxSize={izanamiImageSize ?? 368} />
+                <RdLand nftId={nft.id ?? nft.nftId}/>
               ) : (
                   <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
                             title={nft.name}
@@ -261,7 +261,7 @@ const MyNftCard = ({
                       <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(nft.market.expirationDate)}</Text>
                     )}
                   </HStack>
-                  {marketUsdValue() && (
+                  {!!marketUsdValue() && (
                     <Flex ps={5} className='text-muted'>
                       <Box as='span' ms={1}>
                         ${marketUsdValue() > 100000 ? siPrefixedNumber(marketUsdValue()) : ethers.utils.commify(round(marketUsdValue(), 2))}

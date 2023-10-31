@@ -14960,7 +14960,7 @@
       "multiToken": false,
       "address": "0x5bB97B7D75Ce3151E413aa751F22FcD837703588",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Murder Birdz is a brand of 3000 PFP bird characters made for the crofam. The plan is to build the Murder Birdz DAO in order to build on top of art, thus granting holders utility and revenue sharing. Join our discord to share ideas!",
         "avatar": "/img/collections/murder-birdz/avatar.webp",
@@ -17095,7 +17095,7 @@
         "card": "/img/collections/blumies/card.webp",
         "website": "https://www.blumiesofficial.com/",
         "twitter": "https://twitter.com/BlumiesNFT",
-        "discord": "https://discord.gg/gQEmwg43Dg",
+        "discord": "https://discord.gg/Fuy99WgGeq",
         "medium": "https://blumies.gitbook.io/blumies-nft/",
         "categories": []
       },
@@ -18793,9 +18793,9 @@
       "listable": true,
       "metadata": {
         "description": "A crisp collection of 10000 Mama Bears traveling through Cronos in the pursuit of love and fortune.",
-        "avatar": "/img/collections/sou-sou-Mamas/avatar.webp",
-        "card": "/img/collections/sou-sou-Mamas/card.webp",
-        "banner": "/img/collections/sou-sou-Mamas/banner.webp",
+        "avatar": "/img/collections/sou-sou-mamas/avatar2.webp",
+        "card": "/img/collections/sou-sou-mamas/card.webp",
+        "banner": "/img/collections/sou-sou-mamas/banner.webp",
         "twitter": "https://twitter.com/sousoubears",
         "discord": "https://discord.gg/rMR6YNw7ME",
         "medium": "https://medium.com/@sousoubears",
@@ -22314,7 +22314,7 @@
       "multiToken": false,
       "address": "0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "\"Time Commanders\"    \uD83D\uDC8EWILL stealth drop within the next 6 hours MAKE sure to keep an eye on our drops page   https://time-launcher.com/drops/  \uD83D\uDC40   Supply: 5000 Public price: 50 cro  WL price: 45 cro   IF you are not WL and should be please open a ticket!!!  \uD83D\uDCAA This collections main purpose is reinforcements to time troops. depending on which tier you hold. A MAX of 2 Commanders to increase payout yields by up to 15%.  \uD83D\uDEA8\uD83D\uDEA8Boosters for ATGs, Creatures, tonics, and outside collections(possibly) and future releases   Orange bottom = 100 pieces - 15% Purple = 400 pieces - 10% Red top = 2000 pieces - 5% Green = 2500 pieces - 2% @everyone  **IF you are not WL and should be please open a ticket and i will WL you ASAP**",
         "avatar": "/img/collections/time-commanders/avatar.webp",
@@ -22753,7 +22753,7 @@
       "multiToken": false,
       "address": "0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
         "avatar": "/img/collections/coom-cats/avatar.webp",
@@ -22877,9 +22877,9 @@
       "listable": true,
       "metadata": {
         "description": "Collectable playing cards allowing you participation in several different ongoing card games on EbisusBay.com\n\nCollect them all and join in on the fun!",
-        "avatar": "/img/collections/ryoshi-playing-cards/avatar.webp",
-        "banner": "/img/collections/ryoshi-playing-cards/banner.webp",
-        "card": "/img/collections/ryoshi-playing-cards/card.webp",
+        "avatar": "/img/collections/ryoshi-playing-cards/avatar2.webp",
+        "banner": "/img/collections/ryoshi-playing-cards/banner2.webp",
+        "card": "/img/collections/ryoshi-playing-cards/card2.webp",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
         "discord": "https://discord.gg/ebisusbay",
@@ -23411,7 +23411,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Aiko Legends is the Main Collection of AikoSociety in CronosChain. Each Aiko Legends contains a story in the Art and future benefits to discover. The Aiko Legend Collection includes 3333 pfp generated with different traits and rarities. Become a Legend & join the AikoSociety!",
+        "description": "Aiko Legends is the definitive Aiko Society Collection with surprises and benefits to discover",
         "avatar": "/img/collections/aiko-legends/avatar.webp",
         "banner": "/img/collections/aiko-legends/banner.webp",
         "card": "/img/collections/aiko-legends/card.webp",
@@ -23919,9 +23919,9 @@
       "name": "BOB Headz",
       "slug": "bob-headz",
       "multiToken": false,
-      "address": "",
+      "address": "0x41C7874A2fE9D1ea126bfBD44597A1f96546152e",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "BOB Headz is super limited collection with unique utility to holders! There will be more than 200+ traits and multiple legendaries to be found!",
         "avatar": "/img/collections/bob-headz/avatar.webp",
@@ -24090,6 +24090,207 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "Battle Roos",
+      "slug": "battle-roos",
+      "multiToken": false,
+      "address": "0xfD9B820f09B1f1f11b1537274e20FE257Dc0d3E4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crikey! Have you heard about Battle Roo, our fair dinkum NFT collection from Roo Finance? Here's why you should take the leap and hop on board! With our collection boasting over a thousand AI backgrounds, 30+ outback-inspired skins, 70+ bush-style outfits, and 30 true-blue weapons, we've got more unique combos than kangaroos at a watering hole! Now, let's get down to the nitty-gritty. We're not just about looking good; we're about doing good too. Our entire Battle Roo collection is backed by a whopping 24 million $Weedcoin for staking. ",
+        "avatar": "/img/collections/battle-roos/avatar.webp",
+        "banner": "/img/collections/battle-roos/banner.webp",
+        "card": "/img/collections/battle-roos/card.webp",
+        "website": "https://roo.finance/",
+        "twitter": "https://twitter.com/roofinance",
+        "discord": "https://discord.gg/4u5muHcdaJ",
+        "medium": "https://medium.com/@KangaDegens",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ROO OG",
+      "slug": "roo-og",
+      "multiToken": false,
+      "address": "0x1406904e110f9f51d3101a96627dddc80660780d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Roo Finance OG",
+        "avatar": "/img/collections/roo-og/avatar.webp",
+        "banner": "/img/collections/roo-og/banner.webp",
+        "card": "/img/collections/roo-og/card.webp",
+        "website": "https://roo.finance/",
+        "twitter": "https://twitter.com/roofinance",
+        "discord": "https://discord.gg/4u5muHcdaJ",
+        "medium": "https://medium.com/@KangaDegens",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Bored Punk Roo",
+      "slug": "bored-punk-roo",
+      "multiToken": false,
+      "address": "0xd94898C23C13341c4E5B5a054D07c400c8718E17",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "NFT Booster collection for Roo Finance",
+        "avatar": "/img/collections/bored-punk-roo/avatar.webp",
+        "banner": "/img/collections/bored-punk-roo/banner.webp",
+        "card": "/img/collections/bored-punk-roo/card.webp",
+        "website": "https://roo.finance/",
+        "twitter": "https://twitter.com/roofinance",
+        "discord": "https://discord.gg/4u5muHcdaJ",
+        "medium": "https://medium.com/@KangaDegens",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Hyena Hustlers",
+      "slug": "hyena-hustlers",
+      "multiToken": false,
+      "address": "0xA5353D17cC3F30DC07D6B0C5510a15Ce382B14A4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Step into the world of Hyena Hustlers, where each NFT is a masterpiece on the Cronos Network. With 3200 pieces, we're not just redefining the future of crypto - we're crafting it. Join the movement and seize the opportunity",
+        "avatar": "/img/collections/hyena-hustlers/avatar.webp",
+        "banner": "/img/collections/hyena-hustlers/banner.webp",
+        "card": "/img/collections/hyena-hustlers/card.webp",
+        "website": "https://hyenahustlers.xyz/launchpad",
+        "twitter": "https://twitter.com/hyenahustlers",
+        "discord": "https://discord.gg/s77g5FKjd6",
+        "medium": "https://medium.com/@hyenahustersnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crypto Money Makers - Money Bag",
+      "slug": "cmm-money-bag",
+      "multiToken": false,
+      "address": "0xAE798243f14A1fC202402D9F24e2ccA1a38A4cE5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Our goal is to create a simple investment project where funds from drops will be locked in few invest options and reinvested every month for bigger return. Half of income from all investments will be distributed for NFT holders. Easy way for passive income.  Mint! Hodl! Earn!",
+        "avatar": "/img/collections/cmm-money-bag/avatar.webp",
+        "card": "/img/collections/cmm-money-bag/card.webp",
+        "banner": "/img/collections/cmm-money-bag/banner.webp",
+        "website": "https://cryptomoneymakers.org/",
+        "twitter": "https://twitter.com/CronosMoney",
+        "discord": "https://discord.gg/bcjgNexUqz",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ryoshi Tales",
+      "slug": "ryoshi-tales",
+      "multiToken": false,
+      "address": "0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/ryoshi-tales/avatar.webp",
+        "banner": "/img/collections/ryoshi-tales/banner.webp",
+        "card": "/img/collections/ryoshi-tales/card.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "verified": true
+      }
+    },
+    {
+      "name": "CroTops",
+      "slug": "crotops",
+      "multiToken": false,
+      "address": "0x87e04f1d64619994a5320450E19C184a2dDE09c7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "⚡ Welcome to Cro Tops, This Project is based on the cartoon Bey-Blade's, Our Art will depict spin tops of various colors. themes, backgrounds, bonus item traits, and more!! so with that said, 25% of the mint funds goes to $Fortune token 25% of the mint funds goes to $TTT pairing 10% of the mint funds goes to Time Machine Launchpad 40% of the mint funds will be used to develop a staking site, and gamify CroTops \uD83D\uDE80LFG CROFAMM \uD83D\uDCAA",
+        "avatar": "/img/collections/crotops/avatar.webp",
+        "banner": "/img/collections/crotops/banner.webp",
+        "card": "/img/collections/crotops/card.webp",
+        "website": "https://time-launcher.com/drops/cro-tops",
+        "twitter": "https://twitter.com/PolyTops9000",
+        "discord": "https://discord.gg/MEquYDYUdB",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Crazzzy Ryoshi Monsterzzz",
+      "slug": "crazzzy-ryoshi-monsterzzz",
+      "multiToken": false,
+      "address": "0xe65FAA8791F25E9fB034f1C8913f14F6Db12C6C0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This collection is themed around the Ryoshi Dynasties game by Ebisu's Bay. It will consist of 10,000 NFTs with a heavy burn mechanism, 20 different Crazzzy Ryoshi Monsters with various quantities. Main focus of this collection is to maximise possible daily rewards for the current holders of our main Crazzzy NFT collections on Ebisu's Bay. Surprises will come for holders of the 20 different Crazzzy Ryoshi Monsterzzz.",
+        "avatar": "/img/collections/crazzzy-ryoshi-monsterzzz/avatar.webp",
+        "card": "/img/collections/crazzzy-ryoshi-monsterzzz/card.webp",
+        "banner": "/img/collections/crazzzy-ryoshi-monsterzzz/banner.webp",
+        "website": "https://crazzzymonsters.com/",
+        "twitter": "https://twitter.com/CrazzzyMonsters",
+        "discord": "https://discord.gg/6tR5TcHpBG",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
@@ -30264,7 +30465,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/fallen-angels-demons/drop.webp",
         "banner": "/img/collections/fallen-angels-demons/banner.webp",
@@ -31104,7 +31305,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "images": {
         "drop": "/img/drops/coom-cats/drop2.webp",
@@ -31260,7 +31461,7 @@
         "twitter": "https://twitter.com/CroBobAdventure",
         "discord": "https://discord.gg/kemzRExMju"
       },
-      "address": "",
+      "address": "0x41C7874A2fE9D1ea126bfBD44597A1f96546152e",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 808,
@@ -31273,7 +31474,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/bob-headz/drop.webp",
         "banner": "/img/collections/bob-headz/banner.webp",
@@ -31326,6 +31527,98 @@
         "kyc": true,
         "escrow": false,
         "verified": true
+      }
+    },
+    {
+      "id": 185,
+      "slug": "ryoshi-hearts",
+      "collection": "ryoshi-playing-cards",
+      "title": "Ryoshi Hearts",
+      "subtitle": "Ryoshi Hearts: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #3 Ryoshi Hearts, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
+      "description": "Mint directly from your Rewards pool:\nUsers can mint from their Rewards Pool at the full price without altering or affecting their Karmic Debt \n\nMaximum Mints per Wallet:\nThe maximum mint per wallet is now set at 30 NFTs\n\nEnter Ebisu's Crypto Hodl'em event with up to Two Hands:\nUsers will now have the opportunity to enter up to 2 hands in the third Crypto Hodl’em contest. The second hand can't be composed of the same cards used to compose a user's first hand \n\nThe Second Hand's reverse values: \nThe Second Hand is valued in reverse compared to the typical set of values, making the 2 of Hearts ❤\uFE0F the highest Card for this second submission.\n\nCrypto Hodl'em #3 eligibility criteria: \nUsers' first hand must be composed of a minimum of 5 “Ryoshi Playing Cards” collectibles. Of these, at least 3 out of 5 cards must belong to the Hearts Suit Collection. The remaining 2 out of 5 cards can belong to any available suit (Hearts, Diamonds, or Clubs)",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xd87838a982a401510255ec27e603b0f5fea98d24",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 4000,
+      "erc20Cost": "250",
+      "erc20MemberCost": "200",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "memberMitama": 1000,
+      "foundersOnly": false,
+      "abi": "mint-from-rewards.json",
+      "start": 1698177600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-hearts/drop.webp",
+        "avatar": "/img/drops/ryoshi-hearts/avatar.webp",
+        "banner": "/img/drops/ryoshi-hearts/banner.webp",
+        "preview": "/img/drops/ryoshi-hearts/preview.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 186,
+      "slug": "ryoshi-tales-goblin-gala",
+      "collection": "ryoshi-tales",
+      "title": "Ryoshi Tales: Goblin Gala",
+      "subtitle": "Enter the World of Ryoshi Dynasties\n\nRumors have it that there are spooky creatures living beyond Felisgarde. Goblins and corrupted Ryoshis are seen wandering, gathering $FRTN from fallen Dynasties.\n\nPerhaps they could be friendly and might make valuable additions to the Bank or skilled fighters; after all, the Barracks will always welcome extra hands.\n\nJoin Ebisu at the Goblin Gala and contribute to yet another chapter in the Ryoshi Tales.",
+      "description": "Embrace Spooky Season!\n\nAs the lanterns cast an eerie glow and October 27th descends upon Felisgarde, a parade of strange creatures emerge across the region.\n\nRyoshi Tales: Goblin Gala Collection Details:\n\nSupply: Limited to 500 NFTs\nMint Per Wallet: 1 mint every 5 minutes until the collection reaches its limit\nAll $FRTN will be burned upon minting\nMint Directly from Your Rewards Pool:\n\nUsers can mint directly from their Rewards Pool at the full price without impacting their Karmic Debt.\n\nAcquire New NFTs for Staking:\n\nCollect these new NFTs and bolster your staking capabilities in the Barracks or the Bank, enhancing returns based on the rarity of your acquisitions:\n\nTop 5% Rarity: +0.25%\nTop 10% Rarity: +0.2%\nTop 20% Rarity: +0.15%\nOthers: +0.1%\n\nWishing the best of luck to everyone!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 500,
+      "erc20Cost": "300",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "foundersOnly": false,
+      "abi": "mint-from-rewards.json",
+      "start": 1698436800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": true,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-goblin-gala/drop1.webp",
+        "avatar": "/img/drops/ryoshi-tales-goblin-gala/avatar1.webp",
+        "banner": "/img/drops/ryoshi-tales-goblin-gala/banner1.webp",
+        "preview": "/img/drops/ryoshi-tales-goblin-gala/preview1.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
       }
     }
   ]

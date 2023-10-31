@@ -3,7 +3,7 @@ import {useState} from 'react';
 import useCreateListingSigner, {ListingSignerProps} from '../../../../hooks/useCreateListingSigner';
 import {cancelListing, upsertListing} from '@src/core/cms/endpoints/gaslessListing';
 import UUID from "uuid-int";
-import {caseInsensitiveCompare, isGaslessListing} from "@src/utils";
+import {ciEquals, isGaslessListing} from "@src/utils";
 import NextApiService from "@src/core/services/api-service/next";
 import {getItemType} from "@src/helpers/chain";
 import {useAppSelector} from "@src/Store/hooks";
@@ -20,6 +20,7 @@ export interface PendingListing {
   expirationDate: number;
   is1155: boolean;
   currencySymbol?: string;
+  listingId?: string;
 }
 
 type ResponseProps = {
@@ -47,12 +48,13 @@ const useUpsertGaslessListings = () => {
     });
 
     // Get any existing listings
-    // CRC1155 tokens are excluded as we want to allow them to have multiple listings per user
     const listingsResponse = await NextApiService.getAllListingsByUser(user.address!);
     const existingListings = listingsResponse.data.filter((eListing) => {
       return (pendingListings as Array<PendingListing>).some((pListing) => {
-        return !pListing.is1155 && caseInsensitiveCompare(eListing.nftAddress, pListing.collectionAddress) &&
+        const matchesListingId = !!pListing.listingId && ciEquals(eListing.listingId, pListing.listingId);
+        const matchesNft = ciEquals(eListing.nftAddress, pListing.collectionAddress) &&
           eListing.nftId.toString() === pListing.tokenId.toString();
+        return matchesListingId || (!pListing.is1155 && matchesNft);
       })
     });
 

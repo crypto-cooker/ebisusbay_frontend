@@ -1,11 +1,10 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo} from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import Blockies from 'react-blockies';
-import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 
-import LayeredIcon from './LayeredIcon';
-import {getUserDisplayName, shortAddress} from '../../utils';
+import LayeredIcon from '../../../Components/components/LayeredIcon';
 
 const VerifiedIcon = styled.span`
   font-size: 8px;
@@ -20,42 +19,28 @@ const VerifiedIcon = styled.span`
   z-index: 2;
 `;
 
-const ProfilePreview = ({
-  type = '',
-  title = '',
-  to = '',
-  address = '',
-  avatar = '',
-  verified = false,
-  hover = '',
-  pop = false,
-  useCnsLookup = false
-}) => {
+interface NftPropertyLabelProps {
+  label: string;
+  value: string;
+  avatar?: string;
+  address?: string;
+  verified?: boolean;
+  to: string;
+  hover?: string;
+  pop?: boolean;
+}
 
-  const [name, setName] = useState('');
-  useEffect(() =>{
-    async function func() {
-      const n = await getUserDisplayName(address);
-      setName(n);
-    }
-    if (address && useCnsLookup) {
-      func();
-    } else if (address) {
-      setName(shortAddress(address))
-    }
-  }, [address]);
+const NftPropertyLabel = ({label, value, avatar, address, verified, to, hover, pop}: NftPropertyLabelProps) => {
 
   const AvatarElement = (
     <>
       {(avatar || address) && (
         <div className="author_list_pp">
           <span>
-            {avatar !== '' ? (
-              <img className="lazy" src={avatar} alt={title} title={hover} />
-            ) : address !== '' ? (
+            {!!avatar ? (
+              <img className="lazy" src={avatar} alt={value} title={hover} />
+            ) : !!address && (
               <Blockies seed={address.toLowerCase()} size={10} scale={5} />
-            ) : (
-              <></>
             )}
             {verified && (
               <VerifiedIcon>
@@ -66,12 +51,12 @@ const ProfilePreview = ({
         </div>
       )}
       <div className="author_list_info">
-        <span>{title || name}</span>
+        <span>{value}</span>
       </div>
     </>
   );
 
-  const Hyperlink = ({ url }) => {
+  const Hyperlink = ({ url }: { url: string }) => {
     if (url) {
       if (url.startsWith('http')) {
         return (
@@ -94,7 +79,7 @@ const ProfilePreview = ({
 
   return (
     <div className="col">
-      <h6>{type}</h6>
+      <h6>{label}</h6>
       <div className="item_author">
         <Hyperlink url={to} />
       </div>
@@ -102,4 +87,4 @@ const ProfilePreview = ({
   );
 };
 
-export default memo(ProfilePreview);
+export default memo(NftPropertyLabel);

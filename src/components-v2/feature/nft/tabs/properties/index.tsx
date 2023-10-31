@@ -13,15 +13,13 @@ interface PropertiesProps {
 }
 
 const Properties = ({ address, slug, attributes, queryKey }: PropertiesProps) => {
-  const { data: collectionTraits } = useQuery(
-    ['CollectionTraits', address],
-    () => ApiService.withoutKey().getCollectionTraits(address),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: 2,
-      initialData: {}
-    }
-  );
+  const { data: collectionTraits } = useQuery({
+    queryKey: ['CollectionTraits', address],
+    queryFn: () => ApiService.withoutKey().getCollectionTraits(address),
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 2,
+    initialData: {}
+  });
 
   return (
     <SimpleGrid columns={{base: 1, sm: 2, lg: 3}} gap={3}>

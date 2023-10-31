@@ -298,6 +298,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         expirationDate: expirationDate.value,
         is1155: nft.multiToken,
         currencySymbol: selectedCurrency.symbol,
+        listingId: listing?.listingId,
       });
       toast.success("Listing Successful");
 
@@ -426,7 +427,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                   {isBundle(nft.address ?? nft.nftAddress) ? (
                     <ImagesContainer nft={nft} />
                   ) : isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
-                    <RdLand nftId={nft.id ?? nft.nftId} boxSize={izanamiImageSize ?? 368} />
+                    <RdLand nftId={nft.id ?? nft.nftId} />
                   ) : (
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
@@ -441,7 +442,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                 <div className="col-12 col-sm-6">
                   <Flex h="full" direction="column" justify="space-between">
                     <Box>
-                      {nft.balance > 1 && (
+                      {(nft.balance > 1 || (listing && nft.multiToken)) && (
                         <FormControl className="mb-3" isInvalid={!!quantityError}>
                           <FormLabel className="formLabel">
                             Quantity (up to {nft.balance})
@@ -460,7 +461,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <FormControl isInvalid={!!priceError}>
                         <FormLabel className='formLabel' me={0} mb={1}>
                           <Flex justify='space-between' alignItems='center'>
-                            {nft.balance > 1 ? (
+                            {(nft.balance > 1 || (listing && nft.multiToken)) ? (
                               <>
                                 <Box>
                                   Listing Price ({priceType})

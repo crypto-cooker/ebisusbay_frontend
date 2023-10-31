@@ -119,12 +119,11 @@ const Index = function () {
     return state.user.needsOnboard;
   });
 
-  const { data: balance } = useQuery(['getBalance', walletAddress, 'latest'], async () =>
-    await readProvider.getBalance(walletAddress!),
-    {
-      enabled: !!walletAddress
-    }
-  );
+  const { data: balance } = useQuery({
+    queryKey: ['getBalance', walletAddress, 'latest'],
+    queryFn: async () => await readProvider.getBalance(walletAddress!),
+    enabled: !!walletAddress
+  });
 
   const closeMenu = () => {
     setShowMenu(false);

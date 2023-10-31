@@ -55,13 +55,11 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault}: StakePageProps
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
 
-  const { data: account, status, error, refetch } = useQuery(
-    ['UserStakeAccount', user.address],
-    () => ApiService.withoutKey().ryoshiDynasties.getBankStakingAccount(user.address!),
-    {
-      enabled: !!user.address,
-    }
-  )
+  const { data: account, status, error, refetch } = useQuery({
+    queryKey: ['UserStakeAccount', user.address],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getBankStakingAccount(user.address!),
+    enabled: !!user.address,
+  });
 
   const handleConnect = async () => {
     if (!user.address) {
@@ -83,7 +81,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault}: StakePageProps
           <>
             <Text align='center' pt={2} px={2} fontSize='sm'>Stake & earn $Fortune and receive troops for battle. Stake more to receive more troops and higher APRs.</Text>
             <Box mt={4}>
-              {status === 'loading' ? (
+              {status === 'pending' ? (
                 <Center>
                   <Spinner size='lg' />
                 </Center>

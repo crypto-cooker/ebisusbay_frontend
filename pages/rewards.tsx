@@ -14,33 +14,29 @@ import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
-const currentGameId = 55;
+const currentGameId = 67;
 
 const Rewards = () => {
   const user = useAppSelector(state => state.user);
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
 
-  const {data, error, status,} = useQuery(
-    ['RewardsCollections', currentGameId],
-    () => ApiService.withoutKey().getRewardedEntities(currentGameId),
-    {
-      staleTime: 30,
-      cacheTime: 35,
-      refetchOnWindowFocus: false,
-    }
-  )
+  const {data, error, status,} = useQuery({
+    queryKey: ['RewardsCollections', currentGameId],
+    queryFn: () => ApiService.withoutKey().getRewardedEntities(currentGameId),
+    staleTime: 1000 * 60 * 30,
+    gcTime: 1000 * 60 * 35,
+    refetchOnWindowFocus: false,
+  });
 
-  const { data: rewards, isLoading: isRewardsLoading, isError: isRewardsError } = useQuery(
-    ['BankSeasonalRewards', user.address],
-    () => ApiService.withoutKey().ryoshiDynasties.getSeasonalRewards(user.address!, 1),
-    {
-      enabled: !!user.address,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const { data: rewards, isLoading: isRewardsLoading, isError: isRewardsError } = useQuery({
+    queryKey: ['BankSeasonalRewards', user.address],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getSeasonalRewards(user.address!, 1),
+    enabled: !!user.address,
+    refetchOnWindowFocus: false,
+  });
 
   const content = useMemo(() => {
-    return status === "loading" ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>
