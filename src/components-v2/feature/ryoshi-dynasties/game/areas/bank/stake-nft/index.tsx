@@ -63,6 +63,7 @@ const gothamBook = localFont({ src: '../../../../../../../../src/fonts/Gotham-Bo
 
 const tabs = {
   ryoshiVip: 'ryoshi-tales-vip',
+  ryoshiTales: 'ryoshi-tales',
   ryoshiHalloween: 'ryoshi-tales-halloween',
   ryoshiChristmas: 'ryoshi-tales-christmas',
   fortuneGuards: 'fortune-guards'
@@ -191,7 +192,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   };
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !user.address) return;
 
     queryClient.fetchQuery({
       queryKey: ['BankStakedNfts', user.address],
@@ -232,7 +233,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
     });
 
 
-  }, [isOpen]);
+  }, [isOpen, user.address]);
 
   useEffect(() => {
     setCurrentCollection(addressForTab);
@@ -258,7 +259,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         <FaqPage />
       ) : (
         <BankStakeNftContext.Provider value={{pendingNfts, stakedNfts}}>
-          <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to boost rewards for staked $Fortune. Receive larger boosts by staking higher ranked NFTs.</Text>
+          <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to boost rewards for staked $Fortune. Receive larger boosts by staking higher ranked NFTs. Staked NFTs remain staked for the duration of the game once they start receiving staking rewards.</Text>
           <StakingBlock
             pendingNfts={pendingNfts}
             stakedNfts={stakedNfts}
@@ -269,7 +270,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
           />
           <Box p={4}>
             <Flex direction='row' justify='center' mb={2}>
-              <SimpleGrid columns={{base: 2, sm: 4}}>
+              <SimpleGrid columns={{base: 2, sm: 3, md: 5}}>
                 <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
                   VIP
                 </RdTabButton>
@@ -278,6 +279,9 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
                   Halloween
+                </RdTabButton>
+                <RdTabButton isActive={currentTab === tabs.ryoshiTales} onClick={handleBtnClick(tabs.ryoshiTales)}>
+                  Gala
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
                   Christmas
@@ -597,7 +601,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           </SimpleGrid>
         ) : (
           <Box textAlign='center' mt={8}>
-            <Text>No NFTs available</Text>
+            <Text>No NFTs available. <br />Can't find your NFT? Check the FAQ at the top left for eligibility requirements</Text>
           </Box>
         )}
       </InfiniteScroll>

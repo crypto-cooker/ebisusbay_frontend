@@ -17095,7 +17095,7 @@
         "card": "/img/collections/blumies/card.webp",
         "website": "https://www.blumiesofficial.com/",
         "twitter": "https://twitter.com/BlumiesNFT",
-        "discord": "https://discord.gg/gQEmwg43Dg",
+        "discord": "https://discord.gg/Fuy99WgGeq",
         "medium": "https://blumies.gitbook.io/blumies-nft/",
         "categories": []
       },
@@ -22604,6 +22604,15 @@
         },
         {
           "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
         }
       ],
       "onChain": false,
@@ -22753,7 +22762,7 @@
       "multiToken": false,
       "address": "0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
         "avatar": "/img/collections/coom-cats/avatar.webp",
@@ -24223,7 +24232,7 @@
       "name": "Ryoshi Tales",
       "slug": "ryoshi-tales",
       "multiToken": false,
-      "address": "",
+      "address": "0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -24243,6 +24252,77 @@
         "doxx": true,
         "kyc": "hidden",
         "verified": true
+      }
+    },
+    {
+      "name": "CroTops",
+      "slug": "crotops",
+      "multiToken": false,
+      "address": "0x87e04f1d64619994a5320450E19C184a2dDE09c7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "⚡ Welcome to Cro Tops, This Project is based on the cartoon Bey-Blade's, Our Art will depict spin tops of various colors. themes, backgrounds, bonus item traits, and more!! so with that said, 25% of the mint funds goes to $Fortune token 25% of the mint funds goes to $TTT pairing 10% of the mint funds goes to Time Machine Launchpad 40% of the mint funds will be used to develop a staking site, and gamify CroTops \uD83D\uDE80LFG CROFAMM \uD83D\uDCAA",
+        "avatar": "/img/collections/crotops/avatar.webp",
+        "banner": "/img/collections/crotops/banner.webp",
+        "card": "/img/collections/crotops/card.webp",
+        "website": "https://time-launcher.com/drops/cro-tops",
+        "twitter": "https://twitter.com/PolyTops9000",
+        "discord": "https://discord.gg/MEquYDYUdB",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Crazzzy Ryoshi Monsterzzz",
+      "slug": "crazzzy-ryoshi-monsterzzz",
+      "multiToken": false,
+      "address": "0xe65FAA8791F25E9fB034f1C8913f14F6Db12C6C0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This collection is themed around the Ryoshi Dynasties game by Ebisu's Bay. It will consist of 10,000 NFTs with a heavy burn mechanism, 20 different Crazzzy Ryoshi Monsters with various quantities. Main focus of this collection is to maximise possible daily rewards for the current holders of our main Crazzzy NFT collections on Ebisu's Bay. Surprises will come for holders of the 20 different Crazzzy Ryoshi Monsterzzz.",
+        "avatar": "/img/collections/crazzzy-ryoshi-monsterzzz/avatar.webp",
+        "card": "/img/collections/crazzzy-ryoshi-monsterzzz/card.webp",
+        "banner": "/img/collections/crazzzy-ryoshi-monsterzzz/banner.webp",
+        "website": "https://crazzzymonsters.com/",
+        "twitter": "https://twitter.com/CrazzzyMonsters",
+        "discord": "https://discord.gg/6tR5TcHpBG",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Dooligans",
+      "slug": "dooligans",
+      "multiToken": false,
+      "address": "0xdaacfab134836d72bbb798f0f5bb333384a58894",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Dooligans are designed to provide the DooNFT community with a limited sized collection that gives even more scarcity through classifications, making each Dooligan rare in itself.",
+        "avatar": "/img/collections/dooligans/avatar.webp",
+        "card": "/img/collections/dooligans/card.webp",
+        "banner": "/img/collections/dooligans/banner.webp",
+        "website": "https://doonft.com/",
+        "twitter": "https://twitter.com/TheDooNFT",
+        "discord": "https://discord.gg/jWtZQmZGK5",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -31257,7 +31337,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "images": {
         "drop": "/img/drops/coom-cats/drop2.webp",
@@ -31544,7 +31624,7 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "",
+      "address": "0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 40,
       "totalSupply": 500,
@@ -31558,7 +31638,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "images": {
         "drop": "/img/drops/ryoshi-tales-goblin-gala/drop1.webp",

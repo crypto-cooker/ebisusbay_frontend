@@ -59,14 +59,19 @@ COPY --link types ./types
 COPY --link next.config.js ./
 COPY --link jsconfig.json ./
 COPY --link tsconfig.json ./
+COPY --link sentry.client.config.ts ./
+COPY --link sentry.edge.config.ts ./
+COPY --link sentry.server.config.ts ./
 
 # Define build env. variables based on arguments
 ARG NEXT_PUBLIC_ENV
 ARG NEXT_PUBLIC_SITE24X7_KEY
 ARG NEXT_PUBLIC_SENTRY_DSN
+ARG NEXT_PUBLIC_SENTRY_ENVIRONMENT
+ARG SENTRY_AUTH_TOKEN
 
 # Build the project
-RUN --mount=type=cache,target=/usr/src/app/.next/cache NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN npm run build
+RUN --mount=type=cache,target=/usr/src/app/.next/cache NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN npm run build
 
 #####################
 ### Runtime stage ###
