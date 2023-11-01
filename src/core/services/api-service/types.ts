@@ -105,9 +105,9 @@ export interface TownHallStakeNft {
 }
 
 export enum StakedTokenType {
-    BANK = 'bank',
-    BARRACKS = 'barracks',
-    TOWN_HALL = 'staking'
+    BANK = 'BANK',
+    BARRACKS = 'BARRACKS',
+    TOWN_HALL = 'TOWN_HALL'
 }
 
 export interface RdFaction {
