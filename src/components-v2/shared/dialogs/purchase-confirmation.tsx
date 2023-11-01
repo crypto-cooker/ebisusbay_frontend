@@ -48,7 +48,7 @@ import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {getPrices} from "@src/core/api/endpoints/prices";
-import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
+import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -186,9 +186,8 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                 <div className="col-4 mb-2 mb-sm-0">
                   {isBundle(listing.nftAddress) ? (
                     <ImagesContainer nft={listing.nft} />
-                  ) : isLandDeedsCollection(listing.nft.nftAddress) ? (
-                    <RdLand nftId={listing.nft.nftId} />
                   ) : (
+                  <DynamicNftImage address={listing.nft.address ?? listing.nft.nftAddress} id={listing.nft.id ?? listing.nft.nftId}>
                     <AnyMedia
                       image={specialImageTransform(listing.nft.nftAddress, listing.nft.image)}
                       video={listing.nft.video ?? listing.nft.animation_url}
@@ -197,6 +196,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       usePlaceholder={false}
                       className="img-fluid img-rounded"
                     />
+                  </DynamicNftImage>
                   )}
                 </div>
                 <div className="col-8 mt-2 mt-sm-0">

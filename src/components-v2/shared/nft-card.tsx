@@ -15,8 +15,7 @@ import {
   round,
   siPrefixedNumber,
   timeSince,
-  isLandDeedsCollection,
-  isHerosCollection
+  isDynamicNftImageCollection,
 } from '@src/utils';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
@@ -49,9 +48,8 @@ import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
-import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 import {useExchangeRate} from "@src/hooks/useGlobalPrices";
-import RdHero from '@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero';
+import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
@@ -232,11 +230,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                       usePlaceholder={true}
                     />
                   </Watermarked>
-                ) : isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
-                  <RdLand nftId={nft.id ?? nft.nftId} />
-                ) : isHerosCollection(nft.address ?? nft.nftAddress) ? (
-                  <RdHero nftId={nft.id ?? nft.nftId} />
                 ) : (
+                <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
                   <AnyMedia
                     image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}
                     className={`card-img-top ${imgClass}`}
@@ -248,6 +243,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                     thumbnail={!!nft.video || !!nft.animationUrl || !!nft.animation_url ? ImageService.translate(nft.video ?? nft.animationUrl ?? nft.animation_url).thumbnail() : undefined}
                     usePlaceholder={true}
                   />
+                </DynamicNftImage>
                 )}
               </Box>
             </div>

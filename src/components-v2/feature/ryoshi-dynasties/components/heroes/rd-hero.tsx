@@ -71,7 +71,7 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
     setGloves(mainFolderPath + "/HeroClass/" +heroClass+'/Gloves/'+clothesColor+'.png');
 
     setMarkings(mainFolderPath + (IsDruid(attributes) ? '/HeroClass/Druid/Markings/' : '/HeroClass/Empty/')+clothesColor+'.png');
-    setGoggles(mainFolderPath + (IsTinkerer(attributes) ? '/HeroClass/Tinkerer/Goggles' : '/HeroClass/Empty/')+'.png');
+    setGoggles(mainFolderPath + (IsTinkerer(attributes) ? '/HeroClass/Tinkerer/Goggles' : '/HeroClass/Empty/')+clothesColor+'.png');
   }
   const IsDruid = (attributes:Attribute[]) => {
     for(let i = 0; i < attributes.length; i++){
@@ -103,7 +103,7 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
   }
   const GenerateHeroPNG = (nftId : string) => {
     let nft : NFTMetaData = heroesMetadata.Hero.find((nft) => nft.id == nftId) as NFTMetaData;
-    console.log(nft);
+    // console.log(nft);
 
     setLocation(mainFolderPath +'Location/' + GetTraitType("Location", nft.attributes));
     setSkin(mainFolderPath +'Skin/'+GetTraitType('Skin', nft.attributes));
