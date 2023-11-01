@@ -24324,6 +24324,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Ryoshi Heroes",
+      "slug": "ryoshi-heroes",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/ryoshi-heroes/avatar.webp",
+        "banner": "/img/collections/ryoshi-heroes/banner.webp",
+        "card": "/img/collections/ryoshi-heroes/card.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -31645,6 +31671,51 @@
         "avatar": "/img/drops/ryoshi-tales-goblin-gala/avatar1.webp",
         "banner": "/img/drops/ryoshi-tales-goblin-gala/banner1.webp",
         "preview": "/img/drops/ryoshi-tales-goblin-gala/preview1.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 187,
+      "slug": "ryoshi-heroes",
+      "collection": "ryoshi-heroes",
+      "title": "Ryoshi Heroes",
+      "subtitle": "The Heroes Gen.0 Collection is a collection of unique and powerful Heroes that will play a crucial role in the gameplay experience of Ebisu's Bay. Each Hero will bring their singular skills in the battlefield, leading your army, get access to Heroes cloning, gather resources and accomplish legendary quests! \n\nHeroes Gen.0 are the first of their kind, and they have been carefully crafted to be balanced and fair. If you want to be a leader in Ebisu's Bay, then you will need a Hero Gen.0 on your side.",
+      "description": "A limited amount of 320 unique and powerful Heroes will be available for mint on Ebisu's Bay on November 2nd, 2023.\n\n**Mint details:**\n\n- Available for mint: 320 Heroes Gen.0\n- Date: November 2nd, 2023 at 8pm UTC\n- Requirements: Hold at least 1000 Mitama\n- Maximum mint per wallet: 10\n- Starting price: 15,000 $FRTN\n- Auction’s floor price: 3000 $FRTN\n- Auction duration: 24 hours\n\n**Note:** Each bid will lower the price for everyone. If you minted at a higher price, you will be able to withdraw the difference.\n\n**Of all $FRTN spent:**\n\n97% of $FRTN spent will be burnt, and 3% will be redistributed to holders of specific Land Deeds.\n\nLearn more about Heroes on our Wiki: [https://www.notion.so/ebisusbay/Heroes-bf7562f290d947fd8dac095aa9c6f883](https://www.notion.so/Heroes-bf7562f290d947fd8dac095aa9c6f883?pvs=21)\n\n**Get your Hero Gen.0 today!**",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "",
+      "type": "dutch",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 330,
+      "erc20Cost": "15000",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "foundersOnly": false,
+      "start": 1698792005000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-heroes/drop.webp",
+        "avatar": "/img/collections/ryoshi-heroes/avatar.webp",
+        "banner": "/img/drops/ryoshi-heroes/banner.webp",
+        "preview": "/img/collections/ryoshi-heroes/card.webp"
       },
       "verification": {
         "verified": true,
