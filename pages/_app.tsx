@@ -4,7 +4,6 @@ import * as Sentry from '@sentry/react';
 
 import { ErrorPage } from '@src/Components/ErrorPage';
 import store from '../src/Store/store';
-import { SentryLoggingService } from '@src/third-party/sentry';
 import { Site24x7LoggingService } from '@src/third-party/site24x7';
 import {
   QueryClient,
@@ -27,7 +26,6 @@ import customTheme from "@src/Theme/theme";
 import {AppProps} from "next/app";
 import App from "@src/components-v2/app";
 
-SentryLoggingService.init();
 Site24x7LoggingService.init();
 const queryClient = new QueryClient()
 

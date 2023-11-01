@@ -1,5 +1,20 @@
 [
   {
+    "name": "Ryoshi Heroes",
+    "start": 1698815621,
+    "end": 1698962400,
+    "placement": "rd-board",
+    "details": {
+      "weight": 2,
+      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-heroes-lg.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-heroes-sm.webp",
+      "link": {
+        "url": "/drops/ryoshi-heroes",
+        "external": false
+      }
+    }
+  },
+  {
     "name": "Ryoshi Tales: Goblin Gala",
     "start": 1698275251,
     "end": 1698437220,
@@ -17,10 +32,10 @@
   {
     "name": "Ryoshi Hearts",
     "start": 1697910565,
-    "end": 1698710399,
+    "end": 1699163920,
     "placement": "rd-board",
     "details": {
-      "weight": 2,
+      "weight": 1,
       "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-hearts-lg.webp",
       "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-hearts-sm.webp",
       "link": {
