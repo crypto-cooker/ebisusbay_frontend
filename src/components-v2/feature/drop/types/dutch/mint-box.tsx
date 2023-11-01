@@ -140,15 +140,15 @@ const MintBox = () => {
         >
           Mint
         </PrimaryButton>
-        <PrimaryButton
-          onClick={() => handleMint(FundingType.REWARDS)}
-          disabled={mintingWithType === FundingType.REWARDS}
-          isLoading={mintingWithType === FundingType.REWARDS}
-          loadingText='Minting...'
-          whiteSpace='initial'
-        >
-          Mint from Rewards
-        </PrimaryButton>
+        {/*<PrimaryButton*/}
+        {/*  onClick={() => handleMint(FundingType.REWARDS)}*/}
+        {/*  disabled={mintingWithType === FundingType.REWARDS}*/}
+        {/*  isLoading={mintingWithType === FundingType.REWARDS}*/}
+        {/*  loadingText='Minting...'*/}
+        {/*  whiteSpace='initial'*/}
+        {/*>*/}
+        {/*  Mint from Rewards*/}
+        {/*</PrimaryButton>*/}
       </Stack>
     </Box>
   )
