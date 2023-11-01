@@ -12,7 +12,6 @@ import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {
   appUrl,
   createSuccessfulAddCartContent,
-  isLandDeedsCollection,
   round,
   siPrefixedNumber,
   timeSince
@@ -38,7 +37,6 @@ import {specialImageTransform} from "@src/hacks";
 import {appConfig} from "@src/Config";
 import ImageService from "@src/core/services/image";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
-import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 
 const config = appConfig();
@@ -235,9 +233,8 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                       width={440}
                     />
                   </Watermarked>
-                ) : isLandDeedsCollection(listing.nftAddress) ? (
-                      <RdLand nftId={listing.nftId} />
                 ) : (
+                  <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
                   <AnyMedia
                     image={nftCardUrl(listing.nftAddress, listing.nft.image)}
                     className={`card-img-top ${imgClass}`}
@@ -249,6 +246,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                     thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.translate(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url).thumbnail() : undefined}
                     usePlaceholder={true}
                   />
+                  </DynamicNftImage>
                 )}
               </Box>
             </div>
