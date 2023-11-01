@@ -22,6 +22,7 @@ import ImageService from "@src/core/services/image";
 import {commify} from "ethers/lib/utils";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import Markdown from "react-markdown";
 
 const config = appConfig();
 
@@ -408,7 +409,11 @@ const SingleDrop = ({drop}: SingleDropProps) => {
                     </a>
                     </Text>
                   )}
-                  {newlineText(drop.description)}
+                  <Container>
+                    <Markdown>
+                      {drop.description}
+                    </Markdown>
+                  </Container>
 
                   {drop.slug === 'ryoshi-playing-cards' && (
                     <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
@@ -425,3 +430,18 @@ const SingleDrop = ({drop}: SingleDropProps) => {
   );
 };
 export default SingleDrop;
+
+const Container = styled.div`
+  p {
+      margin-top: 10px;
+  }
+  
+  li {
+    margin-left: 18px;
+  }
+  
+  a {
+    font-weight: bold;
+    color: #218cff;
+  }
+`;
