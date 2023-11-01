@@ -15,7 +15,8 @@ import {
   round,
   siPrefixedNumber,
   timeSince,
-  isLandDeedsCollection
+  isLandDeedsCollection,
+  isHerosCollection
 } from '@src/utils';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
@@ -50,6 +51,7 @@ import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 import {useExchangeRate} from "@src/hooks/useGlobalPrices";
+import RdHero from '@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero';
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
@@ -232,6 +234,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                   </Watermarked>
                 ) : isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
                   <RdLand nftId={nft.id ?? nft.nftId} />
+                ) : isHerosCollection(nft.address ?? nft.nftAddress) ? (
+                  <RdHero nftId={nft.id ?? nft.nftId} />
                 ) : (
                   <AnyMedia
                     image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}

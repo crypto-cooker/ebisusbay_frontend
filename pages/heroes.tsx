@@ -1,9 +1,10 @@
 import {NextPage} from "next";
 import FactionDirectoryComponent from "@src/components-v2/feature/ryoshi-dynasties/components/faction-directory";
-import RdHeroFrame from "@src/components-v2/feature/ryoshi-dynasties/components/rd-hero";
+import RdHeroFrame from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero-frame";
+import RdHero from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero";
 import { Flex, Box } from "@chakra-ui/react";
 
-const FactionDirectory: NextPage = () => {
+const Hero: NextPage = () => {
   return (
   <>
   <Flex 
@@ -13,12 +14,16 @@ const FactionDirectory: NextPage = () => {
     // padding={'200px'}
     padding={'20px'}
     >
-    <Box >
-      <RdHeroFrame/>
+    <Box
+      minW={'200px'}
+      minH={'200px'}
+      >
+      {/* <RdHeroFrame nftId={'6'}/> */}
+      <RdHero nftId={"880"}/>
     </Box>
   </Flex>
   </>
   );
 };
 
-export default FactionDirectory;
+export default Hero;

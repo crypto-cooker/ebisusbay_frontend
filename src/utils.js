@@ -585,6 +585,9 @@ export const isLandDeedsCollection = (address) => {
     ['0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3', '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad']
   );
 };
+export const isHerosCollection = (address) => {
+  return isCollection(address, 'izanamis-cradle-heros', '0x8d5c2Dc8b8a3e5fF9eD8a9dD1A5dEe0AeBd0C9e5');
+}
 
 export const isPlayingCardsCollection = (address) => {
   return isCollection(address, 'ryoshi-playing-cards', '0xd87838a982a401510255ec27e603b0f5fea98d24');
