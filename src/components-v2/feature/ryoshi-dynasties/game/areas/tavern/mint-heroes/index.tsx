@@ -83,7 +83,8 @@ const MintHeroes = ({isOpen, onClose}: MintHeroesProps) => {
         <FaqPage />
       ) : (
         <Box p={4}>
-
+          <Text align='center'>Obtain your own unique Hero Gen.0 and discover its rarity level, class, and stats.
+            Let your Hero guide your army into victory and achieve legendary quests!</Text>
           <Box p={4}>
             <Flex direction='row' justify='center' mb={2}>
               <SimpleGrid columns={2}>
