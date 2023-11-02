@@ -12,7 +12,7 @@ import {
   Text,
   useNumberInput
 } from "@chakra-ui/react";
-import {DropState as statuses} from "@src/core/api/enums";
+import {DropState, DropState as statuses} from "@src/core/api/enums";
 import {constants, Contract, ethers} from "ethers";
 import {createSuccessfulTransactionToastContent, percentage, round} from "@src/utils";
 import React, {useEffect, useState} from "react";
@@ -45,7 +45,7 @@ enum FundingType {
 interface MintBoxProps {
   drop: Drop;
   abi: any;
-  status: number;
+  status: DropState;
   totalSupply: number;
   maxSupply: number;
   priceDescription?: string;
@@ -435,7 +435,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
             {status === statuses.LIVE && !!drop.end && (
               <div className="me-4">
-                <Heading as="h6" size="sm" className="mb-1">{status === statuses.EXPIRED ? <>Minting Ended</> : <>Minting Ends</>}</Heading>
+                <Heading as="h6" size="sm" className="mb-1">Minting Ends</Heading>
                 <Heading as="h3" size="md">{convertTime(drop.end)}</Heading>
               </div>
             )}
