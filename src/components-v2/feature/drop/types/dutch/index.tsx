@@ -113,7 +113,7 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
     }
 
     try {
-      const readContract = new ethers.Contract(drop.address, abi, readProvider);
+      const readContract = auctionData.readContract ?? new ethers.Contract(drop.address, abi, readProvider);
       // const writeContract = !!user.address ? new ethers.Contract(drop.address, abi, user.provider) : undefined;
 
       const kitchenSink = await readContract.getKitchSink(user.address ?? ethers.constants.AddressZero);
@@ -141,7 +141,6 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
           kitchenSink.availableTokenCount
         ),
         readContract,
-        // writeContract,
         refundDue: parseInt(ethers.utils.formatEther(kitchenSink.refundDue)),
         maxSupply: hackMaxSupply,
         availableTokenCount: kitchenSink.availableTokenCount,
@@ -168,13 +167,18 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
     }
   };
 
-  const refreshUserBalance = async () => {
-    const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
-    const userBalance = await fortuneContract.balanceOf(user.address);
-    setAuctionData((prev) => ({
-      ...prev,
-      userBalance: parseInt(ethers.utils.formatEther(userBalance))
-    }));
+  // Passing user address because for some reason user.address not defined sometimes
+  const refreshUserBalance = async (address: string) => {
+    try {
+      const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
+      const userBalance = await fortuneContract.balanceOf(address);
+      setAuctionData((prev) => ({
+        ...prev,
+        userBalance: parseInt(ethers.utils.formatEther(userBalance))
+      }));
+    } catch (e) {
+      console.log('Error refreshing user balance', e);
+    }
   }
 
   useEffect(() => {
@@ -183,8 +187,8 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
       refreshContract: () => {
         retrieveDropInfo();
       },
-      onUserMinted: () => {
-        refreshUserBalance()
+      onUserMinted: (address: string) => {
+        refreshUserBalance(address)
       }
     }));
   }, []);
@@ -196,7 +200,6 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
   useEffect(() => {
     if (!!auctionData.readContract) {
       const onMinted = (to: string, ids: number[], tokensLeft: number) => {
-        console.log(`Minted event: ${to} ${ids} ${tokensLeft}`);
         setAuctionData((prev) => ({
           ...prev,
           currentSupply: prev.maxSupply - tokensLeft,

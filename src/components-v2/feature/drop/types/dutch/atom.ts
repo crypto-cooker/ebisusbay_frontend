@@ -22,7 +22,7 @@ interface AuctionData {
   canMint: number;
   address: string;
   userBalance: number;
-  onUserMinted: () => void;
+  onUserMinted: (address: string) => void;
 }
 
 export const dutchAuctionDataAtom = atom<AuctionData>({
@@ -40,5 +40,5 @@ export const dutchAuctionDataAtom = atom<AuctionData>({
   canMint: 0,
   address: '',
   userBalance: 0,
-  onUserMinted: () => {},
+  onUserMinted: (address: string) => {},
 });
