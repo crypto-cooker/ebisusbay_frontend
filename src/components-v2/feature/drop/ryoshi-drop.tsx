@@ -495,7 +495,7 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
 
                     {status === statuses.LIVE && drop.end && (
                       <div className="me-4">
-                        <Heading as="h6" size="sm" className="mb-1">{status === statuses.EXPIRED ? <>Minting Ended</> : <>Minting Ends</>}</Heading>
+                        <Heading as="h6" size="sm" className="mb-1">Minting Ends</Heading>
                         <Heading as="h3" size="md">{convertTime(drop.end)}</Heading>
                       </div>
                     )}
