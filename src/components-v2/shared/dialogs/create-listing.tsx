@@ -52,7 +52,7 @@ import {useExchangeRate, useTokenExchangeRate} from "@src/hooks/useGlobalPrices"
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import ReactSelect from "react-select";
-import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
+import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -426,9 +426,8 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                 <div className="col-12 col-sm-6 mb-2 mb-sm-0">
                   {isBundle(nft.address ?? nft.nftAddress) ? (
                     <ImagesContainer nft={nft} />
-                  ) : isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
-                    <RdLand nftId={nft.id ?? nft.nftId} />
                   ) : (
+                    <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
                       video={nft.video ?? nft.animation_url}
@@ -437,6 +436,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       usePlaceholder={false}
                       className="img-fluid img-rounded"
                     />
+                    </DynamicNftImage>
                   )}
                 </div>
                 <div className="col-12 col-sm-6">

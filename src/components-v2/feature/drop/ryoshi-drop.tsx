@@ -13,7 +13,7 @@ import styled from 'styled-components';
 
 import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {createSuccessfulTransactionToastContent, isFounderDrop, percentage,} from '@src/utils';
-import {dropState as statuses} from '@src/core/api/enums';
+import {DropState as statuses} from '@src/core/api/enums';
 import {ERC1155} from '@src/Contracts/Abis';
 import {getTheme} from '@src/Theme/theme';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
@@ -495,7 +495,7 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
 
                     {status === statuses.LIVE && drop.end && (
                       <div className="me-4">
-                        <Heading as="h6" size="sm" className="mb-1">{status === statuses.EXPIRED ? <>Minting Ended</> : <>Minting Ends</>}</Heading>
+                        <Heading as="h6" size="sm" className="mb-1">Minting Ends</Heading>
                         <Heading as="h3" size="md">{convertTime(drop.end)}</Heading>
                       </div>
                     )}

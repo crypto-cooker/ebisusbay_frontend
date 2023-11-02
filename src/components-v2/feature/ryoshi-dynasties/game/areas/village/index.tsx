@@ -141,6 +141,10 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const OpenBattleMap = () => {
     handleSceneChange('battleMap');
   }
+  const OpenTavern = () => {
+    setElementToZoomTo('Tavern');
+    DelayedOpen('Tavern');
+  }
   function timeout(delay: number) {
     return new Promise( res => setTimeout(res, delay) );
 }
@@ -159,6 +163,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       onChange('bank');
     } else if(thingToOpen == 'Battle Map') {
       onChange('battleMap');
+    } else if(thingToOpen == 'Tavern') {
+      onChange('tavern');
     }
   }
 
@@ -604,8 +610,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       <img src={ImageService.translate('/img/battle-bay/mapImages/townhall.png').convert()} />
                     </Box>
 
-                    <Box   style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
-                      // onClick={() => onChange('tavern')}
+                    <Box id='Tavern' className={styles.enlarge} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
+                      onClick={OpenTavern}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/tavern.png').convert()} />
                     </Box>

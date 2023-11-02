@@ -31,7 +31,6 @@ import {
   isEmptyObj,
   isEvoSkullCollection,
   isLadyWeirdApesCollection,
-  isLandDeedsCollection,
   isLazyHorseCollection,
   isLazyHorsePonyCollection,
   isNftBlacklisted,
@@ -41,6 +40,7 @@ import {
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   shortAddress,
+  isDynamicNftImageCollection
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
@@ -86,8 +86,8 @@ import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferState, OfferType} from "@src/core/services/api-service/types";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
-import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 import {ApiService} from "@src/core/services/api-service";
+import DynamicNftImage from '@src/components-v2/shared/media/dynamic-nft-image';
 
 const config = appConfig();
 const tabs = {
@@ -577,18 +577,18 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                   <ImageContainer nft={nft} />
                 ) : nft.useIframe ? (
                   <iframe width="100%" height="636" src={nft.iframeSource} title="nft" />
-                ) : isLandDeedsCollection(address) ? (
-                    <RdLand nftId={id} rounded='xl' />
                 ) : (
                   <>
-                    <AnyMedia
-                      image={ImageService.translate(specialImageTransform(address, nft.image)).convert()}
-                      video={nft.video ?? nft.animation_url}
-                      videoProps={{ height: 'auto', autoPlay: true }}
-                      title={nft.name}
-                      usePlaceholder={false}
-                      className="img-fluid img-rounded mb-sm-30"
-                    />
+                    <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
+                      <AnyMedia
+                        image={ImageService.translate(specialImageTransform(address, nft.image)).convert()}
+                        video={nft.video ?? nft.animation_url}
+                        videoProps={{ height: 'auto', autoPlay: true }}
+                        title={nft.name}
+                        usePlaceholder={false}
+                        className="img-fluid img-rounded mb-sm-30"
+                      />
+                    </DynamicNftImage>
                   </>
                 )
               ) : (
