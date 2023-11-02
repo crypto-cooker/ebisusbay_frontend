@@ -17095,7 +17095,7 @@
         "card": "/img/collections/blumies/card.webp",
         "website": "https://www.blumiesofficial.com/",
         "twitter": "https://twitter.com/BlumiesNFT",
-        "discord": "https://discord.gg/gQEmwg43Dg",
+        "discord": "https://discord.gg/Fuy99WgGeq",
         "medium": "https://blumies.gitbook.io/blumies-nft/",
         "categories": []
       },
@@ -19904,7 +19904,7 @@
       "multiToken": false,
       "address": "0x3d7777ff1908B54b57038A2556d6904f71468e2D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Immerse yourself in the world of 7777 distinct 3D CROWs, each featuring a one-of-a-kind 3D model, masterfully designed by RaulPM. These 3D CROWs boast attributes that correspond to their original CRO CROW counterparts, so CRO CROW #1 should have the same attributes as 3D CROW #1 and so on.",
         "avatar": "/img/collections/3d-crow/avatar.webp",
@@ -22604,6 +22604,15 @@
         },
         {
           "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
         }
       ],
       "onChain": false,
@@ -22753,7 +22762,7 @@
       "multiToken": false,
       "address": "0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
         "avatar": "/img/collections/coom-cats/avatar.webp",
@@ -23919,9 +23928,9 @@
       "name": "BOB Headz",
       "slug": "bob-headz",
       "multiToken": false,
-      "address": "",
+      "address": "0x41C7874A2fE9D1ea126bfBD44597A1f96546152e",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "BOB Headz is super limited collection with unique utility to holders! There will be more than 200+ traits and multiple legendaries to be found!",
         "avatar": "/img/collections/bob-headz/avatar.webp",
@@ -24223,14 +24232,111 @@
       "name": "Ryoshi Tales",
       "slug": "ryoshi-tales",
       "multiToken": false,
+      "address": "0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/ryoshi-tales/avatar.webp",
+        "banner": "/img/collections/ryoshi-tales/banner.webp",
+        "card": "/img/collections/ryoshi-tales/card.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "verified": true
+      }
+    },
+    {
+      "name": "CroTops",
+      "slug": "crotops",
+      "multiToken": false,
+      "address": "0x87e04f1d64619994a5320450E19C184a2dDE09c7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "⚡ Welcome to Cro Tops, This Project is based on the cartoon Bey-Blade's, Our Art will depict spin tops of various colors. themes, backgrounds, bonus item traits, and more!! so with that said, 25% of the mint funds goes to $Fortune token 25% of the mint funds goes to $TTT pairing 10% of the mint funds goes to Time Machine Launchpad 40% of the mint funds will be used to develop a staking site, and gamify CroTops \uD83D\uDE80LFG CROFAMM \uD83D\uDCAA",
+        "avatar": "/img/collections/crotops/avatar.webp",
+        "banner": "/img/collections/crotops/banner.webp",
+        "card": "/img/collections/crotops/card.webp",
+        "website": "https://time-launcher.com/drops/cro-tops",
+        "twitter": "https://twitter.com/PolyTops9000",
+        "discord": "https://discord.gg/MEquYDYUdB",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Crazzzy Ryoshi Monsterzzz",
+      "slug": "crazzzy-ryoshi-monsterzzz",
+      "multiToken": false,
+      "address": "0xe65FAA8791F25E9fB034f1C8913f14F6Db12C6C0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This collection is themed around the Ryoshi Dynasties game by Ebisu's Bay. It will consist of 10,000 NFTs with a heavy burn mechanism, 20 different Crazzzy Ryoshi Monsters with various quantities. Main focus of this collection is to maximise possible daily rewards for the current holders of our main Crazzzy NFT collections on Ebisu's Bay. Surprises will come for holders of the 20 different Crazzzy Ryoshi Monsterzzz.",
+        "avatar": "/img/collections/crazzzy-ryoshi-monsterzzz/avatar.webp",
+        "card": "/img/collections/crazzzy-ryoshi-monsterzzz/card.webp",
+        "banner": "/img/collections/crazzzy-ryoshi-monsterzzz/banner.webp",
+        "website": "https://crazzzymonsters.com/",
+        "twitter": "https://twitter.com/CrazzzyMonsters",
+        "discord": "https://discord.gg/6tR5TcHpBG",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Dooligans",
+      "slug": "dooligans",
+      "multiToken": false,
+      "address": "0xdaacfab134836d72bbb798f0f5bb333384a58894",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Dooligans are designed to provide the DooNFT community with a limited sized collection that gives even more scarcity through classifications, making each Dooligan rare in itself.",
+        "avatar": "/img/collections/dooligans/avatar.webp",
+        "card": "/img/collections/dooligans/card.webp",
+        "banner": "/img/collections/dooligans/banner.webp",
+        "website": "https://doonft.com/",
+        "twitter": "https://twitter.com/TheDooNFT",
+        "discord": "https://discord.gg/jWtZQmZGK5",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ryoshi Heroes",
+      "slug": "ryoshi-heroes",
+      "multiToken": false,
       "address": "",
       "onChain": false,
       "listable": true,
       "metadata": {
         "description": "",
-        "avatar": "/img/collections/ryoshi-tales/avatar0.webp",
-        "banner": "/img/collections/ryoshi-tales/banner0.webp",
-        "card": "/img/collections/ryoshi-tales/card0.webp",
+        "avatar": "/img/collections/ryoshi-heroes/avatar.webp",
+        "banner": "/img/collections/ryoshi-heroes/banner.webp",
+        "card": "/img/collections/ryoshi-heroes/card.webp",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
         "discord": "https://discord.gg/ebisusbay",
@@ -31257,7 +31363,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "images": {
         "drop": "/img/drops/coom-cats/drop2.webp",
@@ -31413,7 +31519,7 @@
         "twitter": "https://twitter.com/CroBobAdventure",
         "discord": "https://discord.gg/kemzRExMju"
       },
-      "address": "",
+      "address": "0x41C7874A2fE9D1ea126bfBD44597A1f96546152e",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 100,
       "totalSupply": 808,
@@ -31426,7 +31532,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/bob-headz/drop.webp",
         "banner": "/img/collections/bob-headz/banner.webp",
@@ -31507,7 +31613,7 @@
       "erc20Only": true,
       "memberMitama": 1000,
       "foundersOnly": false,
-      "abi": "ryoshi-playing-cards.json",
+      "abi": "mint-from-rewards.json",
       "start": 1698177600000,
       "end": null,
       "referral": false,
@@ -31544,17 +31650,61 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "",
+      "address": "0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 40,
       "totalSupply": 500,
       "erc20Cost": "300",
       "erc20Token": "frtn",
       "erc20Only": true,
-      "memberMitama": 1000,
       "foundersOnly": false,
-      "abi": "ryoshi-playing-cards.json",
+      "abi": "mint-from-rewards.json",
       "start": 1698436800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": true,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-goblin-gala/drop1.webp",
+        "avatar": "/img/drops/ryoshi-tales-goblin-gala/avatar1.webp",
+        "banner": "/img/drops/ryoshi-tales-goblin-gala/banner1.webp",
+        "preview": "/img/drops/ryoshi-tales-goblin-gala/preview1.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 187,
+      "slug": "ryoshi-heroes",
+      "collection": "ryoshi-heroes",
+      "title": "Ryoshi Heroes",
+      "subtitle": "The Heroes Gen.0 Collection is a collection of unique and powerful Heroes that will play a crucial role in the gameplay experience of Ebisu's Bay. Each Hero will bring their singular skills in the battlefield, leading your army, get access to Heroes cloning, gather resources and accomplish legendary quests! \n\nHeroes Gen.0 are the first of their kind, and they have been carefully crafted to be balanced and fair. If you want to be a leader in Ebisu's Bay, then you will need a Hero Gen.0 on your side.",
+      "description": "A limited amount of 330 unique and powerful Heroes will be available for mint on Ebisu's Bay today November 2nd, 2023. \n\n**Mint details**: \n- Available for mint: 330 Heroes Gen.0 \n- Time: 8pm UTC \n- Maximum mint per wallet: 20 \n- Bids start at 15,000 $FRTN, moving to a lower mint price at each bid, as price will re adjust every 5 minutes. \n- Auction duration: 24 hours\n\n**Note**: Each bid will lower the price for everyone. If you minted at a higher price, you will be able to withdraw the difference. \n\n**Of all $FRTN spent**: Once minted out and the final price is set, all remaining $FRTN will be burnt except: 0.25% to Ebisu's Owners 0.25% to Felisgarde's Owners 1% to Lighthouses' Owners 1.5% to Inns' Owners Proceeds will be deposited to the owner's rewards vault during season 2 Learn more about Heroes on our Wiki: <https://www.notion.so/ebisusbay/Heroes-bf7562f290d947fd8dac095aa9c6f883> \n\n**Get your Hero Gen.0 today!**",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "",
+      "type": "dutch",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 330,
+      "erc20Cost": "15000",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "foundersOnly": false,
+      "start": 1698955200000,
       "end": null,
       "referral": false,
       "is1155": false,
@@ -31562,10 +31712,10 @@
       "complete": false,
       "featured": true,
       "images": {
-        "drop": "/img/drops/ryoshi-tales-goblin-gala/drop.webp",
-        "avatar": "/img/drops/ryoshi-tales-goblin-gala/avatar.webp",
-        "banner": "/img/drops/ryoshi-tales-goblin-gala/banner.webp",
-        "preview": "/img/drops/ryoshi-tales-goblin-gala/preview.webp"
+        "drop": "/img/drops/ryoshi-heroes/drop.webp",
+        "avatar": "/img/collections/ryoshi-heroes/avatar.webp",
+        "banner": "/img/drops/ryoshi-heroes/banner.webp",
+        "preview": "/img/collections/ryoshi-heroes/card.webp"
       },
       "verification": {
         "verified": true,
