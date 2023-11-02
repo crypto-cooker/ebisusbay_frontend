@@ -8,6 +8,12 @@ interface NFTMetaData{
   image : string;
   name : string;
   attributes : Attribute[];
+  stats : NumberAttribute[];
+}
+interface NumberAttribute{
+  trait_type : string;
+  value : number;
+  display_type : string;
 }
 interface Attribute{
   trait_type : string;
@@ -40,6 +46,13 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const mainFolderPath = '/img/ryoshi-dynasties/heroes/'
 
+  const [str, setStr] = useState<number>(0);
+  const [dex, setDex] = useState<number>(0);
+  const [int, setInt] = useState<number>(0);
+  const [wis, setWis] = useState<number>(0);
+  const [agi, setAgi] = useState<number>(0);
+  const [luk, setLuk] = useState<number>(0);
+  const [cha, setCha] = useState<number>(0);
   
   const GetTraitType = (traitType:string, attributes:Attribute[]) => {
     for(let i = 0; i < attributes.length; i++){
@@ -101,6 +114,26 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
     }
     return rarityString + shinyString + '.png';
   }
+  const GetStats = (attributes:NumberAttribute[]) => {
+    for(let i = 0; i < attributes.length; i++){
+      if(attributes[i].trait_type == 'STR'){
+        setStr(attributes[i].value);
+      } else if (attributes[i].trait_type == 'DEX'){
+        setDex(attributes[i].value);
+      } else if (attributes[i].trait_type == 'INT'){
+        setInt(attributes[i].value);
+      } else if (attributes[i].trait_type == 'WIS'){
+        setWis(attributes[i].value);
+      } else if (attributes[i].trait_type == 'AGI'){
+        setAgi(attributes[i].value);
+      } else if (attributes[i].trait_type == 'LUK'){
+        setLuk(attributes[i].value);
+      } else if (attributes[i].trait_type == 'CHA'){
+        setCha(attributes[i].value);
+      }
+    }
+  }
+
   const GenerateHeroPNG = (nftId : string) => {
     let nft : NFTMetaData = heroesMetadata.Hero.find((nft) => nft.id == nftId) as NFTMetaData;
     // console.log(nft);
@@ -110,8 +143,9 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
     setHair(mainFolderPath +'Hair/'+GetTraitType('Hair', nft.attributes));
     setEyes(mainFolderPath +'Eyes/'+GetTraitType('Eyes', nft.attributes));
     setMouth(mainFolderPath +'Mouth/'+GetTraitType('Mouth', nft.attributes));
+    setBorder(mainFolderPath +'Border/'+GetBorder(nft.attributes));
     GetClothes(nft.attributes);
-    setBorder(mainFolderPath +'border/'+GetBorder(nft.attributes));
+    GetStats(nft.stats);
   }
 
   useEffect(() => {
@@ -158,8 +192,49 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
         <Image h={size} w={size} src={gloves} position={'absolute'} borderRadius={'md'} zIndex={0}/>
         <Image h={size} w={size} src={goggles} position={'absolute'} borderRadius={'md'} zIndex={0}/>
         <Image h={size} w={size} src={border} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+
+        {/* <SimpleGrid
+          h={size*0.25}
+          w={size}
+          position={'absolute'}
+          bg={'#111219'}
+          borderTopColor={'#30333f'}
+          borderTopWidth={{ base: 4, sm:4, md: 4 }}
+          columns={4}
+          bottom={0}
+          paddingLeft={2}
+          paddingRight={2}
+          paddingTop={1}
+          spacingX={{ base:1, sm:1, md: 2 }}
+          mt={-2}
+
+          >
+          <Text as={'b'} fontSize={{ base: 8, sm: 8, md: 10 }}> STATS:</Text>
+          <HeroStatItem stat={"STR"} value={str}/>
+          <HeroStatItem stat={"DEX"} value={dex}/>
+          <HeroStatItem stat={"INT"} value={int}/>
+          <HeroStatItem stat={"WIS"} value={wis}/>
+          <HeroStatItem stat={"AGI"} value={agi}/>
+          <HeroStatItem stat={"LUK"} value={luk}/>
+          <HeroStatItem stat={"CHA"} value={cha}/>
+        </SimpleGrid> */}
       </Flex> 
     </>
   )
 }
 export default RdHero;
+
+interface HeroStatItemProps {
+  stat : string;
+  value : number;
+}
+const HeroStatItem = ({stat, value}: HeroStatItemProps) => {
+  return (
+    <GridItem>
+      <HStack justifyContent={'space-between'}>
+      <Text fontSize={{ base: 8, sm:12, md: 12 }}>{stat}</Text>
+      <Text fontSize={{ base: 8, sm:12, md: 12 }}>{value}</Text>
+      </HStack>
+    </GridItem>
+  )
+}
