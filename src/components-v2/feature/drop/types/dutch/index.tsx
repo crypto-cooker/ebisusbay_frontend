@@ -1,27 +1,25 @@
 import {Drop} from "@src/core/models/drop";
 import {useAppSelector} from "@src/Store/hooks";
-import React, {useEffect, useState} from "react";
-import {useQuery} from "@tanstack/react-query";
+import React, {useEffect} from "react";
 import {useAtom} from "jotai";
 import {dutchAuctionDataAtom} from "@src/components-v2/feature/drop/types/dutch/atom";
 import {Contract, ethers} from "ethers";
 import * as Sentry from "@sentry/react";
-import {DropState, DropState as statuses} from "@src/core/api/enums";
+import {DropState as statuses} from "@src/core/api/enums";
 import {appConfig} from "@src/Config";
 import AuctionBox from "@src/components-v2/feature/drop/types/dutch/auction-box";
 import ImageService from "@src/core/services/image";
 import {hostedImage} from "@src/helpers/image";
 import Reveal from "react-awesome-reveal";
 import Countdown from "react-countdown";
-import {Box, Flex, Heading, Image, Progress, Stack} from "@chakra-ui/react";
-import {ciEquals, newlineText, percentage} from "@src/utils";
+import {Box, Flex, Heading, Image, Stack} from "@chakra-ui/react";
+import {ciEquals, newlineText} from "@src/utils";
 import {keyframes} from "@emotion/react";
 import styled from "styled-components";
-import ReactPlayer from "react-player";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import Fortune from "@src/Contracts/Fortune.json";
-import {commify} from "ethers/lib/utils";
+import Markdown from "react-markdown";
 
 const config = appConfig();
 let abi = require(`@src/Assets/abis/ryoshi-tales-heroes.json`);
@@ -299,6 +297,11 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
             </Flex>
 
             <AuctionBox />
+            <Container>
+              <Markdown>
+                {drop.description}
+              </Markdown>
+            </Container>
           </div>
         </div>
       </section>
@@ -307,3 +310,18 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
 }
 
 export default DutchAuction;
+
+const Container = styled.div`
+  p {
+      margin-top: 10px;
+  }
+  
+  li {
+    margin-left: 18px;
+  }
+  
+  a {
+    font-weight: bold;
+    color: #218cff;
+  }
+`;

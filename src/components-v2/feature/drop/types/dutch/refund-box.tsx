@@ -1,4 +1,3 @@
-import {Contract} from "ethers";
 import React, {useState} from "react";
 import {Box, HStack, Icon, IconButton} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";

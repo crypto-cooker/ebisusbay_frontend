@@ -127,7 +127,7 @@ const AuctionBox = ({}: AuctionBoxProps) => {
               rounded='lg'
               hasStripe
               sx={{
-                "& > div:first-child": {
+                "& > div:first-of-type": {
                   transitionProperty: "width",
                 },
               }}
