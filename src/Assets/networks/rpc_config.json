@@ -24329,7 +24329,7 @@
       "name": "Ryoshi Heroes",
       "slug": "ryoshi-heroes",
       "multiToken": false,
-      "address": "",
+      "address": "0xF098C2aD290f32c8666ace27222d3E65cECE43b9",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -31695,7 +31695,7 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "",
+      "address": "0xF098C2aD290f32c8666ace27222d3E65cECE43b9",
       "type": "dutch",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 40,
