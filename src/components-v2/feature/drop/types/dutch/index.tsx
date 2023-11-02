@@ -85,8 +85,6 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
     const eTime = new Date(endTime);
     const now = new Date();
 
-    console.log('CHECK', now, sTime, eTime, startTime, endTime);
-
     if (!startTime || !drop.address || sTime > now) return statuses.NOT_STARTED;
     else if (availableTokenCount < 1) return statuses.SOLD_OUT;
     else if (!endTime || eTime > now) return statuses.LIVE;
@@ -96,20 +94,22 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
 
   const retrieveDropInfo = async () => {
     // Don't do any contract stuff if the drop does not have an address
-    if (!drop.address) {
+    if (!drop.address || !drop.start) {
+      const cost = !!drop.erc20Cost ? Number(drop.erc20Cost) : 0;
       setAuctionData((prev) => ({
         ...prev,
         drop: drop,
         address: drop.address,
-        currentRound: 1,
-        currentPrice: 15000,
+        startPrice: cost,
+        currentRound: 0,
+        currentPrice: cost,
         isUsingContract: false,
         status: calculateStatus(drop, drop.complete ? drop.totalSupply : 0),
         maxSupply: drop.totalSupply,
         nextRoundTime: drop.start,
         availableTokenCount: drop.totalSupply,
         currentSupply: 0,
-        canMint: drop.maxMintPerTx
+        canMint: drop.maxMintPerTx,
       }));
       return;
     }
@@ -120,18 +120,22 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
 
       const kitchenSink = await readContract.getKitchSink(user.address ?? ethers.constants.AddressZero);
 
-      let currentRound = Math.floor(((Date.now() / 1000) - (parseInt(kitchenSink.publicStartTime))) / kitchenSink.decreaseInterval);
-      if (currentRound < 0) currentRound = 0;
+      let currentRound = Math.ceil(((Date.now() / 1000) - (parseInt(kitchenSink.publicStartTime))) / kitchenSink.decreaseInterval);
 
+      if (currentRound < 0) currentRound = 0;
       const hackMaxSupply = 330;
+
+      const priceDrop = kitchenSink.priceDecreaseAmount.mul(currentRound);
+      const currentPrice = Math.floor(parseFloat(ethers.utils.formatEther(kitchenSink.startPrice.sub(priceDrop))));
 
       setAuctionData((prev) => ({
         ...prev,
         drop: drop,
         address: drop.address,
+        startPrice: parseInt(ethers.utils.formatEther(kitchenSink.startPrice)),
         currentRound,
-        nextRoundTime: (parseInt(kitchenSink.publicStartTime) + (parseInt(kitchenSink.decreaseInterval) * (currentRound + 1))) * 1000,
-        currentPrice: parseInt(ethers.utils.formatEther(kitchenSink.mintCost)),
+        nextRoundTime: (parseInt(kitchenSink.publicStartTime) + (parseInt(kitchenSink.decreaseInterval) * currentRound)) * 1000,
+        currentPrice,
         isUsingContract: true,
         status: calculateStatusFromContract(
           parseInt(kitchenSink.publicStartTime) * 1000,
@@ -145,7 +149,7 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
         availableTokenCount: kitchenSink.availableTokenCount,
         currentSupply: hackMaxSupply - kitchenSink.availableTokenCount,
         canMint: parseInt(kitchenSink.canMint),
-        incrementRound: () => {
+        refreshContract: () => {
           retrieveDropInfo();
         }
       }));
@@ -178,7 +182,7 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
   useEffect(() => {
     setAuctionData((prev) => ({
       ...prev,
-      incrementRound: () => {
+      refreshContract: () => {
         retrieveDropInfo();
       },
       onUserMinted: () => {

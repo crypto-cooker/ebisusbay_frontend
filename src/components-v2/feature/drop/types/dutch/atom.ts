@@ -8,6 +8,7 @@ interface AuctionData {
   drop?: Drop;
   readContract?: Contract;
   writeContract?: Contract;
+  startPrice: number;
   currentRound: number;
   currentPrice: number;
   isUsingContract: boolean;
@@ -15,7 +16,7 @@ interface AuctionData {
   refundDue: number;
   nextRoundTime: number;
   maxSupply: number;
-  incrementRound: () => void;
+  refreshContract: () => void;
   availableTokenCount: number;
   currentSupply: number;
   canMint: number;
@@ -25,6 +26,7 @@ interface AuctionData {
 }
 
 export const dutchAuctionDataAtom = atom<AuctionData>({
+  startPrice: 0,
   currentRound: -1,
   currentPrice: 0,
   isUsingContract: false,
@@ -32,7 +34,7 @@ export const dutchAuctionDataAtom = atom<AuctionData>({
   refundDue: 0,
   nextRoundTime: 0,
   maxSupply: 0,
-  incrementRound: () => {},
+  refreshContract: () => {},
   availableTokenCount: 0,
   currentSupply: 0,
   canMint: 0,

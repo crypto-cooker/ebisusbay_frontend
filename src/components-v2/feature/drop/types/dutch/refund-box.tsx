@@ -10,6 +10,7 @@ import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {commify} from "ethers/lib/utils";
 import {useAppSelector} from "@src/Store/hooks";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 
 const RefundBox = () => {
@@ -30,9 +31,10 @@ const RefundBox = () => {
     }
   }
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     try {
       setIsRefreshing(true);
+      await auctionData.refreshContract();
     } catch (e) {
       console.log(e);
       toast.error(parseErrorMessage(e));
@@ -44,8 +46,11 @@ const RefundBox = () => {
   return (
     <Box>
       <Box fontWeight='bold'>Refund Balance</Box>
-      <Box fontWeight='bold'>{commify(auctionData.refundDue)}</Box>
-      <HStack justify='center'>
+      <HStack justify='center' my={1}>
+        <FortuneIcon boxSize={4} />
+        <Box fontWeight='bold'>{commify(auctionData.refundDue)}</Box>
+      </HStack>
+      <HStack justify='center' mt={2}>
         <PrimaryButton
           onClick={handleRefund}
           disabled={isRefunding}

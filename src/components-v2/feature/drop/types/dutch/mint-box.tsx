@@ -122,10 +122,10 @@ const MintBox = () => {
     <Box>
       <Box fontWeight='bold'>Your Balance</Box>
       <HStack justify='center' my={1}>
-        <FortuneIcon boxSize={6} />
+        <FortuneIcon boxSize={4} />
         <Box fontWeight='bold'>{commify(auctionData.userBalance)}</Box>
       </HStack>
-      <Stack spacing={1}>
+      <Stack spacing={1} mt={2}>
         <HStack maxW='170px'>
           <Button {...dec}>-</Button>
           <Input {...input} />
