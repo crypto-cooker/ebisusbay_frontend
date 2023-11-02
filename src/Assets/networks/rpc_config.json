@@ -19904,7 +19904,7 @@
       "multiToken": false,
       "address": "0x3d7777ff1908B54b57038A2556d6904f71468e2D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Immerse yourself in the world of 7777 distinct 3D CROWs, each featuring a one-of-a-kind 3D model, masterfully designed by RaulPM. These 3D CROWs boast attributes that correspond to their original CRO CROW counterparts, so CRO CROW #1 should have the same attributes as 3D CROW #1 and so on.",
         "avatar": "/img/collections/3d-crow/avatar.webp",
