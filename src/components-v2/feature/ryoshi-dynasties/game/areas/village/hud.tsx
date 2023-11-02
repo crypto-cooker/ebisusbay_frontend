@@ -280,7 +280,6 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
 
             </SimpleGrid>
           </Box>
-          {/* <RdLand nftId={selectedNFT} boxSize={368}/> */}
       </Flex>
       
     </Box>

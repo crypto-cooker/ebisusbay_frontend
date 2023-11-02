@@ -12,7 +12,6 @@ import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {
   appUrl,
   createSuccessfulAddCartContent,
-  isLandDeedsCollection,
   round,
   siPrefixedNumber,
   timeSince
@@ -38,8 +37,8 @@ import {specialImageTransform} from "@src/hacks";
 import {appConfig} from "@src/Config";
 import ImageService from "@src/core/services/image";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
-import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
+import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 
 const config = appConfig();
 
@@ -235,20 +234,20 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                       width={440}
                     />
                   </Watermarked>
-                ) : isLandDeedsCollection(listing.nftAddress) ? (
-                      <RdLand nftId={listing.nftId} />
                 ) : (
-                  <AnyMedia
-                    image={nftCardUrl(listing.nftAddress, listing.nft.image)}
-                    className={`card-img-top ${imgClass}`}
-                    title={listing.nft.name}
-                    url={`/collection/${listing.nftAddress}/${listing.nftId}`}
-                    height={440}
-                    width={440}
-                    video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
-                    thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.translate(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url).thumbnail() : undefined}
-                    usePlaceholder={true}
-                  />
+                  <DynamicNftImage address={listing.nftAddress} id={listing.nftId}>
+                    <AnyMedia
+                      image={nftCardUrl(listing.nftAddress, listing.nft.image)}
+                      className={`card-img-top ${imgClass}`}
+                      title={listing.nft.name}
+                      url={`/collection/${listing.nftAddress}/${listing.nftId}`}
+                      height={440}
+                      width={440}
+                      video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
+                      thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.translate(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url).thumbnail() : undefined}
+                      usePlaceholder={true}
+                    />
+                  </DynamicNftImage>
                 )}
               </Box>
             </div>

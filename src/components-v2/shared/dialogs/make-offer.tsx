@@ -34,7 +34,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {ApiService} from "@src/core/services/api-service";
 import {OfferState} from "@src/core/services/api-service/types";
-import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
+import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 25;
@@ -220,9 +220,8 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
                 <div className="col-12 col-sm-6 mb-2 mb-sm-0">
                   {isBundle(nft.address ?? nft.nftAddress) ? (
                     <ImagesContainer nft={nft} />
-                  ) : isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
-                    <RdLand nftId={nft.id ?? nft.nftId} />
                   ) : (
+                    <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
                       video={nft.video ?? nft.animation_url}
@@ -231,6 +230,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
                       usePlaceholder={false}
                       className="img-fluid img-rounded"
                     />
+                    </DynamicNftImage>
                   )}
                 </div>
                 <div className="col-12 col-sm-6">
