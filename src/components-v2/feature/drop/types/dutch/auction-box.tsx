@@ -156,9 +156,19 @@ const AuctionBox = ({}: AuctionBoxProps) => {
           </AuthenticationGuard>
         </Box>
       ) : auctionData.status === statuses.SOLD_OUT ? (
-        <Box textAlign='center' mt={4} className='text-muted'>SOLD OUT</Box>
+        <Box textAlign='center' mt={4}>
+          <Box className='text-muted' border='1px solid' rounded='sm'>SOLD OUT</Box>
+          {!!user.address && (
+            <Box mt={4}><RefundBox /></Box>
+          )}
+        </Box>
       ) : auctionData.status === statuses.EXPIRED && (
-        <Box textAlign='center' mt={4}>ENDED</Box>
+        <Box textAlign='center' mt={4}>
+          <Box className='text-muted' border='1px solid' rounded='sm'>ENDED</Box>
+          {!!user.address && (
+            <Box mt={4}><RefundBox /></Box>
+          )}
+        </Box>
       )}
     </Box>
   )
