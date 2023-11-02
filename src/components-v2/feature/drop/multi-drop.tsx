@@ -13,7 +13,7 @@ import styled from 'styled-components';
 
 import {connectAccount} from '@src/GlobalState/User';
 import {createSuccessfulTransactionToastContent, isCmbDrop, newlineText, percentage} from '@src/utils';
-import {dropState as statuses} from '@src/core/api/enums';
+import {DropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi} from '@src/Contracts/Abis';
 import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";

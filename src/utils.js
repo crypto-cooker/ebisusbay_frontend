@@ -578,6 +578,14 @@ export const isCroSwapQuartermastersCollection = (address) => {
   return isCollection(address, 'croswap-quartermasters', '0x333580e4B59E74243451c531c29121c02F8E3102');
 };
 
+export const isDynamicNftImageCollection = (address) => {
+  if(!address) return false;
+  if (isLandDeedsCollection(address)) return true;
+  if (isHerosCollection(address)) return true;
+
+  return false;
+};
+
 export const isLandDeedsCollection = (address) => {
   return isCollection(
     address,
@@ -585,6 +593,9 @@ export const isLandDeedsCollection = (address) => {
     ['0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3', '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad']
   );
 };
+export const isHerosCollection = (address) => {
+  return isCollection(address, 'ryoshi-heroes', '0x458073C0fb97e42d441778aE4beFc8c1180E513e');
+}
 
 export const isPlayingCardsCollection = (address) => {
   return isCollection(address, 'ryoshi-playing-cards', '0xd87838a982a401510255ec27e603b0f5fea98d24');

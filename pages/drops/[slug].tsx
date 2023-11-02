@@ -10,6 +10,7 @@ import RyoshiDrop from "@src/components-v2/feature/drop/ryoshi-drop";
 import localDataService from "@src/core/services/local-data-service";
 import {Drop} from "@src/core/models/drop";
 import LandDrop from "@src/components-v2/feature/drop/land-drop";
+import DutchAuction from "@src/components-v2/feature/drop/types/dutch";
 
 export const drops = appConfig('drops');
 const config = appConfig();
@@ -41,7 +42,9 @@ const Drop = ({ssrDrop, ssrCollection}: DropProps) => {
             <RyoshiDrop drop={ssrDrop} />
           ) : ssrDrop.slug === 'izanamis-cradle-land-deeds' ? (
             <LandDrop drop={ssrDrop} />
-          )  : (
+          ) : ssrDrop.slug === 'ryoshi-heroes' ? (
+            <DutchAuction drop={ssrDrop} />
+          ) : (
             <SingleDrop drop={ssrDrop} />
           )}
         </>
