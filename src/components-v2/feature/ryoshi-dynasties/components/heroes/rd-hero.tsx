@@ -1,8 +1,9 @@
-import {Flex, GridItem, HStack, Image, SimpleGrid,Text, VStack,Box, Grid, Progress, useBreakpointValue} from "@chakra-ui/react";
-import React, {memo, useEffect, useRef, useState} from "react";
+import {Flex, GridItem, HStack, Image, Text} from "@chakra-ui/react";
+import React, {useEffect, useRef, useState} from "react";
 import heroesMetadata from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/heroes-metadata.json";
 import {ResponsiveValue} from "@chakra-ui/styled-system";
 import * as CSS from "csstype";
+import ImageService from "@src/core/services/image";
 
 interface NFTMetaData{
   image : string;
@@ -179,19 +180,19 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
         borderRadius={'md'} 
         outline={rounded}
       >
-        <Image h={size} w={size} src={location} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={skin} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={hair} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={eyes} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={mouth} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={markings} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={legs} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={feet} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={chest} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={belt} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={gloves} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={goggles} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={border} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(location).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(skin).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(hair).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(eyes).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(mouth).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(markings).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(legs).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(feet).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(chest).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(belt).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(gloves).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(goggles).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        <Image h={size} w={size} src={ImageService.translate(border).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
 
         {/* <SimpleGrid
           h={size*0.25}
