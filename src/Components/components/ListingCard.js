@@ -38,6 +38,7 @@ import {appConfig} from "@src/Config";
 import ImageService from "@src/core/services/image";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
+import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 
 const config = appConfig();
 
@@ -234,18 +235,18 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                     />
                   </Watermarked>
                 ) : (
-                  <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
-                  <AnyMedia
-                    image={nftCardUrl(listing.nftAddress, listing.nft.image)}
-                    className={`card-img-top ${imgClass}`}
-                    title={listing.nft.name}
-                    url={`/collection/${listing.nftAddress}/${listing.nftId}`}
-                    height={440}
-                    width={440}
-                    video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
-                    thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.translate(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url).thumbnail() : undefined}
-                    usePlaceholder={true}
-                  />
+                  <DynamicNftImage address={listing.nftAddress} id={listing.nftId}>
+                    <AnyMedia
+                      image={nftCardUrl(listing.nftAddress, listing.nft.image)}
+                      className={`card-img-top ${imgClass}`}
+                      title={listing.nft.name}
+                      url={`/collection/${listing.nftAddress}/${listing.nftId}`}
+                      height={440}
+                      width={440}
+                      video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
+                      thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.translate(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url).thumbnail() : undefined}
+                      usePlaceholder={true}
+                    />
                   </DynamicNftImage>
                 )}
               </Box>
