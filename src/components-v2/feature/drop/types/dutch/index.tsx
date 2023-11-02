@@ -123,7 +123,7 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
       if (currentRound < 0) currentRound = 0;
       const hackMaxSupply = 330;
 
-      const priceDrop = kitchenSink.priceDecreaseAmount.mul(currentRound);
+      const priceDrop = kitchenSink.priceDecreaseAmount.mul(currentRound > 0 ? currentRound - 1 : 0);
       const currentPrice = Math.floor(parseFloat(ethers.utils.formatEther(kitchenSink.startPrice.sub(priceDrop))));
 
       setAuctionData((prev) => ({
