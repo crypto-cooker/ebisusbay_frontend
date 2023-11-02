@@ -21,7 +21,8 @@ const RefundBox = () => {
   const handleRefund = async () => {
     try {
       setIsRefunding(true);
-      await auctionData.writeContract!.refundDifference(user.address!);
+      const tx = await auctionData.writeContract!.refundDifference(user.address!);
+      await tx.wait();
     } catch (e) {
       console.log(e);
       toast.error(parseErrorMessage(e));

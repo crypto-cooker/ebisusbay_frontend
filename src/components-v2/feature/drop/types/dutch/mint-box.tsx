@@ -125,8 +125,8 @@ const MintBox = () => {
         <FortuneIcon boxSize={4} />
         <Box fontWeight='bold'>{commify(auctionData.userBalance)}</Box>
       </HStack>
-      <Stack spacing={1} mt={2}>
-        <HStack maxW='170px'>
+      <Stack spacing={1} mt={2} maxW='170px' mx='auto'>
+        <HStack mx='auto'>
           <Button {...dec}>-</Button>
           <Input {...input} />
           <Button {...inc}>+</Button>
