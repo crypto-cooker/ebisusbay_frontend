@@ -353,9 +353,9 @@ const FeaturedDrops = () => {
                                   {calculateStatus(drop.salePeriods.public) === DropState.EXPIRED && (
                                     <Heading as="h3" size="lg">Drop Ended</Heading>
                                   )}
-                                  {calculateStatus(drop.salePeriods.public) === DropState.SOLD_OUT && (
-                                    <Heading as="h3" size="lg">Sold Out</Heading>
-                                  )}
+                                  {/*{calculateStatus(drop.salePeriods.public) === DropState.SOLD_OUT && (*/}
+                                  {/*  <Heading as="h3" size="lg">Sold Out</Heading>*/}
+                                  {/*)}*/}
                                 </>
                               ) : calculateStatus(drop.salePeriods.allowlist2) > DropState.NOT_STARTED ? (
                                 <>
@@ -404,9 +404,9 @@ const FeaturedDrops = () => {
                                   {calculateStatus(drop.salePeriods.public) === DropState.EXPIRED && (
                                     <Heading as="h3" size="lg">Drop Ended</Heading>
                                   )}
-                                  {calculateStatus(drop.salePeriods.public) === DropState.SOLD_OUT && (
-                                    <Heading as="h3" size="lg">Sold Out</Heading>
-                                  )}
+                                  {/*{calculateStatus(drop.salePeriods.public) === DropState.SOLD_OUT && (*/}
+                                  {/*  <Heading as="h3" size="lg">Sold Out</Heading>*/}
+                                  {/*)}*/}
                                 </>
                               ) : (
                                 <>
@@ -447,7 +447,7 @@ const FeaturedDrops = () => {
                               )}
                               {calculateStatus(drop.start) === DropState.LIVE && <Heading as="h3" size="lg">Drop is Live!</Heading>}
                               {calculateStatus(drop.start) === DropState.EXPIRED && <Heading as="h3" size="lg">Drop Ended</Heading>}
-                              {calculateStatus(drop.start) === DropState.SOLD_OUT && <Heading as="h3" size="lg">Sold Out</Heading>}
+                              {/*{calculateStatus(drop.start) === DropState.SOLD_OUT && <Heading as="h3" size="lg">Sold Out</Heading>}*/}
                             </div>
                           )}
                         </div>
