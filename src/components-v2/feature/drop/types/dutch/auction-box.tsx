@@ -86,10 +86,6 @@ const AuctionBox = ({}: AuctionBoxProps) => {
       </SimpleGrid>
       {auctionData.status === statuses.LIVE ? (
         <Box mt={2}>
-          <SimpleGrid>
-            <Box>Max Supply</Box>
-            <Box textAlign='end'>{auctionData.maxSupply}</Box>
-          </SimpleGrid>
           <Box>
             <Flex justify='space-between' mt={3} mb={1}>
               <Box fontWeight='bold'>{percentage(auctionData.currentSupply.toString(), auctionData.maxSupply.toString())}% minted</Box>

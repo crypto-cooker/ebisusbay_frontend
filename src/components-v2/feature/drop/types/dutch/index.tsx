@@ -80,6 +80,20 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
     else return statuses.NOT_STARTED;
   };
 
+  const calculateStatusFromContract = (startTime: number, endTime: number, availableTokenCount: number) => {
+    const sTime = new Date(startTime);
+    const eTime = new Date(endTime);
+    const now = new Date();
+
+    console.log('CHECK', now, sTime, eTime, startTime, endTime);
+
+    if (!startTime || !drop.address || sTime > now) return statuses.NOT_STARTED;
+    else if (availableTokenCount < 1) return statuses.SOLD_OUT;
+    else if (!endTime || eTime > now) return statuses.LIVE;
+    else if (endTime && eTime < now) return statuses.EXPIRED;
+    else return statuses.NOT_STARTED;
+  };
+
   const retrieveDropInfo = async () => {
     // Don't do any contract stuff if the drop does not have an address
     if (!drop.address) {
@@ -119,7 +133,11 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
         nextRoundTime: (parseInt(kitchenSink.publicStartTime) + (parseInt(kitchenSink.decreaseInterval) * (currentRound + 1))) * 1000,
         currentPrice: parseInt(ethers.utils.formatEther(kitchenSink.mintCost)),
         isUsingContract: true,
-        status: calculateStatus(drop, kitchenSink.availableTokenCount),
+        status: calculateStatusFromContract(
+          parseInt(kitchenSink.publicStartTime) * 1000,
+          (parseInt(kitchenSink.publicStartTime) + parseInt(kitchenSink.duration)) * 1000,
+          kitchenSink.availableTokenCount
+        ),
         readContract,
         // writeContract,
         refundDue: parseInt(ethers.utils.formatEther(kitchenSink.refundDue)),
@@ -181,7 +199,7 @@ const DutchAuction = ({drop}: DutchAuctionProps) => {
           ...prev,
           currentSupply: prev.maxSupply - tokensLeft,
           canMint: ciEquals(to, user.address) ? prev.canMint - ids.length : prev.canMint,
-          status: calculateStatus(drop, tokensLeft)
+          status: tokensLeft < 1 ? statuses.SOLD_OUT : prev.status
         }));
       };
 
