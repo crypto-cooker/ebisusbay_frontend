@@ -221,7 +221,7 @@ const Mint = () => {
           <SimpleGrid gap={4} columns={{base: 1, lg:2}}>
             {guardsList?.data.map((nft, index) => (
               <RdModalBox>
-                <Flex key={`${nft.address}-${nft.id}`} justify='space-between'>
+                <Flex key={`${nft.address}-${nft.id}`} justify='space-between' direction={{base: 'column', sm: 'row'}} alignItems={{base: 'center', sm: 'inherit'}}>
                   <Image
                     src={nft.image}
                     maxW='150px'
@@ -229,8 +229,8 @@ const Mint = () => {
                     border='2px solid #F48F0C'
                     me={2}
                   />
-                  <VStack align='end'>
-                    <Box fontWeight='bold' textAlign='end'>{nft.name}</Box>
+                  <VStack align='end' alignItems={{base: 'center', sm: 'end'}}>
+                    <Box fontWeight='bold' textAlign={{base: 'center', sm: 'end'}}>{nft.name}</Box>
                     <GuardForm
                       nft={userGuards?.data.find((n => ciEquals(nft.id, n.nftId)))}
                       isMinting={isMinting}
