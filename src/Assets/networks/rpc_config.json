@@ -13491,7 +13491,7 @@
       "multiToken": false,
       "address": "0x4AEef4fbe0e32b9b0aEF6c43DD2625BCA5B9501A",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Crazy Crossbreeds are wicked beasts who's genetics consist of Goat & Boar DNA. These NFT's will powers our Defi Game Cove and will be by far the craziest beasts in our eco-system. Holders receive benefits through our DAO, Tools, Games, Mint, and upcoming Comic Book release. Join The Herd Today!",
         "avatar": "/img/collections/crazy-crossbreeds/avatar.webp",
@@ -29554,7 +29554,7 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/crazy-crossbreeds/drop.webp",
         "banner": "/img/collections/crazy-crossbreeds/banner.webp",
