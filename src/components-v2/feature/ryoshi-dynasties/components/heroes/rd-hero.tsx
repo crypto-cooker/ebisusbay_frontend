@@ -180,19 +180,19 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
         borderRadius={'md'} 
         outline={rounded}
       >
-        <Image h={size} w={size} src={ImageService.translate(location).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={ImageService.translate(skin).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={ImageService.translate(hair).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={ImageService.translate(eyes).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={ImageService.translate(mouth).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={ImageService.translate(markings).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={ImageService.translate(legs).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={ImageService.translate(feet).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={ImageService.translate(chest).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={ImageService.translate(belt).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={ImageService.translate(gloves).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={ImageService.translate(goggles).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={ImageService.translate(border).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        {!!location && <Image h={size} w={size} src={ImageService.translate(location).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!skin && <Image h={size} w={size} src={ImageService.translate(skin).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!hair && <Image h={size} w={size} src={ImageService.translate(hair).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!eyes && <Image h={size} w={size} src={ImageService.translate(eyes).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!mouth && <Image h={size} w={size} src={ImageService.translate(mouth).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!markings && <Image h={size} w={size} src={ImageService.translate(markings).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!legs && <Image h={size} w={size} src={ImageService.translate(legs).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!feet && <Image h={size} w={size} src={ImageService.translate(feet).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!chest && <Image h={size} w={size} src={ImageService.translate(chest).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!belt && <Image h={size} w={size} src={ImageService.translate(belt).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!gloves && <Image h={size} w={size} src={ImageService.translate(gloves).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!goggles && <Image h={size} w={size} src={ImageService.translate(goggles).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!border && <Image h={size} w={size} src={ImageService.translate(border).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
 
         {/* <SimpleGrid
           h={size*0.25}
