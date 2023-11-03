@@ -107,10 +107,18 @@ const AuctionBox = ({}: AuctionBoxProps) => {
         </Box>
         <Box>Current Round</Box>
         <Box textAlign='end'>{auctionData.currentRound}</Box>
-        <Box>{auctionData.status < statuses.LIVE ? <>Starting Price</> : <>Current Price</>}</Box>
+        <Box>
+          {auctionData.status === statuses.LIVE ?
+            <>Current Price</>
+          : auctionData.status < statuses.LIVE ?
+            <>Starting Price</>
+          :
+            <>Final Price</>
+          }
+        </Box>
         <HStack justify='end'>
           <FortuneIcon boxSize={6} />
-          <span className="ms-2">{auctionData.currentPrice ? commify(auctionData.currentPrice) : 'TBA'}</span>
+          <Box ms={2}>{auctionData.currentPrice ? commify(auctionData.currentPrice) : 'TBA'}</Box>
         </HStack>
       </SimpleGrid>
       {auctionData.status === statuses.LIVE ? (
