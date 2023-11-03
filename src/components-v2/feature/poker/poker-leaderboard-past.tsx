@@ -86,9 +86,9 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		download(JSON.stringify(rewards), "diamondsRankedPlayersNFTS.json", "text/plain");
 	}
 
-	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt} = useInfiniteQuery({
+	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt, refetch } = useInfiniteQuery({
 		queryKey: ['RyoshiDiamondsLeaderboard'],
-		queryFn: ({pageParam = 1}) => ApiService.withoutKey().getRyoshiDiamondsLeaderboardAtBlock(pageParam, 500, pokerCollection),
+		queryFn: ({pageParam = 1}) => ApiService.withoutKey().getPokerLeaderboardAtBlock(pageParam, 500, pokerCollection),
 		initialPageParam: 1,
 		getNextPageParam: (lastPage, pages) => {
 			return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
@@ -104,7 +104,14 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 	useEffect(() => {
 		if(!data) return; 
 		// GenerateJson();
+		console.log(pokerCollection);
 	}, [data])
+
+	useEffect(() => {
+		refetch();
+		//remove content 
+		content;
+	}, [pokerCollection])
 
 	const [playerProfile, setPlayerProfile] = useState<Player>();
 	const [playerRank, setPlayerRank] = useState<number>(0);
@@ -137,7 +144,6 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 	}, [dataUpdatedAt])
 
 	const content = useMemo(() => {
-
 		const PrintOutPlayerCards = (cardRanks: number[]) => {
 			let cardRanksString = "";
 			cardRanks.sort((a, b) => b - a);
@@ -145,8 +151,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 			  cardRanksString += getCardName(cardRank) + " ";
 			})
 			return cardRanksString;
-		  }
-
+		}
 	    return status === 'pending' ? (
 
 		<Card variant='outline' mt={2}>
@@ -299,7 +304,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		  </InfiniteScroll>
 		</>
 	    )
-	  }, [data, status, playerProfile]);
+	}, [data, status, playerProfile]);
 	
 	return (
 	  <Flex w={'100%'} justifyContent={'center'} >

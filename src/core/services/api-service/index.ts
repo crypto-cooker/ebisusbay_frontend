@@ -86,7 +86,7 @@ export class ApiService implements Api {
     return await this.getOffers(query);
   }
 
-  async getRyoshiDiamondsLeaderboardAtBlock(page: number, pageSize: number, pokerCollection: PokerCollection): Promise<any> {
+  async getPokerLeaderboardAtBlock(page: number, pageSize: number, pokerCollection: PokerCollection): Promise<any> {
     //info from subgraph
     console.log("pokerCollection = " + pokerCollection);
     const owners = await getOwners(pokerCollection);
@@ -101,7 +101,7 @@ export class ApiService implements Api {
     } else if (pokerCollection == PokerCollection.Live) {
       gameNumber = 3;
     }
-    
+    console.log("gameNumber = " + gameNumber);
     const response = await RankPlayers(owners, false, gameNumber);
 
     function paginate(array : any, page_size:number, page_number:number) {
