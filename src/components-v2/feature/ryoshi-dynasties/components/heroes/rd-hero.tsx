@@ -85,7 +85,7 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
     setGloves(mainFolderPath + "/HeroClass/" +heroClass+'/Gloves/'+clothesColor+'.png');
 
     setMarkings(mainFolderPath + (IsDruid(attributes) ? '/HeroClass/Druid/Markings/' : '/HeroClass/Empty/')+clothesColor+'.png');
-    setGoggles(mainFolderPath + (IsTinkerer(attributes) ? '/HeroClass/Tinkerer/Goggles' : '/HeroClass/Empty/')+clothesColor+'.png');
+    setGoggles(mainFolderPath + (IsTinkerer(attributes) ? '/HeroClass/Tinkerer/Goggles' : '/HeroClass/Empty/'+clothesColor)+'.png');
   }
   const IsDruid = (attributes:Attribute[]) => {
     for(let i = 0; i < attributes.length; i++){
