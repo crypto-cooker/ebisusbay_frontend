@@ -23118,7 +23118,7 @@
       "multiToken": false,
       "address": "0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Time Ship Blueprints are the first, OG collection of Time Ship hull blueprints for the Time Machine Ecosystem's web3 game in the making. Time Wars, These Blueprints will come with a few ship components, some of our in house token $tatastwistedtime ($TTT) and 1 blueprint, per box minted. Be on the lookout for the best hull skins/prints!!",
         "avatar": "/img/collections/time-ship-blueprints/avatar.webp",
