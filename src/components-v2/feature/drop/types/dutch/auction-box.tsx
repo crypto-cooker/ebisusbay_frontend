@@ -1,6 +1,18 @@
 import {useAtom} from "jotai";
 import {dutchAuctionDataAtom} from "@src/components-v2/feature/drop/types/dutch/atom";
-import {Box, Center, Flex, Heading, HStack, Icon, IconButton, Progress, SimpleGrid, Stack} from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Heading,
+  HStack,
+  Icon,
+  IconButton,
+  Progress,
+  SimpleGrid,
+  Spacer,
+  Stack
+} from "@chakra-ui/react";
 import {DropState as statuses} from "@src/core/api/enums";
 import {getTheme} from "@src/Theme/theme";
 import {useAppSelector} from "@src/Store/hooks";
@@ -16,6 +28,7 @@ import MintBox from "@src/components-v2/feature/drop/types/dutch/mint-box";
 import RefundBox from "@src/components-v2/feature/drop/types/dutch/refund-box";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faRefresh} from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 interface ContractInfo {
 
@@ -118,8 +131,14 @@ const AuctionBox = ({}: AuctionBoxProps) => {
         </Box>
         <HStack justify='end'>
           <FortuneIcon boxSize={6} />
-          <Box ms={2}>{auctionData.currentPrice ? commify(auctionData.currentPrice) : 'TBA'}</Box>
+          <Box ms={2} fontWeight='bold' fontSize='lg'>{auctionData.currentPrice ? commify(auctionData.currentPrice) : 'TBA'}</Box>
         </HStack>
+        <Spacer />
+        <Box fontSize='sm' fontWeight='bold' mt={2} textAlign='end'>
+          <Link href={`/collection/${auctionData.drop?.collection ?? 'ryoshi-heroes'}`} className='color'>
+            View collection
+          </Link>
+        </Box>
       </SimpleGrid>
       {auctionData.status === statuses.LIVE ? (
         <Box mt={2}>
@@ -165,14 +184,14 @@ const AuctionBox = ({}: AuctionBoxProps) => {
         </Box>
       ) : auctionData.status === statuses.SOLD_OUT ? (
         <Box textAlign='center' mt={4}>
-          <Box className='text-muted' border='1px solid' rounded='sm'>SOLD OUT</Box>
+          <Box border='1px solid' rounded='sm'>SOLD OUT</Box>
           {!!user.address && (
             <Box mt={4}><RefundBox /></Box>
           )}
         </Box>
       ) : auctionData.status === statuses.EXPIRED && (
         <Box textAlign='center' mt={4}>
-          <Box className='text-muted' border='1px solid' rounded='sm'>ENDED</Box>
+          <Box border='1px solid' rounded='sm'>ENDED</Box>
           {!!user.address && (
             <Box mt={4}><RefundBox /></Box>
           )}

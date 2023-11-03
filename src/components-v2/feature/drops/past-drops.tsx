@@ -1,9 +1,9 @@
-import React, { memo, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, {memo, useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import Slider from '@src/Components/components/Slider';
 
 import PreviewCard from '@src/components-v2/shared/preview-card';
-import { appConfig } from "@src/Config";
+import {appConfig} from "@src/Config";
 
 const drops = appConfig('drops');
 const defaultCardImage = '/img/collections/default/card.jpg';
@@ -36,7 +36,7 @@ const PastDrops = () => {
               title={drop.title}
               subtitle={null}
               collectionId={drop.slug}
-              url={`/collection/${drop.collection ?? drop.slug}`}
+              url={drop.slug === 'ryoshi-heroes' ? `/drops/${drop.slug}` : `/collection/${drop.collection ?? drop.slug}`}
               verified={drop.verification.verified}
               contextComponent={null}
             />
