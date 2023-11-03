@@ -150,6 +150,7 @@ export const configData = {
           '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],        // FortuneTeller
           '0xd87838a982a401510255ec27e603b0f5fea98d24': ['frtn'],        // Ryoshi Playing Cards
           '0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04': ['frtn'],        // Ryoshi Tales
+          '0xF098C2aD290f32c8666ace27222d3E65cECE43b9': ['frtn'],        // Ryoshi Heroes
           '0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98': ['cro', 'frtn', 'bcro'], // Project X Access Pass
           '0xa996aD2b9f240F78b063E47F552037658c4563d1': ['cro', 'frtn', 'bcro'], // Argonauts
           '0xc3cf2416a69351bf336ff671ad46d92efee4ea75': ['cro', 'frtn', 'bcro'], // Honorary Argonauts
