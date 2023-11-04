@@ -14,7 +14,7 @@ import {
   percentage,
   useInterval,
 } from '@src/utils';
-import {dropState, dropState as statuses} from '@src/core/api/enums';
+import {DropState, DropState as statuses} from '@src/core/api/enums';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {appConfig} from "@src/Config";
 import {hostedImage} from "@src/helpers/image";
@@ -495,7 +495,7 @@ const LandDrop = ({drop}: LandDropProps) => {
                       onMint={(quantity: number) => mintNow(quantity)}
                       maxMintQuantity={canMintQuantity}
                       isMinting={minting}
-                      isDropComplete={drop.complete || status > dropState.LIVE}
+                      isDropComplete={drop.complete || status > DropState.LIVE}
                       dropStatus={status}
                       currentSupply={Number(totalSupply)}
                       maxSupply={Number(maxSupply)}
@@ -514,7 +514,7 @@ const LandDrop = ({drop}: LandDropProps) => {
                       onMint={(quantity: number) => mintNow(quantity)}
                       maxMintQuantity={canMintQuantity}
                       isMinting={minting}
-                      isDropComplete={drop.complete || status > dropState.LIVE}
+                      isDropComplete={drop.complete || status > DropState.LIVE}
                       dropStatus={status}
                       currentSupply={Number(totalSupply)}
                       maxSupply={Number(maxSupply)}
@@ -527,7 +527,7 @@ const LandDrop = ({drop}: LandDropProps) => {
                       onMint={(quantity: number) => mintNow(quantity)}
                       maxMintQuantity={canMintQuantity}
                       isMinting={minting}
-                      isDropComplete={drop.complete || status > dropState.LIVE}
+                      isDropComplete={drop.complete || status > DropState.LIVE}
                       dropStatus={status}
                       currentSupply={Number(totalSupply)}
                       maxSupply={Number(maxSupply)}
@@ -566,13 +566,13 @@ const MintPhase = ({ title, description, price, startTime, endTime, onMint, maxM
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
   const [numToMint, setNumToMint] = useState(1);
-  const [phaseStatus, setPhaseStatus] = useState(dropState.UNSET);
+  const [phaseStatus, setPhaseStatus] = useState(DropState.UNSET);
   const [countdownFinished, setCountdownFinished] = useState(false);
 
   async function syncStatus() {
-    if (dropStatus < dropState.LIVE) {
+    if (dropStatus < DropState.LIVE) {
       setPhaseStatus(statuses.NOT_STARTED);
-    } else if (dropStatus > dropState.LIVE || isDropComplete) {
+    } else if (dropStatus > DropState.LIVE || isDropComplete) {
       setPhaseStatus(statuses.EXPIRED);
     } else {
       const now = Date.now();
