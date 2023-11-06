@@ -1,6 +1,4 @@
 import {NextPage} from "next";
-import FactionDirectoryComponent from "@src/components-v2/feature/ryoshi-dynasties/components/faction-directory";
-import RdHeroFrame from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero-frame";
 import RdHero from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero";
 import { Flex, Box } from "@chakra-ui/react";
 
