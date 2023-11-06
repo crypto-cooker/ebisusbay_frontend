@@ -202,7 +202,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       gasLimit
     };
 
-    await contract.mint(numToMint, extra);
+    return await contract.mint(numToMint, extra);
   }
 
   const mintWithErc20 = async (contract: Contract, finalCost: number) => {
