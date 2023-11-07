@@ -128,22 +128,6 @@ const FaqPage = () => {
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
               <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Fortune Guards Information
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text>All Fortune Guards NFTs are eligible. Bonus is based on the NFT ID:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'fortune-guards')!.ids.map((id, i) => (
-                  <ListItem key={i}>{id.id}: {commify(id.bonus)}</ListItem>
-                ))}
-              </UnorderedList>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton fontSize='sm' fontWeight='bold'>
-              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
                 Ryoshi Tales (Goblin Gala) Information
               </Box>
               <AccordionIcon />
