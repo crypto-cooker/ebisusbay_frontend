@@ -37,13 +37,14 @@ import {
   Box,
   ButtonGroup,
   Center,
-  Flex,
   Heading,
+  HStack,
   Link,
   MenuButton as MenuButtonCK,
   Spinner,
   Text,
-  useClipboard
+  useClipboard,
+  VStack
 } from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
@@ -270,21 +271,27 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
     <div>
       {isEbVipCollection(address, id) && (
         <Box className="promo">
-          <Flex justify="center" px={3}>
-            <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
-            <Text ms={2}>
-              Swap your Ebisu's Bay VIP Founding Member for 10x Ryoshi Tales VIP NFTs and enjoy increased benefits in the Ebisu's Bay ecosystem.{' '}
-              <Box textAlign="center">
-                <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
-                  Learn more
-                </Link>
-                <span className="mx-2">|</span>
-                <NextLink href="/drops/ryoshi-tales-vip" >
-                  <Link fontWeight="bold">View drop</Link>
-                </NextLink>
-              </Box>
+          <VStack ms={2} textAlign='center' px={3}>
+            <HStack>
+              <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
+              <Text fontWeight='bold' textDecoration='underline'>DEADLINE: 9 November 2023!</Text>
+            </HStack>
+            <Text>
+              Swap your Ebisu's Bay VIP Founding Member for 10x Ryoshi Tales VIP NFTs and enjoy increased benefits in the Ebisu's Bay ecosystem.
             </Text>
-          </Flex>
+            <Text>
+              Unswapped VIPs after <strong>9 November 2023</strong> will be deactivated from receiving market rewards
+            </Text>
+            <Box>
+              <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
+                Learn more
+              </Link>
+              <span className="mx-2">|</span>
+              <NextLink href="/drops/ryoshi-tales-vip" >
+                <Link fontWeight="bold">View drop</Link>
+              </NextLink>
+            </Box>
+          </VStack>
         </Box>
       )}
       {isLoading ? (
