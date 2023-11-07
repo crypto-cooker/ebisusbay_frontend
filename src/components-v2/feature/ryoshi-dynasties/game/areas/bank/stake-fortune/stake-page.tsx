@@ -198,11 +198,15 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
   }, [vault, rdConfig, rdUser, baseApr]);
 
   const [troops, setTroops] = useState(0);
+  const [mitama, setMitama] = useState(0);
   useEffect(() => {
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    let newTroops = Math.floor(((balance * daysToAdd) / 1080) / mitamaTroopsRatio);
+    const mitama = Math.floor((balance * daysToAdd) / 1080);
+
+    let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && balance > 0) newTroops = 1;
     setTroops(newTroops);
+    setMitama(mitama);
   }, [balance, daysToAdd, rdConfig]);
 
   return (
@@ -252,6 +256,8 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
               </Box>
               <Box>Troops</Box>
               <Box textAlign='end' fontWeight='bold'>{commify(troops)}</Box>
+              <Box>Mitama</Box>
+              <Box textAlign='end' fontWeight='bold'>{commify(mitama)}</Box>
               <Box>End Date</Box>
               <Box textAlign='end' fontWeight='bold'>{endDate}</Box>
             </SimpleGrid>
