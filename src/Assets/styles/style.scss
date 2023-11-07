@@ -5684,7 +5684,19 @@ iframe.metaverse {
   padding-bottom: 8px;
   padding-top: 8px;
   background: #ffee99;
-  color: #555;
+  color: #fff;
+  animation: mymove 6s infinite alternate-reverse;
+}
+//.promo {
+//  padding-bottom: 8px;
+//  background: #15B619;
+//  color: #fff;
+//  animation: mymove 6s infinite alternate-reverse;
+//}
+
+@keyframes mymove {
+  from {background-color: #15B619;}
+  to {background-color: #b63d15;}
 }
 
 .icon-fa {
