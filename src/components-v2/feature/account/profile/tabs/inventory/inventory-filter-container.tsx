@@ -8,6 +8,8 @@ import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wa
 import {caseInsensitiveCompare} from "@src/utils";
 import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-filters";
 import { appConfig } from '@src/Config';
+import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container/filters/radio-filter";
+import {ethers} from "ethers";
 
 const config = appConfig();
 
@@ -24,6 +26,10 @@ interface InventoryFilterContainerProps {
 const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, children}: InventoryFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
 
+  const currencies = Object.entries(config.tokens)
+    .filter(([key, token]: [string, any]) => config.listings.currencies.available.includes(key))
+    .map(token => token[1]) as {name: string, symbol: string, address: string}[] ?? [];
+
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
     const params = queryParams;
     for (const item of items) {
@@ -33,6 +39,7 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
       if (item.key === 'range-max-rank') delete params.maxRank;
       if (item.key === 'range-min-price') delete params.minPrice;
       if (item.key === 'range-max-price') delete params.maxPrice;
+      if (item.key.startsWith('currency')) delete params.currency;
       if (item.key.startsWith('collection')) {
         if (params.collection && params.collection.length > 1) {
           const address = item.key.split('-')[1];
@@ -106,6 +113,25 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
     setFilteredItems([...curFilters]);
   }, [queryParams, filteredItems]);
 
+  const handleCurrencyFilter = useCallback((item: RadioItem) => {
+    const params = queryParams;
+
+    const symbol = item.key.split('-')[1];
+    if (item.key === 'currency-cro') params.currency = ethers.constants.AddressZero;
+    else if (config.tokens[symbol]) params.currency = config.tokens[symbol].address;
+
+    onFilter({...queryParams, ...params});
+
+    const i = filteredItems.findIndex((fi) => fi.key === item.key);
+    if (i === -1) {
+      setFilteredItems([
+        ...filteredItems.filter((fi) => !fi.key.startsWith('currency')),
+        {label: item.label, key: item.key}
+      ])
+    }
+
+  }, [queryParams, filteredItems]);
+
   const FilterAccordion = useMemo(() => (
     <Accordion defaultIndex={[0]} allowMultiple>
       <CollectionFilter
@@ -141,6 +167,17 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
         currentMin={queryParams.minPrice}
         currentMax={queryParams.maxPrice}
         onChange={handlePriceFilter}
+      />
+      <RadioFilter
+        title='Currency'
+        items={
+          [
+            {label: 'CRO', key: 'currency-cro', isSelected: filteredItems.some((fi) => fi.key === 'currency-cro')},
+            ...currencies.map((c) => (
+              {label: c.name, key: `currency-${c.symbol.toLowerCase()}`, isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)}
+            )),
+          ]}
+        onSelect={handleCurrencyFilter}
       />
     </Accordion>
   ), [collections, queryParams, filteredItems, handleCollectionFilter, handleStatusFilter, handleRankFilter, handlePriceFilter]);

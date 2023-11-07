@@ -49,6 +49,7 @@ interface RyoshiConfigBankStakingNFT {
 }
 
 interface RyoshiConfigBankStakingNFTCollection extends RyoshiConfigCollections {
+  active: boolean;
   multipliers: RyoshiConfigStakingMultiplier[];
   adders: RyoshiConfigStakingMultiplier[];
   ids: RyoshiConfigStakingIdMultiplier[];
@@ -78,6 +79,7 @@ interface RyoshiConfigBarracksStakingNFT {
 }
 
 interface RyoshiConfigBarracksStakingNFTCollection extends RyoshiConfigCollections {
+  active: boolean;
   traits: RyoshiConfigTraitEligibility[];
   multipliers: RyoshiConfigStakingMultiplier[];
   ids: RyoshiConfigStakingIdMultiplier[];

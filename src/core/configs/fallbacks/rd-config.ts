@@ -26,6 +26,16 @@ const collections: RyoshiConfigCollections[] = [
     maxSupply: 4
   },
   {
+    slug: 'fortuneteller',
+    address: '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566',
+    maxSupply: 4
+  },
+  {
+    slug: 'ryoshi-tales',
+    address: '0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04',
+    maxSupply: 500
+  },
+  {
     slug: 'mad-meerkat',
     address: '0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56',
     maxSupply: 10000
@@ -66,6 +76,7 @@ export const ryoshiConfig: RyoshiConfig = {
         collections: [
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-vip')!,
+            active: true,
             multipliers: [
               { percentile: 5, value: 0.5 },
               { percentile: 10, value: 0.3 },
@@ -77,6 +88,7 @@ export const ryoshiConfig: RyoshiConfig = {
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-halloween')!,
+            active: true,
             multipliers: [],
             adders: [
               { percentile: 5, value: 0.25 },
@@ -88,6 +100,7 @@ export const ryoshiConfig: RyoshiConfig = {
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-christmas')!,
+            active: true,
             multipliers: [],
             adders: [
               { percentile: 5, value: 0.25 },
@@ -99,6 +112,7 @@ export const ryoshiConfig: RyoshiConfig = {
           },
           {
             ...collections.find(c => c.slug === 'fortune-guards')!,
+            active: true,
             multipliers: [],
             adders: [],
             ids: [
@@ -107,6 +121,31 @@ export const ryoshiConfig: RyoshiConfig = {
               { id: 4, bonus: 2.0 },
               { id: 5, bonus: 4.0 },
             ]
+          },
+          {
+            ...collections.find(c => c.slug === 'fortuneteller')!,
+            active: true,
+            multipliers: [],
+            adders: [],
+            ids: [
+              { id: 1, bonus: 0.25 },
+              { id: 2, bonus: 0.5 },
+              { id: 3, bonus: 1.0 },
+              { id: 4, bonus: 2.0 },
+              { id: 5, bonus: 4.0 },
+            ]
+          },
+          {
+            ...collections.find(c => c.slug === 'ryoshi-tales')!,
+            active: true,
+            multipliers: [],
+            adders: [
+              { percentile: 5, value: 0.25 },
+              { percentile: 10, value: 0.2 },
+              { percentile: 20, value: 0.15 },
+              { percentile: 100, value: 0.1 },
+            ],
+            ids: []
           }
         ],
       }
@@ -119,6 +158,7 @@ export const ryoshiConfig: RyoshiConfig = {
         collections: [
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-vip')!,
+            active: true,
             traits: [
               {
                 type: 'tools',
@@ -157,6 +197,7 @@ export const ryoshiConfig: RyoshiConfig = {
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-halloween')!,
+            active: true,
             traits: [
               {
                 type: 'tools',
@@ -176,6 +217,7 @@ export const ryoshiConfig: RyoshiConfig = {
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-christmas')!,
+            active: true,
             traits: [
               {
                 type: 'miscellaneous',
@@ -195,6 +237,7 @@ export const ryoshiConfig: RyoshiConfig = {
           },
           {
             ...collections.find(c => c.slug === 'fortune-guards')!,
+            active: true,
             traits: [],
             multipliers: [],
             ids: [
@@ -203,6 +246,26 @@ export const ryoshiConfig: RyoshiConfig = {
               { id: 4, bonus: 300 },
               { id: 5, bonus: 400 },
             ],
+          },
+          {
+            ...collections.find(c => c.slug === 'ryoshi-tales')!,
+            active: true,
+            traits: [
+              {
+                type: 'accessories',
+                inclusion: RyoshiConfigTraitInclusionType.EXCLUDE,
+                values: [
+                  'none'
+                ]
+              },
+            ],
+            multipliers: [
+              { percentile: 5, value: 50 },
+              { percentile: 10, value: 30 },
+              { percentile: 20, value: 20 },
+              { percentile: 100, value: 10 },
+            ],
+            ids: []
           }
         ]
       }

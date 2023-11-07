@@ -1,8 +1,6 @@
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
 
 import thunk from 'redux-thunk';
-import * as Sentry from '@sentry/react';
-import createSentryMiddleware from 'redux-sentry-middleware';
 
 import { memberships } from '../GlobalState/Memberships';
 import marketplaceReducer from '../GlobalState/marketplaceSlice';

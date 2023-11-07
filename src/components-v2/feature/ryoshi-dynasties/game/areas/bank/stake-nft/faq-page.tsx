@@ -109,14 +109,14 @@ const FaqPage = () => {
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
               <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Fortune Guards Information
+                Fortune Teller Information
               </Box>
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text>Bonus for Fortune Guards NFTs are <strong>additive</strong> and based on the NFT ID:</Text>
+              <Text>Bonus for Fortune Teller NFTs are <strong>additive</strong> and based on the NFT ID:</Text>
               <UnorderedList>
-                {rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'fortune-guards')!.ids.map((id, i) => (
+                {rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'fortuneteller')!.ids.map((id, i) => (
                   <ListItem key={i}>ID {id.id}: +{commify(id.bonus)}%</ListItem>
                 ))}
               </UnorderedList>

@@ -12114,7 +12114,7 @@
         "banner": "/img/collections/lion-social-club/banner.webp",
         "website": "https://lionsocialclub.io/",
         "twitter": "https://twitter.com/LionSocialClub",
-        "discord": "https://discord.gg/p5hM7BGjxT",
+        "discord": "https://discord.gg/ahEkTN9nRM",
         "categories": []
       },
       "verification": {
@@ -17111,12 +17111,12 @@
       "multiToken": false,
       "address": "0xe0160145ec09f98fb3Dbc03b2b5da08D16871e3f",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Ghost is a Community Driven Project aimed at Gamification. Ghost OG consists of 7070 Interactive NFTs, In fact, it is possible to customize your Ghost on our site; change weapons, background and add items.",
         "avatar": "/img/collections/ghost-og/avatar.webp",
-        "card": "/img/collections/ghost-og/card.webp",
-        "banner": "/img/collections/ghost-og/banner.webp",
+        "card": "/img/collections/ghost-og/card1.webp",
+        "banner": "/img/collections/ghost-og/banner1.webp",
         "website": "https://ghostog.netlify.app/",
         "twitter": "https://twitter.com/GhostEliteNFTs",
         "discord": "https://discord.gg/BtbKbxVmEK",
@@ -24400,6 +24400,71 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Scrap Monsters",
+      "slug": "scrap-monsters",
+      "multiToken": false,
+      "address": "0xBf0Ca142dE65250c38B9C682c5Dd51d56E18dF6A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Scrap Monsters recycle old cans and bottles recycle scrap metals scrap monsters for a greener tomorrow scrap monsters will turn these discarded items into sweet juicy staking rewards",
+        "avatar": "/img/collections/scrap-monsters/avatar.webp",
+        "banner": "/img/collections/scrap-monsters/banner.webp",
+        "card": "/img/collections/scrap-monsters/card.webp",
+        "website": "https://scrapmonsters.com.au/",
+        "twitter": "https://www.twitter.com/Donkey__Finance",
+        "discord": "https://discord.gg/mmyGF8N79Z",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroPepe LE",
+      "slug": "cropepe-le",
+      "multiToken": false,
+      "address": "0xcFBA0839e293e078248CD0F9a089D8870252F1e3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The CroPepe LE collection has 195 pieces. The first collector's collection for CroPepe fans!",
+        "avatar": "/img/collections/cropepe-le/avatar.webp",
+        "website": "https://www.cropepe.com/",
+        "twitter": "https://www.twitter.com/StarwayCity",
+        "discord": "https://discord.gg/zCZeY8Ejgq",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroPepe LE CroDoges",
+      "slug": "cropepe-le-crodoges",
+      "multiToken": false,
+      "address": "0x0F7d79e3B5dE6eEbE440a68c89D0AE275611D340",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The CroPepe LE collection has 195 pieces. The second collector's collection for CroPepe fans!",
+        "avatar": "/img/collections/cropepe-le-crodoges/avatar.webp",
+        "website": "https://www.starway.city/collections/cropepexcrodoges/",
+        "twitter": "https://www.twitter.com/StarwayCity",
+        "discord": "https://discord.gg/zCZeY8Ejgq",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -29759,7 +29824,7 @@
       "totalSupply": 10000,
       "foundersOnly": false,
       "start": 1668200400000,
-      "end": null,
+      "end": 1699738898000,
       "referral": false,
       "is1155": false,
       "published": true,
@@ -30410,9 +30475,9 @@
       "redirect": "https://ghostog.netlify.app/mint",
       "images": {
         "drop": "/img/drops/ghost-og/drop.webp",
-        "banner": "/img/collections/ghost-og/banner.webp",
+        "banner": "/img/collections/ghost-og/banner1.webp",
         "avatar": "/img/collections/ghost-og/avatar.webp",
-        "preview": "/img/collections/ghost-og/card.webp"
+        "preview": "/img/collections/ghost-og/card1.webp"
       },
       "verification": {
         "verified": true,
@@ -31618,7 +31683,7 @@
       "memberCost": "325",
       "whitelistCost": "300",
       "foundersOnly": false,
-      "start": null,
+      "start": 1699560000000,
       "end": null,
       "referral": false,
       "is1155": false,
