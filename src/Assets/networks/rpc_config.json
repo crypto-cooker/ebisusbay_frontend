@@ -17115,8 +17115,8 @@
       "metadata": {
         "description": "Ghost is a Community Driven Project aimed at Gamification. Ghost OG consists of 7070 Interactive NFTs, In fact, it is possible to customize your Ghost on our site; change weapons, background and add items.",
         "avatar": "/img/collections/ghost-og/avatar.webp",
-        "card": "/img/collections/ghost-og/card.webp",
-        "banner": "/img/collections/ghost-og/banner.webp",
+        "card": "/img/collections/ghost-og/card1.webp",
+        "banner": "/img/collections/ghost-og/banner1.webp",
         "website": "https://ghostog.netlify.app/",
         "twitter": "https://twitter.com/GhostEliteNFTs",
         "discord": "https://discord.gg/BtbKbxVmEK",
@@ -30475,9 +30475,9 @@
       "redirect": "https://ghostog.netlify.app/mint",
       "images": {
         "drop": "/img/drops/ghost-og/drop.webp",
-        "banner": "/img/collections/ghost-og/banner.webp",
+        "banner": "/img/collections/ghost-og/banner1.webp",
         "avatar": "/img/collections/ghost-og/avatar.webp",
-        "preview": "/img/collections/ghost-og/card.webp"
+        "preview": "/img/collections/ghost-og/card1.webp"
       },
       "verification": {
         "verified": true,
