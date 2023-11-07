@@ -17111,7 +17111,7 @@
       "multiToken": false,
       "address": "0xe0160145ec09f98fb3Dbc03b2b5da08D16871e3f",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Ghost is a Community Driven Project aimed at Gamification. Ghost OG consists of 7070 Interactive NFTs, In fact, it is possible to customize your Ghost on our site; change weapons, background and add items.",
         "avatar": "/img/collections/ghost-og/avatar.webp",
