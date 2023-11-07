@@ -75,6 +75,7 @@ class WalletsQuery extends Query<WalletsQueryParams> {
     if (!!this.params.maxPrice) obj.maxPrice = this.params.maxPrice;
     if (!!this.params.minListingTime) obj.minListingTime = this.params.minListingTime;
     if (!!this.params.maxListingTime) obj.maxListingTime = this.params.maxListingTime;
+    if (!!this.params.currency) obj.currency = this.params.currency;
 
     return Object.fromEntries(Object.entries(obj).filter(([k, v]) => {
       return v !== undefined && !isEmptyObj(v)
