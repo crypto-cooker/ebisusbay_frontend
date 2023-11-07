@@ -1,4 +1,4 @@
-import {Flex, GridItem, HStack, Image, Text} from "@chakra-ui/react";
+import {Flex, GridItem, HStack, Image, Text, SimpleGrid} from "@chakra-ui/react";
 import React, {useEffect, useRef, useState} from "react";
 import heroesMetadata from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/heroes-metadata.json";
 import {ResponsiveValue} from "@chakra-ui/styled-system";
@@ -24,9 +24,10 @@ interface Attribute{
 export interface RdHeroProps {
   nftId: string;
   rounded?: ResponsiveValue<CSS.Property.BorderRadius>
+  showStats?: boolean;
 }
 
-const RdHero = ({nftId, rounded}: RdHeroProps) => {
+const RdHero = ({nftId, rounded, showStats}: RdHeroProps) => {
 
   const [location, setLocation] = useState<any>(null);
   const [skin, setSkin] = useState<any>(null);
@@ -54,6 +55,7 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
   const [agi, setAgi] = useState<number>(0);
   const [luk, setLuk] = useState<number>(0);
   const [cha, setCha] = useState<number>(0);
+  const flexHeight = showStats ? size*1.25 : size;
   
   const GetTraitType = (traitType:string, attributes:Attribute[]) => {
     for(let i = 0; i < attributes.length; i++){
@@ -127,7 +129,7 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
         setWis(attributes[i].value);
       } else if (attributes[i].trait_type == 'AGI'){
         setAgi(attributes[i].value);
-      } else if (attributes[i].trait_type == 'LUK'){
+      } else if (attributes[i].trait_type == 'LUCK'){
         setLuk(attributes[i].value);
       } else if (attributes[i].trait_type == 'CHA'){
         setCha(attributes[i].value);
@@ -171,12 +173,11 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
     }
     window.addEventListener('resize', handleResize)
   })
-
   return (
     <>
       <Flex
         ref={ref}
-        h={size}
+        h={flexHeight}
         borderRadius={'md'} 
         outline={rounded}
       >
@@ -194,32 +195,34 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
         {!!goggles && <Image h={size} w={size} src={ImageService.translate(goggles).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
         {!!border && <Image h={size} w={size} src={ImageService.translate(border).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
 
-        {/* <SimpleGrid
-          h={size*0.25}
-          w={size}
-          position={'absolute'}
-          bg={'#111219'}
-          borderTopColor={'#30333f'}
-          borderTopWidth={{ base: 4, sm:4, md: 4 }}
-          columns={4}
-          bottom={0}
-          paddingLeft={2}
-          paddingRight={2}
-          paddingTop={1}
-          spacingX={{ base:1, sm:1, md: 2 }}
-          mt={-2}
+        { showStats &&
+          <SimpleGrid
+            h={size*0.25}
+            w={size}
+            position={'absolute'}
+            bg={'#111219'}
+            borderTopColor={'#30333f'}
+            borderTopWidth={{ base: 4, sm:4, md: 4 }}
+            columns={4}
+            bottom={0}
+            paddingLeft={2}
+            paddingRight={2}
+            paddingTop={1}
+            spacingX={{ base:1, sm:1, md: 2 }}
+            mt={-2}
 
-          >
-          <Text as={'b'} fontSize={{ base: 8, sm: 8, md: 10 }}> STATS:</Text>
-          <HeroStatItem stat={"STR"} value={str}/>
-          <HeroStatItem stat={"DEX"} value={dex}/>
-          <HeroStatItem stat={"INT"} value={int}/>
-          <HeroStatItem stat={"WIS"} value={wis}/>
-          <HeroStatItem stat={"AGI"} value={agi}/>
-          <HeroStatItem stat={"LUK"} value={luk}/>
-          <HeroStatItem stat={"CHA"} value={cha}/>
-        </SimpleGrid> */}
-      </Flex> 
+            >
+            <Text as={'i'} fontSize={{ base: 8, sm: 8, md: 10 }}> STATS:</Text>
+            <HeroStatItem stat={"STR"} value={str}/>
+            <HeroStatItem stat={"DEX"} value={dex}/>
+            <HeroStatItem stat={"INT"} value={int}/>
+            <HeroStatItem stat={"WIS"} value={wis}/>
+            <HeroStatItem stat={"AGI"} value={agi}/>
+            <HeroStatItem stat={"LUK"} value={luk}/>
+            <HeroStatItem stat={"CHA"} value={cha}/>
+          </SimpleGrid>
+          }
+        </Flex> 
     </>
   )
 }
