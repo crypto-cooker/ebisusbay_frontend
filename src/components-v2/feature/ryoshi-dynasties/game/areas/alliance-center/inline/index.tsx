@@ -249,6 +249,7 @@ const CurrentFaction = () => {
 
   const [troopsByGame, setTroopsByGame] = useState(rdContext.user?.season.troops);
   const [loadingTroopsBreakdown, setLoadingTroopsBreakdown] = useState(false);
+  const [selectedGame, setSelectedGame] = useState<string>('current');
 
   const getDaysSinceGameStart = () => {
     if(!rdContext.game) return 0;
@@ -329,12 +330,13 @@ const CurrentFaction = () => {
     }
   }
 
-  const handleGameChange = async (e: ChangeEvent<HTMLSelectElement>) => {
-    if (e.target.value === 'previous') {
+  const handleGameChange = async (game?: string) => {
+    if (game === 'previous' && !!rdContext.game) {
       try {
         setLoadingTroopsBreakdown(true);
+        const previousGameId = rdContext.game.history.previousGameId;
         const signature = await requestSignature();
-        const troops = await ApiService.withoutKey().ryoshiDynasties.getTroopsBreakdown(100, user.address!, signature);
+        const troops = await ApiService.withoutKey().ryoshiDynasties.getTroopsBreakdown(previousGameId, user.address!, signature);
         setTroopsByGame(troops);
       } catch (e) {
         console.log(e);
@@ -372,7 +374,14 @@ const CurrentFaction = () => {
 
     setIsRegisteredCurrentSeason(rdContext.user.season.registrations.current);
     setIsRegisteredNextSeason(rdContext.user.season.registrations.next);
-  }, [!!rdContext]);
+
+    setTroopsByGame(rdContext.user.season.troops);
+    setSelectedGame('current');
+  }, [rdContext.user]);
+
+  useEffect(() => {
+    handleGameChange(selectedGame);
+  }, [selectedGame]);
 
   return (
     <Box mt={4}>
@@ -456,7 +465,11 @@ const CurrentFaction = () => {
                   <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={6}/>
                   <Text fontSize='xl' fontWeight='bold'textAlign='start'>Troops</Text>
                 </HStack>
-                <Select onChange={handleGameChange} defaultValue='current' maxW='175px'>
+                <Select
+                  onChange={(e) => setSelectedGame(e.target.value)}
+                  value={selectedGame}
+                  maxW='175px'
+                >
                   <option value='current'>Current Game</option>
                   <option value='previous'>Previous Game</option>
                 </Select>
