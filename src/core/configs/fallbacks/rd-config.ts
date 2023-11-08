@@ -271,6 +271,27 @@ export const ryoshiConfig: RyoshiConfig = {
       }
     }
   },
+  townHall: {
+    staking: {
+      nft: {
+        maxSlots: 5,
+        collections: [
+          {
+            ...collections.find(c => c.slug === 'cowz')!,
+            fortune: 35000
+          },
+          {
+            ...collections.find(c => c.slug === 'aiko-legends')!,
+            fortune: 25000
+          },
+          {
+            ...collections.find(c => c.slug === 'mad-meerkat')!,
+            fortune: 15000
+          }
+        ]
+      }
+    }
+  },
   factions: {
     registration: {
       fortuneCost: 1500,

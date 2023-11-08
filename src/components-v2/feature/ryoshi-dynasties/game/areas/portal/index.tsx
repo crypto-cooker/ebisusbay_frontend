@@ -138,7 +138,7 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
         position={'absolute'}
         opacity={0.2}
         zIndex={0}
-        src={ImageService.translate('/img/ryoshi-dynasties/village/portal.png').convert()}
+        src={ImageService.translate('/img/ryoshi-dynasties/village/background-portal.webp').convert()}
         minH='calc(100vh - 74px)'
       />
     </AspectRatio>

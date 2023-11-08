@@ -1,6 +1,7 @@
 export interface RyoshiConfig {
   bank: RyoshiConfigBank;
   barracks: RyoshiConfigBarracks;
+  townHall: RyoshiConfigTownHall;
   rewards: RyoshiConfigCheckinRewards;
   factions: RyoshiConfigFactions;
   presale: RyoshiConfigPresale;
@@ -82,6 +83,23 @@ interface RyoshiConfigBarracksStakingNFTCollection extends RyoshiConfigCollectio
   traits: RyoshiConfigTraitEligibility[];
   multipliers: RyoshiConfigStakingMultiplier[];
   ids: RyoshiConfigStakingIdMultiplier[];
+}
+
+interface RyoshiConfigTownHall {
+  staking: RyoshiConfigTownHallStaking;
+}
+
+interface RyoshiConfigTownHallStaking {
+  nft: RyoshiConfigTownHallStakingNFT;
+}
+
+interface RyoshiConfigTownHallStakingNFT {
+  maxSlots: number;
+  collections: RyoshiConfigTownHallStakingNFTCollection[];
+}
+
+export interface RyoshiConfigTownHallStakingNFTCollection extends RyoshiConfigCollections {
+  fortune: number;
 }
 
 interface RyoshiConfigTraitEligibility {

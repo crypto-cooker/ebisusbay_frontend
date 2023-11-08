@@ -217,10 +217,10 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
          <AspectRatio ratio={1920/1080} overflow='visible' >
           <Image
           position={'absolute'}
-            src={'/img/ryoshi-dynasties/village/allianceCenter.png'}
+            src={'/img/ryoshi-dynasties/village/background-alliance-center.webp'}
             opacity={0.2}
             zIndex={0}
-            // src={ImageService.translate('/img/ryoshi-dynasties/village/allianceCenter.png').convert()}
+            // src={ImageService.translate('/img/ryoshi-dynasties/village/background-alliance-center.webp').convert()}
             minH='calc(100vh - 74px)'
           />
         </AspectRatio>

@@ -18,6 +18,7 @@ import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bar
 import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/portal";
 import FishMarketModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/fish-market";
 import Tavern from "@src/components-v2/feature/ryoshi-dynasties/game/areas/tavern";
+import TownHall from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall";
 const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig}) => {
   const user = useAppSelector((state) => state.user);
 
@@ -114,13 +115,15 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig}) => 
             ) : currentPage === 'market' ? (
               <FishMarketModal onBack={returnToPreviousPage} />
             ) : currentPage === 'moongate' ? (
-                <PortalModal onBack={returnToPreviousPage} />
+              <PortalModal onBack={returnToPreviousPage} />
             ) : currentPage === 'lands' ? (
               <DynastiesLands onBack={returnToPreviousPage} showBackButton={true}/>
               // ): currentPage === 'announcementBoard' ? (
               // <AnnouncementBoard onBack={returnToPreviousPage} />
             ) : currentPage === 'tavern' ? (
               <Tavern onBack={returnToPreviousPage} />
+            ) : currentPage === 'townHall' ? (
+              <TownHall onBack={returnToPreviousPage} />
             ) : (!currentPage || currentPage === 'village') && (
               <Village onChange={navigate} firstRun={firstRun} onFirstRun={() => setFirstRun(true)}/>
               // <BattleMap onChange={navigate} />
