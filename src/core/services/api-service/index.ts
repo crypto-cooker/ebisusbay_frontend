@@ -20,7 +20,7 @@ import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
 import {caseInsensitiveCompare} from "@src/utils";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 import {getOwners} from "@src/core/subgraph"
-import {Player, RankPlayers} from "@src/core/poker-rank-players"
+import {Player, RankPlayers, RankPlayersByWorst} from "@src/core/poker-rank-players"
 import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
@@ -88,7 +88,7 @@ export class ApiService implements Api {
 
   async getPokerLeaderboardAtBlock(page: number, pageSize: number, pokerCollection: PokerCollection): Promise<any> {
     //info from subgraph
-    console.log("pokerCollection = " + pokerCollection);
+    // console.log("pokerCollection = " + pokerCollection);
     const owners = await getOwners(pokerCollection);
     //rank the info
 
@@ -101,15 +101,39 @@ export class ApiService implements Api {
     } else if (pokerCollection == PokerCollection.Live) {
       gameNumber = 3;
     }
-    console.log("gameNumber = " + gameNumber);
+
     const response = await RankPlayers(owners, false, gameNumber);
+    let worstHands = response.slice(0,1);
+    worstHands = await RankPlayersByWorst(worstHands, gameNumber);
+
+      // let combined = [];
+      // if (pokerCollection == PokerCollection.Live) {
+      //   const bestHands = response.slice(0, 1);
+      //   let worstHands = response.slice(0,1);
+      //   // console.log("bestHands", bestHands);
+      //   worstHands = await RankPlayersByWorst(worstHands, gameNumber);
+      //   //add response and worst hands together alternating every other
+      //   // console.log("worstHands", worstHands);
+      //   console.log("bestHands", bestHands);
+      //   // console.log("response", response.length);
+
+      //   for (let i = 0; i < bestHands.length; i++) {
+      //     combined.push(bestHands[i]);
+      //     // combined.push(worstHands[i]);
+      //   }
+      //   console.log("combined", combined);
+      //   // response = combined;
+      //   // console.log("response", response);
+      // } else {
+      //   combined = response;
+      // }
 
     function paginate(array : any, page_size:number, page_number:number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
     //convert response to paged list
-    const paginatedResponse = paginate(response, pageSize, page);
+    const paginatedResponse = paginate(worstHands, pageSize, page);
     const totalPages = Math.ceil(response.length / pageSize);
 
     return new PagedList<Player>(

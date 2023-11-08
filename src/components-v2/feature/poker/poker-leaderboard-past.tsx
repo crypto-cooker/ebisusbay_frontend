@@ -260,12 +260,22 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 					</>
 				)}
 				
-
 		
 				{data?.pages[0].data.map((player: Player, i : number) => (
 				<>
 				<GridItem maxW='50px'  >
-				<Text fontSize={{base: 12, md:14}}> {i+1}</Text>
+				{/* we want this to print a number every other line */}
+				{ pokerCollection === PokerCollection.Live ?
+				<>
+					{ i%2 === 0 ? 
+					<Text fontSize={{base: 12, md:14}}> {(i/2)+1}</Text>
+					:
+					<></>}
+				
+				</> :
+
+					<Text fontSize={{base: 12, md:14}}> {i+1}</Text>
+				}
 				</GridItem>
 
 				<GridItem _hover={{bg: hoverBackground}}>
@@ -273,12 +283,13 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				</GridItem>
 		
 				<GridItem>
-					<Text fontSize={{base: 12, md:14}}>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text>
+				{ pokerCollection === PokerCollection.Live ?
+					( i%2 === 0 ? 
+					<Text fontSize={{base: 12, md:14}} textColor={'white'}>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text>
+					: <Text fontSize={{base: 12, md:14}} textColor={'red'}>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text> )
+					: <Text fontSize={{base: 12, md:14}}>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text>
+				}
 				</GridItem>
-		
-				{/* <GridItem>
-					<Text>{getCardName(player.bestHand.primaryValue)}</Text>
-				</GridItem> */}
 		
 				<GridItem>
 					<HStack>
