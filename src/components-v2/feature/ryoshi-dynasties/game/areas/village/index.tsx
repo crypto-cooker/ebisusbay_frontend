@@ -146,9 +146,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     DelayedOpen('Tavern');
   }
   const OpenTownHall = () => {
-    // setElementToZoomTo('Town Hall');
-    // DelayedOpen('Town Hall');
-    onOpenTownHallModal();
+    setElementToZoomTo('Town Hall');
+    DelayedOpen('Town Hall');
   }
 
   function timeout(delay: number) {
