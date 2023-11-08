@@ -10,7 +10,7 @@ class RyoshiDynasties {
 
   constructor() {
     this.apollo = new ApolloClient({
-      uri: urlify(config.urls.subgraph, 'ryoshi-dynasties'),
+      uri: urlify(config.urls.subgraph, 'ryoshi-dynasties-meeple'),
       cache: new InMemoryCache()
     });
   }

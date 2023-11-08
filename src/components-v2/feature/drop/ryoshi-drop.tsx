@@ -497,13 +497,13 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
                     {status === statuses.EXPIRED && <p className="mt-5">SWAP HAS ENDED</p>}
 
                     {status === statuses.LIVE && drop.end && (
-                      <div className="me-4">
+                      <Box me={4} mt={4}>
                         <Heading as="h6" size="sm" className="mb-1">Minting Ends</Heading>
                         <Heading as="h3" size="md">
                           {new Date(drop.end).toDateString()}, {new Date(drop.end).toTimeString()}
                         </Heading>
                         <Text mt={2} size='md'>After this time, the contract will be <strong>locked</strong> and no more VIPs will be able to be swapped. Any remaining VIPs will go towards a public Dutch Auction at a later date.</Text>
-                      </div>
+                      </Box>
                     )}
                     {status === statuses.NOT_STARTED && drop.start && (
                       <div className="me-4">
