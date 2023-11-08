@@ -348,29 +348,11 @@ const CurrentFaction = () => {
       setTroopsByGame(rdContext.user?.season.troops);
     }
   }
-
-  useEffect(() => {
-    if(!rdContext.user) return;
-
-    // console.log(rdContext.user);
-    // console.log(rdContext.game?.season);
-    // console.log(rdContext.config);
-
-    // console.log(getAuthSignerInStorage()?.signature)
-    // console.log(user.address)
-    
-    if(rdContext.user?.faction?.id !== undefined && rdContext.user?.faction.isEnabled){
-      console.log('Faction Created and Enabled');
-      setFactionCreatedAndEnabled(true);
-    }
-    else{
-      console.log('Faction Not Created or Enabled');
-      setFactionCreatedAndEnabled(false);
-    }
-  }, [rdContext]); 
   
   useEffect(() => {
     if(!rdContext.user) return;
+
+    setFactionCreatedAndEnabled(rdContext.user?.faction?.id !== undefined && rdContext.user?.faction.isEnabled);
 
     setIsRegisteredCurrentSeason(rdContext.user.season.registrations.current);
     setIsRegisteredNextSeason(rdContext.user.season.registrations.next);
@@ -405,7 +387,7 @@ const CurrentFaction = () => {
                   onClick={OpenEditFaction}
                 />
               </Stack>
-              {factionCreatedAndEnabled && (
+              {factionCreatedAndEnabled ? (
                 <>
                   <Box bg='#564D4A' p={2} rounded='lg' w='full'>
                     <SimpleGrid columns={2}>
@@ -431,6 +413,14 @@ const CurrentFaction = () => {
                     )}
                   </Box>
                 </>
+              ) : (!!rdContext.user && rdContext.user.season.troops.available.total > 0) && (
+                <RdButton
+                  onClick={onOpenDelegate}
+                  maxH='50px'
+                  size='sm'
+                >
+                  Delegate
+                </RdButton>
               )}
             </VStack>
           ) : (
@@ -444,7 +434,7 @@ const CurrentFaction = () => {
                   >
                     Create Faction
                   </RdButton>
-                  {(!!rdContext.user && rdContext.user.season.troops.available.total > 0 && (!rdContext.user.season.faction || !rdContext.user.faction?.isEnabled)) && (
+                  {(!!rdContext.user && rdContext.user.season.troops.available.total > 0 && !factionCreatedAndEnabled) && (
                     <RdButton
                       onClick={onOpenDelegate}
                       maxH='50px'
@@ -469,6 +459,8 @@ const CurrentFaction = () => {
                   onChange={(e) => setSelectedGame(e.target.value)}
                   value={selectedGame}
                   maxW='175px'
+                  size='sm'
+                  rounded='md'
                 >
                   <option value='current'>Current Game</option>
                   <option value='previous'>Previous Game</option>
@@ -525,7 +517,6 @@ const TroopsBreakdown = ({faction, troops}: {faction: RdFaction, troops: RdUserC
   const {signature} = useEnforceSignature();
 
   return (
-
     <Accordion w='full' mt={2} allowMultiple>
       <AccordionItem bgColor='#564D4A' rounded='md'>
         <AccordionButton>
