@@ -1,4 +1,4 @@
-import {Flex, GridItem, HStack, Image, Text, SimpleGrid} from "@chakra-ui/react";
+import {Flex, GridItem, HStack, Image, Text, SimpleGrid, useBreakpointValue} from "@chakra-ui/react";
 import React, {useEffect, useRef, useState} from "react";
 import heroesMetadata from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/heroes-metadata.json";
 import {ResponsiveValue} from "@chakra-ui/styled-system";
@@ -55,7 +55,9 @@ const RdHero = ({nftId, rounded, showStats}: RdHeroProps) => {
   const [agi, setAgi] = useState<number>(0);
   const [luk, setLuk] = useState<number>(0);
   const [cha, setCha] = useState<number>(0);
-  const flexHeight = showStats ? size*1.25 : size;
+  const flexHeight = showStats ? size*1.3 : size;
+
+  //set breakpoints based on width of component
   
   const GetTraitType = (traitType:string, attributes:Attribute[]) => {
     for(let i = 0; i < attributes.length; i++){
@@ -136,6 +138,20 @@ const RdHero = ({nftId, rounded, showStats}: RdHeroProps) => {
       }
     }
   }
+  const GetTextSize = () => {
+    if(size < 175){
+      return 10;
+    } else if (size < 200){
+    return 12;  
+    } else if (size < 300){
+      return 14;  
+    } else if (size < 350){
+      return 16;  
+    } else if (size < 400){
+      return 18;  
+    }
+    return 8;
+  }
 
   const GenerateHeroPNG = (nftId : string) => {
     let nft : NFTMetaData = heroesMetadata.Hero.find((nft) => nft.id == nftId) as NFTMetaData;
@@ -156,6 +172,10 @@ const RdHero = ({nftId, rounded, showStats}: RdHeroProps) => {
       GenerateHeroPNG(nftId)
     }
   },[nftId])
+
+  // useEffect(() => {
+  //   console.log("size: " + size)
+  // },[size])
 
   useEffect(() => {
     //get width of this component
@@ -197,7 +217,7 @@ const RdHero = ({nftId, rounded, showStats}: RdHeroProps) => {
 
         { showStats &&
           <SimpleGrid
-            h={size*0.25}
+            h={size*0.3}
             w={size}
             position={'absolute'}
             bg={'#111219'}
@@ -205,21 +225,20 @@ const RdHero = ({nftId, rounded, showStats}: RdHeroProps) => {
             borderTopWidth={{ base: 4, sm:4, md: 4 }}
             columns={4}
             bottom={0}
-            paddingLeft={2}
-            paddingRight={2}
+            paddingLeft={3}
+            paddingRight={3}
             paddingTop={1}
-            spacingX={{ base:1, sm:1, md: 2 }}
-            mt={-2}
-
+            spacingX={{ base:1, sm:1, md: 2}}
+            mt={-4}
             >
-            <Text as={'i'} fontSize={{ base: 8, sm: 8, md: 10 }}> STATS:</Text>
-            <HeroStatItem stat={"STR"} value={str}/>
-            <HeroStatItem stat={"DEX"} value={dex}/>
-            <HeroStatItem stat={"INT"} value={int}/>
-            <HeroStatItem stat={"WIS"} value={wis}/>
-            <HeroStatItem stat={"AGI"} value={agi}/>
-            <HeroStatItem stat={"LUK"} value={luk}/>
-            <HeroStatItem stat={"CHA"} value={cha}/>
+            {/* <Text as={'i'} fontSize={{ base: 8, sm: 8, md: 10 }}> STATS:</Text> */}
+            <HeroStatItem stat={"STR"} value={str} fontSize={GetTextSize()}/>
+            <HeroStatItem stat={"DEX"} value={dex} fontSize={GetTextSize()}/>
+            <HeroStatItem stat={"INT"} value={int} fontSize={GetTextSize()}/>
+            <HeroStatItem stat={"WIS"} value={wis} fontSize={GetTextSize()}/>
+            <HeroStatItem stat={"AGI"} value={agi} fontSize={GetTextSize()}/>
+            <HeroStatItem stat={"LUK"} value={luk} fontSize={GetTextSize()}/>
+            <HeroStatItem stat={"CHA"} value={cha} fontSize={GetTextSize()}/>
           </SimpleGrid>
           }
         </Flex> 
@@ -231,13 +250,14 @@ export default RdHero;
 interface HeroStatItemProps {
   stat : string;
   value : number;
+  fontSize : any;
 }
-const HeroStatItem = ({stat, value}: HeroStatItemProps) => {
+const HeroStatItem = ({stat, value, fontSize}: HeroStatItemProps) => {
   return (
     <GridItem>
       <HStack justifyContent={'space-between'}>
-      <Text fontSize={{ base: 8, sm:12, md: 12 }}>{stat}</Text>
-      <Text fontSize={{ base: 8, sm:12, md: 12 }}>{value}</Text>
+      <Text fontSize={fontSize}>{stat}</Text>
+      <Text fontSize={fontSize}>{value}</Text>
       </HStack>
     </GridItem>
   )
