@@ -4,7 +4,7 @@ import {
   BarracksStakeNft, RdBattleLog,
   RdFaction,
   RdGameContext,
-  RdUserContext, TownHallStakeNft
+  RdUserContext, RdUserContextNoOwnerFactionTroops, RdUserContextOwnerFactionTroops, TownHallStakeNft
 } from "@src/core/services/api-service/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
@@ -233,6 +233,17 @@ class RyoshiDynastiesRepository extends CmsRepository {
       });
 
     return response.data.data as {currentPage: number, logs: RdBattleLog[], pageSize: number, totalPages: number};
+  }
+
+  async getTroopsBreakdown(gameId: number, address: string, signature: string) {
+    const response = await this.cms.get(`ryoshi-dynasties/armies/breakdown`, {
+      params: {
+        gameId,
+        address,
+        signature
+      }
+    });
+    return response.data.data as RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops;
   }
 }
 

@@ -325,4 +325,8 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async getBattleLog(query: GetBattleLog) {
     return this.cms.getBattleLog(query);
   }
+
+  async getTroopsBreakdown(gameId: number, address: string, signature: string) {
+    return this.cms.getTroopsBreakdown(gameId, address, signature);
+  }
 }
