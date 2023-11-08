@@ -39,9 +39,9 @@ const config = appConfig();
 
 // Maps to collection slug
 const tabs = {
-  cowz: 'cromorphs',
-  aikoLegends: 'everybodys-not-friends',
-  madMeerkat: 'noodles-club'
+  cowz: 'cowz',
+  aikoLegends: 'aiko-legends',
+  madMeerkat: 'mad-meerkat'
 };
 
 interface StakeNftsProps {
