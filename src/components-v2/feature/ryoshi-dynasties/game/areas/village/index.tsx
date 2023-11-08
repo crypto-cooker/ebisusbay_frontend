@@ -146,8 +146,9 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     DelayedOpen('Tavern');
   }
   const OpenTownHall = () => {
-    setElementToZoomTo('Town Hall');
-    DelayedOpen('Town Hall');
+    // setElementToZoomTo('Town Hall');
+    // DelayedOpen('Town Hall');
+    onOpenTownHallModal();
   }
 
   function timeout(delay: number) {
@@ -518,6 +519,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
   const { isOpen: isResetModalOpen, onOpen: onOpenResetModal, onClose: onCloseResetModal } = useDisclosure();
+  const { isOpen: isTownHallModalOpen, onOpen: onOpenTownHallModal, onClose: onCloseTownHalltModal } = useDisclosure();
 
   const handleSceneChange = useCallback((area: string) => {
     if (area === 'battleMap') {
@@ -774,6 +776,15 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       >
         <RdModalAlert>
           <Text>The current game has ended and rewards are being calculated. A new game will begin shortly!</Text>
+        </RdModalAlert>
+      </RdModal>
+      <RdModal
+        isOpen={isTownHallModalOpen}
+        onClose={onCloseTownHalltModal}
+        title='Coming Soon'
+      >
+        <RdModalAlert>
+          <Text>Town Hall staking will be starting shortly. Check back soon!</Text>
         </RdModalAlert>
       </RdModal>
       </motion.div>

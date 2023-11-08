@@ -195,7 +195,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         <FaqPage />
       ) : (
         <TownHallStakeNftContext.Provider value={{pendingNfts, stakedNfts}}>
-          <Text align='center' p={2}>Ryoshi Tales NFTs can be staked to earn extra battle units per slot. Some NFTs may require a weapon trait. Staked NFTs remain staked for the duration of the game while troops have been deployed or delegated.</Text>
+          <Text align='center' p={2}>Collection winners of the September volume competition are now stakable in the Town Hall! Each staked NFT from the below collections are eligible to receive daily FRTN rewards🔥</Text>
           <StakingBlock
             pendingNfts={pendingNfts}
             stakedNfts={stakedNfts}
