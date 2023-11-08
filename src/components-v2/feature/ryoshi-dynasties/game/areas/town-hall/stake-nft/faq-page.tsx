@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionPanel,
   Box, Icon,
-  ListItem,
+  ListItem, OrderedList,
   Stack,
   Text,
   UnorderedList,
@@ -35,110 +35,49 @@ const FaqPage = () => {
 
       <Box p={4}>
         <Text>
-          Each stakeable NFT is eligible for bonus troops. These bonus troops are used to increase your chances of winning battles. Higher ranked NFTs can yield a larger amount of troops. However, some collections are restricted to where NFTs must contain specific traits. For example, NFTs from the holiday collections must contain a weapon.
+          NFTs from collection winners of the September Volume Competition are now eligible for daily FRTN rewards. The collection winners are (in order): Cowz, Aiko Legends, Mad Meerkat.
         </Text>
-        <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={4}>
-          <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
-          <Text
-            fontSize='14'
-            color='#333'
-            fontWeight='bold'
-          >
-            Warning: Once staked, NFTs can only be unstaked if you have neither deployed nor delegated any troops. If troops have been deployed or delegated, then the staked NFTs are locked until the next game.
-          </Text>
-        </Stack>
+        <Text mt={2}>
+          Each collection is designated a FRTN rewards pool of a fixed size proportional to their competition rank. This pool is distributed to stakers daily. Stake more to earn more!
+        </Text>
         <Accordion fontSize='sm' mt={4}>
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
               <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                How are bonus troops calculated?
+                What is the reward schedule for each collection?
               </Box>
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text>The amount of bonus troops depends on the collection type and rank of the NFT. See the below FAQ items for more information specific to each collection</Text>
+              <Text>Based on the competition ranking, the collection winners are allocated the following per day:</Text>
+              <OrderedList>
+                <ListItem>Cowz - 1,200 FRTN</ListItem>
+                <ListItem>Aiko Legends - 850 FRTN</ListItem>
+                <ListItem>Mad Meerkat - 850 FRTN</ListItem>
+              </OrderedList>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
               <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Ryoshi VIP Information
+                How long do the rewards last?
               </Box>
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text>Ryoshi VIP NFTs must contain any of the following for the "Tools" trait:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-vip')!.traits[0].values.map((value) => (
-                  <ListItem key={value}>{titleCase(value.toUpperCase())}</ListItem>
-                ))}
-              </UnorderedList>
-              <Text mt={4}>Eligible NFTs will then be calculated:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-vip')!.multipliers.map((multiplier, i) => (
-                  <ListItem key={i}>{multiplier.percentile}th percentile: {commify(multiplier.value)}</ListItem>
-                ))}
-              </UnorderedList>
+              <Text>The rewards will be distributed daily for a 30 day period.</Text>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
               <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Ryoshi Halloween Information
+                How much is my share?
               </Box>
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text>Ryoshi Halloween NFTs must contain any value for the "Tools" trait EXCEPT:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-halloween')!.traits[0].values.map((value) => (
-                  <ListItem key={value}>{titleCase(value.toUpperCase())}</ListItem>
-                ))}
-              </UnorderedList>
-              <Text mt={4}>Eligible NFTs will then be calculated:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-halloween')!.multipliers.map((multiplier, i) => (
-                  <ListItem key={i}>{multiplier.percentile}th percentile: {commify(multiplier.value)}</ListItem>
-                ))}
-              </UnorderedList>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton fontSize='sm' fontWeight='bold'>
-              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Ryoshi Christmas Information
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text>Ryoshi Christmas NFTs must contain any of the following for the "Miscellaneous" trait:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-christmas')!.traits[0].values.map((value) => (
-                  <ListItem key={value}>{titleCase(value.toUpperCase())}</ListItem>
-                ))}
-              </UnorderedList>
-              <Text mt={4}>Eligible NFTs will then be calculated:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-christmas')!.multipliers.map((multiplier, i) => (
-                  <ListItem key={i}>{multiplier.percentile}th percentile: {commify(multiplier.value)}</ListItem>
-                ))}
-              </UnorderedList>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton fontSize='sm' fontWeight='bold'>
-              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Fortune Guards Information
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text>All Fortune Guards NFTs are eligible. Bonus is based on the NFT ID:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'fortune-guards')!.ids.map((id, i) => (
-                  <ListItem key={i}>{id.id}: {commify(id.bonus)}</ListItem>
-                ))}
-              </UnorderedList>
+              <Text>Staked NFTs will earn a percentage of the total daily allocated rewards. This is based on the amount of currently staked NFTs for each respective collection.</Text>
+              <Text mt={2}>For example, if there are currently 999 Cowz NFTs staked and "User A" then stakes 1 Cowz NFT, that user's staked amount represents 1% of the rewards pool and will receive 1% of 1,200 FRTN daily.</Text>
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
