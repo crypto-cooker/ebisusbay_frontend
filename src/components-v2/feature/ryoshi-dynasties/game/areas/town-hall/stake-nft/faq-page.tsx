@@ -77,7 +77,7 @@ const FaqPage = () => {
             </AccordionButton>
             <AccordionPanel pb={4}>
               <Text>Staked NFTs will earn a percentage of the total daily allocated rewards. This is based on the amount of currently staked NFTs for each respective collection.</Text>
-              <Text mt={2}>For example, if there are currently 999 Cowz NFTs staked and "User A" then stakes 1 Cowz NFT, that user's staked amount represents 1% of the rewards pool and will receive 1% of 1,200 FRTN daily.</Text>
+              <Text mt={2}>For example, if there are currently 999 Cowz NFTs staked and "User A" then stakes 1 Cowz NFT, that user's staked amount represents 0.1% of the rewards pool and will receive 0.1% of 1,200 FRTN daily.</Text>
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
