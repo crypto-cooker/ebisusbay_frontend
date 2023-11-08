@@ -51,6 +51,7 @@ export interface RyoshiDynastiesApi {
     getBankStakingAccount(address: string): Promise<StakingAccount | null>;
     getFactions(gameId?: number): Promise<RdFaction[]>;
     getBattleLog(query: GetBattleLog): Promise<PagedList<RdBattleLog>>;
+    getTroopsBreakdown(gameId: number, address: string, signature: string): Promise<RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops>;
 }
 
 export enum ListingState {

@@ -107,6 +107,10 @@ class Cms {
       response.currentPage < response.totalPages
     );
   }
+
+  async getTroopsBreakdown(gameId: number, address: string, signature: string) {
+    return this.ryoshiDynasties.getTroopsBreakdown(gameId, address, signature);
+  }
 }
 
 export default Cms;
