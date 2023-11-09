@@ -43,6 +43,7 @@ const tabs = {
   dynastiesMap: 'dynastiesMap',
   diamondsPokerGame: 'diamondsPokerGame',
   clubsPokerGame: 'clubsPokerGame',
+  heartsPokerGame: 'heartsPokerGame',
   // currentPokerGame: 'currentPokerGame',
   cns: 'cns'
 };
@@ -248,6 +249,11 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
               <span onClick={handleBtnClick(tabs.clubsPokerGame)}>Clubs Game</span>
             </li>
           )}
+          {isPlayingCardsCollection(collection.address) && (
+            <li className={`tab ${openMenu === tabs.heartsPokerGame ? 'active' : ''} my-1`}>
+              <span onClick={handleBtnClick(tabs.heartsPokerGame)}>Hearts Game</span>
+            </li>
+          )}
         </ul>
 
         <Box className="de_tab_content" px={2}>
@@ -288,8 +294,12 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
           )}
           {openMenu === tabs.clubsPokerGame && (
             <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
-              {/* <PokerLeaderboardComponent /> */}
               <PokerLeaderboardComponentPast pokerCollection={PokerCollection.Clubs} />
+            </NegativeMargin>
+          )}
+          {openMenu === tabs.heartsPokerGame && (
+            <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
+              <PokerLeaderboardComponentPast pokerCollection={PokerCollection.Live} />
             </NegativeMargin>
           )}
           {openMenu === tabs.cns && (

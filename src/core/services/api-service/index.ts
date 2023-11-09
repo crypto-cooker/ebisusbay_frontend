@@ -20,7 +20,7 @@ import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
 import {caseInsensitiveCompare} from "@src/utils";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 import {getOwners} from "@src/core/subgraph"
-import {Player, RankPlayers} from "@src/core/poker-rank-players"
+import {Player, RankPlayers, RankPlayersByWorst} from "@src/core/poker-rank-players"
 import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
@@ -86,11 +86,9 @@ export class ApiService implements Api {
     return await this.getOffers(query);
   }
 
-  async getRyoshiDiamondsLeaderboardAtBlock(page: number, pageSize: number, pokerCollection: PokerCollection): Promise<any> {
+  async getPokerLeaderboardAtBlock(page: number, pageSize: number, pokerCollection: PokerCollection): Promise<any> {
     //info from subgraph
-
     const owners = await getOwners(pokerCollection);
-    //rank the info
 
     let gameNumber = 2;
 
@@ -98,17 +96,34 @@ export class ApiService implements Api {
       gameNumber = 1;
     } else if (pokerCollection == PokerCollection.Clubs) {
       gameNumber = 2;
+    } else if (pokerCollection == PokerCollection.Live) {
+      gameNumber = 3;
     }
-    
-    const response = await RankPlayers(owners, false, gameNumber);
+
+    const response = await RankPlayers(owners, gameNumber);
+
+    let combined = [];
+    if (pokerCollection == PokerCollection.Live)
+    {
+      let worstHands = await RankPlayers(owners, gameNumber);
+      worstHands = await RankPlayersByWorst(worstHands, gameNumber);
+      
+      for (let i = 0; i < response.length; i++) {
+        combined.push(response[i]);
+        combined.push(worstHands[i]);
+      }
+
+    } else {
+      combined = response;
+    }
 
     function paginate(array : any, page_size:number, page_number:number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
     //convert response to paged list
-    const paginatedResponse = paginate(response, pageSize, page);
-    const totalPages = Math.ceil(response.length / pageSize);
+    const paginatedResponse = paginate(combined, pageSize, page);
+    const totalPages = Math.ceil(combined.length / pageSize);
 
     return new PagedList<Player>(
       paginatedResponse,
