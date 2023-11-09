@@ -265,6 +265,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.graph.getStakedTokens(address, type);
   }
 
+  async getStakedTokenTotals(type: StakedTokenType) {
+    return this.cms.getStakedTokenTotals(type);
+  }
+
   async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
     return this.cms.requestBankStakeAuthorization(nfts, address, signature);
   }
