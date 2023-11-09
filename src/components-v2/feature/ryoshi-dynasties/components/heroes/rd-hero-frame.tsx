@@ -1,4 +1,4 @@
-import {Flex, GridItem, HStack, Image, SimpleGrid,Text, VStack,Box, Grid, Progress, useBreakpointValue} from "@chakra-ui/react";
+import {Flex, GridItem, HStack, Image, SimpleGrid,Text, VStack,Box, Grid, Progress, useBreakpointValue, useMediaQuery} from "@chakra-ui/react";
 import React, {memo, useEffect, useRef, useState} from "react";
 import RdHero from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero";
 import {ResponsiveValue} from "@chakra-ui/styled-system";
@@ -42,11 +42,12 @@ export interface RdHeroProps {
 
 const RdHeroFrame = ({nftId} : MapOutlineProps) => {
   const containerSize = useBreakpointValue<ResponsiveValue<CSS.Property.Height>>({
+    base: '275px',
     sm: '400px',
     md: '300px',
-    lg: '275px',
-    base: '250px',
-    xl: '450px',
+    lg: '305px',
+    xl: '350px',
+    '2xl': '450px'
   });
 
   const mainFolderPath = '/img/ryoshi-dynasties/heroes/'
@@ -61,7 +62,32 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
   const [profession, setProfession] = useState<string>('');
   const [cha, setCha] = useState<number>(0);
   const [heroName, setHeroName] = useState<string>('');
+  const [honorGuard, setHonorGuard] = useState<string>('');
+  const [armySize, setArmySize] = useState<number>(0);
 
+  const [size, setSize] = useState<number>(1);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const rowHeight = useBreakpointValue<ResponsiveValue<CSS.Property.Height>>({
+      base: '65px 50px 1fr 50px 80px 80px', 
+      sm: '65px 75px 1fr 75px 80px 80px', 
+      md: '75px 55px 1fr 55px 90px', 
+      lg: '100px 375px 100px',
+      xl: '100px 350px 100px',
+      '2xl': '100px 450px 100px'
+  });
+  const columnWidth = useBreakpointValue<ResponsiveValue<CSS.Property.Width>>({
+    base: '1fr', 
+    lg: '65px 305px 65px',
+    xl: '75px 350px 75px',
+    '2xl': '75px 1fr 75px'
+  });
+  const maxContainerWidth = useBreakpointValue<ResponsiveValue<CSS.Property.Width>>({
+    base: '100%', 
+    lg: '455px',
+    xl: '525px',
+    '2xl': '100%'
+  });
 
   const GetMaxArmySize = (heroClass:string) => {
     switch(heroClass){
@@ -109,6 +135,27 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
     }
   }
 
+  const GetBaseHonorGuard = (heroClass:string) => {
+    switch(heroClass){
+      case 'Rogue':
+        return 10;
+      case 'Warrior':
+        return 15;
+      case 'Priest':
+        return 7;
+      case 'Druid':
+        return 10;
+      case 'Paladin':
+        return 7;
+      case 'Tinkerer':
+        return 20;
+      case 'Mage':
+        return 10;
+      default:
+        return 0;
+    }
+  }
+
   useEffect(() => {
     setLeftSrc(mainFolderPath + (isMobile ? `/CLASS_ICONS_ROTATED.png` : `/LEFT_EQUIPMENT_SLOT.png`));
     setRightSrc(mainFolderPath + (isMobile ? `/CLASS_ICONS_ROTATED.png` : `/RIGHT_EQUIPMENT_SLOT.png`));
@@ -137,7 +184,6 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
 
   },[nft])
 
-  
   useEffect(() => {
     let baseHonorGuard = GetMaxArmySize(heroClass);
     let rarityFactor = GetRarityFactor(rarity);
@@ -145,6 +191,28 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
 
   }, [heroClass, cha])
 
+  useEffect(() => {
+    //get width of this component
+    if(!ref.current) return;
+
+    setSize(ref.current.getBoundingClientRect().width);
+
+  },[ref.current]) 
+
+  useEffect(() => {
+    function handleResize(){
+      if(!ref.current) return;
+      
+      setSize(ref.current.getBoundingClientRect().width);
+    }
+    window.addEventListener('resize', handleResize)
+  })
+
+  useEffect(() => {
+    let baseHonorGuard = GetBaseHonorGuard(heroClass);
+    let rarityFactor = GetRarityFactor(rarity);
+    setHonorGuard((baseHonorGuard + (10*1)+ ((1 +(0.01* cha)) * rarityFactor)).toFixed());
+  }, [heroClass, cha])
 
   useEffect(() => {
     console.log(containerSize)
@@ -164,19 +232,15 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
                       "left main right"
                       "bottom bottom bottom2"
                   `}}
-      gridTemplateRows={{
-        base: '65px 50px 1fr 50px 80px 80px', 
-        // md: '65px 50px 1fr 50px 80px 80px', 
-        md: '75px 75px 1fr 75px 90px', 
-        lg: '100px 1fr 100px'}}
-      gridTemplateColumns={{base: '1fr', lg: '75px 1fr 75px'}}
+      gridTemplateRows={rowHeight}
+      gridTemplateColumns={columnWidth}
       gap={2}
       bg={"gray.900"}
       maxH={'100%'}
-      maxW={'100%'}
+      maxW={maxContainerWidth}
     >
       <GridItem area={'top'}>
-        <LevelContainer heroClass={heroClass} profession={profession} name={heroName}/>
+        <TopContainer heroClass={heroClass} profession={profession} name={heroName} armySize={armySize} maxArmySize={Number(maxArmySize)}/>
       </GridItem>
 
       <GridItem area={'left'}>
@@ -215,7 +279,7 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
       </GridItem >
 
       <GridItem area={'bottom2'}>
-        <Stats2Container maxArmySize={Number(maxArmySize)}/>
+        <Stats2Container honorGuard={Number(honorGuard)}/>
       </GridItem >
 
     </Grid>
@@ -238,18 +302,18 @@ const Item = ({stat, value}: ItemProps) => {
     </GridItem>
   )
 }
-interface LevelProps{
+interface TopContainerProps{
   heroClass: string;
   children?: React.ReactNode;
   profession: string;
   name: string;
+  armySize: number;
+  maxArmySize: number;
 }
 
-const LevelContainer = ({heroClass, profession, name}: LevelProps) => {
+const TopContainer = ({heroClass, profession, name, armySize, maxArmySize}: TopContainerProps) => {
   const maxHp = 100;
   const hp = 100;
-  const ryoshi = 0;
-  const maxRyoshi = 100;
   const maxXp = 100;
   const xp = 0;
   const lvl = 1;
@@ -281,7 +345,7 @@ const LevelContainer = ({heroClass, profession, name}: LevelProps) => {
         p={2}
         >
         <ProgressBar stat={"HP: " + hp + "/" + maxHp} value={hp/maxHp*100+": " + hp + "/" + maxHp} colorScheme={'blue'} borderColor={'navy'}/>
-        <ProgressBar stat={'Ryoshi: ' + hp + "/" + maxHp } value={ryoshi/maxRyoshi*100} colorScheme={'orange'} borderColor={'orange'}/>
+        <ProgressBar stat={'Ryoshi: ' + armySize + "/" + maxArmySize } value={0/maxArmySize*100} colorScheme={'orange'} borderColor={'orange'}/>
         <ProgressBar stat={'XP: '+ hp + "/" + maxHp} value={xp/maxXp*100} colorScheme={'purple'} borderColor={'purple'}/>
         </VStack>
       </Flex>
@@ -324,28 +388,7 @@ const StatsContainer = ({attributes, heroClass, rarity}: statsAttribute) => {
   const [agi, setAgi] = useState<number>(0);
   const [luk, setLuk] = useState<number>(0);
   const [cha, setCha] = useState<number>(0);
-  const [honorGuard, setHonorGuard] = useState<string>('');
 
-  const GetBaseHonorGuard = (heroClass:string) => {
-    switch(heroClass){
-      case 'Rogue':
-        return 10;
-      case 'Warrior':
-        return 15;
-      case 'Priest':
-        return 7;
-      case 'Druid':
-        return 10;
-      case 'Paladin':
-        return 7;
-      case 'Tinkerer':
-        return 20;
-      case 'Mage':
-        return 10;
-      default:
-        return 0;
-    }
-  }
 
   const GetStats = (attributes:NumberAttribute[]) => {
     for(let i = 0; i < attributes.length; i++){
@@ -388,12 +431,6 @@ const StatsContainer = ({attributes, heroClass, rarity}: statsAttribute) => {
     GetStats(attributes);
   }, [attributes])
 
-  useEffect(() => {
-    let baseHonorGuard = GetBaseHonorGuard(heroClass);
-    let rarityFactor = GetRarityFactor(rarity);
-    setHonorGuard((baseHonorGuard + (10*1)+ ((1 +(0.01* cha)) * rarityFactor)).toFixed());
-  }, [heroClass, cha])
-
   return(
     <Flex >
       <HStack justifyContent={'space-between'} w={'100%'} >
@@ -403,7 +440,7 @@ const StatsContainer = ({attributes, heroClass, rarity}: statsAttribute) => {
           p={2}
           border={'2px solid gray'}
           width={'100%'}
-          maxW={{ base: '480px', sm: '480px', md: '350px', lg: '300px', xl: '400px' }}
+          maxW={{ base: '480px', sm: '480px', md: '350px', lg: '290px', xl: '360px', '2xl':"480px" }}
           >
             <GridItem h={'18px'} textAlign={'left'}
             >
@@ -417,7 +454,6 @@ const StatsContainer = ({attributes, heroClass, rarity}: statsAttribute) => {
             <Item stat={'Charisma'} value={cha}/>
             <Item stat={'Agility'} value={agi}/>
             <Item stat={'Wisdom'} value={wis}/>
-            <Item stat={'Honor Guard'} value={Number(honorGuard)}/>
 
           </SimpleGrid>
           
@@ -427,10 +463,10 @@ const StatsContainer = ({attributes, heroClass, rarity}: statsAttribute) => {
 }
 
 interface stats2Attribute{
-  maxArmySize?:number
+  honorGuard?:number
 }
 
-const Stats2Container = ({maxArmySize}: stats2Attribute) => {
+const Stats2Container = ({honorGuard}: stats2Attribute) => {
   const resilience = 0;
   const clones = 0;
 
@@ -454,7 +490,7 @@ const Stats2Container = ({maxArmySize}: stats2Attribute) => {
               pb={0}
               >
               <Text as={'b'} fontSize={{ base: 12, sm:12 }}>
-              Max Army Size: {maxArmySize}
+              Honor Guard: {honorGuard}
               </Text>
             </Box>
             <Box
