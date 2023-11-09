@@ -23953,7 +23953,7 @@
       "name": "The Luckl355",
       "slug": "the-luckl355",
       "multiToken": false,
-      "address": "",
+      "address": "0xbf21dD4385fee72106bf235814AEf29d454c1a93",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -31675,7 +31675,7 @@
         "medium": "https://medium.com/@0xLuckless",
         "instagram": "https://www.instagram.com/0xluckless/"
       },
-      "address": "",
+      "address": "0xbf21dD4385fee72106bf235814AEf29d454c1a93",
       "maxMintPerTx": 3,
       "maxMintPerAddress": 3,
       "totalSupply": 355,
