@@ -32,6 +32,7 @@ export interface RyoshiDynastiesApi {
     getUserStakedFortune(address: string): Promise<FortuneStakingAccount | null>;
     getErc20Account(address: string): Promise<Erc20Account | null>;
     getStakedTokens(address: string, type: StakedTokenType): Promise<StakedToken[]>;
+    getStakedTokenTotals(type: StakedTokenType): Promise<{[key: string]: number}>;
     requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
     requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;

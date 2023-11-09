@@ -1,16 +1,16 @@
-import {Box, Center, Flex, HStack, Icon, IconButton, Image, SimpleGrid, Spinner, Text, VStack} from "@chakra-ui/react"
+import {Box, Center, Flex, IconButton, Image, SimpleGrid, Spinner, Text, VStack} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
+import {useInfiniteQuery, useQuery, useQueryClient} from "@tanstack/react-query";
 import nextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import InfiniteScroll from "react-infinite-scroll-component";
 import StakingNftCard
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/staking-nft-card";
 import {appConfig} from "@src/Config";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare, round} from "@src/utils";
 import WalletNft from "@src/core/models/wallet-nft";
 import ImageService from "@src/core/services/image";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
@@ -20,8 +20,6 @@ import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/
 import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {getNft} from "@src/core/api/endpoints/nft";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAward} from "@fortawesome/free-solid-svg-icons";
 import {toast} from "react-toastify";
 import {StakedTokenType} from "@src/core/services/api-service/types";
 import {
@@ -32,8 +30,10 @@ import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town
 import {parseErrorMessage} from "@src/helpers/validator";
 import useTownHallStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-town-hall-stake-nfts";
 import {
-  TownHallStakeNftContext
+  TownHallStakeNftContext,
+  TownHallStakeNftContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/context";
+import {commify} from "ethers/lib/utils";
 
 const config = appConfig();
 
@@ -102,6 +102,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const handleStakeSuccess = useCallback(() => {
     queryClient.invalidateQueries({queryKey: ['TownHallStakedNfts', user.address]});
     queryClient.invalidateQueries({queryKey: ['TownHallUnstakedNfts', user.address, currentCollection]});
+    queryClient.invalidateQueries({queryKey: ['TownHallStakingTotals']});
     queryClient.setQueryData(['TownHallUnstakedNfts', user.address, currentCollection], (old: any) => {
       if (!old) return [];
       old.pages = old.pages.map((page:  any) => {
@@ -171,6 +172,12 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
     });
   }, [isOpen]);
 
+  const {data: stakedTokenTotals} = useQuery({
+    queryKey: ['TownHallStakingTotals'],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getStakedTokenTotals(StakedTokenType.TOWN_HALL),
+    initialData: {}
+  });
+
   useEffect(() => {
     setCurrentCollection(addressForTab);
   }, [currentTab]);
@@ -194,7 +201,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       {page === 'faq' ? (
         <FaqPage />
       ) : (
-        <TownHallStakeNftContext.Provider value={{pendingNfts, stakedNfts}}>
+        <TownHallStakeNftContext.Provider value={{pendingNfts, stakedNfts, totals: stakedTokenTotals}}>
           <Text align='center' p={2}>Collection winners of the September volume competition are now stakable in the Town Hall! Each staked NFT from the below collections are eligible to receive daily FRTN rewards🔥</Text>
           <StakingBlock
             pendingNfts={pendingNfts}
@@ -254,6 +261,7 @@ interface PendingNft {
 
 const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBlockProps) => {
   const user = useAppSelector((state) => state.user);
+  const townHallStakeNftContext = useContext(TownHallStakeNftContext) as TownHallStakeNftContextProps;
   const [isExecutingStake, setIsExecutingStake] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('');
   const [stakeNfts, response] = useTownHallStakeNfts();
@@ -321,10 +329,16 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                       <Box width={100} height={100}>
                         <Image src={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)} rounded='lg'/>
                       </Box>
-                      <Flex fontSize='xs' mt={1}>
-                        <Box verticalAlign='top'>
-                          {pendingNfts[index].name}
-                        </Box>
+                      <Flex fontSize='xs' mt={1} justify='end'>
+                        {/*<Box verticalAlign='top'>*/}
+                        {/*  {pendingNfts[index].name}*/}
+                        {/*</Box>*/}
+                        <VStack align='end' spacing={0} fontWeight='bold'>
+                          <Box>
+                            + {round((1/(townHallStakeNftContext.totals[pendingNfts[index].nftAddress.toLowerCase()] ?? 0))*100, 2)}%
+                          </Box>
+
+                        </VStack>
                       </Flex>
                     </Box>
 
@@ -395,6 +409,7 @@ interface UnstakedNftsProps {
 }
 
 const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedNftsProps) => {
+  const townHallStakeNftContext = useContext(TownHallStakeNftContext) as TownHallStakeNftContextProps;
   const { data, isLoading, isError, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['TownHallUnstakedNfts', address, collection],
     queryFn: () => nextApiService.getWallet(address!, {
@@ -412,6 +427,9 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
 
   return (
     <>
+      <Box textAlign='center' fontSize='sm'>
+        Total Staked: {commify(townHallStakeNftContext.totals[collection.toLowerCase()] ?? 0)}
+      </Box>
       <InfiniteScroll
         dataLength={data?.pages ? data.pages.flat().length : 0}
         next={fetchNextPage}

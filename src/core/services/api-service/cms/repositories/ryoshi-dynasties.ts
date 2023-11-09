@@ -4,7 +4,7 @@ import {
   BarracksStakeNft, RdBattleLog,
   RdFaction,
   RdGameContext,
-  RdUserContext, RdUserContextNoOwnerFactionTroops, RdUserContextOwnerFactionTroops, TownHallStakeNft
+  RdUserContext, RdUserContextNoOwnerFactionTroops, RdUserContextOwnerFactionTroops, StakedTokenType, TownHallStakeNft
 } from "@src/core/services/api-service/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
@@ -244,6 +244,15 @@ class RyoshiDynastiesRepository extends CmsRepository {
       }
     });
     return response.data.data as RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops;
+  }
+
+  async getStakedTokenTotals(type: StakedTokenType): Promise<{[key: string]: number}> {
+    const response = await this.cms.get(`ryoshi-dynasties/staking/town-hall/totals`, {
+      params: {
+        type
+      }
+    });
+    return response.data.data;
   }
 }
 
