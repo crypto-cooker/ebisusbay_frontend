@@ -174,7 +174,7 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
 
   const calculateStatus = (drop: any, totalSupply: number, maxSupply: number) => {
     const sTime = new Date(drop.start);
-    const eTime = new Date(drop.end);
+    const eTime = new Date(drop.end + (1000 * 60)); // pad an hour in case of potential local timezone issues
     const now = new Date();
 
     if (!drop.start || !drop.address || sTime > now) setStatus(statuses.NOT_STARTED);
@@ -349,9 +349,12 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
 
                 {status === statuses.LIVE && drop.end && (
                   <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
-                    <p className="lead col-white">
-                      Ends in: <Countdown date={drop.end} />
-                    </p>
+                    <Heading as="h4" size="md" className="col-white">
+                      Ends in:{' '}
+                      <span className="text-uppercase color">
+                        <Countdown date={drop.end} />
+                      </span>
+                    </Heading>
                   </Reveal>
                 )}
                 {status === statuses.NOT_STARTED && drop.start && (
@@ -494,10 +497,13 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
                     {status === statuses.EXPIRED && <p className="mt-5">SWAP HAS ENDED</p>}
 
                     {status === statuses.LIVE && drop.end && (
-                      <div className="me-4">
+                      <Box me={4} mt={4}>
                         <Heading as="h6" size="sm" className="mb-1">Minting Ends</Heading>
-                        <Heading as="h3" size="md">{convertTime(drop.end)}</Heading>
-                      </div>
+                        <Heading as="h3" size="md">
+                          {new Date(drop.end).toDateString()}, {new Date(drop.end).toTimeString()}
+                        </Heading>
+                        <Text mt={2} size='md'>After this time, the contract will be <strong>locked</strong> and no more VIPs will be able to be swapped. Any remaining VIPs will go towards a public Dutch Auction at a later date.</Text>
+                      </Box>
                     )}
                     {status === statuses.NOT_STARTED && drop.start && (
                       <div className="me-4">

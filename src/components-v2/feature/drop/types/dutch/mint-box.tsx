@@ -56,7 +56,7 @@ const MintBox = () => {
         const receipt = await response.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
-        auctionData.onUserMinted();
+        auctionData.onUserMinted(user.address!);
       } catch (error: any) {
         Sentry.captureException(error);
         console.log(error);

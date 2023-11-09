@@ -30,7 +30,7 @@ interface BuildingsProps {
 const Buildings = ({isOpenBuildings, onCloseBuildings, buildingButtonRef, setElementToZoomTo}: BuildingsProps) => {
   const [buildingButtons, setBuildingButtons] = useState<ReactElement[]>([]);
 
-  const buttonsNames = ["Bank", "Alliance Center", "Moongate", "Barracks", "Announcements", "Battle Map", "Market"];
+  const buttonsNames = ["Bank", "Alliance Center", "Tavern", "Moongate", "Barracks", "Announcements", "Battle Map", "Market"];
   const SetUpButtons = async () => {
     setBuildingButtons(buttonsNames.map((button, i) =>
       (<Button style={{ marginTop: '4px', marginLeft: '4px' }}

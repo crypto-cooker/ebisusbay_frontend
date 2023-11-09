@@ -12114,7 +12114,7 @@
         "banner": "/img/collections/lion-social-club/banner.webp",
         "website": "https://lionsocialclub.io/",
         "twitter": "https://twitter.com/LionSocialClub",
-        "discord": "https://discord.gg/p5hM7BGjxT",
+        "discord": "https://discord.gg/ahEkTN9nRM",
         "categories": []
       },
       "verification": {
@@ -13491,7 +13491,7 @@
       "multiToken": false,
       "address": "0x4AEef4fbe0e32b9b0aEF6c43DD2625BCA5B9501A",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Crazy Crossbreeds are wicked beasts who's genetics consist of Goat & Boar DNA. These NFT's will powers our Defi Game Cove and will be by far the craziest beasts in our eco-system. Holders receive benefits through our DAO, Tools, Games, Mint, and upcoming Comic Book release. Join The Herd Today!",
         "avatar": "/img/collections/crazy-crossbreeds/avatar.webp",
@@ -17090,7 +17090,7 @@
       "listable": true,
       "metadata": {
         "description": "Blumies collection brought to you by ''Purple Fantasy'' team. \n\nUnique styles lead to unique ideas. Join the journey and discover what you haven't seen and heard before! Work with the team, learn, receive, observe and enjoy while the story evolves.",
-        "avatar": "/img/collections/blumies/avatar.webp",
+        "avatar": "/img/collections/blumies/avatar1.webp",
         "banner": "/img/collections/blumies/banner.webp",
         "card": "/img/collections/blumies/card.webp",
         "website": "https://www.blumiesofficial.com/",
@@ -17111,12 +17111,12 @@
       "multiToken": false,
       "address": "0xe0160145ec09f98fb3Dbc03b2b5da08D16871e3f",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Ghost is a Community Driven Project aimed at Gamification. Ghost OG consists of 7070 Interactive NFTs, In fact, it is possible to customize your Ghost on our site; change weapons, background and add items.",
         "avatar": "/img/collections/ghost-og/avatar.webp",
-        "card": "/img/collections/ghost-og/card.webp",
-        "banner": "/img/collections/ghost-og/banner.webp",
+        "card": "/img/collections/ghost-og/card1.webp",
+        "banner": "/img/collections/ghost-og/banner1.webp",
         "website": "https://ghostog.netlify.app/",
         "twitter": "https://twitter.com/GhostEliteNFTs",
         "discord": "https://discord.gg/BtbKbxVmEK",
@@ -23118,7 +23118,7 @@
       "multiToken": false,
       "address": "0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Time Ship Blueprints are the first, OG collection of Time Ship hull blueprints for the Time Machine Ecosystem's web3 game in the making. Time Wars, These Blueprints will come with a few ship components, some of our in house token $tatastwistedtime ($TTT) and 1 blueprint, per box minted. Be on the lookout for the best hull skins/prints!!",
         "avatar": "/img/collections/time-ship-blueprints/avatar.webp",
@@ -23953,7 +23953,7 @@
       "name": "The Luckl355",
       "slug": "the-luckl355",
       "multiToken": false,
-      "address": "",
+      "address": "0xbf21dD4385fee72106bf235814AEf29d454c1a93",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -24329,7 +24329,7 @@
       "name": "Ryoshi Heroes",
       "slug": "ryoshi-heroes",
       "multiToken": false,
-      "address": "",
+      "address": "0xF098C2aD290f32c8666ace27222d3E65cECE43b9",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -24349,6 +24349,121 @@
         "doxx": true,
         "kyc": "hidden",
         "verified": true
+      }
+    },
+    {
+      "name": "LoC Crowns",
+      "slug": "loc-crowns",
+      "multiToken": false,
+      "address": "0xdedbf7dcb0c4d1a174ed7a7bc5c0c3782e405fbf",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the enchanting realm of Rosaria, dear adventurers! Within these mystical lands, the intricate dance of magic and technology creates an awe-inspiring tapestry. Prepare to embark on a journey where diversity flourishes, where beings of all races, both grand and humble, converge in a symphony of existence. The promise of adventure tinged with the allure of unsolved mysteries awaits those who possess the courage to traverse this wondrous world.  At its heart stands the majestic City of Haven, a testament to resilience and progress, built upon the very foundations of the ancient Lords of CRO. This sprawling metropolis, the pulsating core of Rosaria, not only symbolizes advancement but also serves as a unifying force, binding diverse souls under its towering embrace.  Here, valiant adventurers band together by joining the ranks of the Travelers Guild. Their noble quest? The reclamation of the lost LoC Crowns – poignant remnants left behind by the enigmatic Lords of CRO. These sacred tokens, a currency of valor and destiny, hold the key to a treasury of rewards beyond imagination. But lo and behold, as the journey unfolds, a destination of uncharted wonder beckons – the legendary \u2060\uD83D\uDC51door-of-crowns. The secrets it guards shroud it in ambiguity. Whispers diverge: is it a malevolent abyss that should forever remain sealed, or could it harbor a legacy entrusted by the Lords of CRO themselves? A legacy that might reshape the very fabric of our world.  Venture forth from the opulent streets of Haven City to the ethereal realm of \u2060\uD83C\uDF3Fhavenbrook-hills\uD83C\uDF3F in the north, where verdant landscapes paint a serene vista. Or perhaps you seek the thrill of the \u2060\uD83C\uDFA3-baelins-lagoon to the east, where tales of untamed waters whisper promises of uncharted mysteries. As you weave through these unexplored realms, the jingle of Crowns and the satisfaction of quests accomplished become the melodies that accompany your every stride.",
+        "avatar": "/img/collections/loc-crowns/avatar.webp",
+        "banner": "/img/collections/loc-crowns/banner.webp",
+        "card": "/img/collections/loc-crowns/card.webp",
+        "twitter": "https://twitter.com/LordsOfRosaria",
+        "discord": "https://discord.gg/WeB9jk9VMX",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "GreenStix Access Pass",
+      "slug": "greenstix-access-pass",
+      "multiToken": false,
+      "address": "0xd565Af56d9bbf2DB76b2DE0E2D18B524736ae83b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "GreenStix is a web Nature preservation Project. We will be adventuring into the metaverse to bring you the \"GreenRoom\" where all the GreenStix Community can socialize. You will need to hold on of these GreenCard Passes to gain access into our GreenRoom. In this space we can speak on topics like our favorite forest, hiking trails and where we like to volunteer and SO MUCH MORE. We all strive for a cleaner and greener tomorrow! Come meet some like minded individuals who want to be the impact the environment needs! These Access passes will also be required for any future IRL events GreenStix.",
+        "avatar": "/img/collections/greenstix-access-pass/avatar.webp",
+        "card": "/img/collections/greenstix-access-pass/card.webp",
+        "website": "https://greenstix.xyz/",
+        "twitter": "https://twitter.com/GreenStix_v2",
+        "discord": "https://discord.gg/hJQU3Dsyqs",
+        "telegram": "https://t.me/greeenstixtoken",
+        "medium": "https://medium.com/@greenstixinc",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Scrap Monsters",
+      "slug": "scrap-monsters",
+      "multiToken": false,
+      "address": "0xBf0Ca142dE65250c38B9C682c5Dd51d56E18dF6A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Scrap Monsters recycle old cans and bottles recycle scrap metals scrap monsters for a greener tomorrow scrap monsters will turn these discarded items into sweet juicy staking rewards",
+        "avatar": "/img/collections/scrap-monsters/avatar.webp",
+        "banner": "/img/collections/scrap-monsters/banner.webp",
+        "card": "/img/collections/scrap-monsters/card.webp",
+        "website": "https://scrapmonsters.com.au/",
+        "twitter": "https://www.twitter.com/Donkey__Finance",
+        "discord": "https://discord.gg/mmyGF8N79Z",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroPepe LE",
+      "slug": "cropepe-le",
+      "multiToken": false,
+      "address": "0xcFBA0839e293e078248CD0F9a089D8870252F1e3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The CroPepe LE collection has 195 pieces. The first collector's collection for CroPepe fans!",
+        "avatar": "/img/collections/cropepe-le/avatar.webp",
+        "website": "https://www.cropepe.com/",
+        "twitter": "https://www.twitter.com/StarwayCity",
+        "discord": "https://discord.gg/zCZeY8Ejgq",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroPepe LE CroDoges",
+      "slug": "cropepe-le-crodoges",
+      "multiToken": false,
+      "address": "0x0F7d79e3B5dE6eEbE440a68c89D0AE275611D340",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The CroPepe LE collection has 195 pieces. The second collector's collection for CroPepe fans!",
+        "avatar": "/img/collections/cropepe-le-crodoges/avatar.webp",
+        "website": "https://www.starway.city/collections/cropepexcrodoges/",
+        "twitter": "https://www.twitter.com/StarwayCity",
+        "discord": "https://discord.gg/zCZeY8Ejgq",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -29554,7 +29669,7 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/crazy-crossbreeds/drop.webp",
         "banner": "/img/collections/crazy-crossbreeds/banner.webp",
@@ -29709,7 +29824,7 @@
       "totalSupply": 10000,
       "foundersOnly": false,
       "start": 1668200400000,
-      "end": null,
+      "end": 1699738898000,
       "referral": false,
       "is1155": false,
       "published": true,
@@ -30314,7 +30429,7 @@
       "images": {
         "drop": "/img/drops/blumies/drop.webp",
         "banner": "/img/collections/blumies/banner.webp",
-        "avatar": "/img/collections/blumies/avatar.webp",
+        "avatar": "/img/collections/blumies/avatar1.webp",
         "preview": "/img/collections/blumies/card.webp"
       },
       "verification": {
@@ -30360,9 +30475,9 @@
       "redirect": "https://ghostog.netlify.app/mint",
       "images": {
         "drop": "/img/drops/ghost-og/drop.webp",
-        "banner": "/img/collections/ghost-og/banner.webp",
+        "banner": "/img/collections/ghost-og/banner1.webp",
         "avatar": "/img/collections/ghost-og/avatar.webp",
-        "preview": "/img/collections/ghost-og/card.webp"
+        "preview": "/img/collections/ghost-og/card1.webp"
       },
       "verification": {
         "verified": true,
@@ -31560,7 +31675,7 @@
         "medium": "https://medium.com/@0xLuckless",
         "instagram": "https://www.instagram.com/0xluckless/"
       },
-      "address": "",
+      "address": "0xbf21dD4385fee72106bf235814AEf29d454c1a93",
       "maxMintPerTx": 3,
       "maxMintPerAddress": 3,
       "totalSupply": 355,
@@ -31568,7 +31683,7 @@
       "memberCost": "325",
       "whitelistCost": "300",
       "foundersOnly": false,
-      "start": null,
+      "start": 1699560000000,
       "end": null,
       "referral": false,
       "is1155": false,
@@ -31695,7 +31810,7 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "",
+      "address": "0xF098C2aD290f32c8666ace27222d3E65cECE43b9",
       "type": "dutch",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 40,
@@ -31709,7 +31824,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "images": {
         "drop": "/img/drops/ryoshi-heroes/drop.webp",

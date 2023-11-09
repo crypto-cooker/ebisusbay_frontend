@@ -203,7 +203,7 @@ const Header = function () {
                     <Divider borderColor='white' w='150px' />
                   </VStack>
                   <VStack align='start'>
-                    <NavLink name='Marketplace' to='/marketplace' onClick={onClose} />
+                    <NavLink name='Explore' to='/marketplace' onClick={onClose} />
                     <NavLink name='Collections' to='/collections' onClick={onClose} />
                     <NavLink name='Brands' to='/brands' onClick={onClose} />
                     <NavLink name='Drops' to='/drops' onClick={onClose} />

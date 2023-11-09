@@ -1,8 +1,9 @@
-import {Flex, GridItem, HStack, Image, SimpleGrid,Text, VStack,Box, Grid, Progress, useBreakpointValue} from "@chakra-ui/react";
-import React, {memo, useEffect, useRef, useState} from "react";
+import {Flex, GridItem, HStack, Image, Text, SimpleGrid, useBreakpointValue} from "@chakra-ui/react";
+import React, {useEffect, useRef, useState} from "react";
 import heroesMetadata from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/heroes-metadata.json";
 import {ResponsiveValue} from "@chakra-ui/styled-system";
 import * as CSS from "csstype";
+import ImageService from "@src/core/services/image";
 
 interface NFTMetaData{
   image : string;
@@ -23,9 +24,10 @@ interface Attribute{
 export interface RdHeroProps {
   nftId: string;
   rounded?: ResponsiveValue<CSS.Property.BorderRadius>
+  showStats?: boolean;
 }
 
-const RdHero = ({nftId, rounded}: RdHeroProps) => {
+const RdHero = ({nftId, rounded, showStats}: RdHeroProps) => {
 
   const [location, setLocation] = useState<any>(null);
   const [skin, setSkin] = useState<any>(null);
@@ -53,6 +55,9 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
   const [agi, setAgi] = useState<number>(0);
   const [luk, setLuk] = useState<number>(0);
   const [cha, setCha] = useState<number>(0);
+  const flexHeight = showStats ? size*1.3 : size;
+
+  //set breakpoints based on width of component
   
   const GetTraitType = (traitType:string, attributes:Attribute[]) => {
     for(let i = 0; i < attributes.length; i++){
@@ -84,7 +89,7 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
     setGloves(mainFolderPath + "/HeroClass/" +heroClass+'/Gloves/'+clothesColor+'.png');
 
     setMarkings(mainFolderPath + (IsDruid(attributes) ? '/HeroClass/Druid/Markings/' : '/HeroClass/Empty/')+clothesColor+'.png');
-    setGoggles(mainFolderPath + (IsTinkerer(attributes) ? '/HeroClass/Tinkerer/Goggles' : '/HeroClass/Empty/')+clothesColor+'.png');
+    setGoggles(mainFolderPath + (IsTinkerer(attributes) ? '/HeroClass/Tinkerer/Goggles' : '/HeroClass/Empty/'+clothesColor)+'.png');
   }
   const IsDruid = (attributes:Attribute[]) => {
     for(let i = 0; i < attributes.length; i++){
@@ -126,12 +131,26 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
         setWis(attributes[i].value);
       } else if (attributes[i].trait_type == 'AGI'){
         setAgi(attributes[i].value);
-      } else if (attributes[i].trait_type == 'LUK'){
+      } else if (attributes[i].trait_type == 'LUCK'){
         setLuk(attributes[i].value);
       } else if (attributes[i].trait_type == 'CHA'){
         setCha(attributes[i].value);
       }
     }
+  }
+  const GetTextSize = () => {
+    if(size < 175){
+      return 10;
+    } else if (size < 200){
+    return 12;  
+    } else if (size < 300){
+      return 14;  
+    } else if (size < 350){
+      return 16;  
+    } else if (size < 400){
+      return 18;  
+    }
+    return 8;
   }
 
   const GenerateHeroPNG = (nftId : string) => {
@@ -154,6 +173,10 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
     }
   },[nftId])
 
+  // useEffect(() => {
+  //   console.log("size: " + size)
+  // },[size])
+
   useEffect(() => {
     //get width of this component
     if(!ref.current) return;
@@ -170,55 +193,55 @@ const RdHero = ({nftId, rounded}: RdHeroProps) => {
     }
     window.addEventListener('resize', handleResize)
   })
-
   return (
     <>
       <Flex
         ref={ref}
-        h={size}
+        h={flexHeight}
         borderRadius={'md'} 
         outline={rounded}
       >
-        <Image h={size} w={size} src={location} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={skin} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={hair} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={eyes} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={mouth} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={markings} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={legs} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={feet} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={chest} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={belt} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={gloves} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={goggles} position={'absolute'} borderRadius={'md'} zIndex={0}/>
-        <Image h={size} w={size} src={border} position={'absolute'} borderRadius={'md'} zIndex={0}/>
+        {!!location && <Image h={size} w={size} src={ImageService.translate(location).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!skin && <Image h={size} w={size} src={ImageService.translate(skin).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!hair && <Image h={size} w={size} src={ImageService.translate(hair).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!eyes && <Image h={size} w={size} src={ImageService.translate(eyes).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!mouth && <Image h={size} w={size} src={ImageService.translate(mouth).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!markings && <Image h={size} w={size} src={ImageService.translate(markings).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!legs && <Image h={size} w={size} src={ImageService.translate(legs).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!feet && <Image h={size} w={size} src={ImageService.translate(feet).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!chest && <Image h={size} w={size} src={ImageService.translate(chest).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!belt && <Image h={size} w={size} src={ImageService.translate(belt).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!gloves && <Image h={size} w={size} src={ImageService.translate(gloves).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!goggles && <Image h={size} w={size} src={ImageService.translate(goggles).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
+        {!!border && <Image h={size} w={size} src={ImageService.translate(border).convert()} position={'absolute'} borderRadius={'md'} zIndex={0}/>}
 
-        {/* <SimpleGrid
-          h={size*0.25}
-          w={size}
-          position={'absolute'}
-          bg={'#111219'}
-          borderTopColor={'#30333f'}
-          borderTopWidth={{ base: 4, sm:4, md: 4 }}
-          columns={4}
-          bottom={0}
-          paddingLeft={2}
-          paddingRight={2}
-          paddingTop={1}
-          spacingX={{ base:1, sm:1, md: 2 }}
-          mt={-2}
-
-          >
-          <Text as={'b'} fontSize={{ base: 8, sm: 8, md: 10 }}> STATS:</Text>
-          <HeroStatItem stat={"STR"} value={str}/>
-          <HeroStatItem stat={"DEX"} value={dex}/>
-          <HeroStatItem stat={"INT"} value={int}/>
-          <HeroStatItem stat={"WIS"} value={wis}/>
-          <HeroStatItem stat={"AGI"} value={agi}/>
-          <HeroStatItem stat={"LUK"} value={luk}/>
-          <HeroStatItem stat={"CHA"} value={cha}/>
-        </SimpleGrid> */}
-      </Flex> 
+        { showStats &&
+          <SimpleGrid
+            h={size*0.3}
+            w={size}
+            position={'absolute'}
+            bg={'#111219'}
+            borderTopColor={'#30333f'}
+            borderTopWidth={{ base: 4, sm:4, md: 4 }}
+            columns={4}
+            bottom={0}
+            paddingLeft={3}
+            paddingRight={3}
+            paddingTop={1}
+            spacingX={{ base:1, sm:1, md: 2}}
+            mt={-4}
+            >
+            {/* <Text as={'i'} fontSize={{ base: 8, sm: 8, md: 10 }}> STATS:</Text> */}
+            <HeroStatItem stat={"STR"} value={str} fontSize={GetTextSize()}/>
+            <HeroStatItem stat={"DEX"} value={dex} fontSize={GetTextSize()}/>
+            <HeroStatItem stat={"INT"} value={int} fontSize={GetTextSize()}/>
+            <HeroStatItem stat={"WIS"} value={wis} fontSize={GetTextSize()}/>
+            <HeroStatItem stat={"AGI"} value={agi} fontSize={GetTextSize()}/>
+            <HeroStatItem stat={"LUK"} value={luk} fontSize={GetTextSize()}/>
+            <HeroStatItem stat={"CHA"} value={cha} fontSize={GetTextSize()}/>
+          </SimpleGrid>
+          }
+        </Flex> 
     </>
   )
 }
@@ -227,13 +250,14 @@ export default RdHero;
 interface HeroStatItemProps {
   stat : string;
   value : number;
+  fontSize : any;
 }
-const HeroStatItem = ({stat, value}: HeroStatItemProps) => {
+const HeroStatItem = ({stat, value, fontSize}: HeroStatItemProps) => {
   return (
     <GridItem>
       <HStack justifyContent={'space-between'}>
-      <Text fontSize={{ base: 8, sm:12, md: 12 }}>{stat}</Text>
-      <Text fontSize={{ base: 8, sm:12, md: 12 }}>{value}</Text>
+      <Text fontSize={fontSize}>{stat}</Text>
+      <Text fontSize={fontSize}>{value}</Text>
       </HStack>
     </GridItem>
   )

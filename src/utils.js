@@ -594,7 +594,11 @@ export const isLandDeedsCollection = (address) => {
   );
 };
 export const isHerosCollection = (address) => {
-  return isCollection(address, 'ryoshi-heroes', '0x458073C0fb97e42d441778aE4beFc8c1180E513e');
+  return isCollection(
+    address,
+    'ryoshi-heroes',
+    ['0xF098C2aD290f32c8666ace27222d3E65cECE43b9', '0x458073C0fb97e42d441778aE4beFc8c1180E513e']
+  );
 }
 
 export const isPlayingCardsCollection = (address) => {

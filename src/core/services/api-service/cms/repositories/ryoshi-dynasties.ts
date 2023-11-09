@@ -4,7 +4,7 @@ import {
   BarracksStakeNft, RdBattleLog,
   RdFaction,
   RdGameContext,
-  RdUserContext
+  RdUserContext, RdUserContextNoOwnerFactionTroops, RdUserContextOwnerFactionTroops, TownHallStakeNft
 } from "@src/core/services/api-service/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
@@ -55,6 +55,34 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
   async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
     const response = await this.cms.get('ryoshi-dynasties/staking/authorize/barracks/withdraw', {
+      params: {
+        user: address,
+        contractAddress: nfts.map(nft => nft.nftAddress),
+        tokenId: nfts.map(nft => nft.nftId),
+        amount: nfts.map(nft => nft.amount),
+        address,
+        signature
+      }
+    })
+    return response.data;
+  }
+
+  async requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
+    const response = await this.cms.get('ryoshi-dynasties/staking/authorize/town-hall', {
+      params: {
+        user: address,
+        contractAddress: nfts.map(nft => nft.nftAddress),
+        tokenId: nfts.map(nft => nft.nftId),
+        amount: nfts.map(nft => nft.amount),
+        address,
+        signature
+      }
+    })
+    return response.data;
+  }
+
+  async requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
+    const response = await this.cms.get('ryoshi-dynasties/staking/authorize/town-hall/withdraw', {
       params: {
         user: address,
         contractAddress: nfts.map(nft => nft.nftAddress),
@@ -205,6 +233,17 @@ class RyoshiDynastiesRepository extends CmsRepository {
       });
 
     return response.data.data as {currentPage: number, logs: RdBattleLog[], pageSize: number, totalPages: number};
+  }
+
+  async getTroopsBreakdown(gameId: number, address: string, signature: string) {
+    const response = await this.cms.get(`ryoshi-dynasties/armies/breakdown`, {
+      params: {
+        gameId,
+        address,
+        signature
+      }
+    });
+    return response.data.data as RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops;
   }
 }
 

@@ -36,6 +36,8 @@ export interface RyoshiDynastiesApi {
     requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
+    requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string): Promise<any>;
+    requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string): Promise<any>;
     requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string): Promise<any>;
     getDailyRewards(address: string): Promise<any>
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
@@ -49,6 +51,7 @@ export interface RyoshiDynastiesApi {
     getBankStakingAccount(address: string): Promise<StakingAccount | null>;
     getFactions(gameId?: number): Promise<RdFaction[]>;
     getBattleLog(query: GetBattleLog): Promise<PagedList<RdBattleLog>>;
+    getTroopsBreakdown(gameId: number, address: string, signature: string): Promise<RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops>;
 }
 
 export enum ListingState {
@@ -96,9 +99,16 @@ export interface BarracksStakeNft {
     amount: number;
 }
 
+export interface TownHallStakeNft {
+    nftAddress: string;
+    nftId: string;
+    amount: number;
+}
+
 export enum StakedTokenType {
-    BANK = 'bank',
-    BARRACKS = 'barracks'
+    BANK = 'BANK',
+    BARRACKS = 'BARRACKS',
+    TOWN_HALL = 'TOWN_HALL'
 }
 
 export interface RdFaction {

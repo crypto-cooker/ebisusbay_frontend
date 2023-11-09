@@ -35,7 +35,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		}
 	}
 	
-	const GenerateJson = () => {
+	const GenerateJsonForRewardDistribution = () => {
 		if(!data) return;
 
 		interface Reward {
@@ -43,7 +43,8 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 			amount: number;
 		}
 
-		const rewards: Reward[] = [];
+		const fortuneRewards: Reward[] = [];
+		const nftRewards: Reward[] = [];
 
 		const GetRewardAmount = (index: number) => {
 			if(index <= 15) return 8500;
@@ -58,21 +59,21 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		data.pages[0].data.forEach((player: any, i: number) => {
 			if(i < 315){
 				console.log(i, player)
-				rewards.push({
+				fortuneRewards.push({
 					address: player.address,
 					amount:	GetRewardAmount(i+1),
 				})
 			}
 		})
 
-		// data.pages[0].data.forEach((player: any, i: number) =>  {
-		// 	if(i >= 314 && i < 400){
-		// 		rewards.push({
-		// 			address: player.address,
-		// 			amount:	1
-		// 		})
-		// 	}
-		// })
+		data.pages[0].data.forEach((player: any, i: number) =>  {
+			if(i >= 314 && i < 400){
+				nftRewards.push({
+					address: player.address,
+					amount:	1
+				})
+			}
+		})
 
 		function download(content:any, fileName:any, contentType:any ){
 			const a = document.createElement("a");
@@ -83,7 +84,8 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		} 
 
 		// console.log(JSON.stringify(rewards));
-		download(JSON.stringify(rewards), "diamondsRankedPlayersNFTS.json", "text/plain");
+		download(JSON.stringify(fortuneRewards), "ryoshi-clubs-fortune.json", "text/plain");
+		download(JSON.stringify(nftRewards), "ryoshi-clubs-NFTS.json", "text/plain");
 	}
 
 	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt, refetch } = useInfiniteQuery({
@@ -103,7 +105,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 
 	useEffect(() => {
 		if(!data) return; 
-		// GenerateJson();
+		// GenerateJsonForRewardDistribution();
 		console.log(pokerCollection);
 	}, [data])
 

@@ -1,8 +1,9 @@
-import {Flex, GridItem, HStack, Image, SimpleGrid,Text, VStack,Box, Grid, Progress, useBreakpointValue} from "@chakra-ui/react";
+import {Flex, GridItem, HStack, Image, SimpleGrid,Text, VStack,Box, Grid, Progress, useBreakpointValue, useMediaQuery} from "@chakra-ui/react";
 import React, {memo, useEffect, useRef, useState} from "react";
 import RdHero from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero";
 import {ResponsiveValue} from "@chakra-ui/styled-system";
 import * as CSS from "csstype";
+import heroesMetadata from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/heroes-metadata.json";
 
 interface Attribute{
   trait_type : string;
@@ -18,27 +19,204 @@ interface MapOutlineProps {
   gridHeight?: string;
   gridWidth?: string;
 }
-
+interface NFTMetaData{
+  image : string;
+  name : string;
+  attributes : Attribute[];
+  stats : NumberAttribute[];
+}
+interface NumberAttribute{
+  trait_type : string;
+  value : number;
+  display_type : string;
+}
+interface Attribute{
+  trait_type : string;
+  value : string;
+  display_type : string;
+}
+export interface RdHeroProps {
+  nftId: string;
+  rounded?: ResponsiveValue<CSS.Property.BorderRadius>
+}
 
 const RdHeroFrame = ({nftId} : MapOutlineProps) => {
   const containerSize = useBreakpointValue<ResponsiveValue<CSS.Property.Height>>({
-    base: '325px',
-    sm: '450px',
-    md: '500px',
-    lg: '600px'
+    base: '275px',
+    sm: '400px',
+    md: '300px',
+    lg: '305px',
+    xl: '350px',
+    '2xl': '450px'
   });
 
   const mainFolderPath = '/img/ryoshi-dynasties/heroes/'
-  const isMobile = useBreakpointValue({ base: true, md: false })
+  const isMobile = useBreakpointValue({ base: true, lg: false })
 
   const [leftSrc, setLeftSrc] = useState<any>(null);
   const [rightSrc, setRightSrc] = useState<any>(null);
+  const [nft, setNft] = useState<NFTMetaData>();
+  const [heroClass, setHeroClass] = useState<string>('');
+  const [rarity, setRarity] = useState<string>('');
+  const [maxArmySize, setMaxArmySize] = useState<string>('');
+  const [profession, setProfession] = useState<string>('');
+  const [cha, setCha] = useState<number>(0);
+  const [heroName, setHeroName] = useState<string>('');
+  const [honorGuard, setHonorGuard] = useState<string>('');
+  const [armySize, setArmySize] = useState<number>(0);
+
+  const [size, setSize] = useState<number>(1);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const rowHeight = useBreakpointValue<ResponsiveValue<CSS.Property.Height>>({
+      base: '65px 50px 1fr 50px 80px 80px', 
+      sm: '65px 75px 1fr 75px 80px 80px', 
+      md: '75px 55px 1fr 55px 90px', 
+      lg: '100px 375px 100px',
+      xl: '100px 350px 100px',
+      '2xl': '100px 450px 100px'
+  });
+  const columnWidth = useBreakpointValue<ResponsiveValue<CSS.Property.Width>>({
+    base: '1fr', 
+    lg: '65px 305px 65px',
+    xl: '75px 350px 75px',
+    '2xl': '75px 1fr 75px'
+  });
+  const maxContainerWidth = useBreakpointValue<ResponsiveValue<CSS.Property.Width>>({
+    base: '100%', 
+    lg: '455px',
+    xl: '525px',
+    '2xl': '100%'
+  });
+
+  const GetMaxArmySize = (heroClass:string) => {
+    switch(heroClass){
+      case 'Rogue':
+        return 60;
+      case 'Warrior':
+        return 75;
+      case 'Priest':
+        return 45;
+      case 'Druid':
+        return 60;
+      case 'Paladin':
+        return 50;
+      case 'Tinkerer':
+        return 70;
+      case 'Mage':
+        return 50;
+      default:
+        return 0;
+    }
+  }
+  const GetRarityFactor = (rarity:string) => {
+    switch(rarity){
+      case 'Common':
+        return 1;
+      case 'Uncommon':
+        return 1.1;
+      case 'Rare':
+        return 1.2;
+      case 'Epic':
+        return 1.3;
+      case 'Legendary':
+        return 1.5;
+      case 'Mythic':
+        return 2;
+      default:
+        return 1;
+    }
+  }
+  const GetStats = (attributes:NumberAttribute[]) => {
+    for(let i = 0; i < attributes.length; i++){
+      if (attributes[i].trait_type == 'CHA'){
+        setCha(attributes[i].value);
+      }
+    }
+  }
+
+  const GetBaseHonorGuard = (heroClass:string) => {
+    switch(heroClass){
+      case 'Rogue':
+        return 10;
+      case 'Warrior':
+        return 15;
+      case 'Priest':
+        return 7;
+      case 'Druid':
+        return 10;
+      case 'Paladin':
+        return 7;
+      case 'Tinkerer':
+        return 20;
+      case 'Mage':
+        return 10;
+      default:
+        return 0;
+    }
+  }
 
   useEffect(() => {
     setLeftSrc(mainFolderPath + (isMobile ? `/CLASS_ICONS_ROTATED.png` : `/LEFT_EQUIPMENT_SLOT.png`));
     setRightSrc(mainFolderPath + (isMobile ? `/CLASS_ICONS_ROTATED.png` : `/RIGHT_EQUIPMENT_SLOT.png`));
 
   }, [isMobile])
+
+  const GetHeroNFT = (nftId : string) => {
+    setNft(heroesMetadata.Hero.find((nft) => nft.id == nftId) as NFTMetaData);
+    
+  }
+
+  useEffect(() => {
+    if(nftId){
+      GetHeroNFT(nftId)
+    }
+  },[nftId])
+
+  useEffect(() => {
+    if(!nft) return;
+
+    setHeroClass(nft.attributes.find((attribute) => attribute.trait_type == 'Class')?.value as string);
+    setRarity(nft.attributes.find((attribute) => attribute.trait_type == 'Rarity')?.value as string);
+    GetStats(nft.stats);
+    setProfession(nft.attributes.find((attribute) => attribute.trait_type == 'Profession')?.value as string);
+    setHeroName(nft.name);
+
+  },[nft])
+
+  useEffect(() => {
+    let baseHonorGuard = GetMaxArmySize(heroClass);
+    let rarityFactor = GetRarityFactor(rarity);
+    setMaxArmySize((baseHonorGuard + (10*1)+ ((1 +(0.01* cha)) * rarityFactor)).toFixed());
+
+  }, [heroClass, cha])
+
+  useEffect(() => {
+    //get width of this component
+    if(!ref.current) return;
+
+    setSize(ref.current.getBoundingClientRect().width);
+
+  },[ref.current]) 
+
+  useEffect(() => {
+    function handleResize(){
+      if(!ref.current) return;
+      
+      setSize(ref.current.getBoundingClientRect().width);
+    }
+    window.addEventListener('resize', handleResize)
+  })
+
+  useEffect(() => {
+    let baseHonorGuard = GetBaseHonorGuard(heroClass);
+    let rarityFactor = GetRarityFactor(rarity);
+    setHonorGuard((baseHonorGuard + (10*1)+ ((1 +(0.01* cha)) * rarityFactor)).toFixed());
+  }, [heroClass, cha])
+
+  useEffect(() => {
+    console.log(containerSize)
+  },[containerSize])
 
   return (
     <Grid
@@ -49,23 +227,20 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
                       "right"
                       "bottom"
                       "bottom2"
-                    `, md:`
+                    `, lg:`
                       "top top top"
                       "left main right"
                       "bottom bottom bottom2"
                   `}}
-      gridTemplateRows={{
-        base: '65px 50px 1fr 50px 80px 80px', 
-        sm: '75px 75px 1fr 75px 90px', 
-        md: '100px 1fr 100px'}}
-      gridTemplateColumns={{base: '1fr', md: '75px 1fr 75px'}}
+      gridTemplateRows={rowHeight}
+      gridTemplateColumns={columnWidth}
       gap={2}
       bg={"gray.900"}
       maxH={'100%'}
-      maxW={'100%'}
+      maxW={maxContainerWidth}
     >
       <GridItem area={'top'}>
-        <LevelContainer/>
+        <TopContainer heroClass={heroClass} profession={profession} name={heroName} armySize={armySize} maxArmySize={Number(maxArmySize)}/>
       </GridItem>
 
       <GridItem area={'left'}>
@@ -77,7 +252,10 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
         />
       </GridItem>
 
-      <GridItem alignItems={'center'} area={'main'} position='relative' display='flex' >
+      <GridItem alignItems={'center'} area={'main'} position='relative' display='flex' 
+      alignContent={'center'}
+       alignSelf = {'center'} justifyContent={'center'}
+       >
         <Box
           h={containerSize}
           w={containerSize}
@@ -97,11 +275,11 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
       </GridItem>
 
       <GridItem area={'bottom'}>
-        <StatsContainer />
+        { nft && <StatsContainer attributes={nft.stats} heroClass={heroClass} rarity={rarity}/> }
       </GridItem >
 
       <GridItem area={'bottom2'}>
-        <Stats2Container />
+        <Stats2Container honorGuard={Number(honorGuard)}/>
       </GridItem >
 
     </Grid>
@@ -124,20 +302,21 @@ const Item = ({stat, value}: ItemProps) => {
     </GridItem>
   )
 }
+interface TopContainerProps{
+  heroClass: string;
+  children?: React.ReactNode;
+  profession: string;
+  name: string;
+  armySize: number;
+  maxArmySize: number;
+}
 
-const LevelContainer = ({children}: any) => {
+const TopContainer = ({heroClass, profession, name, armySize, maxArmySize}: TopContainerProps) => {
   const maxHp = 100;
-  const hp = 70;
-  const ryoshi = 55;
-  const maxRyoshi = 100;
+  const hp = 100;
   const maxXp = 100;
-  const xp = 30;
-
-  const lvl = 2;
-  const mainTrait = "Priest";
-  const secondaryTrait = "Blacksmith";
-  const icon = "tinker";
-  const background = "cliffs";
+  const xp = 0;
+  const lvl = 1;
 
   return(
       <Flex justifyContent={'space-between'} w={'100%'} height={'100%'}>
@@ -152,20 +331,21 @@ const LevelContainer = ({children}: any) => {
             spacing={-1}
             justifyContent={'center'}
             alignItems={'left'}
+            minW={'100px'}
             >
-          <Text as={'b'} fontSize={{ base: 12, sm:18, md: 24 }}>LEVEL: {lvl} </Text>
-          <Text fontSize={{ base: 12, sm:16, md: 18 }}>{mainTrait} </Text>
-          <Text fontSize={{ base: 10, sm:12, md: 12 }}>{secondaryTrait} </Text>
+          <Text as={'b'} overflowX="visible" fontSize={{ base: 12, sm:16, md: 18 }}> {name} </Text>
+          <Text fontSize={{ base: 12, sm:16, md: 18 }}> {heroClass} </Text>
+          <Text fontSize={{ base: 10, sm:12, md: 12 }}>{profession} Lvl: {lvl}</Text>
         </VStack>
         
         <VStack 
         w='60%'
-        spacing={{ base: 1, md: 3 }}
+        spacing={{ base: 1, lg: 3 }}
         justifyContent={'center'}
         p={2}
         >
         <ProgressBar stat={"HP: " + hp + "/" + maxHp} value={hp/maxHp*100+": " + hp + "/" + maxHp} colorScheme={'blue'} borderColor={'navy'}/>
-        <ProgressBar stat={'Ryoshi: ' + hp + "/" + maxHp } value={ryoshi/maxRyoshi*100} colorScheme={'orange'} borderColor={'orange'}/>
+        <ProgressBar stat={'Ryoshi: ' + armySize + "/" + maxArmySize } value={0/maxArmySize*100} colorScheme={'orange'} borderColor={'orange'}/>
         <ProgressBar stat={'XP: '+ hp + "/" + maxHp} value={xp/maxXp*100} colorScheme={'purple'} borderColor={'purple'}/>
         </VStack>
       </Flex>
@@ -175,25 +355,81 @@ const LevelContainer = ({children}: any) => {
 const ProgressBar = ({stat, value, colorScheme, borderColor}: any) => {
   return (
     <>
-    <Box w={'100%'} >
+    <Box w={'100%'} 
+    alignItems= {'left'}
+    justifyContent= {'left'}
+    
+    >
       <Flex justifyContent={'space-between'} w={'100%'}>
         <Progress rounded={'md'} h={{base: 3, sm: 4, md:5}} w={'100%'} colorScheme={colorScheme} size='md' value={value} border={'2px solid'}  borderColor={borderColor}/>
       </Flex>
-      <Text pl={2} mt={{ base: -3, sm:-4, md: -5 }}  pos={'absolute'} as='b' fontSize={{ base: 10, sm:12, md: 12 }} textTransform={'uppercase'}> {stat}</Text>
+      <Flex justifyContent={'space-between'} w={'100%'}>
+      <Text 
+      pl={2} mt={{ base: -3, sm:-4, md: -5 }}  pos={'absolute'} as='b' fontSize={{ base: 10, sm:12, md: 12 }} textTransform={'uppercase'}> 
+      {stat}</Text>
+      </Flex>
     </Box>
     </>
   )
 }
 
-const StatsContainer = ({children}: any) => {
-  const dextertity = 33;
-  const strength = 45;
-  const agility = 75;
-  const luck = 6;
-  const intellect = 22;
-  const wisdom = 45;
-  const charisma = 56;
-  const honorGuard = 45;
+interface statsAttribute{
+  attributes:NumberAttribute[]
+  heroClass: string;
+  rarity: string;
+}
+
+const StatsContainer = ({attributes, heroClass, rarity}: statsAttribute) => {
+
+  const [str, setStr] = useState<number>(0);
+  const [dex, setDex] = useState<number>(0);
+  const [int, setInt] = useState<number>(0);
+  const [wis, setWis] = useState<number>(0);
+  const [agi, setAgi] = useState<number>(0);
+  const [luk, setLuk] = useState<number>(0);
+  const [cha, setCha] = useState<number>(0);
+
+
+  const GetStats = (attributes:NumberAttribute[]) => {
+    for(let i = 0; i < attributes.length; i++){
+      if(attributes[i].trait_type == 'STR'){
+        setStr(attributes[i].value);
+      } else if (attributes[i].trait_type == 'DEX'){
+        setDex(attributes[i].value);
+      } else if (attributes[i].trait_type == 'INT'){
+        setInt(attributes[i].value);
+      } else if (attributes[i].trait_type == 'WIS'){
+        setWis(attributes[i].value);
+      } else if (attributes[i].trait_type == 'AGI'){
+        setAgi(attributes[i].value);
+      } else if (attributes[i].trait_type == 'LUCK'){
+        setLuk(attributes[i].value);
+      } else if (attributes[i].trait_type == 'CHA'){
+        setCha(attributes[i].value);
+      }
+    }
+  }
+  const GetRarityFactor = (rarity:string) => {
+    switch(rarity){
+      case 'Common':
+        return 1;
+      case 'Uncommon':
+        return 1.1;
+      case 'Rare':
+        return 1.2;
+      case 'Epic':
+        return 1.3;
+      case 'Legendary':
+        return 1.5;
+      case 'Mythic':
+        return 2;
+      default:
+        return 1;
+    }
+  }
+  useEffect(() => {
+    GetStats(attributes);
+  }, [attributes])
 
   return(
     <Flex >
@@ -204,21 +440,20 @@ const StatsContainer = ({children}: any) => {
           p={2}
           border={'2px solid gray'}
           width={'100%'}
-          maxW={'450px'}
+          maxW={{ base: '480px', sm: '480px', md: '350px', lg: '290px', xl: '360px', '2xl':"480px" }}
           >
-            <GridItem h={'18px'} 
+            <GridItem h={'18px'} textAlign={'left'}
             >
-              <Text as={'b'} fontSize={{ base: 14, sm:16 }} > PLAYER STATS </Text>
+              <Text as={'b'} fontSize={{ base: 14, xl:16 }} textAlign={'left'} > PLAYER STATS </Text>
             </GridItem>
 
-            <Item stat={'Dextertity'} value={dextertity}/>
-            <Item stat={'Luck'} value={luck}/>
-            <Item stat={'Strength'} value={strength}/>
-            <Item stat={'Intellect'} value={intellect}/>
-            <Item stat={'Charisma'} value={charisma}/>
-            <Item stat={'Agility'} value={agility}/>
-            <Item stat={'Wisdom'} value={wisdom}/>
-            <Item stat={'Honor Guard'} value={honorGuard}/>
+            <Item stat={'Dextertity'} value={dex}/>
+            <Item stat={'Luck'} value={luk}/>
+            <Item stat={'Strength'} value={str}/>
+            <Item stat={'Intellect'} value={int}/>
+            <Item stat={'Charisma'} value={cha}/>
+            <Item stat={'Agility'} value={agi}/>
+            <Item stat={'Wisdom'} value={wis}/>
 
           </SimpleGrid>
           
@@ -226,9 +461,14 @@ const StatsContainer = ({children}: any) => {
       </Flex>
   )
 }
-const Stats2Container = ({children}: any) => {
-  const resilience = 33;
-  const clones = 200;
+
+interface stats2Attribute{
+  honorGuard?:number
+}
+
+const Stats2Container = ({honorGuard}: stats2Attribute) => {
+  const resilience = 0;
+  const clones = 0;
 
   return(
     <Flex 
@@ -237,7 +477,7 @@ const Stats2Container = ({children}: any) => {
       >
           <VStack
             w={'100%'}
-            minW={'200px'}
+            minW={'150px'}
             >
             <Box
               borderRadius={'md'}
@@ -250,7 +490,7 @@ const Stats2Container = ({children}: any) => {
               pb={0}
               >
               <Text as={'b'} fontSize={{ base: 12, sm:12 }}>
-                RES: {resilience}
+              Honor Guard: {honorGuard}
               </Text>
             </Box>
             <Box

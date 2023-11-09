@@ -37,7 +37,13 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
 
   const { data: rdConfig, status: rdConfigFetchStatus, error: rdFetchError} = useQuery({
     queryKey: ['RyoshiDynastiesContext'],
-    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
+    queryFn: () => {
+      try {
+        return ApiService.withoutKey().ryoshiDynasties.getGlobalContext()
+      } catch {
+        return initialRdConfig;
+      }
+    },
     initialData: initialRdConfig,
     staleTime: 1000 * 60 * 10,
     gcTime: 1000 * 60 * 11,

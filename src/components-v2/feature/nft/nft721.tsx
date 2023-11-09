@@ -579,7 +579,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                   <iframe width="100%" height="636" src={nft.iframeSource} title="nft" />
                 ) : (
                   <>
-                    <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
+                    <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId} showDetails={true}>
                       <AnyMedia
                         image={ImageService.translate(specialImageTransform(address, nft.image)).convert()}
                         video={nft.video ?? nft.animation_url}

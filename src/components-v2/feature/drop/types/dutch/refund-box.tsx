@@ -10,6 +10,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {commify} from "ethers/lib/utils";
 import {useAppSelector} from "@src/Store/hooks";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {createSuccessfulTransactionToastContent} from "@src/utils";
 
 
 const RefundBox = () => {
@@ -22,7 +23,9 @@ const RefundBox = () => {
     try {
       setIsRefunding(true);
       const tx = await auctionData.writeContract!.refundDifference(user.address!);
-      await tx.wait();
+      const receipt = await tx.wait();
+
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
     } catch (e) {
       console.log(e);
       toast.error(parseErrorMessage(e));
@@ -53,7 +56,7 @@ const RefundBox = () => {
       <HStack justify='center' mt={2}>
         <PrimaryButton
           onClick={handleRefund}
-          disabled={isRefunding}
+          isDisabled={isRefunding || auctionData.refundDue == 0}
           isLoading={isRefunding}
           loadingText='Refunding...'
         >

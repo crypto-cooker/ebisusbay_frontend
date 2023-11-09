@@ -41,17 +41,27 @@ const useBuyGaslessListings = () => {
         .reduce((acc, curr) => acc + Number(curr.price), 0);
       const price = ethers.utils.parseEther(`${croTotal}`);
 
-      const approvedTokens: string[] = [];
+      // Sum all currency totals for allowance approval
+      const currencyTotals = new Map<string, ethers.BigNumber>();
       for (const purchase of pendingPurchases) {
-        if (purchase.currency && purchase.currency !== ethers.constants.AddressZero && !approvedTokens.includes(purchase.currency)) {
-          const tokenContract = contractService!.erc20(purchase.currency);
-          const allowance = await tokenContract.allowance(address!, contractService!.market.address);
-          if (allowance.lt(ethers.utils.parseEther(`${purchase.price}`))) {
-            const approvalAmout = ethers.utils.parseEther(`${purchase.price * 10}`);
-            const tx = await tokenContract.approve(contractService!.market.address, approvalAmout);
-            await tx.wait();
-          }
-          approvedTokens.push(purchase.currency);
+        if (purchase.currency && purchase.currency !== ethers.constants.AddressZero) {
+          const price = ethers.utils.parseEther(`${purchase.price}`);
+          currencyTotals.set(
+            purchase.currency,
+            (currencyTotals.get(purchase.currency) || ethers.BigNumber.from(0)).add(price)
+          );
+        }
+      }
+
+      // Approve the currencies
+      for (const [currency, totalPrice] of currencyTotals) {
+        const tokenContract = contractService!.erc20(currency);
+        const allowance = await tokenContract.allowance(address!, contractService!.market.address);
+
+        if (allowance.lt(totalPrice)) {
+          const approvalAmount = totalPrice.mul(10);
+          const tx = await tokenContract.approve(contractService!.market.address, approvalAmount);
+          await tx.wait();
         }
       }
 

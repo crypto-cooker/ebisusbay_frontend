@@ -24,25 +24,27 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
   SimpleGrid,
-  SkeletonCircle,
-  SkeletonText,
   Stack,
   Text,
   useClipboard,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import React, {useContext, useEffect, useState} from "react";
+import React, {ChangeEvent, useContext, useEffect, useState} from "react";
 import {ArrowBackIcon, CopyIcon, DownloadIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
 import RdButton from "../../../../components/rd-button";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
-import {useQuery} from "@tanstack/react-query";
 import {getRegistrationCost} from "@src/core/api/RyoshiDynastiesAPICalls";
-import {RdUserContextNoOwnerFactionTroops, RdUserContextOwnerFactionTroops} from "@src/core/services/api-service/types";
+import {
+  RdFaction,
+  RdUserContextNoOwnerFactionTroops,
+  RdUserContextOwnerFactionTroops
+} from "@src/core/services/api-service/types";
 import EditFactionForm from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/edit-faction";
 import CreateFactionForm from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/create-faction";
 import DelegateTroopsForm from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/delegate-troops";
@@ -217,10 +219,10 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
          <AspectRatio ratio={1920/1080} overflow='visible' >
           <Image
           position={'absolute'}
-            src={'/img/ryoshi-dynasties/village/allianceCenter.png'}
+            src={'/img/ryoshi-dynasties/village/background-alliance-center.webp'}
             opacity={0.2}
             zIndex={0}
-            // src={ImageService.translate('/img/ryoshi-dynasties/village/allianceCenter.png').convert()}
+            // src={ImageService.translate('/img/ryoshi-dynasties/village/background-alliance-center.webp').convert()}
             minH='calc(100vh - 74px)'
           />
         </AspectRatio>
@@ -233,7 +235,7 @@ export default AllianceCenter;
 
 const CurrentFaction = () => {
   const user = useAppSelector((state) => state.user);
-  const {requestSignature, signature} = useEnforceSignature();
+  const {requestSignature} = useEnforceSignature();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const { isOpen: isOpenFaction, onOpen: onOpenFaction, onClose: onCloseFaction } = useDisclosure();
@@ -244,7 +246,11 @@ const CurrentFaction = () => {
   const [factionCreatedAndEnabled, setFactionCreatedAndEnabled] = useState(false);
   const [isRegisteredCurrentSeason, setIsRegisteredCurrentSeason] = useState(false);
   const [isRegisteredNextSeason, setIsRegisteredNextSeason] = useState(false);
-  
+
+  const [troopsByGame, setTroopsByGame] = useState(rdContext.user?.season.troops);
+  const [loadingTroopsBreakdown, setLoadingTroopsBreakdown] = useState(false);
+  const [selectedGame, setSelectedGame] = useState<string>('current');
+
   const getDaysSinceGameStart = () => {
     if(!rdContext.game) return 0;
     const startDate = new Date(rdContext.game.game.startAt);
@@ -252,6 +258,7 @@ const CurrentFaction = () => {
     const daysSinceStart = timeSinceStart / (1000 * 3600 * 24);
     return daysSinceStart;
   }
+
   const OpenEditFaction = () => {
     onOpenFaction();
     if(getDaysSinceGameStart() >= rdContext.config.factions.editableDays-1){
@@ -268,6 +275,7 @@ const CurrentFaction = () => {
     onCloseDelegate();
     await rdContext.refreshUser();
   }
+
   const checkForApproval = async () => {
     const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
     const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
@@ -322,32 +330,40 @@ const CurrentFaction = () => {
     }
   }
 
-  useEffect(() => {
-    if(!rdContext.user) return;
-
-    // console.log(rdContext.user);
-    // console.log(rdContext.game?.season);
-    // console.log(rdContext.config);
-
-    // console.log(getAuthSignerInStorage()?.signature)
-    // console.log(user.address)
-    
-    if(rdContext.user?.faction?.id !== undefined && rdContext.user?.faction.isEnabled){
-      console.log('Faction Created and Enabled');
-      setFactionCreatedAndEnabled(true);
+  const handleGameChange = async (game?: string) => {
+    if (game === 'previous' && !!rdContext.game) {
+      try {
+        setLoadingTroopsBreakdown(true);
+        const previousGameId = rdContext.game.history.previousGameId;
+        const signature = await requestSignature();
+        const troops = await ApiService.withoutKey().ryoshiDynasties.getTroopsBreakdown(previousGameId, user.address!, signature);
+        setTroopsByGame(troops);
+      } catch (e) {
+        console.log(e);
+        setTroopsByGame(rdContext.user?.season.troops);
+      } finally {
+        setLoadingTroopsBreakdown(false);
+      }
+    } else {
+      setTroopsByGame(rdContext.user?.season.troops);
     }
-    else{
-      console.log('Faction Not Created or Enabled');
-      setFactionCreatedAndEnabled(false);
-    }
-  }, [rdContext]); 
+  }
   
   useEffect(() => {
     if(!rdContext.user) return;
 
+    setFactionCreatedAndEnabled(rdContext.user?.faction?.id !== undefined && rdContext.user?.faction.isEnabled);
+
     setIsRegisteredCurrentSeason(rdContext.user.season.registrations.current);
     setIsRegisteredNextSeason(rdContext.user.season.registrations.next);
-  }, [!!rdContext]);
+
+    setTroopsByGame(rdContext.user.season.troops);
+    setSelectedGame('current');
+  }, [rdContext.user]);
+
+  useEffect(() => {
+    handleGameChange(selectedGame);
+  }, [selectedGame]);
 
   return (
     <Box mt={4}>
@@ -371,7 +387,7 @@ const CurrentFaction = () => {
                   onClick={OpenEditFaction}
                 />
               </Stack>
-              {factionCreatedAndEnabled && (
+              {factionCreatedAndEnabled ? (
                 <>
                   <Box bg='#564D4A' p={2} rounded='lg' w='full'>
                     <SimpleGrid columns={2}>
@@ -397,18 +413,37 @@ const CurrentFaction = () => {
                     )}
                   </Box>
                 </>
+              ) : (!!rdContext.user && rdContext.user.season.troops.available.total > 0) && (
+                <RdButton
+                  onClick={onOpenDelegate}
+                  maxH='50px'
+                  size='sm'
+                >
+                  Delegate
+                </RdButton>
               )}
             </VStack>
           ) : (
             <Center>
-              <VStack spacing={6} mb={2}>
+              <VStack spacing={6} mb={2} w='full'>
                 <Text>You are not the owner of any faction yet</Text>
-                <RdButton
-                  stickyIcon={true}
-                  onClick={onOpenCreateFaction}
-                >
-                  Create Faction
-                </RdButton>
+                <Stack direction='row' justify='space-around' w='full'>
+                  <RdButton
+                    onClick={onOpenCreateFaction}
+                    size='sm'
+                  >
+                    Create Faction
+                  </RdButton>
+                  {(!!rdContext.user && rdContext.user.season.troops.available.total > 0 && !factionCreatedAndEnabled) && (
+                    <RdButton
+                      onClick={onOpenDelegate}
+                      maxH='50px'
+                      size='sm'
+                    >
+                      Delegate
+                    </RdButton>
+                  )}
+                </Stack>
               </VStack>
             </Center>
           )}
@@ -420,294 +455,20 @@ const CurrentFaction = () => {
                   <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={6}/>
                   <Text fontSize='xl' fontWeight='bold'textAlign='start'>Troops</Text>
                 </HStack>
-                {(rdContext.user.season.troops.available.total > 0 && (!rdContext.user.season.faction || !rdContext.user.faction?.isEnabled)) && (
-                  <RdButton
-                    hoverIcon={false}
-                    onClick={onOpenDelegate}
-                    maxH='50px'
-                    size='sm'
-                  >
-                    Delegate
-                  </RdButton>
-                )}
+                <Select
+                  onChange={(e) => setSelectedGame(e.target.value)}
+                  value={selectedGame}
+                  maxW='175px'
+                  size='sm'
+                  rounded='md'
+                >
+                  <option value='current'>Current Game</option>
+                  <option value='previous'>Previous Game</option>
+                </Select>
               </Flex>
-              <Accordion w='full' mt={2} allowMultiple>
-                <AccordionItem bgColor='#564D4A' rounded='md'>
-                  <AccordionButton>
-                    <Flex w='full'>
-                      <Box flex='1' textAlign='left' my='auto'>Total</Box>
-                      <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.overall.total)}</Box>
-                      <AccordionIcon ms={4} my='auto'/>
-                    </Flex>
-                  </AccordionButton>
-                  <AccordionPanel pb={1} fontSize='sm'>
-                    <SimpleGrid columns={2} w='full'>
-                      <Box textAlign='start'>Owned</Box>
-                      <Box textAlign='end'>{commify(rdContext.user.season.troops.overall.owned)}</Box>
-                      {rdContext.user.faction && rdContext.user.faction.isEnabled && (
-                        <>
-                          <Box textAlign='start'>Delegated</Box>
-                          <Box textAlign='end'>{commify(rdContext.user.season.troops.overall.delegated)}</Box>
-                        </>
-                      )}
-                    </SimpleGrid>
-                  </AccordionPanel>
-                </AccordionItem>
-                <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
-                  <AccordionButton>
-                    <Flex w='full'>
-                      <Box flex='1' textAlign='left' my='auto'>Available</Box>
-                      <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.available.total)}</Box>
-                      <AccordionIcon ms={4} my='auto'/>
-                    </Flex>
-                  </AccordionButton>
-                  <AccordionPanel pb={1} pt={0} fontSize='sm'>
-                    <Text color='#ccc' textAlign='start' pb={2}>Troops ready for deployment</Text>
-                    <SimpleGrid columns={2} w='full'>
-                      <Box textAlign='start'>Owned</Box>
-                      <Box textAlign='end'>{commify(rdContext.user.season.troops.available.owned)}</Box>
-                      {/*{rdContext.user.faction && rdContext.user.faction.isEnabled && (*/}
-                      {/*  <>*/}
-                      {/*    <Box textAlign='start'>Delegated</Box>*/}
-                      {/*    <Box textAlign='end'>{commify(rdContext.user.season.troops.delegate.total)}</Box>*/}
-                      {/*  </>*/}
-                      {/*)}*/}
-                    </SimpleGrid>
-                  </AccordionPanel>
-                </AccordionItem>
-                <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
-                  <AccordionButton>
-                    <Flex w='full'>
-                      <Box flex='1' textAlign='left' my='auto'>Delegations</Box>
-                      <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.delegate.total)}</Box>
-                      <AccordionIcon ms={4} my='auto'/>
-                    </Flex>
-                  </AccordionButton>
-                  <AccordionPanel pb={1} pt={0} fontSize='sm'>
-                    {rdContext.user.faction && rdContext.user.faction.isEnabled ? (
-                      <>
-                        <Text color='#ccc' textAlign='start' pb={2}>Troops received from users</Text>
-                        {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.length > 0 ? (
-                          <>
-                            <SimpleGrid columns={2} w='full'>
-                              {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => (
-                                <>
-                                  <Box textAlign='start'>
-                                    <CopyableText
-                                      text={user.profileWalletAddress}
-                                      label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
-                                    />
-                                  </Box>
-                                  <Box textAlign='end'>{commify(user.troops)}</Box>
-                                </>
-                              ))}
-                            </SimpleGrid>
-                            <ExportDataComponent
-                              data={(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
-                                address: user.profileWalletAddress,
-                                name: user.profileName,
-                                troops: user.troops
-                              })).sort((a, b) => b.troops - a.troops)}
-                              address={user.address!}
-                              signature={signature}
-                            />
-                          </>
-                        ) : (
-                          <>None</>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        <Text color='#ccc' textAlign='start' pb={2}>Troops delegated to factions</Text>
-                        {(rdContext.user.season.troops as RdUserContextNoOwnerFactionTroops).delegate.factions.length > 0 ? (
-                          <SimpleGrid columns={2} w='full'>
-                            {(rdContext.user.season.troops as RdUserContextNoOwnerFactionTroops).delegate.factions.map((faction) => (
-                              <>
-                                <Box textAlign='start'>{faction.factionName}</Box>
-                                <Box textAlign='end'>{commify(faction.troops)}</Box>
-                              </>
-                            ))}
-                          </SimpleGrid>
-                        ) : (
-                          <>None</>
-                        )}
-                      </>
-                    )}
-                  </AccordionPanel>
-                </AccordionItem>
-                <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
-                  <AccordionButton>
-                    <Flex w='full'>
-                      <Box flex='1' textAlign='left' my='auto'>Deployments</Box>
-                      <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.deployed.total)}</Box>
-                      <AccordionIcon ms={4} my='auto'/>
-                    </Flex>
-                  </AccordionButton>
-                  <AccordionPanel pb={1} pt={0} fontSize='sm'>
-                    <Text color='#ccc' textAlign='start' pb={2}>Troops deployed to control points</Text>
-                    {rdContext.user.faction && rdContext.user.faction.isEnabled ? (
-                      <>
-                        {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).deployed.users.length > 0 ? (
-                          <Accordion allowMultiple>
-                            {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).deployed.users.map((user) => (
-                              <AccordionItem bgColor='#564D4A' rounded='md'>
-                                <Flex w='100%' ps={4}>
-                                  <Box flex='1' textAlign='left' my='auto'>
-                                    <CopyableText
-                                      text={user.profileWalletAddress}
-                                      label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
-                                    />
-                                  </Box>
-                                  <Box ms={2} my='auto' fontWeight='bold'>{commify(user.troops)}</Box>
-                                  <AccordionButton w='auto'>
-                                    <AccordionIcon />
-                                  </AccordionButton>
-                                </Flex>
-                                <AccordionPanel pb={1} pt={0} fontSize='sm'>
-                                  {user.controlPoints.length > 0 ? (
-                                    <SimpleGrid columns={2} w='full'>
-                                      {user.controlPoints.map((cp) => (
-                                        <>
-                                          <Box textAlign='start'>{cp.name}</Box>
-                                          <Box textAlign='end'>{commify(cp.troops)}</Box>
-                                        </>
-                                      ))}
-                                    </SimpleGrid>
-                                  ) : (
-                                    <>None</>
-                                  )}
-                                </AccordionPanel>
-                              </AccordionItem>
-                            ))}
-                          </Accordion>
-                        ) : (
-                          <>None</>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {(rdContext.user.season.troops as RdUserContextNoOwnerFactionTroops).deployed.factions.length > 0 ? (
-                          <Accordion allowMultiple>
-                            {(rdContext.user.season.troops as RdUserContextNoOwnerFactionTroops).deployed.factions.map((faction) => (
-                              <AccordionItem bgColor='#564D4A' rounded='md'>
-                                <Flex w='100%' ps={4}>
-                                  <Box flex='1' textAlign='left' my='auto'>{faction.factionName}</Box>
-                                  <Box ms={2} my='auto' fontWeight='bold'>{commify(faction.troops)}</Box>
-                                  <AccordionButton w='auto'>
-                                    <AccordionIcon />
-                                  </AccordionButton>
-                                </Flex>
-                                <AccordionPanel pb={1} pt={0} fontSize='sm'>
-                                  {faction.controlPoints.length > 0 ? (
-                                    <SimpleGrid columns={2} w='full'>
-                                      {faction.controlPoints.map((cp) => (
-                                        <>
-                                          <Box textAlign='start'>{cp.name}</Box>
-                                          <Box textAlign='end'>{commify(cp.troops)}</Box>
-                                        </>
-                                      ))}
-                                    </SimpleGrid>
-                                  ) : (
-                                    <>None</>
-                                  )}
-                                </AccordionPanel>
-                              </AccordionItem>
-                            ))}
-                          </Accordion>
-                        ) : (
-                          <>None</>
-                        )}
-                      </>
-                    )}
-                  </AccordionPanel>
-                </AccordionItem>
-                <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
-                  <AccordionButton>
-                    <Flex w='full'>
-                      <Box flex='1' textAlign='left' my='auto'>Slain</Box>
-                      <Box ms={2} my='auto' fontWeight='bold'>{commify(rdContext.user.season.troops.slain.total)}</Box>
-                      <AccordionIcon ms={4} my='auto'/>
-                    </Flex>
-                  </AccordionButton>
-                  <AccordionPanel pb={1} pt={0} fontSize='sm'>
-                    <Text color='#ccc' textAlign='start' pb={2}>Troops defeated in battle</Text>
-                    {rdContext.user.faction && rdContext.user.faction.isEnabled ? (
-                      <>
-                        {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).slain.users.length > 0 ? (
-                          <Accordion allowMultiple>
-                            {(rdContext.user.season.troops as RdUserContextOwnerFactionTroops).slain.users.map((user) => (
-                              <AccordionItem bgColor='#564D4A' rounded='md'>
-                                <Flex w='100%' ps={4}>
-                                  <Box flex='1' textAlign='left' my='auto'>
-                                    <CopyableText
-                                      text={user.profileWalletAddress}
-                                      label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
-                                    />
-                                  </Box>
-                                  <Box ms={2} my='auto' fontWeight='bold'>{commify(user.troops)}</Box>
-                                  <AccordionButton w='auto'>
-                                    <AccordionIcon />
-                                  </AccordionButton>
-                                </Flex>
-                                <AccordionPanel pb={1} pt={0} fontSize='sm'>
-                                  {user.controlPoints.length > 0 ? (
-                                    <SimpleGrid columns={2} w='full'>
-                                      {user.controlPoints.map((cp) => (
-                                        <>
-                                          <Box textAlign='start'>{cp.name}</Box>
-                                          <Box textAlign='end'>{commify(cp.troops)}</Box>
-                                        </>
-                                      ))}
-                                    </SimpleGrid>
-                                  ) : (
-                                    <>None</>
-                                  )}
-                                </AccordionPanel>
-                              </AccordionItem>
-                            ))}
-                          </Accordion>
-                        ) : (
-                          <>None</>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {(rdContext.user.season.troops as RdUserContextNoOwnerFactionTroops).slain.factions.length > 0 ? (
-                          <Accordion allowMultiple>
-                            {(rdContext.user.season.troops as RdUserContextNoOwnerFactionTroops).slain.factions.map((faction) => (
-                              <AccordionItem bgColor='#564D4A' rounded='md'>
-                                <Flex w='100%' ps={4}>
-                                  <Box flex='1' textAlign='left' my='auto'>{faction.factionName}</Box>
-                                  <Box ms={2} my='auto' fontWeight='bold'>{commify(faction.troops)}</Box>
-                                  <AccordionButton w='auto'>
-                                    <AccordionIcon />
-                                  </AccordionButton>
-                                </Flex>
-                                <AccordionPanel pb={1} pt={0} fontSize='sm'>
-                                  {faction.controlPoints.length > 0 ? (
-                                    <SimpleGrid columns={2} w='full'>
-                                      {faction.controlPoints.map((cp) => (
-                                        <>
-                                          <Box textAlign='start'>{cp.name}</Box>
-                                          <Box textAlign='end'>{commify(cp.troops)}</Box>
-                                        </>
-                                      ))}
-                                    </SimpleGrid>
-                                  ) : (
-                                    <>None</>
-                                  )}
-                                </AccordionPanel>
-                              </AccordionItem>
-                            ))}
-                          </Accordion>
-                        ) : (
-                          <>None</>
-                        )}
-                      </>
-                    )}
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
+              {!!troopsByGame && (
+                <TroopsBreakdown faction={rdContext.user.faction} troops={troopsByGame} />
+              )}
             </>
           )}
 
@@ -749,6 +510,291 @@ const CurrentFaction = () => {
 
     </Box>
   );
+}
+
+const TroopsBreakdown = ({faction, troops}: {faction: RdFaction, troops: RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops}) => {
+  const user = useAppSelector((state) => state.user);
+  const {signature} = useEnforceSignature();
+
+  return (
+    <Accordion w='full' mt={2} allowMultiple>
+      <AccordionItem bgColor='#564D4A' rounded='md'>
+        <AccordionButton>
+          <Flex w='full'>
+            <Box flex='1' textAlign='left' my='auto'>Total</Box>
+            <Box ms={2} my='auto' fontWeight='bold'>{commify(troops.overall.total)}</Box>
+            <AccordionIcon ms={4} my='auto'/>
+          </Flex>
+        </AccordionButton>
+        <AccordionPanel pb={1} fontSize='sm'>
+          <SimpleGrid columns={2} w='full'>
+            <Box textAlign='start'>Owned</Box>
+            <Box textAlign='end'>{commify(troops.overall.owned)}</Box>
+            {faction && faction.isEnabled && (
+              <>
+                <Box textAlign='start'>Delegated</Box>
+                <Box textAlign='end'>{commify(troops.overall.delegated)}</Box>
+              </>
+            )}
+          </SimpleGrid>
+        </AccordionPanel>
+      </AccordionItem>
+      <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
+        <AccordionButton>
+          <Flex w='full'>
+            <Box flex='1' textAlign='left' my='auto'>Available</Box>
+            <Box ms={2} my='auto' fontWeight='bold'>{commify(troops.available.total)}</Box>
+            <AccordionIcon ms={4} my='auto'/>
+          </Flex>
+        </AccordionButton>
+        <AccordionPanel pb={1} pt={0} fontSize='sm'>
+          <Text color='#ccc' textAlign='start' pb={2}>Troops ready for deployment</Text>
+          <SimpleGrid columns={2} w='full'>
+            <Box textAlign='start'>Owned</Box>
+            <Box textAlign='end'>{commify(troops.available.owned)}</Box>
+            {/*{rdContext.user.faction && rdContext.user.faction.isEnabled && (*/}
+            {/*  <>*/}
+            {/*    <Box textAlign='start'>Delegated</Box>*/}
+            {/*    <Box textAlign='end'>{commify(rdContext.user.season.troops.delegate.total)}</Box>*/}
+            {/*  </>*/}
+            {/*)}*/}
+          </SimpleGrid>
+        </AccordionPanel>
+      </AccordionItem>
+      <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
+        <AccordionButton>
+          <Flex w='full'>
+            <Box flex='1' textAlign='left' my='auto'>Delegations</Box>
+            <Box ms={2} my='auto' fontWeight='bold'>{commify(troops.delegate.total)}</Box>
+            <AccordionIcon ms={4} my='auto'/>
+          </Flex>
+        </AccordionButton>
+        <AccordionPanel pb={1} pt={0} fontSize='sm'>
+          {faction && faction.isEnabled ? (
+            <>
+              <Text color='#ccc' textAlign='start' pb={2}>Troops received from users</Text>
+              {(troops as RdUserContextOwnerFactionTroops).delegate.users.length > 0 ? (
+                <>
+                  <SimpleGrid columns={2} w='full'>
+                    {(troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => (
+                      <>
+                        <Box textAlign='start'>
+                          <CopyableText
+                            text={user.profileWalletAddress}
+                            label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
+                          />
+                        </Box>
+                        <Box textAlign='end'>{commify(user.troops)}</Box>
+                      </>
+                    ))}
+                  </SimpleGrid>
+                  <ExportDataComponent
+                    data={(troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
+                      address: user.profileWalletAddress,
+                      name: user.profileName,
+                      troops: user.troops
+                    })).sort((a, b) => b.troops - a.troops)}
+                    address={user.address!}
+                    signature={signature}
+                  />
+                </>
+              ) : (
+                <>None</>
+              )}
+            </>
+          ) : (
+            <>
+              <Text color='#ccc' textAlign='start' pb={2}>Troops delegated to factions</Text>
+              {(troops as RdUserContextNoOwnerFactionTroops).delegate.factions.length > 0 ? (
+                <SimpleGrid columns={2} w='full'>
+                  {(troops as RdUserContextNoOwnerFactionTroops).delegate.factions.map((faction) => (
+                    <>
+                      <Box textAlign='start'>{faction.factionName}</Box>
+                      <Box textAlign='end'>{commify(faction.troops)}</Box>
+                    </>
+                  ))}
+                </SimpleGrid>
+              ) : (
+                <>None</>
+              )}
+            </>
+          )}
+        </AccordionPanel>
+      </AccordionItem>
+      <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
+        <AccordionButton>
+          <Flex w='full'>
+            <Box flex='1' textAlign='left' my='auto'>Deployments</Box>
+            <Box ms={2} my='auto' fontWeight='bold'>{commify(troops.deployed.total)}</Box>
+            <AccordionIcon ms={4} my='auto'/>
+          </Flex>
+        </AccordionButton>
+        <AccordionPanel pb={1} pt={0} fontSize='sm'>
+          <Text color='#ccc' textAlign='start' pb={2}>Troops deployed to control points</Text>
+          {faction && faction.isEnabled ? (
+            <>
+              {(troops as RdUserContextOwnerFactionTroops).deployed.users.length > 0 ? (
+                <Accordion allowMultiple>
+                  {(troops as RdUserContextOwnerFactionTroops).deployed.users.map((user) => (
+                    <AccordionItem bgColor='#564D4A' rounded='md'>
+                      <Flex w='100%' ps={4}>
+                        <Box flex='1' textAlign='left' my='auto'>
+                          <CopyableText
+                            text={user.profileWalletAddress}
+                            label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
+                          />
+                        </Box>
+                        <Box ms={2} my='auto' fontWeight='bold'>{commify(user.troops)}</Box>
+                        <AccordionButton w='auto'>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </Flex>
+                      <AccordionPanel pb={1} pt={0} fontSize='sm'>
+                        {user.controlPoints.length > 0 ? (
+                          <SimpleGrid columns={2} w='full'>
+                            {user.controlPoints.map((cp) => (
+                              <>
+                                <Box textAlign='start'>{cp.name}</Box>
+                                <Box textAlign='end'>{commify(cp.troops)}</Box>
+                              </>
+                            ))}
+                          </SimpleGrid>
+                        ) : (
+                          <>None</>
+                        )}
+                      </AccordionPanel>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              ) : (
+                <>None</>
+              )}
+            </>
+          ) : (
+            <>
+              {(troops as RdUserContextNoOwnerFactionTroops).deployed.factions.length > 0 ? (
+                <Accordion allowMultiple>
+                  {(troops as RdUserContextNoOwnerFactionTroops).deployed.factions.map((faction) => (
+                    <AccordionItem bgColor='#564D4A' rounded='md'>
+                      <Flex w='100%' ps={4}>
+                        <Box flex='1' textAlign='left' my='auto'>{faction.factionName}</Box>
+                        <Box ms={2} my='auto' fontWeight='bold'>{commify(faction.troops)}</Box>
+                        <AccordionButton w='auto'>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </Flex>
+                      <AccordionPanel pb={1} pt={0} fontSize='sm'>
+                        {faction.controlPoints.length > 0 ? (
+                          <SimpleGrid columns={2} w='full'>
+                            {faction.controlPoints.map((cp) => (
+                              <>
+                                <Box textAlign='start'>{cp.name}</Box>
+                                <Box textAlign='end'>{commify(cp.troops)}</Box>
+                              </>
+                            ))}
+                          </SimpleGrid>
+                        ) : (
+                          <>None</>
+                        )}
+                      </AccordionPanel>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              ) : (
+                <>None</>
+              )}
+            </>
+          )}
+        </AccordionPanel>
+      </AccordionItem>
+      <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
+        <AccordionButton>
+          <Flex w='full'>
+            <Box flex='1' textAlign='left' my='auto'>Slain</Box>
+            <Box ms={2} my='auto' fontWeight='bold'>{commify(troops.slain.total)}</Box>
+            <AccordionIcon ms={4} my='auto'/>
+          </Flex>
+        </AccordionButton>
+        <AccordionPanel pb={1} pt={0} fontSize='sm'>
+          <Text color='#ccc' textAlign='start' pb={2}>Troops defeated in battle</Text>
+          {faction && faction.isEnabled ? (
+            <>
+              {(troops as RdUserContextOwnerFactionTroops).slain.users.length > 0 ? (
+                <Accordion allowMultiple>
+                  {(troops as RdUserContextOwnerFactionTroops).slain.users.map((user) => (
+                    <AccordionItem bgColor='#564D4A' rounded='md'>
+                      <Flex w='100%' ps={4}>
+                        <Box flex='1' textAlign='left' my='auto'>
+                          <CopyableText
+                            text={user.profileWalletAddress}
+                            label={isAddress(user.profileName) ? shortAddress(user.profileName) : user.profileName}
+                          />
+                        </Box>
+                        <Box ms={2} my='auto' fontWeight='bold'>{commify(user.troops)}</Box>
+                        <AccordionButton w='auto'>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </Flex>
+                      <AccordionPanel pb={1} pt={0} fontSize='sm'>
+                        {user.controlPoints.length > 0 ? (
+                          <SimpleGrid columns={2} w='full'>
+                            {user.controlPoints.map((cp) => (
+                              <>
+                                <Box textAlign='start'>{cp.name}</Box>
+                                <Box textAlign='end'>{commify(cp.troops)}</Box>
+                              </>
+                            ))}
+                          </SimpleGrid>
+                        ) : (
+                          <>None</>
+                        )}
+                      </AccordionPanel>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              ) : (
+                <>None</>
+              )}
+            </>
+          ) : (
+            <>
+              {(troops as RdUserContextNoOwnerFactionTroops).slain.factions.length > 0 ? (
+                <Accordion allowMultiple>
+                  {(troops as RdUserContextNoOwnerFactionTroops).slain.factions.map((faction) => (
+                    <AccordionItem bgColor='#564D4A' rounded='md'>
+                      <Flex w='100%' ps={4}>
+                        <Box flex='1' textAlign='left' my='auto'>{faction.factionName}</Box>
+                        <Box ms={2} my='auto' fontWeight='bold'>{commify(faction.troops)}</Box>
+                        <AccordionButton w='auto'>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </Flex>
+                      <AccordionPanel pb={1} pt={0} fontSize='sm'>
+                        {faction.controlPoints.length > 0 ? (
+                          <SimpleGrid columns={2} w='full'>
+                            {faction.controlPoints.map((cp) => (
+                              <>
+                                <Box textAlign='start'>{cp.name}</Box>
+                                <Box textAlign='end'>{commify(cp.troops)}</Box>
+                              </>
+                            ))}
+                          </SimpleGrid>
+                        ) : (
+                          <>None</>
+                        )}
+                      </AccordionPanel>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              ) : (
+                <>None</>
+              )}
+            </>
+          )}
+        </AccordionPanel>
+      </AccordionItem>
+    </Accordion>
+  )
 }
 
 const CopyableText = ({text, label}: {text: string, label: string}) => {
