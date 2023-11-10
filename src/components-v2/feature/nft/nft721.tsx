@@ -670,7 +670,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
               )}
               <div className="mt-2" style={{ cursor: 'pointer' }}>
                 <ButtonGroup size='md' isAttached variant='outline'>
-                  <ChakraButton styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
+                  <ChakraButton title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
                     <FontAwesomeIcon icon={faSync} spin={refreshing} />
                   </ChakraButton>
                   <ChakraButton
