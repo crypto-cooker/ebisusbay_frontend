@@ -274,13 +274,16 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
           <VStack ms={2} textAlign='center' px={3}>
             <HStack>
               <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
-              <Text fontWeight='bold' textDecoration='underline'>DEADLINE: 9 November 2023!</Text>
+              <Text fontWeight='bold' textDecoration='underline'>DEADLINE: {new Date(1699738898000).toDateString()}, {new Date(1699738898000).toTimeString()}!</Text>
             </HStack>
             <Text>
-              Swap your Ebisu's Bay VIP Founding Member for 10x Ryoshi Tales VIP NFTs and enjoy increased benefits in the Ebisu's Bay ecosystem.
+              Staking benefits have now ended for this NFT.
             </Text>
             <Text>
-              Unswapped VIPs after <strong>9 November 2023</strong> will be deactivated from receiving market rewards
+              But you can still swap your Ebisu's Bay VIP Founding Member for <strong>10x Ryoshi Tales VIP</strong> NFTs and enjoy increased benefits in the Ebisu's Bay ecosystem. Click the "View drop" link below to get started.
+            </Text>
+            <Text>
+              VIPs will will no longer be able to be swapped after this date
             </Text>
             <Box>
               <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
