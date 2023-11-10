@@ -24488,6 +24488,77 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Pesky Alpacas",
+      "slug": "pesky-alpacas",
+      "multiToken": false,
+      "address": "0x95051421D86cbdb62c012B8BeB19AeACF0108181",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/pesky-alpacas/avatar.webp",
+        "banner": "/img/collections/pesky-alpacas/banner.webp",
+        "card": "/img/collections/pesky-alpacas/card.webp",
+        "website": "https://alpaca.timmy.finance/",
+        "twitter": "https://www.twitter.com/Donkey__Finance",
+        "discord": "https://discord.gg/mmyGF8N79Z",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ghostly Lands",
+      "slug": "ghostly-lands",
+      "multiToken": false,
+      "address": "0x5103392C75Dd2DF2E287aE55DECe2d26e836eEfB",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ghostly Lands is a collection of NFTs that represent ownership of virtual lands in a fictional world inhabited by Ghosts OGs.",
+        "avatar": "/img/collections/ghostly-lands/avatar.webp",
+        "card": "/img/collections/ghostly-lands/card.webp",
+        "banner": "/img/collections/ghostly-lands/banner.webp",
+        "website": "https://ghostelitenfs.com/",
+        "twitter": "https://twitter.com/GhostEliteNFTs",
+        "discord": "https://discord.gg/waN3AVvSUK",
+        "categories": [
+          "utilities"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Gangverse Darkside",
+      "slug": "gangverse-darkside",
+      "multiToken": false,
+      "address": "0xC376D7a55a3Fb6FA0B12D90fd96FeFB0d96702bF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Darkness is rising. Here you will witness a completely different face of Gangverse with the characters taken over by the dark side! Of course, if you're ready for it.",
+        "avatar": "/img/collections/gangverse-darkside/avatar.webp",
+        "banner": "/img/collections/gangverse-darkside/banner.webp",
+        "card": "/img/collections/gangverse-darkside/card.webp",
+        "website": "https://gangverse.club/",
+        "twitter": "https://twitter.com/gangverse",
+        "discord": "https://discord.gg/u9NJ8GBPXA",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
