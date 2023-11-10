@@ -291,8 +291,7 @@ export const ryoshiConfig: RyoshiConfig = {
           }
         ]
       }
-    },
-    meepleUpkeep: 0.1
+    }
   },
   factions: {
     registration: {
