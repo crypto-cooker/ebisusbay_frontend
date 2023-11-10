@@ -259,7 +259,7 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
           borderRadius={'md'} 
           outline={'2px solid gray'}
         >
-          <RdHero nftId={nftId}/>
+          <RdHero nftId={nftId} showStats={false}/>
         </Box>
       </GridItem>
       

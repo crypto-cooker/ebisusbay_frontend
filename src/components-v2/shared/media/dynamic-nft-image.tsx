@@ -13,9 +13,10 @@ export interface DynamicNftImageProps {
   id: string;
   children?: ReactNode;
   showDetails?: boolean;
+  showStats?: boolean;
 }
 
-export const DynamicNftImage = ({address, id, children, showDetails}: DynamicNftImageProps) => {
+export const DynamicNftImage = ({address, id, children, showDetails, showStats = true}: DynamicNftImageProps) => {
   return (
     <>
       { isLandDeedsCollection(address) ? (
@@ -25,7 +26,7 @@ export const DynamicNftImage = ({address, id, children, showDetails}: DynamicNft
             {showDetails ? (
               <RdHeroFrame nftId={id} />
               ) : (
-              <RdHero nftId={id} showStats={true}/>
+              <RdHero nftId={id} showStats={showStats}/>
             )}
           </>
         ) : ( 
