@@ -221,7 +221,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
                   {isBundle(nft.address ?? nft.nftAddress) ? (
                     <ImagesContainer nft={nft} />
                   ) : (
-                    <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
+                    <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId} showStats={false}>
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
                       video={nft.video ?? nft.animation_url}
