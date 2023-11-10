@@ -24465,6 +24465,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "UCRO PITBULL KENNEL",
+      "slug": "ucro-pitbull-kennel",
+      "multiToken": false,
+      "address": "0x289C668450C36cE8EE9d018Fd224787bAE741d26",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "From sale proceeds: 80% for earn CRO staking pool on corgistudio.io earn cro stake. buyback held in NFT wallet to fund ongoing USDC pool. 10% royalty will be split between UCRO buyback and CRO pool refill We want this to be ongoing along with the TOKEN project not fizzle that's why the UCRO bearing NFT wallet to feed a pool is crucial Hard to find one that's going to pump the TOKEN you can stake for while stake is live but we're different because just regular crypto guys that wanted a legit project and best way was to make our own",
+        "avatar": "/img/collections/ucro-pitbull-kennel/avatar.webp",
+        "banner": "/img/collections/ucro-pitbull-kennel/banner.webp",
+        "card": "/img/collections/ucro-pitbull-kennel/card.webp",
+        "website": "https://utilitycro.com/",
+        "twitter": "https://www.twitter.com/utilicro",
+        "telegram": "https://t.me/UtilityCro",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
