@@ -200,7 +200,7 @@ const Header = function () {
                 <Box>
                   <VStack align='start' spacing={0} mb={2}>
                     <Heading size='md' className='col-white'>Marketplace</Heading>
-                    <Divider borderColor='white' w='150px' />
+                    <Divider borderColor='white' w='150px' mb={2} mt={1} />
                   </VStack>
                   <VStack align='start'>
                     <NavLink name='Explore' to='/marketplace' onClick={onClose} />
@@ -213,7 +213,7 @@ const Header = function () {
                 <Box>
                   <VStack align='end' spacing={0} mb={2}>
                     <Heading size='md' className='col-white'>GameFi</Heading>
-                    <Divider borderColor='white' w='150px' mb={2} />
+                    <Divider borderColor='white' w='150px' mb={2} mt={1} />
                   </VStack>
                   <VStack align='end'>
                     <NavLink name='Ryoshi Dynasties' to='/ryoshi' onClick={onClose} />

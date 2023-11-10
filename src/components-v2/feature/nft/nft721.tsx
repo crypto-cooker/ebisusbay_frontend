@@ -158,12 +158,60 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     return collection?.name;
   });
 
+  const retrieveLayeredImage = async() => {
+      const response = await fetch(`/api/heroes/${id}`);
+      const blobImage = await response.blob();
+
+      const href = URL.createObjectURL(blobImage);
+      return href;
+  }
+
+  const [downloadingImage, setDownloadingImage] = useState(false);
+  const downloadImage = async() => {
+    try {
+      setDownloadingImage(true);
+
+      const href = await retrieveLayeredImage();
+      const anchorElement = document.createElement('a');
+      anchorElement.href = href;
+      anchorElement.download = `hero_${id}.png`;
+
+      document.body.appendChild(anchorElement);
+      anchorElement.click();
+
+      document.body.removeChild(anchorElement);
+      window.URL.revokeObjectURL(href);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setDownloadingImage(false);
+    }
+
+  }
+
+  const [copyingImage, setCopyingImage] = useState(false);
+  const copyImage = async() => {
+    try {
+      setCopyingImage(true);
+
+      const href = await retrieveLayeredImage();
+      navigator.clipboard
+        .writeText(href)
+        .then(() => {
+          toast.success(`Image copied!`)
+        }, () => {
+          console.error('Copy to clipboard failed.');
+        });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setCopyingImage(false);
+    }
+  }
+
   const DownloadImage = async (nftId:string) => {
     try {
-      const response = await fetch(`/api/heroes/${nftId}`, {
-        method: "GET",
-        headers: {}
-      });
+      const response = await fetch(`/api/heroes/${nftId}`);
       const blobImage = await response.blob();
 
       const href = URL.createObjectURL(blobImage);
@@ -254,7 +302,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
   const MenuButton = () => {
 
     return (
-      <MenuButtonCK as={LegacyOutlinedButton}>
+      <MenuButtonCK as={ChakraButton}>
         <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
       </MenuButtonCK>
     )
@@ -621,12 +669,11 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                 <></>
               )}
               <div className="mt-2" style={{ cursor: 'pointer' }}>
-                <ButtonGroup size='sm' isAttached variant='outline'>
-                  <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
+                <ButtonGroup size='md' isAttached variant='outline'>
+                  <ChakraButton styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
                     <FontAwesomeIcon icon={faSync} spin={refreshing} />
-                  </Button>
-                  <Button
-                    styleType="default-outlined"
+                  </ChakraButton>
+                  <ChakraButton
                     title={isFavorite() ? 'This item is in your favorites list' : 'Click to add to your favorites list'}
                     onClick={onFavoriteClicked}
                   >
@@ -638,23 +685,32 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                         <FontAwesomeIcon icon={faHeartOutline} />
                       )}
                     </div>
-                  </Button>
-                  {nft && nft.original_image && (
-                    isHerosCollection(nft.address) ? (
-                      <>
-                      <Button styleType="default-outlined" title="Download Image" onClick={() =>
-                        DownloadImage(nft.id ?? nft.nftId)
-                      }>
-                        <FontAwesomeIcon icon={faDownload} />
-                      </Button>
-                        </> ) : ( <>
-                      <Button styleType="default-outlined" title="View Full Image" onClick={() =>
+                  </ChakraButton>
+                  {nft && nft.original_image && !isHerosCollection(nft.address) && (
+                    <ChakraButton title="View Full Image" onClick={() =>
                         typeof window !== 'undefined' &&
                         window.open(specialImageTransform(address, fullImage()), '_blank')
-                      }>
-                        <FontAwesomeIcon icon={faExternalLinkAlt} />
-                      </Button>
-                    </>  )
+                    }>
+                      <FontAwesomeIcon icon={faExternalLinkAlt} />
+                    </ChakraButton>
+                  )}
+                  {isHerosCollection(nft.address) && (
+                    <>
+                      <ChakraButton
+                          title="Download Image"
+                          onClick={downloadImage}
+                          isLoading={downloadingImage}
+                      >
+                        <FontAwesomeIcon icon={faDownload} />
+                      </ChakraButton>
+                      <ChakraButton
+                          title="Copy Image"
+                          onClick={copyImage}
+                          isLoading={copyingImage}
+                      >
+                        <FontAwesomeIcon icon={faCopy} />
+                      </ChakraButton>
+                    </>
                   )}
                   <Menu MenuItems={MenuItems} MenuButton={MenuButton()} />
 
