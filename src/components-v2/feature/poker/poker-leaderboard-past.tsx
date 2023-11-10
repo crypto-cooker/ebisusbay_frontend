@@ -106,7 +106,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 	useEffect(() => {
 		if(!data) return; 
 		// GenerateJsonForRewardDistribution();
-		console.log(pokerCollection);
+		// console.log(pokerCollection);
 	}, [data])
 
 	useEffect(() => {
@@ -125,7 +125,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		data.pages[0].data.map((player: Player, i : number) => (
 			player.address === user.address && (
 				setPlayerProfile(player),
-				setPlayerRank(i+1)
+				setPlayerRank(i%2+1)
 			)
 		))
 	}
