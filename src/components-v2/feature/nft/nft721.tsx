@@ -160,10 +160,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
 
   const retrieveLayeredImage = async() => {
       const response = await fetch(`/api/heroes/${id}`);
-      const blobImage = await response.blob();
-
-      const href = URL.createObjectURL(blobImage);
-      return href;
+      return response.blob();
   }
 
   const [downloadingImage, setDownloadingImage] = useState(false);
@@ -171,7 +168,9 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     try {
       setDownloadingImage(true);
 
-      const href = await retrieveLayeredImage();
+      const blobImage = await retrieveLayeredImage();
+      const href = URL.createObjectURL(blobImage);
+
       const anchorElement = document.createElement('a');
       anchorElement.href = href;
       anchorElement.download = `hero_${id}.png`;
@@ -194,14 +193,33 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     try {
       setCopyingImage(true);
 
-      const href = await retrieveLayeredImage();
-      navigator.clipboard
-        .writeText(href)
-        .then(() => {
-          toast.success(`Image copied!`)
-        }, () => {
-          console.error('Copy to clipboard failed.');
-        });
+      const blobImage = await retrieveLayeredImage();
+
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          throw new Error('Unable to get canvas context');
+        }
+        ctx.drawImage(img, 0, 0);
+
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            throw new Error('Canvas toBlob failed');
+          }
+          const item = new ClipboardItem({ "image/png": blob });
+          navigator.clipboard.write([item]).then(() => {
+            toast.success('Image copied!');
+          }, (err) => {
+            throw err;
+          });
+        }, 'image/png');
+      };
+      img.src = URL.createObjectURL(blobImage);
     } catch (error) {
       console.error(error);
     } finally {
