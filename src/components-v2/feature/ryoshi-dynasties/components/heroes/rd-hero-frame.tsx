@@ -272,7 +272,7 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
       </GridItem>
 
       <GridItem area={'bottom'}>
-        { nft && <StatsContainer attributes={nft.stats} heroClass={heroClass} rarity={rarity}/> }
+        { nft && <StatsContainer attributes={nft.stats} /> }
       </GridItem >
 
       <GridItem area={'bottom2'}>
@@ -373,11 +373,9 @@ const ProgressBar = ({stat, value, colorScheme, borderColor}: any) => {
 
 interface statsAttribute{
   attributes:NumberAttribute[]
-  heroClass: string;
-  rarity: string;
 }
 
-const StatsContainer = ({attributes, heroClass, rarity}: statsAttribute) => {
+const StatsContainer = ({attributes}: statsAttribute) => {
 
   const [str, setStr] = useState<number>(0);
   const [dex, setDex] = useState<number>(0);
@@ -386,7 +384,6 @@ const StatsContainer = ({attributes, heroClass, rarity}: statsAttribute) => {
   const [agi, setAgi] = useState<number>(0);
   const [luk, setLuk] = useState<number>(0);
   const [cha, setCha] = useState<number>(0);
-
 
   const GetStats = (attributes:NumberAttribute[]) => {
     for(let i = 0; i < attributes.length; i++){
@@ -407,24 +404,6 @@ const StatsContainer = ({attributes, heroClass, rarity}: statsAttribute) => {
       }
     }
   }
-  const GetRarityFactor = (rarity:string) => {
-    switch(rarity){
-      case 'Common':
-        return 1;
-      case 'Uncommon':
-        return 1.1;
-      case 'Rare':
-        return 1.2;
-      case 'Epic':
-        return 1.3;
-      case 'Legendary':
-        return 1.5;
-      case 'Mythic':
-        return 2;
-      default:
-        return 1;
-    }
-  }
   useEffect(() => {
     GetStats(attributes);
   }, [attributes])
@@ -440,9 +419,10 @@ const StatsContainer = ({attributes, heroClass, rarity}: statsAttribute) => {
           width={'100%'}
           maxW={{ base: '480px', sm: '480px', md: '350px', lg: '290px', xl: '360px', '2xl':"480px" }}
           >
-            <GridItem h={'18px'} textAlign={'left'}
-            >
-              <Text as={'b'} fontSize={{ base: 14, xl:16 }} textAlign={'left'} > PLAYER STATS </Text>
+            <GridItem h={'20px'} textAlign={'left'} alignContent={'center'}>
+              <HStack>
+                <Text as={'b'} fontSize={{ base: 12, sm: 14, md:14, lg:12, xl:16 }} textAlign={'left'} > PLAYER STATS </Text>
+              </HStack>
             </GridItem>
 
             <Item stat={'Dextertity'} value={dex}/>
