@@ -1,4 +1,4 @@
-import {Flex, GridItem, HStack, Image, SimpleGrid,Text, VStack,Box, Grid, Progress, useBreakpointValue, useMediaQuery} from "@chakra-ui/react";
+import {Flex, GridItem, HStack, Image, SimpleGrid,Text, VStack,Box, Grid, Progress, useBreakpointValue, Button} from "@chakra-ui/react";
 import React, {memo, useEffect, useRef, useState} from "react";
 import RdHero from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero";
 import {ResponsiveValue} from "@chakra-ui/styled-system";
@@ -13,7 +13,6 @@ interface Attribute{
 export interface RdHeroProps {
   nftId: string;
 }
-
 interface MapOutlineProps {
   nftId: string;
   gridHeight?: string;
@@ -41,14 +40,6 @@ export interface RdHeroProps {
 }
 
 const RdHeroFrame = ({nftId} : MapOutlineProps) => {
-  const containerSize = useBreakpointValue<ResponsiveValue<CSS.Property.Height>>({
-    base: '275px',
-    sm: '400px',
-    md: '300px',
-    lg: '305px',
-    xl: '350px',
-    '2xl': '450px'
-  });
 
   const mainFolderPath = '/img/ryoshi-dynasties/heroes/'
   const isMobile = useBreakpointValue({ base: true, lg: false })
@@ -87,6 +78,14 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
     lg: '455px',
     xl: '525px',
     '2xl': '100%'
+  });
+  const containerSize = useBreakpointValue<ResponsiveValue<CSS.Property.Height>>({
+    base: '275px',
+    sm: '400px',
+    md: '300px',
+    lg: '305px',
+    xl: '350px',
+    '2xl': '450px'
   });
 
   const GetMaxArmySize = (heroClass:string) => {
@@ -166,6 +165,36 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
     setNft(heroesMetadata.Hero.find((nft) => nft.id == nftId) as NFTMetaData);
     
   }
+  const DownloadImage = async () => {
+    function download(content:any, fileName:any, contentType:any ){
+      const a = document.createElement("a");
+      const file = new Blob([content], { type: contentType });
+      a.href = URL.createObjectURL(file);
+      a.download = fileName;
+      a.click();
+    } 
+    try {
+      const response = await fetch(`/api/heroes/${nftId}`, {
+        method: "GET",
+        headers: {}
+      });
+      const blobImage = await response.blob();
+
+      const href = URL.createObjectURL(blobImage);
+
+      const anchorElement = document.createElement('a');
+      anchorElement.href = href;
+      anchorElement.download = `hero_${nftId}.png`;
+
+      document.body.appendChild(anchorElement);
+      anchorElement.click();
+
+      document.body.removeChild(anchorElement);
+      window.URL.revokeObjectURL(href);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
     if(nftId){
@@ -214,11 +243,8 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
     setHonorGuard((baseHonorGuard + (10*1)+ ((1 +(0.01* cha)) * rarityFactor)).toFixed());
   }, [heroClass, cha])
 
-  useEffect(() => {
-    console.log(containerSize)
-  },[containerSize])
-
   return (
+    <>
     <Grid
       templateAreas={{base:`
                       "top"
@@ -283,6 +309,8 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
       </GridItem >
 
     </Grid>
+      {/* <Button onClick={() => DownloadImage()}>Download</Button> */}
+    </>
   )
 }
 
