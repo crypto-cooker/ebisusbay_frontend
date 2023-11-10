@@ -125,7 +125,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		data.pages[0].data.map((player: Player, i : number) => (
 			player.address === user.address && (
 				setPlayerProfile(player),
-				setPlayerRank(i%2+1)
+				setPlayerRank(i+1)
 			)
 		))
 	}
@@ -270,18 +270,18 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				{ pokerCollection === PokerCollection.Live ?
 				<>
 					{ i%2 === 0 ? 
-					<Text fontSize={{base: 12, md:14}}> {(i/2)+1}</Text>
-					:
-					<></>}
-				
+						<Text fontSize={{base: 12, md:14}}> {i+1}</Text>
+						:<Text fontSize={{base: 12, md:14}} textColor={'red'}> {i+1}</Text> }
 				</> :
-
 					<Text fontSize={{base: 12, md:14}}> {i+1}</Text>
 				}
 				</GridItem>
 
 				<GridItem _hover={{bg: hoverBackground}}>
+				{ i%2 === 0 ? 
 					<Text fontSize={{base: 12, md:14}}>{isMobile ? shortAddress(player.address) : player.address}</Text>
+					: <Text fontSize={{base: 12, md:14}} textColor={'red'}>{isMobile ? shortAddress(player.address) : player.address}</Text>
+				}
 				</GridItem>
 		
 				<GridItem>
@@ -295,7 +295,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		
 				<GridItem>
 					<HStack>
-						<Text>{getCardName(player.bestHand.secondaryValue)}</Text>
+						<Text textColor={i%2 ? 'red':'white'}>{getCardName(player.bestHand.secondaryValue)}</Text>
 						{player?.bestHand?.secondaryCardEdition! >= 0 &&
 							<Text
 							fontSize={{base: 8, md:12}}
