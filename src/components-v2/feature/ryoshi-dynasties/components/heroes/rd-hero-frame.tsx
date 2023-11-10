@@ -165,36 +165,7 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
     setNft(heroesMetadata.Hero.find((nft) => nft.id == nftId) as NFTMetaData);
     
   }
-  const DownloadImage = async () => {
-    function download(content:any, fileName:any, contentType:any ){
-      const a = document.createElement("a");
-      const file = new Blob([content], { type: contentType });
-      a.href = URL.createObjectURL(file);
-      a.download = fileName;
-      a.click();
-    } 
-    try {
-      const response = await fetch(`/api/heroes/${nftId}`, {
-        method: "GET",
-        headers: {}
-      });
-      const blobImage = await response.blob();
 
-      const href = URL.createObjectURL(blobImage);
-
-      const anchorElement = document.createElement('a');
-      anchorElement.href = href;
-      anchorElement.download = `hero_${nftId}.png`;
-
-      document.body.appendChild(anchorElement);
-      anchorElement.click();
-
-      document.body.removeChild(anchorElement);
-      window.URL.revokeObjectURL(href);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   useEffect(() => {
     if(nftId){
@@ -309,7 +280,6 @@ const RdHeroFrame = ({nftId} : MapOutlineProps) => {
       </GridItem >
 
     </Grid>
-      {/* <Button onClick={() => DownloadImage()}>Download</Button> */}
     </>
   )
 }

@@ -5,6 +5,7 @@ import {faHeart as faHeartOutline} from '@fortawesome/free-regular-svg-icons';
 import {
   faCopy,
   faCrow,
+  faDownload,
   faExternalLinkAlt,
   faHeart as faHeartSolid,
   faHeartBroken,
@@ -40,7 +41,9 @@ import {
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   shortAddress,
-  isDynamicNftImageCollection
+  isDynamicNftImageCollection,
+  isHerosCollection,
+
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
@@ -155,6 +158,29 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     return collection?.name;
   });
 
+  const DownloadImage = async (nftId:string) => {
+    try {
+      const response = await fetch(`/api/heroes/${nftId}`, {
+        method: "GET",
+        headers: {}
+      });
+      const blobImage = await response.blob();
+
+      const href = URL.createObjectURL(blobImage);
+
+      const anchorElement = document.createElement('a');
+      anchorElement.href = href;
+      anchorElement.download = `hero_${nftId}.png`;
+
+      document.body.appendChild(anchorElement);
+      anchorElement.click();
+
+      document.body.removeChild(anchorElement);
+      window.URL.revokeObjectURL(href);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   const [{ isLoading: isFavoriting, response, error: errorTF }, toggleFavorite] = useToggleFavorite();
 
   const copyLink = useCallback(() => {
@@ -614,12 +640,21 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                     </div>
                   </Button>
                   {nft && nft.original_image && (
-                    <Button styleType="default-outlined" title="View Full Image" onClick={() =>
-                      typeof window !== 'undefined' &&
-                      window.open(specialImageTransform(address, fullImage()), '_blank')
-                    }>
-                      <FontAwesomeIcon icon={faExternalLinkAlt} />
-                    </Button>
+                    isHerosCollection(nft.address) ? (
+                      <>
+                      <Button styleType="default-outlined" title="Download Image" onClick={() =>
+                        DownloadImage(nft.id ?? nft.nftId)
+                      }>
+                        <FontAwesomeIcon icon={faDownload} />
+                      </Button>
+                        </> ) : ( <>
+                      <Button styleType="default-outlined" title="View Full Image" onClick={() =>
+                        typeof window !== 'undefined' &&
+                        window.open(specialImageTransform(address, fullImage()), '_blank')
+                      }>
+                        <FontAwesomeIcon icon={faExternalLinkAlt} />
+                      </Button>
+                    </>  )
                   )}
                   <Menu MenuItems={MenuItems} MenuButton={MenuButton()} />
 
