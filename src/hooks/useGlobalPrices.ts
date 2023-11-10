@@ -9,22 +9,27 @@ import {ethers} from "ethers";
 const config = appConfig();
 
 export const useGlobalPrices = () => {
-  return useQuery(['GlobalPrices'], getPrices, {
-    staleTime: 2,
-    initialData: []
+  return useQuery({
+    queryKey: ['GlobalPrices'],
+    queryFn: getPrices,
+    staleTime: 1000 * 60 * 2
   })
 };
 
 export const useGlobalPrice = (chainId: number | string) => {
-  return useQuery(['GlobalPrice', chainId], () => getPrice(Number(chainId)), {
-    staleTime: 2
+  return useQuery({
+    queryKey: ['GlobalPrice', chainId],
+    queryFn: () => getPrice(Number(chainId)),
+    staleTime: 1000 * 60 * 2
   })
 };
 
 export const useFortunePrice = (chainId?: number | string) => {
   const address = config.contracts.fortune;
-  return useQuery(['GlobalPrice', chainId, address], () => getPrice(Number(chainId), address), {
-    staleTime: 2
+  return useQuery({
+    queryKey: ['GlobalPrice', chainId, address],
+    queryFn: () => getPrice(Number(chainId), address),
+    staleTime: 1000 * 60 * 2
   })
 };
 

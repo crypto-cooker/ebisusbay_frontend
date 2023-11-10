@@ -37,14 +37,12 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
     return tmpNft.nft;
   }
 
-  const { isLoading, error, data: nft, status } = useQuery(
-    ['CancelOffer', user.address, offer.nftAddress, offer.nftId],
-    fetchNft,
-    {
-      enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
-      refetchOnWindowFocus: false
-    }
-  );
+  const { isPending, error, data: nft, status } = useQuery({
+    queryKey: ['CancelOffer', user.address, offer.nftAddress, offer.nftId],
+    queryFn: fetchNft,
+    enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
+    refetchOnWindowFocus: false
+  });
 
   const handleCancelOffer = async (e) => {
     e.preventDefault();
@@ -83,7 +81,7 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
           {isCollectionOffer ? <>Cancel Collection Offer</> : <>Cancel Offer</>}
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
-        {status === "loading" ? (
+        {status === 'pending' ? (
           <EmptyData>
             <Spinner size='sm' ms={1} />
           </EmptyData>

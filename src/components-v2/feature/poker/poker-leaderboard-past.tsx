@@ -1,5 +1,5 @@
 import {useInfiniteQuery} from "@tanstack/react-query";
-import { Center, Spinner, Box, HStack, useMediaQuery, VStack, Link, Button} from "@chakra-ui/react";
+import { Center, Spinner, Box, HStack, useMediaQuery, VStack, Link, Button, useColorModeValue, Card,CardBody } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { ApiService } from "@src/core/services/api-service";
 import {Text,Grid, GridItem, Flex,SimpleGrid } from "@chakra-ui/react";
@@ -11,6 +11,8 @@ import {shortAddress} from "@src/utils";
 import NextLink from "next/link";
 import { InfoIcon, LinkIcon } from "@chakra-ui/icons";
 import {PokerCollection} from "@src/core/services/api-service/types";
+import ImageService from "@src/core/services/image";
+import {useAppSelector} from "@src/Store/hooks";
 
 interface PokerLeaderboardProps {
 	pokerCollection: PokerCollection;
@@ -19,8 +21,21 @@ interface PokerLeaderboardProps {
 const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) => {
 	const isMobile = useMediaQuery("(max-width: 768px)")[0];
 	const [updatedAt, setUpdatedAt] = useState<string>();
+	const user = useAppSelector(state => state.user);
+	const hoverBackground = useColorModeValue('gray.100', '#424242');
+
+	const GetRules = () => {
+		switch(pokerCollection){
+			case PokerCollection.Clubs:
+				return 'https://blog.ebisusbay.com/crypto-hodlem-round-2-ryoshi-clubs-playing-cards-collection-6e7d869f87ee'
+			case PokerCollection.Diamonds:
+				return'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'
+			case PokerCollection.Live:	
+				return 'https://blog.ebisusbay.com/crypto-hodlem-round-3-ryoshi-hearts-%EF%B8%8F-playing-cards-collection-e5ae3361c32e'
+		}
+	}
 	
-	const GenerateJson = () => {
+	const GenerateJsonForRewardDistribution = () => {
 		if(!data) return;
 
 		interface Reward {
@@ -28,7 +43,8 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 			amount: number;
 		}
 
-		const rewards: Reward[] = [];
+		const fortuneRewards: Reward[] = [];
+		const nftRewards: Reward[] = [];
 
 		const GetRewardAmount = (index: number) => {
 			if(index <= 15) return 8500;
@@ -43,21 +59,21 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		data.pages[0].data.forEach((player: any, i: number) => {
 			if(i < 315){
 				console.log(i, player)
-				rewards.push({
+				fortuneRewards.push({
 					address: player.address,
 					amount:	GetRewardAmount(i+1),
 				})
 			}
 		})
 
-		// data.pages[0].data.forEach((player: any, i: number) =>  {
-		// 	if(i >= 314 && i < 400){
-		// 		rewards.push({
-		// 			address: player.address,
-		// 			amount:	1
-		// 		})
-		// 	}
-		// })
+		data.pages[0].data.forEach((player: any, i: number) =>  {
+			if(i >= 314 && i < 400){
+				nftRewards.push({
+					address: player.address,
+					amount:	1
+				})
+			}
+		})
 
 		function download(content:any, fileName:any, contentType:any ){
 			const a = document.createElement("a");
@@ -68,25 +84,20 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		} 
 
 		// console.log(JSON.stringify(rewards));
-		download(JSON.stringify(rewards), "diamondsRankedPlayersNFTS.json", "text/plain");
+		download(JSON.stringify(fortuneRewards), "ryoshi-clubs-fortune.json", "text/plain");
+		download(JSON.stringify(nftRewards), "ryoshi-clubs-NFTS.json", "text/plain");
 	}
 
-	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt} = useInfiniteQuery(
-		['RyoshiDiamondsLeaderboard'],
-	  ({pageParam = 1}) => ApiService.withoutKey().getRyoshiDiamondsLeaderboardAtBlock(pageParam, 500, pokerCollection),
-		{
-			getNextPageParam: (lastPage, pages) => {
-				return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-			},
-		// onSuccess: (data) => {
-		// 	const [refreshTime, setRefreshTime] = useState('00:00:00');
-		// 	setRefreshTime(new Date().toLocaleTimeString())
-		// },
-	    refetchOnWindowFocus: false,
-	    staleTime: 60,
-	    cacheTime: 65
-	  }
-	)
+	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt, refetch } = useInfiniteQuery({
+		queryKey: ['RyoshiDiamondsLeaderboard'],
+		queryFn: ({pageParam = 1}) => ApiService.withoutKey().getPokerLeaderboardAtBlock(pageParam, 500, pokerCollection),
+		initialPageParam: 1,
+		getNextPageParam: (lastPage, pages) => {
+			return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+		},
+		refetchOnWindowFocus: false,
+		staleTime: 1000 * 60
+	})
 
 	const loadMore = () => {
 		fetchNextPage();
@@ -94,8 +105,37 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 
 	useEffect(() => {
 		if(!data) return; 
-		// GenerateJson();
+		// GenerateJsonForRewardDistribution();
+		// console.log(pokerCollection);
 	}, [data])
+
+	useEffect(() => {
+		refetch();
+		//remove content 
+		content;
+	}, [pokerCollection])
+
+	const [playerProfile, setPlayerProfile] = useState<Player>();
+	const [playerRank, setPlayerRank] = useState<number>(0);
+
+	const FindPlayerInData = () => {
+		if(!data) return;
+		if(!user.address) return;
+
+		data.pages[0].data.map((player: Player, i : number) => (
+			player.address === user.address && (
+				setPlayerProfile(player),
+				setPlayerRank(i+1)
+			)
+		))
+	}
+
+	useEffect(() => {
+		if(!data) return;
+		if(!user.address) return;
+		FindPlayerInData();
+		
+	}, [data, user.address])
 
 	useEffect(() => {
 		if(!dataUpdatedAt) return; 
@@ -106,7 +146,6 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 	}, [dataUpdatedAt])
 
 	const content = useMemo(() => {
-
 		const PrintOutPlayerCards = (cardRanks: number[]) => {
 			let cardRanksString = "";
 			cardRanks.sort((a, b) => b - a);
@@ -114,12 +153,18 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 			  cardRanksString += getCardName(cardRank) + " ";
 			})
 			return cardRanksString;
-		  }
+		}
+	    return status === 'pending' ? (
 
-	    return status === "loading" ? (
-	      <Center>
-	        <Spinner />
-	      </Center>
+		<Card variant='outline' mt={2}>
+           <CardBody textAlign='center'>
+             <Text fontSize='xl' fontWeight='bold'>Preparing Leaderboard...</Text>
+             <Text>Previous game winners will be available shortly!</Text>
+				<Center>
+					<Spinner />
+				</Center>
+           </CardBody>
+          </Card> 
 	    ) : status === "error" ? (
 	      <Box textAlign='center'>
 	        Error: {(error as any).message}
@@ -129,9 +174,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		<Text fontSize={{base: 12, md:14}} textAlign='center'>Must be holding at least 5 cards to be ranked</Text>
 			<Link 
 				as={NextLink} 
-				href={pokerCollection === PokerCollection.Clubs ? 
-						'https://blog.ebisusbay.com/crypto-hodlem-round-2-ryoshi-clubs-playing-cards-collection-6e7d869f87ee' :
-						'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'} 
+				href={GetRules()} 
 				isExternal={true}>
 				<Button variant={'ghost'} maxW='250px' rightIcon={<InfoIcon/>}>Full Rules</Button>
 			</Link> 
@@ -162,7 +205,6 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				spacingX={{base: 4, md: 12}}
 				gridTemplateColumns={{base: '15px 50px 125px 50px', md:'50px 350px 150px 100px'}}
 				rounded={'md'}
-				// justifyItems={'center'}
 			>
 				<GridItem  as='b' maxW='50px' >
 					<Text fontSize={{base: 12, md:14}}>Rank</Text>
@@ -176,10 +218,6 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 					<Text fontSize={{base: 12, md:14}}>Best Hand</Text>
 				</GridItem>
 		
-				{/* <GridItem >
-					<Text as='b'>Primary</Text>
-				</GridItem>
-		 */}
 				<GridItem as='b'>
 					<Text fontSize={{base: 12, md:14}}>Secondary</Text>
 				</GridItem>
@@ -187,29 +225,77 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				{/* <GridItem as='b'>
 					<Text>All Cards</Text>
 				</GridItem> */}
-
+				{user.address && (
+					<>
+					<GridItem backgroundColor={'gray.800'} colSpan ={4} _hover={{bg: hoverBackground}} rounded={'md'}>
+					<HStack minW={'100%'} backgroundColor={'blue.800'} spacing={{base: 4, md: 12}} justifyItems='left' pb={2} pt={2}>
+						<Text as={'b'} w={{base: '15px', md:'50px'}} fontSize={{base: 12, md:14}}>{playerRank === 0 ? "NA" : playerRank}</Text>
+						<GridItem w={{base: '50px', md:'350px'}} >
+							<Text fontSize={{base: 10, md:14}} noOfLines={1}>{isMobile ? shortAddress(user.address) : user.address}</Text>
+						</GridItem>
+						<GridItem w={{base: '125px', md:'150px'}}>
+							<Text as={'b'} fontSize={{base: 12, md:14}}>
+								{playerProfile ? 
+								( getHandName(playerProfile.bestHand.handRef) + " (" 
+								+ playerProfile.bestHand.handDescription + ")") : "NA"}
+							</Text>
+						</GridItem>
+				
+						{/* <GridItem>
+							<Text>{playerProfile ? getCardName(playerProfile.bestHand.primaryValue) : "NA"}</Text>
+						</GridItem> */}
+				
+						<GridItem w={{base: '50px', md:'100px'}}>
+							<HStack>
+								<Text as={'b'} >{ playerProfile ? getCardName(playerProfile.bestHand.secondaryValue) : "NA"}</Text>
+								{playerProfile?.bestHand?.secondaryCardEdition! >= 0 &&
+									<Text
+									as={'b'} 
+									fontSize={{base: 8, md:12}}
+									color={'gray.500'}
+								>id:{playerProfile && playerProfile.bestHand.secondaryCardEdition}</Text>
+								}
+							</HStack>
+						</GridItem>
+					</HStack>
+					</GridItem>
+					</>
+				)}
+				
 		
 				{data?.pages[0].data.map((player: Player, i : number) => (
 				<>
 				<GridItem maxW='50px'  >
-				<Text fontSize={{base: 12, md:14}}> {i+1}</Text>
+				{/* we want this to print a number every other line */}
+				{ pokerCollection === PokerCollection.Live ?
+				<>
+					{ i%2 === 0 ? 
+						<Text fontSize={{base: 12, md:14}}> {i+1}</Text>
+						:<Text fontSize={{base: 12, md:14}} textColor={'red'}> {i+1}</Text> }
+				</> :
+					<Text fontSize={{base: 12, md:14}}> {i+1}</Text>
+				}
 				</GridItem>
 
-				<GridItem >
+				<GridItem _hover={{bg: hoverBackground}}>
+				{ i%2 === 0 ? 
 					<Text fontSize={{base: 12, md:14}}>{isMobile ? shortAddress(player.address) : player.address}</Text>
+					: <Text fontSize={{base: 12, md:14}} textColor={'red'}>{isMobile ? shortAddress(player.address) : player.address}</Text>
+				}
 				</GridItem>
 		
 				<GridItem>
-					<Text fontSize={{base: 12, md:14}}>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text>
+				{ pokerCollection === PokerCollection.Live ?
+					( i%2 === 0 ? 
+					<Text fontSize={{base: 12, md:14}} textColor={'white'}>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text>
+					: <Text fontSize={{base: 12, md:14}} textColor={'red'}>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text> )
+					: <Text fontSize={{base: 12, md:14}}>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text>
+				}
 				</GridItem>
-		
-				{/* <GridItem>
-					<Text>{getCardName(player.bestHand.primaryValue)}</Text>
-				</GridItem> */}
 		
 				<GridItem>
 					<HStack>
-						<Text>{getCardName(player.bestHand.secondaryValue)}</Text>
+						<Text textColor={i%2 ? 'red':'white'}>{getCardName(player.bestHand.secondaryValue)}</Text>
 						{player?.bestHand?.secondaryCardEdition! >= 0 &&
 							<Text
 							fontSize={{base: 8, md:12}}
@@ -231,7 +317,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		  </InfiniteScroll>
 		</>
 	    )
-	  }, [data, status]);
+	}, [data, status, playerProfile]);
 	
 	return (
 	  <Flex w={'100%'} justifyContent={'center'} >

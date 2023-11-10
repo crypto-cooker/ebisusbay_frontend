@@ -5,7 +5,15 @@ import {Contract, ContractReceipt, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {caseInsensitiveCompare, isBundle, isErc20Token, isGaslessListing, knownErc20Token, round} from "@src/utils";
+import {
+  caseInsensitiveCompare,
+  isBundle,
+  isErc20Token,
+  isGaslessListing,
+  isLandDeedsCollection,
+  knownErc20Token,
+  round
+} from "@src/utils";
 import {getTheme} from "@src/Theme/theme";
 import {
   Box,
@@ -40,6 +48,7 @@ import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {getPrices} from "@src/core/api/endpoints/prices";
+import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -161,7 +170,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
           Buy {listing?.nft?.name}
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme)!.colors.textColor4} />
-        {status === "loading" ? (
+        {status === 'pending' ? (
           <EmptyData>
             <Spinner />
           </EmptyData>
@@ -178,6 +187,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                   {isBundle(listing.nftAddress) ? (
                     <ImagesContainer nft={listing.nft} />
                   ) : (
+                  <DynamicNftImage address={listing.nft.address ?? listing.nft.nftAddress} id={listing.nft.id ?? listing.nft.nftId} showStats={false}>
                     <AnyMedia
                       image={specialImageTransform(listing.nft.nftAddress, listing.nft.image)}
                       video={listing.nft.video ?? listing.nft.animation_url}
@@ -186,6 +196,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       usePlaceholder={false}
                       className="img-fluid img-rounded"
                     />
+                  </DynamicNftImage>
                   )}
                 </div>
                 <div className="col-8 mt-2 mt-sm-0">

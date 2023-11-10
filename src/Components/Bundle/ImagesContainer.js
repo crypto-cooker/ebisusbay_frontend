@@ -3,7 +3,7 @@ import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-med
 import {specialImageTransform} from '@src/hacks';
 import {Box, Center, Flex} from "@chakra-ui/react";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {FreeMode, Navigation, Thumbs} from "swiper";
+import {FreeMode, Navigation, Thumbs} from "swiper/modules";
 import {fallbackImageUrl} from "@src/core/constants";
 import ImageService from "@src/core/services/image";
 

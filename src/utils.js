@@ -8,6 +8,7 @@ import {getProfile} from "@src/core/cms/endpoints/profile";
 import {commify} from "ethers/lib/utils";
 import brands from '../src/core/data/brands.json';
 import ImageService from "@src/core/services/image";
+import {ethers} from "ethers";
 
 const config = appConfig();
 const drops = config.drops;
@@ -269,6 +270,17 @@ export function shortString(str, leftChars = 3, rightChars = 3) {
   if (str.length <= leftChars + rightChars) return str;
 
   return `${str.substring(0, leftChars)}...${str.substring(str.length - rightChars, str.length)}`;
+}
+
+export function username(identifier) {
+  try {
+    if (identifier.startsWith('0x') && !identifier.endsWith('.cro')) {
+      return shortAddress(ethers.utils.getAddress(identifier));
+    }
+    return identifier;
+  } catch (e) {
+    return identifier;
+  }
 }
 
 export function timeSince(timestamp) {
@@ -566,6 +578,14 @@ export const isCroSwapQuartermastersCollection = (address) => {
   return isCollection(address, 'croswap-quartermasters', '0x333580e4B59E74243451c531c29121c02F8E3102');
 };
 
+export const isDynamicNftImageCollection = (address) => {
+  if(!address) return false;
+  if (isLandDeedsCollection(address)) return true;
+  if (isHerosCollection(address)) return true;
+
+  return false;
+};
+
 export const isLandDeedsCollection = (address) => {
   return isCollection(
     address,
@@ -573,6 +593,13 @@ export const isLandDeedsCollection = (address) => {
     ['0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3', '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad']
   );
 };
+export const isHerosCollection = (address) => {
+  return isCollection(
+    address,
+    'ryoshi-heroes',
+    ['0xF098C2aD290f32c8666ace27222d3E65cECE43b9', '0x458073C0fb97e42d441778aE4beFc8c1180E513e']
+  );
+}
 
 export const isPlayingCardsCollection = (address) => {
   return isCollection(address, 'ryoshi-playing-cards', '0xd87838a982a401510255ec27e603b0f5fea98d24');
@@ -763,19 +790,6 @@ export const getAddressFromSlug = (slug) => {
 // can use web3.utils.isAddress tho
 export const isAddress = (address) => {
   return /^(0x){1}[0-9a-fA-F]{40}$/i.test(address);
-};
-
-export const getUserDisplayName = async (address) => {
-  if (!address) return '';
-
-  try {
-    let profile = await getProfile(address);
-    if (profile?.data) return profile.data.username;
-  } catch (error) {
-    return shortAddress(address);
-  }
-
-  return shortAddress(address);
 };
 
 export const isEmptyObj = (obj) => {

@@ -41,16 +41,15 @@ export default function MadeOffers({ address, filtersVisible, setFiltersVisible,
     });
   };
 
-  const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery(
-    ['MadeOffers', address, queryParams],
-    fetcher,
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    }
-  )
+  const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery({
+    queryKey: ['MadeOffers', address, queryParams],
+    queryFn: fetcher,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
   const loadMore = () => {
     fetchNextPage();
@@ -72,7 +71,7 @@ export default function MadeOffers({ address, filtersVisible, setFiltersVisible,
   }, [queryParams]);
 
   const historyContent = useMemo(() => {
-    return status === "loading" ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>

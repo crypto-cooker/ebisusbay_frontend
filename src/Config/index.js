@@ -62,7 +62,8 @@ export const configData = {
       fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
-      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af'
+      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
+      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8'
     },
     tokens: {
       loot: {
@@ -149,6 +150,8 @@ export const configData = {
           '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'],        // Fortune Guards
           '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],        // FortuneTeller
           '0xd87838a982a401510255ec27e603b0f5fea98d24': ['frtn'],        // Ryoshi Playing Cards
+          '0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04': ['frtn'],        // Ryoshi Tales
+          '0xF098C2aD290f32c8666ace27222d3E65cECE43b9': ['frtn'],        // Ryoshi Heroes
           '0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98': ['cro', 'frtn', 'bcro'], // Project X Access Pass
           '0xa996aD2b9f240F78b063E47F552037658c4563d1': ['cro', 'frtn', 'bcro'], // Argonauts
           '0xc3cf2416a69351bf336ff671ad46d92efee4ea75': ['cro', 'frtn', 'bcro'], // Honorary Argonauts
@@ -254,7 +257,8 @@ export const configData = {
       fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
-      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af'
+      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
+      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8'
     },
     tokens: {
       loot: {
@@ -371,7 +375,7 @@ export const configData = {
       }
     },
     rpc: {
-      read: 'https://rpc.ebisusbay.biz/',
+      read: 'https://testnet-archive.cronoslabs.com/v1/9e45d288f24ea538e34bc9919da2d360',
       write: 'https://evm-t3.cronos.org/',
     },
     contracts: {
@@ -396,7 +400,8 @@ export const configData = {
       fortune: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
       rewards: '0xB775F2Ef8E007F6719fF0fc113048180b4482e2c',
       presaleVaults: '0x677a4B2910e0e5667907B5bf4cD4fdb188e99281',
-      seasonUnlocks: '0x107ca22a421b24b0986150E51ce03b772b56440f'
+      seasonUnlocks: '0x107ca22a421b24b0986150E51ce03b772b56440f',
+      townHall: '0xEe68452B79653298Af5109Dae5cD4ABA3c4E1934'
     },
     tokens: {
       loot: {

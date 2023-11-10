@@ -10,7 +10,7 @@ import {
   BankStakeNft,
   BarracksStakeNft,
   RyoshiDynastiesApi,
-  StakedTokenType
+  StakedTokenType, TownHallStakeNft
 } from "@src/core/services/api-service/types";
 import {Offer} from "@src/core/models/offer";
 import {WalletsQueryParams} from "./mapi/queries/wallets";
@@ -20,7 +20,7 @@ import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
 import {caseInsensitiveCompare} from "@src/utils";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 import {getOwners} from "@src/core/subgraph"
-import {Player, RankPlayers} from "@src/core/poker-rank-players"
+import {Player, RankPlayers, RankPlayersByWorst} from "@src/core/poker-rank-players"
 import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
@@ -87,11 +87,9 @@ export class ApiService implements Api {
     return await this.getOffers(query);
   }
 
-  async getRyoshiDiamondsLeaderboardAtBlock(page: number, pageSize: number, pokerCollection: PokerCollection): Promise<any> {
+  async getPokerLeaderboardAtBlock(page: number, pageSize: number, pokerCollection: PokerCollection): Promise<any> {
     //info from subgraph
-
     const owners = await getOwners(pokerCollection);
-    //rank the info
 
     let gameNumber = 2;
 
@@ -99,17 +97,34 @@ export class ApiService implements Api {
       gameNumber = 1;
     } else if (pokerCollection == PokerCollection.Clubs) {
       gameNumber = 2;
+    } else if (pokerCollection == PokerCollection.Live) {
+      gameNumber = 3;
     }
-    
-    const response = await RankPlayers(owners, false, gameNumber);
+
+    const response = await RankPlayers(owners, gameNumber);
+
+    let combined = [];
+    if (pokerCollection == PokerCollection.Live)
+    {
+      let worstHands = await RankPlayers(owners, gameNumber);
+      worstHands = await RankPlayersByWorst(worstHands, gameNumber);
+      
+      for (let i = 0; i < response.length; i++) {
+        combined.push(response[i]);
+        combined.push(worstHands[i]);
+      }
+
+    } else {
+      combined = response;
+    }
 
     function paginate(array : any, page_size:number, page_number:number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
     //convert response to paged list
-    const paginatedResponse = paginate(response, pageSize, page);
-    const totalPages = Math.ceil(response.length / pageSize);
+    const paginatedResponse = paginate(combined, pageSize, page);
+    const totalPages = Math.ceil(combined.length / pageSize);
 
     return new PagedList<Player>(
       paginatedResponse,
@@ -185,7 +200,25 @@ export class ApiService implements Api {
       }
     });
 
-    return mappedCollections.concat(walletRecords).sort((a, b) => b.points - a.points);
+    const completeRankings = mappedCollections.concat(walletRecords).sort((a, b) => b.points - a.points);
+
+    let rank = 1;
+    return completeRankings.map((record, index) => {
+      let thisRank;
+      if (index > 0 && completeRankings[index - 1].points !== record.points) {
+        thisRank = rank + 1;
+        rank++;
+      } else if (index === 0) {
+        thisRank = 1;
+      } else {
+        thisRank = '';
+      }
+
+      return {
+        ...record,
+        rank: thisRank
+      }
+    });
   }
 
   async getCollectionTraits(address: string) {
@@ -233,6 +266,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.graph.getStakedTokens(address, type);
   }
 
+  async getStakedTokenTotals(type: StakedTokenType) {
+    return this.cms.getStakedTokenTotals(type);
+  }
+
   async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
     return this.cms.requestBankStakeAuthorization(nfts, address, signature);
   }
@@ -247,6 +284,18 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
     return this.cms.requestBarracksUnstakeAuthorization(nfts, address, signature);
+  }
+
+  async requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
+    return this.cms.requestTownHallStakeAuthorization(nfts, address, signature);
+  }
+
+  async requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
+    return this.cms.requestTownHallUnstakeAuthorization(nfts, address, signature);
+  }
+
+  async requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string) {
+    return this.cms.requestRewardsSpendAuthorization(amount, address, signature);
   }
 
   async getDailyRewards(address: string) {
@@ -295,6 +344,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async getBattleLog(query: GetBattleLog) {
     return this.cms.getBattleLog(query);
+  }
+
+  async getTroopsBreakdown(gameId: number, address: string, signature: string) {
+    return this.cms.getTroopsBreakdown(gameId, address, signature);
   }
 
   async getUserMeeples(address: string) {

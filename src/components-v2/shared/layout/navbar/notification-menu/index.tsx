@@ -29,11 +29,12 @@ const NotificationMenu = function () {
   const [showMenu, setShowMenu] = useState(false);
   const [requestDeleteNotifications] = useDeleteNotifications();
 
-  const { isLoading, isError, error, data:notifications, refetch } = useQuery(
-    ['Notifications', address],
-    () => getNotifications(address),
-    {enabled: !!profile?.id}
-  )
+  const { isPending, isError, error, data: notifications, refetch } = useQuery({
+    queryKey: ['Notifications', address],
+    queryFn: () => getNotifications(address),
+    enabled: !!profile?.id,
+    staleTime: 1000 * 60
+  });
 
   const handleClose = () => {
     setShowMenu(false);
@@ -85,7 +86,7 @@ const NotificationMenu = function () {
           <DrawerHeader>Notifications</DrawerHeader>
 
           <DrawerBody>
-            {isLoading ? (
+            {isPending ? (
               profile.error ? (
                 <>
                   <p className="text-center">Error loading profile</p>

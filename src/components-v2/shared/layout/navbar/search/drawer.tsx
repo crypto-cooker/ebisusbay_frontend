@@ -47,25 +47,23 @@ const MobileSearchDrawer = () => {
   const [searchVisits, setSearchVisits] = useState([]);
   const debouncedSearch = useDebounce(value, 500);
 
-  const { data, status, error, refetch } = useQuery(
-    ['Search', debouncedSearch],
-    () => search(debouncedSearch),
-    {
-      enabled: !!debouncedSearch && debouncedSearch.length >= minChars,
-      refetchOnWindowFocus: false,
-      select: (d) => {
-        // console.log(d);
-        return d.data.collections
-          .filter((collection: any) =>{
-            let validTokenCount = true;
-            // if (collection.tokens) {
-            //   validTokenCount = collection.tokens.filter((t) => Object.keys(t).length > 1).length > 0;
-            // }
-            return knownContracts.find((c: any) => caseInsensitiveCompare(c.address, collection.address)) && validTokenCount;
-          })
-      }
+  const { data, status, error, refetch } = useQuery({
+    queryKey: ['Search', debouncedSearch],
+    queryFn: () => search(debouncedSearch),
+    enabled: !!debouncedSearch && debouncedSearch.length >= minChars,
+    refetchOnWindowFocus: false,
+    select: (d) => {
+      // console.log(d);
+      return d.data.collections
+        .filter((collection: any) =>{
+          let validTokenCount = true;
+          // if (collection.tokens) {
+          //   validTokenCount = collection.tokens.filter((t) => Object.keys(t).length > 1).length > 0;
+          // }
+          return knownContracts.find((c: any) => caseInsensitiveCompare(c.address, collection.address)) && validTokenCount;
+        })
     }
-  );
+  });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -169,7 +167,7 @@ const MobileSearchDrawer = () => {
             )}
             {value.length >= minChars && (
               <Box fontSize="12px">
-                {status === "loading" ? (
+                {status === 'pending' ? (
                   <Center>
                     <Spinner />
                   </Center>

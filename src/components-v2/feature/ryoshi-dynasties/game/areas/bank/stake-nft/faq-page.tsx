@@ -5,7 +5,7 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box,
+  Box, Icon,
   ListItem,
   Stack,
   Text,
@@ -18,6 +18,8 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {commify} from "ethers/lib/utils";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
@@ -34,6 +36,16 @@ const FaqPage = () => {
         <Text>
           Each stakeable NFT is eligible for bonus APR on top of any current APR earned from Fortune staking. Higher ranked NFTs can yield a larger APR.
         </Text>
+        <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={4}>
+          <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
+          <Text
+            fontSize='14'
+            color='#333'
+            fontWeight='bold'
+          >
+            Warning: Once staked, NFTs can only be unstaked if you have not yet received staking rewards for the current game. If staking rewards have been received for the current game, then the staked NFTs are locked until the next game.
+          </Text>
+        </Stack>
         <Accordion fontSize='sm' mt={4}>
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
@@ -97,15 +109,31 @@ const FaqPage = () => {
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
               <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Fortune Guards Information
+                Fortune Teller Information
               </Box>
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text>Bonus for Fortune Guards NFTs are <strong>additive</strong> and based on the NFT ID:</Text>
+              <Text>Bonus for Fortune Teller NFTs are <strong>additive</strong> and based on the NFT ID:</Text>
               <UnorderedList>
-                {rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'fortune-guards')!.ids.map((id, i) => (
+                {rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'fortuneteller')!.ids.map((id, i) => (
                   <ListItem key={i}>ID {id.id}: +{commify(id.bonus)}%</ListItem>
+                ))}
+              </UnorderedList>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                Ryoshi Tales (Goblin Gala) Information
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>Ryoshi Tales (Goblin Gala) NFTs use the following rank-based <strong>adders</strong>:</Text>
+              <UnorderedList>
+                {rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales')!.adders.map((multiplier, i) => (
+                  <ListItem key={i}>{multiplier.percentile}th percentile: +{commify(multiplier.value)}%</ListItem>
                 ))}
               </UnorderedList>
             </AccordionPanel>

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import TopTabs from '../../../src/Components/Account/Settings/TopTabs';
+import TopTabs from "@src/components-v2/feature/account/settings/top-tabs";
 import EditProfile from '../../../src/Components/Account/Settings/Profile';
 import Notification from "@src/Components/Account/Settings/Notification";
 import {Heading} from "@chakra-ui/react";

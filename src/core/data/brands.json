@@ -21,7 +21,9 @@
       "0x013f83434356c0a20698605eBAb337aab966AF88",
       "0xce3f4e59834b5B52B301E075C5B3D427B6884b3d",
       "0xd87838a982a401510255ec27e603b0f5fea98d24",
-      "0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3"
+      "0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3",
+      "0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04",
+      "0xF098C2aD290f32c8666ace27222d3E65cECE43b9"
     ],
     "socials": {
       "website": "https://app.ebisusbay.com/",
@@ -570,6 +572,27 @@
     "style": {}
   },
   {
+    "slug": "the-doonft",
+    "name": "The DooNFT",
+    "description": "DooNFT is an innovative and vibrant Cross-Chain ecosystem that thrives on community participation and development. Within this ecosystem, three remarkable collections stand: CroDoo, Dooligans on Cronos chain and  PolyDoo on Polygon!",
+    "images": {
+      "banner": "/img/brands/the-doonft/banner.webp",
+      "preview": "/img/brands/the-doonft/preview.webp"
+    },
+    "collections": [
+      "0xa560c70220c32c81217cf993676d177d43d48349",
+      "0xdaacfab134836d72bbb798f0f5bb333384a58894"
+    ],
+    "socials": {
+      "website": "https://doonft.com/",
+      "twitter": "https://twitter.com/TheDooNFT",
+      "discord": "https://discord.gg/jWtZQmZGK5"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "crosmonauts",
     "name": "Crosmonauts",
     "description": "A community oriented NFT Project that launched alongside the launch of Cronos",
@@ -677,7 +700,8 @@
     },
     "collections": [
       "0x8fAe79f9b06E3f1525C1de4F88940279dC70C7C9",
-      "0xA869e4c032D4E3786f211520E20754F4347ec67D"
+      "0xA869e4c032D4E3786f211520E20754F4347ec67D",
+      "0xFD90697db5D40B37B86C958106A342088f11AA84"
     ],
     "socials": {
       "website": "https://www.aikosociety.com/",
@@ -896,7 +920,8 @@
       "0x51eaf8c081Cca683A5542c438f9429CE46D238e4",
       "0x72c97F79867219381EFA83127534710D559a2220",
       "0xe0160145ec09f98fb3Dbc03b2b5da08D16871e3f",
-      "0x21037397bDA5CF87c17b5Ec7A07f6935B6c6EA65"
+      "0x21037397bDA5CF87c17b5Ec7A07f6935B6c6EA65",
+      "0x5103392C75Dd2DF2E287aE55DECe2d26e836eEfB"
     ],
     "socials": {
       "website": "https://daogames.online/",

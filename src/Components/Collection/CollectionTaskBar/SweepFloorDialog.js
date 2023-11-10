@@ -18,7 +18,7 @@ import useBreakpoint from "use-breakpoint";
 import {getListings} from "@src/core/api/endpoints/listings";
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {Lazy, Navigation} from "swiper";
+import {Lazy, Navigation} from "swiper/modules";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {
   Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex,
@@ -624,8 +624,7 @@ const Results = ({listings, cost, isMobile}) => {
             spaceBetween={0}
             slidesPerView={3}
             slidesPerGroup={3}
-            navigation={true}
-            modules={[Lazy, Navigation]}
+            modules={[Navigation]}
             breakpoints={{
               600: {
                 slidesPerView: 4,
@@ -636,6 +635,7 @@ const Results = ({listings, cost, isMobile}) => {
                 slidesPerGroup: 5,
               },
             }}
+            navigation
           >
             {listings.map((listing) => (
               <SwiperSlide key={listing.listingId}>

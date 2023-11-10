@@ -3,7 +3,7 @@ import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {createSuccessfulTransactionToastContent, isBundle, round} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle, isLandDeedsCollection, round} from "@src/utils";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -34,6 +34,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {ApiService} from "@src/core/services/api-service";
 import {OfferState} from "@src/core/services/api-service/types";
+import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 25;
@@ -220,6 +221,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
                   {isBundle(nft.address ?? nft.nftAddress) ? (
                     <ImagesContainer nft={nft} />
                   ) : (
+                    <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId} showStats={false}>
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
                       video={nft.video ?? nft.animation_url}
@@ -228,6 +230,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
                       usePlaceholder={false}
                       className="img-fluid img-rounded"
                     />
+                    </DynamicNftImage>
                   )}
                 </div>
                 <div className="col-12 col-sm-6">

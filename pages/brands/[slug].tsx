@@ -93,7 +93,7 @@ const Brand = ({ brand, collections, stats, query }: BrandProps) => {
                 socials={brand.socials}
               />
             </Box>
-            <Text maxW="800px" mt={1} noOfLines={viewMore ? 0 : {base: 3, md: 5}}>
+            <Text maxW="800px" mt={1} noOfLines={viewMore ? 0 : {base: 3, md: 5}} fontWeight='bold'>
               {brand.description}
             </Text>
             {isClippingDescription && !viewMore && (

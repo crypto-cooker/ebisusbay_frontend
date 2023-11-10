@@ -31,6 +31,7 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
 interface DelegateTroopsFormProps {
   isOpen: boolean;
@@ -150,102 +151,104 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsForm
       title='Delegate Troops'
       size='lg'
     >
-      <Flex direction='row' justify='space-between' justifyContent='center'>
-      <Box mb={1} bg='#272523' p={2} roundedBottom='xl' w='98%' justifyContent='center' >
+      <Box p={1}>
+        <RdModalBox roundedBottom='xl' roundedTop={0}>
+          <Text>Users who are not faction owners can delegate their troops to any participating faction. Delegate and let your favorite factions lead your troops into battle!</Text>
+          <Box mt={2}>
+            <Grid templateColumns={{base:'repeat(1, 1fr)', sm:'repeat(5, 1fr)'}} gap={4} marginBottom='4'>
+              <GridItem w='100%' h='5' margin={'auto'}>
+                <FormLabel> Faction:</FormLabel>
+              </GridItem>
+              <GridItem colSpan={{base:5, sm:4}} w='100%' >
+                <SearchFaction handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"md"}/>
+              </GridItem>
+            </Grid>
 
-        <Grid templateColumns={{base:'repeat(1, 1fr)', sm:'repeat(5, 1fr)'}} gap={4} marginBottom='4'>
-          <GridItem w='100%' h='5' margin={'auto'}>
-            <FormLabel> Faction:</FormLabel>
-          </GridItem>
-          <GridItem colSpan={{base:5, sm:4}} w='100%' >
-            <SearchFaction handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={allFactions} imgSize={"md"}/>
-          </GridItem>
-        </Grid>
-              
-        <FormControl 
-          mb={'24px'}
-          isInvalid={!!factionError}
-          >
-          <Select 
-            me={2} 
-            value={selectedFaction}
-            style={{ background: '#272523' }}
-            name="faction" 
-            onChange={changeFactionDropdown}>
-            <option selected hidden disabled value="">Please select a faction</option>
-            {allFactions.map((faction, index) => (
-              <option 
-                style={{ background: '#272523' }} 
-                value={faction.name} 
-                key={index}>
-                <Image 
-                  src={faction.image} 
-                  width='50px' 
-                  height='50px' />
-                {faction.name}
-              </option>))}
-          </Select>
-
-          <FormErrorMessage>{factionError}</FormErrorMessage>
-        </FormControl>
-
-        <FormControl isInvalid={!!troopsError}>
-          <FormLabel>Quantity: (Max {troopsAvailable})</FormLabel>
-          <Flex justifyContent='center' w={'100%'}>
-            <NumberInput 
-              w='80%'
-              defaultValue={0}
-              min={0}
-              max={troopsAvailable}
-              name="quantity"
-              onChange={handleChange}
-              value={troopsToDelegate}
+            <FormControl
+              mb={'24px'}
+              isInvalid={!!factionError}
             >
-            <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-            <Spacer />
-            <Button 
-              variant={'outline'}
-              onClick={() => setTroopsToDelegate(troopsAvailable)}
-            >
-              Max
-            </Button>
-          </Flex>
-       
-          
-          <FormErrorMessage>{troopsError}</FormErrorMessage>
-        </FormControl>
-        <Flex mt='16px'>
-        <Text as='i' fontSize={14} color='#aaa'>
-          {delegateMode==='delegate' ? 
-          'Once delegated, troops may be recalled but will not be unallocated until the end of the game.'
-           : 'Recalling troops will return them to you at the end of the game'} </Text>
-        </Flex>
-        <Flex mt='16px' justifyContent='center'>
-        <Box
-          ps='20px'>
-        </Box>
-        </Flex>
-        
-        <Center>
-          <RdButton
-            w={{base: '200px', sm: '200px'}}
-            disabled={isExecuting}
-            fontSize={{base: 'lg', sm: 'xl'}}
-            stickyIcon={true}
-            marginTop='16px'
-            marginBottom={{base: '16px', sm: '16px'}}
-            onClick={delegateMode==='delegate' ? handleDelegateTroops : handleRecallTroops}>
-            {delegateMode==='delegate' ? 'Delegate' : 'Recall'}
-          </RdButton>
-        </Center>
+              <Select
+                me={2}
+                value={selectedFaction}
+                style={{ background: '#272523' }}
+                name="faction"
+                onChange={changeFactionDropdown}>
+                <option selected hidden disabled value="">Please select a faction</option>
+                {allFactions.map((faction, index) => (
+                  <option
+                    style={{ background: '#272523' }}
+                    value={faction.name}
+                    key={index}>
+                    <Image
+                      src={faction.image}
+                      width='50px'
+                      height='50px' />
+                    {faction.name}
+                  </option>))}
+              </Select>
 
-        </Box>
-      </Flex>
+              <FormErrorMessage>{factionError}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl isInvalid={!!troopsError}>
+              <FormLabel>Quantity: (Max {troopsAvailable})</FormLabel>
+              <Flex justifyContent='center' w={'100%'}>
+                <NumberInput
+                  w='80%'
+                  defaultValue={0}
+                  min={0}
+                  max={troopsAvailable}
+                  name="quantity"
+                  onChange={handleChange}
+                  value={troopsToDelegate}
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+                <Spacer />
+                <Button
+                  variant={'outline'}
+                  onClick={() => setTroopsToDelegate(troopsAvailable)}
+                >
+                  Max
+                </Button>
+              </Flex>
+
+
+              <FormErrorMessage>{troopsError}</FormErrorMessage>
+            </FormControl>
+            <Flex mt='16px'>
+              <Text as='i' fontSize={14} color='#aaa'>
+                {delegateMode==='delegate' ?
+                  'Once delegated, troops may be recalled but will not be unallocated until the end of the game.'
+                  : 'Recalling troops will return them to you at the end of the game'} </Text>
+            </Flex>
+            <Flex mt='16px' justifyContent='center'>
+              <Box
+                ps='20px'>
+              </Box>
+            </Flex>
+
+            <Center>
+              <RdButton
+                w={{base: '200px', sm: '200px'}}
+                disabled={isExecuting}
+                fontSize={{base: 'lg', sm: 'xl'}}
+                stickyIcon={true}
+                marginTop='16px'
+                marginBottom={{base: '16px', sm: '16px'}}
+                onClick={delegateMode==='delegate' ? handleDelegateTroops : handleRecallTroops}>
+                {delegateMode==='delegate' ? 'Delegate' : 'Recall'}
+              </RdButton>
+            </Center>
+
+          </Box>
+        </RdModalBox>
+      </Box>
     </RdModal>
   )
 }

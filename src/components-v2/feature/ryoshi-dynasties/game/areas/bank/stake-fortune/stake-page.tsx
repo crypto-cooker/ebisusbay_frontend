@@ -55,13 +55,11 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault}: StakePageProps
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
 
-  const { data: account, status, error, refetch } = useQuery(
-    ['UserStakeAccount', user.address],
-    () => ApiService.withoutKey().ryoshiDynasties.getBankStakingAccount(user.address!),
-    {
-      enabled: !!user.address,
-    }
-  )
+  const { data: account, status, error, refetch } = useQuery({
+    queryKey: ['UserStakeAccount', user.address],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getBankStakingAccount(user.address!),
+    enabled: !!user.address,
+  });
 
   const handleConnect = async () => {
     if (!user.address) {
@@ -83,7 +81,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault}: StakePageProps
           <>
             <Text align='center' pt={2} px={2} fontSize='sm'>Stake & earn $Fortune and receive troops for battle. Stake more to receive more troops and higher APRs.</Text>
             <Box mt={4}>
-              {status === 'loading' ? (
+              {status === 'pending' ? (
                 <Center>
                   <Spinner size='lg' />
                 </Center>
@@ -200,11 +198,15 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
   }, [vault, rdConfig, rdUser, baseApr]);
 
   const [troops, setTroops] = useState(0);
+  const [mitama, setMitama] = useState(0);
   useEffect(() => {
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    let newTroops = Math.floor(((balance * daysToAdd) / 1080) / mitamaTroopsRatio);
+    const mitama = Math.floor((balance * daysToAdd) / 1080);
+
+    let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && balance > 0) newTroops = 1;
     setTroops(newTroops);
+    setMitama(mitama);
   }, [balance, daysToAdd, rdConfig]);
 
   return (
@@ -254,6 +256,8 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
               </Box>
               <Box>Troops</Box>
               <Box textAlign='end' fontWeight='bold'>{commify(troops)}</Box>
+              <Box>Mitama</Box>
+              <Box textAlign='end' fontWeight='bold'>{commify(mitama)}</Box>
               <Box>End Date</Box>
               <Box textAlign='end' fontWeight='bold'>{endDate}</Box>
             </SimpleGrid>

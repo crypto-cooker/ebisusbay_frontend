@@ -1,10 +1,14 @@
 import ProfilesRepository from "@src/core/services/api-service/cms/repositories/profiles";
 import GdcClaimsRepository from "@src/core/services/api-service/cms/repositories/gdc-claims";
-import {BankStakeNft, BarracksStakeNft, RdBattleLog} from "@src/core/services/api-service/types";
+import {
+  BankStakeNft,
+  BarracksStakeNft,
+  RdBattleLog,
+  StakedTokenType,
+  TownHallStakeNft
+} from "@src/core/services/api-service/types";
 import RyoshiDynastiesRepository from "@src/core/services/api-service/cms/repositories/ryoshi-dynasties";
-import {CollectionInfoQuery} from "@src/core/services/api-service/mapi/queries/collectioninfo";
 import {PagedList} from "@src/core/services/api-service/paginated-list";
-import {Listing} from "@src/core/models/listing";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 
 class Cms {
@@ -40,6 +44,18 @@ class Cms {
 
   async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
     return this.ryoshiDynasties.requestBarracksUnstakeAuthorization(nfts, address, signature);
+  }
+
+  async requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
+    return this.ryoshiDynasties.requestTownHallStakeAuthorization(nfts, address, signature);
+  }
+
+  async requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
+    return this.ryoshiDynasties.requestTownHallUnstakeAuthorization(nfts, address, signature);
+  }
+
+  async requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string) {
+    return this.ryoshiDynasties.requestRewardsSpendAuthorization(amount, address, signature);
   }
 
   async getDailyRewards(address: string) {
@@ -94,6 +110,14 @@ class Cms {
       response.currentPage,
       response.currentPage < response.totalPages
     );
+  }
+
+  async getTroopsBreakdown(gameId: number, address: string, signature: string) {
+    return this.ryoshiDynasties.getTroopsBreakdown(gameId, address, signature);
+  }
+
+  async getStakedTokenTotals(type: StakedTokenType) {
+    return this.ryoshiDynasties.getStakedTokenTotals(type);
   }
 }
 

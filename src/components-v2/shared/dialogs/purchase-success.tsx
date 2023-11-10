@@ -33,6 +33,7 @@ import {appConfig} from "@src/Config";
 import {ContractReceipt} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
+import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 
 const config = appConfig();
 
@@ -102,7 +103,8 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}: P
               {isBundle(listing.nftAddress) ? (
                 <ImagesContainer nft={listing.nft} />
               ) : (
-                <AnyMedia
+                <DynamicNftImage address={listing.nft.address ?? listing.nft.nftAddress} id={listing.nft.id ?? listing.nft.nftId}>
+                  <AnyMedia
                   image={specialImageTransform(listing.nft.nftAddress, listing.nft.image)}
                   video={listing.nft.video ?? listing.nft.animation_url}
                   videoProps={{ height: 'auto', autoPlay: true }}
@@ -110,6 +112,7 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}: P
                   usePlaceholder={false}
                   className="img-fluid img-rounded"
                 />
+                </DynamicNftImage>
               )}
             </Box>
             <Text textAlign="center">Congratulations! You have successfully purchased {listing.nft.name}</Text>

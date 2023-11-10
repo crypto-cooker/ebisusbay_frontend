@@ -87,7 +87,7 @@ function App({ Component, ...pageProps }: AppProps) {
 
   return (
     <ThemeProvider theme={getTheme(userTheme)}>
-      <ExchangePricesContext.Provider value={{prices: exchangePrices.data}}>
+      <ExchangePricesContext.Provider value={{prices: exchangePrices.data ?? []}}>
         <DefaultHead />
         <div className="wraper">
           <GlobalStyles isDark={userTheme === 'dark'} />

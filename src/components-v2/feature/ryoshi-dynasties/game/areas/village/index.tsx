@@ -23,7 +23,7 @@ import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/componen
 import {RdGameState} from "@src/core/services/api-service/types";
 import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
 import {motion} from "framer-motion";
-
+// import FactionDirectory from "@src/components-v2/feature/ryoshi-dynasties/game/modals/xp-leaderboard";
 interface VillageProps {
   onChange: (value: string) => void;
   firstRun: boolean;
@@ -58,6 +58,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   // const [battleRewards, setBattleRewards] = useState<any[]>([]);
   const [forceRefreshBool, setForceRefreshBool] = useState(false);
   const { isOpen: isOpenBattleLog, onOpen: onOpenBattleLog, onClose: onCloseBattleLog } = useDisclosure();
+  const { isOpen: isOpenXPLeaderboard, onOpen: onOpenXPLeaderboard, onClose: onCloseXPLeaderboard } = useDisclosure();
+    
   const forceRefresh = () => {
     setForceRefreshBool(!forceRefreshBool);
   }
@@ -139,6 +141,15 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const OpenBattleMap = () => {
     handleSceneChange('battleMap');
   }
+  const OpenTavern = () => {
+    setElementToZoomTo('Tavern');
+    DelayedOpen('Tavern');
+  }
+  const OpenTownHall = () => {
+    setElementToZoomTo('Town Hall');
+    DelayedOpen('Town Hall');
+  }
+
   function timeout(delay: number) {
     return new Promise( res => setTimeout(res, delay) );
 }
@@ -157,6 +168,10 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       onChange('bank');
     } else if(thingToOpen == 'Battle Map') {
       onChange('battleMap');
+    } else if(thingToOpen == 'Tavern') {
+      onChange('tavern');
+    } else if(thingToOpen == 'Town Hall') {
+      onChange('townHall');
     }
   }
 
@@ -503,6 +518,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
   const { isOpen: isResetModalOpen, onOpen: onOpenResetModal, onClose: onCloseResetModal } = useDisclosure();
+  const { isOpen: isTownHallModalOpen, onOpen: onOpenTownHallModal, onClose: onCloseTownHalltModal } = useDisclosure();
 
   const handleSceneChange = useCallback((area: string) => {
     if (area === 'battleMap') {
@@ -511,7 +527,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         onOpenBlockingModal();
         return;
       }
-      if (!!rdGameContext?.state && rdGameContext.state === RdGameState.RESET) {
+      const hasStopAtPassed = !!rdGameContext?.game?.stopAt && new Date > new Date(rdGameContext.game.stopAt);
+      if ((!!rdGameContext?.state && rdGameContext.state === RdGameState.RESET) || hasStopAtPassed) {
         onOpenResetModal();
         return;
       }
@@ -595,14 +612,14 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       </Box>
                     </Box>
 
-                    <Box  style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}}
-                      // onClick={() => onChange('townHall')}
+                    <Box id='Town Hall' className={styles.enlarge} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}}
+                      onClick={OpenTownHall}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/townhall.png').convert()} />
                     </Box>
 
-                    <Box   style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
-                      // onClick={() => onChange('tavern')}
+                    <Box id='Tavern' className={styles.enlarge} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
+                      onClick={OpenTavern}
                     >
                       <img src={ImageService.translate('/img/battle-bay/mapImages/tavern.png').convert()} />
                     </Box>
@@ -717,14 +734,14 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         )}
 
           <VillageHud onOpenBuildings={onOpenBuildings} onOpenDailyCheckin={onOpenDailyCheckin} 
-            onOpenBattleLog={onOpenBattleLog} forceRefresh={forceRefreshBool} />
+            onOpenBattleLog={onOpenBattleLog} onOpenXPLeaderboard={onOpenXPLeaderboard} forceRefresh={forceRefreshBool} />
       </Box>
 
       <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin}/>
       <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
       <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
       <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
-
+      {/* <FactionDirectory isOpen={isOpenXPLeaderboard} onClose={onCloseXPLeaderboard} /> */}
       <Fade in={isOpenOverlay} 
         >
         <Modal
@@ -758,6 +775,15 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       >
         <RdModalAlert>
           <Text>The current game has ended and rewards are being calculated. A new game will begin shortly!</Text>
+        </RdModalAlert>
+      </RdModal>
+      <RdModal
+        isOpen={isTownHallModalOpen}
+        onClose={onCloseTownHalltModal}
+        title='Coming Soon'
+      >
+        <RdModalAlert>
+          <Text>Town Hall staking will be starting shortly. Check back soon!</Text>
         </RdModalAlert>
       </RdModal>
       </motion.div>

@@ -113,7 +113,7 @@ const useSignature = () => {
         return { objectSignature, objectHash }
       } catch (err: any) {
         console.log(err)
-        throw new Error(err);
+        throw err;
       }
     },
     [user.provider]
@@ -156,7 +156,7 @@ const useSignature = () => {
       return signature;
     } catch (err: any) {
       console.log(err?.message);
-      throw new Error(err);
+      throw err;
 
     }
   }, [signMessage]);

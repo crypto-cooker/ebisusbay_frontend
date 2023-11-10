@@ -61,11 +61,11 @@ const StakingNftCard = ({
     const options = [];
     const count = cartCount();
 
-    if (count > 0 && count >= (nft.balance ?? 1)) {
+    if (count > 0 && count > (nft.balance ?? 1)) {
       options.push({
         icon: faMinus,
         label: 'Unstake',
-        handleClick: onAdd,
+        handleClick: onRemove,
       });
     } else {
       options.push({

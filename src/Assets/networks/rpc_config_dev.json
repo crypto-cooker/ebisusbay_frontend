@@ -10318,7 +10318,7 @@
       "multiToken": false,
       "address": "0xf884647dfa84696d9373f36ee413ccc48093f924",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Cronos ID is an identity and communication layer built on Cronos. Our goal is to enable a deeper and more interconnected web3 community, where everyone is able to share and receive information and cryptocurrency in a safe and verifiable manner. Every user will now get to own a unique username and use it across many services!",
         "avatar": "/img/collections/cronos-id/avatar.webp",
@@ -14960,7 +14960,7 @@
       "multiToken": false,
       "address": "0x5bB97B7D75Ce3151E413aa751F22FcD837703588",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Murder Birdz is a brand of 3000 PFP bird characters made for the crofam. The plan is to build the Murder Birdz DAO in order to build on top of art, thus granting holders utility and revenue sharing. Join our discord to share ideas!",
         "avatar": "/img/collections/murder-birdz/avatar.webp",
@@ -17095,7 +17095,7 @@
         "card": "/img/collections/blumies/card.webp",
         "website": "https://www.blumiesofficial.com/",
         "twitter": "https://twitter.com/BlumiesNFT",
-        "discord": "https://discord.gg/gQEmwg43Dg",
+        "discord": "https://discord.gg/Fuy99WgGeq",
         "medium": "https://blumies.gitbook.io/blumies-nft/",
         "categories": []
       },
@@ -17772,7 +17772,7 @@
       "multiToken": false,
       "address": "0xFA19C0f35Eb3Ef5D118D69d29AE793475527cF5A",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Fallen Angels is a collection of 1998 uniquely generated NFTs on the Cronos Chain.Each Fallen Angel NFT is generated with over 70+ Attributes with different rarities and 10 Legendaries.",
         "avatar": "/img/collections/fallen-angels-demons/avatar.webp",
@@ -18793,9 +18793,9 @@
       "listable": true,
       "metadata": {
         "description": "A crisp collection of 10000 Mama Bears traveling through Cronos in the pursuit of love and fortune.",
-        "avatar": "/img/collections/sou-sou-Mamas/avatar.webp",
-        "card": "/img/collections/sou-sou-Mamas/card.webp",
-        "banner": "/img/collections/sou-sou-Mamas/banner.webp",
+        "avatar": "/img/collections/sou-sou-mamas/avatar2.webp",
+        "card": "/img/collections/sou-sou-mamas/card.webp",
+        "banner": "/img/collections/sou-sou-mamas/banner.webp",
         "twitter": "https://twitter.com/sousoubears",
         "discord": "https://discord.gg/rMR6YNw7ME",
         "medium": "https://medium.com/@sousoubears",
@@ -19904,7 +19904,7 @@
       "multiToken": false,
       "address": "0x3d7777ff1908B54b57038A2556d6904f71468e2D",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Immerse yourself in the world of 7777 distinct 3D CROWs, each featuring a one-of-a-kind 3D model, masterfully designed by RaulPM. These 3D CROWs boast attributes that correspond to their original CRO CROW counterparts, so CRO CROW #1 should have the same attributes as 3D CROW #1 and so on.",
         "avatar": "/img/collections/3d-crow/avatar.webp",
@@ -21390,7 +21390,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A collection of Single NFTs by AngelusBoBsAiNFTs - Buy any 8 in the same tx from 0x5....d99 or an amount = to 1 3D card and claim a free Threads Of 3D Card from discord - used for staking",
+        "description": "A collection of NFTs from the amazing Ai artist AngelusBoBsAiNFTs",
         "avatar": "/img/collections/angelusbobsainfts/avatar.webp",
         "card": "/img/collections/angelusbobsainfts/card.webp",
         "twitter": "https://twitter.com/AngelusbobRh",
@@ -21414,7 +21414,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A collection of Ninjas v Samurais from the amazing Ai artist AngelusBoBsAiNFTs - Mint any 8 in the same tx and claim a free Threads Of 3D Card from discord - used for staking",
+        "description": "A collection of NFTs from the amazing Ai artist AngelusBoBsAiNFTs",
         "avatar": "/img/collections/angelusbobsainfts-ninjas-v-samurais/avatar.webp",
         "card": "/img/collections/angelusbobsainfts-ninjas-v-samurais/card.webp",
         "twitter": "https://twitter.com/AngelusbobRh",
@@ -21706,7 +21706,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A collection of Ninjas v Samurais from the amazing Ai artist AngelusBoBsAiNFTs - Mint any 8 in the same tx and claim a free Threads Of 3D Card from discord - used for staking",
+        "description": "A collection of NFTs from the amazing Ai artist AngelusBoBsAiNFTs",
         "avatar": "/img/collections/angelusbobsainfts-ninjas-v-samurais-v2/avatar.webp",
         "card": "/img/collections/angelusbobsainfts-ninjas-v-samurais-v2/card.webp",
         "banner": "/img/collections/angelusbobsainfts-ninjas-v-samurais-v2/banner.webp",
@@ -21731,7 +21731,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A collection of Soul Corruption Chronicles NFTs by AngelusBoBsAiNFTs - Buy any 8 in the same tx from 0x5....d99 and claim a free Threads Of 3D Card from discord - used for staking",
+        "description": "A collection of NFTs from the amazing Ai artist AngelusBoBsAiNFTs",
         "avatar": "/img/collections/soul-corruption-chronicles/avatar.webp",
         "card": "/img/collections/soul-corruption-chronicles/card.webp",
         "banner": "/img/collections/soul-corruption-chronicles/banner.webp",
@@ -21756,7 +21756,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A collection of Soul Fighters NFTs by AngelusBoBsAiNFTs - Mint any 8 in the same tx and claim a free Threads Of 3D Card from discord - used for staking",
+        "description": "A collection of NFTs from the amazing Ai artist AngelusBoBsAiNFTs",
         "avatar": "/img/collections/soul-fighters/avatar.webp",
         "card": "/img/collections/soul-fighters/card.webp",
         "banner": "/img/collections/soul-fighters/banner.webp",
@@ -21805,7 +21805,7 @@
       "name": "Project Zayon",
       "slug": "project-zayon",
       "multiToken": false,
-      "address": "0xF4ca337c841440BA2ad585d91361e535791c3f4c",
+      "address": "0xf4ca337c841440ba2ad585d91361e535791c3f4c",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -22060,7 +22060,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A collection of Threads Of Crypto 3D cards from the amazing Ai artist AngelusBoBsAiNFTs - Threads Of 3D Card from discord - used for staking - Claim them in discord - Mint 8 from my other collections in same Tx",
+        "description": "A collection of NFTs from the amazing Ai artist AngelusBoBsAiNFTs",
         "avatar": "/img/collections/threads-of-crypto-3d-trading-cards/avatar.webp",
         "card": "/img/collections/threads-of-crypto-3d-trading-cards/card.webp",
         "banner": "/img/collections/threads-of-crypto-3d-trading-cards/banner.webp",
@@ -22085,7 +22085,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A collection of Threads Of Crypto from the amazing Ai artist AngelusBoBsAiNFTs - Mint any 8 in the same tx and claim a free Threads Of 3D Card from discord - used for staking",
+        "description": "A collection of NFTs from the amazing Ai artist AngelusBoBsAiNFTs",
         "avatar": "/img/collections/threads-of-crypto-2d-angelusbobsainfts/avatar.webp",
         "card": "/img/collections/threads-of-crypto-2d-angelusbobsainfts/card.webp",
         "twitter": "https://twitter.com/AngelusbobRh",
@@ -22221,7 +22221,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A collection of Rainbow Creatures nfts from the amazing Ai artist AngelusBoBsAiNFTs - Mint any 8 in the same tx and claim a free Threads Of 3D Card from discord - used for staking",
+        "description": "A collection of NFTs from the amazing Ai artist AngelusBoBsAiNFTs",
         "avatar": "/img/collections/fantasy-rainbow-creatures/avatar.webp",
         "twitter": "https://twitter.com/AngelusbobRh",
         "discord": "https://discord.gg/QHrzqSn9Rf",
@@ -22244,7 +22244,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A collection of Demons N Gremlins from the amazing Ai artist AngelusBoBsAiNFTs - Mint any 8 in the same tx and claim a free Threads Of 3D Card from discord - used for staking",
+        "description": "A collection of NFTs from the amazing Ai artist AngelusBoBsAiNFTs",
         "avatar": "/img/collections/demons-n-gremlins/avatar.webp",
         "card": "/img/collections/demons-n-gremlins/card.webp",
         "banner": "/img/collections/demons-n-gremlins/banner.webp",
@@ -22269,7 +22269,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A collection of Alien Creatures NFTs by AngelusBoBsAiNFTs - Mint any 8 in the same tx and claim a free Threads Of 3D Card from discord - used for staking",
+        "description": "A collection of NFTs from the amazing Ai artist AngelusBoBsAiNFTs",
         "avatar": "/img/collections/alien-creatures/avatar.webp",
         "card": "/img/collections/alien-creatures/card.webp",
         "banner": "/img/collections/alien-creatures/banner.webp",
@@ -22314,7 +22314,7 @@
       "multiToken": false,
       "address": "0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "\"Time Commanders\"    \uD83D\uDC8EWILL stealth drop within the next 6 hours MAKE sure to keep an eye on our drops page   https://time-launcher.com/drops/  \uD83D\uDC40   Supply: 5000 Public price: 50 cro  WL price: 45 cro   IF you are not WL and should be please open a ticket!!!  \uD83D\uDCAA This collections main purpose is reinforcements to time troops. depending on which tier you hold. A MAX of 2 Commanders to increase payout yields by up to 15%.  \uD83D\uDEA8\uD83D\uDEA8Boosters for ATGs, Creatures, tonics, and outside collections(possibly) and future releases   Orange bottom = 100 pieces - 15% Purple = 400 pieces - 10% Red top = 2000 pieces - 5% Green = 2500 pieces - 2% @everyone  **IF you are not WL and should be please open a ticket and i will WL you ASAP**",
         "avatar": "/img/collections/time-commanders/avatar.webp",
@@ -22601,6 +22601,18 @@
       "tokens": [
         {
           "id": 0
+        },
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
         }
       ],
       "onChain": false,
@@ -22704,7 +22716,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Limited Edition 150 Coin Set A collection of Dragon Coins from the amazing Ai artist AngelusBoBsAiNFTs  Mint or buy 1 NFT 75 CRO - I will airdrop a Threads of Crypto 3D staking NFT ASAP",
+        "description": "A collection of NFTs from the amazing Ai artist AngelusBoBsAiNFTs",
         "avatar": "/img/collections/dragon-meme-coins/avatar.webp",
         "card": "/img/collections/dragon-meme-coins/card.webp",
         "twitter": "https://twitter.com/AngelusbobRh",
@@ -22750,7 +22762,7 @@
       "multiToken": false,
       "address": "0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
         "avatar": "/img/collections/coom-cats/avatar.webp",
@@ -22773,7 +22785,7 @@
       "multiToken": false,
       "address": "0x902b49b97Ab03bcF5095e3439422f4a9351cAe82",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection consisting of 5,000 Plush Foot Print (PFP) NFTs. There will be 20 different Foot Prints with different rarities and no Foot Print will have the same amount.",
         "avatar": "/img/collections/y-plush-foot-print/avatar.webp",
@@ -22874,9 +22886,9 @@
       "listable": true,
       "metadata": {
         "description": "Collectable playing cards allowing you participation in several different ongoing card games on EbisusBay.com\n\nCollect them all and join in on the fun!",
-        "avatar": "/img/collections/ryoshi-playing-cards/avatar.webp",
-        "banner": "/img/collections/ryoshi-playing-cards/banner.webp",
-        "card": "/img/collections/ryoshi-playing-cards/card.webp",
+        "avatar": "/img/collections/ryoshi-playing-cards/avatar2.webp",
+        "banner": "/img/collections/ryoshi-playing-cards/banner2.webp",
+        "card": "/img/collections/ryoshi-playing-cards/card2.webp",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
         "discord": "https://discord.gg/ebisusbay",
@@ -22920,7 +22932,7 @@
       "multiToken": false,
       "address": "0xC0D28282A4780e099884f344A9746A2D75A1BAF7",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Ever wanted to own the libs? Now you can! The Liberators, Cronos Steakhouse's 4th of July Special collection! First minted during 2023 Independence week, These feisty fellows will liberate you from FEEdom across the steakhouse ecosystem! Structured fee discounts on all future smart contracts based on amount held/time consumed",
         "avatar": "/img/collections/the-liberators/avatar.webp",
@@ -23110,6 +23122,7 @@
       "metadata": {
         "description": "The Time Ship Blueprints are the first, OG collection of Time Ship hull blueprints for the Time Machine Ecosystem's web3 game in the making. Time Wars, These Blueprints will come with a few ship components, some of our in house token $tatastwistedtime ($TTT) and 1 blueprint, per box minted. Be on the lookout for the best hull skins/prints!!",
         "avatar": "/img/collections/time-ship-blueprints/avatar.webp",
+        "banner": "/img/collections/time-ship-blueprints/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
         "discord": "https://discord.gg/8whpvt3WEr",
@@ -23407,7 +23420,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Aiko Legends is the Main Collection of AikoSociety in CronosChain. Each Aiko Legends contains a story in the Art and future benefits to discover. The Aiko Legend Collection includes 3333 pfp generated with different traits and rarities. Become a Legend & join the AikoSociety!",
+        "description": "Aiko Legends is the definitive Aiko Society Collection with surprises and benefits to discover",
         "avatar": "/img/collections/aiko-legends/avatar.webp",
         "banner": "/img/collections/aiko-legends/banner.webp",
         "card": "/img/collections/aiko-legends/card.webp",
@@ -23697,8 +23710,8 @@
       "listable": true,
       "metadata": {
         "description": "The Cronos Chickens are a collection of 5,555 fun-loving chickens that live on the Cronos blockchain.",
-        "avatar": "/img/collections/cronos-chickens/avatar.webp",
-        "banner": "/img/collections/cronos-chickens/banner.webp",
+        "avatar": "/img/collections/cronos-chickens/avatar2.webp",
+        "banner": "/img/collections/cronos-chickens/banner2.webp",
         "card": "/img/collections/cronos-chickens/card.webp",
         "website": "https://cronos-chickens.netlify.app/",
         "twitter": "https://twitter.com/CROChickens",
@@ -23761,6 +23774,581 @@
         "verified": true,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "Loaded Innovators",
+      "slug": "loaded-innovators",
+      "multiToken": false,
+      "address": "0x99e758498E891A9e27C7e8c49259224d4073B53D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "222 extremely striking charged lions make their way through Cronos for the best possible passive income",
+        "avatar": "/img/collections/loaded-innovators/avatar.webp",
+        "website": "https://liquor-token-cronos.com/",
+        "twitter": "https://twitter.com/LiquorTokenCro",
+        "discord": "https://discord.gg/NqqFZsvMJE",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ryoshi Beta Mascots",
+      "slug": "ryoshi-beta-mascots",
+      "multiToken": false,
+      "address": "0x02c520d720fc9CFBcf7D67C2903309Dc95F2269f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This collection is themed around the Ryoshi Dynasties game by Ebisu's Bay. It will consist of 10,000 unique items, each focused on the concept of Kamiyo-nanayo, \"Seven Generations of the Age of the Gods.\" This collection aims to offer a simple yet exciting experience, featuring elements like ranks and properties that will make them highly appealing for trading and minting. Primary intention behind introducing this collection is to maximize the benefits for the current holders of The Sports NFT, also known as the Beta Mascots ecosystem. The utility of this collection will be within the Ryoshi Dynasties game within Ebisu's Bay.",
+        "avatar": "/img/collections/ryoshi-beta-mascots/avatar.webp",
+        "card": "/img/collections/ryoshi-beta-mascots/card.webp",
+        "banner": "/img/collections/ryoshi-beta-mascots/banner.webp",
+        "website": "https://www.betamascots.com/",
+        "twitter": "https://twitter.com/TheSportsNFT",
+        "discord": "https://discord.gg/PGn2jNQf6g",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ChiVerse Ryoshi Pass",
+      "slug": "chiverse-ryoshi-pass",
+      "multiToken": false,
+      "address": "0xF66e736E3C4C5A8DA2773FafA570E53567010827",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The first free ChiVerse airdrop including a pass to the Ryoshi Dynasties by Ebisus game",
+        "avatar": "/img/collections/chiverse-ryoshi-pass/avatar.webp",
+        "card": "/img/collections/chiverse-ryoshi-pass/card.webp",
+        "banner": "/img/collections/chiverse-ryoshi-pass/banner.webp",
+        "website": "https://chiverse.online/",
+        "twitter": "https://twitter.com/ChiVerseOnline",
+        "discord": "https://discord.gg/tWmKk7Htq3",
+        "categories": [
+          "gaming"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Battle DBDs",
+      "slug": "battle-dbds",
+      "multiToken": false,
+      "address": "0x14769cebC0479e192A465A685844261F16109495",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dead Beat Dads came out of nowhere to claim victory in Ryoshi Dynasties Season 1. To show our appreciation we have created a small collection of unique Dead Beat Dads that are ready to fight. These 50 exclusive Battle DBDs are mainly for collection purposes, but who knows, maybe Fortune will find them.",
+        "avatar": "/img/collections/battle-dbds/avatar.webp",
+        "card": "/img/collections/battle-dbds/card.webp",
+        "banner": "/img/collections/battle-dbds/banner.webp",
+        "website": "https://deadbeatdadscronos.com/",
+        "twitter": "https://twitter.com/zolape01",
+        "discord": "https://discord.gg/KnRmEA4u8v",
+        "medium": "https://medium.com/@deadbeatdadscro/dead-beat-dads-army-53331d440025",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Time Cronos Planets",
+      "slug": "time-cronos-planets",
+      "multiToken": false,
+      "address": "0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Time Cronos Planets are a collection from the Time Machine Eco, To provide our Resource mining for Time Wars Web3 game, Minting a Time Planet guarantees you weekly passive resources (before mint out) AND a boost in Time Adventures for resources gathered on adventures.",
+        "avatar": "/img/collections/time-cronos-planets/avatar.webp",
+        "card": "/img/collections/time-cronos-planets/card.webp",
+        "banner": "/img/collections/time-cronos-planets/banner.webp",
+        "website": "https://time-dapp.netlify.app/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/yAP34R3kms",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Lightwave Booster",
+      "slug": "lightwave-booster",
+      "multiToken": false,
+      "address": "0x4Ffca5C2790ef342c1EF25d48D1FFc8a2B4b1D9A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Lightwave-Boosters are staked to increase the farm APR rewards for the Lighwave crypto currency",
+        "avatar": "/img/collections/lightwave-booster/avatar.webp",
+        "banner": "/img/collections/lightwave-booster/banner.webp",
+        "card": "/img/collections/lightwave-booster/card.webp",
+        "website": "https://degen-consortium.netlify.app/",
+        "twitter": "https://twitter.com/degenapecroclub",
+        "discord": "https://discord.gg/5gjqN7YpJn",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": true,
+        "kyc": true
+      }
+    },
+    {
+      "name": "BOB Headz",
+      "slug": "bob-headz",
+      "multiToken": false,
+      "address": "0x41C7874A2fE9D1ea126bfBD44597A1f96546152e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BOB Headz is super limited collection with unique utility to holders! There will be more than 200+ traits and multiple legendaries to be found!",
+        "avatar": "/img/collections/bob-headz/avatar.webp",
+        "card": "/img/collections/bob-headz/card.webp",
+        "banner": "/img/collections/bob-headz/banner.webp",
+        "website": "https://bob-adventures.netlify.app/",
+        "twitter": "https://twitter.com/CroBobAdventure",
+        "discord": "https://discord.gg/kemzRExMju",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "The Luckl355",
+      "slug": "the-luckl355",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Where resilience meets opportunity. We are a diverse community of individuals who've faced setbacks and failures but now unite to support each other. Our name symbolizes our strength born from adversity. Through masks and specialized factions, we express our unique reflections and maintain our anonymous online identities.",
+        "avatar": "/img/collections/the-luckl355/avatar.webp",
+        "card": "/img/collections/the-luckl355/card.webp",
+        "banner": "/img/collections/the-luckl355/banner.webp",
+        "website": "https://0xluckless.com",
+        "twitter": "https://twitter.com/0xLuckless",
+        "discord": "https://discord.gg/y3Wv2gHjWZ",
+        "medium": "https://medium.com/@0xLuckless",
+        "instagram": "https://www.instagram.com/0xluckless/",
+        "categories": [
+          "art"
+        ]
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Monkey Of Anarkey License NFT",
+      "slug": "monkey-of-anarkey-license-nft",
+      "multiToken": false,
+      "address": "0x8de18EB0bD2C6A6B66bf58e669aD010544937757",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The MoA License NFT is the ultimate key to unlocking hidden mysteries and secrets within the Monkey of Anarkey ecosystem. As a proud MoA License Holder, you will embark on a thrilling journey through time and space, gaining access to the most exclusive areas of the ecosystem.",
+        "avatar": "/img/collections/monkey-of-anarkey-license-nft/avatar.webp",
+        "card": "/img/collections/monkey-of-anarkey-license-nft/card.webp",
+        "banner": "/img/collections/monkey-of-anarkey-license-nft/banner.webp",
+        "website": "https://monkeyofanarkey.com/",
+        "twitter": "https://twitter.com/MonkeyOfAnarkey",
+        "discord": "https://discord.gg/wxYhYkVhNN",
+        "medium": "https://medium.com/@MonkeyOfAnarkey/introducing-the-moa-license-nft-revealing-secrets-and-exclusive-perks-cbbec8f74747",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": false
+      }
+    },
+    {
+      "name": "Sp00kies",
+      "slug": "sp00kies",
+      "multiToken": false,
+      "address": "0x0521217B36a1482E6798692687f836c68c7F3837",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collaborative collection featuring Cr00ts & Fe00ts to celebrate the spooky season.  This collection made out of 5566 NFTs, half from each character, will be a boost relayed directly to the Cr00ts/Fe00ts/Doo Faction on the Ryoshi game by Ebisus.",
+        "avatar": "/img/collections/sp00kies/avatar.webp",
+        "card": "/img/collections/sp00kies/card.webp",
+        "banner": "/img/collections/sp00kies/banner.webp",
+        "website": "https://fe00ts.netlify.app/sp00kies/mint",
+        "twitter": "https://www.twitter.com/Fe00ts",
+        "discord": "https://discord.gg/gRs6HjryEW",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Blumies Tickets",
+      "slug": "blumies-tickets",
+      "multiToken": false,
+      "address": "0x4Eeeb2684b51AbB93660C0EAFA98a9185EE46A3F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Engage with Blumies and don't miss a chance to win prizes, special bonuses, custom NFTs, airdrops throughout the seasons, and more.",
+        "avatar": "/img/collections/blumies-tickets/avatar.webp",
+        "banner": "/img/collections/blumies-tickets/banner.webp",
+        "card": "/img/collections/blumies-tickets/card.webp",
+        "website": "https://www.blumiesofficial.com/",
+        "twitter": "https://twitter.com/BlumiesNFT",
+        "discord": "https://discord.gg/SWanx5JTAa",
+        "medium": "https://blumies.gitbook.io/blumies-nft/",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Mutant Shinu",
+      "slug": "mutant-shinu",
+      "multiToken": false,
+      "address": "0x3D373F4887A7316f04a72Cc2162524e5A40C188c",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "By trading Mutant Shinus, you can support your favorite Faction on Ryoshi Dynasty and receive daily rewards. Join us and earn FRTN today!",
+        "avatar": "/img/collections/mutant-shinu/avatar.webp",
+        "card": "/img/collections/mutant-shinu/card.webp",
+        "banner": "/img/collections/mutant-shinu/banner.webp",
+        "website": "https://shinudex.online/#/swap",
+        "twitter": "https://twitter.com/ShikokuInuCro",
+        "discord": "https://discord.gg/gx7E3v8vZT",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CronosBullFinance",
+      "slug": "cronosbullfinance",
+      "multiToken": false,
+      "address": "0x320EC6a9b6963670daAa13839bbE77D41af6f330",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CronosBullFinance collection, is our second drop and comes now to you as pointed on the roadmap from the beginning of the journey.The collection itself contains 8510 NFTs generated with more than 75 hand drawn traits, some of them tributes to Cronos chain and #Crofam members.Join us for the Bullrun",
+        "avatar": "/img/collections/cronosbullfinance/avatar.webp",
+        "banner": "/img/collections/cronosbullfinance/banner.webp",
+        "card": "/img/collections/cronosbullfinance/card.webp",
+        "website": "https://cronosbull.finance/",
+        "twitter": "https://twitter.com/CronosBullFi",
+        "discord": "https://discord.gg/cronosbullfinance",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Battle Roos",
+      "slug": "battle-roos",
+      "multiToken": false,
+      "address": "0xfD9B820f09B1f1f11b1537274e20FE257Dc0d3E4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crikey! Have you heard about Battle Roo, our fair dinkum NFT collection from Roo Finance? Here's why you should take the leap and hop on board! With our collection boasting over a thousand AI backgrounds, 30+ outback-inspired skins, 70+ bush-style outfits, and 30 true-blue weapons, we've got more unique combos than kangaroos at a watering hole! Now, let's get down to the nitty-gritty. We're not just about looking good; we're about doing good too. Our entire Battle Roo collection is backed by a whopping 24 million $Weedcoin for staking. ",
+        "avatar": "/img/collections/battle-roos/avatar.webp",
+        "banner": "/img/collections/battle-roos/banner.webp",
+        "card": "/img/collections/battle-roos/card.webp",
+        "website": "https://roo.finance/",
+        "twitter": "https://twitter.com/roofinance",
+        "discord": "https://discord.gg/4u5muHcdaJ",
+        "medium": "https://medium.com/@KangaDegens",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ROO OG",
+      "slug": "roo-og",
+      "multiToken": false,
+      "address": "0x1406904e110f9f51d3101a96627dddc80660780d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Roo Finance OG",
+        "avatar": "/img/collections/roo-og/avatar.webp",
+        "banner": "/img/collections/roo-og/banner.webp",
+        "card": "/img/collections/roo-og/card.webp",
+        "website": "https://roo.finance/",
+        "twitter": "https://twitter.com/roofinance",
+        "discord": "https://discord.gg/4u5muHcdaJ",
+        "medium": "https://medium.com/@KangaDegens",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Bored Punk Roo",
+      "slug": "bored-punk-roo",
+      "multiToken": false,
+      "address": "0xd94898C23C13341c4E5B5a054D07c400c8718E17",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "NFT Booster collection for Roo Finance",
+        "avatar": "/img/collections/bored-punk-roo/avatar.webp",
+        "banner": "/img/collections/bored-punk-roo/banner.webp",
+        "card": "/img/collections/bored-punk-roo/card.webp",
+        "website": "https://roo.finance/",
+        "twitter": "https://twitter.com/roofinance",
+        "discord": "https://discord.gg/4u5muHcdaJ",
+        "medium": "https://medium.com/@KangaDegens",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Hyena Hustlers",
+      "slug": "hyena-hustlers",
+      "multiToken": false,
+      "address": "0xA5353D17cC3F30DC07D6B0C5510a15Ce382B14A4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Step into the world of Hyena Hustlers, where each NFT is a masterpiece on the Cronos Network. With 3200 pieces, we're not just redefining the future of crypto - we're crafting it. Join the movement and seize the opportunity",
+        "avatar": "/img/collections/hyena-hustlers/avatar.webp",
+        "banner": "/img/collections/hyena-hustlers/banner.webp",
+        "card": "/img/collections/hyena-hustlers/card.webp",
+        "website": "https://hyenahustlers.xyz/launchpad",
+        "twitter": "https://twitter.com/hyenahustlers",
+        "discord": "https://discord.gg/s77g5FKjd6",
+        "medium": "https://medium.com/@hyenahustersnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crypto Money Makers - Money Bag",
+      "slug": "cmm-money-bag",
+      "multiToken": false,
+      "address": "0xAE798243f14A1fC202402D9F24e2ccA1a38A4cE5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Our goal is to create a simple investment project where funds from drops will be locked in few invest options and reinvested every month for bigger return. Half of income from all investments will be distributed for NFT holders. Easy way for passive income.  Mint! Hodl! Earn!",
+        "avatar": "/img/collections/cmm-money-bag/avatar.webp",
+        "card": "/img/collections/cmm-money-bag/card.webp",
+        "banner": "/img/collections/cmm-money-bag/banner.webp",
+        "website": "https://cryptomoneymakers.org/",
+        "twitter": "https://twitter.com/CronosMoney",
+        "discord": "https://discord.gg/bcjgNexUqz",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ryoshi Tales",
+      "slug": "ryoshi-tales",
+      "multiToken": false,
+      "address": "0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/ryoshi-tales/avatar.webp",
+        "banner": "/img/collections/ryoshi-tales/banner.webp",
+        "card": "/img/collections/ryoshi-tales/card.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "verified": true
+      }
+    },
+    {
+      "name": "CroTops",
+      "slug": "crotops",
+      "multiToken": false,
+      "address": "0x87e04f1d64619994a5320450E19C184a2dDE09c7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "⚡ Welcome to Cro Tops, This Project is based on the cartoon Bey-Blade's, Our Art will depict spin tops of various colors. themes, backgrounds, bonus item traits, and more!! so with that said, 25% of the mint funds goes to $Fortune token 25% of the mint funds goes to $TTT pairing 10% of the mint funds goes to Time Machine Launchpad 40% of the mint funds will be used to develop a staking site, and gamify CroTops \uD83D\uDE80LFG CROFAMM \uD83D\uDCAA",
+        "avatar": "/img/collections/crotops/avatar.webp",
+        "banner": "/img/collections/crotops/banner.webp",
+        "card": "/img/collections/crotops/card.webp",
+        "website": "https://time-launcher.com/drops/cro-tops",
+        "twitter": "https://twitter.com/PolyTops9000",
+        "discord": "https://discord.gg/MEquYDYUdB",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Crazzzy Ryoshi Monsterzzz",
+      "slug": "crazzzy-ryoshi-monsterzzz",
+      "multiToken": false,
+      "address": "0xe65FAA8791F25E9fB034f1C8913f14F6Db12C6C0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This collection is themed around the Ryoshi Dynasties game by Ebisu's Bay. It will consist of 10,000 NFTs with a heavy burn mechanism, 20 different Crazzzy Ryoshi Monsters with various quantities. Main focus of this collection is to maximise possible daily rewards for the current holders of our main Crazzzy NFT collections on Ebisu's Bay. Surprises will come for holders of the 20 different Crazzzy Ryoshi Monsterzzz.",
+        "avatar": "/img/collections/crazzzy-ryoshi-monsterzzz/avatar.webp",
+        "card": "/img/collections/crazzzy-ryoshi-monsterzzz/card.webp",
+        "banner": "/img/collections/crazzzy-ryoshi-monsterzzz/banner.webp",
+        "website": "https://crazzzymonsters.com/",
+        "twitter": "https://twitter.com/CrazzzyMonsters",
+        "discord": "https://discord.gg/6tR5TcHpBG",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Dooligans",
+      "slug": "dooligans",
+      "multiToken": false,
+      "address": "0xdaacfab134836d72bbb798f0f5bb333384a58894",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Dooligans are designed to provide the DooNFT community with a limited sized collection that gives even more scarcity through classifications, making each Dooligan rare in itself.",
+        "avatar": "/img/collections/dooligans/avatar.webp",
+        "card": "/img/collections/dooligans/card.webp",
+        "banner": "/img/collections/dooligans/banner.webp",
+        "website": "https://doonft.com/",
+        "twitter": "https://twitter.com/TheDooNFT",
+        "discord": "https://discord.gg/jWtZQmZGK5",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ryoshi Heroes",
+      "slug": "ryoshi-heroes",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/ryoshi-heroes/avatar.webp",
+        "banner": "/img/collections/ryoshi-heroes/banner.webp",
+        "card": "/img/collections/ryoshi-heroes/card.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "verified": true
       }
     }
   ],
@@ -29935,7 +30523,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/fallen-angels-demons/drop.webp",
         "banner": "/img/collections/fallen-angels-demons/banner.webp",
@@ -30775,7 +31363,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "images": {
         "drop": "/img/drops/coom-cats/drop2.webp",
@@ -30904,13 +31492,230 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "images": {
         "drop": "/img/drops/ryoshi-clubs/drop.webp",
         "avatar": "/img/drops/ryoshi-clubs/avatar.webp",
         "banner": "/img/drops/ryoshi-clubs/banner.webp",
         "preview": "/img/drops/ryoshi-clubs/preview.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 183,
+      "slug": "bob-headz",
+      "title": "BOB Headz",
+      "subtitle": "BOB Headz is super limited collection with unique utility to holders! There will be more than 200+ traits and multiple legendaries to be found!",
+      "description": "BOB Headz is a new, super limited NFT collection from the BOB Adventures ecosystem.\n\nOur main mission for this collection is to grow our community with more and more positive people who like crypto, gaming, passive income and other activities.  If you want to join our community and enjoy different utilities, this is the right place!\n\nUTILITY This collection will unlock our new game - Flappy BOB Game that everyone knows and are easy to play using PC or Mobile. BOB Headz will be used in our game and everyone who holds BOB Headz can play it! We will have online leaderboard where we will track players with best scores every week and we will reward them! But it will be harder than you think! Each NFT will be 1 life. Life resets every 24H, so if you hold 1x BOB Headz NFT, you can play 1 time per 24H. If you hold 10x BOB Headz, you can play 10 times per 24H and so on... The more Headz you own, the better chance to get better score. There also will be burn mechanism - part of secondary sale royalties we will use to sweep BOB Headz floor and burn them. This way we will reduce total supply from time to time. So this collection will be more and more valuable in the future. \n\nLEGENDARY BOB HEADz In our collection you can find 20 1/1 Legendaries and if you mint one of them, you can claim their bounty!  Each legendary bounty is different, it can be free NFT, crypto coin and more!\n\n MINTING REWARDS Also there are minting rewards that will be distributed to random minters when 25%, 50%, 75% and 100% is minted! Join our Discord for more info!",
+      "author": {
+        "name": "BOB Adventures",
+        "website": "https://bob-adventures.netlify.app/",
+        "twitter": "https://twitter.com/CroBobAdventure",
+        "discord": "https://discord.gg/kemzRExMju"
+      },
+      "address": "0x41C7874A2fE9D1ea126bfBD44597A1f96546152e",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 100,
+      "totalSupply": 808,
+      "cost": "98",
+      "memberCost": "88",
+      "whitelistCost": "88",
+      "foundersOnly": false,
+      "start": 1698343200000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": true,
+      "images": {
+        "drop": "/img/drops/bob-headz/drop.webp",
+        "banner": "/img/collections/bob-headz/banner.webp",
+        "avatar": "/img/collections/bob-headz/avatar.webp",
+        "preview": "/img/collections/bob-headz/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 184,
+      "slug": "the-luckl355",
+      "title": "The Luckl355",
+      "subtitle": "Where resilience meets opportunity. We are a diverse community of individuals who've faced setbacks and failures but now unite to support each other. Our name symbolizes our strength born from adversity. Through masks and specialized factions, we express our unique reflections and maintain our anonymous online identities.",
+      "description": "The Luckl355 community provides support, resources, and fosters collaboration for members facing a wide array of challenges, with a mission to build an inclusive, empowering community that helps members achieve success and fulfillment in their personal and professional lives.",
+      "author": {
+        "name": "0xLuckless",
+        "website": "https://0xLuckless.com",
+        "twitter": "https://twitter.com/0xLuckless",
+        "discord": "https://discord.gg/y3Wv2gHjWZ",
+        "medium": "https://medium.com/@0xLuckless",
+        "instagram": "https://www.instagram.com/0xluckless/"
+      },
+      "address": "",
+      "maxMintPerTx": 3,
+      "maxMintPerAddress": 3,
+      "totalSupply": 355,
+      "cost": "350",
+      "memberCost": "325",
+      "whitelistCost": "300",
+      "foundersOnly": false,
+      "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/the-luckl355/drop.webp",
+        "banner": "/img/collections/the-luckl355/banner.webp",
+        "avatar": "/img/collections/the-luckl355/avatar.webp",
+        "preview": "/img/collections/the-luckl355/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 185,
+      "slug": "ryoshi-hearts",
+      "collection": "ryoshi-playing-cards",
+      "title": "Ryoshi Hearts",
+      "subtitle": "Ryoshi Hearts: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #3 Ryoshi Hearts, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
+      "description": "Mint directly from your Rewards pool:\nUsers can mint from their Rewards Pool at the full price without altering or affecting their Karmic Debt \n\nMaximum Mints per Wallet:\nThe maximum mint per wallet is now set at 30 NFTs\n\nEnter Ebisu's Crypto Hodl'em event with up to Two Hands:\nUsers will now have the opportunity to enter up to 2 hands in the third Crypto Hodl’em contest. The second hand can't be composed of the same cards used to compose a user's first hand \n\nThe Second Hand's reverse values: \nThe Second Hand is valued in reverse compared to the typical set of values, making the 2 of Hearts ❤\uFE0F the highest Card for this second submission.\n\nCrypto Hodl'em #3 eligibility criteria: \nUsers' first hand must be composed of a minimum of 5 “Ryoshi Playing Cards” collectibles. Of these, at least 3 out of 5 cards must belong to the Hearts Suit Collection. The remaining 2 out of 5 cards can belong to any available suit (Hearts, Diamonds, or Clubs)",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xd87838a982a401510255ec27e603b0f5fea98d24",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 4000,
+      "erc20Cost": "250",
+      "erc20MemberCost": "200",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "memberMitama": 1000,
+      "foundersOnly": false,
+      "abi": "mint-from-rewards.json",
+      "start": 1698177600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-hearts/drop.webp",
+        "avatar": "/img/drops/ryoshi-hearts/avatar.webp",
+        "banner": "/img/drops/ryoshi-hearts/banner.webp",
+        "preview": "/img/drops/ryoshi-hearts/preview.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 186,
+      "slug": "ryoshi-tales-goblin-gala",
+      "collection": "ryoshi-tales",
+      "title": "Ryoshi Tales: Goblin Gala",
+      "subtitle": "Enter the World of Ryoshi Dynasties\n\nRumors have it that there are spooky creatures living beyond Felisgarde. Goblins and corrupted Ryoshis are seen wandering, gathering $FRTN from fallen Dynasties.\n\nPerhaps they could be friendly and might make valuable additions to the Bank or skilled fighters; after all, the Barracks will always welcome extra hands.\n\nJoin Ebisu at the Goblin Gala and contribute to yet another chapter in the Ryoshi Tales.",
+      "description": "Embrace Spooky Season!\n\nAs the lanterns cast an eerie glow and October 27th descends upon Felisgarde, a parade of strange creatures emerge across the region.\n\nRyoshi Tales: Goblin Gala Collection Details:\n\nSupply: Limited to 500 NFTs\nMint Per Wallet: 1 mint every 5 minutes until the collection reaches its limit\nAll $FRTN will be burned upon minting\nMint Directly from Your Rewards Pool:\n\nUsers can mint directly from their Rewards Pool at the full price without impacting their Karmic Debt.\n\nAcquire New NFTs for Staking:\n\nCollect these new NFTs and bolster your staking capabilities in the Barracks or the Bank, enhancing returns based on the rarity of your acquisitions:\n\nTop 5% Rarity: +0.25%\nTop 10% Rarity: +0.2%\nTop 20% Rarity: +0.15%\nOthers: +0.1%\n\nWishing the best of luck to everyone!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 500,
+      "erc20Cost": "300",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "foundersOnly": false,
+      "abi": "mint-from-rewards.json",
+      "start": 1698436800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": true,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-goblin-gala/drop1.webp",
+        "avatar": "/img/drops/ryoshi-tales-goblin-gala/avatar1.webp",
+        "banner": "/img/drops/ryoshi-tales-goblin-gala/banner1.webp",
+        "preview": "/img/drops/ryoshi-tales-goblin-gala/preview1.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 187,
+      "slug": "ryoshi-heroes",
+      "collection": "ryoshi-heroes",
+      "title": "Ryoshi Heroes",
+      "subtitle": "The Heroes Gen.0 Collection is a collection of unique and powerful Heroes that will play a crucial role in the gameplay experience of Ebisu's Bay. Each Hero will bring their singular skills in the battlefield, leading your army, get access to Heroes cloning, gather resources and accomplish legendary quests! \n\nHeroes Gen.0 are the first of their kind, and they have been carefully crafted to be balanced and fair. If you want to be a leader in Ebisu's Bay, then you will need a Hero Gen.0 on your side.",
+      "description": "A limited amount of 330 unique and powerful Heroes will be available for mint on Ebisu's Bay today November 2nd, 2023. \n\n**Mint details**: \n- Available for mint: 330 Heroes Gen.0 \n- Time: 8pm UTC \n- Maximum mint per wallet: 20 \n- Bids start at 15,000 $FRTN, moving to a lower mint price at each bid, as price will re adjust every 5 minutes. \n- Auction duration: 24 hours\n\n**Note**: Each bid will lower the price for everyone. If you minted at a higher price, you will be able to withdraw the difference. \n\n**Of all $FRTN spent**: Once minted out and the final price is set, all remaining $FRTN will be burnt except: \n- 0.25% to Ebisu's Owners \n- 0.25% to Felisgarde's Owners \n- 1% to Lighthouses' \n- Owners 1.5% to Inns' Owners \n\nProceeds will be deposited to the owner's rewards vault during season 2\n\nLearn more about Heroes on our Wiki: <https://www.notion.so/ebisusbay/Heroes-bf7562f290d947fd8dac095aa9c6f883> \n\n**Get your Hero Gen.0 today!**",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "",
+      "type": "dutch",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 330,
+      "erc20Cost": "15000",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "foundersOnly": false,
+      "start": 1698955200000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-heroes/drop.webp",
+        "avatar": "/img/collections/ryoshi-heroes/avatar.webp",
+        "banner": "/img/drops/ryoshi-heroes/banner.webp",
+        "preview": "/img/collections/ryoshi-heroes/card.webp"
       },
       "verification": {
         "verified": true,

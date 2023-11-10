@@ -32,10 +32,14 @@ export interface RyoshiDynastiesApi {
     getUserStakedFortune(address: string): Promise<FortuneStakingAccount | null>;
     getErc20Account(address: string): Promise<Erc20Account | null>;
     getStakedTokens(address: string, type: StakedTokenType): Promise<StakedToken[]>;
+    getStakedTokenTotals(type: StakedTokenType): Promise<{[key: string]: number}>;
     requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
     requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
+    requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string): Promise<any>;
+    requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string): Promise<any>;
+    requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string): Promise<any>;
     getDailyRewards(address: string): Promise<any>
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
     claimDailyRewards(address: string, signature: string): Promise<any>
@@ -48,6 +52,7 @@ export interface RyoshiDynastiesApi {
     getBankStakingAccount(address: string): Promise<StakingAccount | null>;
     getFactions(gameId?: number): Promise<RdFaction[]>;
     getBattleLog(query: GetBattleLog): Promise<PagedList<RdBattleLog>>;
+    getTroopsBreakdown(gameId: number, address: string, signature: string): Promise<RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops>;
     getUserMeeples(address: string): Promise<Meeple | null>;
 }
 
@@ -96,9 +101,16 @@ export interface BarracksStakeNft {
     amount: number;
 }
 
+export interface TownHallStakeNft {
+    nftAddress: string;
+    nftId: string;
+    amount: number;
+}
+
 export enum StakedTokenType {
-    BANK = 'bank',
-    BARRACKS = 'barracks'
+    BANK = 'BANK',
+    BARRACKS = 'BARRACKS',
+    TOWN_HALL = 'TOWN_HALL'
 }
 
 export interface RdFaction {
@@ -281,16 +293,21 @@ interface RdGameBase {
     endAt: string;
 }
 
-interface RdGame extends RdGameBase {
-    parent: RdSeason;
+interface RdGame {
+    id: number;
+    uuid: string;
+    startAt: string;
+    stopAt: string;
+    endAt: string;
+    season: RdSeason;
 }
 
-interface RdSeason extends RdGameBase {
-    blockId: number;
-    endAt: string;
+interface RdSeason {
     id: number;
-    startAt: string;
     uuid: string;
+    startAt: string;
+    endAt: string;
+    blockId: number;
     map: RdSeasonMap;
 }
 
@@ -381,5 +398,16 @@ export interface RdBattleLog {
 export enum PokerCollection{
     Diamonds = 'Diamonds', 
     Clubs = 'Clubs',
+    Hearts = 'Hearts',
+    Spades = 'Spades',
     Live = 'Live',
+}
+
+export interface XPProfile {
+    walletAddress: string;
+    username: string;
+    avatar: string;
+    experience: number;
+    level: number;
+    rank: number;
 }

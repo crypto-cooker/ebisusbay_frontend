@@ -11,20 +11,26 @@ import {setTheme} from '@src/GlobalState/User';
 import {
   Box,
   Button,
+  Divider,
   Flex,
+  Heading,
   HStack,
   IconButton,
+  Image,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  SimpleGrid,
   Spacer,
   Stack,
   Text,
   useBreakpointValue,
   useColorMode,
   useDisclosure,
-  useOutsideClick
+  useMediaQuery,
+  useOutsideClick,
+  VStack
 } from "@chakra-ui/react";
 import Cart from "./cart";
 import {ChevronDownIcon, CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
@@ -35,6 +41,7 @@ import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {round} from "@src/utils";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 
@@ -63,6 +70,7 @@ const Header = function () {
     { base: true, lg: false },
     { fallback: 'lg'},
   );
+  const [shouldHideTitle] = useMediaQuery('(max-width: 516px)');
   const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, config.chain.id);
   const [currentFrtnPrice, setCurrentFrtnPrice] = useState(0);
 
@@ -81,7 +89,7 @@ const Header = function () {
   useEffect(() => {
     try {
       if (tokenUsdRate) {
-        setCurrentFrtnPrice(round(tokenUsdRate, 4));
+        setCurrentFrtnPrice(round(tokenUsdRate, 3));
       }
     } catch (e) {
       console.error('Error setting global FRTN price', e);
@@ -96,37 +104,41 @@ const Header = function () {
           <Flex h={16} alignItems={'center'}>
             <Link href="/">
               <HStack spacing={2}>
-                <Box w="44px" >
-                  <img
-                    src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark.svg'}
-                    alt="ebisus bay logo"
+                <Image
+                  src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark.svg'}
+                  alt='ebisus bay logo'
+                  w='44px'
+                />
+                {!shouldHideTitle && shouldUseMobileSearch ? (
+                  <Image
+                    src={ImageService.translate('/img/logos/eb-title-sm.png').convert()}
+                    maxH='40px'
                   />
-                </Box>
-                <Text
-                  fontSize="lg"
-                  fontWeight="normal"
-                  color="white"
-                  minW="97px"
-                  display={{base: 'none', sm: 'block'}}
-                >
-                  Ebisu's Bay
-                </Text>
+                ) : !shouldHideTitle && (
+                  <Image
+                    src={ImageService.translate('/img/logos/eb-title-lg.png').convert()}
+                    maxH='40px'
+                  />
+                )}
               </HStack>
             </Link>
-            {!shouldUseMobileSearch && (
-              <Box w="100%" me={2} ms={4}>
+            {!shouldUseMobileSearch ? (
+              <Box flexGrow={1} me={2} ms={4}>
                 <Search />
               </Box>
+            ) : (
+              <Spacer />
             )}
 
-            <Spacer />
             <Flex alignItems={'center'} className="mainside">
 
               {!!currentFrtnPrice && (
-                <HStack fontSize='sm' fontWeight='bold' me={4} >
-                  <FortuneIcon boxSize={6} />
-                  <Text as='span' className='col-white'>${currentFrtnPrice}</Text>
-                </HStack>
+                <Link href='/rewards'>
+                  <HStack fontSize='sm' fontWeight='bold' me={{base: 2, sm: 4}}>
+                    <FortuneIcon boxSize={{base: 4, md: 6}} />
+                    <Text as='span' className='col-white'>${currentFrtnPrice}</Text>
+                  </HStack>
+                </Link>
               )}
 
               <HStack
@@ -158,6 +170,7 @@ const Header = function () {
                     <MenuItem as={Link} href='/ryoshi' _hover={{color: 'inherit'}} justifyContent='end'>Ryoshi Dynasties</MenuItem>
                     <MenuItem as={Link} href='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' _hover={{color: 'inherit'}} justifyContent='end'>Izanami&apos;s Cradle</MenuItem>
                     <MenuItem as={Link} href='/collection/ryoshi-playing-cards?tab=pokerRanks' _hover={{color: 'inherit'}} justifyContent='end'>Crypto HODL&apos;em</MenuItem>
+                    <MenuItem as={Link} href='/xp-leaderboard' _hover={{color: 'inherit'}} justifyContent='end'>XP Leaderboard</MenuItem>
                   </MenuList>
                 </Menu>
               </HStack>
@@ -182,15 +195,36 @@ const Header = function () {
           </Flex>
 
           {isOpen ? (
-            <Box pb={4} display={{md: 'none'}} textAlign="end">
-              <Stack as={'nav'} spacing={4}>
-                <NavLink name={'Rewards'} to={'/rewards'} onClick={onClose} />
-                <NavLink name={'Ryoshi Dynasties'} to={'/ryoshi'} onClick={onClose} />
-                <NavLink name={'Marketplace'} to={'/marketplace'} onClick={onClose} />
-                <NavLink name={'Collections'} to={'/collections'} onClick={onClose} />
-                <NavLink name={'Brands'} to={'/brands'} onClick={onClose} />
-                <NavLink name={'Drops'} to={'/drops'} onClick={onClose} />
-                <NavLink name={'Become a Creator'} to={'/apply'} onClick={onClose} />
+            <Box pb={2} display={{md: 'none'}}>
+              <SimpleGrid columns={2} p={2}>
+                <Box>
+                  <VStack align='start' spacing={0} mb={2}>
+                    <Heading size='md' className='col-white'>Marketplace</Heading>
+                    <Divider borderColor='white' w='150px' mb={2} mt={1} />
+                  </VStack>
+                  <VStack align='start'>
+                    <NavLink name='Explore' to='/marketplace' onClick={onClose} />
+                    <NavLink name='Collections' to='/collections' onClick={onClose} />
+                    <NavLink name='Brands' to='/brands' onClick={onClose} />
+                    <NavLink name='Drops' to='/drops' onClick={onClose} />
+                    <NavLink name='Become a Creator' to='/apply' onClick={onClose} />
+                  </VStack>
+                </Box>
+                <Box>
+                  <VStack align='end' spacing={0} mb={2}>
+                    <Heading size='md' className='col-white'>GameFi</Heading>
+                    <Divider borderColor='white' w='150px' mb={2} mt={1} />
+                  </VStack>
+                  <VStack align='end'>
+                    <NavLink name='Ryoshi Dynasties' to='/ryoshi' onClick={onClose} />
+                    <NavLink name='Izanami&apos;s Cradle' to='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' onClick={onClose} />
+                    <NavLink name='Crypto HODL&apos;em' to='/collection/ryoshi-playing-cards?tab=pokerRanks' onClick={onClose} />
+                    <NavLink name='XP Leaderboard' to='/xp-leaderboard' onClick={onClose} />
+                    <NavLink name='Rewards' to='/rewards' onClick={onClose} />
+                  </VStack>
+                </Box>
+              </SimpleGrid>
+              <Stack mt={2} align='center'>
                 {/*<NavLink name={'Stats'} to={'/stats'} onClick={onClose} />*/}
                 {/*<NavLink name={'Auction'} to={'/auctions/mutant-serum'} />*/}
 

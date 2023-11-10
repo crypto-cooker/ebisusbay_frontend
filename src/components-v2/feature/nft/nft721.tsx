@@ -5,6 +5,7 @@ import {faHeart as faHeartOutline} from '@fortawesome/free-regular-svg-icons';
 import {
   faCopy,
   faCrow,
+  faDownload,
   faExternalLinkAlt,
   faHeart as faHeartSolid,
   faHeartBroken,
@@ -14,10 +15,10 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
-import ProfilePreview from '@src/Components/components/ProfilePreview';
+import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
 import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
-import ProfileImage from '@src/Components/components/ProfileImage'
+import NftProfilePreview from '@src/components-v2/feature/nft/profile-preview'
 
 import {
   appUrl,
@@ -31,7 +32,6 @@ import {
   isEmptyObj,
   isEvoSkullCollection,
   isLadyWeirdApesCollection,
-  isLandDeedsCollection,
   isLazyHorseCollection,
   isLazyHorsePonyCollection,
   isNftBlacklisted,
@@ -41,6 +41,9 @@ import {
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   shortAddress,
+  isDynamicNftImageCollection,
+  isHerosCollection,
+
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
@@ -86,8 +89,8 @@ import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferState, OfferType} from "@src/core/services/api-service/types";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
-import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 import {ApiService} from "@src/core/services/api-service";
+import DynamicNftImage from '@src/components-v2/shared/media/dynamic-nft-image';
 
 const config = appConfig();
 const tabs = {
@@ -122,9 +125,10 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
   const currentListing = useAppSelector((state) => state.nft.currentListing);
   const powertraits = useAppSelector((state) => state.nft.nft?.powertraits);
 
-  const { isLoading: isLoadingCollection, error, data, status } = useQuery(['Collections', address], () =>
-    getCollections({ address }),
-  )
+  const { isPending: isLoadingCollection, error, data, status } = useQuery({
+    queryKey: ['Collections', address],
+    queryFn: () => getCollections({address})
+  });
 
   const [collection, setCollection] = useState<any>(null);
   const izanamiImageSize = useBreakpointValue(
@@ -154,6 +158,95 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     return collection?.name;
   });
 
+  const retrieveLayeredImage = async() => {
+      const response = await fetch(`/api/heroes/${id}`);
+      return response.blob();
+  }
+
+  const [downloadingImage, setDownloadingImage] = useState(false);
+  const downloadImage = async() => {
+    try {
+      setDownloadingImage(true);
+
+      const blobImage = await retrieveLayeredImage();
+      const href = URL.createObjectURL(blobImage);
+
+      const anchorElement = document.createElement('a');
+      anchorElement.href = href;
+      anchorElement.download = `hero_${id}.png`;
+
+      document.body.appendChild(anchorElement);
+      anchorElement.click();
+
+      document.body.removeChild(anchorElement);
+      window.URL.revokeObjectURL(href);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setDownloadingImage(false);
+    }
+
+  }
+
+  const [copyingImage, setCopyingImage] = useState(false);
+  const copyImage = async() => {
+    try {
+      setCopyingImage(true);
+
+      const blobImage = await retrieveLayeredImage();
+
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          throw new Error('Unable to get canvas context');
+        }
+        ctx.drawImage(img, 0, 0);
+
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            throw new Error('Canvas toBlob failed');
+          }
+          const item = new ClipboardItem({ "image/png": blob });
+          navigator.clipboard.write([item]).then(() => {
+            toast.success('Image copied!');
+          }, (err) => {
+            throw err;
+          });
+        }, 'image/png');
+      };
+      img.src = URL.createObjectURL(blobImage);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setCopyingImage(false);
+    }
+  }
+
+  const DownloadImage = async (nftId:string) => {
+    try {
+      const response = await fetch(`/api/heroes/${nftId}`);
+      const blobImage = await response.blob();
+
+      const href = URL.createObjectURL(blobImage);
+
+      const anchorElement = document.createElement('a');
+      anchorElement.href = href;
+      anchorElement.download = `hero_${nftId}.png`;
+
+      document.body.appendChild(anchorElement);
+      anchorElement.click();
+
+      document.body.removeChild(anchorElement);
+      window.URL.revokeObjectURL(href);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   const [{ isLoading: isFavoriting, response, error: errorTF }, toggleFavorite] = useToggleFavorite();
 
   const copyLink = useCallback(() => {
@@ -227,7 +320,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
   const MenuButton = () => {
 
     return (
-      <MenuButtonCK as={LegacyOutlinedButton}>
+      <MenuButtonCK as={ChakraButton}>
         <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
       </MenuButtonCK>
     )
@@ -576,32 +669,29 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                   <ImageContainer nft={nft} />
                 ) : nft.useIframe ? (
                   <iframe width="100%" height="636" src={nft.iframeSource} title="nft" />
-                ) : isLandDeedsCollection(address) ? (
-                  <Center>
-                      <RdLand nftId={id} boxSize={izanamiImageSize ?? 368} forceBoxSize={true} rounded='xl' />
-                  </Center>
                 ) : (
                   <>
-                    <AnyMedia
-                      image={ImageService.translate(specialImageTransform(address, nft.image)).convert()}
-                      video={nft.video ?? nft.animation_url}
-                      videoProps={{ height: 'auto', autoPlay: true }}
-                      title={nft.name}
-                      usePlaceholder={false}
-                      className="img-fluid img-rounded mb-sm-30"
-                    />
+                    <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId} showDetails={true}>
+                      <AnyMedia
+                        image={ImageService.translate(specialImageTransform(address, nft.image)).convert()}
+                        video={nft.video ?? nft.animation_url}
+                        videoProps={{ height: 'auto', autoPlay: true }}
+                        title={nft.name}
+                        usePlaceholder={false}
+                        className="img-fluid img-rounded mb-sm-30"
+                      />
+                    </DynamicNftImage>
                   </>
                 )
               ) : (
                 <></>
               )}
               <div className="mt-2" style={{ cursor: 'pointer' }}>
-                <ButtonGroup size='sm' isAttached variant='outline'>
-                  <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
+                <ButtonGroup size='md' isAttached variant='outline'>
+                  <ChakraButton title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
                     <FontAwesomeIcon icon={faSync} spin={refreshing} />
-                  </Button>
-                  <Button
-                    styleType="default-outlined"
+                  </ChakraButton>
+                  <ChakraButton
                     title={isFavorite() ? 'This item is in your favorites list' : 'Click to add to your favorites list'}
                     onClick={onFavoriteClicked}
                   >
@@ -613,14 +703,32 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                         <FontAwesomeIcon icon={faHeartOutline} />
                       )}
                     </div>
-                  </Button>
-                  {nft && nft.original_image && (
-                    <Button styleType="default-outlined" title="View Full Image" onClick={() =>
-                      typeof window !== 'undefined' &&
-                      window.open(specialImageTransform(address, fullImage()), '_blank')
+                  </ChakraButton>
+                  {nft && nft.original_image && !isHerosCollection(nft.address) && (
+                    <ChakraButton title="View Full Image" onClick={() =>
+                        typeof window !== 'undefined' &&
+                        window.open(specialImageTransform(address, fullImage()), '_blank')
                     }>
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
-                    </Button>
+                    </ChakraButton>
+                  )}
+                  {isHerosCollection(nft.address) && (
+                    <>
+                      <ChakraButton
+                          title="Download Image"
+                          onClick={downloadImage}
+                          isLoading={downloadingImage}
+                      >
+                        <FontAwesomeIcon icon={faDownload} />
+                      </ChakraButton>
+                      <ChakraButton
+                          title="Copy Image"
+                          onClick={copyImage}
+                          isLoading={copyingImage}
+                      >
+                        <FontAwesomeIcon icon={faCopy} />
+                      </ChakraButton>
+                    </>
                   )}
                   <Menu MenuItems={MenuItems} MenuButton={MenuButton()} />
 
@@ -714,19 +822,14 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
 
                   <div className="row" style={{ gap: '2rem 0' }}>
                     {nft.owner ? (
-                      <ProfileImage address={nft.owner} title='Owner' displayName />
+                      <NftProfilePreview address={nft.owner} title='Owner' />
                     ) : (currentListing && collection.listable) && (
-                      <ProfilePreview
-                        type="Owner"
-                        address={currentListing.seller}
-                        to={`/account/${currentListing.seller}`}
-                        useCnsLookup={true}
-                      />
+                      <NftProfilePreview address={currentListing.seller} title='Owner' />
                     )}
 
-                    <ProfilePreview
-                      type="Collection"
-                      title={collectionName ?? 'View Collection'}
+                    <NftPropertyLabel
+                      label="Collection"
+                      value={collectionName ?? 'View Collection'}
                       avatar={ImageService.translate(collectionMetadata?.avatar).avatar()}
                       address={address}
                       verified={collection.verification?.verified}
@@ -734,9 +837,9 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                     />
 
                     {typeof nft.rank !== 'undefined' && nft.rank !== null && (
-                      <ProfilePreview
-                        type="Rarity Rank"
-                        title={nft.rank}
+                      <NftPropertyLabel
+                        label="Rarity Rank"
+                        value={nft.rank}
                         avatar={rankingsLogoForCollection(collection)}
                         hover={rankingsTitleForCollection(collection)}
                         to={rankingsLinkForCollection(collection, nft.id)}

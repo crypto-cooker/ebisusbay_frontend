@@ -47,7 +47,7 @@ const BatchPreview = ({mutationKey}: BatchPreviewProps) => {
       }
 
       toast.success('Listings have been cancelled');
-      await queryClient.invalidateQueries(mutationKey)
+      await queryClient.invalidateQueries({queryKey: mutationKey})
     } catch (error: any) {
       console.log(error);
       if (error.data) {

@@ -11,7 +11,7 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
-import ProfilePreview from '@src/Components/components/ProfilePreview';
+import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import {
   appUrl,
   caseInsensitiveCompare,
@@ -37,13 +37,14 @@ import {
   Box,
   ButtonGroup,
   Center,
-  Flex,
   Heading,
+  HStack,
   Link,
   MenuButton as MenuButtonCK,
   Spinner,
   Text,
-  useClipboard
+  useClipboard,
+  VStack
 } from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
@@ -270,21 +271,30 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
     <div>
       {isEbVipCollection(address, id) && (
         <Box className="promo">
-          <Flex justify="center" px={3}>
-            <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
-            <Text ms={2}>
-              Swap your Ebisu's Bay VIP Founding Member for 10x Ryoshi Tales VIP NFTs and enjoy increased benefits in the Ebisu's Bay ecosystem.{' '}
-              <Box textAlign="center">
-                <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
-                  Learn more
-                </Link>
-                <span className="mx-2">|</span>
-                <NextLink href="/drops/ryoshi-tales-vip" >
-                  <Link fontWeight="bold">View drop</Link>
-                </NextLink>
-              </Box>
+          <VStack ms={2} textAlign='center' px={3}>
+            <HStack>
+              <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
+              <Text fontWeight='bold' textDecoration='underline'>DEADLINE: {new Date(1699738898000).toDateString()}, {new Date(1699738898000).toTimeString()}!</Text>
+            </HStack>
+            <Text>
+              Staking benefits have now ended for this NFT.
             </Text>
-          </Flex>
+            <Text>
+              But you can still swap your Ebisu's Bay VIP Founding Member for <strong>10x Ryoshi Tales VIP</strong> NFTs and enjoy increased benefits in the Ebisu's Bay ecosystem. Click the "View drop" link below to get started.
+            </Text>
+            <Text>
+              VIPs will will no longer be able to be swapped after this date
+            </Text>
+            <Box>
+              <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
+                Learn more
+              </Link>
+              <span className="mx-2">|</span>
+              <NextLink href="/drops/ryoshi-tales-vip" >
+                <Link fontWeight="bold">View drop</Link>
+              </NextLink>
+            </Box>
+          </VStack>
         </Box>
       )}
       {isLoading ? (
@@ -376,9 +386,9 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                     />
                   )}
                   <div className="row" style={{ gap: '2rem 0' }}>
-                    <ProfilePreview
-                      type="Collection"
-                      title={collectionName ?? 'View Collection'}
+                    <NftPropertyLabel
+                      label="Collection"
+                      value={collectionName ?? 'View Collection'}
                       avatar={ImageService.translate(collectionMetadata?.avatar).avatar()}
                       address={address}
                       verified={collection.verification?.verified}
@@ -386,9 +396,9 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
                     />
 
                     {typeof nft.rank !== 'undefined' && nft.rank !== null && (
-                      <ProfilePreview
-                        type="Rarity Rank"
-                        title={nft.rank}
+                      <NftPropertyLabel
+                        label="Rarity Rank"
+                        value={nft.rank}
                         avatar={rankingsLogoForCollection(collection)}
                         hover={rankingsTitleForCollection(collection)}
                         to={rankingsLinkForCollection(collection)}

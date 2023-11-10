@@ -28,6 +28,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import axios from "axios";
 import {appConfig} from "@src/Config";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 
@@ -57,7 +58,7 @@ const CropperModal = ({isOpen, onClose, src, setPreview}:CropperProps) => {
 
     } catch (error) {
       console.log(error)
-      toast.error("Icon too large, please use a smaller image")
+      toast.error(parseErrorMessage(error, 'Icon too large, please use a smaller image'));
     }
   }
 

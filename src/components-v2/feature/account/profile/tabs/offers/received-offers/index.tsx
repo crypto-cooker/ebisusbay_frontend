@@ -36,16 +36,15 @@ export default function MadeOffers({ address, filtersVisible, setFiltersVisible,
     direction: 'desc'
   });
 
-  const {data: offers, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery(
-    ['ReceivedOffers', address, queryParams],
-    ({pageParam = 1}) => NextApiService.getReceivedOffersByUser(address, {...queryParams, page: pageParam}),
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false
-    }
-  )
+  const {data: offers, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery({
+    queryKey: ['ReceivedOffers', address, queryParams],
+    queryFn: ({pageParam = 1}) => NextApiService.getReceivedOffersByUser(address, {...queryParams, page: pageParam}),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false
+  });
 
   const {data: offersOverview} = useQuery({
     queryKey: ['OffersOverview', address],
@@ -77,7 +76,7 @@ export default function MadeOffers({ address, filtersVisible, setFiltersVisible,
   }, [queryParams]);
 
   const historyContent = useMemo(() => {
-    return status === "loading" ? (
+    return status === 'pending' ? (
       <Center>
         <Spinner />
       </Center>

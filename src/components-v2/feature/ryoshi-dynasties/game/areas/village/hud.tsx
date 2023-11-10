@@ -5,10 +5,8 @@ import NextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import {Contract, ethers} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
-import {round, shortAddress, siPrefixedNumber} from "@src/utils";
+import {round, shortAddress, siPrefixedNumber, username} from "@src/utils";
 import ImageService from "@src/core/services/image";
-// import {getAuthSignerInStorage} from "@src/helpers/storage";
-// import {getRewardsStreak} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {appConfig} from "@src/Config";
 import {
   RyoshiDynastiesContext,
@@ -18,19 +16,22 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBuilding, faClipboardList} from "@fortawesome/free-solid-svg-icons";
 
 import {ERC1155} from "@src/Contracts/Abis";
-import Button from "@src/Components/components/Button";
+import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import Countdown, {zeroPad} from "react-countdown";
 
 interface VillageHudProps {
   onOpenBuildings: () => void;
   onOpenDailyCheckin: () => void;
   onOpenBattleLog: () => void;
+  onOpenXPLeaderboard: () => void;
   forceRefresh: boolean;
 }
 
-export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog, forceRefresh}: VillageHudProps) => {
+export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog, onOpenXPLeaderboard, forceRefresh}: VillageHudProps) => {
   const user = useAppSelector((state) => state.user);
-  const { config: rdConfig, user:rdUser, game: rdGameContext, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, user: rdUserContext, game: rdGameContext, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const config = appConfig();
+  const {isSignedIn} = useEnforceSigner();
 
   const[isLoading, setIsLoading] = useState(false);
   const[koban, setKoban] = useState<number | string>(0);
@@ -44,51 +45,9 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
   const[currentLevelProgress, setCurrentLevelProgress] = useState<number>(0);
 
   //timer
-  const Ref = useRef<NodeJS.Timer | null>(null);
-  const [timer, setTimer] = useState('00:00:00');
   const [canClaim, setCanClaim] = useState(true);
+  const [nextClaim, setNextClaim] = useState<number>();
 
-  //timer functions
-  const getTimeRemaining = (e:any) => {
-    const total = Date.parse(e) - Date.now();
-    const days = Math.floor(total / (1000 * 60 * 60 * 24));
-    const seconds = Math.floor((total / 1000) % 60);
-    const minutes = Math.floor((total / 1000 / 60) % 60);
-    const hours = Math.floor((total / 1000 / 60 / 60) % 24);
-    return {
-        total, days, hours, minutes, seconds
-    };
-  }
-  const startTimer = (e:any) => {
-      let { total, hours, days, minutes, seconds } = getTimeRemaining(e);
-      if (total >= 0) {
-          setTimer(
-              ((days) > 0 ? (days + ' days ') : (
-              (hours > 9 ? hours : '0' + hours) + ':' +
-              (minutes > 9 ? minutes : '0' + minutes) + ':' +
-              (seconds > 9 ? seconds : '0' + seconds)))
-          )
-      }
-  }
-  const clearTimer = (e:any) => {
-    startTimer(e);
-    if (Ref.current) clearInterval(Ref.current as any);
-    const id = setInterval(() => { startTimer(e); }, 1000) 
-    Ref.current = id;
-  }
-  const getRewardsStreakData = async () => {
-    if (!user.address || !rdUser) return;
-      const dt = Date.parse(rdUser.dailyRewards.nextClaim)
-      // console.log(dt)
-
-      if(!dt || dt <= Date.now()) {
-        setCanClaim(true)
-      }
-      else{
-        setCanClaim(false)
-        clearTimer(rdUser.dailyRewards.nextClaim)
-      }
-  }
   const getResources = async () => {
     try {
       setIsLoading(true);
@@ -143,42 +102,22 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
   }
 
   const calculateCurrentValue = () => {
-    if (!rdUser) return;
+    if (!rdUserContext) return;
 
-    const currentExp = rdUser.experience.points;
+    const currentExp = rdUserContext.experience.points;
     const xpLevel = getXpLevel(currentExp);
     const currentLevelStart = xpLevelTiers[xpLevel].min;
     const currentLevelEnd = xpLevelTiers[xpLevel + 1].min;
     const currentLevelProgress = (currentExp - currentLevelStart) / (currentLevelEnd - currentLevelStart);
-    const toFixedWithoutZeros = (num:number, precision:number) =>
-      num.toFixed(precision).replace(/\.0+$/, '');
 
-    setLevelProgressString(toFixedWithoutZeros(currentExp - currentLevelStart, 1) +"/" +(currentLevelEnd - currentLevelStart));
-    setPlayerLevel(rdUser.experience.level);
+    setLevelProgressString(round(currentExp - currentLevelStart, 1) +"/" +(currentLevelEnd - currentLevelStart));
+    setPlayerLevel(rdUserContext.experience.level);
     setCurrentLevelProgress(currentLevelProgress * 100);
   };
 
-  const username = () => {
-    const identifier = user.profile.username;
-    try {
-      if (identifier.startsWith('0x')) {
-        return shortAddress(ethers.utils.getAddress(identifier));
-      }
-      return identifier;
-    } catch (e) {
-      return identifier;
-    }
-  }
-
   useEffect(() => {
     calculateCurrentValue();
-  }, [rdUser])
-
-  useEffect(() => {
-    getRewardsStreakData();
-    // console.log('rdUser', rdUser);
-    refreshUser(); 
-  }, [user.address, rdUser])
+  }, [user.address, rdUserContext])
 
   useEffect(() => {
     // get all resources
@@ -186,6 +125,23 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
       getResources();
     }
   }, [user.address, forceRefresh])
+
+  useEffect(() => {
+    if (!user.address || !rdUserContext) {
+      setCanClaim(false);
+      return;
+    }
+
+    const claimData = rdUserContext.dailyRewards;
+    if(!claimData.nextClaim) {
+      setCanClaim(true);
+    } else if(Date.parse(claimData.nextClaim) <= Date.now()) {
+      setCanClaim(true);
+    } else {
+      setCanClaim(false);
+      setNextClaim(new Date(claimData.nextClaim).getTime());
+    }
+}, [user.address, rdUserContext])
 
   const changeBackground = () => {
     if(!isMobile) return;
@@ -220,10 +176,19 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
               h={{base: '40px', sm: '40px'}}
               lineHeight={'1.2'}
             >
-              {canClaim ? (
-                "Claim Rewards!"
-              ) : (
-                "Claim in "+ timer
+              {user.address && isSignedIn && nextClaim ? (
+                <Countdown
+                  date={nextClaim ?? 0}
+                  renderer={({ hours, minutes, seconds, completed }) => {
+                    if (completed && canClaim) {
+                      return <span>Claim Now!</span>;
+                    } else {
+                      return <span>Claim in {hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>;
+                    }
+                  }}
+                />
+                ) : (
+                <>Claim Koban!</>
               )}
             </RdButton>
           </HStack>
@@ -306,12 +271,15 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
               icon={faClipboardList}/>
 
             {/* <DarkButton
+              onClick={onOpenXPLeaderboard}
+              icon={faClipboardList}/> */}
+
+            {/* <DarkButton
               onClick={() => UpdateMetaData(Math.floor(Math.random() * 2500))}
               icon={faBlog}/> */}
 
             </SimpleGrid>
           </Box>
-          {/* <RdLand nftId={selectedNFT} boxSize={368}/> */}
       </Flex>
       
     </Box>

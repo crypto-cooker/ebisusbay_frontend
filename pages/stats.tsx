@@ -7,7 +7,7 @@ import {getAllLeaderBoard} from '@src/GlobalState/leaderBoardSlice';
 import {shortAddress} from '@src/utils';
 import styles from '../src/Components/Leaderboard/styles.module.scss';
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import {Navigation, Pagination} from "swiper";
+import {Navigation, Pagination} from "swiper/modules";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Heading, Link, Tag} from "@chakra-ui/react";
 import {useRouter} from "next/router";

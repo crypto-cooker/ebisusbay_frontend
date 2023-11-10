@@ -8,7 +8,7 @@ import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 import {isFounderDrop, isPlayingCardsCollection, newlineText,} from '@src/utils';
-import {dropState as statuses} from '@src/core/api/enums';
+import {DropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi, ERC20} from '@src/Contracts/Abis';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {appConfig} from "@src/Config";
@@ -21,6 +21,8 @@ import {Drop, SpecialWhitelist} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
 import {commify} from "ethers/lib/utils";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import Markdown from "react-markdown";
 
 const config = appConfig();
 
@@ -125,8 +127,15 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     // Use the new contract format if applicable
     let abi = currentDrop.abi;
     if (isUsingAbiFile(abi)) {
-      const abiJson = require(`@src/Assets/abis/${currentDrop.abi}`);
-      abi = abiJson.abi ?? abiJson;
+      await import(`@src/Assets/abis/${currentDrop.abi}`)
+        .then((abiJson) => {
+          abi = abiJson.default.abi ?? abiJson.default;
+          setAbi(abi as any);
+        })
+        .catch((error) => {
+          // Handle the error. For example, setAbi to a default value or show an error message.
+          console.error("Could not load ABI JSON:", error);
+        });
     } else if (isUsingDefaultDropAbi(abi)) {
       abi = EbisuDropAbi;
     }
@@ -200,8 +209,8 @@ const SingleDrop = ({drop}: SingleDropProps) => {
 
 
     if (isPlayingCardsCollection(drop.collection)) {
-      setTotalSupply(infos.totalSupply - 4000);
-      setMaxSupply(infos.maxSupply - 4000);
+      setTotalSupply(infos.totalSupply - 8000);
+      setMaxSupply(infos.maxSupply - 8000);
     }
   };
 
@@ -400,11 +409,15 @@ const SingleDrop = ({drop}: SingleDropProps) => {
                     </a>
                     </Text>
                   )}
-                  {newlineText(drop.description)}
+                  <Container>
+                    <Markdown>
+                      {drop.description}
+                    </Markdown>
+                  </Container>
 
                   {drop.slug === 'ryoshi-playing-cards' && (
                     <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
-                      For complete rules to Crypto Holdem please visit our blog post <Link href={'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'} target='_blank' className='color'>https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496</Link>
+                      For complete rules to Crypto Hodl'em please visit our blog post <Link href={'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'} target='_blank' className='color'>https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496</Link>
                     </Text>
                   )}
                 </div>
@@ -417,3 +430,18 @@ const SingleDrop = ({drop}: SingleDropProps) => {
   );
 };
 export default SingleDrop;
+
+const Container = styled.div`
+  p {
+      margin-top: 10px;
+  }
+  
+  li {
+    margin-left: 18px;
+  }
+  
+  a {
+    font-weight: bold;
+    color: #218cff;
+  }
+`;

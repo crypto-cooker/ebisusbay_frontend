@@ -1,8 +1,6 @@
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
 
 import thunk from 'redux-thunk';
-import * as Sentry from '@sentry/react';
-import createSentryMiddleware from 'redux-sentry-middleware';
 
 import { memberships } from '../GlobalState/Memberships';
 import marketplaceReducer from '../GlobalState/marketplaceSlice';
@@ -38,7 +36,7 @@ const reduxDevToolsComposeEnhancers =
   (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 // @ts-ignore
-const sentryEnhancedMiddlewares = applyMiddleware(thunk, createSentryMiddleware(Sentry, {}));
+const sentryEnhancedMiddlewares = applyMiddleware(thunk);
 
 const enableDevTools = process.env.NODE_ENV !== 'production' || process.env.REACT_APP_DEVTOOLS === 'true';
 
@@ -46,7 +44,7 @@ const reduxDevToolsEnhancedMiddlewares = enableDevTools
   ? reduxDevToolsComposeEnhancers(sentryEnhancedMiddlewares)
   : sentryEnhancedMiddlewares;
 
-const store = createStore(rootReducer, reduxDevToolsEnhancedMiddlewares);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

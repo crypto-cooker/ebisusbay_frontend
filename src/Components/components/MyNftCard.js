@@ -39,8 +39,8 @@ import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
-import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 import {useExchangeRate} from "@src/hooks/useGlobalPrices";
+import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 
 const MyNftCard = ({
   nft,
@@ -213,9 +213,7 @@ const MyNftCard = ({
               onClick={() => navigateTo(nftUrl)}
               cursor="pointer"
             >
-              {isLandDeedsCollection(nft.address ?? nft.nftAddress) ? (
-                <RdLand nftId={nft.id ?? nft.nftId} boxSize={izanamiImageSize ?? 368} />
-              ) : (
+                <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
                   <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
                             title={nft.name}
                             newTab={true}
@@ -226,7 +224,7 @@ const MyNftCard = ({
                             thumbnail={!!nft.video || !!nft.animationUrl || !!nft.animation_url ? ImageService.translate(nft.video ?? nft.animationUrl ?? nft.animation_url).thumbnail() : undefined}
                             usePlaceholder={true}
                   />
-              )}
+                </DynamicNftImage>
             </Box>
           </div>
           {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
@@ -261,7 +259,7 @@ const MyNftCard = ({
                       <Text mt={1} flex={1} align='end' className='text-muted'>{timeSince(nft.market.expirationDate)}</Text>
                     )}
                   </HStack>
-                  {marketUsdValue() && (
+                  {!!marketUsdValue() && (
                     <Flex ps={5} className='text-muted'>
                       <Box as='span' ms={1}>
                         ${marketUsdValue() > 100000 ? siPrefixedNumber(marketUsdValue()) : ethers.utils.commify(round(marketUsdValue(), 2))}

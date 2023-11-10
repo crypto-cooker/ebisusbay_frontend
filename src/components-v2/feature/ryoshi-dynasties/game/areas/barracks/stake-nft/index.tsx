@@ -14,7 +14,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
+  ModalOverlay, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger,
   SimpleGrid,
   Spinner,
   Text,
@@ -66,9 +66,9 @@ const gothamBook = localFont({ src: '../../../../../../../../src/fonts/Gotham-Bo
 // Maps to collection slug
 const tabs = {
   ryoshiVip: 'ryoshi-tales-vip',
+  ryoshiTales: 'ryoshi-tales',
   ryoshiHalloween: 'ryoshi-tales-halloween',
   ryoshiChristmas: 'ryoshi-tales-christmas',
-  fortuneGuards: 'fortune-guards'
 };
 
 interface StakeNftsProps {
@@ -136,6 +136,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         rank: nft.rank,
         multiplier: multiplier + idBonus,
         isAlreadyStaked: stakedCount > pendingCount,
+        isActive: stakeConfig!.active,
         refBalance: nft.balance ?? 1,
       }]);
     }
@@ -152,8 +153,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   }, [pendingNfts]);
 
   const handleStakeSuccess = useCallback(() => {
-    queryClient.invalidateQueries(['BarracksStakedNfts', user.address]);
-    queryClient.invalidateQueries(['BarracksUnstakedNfts', user.address, currentCollection]);
+    queryClient.invalidateQueries({queryKey: ['BarracksStakedNfts', user.address]});
+    queryClient.invalidateQueries({queryKey: ['BarracksUnstakedNfts', user.address, currentCollection]});
     queryClient.setQueryData(['BarracksUnstakedNfts', user.address, currentCollection], (old: any) => {
       if (!old) return [];
       old.pages = old.pages.map((page:  any) => {
@@ -170,7 +171,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       type: StakedTokenType.BARRACKS,
       user: user.address!
     }))]);
-    setPendingNfts([...pendingNfts.map((nft) => ({...nft, isAlreadyStaked: true, refBalance: nft.refBalance - 1}))]);
+    setPendingNfts([...pendingNfts.map((nft) => ({...nft, isAlreadyStaked: true, isActive: true, refBalance: nft.refBalance - 1}))]);
     refreshUser();
   }, [queryClient, stakedNfts, pendingNfts, user.address]);
 
@@ -191,12 +192,12 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   };
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !user.address) return;
 
-    queryClient.fetchQuery(
-      ['BarracksStakedNfts', user.address],
-      () => ApiService.withoutKey().ryoshiDynasties.getStakedTokens(user.address!, StakedTokenType.BARRACKS)
-    ).then(async (data) => {
+    queryClient.fetchQuery({
+      queryKey: ['BarracksStakedNfts', user.address],
+      queryFn: () => ApiService.withoutKey().ryoshiDynasties.getStakedTokens(user.address!, StakedTokenType.BARRACKS)
+    }).then(async (data) => {
       setStakedNfts(data);
 
       const nfts: PendingNft[] = [];
@@ -219,6 +220,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
               rank: nft.nft.rank,
               multiplier: multiplier + idBonus,
               isAlreadyStaked: true,
+              isActive: stakeConfig!.active,
               refBalance: 0,
             })
           }
@@ -226,7 +228,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       }
       setPendingNfts(nfts);
     });
-  }, [isOpen]);
+  }, [isOpen, user.address]);
 
   useEffect(() => {
     setCurrentCollection(addressForTab);
@@ -263,15 +265,15 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
           />
           <Box p={4}>
             <Flex direction='row' justify='center' mb={2}>
-              <SimpleGrid columns={{base: 2, sm: 4}}>
+              <SimpleGrid columns={{base: 2, sm: 3, md: 4}}>
                 <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
                   VIP
                 </RdTabButton>
-                <RdTabButton isActive={currentTab === tabs.fortuneGuards} onClick={handleBtnClick(tabs.fortuneGuards)}>
-                  Guards
-                </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
                   Halloween
+                </RdTabButton>
+                <RdTabButton isActive={currentTab === tabs.ryoshiTales} onClick={handleBtnClick(tabs.ryoshiTales)}>
+                  Goblin Gala
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
                   Christmas
@@ -312,6 +314,7 @@ interface PendingNft {
   rank: number;
   multiplier: number;
   isAlreadyStaked: boolean;
+  isActive: boolean;
   refBalance: number;
 }
 
@@ -391,55 +394,70 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
             return (
               <Box key={index} w='120px'>
                 {!!pendingNfts[index] ? (
-                  <Box position='relative'>
-                    <Box
-                      bg='#376dcf'
-                      p={2}
-                      rounded='xl'
-                      border='2px dashed'
-                      borderColor={pendingNfts[index].isAlreadyStaked ? 'transparent' : '#ffa71c'}
-                    >
-                      <Box
-                        width={100}
-                        height={100}
+                  <Popover>
+                    <PopoverTrigger>
+                      <Box position='relative'>
+                        <Box
+                          bg='#376dcf'
+                          p={2}
+                          rounded='xl'
+                          border='2px dashed'
+                          borderColor={pendingNfts[index].isAlreadyStaked ? 'transparent' : '#ffa71c'}
+                        >
+                          <Box
+                            width={100}
+                            height={100}
 
-                      >
-                        <Image src={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)} rounded='lg'/>
-                      </Box>
-                      <Flex fontSize='xs' justify='space-between' mt={1}>
-                        <Box verticalAlign='top'>
-                          {pendingNfts[index].rank && (
-                            <HStack spacing={1}>
-                              <Icon as={FontAwesomeIcon} icon={faAward} />
-                              <Box as='span'>{pendingNfts[index].rank}</Box>
-                            </HStack>
-                          )}
+                          >
+                            <Image src={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)} rounded='lg'/>
+                          </Box>
+                          <Flex fontSize='xs' justify='space-between' mt={1}>
+                            <Box verticalAlign='top'>
+                              {pendingNfts[index].rank && (
+                                <HStack spacing={1}>
+                                  <Icon as={FontAwesomeIcon} icon={faAward} />
+                                  <Box as='span'>{pendingNfts[index].rank}</Box>
+                                </HStack>
+                              )}
+                            </Box>
+                            <VStack align='end' spacing={0} fontWeight='bold'>
+                              {pendingNfts[index].multiplier && (
+                                <Box>+ {pendingNfts[index].multiplier}</Box>
+                              )}
+                            </VStack>
+                          </Flex>
                         </Box>
-                        <VStack align='end' spacing={0} fontWeight='bold'>
-                          {pendingNfts[index].multiplier && (
-                            <Box>+ {pendingNfts[index].multiplier}</Box>
-                          )}
-                        </VStack>
-                      </Flex>
-                    </Box>
 
-                    <Box
-                      position='absolute'
-                      top={0}
-                      right={0}
-                      pe='3px'
-                    >
-                      <IconButton
-                        icon={<CloseIcon boxSize={2} />}
-                        aria-label='Remove'
-                        bg='gray.800'
-                        _hover={{ bg: 'gray.600' }}
-                        size='xs'
-                        rounded='full'
-                        onClick={() => onRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)}
-                      />
-                    </Box>
-                  </Box>
+                        <Box
+                          position='absolute'
+                          top={0}
+                          right={0}
+                          pe='3px'
+                        >
+                          <IconButton
+                            icon={<CloseIcon boxSize={2} />}
+                            aria-label='Remove'
+                            bg='gray.800'
+                            _hover={{ bg: 'gray.600' }}
+                            size='xs'
+                            rounded='full'
+                            onClick={(e) => {
+                              e.stopPropagation(); // prevent popover
+                              onRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    </PopoverTrigger>
+
+                    {!pendingNfts[index].isActive && (
+                      <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <PopoverBody>The Barracks no longer supports this collection for staking. Any benefits will be removed next game</PopoverBody>
+                      </PopoverContent>
+                    )}
+                  </Popover>
                 ) : (
                   <Box position='relative' overflow='hidden'>
                     <Box
@@ -535,53 +553,52 @@ interface UnstakedNftsProps {
 const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedNftsProps) => {
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
-  const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['BarracksUnstakedNfts', address, collection],
-    () => nextApiService.getWallet(address!, {
+  const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['BarracksUnstakedNfts', address, collection],
+    queryFn: () => nextApiService.getWallet(address!, {
       collection: [collection],
       sortBy: 'rank',
       direction: 'asc'
     }),
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-      },
-      refetchOnWindowFocus: false,
-      enabled: !!address && isReady && !!collection,
-      select: (data) => {
-        data.pages = data.pages.map((page) => {
-          return {
-            ...page,
-            data: page.data.filter((item) => {
-              return item.attributes?.some((attr: any) => {
-                const collection = config.collections.find((c: any) => caseInsensitiveCompare(c.address, item.nftAddress));
-                const eligibility = rdContext.config.barracks.staking.nft.collections.find((e) => e.slug === collection.slug);
-                if (!eligibility) return false;
-                const traitType = attr.trait_type.toLowerCase();
-                const value = attr.value.toString().toLowerCase();
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false,
+    enabled: !!address && isReady && !!collection,
+    select: (data) => {
+      data.pages = data.pages.map((page) => {
+        return {
+          ...page,
+          data: page.data.filter((item) => {
+            return item.attributes?.some((attr: any) => {
+              const collection = config.collections.find((c: any) => caseInsensitiveCompare(c.address, item.nftAddress));
+              const eligibility = rdContext.config.barracks.staking.nft.collections.find((e) => e.slug === collection.slug);
+              if (!eligibility) return false;
+              const traitType = attr.trait_type.toLowerCase();
+              const value = attr.value.toString().toLowerCase();
 
-                let found = eligibility.traits.length === 0;
-                for (let traitRule of eligibility.traits) {
-                  if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
-                    found = true;
-                    break;
-                  } else if (traitRule.inclusion === 'exclude' && traitRule.type === traitType && !traitRule.values.includes(value)) {
-                    found = true;
-                    break;
-                  }
+              let found = eligibility.traits.length === 0;
+              for (let traitRule of eligibility.traits) {
+                if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
+                  found = true;
+                  break;
+                } else if (traitRule.inclusion === 'exclude' && traitRule.type === traitType && !traitRule.values.includes(value)) {
+                  found = true;
+                  break;
                 }
+              }
 
-                return found;
-              })
+              return found;
+            })
 
-            }),
-          };
-        });
+          }),
+        };
+      });
 
-        return data;
-      }
+      return data;
     }
-  );
+  });
 
   return (
     <>
@@ -596,7 +613,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           </Center>
         }
       >
-        {status === "loading" ? (
+        {status === 'pending' ? (
           <Center>
             <Spinner />
           </Center>
@@ -622,7 +639,7 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           </SimpleGrid>
         ) : (
           <Box textAlign='center' mt={8}>
-            <Text>No NFTs available</Text>
+            <Text>No NFTs available. <br />Can't find your NFT? Check the FAQ at the top left for eligibility requirements</Text>
           </Box>
         )}
       </InfiniteScroll>

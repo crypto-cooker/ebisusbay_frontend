@@ -1,5 +1,50 @@
 [
   {
+    "name": "Ryoshi Heroes",
+    "start": 1698815621,
+    "end": 1698962400,
+    "placement": "rd-board",
+    "details": {
+      "weight": 2,
+      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-heroes-lg.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-heroes-sm.webp",
+      "link": {
+        "url": "/drops/ryoshi-heroes",
+        "external": false
+      }
+    }
+  },
+  {
+    "name": "Ryoshi Tales: Goblin Gala",
+    "start": 1698275251,
+    "end": 1698437220,
+    "placement": "rd-board",
+    "details": {
+      "weight": 3,
+      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-tales-goblin-gala-lg.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-tales-goblin-gala-sm.webp",
+      "link": {
+        "url": "/collection/ryoshi-tales",
+        "external": false
+      }
+    }
+  },
+  {
+    "name": "Ryoshi Hearts",
+    "start": 1697910565,
+    "end": 1699163920,
+    "placement": "rd-board",
+    "details": {
+      "weight": 1,
+      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-hearts-lg.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-hearts-sm.webp",
+      "link": {
+        "url": "/drops/ryoshi-hearts",
+        "external": false
+      }
+    }
+  },
+  {
     "name": "Ryoshi Clubs",
     "start": 1694211854,
     "end": 1697126400,
@@ -85,8 +130,8 @@
     "placement": "rd-board",
     "details": {
       "weight": 1,
-      "imageLg": "/img/ryoshi-dynasties/announcements/vvs.webp",
-      "imageSm": "/img/ryoshi-dynasties/announcements/vvs.webp",
+      "imageLg": "/img/ryoshi-dynasties/announcements/ads/vvs.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/ads/vvs-sm.gif",
       "link": {
         "url": "https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
         "external": true

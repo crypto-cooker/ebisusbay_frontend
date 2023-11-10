@@ -123,8 +123,11 @@ class ImageTranslator {
   }
 
   static remapUrl(fromDomain: string, toDomain: string) {
-    if (isLocalEnv() || !fromDomain.startsWith('http')) return urlify(toDomain, fromDomain);
-    if(!fromDomain || fromDomain.startsWith('data')) return fromDomain;
+    const isRawData = fromDomain.startsWith('data');
+    if (!isRawData && (isLocalEnv() || !fromDomain.startsWith('http'))) {
+      return urlify(toDomain, fromDomain);
+    }
+    if(!fromDomain || isRawData) return fromDomain;
 
     // Put urls with paths above base urls to avoid path nesting
     const remappableDomains: string[] = [

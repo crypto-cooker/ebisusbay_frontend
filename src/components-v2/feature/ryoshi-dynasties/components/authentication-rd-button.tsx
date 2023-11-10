@@ -1,4 +1,4 @@
-import {Box, Text} from "@chakra-ui/react";
+import {Box, Text, ResponsiveValue} from "@chakra-ui/react";
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components/index";
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
 import React, {ReactNode, useEffect, useState} from "react";
@@ -6,13 +6,16 @@ import React, {ReactNode, useEffect, useState} from "react";
 // import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 // import {useAppSelector} from "@src/Store/hooks";
 
+type Size = 'sm' | 'md' | 'lg';
+
 interface AuthenticationRdButtonProps {
   connectText?: string;
   signinText?: string;
+  size?: ResponsiveValue<Size>;
   children: ReactNode;
 }
 
-const AuthenticationRdButton: React.FC<AuthenticationRdButtonProps> = ({ connectText, signinText, children }) => {
+const AuthenticationRdButton: React.FC<AuthenticationRdButtonProps> = ({ connectText, signinText, size = 'lg', children }) => {
   // const [manualConnect, setManualConnect] = useState(false);
   // const {isSignedIn, signin, isSigningIn: isAutoSigningIn} = useEnforceSigner();
   // const user = useAppSelector(state => state.user);
@@ -50,6 +53,7 @@ const AuthenticationRdButton: React.FC<AuthenticationRdButtonProps> = ({ connect
                 stickyIcon={true}
                 onClick={signin}
                 isLoading={isSigningIn}
+                size={size}
                 // isLoading={isSigningIn || isAutoSigningIn}
               >
                 Sign in
@@ -63,6 +67,7 @@ const AuthenticationRdButton: React.FC<AuthenticationRdButtonProps> = ({ connect
               <RdButton
                 onClick={connect}
                 isLoading={isConnecting}
+                size={size}
               >
                 Connect Wallet
               </RdButton>
