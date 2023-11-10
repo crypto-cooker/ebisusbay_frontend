@@ -856,3 +856,14 @@ html[data-theme='dark'] {
 //  border: 1px solid $borderColor2 !important;
 //  color: $textColor1 !important;
 //}
+
+// Hacks for Chakra UI v2.8+ to suppress bootstrap styles that earlier versions once did
+p {
+  margin-bottom: 0;
+}
+dl, ol, ul {
+  margin-bottom: 0;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0;
+}

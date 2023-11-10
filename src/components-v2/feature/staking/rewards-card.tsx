@@ -162,7 +162,7 @@ const RewardsCard = () => {
               </Box>
               {user.address && (
                 <div className="mt-4">
-                  {userPendingRewards > 0 ? (
+                  {Number(userPendingRewards) > 0 ? (
                     <>
                       <p className="text-center my-xl-auto fs-5" style={{ color: getTheme(userTheme).colors.textColor3 }}>
                         You have <strong>{ethers.utils.commify(round(userPendingRewards, 3))} CRO</strong> available for
@@ -173,7 +173,7 @@ const RewardsCard = () => {
                         mb={1}
                         mt={2}
                         onClick={harvest}
-                        disabled={!(userPendingRewards > 0)}
+                        disabled={!(Number(userPendingRewards) > 0)}
                         loadingText='Harvesting...'
                         isLoading={isHarvesting}
                       >
