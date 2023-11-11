@@ -120,130 +120,13 @@ export const RankPlayers = async (data : any, gameId:number, testcases:boolean=f
   activeGameStartIndex = (gameNumber - 1) * 4000;
   // console.log("activeGameStartIndex", activeGameStartIndex);
 
-  // if(testcases) {
-  //   // 4 of a kind club kicker card
-  //   rankedPlayers.push({ 
-  //     address: "4:A(2C) Secondary:2(C)",
-  //     cards: [3903, 3902, 1960, 1728, 222, 4210, 7999, 7998],
-  //     cardRanks: [],
-  //     bestHand: {
-  //       handRef: 0,
-  //       primaryValue: 0,
-  //       secondaryValue: 0,
-  //       handDescription: "",
-  //       secondaryCardEdition: 0
-  //     },
-  //   })
-  //   //4 of a kind diamond kicker card
-  //   rankedPlayers.push({ 
-  //     address: "4:A(3C) Secondary:A(D)",
-  //     cards: [3903, 3902, 1960, 1728, 222, 2710, 7999, 7998, 7997],
-  //     cardRanks: [],
-  //     bestHand: {
-  //       handRef: 0,
-  //       primaryValue: 0,
-  //       secondaryValue: 0,
-  //       handDescription: "",
-  //       secondaryCardEdition: 0
-  //     },
-  //   })
-  //   //full house
-  //   rankedPlayers.push({ 
-  //     address: "3:A(2C) 2:5s(1C+1D)",
-  //     cards: [3903, 7998, 1110, 5110, 7999],
-  //     cardRanks: [],
-  //     bestHand: {
-  //       handRef: 0,
-  //       primaryValue: 0,
-  //       secondaryValue: 0,
-  //       handDescription: "",
-  //       secondaryCardEdition: 0
-  //     },
-  //   })
-  //   //Three of a kind with club kicker
-  //   rankedPlayers.push({ 
-  //     address: "3:A(2C) 1:5s(1C)",
-  //     cards: [3903, 7998, 2, 5110, 7999],
-  //     cardRanks: [],
-  //     bestHand: {
-  //       handRef: 0,
-  //       primaryValue: 0,
-  //       secondaryValue: 0,
-  //       handDescription: "",
-  //       secondaryCardEdition: 0
-  //     },
-  //   })
-  //   //Three of a kind with diamond kicker
-  //   rankedPlayers.push({ 
-  //     address: "3:A(3C) 1:Q(D)",
-  //     cards: [7997, 7998, 3799, 5110, 7999],
-  //     cardRanks: [],
-  //     bestHand: {
-  //       handRef: 0,
-  //       primaryValue: 0,
-  //       secondaryValue: 0,
-  //       handDescription: "",
-  //       secondaryCardEdition: 0
-  //     },
-  //   })
-  //   //fails because it doesn't have enough cards for the game
-  //   rankedPlayers.push({ 
-  //     address: "3:A(1C) 2:2s(1C,1D)",
-  //     cards: [3903, 3902, 1110, 5110, 7999],
-  //     cardRanks: [],
-  //     bestHand: {
-  //       handRef: 0,
-  //       primaryValue: 0,
-  //       secondaryValue: 0,
-  //       handDescription: "",
-  //       secondaryCardEdition: 0
-  //     },
-  //   })
-  //   //Straight with 5 clubs
-  //   rankedPlayers.push({ 
-  //     address: "Straight:5-9 (5C)",
-  //     cards: [5600, 6000, 6400, 6800, 7200],
-  //     cardRanks: [],
-  //     bestHand: {
-  //       handRef: 0,
-  //       primaryValue: 0,
-  //       secondaryValue: 0,
-  //       handDescription: "",
-  //       secondaryCardEdition: 0
-  //     },
-  //   })
-  //   //Straight with 3 clubs
-  //   rankedPlayers.push({ 
-  //     address: "Straight:5-9 (3C)",
-  //     cards: [5600, 2000, 6400, 2800, 7200],
-  //     cardRanks: [],
-  //     bestHand: {
-  //       handRef: 0,
-  //       primaryValue: 0,
-  //       secondaryValue: 0,
-  //       handDescription: "",
-  //       secondaryCardEdition: 0
-  //     },
-  //   })
-  //    //Straight with 2 clubs
-  //    rankedPlayers.push({ 
-  //     address: "Straight:5-9 (2C)",
-  //     cards: [5600, 2000, 2400, 2800, 7200],
-  //     cardRanks: [],
-  //     bestHand: {
-  //       handRef: 0,
-  //       primaryValue: 0,
-  //       secondaryValue: 0,
-  //       handDescription: "",
-  //       secondaryCardEdition: 0
-  //     },
-  //   })
+
   // } else {
     rankedPlayers = CreateRankedPlayersFromData(data);
   // }
   // filter out only the entry with the address that we want
-  // rankedPlayers = rankedPlayers.filter((player) => player.address === ("0xcc937dfeb7f9e608fcbeb3937636b0471d477e42").toLowerCase());
-  // rankedPlayers = rankedPlayers.filter((player) => player.address === ("0xd77df0b7b7d7b45693c21AAc464AF2BA10433171").toLowerCase());
+  // rankedPlayers = rankedPlayers.filter((player) => player.address === ("0x191df655aeb0c1e6c67ff5bf8a2d401903e61448").toLowerCase());
+  // rankedPlayers = rankedPlayers.filter((player) => player.address === ("0x574ceac75090869c92fd5315d0e89a0294ca58fc").toLowerCase());
   
   rankedPlayers = rankedPlayers.filter((player) => player.cards.length >= 5);
   rankedPlayers = RemoveBlackListedPlayers(rankedPlayers);
@@ -407,7 +290,6 @@ export const RankPlayersByWorst = async (_rankedPlayers : Player[], gameId:numbe
   }
   const GetLowestCard = (_activeGameCards: number[], cardInHand: number[]) => {
     let activeGameCards = new Array(..._activeGameCards);
-    
     //check if there is a club card with the same value as the card in hand
     for(let i = 0; i < cardInHand.length; i++) {
       let removedMe = false;
@@ -421,6 +303,7 @@ export const RankPlayersByWorst = async (_rankedPlayers : Player[], gameId:numbe
     //go through the remaining cards and find the best card to add
     let bestClubCard = Infinity;
     activeGameCards.sort((a, b) => b - a);
+    // console.log("activeGameCards", activeGameCards);
     for(let i = 0; i < activeGameCards.length; i++) {
       if(activeGameCards[i] < bestClubCard) {
         bestClubCard = activeGameCards[i];
@@ -464,18 +347,20 @@ export const RankPlayersByWorst = async (_rankedPlayers : Player[], gameId:numbe
     let secondaryCardEdition = -1;
     cardsFromGame.sort((a, b) => b - a);
     let filteredCards = new Array();
+    // console.log("reverseOrder", reverseOrder, cards.length);
 
     for(let i = 0; i < cards.length; i++){
       //get value of card from cardValueDict
       let cardActualValue  = 0;
       cardValueDict.forEach((cardValue) => {
-        if(cardValue.max <= cards[i]) {
+        if(cardValue.max < cards[i]%4000) {
           cardActualValue = cardValue.value+1;
         }
       })
       //fix for overflow
-      // if(cardActualValue == 15) cardActualValue = 2;
-      // console.log("cardActualValue", cardActualValue);
+      if(cardActualValue == 15) cardActualValue = 2;
+      // console.log("cards[i]", cards[i], cards[i]%4000, cardActualValue, secondaryValue, reverseOrder);
+
 
       if(cardActualValue == secondaryValue) {
         filteredCards.push(cards[i]);
@@ -484,7 +369,6 @@ export const RankPlayersByWorst = async (_rankedPlayers : Player[], gameId:numbe
     }
 
     if(ActiveGameCardNeededInKicker(cardsFromGame, valuesUsedInHand)) {
-      // console.log("activeGameStartIndex", activeGameStartIndex);
       filteredCards = filteredCards.filter((card) => card > activeGameStartIndex)
     }
 
@@ -496,6 +380,7 @@ export const RankPlayersByWorst = async (_rankedPlayers : Player[], gameId:numbe
       // console.log("filteredCards", filteredCards);
 
       for(let i = 0; i < filteredCards.length; i++) {
+        // console.log("filteredCards[i]%4000", filteredCards[i]%4000, reverseOrder);
         filteredCards[i]%4000 < lowestCard ? lowestCard = filteredCards[i]%4000 : null;
         // console.log("lowestCard", filteredCards[i]%4000);
       }
@@ -557,7 +442,9 @@ export const RankPlayersByWorst = async (_rankedPlayers : Player[], gameId:numbe
     if(fourOfAKind) {
       let valuesUsedInHand = [fourOfAKindValue, fourOfAKindValue, fourOfAKindValue, fourOfAKindValue];
       secondaryValue = GetSecondaryCardRank(cardsFromGame, valuesUsedInHand, secondaryValue)
-      if(reverseOrder) secondaryValue = GetLowestCard(cardRanks, valuesUsedInHand);
+      if(reverseOrder ){
+        secondaryValue = ActiveGameCardNeededInKicker(cardsFromGame, valuesUsedInHand) ? GetLowestCard(cardsFromGame, valuesUsedInHand) : GetLowestCard(cardRanks, valuesUsedInHand)
+      }
       let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame, cards, secondaryValue, valuesUsedInHand, reverseOrder);
 
       return {
@@ -601,7 +488,9 @@ export const RankPlayersByWorst = async (_rankedPlayers : Player[], gameId:numbe
     if(straight) {
       let valuesUsedInHand = [straightValue, straightValue-1, straightValue-2, straightValue-3];
       let secondaryValue = GetSecondaryCardRank(cardsFromGame, valuesUsedInHand, uniqueCards[uniqueCards.length - 1])
-      if(reverseOrder) secondaryValue = GetLowestCard(cardRanks, valuesUsedInHand);
+      if(reverseOrder ){
+        secondaryValue = ActiveGameCardNeededInKicker(cardsFromGame, valuesUsedInHand) ? GetLowestCard(cardsFromGame, valuesUsedInHand) : GetLowestCard(cardRanks, valuesUsedInHand)
+      }
       let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame, cards, secondaryValue, valuesUsedInHand, reverseOrder);
 
       return {
@@ -693,7 +582,9 @@ export const RankPlayersByWorst = async (_rankedPlayers : Player[], gameId:numbe
     if(threeOfAKind) {
       let valuesUsedInHand = [threeOfAKindValue, threeOfAKindValue, threeOfAKindValue, secondaryValue, secondaryValue];
       secondaryValue = GetSecondaryCardRank(cardsFromGame, valuesUsedInHand, secondaryValue)
-      if(reverseOrder) secondaryValue = GetLowestCard(cardRanks, valuesUsedInHand);
+      if(reverseOrder ){
+        secondaryValue = ActiveGameCardNeededInKicker(cardsFromGame, valuesUsedInHand) ? GetLowestCard(cardsFromGame, valuesUsedInHand) : GetLowestCard(cardRanks, valuesUsedInHand)
+      }
       let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame, cards, secondaryValue, valuesUsedInHand, reverseOrder);
       let cardIds = GetCardIdsFromGame(cards, [threeOfAKindValue.toString(), threeOfAKindValue.toString(), threeOfAKindValue.toString(), 
         secondaryValue.toString(), secondaryValue.toString()]);
@@ -724,17 +615,16 @@ export const RankPlayersByWorst = async (_rankedPlayers : Player[], gameId:numbe
 
     let onePair = false;
     let twoPair = false;
-    let smallerPairValue = 0;
-    let largerPair = 0;
+    let smallerPairValue = reverseOrder ? Infinity : 0;
+    let largerPair = reverseOrder ? Infinity : 0;
 
     Object.keys(cardCountDict).forEach((card) => {
-      if(cardCountDict[card] === 2 && MeetsGameRequriements(cardsFromGame, [card, card])) {
+      if(cardCountDict[card] >= 2 && MeetsGameRequriements(cardsFromGame, [card, card])) {
         if(!onePair) {
           onePair = true;
           smallerPairValue = parseInt(card);
         } else {
           twoPair = true;
-
           if(reverseOrder) {
             if(parseInt(card) < largerPair) {
               if(largerPair < smallerPairValue) {
@@ -758,6 +648,7 @@ export const RankPlayersByWorst = async (_rankedPlayers : Player[], gameId:numbe
     if(twoPair) {
       let valuesUsedInHand = [smallerPairValue, smallerPairValue, largerPair, largerPair];
       smallerPairValue = GetSecondaryCardRank(cardsFromGame, valuesUsedInHand, smallerPairValue)
+      largerPair = GetSecondaryCardRank(cardsFromGame, valuesUsedInHand, largerPair)
       let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame, cards, smallerPairValue, valuesUsedInHand, reverseOrder);
       let cardIds = GetCardIdsFromGame(cards, [smallerPairValue.toString(), smallerPairValue.toString(), largerPair.toString(), 
         largerPair.toString()]);
@@ -800,7 +691,9 @@ export const RankPlayersByWorst = async (_rankedPlayers : Player[], gameId:numbe
     if(onePair) {
       let valuesUsedInHand = [onePairValue, onePairValue];
       secondaryValue = GetSecondaryCardRank(cardsFromGame, valuesUsedInHand, secondaryValue)
-      if(reverseOrder) secondaryValue = GetLowestCard(cardRanks, valuesUsedInHand);
+      if(reverseOrder ){
+        secondaryValue = ActiveGameCardNeededInKicker(cardsFromGame, valuesUsedInHand) ? GetLowestCard(cardsFromGame, valuesUsedInHand) : GetLowestCard(cardRanks, valuesUsedInHand)
+      }
       let secondaryCardEdition = GetSecondaryCardEdition(cardRanks, cardsFromGame, cards, secondaryValue, valuesUsedInHand, reverseOrder);
       let cardIds = GetCardIdsFromGame(cards, [onePairValue.toString(), onePairValue.toString()]);
 
