@@ -375,7 +375,7 @@ export const configData = {
       }
     },
     rpc: {
-      read: 'https://testnet-archive.cronoslabs.com/v1/9e45d288f24ea538e34bc9919da2d360',
+      read: 'https://rpc.ebisusbay.biz/',
       write: 'https://evm-t3.cronos.org/',
     },
     contracts: {
