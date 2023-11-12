@@ -23955,7 +23955,7 @@
       "multiToken": false,
       "address": "0xbf21dD4385fee72106bf235814AEf29d454c1a93",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Where resilience meets opportunity. We are a diverse community of individuals who've faced setbacks and failures but now unite to support each other. Our name symbolizes our strength born from adversity. Through masks and specialized factions, we express our unique reflections and maintain our anonymous online identities.",
         "avatar": "/img/collections/the-luckl355/avatar.webp",
@@ -31782,7 +31782,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/the-luckl355/drop.webp",
         "banner": "/img/collections/the-luckl355/banner.webp",
