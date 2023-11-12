@@ -2427,7 +2427,7 @@
         "avatar": "/img/collections/hypeddogs/avatar.webp",
         "card": "/img/collections/hypeddogs/card.webp",
         "banner": "/img/collections/hypeddogs/banner.webp",
-        "website": "https://www.hypednftclub.com/hypeddog",
+        "website": "https://www.hypedclubnft.com/",
         "twitter": "https://twitter.com/HypedDogs",
         "discord": "https://discord.gg/z6MtMavKMp",
         "categories": [
@@ -4529,7 +4529,7 @@
         "description": "Hyped Dogs: Custom Gen is here! Customs are hand made by the artist for loyal members of Hyped Dogs GEN1 collection. This is our revolution.",
         "avatar": "/img/collections/hypeddogs/custom/avatar.webp",
         "banner": "/img/collections/hypeddogs/custom/banner.webp",
-        "website": "https://www.hypednftclub.com/hypeddog",
+        "website": "https://www.hypedclubnft.com/",
         "twitter": "https://twitter.com/HypedDogs",
         "discord": "https://discord.gg/z6MtMavKMp",
         "categories": [
@@ -20308,7 +20308,7 @@
         "banner": "/img/collections/the-pogo/banner.webp",
         "website": "https://thepogonft.xyz/",
         "twitter": "https://twitter.com/ThePogoNFT",
-        "discord": "https://discord.gg/GmdJ6tuzR7",
+        "discord": "https://discord.gg/JupNGe7t7k",
         "medium": "https://the-pogo.gitbook.io/the-pogo/",
         "categories": [
           "collectibles"
@@ -23955,7 +23955,7 @@
       "multiToken": false,
       "address": "0xbf21dD4385fee72106bf235814AEf29d454c1a93",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Where resilience meets opportunity. We are a diverse community of individuals who've faced setbacks and failures but now unite to support each other. Our name symbolizes our strength born from adversity. Through masks and specialized factions, we express our unique reflections and maintain our anonymous online identities.",
         "avatar": "/img/collections/the-luckl355/avatar.webp",
@@ -29922,7 +29922,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/ryoshi-tales-vip/drop.webp",
         "banner": "/img/drops/ryoshi-tales-vip/banner.webp",
@@ -31202,7 +31202,7 @@
         "name": "The Pogo NFT",
         "website": "https://thepogonft.xyz/",
         "twitter": "https://twitter.com/ThePogoNFT",
-        "discord": "https://discord.gg/GmdJ6tuzR7",
+        "discord": "https://discord.gg/JupNGe7t7k",
         "medium": "https://the-pogo.gitbook.io/the-pogo/"
       },
       "address": "0x860c2245Ea1693f24AEd4A0364bba5787355bAA0",
@@ -31782,7 +31782,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/the-luckl355/drop.webp",
         "banner": "/img/collections/the-luckl355/banner.webp",
