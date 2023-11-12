@@ -29922,7 +29922,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/ryoshi-tales-vip/drop.webp",
         "banner": "/img/drops/ryoshi-tales-vip/banner.webp",
