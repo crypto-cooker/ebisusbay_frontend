@@ -45,8 +45,8 @@ export default async function handler(req: NextRequest) {
   const chest = urlify(appConfig('urls.app'), mainFolderPath + "/HeroClass/"+ GetHeroClass(nft.attributes)  + '/Chest/'+GetClothes(nft.attributes));
   const belt = urlify(appConfig('urls.app'), mainFolderPath + "/HeroClass/"+ GetHeroClass(nft.attributes)  + '/Belt/'+GetClothes(nft.attributes));
   const gloves = urlify(appConfig('urls.app'), mainFolderPath + "/HeroClass/"+ GetHeroClass(nft.attributes)  + '/Gloves/'+GetClothes(nft.attributes));
-  const goggles = urlify(appConfig('urls.app'), mainFolderPath + "/HeroClass/"+ (IsDruid(nft.attributes) ? '/HeroClass/Druid/Markings/' : '/HeroClass/Empty/') +GetClothes(nft.attributes));
-  const markings = urlify(appConfig('urls.app'), mainFolderPath + "/HeroClass/"+ (IsTinkerer(nft.attributes) ? '/HeroClass/Tinkerer/Goggles.png' : '/HeroClass/Empty/'+GetClothes(nft.attributes)));
+  const goggles = urlify(appConfig('urls.app'), mainFolderPath + "/HeroClass/"+ (IsDruid(nft.attributes) ? 'Druid/Markings/' : 'Empty/') +GetClothes(nft.attributes));
+  const markings = urlify(appConfig('urls.app'), mainFolderPath + "/HeroClass/"+ (IsTinkerer(nft.attributes) ? 'Tinkerer/Goggles.png' : 'Empty/'+GetClothes(nft.attributes)));
 
   return new ImageResponse(
     (
