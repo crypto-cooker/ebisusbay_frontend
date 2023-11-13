@@ -58,17 +58,27 @@ export async function getOwners(collection) {
         }
   }
   `
+  let queryHearts = `
+      query owners($lastID: String) {
+        erc721Tokens(where: {contract: "0xd87838a982a401510255ec27e603b0f5fea98d24", id_gt: $lastID}, first: 1000, block: {number: 11127075}) {
+              id
+              owner {
+                    id
+              }
+              identifier
+        }
+  }
+  `
   try {
     let data;
       if(collection == "Live") {
         data = await getSubgraphData(SUBGRAPH, query, {}, "erc721Tokens");
-        // console.log("Live: ", data)
       } else if(collection == "Diamonds") {
         data = await getSubgraphData(SUBGRAPH, queryDiamonds, {}, "erc721Tokens");
-        // console.log("Diamonds: ", data)
       } else if(collection == "Clubs") {
         data = await getSubgraphData(SUBGRAPH, queryClubs, {}, "erc721Tokens");
-        // console.log("Clubs: ", data)
+      } else if(collection == "Hearts") {
+        data = await getSubgraphData(SUBGRAPH, queryHearts, {}, "erc721Tokens");
       }
       if (data) {
           // DATA HERE

@@ -330,6 +330,7 @@ const CurrentFaction = () => {
     }
   }
 
+  const [focusedGameId, setFocusedGameId] = useState<number>(rdContext.game?.game.id ?? 0);
   const handleGameChange = async (game?: string) => {
     if (game === 'previous' && !!rdContext.game) {
       try {
@@ -338,9 +339,11 @@ const CurrentFaction = () => {
         const signature = await requestSignature();
         const troops = await ApiService.withoutKey().ryoshiDynasties.getTroopsBreakdown(previousGameId, user.address!, signature);
         setTroopsByGame(troops);
+        setFocusedGameId(previousGameId);
       } catch (e) {
         console.log(e);
         setTroopsByGame(rdContext.user?.season.troops);
+        setFocusedGameId(rdContext.game.game.id);
       } finally {
         setLoadingTroopsBreakdown(false);
       }
@@ -467,7 +470,11 @@ const CurrentFaction = () => {
                 </Select>
               </Flex>
               {!!troopsByGame && (
-                <TroopsBreakdown faction={rdContext.user.faction} troops={troopsByGame} />
+                <TroopsBreakdown
+                  faction={rdContext.user.faction}
+                  troops={troopsByGame}
+                  gameId={focusedGameId}
+                />
               )}
             </>
           )}
@@ -512,7 +519,7 @@ const CurrentFaction = () => {
   );
 }
 
-const TroopsBreakdown = ({faction, troops}: {faction: RdFaction, troops: RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops}) => {
+const TroopsBreakdown = ({faction, troops, gameId}: {faction: RdFaction, gameId: number, troops: RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops}) => {
   const user = useAppSelector((state) => state.user);
   const {signature} = useEnforceSignature();
 
@@ -592,10 +599,11 @@ const TroopsBreakdown = ({faction, troops}: {faction: RdFaction, troops: RdUserC
                     data={(troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
                       address: user.profileWalletAddress,
                       name: user.profileName,
-                      troops: user.troops
+                      troops: user.troops,
                     })).sort((a, b) => b.troops - a.troops)}
                     address={user.address!}
                     signature={signature}
+                    gameId={gameId}
                   />
                 </>
               ) : (
@@ -809,7 +817,7 @@ const CopyableText = ({text, label}: {text: string, label: string}) => {
   )
 }
 
-const ExportDataComponent = ({data, address, signature}: {data: any, address: string, signature: string}) => {
+const ExportDataComponent = ({data, gameId, address, signature}: {data: any, gameId: number, address: string, signature: string}) => {
   const csvData = convertToCSV(data);
   const blob = new Blob([csvData], { type: 'text/csv' });
   const downloadLink = URL.createObjectURL(blob);
@@ -822,7 +830,7 @@ const ExportDataComponent = ({data, address, signature}: {data: any, address: st
       params: {
         address,
         signature,
-        gameId: 52,
+        gameId,
         type: 'ryoshi-dynasties/delegations'
       }
     });
