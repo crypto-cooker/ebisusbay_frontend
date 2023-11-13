@@ -77,12 +77,12 @@ export const getServerSideProps = async ({query}: GetServerSidePropsContext) => 
       }
     }
 
-    const data = await ApiService
+    const troops = await ApiService
       .withKey(process.env.EB_API_KEY as string)
       .ryoshiDynasties
-      .getUserContext(token.address!, token.signature);
+      .getTroopsBreakdown(token.gameId, token.address!, token.signature);
 
-    const delegations = (data.season.troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
+    const delegations = (troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
       address: user.profileWalletAddress,
       name: user.profileName,
       troops: user.troops
