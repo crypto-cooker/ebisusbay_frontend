@@ -96,14 +96,14 @@ export class ApiService implements Api {
       gameNumber = 1;
     } else if (pokerCollection == PokerCollection.Clubs) {
       gameNumber = 2;
-    } else if (pokerCollection == PokerCollection.Live) {
+    } else if (pokerCollection == PokerCollection.Hearts) {
       gameNumber = 3;
     }
 
     const response = await RankPlayers(owners, gameNumber);
 
     let combined = [];
-    if (pokerCollection == PokerCollection.Live)
+    if (pokerCollection == PokerCollection.Hearts)
     {
       let worstHands = await RankPlayers(owners, gameNumber);
       worstHands = await RankPlayersByWorst(worstHands, gameNumber);

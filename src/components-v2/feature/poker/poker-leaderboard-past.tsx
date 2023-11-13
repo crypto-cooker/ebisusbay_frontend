@@ -30,7 +30,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				return 'https://blog.ebisusbay.com/crypto-hodlem-round-2-ryoshi-clubs-playing-cards-collection-6e7d869f87ee'
 			case PokerCollection.Diamonds:
 				return'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'
-			case PokerCollection.Live:	
+			case PokerCollection.Hearts:	
 				return 'https://blog.ebisusbay.com/crypto-hodlem-round-3-ryoshi-hearts-%EF%B8%8F-playing-cards-collection-e5ae3361c32e'
 		}
 	}
@@ -267,7 +267,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				<>
 				<GridItem maxW='50px'  >
 				{/* we want this to print a number every other line */}
-				{ pokerCollection === PokerCollection.Live ?
+				{ pokerCollection === PokerCollection.Hearts ?
 				<>
 					{ i%2 === 0 ? 
 						<Text fontSize={{base: 12, md:14}}> {i+1}</Text>
@@ -278,14 +278,17 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				</GridItem>
 
 				<GridItem _hover={{bg: hoverBackground}}>
-				{ i%2 === 0 ? 
+				{ pokerCollection === PokerCollection.Hearts ?
+				i%2 === 0 ? 
 					<Text fontSize={{base: 12, md:14}}>{isMobile ? shortAddress(player.address) : player.address}</Text>
 					: <Text fontSize={{base: 12, md:14}} textColor={'red'}>{isMobile ? shortAddress(player.address) : player.address}</Text>
+				:
+					<Text fontSize={{base: 12, md:14}}>{isMobile ? shortAddress(player.address) : player.address}</Text>
 				}
 				</GridItem>
 		
 				<GridItem>
-				{ pokerCollection === PokerCollection.Live ?
+				{ pokerCollection === PokerCollection.Hearts ?
 					( i%2 === 0 ? 
 					<Text fontSize={{base: 12, md:14}} textColor={'white'}>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text>
 					: <Text fontSize={{base: 12, md:14}} textColor={'red'}>{getHandName(player.bestHand.handRef)} ({player.bestHand.handDescription})</Text> )
@@ -295,7 +298,9 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		
 				<GridItem>
 					<HStack>
+					{ pokerCollection === PokerCollection.Hearts ?
 						<Text textColor={i%2 ? 'red':'white'}>{getCardName(player.bestHand.secondaryValue)}</Text>
+						: <Text>{getCardName(player.bestHand.secondaryValue)}</Text>}
 						{player?.bestHand?.secondaryCardEdition! >= 0 &&
 							<Text
 							fontSize={{base: 8, md:12}}
@@ -324,6 +329,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		<VStack>
 			{pokerCollection === PokerCollection.Diamonds && updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Snapshot taken at Sep-12-2023 04:00:01 PM +UTC</Text>}
 			{pokerCollection === PokerCollection.Clubs && updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Snapshot taken at Oct-12-2023 04:00:01 PM +UTC</Text>}
+			{pokerCollection === PokerCollection.Hearts && updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Snapshot taken at Nov-13-2023 04:00:01 PM +UTC</Text>}
 			{pokerCollection === PokerCollection.Live && updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Last refreshed at {updatedAt}</Text>}
 			{content}
 		</VStack>
