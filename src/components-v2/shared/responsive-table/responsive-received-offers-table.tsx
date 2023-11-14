@@ -123,11 +123,23 @@ const DataTable = ({data, onAccept, onReject, canReject, onSort}: ResponsiveRece
                   <Td>
                     {!!offer.metadata.name ? (
                       <VStack align='start'>
-                        <Box fontSize='xs' className='color'>{offer.collection.name}</Box>
-                        <Box fontWeight='bold'>{offer.metadata.name}</Box>
+                        <Box fontSize='xs' className='color'>
+                          <Link href={`/collection/${offer.nftAddress}`} target='_blank'>
+                            {offer.collection.name}
+                          </Link>
+                        </Box>
+                        <Box fontWeight='bold'>
+                          <Link href={`/collection/${offer.nftAddress}/${offer.nftId}`} target='_blank'>
+                            {offer.metadata.name}
+                          </Link>
+                        </Box>
                       </VStack>
                     ) : (
-                      <Box fontWeight='bold'>{offer.collection.name}</Box>
+                      <Box fontWeight='bold'>
+                        <Link href={`/collection/${offer.nftAddress}`} target='_blank'>
+                          {offer.collection.name}
+                        </Link>
+                      </Box>
                     )}
                   </Td>
                   <Td>
@@ -234,10 +246,18 @@ const DataAccordion = ({data, onSort, onAccept, onReject, canReject}: Responsive
                         {!!offer.metadata.name ? (
                           <VStack align='start'>
                             <Box fontSize='xs' className='color'>{offer.collection.name}</Box>
-                            <Box fontWeight='bold'>{offer.metadata.name}</Box>
+                            <Box fontWeight='bold'>
+                              <Link href={`/collection/${offer.nftAddress}/${offer.nftId}`} target='_blank'>
+                                {offer.metadata.name}
+                              </Link>
+                            </Box>
                           </VStack>
                         ) : (
-                          <Box fontWeight='bold'>{offer.collection.name}</Box>
+                          <Box fontWeight='bold'>
+                            <Link href={`/collection/${offer.nftAddress}`} target='_blank'>
+                              {offer.collection.name}
+                            </Link>
+                          </Box>
                         )}
                       </Box>
                     </HStack>
