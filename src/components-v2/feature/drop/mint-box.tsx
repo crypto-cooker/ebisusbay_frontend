@@ -310,7 +310,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                     )}
                   </Box>
                 )}
-                {!!drop.rewardCost && (
+                {!!erc20Token && !!drop.rewardCost && (
                   <Box>
                     <Heading as="h6" size="sm" className="mb-1">
                       From Rewards
