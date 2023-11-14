@@ -32,12 +32,4 @@ Sentry.init({
   // ],
 
   maxBreadcrumbs: 50,
-
-  beforeSend(event, hint) {
-    // Check if the event is an error
-    if (event.level === 'error') {
-      return event;  // If it is an error, send the event to Sentry
-    }
-    return null;  // If it's not an error, discard the event
-  },
 });
