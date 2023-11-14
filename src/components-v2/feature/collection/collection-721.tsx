@@ -299,7 +299,7 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
           )}
           {openMenu === tabs.heartsPokerGame && (
             <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
-              <PokerLeaderboardComponentPast pokerCollection={PokerCollection.Live} />
+              <PokerLeaderboardComponentPast pokerCollection={PokerCollection.Hearts} />
             </NegativeMargin>
           )}
           {openMenu === tabs.cns && (

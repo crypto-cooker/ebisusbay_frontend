@@ -7,7 +7,7 @@ import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {
   caseInsensitiveCompare,
-  isBundle,
+  isBundle, isEbVipCollection,
   isErc20Token,
   isGaslessListing,
   isLandDeedsCollection,
@@ -49,6 +49,7 @@ import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon
 import {parseErrorMessage} from "@src/helpers/validator";
 import {getPrices} from "@src/core/api/endpoints/prices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
+import Link from "next/link";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -160,6 +161,8 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
     }
   }, [listing]);
 
+  const [hasAcceptedVipCondition, setHasAcceptedVipCondition] = useState(false);
+
   return isComplete ? (
     <PurchaseSuccessDialog onClose={onClose} isOpen={isOpen} listing={listing} tx={tx} />
   ) : (
@@ -179,6 +182,32 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
             <Text>Unable to load listing information</Text>
             <Text fontSize="xs">Error: {error?.toString()}</Text>
           </VStack>
+        ) : !hasAcceptedVipCondition && isEbVipCollection(listing.nft.address ?? listing.nft.nftAddress, listing.nft.id ?? listing.nft.nftId) ? (
+          <>
+            <ModalBody>
+              <Text>The Legacy Ebisu's Bay VIP has recently migrated to the Ryoshi Tales VIP. As a result, this NFT does <strong>NOT</strong> hold any of its previous membership benefits anymore such as reduced market fees and staking benefits.</Text>
+              <Text mt={2}>If you are wishing to gain membership benefits such as reduced market fees or staking benefits, please check out the new <Link href='/collection/ryoshi-tales-vip' className='color fw-bold'>Ryoshi Tales VIP</Link> collection.</Text>
+              <Text mt={2}>If you still wish to purchase this NFT, please confirm that you understand these conditions and that the price accurately represents the current market value.</Text>
+            </ModalBody>
+            <ModalFooter className="border-0">
+              <div className="d-flex">
+                <Button type="legacy"
+                  onClick={onClose}
+                  className="me-2 flex-fill"
+                >
+                  Go Back
+                </Button>
+                <Button type="legacy-outlined"
+                  onClick={() => {
+                    setHasAcceptedVipCondition(true);
+                  }}
+                  className="flex-fill"
+                >
+                  I understand, continue
+                </Button>
+              </div>
+            </ModalFooter>
+          </>
         ) : (
           <>
             <ModalBody>
@@ -187,16 +216,16 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                   {isBundle(listing.nftAddress) ? (
                     <ImagesContainer nft={listing.nft} />
                   ) : (
-                  <DynamicNftImage address={listing.nft.address ?? listing.nft.nftAddress} id={listing.nft.id ?? listing.nft.nftId} showStats={false}>
-                    <AnyMedia
-                      image={specialImageTransform(listing.nft.nftAddress, listing.nft.image)}
-                      video={listing.nft.video ?? listing.nft.animation_url}
-                      videoProps={{ height: 'auto', autoPlay: true }}
-                      title={listing.nft.name}
-                      usePlaceholder={false}
-                      className="img-fluid img-rounded"
-                    />
-                  </DynamicNftImage>
+                    <DynamicNftImage address={listing.nft.address ?? listing.nft.nftAddress} id={listing.nft.id ?? listing.nft.nftId} showStats={false}>
+                      <AnyMedia
+                        image={specialImageTransform(listing.nft.nftAddress, listing.nft.image)}
+                        video={listing.nft.video ?? listing.nft.animation_url}
+                        videoProps={{ height: 'auto', autoPlay: true }}
+                        title={listing.nft.name}
+                        usePlaceholder={false}
+                        className="img-fluid img-rounded"
+                      />
+                    </DynamicNftImage>
                   )}
                 </div>
                 <div className="col-8 mt-2 mt-sm-0">

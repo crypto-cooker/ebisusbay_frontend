@@ -9232,6 +9232,52 @@
         "kyc": true,
         "escrow": false
       }
+    },
+    {
+      "id": 188,
+      "slug": "ryoshi-tales-celestial-celebration",
+      "collection": "ryoshi-tales",
+      "title": "Ryoshi Tales: Celestial Celebration",
+      "subtitle": "High Commanders, Royalty and Elite members of Ryoshi society have gathered in celebration of Ebisu’s 2nd anniversary!",
+      "description": "An esteemed member of the Ryoshi elite, gracing the grand Celestial Celebration with their regal presence. This noble attendee, adorned in cosmic finery, is among the distinguished few who illuminate the 2-year anniversary of Ebisu’s Bay. Each character represents the zenith of Ryoshi society, from the starlit courts of royalty to the esteemed ranks of high command.",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 200,
+      "erc20Cost": "450",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "rewardCost": "750",
+      "foundersOnly": false,
+      "abi": "mint-from-rewards.json",
+      "start": 1699990712000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-celestial-celebration/drop.webp",
+        "avatar": "/img/drops/ryoshi-tales-celestial-celebration/avatar.webp",
+        "banner": "/img/drops/ryoshi-tales-celestial-celebration/banner.webp",
+        "preview": "/img/drops/ryoshi-tales-celestial-celebration/preview.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
     }
   ]
 }
