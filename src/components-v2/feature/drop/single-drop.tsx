@@ -19,10 +19,9 @@ import {MintBox} from "@src/components-v2/feature/drop/mint-box";
 import {useAppSelector} from "@src/Store/hooks";
 import {Drop, SpecialWhitelist} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
-import {commify} from "ethers/lib/utils";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import Markdown from "react-markdown";
+const Markdown= dynamic(() => import('react-markdown'),{ ssr: false });
 
 const config = appConfig();
 
