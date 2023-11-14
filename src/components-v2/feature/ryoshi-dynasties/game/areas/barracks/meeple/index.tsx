@@ -440,8 +440,8 @@ console.log('sdfasdf', walletData);
             isOpen={isOpenMintModal}
             onClose={onCloseMintModal}
             onComplete={() => {
-              refetchWallet();
-              rdRefreshUser();
+              // refetchWallet();
+              // rdRefreshUser();
               onCloseMintModal();
             }}
             onDutyAmount={onDutyMeepleData.onDuty}
@@ -480,7 +480,7 @@ console.log('sdfasdf', walletData);
             isOpen={isOpenDepositModal}
             onClose={onCloseDepositModal}
             onComplete={() => {
-              rdRefreshUser();
+              // rdRefreshUser();
               onCloseDepositModal();
             }}
             offDutyAmount={walletData.offDutyAmount}
@@ -804,15 +804,22 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyAmount}: Deposi
   const mutation = useMutation({
     mutationFn: depositMeeple,
     onSuccess: data => {
-      queryClient.setQueryData(['MeepleManagementPage', user.address], (old: any) => {
-        old.offDutyAmount = old.offDutyAmount - meepleToDeposit;
-        if (old.offDutyAmount < 0) old.offDutyAmount = 0;
-        return old;
-      });
+      try {
+        queryClient.setQueryData(['MeepleManagementPage', user.address], (old: any) => {
+          old.offDutyAmount = old.offDutyAmount - meepleToDeposit;
+          if (old.offDutyAmount < 0) old.offDutyAmount = 0;
+          return old;
+        });
 
-      toast.success(createSuccessfulTransactionToastContent(data.transactionHash));
-      setMeepleToDeposit(0);
-      onComplete();
+        queryClient.setQueryData(['GetMeepleOnDuty', user.address], (old: any) => {
+          old.onDuty = old.onDuty + meepleToDeposit;
+          return old;
+        });
+      } finally {
+        toast.success(createSuccessfulTransactionToastContent(data.transactionHash));
+        setMeepleToDeposit(0);
+        onComplete();
+      }
     }
   });
 
