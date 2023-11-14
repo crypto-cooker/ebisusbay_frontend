@@ -1,5 +1,20 @@
 [
   {
+    "name": "Ryoshi Tales: Celestial Celebration",
+    "start": 1699989574,
+    "end":  1700080200,
+    "placement": "rd-board",
+    "details": {
+      "weight": 1,
+      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-tales-celestial-celebration-lg.webp",
+      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-tales-celestial-celebration-sm.webp",
+      "link": {
+        "url": "/drops/ryoshi-tales-celestial-celebration",
+        "external": false
+      }
+    }
+  },
+  {
     "name": "Ryoshi Heroes",
     "start": 1698815621,
     "end": 1698962400,
@@ -129,7 +144,7 @@
     "end": 1718841600,
     "placement": "rd-board",
     "details": {
-      "weight": 1,
+      "weight": 0,
       "imageLg": "/img/ryoshi-dynasties/announcements/ads/vvs.webp",
       "imageSm": "/img/ryoshi-dynasties/announcements/ads/vvs-sm.gif",
       "link": {
