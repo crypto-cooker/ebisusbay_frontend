@@ -310,6 +310,19 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                     )}
                   </Box>
                 )}
+                {!!drop.rewardCost && (
+                  <Box>
+                    <Heading as="h6" size="sm" className="mb-1">
+                      From Rewards
+                    </Heading>
+                    <Heading as="h5" size="md">
+                      <Flex alignItems='center'>
+                        <DynamicCurrencyIcon address={erc20Token.address} boxSize={6} />
+                        <span className="ms-2">{ethers.utils.commify(round(drop.rewardCost))}</span>
+                      </Flex>
+                    </Heading>
+                  </Box>
+                )}
 
                 {whitelistCost > 0 && (
                   <Box>

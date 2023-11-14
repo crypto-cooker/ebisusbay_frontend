@@ -6,7 +6,7 @@ import * as Sentry from "@sentry/nextjs";
 const { name, version } = require('./package.json');
 
 Sentry.init({
-  release: `${name}@${version}`,
+  // release: `${name}@${version}`,
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   environment: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT,
 
