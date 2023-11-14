@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Provider } from 'react-redux';
 import * as Sentry from '@sentry/react';
 
@@ -25,20 +25,35 @@ import '../src/Assets/styles/override.scss';
 import customTheme from "@src/Theme/theme";
 import {AppProps} from "next/app";
 import App from "@src/components-v2/app";
+import {Web3Modal} from "@src/components-v2/web3modal";
 
 Site24x7LoggingService.init();
-const queryClient = new QueryClient()
 
 config.autoAddCss = false;
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            // With SSR, we usually want to set some default staleTime
+            // above 0 to avoid refetching immediately on the client
+            staleTime: 60 * 1000,
+          },
+        },
+      }),
+  )
+
   return (
     <>
       <Provider store={store}>
         <Sentry.ErrorBoundary fallback={() => <ErrorPage />}>
           <QueryClientProvider client={queryClient} >
             <ChakraProvider theme={customTheme}>
-              <App Component={Component} {...pageProps} />
+              <Web3Modal>
+                <App Component={Component} {...pageProps} />
+              </Web3Modal>
             </ChakraProvider>
           </QueryClientProvider>
         </Sentry.ErrorBoundary>
