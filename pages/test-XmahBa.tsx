@@ -1,16 +1,24 @@
 import {useEffect, useState} from "react";
 import {useAppSelector} from "@src/Store/hooks";
-import {Contract} from "ethers";
+import {Contract, ethers} from "ethers";
 import {Box, Button, Text, VStack} from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {GetServerSidePropsContext} from "next";
 import * as process from "process";
+import StakeABI from "@src/Contracts/Stake.json";
+import Membership from "@src/Contracts/EbisusBayMembership.json";
+import {appConfig} from "@src/Config";
+import {ApiService} from "@src/core/services/api-service";
+import Market from "@src/Contracts/Marketplace.json";
+import {ciEquals} from "@src/utils";
+
+const config = appConfig();
 
 function Test() {
   return (
     <Box m={4}>
       <VStack align='start'>
-        <SeasonIncrementor />
+        <GetRoyaltiedCollections />
       </VStack>
     </Box>
   )
@@ -19,62 +27,58 @@ function Test() {
 export default Test;
 
 
-const SeasonIncrementor = () => {
-  const user = useAppSelector((state) => state.user);
+const GetRoyaltiedCollections = () => {
   const [isExecuting, setIsExecuting] = useState(false);
-  const [gameLoopContract, setGameLoopContract] = useState<Contract | null>(null);
-  const [curSeason, setCurSeason] = useState<number>();
 
-  const handleIncrementSeason = async () => {
-    if (!user.address) {
-      toast.error('Please connect your wallet to continue');
-      return;
-    }
 
-    if (!gameLoopContract) {
-      toast.error('GameLoop contract not initialized');
-      return;
-    }
-
+  const handleGetRoyalties = async () => {
     try {
       setIsExecuting(true);
-      const tx = await gameLoopContract.newSeason();
-      const receipt = await tx.wait();
-      toast.success('Success!');
-      await getSeason(gameLoopContract);
-    } catch (e: any) {
+      await getRoyalties();
+    } catch (e) {
       console.log(e);
-      toast.error(e.message);
     } finally {
       setIsExecuting(false);
     }
-
   }
 
-  const getSeason = async (contract: Contract) => {
-    const season = await contract.curSeason();
-    setCurSeason(season);
-  }
+  const getRoyalties = async () => {
+    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+    const marketContract = new Contract(config.contracts.market, Market.abi, readProvider);
+    const values = [];
+    for (const knownContract of config.collections) {
+      try {
+        const isRoyaltyStandard = await marketContract.isRoyaltyStandard(knownContract.address);
+        const royalty = await marketContract.getRoyalty(knownContract.address);
+        const shouldRecord = isRoyaltyStandard && royalty.ipHolder !== ethers.constants.AddressZero;
+        if (!shouldRecord) continue;
 
-  useEffect(() => {
-
-
-    if (!!user.address) {
-      const contract = new Contract(
-        '0xC101d78F14d0840619b22B857eB131b402265D3e',
-        gameLoopAbi,
-        user.provider.getSigner()
-      )
-      setGameLoopContract(contract);
-      getSeason(contract);
+        const standardRoyalty = await marketContract.getStandardNFTRoyalty(knownContract.address, 1, 10000);
+        values.push({
+          address: knownContract.address,
+          name: knownContract.name,
+          marketIpHolder: royalty.ipHolder,
+          marketPercent: royalty.percent,
+          standardIpHolder: standardRoyalty.ipHolder,
+          standardPercent: Number(standardRoyalty.royaltyAmount),
+          isEqual: ciEquals(royalty.ipHolder, standardRoyalty.ipHolder) && royalty.percent === Number(standardRoyalty.royaltyAmount)
+        });
+      } catch (e) {
+        console.log(`Error with address ${knownContract.address}`, e);
+      }
     }
-  }, [user.address]);
+
+    console.log('RESULT', JSON.stringify(values));
+  }
+
+  // useEffect(() => {
+  //   getStakings();
+  // }, [user.address]);
 
   return (
     <Box>
-      <Text fontWeight='bold'>Current Season: {curSeason}</Text>
-      <Button isLoading={isExecuting} isDisabled={isExecuting} onClick={handleIncrementSeason}>
-        Increment Season
+      <Button isLoading={isExecuting} isDisabled={isExecuting} onClick={handleGetRoyalties}>
+        Get Royalties
       </Button>
     </Box>
   )
