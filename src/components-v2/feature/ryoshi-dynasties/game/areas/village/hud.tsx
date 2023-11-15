@@ -206,7 +206,9 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             <Text 
               fontSize={{base: '12', sm: '14'}} 
               as={'b'}
-              color='white'>Lvl: {playerLevel}
+              color='white'
+            >
+              Lvl: {playerLevel}
             </Text>
 
           </Flex>
