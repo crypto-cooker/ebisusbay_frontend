@@ -130,9 +130,10 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       const stakeConfigs = rdConfig.barracks.staking.nft.collections.filter((c) => c.slug === collectionSlug);
       const stakeConfig = stakeConfigs.length < 2
         ? stakeConfigs[0]
-        : stakeConfigs.find(c => c.minId && c.maxId && c.minId <= Number(nft.nftId) && c.maxId >= Number(nft.nftId));
+        : stakeConfigs.find(c =>  c.minId <= Number(nft.nftId) && c.maxId >= Number(nft.nftId));
 
-      const percentile = (nft.rank / stakeConfig!.maxSupply) * 100;
+      const maxSupply = stakeConfig!.maxId - stakeConfig!.minId + 1;
+      const percentile = (nft.rank / maxSupply) * 100;
       const multiplier = stakeConfig!.multipliers
         .sort((a: any, b: any) => a.percentile - b.percentile)
         .find((m: any) => percentile <= m.percentile)?.value || 0;
@@ -216,9 +217,10 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
           let stakeConfigs = rdConfig.barracks.staking.nft.collections.filter((c) => caseInsensitiveCompare(c.address, nft.collection.address));
           const stakeConfig = stakeConfigs.length < 2
             ? stakeConfigs[0]
-            : stakeConfigs.find(c => c.minId && c.maxId && c.minId <= Number(nft.nftId) && c.maxId >= Number(nft.nftId));
+            : stakeConfigs.find(c => c.minId <= Number(nft.nftId) && c.maxId >= Number(nft.nftId));
 
-          const percentile = (nft.nft.rank / stakeConfig!.maxSupply) * 100;
+          const maxSupply = stakeConfig!.maxId - stakeConfig!.minId + 1;
+          const percentile = (nft.nft.rank / maxSupply) * 100;
           const multiplier = stakeConfig!.multipliers
             .sort((a: any, b: any) => a.percentile - b.percentile)
             .find((m: any) => percentile <= m.percentile)?.value || 0;
