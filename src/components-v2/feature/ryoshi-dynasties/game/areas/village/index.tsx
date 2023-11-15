@@ -85,21 +85,21 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const buildings ={ "allianceCenter" : {height:438, width:554, top:'7%', left:'55%'},
     "townhall" : {height:607, width:707, top:'13.25%', left:'36.25%'},
     "academy" : {height: 792, width: 744, top: '4%', left: '74%'},
-    "tavern" : {height: 573, width: 725, top: '3%', left: '14%'},
-    "tavernSpin" : {height: 573, width: 725, top: '3%', left: '14%'},
+    "tavern" : {height: 573, width: 725, top: '1%', left: '15%'},
+    "tavernSpin" : {height: 573, width: 725, top: '1%', left: '15%'},
 
     "water" : {height: 703, width: 2880, top: '32%', left: '0%'},
     "boat" : {height: 613, width: 718, top: '33%', left: '2%'},
     "ebisustatue" : {height: 542, width: 279, top: '35%', left: '40%'},
     "market" : {height: 545, width: 793, top: '36.5%', left: '55%'},
-    "barracks" : {height: 579, width: 832, top: '12.5%', left: '-0.5%'},
-    "swordsmen" : {height: 270, width: 383, top: '22%', left: '14%'},
+    "barracks" : {height: 579, width: 832, top: '14.5%', left: '-0.5%'},
+    "swordsmen" : {height: 270, width: 383, top: '24.5%', left: '14%'},
 
     "flowers1" : {height: 251, width: 229, top: '3%', left: '14%'},
     "flowers2" : {height: 251, width: 229, top: '3%', left: '14%'},
     "flowers3" : {height: 251, width: 229, top: '3%', left: '14%'},
 
-    "bank" : {height: 456, width: 579, top: '%', left: '33%', x: 444, y: 444, scale: 4},
+    "bank" : {height: 456, width: 579, top: '%', left: '36%', x: 444, y: 444, scale: 4},
     "announcement" : {height: 243, width: 206, top: '28%', left: '60%'},
 
     "moongate" : {height: 482, width: 443, top: '23%', left: '67%'},
