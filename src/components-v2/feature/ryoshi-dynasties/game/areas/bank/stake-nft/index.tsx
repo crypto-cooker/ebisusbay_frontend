@@ -297,7 +297,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
                   Halloween
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.ryoshiTales} onClick={handleBtnClick(tabs.ryoshiTales)}>
-                  Goblin Gala
+                  Ryoshi Tales
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
                   Christmas
