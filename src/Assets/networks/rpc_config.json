@@ -24559,6 +24559,70 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Genius Genies",
+      "slug": "genius-genies",
+      "multiToken": false,
+      "address": "0x5DAf5C61cb6FC86aBBaf3129040e74f8011fbb2D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Genius Genies are the DAO token used to make decisions regarding ecosystem treasury funds. 1 Genie = 1 vote",
+        "website": "https://CroGenius.app/",
+        "twitter": "https://twitter.com/crogenius",
+        "discord": "https://discord.gg/VJukBFYwYD",
+        "instagram": "https://medium.com/@GeniusToken",
+        "telegram": "https://t.me/CroGenius",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "PINT-SIZED LIQUOR HEROES",
+      "slug": "pint-sized-liquor-heroes",
+      "multiToken": false,
+      "address": "0xc3AEb35b09956C69E905f62789Fcace81d177dD9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Prepare for an NFT-Airdrop per 10 you hold and earn $Moonshine through staking",
+        "avatar": "/img/collections/pint-sized-liquor-heroes/avatar.webp",
+        "website": "https://www.liquor-token-cronos.com/",
+        "twitter": "https://twitter.com/LiquorTokenCro",
+        "discord": "https://discord.gg/mz9WXNpmEV",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Liquor Coin NFT",
+      "slug": "liquor-coin-nft",
+      "multiToken": false,
+      "address": "0xfe73dd668C8ed13C6Ff9B098E76e97e50B575bD0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Staking + exclusive access",
+        "avatar": "/img/collections/liquor-coin-nft/avatar.webp",
+        "website": "https://www.liquor-token-cronos.com/",
+        "twitter": "https://twitter.com/LiquorTokenCro",
+        "discord": "https://discord.gg/7QQDvChjNq",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
