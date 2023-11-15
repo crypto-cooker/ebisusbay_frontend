@@ -9254,6 +9254,7 @@
       "maxMintPerAddress": 40,
       "totalSupply": 200,
       "erc20Cost": "450",
+      "erc20MemberCost": "450",
       "erc20Token": "frtn",
       "erc20Only": true,
       "rewardCost": "750",

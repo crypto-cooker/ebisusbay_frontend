@@ -21,7 +21,6 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.com/',
       app: 'https://app.ebisusbay.com/',
-      subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
       cmsSocket: 'wss://cms.ebisusbay.com/socket/',
       explorer: 'https://cronoscan.com/',
@@ -34,6 +33,13 @@ export const configData = {
         files: 'https://cdn-prod.ebisusbay.com/files/',
         apng: 'https://ebisusbay-prod-no-op.b-cdn.net/',
         app: 'https://cdn-prod.ebisusbay.com/'
+      },
+      subgraph: {
+        root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+        ryoshiDynasties: 'ryoshi-dynasties-meeple',
+        ryoshiPresale: 'ryoshi-presale',
+        stakedOwners: 'staked-owners',
+        staking: 'staking'
       }
     },
     rpc: {
@@ -216,7 +222,6 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.biz/',
       app: 'https://app.ebisusbay.biz/',
-      subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
       cmsSocket: 'wss://cms.ebisusbay.biz/socket/',
       explorer: 'https://cronoscan.com/',
@@ -229,6 +234,13 @@ export const configData = {
         files: 'https://cdn-dev.ebisusbay.biz/files/',
         apng: 'https://ebisusbay-prod-no-op.b-cdn.net/',
         app: 'https://cdn-dev.ebisusbay.biz/'
+      },
+      subgraph: {
+        root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+        ryoshiDynasties: 'ryoshi-dynasties-meeple',
+        ryoshiPresale: 'ryoshi-presale',
+        stakedOwners: 'staked-owners',
+        staking: 'staking'
       }
     },
     rpc: {
@@ -358,7 +370,6 @@ export const configData = {
     urls: {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
-      subgraph: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://testcms.ebisusbay.biz/api/',
       // cms: "http://localhost:4000/api/",
       cmsSocket: 'wss://testcms.ebisusbay.biz/socket/',
@@ -372,6 +383,13 @@ export const configData = {
         files: 'https://cdn-test.ebisusbay.biz/files/',
         apng: 'https://ebisusbay-test-no-op.b-cdn.net/',
         app: 'https://cdn-test.ebisusbay.biz/'
+      },
+      subgraph: {
+        root: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
+        ryoshiDynasties: 'ryoshi-dynasties',
+        ryoshiPresale: 'ryoshi-presale',
+        stakedOwners: 'staked-owners',
+        staking: 'staking'
       }
     },
     rpc: {
@@ -500,7 +518,6 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.com/',
       app: 'http://localhost:3000/',
-      subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
       cmsSocket: 'wss://cms.ebisusbay.com/socket/',
       explorer: 'https://cronoscan.com/',
@@ -513,6 +530,13 @@ export const configData = {
         files: 'https://cdn-prod.ebisusbay.com/files/',
         apng: 'https://ebisusbay-prod-no-op.b-cdn.net/',
         app: 'https://cdn-prod.ebisusbay.com/'
+      },
+      subgraph: {
+        root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+        ryoshiDynasties: 'ryoshi-dynasties-meeple',
+        ryoshiPresale: 'ryoshi-presale',
+        stakedOwners: 'staked-owners',
+        staking: 'staking'
       }
     },
     rpc: {
