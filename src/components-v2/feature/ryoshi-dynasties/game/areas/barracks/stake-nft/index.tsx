@@ -412,28 +412,36 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
                     <PopoverTrigger>
                       <Box position='relative'>
                         <Box
-                          bg='#376dcf'
+                          bg={pendingNfts[index].isActive ? '#376dcf' : '#716A67'}
                           p={2}
                           rounded='xl'
                           border='2px dashed'
                           borderColor={pendingNfts[index].isAlreadyStaked ? 'transparent' : '#ffa71c'}
+                          cursor={pendingNfts[index].isActive ? 'auto' : 'pointer'}
                         >
                           <Box
                             width={100}
                             height={100}
-
+                            filter={pendingNfts[index].isActive ? 'auto' : 'grayscale(80%)'}
+                            opacity={pendingNfts[index].isActive ? 'auto' : 0.8}
                           >
                             <Image src={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)} rounded='lg'/>
                           </Box>
                           <Flex fontSize='xs' justify='space-between' mt={1}>
-                            <Box verticalAlign='top'>
-                              {pendingNfts[index].rank && (
-                                <HStack spacing={1}>
-                                  <Icon as={FontAwesomeIcon} icon={faAward} />
-                                  <Box as='span'>{pendingNfts[index].rank}</Box>
-                                </HStack>
-                              )}
-                            </Box>
+                            {pendingNfts[index].isActive ? (
+                              <>
+                                <Box verticalAlign='top'>
+                                  {pendingNfts[index].rank && (
+                                    <HStack spacing={1}>
+                                      <Icon as={FontAwesomeIcon} icon={faAward} />
+                                      <Box as='span'>{pendingNfts[index].rank}</Box>
+                                    </HStack>
+                                  )}
+                                </Box>
+                              </>
+                            ): (
+                              <>Inactive</>
+                            )}
                             <VStack align='end' spacing={0} fontWeight='bold'>
                               {pendingNfts[index].multiplier && (
                                 <Box>+ {pendingNfts[index].multiplier}</Box>
@@ -455,6 +463,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
                             _hover={{ bg: 'gray.600' }}
                             size='xs'
                             rounded='full'
+                            color='white'
                             onClick={(e) => {
                               e.stopPropagation(); // prevent popover
                               onRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)

@@ -8,6 +8,7 @@ import LayeredIcon from '../../../Components/components/LayeredIcon';
 import ImageService from "@src/core/services/image";
 import useGetProfilePreview from "@src/hooks/useGetUsername";
 import {shortAddress} from "@src/utils";
+import {Image} from "@chakra-ui/react";
 
 const VerifiedIcon = styled.span`
   font-size: 8px;
@@ -37,7 +38,13 @@ const NftProfilePreview = ({ title, address }: NftProfilePreviewProps) => {
         <Link href={`/account/${address}`}>
           <div className="author_list_pp">
             {!isLoading && avatar ? (
-              <img src={ImageService.translate(avatar).avatar()} alt={username ?? address} />
+              <Image
+                src={ImageService.translate(avatar).avatar()}
+                alt={username ?? address}
+                w={50}
+                h={50}
+                objectFit='cover'
+              />
             ) : (
               <Blockies seed={address} size={10} scale={5} />
             )}

@@ -108,12 +108,13 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
   }
 
   return (
-<Box
+    <Box
       position='relative'
       h='calc(100vh - 74px)'
       overflow={'scroll'}
       minH={{base: '900px', xl: '100vh' }}
-      >
+      color='white'
+    >
      <motion.div
         variants={item}
         initial="hidden"
@@ -164,6 +165,7 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
                 border='8px solid #F48F0C'
                 w={14}
                 h={14}
+                color='white'
                 onClick={onClose}
                 _groupHover={{
                   bg: '#de8b08',
@@ -853,6 +855,7 @@ const ExportDataComponent = ({data, gameId, address, signature}: {data: any, gam
         size='xs'
         leftIcon={<DownloadIcon />}
         onClick={onOpen}
+        color='#FDAB1A'
       >
         Export Options
       </Button>

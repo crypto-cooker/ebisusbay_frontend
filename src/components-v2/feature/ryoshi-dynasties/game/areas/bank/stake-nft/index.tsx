@@ -478,6 +478,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
                             _hover={{ bg: 'gray.600' }}
                             size='xs'
                             rounded='full'
+                            color='white'
                             onClick={(e) => {
                               e.stopPropagation(); // prevent popover
                               onRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)

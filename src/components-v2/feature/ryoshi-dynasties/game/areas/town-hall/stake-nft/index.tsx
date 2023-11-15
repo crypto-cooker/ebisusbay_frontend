@@ -337,7 +337,6 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                           <Box>
                             + {round((1/(townHallStakeNftContext.totals[pendingNfts[index].nftAddress.toLowerCase()] ?? 0))*100, 2)}%
                           </Box>
-
                         </VStack>
                       </Flex>
                     </Box>
@@ -355,6 +354,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                         _hover={{ bg: 'gray.600' }}
                         size='xs'
                         rounded='full'
+                        color='white'
                         onClick={() => onRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)}
                       />
                     </Box>
