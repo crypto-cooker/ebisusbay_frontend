@@ -42,6 +42,8 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
   const [nftImages, setNftImages] = useState<any[]>([]);
   const [isHovered, setIsHovered] = useState(false);
   const {requestSignature} = useEnforceSignature();
+  const cardBg = useColorModeValue('#FFFFFF', '#404040');
+  const bg = useColorModeValue(lightTheme.textColor4, darkTheme.textColor4);
 
   const handleClose = () => {
     onClose();
@@ -135,9 +137,8 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
         </Box>
     </>) :(<>
     <Flex direction={{base: 'column', md: 'row'}} my={6} px={4}>
-    <Wrap>
-      {[...Array(battleRewards?.tokenIds?.length).fill(0)].map((_, index) => {
-        return (
+      <Wrap>
+        {[...Array(battleRewards?.tokenIds?.length).fill(0)].map((_, index) => (
           <WrapItem key={index}>
             {!!battleRewards.tokenIds[index] ? (
               <Box position='relative'>
@@ -146,62 +147,61 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   _hover={{
-                    borderColor:useColorModeValue('#595d69', '#ddd'),
+                    borderColor:'#F48F0C',
                   }}
                 >
                   <Box
-          _groupHover={{
-            background:useColorModeValue('#FFFFFF', '#404040'),
-            transition:'0.3s ease'
-          }}
-          borderRadius={'15px'}
-          transition="0.3s ease"
-          height="100%"
-        >
-          <Flex direction="column" height="100%">
-            <div className="card-img-container">
-              <Box
-                _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
-                transition="0.3s ease"
-                transform="scale(1.0)"
-                width={180}
-                height={225}
-              >
-                  <Image
-                    src = {GetTokenImage(battleRewards.tokenIds[index])}
-                    // image={nftCardUrl(listing.nftAddress, listing.nft.image)}
-                    // className={`card-img-top ${imgClass}`}
-                    // title={listing.nft.name}
-                    // url={`/collection/${listing.nftAddress}/${listing.nftId}`}
-                    // width={440}
-                    // height={440}
-                    // video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
-                    // thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.translate(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url).thumbnail() : undefined}
-                    // usePlaceholder={true}
-                  />
-              </Box>
-            </div>
+                    _groupHover={{
+                      background:cardBg,
+                      transition:'0.3s ease'
+                    }}
+                    borderRadius={'15px'}
+                    transition="0.3s ease"
+                    height="100%"
+                  >
+                    <Flex direction="column" height="100%">
+                      <div className="card-img-container">
+                        <Box
+                          _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
+                          transition="0.3s ease"
+                          transform="scale(1.0)"
+                          width={180}
+                          height={225}
+                        >
+                          <Image
+                            src = {GetTokenImage(battleRewards.tokenIds[index])}
+                            // image={nftCardUrl(listing.nftAddress, listing.nft.image)}
+                            // className={`card-img-top ${imgClass}`}
+                            // title={listing.nft.name}
+                            // url={`/collection/${listing.nftAddress}/${listing.nftId}`}
+                            // width={440}
+                            // height={440}
+                            // video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
+                            // thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.translate(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url).thumbnail() : undefined}
+                            // usePlaceholder={true}
+                          />
+                        </Box>
+                      </div>
 
-            {/* {listing.nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>} */}
+                      {/* {listing.nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>} */}
 
-            <Spacer />
-            <Box
-              borderBottomRadius={15}
-              _groupHover={{background: useColorModeValue(lightTheme.textColor4, darkTheme.textColor4), color:lightTheme.textColor1}}
-              px={4}
-              py={1}
-            >
-                <Box 
-                  maxW={'100%'} 
-                  justifyContent='space-between'
-                >
-                  <Heading isTruncated width={140} as="h6" size="sm" className="card-title mt-auto mb-1">{GetTokenName(battleRewards.tokenIds[index])}</Heading>
-                  <Heading  as="h6" size="sm" className="card-title mt-auto mb-1">x{battleRewards.quantity[index]}</Heading>
-                </Box>
-                
-            </Box>
-          </Flex>
-        </Box>
+                      <Spacer />
+                      <Box
+                        borderBottomRadius={15}
+                        _groupHover={{background: bg, color:lightTheme.textColor1}}
+                        px={4}
+                        py={1}
+                      >
+                        <Box
+                          maxW={'100%'}
+                          justifyContent='space-between'
+                        >
+                          <Heading isTruncated width={140} as="h6" size="sm" className="card-title mt-auto mb-1">{GetTokenName(battleRewards.tokenIds[index])}</Heading>
+                          <Heading  as="h6" size="sm" className="card-title mt-auto mb-1">x{battleRewards.quantity[index]}</Heading>
+                        </Box>
+                      </Box>
+                    </Flex>
+                  </Box>
                   <Flex fontSize='xs' justify='space-between' mt={4}>
                     <Flex marginLeft='auto'>
                       <Text as='b'></Text>
@@ -235,9 +235,8 @@ const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
               </Box>
             )}
           </WrapItem>
-        )
-      })}
-    </Wrap>
+        ))}
+      </Wrap>
     </Flex>
     <Box ms={8} my={{base: 4, md: 'auto'}} textAlign='center'>
       {battleRewards.tokenIds.length === 0 ? (

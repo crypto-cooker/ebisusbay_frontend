@@ -218,7 +218,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
           const stakeConfigs = rdContext.config.bank.staking.nft.collections.filter((c) => caseInsensitiveCompare(c.address, nft.collection.address));
           const stakeConfig = stakeConfigs.length < 2
             ? stakeConfigs[0]
-            : stakeConfigs.find(c => c.minId <= Number(nft.nftId) && c.maxId >= Number(nft.nftId));
+            : stakeConfigs.find(c => c.minId <= Number(nft.nft.nftId) && c.maxId >= Number(nft.nft.nftId));
 
           const maxSupply = stakeConfig!.maxId - stakeConfig!.minId + 1;
           const percentile = (nft.nft.rank / maxSupply) * 100;
