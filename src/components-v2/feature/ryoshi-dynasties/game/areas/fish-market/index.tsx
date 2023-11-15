@@ -104,6 +104,7 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
             border='8px solid #F48F0C'
             w={14}
             h={14}
+            color='white'
             onClick={onBack}
             _groupHover={{
               bg: '#de8b08',

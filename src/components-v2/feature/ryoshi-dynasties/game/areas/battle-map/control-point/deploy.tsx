@@ -370,7 +370,10 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
                 <Button 
                   variant={'outline'}
                   onClick={() => setSelectedQuantity(GetMaxTroops())}
-                  > Max </Button>
+                  color='white'
+                >
+                  Max
+                </Button>
               </Flex>
 
               <FormErrorMessage>{troopsError}</FormErrorMessage>
