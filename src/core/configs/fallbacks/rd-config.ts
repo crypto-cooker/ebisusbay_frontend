@@ -7,48 +7,39 @@ import {
 const collections: RyoshiConfigCollections[] = [
   {
     slug: 'ryoshi-tales-vip',
-    address: '0xE49709A3B59d708f50AA3712F2E5a84b7707664C',
-    maxSupply: 10000
+    address: '0xE49709A3B59d708f50AA3712F2E5a84b7707664C'
   },
   {
     slug: 'ryoshi-tales-halloween',
-    address: '0x54E61e2043f894475D17D344250F1983f7F7e6D3',
-    maxSupply: 2500
+    address: '0x54E61e2043f894475D17D344250F1983f7F7e6D3'
   },
   {
     slug: 'ryoshi-tales-christmas',
-    address: '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C',
-    maxSupply: 2500
+    address: '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C'
   },
   {
     slug: 'fortune-guards',
-    address: '0x013f83434356c0a20698605eBAb337aab966AF88',
-    maxSupply: 4
+    address: '0x013f83434356c0a20698605eBAb337aab966AF88'
   },
   {
     slug: 'fortuneteller',
-    address: '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566',
-    maxSupply: 4
+    address: '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566'
   },
   {
     slug: 'ryoshi-tales',
-    address: '0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04',
-    maxSupply: 500
+    address: '0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04'
   },
   {
     slug: 'mad-meerkat',
-    address: '0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56',
-    maxSupply: 10000
+    address: '0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56'
   },
   {
     slug: 'cowz',
-    address: '0xdbFDf81D1fDD2e79e8ffaDE50c219452587e9488',
-    maxSupply: 10000
+    address: '0xdbFDf81D1fDD2e79e8ffaDE50c219452587e9488'
   },
   {
     slug: 'aiko-legends',
-    address: '0xFD90697db5D40B37B86C958106A342088f11AA84',
-    maxSupply: 3333
+    address: '0xFD90697db5D40B37B86C958106A342088f11AA84'
   }
 ];
 
@@ -77,6 +68,8 @@ export const ryoshiConfig: RyoshiConfig = {
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-vip')!,
             active: true,
+            minId: 1,
+            maxId: 10000,
             multipliers: [
               { percentile: 5, value: 0.5 },
               { percentile: 10, value: 0.3 },
@@ -89,6 +82,8 @@ export const ryoshiConfig: RyoshiConfig = {
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-halloween')!,
             active: true,
+            minId: 1,
+            maxId: 2500,
             multipliers: [],
             adders: [
               { percentile: 5, value: 0.25 },
@@ -101,6 +96,8 @@ export const ryoshiConfig: RyoshiConfig = {
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-christmas')!,
             active: true,
+            minId: 1,
+            maxId: 2500,
             multipliers: [],
             adders: [
               { percentile: 5, value: 0.25 },
@@ -112,7 +109,9 @@ export const ryoshiConfig: RyoshiConfig = {
           },
           {
             ...collections.find(c => c.slug === 'fortune-guards')!,
-            active: true,
+            active: false,
+            minId: 2,
+            maxId: 5,
             multipliers: [],
             adders: [],
             ids: [
@@ -125,6 +124,8 @@ export const ryoshiConfig: RyoshiConfig = {
           {
             ...collections.find(c => c.slug === 'fortuneteller')!,
             active: true,
+            minId: 1,
+            maxId: 5,
             multipliers: [],
             adders: [],
             ids: [
@@ -138,12 +139,28 @@ export const ryoshiConfig: RyoshiConfig = {
           {
             ...collections.find(c => c.slug === 'ryoshi-tales')!,
             active: true,
+            minId: 1,
+            maxId: 500,
             multipliers: [],
             adders: [
               { percentile: 5, value: 0.25 },
               { percentile: 10, value: 0.2 },
               { percentile: 20, value: 0.15 },
               { percentile: 100, value: 0.1 },
+            ],
+            ids: []
+          },
+          {
+            ...collections.find(c => c.slug === 'ryoshi-tales')!,
+            active: true,
+            minId: 501,
+            maxId: 700,
+            multipliers: [],
+            adders: [
+              { percentile: 5, value: 0.5 },
+              { percentile: 10, value: 0.4 },
+              { percentile: 20, value: 0.3 },
+              { percentile: 100, value: 0.2 },
             ],
             ids: []
           }
@@ -159,6 +176,8 @@ export const ryoshiConfig: RyoshiConfig = {
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-vip')!,
             active: true,
+            minId: 1,
+            maxId: 10000,
             traits: [
               {
                 type: 'tools',
@@ -198,6 +217,8 @@ export const ryoshiConfig: RyoshiConfig = {
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-halloween')!,
             active: true,
+            minId: 1,
+            maxId: 2500,
             traits: [
               {
                 type: 'tools',
@@ -218,6 +239,8 @@ export const ryoshiConfig: RyoshiConfig = {
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-christmas')!,
             active: true,
+            minId: 1,
+            maxId: 2500,
             traits: [
               {
                 type: 'miscellaneous',
@@ -237,7 +260,9 @@ export const ryoshiConfig: RyoshiConfig = {
           },
           {
             ...collections.find(c => c.slug === 'fortune-guards')!,
-            active: true,
+            active: false,
+            minId: 2,
+            maxId: 5,
             traits: [],
             multipliers: [],
             ids: [
@@ -250,6 +275,8 @@ export const ryoshiConfig: RyoshiConfig = {
           {
             ...collections.find(c => c.slug === 'ryoshi-tales')!,
             active: true,
+            minId: 1,
+            maxId: 500,
             traits: [
               {
                 type: 'accessories',
@@ -266,6 +293,37 @@ export const ryoshiConfig: RyoshiConfig = {
               { percentile: 100, value: 10 },
             ],
             ids: []
+          },
+          {
+            ...collections.find(c => c.slug === 'ryoshi-tales')!,
+            active: true,
+            minId: 501,
+            maxId: 700,
+            traits: [
+              {
+                type: 'accessory',
+                inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                values: [
+                  'celestial staff silver',
+                  'celestial staff gold'
+                ]
+              },
+              {
+                type: 'clothing',
+                inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                values: [
+                  'celestial epaulettes midnight gold',
+                  'celestial epaulettes maroon silver'
+                ]
+              },
+            ],
+            multipliers: [
+              { percentile: 5, value: 100 },
+              { percentile: 10, value: 60 },
+              { percentile: 20, value: 40 },
+              { percentile: 100, value: 20 },
+            ],
+            ids: []
           }
         ]
       }
@@ -278,14 +336,17 @@ export const ryoshiConfig: RyoshiConfig = {
         collections: [
           {
             ...collections.find(c => c.slug === 'cowz')!,
+            active: true,
             fortune: 35000
           },
           {
             ...collections.find(c => c.slug === 'aiko-legends')!,
+            active: true,
             fortune: 25000
           },
           {
             ...collections.find(c => c.slug === 'mad-meerkat')!,
+            active: true,
             fortune: 15000
           }
         ]
