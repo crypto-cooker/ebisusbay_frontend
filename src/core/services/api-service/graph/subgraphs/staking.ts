@@ -1,5 +1,6 @@
 import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
 import {appConfig} from "@src/Config";
+import {urlify} from "@src/utils";
 
 const config = appConfig();
 
@@ -9,7 +10,7 @@ class Staking {
 
   constructor() {
     this.apollo = new ApolloClient({
-      uri: `${config.urls.subgraph}staking`,
+      uri: urlify(config.urls.subgraph, config.urls.subgraph.staking),
       cache: new InMemoryCache()
     });
   }

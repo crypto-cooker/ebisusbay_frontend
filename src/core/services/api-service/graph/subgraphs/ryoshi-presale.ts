@@ -1,6 +1,7 @@
 import {appConfig} from "@src/Config";
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import {PresaleVault, VaultContract} from "@src/core/services/api-service/graph/types";
+import {urlify} from "@src/utils";
 
 const config = appConfig();
 
@@ -9,7 +10,7 @@ class RyoshiPresale {
 
   constructor() {
     this.apollo = new ApolloClient({
-      uri: `${config.urls.subgraph}ryoshi-presale`,
+      uri: urlify(config.urls.subgraph.root, config.urls.subgraph.ryoshiPresale),
       cache: new InMemoryCache()
     });
   }

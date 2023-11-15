@@ -1,5 +1,6 @@
 import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
 import {appConfig} from "@src/Config";
+import {urlify} from "@src/utils";
 
 const config = appConfig();
 
@@ -9,7 +10,7 @@ class StakedOwners {
 
   constructor() {
     this.apollo = new ApolloClient({
-      uri: `${config.urls.subgraph}staked-owners`,
+      uri: urlify(config.urls.subgraph, config.urls.subgraph.stakedOwners),
       cache: new InMemoryCache()
     });
   }
