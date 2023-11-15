@@ -32031,7 +32031,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "images": {
         "drop": "/img/drops/ryoshi-tales-celestial-celebration/drop.webp",
