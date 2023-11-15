@@ -221,7 +221,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
             : stakeConfigs.find(c => c.minId <= Number(nft.nftId) && c.maxId >= Number(nft.nftId));
 
           const maxSupply = stakeConfig!.maxId - stakeConfig!.minId + 1;
-          const percentile = (nft.nft.rank / stakeConfig!.maxSupply) * 100;
+          const percentile = (nft.nft.rank / maxSupply) * 100;
           const multiplier = stakeConfig!.multipliers
             .sort((a: any, b: any) => a.percentile - b.percentile)
             .find((m: any) => percentile <= m.percentile)?.value || 0;
