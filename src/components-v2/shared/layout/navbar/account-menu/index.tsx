@@ -50,7 +50,7 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  Heading,
+  Heading, Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -290,7 +290,14 @@ const Index = function () {
       {walletAddress && correctChain && (
         <Box className="de-menu-profile" onClick={() => setShowMenu(!showMenu)}>
           {user.profile.profilePicture ? (
-            <img src={ImageService.translate(user.profile.profilePicture).avatar()} alt={user.profile.username} />
+            <Image
+              src={ImageService.translate(user.profile.profilePicture).avatar()}
+              alt={user.profile.username}
+              title={user.profile.username}
+              w={38}
+              h={38}
+              objectFit='cover'
+            />
           ) : (
             <Blockies seed={user.address} size={9} scale={4} />
           )}
