@@ -10,7 +10,7 @@ class Staking {
 
   constructor() {
     this.apollo = new ApolloClient({
-      uri: urlify(config.urls.subgraph, config.urls.subgraph.staking),
+      uri: urlify(config.urls.subgraph.root, config.urls.subgraph.staking),
       cache: new InMemoryCache()
     });
   }

@@ -14,7 +14,13 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger,
+  ModalOverlay,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverTrigger,
   SimpleGrid,
   Spinner,
   Text,
@@ -30,7 +36,7 @@ import {ApiService} from "@src/core/services/api-service";
 import InfiniteScroll from "react-infinite-scroll-component";
 import StakingNftCard from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/staking-nft-card";
 import {appConfig} from "@src/Config";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare, ciEquals} from "@src/utils";
 import WalletNft from "@src/core/models/wallet-nft";
 import ImageService from "@src/core/services/image";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
@@ -121,7 +127,10 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
     if (hasRemainingBalance && withinUnlockedRange && withinMaxSlotRange) {
       const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
-      const stakeConfig = rdConfig.barracks.staking.nft.collections.find((c) => c.slug === collectionSlug);
+      const stakeConfigs = rdConfig.barracks.staking.nft.collections.filter((c) => c.slug === collectionSlug);
+      const stakeConfig = stakeConfigs.length < 2
+        ? stakeConfigs[0]
+        : stakeConfigs.find(c => c.minId && c.maxId && c.minId <= Number(nft.nftId) && c.maxId >= Number(nft.nftId));
 
       const percentile = (nft.rank / stakeConfig!.maxSupply) * 100;
       const multiplier = stakeConfig!.multipliers
@@ -204,7 +213,10 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       for (const token of data) {
         const nft = await getNft(token.contractAddress, token.tokenId);
         if (nft) {
-          const stakeConfig = rdConfig.barracks.staking.nft.collections.find((c) => caseInsensitiveCompare(c.address, nft.collection.address));
+          let stakeConfigs = rdConfig.barracks.staking.nft.collections.filter((c) => caseInsensitiveCompare(c.address, nft.collection.address));
+          const stakeConfig = stakeConfigs.length < 2
+            ? stakeConfigs[0]
+            : stakeConfigs.find(c => c.minId && c.maxId && c.minId <= Number(nft.nftId) && c.maxId >= Number(nft.nftId));
 
           const percentile = (nft.nft.rank / stakeConfig!.maxSupply) * 100;
           const multiplier = stakeConfig!.multipliers
@@ -572,8 +584,11 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           ...page,
           data: page.data.filter((item) => {
             return item.attributes?.some((attr: any) => {
-              const collection = config.collections.find((c: any) => caseInsensitiveCompare(c.address, item.nftAddress));
-              const eligibility = rdContext.config.barracks.staking.nft.collections.find((e) => e.slug === collection.slug);
+              const stakeConfigs = rdContext.config.barracks.staking.nft.collections.filter((c) => ciEquals(c.address, item.nftAddress));
+              const eligibility = stakeConfigs.length < 2
+                ? stakeConfigs[0]
+                : stakeConfigs.find(c => c.minId && c.maxId && c.minId <= Number(item.nftId) && c.maxId >= Number(item.nftId));
+
               if (!eligibility) return false;
               const traitType = attr.trait_type.toLowerCase();
               const value = attr.value.toString().toLowerCase();

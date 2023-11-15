@@ -385,7 +385,7 @@ export const configData = {
         app: 'https://cdn-test.ebisusbay.biz/'
       },
       subgraph: {
-        root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+        root: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
         ryoshiDynasties: 'ryoshi-dynasties',
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners',

@@ -10,7 +10,7 @@ class StakedOwners {
 
   constructor() {
     this.apollo = new ApolloClient({
-      uri: urlify(config.urls.subgraph, config.urls.subgraph.stakedOwners),
+      uri: urlify(config.urls.subgraph.root, config.urls.subgraph.stakedOwners),
       cache: new InMemoryCache()
     });
   }
