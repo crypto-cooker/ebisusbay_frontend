@@ -605,6 +605,10 @@ export const isPlayingCardsCollection = (address) => {
   return isCollection(address, 'ryoshi-playing-cards', '0xd87838a982a401510255ec27e603b0f5fea98d24');
 }
 
+export const isRyoshiTalesCollection = (address) => {
+  return isCollection(address, 'ryoshi-tales', ['0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04', '0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4']);
+}
+
 export const isKoban = (address, nftId) => {
   return isCollection(address, 'ryoshi-resources', '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d') && nftId?.toString() === '1';
 }

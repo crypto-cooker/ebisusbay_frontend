@@ -106,7 +106,8 @@ export function mapDrop(drop: any): Drop {
     redirect: drop.redirect,
     erc20Only: drop.erc20Only ?? false,
     memberMitama: drop.memberMitama ?? 0,
-    collection: drop.collection
+    collection: drop.collection,
+    supplyOffset: drop.supplyOffset ?? 0
   }
 
   if (!!drop.memberCost) obj.memberCost = Number(drop.memberCost);
