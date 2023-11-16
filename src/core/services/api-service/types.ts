@@ -52,7 +52,7 @@ export interface RyoshiDynastiesApi {
     getBankStakingAccount(address: string): Promise<StakingAccount | null>;
     getFactions(gameId?: number): Promise<RdFaction[]>;
     getBattleLog(query: GetBattleLog): Promise<PagedList<RdBattleLog>>;
-    getTroopsBreakdown(gameId: number, address: string, signature: string): Promise<RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops>;
+    getTroopsBreakdown(gameId: number, address: string, signature: string): Promise<RdUserContextGameTroops>;
     getUserMeeples(address: string): Promise<Meeple | null>;
 }
 
@@ -151,6 +151,7 @@ export interface RdUserContext {
     faction: RdFaction;
     armies: RdUserContextArmies;
     season: RdUserContextSeason;
+    game: RdUserContextGame;
     bank: {
         nfts: any[];
         bonus: {
@@ -175,8 +176,16 @@ export interface RdUserContext {
 
 interface RdUserContextSeason {
     faction: RdFaction;
-    troops: RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops;
     registrations: RdUserContextSeasonRegistration;
+}
+
+interface RdUserContextGame {
+    troops: RdUserContextGameTroops
+}
+
+export interface RdUserContextGameTroops {
+    user: RdUserContextNoOwnerFactionTroops;
+    faction: RdUserContextOwnerFactionTroops;
 }
 
 export interface RdUserContextOwnerFactionTroops {

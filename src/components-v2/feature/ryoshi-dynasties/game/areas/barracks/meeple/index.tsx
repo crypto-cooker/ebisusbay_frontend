@@ -132,13 +132,14 @@ console.log('sdfasdf', walletData);
       const activeMeeples = meeples ? meeples.activeAmount : 0;
 
       return {
-        onDuty: rdUser!.season.troops.available.owned,
+        onDutyUser: rdUser!.game.troops.user.available.owned,
+        onDutyFaction: rdUser!.game.troops.faction?.available.owned ?? 0,
         upkeepPaid: BigNumber.from(activeMeeples).toNumber(),
         meeplePaidFor: BigNumber.from(activeMeeples).toNumber()
       }
     },
     enabled: !!rdUser && !!user.address,
-    initialData: {onDuty: 0, upkeepPaid: 0, meeplePaidFor: 0}
+    initialData: {onDutyUser: 0, onDutyFaction: 0, upkeepPaid: 0, meeplePaidFor: 0}
   })
 
   const splitWalletData = (data: WalletNft[]) => {
@@ -263,7 +264,7 @@ console.log('sdfasdf', walletData);
     setLocationData(locations);
   }
   const onCompleteTurnInCards = () => {
-    GetMeepleOffDuty();
+    // GetMeepleOffDuty();
   }
 
   useEffect(() => {
@@ -329,11 +330,11 @@ console.log('sdfasdf', walletData);
                   { isFetchingWallet || isLoadingWallet ? (
                       <Spinner size='sm' ms={2} alignSelf="flex-end" />
                   ) : (
-                      <Text as={'b'} fontSize='28px' lineHeight="1">{commify(onDutyMeepleData.onDuty)}</Text>
+                    <Text as={'b'} fontSize='28px' lineHeight="1">{!!onDutyMeepleData && commify(onDutyMeepleData.onDutyUser)}</Text>
                   )}
                 </Box>
                 <Text color={'#aaa'}>The amount or Ryoshi that are ready to be used and have not been delegated or deployed</Text>
-                {onDutyMeepleData.onDuty > 3000 && (
+                {onDutyMeepleData.onDutyUser > 3000 && (
                   <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={2}>
                     <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
                     <Text fontSize='14' color='#333' fontWeight='bold'>
@@ -444,7 +445,7 @@ console.log('sdfasdf', walletData);
               // rdRefreshUser();
               onCloseMintModal();
             }}
-            onDutyAmount={onDutyMeepleData.onDuty}
+            onDutyAmount={onDutyMeepleData.onDutyUser}
           />
 
           <UpkeepModal
