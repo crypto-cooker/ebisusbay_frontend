@@ -209,6 +209,14 @@ export const configData = {
           '0x1368a855545724B165F8c3e466ec30e1fB2A3683': ['cro', 'frtn', 'bcro'], // Football Squares S2
           '0x5c18d5eb211203eb80b591aa71a269b1e16e9eba': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Ballies: The Gear v2
           '0xE1049178296ce004996AFb16B0816c5A95aC8482': ['cro', 'frtn', 'candy'], // Bored Candy
+          '0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW
+          '0x65AB0251d29c9C473c8d01BFfa2966F891fB1181': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // MAD CROW
+          '0x937879726455531dB135F9b8D88F38dF5D4Eb13b': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW NEST
+          '0x0f1439a290e86a38157831fe27a3dcd302904055': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CROW PUNKS
+          '0x13d13e2410A34Bfe5502D50ea4FCFBd591D7589E': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Wrapped Cronos Punk
+          '0xd33CFeF82377fef83703B9D84151a477B08Ab3b8': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW Airdrops
+          '0xccc777777ac85999fc9fe355f25cd908060ec9ea': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW Customs
+          '0x3d7777ff1908B54b57038A2556d6904f71468e2D': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // 3D CROW
         }
       }
     }
