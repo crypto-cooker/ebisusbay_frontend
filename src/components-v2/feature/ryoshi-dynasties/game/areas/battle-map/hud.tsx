@@ -56,8 +56,10 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   const [isMobile] = useMediaQuery("(max-width: 750px)");
   const [accordionIndex, setAccordionIndex] = useState<number>(0);
 
-  const[availableTroops, setAvailableTroops] = useState(0);
-  const[totalTroops, setTotalTroops] = useState(0);
+  const[availableUserTroops, setAvailableUserTroops] = useState(0);
+  const[availableFactionTroops, setAvailableFactionTroops] = useState(0);
+  const[totalUserTroops, setTotalUserTroops] = useState(0);
+  const[totalFactionTroops, setTotalFactionTroops] = useState(0);
 
   const GetKoban = async () => {
     try {
@@ -99,8 +101,10 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   useEffect(() => {
     if(!rdUser) return;
 
-    setAvailableTroops(rdUser.season.troops.available.total);
-    setTotalTroops(rdUser.season.troops.overall.total);
+    setAvailableUserTroops(rdUser.game.troops.user.available.total);
+    setTotalUserTroops(rdUser.game.troops.user.overall.total);
+    setAvailableFactionTroops(rdUser.game.troops.faction?.available.total ?? 0);
+    setTotalFactionTroops(rdUser.game.troops.faction?.overall.total ?? 0);
     CheckTroopCooldown();
   }, [rdUser]); 
 
@@ -176,48 +180,42 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
           </AccordionButton>
         
           <AccordionPanel pb={4} alignItems={'right'} pointerEvents='auto'>
-
-          <AuthenticationRdButton
-            connectText=''
-            signinText=''
-            size={'sm'}
-          >
-          <>
-
-          <Center>
-            <Tag  variant='outline'>
-              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()}
-                      alt="troopsIcon" boxSize={4}/>
-              <Box ms={1}>
-              {!isLoading ? (<>
-                {koban}
-              </>
-                ) : (
-                  <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>
-                )}
+            <AuthenticationRdButton
+              connectText=''
+              signinText=''
+              size={'sm'}
+            >
+              <Center>
+                <Tag  variant='outline'>
+                  <Image
+                    src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()}
+                    alt="troopsIcon"
+                    boxSize={4}
+                  />
+                  <Box ms={1}>
+                    {!isLoading ? (
+                      <>{koban}</>
+                    ) : (
+                      <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>
+                    )}
+                  </Box>
+                </Tag>
+              </Center>
+              <Box mt={4} fontSize='sm'>
+                <HStack>
+                  <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={4}/>
+                  <Text fontWeight='bold' color='white'>Ryoshi On Duty</Text>
+                </HStack>
+                <HStack justify='space-between'>
+                  <Box color="#aaa">User:</Box>
+                  <Box fontWeight='bold' color='white'>{availableUserTroops} / {totalUserTroops}</Box>
+                </HStack>
+                <HStack justify='space-between'>
+                  <Box color="#aaa">Faction:</Box>
+                  <Box fontWeight='bold' color='white'>{availableFactionTroops} / {totalFactionTroops}</Box>
+                </HStack>
               </Box>
-            </Tag>
-          </Center>
-          <Flex justify="right" align="right">
-          <SimpleGrid columns={2} my={4} px={1}>
-            <Box color="#aaa">Available:</Box>
-            <Flex textAlign='end' fontWeight='bold' alignContent='space-between'>
-              <HStack textAlign='end'>
-                <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
-                <Text color='white'>{availableTroops}</Text>
-              </HStack>
-              </Flex>
-            <Box color="#aaa">Total:</Box>
-            <Box textAlign='end' fontWeight='bold'>
-              <HStack textAlign='end'>
-                <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
-                <Text color='white'>{totalTroops}</Text>
-              </HStack>
-              </Box>
-          </SimpleGrid>
-          </Flex>
-          </>
-          </AuthenticationRdButton>
+            </AuthenticationRdButton>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>

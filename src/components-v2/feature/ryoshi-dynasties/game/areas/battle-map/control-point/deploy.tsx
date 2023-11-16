@@ -249,8 +249,10 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
   useEffect(() => {
     if(!rdContext?.user) return;
 
-    if(rdContext.user.season.troops.available.total !== undefined) {
-      setTroopsAvailable(rdContext.user.season.troops.available.total);
+    if(rdContext.user.game.troops.faction?.available.total !== undefined && hasFaction) {
+      setTroopsAvailable(rdContext.user.game.troops.faction.available.total);
+    } else if(rdContext.user.game.troops.user.available.total !== undefined && !hasFaction) {
+      setTroopsAvailable(rdContext.user.game.troops.user.available.total);
     }
   }, [rdContext]);
 

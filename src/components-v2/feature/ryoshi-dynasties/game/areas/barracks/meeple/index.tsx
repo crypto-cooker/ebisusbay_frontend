@@ -846,7 +846,6 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyAmount}: Deposi
     mutationFn: depositMeeple,
     onSuccess: data => {
       try {
-        console.log('SUCCESS', data);
         queryClient.setQueryData(['MeepleManagementPage', user.address], (old: any) => {
           old.offDutyAmount = old.offDutyAmount - meepleToDeposit;
           if (old.offDutyAmount < 0) old.offDutyAmount = 0;
