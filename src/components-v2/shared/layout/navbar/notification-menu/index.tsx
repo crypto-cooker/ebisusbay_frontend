@@ -19,15 +19,20 @@ import {
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
-  DrawerOverlay, Flex, Spinner,
+  DrawerOverlay,
+  Flex,
+  Image,
+  Spinner,
   Text
 } from "@chakra-ui/react";
+import {useColorModeValue} from "@chakra-ui/color-mode";
 
 const NotificationMenu = function () {
   const history = useRouter();
   const {address, theme, profile}: {address: any, theme: any, profile: any} = useAppSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
   const [requestDeleteNotifications] = useDeleteNotifications();
+  const cardBg = useColorModeValue('white', '#333');
 
   const { isPending, isError, error, data: notifications, refetch } = useQuery({
     queryKey: ['Notifications', address],
@@ -138,19 +143,27 @@ const NotificationMenu = function () {
                   <div className="flex-fill h-auto">
                     {notifications.length > 0 && (
                       notifications.map((item: any) => (
-                        <Box key={item.createdAt} className={classnames('card eb-nft__card px-3 py-2 mb-2', styles.card)}>
+                        <Box key={item.createdAt} p={2} mb={2} className={classnames('card eb-nft__card', styles.card)} bg={cardBg}>
                           <Flex>
-                            <div className="flex-fill">
-                              <div className="text-muted fst-italic">
-                                <div className="flex-fill">{timeSince(new Date(item.createdAt))} ago</div>
-                              </div>
+                            <Box me={2} p={1} my='auto' w='60px'>
+                              <Image
+                                src={imageMappings[item.type].icon}
+                                alt={imageMappings[item.type].alt}
+                                w={50}
+                                h={50}
+                              />
+                            </Box>
+                            <Box flex='1' textAlign='start'>
+                              <Box className='text-muted fst-italic'>
+                                {timeSince(new Date(item.createdAt))} ago
+                              </Box>
                               <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
                                 {item.message}
                               </span>
-                            </div>
-                            <div className="cursor-pointer my-auto ms-4" onClick={handleDeleteNotification(item)}>
+                            </Box>
+                            <Box my='auto' ms={4} me={1} cursor='pointer' onClick={handleDeleteNotification(item)}>
                               <FontAwesomeIcon icon={faTrash} />
-                            </div>
+                            </Box>
                           </Flex>
                         </Box>
                       ))
@@ -169,3 +182,43 @@ const NotificationMenu = function () {
 };
 
 export default memo(NotificationMenu);
+
+
+const imageMappings: {[key:string]: {icon: string, alt: string}} = {
+  SOLD: {
+    icon: '/img/icons/notifications/sold.svg',
+    alt: 'Sold'
+  },
+  LISTED: {
+    icon: '/img/icons/notifications/listed.svg',
+    alt: 'Listed'
+  },
+  OFFER_MADE: {
+    icon: '/img/icons/notifications/offer-made.svg',
+    alt: 'Offer Made'
+  },
+  OFFER_ACCEPTED: {
+    icon: '/img/icons/notifications/offer-accepted.svg',
+    alt: 'Offer Accepted'
+  },
+  FAVORITE_LISTED: {
+    icon: '/img/icons/notifications/favorite-listed.svg',
+    alt: 'Favorite Listed'
+  },
+  LEVEL_UP: {
+    icon: '/img/icons/notifications/level-up.svg',
+    alt: 'Level Up'
+  },
+  XP_GAINED: {
+    icon: '/img/icons/notifications/xp-gained.png',
+    alt: 'XP Gained'
+  },
+  GENERAL: {
+    icon: '/img/icons/notifications/general.svg',
+    alt: 'General Notification'
+  },
+  ANNOUNCEMENT: {
+    icon: '/img/icons/notifications/announcement.svg',
+    alt: 'Announcement'
+  }
+}
