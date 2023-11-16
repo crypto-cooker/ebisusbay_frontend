@@ -26,6 +26,7 @@ import {
   Text
 } from "@chakra-ui/react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
+import ImageService from "@src/core/services/image";
 
 const NotificationMenu = function () {
   const history = useRouter();
@@ -147,7 +148,7 @@ const NotificationMenu = function () {
                           <Flex>
                             <Box me={2} p={1} my='auto' w='60px'>
                               <Image
-                                src={imageMappings[item.type].icon}
+                                src={ImageService.translate(imageMappings[item.type].icon).avatar()}
                                 alt={imageMappings[item.type].alt}
                                 w={50}
                                 h={50}
@@ -210,7 +211,7 @@ const imageMappings: {[key:string]: {icon: string, alt: string}} = {
     alt: 'Level Up'
   },
   XP_GAINED: {
-    icon: '/img/icons/notifications/xp-gained.png',
+    icon: '/img/icons/notifications/xp-gained.svg',
     alt: 'XP Gained'
   },
   GENERAL: {
