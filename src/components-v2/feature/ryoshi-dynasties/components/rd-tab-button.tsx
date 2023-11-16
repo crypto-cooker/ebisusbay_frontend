@@ -7,6 +7,7 @@ interface RdTabButtonProps {
 const RdTabButton = ({children, ...props}: RdTabButtonProps | ButtonProps) => {
   return (
     <Button
+      color='white'
       rounded='full'
       bg={(props as ButtonProps).isActive ? '#F48F0C' : 'none'}
       m={2}

@@ -14,7 +14,12 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader,
+  ModalOverlay,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
   PopoverTrigger,
   SimpleGrid,
   Spinner,
@@ -120,9 +125,13 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
     if (hasRemainingBalance && withinUnlockedRange && withinMaxSlotRange) {
       const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
-      const stakeConfig = rdContext.config.bank.staking.nft.collections.find((c) => c.slug === collectionSlug);
+      const stakeConfigs = rdContext.config.bank.staking.nft.collections.filter((c) => c.slug === collectionSlug);
+      const stakeConfig = stakeConfigs.length < 2
+        ? stakeConfigs[0]
+        : stakeConfigs.find(c => c.minId <= Number(nft.nftId) && c.maxId >= Number(nft.nftId));
 
-      const percentile = (nft.rank / stakeConfig!.maxSupply) * 100;
+      const maxSupply = stakeConfig!.maxId - stakeConfig!.minId + 1;
+      const percentile = (nft.rank / maxSupply) * 100;
       const multiplier = stakeConfig!.multipliers
         .sort((a: any, b: any) => a.percentile - b.percentile)
         .find((m: any) => percentile <= m.percentile)?.value || 0;
@@ -206,9 +215,13 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       for (const token of data) {
         const nft = await getNft(token.contractAddress, token.tokenId);
         if (nft) {
-          const stakeConfig = rdContext.config.bank.staking.nft.collections.find((c) => caseInsensitiveCompare(c.address, nft.collection.address));
+          const stakeConfigs = rdContext.config.bank.staking.nft.collections.filter((c) => caseInsensitiveCompare(c.address, nft.collection.address));
+          const stakeConfig = stakeConfigs.length < 2
+            ? stakeConfigs[0]
+            : stakeConfigs.find(c => c.minId <= Number(nft.nft.nftId) && c.maxId >= Number(nft.nft.nftId));
 
-          const percentile = (nft.nft.rank / stakeConfig!.maxSupply) * 100;
+          const maxSupply = stakeConfig!.maxId - stakeConfig!.minId + 1;
+          const percentile = (nft.nft.rank / maxSupply) * 100;
           const multiplier = stakeConfig!.multipliers
             .sort((a: any, b: any) => a.percentile - b.percentile)
             .find((m: any) => percentile <= m.percentile)?.value || 0;
@@ -284,7 +297,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
                   Halloween
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.ryoshiTales} onClick={handleBtnClick(tabs.ryoshiTales)}>
-                  Goblin Gala
+                  Ryoshi Tales
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
                   Christmas
@@ -465,6 +478,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
                             _hover={{ bg: 'gray.600' }}
                             size='xs'
                             rounded='full'
+                            color='white'
                             onClick={(e) => {
                               e.stopPropagation(); // prevent popover
                               onRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)

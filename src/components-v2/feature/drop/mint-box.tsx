@@ -148,7 +148,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
         let response;
         if (fundingType === FundingType.REWARDS) {
-          response = await mintWithRewards(contract, finalCost);
+          response = await mintWithRewards(contract, drop.rewardCost);
         } else if (fundingType === FundingType.ERC20) {
           response = await mintWithErc20(contract, finalCost);
         } else {
@@ -225,10 +225,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
   const mintWithRewards = async (contract: Contract, finalCost: number) => {
     const signature = await requestSignature();
-    const finalCostEth = ethers.utils.formatEther(finalCost);
+    const finalCostEth = finalCost;
     const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(finalCostEth, user.address!, signature);
 
     const gasPrice = parseUnits('5000', 'gwei');
+    console.log('NUMTO M INE?', numToMint)
     const gasEstimate = await contract.estimateGas.mintWithRewards(numToMint, authorization.reward, authorization.signature);
     const gasLimit = gasEstimate.mul(2);
     let extra = {
@@ -289,24 +290,30 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                 </Box>
                 {(!!memberCost || (drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost)) && (
                   <Box>
-                    <Heading as="h6" size="sm" className="mb-1">
-                      {drop.memberMitama > 0 ? 'Mitama Price' : 'Member Price'}
-                    </Heading>
-                    {!!memberCost && !drop.erc20Only && (
-                      <Heading as="h5" size="md">
-                        <Flex alignItems='center'>
-                          <CronosIconBlue boxSize={5} />
-                          <span className="ms-2">{ethers.utils.commify(round(memberCost))}</span>
-                        </Flex>
-                      </Heading>
-                    )}
-                    {!!drop.erc20Token && !!drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost && erc20Token && (
-                      <Heading as="h5" size="md" mt={1}>
-                        <Flex alignItems='center'>
-                          <DynamicCurrencyIcon address={erc20Token.address} boxSize={6} />
-                          <span className="ms-2">{ethers.utils.commify(round(drop.erc20MemberCost))}</span>
-                        </Flex>
-                      </Heading>
+                    {!!memberCost && !drop.erc20Only ? (
+                      <>
+                        <Heading as="h6" size="sm" className="mb-1">
+                          {drop.memberMitama > 0 ? 'Mitama Price' : 'Member Price'}
+                        </Heading>
+                        <Heading as="h5" size="md">
+                          <Flex alignItems='center'>
+                            <CronosIconBlue boxSize={5} />
+                            <span className="ms-2">{ethers.utils.commify(round(memberCost))}</span>
+                          </Flex>
+                        </Heading>
+                      </>
+                    ) : !!drop.erc20Token && !!drop.erc20MemberCost && drop.erc20Cost !== drop.erc20MemberCost && erc20Token && (
+                      <>
+                        <Heading as="h6" size="sm" className="mb-1">
+                          {drop.memberMitama > 0 ? 'Mitama Price' : 'Member Price'}
+                        </Heading>
+                        <Heading as="h5" size="md" mt={1}>
+                          <Flex alignItems='center'>
+                            <DynamicCurrencyIcon address={erc20Token.address} boxSize={6} />
+                            <span className="ms-2">{ethers.utils.commify(round(drop.erc20MemberCost))}</span>
+                          </Flex>
+                        </Heading>
+                      </>
                     )}
                   </Box>
                 )}

@@ -89,6 +89,7 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
                     w={14}
                     h={14}
                     fontSize='28px'
+                    color='white'
                     onClick={onUtilBtnClick}
                     _groupHover={{
                       bg: '#de8b08',
@@ -117,6 +118,7 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
                     border='8px solid #F48F0C'
                     w={14}
                     h={14}
+                    color='white'
                     onClick={onClose}
                     _groupHover={{
                       bg: '#de8b08',

@@ -49,8 +49,10 @@ interface RyoshiConfigBankStakingNFT {
   collections: RyoshiConfigBankStakingNFTCollection[];
 }
 
-interface RyoshiConfigBankStakingNFTCollection extends RyoshiConfigCollections {
+export interface RyoshiConfigBankStakingNFTCollection extends RyoshiConfigCollections {
   active: boolean;
+  minId: number;
+  maxId: number;
   multipliers: RyoshiConfigStakingMultiplier[];
   adders: RyoshiConfigStakingMultiplier[];
   ids: RyoshiConfigStakingIdMultiplier[];
@@ -80,8 +82,10 @@ interface RyoshiConfigBarracksStakingNFT {
   collections: RyoshiConfigBarracksStakingNFTCollection[];
 }
 
-interface RyoshiConfigBarracksStakingNFTCollection extends RyoshiConfigCollections {
+export interface RyoshiConfigBarracksStakingNFTCollection extends RyoshiConfigCollections {
   active: boolean;
+  minId: number;
+  maxId: number;
   traits: RyoshiConfigTraitEligibility[];
   multipliers: RyoshiConfigStakingMultiplier[];
   ids: RyoshiConfigStakingIdMultiplier[];
@@ -101,6 +105,7 @@ interface RyoshiConfigTownHallStakingNFT {
 }
 
 export interface RyoshiConfigTownHallStakingNFTCollection extends RyoshiConfigCollections {
+  active: boolean;
   fortune: number;
 }
 
@@ -118,7 +123,6 @@ export enum RyoshiConfigTraitInclusionType {
 export interface RyoshiConfigCollections {
   slug: string;
   address: string;
-  maxSupply: number;
 }
 
 interface RyoshiConfigCheckinRewards {

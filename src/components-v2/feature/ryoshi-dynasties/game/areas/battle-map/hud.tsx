@@ -147,31 +147,28 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
               <>
                 {!!user.address ? (
                   <>
-                  <Flex justify="right" align="right">
-                  <HStack justifyContent='right' marginTop='0'>
-                    <Text fontSize='xs' color="#aaa" zIndex='9'>Game End:</Text>
-                    <Text fontWeight='bold' zIndex='9'> 
-                    <Countdown
-                        date={gameStopTime ?? 0}
-                        renderer={({days, hours, minutes, seconds, completed }) => {
-                          return (days > 0 ?
-                            <span>{days} days</span>
-                            :
-                            <span>{hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>)
-                          }
-                        }
-                      />
-                    </Text>
-                    <AccordionIcon 
-                      color='#ffffff'/>
-                  </HStack>
+                    <Flex justify="right" align="right">
+                      <HStack justifyContent='right' marginTop='0'>
+                        <Text fontSize='xs' color="#aaa" zIndex='9'>Game End:</Text>
+                        <Text fontWeight='bold' zIndex='9' color='white'>
+                          <Countdown
+                            date={gameStopTime ?? 0}
+                            renderer={({days, hours, minutes, seconds, completed }) => {
+                              return (days > 0 ?
+                                <span>{days} days</span>
+                                :
+                                <span>{hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>)
+                              }
+                            }
+                          />
+                        </Text>
+                        <AccordionIcon color='#ffffff'/>
+                      </HStack>
                   </Flex>
                   </>
                 ) : (
                   <Text align='center'>Connect wallet for stats</Text>
                 )}
-                {/* <Spacer /> */}
-                
               </>
             ) : (
               <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>
@@ -207,14 +204,14 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
             <Flex textAlign='end' fontWeight='bold' alignContent='space-between'>
               <HStack textAlign='end'>
                 <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
-                <Text>{availableTroops}</Text>
+                <Text color='white'>{availableTroops}</Text>
               </HStack>
               </Flex>
             <Box color="#aaa">Total:</Box>
             <Box textAlign='end' fontWeight='bold'>
               <HStack textAlign='end'>
                 <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
-                <Text>{totalTroops}</Text>
+                <Text color='white'>{totalTroops}</Text>
               </HStack>
               </Box>
           </SimpleGrid>

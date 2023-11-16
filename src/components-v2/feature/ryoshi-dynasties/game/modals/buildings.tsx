@@ -28,19 +28,7 @@ interface BuildingsProps {
 }
 
 const Buildings = ({isOpenBuildings, onCloseBuildings, buildingButtonRef, setElementToZoomTo}: BuildingsProps) => {
-  const [buildingButtons, setBuildingButtons] = useState<ReactElement[]>([]);
-
   const buttonsNames = ["Bank", "Alliance Center", "Tavern", "Moongate", "Barracks", "Announcements", "Battle Map", "Market"];
-  const SetUpButtons = async () => {
-    setBuildingButtons(buttonsNames.map((button, i) =>
-      (<Button style={{ marginTop: '4px', marginLeft: '4px' }}
-               onClick={() => setElementToZoomTo(button)} variant='outline'size='sm'>
-          {button}</Button>
-      )))
-  }
-  useEffect(() => {
-    SetUpButtons();
-  }, [])
 
   return (
     <Drawer
@@ -56,8 +44,17 @@ const Buildings = ({isOpenBuildings, onCloseBuildings, buildingButtonRef, setEle
           <DrawerHeader>Zoom to Building</DrawerHeader>
           <DrawerBody >
             <SimpleGrid columns={{base: 2, sm: 3}} w={{base: '300px', sm: '500px'}}>
-            {buildingButtons}
-
+              {buttonsNames.map((button, i) => (
+                <Button
+                  key={i}
+                  style={{ marginTop: '4px', marginLeft: '4px' }}
+                  onClick={() => setElementToZoomTo(button)}
+                  variant='outline'
+                  size='sm'
+                >
+                  {button}
+                </Button>
+              ))}
             </SimpleGrid>
           </DrawerBody>
         </DrawerContent>

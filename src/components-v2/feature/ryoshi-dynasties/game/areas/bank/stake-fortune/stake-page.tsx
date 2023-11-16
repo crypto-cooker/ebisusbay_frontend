@@ -250,7 +250,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
               <Box>APR</Box>
               <Box textAlign='end'>
                 <VStack align='end' spacing={0}>
-                  <Box fontWeight='bold'>{totalApr}%</Box>
+                  <Box fontWeight='bold'>{round(totalApr, 2)}%</Box>
                   <Box fontSize='xs'>{baseApr}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
                 </VStack>
               </Box>

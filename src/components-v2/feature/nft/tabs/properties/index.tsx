@@ -17,15 +17,14 @@ const Properties = ({ address, slug, attributes, queryKey }: PropertiesProps) =>
     queryKey: ['CollectionTraits', address],
     queryFn: () => ApiService.withoutKey().getCollectionTraits(address),
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 2,
-    initialData: {}
+    staleTime: 1000 * 60 * 2
   });
 
   return (
     <SimpleGrid columns={{base: 1, sm: 2, lg: 3}} gap={3}>
       {attributes.filter((a: any) => a.value !== 'None').map((data: any, i: number) => {
         let occurrence = data.occurrence;
-        if (!!collectionTraits[data.trait_type]?.[data.value]) {
+        if (collectionTraits && !!collectionTraits[data.trait_type]?.[data.value]) {
           occurrence = collectionTraits[data.trait_type][data.value].occurrence;
         }
 
