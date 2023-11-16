@@ -328,7 +328,10 @@ export const ryoshiConfig: RyoshiConfig = {
         ]
       }
     },
-    meepleUpkeep: 0.1
+    ryoshi: {
+      upkeep: 0.1,
+      restockCutoff: 3000
+    }
   },
   townHall: {
     staking: {

@@ -70,11 +70,16 @@ interface RyoshiConfigStakingIdMultiplier {
 
 interface RyoshiConfigBarracks {
   staking: RyoshiConfigBarracksStaking;
-  meepleUpkeep: number;
+  ryoshi: RyoshiConfigBarracksRyoshi;
 }
 
 interface RyoshiConfigBarracksStaking {
   nft: RyoshiConfigBarracksStakingNFT;
+}
+
+interface RyoshiConfigBarracksRyoshi {
+  upkeep: number;
+  restockCutoff: number;
 }
 
 interface RyoshiConfigBarracksStakingNFT {

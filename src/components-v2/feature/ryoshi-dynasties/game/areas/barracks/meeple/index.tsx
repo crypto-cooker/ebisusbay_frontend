@@ -1,14 +1,14 @@
 import {
-  Box, 
-  Flex, 
-  HStack, 
-  Icon, 
-  Image, 
-  SimpleGrid, 
-  Spacer, 
-  Text, 
-  Stack, 
-  useDisclosure, 
+  Box,
+  Flex,
+  HStack,
+  Icon,
+  Image,
+  SimpleGrid,
+  Spacer,
+  Text,
+  Stack,
+  useDisclosure,
   VStack,
   NumberInput,
   NumberInputField,
@@ -25,8 +25,8 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderMark,
-  GridItem,
-  } from "@chakra-ui/react"
+  GridItem, FormControl, FormErrorMessage,
+} from "@chakra-ui/react"
 import React, {useContext, useEffect, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
@@ -334,11 +334,11 @@ console.log('sdfasdf', walletData);
                   )}
                 </Box>
                 <Text color={'#aaa'}>The amount or Ryoshi that are ready to be used and have not been delegated or deployed</Text>
-                {onDutyMeepleData.onDutyUser > 3000 && (
+                {onDutyMeepleData.onDutyUser >= rdConfig.barracks.ryoshi.restockCutoff && (
                   <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={2}>
                     <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
                     <Text fontSize='14' color='#333' fontWeight='bold'>
-                      Amounts exceeding 3,000 Ryoshi by the end of the week will prevent receiving additional Ryoshi the following week. Take them off duty <b> or </b> use them for battles and resource gathering.
+                      Amounts equal or greater than {commify(rdConfig.barracks.ryoshi.restockCutoff)} Ryoshi by the end of the week will prevent receiving additional Ryoshi the following week. Take them off duty <b> or </b> use them for battles and resource gathering.
                     </Text>
                   </Stack>
                 )}
@@ -509,10 +509,23 @@ const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: Withdr
   const [meepleToMint, setMeepleToMint] = useState(0);
   const [isExecuting, setIsExecuting] = useState(false);
   const queryClient = useQueryClient();
+  const [hasAmountError, setHasAmountError] = useState(true);
+  const minValue = onDutyAmount > 0 ? 1 : 0;
 
-  const handleQuantityChange = (stringValue: string, numValue: number) => setMeepleToMint(numValue)
+  const handleQuantityChange = (stringValue: string, numValue: number) => {
+    if (isNaN(numValue)) numValue = minValue;
+    if (numValue > onDutyAmount) numValue = onDutyAmount;
+    setHasAmountError(numValue < 1 || meepleToMint > numValue);
+    setMeepleToMint(numValue);
+  }
 
   const mintMeeple = async () => {
+    if (meepleToMint < 1 || meepleToMint > onDutyAmount) {
+      setHasAmountError(true);
+      return;
+    }
+    setHasAmountError(false);
+
     if (!user.address) return;
     const signature = await requestSignature();
     try {
@@ -520,7 +533,7 @@ const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: Withdr
       const cmsResponse = await MeepleMint(user.address, signature, meepleToMint);
       const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
       const tx = await resourcesContract.mintWithSig(cmsResponse.mintRequest, cmsResponse.signature);
-      return tx.wait();
+      return await tx.wait();
     } catch (error: any) {
       console.log(error);
       toast.error(parseErrorMessage(error));
@@ -532,18 +545,30 @@ const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: Withdr
   const mutation = useMutation({
     mutationFn: mintMeeple,
     onSuccess: data => {
-      queryClient.setQueryData(['GetMeepleOnDuty', user.address], (old: any) => {
-        return {
-          ...old,
-          onDuty: old.onDuty - meepleToMint,
-          // upkeepPaid: BigNumber.from(activeMeeples).toNumber(),
-          // meeplePaidFor: BigNumber.from(activeMeeples).toNumber()
-        }
-      });
+      try {
+        queryClient.setQueryData(['MeepleManagementPage', user.address], (old: any) => {
+          old.offDutyAmount = old.offDutyAmount + meepleToMint;
+          return old;
+        });
 
-      toast.success(createSuccessfulTransactionToastContent(data.transactionHash));
-      setMeepleToMint(0);
-      onComplete();
+        queryClient.setQueryData(['GetMeepleOnDuty', user.address], (old: any) => {
+          old.onDutyUser = old.onDutyUser - meepleToMint;
+          if (old.onDutyUser < 0) old.onDutyUser = 0;
+          return old;
+          // return {
+          //   ...old,
+          //   onDutyUser: old.onDutyUser - meepleToMint,
+          //   // upkeepPaid: BigNumber.from(activeMeeples).toNumber(),
+          //   // meeplePaidFor: BigNumber.from(activeMeeples).toNumber()
+          // }
+        });
+      } catch (e) {
+        console.log(e);
+      } finally {
+        toast.success(createSuccessfulTransactionToastContent(data.transactionHash));
+        setMeepleToMint(0);
+        onComplete();
+      }
     }
   });
 
@@ -559,24 +584,26 @@ const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: Withdr
             Taking Ryoshi off-duty will store them on the blockchain for later use. They can be brought back on-duty at any time (upkeep costs may apply).
           </Text>
           <Box mt={2}>
-            <Text color={'#aaa'} w={'100%'} textAlign={'left'} py={2}> Select Ryoshi to Withdraw (Mint): </Text>
-            <Flex justifyContent='center' w={'100%'}>
-              <NumberInput
-                defaultValue={0}
-                min={0}
-                max={onDutyAmount}
-                name="quantity"
-                onChange={handleQuantityChange}
-                value={meepleToMint}
-                clampValueOnBlur={true}
-                w='85%'
-              >
-                <NumberInputField />
-                <NumberInputStepper >
-                  <NumberIncrementStepper color='#ffffff'/>
-                  <NumberDecrementStepper color='#ffffff'/>
-                </NumberInputStepper>
-              </NumberInput>
+            <Text color={'#aaa'} w='full' textAlign={'left'} py={2}> Select Ryoshi to Withdraw (Mint): </Text>
+            <HStack align='top' w='full'>
+              <FormControl isInvalid={hasAmountError}>
+                <NumberInput
+                  defaultValue={minValue}
+                  min={minValue}
+                  max={onDutyAmount}
+                  name="quantity"
+                  onChange={handleQuantityChange}
+                  value={meepleToMint}
+                  clampValueOnBlur={true}
+                >
+                  <NumberInputField />
+                  <NumberInputStepper >
+                    <NumberIncrementStepper color='#ffffff'/>
+                    <NumberDecrementStepper color='#ffffff'/>
+                  </NumberInputStepper>
+                </NumberInput>
+                <FormErrorMessage>Invalid amount</FormErrorMessage>
+              </FormControl>
 
               <Spacer />
               <Button
@@ -585,7 +612,7 @@ const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: Withdr
               >
                 Max
               </Button>
-            </Flex>
+            </HStack>
 
             <Flex justifyContent={'space-between'} align={'center'} mt={'8'}>
               <Text color={'#aaa'} alignContent={'baseline'} py={2}> Remaining Ryoshi On Duty: </Text>
@@ -598,7 +625,7 @@ const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: Withdr
         <Stack justifyContent={'space-between'} direction='row'>
           <RdButton onClick={onClose} size='lg' fontSize={{base: '18', sm: '24'}}>Cancel</RdButton>
           <RdButton
-            onClick={mintMeeple}
+            onClick={handleMintMeeple}
             size='lg'
             fontSize={{base: '18', sm: '24'}}
             isLoading={isExecuting}
@@ -782,12 +809,25 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyAmount}: Deposi
   const collectionAddress = config.contracts.resources
   const [isExecuting, setIsExecuting] = useState(false);
   const queryClient = useQueryClient();
+  const [hasAmountError, setHasAmountError] = useState(true);
+  const minValue = offDutyAmount > 0 ? 1 : 0;
 
   //Deposit Ryoshi
   const [meepleToDeposit, setMeepleToDeposit] = useState(0);
-  const handleQuantityChangeDeposit= (stringValue: string, numValue: number) => setMeepleToDeposit(numValue)
+  const handleQuantityChangeDeposit= (stringValue: string, numValue: number) => {
+    if (isNaN(numValue)) numValue = minValue;
+    if (numValue > offDutyAmount) numValue = offDutyAmount;
+    setHasAmountError(numValue < 1 || meepleToDeposit > numValue);
+    setMeepleToDeposit(numValue);
+  }
 
   const depositMeeple = async () => {
+    if (meepleToDeposit < 1 || meepleToDeposit > offDutyAmount) {
+      setHasAmountError(true);
+      return;
+    }
+    setHasAmountError(false);
+
     if (!user.address) return;
     try {
       setIsExecuting(true);
@@ -806,6 +846,7 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyAmount}: Deposi
     mutationFn: depositMeeple,
     onSuccess: data => {
       try {
+        console.log('SUCCESS', data);
         queryClient.setQueryData(['MeepleManagementPage', user.address], (old: any) => {
           old.offDutyAmount = old.offDutyAmount - meepleToDeposit;
           if (old.offDutyAmount < 0) old.offDutyAmount = 0;
@@ -813,7 +854,7 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyAmount}: Deposi
         });
 
         queryClient.setQueryData(['GetMeepleOnDuty', user.address], (old: any) => {
-          old.onDuty = old.onDuty + meepleToDeposit;
+          old.onDutyUser = old.onDutyUser + meepleToDeposit;
           return old;
         });
       } finally {
@@ -832,31 +873,33 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyAmount}: Deposi
     <RdModal isOpen={isOpen} onClose={onClose} title='Deposit Ryoshi'>
       <RdModalAlert>
         <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
-        <Text color={'#aaa'} w={'100%'} textAlign={'left'} py={2}>Select Ryoshi to put on duty:</Text>
-        <Flex justifyContent='center' w={'100%'}>
-          <NumberInput 
-            defaultValue={0} 
-            min={0} 
-            max={offDutyAmount} 
-            name="quantity"
-            onChange={handleQuantityChangeDeposit}
-            value={meepleToDeposit}
-            clampValueOnBlur={true}
-            w='85%'
+        <Text color={'#aaa'} w='full' textAlign={'left'} py={2}>Select Ryoshi to put on duty:</Text>
+        <HStack align='top' w='full'>
+          <FormControl isInvalid={hasAmountError}>
+            <NumberInput
+              defaultValue={minValue}
+              min={minValue}
+              max={offDutyAmount}
+              name="quantity"
+              onChange={handleQuantityChangeDeposit}
+              value={meepleToDeposit}
+              clampValueOnBlur={true}
             >
-            <NumberInputField />
-            <NumberInputStepper >
-              <NumberIncrementStepper color='#ffffff'/>
-              <NumberDecrementStepper color='#ffffff'/>
-            </NumberInputStepper>
-          </NumberInput>
+              <NumberInputField />
+              <NumberInputStepper >
+                <NumberIncrementStepper color='#ffffff'/>
+                <NumberDecrementStepper color='#ffffff'/>
+              </NumberInputStepper>
+            </NumberInput>
+            <FormErrorMessage>Invalid amount</FormErrorMessage>
+          </FormControl>
 
           <Spacer />
           <Button 
             variant={'outline'}
             onClick={() => setMeepleToDeposit(offDutyAmount)}
             > Max </Button>
-        </Flex>
+        </HStack>
 
         <Flex justifyContent={'space-between'} align={'center'} mt={'8'}>
           <Text color={'#aaa'} alignContent={'baseline'} p={2}> Remaining Ryoshi Off Duty: </Text>
