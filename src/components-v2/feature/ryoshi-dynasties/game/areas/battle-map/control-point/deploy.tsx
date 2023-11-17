@@ -65,11 +65,14 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [selectedFaction, setSelectedFaction] = useState<string>(dataForm.faction);
   const handleQuantityChange = (stringValue: string, numValue: number) => setSelectedQuantity(numValue)
-  const [playerFaction, setPlayerFaction] = useState<RdFaction>();
-  const [hasFaction, setHasFaction] = useState(false);
+  // const [playerFaction, setPlayerFaction] = useState<RdFaction>();
+  // const [hasFaction, setHasFaction] = useState(false);
   const [troopsAvailable, setTroopsAvailable] = useState(0);
   const [troopsDeployed, setTroopsDeployed] = useState(0);
   const [factionSubscribed, setFactionSubscribed] = useState(false);
+
+  const hasFaction = rdContext.user?.faction && rdContext.user.faction.isEnabled;
+  const playerFaction = rdContext.user?.faction;
 
   const handleConnect = async () => {
     if (!user.address) {
@@ -98,24 +101,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
       console.log(error)
     }
   }
-  const GetPlayerTroops = async () => {
-    if (!user.address) return;
 
-    try {
-      const signature = await requestSignature();
-      const data = await getFactionOwned(user.address.toLowerCase(), signature);
-      // console.log("data.data.data", data.data.data)
-      if(data.data.data?.isEnabled) {
-        setHasFaction(true)
-        setPlayerFaction(data.data.data)
-      }
-      else {
-        setHasFaction(false)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
   const HandleSelectCollectionCallback = (factionName: string) => {
     setSelectedFaction(factionName);
   }
@@ -179,7 +165,6 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
       var data = await deployTroops(user.address?.toLowerCase(), signature,
           rdContext?.game?.game.id, selectedQuantity, controlPoint.id, factionId)
 
-      await GetPlayerTroops();
       setSelectedQuantity(0);
       await rdContext.refreshUser();
 
@@ -208,7 +193,6 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
       var data = await recallTroops(user.address?.toLowerCase(), signature,
         rdContext?.game?.game.id, selectedQuantity, controlPoint.id, factionId)
 
-      await GetPlayerTroops();
       setSelectedQuantity(0);
       await rdContext.refreshUser();
       refreshControlPoint();
@@ -232,6 +216,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
     }
     return 0;
   }
+
   const CheckIfFactionSubscribed = () => {
     //check if allfactions (which contains factions subscribed to the season) contains selected faction
     setFactionSubscribed(factionsSubscribedToSeason.filter(faction => faction.name === selectedFaction).length > 0);
@@ -241,11 +226,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
     GetTroopsOnPoint();
     CheckIfFactionSubscribed();
   }, [selectedFaction])
-  useEffect(() => {
-    GetPlayerTroops();
-  }, [user.address])
-  useEffect(() => {
-  }, [factionsSubscribedToSeason]);
+
   useEffect(() => {
     if(!rdContext?.user) return;
 
