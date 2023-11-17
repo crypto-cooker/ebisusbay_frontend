@@ -24569,6 +24569,9 @@
       "listable": true,
       "metadata": {
         "description": "Genius Genies are the DAO token used to make decisions regarding ecosystem treasury funds. 1 Genie = 1 vote",
+        "avatar": "/img/collections/genius-genies/avatar.webp",
+        "banner": "/img/collections/genius-genies/banner.webp",
+        "card": "/img/collections/genius-genies/card.webp",
         "website": "https://CroGenius.app/",
         "twitter": "https://twitter.com/crogenius",
         "discord": "https://discord.gg/VJukBFYwYD",
