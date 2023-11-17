@@ -24623,6 +24623,30 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Blumies Customs",
+      "slug": "blumies-customs",
+      "multiToken": false,
+      "address": "0x3478c03926BAaB968b7A24A451ec8686892e3C4C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Custom 1 of 1 NFTs provided by Purple Fantasy team.",
+        "avatar": "/img/collections/blumies-customs/avatar.webp",
+        "banner": "/img/collections/blumies-customs/banner.webp",
+        "card": "/img/collections/blumies-customs/card.webp",
+        "website": "https://www.blumiesofficial.com/",
+        "twitter": "https://twitter.com/BlumiesNFT",
+        "discord": "https://discord.gg/BpHwsasXvU",
+        "medium": "https://blumies.gitbook.io/blumies-nft/",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
