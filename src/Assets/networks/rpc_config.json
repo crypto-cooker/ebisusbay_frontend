@@ -21577,7 +21577,7 @@
       "multiToken": false,
       "address": "0x7Da8e3ACda33FFA01396fF00e2c4b36Ad899f8AD",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "666 EXCLUSIVE ApeX NFTs by Troopz - Completely random and algorithmically generated. The old fashioned NFT way! Hand-draw artwork, layer by layer, by our very own artist, with NO AI, NO Pixels, No BS! ApeX are the top of the food chain, with no natural predators...place these NFTs into ANY battle....and they are guaranteed to come out on top! EXCLUSIVELY available to Troopz holders by burning a set of Sketchz NFTs.",
         "avatar": "/img/collections/trooprz-apex/avatar.webp",
@@ -24569,6 +24569,9 @@
       "listable": true,
       "metadata": {
         "description": "Genius Genies are the DAO token used to make decisions regarding ecosystem treasury funds. 1 Genie = 1 vote",
+        "avatar": "/img/collections/genius-genies/avatar.webp",
+        "banner": "/img/collections/genius-genies/banner.webp",
+        "card": "/img/collections/genius-genies/card.webp",
         "website": "https://CroGenius.app/",
         "twitter": "https://twitter.com/crogenius",
         "discord": "https://discord.gg/VJukBFYwYD",
@@ -24622,6 +24625,30 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "Blumies Customs",
+      "slug": "blumies-customs",
+      "multiToken": false,
+      "address": "0x3478c03926BAaB968b7A24A451ec8686892e3C4C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Custom 1 of 1 NFTs provided by Purple Fantasy team.",
+        "avatar": "/img/collections/blumies-customs/avatar.webp",
+        "banner": "/img/collections/blumies-customs/banner.webp",
+        "card": "/img/collections/blumies-customs/card.webp",
+        "website": "https://www.blumiesofficial.com/",
+        "twitter": "https://twitter.com/BlumiesNFT",
+        "discord": "https://discord.gg/BpHwsasXvU",
+        "medium": "https://blumies.gitbook.io/blumies-nft/",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
