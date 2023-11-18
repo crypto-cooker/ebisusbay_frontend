@@ -601,6 +601,10 @@ export const isHerosCollection = (address) => {
   );
 }
 
+export const isVaultCollection = (address) => {
+  return ciEquals(address, config.contracts.vaultNft);
+}
+
 export const isPlayingCardsCollection = (address) => {
   return isCollection(address, 'ryoshi-playing-cards', '0xd87838a982a401510255ec27e603b0f5fea98d24');
 }

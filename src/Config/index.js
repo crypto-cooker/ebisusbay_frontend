@@ -69,7 +69,8 @@ export const configData = {
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
-      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8'
+      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
+      vaultNft: ''
     },
     tokens: {
       loot: {
@@ -278,7 +279,8 @@ export const configData = {
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
-      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8'
+      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
+      vaultNft: ''
     },
     tokens: {
       loot: {
@@ -427,7 +429,8 @@ export const configData = {
       rewards: '0xB775F2Ef8E007F6719fF0fc113048180b4482e2c',
       presaleVaults: '0x677a4B2910e0e5667907B5bf4cD4fdb188e99281',
       seasonUnlocks: '0x107ca22a421b24b0986150E51ce03b772b56440f',
-      townHall: '0xEe68452B79653298Af5109Dae5cD4ABA3c4E1934'
+      townHall: '0xEe68452B79653298Af5109Dae5cD4ABA3c4E1934',
+      vaultNft: '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74'
     },
     tokens: {
       loot: {
@@ -573,7 +576,9 @@ export const configData = {
       fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
-      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af'
+      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
+      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
+      vaultNft: '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74'
     },
     tokens: {
       loot: {

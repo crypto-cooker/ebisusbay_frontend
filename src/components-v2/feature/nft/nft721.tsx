@@ -31,19 +31,18 @@ import {
   isCroSkullPetsCollection,
   isEmptyObj,
   isEvoSkullCollection,
+  isHerosCollection,
   isLadyWeirdApesCollection,
   isLazyHorseCollection,
   isLazyHorsePonyCollection,
   isNftBlacklisted,
+  isVaultCollection,
   isVoxelWeirdApesCollection,
   isWeirdApesCollection,
   rankingsLinkForCollection,
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   shortAddress,
-  isDynamicNftImageCollection,
-  isHerosCollection,
-
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
@@ -56,7 +55,7 @@ import {commify} from 'ethers/lib/utils';
 import {appConfig} from '@src/Config';
 import Link from 'next/link';
 import axios from "axios";
-import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
+import Button from "@src/Components/components/common/Button";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {
   Box,
@@ -571,6 +570,32 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
       }
     }
     getLadyApeInfo();
+
+    // eslint-disable-next-line
+  }, [address]);
+
+  useEffect(() => {
+    async function getEbisuVaultsExtraAttributes() {
+      if (isVaultCollection(address)) {
+        let attributes = [];
+        const startTime = nft.attributes.find((attribute: any) => attribute.trait_type === 'Start Time')?.value ?? 0;
+        const endTime = nft.attributes.find((attribute: any) => attribute.trait_type === 'End Time')?.value ?? 0;
+
+        const timeRemaining = (parseInt(endTime) - parseInt(startTime)) - (Date.now() / 1000);
+        const timeRemainingDays = Math.floor(timeRemaining / 86400);
+
+        attributes.push({
+          key: 'Days Remaining',
+          value: `${timeRemainingDays} days`,
+          type: 'string'
+        });
+
+        setOnChainPowertraits(attributes);
+      } else {
+        setOnChainPowertraits([]);
+      }
+    }
+    getEbisuVaultsExtraAttributes();
 
     // eslint-disable-next-line
   }, [address]);

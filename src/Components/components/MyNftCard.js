@@ -3,10 +3,11 @@ import {useRouter} from 'next/router';
 import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import {
+  faBank,
   faBoltLightning,
   faEllipsisH,
-  faExchangeAlt,
-  faHand,
+  faExchangeAlt, faFileImport,
+  faHand, faImage,
   faLink,
   faPen,
   faPlusCircle,
@@ -49,12 +50,14 @@ const MyNftCard = ({
   isStaked = false,
   canCancel = false,
   canUpdate = false,
+  isVault = false,
   onTransferButtonPressed,
   onSellButtonPressed,
   onCancelButtonPressed,
   onUpdateButtonPressed,
   onAddToBatchListingButtonPressed,
   onRemoveFromBatchListingButtonPressed,
+  onImportVaultButtonPressed,
   newTab = false,
 }) => {
   const history = useRouter();
@@ -131,6 +134,14 @@ const MyNftCard = ({
         icon: faTimes,
         label: 'Cancel',
         handleClick: onCancelButtonPressed,
+      });
+    }
+
+    if (isVault) {
+      options.push({
+        icon: faBank,
+        label: 'Import Vault',
+        handleClick: onImportVaultButtonPressed,
       });
     }
 

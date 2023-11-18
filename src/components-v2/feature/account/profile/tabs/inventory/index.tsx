@@ -2,7 +2,13 @@ import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'rea
 import {useDispatch} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import MyNftCard from "@src/Components/components/MyNftCard";
-import {caseInsensitiveCompare, findCollectionByAddress, isBundle, isNftBlacklisted} from "@src/utils";
+import {
+  caseInsensitiveCompare,
+  findCollectionByAddress,
+  isBundle,
+  isNftBlacklisted,
+  isVaultCollection
+} from "@src/utils";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
 import {MyNftPageActions} from "@src/GlobalState/User";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
@@ -23,7 +29,8 @@ import {
 } from "@src/GlobalState/user-batch";
 import {MobileBatchPreview} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-batch-preview";
 import {
-  Box, Center,
+  Box,
+  Center,
   CloseButton,
   Collapse,
   HStack,
@@ -33,7 +40,8 @@ import {
   InputGroup,
   InputRightElement,
   ListItem,
-  SimpleGrid, Spinner,
+  SimpleGrid,
+  Spinner,
   Stack,
   UnorderedList,
   useBreakpointValue,
@@ -212,6 +220,7 @@ export default function Inventory({ address }: InventoryProps) {
                           isStaked={nft.isStaked}
                           canCancel={nft.listed && !!nft.listingId}
                           canUpdate={nft.listable && nft.listed && !nft.multiToken}
+                          isVault={isVaultCollection(nft.nftAddress)}
                           onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
                           onSellButtonPressed={() => {
                             dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
@@ -222,6 +231,7 @@ export default function Inventory({ address }: InventoryProps) {
                           onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft)) }
                           onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
                           onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
+                          onImportVaultButtonPressed={() => console.log('TBI')}
                           newTab={true}
                         />
                       ) : (

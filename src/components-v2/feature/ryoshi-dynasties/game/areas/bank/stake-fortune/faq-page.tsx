@@ -83,6 +83,31 @@ const FaqPage = () => {
             <Text>Staked Fortune is locked until the end of the staking duration. However, it is possible to withdraw early with the Emergency Withdraw function. This will withdraw all the Fortune in the vault, but will burn 50% of the Fortune value. Take caution of this if using this feature.</Text>
           </AccordionPanel>
         </AccordionItem>
+        <AccordionItem>
+          <AccordionButton fontSize='sm' fontWeight='bold'>
+            <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+              What is the "Tokenize Vault" button?
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <Text>The Tokenize Vault button converts your current active vault into an NFT. This means that it can then be freely transferred or sold on the marketplace.</Text>
+            <Text mt={2}>Note that all Bank benefits applied to the vault will be paused until the vault is imported back into the Bank. This includes APR, Mitama, and Troops.</Text>
+            <Text mt={2}>1.5% of the vault's balance will be burned upon completion of the tokenization.</Text>
+          </AccordionPanel>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton fontSize='sm' fontWeight='bold'>
+            <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+              How do I import a vault from my Inventory?
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <Text>To import a  vault from your Inventory, click the <strong>"+ New Vault"</strong> button. This will present an option to either create a new vault or import a vault. Click the <strong>"Import Vault"</strong> button and follow the instructions to complete the process.</Text>
+            <Text mt={2}>Once imported, the vault will be immediately activated and start earning Bank benefits such as APR, Mitama, and Troops.</Text>
+          </AccordionPanel>
+        </AccordionItem>
       </Accordion>
     </Stack>
   );

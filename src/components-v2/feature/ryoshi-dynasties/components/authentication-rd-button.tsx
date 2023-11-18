@@ -11,11 +11,12 @@ type Size = 'sm' | 'md' | 'lg';
 interface AuthenticationRdButtonProps {
   connectText?: string;
   signinText?: string;
+  requireSignin?: boolean;
   size?: ResponsiveValue<Size>;
   children: ReactNode;
 }
 
-const AuthenticationRdButton: React.FC<AuthenticationRdButtonProps> = ({ connectText, signinText, size = 'lg', children }) => {
+const AuthenticationRdButton: React.FC<AuthenticationRdButtonProps> = ({ connectText, signinText, requireSignin = true, size = 'lg', children }) => {
   // const [manualConnect, setManualConnect] = useState(false);
   // const {isSignedIn, signin, isSigningIn: isAutoSigningIn} = useEnforceSigner();
   // const user = useAppSelector(state => state.user);
@@ -40,7 +41,7 @@ const AuthenticationRdButton: React.FC<AuthenticationRdButtonProps> = ({ connect
     <AuthenticationGuard>
       {({isConnected, isSignedIn, isConnecting, isSigningIn, signin, connect}) => (
         <>
-          {isConnected && isSignedIn ? (
+          {isConnected && (!requireSignin || isSignedIn) ? (
             <>
               {children}
             </>
