@@ -1,7 +1,15 @@
-import {humanizeAdvanced, mapAttributeString, millisecondTimestamp, relativePrecision} from "@src/utils";
+import {
+  humanizeAdvanced,
+  isVaultCollection,
+  mapAttributeString,
+  millisecondTimestamp,
+  relativePrecision, round
+} from "@src/utils";
 import Link from "next/link";
 import React from "react";
 import {Box, Heading} from "@chakra-ui/react";
+import { ethers } from "ethers";
+import {commify} from "ethers/lib/utils";
 
 interface TraitProps {
   title: string;
@@ -33,6 +41,10 @@ const Trait = ({
           <>
             {type === 'date' ? (
               <>{new Date(millisecondTimestamp(value)).toDateString()}</>
+            ) : type === 'duration' ? (
+              <>{parseInt(value) / 86400} Days</>
+            ) : isVaultCollection(collectionAddress) && title === 'Amount' ? (
+              <>{commify(round(ethers.utils.formatEther(value)))} FRTN</>
             ) : (
               <>{mapAttributeString(valueDisplay ?? value, collectionAddress, title, true)}</>
             )}

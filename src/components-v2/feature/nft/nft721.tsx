@@ -23,6 +23,7 @@ import NftProfilePreview from '@src/components-v2/feature/nft/profile-preview'
 import {
   appUrl,
   caseInsensitiveCompare,
+  findNextLowestNumber,
   isAnyWeirdApesCollection,
   isArgonautsBrandCollection,
   isBabyWeirdApesCollection,
@@ -133,7 +134,17 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
   const izanamiImageSize = useBreakpointValue(
     {base: 250, sm: 368, lg: 500},
     {fallback: 'md'}
-  )
+  );
+
+  const { data: rdConfig } = useQuery({
+    queryKey: ['RyoshiDynastiesContext'],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
+    staleTime: 1000 * 60 * 60,
+    gcTime: 1000 * 60 * 61,
+    refetchOnWindowFocus: false,
+    enabled: isVaultCollection(address)
+  });
+
   // useEffect(() => {
   //   if (collection) {
   //     async function asyncFunc() {
@@ -581,7 +592,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
         const startTime = nft.attributes.find((attribute: any) => attribute.trait_type === 'Start Time')?.value ?? 0;
         const endTime = nft.attributes.find((attribute: any) => attribute.trait_type === 'End Time')?.value ?? 0;
 
-        const timeRemaining = (parseInt(endTime) - parseInt(startTime)) - (Date.now() / 1000);
+        const timeRemaining = (parseInt(endTime) - (Date.now() / 1000));
         const timeRemainingDays = Math.floor(timeRemaining / 86400);
 
         attributes.push({
@@ -589,6 +600,24 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
           value: `${timeRemainingDays} days`,
           type: 'string'
         });
+
+        if (rdConfig) {
+          const totalStakingDays = Math.floor((parseInt(endTime) - parseInt(startTime)) / 86400);
+          const numTerms = Math.floor(totalStakingDays / rdConfig.bank.staking.fortune.termLength);
+          const availableAprs = rdConfig.bank.staking.fortune.apr as any;
+          let apr = 'N/A';
+          console.log('availableAprs', availableAprs)
+          if (availableAprs && Object.keys(availableAprs).length > 0) {
+            const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
+            apr = `${(availableAprs[aprKey] ?? availableAprs[1]) * 100}%`;
+          }
+
+          attributes.push({
+            key: 'APR',
+            value: apr,
+            type: 'number'
+          });
+        }
 
         setOnChainPowertraits(attributes);
       } else {
@@ -598,7 +627,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     getEbisuVaultsExtraAttributes();
 
     // eslint-disable-next-line
-  }, [address]);
+  }, [address, rdConfig]);
 
   const fullImage = () => {
     if (nft.original_image.startsWith('ipfs://')) {
