@@ -24650,6 +24650,32 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Time Ship Components",
+      "slug": "time-ship-components",
+      "multiToken": false,
+      "address": "0xfF567a62d7BF2CF984F02175C8bd485E3C4E2c0e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "5 different component types with 10 different Tiers ranging from T1 - T10 T10 being the most rare    These components will be attach/detachable from Time Ships at any time, in the Ship Yard  Not only will you be able to attach a specific tier but we are debating on allowing the \"stacking\" of the same tier components for a even Higher tier to be fused/made. Time Ships wont be the only thing components can be attached to \uD83D\uDE09",
+        "avatar": "/img/collections/time-ship-components/avatar.webp",
+        "banner": "/img/collections/time-ship-components/banner.webp",
+        "card": "/img/collections/time-ship-components/card.webp",
+        "website": "https://timemachine101.com/wars",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/gAhXUXQDu4",
+        "medium": "https://medium.com/@tashaandluke96/before-the-time-wars-66654b9132a",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
