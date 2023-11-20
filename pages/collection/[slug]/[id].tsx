@@ -34,11 +34,15 @@ const Nft = ({ slug, id, nft, collection }: NftProps) => {
     if(!collection) return;
 
     if(isHerosCollection(collection?.address)) {
-      setNftImage(appUrl(`api/heroes/${id}/og?${cacheBustingKey()}`).toString());
+      setNftImage(appUrl(`api/heroes/${id}?${cacheBustingKey()}`).toString());
     } else {
       setNftImage(nft?.image);
     }
   }, [collection, id]);
+
+  // useEffect(() => {
+  //     console.log('nftImage', nftImage);
+  // }, [nftImage]);
 
   // const retrieveLayeredImage = async(id:string) => {
   //   const response = await fetch(`/api/heroes/${id}`);
