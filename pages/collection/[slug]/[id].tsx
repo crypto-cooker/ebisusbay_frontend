@@ -6,6 +6,7 @@ import {appConfig} from "@src/Config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {GetServerSidePropsContext} from "next";
+import {appUrl, cacheBustingKey} from '@src/utils';
 import {
   isLandDeedsCollection,
   isHerosCollection,
@@ -33,23 +34,20 @@ const Nft = ({ slug, id, nft, collection }: NftProps) => {
     if(!collection) return;
 
     if(isHerosCollection(collection?.address)) {
-      GetPreviewImage(collection.address, id);
+      setNftImage(appUrl(`api/heroes/${id}/og?${cacheBustingKey()}`).toString());
     } else {
       setNftImage(nft?.image);
     }
   }, [collection, id]);
 
-  const retrieveLayeredImage = async(id:string) => {
-    const response = await fetch(`/api/heroes/${id}`);
-    return response.blob();
-  }
+  // const retrieveLayeredImage = async(id:string) => {
+  //   const response = await fetch(`/api/heroes/${id}`);
+  //   return response.blob();
+  // }
 
-  const GetPreviewImage = async(address : string, id:string) => {
-    if(isHerosCollection(address)) {
-      let layeredImage = await retrieveLayeredImage(id);
-      setNftImage(URL.createObjectURL(layeredImage));
-    }
-  }
+  // const GetPreviewImage = async(id:string) => {
+  //   console.log('route', appUrl(`api/heroes/${id}/og?${cacheBustingKey()}`).toString());
+  // }
 
   const getTraits = (anNFT: any) => {
     if (
