@@ -44,7 +44,7 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
         return initialRdConfig;
       }
     },
-    initialData: initialRdConfig,
+    placeholderData: initialRdConfig,
     staleTime: 1000 * 60 * 10,
     gcTime: 1000 * 60 * 11,
     refetchInterval: 1000 * 60,
