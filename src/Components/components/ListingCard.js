@@ -235,7 +235,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                     />
                   </Watermarked>
                 ) : (
-                  <DynamicNftImage address={listing.nftAddress} id={listing.nftId}>
+                  <DynamicNftImage nft={listing.nft} address={listing.nftAddress} id={listing.nftId}>
                     <AnyMedia
                       image={nftCardUrl(listing.nftAddress, listing.nft.image)}
                       className={`card-img-top ${imgClass}`}

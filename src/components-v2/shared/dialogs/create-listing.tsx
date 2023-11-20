@@ -427,15 +427,15 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                   {isBundle(nft.address ?? nft.nftAddress) ? (
                     <ImagesContainer nft={nft} />
                   ) : (
-                    <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
-                    <AnyMedia
-                      image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
-                      video={nft.video ?? nft.animation_url}
-                      videoProps={{ height: 'auto', autoPlay: true }}
-                      title={nft.name}
-                      usePlaceholder={false}
-                      className="img-fluid img-rounded"
-                    />
+                    <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
+                      <AnyMedia
+                        image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                        video={nft.video ?? nft.animation_url}
+                        videoProps={{ height: 'auto', autoPlay: true }}
+                        title={nft.name}
+                        usePlaceholder={false}
+                        className="img-fluid img-rounded"
+                      />
                     </DynamicNftImage>
                   )}
                 </div>

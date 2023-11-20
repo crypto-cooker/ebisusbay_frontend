@@ -183,7 +183,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
             <ModalBody>
               <div className="nftSaleForm row gx-3">
                 <div className="col-12 col-sm-4 mb-sm-3">
-                  <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
+                  <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
                     <AnyMedia
                       image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
                       video={nft.video ?? nft.animation_url}

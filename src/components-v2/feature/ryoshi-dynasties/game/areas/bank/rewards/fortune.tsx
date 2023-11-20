@@ -4,6 +4,7 @@ import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {
   Accordion,
   AccordionButton,
+  AccordionIcon,
   AccordionItem,
   AccordionPanel,
   Box,
@@ -18,9 +19,17 @@ import {
   Spacer,
   Spinner,
   Stack,
+  Table,
+  Tag,
+  Tbody,
+  Td,
   Text,
+  Th,
+  Thead,
+  Tr,
+  useBreakpointValue,
   useDisclosure,
-  VStack
+  VStack, Wrap
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import RdButton from "../../../../components/rd-button";
@@ -32,7 +41,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {round, timeSince} from "@src/utils";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {RdModalAlert, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {RdModalAlert, RdModalBox, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {useFortunePrice} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
@@ -89,7 +98,7 @@ const FortuneRewardsTab = () => {
         <Text fontWeight='bold' fontSize='lg'>Karmic Debt ({round(burnMalus)}%)</Text>
         <RdProgressBar current={burnMalus} max={100} useGrid={false} fillColor='linear-gradient(to left, #B45402, #7D3500)' />
       </Box>
-      <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' mt={4}>
+      <RdModalBox mt={4}>
         <Box textAlign='center'>
           Fortune rewards accumulate from Fortune staking, marketplace listings, and from playing the game and can be withdrawn at any time.
           Compound to an existing vault to multiply your rewards!
@@ -115,8 +124,96 @@ const FortuneRewardsTab = () => {
             )}
           </>
         )}
-      </Box>
+      </RdModalBox>
+      {!!rewards?.data.rewards && rewards.data.rewards.rewardsHistory.length > 0 && (
+        <RewardsBreakdown rewardsHistory={rewards.data.rewards.rewardsHistory} />
+      )}
     </Box>
+  )
+}
+
+const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
+  const useTable = useBreakpointValue(
+    {base: false, sm: true},
+    {fallback: 'sm'}
+  )
+
+  const mappings: {[key: string]: string} = {
+    APR: 'APR',
+  }
+
+  const formatString = (str: string): string =>
+    mappings[str] ?? str.replace(/_/g, ' ')
+      .toLowerCase()
+      .replace(/\b\w/g, (char: string) => char.toUpperCase());
+
+  return (
+    <RdModalBox mt={4}>
+      <Accordion allowToggle>
+        <AccordionItem style={{borderWidth:'0'}}>
+          <AccordionButton>
+            <Flex justify='space-between' w='full' >
+              <Box>View recent rewards</Box>
+              <Box ms={4}>
+                <AccordionIcon/>
+              </Box>
+            </Flex>
+          </AccordionButton>
+          <AccordionPanel pb={0} px={1}>
+            {useTable ? (
+              <Table>
+                <Thead>
+                  <Tr>
+                    <Th ps={3}>Date</Th>
+                    <Th>Type</Th>
+                    <Th pe={3} isNumeric>Amount</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {rewardsHistory.map((reward: any) => (
+                    <Tr>
+                      <Td py={1} ps={3}>{new Date(reward.timestamp).toLocaleString()}</Td>
+                      <Td py={1}>
+                        <Box>{formatString(reward.type)}</Box>
+                      </Td>
+                      <Td py={1} pe={3} isNumeric>
+                        <HStack justify='end'>
+                          <Box>{round(reward.amount, 3)}</Box>
+                          <FortuneIcon boxSize={4}/>
+                        </HStack>
+                        {reward.status === 'PENDING' && (
+                          <Box fontStyle='italic' color='#aaa'>(Pending)</Box>
+                        )}
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            ) : (
+              <>
+                {rewardsHistory.map((reward: any) => (
+                  <Box my={2}>
+                    <HStack justify='space-between'>
+                      <HStack  justify='end'>
+                        <FortuneIcon boxSize={4}/>
+                        <Box>{commify(round(reward.amount, 3))}</Box>
+                      </HStack>
+                      <Wrap justify='end'>
+                        <Tag py={1} colorScheme={reward.status === 'PENDING' ? undefined : 'blue'} variant='solid'>{formatString(reward.type)}</Tag>
+                        {reward.status === 'PENDING' && (
+                          <Tag variant='solid'>Pending</Tag>
+                        )}
+                      </Wrap>
+                    </HStack>
+                    <Box py={1}>{new Date(reward.timestamp).toLocaleString()}</Box>
+                  </Box>
+                ))}
+              </>
+            )}
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
+    </RdModalBox>
   )
 }
 

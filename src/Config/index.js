@@ -69,7 +69,8 @@ export const configData = {
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
-      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8'
+      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
+      vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F'
     },
     tokens: {
       loot: {
@@ -158,6 +159,7 @@ export const configData = {
           '0xd87838a982a401510255ec27e603b0f5fea98d24': ['frtn'],        // Ryoshi Playing Cards
           '0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04': ['frtn'],        // Ryoshi Tales
           '0xF098C2aD290f32c8666ace27222d3E65cECE43b9': ['frtn'],        // Ryoshi Heroes
+          '0xb2925FFC01907170493F94c1efb2Fac107a83b9F': ['cro'],         // Ryoshi Vaults
           '0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98': ['cro', 'frtn', 'bcro'], // Project X Access Pass
           '0xa996aD2b9f240F78b063E47F552037658c4563d1': ['cro', 'frtn', 'bcro'], // Argonauts
           '0xc3cf2416a69351bf336ff671ad46d92efee4ea75': ['cro', 'frtn', 'bcro'], // Honorary Argonauts
@@ -209,6 +211,14 @@ export const configData = {
           '0x1368a855545724B165F8c3e466ec30e1fB2A3683': ['cro', 'frtn', 'bcro'], // Football Squares S2
           '0x5c18d5eb211203eb80b591aa71a269b1e16e9eba': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Ballies: The Gear v2
           '0xE1049178296ce004996AFb16B0816c5A95aC8482': ['cro', 'frtn', 'candy'], // Bored Candy
+          '0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW
+          '0x65AB0251d29c9C473c8d01BFfa2966F891fB1181': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // MAD CROW
+          '0x937879726455531dB135F9b8D88F38dF5D4Eb13b': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW NEST
+          '0x0f1439a290e86a38157831fe27a3dcd302904055': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CROW PUNKS
+          '0x13d13e2410A34Bfe5502D50ea4FCFBd591D7589E': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Wrapped Cronos Punk
+          '0xd33CFeF82377fef83703B9D84151a477B08Ab3b8': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW Airdrops
+          '0xccc777777ac85999fc9fe355f25cd908060ec9ea': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW Customs
+          '0x3d7777ff1908B54b57038A2556d6904f71468e2D': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // 3D CROW
         }
       }
     }
@@ -270,7 +280,8 @@ export const configData = {
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
-      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8'
+      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
+      vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F'
     },
     tokens: {
       loot: {
@@ -419,7 +430,8 @@ export const configData = {
       rewards: '0xB775F2Ef8E007F6719fF0fc113048180b4482e2c',
       presaleVaults: '0x677a4B2910e0e5667907B5bf4cD4fdb188e99281',
       seasonUnlocks: '0x107ca22a421b24b0986150E51ce03b772b56440f',
-      townHall: '0xEe68452B79653298Af5109Dae5cD4ABA3c4E1934'
+      townHall: '0xEe68452B79653298Af5109Dae5cD4ABA3c4E1934',
+      vaultNft: '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74'
     },
     tokens: {
       loot: {
@@ -504,7 +516,8 @@ export const configData = {
           '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0': ['frtn'],
           '0xa937e814A2c5e99E9e86c4F34162c4F012F75a52': ['cro', 'frtn'],
           '0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9': ['cro', 'frtn'],
-          '0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f': ['cro', 'frtn']
+          '0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f': ['cro', 'frtn'],
+          '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74': ['cro']
         }
       }
     }
@@ -565,7 +578,9 @@ export const configData = {
       fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
-      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af'
+      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
+      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
+      vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F'
     },
     tokens: {
       loot: {

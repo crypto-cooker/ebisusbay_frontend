@@ -69,10 +69,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
       });
       let kobanBalance = 0;
       if (nfts.data.length > 0) {
-        const kobanToken = nfts.data.find((token) => token.nftId === '1');
-        if (kobanToken) {
-          kobanBalance = kobanToken.balance ?? 0;
-        }
+        kobanBalance = Number(nfts.data.find(nft => nft.nftId === '1')?.balance ?? 0);
       } else {
         const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
         const contract = new Contract(config.contracts.resources, ERC1155, readProvider);

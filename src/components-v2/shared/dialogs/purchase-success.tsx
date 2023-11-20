@@ -103,7 +103,7 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}: P
               {isBundle(listing.nftAddress) ? (
                 <ImagesContainer nft={listing.nft} />
               ) : (
-                <DynamicNftImage address={listing.nft.address ?? listing.nft.nftAddress} id={listing.nft.id ?? listing.nft.nftId}>
+                <DynamicNftImage nft={listing.nft} address={listing.nft.address ?? listing.nft.nftAddress} id={listing.nft.id ?? listing.nft.nftId}>
                   <AnyMedia
                   image={specialImageTransform(listing.nft.nftAddress, listing.nft.image)}
                   video={listing.nft.video ?? listing.nft.animation_url}
