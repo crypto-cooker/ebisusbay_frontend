@@ -58,7 +58,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
 
       let kobanBalance = 0;
       if (nfts.data.length > 0) {
-        kobanBalance = Number(nfts.data[0].balance);
+        kobanBalance = Number(nfts.data.find(nft => nft.nftId === '1')?.balance ?? 0);
       } else {
         const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
         const contract = new Contract(config.contracts.resources, ERC1155, readProvider);
