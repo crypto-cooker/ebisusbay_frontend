@@ -23,6 +23,7 @@ import NftProfilePreview from '@src/components-v2/feature/nft/profile-preview'
 import {
   appUrl,
   caseInsensitiveCompare,
+  findNextLowestNumber,
   isAnyWeirdApesCollection,
   isArgonautsBrandCollection,
   isBabyWeirdApesCollection,
@@ -31,19 +32,18 @@ import {
   isCroSkullPetsCollection,
   isEmptyObj,
   isEvoSkullCollection,
+  isHerosCollection,
   isLadyWeirdApesCollection,
   isLazyHorseCollection,
   isLazyHorsePonyCollection,
   isNftBlacklisted,
+  isVaultCollection,
   isVoxelWeirdApesCollection,
   isWeirdApesCollection,
   rankingsLinkForCollection,
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   shortAddress,
-  isDynamicNftImageCollection,
-  isHerosCollection,
-
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
@@ -56,7 +56,7 @@ import {commify} from 'ethers/lib/utils';
 import {appConfig} from '@src/Config';
 import Link from 'next/link';
 import axios from "axios";
-import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
+import Button from "@src/Components/components/common/Button";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {
   Box,
@@ -134,7 +134,17 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
   const izanamiImageSize = useBreakpointValue(
     {base: 250, sm: 368, lg: 500},
     {fallback: 'md'}
-  )
+  );
+
+  const { data: rdConfig } = useQuery({
+    queryKey: ['RyoshiDynastiesContext'],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getGlobalContext(),
+    staleTime: 1000 * 60 * 60,
+    gcTime: 1000 * 60 * 61,
+    refetchOnWindowFocus: false,
+    enabled: isVaultCollection(address)
+  });
+
   // useEffect(() => {
   //   if (collection) {
   //     async function asyncFunc() {
@@ -575,6 +585,50 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     // eslint-disable-next-line
   }, [address]);
 
+  useEffect(() => {
+    async function getEbisuVaultsExtraAttributes() {
+      if (isVaultCollection(address)) {
+        let attributes = [];
+        const startTime = nft.attributes.find((attribute: any) => attribute.trait_type === 'Start Time')?.value ?? 0;
+        const endTime = nft.attributes.find((attribute: any) => attribute.trait_type === 'End Time')?.value ?? 0;
+
+        const timeRemaining = (parseInt(endTime) - (Date.now() / 1000));
+        const timeRemainingDays = Math.floor(timeRemaining / 86400);
+
+        attributes.push({
+          key: 'Days Remaining',
+          value: `${timeRemainingDays} days`,
+          type: 'string'
+        });
+
+        if (rdConfig) {
+          const totalStakingDays = Math.floor((parseInt(endTime) - parseInt(startTime)) / 86400);
+          const numTerms = Math.floor(totalStakingDays / rdConfig.bank.staking.fortune.termLength);
+          const availableAprs = rdConfig.bank.staking.fortune.apr as any;
+          let apr = 'N/A';
+          console.log('availableAprs', availableAprs)
+          if (availableAprs && Object.keys(availableAprs).length > 0) {
+            const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
+            apr = `${(availableAprs[aprKey] ?? availableAprs[1]) * 100}%`;
+          }
+
+          attributes.push({
+            key: 'APR',
+            value: apr,
+            type: 'number'
+          });
+        }
+
+        setOnChainPowertraits(attributes);
+      } else {
+        setOnChainPowertraits([]);
+      }
+    }
+    getEbisuVaultsExtraAttributes();
+
+    // eslint-disable-next-line
+  }, [address, rdConfig]);
+
   const fullImage = () => {
     if (nft.original_image.startsWith('ipfs://')) {
       const link = nft.original_image.split('://')[1];
@@ -671,7 +725,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                   <iframe width="100%" height="636" src={nft.iframeSource} title="nft" />
                 ) : (
                   <>
-                    <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId} showDetails={true}>
+                    <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId} showDetails={true}>
                       <AnyMedia
                         image={ImageService.translate(specialImageTransform(address, nft.image)).convert()}
                         video={nft.video ?? nft.animation_url}

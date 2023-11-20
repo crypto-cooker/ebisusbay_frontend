@@ -153,7 +153,7 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
         <AccordionItem style={{borderWidth:'0'}}>
           <AccordionButton>
             <Flex justify='space-between' w='full' >
-              <Box>View last 50 rewards</Box>
+              <Box>View recent rewards</Box>
               <Box ms={4}>
                 <AccordionIcon/>
               </Box>
@@ -164,19 +164,19 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
               <Table>
                 <Thead>
                   <Tr>
-                    <Th>Date</Th>
-                    <Th>Desc</Th>
-                    <Th isNumeric>Amount</Th>
+                    <Th ps={3}>Date</Th>
+                    <Th>Type</Th>
+                    <Th pe={3} isNumeric>Amount</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
                   {rewardsHistory.map((reward: any) => (
                     <Tr>
-                      <Td py={1}>{new Date(reward.timestamp).toLocaleString()}</Td>
+                      <Td py={1} ps={3}>{new Date(reward.timestamp).toLocaleString()}</Td>
                       <Td py={1}>
                         <Box>{formatString(reward.type)}</Box>
                       </Td>
-                      <Td py={1} isNumeric>
+                      <Td py={1} pe={3} isNumeric>
                         <HStack justify='end'>
                           <Box>{round(reward.amount, 3)}</Box>
                           <FortuneIcon boxSize={4}/>
