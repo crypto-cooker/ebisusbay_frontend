@@ -790,6 +790,38 @@
     "style": {}
   },
   {
+    "slug": "time-machine-nfts",
+    "name": "Time Machine NFTs",
+    "description": "Time Machine NFTs is an immersive ecosystem with plenty of moving parts to keep you entertained and earning passive income weekly.  From soft staking to adventures, beginning earning today for our strategy game (currently in development). Each project in our ecosystem has their purpose. Join our discord today to learn.",
+    "images": {
+      "banner": "/img/brands/time-machine-nfts/banner.webp",
+      "preview": "/img/brands/time-machine-nfts/preview.webp"
+    },
+    "collections": [
+      "0x9b72f7d5aecee857cc3d1a1a3357aff0e342d0a8",
+      "0x146cf0ee7b6b986769782ea832e8327f9dff55e7",
+      "0x482eBe3063ED2d2281AAfec31941705787432A1A",
+      "0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35",
+      "0x55c8f67e6D3f037297Daf94AD2bCC67CC477BEa9",
+      "0x1c4924f36Fe60374DB6ac206894D82F03d522933",
+      "0x15Af2503a934D211A1936684fEd986E7E3f417db",
+      "0x6cC790CAE45EC057f9637784279A475CC91cf517",
+      "0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645",
+      "0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475",
+      "0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F"
+    ],
+    "socials": {
+      "website": "https://timemachine101.com/",
+      "twitter": "https://twitter.com/TimeMachines101",
+      "discord": "https://discord.gg/34ezMF2M5P",
+      "telegram": "https://t.me/newsrainbowland",
+      "medium": "https://medium/.com/@the-rainbowland-metaverse"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "cr00ts-club",
     "name": "Cr00ts Club",
     "description": "Welcome in the growing ecosystem of the Cr00ts, we are here to takeover the Cronos chain \uD83D\uDE0E",
