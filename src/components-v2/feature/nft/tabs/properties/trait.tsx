@@ -41,9 +41,9 @@ const Trait = ({
           <>
             {type === 'date' ? (
               <>{new Date(millisecondTimestamp(value)).toDateString()}</>
-            ) : type === 'duration' ? (
+            ) : type === 'seconds' ? (
               <>{parseInt(value) / 86400} Days</>
-            ) : isVaultCollection(collectionAddress) && title === 'Amount' ? (
+            ) : type === 'wei' ? (
               <>{commify(round(ethers.utils.formatEther(value)))} FRTN</>
             ) : (
               <>{mapAttributeString(valueDisplay ?? value, collectionAddress, title, true)}</>
