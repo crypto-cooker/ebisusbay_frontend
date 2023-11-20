@@ -148,7 +148,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
         let response;
         if (fundingType === FundingType.REWARDS) {
-          response = await mintWithRewards(contract, drop.rewardCost);
+          response = await mintWithRewards(contract, finalCost);
         } else if (fundingType === FundingType.ERC20) {
           response = await mintWithErc20(contract, finalCost);
         } else {
@@ -225,11 +225,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
   const mintWithRewards = async (contract: Contract, finalCost: number) => {
     const signature = await requestSignature();
-    const finalCostEth = finalCost;
+    const finalCostEth = ethers.utils.formatEther(finalCost);
     const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(finalCostEth, user.address!, signature);
 
     const gasPrice = parseUnits('5000', 'gwei');
-    console.log('NUMTO M INE?', numToMint)
+
     const gasEstimate = await contract.estimateGas.mintWithRewards(numToMint, authorization.reward, authorization.signature);
     const gasLimit = gasEstimate.mul(2);
     let extra = {
