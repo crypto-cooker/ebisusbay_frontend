@@ -39,6 +39,7 @@ class CollectionsRepository extends MapiRepository {
     let defaultQuery = {
       page: 1,
       pageSize: 50,
+      burnt: 0
     };
 
     return await this.api.get(`fullcollections`, {
