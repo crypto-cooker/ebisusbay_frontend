@@ -374,7 +374,7 @@ const HeroNft = ({nft}: {nft: WalletNft}) => {
               transform="scale(1.0)"
               cursor="pointer"
             >
-              <DynamicNftImage address={nft.nftAddress} id={nft.nftId} />
+              <DynamicNftImage nft={nft} address={nft.nftAddress} id={nft.nftId} />
             </Box>
           </div>
           {nft.rank && typeof nft.rank === 'number' && (

@@ -224,7 +224,7 @@ const MyNftCard = ({
               onClick={() => navigateTo(nftUrl)}
               cursor="pointer"
             >
-                <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
+                <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
                   <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
                             title={nft.name}
                             newTab={true}
