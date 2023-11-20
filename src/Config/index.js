@@ -70,7 +70,7 @@ export const configData = {
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
       townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
-      vaultNft: ''
+      vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F'
     },
     tokens: {
       loot: {
@@ -159,6 +159,7 @@ export const configData = {
           '0xd87838a982a401510255ec27e603b0f5fea98d24': ['frtn'],        // Ryoshi Playing Cards
           '0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04': ['frtn'],        // Ryoshi Tales
           '0xF098C2aD290f32c8666ace27222d3E65cECE43b9': ['frtn'],        // Ryoshi Heroes
+          '0xb2925FFC01907170493F94c1efb2Fac107a83b9F': ['cro'],         // Ebisu Vaults
           '0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98': ['cro', 'frtn', 'bcro'], // Project X Access Pass
           '0xa996aD2b9f240F78b063E47F552037658c4563d1': ['cro', 'frtn', 'bcro'], // Argonauts
           '0xc3cf2416a69351bf336ff671ad46d92efee4ea75': ['cro', 'frtn', 'bcro'], // Honorary Argonauts
@@ -280,7 +281,7 @@ export const configData = {
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
       townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
-      vaultNft: ''
+      vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F'
     },
     tokens: {
       loot: {
@@ -579,7 +580,7 @@ export const configData = {
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
       townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
-      vaultNft: '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74'
+      vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F'
     },
     tokens: {
       loot: {
