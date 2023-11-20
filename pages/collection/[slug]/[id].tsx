@@ -6,6 +6,10 @@ import {appConfig} from "@src/Config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {GetServerSidePropsContext} from "next";
+import {
+  isLandDeedsCollection,
+  isHerosCollection,
+} from '@src/utils';
 
 interface NftProps {
   slug: string;
@@ -17,11 +21,35 @@ interface NftProps {
 const Nft = ({ slug, id, nft, collection }: NftProps) => {
   const [type, setType] = useState('721');
   const [initialized, setInitialized] = useState(false);
+  const [nftImage, setNftImage] = useState<string>();
 
   useEffect(() => {
     setType(collection.multiToken ? '1155' : '721');
     setInitialized(true);
   }, [slug, id]);
+
+  useEffect(() => {
+    if(!nft) return;
+    if(!collection) return;
+
+    if(isHerosCollection(collection?.address)) {
+      GetPreviewImage(collection.address, id);
+    } else {
+      setNftImage(nft?.image);
+    }
+  }, [collection, id]);
+
+  const retrieveLayeredImage = async(id:string) => {
+    const response = await fetch(`/api/heroes/${id}`);
+    return response.blob();
+  }
+
+  const GetPreviewImage = async(address : string, id:string) => {
+    if(isHerosCollection(address)) {
+      let layeredImage = await retrieveLayeredImage(id);
+      setNftImage(URL.createObjectURL(layeredImage));
+    }
+  }
 
   const getTraits = (anNFT: any) => {
     if (
@@ -72,7 +100,7 @@ const Nft = ({ slug, id, nft, collection }: NftProps) => {
         title={nft.name}
         description={getTraits(nft)}
         url={`/collection/${collection?.slug}/${nft.id}`}
-        image={nft.image}
+        image={nftImage}
       />
       {initialized && collection && (
         <>
