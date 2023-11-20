@@ -515,7 +515,8 @@ export const configData = {
           '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0': ['frtn'],
           '0xa937e814A2c5e99E9e86c4F34162c4F012F75a52': ['cro', 'frtn'],
           '0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9': ['cro', 'frtn'],
-          '0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f': ['cro', 'frtn']
+          '0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f': ['cro', 'frtn'],
+          '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74': ['cro']
         }
       }
     }
