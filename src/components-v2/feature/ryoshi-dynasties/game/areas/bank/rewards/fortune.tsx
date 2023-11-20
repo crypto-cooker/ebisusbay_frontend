@@ -29,7 +29,7 @@ import {
   Tr,
   useBreakpointValue,
   useDisclosure,
-  VStack
+  VStack, Wrap
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import RdButton from "../../../../components/rd-button";
@@ -138,8 +138,12 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
     {fallback: 'sm'}
   )
 
+  const mappings: {[key: string]: string} = {
+    APR: 'APR',
+  }
+
   const formatString = (str: string): string =>
-    str.replace(/_/g, ' ')
+    mappings[str] ?? str.replace(/_/g, ' ')
       .toLowerCase()
       .replace(/\b\w/g, (char: string) => char.toUpperCase());
 
@@ -155,7 +159,7 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
               </Box>
             </Flex>
           </AccordionButton>
-          <AccordionPanel pb={0} px={1} overflowX='scroll'>
+          <AccordionPanel pb={0} px={1}>
             {useTable ? (
               <Table>
                 <Thead>
@@ -169,12 +173,17 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
                   {rewardsHistory.map((reward: any) => (
                     <Tr>
                       <Td py={1}>{new Date(reward.timestamp).toLocaleString()}</Td>
-                      <Td py={1}>{formatString(reward.type)}</Td>
+                      <Td py={1}>
+                        <Box>{formatString(reward.type)}</Box>
+                      </Td>
                       <Td py={1} isNumeric>
-                        <HStack  justify='end'>
+                        <HStack justify='end'>
                           <Box>{round(reward.amount, 3)}</Box>
                           <FortuneIcon boxSize={4}/>
                         </HStack>
+                        {reward.status === 'PENDING' && (
+                          <Box fontStyle='italic' color='#aaa'>(Pending)</Box>
+                        )}
                       </Td>
                     </Tr>
                   ))}
@@ -187,9 +196,14 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
                     <HStack justify='space-between'>
                       <HStack  justify='end'>
                         <FortuneIcon boxSize={4}/>
-                        <Box>{round(reward.amount, 3)}</Box>
+                        <Box>{commify(round(reward.amount, 3))}</Box>
                       </HStack>
-                      <Tag py={1}>{formatString(reward.type)}</Tag>
+                      <Wrap justify='end'>
+                        <Tag py={1} colorScheme={reward.status === 'PENDING' ? undefined : 'blue'} variant='solid'>{formatString(reward.type)}</Tag>
+                        {reward.status === 'PENDING' && (
+                          <Tag variant='solid'>Pending</Tag>
+                        )}
+                      </Wrap>
                     </HStack>
                     <Box py={1}>{new Date(reward.timestamp).toLocaleString()}</Box>
                   </Box>
