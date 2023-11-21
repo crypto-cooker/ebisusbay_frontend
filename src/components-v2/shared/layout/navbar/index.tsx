@@ -134,7 +134,7 @@ const Header = function () {
 
               {!!currentFrtnPrice && (
                 <Link href='/rewards'>
-                  <HStack fontSize='sm' fontWeight='bold' me={{base: 2, sm: 4}}>
+                  <HStack fontSize='sm' fontWeight='bold' me={{base: 1, sm: 4}} spacing={1}>
                     <FortuneIcon boxSize={{base: 4, md: 6}} />
                     <Text as='span' className='col-white'>${currentFrtnPrice}</Text>
                   </HStack>
