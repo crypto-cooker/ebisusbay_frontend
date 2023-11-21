@@ -93,7 +93,7 @@ const FaqPage = () => {
           <AccordionPanel pb={4}>
             <Text>The Tokenize Vault button converts your current active vault into an NFT. This means that it can then be freely transferred or sold on the marketplace.</Text>
             <Text mt={2}>Note that all Bank benefits applied to the vault will be paused until the vault is imported back into the Bank. This includes APR, Mitama, and Troops.</Text>
-            <Text mt={2}>1.5% of the vault's balance will be burned upon completion of the tokenization.</Text>
+            <Text mt={2}>5% of the vault's balance will be burned upon completion of the tokenization.</Text>
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem>
