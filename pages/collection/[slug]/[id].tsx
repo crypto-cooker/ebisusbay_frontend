@@ -40,9 +40,10 @@ const Nft = ({ slug, id, nft, collection }: NftProps) => {
     }
   }, [collection, id]);
 
-  // useEffect(() => {
-  //     console.log('nftImage', nftImage);
-  // }, [nftImage]);
+  useEffect(() => {
+      console.log('nftImage', nftImage);
+      console.log('nft', nft.image);
+  }, [nftImage]);
 
   // const retrieveLayeredImage = async(id:string) => {
   //   const response = await fetch(`/api/heroes/${id}`);
