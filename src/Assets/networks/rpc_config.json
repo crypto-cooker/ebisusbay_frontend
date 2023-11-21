@@ -30260,7 +30260,7 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/murder-birdz/drop.webp",
         "banner": "/img/collections/murder-birdz/banner.webp",
