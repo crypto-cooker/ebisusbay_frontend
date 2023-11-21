@@ -123,7 +123,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     enabled: !!user.address && !!collectionAddress,
     initialData: {cards: [], offDutyAmount: 0, upkeepAmount: 0}
   });
-console.log('sdfasdf', walletData);
 
   const {data: onDutyMeepleData} = useQuery({
     queryKey: ['GetMeepleOnDuty', user.address],

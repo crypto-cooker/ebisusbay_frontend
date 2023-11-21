@@ -78,8 +78,10 @@ interface RyoshiConfigBarracksStaking {
 }
 
 interface RyoshiConfigBarracksRyoshi {
-  upkeep: number;
   restockCutoff: number;
+  upkeepDecay: number;
+  upkeepActiveDays: number;
+  upkeepCosts: Array<{ threshold: number, multiplier: number }>;
 }
 
 interface RyoshiConfigBarracksStakingNFT {

@@ -329,8 +329,15 @@ export const ryoshiConfig: RyoshiConfig = {
       }
     },
     ryoshi: {
-      upkeep: 0.1,
-      restockCutoff: 3000
+      upkeepDecay: 0.1,
+      upkeepActiveDays: 7,
+      restockCutoff: 3000,
+      upkeepCosts:[
+        { threshold: 0, multiplier: 0 },
+        { threshold: 201, multiplier: 1 },
+        { threshold: 1000, multiplier: 2 },
+        { threshold: 5000, multiplier: 3 },
+      ]
     }
   },
   townHall: {
