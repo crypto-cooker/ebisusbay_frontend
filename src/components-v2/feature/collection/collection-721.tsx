@@ -44,6 +44,7 @@ const tabs = {
   diamondsPokerGame: 'diamondsPokerGame',
   clubsPokerGame: 'clubsPokerGame',
   heartsPokerGame: 'heartsPokerGame',
+  spadesPokerGame: 'spadesPokerGame',
   // currentPokerGame: 'currentPokerGame',
   cns: 'cns'
 };
@@ -240,21 +241,22 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
             </li>
           )}
           {isPlayingCardsCollection(collection.address) && (
+            <>
             <li className={`tab ${openMenu === tabs.diamondsPokerGame ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.diamondsPokerGame)}>Diamonds Game</span>
             </li>
-          )}
-          {isPlayingCardsCollection(collection.address) && (
             <li className={`tab ${openMenu === tabs.clubsPokerGame ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.clubsPokerGame)}>Clubs Game</span>
             </li>
-          )}
-          {isPlayingCardsCollection(collection.address) && (
             <li className={`tab ${openMenu === tabs.heartsPokerGame ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.heartsPokerGame)}>Hearts Game</span>
             </li>
+            <li className={`tab ${openMenu === tabs.spadesPokerGame ? 'active' : ''} my-1`}>
+              <span onClick={handleBtnClick(tabs.spadesPokerGame)}>Spades Game</span>
+            </li>
+            </>
           )}
-        </ul>
+          </ul>
 
         <Box className="de_tab_content" px={2}>
           {openMenu === tabs.items && (
@@ -300,6 +302,11 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
           {openMenu === tabs.heartsPokerGame && (
             <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
               <PokerLeaderboardComponentPast pokerCollection={PokerCollection.Hearts} />
+            </NegativeMargin>
+          )}
+          {openMenu === tabs.spadesPokerGame && (
+            <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
+              <PokerLeaderboardComponentPast pokerCollection={PokerCollection.Spades} />
             </NegativeMargin>
           )}
           {openMenu === tabs.cns && (
