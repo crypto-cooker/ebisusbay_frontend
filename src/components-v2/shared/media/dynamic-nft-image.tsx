@@ -1,14 +1,22 @@
 import React, {memo, ReactNode, useEffect, useState} from 'react';
 import {
   isLandDeedsCollection,
-  isHerosCollection,
+  isHerosCollection, isVaultCollection,
 } from '@src/utils';
 
 import RdHero from '@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero';
 import RdHeroFrame from '@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero-frame';
 import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
+import VaultNft from "@src/components-v2/feature/ryoshi-dynasties/components/vault-nft";
 
 export interface DynamicNftImageProps {
+  nft?: {
+    id?: string;
+    address?: string;
+    nftId?: string;
+    nftAddress?: string;
+    attributes?: any[]
+  }
   address: string;
   id: string;
   children?: ReactNode;
@@ -16,24 +24,28 @@ export interface DynamicNftImageProps {
   showStats?: boolean;
 }
 
-export const DynamicNftImage = ({address, id, children, showDetails, showStats = true}: DynamicNftImageProps) => {
+export const DynamicNftImage = ({nft, address, id, children, showDetails, showStats = true}: DynamicNftImageProps) => {
   return (
     <>
       { isLandDeedsCollection(address) ? (
         <RdLand nftId={id} />
-        ) : isHerosCollection(address) ? (
-          <>
-            {showDetails ? (
-              <RdHeroFrame nftId={id} />
-              ) : (
-              <RdHero nftId={id} showStats={showStats}/>
-            )}
-          </>
-        ) : ( 
-        <> 
+      ) : isHerosCollection(address) ? (
+        <>
+          {showDetails ? (
+            <RdHeroFrame nftId={id} />
+            ) : (
+            <RdHero nftId={id} showStats={showStats}/>
+          )}
+        </>
+      ) : isVaultCollection(address) && nft ? (
+        <>
+          <VaultNft nft={nft} children={children} />
+        </>
+      ) : (
+        <>
           {children}
-        </> 
-        )}
+        </>
+      )}
     </>
   );
 };

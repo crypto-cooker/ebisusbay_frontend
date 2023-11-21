@@ -15,11 +15,10 @@ import {
   round,
   siPrefixedNumber,
   timeSince,
-  isDynamicNftImageCollection,
 } from '@src/utils';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
-import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard, Center, useBreakpointValue} from "@chakra-ui/react";
+import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useBreakpointValue, useClipboard} from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faBoltLightning,
@@ -37,7 +36,6 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import {useColorModeValue} from "@chakra-ui/color-mode";
-import Image from "next/image";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
@@ -231,7 +229,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                     />
                   </Watermarked>
                 ) : (
-                <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
+                <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
                   <AnyMedia
                     image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}
                     className={`card-img-top ${imgClass}`}

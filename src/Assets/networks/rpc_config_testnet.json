@@ -3831,6 +3831,32 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "Ryoshi Vaults",
+      "slug": "ryoshi-vaults",
+      "multiToken": false,
+      "address": "0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Tokenized vaults from the Bank in Ryoshi Dynasties",
+        "avatar": "/img/collections/ryoshi-vaults/avatar.webp",
+        "card": "/img/collections/ryoshi-vaults/card.webp",
+        "banner": "/img/collections/ryoshi-vaults/banner.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "verified": true
+      }
     }
   ],
   "drops": [

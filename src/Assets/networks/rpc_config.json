@@ -24237,9 +24237,9 @@
       "listable": true,
       "metadata": {
         "description": "",
-        "avatar": "/img/collections/ryoshi-tales/avatar1.webp",
+        "avatar": "/img/collections/ryoshi-tales/avatar2.webp",
         "banner": "/img/collections/ryoshi-tales/banner1.webp",
-        "card": "/img/collections/ryoshi-tales/card1.webp",
+        "card": "/img/collections/ryoshi-tales/card2.webp",
         "website": "https://app.ebisusbay.com/",
         "twitter": "https://twitter.com/EbisusBay",
         "discord": "https://discord.gg/ebisusbay",
@@ -24675,6 +24675,32 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Ryoshi Vaults",
+      "slug": "ryoshi-vaults",
+      "multiToken": false,
+      "address": "0xb2925FFC01907170493F94c1efb2Fac107a83b9F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Tokenized vaults from the Bank in Ryoshi Dynasties",
+        "avatar": "/img/collections/ryoshi-vaults/avatar.webp",
+        "card": "/img/collections/ryoshi-vaults/card.webp",
+        "banner": "/img/collections/ryoshi-vaults/banner.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "verified": true
       }
     }
   ],
@@ -30234,7 +30260,7 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/murder-birdz/drop.webp",
         "banner": "/img/collections/murder-birdz/banner.webp",

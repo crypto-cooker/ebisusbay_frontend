@@ -216,7 +216,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                   {isBundle(listing.nftAddress) ? (
                     <ImagesContainer nft={listing.nft} />
                   ) : (
-                    <DynamicNftImage address={listing.nft.address ?? listing.nft.nftAddress} id={listing.nft.id ?? listing.nft.nftId} showStats={false}>
+                    <DynamicNftImage nft={listing.nft} address={listing.nft.address ?? listing.nft.nftAddress} id={listing.nft.id ?? listing.nft.nftId} showStats={false}>
                       <AnyMedia
                         image={specialImageTransform(listing.nft.nftAddress, listing.nft.image)}
                         video={listing.nft.video ?? listing.nft.animation_url}

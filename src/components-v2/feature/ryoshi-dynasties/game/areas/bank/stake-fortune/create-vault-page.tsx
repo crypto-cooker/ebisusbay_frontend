@@ -17,6 +17,7 @@ import {
   Spacer,
   Spinner,
   Stack,
+  Tag,
   Text,
   VStack
 } from "@chakra-ui/react";
@@ -39,12 +40,19 @@ import {appConfig} from "@src/Config";
 import {useDispatch} from "react-redux";
 import ImageService from "@src/core/services/image";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {parseErrorMessage} from "@src/helpers/validator";
+import {ApiService} from "@src/core/services/api-service";
+import {useQuery} from "@tanstack/react-query";
+import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
 const config = appConfig();
 
 const steps = {
-  form: 'form',
-  complete: 'complete'
+  choice: 'choice',
+  createVaultForm: 'createVaultForm',
+  importVaultForm: 'importVaultForm',
+  createVaultComplete: 'createVaultComplete',
+  importVaultComplete: 'importVaultComplete'
 };
 
 interface CreateVaultPageProps {
@@ -57,7 +65,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
   const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
 
-  const [currentStep, setCurrentStep] = useState(steps.form);
+  const [currentStep, setCurrentStep] = useState(steps.choice);
   const [isExecuting, setIsExecuting] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('Staking...');
   const [isRetrievingFortune, setIsRetrievingFortune] = useState(false);
@@ -163,7 +171,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
       const receipt = await tx.wait();
 
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      setCurrentStep(steps.complete);
+      setCurrentStep(steps.createVaultComplete);
       refreshUser();
     } catch (error: any) {
       console.log(error)
@@ -202,9 +210,30 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
 
   return (
     <Box mx={1} pb={6}>
-      {currentStep === steps.complete ? (
-        <StakeComplete amount={fortuneToStake} duration={daysToStake} onReturn={onReturn} />
-      ) : (
+      {currentStep === steps.choice ? (
+        <Box>
+          <Text px={2} textAlign='center' fontSize={14} py={2}>Earn staking benefits by opening a staking vault. Earn APR, Mitama, and Troops for battle. Stake more to earn more.</Text>
+          <Text px={2} textAlign='center' fontSize={14} py={2}>Click <strong>Create Vault</strong> for new vaults. If you have a Vault NFT, click <strong>Import Vault</strong></Text>
+          <Box textAlign='center' mt={8} mx={2}>
+            <Stack direction={{base: 'column', sm: 'row'}} justify='space-around'>
+              <RdButton
+                size={{base: 'md', md: 'lg'}}
+                w={{base: 'full', sm: 'auto'}}
+                onClick={() => setCurrentStep(steps.importVaultForm)}
+              >
+                Import Vault
+              </RdButton>
+              <RdButton
+                size={{base: 'md', md: 'lg'}}
+                w={{base: 'full', sm: 'auto'}}
+                onClick={() => setCurrentStep(steps.createVaultForm)}
+              >
+                Create Vault
+              </RdButton>
+            </Stack>
+          </Box>
+        </Box>
+      ) : currentStep === steps.createVaultForm ? (
         <>
           <Box bg='#272523' p={2} roundedBottom='md'>
             <Box textAlign='center' w='full'>
@@ -314,6 +343,177 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
             </Box>
           )}
         </>
+      ) : currentStep === steps.importVaultForm ? (
+        <ImportVaultForm onComplete={() => setCurrentStep(steps.importVaultComplete)} />
+      ) : currentStep === steps.importVaultComplete ? (
+        <ImportVaultComplete onReturn={onReturn} />
+      ) : currentStep === steps.createVaultComplete && (
+        <StakeComplete amount={fortuneToStake} duration={daysToStake} onReturn={onReturn} />
+      )}
+    </Box>
+  )
+}
+
+interface ImportVaultFormProps {
+  onComplete: () => void;
+}
+
+const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
+  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const [isExecuting, setIsExecuting] = useState(false);
+  const user = useAppSelector((state) => state.user);
+  const [selectedVaultId, setSelectedVaultId] = useState<string>();
+  const availableAprs = rdConfig.bank.staking.fortune.apr as any;
+
+  const { data: vaultNfts, isLoading, isError, error } = useQuery({
+    queryKey: ['UserVaultNfts', user.address],
+    queryFn: async () => {
+      const nfts = await ApiService.withoutKey().getWallet(user.address!, {
+        wallet: user.address!,
+        collection: config.contracts.vaultNft
+      });
+
+      return nfts.data.map((nft) => {
+        const amount = nft.attributes.find(a => a.trait_type === 'Amount');
+        const formattedAmount = amount ? Number(ethers.utils.formatEther(amount.value)) : 0;
+
+        const length = nft.attributes.find(a => a.trait_type === 'Deposit Length');
+        const lengthDays = length ? Number(length.value) / 86400 : 0;
+        const start = nft.attributes.find(a => a.trait_type === 'Start Time');
+        const daysRemaining = round(lengthDays - ((Date.now() / 1000) - Number(start?.value)) / 86400, 1);
+        // const endTime = Number(start?.value) + Number(length?.value);
+
+        const numTerms = Math.floor(lengthDays / rdConfig.bank.staking.fortune.termLength);
+        const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
+        const baseApr = (availableAprs[aprKey] ?? availableAprs[1]) * 100;
+        // const endDate = moment(endTime * 1000).format("MMM D yyyy");
+
+        const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
+        const mitama = Math.floor((formattedAmount * lengthDays) / 1080);
+
+        let troops = Math.floor(mitama / mitamaTroopsRatio);
+        if (troops < 1 && formattedAmount > 0) troops = 1;
+
+        return {
+          ...nft,
+          amount: formattedAmount,
+          length: lengthDays,
+          daysRemaining,
+          baseApr,
+          troops,
+          mitama,
+          start: Number(start?.value)
+        }
+      });
+    },
+    enabled: !!user.address
+  });
+
+  const handleConvert = async () => {
+    if (!selectedVaultId) {
+      toast.error('Please select a vault');
+      return;
+    }
+
+    try {
+      setIsExecuting(true);
+      const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
+      const tx = await bank.installBox(selectedVaultId);
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      onComplete();
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } finally {
+      setIsExecuting(false);
+    }
+  }
+
+  const handleSelectVault = async (id: string) => {
+    setSelectedVaultId(selectedVaultId === id ? undefined : id);
+  }
+
+  return (
+    <Box px={2}>
+      <Text textAlign='center' fontSize={14} py={2}>Once converted, your NFT will be available in your inventory. Select a vault below and then click <strong>Convert</strong>.</Text>
+      {isLoading ? (
+        <Center>
+          <Spinner />
+        </Center>
+      ) : isError ? (
+        <Box textAlign='center'>
+          Error: {(error as any).message}
+        </Box>
+      ) : !!vaultNfts && vaultNfts.length > 0 ? (
+        <>
+          <Box>
+            <VStack>
+              {vaultNfts.map((nft) => (
+                <RdModalBox
+                  w='full'
+                  cursor='pointer'
+                  border={`2px solid ${selectedVaultId === nft.nftId ? '#F48F0C' : 'transparent'}`}
+                  _hover={{
+                    border: '2px solid #F48F0C'
+                  }}
+                  onClick={() => handleSelectVault(nft.nftId)}
+                >
+                  <Flex direction='column' w='full' align='start'>
+                    <Flex w='full' align='center'>
+                      <Box flex='1' textAlign='left' my='auto'>
+                        <Text fontSize='xs' color="#aaa">{nft.name}</Text>
+                        <Box fontWeight='bold'>{nft.length} days ({nft.daysRemaining} days remaining)</Box>
+                      </Box>
+                      <Box>
+                        <VStack align='end' spacing={2} fontSize='sm'>
+                          <HStack fontWeight='bold'>
+                            <FortuneIcon boxSize={6} />
+                            <Box>{commify(round(nft.amount))}</Box>
+                          </HStack>
+                          <Flex>
+                            <Tag variant='outline'>
+                              {round(nft.baseApr, 2)}%
+                            </Tag>
+                            <Tag ms={2} variant='outline'>
+                              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}
+                                     alt="troopsIcon" boxSize={4}/>
+                              <Box ms={1}>
+                                {commify(nft.troops)}
+                              </Box>
+                            </Tag>
+                            <Tag ms={2} variant='outline'>
+                              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/mitama.png').convert()}
+                                     alt="troopsIcon" boxSize={4}/>
+                              <Box ms={1}>
+                                {commify(nft.mitama)}
+                              </Box>
+                            </Tag>
+                          </Flex>
+                        </VStack>
+                      </Box>
+                    </Flex>
+                  </Flex>
+                </RdModalBox>
+              ))}
+            </VStack>
+          </Box>
+          <Box ps='20px' textAlign='center' mt={4}>
+            <RdButton
+              fontSize={{base: 'xl', sm: '2xl'}}
+              stickyIcon={true}
+              isLoading={isExecuting}
+              isDisabled={isExecuting || !selectedVaultId}
+              onClick={handleConvert}
+            >
+              Convert
+            </RdButton>
+          </Box>
+        </>
+      ) : (
+        <Box textAlign='center' mt={4}>
+          No vault NFTs found
+        </Box>
       )}
     </Box>
   )
@@ -341,6 +541,21 @@ const StakeComplete = ({amount, duration, onReturn}: StakeCompleteProps) => {
             Back To Vaults
           </RdButton>
         </Box>
+      </Box>
+    </Box>
+  )
+}
+
+const ImportVaultComplete = ({onReturn}: {onReturn: () => void}) => {
+  return (
+    <Box p={4}>
+      <Box textAlign='center'>
+        Vault imported successfully! The vault is now visible in the Bank. Any bonus APR will be automatically applied.
+      </Box>
+      <Box textAlign='center' mt={8} mx={2}>
+        <RdButton size={{base: 'md', md: 'lg'}} onClick={onReturn} w={{base: 'full', sm: 'auto'}}>
+          Back To Vaults
+        </RdButton>
       </Box>
     </Box>
   )
