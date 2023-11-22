@@ -37,7 +37,7 @@ import {
 import {toast} from "react-toastify";
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/meeple/faq-page";
+import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/meeple/faq-page";
 import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
 import {
   RdModalAlert,
