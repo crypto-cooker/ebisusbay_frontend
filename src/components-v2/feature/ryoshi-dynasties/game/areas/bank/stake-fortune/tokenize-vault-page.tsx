@@ -42,7 +42,7 @@ const TokenizeVaultPage = ({ vault, onReturn }: TokenizeVaultProps) => {
 
   return (
     <Box mx={1} pb={6} px={2}>
-      <Text textAlign='center' fontSize={14} py={2}>Turn your vault into an NFT to be transferred or sold on the marketplace. All Bank benefits will be paused until imported back into a vault in the Bank. This includes APR, Mitama, and Troops. A 1.5% burn fee on the vault's balance will be applied.</Text>
+      <Text textAlign='center' fontSize={14} py={2}>Turn your vault into an NFT to be transferred or sold on the marketplace. All Bank benefits will be paused until imported back into a vault in the Bank. This includes APR, Mitama, and Troops. A 5% burn fee on the vault's balance will be applied.</Text>
       <AuthenticationRdButton requireSignin={false}>
         <Box p={4}>
           {currentStep === steps.form && (

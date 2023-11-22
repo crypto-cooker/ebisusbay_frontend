@@ -24702,6 +24702,28 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "Degen Royale: Guns on Cronos",
+      "slug": "degen-royale-guns-on-cronos",
+      "multiToken": false,
+      "address": "0xd4E29bdba77c948b04C3ACd67C1dAC17264d2983",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The first $CRO nfts to hit mainstream gaming as in-game assets. \uD83C\uDFAE  Degen Royale / Skully-X / The Monsters",
+        "website": "https://monsters-wyverns-nft.ca/",
+        "twitter": "https://twitter.com/babymonstersnft",
+        "discord": "https://discord.gg/jrtCza5Gee",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
