@@ -89,6 +89,18 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		download(JSON.stringify(fortuneRewards), "ryoshi-clubs-fortune.json", "text/plain");
 		download(JSON.stringify(nftRewards), "ryoshi-clubs-NFTS.json", "text/plain");
 	}
+	const GetSuite = (suite: number) => {
+		switch(suite){
+			case 3:
+				return "♠️";
+			case 2:
+				return "♥️";
+			case 1:
+				return "♦️";
+			case 0:
+				return "♣️";
+		}
+	}
 
 	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt, refetch } = useInfiniteQuery({
 		queryKey: ['RyoshiDiamondsLeaderboard'],
@@ -303,11 +315,12 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 					{ pokerCollection === PokerCollection.Hearts ?
 						<Text textColor={i%2 ? 'red':'white'}>{getCardName(player.bestHand.secondaryValue)}</Text>
 						: <Text>{getCardName(player.bestHand.secondaryValue)}</Text>}
+
 						{player?.bestHand?.secondaryCardEdition! >= 0 &&
 							<Text
 							fontSize={{base: 8, md:12}}
 							color={'gray.500'}
-						>id:{player.bestHand.secondaryCardEdition!}</Text>
+						>id:{player.bestHand.secondaryCardEdition!} {GetSuite(player.bestHand.secondaryCardSuit!)}</Text>
 						}
 					</HStack>
 				</GridItem>
