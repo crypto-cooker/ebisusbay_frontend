@@ -52,9 +52,22 @@ export interface RyoshiConfigBankStakingNFTCollection extends RyoshiConfigCollec
   active: boolean;
   minId: number;
   maxId: number;
+  apr: RyoshiConfigBankStakingAPR;
+  troops?: RyoshiConfigBankStakingTroops;
+}
+
+interface RyoshiConfigBankStakingAPR {
   multipliers: RyoshiConfigStakingMultiplier[];
   adders: RyoshiConfigStakingMultiplier[];
   ids: RyoshiConfigStakingIdMultiplier[];
+}
+
+interface RyoshiConfigBankStakingTroops {
+  values: RyoshiConfigStakingMultiplier[];
+  bonus: {
+    value: number;
+    traits: RyoshiConfigTraitEligibility[]
+  }
 }
 
 interface RyoshiConfigStakingMultiplier {
