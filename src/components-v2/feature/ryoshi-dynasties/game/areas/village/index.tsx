@@ -592,7 +592,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                   <MapFrame gridHeight={'50px 1fr 50px'} gridWidth={'50px 1fr 50px'}>
                     <Box
                       as='img'
-                      src={ImageService.translate('/img/battle-bay/mapImages/background.png').custom({width: 2880, height: 1620})}
+                      src={ImageService.translate('/img/battle-bay/mapImages/background_xmas.png').custom({width: 2880, height: 1620})}
                       maxW='none'
                       useMap="#image-map"
                       className={`${styles.mapImageArea}`}
@@ -606,7 +606,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       // onClick={() => onChange('allianceCenter')}
                          onClick={() => OpenAllianceCenter()}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/alliancecenter_day.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/alliancecenter_xmas.png').convert()} />
                       <Box className={styles.enlarge} style={{position:"absolute", marginTop: alliancecenter_labelTop, marginLeft: alliancecenter_labelLeft, zIndex:"20"}}>
                         <img src={ImageService.translate('/img/battle-bay/building_labels/alliancecenter_label.png').convert()} />
                       </Box>
@@ -615,19 +615,19 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                     <Box id='Town Hall' className={styles.enlarge} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}}
                       onClick={OpenTownHall}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/townhall.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/townhall_xmas.png').convert()} />
                     </Box>
 
                     <Box id='Tavern' className={styles.enlarge} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
                       onClick={OpenTavern}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/tavern2.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/tavern_xmas.png').convert()} />
                     </Box>
 
                     <Box  style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}}
                       // onClick={() => onChange('academy')}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/academy.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/academy_xmas.png').convert()} />
                     </Box>
 
                     <Box  style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
@@ -637,11 +637,11 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                     <Box id="Battle Map" className={styles.enlarge} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
                          onClick={() => OpenBattleMap()}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/boat_day.apng').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/boat_xmas.apng').convert()} />
                     </Box>
 
                     <Box style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/ebisustatue.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/ebisustatue_xmas.png').convert()} />
                     </Box>
 
                     <Box 
@@ -649,7 +649,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       className={styles.enlarge}
                       onClick={() => OpenMarket()}
                       style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/fishmarket_day.apng').convert()}/>
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/fishmarket_xmas.apng').convert()}/>
                     </Box>
 
                     <Box style={{position:"absolute", marginTop: waterTop, marginLeft: waterLeft, zIndex:"8"}} >
@@ -663,13 +663,13 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       // onClick={() => onChange('bank')}
                       onClick={() => OpenBank()}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/bank_day.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/bank_xmas.png').convert()} />
                     </Box>
 
                     <Box id="Announcements" className={styles.enlarge} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}}
                          onClick={onOpenAnnouncementBoard}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/announcement.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/announcement_xmas.png').convert()} />
                     </Box>
 
                     <Box 
@@ -678,7 +678,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
                       onClick={() => handleSceneChange('barracks')}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/barracks.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/barracks_xmas.png').convert()} />
                     </Box>
 
                     <Box className={styles.enlarge} style={{position:"absolute", marginTop: swordsmenTop, marginLeft: swordsmenLeft, zIndex:"9", pointerEvents:"none"}} >
@@ -687,7 +687,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
                     <Box id="Moongate" className={styles.enlarge} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}
                       onClick={() => OpenPortal()}>
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/moongate_day.apng').convert()} onClick={() => OpenPortal()}/>
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/moongate_xmas.apng').convert()} onClick={() => OpenPortal()}/>
                       {/* <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
                         <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
                     </Box>
@@ -698,12 +698,24 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"8"}}
                       onClick={() => onChange('lands')}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/torii.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/torii_xmas.png').convert()} />
                     </Box>
 
                     <Box style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/pond1.apng').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/pond1_xmas.png').convert()} />
                     </Box>
+
+                    <Box
+                      as='img'
+                      src={ImageService.translate('/img/battle-bay/mapImages/snow_overlay.gif').custom({width: 2880, height: 1620})}
+                      maxW='none'
+                      useMap="#image-map"
+                      className={`${styles.mapImageArea}`}
+                      id="fancyMenu"
+                      onLoad={() => setDimensionsLoaded(true)}
+                      style={{position:"absolute", marginTop: 0, marginLeft: 0, zIndex:"10"}}
+                      pointerEvents={'none'}
+                    />
 
 
                     {/* <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhall_labelTop, marginLeft: townhall_labelLeft, zIndex:"20"}}>
