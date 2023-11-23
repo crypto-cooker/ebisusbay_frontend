@@ -1,4 +1,5 @@
 import {
+  Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel,
   Box,
   Button, Center,
   Flex,
@@ -6,7 +7,7 @@ import {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  Grid,
+  Grid, GridItem,
   HStack,
   Icon,
   Image,
@@ -22,7 +23,7 @@ import {
   Tab,
   TabList,
   Tabs,
-  Text,
+  Text, UnorderedList,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react"
@@ -97,14 +98,14 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
 
       let activeMeeple = parseInt(meeples?.activeAmount ?? 0);
       const lastUpkeep = parseInt(meeples?.lastUpkeep ?? 0);
-      const nextUpkeep = lastUpkeep + (rdConfig.barracks.ryoshi.upkeepActiveDays * 86400);
+      const nextUpkeep = lastUpkeep + (rdConfig.townHall.ryoshi.upkeepActiveDays * 86400);
 
       const now = new Date();
       const difference = (now.getTime() - lastUpkeep * 1000) / (1000 * 3600 * 24);
-      const cutoff = rdConfig.barracks.ryoshi.upkeepActiveDays;
+      const cutoff = rdConfig.townHall.ryoshi.upkeepActiveDays;
       if (difference > cutoff) activeMeeple = 0;
       const staleMeeple = nftInfo.offDutyAmount - activeMeeple;
-      const maxUpkeepAmount = calculateUpkeepCost(staleMeeple, rdConfig.barracks.ryoshi.upkeepCosts);
+      const maxUpkeepAmount = calculateUpkeepCost(staleMeeple, rdConfig.townHall.ryoshi.upkeepCosts);
 
       return {
         ...nftInfo,
@@ -219,11 +220,11 @@ const OnDutyRyoshi = ({onDutyMeepleData}: {onDutyMeepleData: OnDutyMeepleInfo}) 
             <Text as={'b'} fontSize='28px' lineHeight="1">{!!onDutyMeepleData && commify(onDutyMeepleData.onDutyUser)}</Text>
           </Box>
           <Text color={'#aaa'}>The amount or Ryoshi that are ready to be used and have not been delegated or deployed</Text>
-          {onDutyMeepleData.onDutyUser >= rdConfig.barracks.ryoshi.restockCutoff && (
+          {onDutyMeepleData.onDutyUser >= rdConfig.townHall.ryoshi.restockCutoff && (
             <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={2}>
               <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
               <Text fontSize='14' color='#333' fontWeight='bold'>
-                Amounts equal or greater than {commify(rdConfig.barracks.ryoshi.restockCutoff)} Ryoshi by the end of the week will prevent receiving additional Ryoshi the following week. Take them off duty <b> or </b> use them for battles and resource gathering.
+                Amounts equal or greater than {commify(rdConfig.townHall.ryoshi.restockCutoff)} Ryoshi by the end of the week will prevent receiving additional Ryoshi the following week. Take them off duty <b> or </b> use them for battles and resource gathering.
               </Text>
             </Stack>
           )}
@@ -638,15 +639,15 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
   const [quantityToUpkeep, setQuantityToUpkeep] = useState(0);
 
   const paymentAmount = useMemo(() => {
-    return calculateUpkeepCost(quantityToUpkeep, rdConfig.barracks.ryoshi.upkeepCosts);
-  }, [quantityToUpkeep, rdConfig.barracks.ryoshi.upkeepCosts]);
+    return calculateUpkeepCost(quantityToUpkeep, rdConfig.townHall.ryoshi.upkeepCosts);
+  }, [quantityToUpkeep, rdConfig.townHall.ryoshi.upkeepCosts]);
 
   const meepleToBurn = useMemo(() => {
     const totalOwnedMeeple = activeMeeple + staleMeeple;
     const now = new Date();
     const difference = (now.getTime() - lastUpkeep * 1000) / (1000 * 3600 * 24);
-    const cutoff = rdConfig.barracks.ryoshi.upkeepActiveDays;
-    const decay = rdConfig.barracks.ryoshi.upkeepDecay;
+    const cutoff = rdConfig.townHall.ryoshi.upkeepActiveDays;
+    const decay = rdConfig.townHall.ryoshi.upkeepDecay;
     const decayedIntervals = Math.floor(difference / cutoff);
     const staleMeepleToBurn = Math.ceil(staleMeeple * decay);
     let meepleRemaining = totalOwnedMeeple;
@@ -660,7 +661,7 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
     if (meepleToBurn > totalOwnedMeeple) meepleToBurn = totalOwnedMeeple;
 
     return meepleToBurn;
-  }, [activeMeeple, staleMeeple, lastUpkeep, rdConfig.barracks.ryoshi.upkeepActiveDays, rdConfig.barracks.ryoshi.upkeepDecay]);
+  }, [activeMeeple, staleMeeple, lastUpkeep, rdConfig.townHall.ryoshi.upkeepActiveDays, rdConfig.townHall.ryoshi.upkeepDecay]);
 
   const payUpkeep = async () => {
     if (!user.address) return;
@@ -688,7 +689,7 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
           old.staleMeeple = old.staleMeeple - quantityToUpkeep;
           if (old.staleMeeple < 0) old.staleMeeple = 0;
           old.lastUpkeep = Math.floor(Date.now() / 1000);
-          old.nextUpkeep = old.lastUpkeep + (rdConfig.barracks.ryoshi.upkeepActiveDays * 86400);
+          old.nextUpkeep = old.lastUpkeep + (rdConfig.townHall.ryoshi.upkeepActiveDays * 86400);
           return old;
         });
       } finally {
@@ -709,17 +710,27 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
         <RdModalBox>
           <Text align='center'>Pay upkeep to maintain the loyalty of your Ryoshi. If you do not pay upkeep, some of them may leave the next time upkeep is paid.</Text>
           <SimpleGrid columns={2} spacing={0} mt={2}>
-            <Text color={'#aaa'} textAlign='left' p={2}>Inactive Ryoshi</Text>
+            <Text color={'#aaa'} textAlign='left' p={2}>Ryoshi inactive</Text>
             <Text textAlign='end' p={2}>{commify(staleMeeple)}</Text>
             <Text color={'#aaa'} textAlign={'left'} p={2}>Ryoshi maintained</Text>
-            <Text as={'b'} textAlign={'right'} p={2}>{activeMeeple} </Text>
+            <Text as={'b'} textAlign={'right'} p={2}>{commify(activeMeeple)} Ryoshi</Text>
             <Text color={'#aaa'} textAlign='left' p={2}>Max upkeep cost</Text>
             <HStack spacing={0} justifyContent='end'>
               <Text>{commify(maxUpkeepAmount)}</Text>
               <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={4} />
             </HStack>
             <Text color={'#aaa'} textAlign={'left'} p={2}>Mutiny cost</Text>
-            <Text as={'b'} textAlign={'right'} p={2}>- {meepleToBurn} Ryoshi</Text>
+            <Text as={'b'} textAlign={'right'} p={2}>{commify(meepleToBurn)} Ryoshi</Text>
+            {!!meepleToBurn && (
+              <GridItem colSpan={2}>
+                <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={2}>
+                  <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
+                  <Text fontSize='14' color='#333' fontWeight='bold'>
+                    Every {rdConfig.townHall.ryoshi.upkeepActiveDays} days that upkeep is not paid, {rdConfig.townHall.ryoshi.upkeepDecay * 100}% of your Ryoshi will leave the next time you upkeep.
+                  </Text>
+                </Stack>
+              </GridItem>
+            )}
           </SimpleGrid>
         </RdModalBox>
         <RdModalBox mt={2}>
@@ -741,7 +752,7 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
-              <Button>
+              <Button onClick={() => setQuantityToUpkeep(staleMeeple)}>
                 Max
               </Button>
             </Stack>
@@ -750,21 +761,60 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
           <SimpleGrid columns={2} pt={4}>
             <Text my='auto' fontSize='lg' fontWeight='bold'>Payment Amount</Text>
             <HStack spacing={0} justifyContent='end'>
-              <Text as={'b'} textAlign={'right'} fontSize='28'>{paymentAmount}</Text>
+              <Text as={'b'} textAlign={'right'} fontSize='28'>{commify(paymentAmount)}</Text>
               <Image  src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/>
             </HStack >
           </SimpleGrid>
+          <Accordion allowToggle>
+            <AccordionItem border='none'>
+              {({ isExpanded }) => (
+                <>
+                  <AccordionButton p={0}>
+                    <Flex w='full' fontSize='sm'>
+                      <Box>{isExpanded ? 'Hide' : 'Show'} payment tiers</Box>
+                      <Box ms={4}>
+                        <AccordionIcon/>
+                      </Box>
+                    </Flex>
+                  </AccordionButton>
+                  <AccordionPanel fontSize='sm' px={0}>
+                    Cost per Ryoshi is based on the following tiers:
+                    <SimpleGrid columns={2}>
+                      {rdConfig.townHall.ryoshi.upkeepCosts.sort((a, b) => a.threshold - b.threshold).map((cost, index, array) => {
+                        const nextCost = array[index + 1];
+                        return (
+                          <React.Fragment key={index}>
+                            {!!nextCost ? (
+                              <Box>{cost.threshold} - {nextCost.threshold - 1} Ryoshi</Box>
+                            ) : (
+                              <Box>{cost.threshold}+ Ryoshi</Box>
+                            )}
+                            <HStack spacing={0} justifyContent='end'>
+                              <Text>{cost.multiplier}</Text>
+                              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={3}/>
+                            </HStack>
+                          </React.Fragment>
+                        );
+                      })}
+                    </SimpleGrid>
+                  </AccordionPanel>
+                </>
+              )}
+            </AccordionItem>
+          </Accordion>
         </RdModalBox>
       </Box>
       <RdModalFooter>
-        <Stack justifyContent={'space-between'} direction='row' spacing={6}>
-          <RdButton onClick={onClose} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
+        <Stack justifyContent='space-between' direction='row' spacing={6}>
+          <RdButton onClick={onClose} size='lg' fontSize={{base: '18', sm: '24'}}>Cancel</RdButton>
           <RdButton
             onClick={handlePayUpkeep}
             size='lg'
             fontSize={{base: '18', sm: '24'}}
             isLoading={isExecuting}
-          > Pay Upkeep </RdButton>
+          >
+            Pay Upkeep
+          </RdButton>
         </Stack>
       </RdModalFooter>
     </RdModal>

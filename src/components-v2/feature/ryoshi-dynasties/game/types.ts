@@ -70,18 +70,10 @@ interface RyoshiConfigStakingIdMultiplier {
 
 interface RyoshiConfigBarracks {
   staking: RyoshiConfigBarracksStaking;
-  ryoshi: RyoshiConfigBarracksRyoshi;
 }
 
 interface RyoshiConfigBarracksStaking {
   nft: RyoshiConfigBarracksStakingNFT;
-}
-
-interface RyoshiConfigBarracksRyoshi {
-  restockCutoff: number;
-  upkeepDecay: number;
-  upkeepActiveDays: number;
-  upkeepCosts: Array<{ threshold: number, multiplier: number }>;
 }
 
 interface RyoshiConfigBarracksStakingNFT {
@@ -100,6 +92,7 @@ export interface RyoshiConfigBarracksStakingNFTCollection extends RyoshiConfigCo
 
 interface RyoshiConfigTownHall {
   staking: RyoshiConfigTownHallStaking;
+  ryoshi: RyoshiConfigTownHallRyoshi;
 }
 
 interface RyoshiConfigTownHallStaking {
@@ -114,6 +107,13 @@ interface RyoshiConfigTownHallStakingNFT {
 export interface RyoshiConfigTownHallStakingNFTCollection extends RyoshiConfigCollections {
   active: boolean;
   fortune: number;
+}
+
+interface RyoshiConfigTownHallRyoshi {
+  restockCutoff: number;
+  upkeepDecay: number;
+  upkeepActiveDays: number;
+  upkeepCosts: Array<{ threshold: number, multiplier: number }>;
 }
 
 interface RyoshiConfigTraitEligibility {
