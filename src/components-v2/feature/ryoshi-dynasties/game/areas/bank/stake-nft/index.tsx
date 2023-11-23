@@ -147,7 +147,6 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
           .sort((a: any, b: any) => a.percentile - b.percentile)
           .find((m: any) => percentile <= m.percentile)?.value || 0 : 0;
 
-        console.log('STARTING TROOPS', troops);
         const hasBonusTrait = nft.attributes?.some((attr: any) => {
           const traitType = attr.trait_type.toLowerCase();
           const value = attr.value.toString().toLowerCase();
@@ -160,7 +159,6 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         });
         if (hasBonusTrait) troops += troopsConfig.bonus.value;
       }
-      console.log('ENDING TROOPS', troops);
 
       setPendingNfts([...pendingNfts, {
         nftAddress: nft.nftAddress,
