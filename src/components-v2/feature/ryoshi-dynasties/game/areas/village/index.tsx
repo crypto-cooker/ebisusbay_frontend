@@ -705,6 +705,18 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       <img src={ImageService.translate('/img/battle-bay/mapImages/pond1_xmas.png').convert()} />
                     </Box>
 
+                    <Box
+                      as='img'
+                      src={ImageService.translate('/img/battle-bay/mapImages/snow_overlay.gif').custom({width: 2880, height: 1620})}
+                      maxW='none'
+                      useMap="#image-map"
+                      className={`${styles.mapImageArea}`}
+                      id="fancyMenu"
+                      onLoad={() => setDimensionsLoaded(true)}
+                      style={{position:"absolute", marginTop: 0, marginLeft: 0, zIndex:"10"}}
+                      pointerEvents={'none'}
+                    />
+
 
                     {/* <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhall_labelTop, marginLeft: townhall_labelLeft, zIndex:"20"}}>
                       <img src='/img/battle-bay/building_labels/townhall_label.png' width={townhall_labelWidth} height={townhall_labelHeight} /> </div>
