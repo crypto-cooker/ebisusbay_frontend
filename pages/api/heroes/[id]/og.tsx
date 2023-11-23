@@ -91,7 +91,8 @@ export default async function handler(req: NextRequest) {
       width: size,
       height: size,
       headers: {
-        'cache-control': 'public, max-age=3600, stale-while-revalidate=4200, no-transform'
+        'cache-control': 'public, max-age=3600, stale-while-revalidate=4200, no-transform',
+        'Content-Type': 'image/png'
       }
     }
   )
