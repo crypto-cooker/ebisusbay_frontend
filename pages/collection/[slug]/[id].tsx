@@ -1,58 +1,37 @@
 import React, {memo, useEffect, useState} from 'react';
-import {caseInsensitiveCompare, humanize, isAddress, isBundle, relativePrecision} from '@src/utils';
+import {
+  appUrl,
+  cacheBustingKey,
+  caseInsensitiveCompare,
+  humanize,
+  isAddress,
+  isBundle,
+  isHerosCollection,
+  relativePrecision
+} from '@src/utils';
 import Nft1155 from '@src/components-v2/feature/nft/nft1155';
 import Nft721 from '@src/components-v2/feature/nft/nft721';
 import {appConfig} from "@src/Config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {GetServerSidePropsContext} from "next";
-import {appUrl, cacheBustingKey} from '@src/utils';
-import {
-  isLandDeedsCollection,
-  isHerosCollection,
-} from '@src/utils';
 
 interface NftProps {
   slug: string;
   id: string;
   nft: any;
   collection: any;
+  seoImage: string;
 }
 
-const Nft = ({ slug, id, nft, collection }: NftProps) => {
+const Nft = ({ slug, id, nft, collection, seoImage }: NftProps) => {
   const [type, setType] = useState('721');
   const [initialized, setInitialized] = useState(false);
-  const [nftImage, setNftImage] = useState<string>();
 
   useEffect(() => {
     setType(collection.multiToken ? '1155' : '721');
     setInitialized(true);
   }, [slug, id]);
-
-  useEffect(() => {
-    if(!nft) return;
-    if(!collection) return;
-
-    if(isHerosCollection(collection?.address)) {
-      setNftImage(appUrl(`api/heroes/${id}?${cacheBustingKey()}`).toString());
-    } else {
-      setNftImage(nft?.image);
-    }
-  }, [collection, id]);
-
-  useEffect(() => {
-      console.log('nftImage', nftImage);
-      console.log('nft', nft.image);
-  }, [nftImage]);
-
-  // const retrieveLayeredImage = async(id:string) => {
-  //   const response = await fetch(`/api/heroes/${id}`);
-  //   return response.blob();
-  // }
-
-  // const GetPreviewImage = async(id:string) => {
-  //   console.log('route', appUrl(`api/heroes/${id}/og?${cacheBustingKey()}`).toString());
-  // }
 
   const getTraits = (anNFT: any) => {
     if (
@@ -103,7 +82,7 @@ const Nft = ({ slug, id, nft, collection }: NftProps) => {
         title={nft.name}
         description={getTraits(nft)}
         url={`/collection/${collection?.slug}/${nft.id}`}
-        image={nftImage}
+        image={seoImage}
       />
       {initialized && collection && (
         <>
@@ -167,12 +146,17 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
     };
   }
 
+  const seoImage = isHerosCollection(collection.address) ?
+    appUrl(`api/heroes/${tokenId}/og?${cacheBustingKey()}`).toString() :
+    nft.image;
+
   return {
     props: {
       slug: collection?.slug,
       id: tokenId,
       collection,
       nft,
+      seoImage
     },
   };
 };
