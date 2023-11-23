@@ -1,6 +1,6 @@
 import {
   Box,
-  Button,
+  Button, Center,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -15,7 +15,7 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  SimpleGrid,
+  SimpleGrid, Skeleton,
   Spacer,
   Spinner,
   Stack,
@@ -67,13 +67,6 @@ interface LocationData{
   playerCards: number;
 }
 
-const upKeepModifier = [
-  { min: 0, value: 0},
-  { min: 201, value: 1},
-  { min: 1000, value: 2},
-  { min: 5000, value: 3},
-]
-
 interface MeepleProps {
   isOpen: boolean;
   onClose: () => void;
@@ -85,28 +78,10 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const { config: rdConfig, user:rdUser, game: rdGameContext, refreshUser: rdRefreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [page, setPage] = useState<string>();
   const collectionAddress = config.contracts.resources
-  const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-
-  //Ryoshi
-  // const [meepleOnDuty, setMeepleOnDuty] = useState<number>(0);
-  // const [meepleOffDuty, setMeepleOffDuty] = useState<number>(0);
-
-  //upkeep
-  // const [meeplePaidFor, setMeeplePaidFor] = useState<number>(0);
-  // const [upkeepDueText, setUpkeepDueText] = useState<string>("");
-  // const [totalUpkeepRequired, setTotalUpkeepRequired] = useState<number>(0);
-  // const [upkeepPaid, setUpkeepPaid] = useState<number>(0);
-  // const needsToPayUpkeep = totalUpkeepRequired > upkeepPaid;
 
   //Turn in Cards
   const [locationData, setLocationData] = useState<LocationData[]>([]);
   const [cardsInWallet, setCardsInWallet] = useState<LocationData[]>([]);
-
-  //modals
-  const { isOpen: isOpenUpkeepModal, onOpen: onOpenUpkeepModal, onClose: onCloseUpkeepModal } = useDisclosure();
-  const { isOpen: isOpenTurnInCardsModal, onOpen: onOpenTurnInCardsModal, onClose: onCloseTurnInCardsModal } = useDisclosure();
-  const { isOpen: isOpenMintModal, onOpen: onOpenMintModal, onClose: onCloseMintModal } = useDisclosure();
-  const { isOpen: isOpenDepositModal, onOpen: onOpenDepositModal, onClose: onCloseDepositModal } = useDisclosure();
 
   const {data: walletData, refetch: refetchWallet, isFetching: isFetchingWallet, isLoading: isLoadingWallet} = useQuery({
     queryKey: ['OnChainMeepleInfo', user.address],
@@ -178,121 +153,12 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     onClose();
   }
 
-  // const GetLastUpkeepPayment = async () => {
-  //   if (!user.address) return;
-  //   try {
-  //     const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
-  //     const tx = await resourcesContract.lastUpkeep(user.address);
-  //
-  //     const date = new Date(BigNumber.from(tx).toNumber() * 1000);
-  //     const nextUpkeepPayment = date.setDate(date.getDate() + 7);
-  //     const days = Math.floor((nextUpkeepPayment - Date.now()) / (1000 * 60 * 60 * 24));
-  //     const hours = Math.floor(((nextUpkeepPayment - Date.now()) / 1000 / 60 / 60) % 24);
-  //     setUpkeepDueText(days + " days " + hours + " hours")
-  //
-  //   } catch (error: any) {
-  //     console.log(error);
-  //     toast.error(parseErrorMessage(error));
-  //   }
-  // }
 
-  // const GetMeepleOnDuty = async () => {
-  //   if(!rdUser || !user.address) return;
-  //
-  //   // setMeepleOnDuty(rdUser.season.troops.available.owned);
-  //   const resourcesContract = new Contract(collectionAddress, Resources, readProvider);
-  //   const balanceOf = await resourcesContract.balanceOf(user.address, 2);
-  //   const meeples = await ApiService.withoutKey().ryoshiDynasties.getUserMeeples(user.address);
-  //   const activeMeeples = meeples ? meeples.activeAmount : 0;
-  //
-  //   // console.log("balanceOf ", BigNumber.from(balanceOf).toNumber());
-  //   // console.log("activeMeeples ", BigNumber.from(activeMeeples).toNumber());
-  //   //only works for first 800 will fix
-  //   // setUpkeepPaid(BigNumber.from(activeMeeples).toNumber());
-  //   // setMeeplePaidFor(BigNumber.from(activeMeeples).toNumber());
-  // }
-
-
- 
-  // const GetMeepleOffDuty = () => {
-  //   walletData.data.forEach((card) => {
-  //     card.nftId == "2" ? setMeepleOffDuty(card.balance!) : <></>
-  //   })
-  // }
-  //
-  // const SetUpCardsInWallet = () => {
-  //   let cards:LocationData[] = [];
-  //   walletData.data.forEach((card) => {
-  //     {
-  //       card.attributes !== undefined && card.attributes[1].trait_type === "Tier" ?
-  //       cards.push({
-  //         location: card.name,
-  //         tier: card.attributes[1].value,
-  //         id: Number(card.nftId),
-  //         playerCards: card.balance === undefined ? 0 : card.balance,
-  //       })
-  //       : <></>
-  //     }
-  //
-  //   })
-  //   setCardsInWallet(cards)
-  // }
-
-  const GetLocationData = async () => {
-    let data = await ApiService.withoutKey().getCollectionItems({
-      address: collectionAddress
-    });
-    let locations:LocationData[] = [];
-    // console.log("Location Data: ", data.data);
-
-    //filter out only locations 
-    for(let i = 0; i < data.data.length; i++){
-      for(let j=0; j < data.data[i].attributes?.length; j++){
-        if(data.data[i].attributes[j].trait_type == "Location"){
-          locations.push({
-            location: data.data[i].attributes[j].value,
-            tier: data.data[i].attributes[1].value,
-            id: data.data[i].id,
-            playerCards: 0,
-          })
-        }
-      }
-    }
-    setLocationData(locations);
-  }
-  const onCompleteTurnInCards = () => {
-    // GetMeepleOffDuty();
-  }
-
-  useEffect(() => {
-    // if(!walletData) return;
-    //
-    // if(walletData.data.length > 0){
-    //   console.log("Wallet Data: ", walletData);
-      // SetUpCardsInWallet();
-      // GetMeepleOnDuty();
-      // GetMeepleOffDuty();
-      // GetLastUpkeepPayment();
-    // }
-
-  }, [])
 
   useEffect(() => {
     refetchWallet();
   }, [rdUser])
 
-  useEffect(() => {
-    if(!rdGameContext) return;
-
-    GetLocationData();
-    // CalculateUpkeepCost();
-
-  }, [rdConfig, rdGameContext])
-
-  // useEffect(() => {
-  //   GetMeepleOnDuty();
-  //
-  // }, [rdUser])
 
   const handleBack = () => {
     if (!!page) {
@@ -304,206 +170,90 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
 
   return (
     <>
-  <RdModal
-      isOpen={isOpen}
-      onClose={handleClose}
-      title='Ryoshi Management'
-      size='2xl'
-      isCentered={false}
-      utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
-      onUtilBtnClick={handleBack}
-    >
-      {page === 'faq' ? (
-        <FaqPage />
-      ) : (
-        <>
+      <RdModal
+        isOpen={isOpen}
+        onClose={handleClose}
+        title='Ryoshi Management'
+        size='2xl'
+        isCentered={false}
+        utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
+        onUtilBtnClick={handleBack}
+      >
+        {page === 'faq' ? (
+          <FaqPage />
+        ) : (
           <RdModalBody>
-            <RdModalBox>
-              <Box textAlign='left' as="b" fontSize={18}>
-                Ryoshi On Duty
-              </Box>
-              <VStack spacing={0} alignItems='start' mt={2}>
-                <Box h='28px'>
-                  { isFetchingWallet || isLoadingWallet ? (
-                      <Spinner size='sm' ms={2} alignSelf="flex-end" />
-                  ) : (
-                    <Text as={'b'} fontSize='28px' lineHeight="1">{!!onDutyMeepleData && commify(onDutyMeepleData.onDutyUser)}</Text>
-                  )}
-                </Box>
-                <Text color={'#aaa'}>The amount or Ryoshi that are ready to be used and have not been delegated or deployed</Text>
-                {onDutyMeepleData.onDutyUser >= rdConfig.barracks.ryoshi.restockCutoff && (
-                  <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={2}>
-                    <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
-                    <Text fontSize='14' color='#333' fontWeight='bold'>
-                      Amounts equal or greater than {commify(rdConfig.barracks.ryoshi.restockCutoff)} Ryoshi by the end of the week will prevent receiving additional Ryoshi the following week. Take them off duty <b> or </b> use them for battles and resource gathering.
-                    </Text>
-                  </Stack>
-                )}
-                <RdButton
-                    h={12}
-                    onClick={() => onOpenMintModal()}
-                    size='md'
-                    fontSize={{base: '16', sm: '18'}}
-                    w={{base: '160px', sm: '190px'}}
-                    my='auto'
-                    alignSelf='end'
-                    mt={2}
-                >
-                  Take Off Duty
-                </RdButton>
-              </VStack>
-            </RdModalBox>
-            <RdModalBox mt={2}>
-              <Box textAlign='left' as="b" fontSize={18}>
-                Ryoshi Off Duty
-              </Box>
-              <VStack spacing={0} alignItems='start' mt={2}>
-                <Box h='28px'>
-                  { isFetchingWallet || isLoadingWallet ? (
-                    <Spinner size='sm' ms={2} alignSelf="flex-end" />
-                  ) : (
-
-                    <Text as={'b'} fontSize='28px' lineHeight="1">
-                      {commify(walletData.offDutyAmount)}
-                      <Text as='span' fontSize='sm' color='#aaa' ms={2}>({commify(walletData.activeMeeple)} active)</Text>
-                    </Text>
-                  )}
-                </Box>
-                <Text color='#aaa'>The amount or Ryoshi that are stored away for later</Text>
-                {walletData.activeMeeple > 0 ? (
-                  <RdButton
-                    h={12}
-                    onClick={onOpenDepositModal}
-                    size='md'
-                    fontSize={{base: '16', sm: '18'}}
-                    w={{base: '150px', sm: '190px'}}
-                    my='auto'
-                    alignSelf='end'
-                    mt={2}
-                  >
-                    Put On Duty
-                  </RdButton>
-                ) : walletData.offDutyAmount > 0 ? (
-                  <Text color='#aaa' mt={2}>Pay upkeep below to put some Ryoshi on duty</Text>
-                ) : (
-                  <Text color='#aaa' mt={2}>No off-duty Ryoshi</Text>
-                )}
-              </VStack>
-            </RdModalBox>
-            
-            {/* Upkeep */}
-            <RdModalBox mt={2}>
-              <Box textAlign='left' as="b" fontSize={18}>
-                Weekly Upkeep
-              </Box>
-                <VStack spacing={0} alignItems='start' mt={2}>
-                  <Text color={'#aaa'}>Off Duty Ryoshi must be periodically paid upkeep to keep them loyal to you</Text>
-
-                  <Stack direction={{base: 'column', sm: 'row'}} justify='space-between' w='full'>
-                    {millisecondTimestamp(walletData.nextUpkeep) > Date.now() ? (
-                      <Text color={'#aaa'}>Upkeep due in <b>{timeSince(walletData.nextUpkeep)} days</b></Text>
-                    ) : (
-                      <HStack color='#f8a211'>
-                        <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} boxSize={6}/>
-                        <Text fontWeight='bold'>Upkeep overdue</Text>
-                      </HStack>
-                    )}
-                    <RdButton
-                      h={12}
-                      onClick={onOpenUpkeepModal}
-                      size='md'
-                      fontSize={{base: '12', sm: '18'}}
-                      w={{base: '150px', sm: '190px'}}
-                      my='auto'
-                      alignSelf='end'
-                      mt={2}
-                    >
-                      Pay Upkeep
-                    </RdButton>
-                  </Stack>
-                </VStack>
-            </RdModalBox>
-
-            <RdModalBox mt={2}>
-              <Flex justifyContent={'space-between'} align={'center'}>
-                <VStack spacing={1} align='left' mb={10}>
-                  <Box textAlign='left' as="b" fontSize={18}>
-                    Earn Additional Ryoshi
-                  </Box>
-                  <Text color={'#aaa'} as={'i'}>Card values can be found in FAQ</Text>
-                </VStack>
-                <RdButton
-                  h={12}
-                  mt={10}
-                  onClick={onOpenTurnInCardsModal}
-                  size='lg'
-                  fontSize={{base: '12', sm: '18'}}
-                  w={{base: '150px', sm: '190px'}}
-                  >
-                  Turn in Cards
-                </RdButton> 
-              </Flex>
-            </RdModalBox>
+            { isFetchingWallet || isLoadingWallet ? (
+              <Center>
+                <Spinner />
+              </Center>
+            ) : (
+              <>
+                <OnDutyRyoshi onDutyMeepleData={onDutyMeepleData} />
+                <OffDutyRyoshi offDutyMeepleData={walletData} />
+                <Upkeep offDutyMeepleData={walletData} />
+                <CardTradeIn />
+              </>
+            )}
           </RdModalBody>
-
-          <WithdrawRyoshiModal
-            isOpen={isOpenMintModal}
-            onClose={onCloseMintModal}
-            onComplete={() => {
-              // refetchWallet();
-              // rdRefreshUser();
-              onCloseMintModal();
-            }}
-            onDutyAmount={onDutyMeepleData.onDutyUser}
-          />
-
-          <UpkeepModal
-            isOpen={isOpenUpkeepModal}
-            onClose={onCloseUpkeepModal}
-            onComplete={() => {
-              refetchWallet();
-              rdRefreshUser();
-              onCloseUpkeepModal();
-            }}
-            maxUpkeepAmount={walletData.maxUpkeepAmount}
-            staleMeeple={walletData.staleMeeple}
-            activeMeeple={walletData.activeMeeple}
-            lastUpkeep={walletData.lastUpkeep}
-          />
-
-          <TurnInCardsModal
-            isOpen={isOpenTurnInCardsModal}
-            onClose={onCloseTurnInCardsModal}
-            onComplete={() => {
-              rdRefreshUser();
-              refetchWallet();
-              onCompleteTurnInCards();
-              onCloseTurnInCardsModal();
-            }}
-            cardsInWallet={cardsInWallet}
-            locationData={locationData}
-            setCardsInWallet={setCardsInWallet}
-            ResetCardsInWallet={() => console.log('TODO SETUP')}
-          />
-
-          <DepositRyoshiModal
-            isOpen={isOpenDepositModal}
-            onClose={onCloseDepositModal}
-            onComplete={() => {
-              // rdRefreshUser();
-              onCloseDepositModal();
-            }}
-            offDutyActiveAmount={walletData.activeMeeple}
-          />
-          
-        </>
-      )}
-    </RdModal>
+        )}
+      </RdModal>
     </>
   )
 }
 
 export default Meeple;
+
+const OnDutyRyoshi = ({onDutyMeepleData}: {onDutyMeepleData: OnDutyMeepleInfo}) => {
+  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <>
+      <RdModalBox>
+        <Box textAlign='left' as="b" fontSize={18}>
+          Ryoshi On Duty
+        </Box>
+        <VStack spacing={0} alignItems='start' mt={2}>
+          <Box h='28px'>
+            <Text as={'b'} fontSize='28px' lineHeight="1">{!!onDutyMeepleData && commify(onDutyMeepleData.onDutyUser)}</Text>
+          </Box>
+          <Text color={'#aaa'}>The amount or Ryoshi that are ready to be used and have not been delegated or deployed</Text>
+          {onDutyMeepleData.onDutyUser >= rdConfig.barracks.ryoshi.restockCutoff && (
+            <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={2}>
+              <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
+              <Text fontSize='14' color='#333' fontWeight='bold'>
+                Amounts equal or greater than {commify(rdConfig.barracks.ryoshi.restockCutoff)} Ryoshi by the end of the week will prevent receiving additional Ryoshi the following week. Take them off duty <b> or </b> use them for battles and resource gathering.
+              </Text>
+            </Stack>
+          )}
+          {onDutyMeepleData.onDutyUser > 0 ? (
+            <RdButton
+              h={12}
+              onClick={onOpen}
+              size='md'
+              fontSize={{base: '16', sm: '18'}}
+              w={{base: '160px', sm: '190px'}}
+              my='auto'
+              alignSelf='end'
+              mt={2}
+            >
+              Take Off Duty
+            </RdButton>
+          ) : (
+            <Text color='#aaa' mt={2}>No on-duty Ryoshi</Text>
+          )}
+        </VStack>
+      </RdModalBox>
+      <WithdrawRyoshiModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onComplete={onClose}
+        onDutyAmount={onDutyMeepleData.onDutyUser}
+      />
+    </>
+  )
+}
 
 interface WithdrawRyoshiModalProps {
   isOpen: boolean;
@@ -647,162 +397,50 @@ const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: Withdr
   )
 }
 
-interface TurnInCardsModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onComplete: () => void;
-  cardsInWallet: LocationData[];
-  locationData: LocationData[];
-  setCardsInWallet: (cards:LocationData[]) => void;
-  ResetCardsInWallet: () => void;
-}
+const OffDutyRyoshi = ({offDutyMeepleData}: {offDutyMeepleData: OffDutyMeepleInfo}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-const TurnInCardsModal = ({isOpen, onClose, onComplete, cardsInWallet, locationData, setCardsInWallet, ResetCardsInWallet}: TurnInCardsModalProps) => {
-  const user = useAppSelector((state) => state.user);
-  const {requestSignature} = useEnforceSignature();
-  const collectionAddress = config.contracts.resources
-  const [isExecuting, setIsExecuting] = useState(false);
-
-  //Turn in cards
-  const [selectedTab, setSelectedTab] = useState<number>(0);
-  const [filteredCards, setFilteredCards] = useState<LocationData[]>([]);
-  const [cardsToTurnIn, setCardsToTurnIn] = useState<LocationData[]>([]);
-
-  const RefreshFilteredCards = () => {
-    const filtered = locationData.filter((location) => location.tier == selectedTab+1);
-    setFilteredCards(filtered);
-  }
-  const handleClose = () => {
-    setSelectedTab(0);
-    setCardsToTurnIn([]);
-    // SetUpCardsInWallet();
-    onClose();
-    ResetCardsInWallet();
-    console.log("Closed");
-  }
-
-  const TurnInCards = async () => {
-    if (!user.address) return;
-    const signature = await requestSignature();
-
-    let ids:number[] = [];
-    let amounts:number[] = [];
-    cardsToTurnIn.forEach((card) => {
-      for(let i = 0; i < 3; i+=3){
-        ids.push(card.id);
-        amounts.push(3);
-      }
-    })
-    try {
-      setIsExecuting(true);
-      const cmsResponse = await MeepleTradeInCards(user.address, signature, ids, amounts);
-      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
-      const tx = await resourcesContract.craftItems(cmsResponse.request, cmsResponse.signature);
-      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
-      onComplete();
-
-    } catch (error: any) {
-      console.log(error);
-      toast.error(parseErrorMessage(error));
-    } finally {
-      setIsExecuting(false);
-    } 
-  }
-
-  const SelectCardsToTurnIn = (nftId:number) => {
-    let cards:LocationData[] = [];
-    cardsInWallet.forEach((card) => {
-      if(card.id == nftId){
-        console.log("Set " + card.location + " to be turned in");
-        cards.push(card);
-      }
-    })
-    //remove 3 of EACH CARD selected from player wallet
-    let cardsInWalletCopy = [...cardsInWallet];
-    cardsInWalletCopy.forEach((card) => {
-      cards.forEach((selectedCard) => {
-        if(card.id == selectedCard.id){
-          card.playerCards -= 3;
-        }
-      })
-    })
-    setCardsInWallet(cardsInWalletCopy);
-    setCardsToTurnIn([...cardsToTurnIn, ...cards]);
-  }
-
-  useEffect(() => {
-    locationData.forEach((location) => {
-      cardsInWallet.forEach((card) => {
-        if(Number(card.id) === Number(location.id)){
-          locationData[locationData.indexOf(location)].playerCards = card.playerCards;
-        }
-      })
-    })
-    RefreshFilteredCards();
-  } , [locationData, cardsInWallet])
-
-  useEffect(() => {
-    RefreshFilteredCards();
-
-  }, [selectedTab])
-  
   return (
-    <RdModal isOpen={isOpen} onClose={handleClose} title={'Turn In Cards'} >
-      <RdModalAlert>
-        <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' minH={'300px'}>
-        <Tabs isFitted variant='enclosed' onChange={(index) => setSelectedTab(index)}>
-            <TabList  mb='1em'>
-              <Tab>Tier 1</Tab>
-              <Tab>Tier 2</Tab>
-              <Tab>Tier 3</Tab>
-            </TabList>
-          </Tabs>
-        <Grid gridTemplateColumns={{base: '50px 225px', md: '50px 225px 50px 225px'}} w={'100%'} p={0}>
-          {filteredCards.map((card) => (
-            <>
-            <HStack>
-              {card.playerCards >= 3 && (
-                <>
-                {/* <Checkbox p={0} maxW={10} colorScheme="yellow" onClick={() => SelectCard(card.id)}/> */}
-                <Button onClick={() => SelectCardsToTurnIn(card.id)} border={1} h={{base:8,md:4}}>+</Button>
-                {/* <Button w={4} h={4}>-</Button> */}
-                </>
-              )}
-            </HStack>
-            <HStack p={{base:2, md:0}}>
-              <Text p={0} 
-                color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}
-                as={card.playerCards >= 3 ? 'b' :'a'} 
-                textAlign={'left'}> {card.location}</Text> 
-              <Text p={0} 
-                color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}
-                as={card.playerCards >= 3 ? 'b' :'a'} 
-                >x {card.playerCards}</Text></HStack>
-            </>
-          ))}
-        </Grid>
-      </Box>
-      <Box bgColor='#292626' rounded='md' mt={4} p={4} fontSize='sm' minH={'100px'}>
-        {cardsToTurnIn?.map((card) => (
-          <HStack>
-            <Text p={0} color={'#aaa'} textAlign={'left'}> {card.location}</Text>
-            <Text p={0} color={'#aaa'}>x 3</Text>
-          </HStack>
-        ))}
-      </Box>
-      </RdModalAlert>
-      <RdModalFooter>
-        <Stack justifyContent={'space-between'} direction='row' spacing={6}>
-            <RdButton onClick={handleClose} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-            <RdButton 
-              onClick={TurnInCards} 
-              size='lg' 
-              fontSize={{base: '18', sm: '24'}}
-              isLoading={isExecuting}
-            >Turn In Selected Cards </RdButton>
-        </Stack>
-      </RdModalFooter>
-    </RdModal>
+    <>
+      <RdModalBox mt={2}>
+        <Box textAlign='left' as="b" fontSize={18}>
+          Ryoshi Off Duty
+        </Box>
+        <VStack spacing={0} alignItems='start' mt={2}>
+          <Box h='28px'>
+            <Text as={'b'} fontSize='28px' lineHeight="1">
+              {commify(offDutyMeepleData.offDutyAmount)}
+              <Text as='span' fontSize='sm' color='#aaa' ms={2}>({commify(offDutyMeepleData.activeMeeple)} active)</Text>
+            </Text>
+          </Box>
+          <Text color='#aaa'>The amount or Ryoshi that are stored away for later</Text>
+          {offDutyMeepleData.activeMeeple > 0 ? (
+            <RdButton
+              h={12}
+              onClick={onOpen}
+              size='md'
+              fontSize={{base: '16', sm: '18'}}
+              w={{base: '150px', sm: '190px'}}
+              my='auto'
+              alignSelf='end'
+              mt={2}
+            >
+              Put On Duty
+            </RdButton>
+          ) : offDutyMeepleData.offDutyAmount > 0 ? (
+            <Text color='#aaa' mt={2}>Pay upkeep below to put some Ryoshi on duty</Text>
+          ) : (
+            <Text color='#aaa' mt={2}>No off-duty Ryoshi</Text>
+          )}
+        </VStack>
+      </RdModalBox>
+      <DepositRyoshiModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onComplete={onClose}
+        offDutyActiveAmount={offDutyMeepleData.activeMeeple}
+      />
+    </>
   )
 }
 
@@ -881,53 +519,101 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyActiveAmount}: 
     <RdModal isOpen={isOpen} onClose={onClose} title='Deposit Ryoshi'>
       <RdModalAlert>
         <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
-        <Text color={'#aaa'} w='full' textAlign={'left'} py={2}>Select Ryoshi to put on duty:</Text>
-        <HStack align='top' w='full'>
-          <FormControl isInvalid={hasAmountError}>
-            <NumberInput
-              defaultValue={minValue}
-              min={minValue}
-              max={offDutyActiveAmount}
-              name="quantity"
-              onChange={handleQuantityChangeDeposit}
-              value={meepleToDeposit}
-              clampValueOnBlur={true}
-            >
-              <NumberInputField />
-              <NumberInputStepper >
-                <NumberIncrementStepper color='#ffffff'/>
-                <NumberDecrementStepper color='#ffffff'/>
-              </NumberInputStepper>
-            </NumberInput>
-            <FormErrorMessage>Invalid amount</FormErrorMessage>
-          </FormControl>
+          <Text color={'#aaa'} w='full' textAlign={'left'} py={2}>Select Ryoshi to put on duty:</Text>
+          <HStack align='top' w='full'>
+            <FormControl isInvalid={hasAmountError}>
+              <NumberInput
+                defaultValue={minValue}
+                min={minValue}
+                max={offDutyActiveAmount}
+                name="quantity"
+                onChange={handleQuantityChangeDeposit}
+                value={meepleToDeposit}
+                clampValueOnBlur={true}
+              >
+                <NumberInputField />
+                <NumberInputStepper >
+                  <NumberIncrementStepper color='#ffffff'/>
+                  <NumberDecrementStepper color='#ffffff'/>
+                </NumberInputStepper>
+              </NumberInput>
+              <FormErrorMessage>Invalid amount</FormErrorMessage>
+            </FormControl>
 
-          <Spacer />
-          <Button 
-            variant={'outline'}
-            onClick={() => setMeepleToDeposit(offDutyActiveAmount)}
+            <Spacer />
+            <Button
+              variant={'outline'}
+              onClick={() => setMeepleToDeposit(offDutyActiveAmount)}
             > Max </Button>
-        </HStack>
+          </HStack>
 
-        <Flex justifyContent={'space-between'} align={'center'} mt={'8'}>
-          <Text color={'#aaa'} alignContent={'baseline'} p={2}> Remaining Ryoshi Off Duty: </Text>
-          <Text as={'b'} fontSize='28' p={2}>{offDutyActiveAmount - meepleToDeposit}</Text>
-        </Flex>
+          <Flex justifyContent={'space-between'} align={'center'} mt={'8'}>
+            <Text color={'#aaa'} alignContent={'baseline'} p={2}> Remaining Ryoshi Off Duty: </Text>
+            <Text as={'b'} fontSize='28' p={2}>{offDutyActiveAmount - meepleToDeposit}</Text>
+          </Flex>
 
-      </Box>
+        </Box>
       </RdModalAlert>
       <RdModalFooter>
         <Stack justifyContent={'space-between'} direction='row'>
           <RdButton onClick={onClose} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-          <RdButton 
+          <RdButton
             onClick={handleDepositMeeple}
-            size='lg' 
+            size='lg'
             fontSize={{base: '18', sm: '24'}}
             isLoading={isExecuting}
-            > Deposit </RdButton>
+          > Deposit </RdButton>
         </Stack>
       </RdModalFooter>
     </RdModal>
+  )
+}
+
+const Upkeep = ({offDutyMeepleData}: {offDutyMeepleData: OffDutyMeepleInfo}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <>
+      <RdModalBox mt={2}>
+        <Box textAlign='left' as="b" fontSize={18}>
+          Weekly Upkeep
+        </Box>
+        <VStack spacing={0} alignItems='start' mt={2}>
+          <Text color={'#aaa'}>Off Duty Ryoshi must be periodically paid upkeep to keep them loyal to you</Text>
+          <Stack direction={{base: 'column', sm: 'row'}} justify='space-between' w='full'>
+            {millisecondTimestamp(offDutyMeepleData.nextUpkeep) > Date.now() ? (
+              <Text color={'#aaa'}>Upkeep due in <b>{timeSince(offDutyMeepleData.nextUpkeep)} days</b></Text>
+            ) : (
+              <HStack color='#f8a211'>
+                <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} boxSize={6}/>
+                <Text fontWeight='bold'>Upkeep overdue</Text>
+              </HStack>
+            )}
+            <RdButton
+              h={12}
+              onClick={onOpen}
+              size='md'
+              fontSize={{base: '12', sm: '18'}}
+              w={{base: '150px', sm: '190px'}}
+              my='auto'
+              alignSelf='end'
+              mt={2}
+            >
+              Pay Upkeep
+            </RdButton>
+          </Stack>
+        </VStack>
+      </RdModalBox>
+      <UpkeepModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onComplete={onClose}
+        maxUpkeepAmount={offDutyMeepleData.maxUpkeepAmount}
+        staleMeeple={offDutyMeepleData.staleMeeple}
+        activeMeeple={offDutyMeepleData.activeMeeple}
+        lastUpkeep={offDutyMeepleData.lastUpkeep}
+      />
+    </>
   )
 }
 
@@ -1072,18 +758,250 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
       </Box>
       <RdModalFooter>
         <Stack justifyContent={'space-between'} direction='row' spacing={6}>
-            <RdButton onClick={onClose} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-            <RdButton 
+          <RdButton onClick={onClose} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
+          <RdButton
             onClick={handlePayUpkeep}
-            size='lg' 
+            size='lg'
             fontSize={{base: '18', sm: '24'}}
             isLoading={isExecuting}
-            > Pay Upkeep </RdButton>
+          > Pay Upkeep </RdButton>
         </Stack>
       </RdModalFooter>
     </RdModal>
   )
 }
+
+
+const CardTradeIn = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <>
+      <RdModalBox mt={2}>
+        <Flex justifyContent={'space-between'} align={'center'}>
+          <VStack spacing={1} align='left' mb={10}>
+            <Box textAlign='left' as="b" fontSize={18}>
+              Earn Additional Ryoshi
+            </Box>
+            <Text color={'#aaa'} as={'i'}>Card values can be found in FAQ</Text>
+          </VStack>
+          <RdButton
+            h={12}
+            mt={10}
+            onClick={onOpen}
+            size='lg'
+            fontSize={{base: '12', sm: '18'}}
+            w={{base: '150px', sm: '190px'}}
+          >
+            Turn in Cards
+          </RdButton>
+        </Flex>
+      </RdModalBox>
+      <TurnInCardsModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onComplete={onClose}
+        // cardsInWallet={cardsInWallet}
+        // locationData={locationData}
+        // setCardsInWallet={setCardsInWallet}
+        ResetCardsInWallet={() => console.log('TODO SETUP')}
+      />
+    </>
+  )
+}
+
+interface TurnInCardsModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onComplete: () => void;
+  // cardsInWallet: LocationData[];
+  // locationData: LocationData[];
+  // setCardsInWallet: (cards:LocationData[]) => void;
+  ResetCardsInWallet: () => void;
+}
+
+const TurnInCardsModal = ({isOpen, onClose, onComplete, ResetCardsInWallet}: TurnInCardsModalProps) => {
+  const user = useAppSelector((state) => state.user);
+  const { config: rdConfig, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const {requestSignature} = useEnforceSignature();
+  const collectionAddress = config.contracts.resources
+  const [isExecuting, setIsExecuting] = useState(false);
+
+  const [locationData, setLocationData] = useState<LocationData[]>([]);
+  // const [cardsInWallet, setCardsInWallet] = useState<LocationData[]>([]);
+
+  //Turn in cards
+  const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [filteredCards, setFilteredCards] = useState<LocationData[]>([]);
+  const [cardsToTurnIn, setCardsToTurnIn] = useState<LocationData[]>([]);
+
+  const GetLocationData = async () => {
+    let data = await ApiService.withoutKey().getCollectionItems({
+      address: collectionAddress
+    });
+    let locations:LocationData[] = [];
+    // console.log("Location Data: ", data.data);
+
+    //filter out only locations
+    for(let i = 0; i < data.data.length; i++){
+      for(let j=0; j < data.data[i].attributes?.length; j++){
+        if(data.data[i].attributes[j].trait_type == "Location"){
+          locations.push({
+            location: data.data[i].attributes[j].value,
+            tier: data.data[i].attributes[1].value,
+            id: data.data[i].id,
+            playerCards: 0,
+          })
+        }
+      }
+    }
+    setLocationData(locations);
+  }
+
+  const RefreshFilteredCards = () => {
+    // const filtered = locationData.filter((location) => location.tier == selectedTab+1);
+    // setFilteredCards(filtered);
+  }
+  const handleClose = () => {
+    setSelectedTab(0);
+    setCardsToTurnIn([]);
+    // SetUpCardsInWallet();
+    onClose();
+    ResetCardsInWallet();
+    console.log("Closed");
+  }
+
+  const TurnInCards = async () => {
+    if (!user.address) return;
+    const signature = await requestSignature();
+
+    let ids:number[] = [];
+    let amounts:number[] = [];
+    cardsToTurnIn.forEach((card) => {
+      for(let i = 0; i < 3; i+=3){
+        ids.push(card.id);
+        amounts.push(3);
+      }
+    })
+    try {
+      setIsExecuting(true);
+      const cmsResponse = await MeepleTradeInCards(user.address, signature, ids, amounts);
+      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
+      const tx = await resourcesContract.craftItems(cmsResponse.request, cmsResponse.signature);
+      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
+      onComplete();
+
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } finally {
+      setIsExecuting(false);
+    }
+  }
+
+  const SelectCardsToTurnIn = (nftId:number) => {
+    // let cards:LocationData[] = [];
+    // cardsInWallet.forEach((card) => {
+    //   if(card.id == nftId){
+    //     console.log("Set " + card.location + " to be turned in");
+    //     cards.push(card);
+    //   }
+    // })
+    // //remove 3 of EACH CARD selected from player wallet
+    // let cardsInWalletCopy = [...cardsInWallet];
+    // cardsInWalletCopy.forEach((card) => {
+    //   cards.forEach((selectedCard) => {
+    //     if(card.id == selectedCard.id){
+    //       card.playerCards -= 3;
+    //     }
+    //   })
+    // })
+    // setCardsInWallet(cardsInWalletCopy);
+    // setCardsToTurnIn([...cardsToTurnIn, ...cards]);
+  }
+
+  // useEffect(() => {
+  //   locationData.forEach((location) => {
+  //     cardsInWallet.forEach((card) => {
+  //       if(Number(card.id) === Number(location.id)){
+  //         locationData[locationData.indexOf(location)].playerCards = card.playerCards;
+  //       }
+  //     })
+  //   })
+  //   RefreshFilteredCards();
+  // } , [locationData, cardsInWallet])
+
+  useEffect(() => {
+    RefreshFilteredCards();
+
+  }, [selectedTab])
+
+  useEffect(() => {
+    if(!rdGameContext) return;
+
+    GetLocationData();
+  }, [rdConfig, rdGameContext])
+
+  return (
+    <RdModal isOpen={isOpen} onClose={handleClose} title={'Turn In Cards'} >
+      <RdModalAlert>
+        <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' minH={'300px'}>
+          <Tabs isFitted variant='enclosed' onChange={(index) => setSelectedTab(index)}>
+            <TabList  mb='1em'>
+              <Tab>Tier 1</Tab>
+              <Tab>Tier 2</Tab>
+              <Tab>Tier 3</Tab>
+            </TabList>
+          </Tabs>
+          <Grid gridTemplateColumns={{base: '50px 225px', md: '50px 225px 50px 225px'}} w={'100%'} p={0}>
+            {filteredCards.map((card) => (
+              <>
+                <HStack>
+                  {card.playerCards >= 3 && (
+                    <>
+                      {/* <Checkbox p={0} maxW={10} colorScheme="yellow" onClick={() => SelectCard(card.id)}/> */}
+                      <Button onClick={() => SelectCardsToTurnIn(card.id)} border={1} h={{base:8,md:4}}>+</Button>
+                      {/* <Button w={4} h={4}>-</Button> */}
+                    </>
+                  )}
+                </HStack>
+                <HStack p={{base:2, md:0}}>
+                  <Text p={0}
+                        color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}
+                        as={card.playerCards >= 3 ? 'b' :'a'}
+                        textAlign={'left'}> {card.location}</Text>
+                  <Text p={0}
+                        color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}
+                        as={card.playerCards >= 3 ? 'b' :'a'}
+                  >x {card.playerCards}</Text></HStack>
+              </>
+            ))}
+          </Grid>
+        </Box>
+        <Box bgColor='#292626' rounded='md' mt={4} p={4} fontSize='sm' minH={'100px'}>
+          {cardsToTurnIn?.map((card) => (
+            <HStack>
+              <Text p={0} color={'#aaa'} textAlign={'left'}> {card.location}</Text>
+              <Text p={0} color={'#aaa'}>x 3</Text>
+            </HStack>
+          ))}
+        </Box>
+      </RdModalAlert>
+      <RdModalFooter>
+        <Stack justifyContent={'space-between'} direction='row' spacing={6}>
+          <RdButton onClick={handleClose} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
+          <RdButton
+            onClick={TurnInCards}
+            size='lg'
+            fontSize={{base: '18', sm: '24'}}
+            isLoading={isExecuting}
+          >Turn In Selected Cards </RdButton>
+        </Stack>
+      </RdModalFooter>
+    </RdModal>
+  )
+}
+
 
 const calculateUpkeepCost = (offDutyAmount: number, upkeepCosts: Array<{ threshold: number, multiplier: number }>) => {
   let cost = 0;
@@ -1102,4 +1020,19 @@ const calculateUpkeepCost = (offDutyAmount: number, upkeepCosts: Array<{ thresho
   }
 
   return cost;
+}
+
+interface OnDutyMeepleInfo {
+  onDutyUser: number;
+  onDutyFaction: number;
+}
+
+interface OffDutyMeepleInfo {
+  cards: Array<{location: string, tier: string, id: number, playerCards: number}>,
+  offDutyAmount: number;
+  activeMeeple: number;
+  staleMeeple: number;
+  lastUpkeep: number;
+  nextUpkeep: number;
+  maxUpkeepAmount: number;
 }
