@@ -1,13 +1,13 @@
 import {
   Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel,
   Box,
-  Button, Center,
+  Button, Card, CardBody, CardFooter, Center,
   Flex,
   FormControl,
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  Grid, GridItem,
+  Grid, GridItem, Heading,
   HStack,
   Icon,
   Image,
@@ -21,7 +21,7 @@ import {
   Spinner,
   Stack,
   Tab,
-  TabList,
+  TabList, TabPanel, TabPanels,
   Tabs,
   Text, UnorderedList,
   useDisclosure,
@@ -61,11 +61,15 @@ import WalletNft from "@src/core/models/wallet-nft";
 
 const config = appConfig();
 
-interface LocationData{
-  location: string;
+interface LocationCard {
+  name: string;
+  image: string;
   tier: number;
   id: number;
-  playerCards: number;
+}
+
+interface UserLocationCard extends LocationCard {
+  quantity: number;
 }
 
 interface MeepleProps {
@@ -80,10 +84,6 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
   const [page, setPage] = useState<string>();
   const collectionAddress = config.contracts.resources
 
-  //Turn in Cards
-  const [locationData, setLocationData] = useState<LocationData[]>([]);
-  const [cardsInWallet, setCardsInWallet] = useState<LocationData[]>([]);
-
   const {data: walletData, refetch: refetchWallet, isFetching: isFetchingWallet, isLoading: isLoadingWallet} = useQuery({
     queryKey: ['OnChainMeepleInfo', user.address],
     queryFn: async () => {
@@ -92,7 +92,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
         pageSize: 100,
         collection: collectionAddress
       });
-      const nftInfo: {offDutyAmount: number, cards: any[]} = splitWalletData(wallet.data);
+      const nftInfo = splitWalletData(wallet.data);
 
       const meeples = await ApiService.withoutKey().ryoshiDynasties.getUserMeeples(user.address!);
 
@@ -134,13 +134,14 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     initialData: {onDutyUser: 0, onDutyFaction: 0}
   })
 
-  const splitWalletData = (data: WalletNft[]) => {
-    return data.reduce((acc: any, card: any) => {
+  const splitWalletData = (data: WalletNft[]): {offDutyAmount: number, cards: UserLocationCard[]} => {
+    return data.reduce((acc: any, card) => {
       if (card.nftId == "2") {
-        acc.offDutyAmount = parseInt(card.balance!);
+        acc.offDutyAmount = Number(card.balance);
       } else if (card.attributes !== undefined && card.attributes[1].trait_type === "Tier") {
         acc.cards.push({
-          location: card.name,
+          name: card.name,
+          image: card.image,
           tier: card.attributes[1].value,
           id: Number(card.nftId),
           playerCards: card.balance === undefined ? 0 : card.balance,
@@ -154,12 +155,9 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
     onClose();
   }
 
-
-
   useEffect(() => {
     refetchWallet();
   }, [rdUser])
-
 
   const handleBack = () => {
     if (!!page) {
@@ -193,7 +191,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
                 <OnDutyRyoshi onDutyMeepleData={onDutyMeepleData} />
                 <OffDutyRyoshi offDutyMeepleData={walletData} />
                 <Upkeep offDutyMeepleData={walletData} />
-                <CardTradeIn />
+                <CardTradeIn userLocationCards={walletData.cards} />
               </>
             )}
           </RdModalBody>
@@ -822,7 +820,7 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
 }
 
 
-const CardTradeIn = () => {
+const CardTradeIn = ({userLocationCards}: {userLocationCards: UserLocationCard[]}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -851,10 +849,10 @@ const CardTradeIn = () => {
         isOpen={isOpen}
         onClose={onClose}
         onComplete={onClose}
-        // cardsInWallet={cardsInWallet}
+        userLocationCards={userLocationCards}
         // locationData={locationData}
         // setCardsInWallet={setCardsInWallet}
-        ResetCardsInWallet={() => console.log('TODO SETUP')}
+        // ResetCardsInWallet={() => console.log('TODO SETUP')}
       />
     </>
   )
@@ -864,60 +862,71 @@ interface TurnInCardsModalProps {
   isOpen: boolean;
   onClose: () => void;
   onComplete: () => void;
-  // cardsInWallet: LocationData[];
+  userLocationCards: UserLocationCard[];
   // locationData: LocationData[];
   // setCardsInWallet: (cards:LocationData[]) => void;
   ResetCardsInWallet: () => void;
 }
 
-const TurnInCardsModal = ({isOpen, onClose, onComplete, ResetCardsInWallet}: TurnInCardsModalProps) => {
+const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: TurnInCardsModalProps) => {
   const user = useAppSelector((state) => state.user);
   const { config: rdConfig, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const {requestSignature} = useEnforceSignature();
   const collectionAddress = config.contracts.resources
   const [isExecuting, setIsExecuting] = useState(false);
 
-  const [locationData, setLocationData] = useState<LocationData[]>([]);
+  const [locationCards, setLocationCards] = useState<LocationCard[]>([]);
   // const [cardsInWallet, setCardsInWallet] = useState<LocationData[]>([]);
 
   //Turn in cards
   const [selectedTab, setSelectedTab] = useState<number>(0);
-  const [filteredCards, setFilteredCards] = useState<LocationData[]>([]);
-  const [cardsToTurnIn, setCardsToTurnIn] = useState<LocationData[]>([]);
+  const [filteredCards, setFilteredCards] = useState<LocationCard[]>([]);
+  const [cardsToTurnIn, setCardsToTurnIn] = useState<LocationCard[]>([]);
 
-  const GetLocationData = async () => {
+  const getLocationData = async () => {
     let data = await ApiService.withoutKey().getCollectionItems({
       address: collectionAddress
     });
-    let locations:LocationData[] = [];
-    // console.log("Location Data: ", data.data);
+    let locations:LocationCard[] = [];
 
     //filter out only locations
     for(let i = 0; i < data.data.length; i++){
       for(let j=0; j < data.data[i].attributes?.length; j++){
         if(data.data[i].attributes[j].trait_type == "Location"){
           locations.push({
-            location: data.data[i].attributes[j].value,
+            name: data.data[i].attributes[j].value,
+            image: data.data[i].image,
             tier: data.data[i].attributes[1].value,
-            id: data.data[i].id,
-            playerCards: 0,
+            id: data.data[i].id
           })
         }
       }
     }
-    setLocationData(locations);
+
+    const sortedLocations = locations.sort((a, b) => {
+      // Find the quantity of card 'a' owned by the user (default to 0 if not found)
+      const quantityA = userLocationCards.find((card) => card.id === a.id)?.quantity || 0;
+
+      // Find the quantity of card 'b' owned by the user (default to 0 if not found)
+      const quantityB = userLocationCards.find((card) => card.id === b.id)?.quantity || 0;
+
+      // Sort in descending order based on the quantity
+      return quantityB - quantityA;
+    });
+
+    setLocationCards(sortedLocations);
   }
 
-  const RefreshFilteredCards = () => {
-    // const filtered = locationData.filter((location) => location.tier == selectedTab+1);
-    // setFilteredCards(filtered);
-  }
+  // const RefreshFilteredCards = () => {
+  //   const filtered = locationData.filter((location) => location.tier == selectedTab+1);
+  //   setFilteredCards(filtered);
+  // }
   const handleClose = () => {
     setSelectedTab(0);
     setCardsToTurnIn([]);
     // SetUpCardsInWallet();
     onClose();
-    ResetCardsInWallet();
+    // ResetCardsInWallet();
     console.log("Closed");
   }
 
@@ -981,19 +990,17 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, ResetCardsInWallet}: Tur
   //   RefreshFilteredCards();
   // } , [locationData, cardsInWallet])
 
+  // useEffect(() => {
+  //   RefreshFilteredCards();
+  //
+  // }, [selectedTab, locationData])
+
   useEffect(() => {
-    RefreshFilteredCards();
-
-  }, [selectedTab])
-
-  useEffect(() => {
-    if(!rdGameContext) return;
-
-    GetLocationData();
-  }, [rdConfig, rdGameContext])
+    getLocationData();
+  }, [])
 
   return (
-    <RdModal isOpen={isOpen} onClose={handleClose} title={'Turn In Cards'} >
+    <RdModal isOpen={isOpen} onClose={handleClose} title='Turn In Cards' size='4xl'>
       <RdModalAlert>
         <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' minH={'300px'}>
           <Tabs isFitted variant='enclosed' onChange={(index) => setSelectedTab(index)}>
@@ -1003,35 +1010,71 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, ResetCardsInWallet}: Tur
               <Tab>Tier 3</Tab>
             </TabList>
           </Tabs>
-          <Grid gridTemplateColumns={{base: '50px 225px', md: '50px 225px 50px 225px'}} w={'100%'} p={0}>
-            {filteredCards.map((card) => (
-              <>
-                <HStack>
-                  {card.playerCards >= 3 && (
-                    <>
-                      {/* <Checkbox p={0} maxW={10} colorScheme="yellow" onClick={() => SelectCard(card.id)}/> */}
-                      <Button onClick={() => SelectCardsToTurnIn(card.id)} border={1} h={{base:8,md:4}}>+</Button>
-                      {/* <Button w={4} h={4}>-</Button> */}
-                    </>
-                  )}
-                </HStack>
-                <HStack p={{base:2, md:0}}>
-                  <Text p={0}
-                        color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}
-                        as={card.playerCards >= 3 ? 'b' :'a'}
-                        textAlign={'left'}> {card.location}</Text>
-                  <Text p={0}
-                        color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}
-                        as={card.playerCards >= 3 ? 'b' :'a'}
-                  >x {card.playerCards}</Text></HStack>
-              </>
+          <SimpleGrid columns={2} spacing={2}>
+            {locationCards.filter((location) => location.tier == selectedTab+1).map((card) => (
+              <Card
+                direction={{ base: 'column', sm: 'row' }}
+                overflow='hidden'
+                variant='outline'
+                px={4}
+                py={2}
+              >
+                <Image
+                  objectFit='contain'
+                  maxW='50px'
+                  src={card.image}
+                  alt='Caffe Latte'
+                />
+
+                <Stack w='full'>
+                  <CardBody textAlign='end' px={0}>
+                    <Heading size='md'>{card.name}</Heading>
+                      <Text py='2'>
+                        Qty: {userLocationCards.find((userCard) => userCard.id === card.id)?.quantity || 0}
+                      </Text>
+                      <Text py='2'>
+                        <NumberInput />
+                      </Text>
+                  </CardBody>
+
+                  {/*<CardFooter>*/}
+                  {/*  <Button>*/}
+                  {/*    Buy Latte*/}
+                  {/*  </Button>*/}
+                  {/*</CardFooter>*/}
+                </Stack>
+              </Card>
             ))}
-          </Grid>
+          </SimpleGrid>
+          {/*<Grid gridTemplateColumns={{base: '50px 225px', md: '50px 225px 50px 225px'}} w={'100%'} p={0}>*/}
+          {/*  {locationCards.map((card) => (*/}
+          {/*    <>*/}
+          {/*      <HStack>*/}
+          {/*        {card.playerCards >= 3 && (*/}
+          {/*          <>*/}
+          {/*            /!* <Checkbox p={0} maxW={10} colorScheme="yellow" onClick={() => SelectCard(card.id)}/> *!/*/}
+          {/*            <Button onClick={() => SelectCardsToTurnIn(card.id)} border={1} h={{base:8,md:4}}>+</Button>*/}
+          {/*            /!* <Button w={4} h={4}>-</Button> *!/*/}
+          {/*          </>*/}
+          {/*        )}*/}
+          {/*      </HStack>*/}
+          {/*      <HStack p={{base:2, md:0}}>*/}
+          {/*        <Text p={0}*/}
+          {/*              color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}*/}
+          {/*              as={card.playerCards >= 3 ? 'b' :'a'}*/}
+          {/*              textAlign={'left'}> {card.name}</Text>*/}
+          {/*        <Text p={0}*/}
+          {/*              color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}*/}
+          {/*              as={card.playerCards >= 3 ? 'b' :'a'}*/}
+          {/*        >x {card.playerCards}</Text></HStack>*/}
+          {/*    </>*/}
+          {/*  ))}*/}
+          {/*</Grid>*/}
         </Box>
         <Box bgColor='#292626' rounded='md' mt={4} p={4} fontSize='sm' minH={'100px'}>
           {cardsToTurnIn?.map((card) => (
             <HStack>
-              <Text p={0} color={'#aaa'} textAlign={'left'}> {card.location}</Text>
+              <Text p={0} color={'#aaa'} textAlign={'left'}> {card.name}</Text>
               <Text p={0} color={'#aaa'}>x 3</Text>
             </HStack>
           ))}
@@ -1078,7 +1121,7 @@ interface OnDutyMeepleInfo {
 }
 
 interface OffDutyMeepleInfo {
-  cards: Array<{location: string, tier: string, id: number, playerCards: number}>,
+  cards: UserLocationCard[],
   offDutyAmount: number;
   activeMeeple: number;
   staleMeeple: number;
