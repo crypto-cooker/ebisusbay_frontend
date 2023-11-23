@@ -1,5 +1,14 @@
 import React, {memo, useEffect, useState} from 'react';
-import {caseInsensitiveCompare, humanize, isAddress, isBundle, relativePrecision} from '@src/utils';
+import {
+  appUrl,
+  cacheBustingKey,
+  caseInsensitiveCompare,
+  humanize,
+  isAddress,
+  isBundle,
+  isHerosCollection,
+  relativePrecision
+} from '@src/utils';
 import Nft1155 from '@src/components-v2/feature/nft/nft1155';
 import Nft721 from '@src/components-v2/feature/nft/nft721';
 import {appConfig} from "@src/Config";
@@ -12,9 +21,10 @@ interface NftProps {
   id: string;
   nft: any;
   collection: any;
+  seoImage: string;
 }
 
-const Nft = ({ slug, id, nft, collection }: NftProps) => {
+const Nft = ({ slug, id, nft, collection, seoImage }: NftProps) => {
   const [type, setType] = useState('721');
   const [initialized, setInitialized] = useState(false);
 
@@ -72,7 +82,7 @@ const Nft = ({ slug, id, nft, collection }: NftProps) => {
         title={nft.name}
         description={getTraits(nft)}
         url={`/collection/${collection?.slug}/${nft.id}`}
-        image={nft.image}
+        image={seoImage}
       />
       {initialized && collection && (
         <>
@@ -136,12 +146,17 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
     };
   }
 
+  const seoImage = isHerosCollection(collection.address) ?
+    appUrl(`api/heroes/${tokenId}/og?${cacheBustingKey()}`).toString() :
+    nft.image;
+
   return {
     props: {
       slug: collection?.slug,
       id: tokenId,
       collection,
       nft,
+      seoImage
     },
   };
 };
