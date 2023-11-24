@@ -135,7 +135,7 @@ const EligibilityCriteriaItem = ({ name, collectionStakingConfig }: { name: stri
             <Text>Troops for {name} NFTs use the following rank-based <strong>values</strong>:</Text>
             <UnorderedList>
               {collectionStakingConfig.troops.values.map((multiplier, i) => (
-                <ListItem key={i}>{multiplier.percentile}th percentile: x{commify(multiplier.value)}%</ListItem>
+                <ListItem key={i}>{multiplier.percentile}th percentile: x{commify(multiplier.value)}</ListItem>
               ))}
             </UnorderedList>
 
