@@ -3,10 +3,10 @@ import {
   appUrl,
   cacheBustingKey,
   caseInsensitiveCompare,
-  humanize,
+  humanizeAdvanced,
   isAddress,
   isBundle,
-  isHerosCollection,
+  isHeroesCollection,
   relativePrecision
 } from '@src/utils';
 import Nft1155 from '@src/components-v2/feature/nft/nft1155';
@@ -64,7 +64,7 @@ const Nft = ({ slug, id, nft, collection, seoImage }: NftProps) => {
       if (traits.length > 0 && traits[0].occurrence) {
         const traitsTop = traits[0];
         const res = `${anNFT?.description ? anNFT.description.slice(0, 250) : ''} ... Top Trait: ${
-          traitsTop.value ? humanize(traitsTop.value) : 'N/A'
+          traitsTop.value ? humanizeAdvanced(traitsTop.value) : 'N/A'
         }, ${relativePrecision(traitsTop.occurrence)}%`;
 
         return res;
@@ -131,7 +131,7 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
     }
   }
 
-  const seoImage = isHerosCollection(collection.address) ?
+  const seoImage = isHeroesCollection(collection.address) ?
     appUrl(`api/heroes/${tokenId}/og?${cacheBustingKey()}`).toString() :
     nft.image;
 
