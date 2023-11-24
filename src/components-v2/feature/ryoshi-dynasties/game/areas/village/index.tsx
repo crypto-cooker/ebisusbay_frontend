@@ -94,6 +94,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     "market" : {height: 545, width: 793, top: '36.5%', left: '55%'},
     "barracks" : {height: 579, width: 832, top: '15.5%', left: '-0.5%'},
     "swordsmen" : {height: 270, width: 383, top: '25%', left: '14.5%'},
+    "xmas_tree" : {height: 505, width: 344, top: '23%', left: '27%'},
 
     "flowers1" : {height: 251, width: 229, top: '3%', left: '14%'},
     "flowers2" : {height: 251, width: 229, top: '3%', left: '14%'},
@@ -317,6 +318,9 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const [barracks_labelTop, setbarracks_labelTop] = useState<number | string>(buildings.barracks_label.width);
   const [barracks_labelLeft, setbarracks_labelLeft] = useState<number | string>(buildings.barracks_label.height);
 
+  const [xmasTreeTop, setXmasTreeTop] = useState(buildings.xmas_tree.top);
+  const [xmasTreeLeft, setXmasTreeLeft] = useState(buildings.xmas_tree.left);
+  
   const [mapInitialized, setMapInitialized] = useState(false);
 
 //#endregion
@@ -715,6 +719,9 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       style={{position:"absolute", marginTop: 0, marginLeft: 0, zIndex:"10"}}
                       pointerEvents={'none'}
                     />
+                    <Box style={{position:"absolute", marginTop: xmasTreeTop, marginLeft: xmasTreeLeft, zIndex:"8"}} >
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/xmas_tree.png').convert()} />
+                    </Box>
 
 
                     {/* <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhall_labelTop, marginLeft: townhall_labelLeft, zIndex:"20"}}>
