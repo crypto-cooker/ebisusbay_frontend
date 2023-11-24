@@ -21,10 +21,9 @@ interface NftProps {
   id: string;
   nft: any;
   collection: any;
-  seoImage: string;
 }
 
-const Nft = ({ slug, id, nft, collection, seoImage }: NftProps) => {
+const Nft = ({ slug, id, nft, collection }: NftProps) => {
   const [type, setType] = useState('721');
   const [initialized, setInitialized] = useState(false);
 
@@ -82,7 +81,7 @@ const Nft = ({ slug, id, nft, collection, seoImage }: NftProps) => {
         title={nft.name}
         description={getTraits(nft)}
         url={`/collection/${collection?.slug}/${nft.id}`}
-        image={seoImage}
+        image={nft.image}
       />
       {initialized && collection && (
         <>
@@ -157,7 +156,6 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
       id: tokenId,
       collection,
       nft,
-      seoImage
     },
   };
 };

@@ -702,7 +702,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                     </Box>
 
                     <Box style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/pond1.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/pond1.apng').convert()} />
                     </Box>
 
                     {/*<Box*/}
@@ -715,7 +715,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                     {/*  style={{position:"absolute", marginTop: 0, marginLeft: 0, zIndex:"10"}}*/}
                     {/*  pointerEvents={'none'}*/}
                     {/*/>*/}
-
 
                     {/* <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhall_labelTop, marginLeft: townhall_labelLeft, zIndex:"20"}}>
                       <img src='/img/battle-bay/building_labels/townhall_label.png' width={townhall_labelWidth} height={townhall_labelHeight} /> </div>
