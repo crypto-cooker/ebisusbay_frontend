@@ -131,6 +131,10 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
     }
   }
 
+  const seoImage = isHerosCollection(collection.address) ?
+    appUrl(`api/heroes/${tokenId}/og?${cacheBustingKey()}`).toString() :
+    nft.image;
+
   if (isAddress(slug)) {
     return {
       redirect: {
@@ -142,13 +146,10 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
         id: tokenId,
         collection,
         nft,
+        seoImage
       },
     };
   }
-
-  const seoImage = isHerosCollection(collection.address) ?
-    appUrl(`api/heroes/${tokenId}/og?${cacheBustingKey()}`).toString() :
-    nft.image;
 
   return {
     props: {
