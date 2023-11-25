@@ -1,33 +1,37 @@
 import {
-  Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel,
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   Box,
-  Button, Card, CardBody, CardFooter, Center,
+  Button,
+  Center,
   Flex,
   FormControl,
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  Grid, GridItem, Heading,
+  GridItem,
+  Heading,
   HStack,
   Icon,
+  IconButton,
   Image,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  SimpleGrid, Skeleton,
+  SimpleGrid,
   Spacer,
   Spinner,
   Stack,
-  Tab,
-  TabList, TabPanel, TabPanels,
-  Tabs,
-  Text, UnorderedList,
+  Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react"
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {memo, useContext, useEffect, useMemo, useState} from 'react';
 import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {appConfig} from "@src/Config";
@@ -36,7 +40,7 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {toast} from "react-toastify";
-import {ArrowBackIcon} from "@chakra-ui/icons";
+import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/meeple/faq-page";
 import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
@@ -49,7 +53,7 @@ import {
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
 import {MeepleMint, MeepleTradeInCards, MeepleUpkeep} from "@src/core/api/RyoshiDynastiesAPICalls";
-import {Contract, ethers} from "ethers";
+import {Contract} from "ethers";
 import Resources from "@src/Contracts/Resources.json";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
@@ -58,6 +62,7 @@ import {createSuccessfulTransactionToastContent, millisecondTimestamp, timeSince
 import {ApiService} from "@src/core/services/api-service";
 import {commify} from "ethers/lib/utils";
 import WalletNft from "@src/core/models/wallet-nft";
+import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 
 const config = appConfig();
 
@@ -66,6 +71,7 @@ interface LocationCard {
   image: string;
   tier: number;
   id: number;
+  quantity?: number;
 }
 
 interface UserLocationCard extends LocationCard {
@@ -144,7 +150,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
           image: card.image,
           tier: card.attributes[1].value,
           id: Number(card.nftId),
-          playerCards: card.balance === undefined ? 0 : card.balance,
+          quantity: card.balance === undefined ? 0 : card.balance,
         })
       }
       return acc;
@@ -826,33 +832,30 @@ const CardTradeIn = ({userLocationCards}: {userLocationCards: UserLocationCard[]
   return (
     <>
       <RdModalBox mt={2}>
-        <Flex justifyContent={'space-between'} align={'center'}>
-          <VStack spacing={1} align='left' mb={10}>
-            <Box textAlign='left' as="b" fontSize={18}>
-              Earn Additional Ryoshi
-            </Box>
-            <Text color={'#aaa'} as={'i'}>Card values can be found in FAQ</Text>
-          </VStack>
+        <Box textAlign='left' as="b" fontSize={18}>
+          Earn Additional Ryoshi
+        </Box>
+        <VStack spacing={0} alignItems='start' mt={2}>
+          <Text color={'#aaa'}>Exchange battle cards to increase your Ryoshi population. Card values can be found in FAQ</Text>
           <RdButton
             h={12}
-            mt={10}
             onClick={onOpen}
-            size='lg'
+            size='md'
             fontSize={{base: '12', sm: '18'}}
             w={{base: '150px', sm: '190px'}}
+            my='auto'
+            alignSelf='end'
+            mt={2}
           >
             Turn in Cards
           </RdButton>
-        </Flex>
+        </VStack>
       </RdModalBox>
       <TurnInCardsModal
         isOpen={isOpen}
         onClose={onClose}
         onComplete={onClose}
         userLocationCards={userLocationCards}
-        // locationData={locationData}
-        // setCardsInWallet={setCardsInWallet}
-        // ResetCardsInWallet={() => console.log('TODO SETUP')}
       />
     </>
   )
@@ -863,9 +866,6 @@ interface TurnInCardsModalProps {
   onClose: () => void;
   onComplete: () => void;
   userLocationCards: UserLocationCard[];
-  // locationData: LocationData[];
-  // setCardsInWallet: (cards:LocationData[]) => void;
-  ResetCardsInWallet: () => void;
 }
 
 const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: TurnInCardsModalProps) => {
@@ -875,13 +875,10 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
   const collectionAddress = config.contracts.resources
   const [isExecuting, setIsExecuting] = useState(false);
 
-  const [locationCards, setLocationCards] = useState<LocationCard[]>([]);
-  // const [cardsInWallet, setCardsInWallet] = useState<LocationData[]>([]);
+  const [locationsWithUserQty, setLocationsWithUserQty] = useState<UserLocationCard[]>([]);
 
-  //Turn in cards
   const [selectedTab, setSelectedTab] = useState<number>(0);
-  const [filteredCards, setFilteredCards] = useState<LocationCard[]>([]);
-  const [cardsToTurnIn, setCardsToTurnIn] = useState<LocationCard[]>([]);
+  const [cardsToTurnIn, setCardsToTurnIn] = useState<{[key: number]: number}>({});
 
   const getLocationData = async () => {
     let data = await ApiService.withoutKey().getCollectionItems({
@@ -903,24 +900,19 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
       }
     }
 
-    const sortedLocations = locations.sort((a, b) => {
-      // Find the quantity of card 'a' owned by the user (default to 0 if not found)
-      const quantityA = userLocationCards.find((card) => card.id === a.id)?.quantity || 0;
-
-      // Find the quantity of card 'b' owned by the user (default to 0 if not found)
-      const quantityB = userLocationCards.find((card) => card.id === b.id)?.quantity || 0;
-
-      // Sort in descending order based on the quantity
-      return quantityB - quantityA;
+    const locationsWithUserQuantity = locations.map((card) => {
+      const ownedCard = userLocationCards.find((userCard) => userCard.id.toString() === card.id.toString());
+      return {
+        ...card,
+        quantity: ownedCard ? ownedCard.quantity : 0,
+      };
     });
 
-    setLocationCards(sortedLocations);
+    const sortedLocations = locationsWithUserQuantity.sort((a, b) => b.quantity - a.quantity);
+
+    setLocationsWithUserQty(sortedLocations);
   }
 
-  // const RefreshFilteredCards = () => {
-  //   const filtered = locationData.filter((location) => location.tier == selectedTab+1);
-  //   setFilteredCards(filtered);
-  // }
   const handleClose = () => {
     setSelectedTab(0);
     setCardsToTurnIn([]);
@@ -930,18 +922,18 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
     console.log("Closed");
   }
 
-  const TurnInCards = async () => {
+  const handleTurnInCards = async () => {
     if (!user.address) return;
     const signature = await requestSignature();
 
-    let ids:number[] = [];
-    let amounts:number[] = [];
-    cardsToTurnIn.forEach((card) => {
-      for(let i = 0; i < 3; i+=3){
-        ids.push(card.id);
-        amounts.push(3);
-      }
-    })
+    let ids = Object.keys(cardsToTurnIn);
+    let amounts = Object.values(cardsToTurnIn);
+
+    if (ids.length < 1) {
+      toast.error('No cards selected');
+      return;
+    }
+
     try {
       setIsExecuting(true);
       const cmsResponse = await MeepleTradeInCards(user.address, signature, ids, amounts);
@@ -958,143 +950,137 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
     }
   }
 
-  const SelectCardsToTurnIn = (nftId:number) => {
-    // let cards:LocationData[] = [];
-    // cardsInWallet.forEach((card) => {
-    //   if(card.id == nftId){
-    //     console.log("Set " + card.location + " to be turned in");
-    //     cards.push(card);
-    //   }
-    // })
-    // //remove 3 of EACH CARD selected from player wallet
-    // let cardsInWalletCopy = [...cardsInWallet];
-    // cardsInWalletCopy.forEach((card) => {
-    //   cards.forEach((selectedCard) => {
-    //     if(card.id == selectedCard.id){
-    //       card.playerCards -= 3;
-    //     }
-    //   })
-    // })
-    // setCardsInWallet(cardsInWalletCopy);
-    // setCardsToTurnIn([...cardsToTurnIn, ...cards]);
+  const handleSelectCards = (nftId: number, quantity: number) => {
+    setCardsToTurnIn((prevState) => {
+      const updatedState = { ...prevState };
+
+      if (quantity === 0) {
+        delete updatedState[nftId];
+      } else {
+        updatedState[nftId] = quantity;
+      }
+
+      return updatedState;
+    });
   }
-
-  // useEffect(() => {
-  //   locationData.forEach((location) => {
-  //     cardsInWallet.forEach((card) => {
-  //       if(Number(card.id) === Number(location.id)){
-  //         locationData[locationData.indexOf(location)].playerCards = card.playerCards;
-  //       }
-  //     })
-  //   })
-  //   RefreshFilteredCards();
-  // } , [locationData, cardsInWallet])
-
-  // useEffect(() => {
-  //   RefreshFilteredCards();
-  //
-  // }, [selectedTab, locationData])
 
   useEffect(() => {
     getLocationData();
-  }, [])
+  }, [user.address])
 
   return (
     <RdModal isOpen={isOpen} onClose={handleClose} title='Turn In Cards' size='4xl'>
-      <RdModalAlert>
-        <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' minH={'300px'}>
-          <Tabs isFitted variant='enclosed' onChange={(index) => setSelectedTab(index)}>
-            <TabList  mb='1em'>
-              <Tab>Tier 1</Tab>
-              <Tab>Tier 2</Tab>
-              <Tab>Tier 3</Tab>
-            </TabList>
-          </Tabs>
-          <SimpleGrid columns={2} spacing={2}>
-            {locationCards.filter((location) => location.tier == selectedTab+1).map((card) => (
-              <Card
-                direction={{ base: 'column', sm: 'row' }}
-                overflow='hidden'
-                variant='outline'
-                px={4}
-                py={2}
-              >
-                <Image
-                  objectFit='contain'
-                  maxW='50px'
-                  src={card.image}
-                  alt='Caffe Latte'
-                />
-
-                <Stack w='full'>
-                  <CardBody textAlign='end' px={0}>
-                    <Heading size='md'>{card.name}</Heading>
-                      <Text py='2'>
-                        Qty: {userLocationCards.find((userCard) => userCard.id === card.id)?.quantity || 0}
-                      </Text>
-                      <Text py='2'>
-                        <NumberInput />
-                      </Text>
-                  </CardBody>
-
-                  {/*<CardFooter>*/}
-                  {/*  <Button>*/}
-                  {/*    Buy Latte*/}
-                  {/*  </Button>*/}
-                  {/*</CardFooter>*/}
-                </Stack>
-              </Card>
-            ))}
+      <Box textAlign='center' mt={2}>
+        Select 3 of the same battle cards from any type below to add more Ryoshi to your population
+      </Box>
+      <Box px={2} mt={4}>
+        <Flex direction='row' justify='center' mb={2}>
+          <SimpleGrid columns={{base: 2, md: 3}}>
+            <RdTabButton isActive={selectedTab === 0} onClick={() => setSelectedTab(0)}>
+              Tier 1
+            </RdTabButton>
+            <RdTabButton isActive={selectedTab === 1} onClick={() => setSelectedTab(1)}>
+              Tier 2
+            </RdTabButton>
+            <RdTabButton isActive={selectedTab === 2} onClick={() => setSelectedTab(2)}>
+              Tier 3
+            </RdTabButton>
           </SimpleGrid>
-          {/*<Grid gridTemplateColumns={{base: '50px 225px', md: '50px 225px 50px 225px'}} w={'100%'} p={0}>*/}
-          {/*  {locationCards.map((card) => (*/}
-          {/*    <>*/}
-          {/*      <HStack>*/}
-          {/*        {card.playerCards >= 3 && (*/}
-          {/*          <>*/}
-          {/*            /!* <Checkbox p={0} maxW={10} colorScheme="yellow" onClick={() => SelectCard(card.id)}/> *!/*/}
-          {/*            <Button onClick={() => SelectCardsToTurnIn(card.id)} border={1} h={{base:8,md:4}}>+</Button>*/}
-          {/*            /!* <Button w={4} h={4}>-</Button> *!/*/}
-          {/*          </>*/}
-          {/*        )}*/}
-          {/*      </HStack>*/}
-          {/*      <HStack p={{base:2, md:0}}>*/}
-          {/*        <Text p={0}*/}
-          {/*              color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}*/}
-          {/*              as={card.playerCards >= 3 ? 'b' :'a'}*/}
-          {/*              textAlign={'left'}> {card.name}</Text>*/}
-          {/*        <Text p={0}*/}
-          {/*              color={card.playerCards >= 3 ? "#ffffff" : "#aaa"}*/}
-          {/*              as={card.playerCards >= 3 ? 'b' :'a'}*/}
-          {/*        >x {card.playerCards}</Text></HStack>*/}
-          {/*    </>*/}
-          {/*  ))}*/}
-          {/*</Grid>*/}
-        </Box>
-        <Box bgColor='#292626' rounded='md' mt={4} p={4} fontSize='sm' minH={'100px'}>
-          {cardsToTurnIn?.map((card) => (
-            <HStack>
-              <Text p={0} color={'#aaa'} textAlign={'left'}> {card.name}</Text>
-              <Text p={0} color={'#aaa'}>x 3</Text>
-            </HStack>
+        </Flex>
+        <SimpleGrid columns={{base: 1, md: 2}} spacing={2}>
+          {locationsWithUserQty.filter((location) => location.tier == selectedTab+1).map((card) => (
+            <MemoizedLocationCardForm
+              key={card.id}
+              card={card}
+              quantitySelected={cardsToTurnIn[card.id] || 0}
+              onChange={(quantity) => handleSelectCards(card.id, quantity)}
+            />
           ))}
-        </Box>
-      </RdModalAlert>
+        </SimpleGrid>
+      </Box>
       <RdModalFooter>
-        <Stack justifyContent={'space-between'} direction='row' spacing={6}>
-          <RdButton onClick={handleClose} size='lg' fontSize={{base: '18', sm: '24'}}> Cancel </RdButton>
-          <RdButton
-            onClick={TurnInCards}
-            size='lg'
-            fontSize={{base: '18', sm: '24'}}
-            isLoading={isExecuting}
-          >Turn In Selected Cards </RdButton>
-        </Stack>
+        <Box textAlign='center' mt={8} mx={2}>
+          <Box ps='20px'>
+            <RdButton
+              fontSize={{base: 'xl', sm: '2xl'}}
+              stickyIcon={true}
+              onClick={handleTurnInCards}
+              isLoading={isExecuting}
+              isDisabled={isExecuting}
+            >
+              Turn In Cards
+            </RdButton>
+          </Box>
+        </Box>
       </RdModalFooter>
     </RdModal>
   )
 }
 
+const LocationCardForm = ({card, quantitySelected, onChange}: {card: UserLocationCard, quantitySelected: number, onChange: (quantity: number) => void}) => {
+
+  const handleSelectQuantity = () => {
+    const step = 3;
+    let newQuantity = 0;
+    if (quantitySelected + step <= card.quantity && card.quantity >= step) {
+      newQuantity = quantitySelected + step;
+    }
+    onChange(newQuantity);
+  }
+
+  return (
+    <Box position='relative'>
+      <RdModalBox
+        w='full'
+        p={2}
+        cursor='pointer'
+        border={`2px solid ${quantitySelected > 0 ? '#F48F0C' : 'transparent'}`}
+        _hover={{ base: {}, md: {
+            border: '2px solid #F48F0C'
+          }}}
+        onClick={handleSelectQuantity}
+      >
+
+        <Stack w='full' direction='row'>
+          <Image
+            objectFit='contain'
+            maxW='25px'
+            src={card.image}
+            alt={card.name}
+          />
+          <VStack align='start' spacing={1}>
+            <Heading size='sm'>{card.name}</Heading>
+            <Text fontSize='sm'>Selected: {quantitySelected} / {card.quantity}</Text>
+          </VStack>
+        </Stack>
+      </RdModalBox>
+
+      {quantitySelected > 0 && (
+        <Box
+          position='absolute'
+          top='-12px'
+          right='-10px'
+          pe='3px'
+        >
+          <IconButton
+            icon={<CloseIcon boxSize={2} />}
+            aria-label='Remove'
+            bg='gray.800'
+            _hover={{ bg: 'gray.600' }}
+            size='xs'
+            rounded='full'
+            color='white'
+            onClick={(e) => {
+              e.stopPropagation(); // prevent popover
+              onChange(0);
+            }}
+          />
+        </Box>
+      )}
+    </Box>
+  )
+}
+const MemoizedLocationCardForm = memo(LocationCardForm);
 
 const calculateUpkeepCost = (offDutyAmount: number, upkeepCosts: Array<{ threshold: number, multiplier: number }>) => {
   let cost = 0;
