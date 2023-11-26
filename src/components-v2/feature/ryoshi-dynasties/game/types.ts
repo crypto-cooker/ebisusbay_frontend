@@ -114,6 +114,10 @@ interface RyoshiConfigTownHallRyoshi {
   upkeepDecay: number;
   upkeepActiveDays: number;
   upkeepCosts: Array<{ threshold: number, multiplier: number }>;
+  tradeIn: {
+    tierMultiplier: number[],
+    base: {[key: number]: number}
+  }
 }
 
 interface RyoshiConfigTraitEligibility {

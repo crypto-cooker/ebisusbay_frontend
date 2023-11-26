@@ -327,17 +327,6 @@ export const ryoshiConfig: RyoshiConfig = {
           }
         ]
       }
-    },
-    ryoshi: {
-      upkeepDecay: 0.1,
-      upkeepActiveDays: 7,
-      restockCutoff: 3000,
-      upkeepCosts:[
-        { threshold: 0, multiplier: 0 },
-        { threshold: 201, multiplier: 1 },
-        { threshold: 1000, multiplier: 2 },
-        { threshold: 5000, multiplier: 3 },
-      ]
     }
   },
   townHall: {
@@ -361,6 +350,82 @@ export const ryoshiConfig: RyoshiConfig = {
             fortune: 15000
           }
         ]
+      }
+    },
+    ryoshi: {
+      upkeepDecay: 0.1,
+      upkeepActiveDays: 7,
+      restockCutoff: 3000,
+      upkeepCosts:[
+        { threshold: 0, multiplier: 0 },
+        { threshold: 201, multiplier: 1 },
+        { threshold: 1000, multiplier: 2 },
+        { threshold: 5000, multiplier: 3 },
+      ],
+      tradeIn: {
+        tierMultiplier: [1, 2, 3],
+        base: {
+          100: 15,
+          101: 15,
+          102: 15,
+          103: 10,
+          104: 10,
+          105: 10,
+          106: 10,
+          107: 10,
+          108: 10,
+          109: 15,
+          110: 15,
+          111: 15,
+          112: 20,
+          113: 20,
+          114: 20,
+          115: 20,
+          116: 20,
+          117: 20,
+          118: 15,
+          119: 15,
+          120: 15,
+          121: 10,
+          122: 10,
+          123: 10,
+          124: 15,
+          125: 15,
+          126: 15,
+          127: 10,
+          128: 10,
+          129: 10,
+          130: 15,
+          131: 15,
+          132: 15,
+          133: 15,
+          134: 15,
+          135: 15,
+          136: 10,
+          137: 10,
+          138: 10,
+          139: 10,
+          140: 10,
+          141: 10,
+          142: 20,
+          143: 20,
+          144: 20,
+          145: 15,
+          146: 15,
+          147: 15,
+          148: 20,
+          149: 20,
+          150: 20,
+          151: 10,
+          152: 10,
+          153: 10,
+          154: 10,
+          155: 10,
+          156: 10,
+          157: 10,
+          158: 10,
+          159: 10,
+        }
       }
     }
   },

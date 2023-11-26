@@ -63,6 +63,7 @@ import {ApiService} from "@src/core/services/api-service";
 import {commify} from "ethers/lib/utils";
 import WalletNft from "@src/core/models/wallet-nft";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
+import {useIsTouchDevice} from "@src/hooks/use-is-touch-device";
 
 const config = appConfig();
 
@@ -423,8 +424,7 @@ const OffDutyRyoshi = ({offDutyMeepleData}: {offDutyMeepleData: OffDutyMeepleInf
             <RdButton
               h={12}
               onClick={onOpen}
-              size='md'
-              fontSize={{base: '16', sm: '18'}}
+              size={{base: 'sm', sm: 'md'}}
               w={{base: '150px', sm: '190px'}}
               my='auto'
               alignSelf='end'
@@ -597,8 +597,7 @@ const Upkeep = ({offDutyMeepleData}: {offDutyMeepleData: OffDutyMeepleInfo}) => 
             <RdButton
               h={12}
               onClick={onOpen}
-              size='md'
-              fontSize={{base: '12', sm: '18'}}
+              size={{base: 'sm', sm: 'md'}}
               w={{base: '150px', sm: '190px'}}
               my='auto'
               alignSelf='end'
@@ -840,8 +839,7 @@ const CardTradeIn = ({userLocationCards}: {userLocationCards: UserLocationCard[]
           <RdButton
             h={12}
             onClick={onOpen}
-            size='md'
-            fontSize={{base: '12', sm: '18'}}
+            size={{base: 'sm', sm: 'md'}}
             w={{base: '150px', sm: '190px'}}
             my='auto'
             alignSelf='end'
@@ -876,13 +874,14 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
   const [isExecuting, setIsExecuting] = useState(false);
 
   const [locationsWithUserQty, setLocationsWithUserQty] = useState<UserLocationCard[]>([]);
-
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [cardsToTurnIn, setCardsToTurnIn] = useState<{[key: number]: number}>({});
+  const [showAll, setShowAll] = useState<boolean>(true);
 
   const getLocationData = async () => {
     let data = await ApiService.withoutKey().getCollectionItems({
-      address: collectionAddress
+      address: collectionAddress,
+      pageSize: 100
     });
     let locations:LocationCard[] = [];
 
@@ -969,13 +968,19 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
   }, [user.address])
 
   return (
-    <RdModal isOpen={isOpen} onClose={handleClose} title='Turn In Cards' size='4xl'>
+    <RdModal
+      isOpen={isOpen}
+      onClose={handleClose}
+      title='Turn In Cards'
+      size='4xl'
+      isCentered={false}
+    >
       <Box textAlign='center' mt={2}>
         Select 3 of the same battle cards from any type below to add more Ryoshi to your population
       </Box>
       <Box px={2} mt={4}>
         <Flex direction='row' justify='center' mb={2}>
-          <SimpleGrid columns={{base: 2, md: 3}}>
+          <SimpleGrid columns={3}>
             <RdTabButton isActive={selectedTab === 0} onClick={() => setSelectedTab(0)}>
               Tier 1
             </RdTabButton>
@@ -987,16 +992,26 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
             </RdTabButton>
           </SimpleGrid>
         </Flex>
-        <SimpleGrid columns={{base: 1, md: 2}} spacing={2}>
+        <Flex justify='space-between' align='center'>
+          <Box fontSize='sm'>This tier has a <strong>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</strong> multiplier</Box>
+          <Button size='sm' onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide Empty' : 'Show All'}</Button>
+        </Flex>
+        <SimpleGrid columns={{base: 1, md: 2}} spacing={2} mt={1}>
           {locationsWithUserQty.filter((location) => location.tier == selectedTab+1).map((card) => (
-            <MemoizedLocationCardForm
-              key={card.id}
-              card={card}
-              quantitySelected={cardsToTurnIn[card.id] || 0}
-              onChange={(quantity) => handleSelectCards(card.id, quantity)}
-            />
+            <>
+              {(showAll || card.quantity > 0) && (
+                <MemoizedLocationCardForm
+                  key={card.id}
+                  card={card}
+                  bonus={rdConfig.townHall.ryoshi.tradeIn.base[card.id]}
+                  quantitySelected={cardsToTurnIn[card.id] || 0}
+                  onChange={(quantity) => handleSelectCards(card.id, quantity)}
+                />
+              )}
+            </>
           ))}
         </SimpleGrid>
+
       </Box>
       <RdModalFooter>
         <Box textAlign='center' mt={8} mx={2}>
@@ -1017,7 +1032,19 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
   )
 }
 
-const LocationCardForm = ({card, quantitySelected, onChange}: {card: UserLocationCard, quantitySelected: number, onChange: (quantity: number) => void}) => {
+interface LocationCardFormProps {
+  card: UserLocationCard;
+  bonus: number;
+  quantitySelected: number;
+  onChange: (quantity: number) => void;
+}
+const LocationCardForm = ({card, bonus, quantitySelected, onChange}: LocationCardFormProps) => {
+  const isTouchDevice = useIsTouchDevice();
+
+  const hoverStyle = useMemo(() => ({
+    borderStyle: isTouchDevice || (!isTouchDevice && quantitySelected > 0) ? 'solid' : 'dashed',
+    borderColor: isTouchDevice ? undefined : '#F48F0C'
+  }), [isTouchDevice, quantitySelected]);
 
   const handleSelectQuantity = () => {
     const step = 3;
@@ -1033,24 +1060,34 @@ const LocationCardForm = ({card, quantitySelected, onChange}: {card: UserLocatio
       <RdModalBox
         w='full'
         p={2}
+        bg={card.quantity > 0 ? '#376dcf' : undefined}
         cursor='pointer'
         border={`2px solid ${quantitySelected > 0 ? '#F48F0C' : 'transparent'}`}
-        _hover={{ base: {}, md: {
-            border: '2px solid #F48F0C'
-          }}}
+        _hover={hoverStyle}
+        _active={{
+          borderStyle: 'solid',
+          bg: card.quantity > 0 ? '#376dcfcc' : undefined
+        }}
         onClick={handleSelectQuantity}
       >
 
         <Stack w='full' direction='row'>
           <Image
             objectFit='contain'
-            maxW='25px'
+            w='25px'
             src={card.image}
             alt={card.name}
           />
-          <VStack align='start' spacing={1}>
-            <Heading size='sm'>{card.name}</Heading>
-            <Text fontSize='sm'>Selected: {quantitySelected} / {card.quantity}</Text>
+          <VStack align='start' spacing={1} w='full'>
+            <Heading size='sm'>{card.name} ({card.id})</Heading>
+            <HStack w='full' justify='space-between'>
+              <HStack spacing={1}>
+                <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}
+                       alt="troopsIcon" boxSize={4}/>
+                <Box>{bonus}</Box>
+              </HStack>
+              <Text fontSize='sm'>Selected: {quantitySelected} / {card.quantity}</Text>
+            </HStack>
           </VStack>
         </Stack>
       </RdModalBox>
