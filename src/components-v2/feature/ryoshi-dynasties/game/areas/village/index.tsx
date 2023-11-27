@@ -1,4 +1,4 @@
-import {Box, Fade, Modal, ModalContent, ModalOverlay, Text, useBreakpointValue, useDisclosure} from "@chakra-ui/react"
+import {Box, Fade, Modal, ModalContent, ModalOverlay, Button, Text, keyframes, usePrefersReducedMotion, useBreakpointValue, useDisclosure, VStack} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
@@ -23,6 +23,8 @@ import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/componen
 import {RdGameState} from "@src/core/services/api-service/types";
 import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
 import {motion} from "framer-motion";
+import xmasMessages from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/xmasMessages.json";
+import { RdModalFooter } from "../../../components/rd-announcement-modal";
 // import FactionDirectory from "@src/components-v2/feature/ryoshi-dynasties/game/modals/xp-leaderboard";
 interface VillageProps {
   onChange: (value: string) => void;
@@ -64,6 +66,119 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     setForceRefreshBool(!forceRefreshBool);
   }
 
+
+  const [openShakePresent, setOpenShakePresent] = useState(false);
+  const [presentMessage, setPresentMessage] = useState('');
+  const [showMessage, setShowMessage] = useState(false);
+
+  const getRandomEntry = (entries: string[]): string => {
+    const randomIndex = Math.floor(Math.random() * entries.length);
+    return entries[randomIndex];
+  };
+  const PresentPresent = async () => {
+    onOpenPresentModal();
+
+    setShowMessage(false);
+    await new Promise(r => setTimeout(r, 2000));
+    setShowMessage(true);
+
+    setPresentMessage(getRandomEntry(xmasMessages));
+    setOpenShakePresent(false);
+  }
+
+  const keyframe_dot1 = keyframes`
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1, 1.5);
+  }
+  50% {
+    transform: scale(1, 0.67);
+  }
+  75% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+`;
+const keyframe_dot2 = keyframes`
+ 0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1, 1.5);
+  }
+  75% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+`;
+const keyframe_dot3 = keyframes`
+ 0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1, 0.67);
+  }
+  75% {
+    transform: scale(1, 1.5);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+`;
+
+const styles2 = {
+  dot1: {
+    width: "10px",
+    height: "10px",
+    borderRadius: "5px",
+    backgroundColor: "#f9a50b",
+    color: "#f9a50b",
+    display: " inline-block",
+    margin: "0 2px"
+  },
+  dot2: {
+    width: "10px",
+    height: "10px",
+    borderRadius: "5px",
+    backgroundColor: "#f9a50b",
+    color: "#f9a50b",
+    display: "inline-block",
+    margin: "0 2px"
+  },
+
+  dot3: {
+    width: "10px",
+    height: "10px",
+    borderRadius: "5px",
+    backgroundColor: "#f9a50b",
+    display: "inline-block",
+    margin: "0 2px"
+  }
+};
+const prefersReducedMotion = usePrefersReducedMotion();
+const animation1 = prefersReducedMotion
+  ? undefined
+  : `${keyframe_dot1} infinite 1s linear`;
+const animation2 = prefersReducedMotion
+  ? undefined
+  : `${keyframe_dot2} infinite 1s linear`;
+const animation3 = prefersReducedMotion
+  ? undefined
+  : `${keyframe_dot3} infinite 1s linear`;
+
+
   useEffect(() => {
     if (transformComponentRef.current) {
       const { zoomToElement } = transformComponentRef.current as any;
@@ -86,7 +201,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     "townhall" : {height:607, width:707, top:'13.25%', left:'36.25%'},
     "academy" : {height: 792, width: 744, top: '4%', left: '74%'},
     "tavern" : {height: 500, width: 700, top: '2%', left: '17%'},
-    "tavernSpin" : {height: 573, width: 725, top: '0.5%', left: '15.52%'},
+    "tavernSpin" : {height: 573, width: 725, top: '2%', left: '17.05%'},
 
     "water" : {height: 703, width: 2880, top: '32%', left: '0%'},
     "boat" : {height: 613, width: 718, top: '34%', left: '3%'},
@@ -94,6 +209,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     "market" : {height: 545, width: 793, top: '36.5%', left: '55%'},
     "barracks" : {height: 579, width: 832, top: '15.5%', left: '-0.5%'},
     "swordsmen" : {height: 270, width: 383, top: '25%', left: '14.5%'},
+    "xmas_tree" : {height: 505, width: 344, top: '23%', left: '27%'},
 
     "flowers1" : {height: 251, width: 229, top: '3%', left: '14%'},
     "flowers2" : {height: 251, width: 229, top: '3%', left: '14%'},
@@ -317,6 +433,9 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const [barracks_labelTop, setbarracks_labelTop] = useState<number | string>(buildings.barracks_label.width);
   const [barracks_labelLeft, setbarracks_labelLeft] = useState<number | string>(buildings.barracks_label.height);
 
+  const [xmasTreeTop, setXmasTreeTop] = useState(buildings.xmas_tree.top);
+  const [xmasTreeLeft, setXmasTreeLeft] = useState(buildings.xmas_tree.left);
+  
   const [mapInitialized, setMapInitialized] = useState(false);
 
 //#endregion
@@ -519,6 +638,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
   const { isOpen: isResetModalOpen, onOpen: onOpenResetModal, onClose: onCloseResetModal } = useDisclosure();
   const { isOpen: isTownHallModalOpen, onOpen: onOpenTownHallModal, onClose: onCloseTownHalltModal } = useDisclosure();
+  const { isOpen: isPresentModalOpen, onOpen: onOpenPresentModal, onClose: onClosePresentModal } = useDisclosure();
 
   const handleSceneChange = useCallback((area: string) => {
     if (area === 'battleMap') {
@@ -592,7 +712,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                   <MapFrame gridHeight={'50px 1fr 50px'} gridWidth={'50px 1fr 50px'}>
                     <Box
                       as='img'
-                      src={ImageService.translate('/img/battle-bay/mapImages/background.png').custom({width: 2880, height: 1620})}
+                      src={ImageService.translate('/img/battle-bay/mapImages/background_xmas.png').custom({width: 2880, height: 1620})}
                       maxW='none'
                       useMap="#image-map"
                       className={`${styles.mapImageArea}`}
@@ -606,7 +726,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       // onClick={() => onChange('allianceCenter')}
                          onClick={() => OpenAllianceCenter()}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/alliancecenter_day.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/alliancecenter_xmas.png').convert()} />
                       <Box className={styles.enlarge} style={{position:"absolute", marginTop: alliancecenter_labelTop, marginLeft: alliancecenter_labelLeft, zIndex:"20"}}>
                         <img src={ImageService.translate('/img/battle-bay/building_labels/alliancecenter_label.png').convert()} />
                       </Box>
@@ -615,19 +735,19 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                     <Box id='Town Hall' className={styles.enlarge} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}}
                       onClick={OpenTownHall}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/townhall.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/townhall_xmas.png').convert()} />
                     </Box>
 
                     <Box id='Tavern' className={styles.enlarge} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
                       onClick={OpenTavern}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/tavern2.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/tavern_xmas.png').convert()} />
                     </Box>
 
                     <Box  style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}}
                       // onClick={() => onChange('academy')}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/academy.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/academy_xmas.png').convert()} />
                     </Box>
 
                     <Box  style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
@@ -637,11 +757,11 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                     <Box id="Battle Map" className={styles.enlarge} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
                          onClick={() => OpenBattleMap()}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/boat_day.apng').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/boat_xmas.apng').convert()} />
                     </Box>
 
                     <Box style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/ebisustatue.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/ebisustatue_xmas.png').convert()} />
                     </Box>
 
                     <Box 
@@ -649,7 +769,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       className={styles.enlarge}
                       onClick={() => OpenMarket()}
                       style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/fishmarket_day.apng').convert()}/>
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/fishmarket_xmas.apng').convert()}/>
                     </Box>
 
                     <Box style={{position:"absolute", marginTop: waterTop, marginLeft: waterLeft, zIndex:"8"}} >
@@ -663,13 +783,13 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       // onClick={() => onChange('bank')}
                       onClick={() => OpenBank()}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/bank_day.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/bank_xmas.png').convert()} />
                     </Box>
 
                     <Box id="Announcements" className={styles.enlarge} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}}
                          onClick={onOpenAnnouncementBoard}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/announcement.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/announcement_xmas.png').convert()} />
                     </Box>
 
                     <Box 
@@ -678,7 +798,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
                       onClick={() => handleSceneChange('barracks')}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/barracks.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/barracks_xmas.png').convert()} />
                     </Box>
 
                     <Box className={styles.enlarge} style={{position:"absolute", marginTop: swordsmenTop, marginLeft: swordsmenLeft, zIndex:"9", pointerEvents:"none"}} >
@@ -687,7 +807,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
                     <Box id="Moongate" className={styles.enlarge} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}
                       onClick={() => OpenPortal()}>
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/moongate_day.apng').convert()} onClick={() => OpenPortal()}/>
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/moongate_xmas.apng').convert()} onClick={() => OpenPortal()}/>
                       {/* <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
                         <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
                     </Box>
@@ -698,12 +818,50 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"8"}}
                       onClick={() => onChange('lands')}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/torii.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/torii_xmas.png').convert()} />
                     </Box>
 
                     <Box style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/pond1.apng').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/pond1_xmas.png').convert()} />
                     </Box>
+
+                    <Box
+                      as='img'
+                      src={ImageService.translate('/img/battle-bay/mapImages/snow_overlay.gif').custom({width: 2880, height: 1620})}
+                      maxW='none'
+                      useMap="#image-map"
+                      id="fancyMenu"
+                      onLoad={() => setDimensionsLoaded(true)}
+                      style={{position:"absolute", marginTop: 0, marginLeft: 0, zIndex:"10"}}
+                      pointerEvents={'none'}
+                    />
+
+                    {/* x-mas */}
+                    <Box className={styles.enlarge} style={{position:"absolute", marginTop: xmasTreeTop, marginLeft: xmasTreeLeft, zIndex:"8"}} 
+                      onClick={() => setOpenShakePresent(!openShakePresent)}>
+                        <VStack 
+                        justifyContent={'center'}
+                        alignItems={'center'}
+
+                        >
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/xmas_tree.apng').convert()} />
+                      {
+                        openShakePresent && (
+                          <>
+                          <Button 
+                          border= '2px solid  red'
+                           h={'16'} ml={'16'} 
+                           bg='linear-gradient(to left, #339933, #006600 )'
+                           fontSize={'24px'} 
+                           _hover={{bg: 'linear-gradient(to left, #006600, #339933 )'}}
+                           onClick={PresentPresent}
+                            >Shake Present</Button>
+                          </>
+                        )
+                      }
+                        </VStack>
+                    </Box>
+
 
                     {/* <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhall_labelTop, marginLeft: townhall_labelLeft, zIndex:"20"}}>
                       <img src='/img/battle-bay/building_labels/townhall_label.png' width={townhall_labelWidth} height={townhall_labelHeight} /> </div>
@@ -741,6 +899,34 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
       <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
       {/* <FactionDirectory isOpen={isOpenXPLeaderboard} onClose={onCloseXPLeaderboard} /> */}
+      {/* x-mas */}
+      <RdModal
+        isOpen={isPresentModalOpen}
+        onClose={onClosePresentModal}
+        title='Gifts from Ebisu Claus'
+      >
+        <RdModalAlert>
+          <>
+          {
+            showMessage ? (
+              <Text>{presentMessage}</Text>
+            ) : (
+              <>
+              <Box>
+                <Box style={styles2.dot1} animation={animation1} />
+                <Box style={styles2.dot2} animation={animation2} />
+                <Box style={styles2.dot3} animation={animation3} />
+              </Box>
+              </>
+            )
+          }
+          </>
+        </RdModalAlert>
+        <RdModalFooter>
+          <Text textAlign={'center'} fontSize={'12'} textColor={'lightgray'}>Merry Christmas and Happy Holidays from the team at Ebisu's Bay</Text>
+        </RdModalFooter>
+      </RdModal>
+
       <Fade in={isOpenOverlay} 
         >
         <Modal
