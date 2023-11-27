@@ -1,4 +1,4 @@
-import {Box, Fade, Modal, ModalContent, ModalOverlay, Text, useBreakpointValue, useDisclosure} from "@chakra-ui/react"
+import {Box, Fade, Modal, ModalContent, ModalOverlay, Button, Text, useBreakpointValue, useDisclosure, VStack} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
@@ -23,6 +23,8 @@ import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/componen
 import {RdGameState} from "@src/core/services/api-service/types";
 import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
 import {motion} from "framer-motion";
+import xmasMessages from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/xmasMessages.json";
+import { RdModalFooter } from "../../../components/rd-announcement-modal";
 // import FactionDirectory from "@src/components-v2/feature/ryoshi-dynasties/game/modals/xp-leaderboard";
 interface VillageProps {
   onChange: (value: string) => void;
@@ -62,6 +64,21 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     
   const forceRefresh = () => {
     setForceRefreshBool(!forceRefreshBool);
+  }
+
+
+  const [openShakePresent, setOpenShakePresent] = useState(false);
+  const [presentMessage, setPresentMessage] = useState('');
+
+  const getRandomEntry = (entries: string[]): string => {
+    const randomIndex = Math.floor(Math.random() * entries.length);
+    return entries[randomIndex];
+  };
+
+  const PresentPresent = () => {
+    setPresentMessage(getRandomEntry(xmasMessages));
+    setOpenShakePresent(false);
+    onOpenPresentModal();
   }
 
   useEffect(() => {
@@ -523,6 +540,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
   const { isOpen: isResetModalOpen, onOpen: onOpenResetModal, onClose: onCloseResetModal } = useDisclosure();
   const { isOpen: isTownHallModalOpen, onOpen: onOpenTownHallModal, onClose: onCloseTownHalltModal } = useDisclosure();
+  const { isOpen: isPresentModalOpen, onOpen: onOpenPresentModal, onClose: onClosePresentModal } = useDisclosure();
 
   const handleSceneChange = useCallback((area: string) => {
     if (area === 'battleMap') {
@@ -719,8 +737,31 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       style={{position:"absolute", marginTop: 0, marginLeft: 0, zIndex:"10"}}
                       pointerEvents={'none'}
                     />
-                    <Box style={{position:"absolute", marginTop: xmasTreeTop, marginLeft: xmasTreeLeft, zIndex:"8"}} >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/xmas_tree.png').convert()} />
+
+                    {/* x-mas */}
+                    <Box className={styles.enlarge} style={{position:"absolute", marginTop: xmasTreeTop, marginLeft: xmasTreeLeft, zIndex:"8"}} 
+                      onClick={() => setOpenShakePresent(!openShakePresent)}>
+                        <VStack 
+                        justifyContent={'center'}
+                        alignItems={'center'}
+
+                        >
+                      <img src='/img/battle-bay/mapImages/xmas_tree.png' />
+                      {
+                        openShakePresent && (
+                          <>
+                          <Button 
+                          border= '2px solid  red'
+                           h={'16'} ml={'16'} 
+                           bg='linear-gradient(to left, #339933, #006600 )'
+                           fontSize={'24px'} 
+                           _hover={{bg: 'linear-gradient(to left, #006600, #339933 )'}}
+                           onClick={PresentPresent}
+                            >Shake Present</Button>
+                          </>
+                        )
+                      }
+                        </VStack>
                     </Box>
 
 
@@ -760,6 +801,20 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
       <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
       {/* <FactionDirectory isOpen={isOpenXPLeaderboard} onClose={onCloseXPLeaderboard} /> */}
+      {/* x-mas */}
+      <RdModal
+        isOpen={isPresentModalOpen}
+        onClose={onClosePresentModal}
+        title='Gifts from Ebisu Claus'
+      >
+        <RdModalAlert>
+          <Text>{presentMessage}</Text>
+        </RdModalAlert>
+        <RdModalFooter>
+          <Text textAlign={'center'} fontSize={'12'} textColor={'lightgray'}>Merry Christmas and Happy Holidays from the team at Ebisu's Bay</Text>
+        </RdModalFooter>
+      </RdModal>
+
       <Fade in={isOpenOverlay} 
         >
         <Modal
