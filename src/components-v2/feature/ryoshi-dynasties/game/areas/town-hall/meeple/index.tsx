@@ -994,7 +994,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
         </Flex>
         <Flex justify='space-between' align='center'>
           <Box fontSize='sm'>This tier has a <strong>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</strong> multiplier</Box>
-          <Button size='sm' onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide Empty' : 'Show All'}</Button>
+          <Button size='sm' variant='unstyled' onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide Empty' : 'Show All'}</Button>
         </Flex>
         <SimpleGrid columns={{base: 1, md: 2}} spacing={2} mt={1}>
           {locationsWithUserQty.filter((location) => location.tier == selectedTab+1).map((card) => (
