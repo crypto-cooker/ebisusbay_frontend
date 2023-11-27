@@ -132,13 +132,33 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
       const maxSupply = stakeConfig!.maxId - stakeConfig!.minId + 1;
       const percentile = (nft.rank / maxSupply) * 100;
-      const multiplier = stakeConfig!.multipliers
+      const multiplier = stakeConfig!.apr.multipliers
         .sort((a: any, b: any) => a.percentile - b.percentile)
         .find((m: any) => percentile <= m.percentile)?.value || 0;
-      const adder = stakeConfig!.adders
+      const adder = stakeConfig!.apr.adders
         .sort((a: any, b: any) => a.percentile - b.percentile)
         .find((m: any) => percentile <= m.percentile)?.value || 0;
-      const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nftId)?.bonus || 0;
+      const idBonus = stakeConfig!.apr.ids.find((i) => i.id.toString() === nft.nftId)?.bonus || 0;
+
+      let troops = 0;
+      const troopsConfig = stakeConfig!.troops;
+      if (!!troopsConfig)  {
+        troops = percentile ? troopsConfig.values
+          .sort((a: any, b: any) => a.percentile - b.percentile)
+          .find((m: any) => percentile <= m.percentile)?.value || 0 : 0;
+
+        const hasBonusTrait = nft.attributes?.some((attr: any) => {
+          const traitType = attr.trait_type.toLowerCase();
+          const value = attr.value.toString().toLowerCase();
+
+          for (let traitRule of troopsConfig.bonus.traits) {
+            if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
+              return true;
+            }
+          }
+        });
+        if (hasBonusTrait) troops += troopsConfig.bonus.value;
+      }
 
       setPendingNfts([...pendingNfts, {
         nftAddress: nft.nftAddress,
@@ -147,6 +167,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         rank: nft.rank,
         multiplier: multiplier > 0 ? multiplier + 1 : 0,
         adder: adder + idBonus,
+        troops,
         isAlreadyStaked: stakedCount > pendingCount,
         isActive: stakeConfig!.active,
         refBalance: nft.balance ?? 1,
@@ -222,13 +243,33 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
           const maxSupply = stakeConfig!.maxId - stakeConfig!.minId + 1;
           const percentile = (nft.nft.rank / maxSupply) * 100;
-          const multiplier = stakeConfig!.multipliers
+          const multiplier = stakeConfig!.apr.multipliers
             .sort((a: any, b: any) => a.percentile - b.percentile)
             .find((m: any) => percentile <= m.percentile)?.value || 0;
-          const adder = stakeConfig!.adders
+          const adder = stakeConfig!.apr.adders
             .sort((a: any, b: any) => a.percentile - b.percentile)
             .find((m: any) => percentile <= m.percentile)?.value || 0;
-          const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nft.nftId)?.bonus || 0;
+          const idBonus = stakeConfig!.apr.ids.find((i) => i.id.toString() === nft.nft.nftId)?.bonus || 0;
+
+          let troops = 0;
+          const troopsConfig = stakeConfig!.troops;
+          if (!!troopsConfig)  {
+            troops = percentile ? troopsConfig.values
+              .sort((a: any, b: any) => a.percentile - b.percentile)
+              .find((m: any) => percentile <= m.percentile)?.value || 0 : 0;
+
+            const hasBonusTrait = nft.nft.attributes?.some((attr: any) => {
+              const traitType = attr.trait_type.toLowerCase();
+              const value = attr.value.toString().toLowerCase();
+
+              for (let traitRule of troopsConfig.bonus.traits) {
+                if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
+                  return true;
+                }
+              }
+            });
+            if (hasBonusTrait) troops += troopsConfig.bonus.value;
+          }
 
           for (let i = 0; i < Number(token.amount); i++) {
             nfts.push({
@@ -238,6 +279,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
               rank: nft.nft.rank,
               multiplier: multiplier > 0 ? multiplier + 1 : 0,
               adder: adder + idBonus,
+              troops,
               isAlreadyStaked: true,
               isActive: stakeConfig!.active,
               refBalance: 0,
@@ -338,6 +380,7 @@ interface PendingNft {
   rank: number;
   multiplier: number;
   adder: number;
+  troops: number;
   isAlreadyStaked: boolean;
   isActive: boolean;
   refBalance: number;
@@ -460,6 +503,12 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
                               )}
                               {pendingNfts[index].adder && (
                                 <Box>+ {pendingNfts[index].adder}%</Box>
+                              )}
+                              {pendingNfts[index].troops && (
+                                <HStack spacing={0}>
+                                  <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}alt="troopsIcon" boxSize={4}/>
+                                  <Box>+ {pendingNfts[index].troops}</Box>
+                                </HStack>
                               )}
                             </VStack>
                           </Flex>

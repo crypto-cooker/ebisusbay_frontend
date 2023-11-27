@@ -3,10 +3,10 @@ import {
   appUrl,
   cacheBustingKey,
   caseInsensitiveCompare,
-  humanize,
+  humanizeAdvanced,
   isAddress,
   isBundle,
-  isHerosCollection,
+  isHeroesCollection,
   relativePrecision
 } from '@src/utils';
 import Nft1155 from '@src/components-v2/feature/nft/nft1155';
@@ -21,10 +21,9 @@ interface NftProps {
   id: string;
   nft: any;
   collection: any;
-  seoImage: string;
 }
 
-const Nft = ({ slug, id, nft, collection, seoImage }: NftProps) => {
+const Nft = ({ slug, id, nft, collection }: NftProps) => {
   const [type, setType] = useState('721');
   const [initialized, setInitialized] = useState(false);
 
@@ -64,7 +63,7 @@ const Nft = ({ slug, id, nft, collection, seoImage }: NftProps) => {
       if (traits.length > 0 && traits[0].occurrence) {
         const traitsTop = traits[0];
         const res = `${anNFT?.description ? anNFT.description.slice(0, 250) : ''} ... Top Trait: ${
-          traitsTop.value ? humanize(traitsTop.value) : 'N/A'
+          traitsTop.value ? humanizeAdvanced(traitsTop.value) : 'N/A'
         }, ${relativePrecision(traitsTop.occurrence)}%`;
 
         return res;
@@ -82,7 +81,7 @@ const Nft = ({ slug, id, nft, collection, seoImage }: NftProps) => {
         title={nft.name}
         description={getTraits(nft)}
         url={`/collection/${collection?.slug}/${nft.id}`}
-        image={seoImage}
+        image={nft.image}
       />
       {initialized && collection && (
         <>
@@ -131,6 +130,10 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
     }
   }
 
+  const seoImage = isHeroesCollection(collection.address) ?
+    appUrl(`api/heroes/${tokenId}/og?${cacheBustingKey()}`).toString() :
+    nft.image;
+
   if (isAddress(slug)) {
     return {
       redirect: {
@@ -142,13 +145,10 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
         id: tokenId,
         collection,
         nft,
+        seoImage
       },
     };
   }
-
-  const seoImage = isHerosCollection(collection.address) ?
-    appUrl(`api/heroes/${tokenId}/og?${cacheBustingKey()}`).toString() :
-    nft.image;
 
   return {
     props: {
@@ -156,7 +156,6 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
       id: tokenId,
       collection,
       nft,
-      seoImage
     },
   };
 };

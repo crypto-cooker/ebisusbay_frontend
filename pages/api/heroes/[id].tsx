@@ -69,20 +69,20 @@ export default async function handler(req: NextRequest) {
             borderRadius: '20px',
           }}
         >
-          <img src={location}  height={size} width={size} style={{ position: 'absolute' }}/>
-          <img src={skin}  height={size} width={size} style={{ position: 'absolute' }}/>
-          <img src={hair}  height={size} width={size} style={{ position: 'absolute' }}/>
-          <img src={eyes}  height={size} width={size} style={{ position: 'absolute' }}/>
-          <img src={mouth}  height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={location} height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={skin} height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={hair} height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={eyes} height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={mouth} height={size} width={size} style={{ position: 'absolute' }}/>
 
-          <img src={markings}  height={size} width={size} style={{ position: 'absolute' }}/>
-          <img src={legs}  height={size} width={size} style={{ position: 'absolute' }}/>
-          <img src={feet}  height={size} width={size} style={{ position: 'absolute' }}/>
-          <img src={chest}  height={size} width={size} style={{ position: 'absolute' }}/>
-          <img src={belt}  height={size} width={size} style={{ position: 'absolute' }}/>
-          <img src={gloves}  height={size} width={size} style={{ position: 'absolute' }}/>
-          <img src={goggles}  height={size} width={size} style={{ position: 'absolute' }}/>
-          <img src={border}  height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={markings} height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={legs} height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={feet} height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={chest} height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={belt} height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={gloves} height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={goggles} height={size} width={size} style={{ position: 'absolute' }}/>
+          <img src={border} height={size} width={size} style={{ position: 'absolute' }}/>
         </div>
 
       </div>
@@ -91,8 +91,7 @@ export default async function handler(req: NextRequest) {
       width: size,
       height: size,
       headers: {
-        'cache-control': 'public, max-age=3600, stale-while-revalidate=4200, no-transform',
-        'Content-Type': 'image/png'
+        'cache-control': 'public, max-age=3600, stale-while-revalidate=4200, no-transform'
       }
     }
   )
