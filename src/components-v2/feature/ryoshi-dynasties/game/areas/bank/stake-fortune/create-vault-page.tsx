@@ -19,7 +19,7 @@ import {
   Stack,
   Tag,
   Text,
-  VStack
+  VStack, Wrap
 } from "@chakra-ui/react";
 import {createSuccessfulTransactionToastContent, findNextLowestNumber, pluralize, round} from "@src/utils";
 import {commify} from "ethers/lib/utils";
@@ -436,7 +436,7 @@ const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
 
   return (
     <Box px={2}>
-      <Text textAlign='center' fontSize={14} py={2}>Once converted, your NFT will be available in your inventory. Select a vault below and then click <strong>Convert</strong>.</Text>
+      <Text textAlign='center' fontSize={14} py={2}>Once converted, your NFT will be available in your bank. Select a vault below and then click <strong>Convert</strong>.</Text>
       {isLoading ? (
         <Center>
           <Spinner />
@@ -461,7 +461,7 @@ const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
                 >
                   <Flex direction='column' w='full' align='start'>
                     <Flex w='full' align='center'>
-                      <Box flex='1' textAlign='left' my='auto'>
+                      <Box flex='1' textAlign='left' my='auto' minW='127px'>
                         <Text fontSize='xs' color="#aaa">{nft.name}</Text>
                         <Box fontWeight='bold'>{nft.length} days ({nft.daysRemaining} days remaining)</Box>
                       </Box>
@@ -471,25 +471,25 @@ const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
                             <FortuneIcon boxSize={6} />
                             <Box>{commify(round(nft.amount))}</Box>
                           </HStack>
-                          <Flex>
+                          <Wrap spacing={2} justify='flex-end'>
                             <Tag variant='outline'>
                               {round(nft.baseApr, 2)}%
                             </Tag>
-                            <Tag ms={2} variant='outline'>
+                            <Tag variant='outline'>
                               <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}
                                      alt="troopsIcon" boxSize={4}/>
                               <Box ms={1}>
                                 {commify(nft.troops)}
                               </Box>
                             </Tag>
-                            <Tag ms={2} variant='outline'>
+                            <Tag variant='outline'>
                               <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/mitama.png').convert()}
                                      alt="troopsIcon" boxSize={4}/>
                               <Box ms={1}>
                                 {commify(nft.mitama)}
                               </Box>
                             </Tag>
-                          </Flex>
+                          </Wrap>
                         </VStack>
                       </Box>
                     </Flex>
