@@ -746,7 +746,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         alignItems={'center'}
 
                         >
-                      <img src='/img/battle-bay/mapImages/xmas_tree.png' />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/xmas_tree.png').convert()} />
                       {
                         openShakePresent && (
                           <>
