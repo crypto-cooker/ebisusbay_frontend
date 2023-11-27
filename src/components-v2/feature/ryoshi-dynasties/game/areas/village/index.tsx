@@ -1,4 +1,4 @@
-import {Box, Fade, Modal, ModalContent, ModalOverlay, Button, Text, useBreakpointValue, useDisclosure, VStack} from "@chakra-ui/react"
+import {Box, Fade, Modal, ModalContent, ModalOverlay, Button, Text, keyframes, usePrefersReducedMotion, useBreakpointValue, useDisclosure, VStack} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
@@ -69,17 +69,115 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
   const [openShakePresent, setOpenShakePresent] = useState(false);
   const [presentMessage, setPresentMessage] = useState('');
+  const [showMessage, setShowMessage] = useState(false);
 
   const getRandomEntry = (entries: string[]): string => {
     const randomIndex = Math.floor(Math.random() * entries.length);
     return entries[randomIndex];
   };
+  const PresentPresent = async () => {
+    onOpenPresentModal();
 
-  const PresentPresent = () => {
+    setShowMessage(false);
+    await new Promise(r => setTimeout(r, 2000));
+    setShowMessage(true);
+
     setPresentMessage(getRandomEntry(xmasMessages));
     setOpenShakePresent(false);
-    onOpenPresentModal();
   }
+
+  const keyframe_dot1 = keyframes`
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1, 1.5);
+  }
+  50% {
+    transform: scale(1, 0.67);
+  }
+  75% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+`;
+const keyframe_dot2 = keyframes`
+ 0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1, 1.5);
+  }
+  75% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+`;
+const keyframe_dot3 = keyframes`
+ 0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1, 0.67);
+  }
+  75% {
+    transform: scale(1, 1.5);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+`;
+
+const styles2 = {
+  dot1: {
+    width: "10px",
+    height: "10px",
+    borderRadius: "5px",
+    backgroundColor: "#f9a50b",
+    color: "#f9a50b",
+    display: " inline-block",
+    margin: "0 2px"
+  },
+  dot2: {
+    width: "10px",
+    height: "10px",
+    borderRadius: "5px",
+    backgroundColor: "#f9a50b",
+    color: "#f9a50b",
+    display: "inline-block",
+    margin: "0 2px"
+  },
+
+  dot3: {
+    width: "10px",
+    height: "10px",
+    borderRadius: "5px",
+    backgroundColor: "#f9a50b",
+    display: "inline-block",
+    margin: "0 2px"
+  }
+};
+const prefersReducedMotion = usePrefersReducedMotion();
+const animation1 = prefersReducedMotion
+  ? undefined
+  : `${keyframe_dot1} infinite 1s linear`;
+const animation2 = prefersReducedMotion
+  ? undefined
+  : `${keyframe_dot2} infinite 1s linear`;
+const animation3 = prefersReducedMotion
+  ? undefined
+  : `${keyframe_dot3} infinite 1s linear`;
+
 
   useEffect(() => {
     if (transformComponentRef.current) {
@@ -103,7 +201,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     "townhall" : {height:607, width:707, top:'13.25%', left:'36.25%'},
     "academy" : {height: 792, width: 744, top: '4%', left: '74%'},
     "tavern" : {height: 500, width: 700, top: '2%', left: '17%'},
-    "tavernSpin" : {height: 573, width: 725, top: '0.5%', left: '15.52%'},
+    "tavernSpin" : {height: 573, width: 725, top: '2%', left: '17.05%'},
 
     "water" : {height: 703, width: 2880, top: '32%', left: '0%'},
     "boat" : {height: 613, width: 718, top: '34%', left: '3%'},
@@ -746,7 +844,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         alignItems={'center'}
 
                         >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/xmas_tree.png').convert()} />
+                      <img src={ImageService.translate('/img/battle-bay/mapImages/xmas_tree.apng').convert()} />
                       {
                         openShakePresent && (
                           <>
@@ -808,7 +906,21 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         title='Gifts from Ebisu Claus'
       >
         <RdModalAlert>
-          <Text>{presentMessage}</Text>
+          <>
+          {
+            showMessage ? (
+              <Text>{presentMessage}</Text>
+            ) : (
+              <>
+              <Box>
+                <Box style={styles2.dot1} animation={animation1} />
+                <Box style={styles2.dot2} animation={animation2} />
+                <Box style={styles2.dot3} animation={animation3} />
+              </Box>
+              </>
+            )
+          }
+          </>
         </RdModalAlert>
         <RdModalFooter>
           <Text textAlign={'center'} fontSize={'12'} textColor={'lightgray'}>Merry Christmas and Happy Holidays from the team at Ebisu's Bay</Text>
