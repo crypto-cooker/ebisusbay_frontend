@@ -993,7 +993,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
           </SimpleGrid>
         </Flex>
         <Flex justify='space-between' align='center'>
-          <Box fontSize='sm'>This tier has a <strong>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</strong> multiplier</Box>
+          <Box fontSize='sm'>This tier has a <Text as='span' fontWeight='bold' textDecoration='underline'>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</Text> multiplier</Box>
           <Button size='sm' variant='unstyled' onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide Empty' : 'Show All'}</Button>
         </Flex>
         <SimpleGrid columns={{base: 1, md: 2}} spacing={2} mt={1}>
@@ -1060,13 +1060,13 @@ const LocationCardForm = ({card, bonus, quantitySelected, onChange}: LocationCar
       <RdModalBox
         w='full'
         p={2}
-        bg={card.quantity > 0 ? '#376dcf' : undefined}
+        bg={card.quantity >= 3 ? '#376dcf' : undefined}
         cursor='pointer'
         border={`2px solid ${quantitySelected > 0 ? '#F48F0C' : 'transparent'}`}
         _hover={hoverStyle}
         _active={{
           borderStyle: 'solid',
-          bg: card.quantity > 0 ? '#376dcfcc' : undefined
+          bg: card.quantity >= 3 ? '#376dcfcc' : undefined
         }}
         onClick={handleSelectQuantity}
       >
