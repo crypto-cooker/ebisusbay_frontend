@@ -149,7 +149,7 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
           />
           {collection.metadata.description && (
             <Box>
-              <Text noOfLines={showFullDescription ? 0 : 2}>{collection.metadata.description}</Text>
+              <Text noOfLines={showFullDescription || collection.metadata.description.length <= 255 ? 0 : 2}>{collection.metadata.description}</Text>
               {collection.metadata.description.length > 255 && (
                 <Button variant="link" onClick={() => setShowFullDescription(!showFullDescription)}>
                   See {showFullDescription ? 'less' : 'more'}

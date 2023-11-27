@@ -32,7 +32,7 @@ import {
   isCroSkullPetsCollection,
   isEmptyObj,
   isEvoSkullCollection,
-  isHerosCollection,
+  isHeroesCollection,
   isLadyWeirdApesCollection,
   isLazyHorseCollection,
   isLazyHorsePonyCollection,
@@ -758,7 +758,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                       )}
                     </div>
                   </ChakraButton>
-                  {nft && nft.original_image && !isHerosCollection(nft.address) && (
+                  {nft && nft.original_image && !isHeroesCollection(nft.address) && (
                     <ChakraButton title="View Full Image" onClick={() =>
                         typeof window !== 'undefined' &&
                         window.open(specialImageTransform(address, fullImage()), '_blank')
@@ -766,7 +766,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
                     </ChakraButton>
                   )}
-                  {isHerosCollection(nft.address) && (
+                  {isHeroesCollection(nft.address) && (
                     <>
                       <ChakraButton
                           title="Download Image"

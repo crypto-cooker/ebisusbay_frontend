@@ -581,7 +581,7 @@ export const isCroSwapQuartermastersCollection = (address) => {
 export const isDynamicNftImageCollection = (address) => {
   if(!address) return false;
   if (isLandDeedsCollection(address)) return true;
-  if (isHerosCollection(address)) return true;
+  if (isHeroesCollection(address)) return true;
 
   return false;
 };
@@ -593,7 +593,7 @@ export const isLandDeedsCollection = (address) => {
     ['0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3', '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad']
   );
 };
-export const isHerosCollection = (address) => {
+export const isHeroesCollection = (address) => {
   return isCollection(
     address,
     'ryoshi-heroes',

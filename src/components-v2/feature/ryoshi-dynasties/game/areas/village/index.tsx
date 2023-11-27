@@ -705,7 +705,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       <img src={ImageService.translate('/img/battle-bay/mapImages/pond1.apng').convert()} />
                     </Box>
 
-
                     {/* <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhall_labelTop, marginLeft: townhall_labelLeft, zIndex:"20"}}>
                       <img src='/img/battle-bay/building_labels/townhall_label.png' width={townhall_labelWidth} height={townhall_labelHeight} /> </div>
 
