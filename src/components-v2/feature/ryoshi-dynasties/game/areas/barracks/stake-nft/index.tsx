@@ -139,12 +139,27 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         .find((m: any) => percentile <= m.percentile)?.value || 0;
       const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nftId)?.bonus || 0;
 
+      const bonusTroops = nft.attributes?.reduce((acc: number, attr: any) => {
+        const traitType = attr.trait_type.toLowerCase();
+        const value = attr.value.toString().toLowerCase();
+
+        for (let bonusRule of stakeConfig!.bonus) {
+          for (let traitRule of bonusRule.traits) {
+            if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
+              return bonusRule.value;
+            }
+          }
+        }
+        return acc;
+      }, 0);
+
       setPendingNfts([...pendingNfts, {
         nftAddress: nft.nftAddress,
         nftId: nft.nftId,
         image: nft.image,
         rank: nft.rank,
         multiplier: multiplier + idBonus,
+        bonusTroops,
         isAlreadyStaked: stakedCount > pendingCount,
         isActive: stakeConfig!.active,
         refBalance: nft.balance ?? 1,
@@ -226,6 +241,20 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
             .find((m: any) => percentile <= m.percentile)?.value || 0;
           const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nft.nftId)?.bonus || 0;
 
+          const bonusTroops = nft.attributes?.reduce((acc: number, attr: any) => {
+            const traitType = attr.trait_type.toLowerCase();
+            const value = attr.value.toString().toLowerCase();
+
+            for (let bonusRule of stakeConfig!.bonus) {
+              for (let traitRule of bonusRule.traits) {
+                if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
+                  return bonusRule.value;
+                }
+              }
+            }
+            return acc;
+          }, 0);
+
           for (let i = 0; i < Number(token.amount); i++) {
             nfts.push({
               nftAddress: token.contractAddress,
@@ -233,6 +262,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
               image: nft.nft.image,
               rank: nft.nft.rank,
               multiplier: multiplier + idBonus,
+              bonusTroops,
               isAlreadyStaked: true,
               isActive: stakeConfig!.active,
               refBalance: 0,
@@ -327,6 +357,7 @@ interface PendingNft {
   image: string;
   rank: number;
   multiplier: number;
+  bonusTroops: number;
   isAlreadyStaked: boolean;
   isActive: boolean;
   refBalance: number;
@@ -445,6 +476,9 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
                             <VStack align='end' spacing={0} fontWeight='bold'>
                               {pendingNfts[index].multiplier && (
                                 <Box>+ {pendingNfts[index].multiplier}</Box>
+                              )}
+                              {pendingNfts[index].bonusTroops && (
+                                <Box>+ {pendingNfts[index].bonusTroops}</Box>
                               )}
                             </VStack>
                           </Flex>

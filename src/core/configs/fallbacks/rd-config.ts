@@ -268,7 +268,64 @@ export const ryoshiConfig: RyoshiConfig = {
               { percentile: 20, value: 275 },
               { percentile: 100, value: 250 },
             ],
-            ids: []
+            ids: [],
+            bonus: [
+              {
+                value: 25,
+                traits: [
+                  {
+                    type: 'clothing',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'archer suit'
+                    ]
+                  }
+                ]
+              },
+              {
+                value: 200,
+                traits: [
+                  {
+                    type: 'clothing',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'golden armor'
+                    ]
+                  }
+                ]
+              },
+              {
+                value: 40,
+                traits: [
+                  {
+                    type: 'clothing',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'medieval armor'
+                    ]
+                  }
+                ]
+              },
+              {
+                value: 75,
+                traits: [
+                  {
+                    type: 'clothing',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'samurai'
+                    ]
+                  },
+                  {
+                    type: 'hair',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'samurai helmet'
+                    ]
+                  }
+                ]
+              }
+            ]
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-halloween')!,
@@ -290,7 +347,8 @@ export const ryoshiConfig: RyoshiConfig = {
               { percentile: 20, value: 20 },
               { percentile: 100, value: 10 },
             ],
-            ids: []
+            ids: [],
+            bonus: []
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-christmas')!,
@@ -312,7 +370,8 @@ export const ryoshiConfig: RyoshiConfig = {
               { percentile: 20, value: 20 },
               { percentile: 100, value: 10 },
             ],
-            ids: []
+            ids: [],
+            bonus: []
           },
           {
             ...collections.find(c => c.slug === 'fortune-guards')!,
@@ -327,6 +386,7 @@ export const ryoshiConfig: RyoshiConfig = {
               { id: 4, bonus: 300 },
               { id: 5, bonus: 400 },
             ],
+            bonus: []
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales')!,
@@ -348,7 +408,8 @@ export const ryoshiConfig: RyoshiConfig = {
               { percentile: 20, value: 20 },
               { percentile: 100, value: 10 },
             ],
-            ids: []
+            ids: [],
+            bonus: []
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales')!,
@@ -379,7 +440,8 @@ export const ryoshiConfig: RyoshiConfig = {
               { percentile: 20, value: 40 },
               { percentile: 100, value: 20 },
             ],
-            ids: []
+            ids: [],
+            bonus: []
           }
         ]
       }

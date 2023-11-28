@@ -101,6 +101,26 @@ const EligibilityCriteriaItem = ({ name, collectionStakingConfig }: { name: stri
             <ListItem key={i}>{multiplier.percentile}th percentile: {commify(multiplier.value)}</ListItem>
           ))}
         </UnorderedList>
+        {collectionStakingConfig.bonus.length > 0 && (
+          <Box mt={2}>
+            {collectionStakingConfig!.bonus.sort((a, b) => a.value - b.value).map((bonus) => (
+              <Box mt={2}>
+                <Text>NFTs adhering to the following specific trait specifications will gain an additional <strong>{bonus.value}</strong> troops:</Text>
+                <Box mt={2}>
+                  {bonus.traits.map((trait) => (
+                    <>
+                      <UnorderedList>
+                        {trait.values.map((value) => (
+                          <ListItem key={`${trait.type}${value}`}>{titleCase(trait.type)} - {titleCase(value.toUpperCase())}</ListItem>
+                        ))}
+                      </UnorderedList>
+                    </>
+                  ))}
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        )}
       </AccordionPanel>
     </AccordionItem>
   )
