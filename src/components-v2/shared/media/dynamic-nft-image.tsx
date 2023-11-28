@@ -1,7 +1,7 @@
 import React, {memo, ReactNode, useEffect, useState} from 'react';
 import {
   isLandDeedsCollection,
-  isHerosCollection, isVaultCollection,
+  isHeroesCollection, isVaultCollection,
 } from '@src/utils';
 
 import RdHero from '@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero';
@@ -29,7 +29,7 @@ export const DynamicNftImage = ({nft, address, id, children, showDetails, showSt
     <>
       { isLandDeedsCollection(address) ? (
         <RdLand nftId={id} />
-      ) : isHerosCollection(address) ? (
+      ) : isHeroesCollection(address) ? (
         <>
           {showDetails ? (
             <RdHeroFrame nftId={id} />

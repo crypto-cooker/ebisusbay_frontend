@@ -70,99 +70,155 @@ export const ryoshiConfig: RyoshiConfig = {
             active: true,
             minId: 1,
             maxId: 10000,
-            multipliers: [
-              { percentile: 5, value: 0.5 },
-              { percentile: 10, value: 0.3 },
-              { percentile: 20, value: 0.2 },
-              { percentile: 100, value: 0.1 },
-            ],
-            adders: [],
-            ids: []
+            apr: {
+              multipliers: [
+                { percentile: 5, value: 0.5 },
+                { percentile: 10, value: 0.3 },
+                { percentile: 20, value: 0.2 },
+                { percentile: 100, value: 0.1 },
+              ],
+              adders: [],
+              ids: []
+            },
+            troops: {
+              values: [
+                { percentile: 5, value: 50 },
+                { percentile: 10, value: 30 },
+                { percentile: 20, value: 20 },
+                { percentile: 100, value: 10 },
+              ],
+              bonus: {
+                value: 10,
+                traits: [
+                  {
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    type: 'clothing',
+                    values: [
+                      'bitcoin tee 1',
+                      'bitcoin tee 2',
+                      'bitcoin tee 3',
+                      'chronos tee 1',
+                      'chronos tee 2',
+                      'chronos tee 3',
+                      'dollar tee 1',
+                      'dollar tee 2',
+                      'dollar tee 3'
+                    ]
+                  },
+                  {
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    type: 'eye wear',
+                    values: [
+                      'monocle'
+                    ]
+                  },
+                  {
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    type: 'eye wear',
+                    values: [
+                      'monocle'
+                    ]
+                  }
+                ]
+              }
+            }
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-halloween')!,
             active: true,
             minId: 1,
             maxId: 2500,
-            multipliers: [],
-            adders: [
-              { percentile: 5, value: 0.25 },
-              { percentile: 10, value: 0.2 },
-              { percentile: 20, value: 0.15 },
-              { percentile: 100, value: 0.1 },
-            ],
-            ids: []
+            apr: {
+              multipliers: [],
+              adders: [
+                { percentile: 5, value: 0.25 },
+                { percentile: 10, value: 0.2 },
+                { percentile: 20, value: 0.15 },
+                { percentile: 100, value: 0.1 },
+              ],
+              ids: []
+            }
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-christmas')!,
             active: true,
             minId: 1,
             maxId: 2500,
-            multipliers: [],
-            adders: [
-              { percentile: 5, value: 0.25 },
-              { percentile: 10, value: 0.2 },
-              { percentile: 20, value: 0.15 },
-              { percentile: 100, value: 0.1 },
-            ],
-            ids: []
+            apr: {
+              multipliers: [],
+              adders: [
+                { percentile: 5, value: 0.25 },
+                { percentile: 10, value: 0.2 },
+                { percentile: 20, value: 0.15 },
+                { percentile: 100, value: 0.1 },
+              ],
+              ids: []
+            }
           },
           {
             ...collections.find(c => c.slug === 'fortune-guards')!,
             active: false,
             minId: 2,
             maxId: 5,
-            multipliers: [],
-            adders: [],
-            ids: [
-              { id: 2, bonus: 0.5 },
-              { id: 3, bonus: 1.0 },
-              { id: 4, bonus: 2.0 },
-              { id: 5, bonus: 4.0 },
-            ]
+            apr: {
+              multipliers: [],
+              adders: [],
+              ids: [
+                { id: 2, bonus: 0 },
+                { id: 3, bonus: 0 },
+                { id: 4, bonus: 0 },
+                { id: 5, bonus: 0 },
+              ]
+            }
           },
           {
             ...collections.find(c => c.slug === 'fortuneteller')!,
             active: true,
             minId: 1,
             maxId: 5,
-            multipliers: [],
-            adders: [],
-            ids: [
-              { id: 1, bonus: 0.25 },
-              { id: 2, bonus: 0.5 },
-              { id: 3, bonus: 1.0 },
-              { id: 4, bonus: 2.0 },
-              { id: 5, bonus: 4.0 },
-            ]
+            apr: {
+              multipliers: [],
+              adders: [],
+              ids: [
+                { id: 1, bonus: 0.25 },
+                { id: 2, bonus: 0.5 },
+                { id: 3, bonus: 1.0 },
+                { id: 4, bonus: 2.0 },
+                { id: 5, bonus: 4.0 },
+              ]
+            }
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales')!,
             active: true,
             minId: 1,
             maxId: 500,
-            multipliers: [],
-            adders: [
-              { percentile: 5, value: 0.25 },
-              { percentile: 10, value: 0.2 },
-              { percentile: 20, value: 0.15 },
-              { percentile: 100, value: 0.1 },
-            ],
-            ids: []
+            apr: {
+              multipliers: [],
+              adders: [
+                { percentile: 5, value: 0.25 },
+                { percentile: 10, value: 0.2 },
+                { percentile: 20, value: 0.15 },
+                { percentile: 100, value: 0.1 },
+              ],
+              ids: []
+            }
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales')!,
             active: true,
             minId: 501,
             maxId: 700,
-            multipliers: [],
-            adders: [
-              { percentile: 5, value: 0.5 },
-              { percentile: 10, value: 0.4 },
-              { percentile: 20, value: 0.3 },
-              { percentile: 100, value: 0.2 },
-            ],
-            ids: []
+            apr: {
+              multipliers: [],
+              adders: [
+                { percentile: 5, value: 0.5 },
+                { percentile: 10, value: 0.4 },
+                { percentile: 20, value: 0.3 },
+                { percentile: 100, value: 0.2 },
+              ],
+              ids: []
+            }
           }
         ],
       }
@@ -212,7 +268,64 @@ export const ryoshiConfig: RyoshiConfig = {
               { percentile: 20, value: 275 },
               { percentile: 100, value: 250 },
             ],
-            ids: []
+            ids: [],
+            bonus: [
+              {
+                value: 25,
+                traits: [
+                  {
+                    type: 'clothing',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'archer suit'
+                    ]
+                  }
+                ]
+              },
+              {
+                value: 200,
+                traits: [
+                  {
+                    type: 'clothing',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'golden armor'
+                    ]
+                  }
+                ]
+              },
+              {
+                value: 40,
+                traits: [
+                  {
+                    type: 'clothing',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'medieval armor'
+                    ]
+                  }
+                ]
+              },
+              {
+                value: 75,
+                traits: [
+                  {
+                    type: 'clothing',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'samurai'
+                    ]
+                  },
+                  {
+                    type: 'hair',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'samurai helmet'
+                    ]
+                  }
+                ]
+              }
+            ]
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-halloween')!,
@@ -234,7 +347,8 @@ export const ryoshiConfig: RyoshiConfig = {
               { percentile: 20, value: 20 },
               { percentile: 100, value: 10 },
             ],
-            ids: []
+            ids: [],
+            bonus: []
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales-christmas')!,
@@ -256,7 +370,8 @@ export const ryoshiConfig: RyoshiConfig = {
               { percentile: 20, value: 20 },
               { percentile: 100, value: 10 },
             ],
-            ids: []
+            ids: [],
+            bonus: []
           },
           {
             ...collections.find(c => c.slug === 'fortune-guards')!,
@@ -271,6 +386,7 @@ export const ryoshiConfig: RyoshiConfig = {
               { id: 4, bonus: 300 },
               { id: 5, bonus: 400 },
             ],
+            bonus: []
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales')!,
@@ -292,7 +408,8 @@ export const ryoshiConfig: RyoshiConfig = {
               { percentile: 20, value: 20 },
               { percentile: 100, value: 10 },
             ],
-            ids: []
+            ids: [],
+            bonus: []
           },
           {
             ...collections.find(c => c.slug === 'ryoshi-tales')!,
@@ -323,7 +440,8 @@ export const ryoshiConfig: RyoshiConfig = {
               { percentile: 20, value: 40 },
               { percentile: 100, value: 20 },
             ],
-            ids: []
+            ids: [],
+            bonus: []
           }
         ]
       }

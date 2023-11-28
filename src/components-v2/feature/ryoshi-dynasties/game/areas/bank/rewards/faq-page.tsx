@@ -55,6 +55,18 @@ const FaqPage = () => {
             </AccordionButton>
             <AccordionPanel pb={4}>
               <Text>Yes, your rewards can be automatically compounded into an existing Fortune vault to maximize rewards, and will not reset the Karmic Debt. Only vaults ending later than 90 days are eligible.</Text>
+              <Text mt={2}>Note that compounding can only be done once every 14 days</Text>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                How often can I compound?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>Compounding can only be done once every 14 days</Text>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>

@@ -151,66 +151,76 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
     <RdModalBox mt={4}>
       <Accordion allowToggle>
         <AccordionItem style={{borderWidth:'0'}}>
-          <AccordionButton>
-            <Flex justify='space-between' w='full' >
-              <Box>View recent rewards</Box>
-              <Box ms={4}>
-                <AccordionIcon/>
-              </Box>
-            </Flex>
-          </AccordionButton>
-          <AccordionPanel pb={0} px={1}>
-            {useTable ? (
-              <Table>
-                <Thead>
-                  <Tr>
-                    <Th ps={3}>Date</Th>
-                    <Th>Type</Th>
-                    <Th pe={3} isNumeric>Amount</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {rewardsHistory.map((reward: any) => (
-                    <Tr>
-                      <Td py={1} ps={3}>{new Date(reward.timestamp).toLocaleString()}</Td>
-                      <Td py={1}>
-                        <Box>{formatString(reward.type)}</Box>
-                      </Td>
-                      <Td py={1} pe={3} isNumeric>
-                        <HStack justify='end'>
-                          <Box>{round(reward.amount, 3)}</Box>
-                          <FortuneIcon boxSize={4}/>
-                        </HStack>
-                        {reward.status === 'PENDING' && (
-                          <Box fontStyle='italic' color='#aaa'>(Pending)</Box>
-                        )}
-                      </Td>
-                    </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            ) : (
-              <>
-                {rewardsHistory.map((reward: any) => (
-                  <Box my={2}>
-                    <HStack justify='space-between'>
-                      <HStack  justify='end'>
-                        <FortuneIcon boxSize={4}/>
-                        <Box>{commify(round(reward.amount, 3))}</Box>
-                      </HStack>
-                      <Wrap justify='end'>
-                        <Tag py={1} colorScheme={reward.status === 'PENDING' ? undefined : 'blue'} variant='solid'>{formatString(reward.type)}</Tag>
-                        {reward.status === 'PENDING' && (
-                          <Tag variant='solid'>Pending</Tag>
-                        )}
-                      </Wrap>
-                    </HStack>
-                    <Box py={1}>{new Date(reward.timestamp).toLocaleString()}</Box>
+          {({ isExpanded }) => (
+            <>
+              <AccordionButton px={0}>
+                <Flex justify='space-between' w='full' align='center'>
+                  <Box>{isExpanded ? 'Hide' : 'View'} recent rewards</Box>
+                  <Box ms={4}>
+                    <AccordionIcon/>
                   </Box>
-                ))}
-              </>
-            )}
-          </AccordionPanel>
+                </Flex>
+              </AccordionButton>
+              <AccordionPanel pb={0} px={1}>
+                {useTable ? (
+                  <Table>
+                    <Thead>
+                      <Tr>
+                        <Th ps={3}>Date</Th>
+                        <Th>Type</Th>
+                        <Th pe={3} isNumeric>Amount</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {rewardsHistory.map((reward: any) => (
+                        <Tr>
+                          <Td py={1} ps={3}>{new Date(reward.timestamp).toLocaleString()}</Td>
+                          <Td py={1}>
+                            <Box>{formatString(reward.type)}</Box>
+                            {(!!reward.metadata?.type || !!reward.metadata?.name) && (
+                              <Box fontSize='xs'>({reward.metadata.type && <>{reward.metadata.type}: </>}{reward.metadata.name})</Box>
+                            )}
+                          </Td>
+                          <Td py={1} pe={3} isNumeric>
+                            <HStack justify='end'>
+                              <Box>{round(reward.amount, 3)}</Box>
+                              <FortuneIcon boxSize={4}/>
+                            </HStack>
+                            {reward.status === 'PENDING' && (
+                              <Box fontStyle='italic' color='#aaa'>(Pending)</Box>
+                            )}
+                          </Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+                ) : (
+                  <>
+                    {rewardsHistory.map((reward: any) => (
+                      <Box my={2}>
+                        <HStack justify='space-between'>
+                          <HStack  justify='end'>
+                            <FortuneIcon boxSize={4}/>
+                            <Box>{commify(round(reward.amount, 3))}</Box>
+                          </HStack>
+                          <Wrap justify='end'>
+                            <Tag py={1} colorScheme={reward.status === 'PENDING' ? undefined : 'blue'} variant='solid'>{formatString(reward.type)}</Tag>
+                            {reward.status === 'PENDING' && (
+                              <Tag variant='solid'>Pending</Tag>
+                            )}
+                          </Wrap>
+                        </HStack>
+                        {(!!reward.metadata?.type || !!reward.metadata?.name) && (
+                          <Box>({reward.metadata.type && <>{reward.metadata.type}: </>}{reward.metadata.name})</Box>
+                        )}
+                        <Box py={1}>{new Date(reward.timestamp).toLocaleString()}</Box>
+                      </Box>
+                    ))}
+                  </>
+                )}
+              </AccordionPanel>
+            </>
+          )}
         </AccordionItem>
       </Accordion>
     </RdModalBox>
@@ -520,7 +530,7 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
           </Flex>
         </Flex>
         <AccordionPanel>
-          {!!account && account.vaults.length > 0 ? (
+          {!!account && account.vaults.length > 0 && reward.canCompound ? (
             <>
               <Box mb={2}>
                 <Box fontWeight='bold'>Compound to Vault</Box>
@@ -580,6 +590,8 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
                 <Text align='center' color='#aaa'>No vaults found</Text>
               )}
             </>
+          ) : !reward.canCompound ? (
+            <Text align='center'>Compound cooldown reached. Compound again in {timeSince(reward.nextCompound * 1000)}</Text>
           ) : (
             <Text align='center'>No vaults found. Create a $Fortune vault from the Bank screen and then use the vault here to start compounding</Text>
           )}
