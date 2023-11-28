@@ -199,7 +199,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
                 </Tag>
               </Center>
               <Box mt={4} fontSize='sm'>
-                <HStack>
+                <HStack justify='space-between'>
                   <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={4}/>
                   <Text fontWeight='bold' color='white'>Ryoshi On Duty</Text>
                 </HStack>

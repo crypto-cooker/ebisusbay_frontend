@@ -177,6 +177,7 @@ interface RyoshiConfigFactionsRegistration {
 
 interface RyoshiConfigArmies {
   redeploymentDelay: number[];
+  recallTax: number;
 }
 
 export interface ExperienceEvent {

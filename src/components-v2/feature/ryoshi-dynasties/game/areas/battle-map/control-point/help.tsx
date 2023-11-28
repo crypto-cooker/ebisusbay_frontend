@@ -4,16 +4,21 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box,
+  Box, ListItem,
   Stack,
-  Text,
+  Text, UnorderedList,
 } from '@chakra-ui/react';
 import localFont from "next/font/local";
-import React from "react";
+import React, {useContext} from "react";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
 const HelpPage = () => {
+  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   return (
     <Stack spacing={3} className={gothamBook.className} fontSize={{ base: 'xs', md: 'sm' }}>
@@ -65,6 +70,40 @@ const HelpPage = () => {
                   In Conquest, multiple battles will take place until one side loses all their troops. The winner is determined by which faction is left with troops at the end of the battle. The maximum amount of troops that can be used in a Conquest battle is 3.
                 </Text>
               </Box>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                Can I reassign deployed troops?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>
+                Yes, by clicking the "Recall" tab in the Dispatch section, you can recall troops which then can be used elsewhere.
+              </Text>
+              <Text mt={2}>
+                Note that recalling is taxing on your troops. {rdConfig.armies.recallTax * 100}% of them will be lost on the way back to your faction.
+              </Text>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                How often can I deploy and/or recall troops?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>
+                Deploying and recalling troops are subject to a variable cooldown period which increases daily. See below:
+              </Text>
+              <UnorderedList>
+                {rdConfig.armies.redeploymentDelay.map((delay, i) => (
+                  <ListItem>Day {i+1}: {delay} minutes</ListItem>
+                ))}
+              </UnorderedList>
             </AccordionPanel>
           </AccordionItem>
         </Accordion>

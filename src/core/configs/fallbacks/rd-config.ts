@@ -599,7 +599,8 @@ export const ryoshiConfig: RyoshiConfig = {
       1800,
       3600,
       10800
-    ]
+    ],
+    recallTax: 0.1
   },
   reputations: {
     points: {
