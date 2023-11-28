@@ -149,10 +149,14 @@ const FaqPage = () => {
             </AccordionButton>
             <AccordionPanel pb={4}>
               <Text>
-                All off duty Ryoshi will be required to be paid upkeep before they can be used. This includes bringing them back on duty and transferring them via diret transfer or marketplace sales. Upkeep is necessary to keep your Ryoshi healthy, fed, and loyal to your cause.
+                All off duty Ryoshi will be required to be paid upkeep before they can be used. This includes bringing them back on duty and transferring them via direct transfer or marketplace sales. Upkeep is necessary to keep your Ryoshi healthy, fed, and loyal to your cause.
               </Text>
               <Text mt={4}>
-                Upkeep will need to be paid with Koban once every 7 days and is paid on the entire off duty Ryoshi amount. For every week upkeep goes unpaid there will be a mutiny of {rdConfig.townHall.ryoshi.upkeepDecay * 100}% of all the user's off duty <b>Ryoshi</b>. Upkeep prices increase at a faster rate as more <b>Ryoshi</b> are accumulated, so be mindful of how may. Upkeep is paid in Koban weekly</Text>
+                Upkeep will need to be paid with Koban once every 7 days and is paid on the entire off duty Ryoshi amount. For every week upkeep goes unpaid there will be a mutiny of {rdConfig.townHall.ryoshi.upkeepDecay * 100}% of all the user's off duty <b>Ryoshi</b>. Users will have a 1-week grace period before the mutiny begins. Upkeep prices increase at a faster rate as more <b>Ryoshi</b> are accumulated, so be mindful of how many you decide to maintain.
+              </Text>
+              <Text mt={4}>
+                Upkeep is paid in Koban weekly. The cost per Ryoshi follows the below formula:
+              </Text>
               <UnorderedList>
                 {rdConfig.townHall.ryoshi.upkeepCosts.sort((a, b) => a.threshold - b.threshold).map((cost, index, array) => {
                   const nextCost = array[index + 1];

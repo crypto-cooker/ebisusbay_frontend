@@ -64,6 +64,7 @@ import {commify} from "ethers/lib/utils";
 import WalletNft from "@src/core/models/wallet-nft";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {useIsTouchDevice} from "@src/hooks/use-is-touch-device";
+import moment from "moment";
 
 const config = appConfig();
 
@@ -224,7 +225,7 @@ const OnDutyRyoshi = ({onDutyMeepleData}: {onDutyMeepleData: OnDutyMeepleInfo}) 
           <Box h='28px'>
             <Text as={'b'} fontSize='28px' lineHeight="1">{!!onDutyMeepleData && commify(onDutyMeepleData.onDutyUser)}</Text>
           </Box>
-          <Text color={'#aaa'}>The amount or Ryoshi that are ready to be used and have not been delegated or deployed</Text>
+          <Text color={'#aaa'}>The amount of Ryoshi that are ready to be used and have not been delegated or deployed</Text>
           {onDutyMeepleData.onDutyUser >= rdConfig.townHall.ryoshi.restockCutoff && (
             <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={2}>
               <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
@@ -419,7 +420,7 @@ const OffDutyRyoshi = ({offDutyMeepleData}: {offDutyMeepleData: OffDutyMeepleInf
               <Text as='span' fontSize='sm' color='#aaa' ms={2}>({commify(offDutyMeepleData.activeMeeple)} active)</Text>
             </Text>
           </Box>
-          <Text color='#aaa'>The amount or Ryoshi that are stored away for later</Text>
+          <Text color='#aaa'>The amount of Ryoshi that are off the clock, taking a much needed rest. Upkeep may be required to bring them back on duty.</Text>
           {offDutyMeepleData.activeMeeple > 0 ? (
             <RdButton
               h={12}
@@ -577,6 +578,8 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyActiveAmount}: 
 const Upkeep = ({offDutyMeepleData}: {offDutyMeepleData: OffDutyMeepleInfo}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const nextUpkeep = formatTimeDifference(offDutyMeepleData.nextUpkeep);
+
   return (
     <>
       <RdModalBox mt={2}>
@@ -587,7 +590,7 @@ const Upkeep = ({offDutyMeepleData}: {offDutyMeepleData: OffDutyMeepleInfo}) => 
           <Text color={'#aaa'}>Off Duty Ryoshi must be periodically paid upkeep to keep them loyal to you</Text>
           <Stack direction={{base: 'column', sm: 'row'}} justify='space-between' w='full'>
             {millisecondTimestamp(offDutyMeepleData.nextUpkeep) > Date.now() ? (
-              <Text color={'#aaa'}>Upkeep due in <b>{timeSince(offDutyMeepleData.nextUpkeep)} days</b></Text>
+              <Text color={'#aaa'}>Upkeep due: <b>{nextUpkeep}</b></Text>
             ) : (
               <HStack color='#f8a211'>
                 <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} boxSize={6}/>
@@ -641,30 +644,39 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
   const [isExecuting, setIsExecuting] = useState(false);
   const [quantityToUpkeep, setQuantityToUpkeep] = useState(0);
 
-  const paymentAmount = useMemo(() => {
-    return calculateUpkeepCost(quantityToUpkeep, rdConfig.townHall.ryoshi.upkeepCosts);
-  }, [quantityToUpkeep, rdConfig.townHall.ryoshi.upkeepCosts]);
-
-  const meepleToBurn = useMemo(() => {
+  const targetMeeple = useMemo(() => {
     const totalOwnedMeeple = activeMeeple + staleMeeple;
     const now = new Date();
     const difference = (now.getTime() - lastUpkeep * 1000) / (1000 * 3600 * 24);
     const cutoff = rdConfig.townHall.ryoshi.upkeepActiveDays;
     const decay = rdConfig.townHall.ryoshi.upkeepDecay;
     const decayedIntervals = Math.floor(difference / cutoff);
-    const staleMeepleToBurn = Math.ceil(staleMeeple * decay);
-    let meepleRemaining = totalOwnedMeeple;
-    let totalMeepleToBurn = 0;
-    for(let i = 0; i < decayedIntervals; i++) {
-      meepleRemaining *= decay;
-      totalMeepleToBurn += meepleRemaining;
+    const upkeepDue = difference > cutoff;
+
+    let upkeptMeeple = 0;
+    let meepleToBurn = 0;
+    if (upkeepDue) {
+      let meepleRemaining = totalOwnedMeeple;
+      let totalMeepleToBurn = 0;
+      for(let i = 0; i < decayedIntervals - 1; i++) {
+        meepleRemaining *= decay;
+        totalMeepleToBurn += meepleRemaining;
+      }
+      meepleToBurn = Math.ceil(totalMeepleToBurn);
+    } else {
+      upkeptMeeple = activeMeeple;
     }
-    totalMeepleToBurn = Math.ceil(totalMeepleToBurn);
-    let meepleToBurn = difference <= cutoff ? staleMeepleToBurn : totalMeepleToBurn;
     if (meepleToBurn > totalOwnedMeeple) meepleToBurn = totalOwnedMeeple;
 
-    return meepleToBurn;
+    return {
+      meepleToBurn,
+      upkeptMeeple
+    };
   }, [activeMeeple, staleMeeple, lastUpkeep, rdConfig.townHall.ryoshi.upkeepActiveDays, rdConfig.townHall.ryoshi.upkeepDecay]);
+  
+  const paymentAmount = useMemo(() => {
+    return calculateUpkeepCost(quantityToUpkeep + targetMeeple.upkeptMeeple, rdConfig.townHall.ryoshi.upkeepCosts);
+  }, [quantityToUpkeep, rdConfig.townHall.ryoshi.upkeepCosts]);
 
   const payUpkeep = async () => {
     if (!user.address) return;
@@ -707,6 +719,8 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
     mutation.mutate();
   }
 
+  const nextUpkeep = lastUpkeep ? formatTimeDifference(lastUpkeep + (rdConfig.townHall.ryoshi.upkeepActiveDays * 86400)) : 0;
+
   return (
     <RdModal isOpen={isOpen} onClose={onClose} title={'Upkeep Cost Breakdown'} >
       <Box p={4}>
@@ -723,8 +737,10 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
               <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={4} />
             </HStack>
             <Text color={'#aaa'} textAlign={'left'} p={2}>Mutiny cost</Text>
-            <Text as={'b'} textAlign={'right'} p={2}>{commify(meepleToBurn)} Ryoshi</Text>
-            {!!meepleToBurn && (
+            <Text as={'b'} textAlign={'right'} p={2}>{commify(targetMeeple.meepleToBurn)} Ryoshi</Text>
+            <Text color={'#aaa'} textAlign={'left'} p={2}>Upkeep resets</Text>
+            <Text as={'b'} textAlign={'right'} p={2}>{nextUpkeep}</Text>
+            {!!targetMeeple.meepleToBurn && (
               <GridItem colSpan={2}>
                 <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={2}>
                   <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
@@ -1119,23 +1135,41 @@ const LocationCardForm = ({card, bonus, quantitySelected, onChange}: LocationCar
 }
 const MemoizedLocationCardForm = memo(LocationCardForm);
 
-const calculateUpkeepCost = (offDutyAmount: number, upkeepCosts: Array<{ threshold: number, multiplier: number }>) => {
+const calculateUpkeepCost = (requestedAmountPlusActive: number, upkeepCosts: Array<{ threshold: number, multiplier: number }>) => {
   let cost = 0;
   const sortedUpkeepCosts = upkeepCosts
     .sort((a, b) => b.threshold - a.threshold);
 
-  for (let i = 1; i <= offDutyAmount; i++) {
+  for (let i = 1; i <= requestedAmountPlusActive; i++) {
     const rateIndex = sortedUpkeepCosts.findIndex(cost => i >= cost.threshold);
     if (rateIndex === -1) throw new Error('No upkeep cost found for amount');
     const rate = sortedUpkeepCosts[rateIndex];
     if (rateIndex === 0) {
-      cost += rate.multiplier * (offDutyAmount - i);
+      cost += rate.multiplier * (requestedAmountPlusActive - i);
       break;
     }
     cost += rate.multiplier;
   }
 
   return cost;
+}
+
+const formatTimeDifference = (timestamp: number) => {
+  const now = moment();
+  const givenTime = moment(millisecondTimestamp(timestamp));
+  const isBefore = givenTime.isBefore(now);
+
+  const diffInSeconds = Math.abs(now.diff(givenTime, 'seconds'));
+
+  if (diffInSeconds < 60) {
+    return `${diffInSeconds} seconds ${isBefore ? 'ago' : 'from now'}`;
+  } else if (diffInSeconds < 86400) { // Less than 24 hours
+    const diffInMinutes = Math.round(diffInSeconds / 60);
+    return `${diffInMinutes} minutes ${isBefore ? 'ago' : 'from now'}`;
+  } else { // More than 24 hours
+    const diffInDays = Math.round(diffInSeconds / 86400);
+    return `${diffInDays} days ${isBefore ? 'ago' : 'from now'}`;
+  }
 }
 
 interface OnDutyMeepleInfo {
