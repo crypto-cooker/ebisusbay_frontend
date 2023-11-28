@@ -100,7 +100,14 @@ export interface RyoshiConfigBarracksStakingNFTCollection extends RyoshiConfigCo
   traits: RyoshiConfigTraitEligibility[];
   multipliers: RyoshiConfigStakingMultiplier[];
   ids: RyoshiConfigStakingIdMultiplier[];
+  bonus: RyoshiConfigBarracksStakingNFTBonus[];
 }
+
+interface RyoshiConfigBarracksStakingNFTBonus {
+  value: number;
+  traits: RyoshiConfigTraitEligibility[];
+}
+
 
 interface RyoshiConfigTownHall {
   staking: RyoshiConfigTownHallStaking;
