@@ -520,7 +520,7 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
           </Flex>
         </Flex>
         <AccordionPanel>
-          {!!account && account.vaults.length > 0 ? (
+          {!!account && account.vaults.length > 0 && reward.canCompound ? (
             <>
               <Box mb={2}>
                 <Box fontWeight='bold'>Compound to Vault</Box>
@@ -580,6 +580,8 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
                 <Text align='center' color='#aaa'>No vaults found</Text>
               )}
             </>
+          ) : !reward.canCompound ? (
+            <Text align='center'>Compound cooldown reached. Compound again in {timeSince(reward.nextCompound * 1000)}</Text>
           ) : (
             <Text align='center'>No vaults found. Create a $Fortune vault from the Bank screen and then use the vault here to start compounding</Text>
           )}
