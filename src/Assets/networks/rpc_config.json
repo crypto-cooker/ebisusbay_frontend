@@ -24730,6 +24730,31 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Under Water Oasis - Tanks",
+      "slug": "under-water-oasis-tanks",
+      "multiToken": false,
+      "address": "0x1570Ce2bcbe7d720b2A4D49318D88f5D31Fce03A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "\uD83D\uDC21\uD83D\uDC20\uD83D\uDC1FHey there, fellow ocean explorers and NFT enthusiasts! Introducing Under Water Oasis - Tank mint!! \uD83E\uDD3F Ready to Dive In: Under Water Oasis isn't just your typical NFT collection- it's a full-on passion project that's all about shining a spotlight on the awesomeness of tropical and saltwater fish-keeping. We're making waves in the crypto world like never before! \uD83C\uDF0A\uD83C\uDF0A\uD83C\uDF0AThree epic NFT waves: We're rolling out our project in three epic waves, each one more awesome than a mermaid's tail\uD83E\uDDDC\u200D♀\uFE0F \uD83D\uDC1A The Aquarium Collection: Custom aquariums that'll make you go \"whoa.\" \uD83E\uDDEC The Components Collection: Equip your virtual aquarium with all it needs to thrive. \uD83D\uDC20 Fish and Aquatic Species: The holy grail- collecting and breeding a boatload of fish and aquatic creatures \uD83D\uDCB0\uD83E\uDDAA\uD83D\uDCB0 The Pearl Token: You're probably wondering, \"How can I turn my virtual fish tanks into cold, hard cash?\" The Pearl token will play a big role in how your aquariums generate passive income! \uD83D\uDEE5\uFE0F",
+        "avatar": "/img/collections/under-water-oasis-tanks/avatar.webp",
+        "card": "/img/collections/under-water-oasis-tanks/card.webp",
+        "banner": "/img/collections/under-water-oasis-tanks/banner.webp",
+        "website": "https://time-launcher.com/drops/under-water-oasis-tanks",
+        "twitter": "https://twitter.com/NftsOasis",
+        "discord": "https://discord.gg/hSBRvZjxDs",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
