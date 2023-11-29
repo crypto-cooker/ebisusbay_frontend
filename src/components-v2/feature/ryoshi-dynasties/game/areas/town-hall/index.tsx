@@ -103,7 +103,7 @@ const TownHall = ({onBack}: BarracksProps) => {
             <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
             <VStack spacing={4} align='stretch'>
               <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
-              {/*<RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenMeeple)}>Ryoshi Management</RdButton>*/}
+              <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenMeeple)}>Ryoshi Management</RdButton>
             </VStack>
           </Flex>
         </Flex>

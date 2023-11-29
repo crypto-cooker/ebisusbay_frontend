@@ -134,7 +134,7 @@ const Barracks = ({onBack}: BarracksProps) => {
         )}
 
         <VStack spacing={4} align='stretch'>
-          <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
+          <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
           {(!!battleRewards && !battleRewardsClaimed) &&  (
             <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
           )}
