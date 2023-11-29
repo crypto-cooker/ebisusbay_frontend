@@ -32,6 +32,7 @@ interface VillageProps {
   onFirstRun: () => void;
 }
 const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
+  const xmasTheme = false ? '_xmas' : '';
   const { config: rdConfig, game: rdGameContext, user: rdUser, refreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
   const { isOpen:isOpenOverlay, onToggle } = useDisclosure()
@@ -61,7 +62,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const [forceRefreshBool, setForceRefreshBool] = useState(false);
   const { isOpen: isOpenBattleLog, onOpen: onOpenBattleLog, onClose: onCloseBattleLog } = useDisclosure();
   const { isOpen: isOpenXPLeaderboard, onOpen: onOpenXPLeaderboard, onClose: onCloseXPLeaderboard } = useDisclosure();
-    
   const forceRefresh = () => {
     setForceRefreshBool(!forceRefreshBool);
   }
@@ -712,7 +712,7 @@ const animation3 = prefersReducedMotion
                   <MapFrame gridHeight={'50px 1fr 50px'} gridWidth={'50px 1fr 50px'}>
                     <Box
                       as='img'
-                      src={ImageService.translate('/img/battle-bay/mapImages/background_xmas.png').custom({width: 2880, height: 1620})}
+                      src={ImageService.translate(`/img/battle-bay/mapImages/background${xmasTheme}.png`).custom({width: 2880, height: 1620})}
                       maxW='none'
                       useMap="#image-map"
                       className={`${styles.mapImageArea}`}
@@ -726,7 +726,7 @@ const animation3 = prefersReducedMotion
                       // onClick={() => onChange('allianceCenter')}
                          onClick={() => OpenAllianceCenter()}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/alliancecenter_xmas.png').convert()} />
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/alliancecenter${xmasTheme}.png`).convert()} />
                       <Box className={styles.enlarge} style={{position:"absolute", marginTop: alliancecenter_labelTop, marginLeft: alliancecenter_labelLeft, zIndex:"20"}}>
                         <img src={ImageService.translate('/img/battle-bay/building_labels/alliancecenter_label.png').convert()} />
                       </Box>
@@ -735,19 +735,19 @@ const animation3 = prefersReducedMotion
                     <Box id='Town Hall' className={styles.enlarge} style={{position:"absolute", marginTop: townhallTop, marginLeft: townhallLeft, zIndex:"9"}}
                       onClick={OpenTownHall}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/townhall_xmas.png').convert()} />
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/townhall${xmasTheme}.png`).convert()} />
                     </Box>
 
                     <Box id='Tavern' className={styles.enlarge} style={{position:"absolute", marginTop: tavernTop, marginLeft: tavernLeft, zIndex:"9"}}
                       onClick={OpenTavern}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/tavern_xmas.png').convert()} />
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/tavern${xmasTheme}.png`).convert()} />
                     </Box>
 
                     <Box  style={{position:"absolute", marginTop: academyTop, marginLeft: academyLeft, zIndex:"9"}}
                       // onClick={() => onChange('academy')}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/academy_xmas.png').convert()} />
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/academy${xmasTheme}.png`).convert()} />
                     </Box>
 
                     <Box  style={{position:"absolute", marginTop: tavernSpinTop, marginLeft: tavernSpinLeft, zIndex:"9", pointerEvents:"none"}}>
@@ -757,11 +757,11 @@ const animation3 = prefersReducedMotion
                     <Box id="Battle Map" className={styles.enlarge} style={{position:"absolute", marginTop: boatTop, marginLeft: boatLeft, zIndex:"9"}}
                          onClick={() => OpenBattleMap()}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/boat_xmas.apng').convert()} />
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/boat${xmasTheme}.apng`).convert()} />
                     </Box>
 
                     <Box style={{position:"absolute", marginTop: ebisustatueTop, marginLeft: ebisustatueLeft, zIndex:"9"}} >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/ebisustatue_xmas.png').convert()} />
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/ebisustatue${xmasTheme}.png`).convert()} />
                     </Box>
 
                     <Box 
@@ -769,7 +769,7 @@ const animation3 = prefersReducedMotion
                       className={styles.enlarge}
                       onClick={() => OpenMarket()}
                       style={{position:"absolute", marginTop: fishmarketTop, marginLeft: fishmarketLeft, zIndex:"9"}} >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/fishmarket_xmas.apng').convert()}/>
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/fishmarket${xmasTheme}.apng`).convert()}/>
                     </Box>
 
                     <Box style={{position:"absolute", marginTop: waterTop, marginLeft: waterLeft, zIndex:"8"}} >
@@ -783,13 +783,13 @@ const animation3 = prefersReducedMotion
                       // onClick={() => onChange('bank')}
                       onClick={() => OpenBank()}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/bank_xmas.png').convert()} />
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/bank${xmasTheme}.png`).convert()} />
                     </Box>
 
                     <Box id="Announcements" className={styles.enlarge} style={{position:"absolute", marginTop: announcementTop, marginLeft: announcementLeft, zIndex:"9"}}
                          onClick={onOpenAnnouncementBoard}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/announcement_xmas.png').convert()} />
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/announcement${xmasTheme}.png`).convert()} />
                     </Box>
 
                     <Box 
@@ -798,7 +798,7 @@ const animation3 = prefersReducedMotion
                       style={{position:"absolute", marginTop: barracksTop, marginLeft: barracksLeft, zIndex:"9"}}
                       onClick={() => handleSceneChange('barracks')}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/barracks_xmas.png').convert()} />
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/barracks${xmasTheme}.png`).convert()} />
                     </Box>
 
                     <Box className={styles.enlarge} style={{position:"absolute", marginTop: swordsmenTop, marginLeft: swordsmenLeft, zIndex:"9", pointerEvents:"none"}} >
@@ -807,7 +807,7 @@ const animation3 = prefersReducedMotion
 
                     <Box id="Moongate" className={styles.enlarge} style={{position:"absolute", marginTop: moongateTop, marginLeft: moongateLeft, zIndex:"9"}}
                       onClick={() => OpenPortal()}>
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/moongate_xmas.apng').convert()} onClick={() => OpenPortal()}/>
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/moongate${xmasTheme}.apng`).convert()} onClick={() => OpenPortal()}/>
                       {/* <div className={[styles.enlarge]} style={{position:"absolute",  zIndex:"20"}}>
                         <img src='/img/battle-bay/building_labels/moongate_label.png' /> </div> */}
                     </Box>
@@ -818,50 +818,48 @@ const animation3 = prefersReducedMotion
                       style={{position:"absolute", marginTop: toriiTop, marginLeft: toriiLeft, zIndex:"8"}}
                       onClick={() => onChange('lands')}
                     >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/torii_xmas.png').convert()} />
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/torii${xmasTheme}.png`).convert()} />
                     </Box>
 
                     <Box style={{position:"absolute", marginTop: pondTop, marginLeft: pondLeft, zIndex:"8"}}>
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/pond1_xmas.png').convert()} />
+                      <img src={ImageService.translate(`/img/battle-bay/mapImages/pond${xmasTheme}.apng`).convert()} />
                     </Box>
 
-                    <Box
-                      as='img'
-                      src={ImageService.translate('/img/battle-bay/mapImages/snow_overlay.gif').custom({width: 2880, height: 1620})}
-                      maxW='none'
-                      useMap="#image-map"
-                      id="fancyMenu"
-                      onLoad={() => setDimensionsLoaded(true)}
-                      style={{position:"absolute", marginTop: 0, marginLeft: 0, zIndex:"10"}}
-                      pointerEvents={'none'}
-                    />
-
-                    {/* x-mas */}
-                    <Box className={styles.enlarge} style={{position:"absolute", marginTop: xmasTreeTop, marginLeft: xmasTreeLeft, zIndex:"8"}} 
-                      onClick={() => setOpenShakePresent(!openShakePresent)}>
-                        <VStack 
-                        justifyContent={'center'}
-                        alignItems={'center'}
-
-                        >
-                      <img src={ImageService.translate('/img/battle-bay/mapImages/xmas_tree.apng').convert()} />
-                      {
-                        openShakePresent && (
-                          <>
-                          <Button 
-                          border= '2px solid  red'
-                           h={'16'} ml={'16'} 
-                           bg='linear-gradient(to left, #339933, #006600 )'
-                           fontSize={'24px'} 
-                           _hover={{bg: 'linear-gradient(to left, #006600, #339933 )'}}
-                           onClick={PresentPresent}
-                            >Shake Present</Button>
-                          </>
-                        )
-                      }
-                        </VStack>
-                    </Box>
-
+                    { xmasTheme ? ( <>
+                        <Box
+                          as='img'
+                          src={ImageService.translate('/img/battle-bay/mapImages/snow_overlay.gif').custom({width: 2880, height: 1620})}
+                          maxW='none'
+                          useMap="#image-map"
+                          id="fancyMenu"
+                          onLoad={() => setDimensionsLoaded(true)}
+                          style={{position:"absolute", marginTop: 0, marginLeft: 0, zIndex:"10"}}
+                          pointerEvents={'none'}
+                        />
+                        
+                        <Box className={styles.enlarge} style={{position:"absolute", marginTop: xmasTreeTop, marginLeft: xmasTreeLeft, zIndex:"8"}} 
+                          onClick={() => setOpenShakePresent(!openShakePresent)}>
+                            <VStack 
+                              justifyContent={'center'}
+                              alignItems={'center'}
+                              >
+                              <img src={ImageService.translate('/img/battle-bay/mapImages/xmas_tree.apng').convert()} />
+                              { openShakePresent && (
+                                  <>
+                                  <Button 
+                                  border= '2px solid  red'
+                                  h={'16'} ml={'16'} 
+                                  bg='linear-gradient(to left, #339933, #006600 )'
+                                  fontSize={'24px'} 
+                                  _hover={{bg: 'linear-gradient(to left, #006600, #339933 )'}}
+                                  onClick={PresentPresent}
+                                    >Shake Present</Button>
+                                  </>
+                                )
+                              }
+                          </VStack>
+                        </Box>
+                    </>) : (<></>) }
 
                     {/* <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhall_labelTop, marginLeft: townhall_labelLeft, zIndex:"20"}}>
                       <img src='/img/battle-bay/building_labels/townhall_label.png' width={townhall_labelWidth} height={townhall_labelHeight} /> </div>
