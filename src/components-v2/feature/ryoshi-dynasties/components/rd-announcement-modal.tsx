@@ -16,6 +16,7 @@ import {
   InlineModalContext,
   InlineModalContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/inline-modal-context";
+import ImageService from "@src/core/services/image";
 
 const gothamBook = localFont({
   src: '../../../../fonts/Gotham-Book.woff2',
@@ -41,6 +42,7 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
   const [maskInnerClass, setMaskInnerClass] = useState('');
   const {ref: globalRef, setRef: setGlobalRef} = useContext(InlineModalContext) as InlineModalContextProps;
   const [isMobile] = useMediaQuery("(max-width: 750px)");
+  const snowTheme = true ? '_snow' : ''
 
   useEventListener('keydown', (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
@@ -122,7 +124,7 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
             position='relative' 
             minW={isMobile ?'105%' :'105%'}
             mt={[0, "0rem !important"]}
-            src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
+            src={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/large_frame_top_1200${snowTheme}.png`).convert()}
             minH={isMobile ? '20px' : '100%'}
           />
           </Center>
@@ -191,7 +193,7 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
                       minW={isMobile ? '105%' : '110%'}
                       position='absolute' 
                       zIndex={1} 
-                      src='/img/ryoshi-dynasties/announcements/base/message_board_top_wood_1200.png'
+                      src={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/message_board_top_wood_1200${snowTheme}.png`).convert()}
                     />
                     <Image 
                       position='absolute' 
@@ -209,7 +211,7 @@ const RdAnnouncementModal = ({isOpen, onClose, title, isFAQ, utilBtnTitle, onUti
                   position='relative' 
                   minW='105%'
                   mt={isMobile ? '310px' : ''}
-                  src='/img/ryoshi-dynasties/announcements/base/bottom_wood.png'
+                  src={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/bottom_wood${snowTheme}.png`).convert()}
                   minH={isMobile ? '100%' : '100%'}
                   />
               </Center>
