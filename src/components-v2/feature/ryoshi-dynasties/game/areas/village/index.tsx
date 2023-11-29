@@ -32,7 +32,7 @@ interface VillageProps {
   onFirstRun: () => void;
 }
 const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
-  const xmasTheme = false ? '_xmas' : '';
+  const xmasTheme = true ? '_xmas' : '';
   const { config: rdConfig, game: rdGameContext, user: rdUser, refreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
   const { isOpen:isOpenOverlay, onToggle } = useDisclosure()
@@ -46,8 +46,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   });
 
   const [sizeMultiplier, setSizeMultiplier] = useState(1);
-  const [initialPositionX, setInitialPositionX] = useState(-906);
-  const [initialPositionY, setInitialPositionY] = useState(-414);
   const [dimensionsLoaded, setDimensionsLoaded] = useState(false);
 
   // const [buildingOpen, setBuildingOpen] = useState(false);
