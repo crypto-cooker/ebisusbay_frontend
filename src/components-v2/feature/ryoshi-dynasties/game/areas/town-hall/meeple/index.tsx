@@ -58,7 +58,7 @@ import Resources from "@src/Contracts/Resources.json";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
 import ImageService from "@src/core/services/image";
-import {createSuccessfulTransactionToastContent, millisecondTimestamp, timeSince} from '@src/utils';
+import {createSuccessfulTransactionToastContent, millisecondTimestamp} from '@src/utils';
 import {ApiService} from "@src/core/services/api-service";
 import {commify} from "ethers/lib/utils";
 import WalletNft from "@src/core/models/wallet-nft";
@@ -685,7 +685,7 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
       setIsExecuting(true);
       const cmsResponse = await MeepleUpkeep(user.address, signature, Number(quantityToUpkeep.toFixed()));
       const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
-      const tx = await resourcesContract.upkeep(cmsResponse.upkeepRequest, cmsResponse.signature);
+      const tx = await resourcesContract.upkeep(cmsResponse.request, cmsResponse.signature);
       return await tx.wait();
     } catch (error: any) {
       console.log(error);
@@ -703,8 +703,8 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
           old.activeMeeple = old.activeMeeple + quantityToUpkeep;
           old.staleMeeple = old.staleMeeple - quantityToUpkeep;
           if (old.staleMeeple < 0) old.staleMeeple = 0;
-          old.lastUpkeep = Math.floor(Date.now() / 1000);
-          old.nextUpkeep = old.lastUpkeep + (rdConfig.townHall.ryoshi.upkeepActiveDays * 86400);
+          // old.lastUpkeep = Math.floor(Date.now() / 1000);
+          // old.nextUpkeep = old.lastUpkeep + (rdConfig.townHall.ryoshi.upkeepActiveDays * 86400);
           return old;
         });
       } finally {
@@ -777,13 +777,13 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
             </Stack>
             <FormHelperText>The amount of Ryoshi to upkeep</FormHelperText>
           </FormControl>
-          <SimpleGrid columns={2} pt={4}>
-            <Text my='auto' fontSize='lg' fontWeight='bold'>Payment Amount</Text>
+          <Flex justify='space-between' pt={4}>
+            <Text my='auto' fontSize={{base:'md', sm:'lg'}} fontWeight='bold'>Payment Amount</Text>
             <HStack spacing={0} justifyContent='end'>
               <Text as={'b'} textAlign={'right'} fontSize='28'>{commify(paymentAmount)}</Text>
               <Image  src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/>
             </HStack >
-          </SimpleGrid>
+          </Flex>
           <Accordion allowToggle>
             <AccordionItem border='none'>
               {({ isExpanded }) => (
@@ -798,11 +798,11 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
                   </AccordionButton>
                   <AccordionPanel fontSize='sm' px={0}>
                     Cost per Ryoshi is based on the following tiers:
-                    <SimpleGrid columns={2}>
+                    <Box mt={2}>
                       {rdConfig.townHall.ryoshi.upkeepCosts.sort((a, b) => a.threshold - b.threshold).map((cost, index, array) => {
                         const nextCost = array[index + 1];
                         return (
-                          <React.Fragment key={index}>
+                          <Flex key={index} justify='space-between'>
                             {!!nextCost ? (
                               <Box>{cost.threshold} - {nextCost.threshold - 1} Ryoshi</Box>
                             ) : (
@@ -812,10 +812,10 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
                               <Text>{cost.multiplier}</Text>
                               <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={3}/>
                             </HStack>
-                          </React.Fragment>
+                          </Flex>
                         );
                       })}
-                    </SimpleGrid>
+                    </Box>
                   </AccordionPanel>
                 </>
               )}
@@ -824,17 +824,19 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
         </RdModalBox>
       </Box>
       <RdModalFooter>
-        <Stack justifyContent='space-between' direction='row' spacing={6}>
-          <RdButton onClick={onClose} size='lg' fontSize={{base: '18', sm: '24'}}>Cancel</RdButton>
-          <RdButton
-            onClick={handlePayUpkeep}
-            size='lg'
-            fontSize={{base: '18', sm: '24'}}
-            isLoading={isExecuting}
-          >
-            Pay Upkeep
-          </RdButton>
-        </Stack>
+        <Box textAlign='center' mx={2}>
+          <Box ps='20px'>
+            <RdButton
+              stickyIcon={true}
+              onClick={handlePayUpkeep}
+              fontSize={{base: 'xl', sm: '2xl'}}
+              isLoading={isExecuting}
+              isDisabled={isExecuting}
+            >
+              Pay Upkeep
+            </RdButton>
+          </Box>
+        </Box>
       </RdModalFooter>
     </RdModal>
   )
