@@ -43,6 +43,7 @@ import SearchFaction from "@src/components-v2/feature/ryoshi-dynasties/component
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
+import {getLengthOfTime} from "@src/utils";
 // import Select from "react-select";
 const tabs = {
   recall: 'recall',
@@ -252,7 +253,10 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
     const diff = currentTimestamp - startTimestamp;
     const diffInDays = Math.floor(diff / (1000 * 3600 * 24));
 
-    return dates[diffInDays] ?? 'N/A';
+    const value = dates[diffInDays];
+    if (!value) return 'N/A';
+
+    return getLengthOfTime(value);
   }, [rdContext.config.armies.redeploymentDelay, rdContext.game?.game.startAt]);
 
 
@@ -275,7 +279,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
                 </Popover>
                 <Text as='span' ms={1}>:</Text>
               </Box>
-              <Text fontWeight='bold' textAlign='end'>{cooldownRate} minutes</Text>
+              <Text fontWeight='bold' textAlign='end'>{cooldownRate}</Text>
             </Flex>
           </RdModalBox>
           <RdModalBox mt={2}>
@@ -301,8 +305,8 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
 
               {hasFaction ? (<></>) : (<>
                 <Grid templateColumns={{base:'repeat(1, 1fr)', sm:'repeat(5, 1fr)'}} gap={6} marginBottom='4'>
-                  <GridItem w='100%' h='5' >
-                    <FormLabel> Faction:</FormLabel>
+                  <GridItem w='100%' h='5' my='auto'>
+                    <FormLabel>Faction:</FormLabel>
                   </GridItem>
                   <GridItem colSpan={{base:5, sm:4}} w='100%' >
                     <SearchFaction handleSelectCollectionCallback={HandleSelectCollectionCallback} allFactions={factionsSubscribedToSeason} imgSize={"lrg"}/>
@@ -401,7 +405,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
 
             <Spacer h='8'/>
 
-            <Center>
+            <Box textAlign='center'>
               {selectedFaction ? (
                 factionSubscribed ? (
                   <RdButton
@@ -419,7 +423,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
                 <></>
               )}
               {currentTab === tabs.recall &&  (
-                <Box textAlign='center' fontSize='xs'>
+                <Box textAlign='center' fontSize='xs' mt={4}>
                   <Text as='span' my='auto'>{rdContext.config.armies.recallTax * 100}% of recalled troops may lose their way back</Text>
                   <Popover>
                     <PopoverTrigger>
@@ -432,7 +436,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
                   </Popover>
                 </Box>
               )}
-            </Center>
+            </Box>
 
           </RdModalBox>
         </>

@@ -181,12 +181,13 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
           <section className={`px-4 pt-2 ${useMobileCartView ? 'px-4' : 'px-5'}`}>
             <Box mb={6}>
               <Flex>
-                <Flex mt={{base: -16, lg: -20, xl: -20}}>
+                <Flex mt={{base: '-55px', lg: '-73px'}}>
                   <Avatar
                     src={profilePicture}
                     rounded='full'
                     size={{base: 'xl', lg: '2xl'}}
-                    border={`4px solid ${getTheme(user.theme).colors.bgColor1}`}
+                    border={`6px solid ${getTheme(user.theme).colors.bgColor1}`}
+                    bg={getTheme(user.theme).colors.bgColor1}
                   />
                 </Flex>
                 {!useMobileLayout && (
