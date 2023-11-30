@@ -843,16 +843,33 @@ const animation3 = prefersReducedMotion
                               >
                               <img src={ImageService.translate('/img/battle-bay/mapImages/xmas_tree.apng').convert()} />
                               { openShakePresent && (
-                                  <>
-                                  <Button 
-                                  border= '2px solid  red'
-                                  h={'16'} ml={'16'} 
-                                  bg='linear-gradient(to left, #339933, #006600 )'
-                                  fontSize={'24px'} 
-                                  _hover={{bg: 'linear-gradient(to left, #006600, #339933 )'}}
-                                  onClick={PresentPresent}
-                                    >Shake Present</Button>
-                                  </>
+                                <>
+                                  <Box
+                                    position='absolute'
+                                    bgImage={'/img/battle-bay/mapImages/shake_present.png'}
+                                    top={450}
+                                    rounded='full'
+                                    zIndex={13}
+                                    data-group
+                                    w={357}
+                                    h={81}
+                                    left={25}
+                                  >
+                                    <Button
+                                      bg={'transparent'}
+                                      w={357}
+                                      h={81}
+                                      fontSize='28px'
+                                      onClick={PresentPresent}
+                                      _groupHover={{
+                                        cursor: 'pointer',
+                                        bg: 'transparent',
+                                        bgImage:'/img/battle-bay/mapImages/shake_present_hover.png',
+                                      }}
+                                    >
+                                    </Button>
+                                  </Box>
+                                </>
                                 )
                               }
                           </VStack>

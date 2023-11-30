@@ -82,11 +82,13 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
             {ads.map((ad, index) => (
               <SwiperSlide key={ad.name} virtualIndex={index}>
                 <Center>
-                  <Image
-                    alt={ad.name}
-                    src={ImageService.translate(ad.details.imageSm).convert()}
-                    maxH='300px'
-                  />
+                  <Link as={NextLink} href={ad.details.link.url} isExternal={ad.details.link.external}>
+                    <Image
+                      alt={ad.name}
+                      src={ImageService.translate(ad.details.imageSm).convert()}
+                      maxH='300px'
+                    />
+                  </Link>
                 </Center>
               </SwiperSlide>
             ))}
