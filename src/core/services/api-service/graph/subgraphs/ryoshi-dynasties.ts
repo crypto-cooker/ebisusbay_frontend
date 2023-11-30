@@ -113,6 +113,26 @@ class RyoshiDynasties {
       }
     });
   }
+
+  async meeple(walletAddress: string) {
+    const query = `
+      query UserMeeplesQuery($address: String) {
+        meeple(id: $address) {
+          id
+          activeAmount
+          lastUpkeep
+          user
+        }
+      }
+    `;
+
+    return this.apollo.query({
+      query: gql(query),
+      variables: {
+        address: walletAddress.toLowerCase(),
+      }
+    });
+  }
 }
 
 export default RyoshiDynasties;

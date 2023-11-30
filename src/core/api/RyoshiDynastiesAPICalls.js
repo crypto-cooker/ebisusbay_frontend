@@ -471,3 +471,82 @@ export const getLeadersForSeason = async (gameId) => {
     throw error;
   }
 }
+//meeple
+export const MeepleUpkeep = async (address, signature, amount) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/upkeep?", 
+      {amount},
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const MeepleMint = async (address, signature, amount) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/minting?", 
+      {amount},
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const MeepleTradeInCards = async (address, signature, nftId, amount) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/trading-card?", 
+      {nftId, amount},
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+
+//tests
+export const MeepleTradeInCardsTest = async (address, signature) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/trading-card-testing?", 
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const MeepleMintTest = async (address, signature, amount) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/minting-testing?", 
+      {amount},
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const MeepleUpkeepTest = async (address, signature, amount) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/upkeep-testing?", 
+      {amount},
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}
+export const MeepleBurnTest = async (address, signature, amount) => {
+  try{
+    var data = await api.post("ryoshi-dynasties/meeple/burn-testing?", 
+      {amount},
+      {params: {address, signature}});
+    return data.data.data;
+  }
+  catch(error){
+    throw error;
+  }
+}

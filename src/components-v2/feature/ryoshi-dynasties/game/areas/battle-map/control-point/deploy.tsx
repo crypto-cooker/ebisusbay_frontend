@@ -8,18 +8,18 @@ import {
   FormLabel,
   Grid,
   GridItem,
-  HStack,
+  HStack, IconButton,
   Image,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
   NumberInputField,
-  NumberInputStepper,
+  NumberInputStepper, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger,
   Select,
   Spacer,
   Text,
 } from "@chakra-ui/react";
-import React, {ChangeEvent, useContext, useEffect, useState} from "react";
+import React, {ChangeEvent, useContext, useEffect, useMemo, useState} from "react";
 import {useAppSelector} from "@src/Store/hooks";
 import {toast} from "react-toastify";
 import {
@@ -41,6 +41,8 @@ import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import SearchFaction from "@src/components-v2/feature/ryoshi-dynasties/components/search-factions";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {QuestionOutlineIcon} from "@chakra-ui/icons";
 // import Select from "react-select";
 const tabs = {
   recall: 'recall',
@@ -65,11 +67,14 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [selectedFaction, setSelectedFaction] = useState<string>(dataForm.faction);
   const handleQuantityChange = (stringValue: string, numValue: number) => setSelectedQuantity(numValue)
-  const [playerFaction, setPlayerFaction] = useState<RdFaction>();
-  const [hasFaction, setHasFaction] = useState(false);
+  // const [playerFaction, setPlayerFaction] = useState<RdFaction>();
+  // const [hasFaction, setHasFaction] = useState(false);
   const [troopsAvailable, setTroopsAvailable] = useState(0);
   const [troopsDeployed, setTroopsDeployed] = useState(0);
   const [factionSubscribed, setFactionSubscribed] = useState(false);
+
+  const hasFaction = rdContext.user?.faction && rdContext.user.faction.isEnabled;
+  const playerFaction = rdContext.user?.faction;
 
   const handleConnect = async () => {
     if (!user.address) {
@@ -98,24 +103,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
       console.log(error)
     }
   }
-  const GetPlayerTroops = async () => {
-    if (!user.address) return;
 
-    try {
-      const signature = await requestSignature();
-      const data = await getFactionOwned(user.address.toLowerCase(), signature);
-      // console.log("data.data.data", data.data.data)
-      if(data.data.data?.isEnabled) {
-        setHasFaction(true)
-        setPlayerFaction(data.data.data)
-      }
-      else {
-        setHasFaction(false)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
   const HandleSelectCollectionCallback = (factionName: string) => {
     setSelectedFaction(factionName);
   }
@@ -179,7 +167,6 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
       var data = await deployTroops(user.address?.toLowerCase(), signature,
           rdContext?.game?.game.id, selectedQuantity, controlPoint.id, factionId)
 
-      await GetPlayerTroops();
       setSelectedQuantity(0);
       await rdContext.refreshUser();
 
@@ -208,7 +195,6 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
       var data = await recallTroops(user.address?.toLowerCase(), signature,
         rdContext?.game?.game.id, selectedQuantity, controlPoint.id, factionId)
 
-      await GetPlayerTroops();
       setSelectedQuantity(0);
       await rdContext.refreshUser();
       refreshControlPoint();
@@ -232,6 +218,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
     }
     return 0;
   }
+
   const CheckIfFactionSubscribed = () => {
     //check if allfactions (which contains factions subscribed to the season) contains selected faction
     setFactionSubscribed(factionsSubscribedToSeason.filter(faction => faction.name === selectedFaction).length > 0);
@@ -241,24 +228,57 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
     GetTroopsOnPoint();
     CheckIfFactionSubscribed();
   }, [selectedFaction])
-  useEffect(() => {
-    GetPlayerTroops();
-  }, [user.address])
-  useEffect(() => {
-  }, [factionsSubscribedToSeason]);
+
   useEffect(() => {
     if(!rdContext?.user) return;
 
-    if(rdContext.user.season.troops.available.total !== undefined) {
-      setTroopsAvailable(rdContext.user.season.troops.available.total);
+    if(rdContext.user.game.troops.faction?.available.total !== undefined && hasFaction) {
+      setTroopsAvailable(rdContext.user.game.troops.faction.available.total);
+    } else if(rdContext.user.game.troops.user.available.total !== undefined && !hasFaction) {
+      setTroopsAvailable(rdContext.user.game.troops.user.available.total);
     }
   }, [rdContext]);
 
+  const cooldownRate = useMemo(() => {
+    const { redeploymentDelay: dates } = rdContext.config.armies;
+    const gameStart = rdContext.game?.game.startAt;
+
+    if (!gameStart || isNaN(Date.parse(gameStart))) {
+      return 'N/A';
+    }
+
+    const currentTimestamp = new Date().getTime();
+    const startTimestamp = new Date(gameStart).getTime();
+    const diff = currentTimestamp - startTimestamp;
+    const diffInDays = Math.floor(diff / (1000 * 3600 * 24));
+
+    return dates[diffInDays] ?? 'N/A';
+  }, [rdContext.config.armies.redeploymentDelay, rdContext.game?.game.startAt]);
+
+
   return (
-    <Flex flexDirection='column' textAlign='center'justifyContent='space-around'>
+    <Box p={4}>
       {!!user.address ? (
-        <Flex direction='row' justify='space-between' justifyContent='center'>
-          <Box mb={4} bg='#272523' p={2} rounded='md' w='90%' justifyContent='center' >
+        <>
+          <RdModalBox>
+            <Flex justify='space-between'>
+              <Box>
+                <Text as='span' my='auto'>Cooldown after next deploy/recall</Text>
+                <Popover>
+                  <PopoverTrigger>
+                    <QuestionOutlineIcon ms={1} cursor='pointer' mb={1}/>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverBody>After deploying/recalling, you can only deploy/recall again after the cooldown period. Click the "?" at the top right to learn more.</PopoverBody>
+                  </PopoverContent>
+                </Popover>
+                <Text as='span' ms={1}>:</Text>
+              </Box>
+              <Text fontWeight='bold' textAlign='end'>{cooldownRate} minutes</Text>
+            </Flex>
+          </RdModalBox>
+          <RdModalBox mt={2}>
             <Center>
               <Flex direction='row' justify='center' mb={2}>
                 <RdTabButton
@@ -278,7 +298,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
               isInvalid={!!factionError}
               mb={'24px'}
               bg='none'>
-              
+
               {hasFaction ? (<></>) : (<>
                 <Grid templateColumns={{base:'repeat(1, 1fr)', sm:'repeat(5, 1fr)'}} gap={6} marginBottom='4'>
                   <GridItem w='100%' h='5' >
@@ -290,7 +310,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
                 </Grid>
               </>)}
 
-              <Select 
+              <Select
                 me={2}
                 bg='none'
                 style={{ background: '#272523' }}
@@ -300,24 +320,24 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
               >
                 <option selected hidden disabled value="">Please select a faction</option>
                 {hasFaction ? (
-                  <option 
-                    style={{ background: '#272523' }} 
-                    value={playerFaction!.name} 
+                  <option
+                    style={{ background: '#272523' }}
+                    value={playerFaction!.name}
                     key={0}>
-                    <Image 
-                      src={playerFaction!.image} 
-                      width='20px' 
+                    <Image
+                      src={playerFaction!.image}
+                      width='20px'
                       height='20px' />
                     {playerFaction!.name}
                   </option>
                 ) : factionsSubscribedToSeason.map((faction, index) => (
-                  <option 
-                    style={{ background: '#272523' }} 
-                    value={faction.name} 
+                  <option
+                    style={{ background: '#272523' }}
+                    value={faction.name}
                     key={index}>
-                    <Image 
-                      src={faction.image} 
-                      width='50px' 
+                    <Image
+                      src={faction.image}
+                      width='50px'
                       height='50px' />
                     {faction.name}
                   </option>
@@ -350,15 +370,15 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
 
               </FormLabel>
               <Flex justifyContent='center' w={'100%'}>
-                <NumberInput 
-                  defaultValue={1} 
-                  min={1} 
-                  max={GetMaxTroops()} 
+                <NumberInput
+                  defaultValue={1}
+                  min={1}
+                  max={GetMaxTroops()}
                   name="quantity"
                   onChange={handleQuantityChange}
                   value={selectedQuantity}
                   w='85%'
-                  >
+                >
                   <NumberInputField />
                   <NumberInputStepper >
                     <NumberIncrementStepper color='#ffffff'/>
@@ -367,7 +387,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
                 </NumberInput>
 
                 <Spacer />
-                <Button 
+                <Button
                   variant={'outline'}
                   onClick={() => setSelectedQuantity(GetMaxTroops())}
                   color='white'
@@ -384,24 +404,38 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
             <Center>
               {selectedFaction ? (
                 factionSubscribed ? (
-                    <RdButton
-                      w='250px'
-                      fontSize={{base: 'lg', sm: 'lg'}}
-                      onClick={DeployOrRecallTroops}
-                      disabled={isExecuting}
-                    >
-                      {currentTab === tabs.deploy ? "Deploy" :"Recall" }
-                    </RdButton>
+                  <RdButton
+                    w='250px'
+                    fontSize={{base: 'lg', sm: 'lg'}}
+                    onClick={DeployOrRecallTroops}
+                    disabled={isExecuting}
+                  >
+                    {currentTab === tabs.deploy ? "Deploy" :"Recall" }
+                  </RdButton>
                 ) : (
-                  <Text as={'i'} textColor={'#aaa'}> {selectedFaction} is not subscribed to current season</Text>
+                  <Text as={'i'} textColor={'#aaa'}>{selectedFaction} is not subscribed to current season</Text>
                 )
               ) : (
                 <></>
               )}
+              {currentTab === tabs.recall &&  (
+                <Box textAlign='center' fontSize='xs'>
+                  <Text as='span' my='auto'>{rdContext.config.armies.recallTax * 100}% of recalled troops may lose their way back</Text>
+                  <Popover>
+                    <PopoverTrigger>
+                      <QuestionOutlineIcon ms={1} cursor='pointer' mb={1} />
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <PopoverArrow />
+                      <PopoverBody>Any recalls will result in {rdContext.config.armies.recallTax * 100}% of your selected value being lost. Be careful how much you wish to recall. Click the "?" at the top left to learn more.</PopoverBody>
+                    </PopoverContent>
+                  </Popover>
+                </Box>
+              )}
             </Center>
 
-          </Box>
-        </Flex>
+          </RdModalBox>
+        </>
       ) : (
         <Box textAlign='center' pt={8} pb={4} px={2}>
           <Box ps='20px'>
@@ -416,7 +450,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
           </Box>
         </Box>
       )}
-    </Flex>
+    </Box>
   )
 }
 

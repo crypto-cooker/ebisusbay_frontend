@@ -135,8 +135,8 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsForm
   useEffect(() => {
     if(!rdUser) return;
 
-    if(rdUser.season.troops.available.total !== undefined){
-      setTroopsAvailable(rdUser.season.troops.available.total);
+    if(rdUser.game.troops.user.available.total !== undefined){
+      setTroopsAvailable(rdUser.game.troops.user.available.total);
     }
   }, [rdUser]);
 
