@@ -67,7 +67,7 @@ export const getServerSideProps = async ({query}: GetServerSidePropsContext) => 
 
     const currentTime = new Date().getTime();
 
-    if (currentTime > token.expiration) {
+    if (currentTime > token.expiry) {
       // The token has expired
       return {
         props: {
@@ -88,7 +88,6 @@ export const getServerSideProps = async ({query}: GetServerSidePropsContext) => 
       troops: user.troops
     })).sort((a, b) => b.troops - a.troops);
 
-
     return {
       props: {
         valid: true,
@@ -107,7 +106,7 @@ interface TokenProps {
   signature: string;
   gameId: number;
   type: string;
-  expiration: number;
+  expiry: number;
 }
 
 function decrypt(text: any, key: string) {
