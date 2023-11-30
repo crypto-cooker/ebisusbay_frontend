@@ -128,7 +128,13 @@ export const RankPlayers = async (data : any, gameId:number, testcases:boolean=f
   }
 
   rankedPlayers = CreateRankedPlayersFromData(data);
+  // const testingAdds = ["0xb762c2bdea9ea8ecc641ad40c3e38ad7031be31e", "0x80075c04f21f8c0ae2e7261a443dd4a57c3f07d0"];
   // rankedPlayers = rankedPlayers.filter((player) => player.address === ("0x574ceac75090869c92fd5315d0e89a0294ca58fc").toLowerCase());
+  // rankedPlayers = rankedPlayers.filter((player) => player.address === ("0xb762c2bdea9ea8ecc641ad40c3e38ad7031be31e").toLowerCase() 
+  //   || player.address === ("0x80075c04f21f8c0ae2e7261a443dd4a57c3f07d0").toLowerCase()
+  //   || player.address === ("0x4dc3c580f9557fcfa4077e0175498178277aafe4").toLowerCase()
+  //   || player.address === ("0x75c0de1bba50c28dde6ad3d97ea4f0a9c7514a6b").toLowerCase()
+  //   );
   
   rankedPlayers = rankedPlayers.filter((player) => player.cards.length >= 5);
   rankedPlayers = RemoveBlackListedPlayers(rankedPlayers);
@@ -1102,6 +1108,25 @@ const GetLowestCardID = (cards: number[]) => {
     return score;
   }
   const RankPlayersByCards = (playersWithHands: Player[], reverseOrder:boolean = false) => {
+    let secondaryValues: any = {};
+
+    if(gameNumber === 4) {
+      //map all secondary values to a to the address of the player
+      playersWithHands.forEach((player) => {
+        if(!secondaryValues[player.bestHand.secondaryValue]) {
+          secondaryValues[player.bestHand.secondaryValue] = [player];
+        } else {
+          secondaryValues[player.bestHand.secondaryValue].push(player);
+        }
+      })
+
+      //overwrite 8s with Aces so that  
+      playersWithHands.forEach((player) => {
+        if(player.bestHand.secondaryValue === 8) {
+          player.bestHand.secondaryValue = 14;
+        }
+      })
+    }
 
     if(!reverseOrder) {
       //sort by handRef
@@ -1118,16 +1143,6 @@ const GetLowestCardID = (cards: number[]) => {
       //sort by secondaryValue but only if primaryValue is the same
       playersWithHands.sort((a, b) => {
         if(a.bestHand.handRef === b.bestHand.handRef && a.bestHand.primaryValue === b.bestHand.primaryValue) {
-
-            if(gameNumber === 4) {
-              if(a.bestHand.secondaryValue === 8 && b.bestHand.secondaryValue !== 8) {
-                return -1;
-              } else if(a.bestHand.secondaryValue !== 8 && b.bestHand.secondaryValue === 8) {
-                return 1;
-              } else {
-                return b.bestHand.secondaryValue - a.bestHand.secondaryValue;
-              }
-            }
             return b.bestHand.secondaryValue - a.bestHand.secondaryValue;
           }
         return 1;
@@ -1178,7 +1193,16 @@ const GetLowestCardID = (cards: number[]) => {
       })
     }
 
-      return playersWithHands;
+    //reapply secondary values for game 4
+    if(gameNumber === 4) {
+      Object.keys(secondaryValues).forEach((secondaryValue) => {
+        secondaryValues[secondaryValue].forEach((player: Player) => {
+          player.bestHand.secondaryValue = parseInt(secondaryValue);
+        })
+      })
+    }
+
+    return playersWithHands;
   }
   const RemoveBestHand = (playersWithHands: Player[]) => {
     //itterate through cards and if in best hand remove it
