@@ -1,7 +1,5 @@
 import {AspectRatio, Box, Button, Flex, Image, Text, useDisclosure, VStack,} from '@chakra-ui/react';
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import StakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft";
-import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
 import {useAppSelector} from "@src/Store/hooks";
 
 import localFont from 'next/font/local';
@@ -14,6 +12,10 @@ import {motion} from "framer-motion";
 import ImageService from "@src/core/services/image";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
+import StakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft";
+import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
+import Meeple from "src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/meeple";
+
 const gothamBook = localFont({
   src: '../../../../../../fonts/Gotham-Book.woff2',
   fallback: ['Roboto', 'system-ui', 'arial'],
@@ -24,8 +26,6 @@ interface BarracksProps {
 }
 
 const Barracks = ({onBack}: BarracksProps) => {
-  const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
-  const { isOpen: isOpenClaimRewards, onOpen: onOpenClaimRewards, onClose: onCloseClaimRewards} = useDisclosure();
   const [handleAuthedNavigation] = useAuthedFunction();
   const user = useAppSelector((state) => state.user);
   const [battleRewardsClaimed, setBattleRewardsClaimed] = useState(false);
@@ -36,6 +36,11 @@ const Barracks = ({onBack}: BarracksProps) => {
     onCloseClaimRewards();
     // console.log("claimedRewards")
   }
+
+  const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
+  const { isOpen: isOpenClaimRewards, onOpen: onOpenClaimRewards, onClose: onCloseClaimRewards} = useDisclosure();
+  const { isOpen: isOpenMeeple, onOpen: onOpenMeeple, onClose: onCloseMeeple} = useDisclosure();
+
   const checkForBattleRewards = async () => {
     if (!user.address) return;
 
@@ -121,15 +126,20 @@ const Barracks = ({onBack}: BarracksProps) => {
       </Flex>
 
       <Flex align={'center'} minH={'calc(100vh - 175px)'} justifyContent={'center'}>
+
+        <Meeple isOpen={isOpenMeeple} onClose={onCloseMeeple} />
         <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
-        {!!battleRewards && ( <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards}/> )}
+        {!!battleRewards && ( 
+          <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards}/> 
+        )}
+
         <VStack spacing={4} align='stretch'>
           <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
-
           {(!!battleRewards && !battleRewardsClaimed) &&  (
             <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
           )}
         </VStack>
+        
       </Flex>
     </Flex>
     </Box>

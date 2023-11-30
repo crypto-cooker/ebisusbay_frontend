@@ -25,6 +25,7 @@ import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/o
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
 import {PokerCollection} from "@src/core/services/api-service/types";
+import {Meeple} from "@src/core/services/api-service/graph/types";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -349,5 +350,9 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async getTroopsBreakdown(gameId: number, address: string, signature: string) {
     return this.cms.getTroopsBreakdown(gameId, address, signature);
+  }
+
+  async getUserMeeples(address: string) {
+    return await this.graph.getUserMeeples(address);
   }
 }

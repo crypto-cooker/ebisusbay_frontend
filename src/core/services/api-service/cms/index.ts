@@ -12,9 +12,9 @@ import {PagedList} from "@src/core/services/api-service/paginated-list";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 
 class Cms {
-  private profiles;
-  private gdcClaims;
-  private ryoshiDynasties;
+  private profiles: ProfilesRepository;
+  private gdcClaims: GdcClaimsRepository;
+  private ryoshiDynasties: RyoshiDynastiesRepository;
 
   constructor(apiKey?: string) {
     this.profiles = new ProfilesRepository(apiKey);

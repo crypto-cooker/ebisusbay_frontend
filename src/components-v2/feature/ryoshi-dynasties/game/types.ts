@@ -7,6 +7,7 @@ export interface RyoshiConfig {
   presale: RyoshiConfigPresale;
   armies: RyoshiConfigArmies;
   reputations: RyoshiConfigReputation;
+  experience: RyoshiConfigExperience;
 }
 
 interface RyoshiConfigReputation {
@@ -111,6 +112,7 @@ interface RyoshiConfigBarracksStakingNFTBonus {
 
 interface RyoshiConfigTownHall {
   staking: RyoshiConfigTownHallStaking;
+  ryoshi: RyoshiConfigTownHallRyoshi;
 }
 
 interface RyoshiConfigTownHallStaking {
@@ -125,6 +127,17 @@ interface RyoshiConfigTownHallStakingNFT {
 export interface RyoshiConfigTownHallStakingNFTCollection extends RyoshiConfigCollections {
   active: boolean;
   fortune: number;
+}
+
+interface RyoshiConfigTownHallRyoshi {
+  restockCutoff: number;
+  upkeepDecay: number;
+  upkeepActiveDays: number;
+  upkeepCosts: Array<{ threshold: number, multiplier: number }>;
+  tradeIn: {
+    tierMultiplier: number[],
+    base: {[key: number]: number}
+  }
 }
 
 interface RyoshiConfigTraitEligibility {
@@ -164,4 +177,26 @@ interface RyoshiConfigFactionsRegistration {
 
 interface RyoshiConfigArmies {
   redeploymentDelay: number[];
+  recallTax: number;
+}
+
+export interface ExperienceEvent {
+  points: number;
+  coolDown: number;
+  usd?: number;
+}
+
+export interface RyoshiConfigExperience {
+  DAILY_CHECK_IN: ExperienceEvent;
+  DEPLOY_TROOPS: ExperienceEvent;
+  TROOP_KILLED: ExperienceEvent;
+  STAKE_VIP: ExperienceEvent;
+  STAKE_MITAMA: ExperienceEvent;
+  ITEM_SOLD_SELLER: ExperienceEvent;
+  OFFER_ACCEPTED_SELLER: ExperienceEvent;
+  ITEM_SOLD_BUYER: ExperienceEvent;
+  CLAIM_PLATFORM_REWARD: ExperienceEvent;
+  COMPOUND_PLATFORM_REWARD: ExperienceEvent;
+  CLAIM_MARKET_STAKING_REWARD: ExperienceEvent;
+  VERIFY_EMAIL: ExperienceEvent;
 }

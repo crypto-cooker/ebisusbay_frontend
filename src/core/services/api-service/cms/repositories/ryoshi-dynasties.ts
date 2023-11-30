@@ -1,10 +1,14 @@
 import CmsRepository from "@src/core/services/api-service/cms/repositories/index";
 import {
   BankStakeNft,
-  BarracksStakeNft, RdBattleLog,
+  BarracksStakeNft,
+  RdBattleLog,
   RdFaction,
   RdGameContext,
-  RdUserContext, RdUserContextNoOwnerFactionTroops, RdUserContextOwnerFactionTroops, StakedTokenType, TownHallStakeNft
+  RdUserContext,
+  RdUserContextGameTroops,
+  StakedTokenType,
+  TownHallStakeNft
 } from "@src/core/services/api-service/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
@@ -243,7 +247,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
         signature
       }
     });
-    return response.data.data as RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops;
+    return response.data.data as RdUserContextGameTroops;
   }
 
   async getStakedTokenTotals(type: StakedTokenType): Promise<{[key: string]: number}> {

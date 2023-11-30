@@ -529,6 +529,33 @@
     "style": {}
   },
   {
+    "slug": "ballies",
+    "name": "Ballies",
+    "description": "Ballies is a gaming platform with an on-ramping lend-to-earn system, which operates as a web2 game while incorporating all the benefits of web3.\n\nOur mission is to continue creating a strong social community of gamers. The platform has already begun onboarding thousands of players and is projected to attact millions more.",
+    "images": {
+      "banner": "/img/brands/ballies/banner.webp",
+      "preview": "/img/brands/ballies/preview.webp"
+    },
+    "collections": [
+      "0xF12B07570804c56B4ce8f63e7121BEC8C7CA1542",
+      "0x9E38e9FE0b613be34F1826A5a3d63d9759d29873",
+      "0x861C150f818A882AAA3aFA91694Fc9a6C5CCcA1C",
+      "0x5c18d5eb211203eb80b591aa71a269b1e16e9eba",
+      "0xd4390FF0122E9E79aF2054bF9B23103d20bFd155"
+    ],
+    "socials": {
+      "website": "https://ballies.gg/",
+      "twitter": "https://twitter.com/Ballies_NFT",
+      "discord": "https://discord.gg/Hec5CgFKfX",
+      "medium": "https://medium.com/@BalliesNFT",
+      "instagram": "https://www.instagram.com/ballies_nft",
+      "youtube": "https://www.youtube.com/@Ballies"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "lost-toys",
     "name": "Lost Toys",
     "description": "",
