@@ -125,12 +125,16 @@ export function scrollTo(scrollableElement, elmID) {
 export function getTimeDifference(date) {
   let difference = moment(new Date(), 'DD/MM/YYYY HH:mm:ss').diff(moment(date, 'DD/MM/YYYY HH:mm:ss')) / 1000;
 
-  if (difference < 60) return `${Math.floor(difference)} seconds`;
-  else if (difference < 3600) return `${Math.floor(difference / 60)} minutes`;
-  else if (difference < 86400) return `${Math.floor(difference / 3660)} hours`;
-  else if (difference < 86400 * 30) return `${Math.floor(difference / 86400)} days`;
-  else if (difference < 86400 * 30 * 12) return `${Math.floor(difference / 86400 / 30)} months`;
-  else return `${(difference / 86400 / 30 / 12).toFixed(1)} years`;
+  return getLengthOfTime(difference);
+}
+
+export function getLengthOfTime(duration) {
+  if (duration < 60) return `${Math.floor(duration)} seconds`;
+  else if (duration < 3600) return `${Math.floor(duration / 60)} minutes`;
+  else if (duration < 86400) return `${Math.floor(duration / 3660)} hours`;
+  else if (duration < 86400 * 30) return `${Math.floor(duration / 86400)} days`;
+  else if (duration < 86400 * 30 * 12) return `${Math.floor(duration / 86400 / 30)} months`;
+  else return `${(duration / 86400 / 30 / 12).toFixed(1)} years`;
 }
 
 export function generateRandomId() {

@@ -43,6 +43,7 @@ import SearchFaction from "@src/components-v2/feature/ryoshi-dynasties/component
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
+import {getLengthOfTime} from "@src/utils";
 // import Select from "react-select";
 const tabs = {
   recall: 'recall',
@@ -252,7 +253,10 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
     const diff = currentTimestamp - startTimestamp;
     const diffInDays = Math.floor(diff / (1000 * 3600 * 24));
 
-    return dates[diffInDays] ?? 'N/A';
+    const value = dates[diffInDays];
+    if (!value) return 'N/A';
+
+    return getLengthOfTime(value);
   }, [rdContext.config.armies.redeploymentDelay, rdContext.game?.game.startAt]);
 
 
@@ -275,7 +279,7 @@ const DeployTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeaso
                 </Popover>
                 <Text as='span' ms={1}>:</Text>
               </Box>
-              <Text fontWeight='bold' textAlign='end'>{cooldownRate} minutes</Text>
+              <Text fontWeight='bold' textAlign='end'>{cooldownRate}</Text>
             </Flex>
           </RdModalBox>
           <RdModalBox mt={2}>
