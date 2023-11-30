@@ -464,9 +464,8 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyActiveAmount}: 
   const queryClient = useQueryClient();
   const [hasAmountError, setHasAmountError] = useState(true);
   const minValue = offDutyActiveAmount > 0 ? 1 : 0;
-
-  //Deposit Ryoshi
   const [meepleToDeposit, setMeepleToDeposit] = useState(0);
+
   const handleQuantityChangeDeposit= (stringValue: string, numValue: number) => {
     if (isNaN(numValue)) numValue = minValue;
     if (numValue > offDutyActiveAmount) numValue = offDutyActiveAmount;
@@ -554,10 +553,9 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyActiveAmount}: 
           </HStack>
 
           <Flex justifyContent={'space-between'} align={'center'} mt={'8'}>
-            <Text color={'#aaa'} alignContent={'baseline'} p={2}> Remaining Ryoshi Off Duty: </Text>
+            <Text color={'#aaa'} alignContent={'baseline'} p={2}>Remaining Ryoshi Off Duty:</Text>
             <Text as={'b'} fontSize='28' p={2}>{offDutyActiveAmount - meepleToDeposit}</Text>
           </Flex>
-
         </Box>
       </RdModalAlert>
       <RdModalFooter>
@@ -568,7 +566,9 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyActiveAmount}: 
             size='lg'
             fontSize={{base: '18', sm: '24'}}
             isLoading={isExecuting}
-          > Deposit </RdButton>
+          >
+            Deposit
+          </RdButton>
         </Stack>
       </RdModalFooter>
     </RdModal>
@@ -587,27 +587,31 @@ const Upkeep = ({offDutyMeepleData}: {offDutyMeepleData: OffDutyMeepleInfo}) => 
           Weekly Upkeep
         </Box>
         <VStack spacing={0} alignItems='start' mt={2}>
-          <Text color={'#aaa'}>Off Duty Ryoshi must be periodically paid upkeep to keep them loyal to you</Text>
+          <Text color={'#aaa'}>Off Duty Ryoshi must be periodically paid upkeep to keep them loyal to you.</Text>
           <Stack direction={{base: 'column', sm: 'row'}} justify='space-between' w='full'>
             {millisecondTimestamp(offDutyMeepleData.nextUpkeep) > Date.now() ? (
               <Text color={'#aaa'}>Upkeep due: <b>{nextUpkeep}</b></Text>
+            ) : offDutyMeepleData.lastUpkeep === 0 ? (
+              <Text color={'#aaa'}>Take some Ryoshi off-duty first</Text>
             ) : (
               <HStack color='#f8a211'>
                 <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} boxSize={6}/>
                 <Text fontWeight='bold'>Upkeep overdue</Text>
               </HStack>
             )}
-            <RdButton
-              h={12}
-              onClick={onOpen}
-              size={{base: 'sm', sm: 'md'}}
-              w={{base: '150px', sm: '190px'}}
-              my='auto'
-              alignSelf='end'
-              mt={2}
-            >
-              Pay Upkeep
-            </RdButton>
+            {offDutyMeepleData.offDutyAmount > 0 && (
+              <RdButton
+                h={12}
+                onClick={onOpen}
+                size={{base: 'sm', sm: 'md'}}
+                w={{base: '150px', sm: '190px'}}
+                my='auto'
+                alignSelf='end'
+                mt={2}
+              >
+                Pay Upkeep
+              </RdButton>
+            )}
           </Stack>
         </VStack>
       </RdModalBox>
