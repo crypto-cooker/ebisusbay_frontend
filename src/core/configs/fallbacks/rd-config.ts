@@ -469,6 +469,82 @@ export const ryoshiConfig: RyoshiConfig = {
           }
         ]
       }
+    },
+    ryoshi: {
+      upkeepDecay: 0.1,
+      upkeepActiveDays: 7,
+      restockCutoff: 3000,
+      upkeepCosts:[
+        { threshold: 0, multiplier: 0 },
+        { threshold: 201, multiplier: 1 },
+        { threshold: 1000, multiplier: 2 },
+        { threshold: 5000, multiplier: 3 },
+      ],
+      tradeIn: {
+        tierMultiplier: [1, 2, 3],
+        base: {
+          100: 15,
+          101: 15,
+          102: 15,
+          103: 10,
+          104: 10,
+          105: 10,
+          106: 10,
+          107: 10,
+          108: 10,
+          109: 15,
+          110: 15,
+          111: 15,
+          112: 20,
+          113: 20,
+          114: 20,
+          115: 20,
+          116: 20,
+          117: 20,
+          118: 15,
+          119: 15,
+          120: 15,
+          121: 10,
+          122: 10,
+          123: 10,
+          124: 15,
+          125: 15,
+          126: 15,
+          127: 10,
+          128: 10,
+          129: 10,
+          130: 15,
+          131: 15,
+          132: 15,
+          133: 15,
+          134: 15,
+          135: 15,
+          136: 10,
+          137: 10,
+          138: 10,
+          139: 10,
+          140: 10,
+          141: 10,
+          142: 20,
+          143: 20,
+          144: 20,
+          145: 15,
+          146: 15,
+          147: 15,
+          148: 20,
+          149: 20,
+          150: 20,
+          151: 10,
+          152: 10,
+          153: 10,
+          154: 10,
+          155: 10,
+          156: 10,
+          157: 10,
+          158: 10,
+          159: 10,
+        }
+      }
     }
   },
   factions: {
@@ -523,7 +599,8 @@ export const ryoshiConfig: RyoshiConfig = {
       1800,
       3600,
       10800
-    ]
+    ],
+    recallTax: 0.1
   },
   reputations: {
     points: {
@@ -535,6 +612,59 @@ export const ryoshiConfig: RyoshiConfig = {
       deploy: 1,
       delegated: 5,
       recall: -1
+    }
+  },
+  experience: {
+    DAILY_CHECK_IN: {
+      points: 5,
+      coolDown: 0
+    },
+    DEPLOY_TROOPS: {
+      points: 5,
+      coolDown: 3600
+    },
+    TROOP_KILLED: {
+      points: 1,
+      coolDown: 0
+    },
+    STAKE_VIP: {
+      points: 2,
+      coolDown: 1
+    },
+    STAKE_MITAMA: {
+      points: 0.1,
+      coolDown: 1
+    },
+    ITEM_SOLD_SELLER: {
+      points: 1,
+      coolDown: 0,
+      usd: 3
+    },
+    OFFER_ACCEPTED_SELLER: {
+      points: 1,
+      coolDown: 0,
+      usd: 3
+    },
+    ITEM_SOLD_BUYER: {
+      points: 0.5,
+      coolDown: 0,
+      usd: 3
+    },
+    CLAIM_PLATFORM_REWARD: {
+      points: 50,
+      coolDown: 7,
+    },
+    COMPOUND_PLATFORM_REWARD: {
+      points: 75,
+      coolDown: 7,
+    },
+    CLAIM_MARKET_STAKING_REWARD: {
+      points: 5,
+      coolDown: 1,
+    },
+    VERIFY_EMAIL: {
+      points: 20,
+      coolDown: 0,
     }
   }
 }

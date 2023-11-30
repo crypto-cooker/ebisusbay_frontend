@@ -82,7 +82,7 @@ export const getServerSideProps = async ({query}: GetServerSidePropsContext) => 
       .ryoshiDynasties
       .getTroopsBreakdown(token.gameId, token.address!, token.signature);
 
-    const delegations = (troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
+    const delegations = (troops.faction as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
       address: user.profileWalletAddress,
       name: user.profileName,
       troops: user.troops
