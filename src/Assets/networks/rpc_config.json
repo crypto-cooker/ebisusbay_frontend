@@ -20480,6 +20480,8 @@
       "metadata": {
         "description": "The main purpose of this collection is to act as a Booster NFT for different percentage yields depending on which tier you hold. A MAX of 2 troops can be staked under a 102 Time Machine, 101 Time Machine, or Tata’s Guardian to increase payout yields by up to 10%. From our own ecosystems tokens.",
         "avatar": "/img/collections/time-troops/avatar.webp",
+        "card": "/img/collections/time-troops/card.webp",
+        "banner": "/img/collections/time-troops/banner.webp",
         "website": "https://tatastwistedtonics.com/",
         "twitter": "https://twitter.com/TimeMachines101",
         "discord": "https://discord.gg/8whpvt3WEr",
@@ -21291,7 +21293,7 @@
         "description": "Animated Time Gods are the overseers of the Time Ecosystem. They will earn a percentage of everything Time and Tonic related.",
         "avatar": "/img/collections/animated-time-gods/avatar.webp",
         "banner": "/img/collections/animated-time-gods/banner.webp",
-        "card": "/img/collections/animated-time-gods/card.webp",
+        "card": "/img/collections/animated-time-gods/card2.webp",
         "website": "https://tatastwistedtonics.com/",
         "twitter": "https://twitter.com/TimeMachines101",
         "discord": "https://discord.gg/8whpvt3WEr",
@@ -22318,6 +22320,7 @@
       "metadata": {
         "description": "\"Time Commanders\"    \uD83D\uDC8EWILL stealth drop within the next 6 hours MAKE sure to keep an eye on our drops page   https://time-launcher.com/drops/  \uD83D\uDC40   Supply: 5000 Public price: 50 cro  WL price: 45 cro   IF you are not WL and should be please open a ticket!!!  \uD83D\uDCAA This collections main purpose is reinforcements to time troops. depending on which tier you hold. A MAX of 2 Commanders to increase payout yields by up to 15%.  \uD83D\uDEA8\uD83D\uDEA8Boosters for ATGs, Creatures, tonics, and outside collections(possibly) and future releases   Orange bottom = 100 pieces - 15% Purple = 400 pieces - 10% Red top = 2000 pieces - 5% Green = 2500 pieces - 2% @everyone  **IF you are not WL and should be please open a ticket and i will WL you ASAP**",
         "avatar": "/img/collections/time-commanders/avatar.webp",
+        "card": "/img/collections/time-commanders/card.webp",
         "banner": "/img/collections/time-commanders/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
@@ -23122,6 +23125,7 @@
       "metadata": {
         "description": "The Time Ship Blueprints are the first, OG collection of Time Ship hull blueprints for the Time Machine Ecosystem's web3 game in the making. Time Wars, These Blueprints will come with a few ship components, some of our in house token $tatastwistedtime ($TTT) and 1 blueprint, per box minted. Be on the lookout for the best hull skins/prints!!",
         "avatar": "/img/collections/time-ship-blueprints/avatar.webp",
+        "card": "/img/collections/time-ship-blueprints/card.webp",
         "banner": "/img/collections/time-ship-blueprints/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
@@ -23146,6 +23150,8 @@
       "metadata": {
         "description": "Time Creature Ships is partly a free drop for holding matching ID numbers of Time Creatures during the snapshot, The remaining will be sold for TTT only and 100% of the TTT will be BURNED!! Time Creature Ships will be required to send your Time Creatures off to gather resources in order to build your Time Ships for the Time Wars web3 game coming soon, Resources will start to be gathered for war BEFORE war!!",
         "avatar": "/img/collections/time-creature-ships/avatar.webp",
+        "card": "/img/collections/time-creature-ships/card.webp",
+        "banner": "/img/collections/time-creature-ships/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
         "discord": "https://discord.gg/8whpvt3WEr",
