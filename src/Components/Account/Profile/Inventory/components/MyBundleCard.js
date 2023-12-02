@@ -290,9 +290,7 @@ const MyNftCard = ({
                   <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onUpdateButtonPressed}>Update</Text>
                 )}
               </Box>
-              <MenuPopup options={getOptions()}>
-                <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
-              </MenuPopup>
+              <MenuPopup options={getOptions()} />
             </div>
           </Box>
         </Flex>

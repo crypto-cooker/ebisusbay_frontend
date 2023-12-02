@@ -314,9 +314,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
                     <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleMakeOffer}>Make Offer</Text>
                   )}
                 </Box>
-                <MenuPopup options={getOptions()}>
-                  <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
-                </MenuPopup>
+                <MenuPopup options={getOptions()} />
               </div>
             </Box>
           </Flex>

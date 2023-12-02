@@ -205,9 +205,7 @@ const StakingNftCard = ({
           >
             <div className="d-flex justify-content-between">
               <Spacer />
-              <MenuPopup options={getOptions()}>
-                <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
-              </MenuPopup>
+              <MenuPopup options={getOptions()} />
             </div>
           </Box>
         </Flex>

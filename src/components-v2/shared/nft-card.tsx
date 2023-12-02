@@ -22,7 +22,6 @@ import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useBreakpointValue, u
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faBoltLightning,
-  faEllipsisH,
   faExchangeAlt,
   faExternalLink,
   faHand,
@@ -304,7 +303,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
               px={4}
               py={1}
             >
-              <div className="d-flex justify-content-between">
+              <Flex justify='space-between' align='center'>
                 <Box
                   _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
                   visibility="hidden"
@@ -321,10 +320,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                     <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleMakeOffer}>Make Offer</Text>
                   )}
                 </Box>
-                <MenuPopup options={menuOptions}>
-                  <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
-                </MenuPopup>
-              </div>
+                <MenuPopup options={menuOptions} />
+              </Flex>
             </Box>
           </Flex>
         </Box>

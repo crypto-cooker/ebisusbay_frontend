@@ -103,7 +103,6 @@ import {
 
     const getCollectionAddresses = async () => {
       let newAddresses: CollectionAddress[] = [];
-      console.log("Searching for factions");
 
       allFactions.filter(async (faction) => {
         if(faction.type === "COLLECTION" && faction.addresses.length > 0){
