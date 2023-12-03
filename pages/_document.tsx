@@ -43,9 +43,6 @@ export default function Document() {
         />
       </Head>
       <body>
-        <div id="initialLoader">
-          <div className="loader"></div>
-        </div>
         <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
         <Main />
         <NextScript />

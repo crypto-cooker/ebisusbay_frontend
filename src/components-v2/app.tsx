@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {createGlobalStyle, ThemeProvider} from 'styled-components';
 import {toast, ToastContainer} from 'react-toastify';
@@ -50,7 +50,7 @@ const GlobalStyles = createGlobalStyle`
 const firebase = initializeApp(firebaseConfig);
 
 function App({ Component, ...pageProps }: AppProps) {
-
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const { colorMode } = useColorMode()
   const exchangePrices = useGlobalPrices();
@@ -75,14 +75,8 @@ function App({ Component, ...pageProps }: AppProps) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const loader = document.getElementById('initialLoader');
-      if (loader) loader.style.display = 'none';
-    }
-  }, []);
-
-  useEffect(() => {
     dispatch(syncCartStorage());
+    setLoading(false);
   }, []);
 
   return (
@@ -90,18 +84,26 @@ function App({ Component, ...pageProps }: AppProps) {
       <ExchangePricesContext.Provider value={{prices: exchangePrices.data ?? []}}>
         <DefaultHead />
         <div className="wraper">
-          <GlobalStyles isDark={userTheme === 'dark'} />
-          <Header />
-          <div style={{paddingTop:'74px'}}>
-            <Component {...pageProps} />
-          </div>
-          <Footer />
-          <ScrollToTopBtn />
-          <ToastContainer
-            position={toast.POSITION.BOTTOM_LEFT}
-            hideProgressBar={true}
-            theme={colorMode}
-          />
+          {loading ? (
+            <div id="initialLoader">
+              <div className="loader"></div>
+            </div>
+          ) : (
+            <>
+              <GlobalStyles isDark={userTheme === 'dark'} />
+              <Header />
+              <div style={{paddingTop:'74px'}}>
+                <Component {...pageProps} />
+              </div>
+              <Footer />
+              <ScrollToTopBtn />
+              <ToastContainer
+                position={toast.POSITION.BOTTOM_LEFT}
+                hideProgressBar={true}
+                theme={colorMode}
+              />
+            </>
+          )}
         </div>
       </ExchangePricesContext.Provider>
     </ThemeProvider>
