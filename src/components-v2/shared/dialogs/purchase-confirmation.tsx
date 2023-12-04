@@ -101,12 +101,21 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   }
 
   const handleBuyErc20 = (address: string) => {
-    const url = new URL('https://vvs.finance/swap');
-    if (user.address) {
-      url.searchParams.append('outputCurrency', address);
-      url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
+    if (token?.symbol === 'TTT') {
+      const url = new URL('https://app.cronaswap.org/swap');
+      if (user.address) {
+        url.searchParams.append('outputCurrency', address);
+        url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
+      }
+      window.open(url, '_blank');
+    } else {
+      const url = new URL('https://vvs.finance/swap');
+      if (user.address) {
+        url.searchParams.append('outputCurrency', address);
+        url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
+      }
+      window.open(url, '_blank');
     }
-    window.open(url, '_blank');
   }
 
   const handleExecutePurchase = async () => {
