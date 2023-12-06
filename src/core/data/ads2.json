@@ -1,5 +1,20 @@
 [
   {
+    "name": "Ryoshi Tales VIP",
+    "start": 1701890579,
+    "end": 1702589400,
+    "placement": "rd-board",
+    "details": {
+      "weight": 2,
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-tales-vip-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-tales-vip-sm.webp",
+      "link": {
+        "url": "/drops/ryoshi-tales-vip-2",
+        "external": false
+      }
+    }
+  },
+  {
     "name": "3D Crow",
     "start": 1701365614,
     "end": 1701993599,
