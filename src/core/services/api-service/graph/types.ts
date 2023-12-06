@@ -15,6 +15,11 @@ export type Scalars = {
   BigDecimal: { input: any; output: any; }
   BigInt: { input: any; output: any; }
   Bytes: { input: any; output: any; }
+  /**
+   * 8 bytes signed integer
+   *
+   */
+  Int8: { input: any; output: any; }
 };
 
 export type AccessControl = {
