@@ -449,13 +449,18 @@ const RelocateForm = ({fromControlPoint, hasFaction, subscribedFactions, troopsD
 
     const currentRegionId = fromControlPoint.regionId;
 
-    return rdContext.game?.game.season.map.regions
-      .flatMap(region => region.controlPoints.map(cp => ({ ...cp, regionId: region.id })))
-      .filter(controlPoint =>
-        controlPoint.id !== fromControlPoint.id &&
-        (controlPoint.regionId === currentRegionId || fromControlPoint.paths.includes(controlPoint.id))
-      )
-      .sort((a, b) => a.name.localeCompare(b.name));
+    try {
+      return rdContext.game?.game.season.map.regions
+        .flatMap(region => region.controlPoints.map(cp => ({ ...cp, regionId: region.id })))
+        .filter(controlPoint =>
+          controlPoint.id !== fromControlPoint.id &&
+          (controlPoint.regionId === currentRegionId || fromControlPoint.paths.includes(controlPoint.id))
+        )
+        .sort((a, b) => a.name.localeCompare(b.name));
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
   }, [rdContext.game?.game.season.map.regions]);
 
   const handleQuantityChange = (stringValue: string, numValue: number) => setSelectedQuantity(numValue);
