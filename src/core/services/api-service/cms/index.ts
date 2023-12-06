@@ -119,6 +119,14 @@ class Cms {
   async getStakedTokenTotals(type: StakedTokenType) {
     return this.ryoshiDynasties.getStakedTokenTotals(type);
   }
+
+  async deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string) {
+    return this.ryoshiDynasties.deployTroops(troops, controlPointId, gameId, factionId, address, signature)
+  }
+
+  async relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string) {
+    return this.ryoshiDynasties.relocateTroops(troops, fromControlPointId, toControlPointId, fromFactionId, toFactionId, address, signature)
+  }
 }
 
 export default Cms;

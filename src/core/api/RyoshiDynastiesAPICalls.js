@@ -49,15 +49,7 @@ export const createFaction = async (address, signature, type, name, addresses=[]
   }
 }
 //gets specific factions
-export const getFactionOwned = async (address, signature) => {
-  try{
-    return await api.get("ryoshi-dynasties/factions?", 
-      {params: {address, signature}});
-  }
-  catch(error){
-    throw error;
-  }
-}
+
 export const editFaction = async (address, signature, id, name, addresses=[], type) => {
   try{
     return await api.patch("ryoshi-dynasties/factions?", 
@@ -89,41 +81,7 @@ export const delegateTroops = async (address, signature, troops, factionId) => {
     throw error;
   }
 }
-//deploys troops from a faction to a control point
-export const deployTroops = async (address, signature, gameId, troops, controlPointId, factionId) => {
-  try{
 
-    // var gameId = await getWeeklyGameId();
-    // console.log("Troops: "+troops);
-    // troops = Number(troops);
-    // console.log("ControlPointID: "+controlPointId);
-    // console.log("GameID: "+gameId);
-    // console.log("FactionID: "+factionId);
-    
-    // console.log("Address: "+address);
-    // console.log("Signature: "+signature);
-
-    return await api.patch("ryoshi-dynasties/armies?", 
-      {troops, controlPointId, gameId, factionId},
-      {params: {address: address, signature: signature, action: "DEPLOY"}}
-      );
-  }
-  catch(error){
-    throw error;
-  }
-}
-//recalls troops from a control point and returns them to the faction
-export const recallTroops = async (address, signature, gameId, troops, controlPointId, factionId) => {
-  try{
-    return await api.patch("ryoshi-dynasties/armies?", 
-      {troops, controlPointId, gameId, factionId},
-      {params: {address, signature, action: "RECALL"}}
-      );
-  }
-  catch(error){
-    throw error;
-  }
-}
 export const getReward= async (_rewardNumber) => {
   try{
     var data = await api.get("ryoshi-dynasties/rewards/"+_rewardNumber);
@@ -199,13 +157,21 @@ export const getTroopsOnControlPoint = async (address, signature, controlPoint, 
   try{
     let data = await api.get("ryoshi-dynasties/armies?",
       {params: {address, signature, gameId}});
-    var troops = 0;
-    data.data.data.forEach(element => {
-      if(element.controlPointId === controlPoint){
-        troops += element.troops;
-      }
-    });
-    return troops;
+
+    const armies = data.data.data
+      .filter(army => army.controlPointId === controlPoint)
+      .map(army => {
+        return {
+          factionId: army.factionId,
+          troops: army.troops,
+        }
+      });
+    const sum = armies.reduce((a, b) => a + (b.troops || 0), 0);
+
+    return {
+      armies,
+      sum,
+    };
   }
   catch(error){
     throw error;

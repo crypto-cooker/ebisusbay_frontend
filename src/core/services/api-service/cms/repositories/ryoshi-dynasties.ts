@@ -258,6 +258,24 @@ class RyoshiDynastiesRepository extends CmsRepository {
     });
     return response.data.data;
   }
+
+  async deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string) {
+    const response = await this.cms.patch(
+      `ryoshi-dynasties/armies`,
+      {troops, controlPointId, gameId, factionId},
+      {params: {address, signature, action: "DEPLOY"}}
+    );
+    return response.data;
+  }
+
+  async relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string) {
+    const response = await this.cms.patch(
+      `ryoshi-dynasties/armies`,
+      {troops, fromControlPointId, toControlPointId, fromFactionId, toFactionId},
+      {params: {address, signature, action: "RELOCATE"}}
+    );
+    return response.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;
