@@ -5,7 +5,8 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box, Icon,
+  Box,
+  Icon,
   ListItem,
   Stack,
   Text,
@@ -20,6 +21,11 @@ import {
 import {commify} from "ethers/lib/utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
+import {
+  RyoshiConfigBankStakingNFTCollection,
+  RyoshiConfigTraitInclusionType
+} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
+import {titleCase} from "@src/utils";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
@@ -61,83 +67,20 @@ const FaqPage = () => {
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
               <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Ryoshi VIP Information
+                How are bonus troops calculated?
               </Box>
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text>Ryoshi VIP NFTs use the following rank-based <strong>multipliers</strong>:</Text>
-              <UnorderedList>
-                {rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-vip')!.multipliers.map((multiplier, i) => (
-                  <ListItem key={i}>{multiplier.percentile}th percentile: x{commify(multiplier.value)}%</ListItem>
-                ))}
-              </UnorderedList>
+              <Text>Some collections such as Ryoshi VIP earn additional troops on top of the base APR bonus. The amount depends on the rank of the NFT. Additional bonus troops may be given on top of this value but may have eligibility requirements. See collections below for more information.</Text>
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem>
-            <AccordionButton fontSize='sm' fontWeight='bold'>
-              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Ryoshi Halloween Information
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text>Ryoshi Halloween NFTs use the following rank-based <strong>adders</strong>:</Text>
-              <UnorderedList>
-                {rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-halloween')!.adders.map((multiplier, i) => (
-                  <ListItem key={i}>{multiplier.percentile}th percentile: +{commify(multiplier.value)}%</ListItem>
-                ))}
-              </UnorderedList>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton fontSize='sm' fontWeight='bold'>
-              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Ryoshi Christmas Information
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text>Ryoshi Christmas NFTs use the following rank-based <strong>adders</strong>:</Text>
-              <UnorderedList>
-                {rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-christmas')!.adders.map((multiplier, i) => (
-                  <ListItem key={i}>{multiplier.percentile}th percentile: +{commify(multiplier.value)}%</ListItem>
-                ))}
-              </UnorderedList>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton fontSize='sm' fontWeight='bold'>
-              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Fortune Teller Information
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text>Bonus for Fortune Teller NFTs are <strong>additive</strong> and based on the NFT ID:</Text>
-              <UnorderedList>
-                {rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'fortuneteller')!.ids.map((id, i) => (
-                  <ListItem key={i}>ID {id.id}: +{commify(id.bonus)}%</ListItem>
-                ))}
-              </UnorderedList>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton fontSize='sm' fontWeight='bold'>
-              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Ryoshi Tales (Goblin Gala) Information
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text>Ryoshi Tales (Goblin Gala) NFTs use the following rank-based <strong>adders</strong>:</Text>
-              <UnorderedList>
-                {rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales')!.adders.map((multiplier, i) => (
-                  <ListItem key={i}>{multiplier.percentile}th percentile: +{commify(multiplier.value)}%</ListItem>
-                ))}
-              </UnorderedList>
-            </AccordionPanel>
-          </AccordionItem>
+          <EligibilityCriteriaItem name='Ryoshi VIP' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-vip')!} />
+          <EligibilityCriteriaItem name='Ryoshi Halloween' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-halloween')!} />
+          <EligibilityCriteriaItem name='Ryoshi Christmas' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-christmas')!} />
+          <EligibilityCriteriaItem name='Fortune Teller' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'fortuneteller')!} />
+          <EligibilityCriteriaItem name='Ryoshi Tales (Goblin Gala)' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales' && c.minId === 1 && c.maxId === 500)!} />
+          <EligibilityCriteriaItem name='Ryoshi Tales (Celestial Celebration)' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales' && c.minId === 501 && c.maxId === 700)!} />
         </Accordion>
       </Box>
     </Stack>
@@ -145,3 +88,75 @@ const FaqPage = () => {
 }
 
 export default FaqPage;
+
+const EligibilityCriteriaItem = ({ name, collectionStakingConfig }: { name: string, collectionStakingConfig: RyoshiConfigBankStakingNFTCollection }) => {
+
+  return (
+    <AccordionItem>
+      <AccordionButton fontSize='sm' fontWeight='bold'>
+        <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+          {name} Information
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
+      <AccordionPanel pb={4}>
+        {collectionStakingConfig.apr.multipliers.length > 0 && (
+          <>
+            <Text>{name} NFTs use the following rank-based <strong>multipliers</strong>:</Text>
+            <UnorderedList>
+              {collectionStakingConfig.apr.multipliers.map((multiplier, i) => (
+                <ListItem key={i}>{multiplier.percentile}th percentile: x{commify(multiplier.value)}%</ListItem>
+              ))}
+            </UnorderedList>
+          </>
+        )}
+        {collectionStakingConfig.apr.adders.length > 0 && (
+          <>
+            <Text>{name} NFTs use the following rank-based <strong>adders</strong>:</Text>
+            <UnorderedList>
+              {collectionStakingConfig.apr.adders.map((adder, i) => (
+                <ListItem key={i}>{adder.percentile}th percentile: +{commify(adder.value)}%</ListItem>
+              ))}
+            </UnorderedList>
+          </>
+        )}
+        {collectionStakingConfig.apr.ids.length > 0 && (
+          <>
+            <Text>Bonus for {name} NFTs are <strong>additive</strong> and based on the NFT ID:</Text>
+            <UnorderedList>
+              {collectionStakingConfig.apr.ids.map((id, i) => (
+                <ListItem key={i}>ID {id.id}: +{commify(id.bonus)}%</ListItem>
+              ))}
+            </UnorderedList>
+          </>
+        )}
+        {!!collectionStakingConfig.troops && collectionStakingConfig.troops.values.length > 0 && (
+          <Box mt={2}>
+            <Text>Troops for {name} NFTs use the following rank-based <strong>values</strong>:</Text>
+            <UnorderedList>
+              {collectionStakingConfig.troops.values.map((multiplier, i) => (
+                <ListItem key={i}>{multiplier.percentile}th percentile: x{commify(multiplier.value)}</ListItem>
+              ))}
+            </UnorderedList>
+
+            {collectionStakingConfig.troops.bonus.traits.length > 0 && (
+              <Box mt={2}>
+                <Text>NFTs adhering to the following specific trait specifications will gain an additional <strong>{collectionStakingConfig.troops.bonus.value}</strong> troops:</Text>
+                {collectionStakingConfig!.troops.bonus.traits.map((trait) => (
+                  <Box mt={2}>
+                    <Text>For the "{titleCase(trait.type)}" trait, NFTs must {trait.inclusion === RyoshiConfigTraitInclusionType.EXCLUDE && <>NOT</>} contain any of the following:</Text>
+                    <UnorderedList>
+                      {trait.values.map((value) => (
+                        <ListItem key={`${trait.type}${value}`}>{titleCase(value.toUpperCase())}</ListItem>
+                      ))}
+                    </UnorderedList>
+                  </Box>
+                ))}
+              </Box>
+            )}
+          </Box>
+        )}
+      </AccordionPanel>
+    </AccordionItem>
+  )
+}

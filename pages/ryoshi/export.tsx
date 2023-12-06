@@ -67,7 +67,7 @@ export const getServerSideProps = async ({query}: GetServerSidePropsContext) => 
 
     const currentTime = new Date().getTime();
 
-    if (currentTime > token.expiration) {
+    if (currentTime > token.expiry) {
       // The token has expired
       return {
         props: {
@@ -82,12 +82,11 @@ export const getServerSideProps = async ({query}: GetServerSidePropsContext) => 
       .ryoshiDynasties
       .getTroopsBreakdown(token.gameId, token.address!, token.signature);
 
-    const delegations = (troops as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
+    const delegations = (troops.faction as RdUserContextOwnerFactionTroops).delegate.users.map((user) => ({
       address: user.profileWalletAddress,
       name: user.profileName,
       troops: user.troops
     })).sort((a, b) => b.troops - a.troops);
-
 
     return {
       props: {
@@ -107,7 +106,7 @@ interface TokenProps {
   signature: string;
   gameId: number;
   type: string;
-  expiration: number;
+  expiry: number;
 }
 
 function decrypt(text: any, key: string) {

@@ -14,7 +14,13 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger,
+  ModalOverlay,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverTrigger,
   SimpleGrid,
   Spinner,
   Text,
@@ -30,7 +36,7 @@ import {ApiService} from "@src/core/services/api-service";
 import InfiniteScroll from "react-infinite-scroll-component";
 import StakingNftCard from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/staking-nft-card";
 import {appConfig} from "@src/Config";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare, ciEquals} from "@src/utils";
 import WalletNft from "@src/core/models/wallet-nft";
 import ImageService from "@src/core/services/image";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
@@ -121,13 +127,31 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
     if (hasRemainingBalance && withinUnlockedRange && withinMaxSlotRange) {
       const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
-      const stakeConfig = rdConfig.barracks.staking.nft.collections.find((c) => c.slug === collectionSlug);
+      const stakeConfigs = rdConfig.barracks.staking.nft.collections.filter((c) => c.slug === collectionSlug);
+      const stakeConfig = stakeConfigs.length < 2
+        ? stakeConfigs[0]
+        : stakeConfigs.find(c =>  c.minId <= Number(nft.nftId) && c.maxId >= Number(nft.nftId));
 
-      const percentile = (nft.rank / stakeConfig!.maxSupply) * 100;
+      const maxSupply = stakeConfig!.maxId - stakeConfig!.minId + 1;
+      const percentile = (nft.rank / maxSupply) * 100;
       const multiplier = stakeConfig!.multipliers
         .sort((a: any, b: any) => a.percentile - b.percentile)
         .find((m: any) => percentile <= m.percentile)?.value || 0;
       const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nftId)?.bonus || 0;
+
+      const bonusTroops = nft.attributes?.reduce((acc: number, attr: any) => {
+        const traitType = attr.trait_type.toLowerCase();
+        const value = attr.value.toString().toLowerCase();
+
+        for (let bonusRule of stakeConfig!.bonus) {
+          for (let traitRule of bonusRule.traits) {
+            if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
+              return bonusRule.value;
+            }
+          }
+        }
+        return acc;
+      }, 0);
 
       setPendingNfts([...pendingNfts, {
         nftAddress: nft.nftAddress,
@@ -135,6 +159,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         image: nft.image,
         rank: nft.rank,
         multiplier: multiplier + idBonus,
+        bonusTroops,
         isAlreadyStaked: stakedCount > pendingCount,
         isActive: stakeConfig!.active,
         refBalance: nft.balance ?? 1,
@@ -204,13 +229,31 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       for (const token of data) {
         const nft = await getNft(token.contractAddress, token.tokenId);
         if (nft) {
-          const stakeConfig = rdConfig.barracks.staking.nft.collections.find((c) => caseInsensitiveCompare(c.address, nft.collection.address));
+          let stakeConfigs = rdConfig.barracks.staking.nft.collections.filter((c) => caseInsensitiveCompare(c.address, nft.collection.address));
+          const stakeConfig = stakeConfigs.length < 2
+            ? stakeConfigs[0]
+            : stakeConfigs.find(c => c.minId <= Number(nft.nft.nftId) && c.maxId >= Number(nft.nft.nftId));
 
-          const percentile = (nft.nft.rank / stakeConfig!.maxSupply) * 100;
+          const maxSupply = stakeConfig!.maxId - stakeConfig!.minId + 1;
+          const percentile = (nft.nft.rank / maxSupply) * 100;
           const multiplier = stakeConfig!.multipliers
             .sort((a: any, b: any) => a.percentile - b.percentile)
             .find((m: any) => percentile <= m.percentile)?.value || 0;
           const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nft.nftId)?.bonus || 0;
+
+          const bonusTroops = nft.attributes?.reduce((acc: number, attr: any) => {
+            const traitType = attr.trait_type.toLowerCase();
+            const value = attr.value.toString().toLowerCase();
+
+            for (let bonusRule of stakeConfig!.bonus) {
+              for (let traitRule of bonusRule.traits) {
+                if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
+                  return bonusRule.value;
+                }
+              }
+            }
+            return acc;
+          }, 0);
 
           for (let i = 0; i < Number(token.amount); i++) {
             nfts.push({
@@ -219,6 +262,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
               image: nft.nft.image,
               rank: nft.nft.rank,
               multiplier: multiplier + idBonus,
+              bonusTroops,
               isAlreadyStaked: true,
               isActive: stakeConfig!.active,
               refBalance: 0,
@@ -273,7 +317,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
                   Halloween
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.ryoshiTales} onClick={handleBtnClick(tabs.ryoshiTales)}>
-                  Goblin Gala
+                  Ryoshi Tales
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
                   Christmas
@@ -313,6 +357,7 @@ interface PendingNft {
   image: string;
   rank: number;
   multiplier: number;
+  bonusTroops: number;
   isAlreadyStaked: boolean;
   isActive: boolean;
   refBalance: number;
@@ -398,31 +443,42 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
                     <PopoverTrigger>
                       <Box position='relative'>
                         <Box
-                          bg='#376dcf'
+                          bg={pendingNfts[index].isActive ? '#376dcf' : '#716A67'}
                           p={2}
                           rounded='xl'
                           border='2px dashed'
                           borderColor={pendingNfts[index].isAlreadyStaked ? 'transparent' : '#ffa71c'}
+                          cursor={pendingNfts[index].isActive ? 'auto' : 'pointer'}
                         >
                           <Box
                             width={100}
                             height={100}
-
+                            filter={pendingNfts[index].isActive ? 'auto' : 'grayscale(80%)'}
+                            opacity={pendingNfts[index].isActive ? 'auto' : 0.8}
                           >
                             <Image src={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)} rounded='lg'/>
                           </Box>
                           <Flex fontSize='xs' justify='space-between' mt={1}>
-                            <Box verticalAlign='top'>
-                              {pendingNfts[index].rank && (
-                                <HStack spacing={1}>
-                                  <Icon as={FontAwesomeIcon} icon={faAward} />
-                                  <Box as='span'>{pendingNfts[index].rank}</Box>
-                                </HStack>
-                              )}
-                            </Box>
+                            {pendingNfts[index].isActive ? (
+                              <>
+                                <Box verticalAlign='top'>
+                                  {pendingNfts[index].rank && (
+                                    <HStack spacing={1}>
+                                      <Icon as={FontAwesomeIcon} icon={faAward} />
+                                      <Box as='span'>{pendingNfts[index].rank}</Box>
+                                    </HStack>
+                                  )}
+                                </Box>
+                              </>
+                            ): (
+                              <>Inactive</>
+                            )}
                             <VStack align='end' spacing={0} fontWeight='bold'>
                               {pendingNfts[index].multiplier && (
                                 <Box>+ {pendingNfts[index].multiplier}</Box>
+                              )}
+                              {pendingNfts[index].bonusTroops && (
+                                <Box>+ {pendingNfts[index].bonusTroops}</Box>
                               )}
                             </VStack>
                           </Flex>
@@ -441,6 +497,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
                             _hover={{ bg: 'gray.600' }}
                             size='xs'
                             rounded='full'
+                            color='white'
                             onClick={(e) => {
                               e.stopPropagation(); // prevent popover
                               onRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)
@@ -572,8 +629,11 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
           ...page,
           data: page.data.filter((item) => {
             return item.attributes?.some((attr: any) => {
-              const collection = config.collections.find((c: any) => caseInsensitiveCompare(c.address, item.nftAddress));
-              const eligibility = rdContext.config.barracks.staking.nft.collections.find((e) => e.slug === collection.slug);
+              const stakeConfigs = rdContext.config.barracks.staking.nft.collections.filter((c) => ciEquals(c.address, item.nftAddress));
+              const eligibility = stakeConfigs.length < 2
+                ? stakeConfigs[0]
+                : stakeConfigs.find(c => c.minId && c.maxId && c.minId <= Number(item.nftId) && c.maxId >= Number(item.nftId));
+
               if (!eligibility) return false;
               const traitType = attr.trait_type.toLowerCase();
               const value = attr.value.toString().toLowerCase();

@@ -1,5 +1,14 @@
 import React, {memo, useEffect, useState} from 'react';
-import {caseInsensitiveCompare, humanize, isAddress, isBundle, relativePrecision} from '@src/utils';
+import {
+  appUrl,
+  cacheBustingKey,
+  caseInsensitiveCompare,
+  humanizeAdvanced,
+  isAddress,
+  isBundle,
+  isHeroesCollection,
+  relativePrecision
+} from '@src/utils';
 import Nft1155 from '@src/components-v2/feature/nft/nft1155';
 import Nft721 from '@src/components-v2/feature/nft/nft721';
 import {appConfig} from "@src/Config";
@@ -54,7 +63,7 @@ const Nft = ({ slug, id, nft, collection }: NftProps) => {
       if (traits.length > 0 && traits[0].occurrence) {
         const traitsTop = traits[0];
         const res = `${anNFT?.description ? anNFT.description.slice(0, 250) : ''} ... Top Trait: ${
-          traitsTop.value ? humanize(traitsTop.value) : 'N/A'
+          traitsTop.value ? humanizeAdvanced(traitsTop.value) : 'N/A'
         }, ${relativePrecision(traitsTop.occurrence)}%`;
 
         return res;
@@ -121,6 +130,10 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
     }
   }
 
+  const seoImage = isHeroesCollection(collection.address) ?
+    appUrl(`api/heroes/${tokenId}/og?${cacheBustingKey()}`).toString() :
+    nft.image;
+
   if (isAddress(slug)) {
     return {
       redirect: {
@@ -132,6 +145,7 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
         id: tokenId,
         collection,
         nft,
+        seoImage
       },
     };
   }

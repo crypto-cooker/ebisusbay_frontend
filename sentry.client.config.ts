@@ -6,7 +6,7 @@ import * as Sentry from "@sentry/nextjs";
 const { name, version } = require('./package.json');
 
 Sentry.init({
-  release: `${name}@${version}`,
+  // release: `${name}@${version}`,
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   environment: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT,
 
@@ -32,12 +32,4 @@ Sentry.init({
   // ],
 
   maxBreadcrumbs: 50,
-
-  beforeSend(event, hint) {
-    // Check if the event is an error
-    if (event.level === 'error') {
-      return event;  // If it is an error, send the event to Sentry
-    }
-    return null;  // If it's not an error, discard the event
-  },
 });

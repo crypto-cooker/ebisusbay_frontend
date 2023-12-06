@@ -10,7 +10,7 @@ class RyoshiDynasties {
 
   constructor() {
     this.apollo = new ApolloClient({
-      uri: urlify(config.urls.subgraph, 'ryoshi-dynasties-meeple'),
+      uri: urlify(config.urls.subgraph.root, config.urls.subgraph.ryoshiDynasties),
       cache: new InMemoryCache()
     });
   }
@@ -102,6 +102,26 @@ class RyoshiDynasties {
             endTime
             vaultId
           }
+        }
+      }
+    `;
+
+    return this.apollo.query({
+      query: gql(query),
+      variables: {
+        address: walletAddress.toLowerCase(),
+      }
+    });
+  }
+
+  async meeple(walletAddress: string) {
+    const query = `
+      query UserMeeplesQuery($address: String) {
+        meeple(id: $address) {
+          id
+          activeAmount
+          lastUpkeep
+          user
         }
       }
     `;

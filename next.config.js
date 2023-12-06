@@ -240,7 +240,7 @@ const sentryWebpackPluginOptions = {
   silent: true,
   org: "ebisus-bay",
   project: "eb-web",
-  authToken: process.env.SENTRY_AUTH_TOKEN,
+  // authToken: process.env.SENTRY_AUTH_TOKEN,
 };
 
 const sentryOptions = {

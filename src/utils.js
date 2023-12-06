@@ -125,12 +125,25 @@ export function scrollTo(scrollableElement, elmID) {
 export function getTimeDifference(date) {
   let difference = moment(new Date(), 'DD/MM/YYYY HH:mm:ss').diff(moment(date, 'DD/MM/YYYY HH:mm:ss')) / 1000;
 
-  if (difference < 60) return `${Math.floor(difference)} seconds`;
-  else if (difference < 3600) return `${Math.floor(difference / 60)} minutes`;
-  else if (difference < 86400) return `${Math.floor(difference / 3660)} hours`;
-  else if (difference < 86400 * 30) return `${Math.floor(difference / 86400)} days`;
-  else if (difference < 86400 * 30 * 12) return `${Math.floor(difference / 86400 / 30)} months`;
-  else return `${(difference / 86400 / 30 / 12).toFixed(1)} years`;
+  return getLengthOfTime(difference);
+}
+
+export function getLengthOfTime(duration) {
+  const timeUnits = [
+    { unit: 'year', threshold: 86400 * 30 * 12, roundFunc: val => (val / 86400 / 30 / 12).toFixed(1) },
+    { unit: 'month', threshold: 86400 * 30, roundFunc: val => Math.floor(val / 86400 / 30) },
+    { unit: 'day', threshold: 86400, roundFunc: val => Math.floor(val / 86400) },
+    { unit: 'hour', threshold: 3600, roundFunc: val => Math.floor(val / 3600) },
+    { unit: 'minute', threshold: 60, roundFunc: val => Math.floor(val / 60) },
+    { unit: 'second', threshold: 1, roundFunc: val => Math.floor(val) }
+  ];
+
+  for (const { unit, threshold, roundFunc } of timeUnits) {
+    if (duration >= threshold) {
+      const value = roundFunc(duration);
+      return `${value} ${pluralize(value, unit)}`;
+    }
+  }
 }
 
 export function generateRandomId() {
@@ -581,7 +594,7 @@ export const isCroSwapQuartermastersCollection = (address) => {
 export const isDynamicNftImageCollection = (address) => {
   if(!address) return false;
   if (isLandDeedsCollection(address)) return true;
-  if (isHerosCollection(address)) return true;
+  if (isHeroesCollection(address)) return true;
 
   return false;
 };
@@ -593,7 +606,7 @@ export const isLandDeedsCollection = (address) => {
     ['0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3', '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad']
   );
 };
-export const isHerosCollection = (address) => {
+export const isHeroesCollection = (address) => {
   return isCollection(
     address,
     'ryoshi-heroes',
@@ -601,8 +614,16 @@ export const isHerosCollection = (address) => {
   );
 }
 
+export const isVaultCollection = (address) => {
+  return ciEquals(address, config.contracts.vaultNft);
+}
+
 export const isPlayingCardsCollection = (address) => {
   return isCollection(address, 'ryoshi-playing-cards', '0xd87838a982a401510255ec27e603b0f5fea98d24');
+}
+
+export const isRyoshiTalesCollection = (address) => {
+  return isCollection(address, 'ryoshi-tales', ['0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04', '0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4']);
 }
 
 export const isKoban = (address, nftId) => {

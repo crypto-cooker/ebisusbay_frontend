@@ -3831,6 +3831,32 @@
         "kyc": "hidden",
         "verified": true
       }
+    },
+    {
+      "name": "Ryoshi Vaults",
+      "slug": "ryoshi-vaults",
+      "multiToken": false,
+      "address": "0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Tokenized vaults from the Bank in Ryoshi Dynasties",
+        "avatar": "/img/collections/ryoshi-vaults/avatar.webp",
+        "card": "/img/collections/ryoshi-vaults/card.webp",
+        "banner": "/img/collections/ryoshi-vaults/banner.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": "hidden",
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -9036,6 +9062,7 @@
       "maxMintPerTx": 25,
       "maxMintPerAddress": 100,
       "totalSupply": 4000,
+      "supplyOffset": 4000,
       "erc20Cost": "250",
       "erc20MemberCost": "200",
       "erc20Token": "frtn",
@@ -9225,6 +9252,54 @@
         "avatar": "/img/collections/ryoshi-heroes/avatar.webp",
         "banner": "/img/drops/ryoshi-heroes/banner.webp",
         "preview": "/img/collections/ryoshi-heroes/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 188,
+      "slug": "ryoshi-tales-celestial-celebration",
+      "collection": "ryoshi-tales",
+      "title": "Ryoshi Tales: Celestial Celebration",
+      "subtitle": "High Commanders, Royalty and Elite members of Ryoshi society have gathered in celebration of Ebisu’s 2nd anniversary!",
+      "description": "An esteemed member of the Ryoshi elite, gracing the grand Celestial Celebration with their regal presence. This noble attendee, adorned in cosmic finery, is among the distinguished few who illuminate the 2-year anniversary of Ebisu’s Bay. Each character represents the zenith of Ryoshi society, from the starlit courts of royalty to the esteemed ranks of high command.",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 200,
+      "supplyOffset": 500,
+      "erc20Cost": "450",
+      "erc20MemberCost": "450",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "rewardCost": "750",
+      "foundersOnly": false,
+      "abi": "mint-from-rewards.json",
+      "start": 1699990712000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-celestial-celebration/drop.webp",
+        "avatar": "/img/drops/ryoshi-tales-celestial-celebration/avatar.webp",
+        "banner": "/img/drops/ryoshi-tales-celestial-celebration/banner2.webp",
+        "preview": "/img/drops/ryoshi-tales-celestial-celebration/preview1.webp"
       },
       "verification": {
         "verified": true,

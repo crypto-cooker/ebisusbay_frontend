@@ -7,6 +7,7 @@ export interface RyoshiConfig {
   presale: RyoshiConfigPresale;
   armies: RyoshiConfigArmies;
   reputations: RyoshiConfigReputation;
+  experience: RyoshiConfigExperience;
 }
 
 interface RyoshiConfigReputation {
@@ -48,11 +49,26 @@ interface RyoshiConfigBankStakingNFT {
   collections: RyoshiConfigBankStakingNFTCollection[];
 }
 
-interface RyoshiConfigBankStakingNFTCollection extends RyoshiConfigCollections {
+export interface RyoshiConfigBankStakingNFTCollection extends RyoshiConfigCollections {
   active: boolean;
+  minId: number;
+  maxId: number;
+  apr: RyoshiConfigBankStakingAPR;
+  troops?: RyoshiConfigBankStakingTroops;
+}
+
+interface RyoshiConfigBankStakingAPR {
   multipliers: RyoshiConfigStakingMultiplier[];
   adders: RyoshiConfigStakingMultiplier[];
   ids: RyoshiConfigStakingIdMultiplier[];
+}
+
+interface RyoshiConfigBankStakingTroops {
+  values: RyoshiConfigStakingMultiplier[];
+  bonus: {
+    value: number;
+    traits: RyoshiConfigTraitEligibility[]
+  }
 }
 
 interface RyoshiConfigStakingMultiplier {
@@ -78,15 +94,25 @@ interface RyoshiConfigBarracksStakingNFT {
   collections: RyoshiConfigBarracksStakingNFTCollection[];
 }
 
-interface RyoshiConfigBarracksStakingNFTCollection extends RyoshiConfigCollections {
+export interface RyoshiConfigBarracksStakingNFTCollection extends RyoshiConfigCollections {
   active: boolean;
+  minId: number;
+  maxId: number;
   traits: RyoshiConfigTraitEligibility[];
   multipliers: RyoshiConfigStakingMultiplier[];
   ids: RyoshiConfigStakingIdMultiplier[];
+  bonus: RyoshiConfigBarracksStakingNFTBonus[];
 }
+
+interface RyoshiConfigBarracksStakingNFTBonus {
+  value: number;
+  traits: RyoshiConfigTraitEligibility[];
+}
+
 
 interface RyoshiConfigTownHall {
   staking: RyoshiConfigTownHallStaking;
+  ryoshi: RyoshiConfigTownHallRyoshi;
 }
 
 interface RyoshiConfigTownHallStaking {
@@ -99,7 +125,19 @@ interface RyoshiConfigTownHallStakingNFT {
 }
 
 export interface RyoshiConfigTownHallStakingNFTCollection extends RyoshiConfigCollections {
+  active: boolean;
   fortune: number;
+}
+
+interface RyoshiConfigTownHallRyoshi {
+  restockCutoff: number;
+  upkeepDecay: number;
+  upkeepActiveDays: number;
+  upkeepCosts: Array<{ threshold: number, multiplier: number }>;
+  tradeIn: {
+    tierMultiplier: number[],
+    base: {[key: number]: number}
+  }
 }
 
 interface RyoshiConfigTraitEligibility {
@@ -116,7 +154,6 @@ export enum RyoshiConfigTraitInclusionType {
 export interface RyoshiConfigCollections {
   slug: string;
   address: string;
-  maxSupply: number;
 }
 
 interface RyoshiConfigCheckinRewards {
@@ -140,4 +177,26 @@ interface RyoshiConfigFactionsRegistration {
 
 interface RyoshiConfigArmies {
   redeploymentDelay: number[];
+  recallTax: number;
+}
+
+export interface ExperienceEvent {
+  points: number;
+  coolDown: number;
+  usd?: number;
+}
+
+export interface RyoshiConfigExperience {
+  DAILY_CHECK_IN: ExperienceEvent;
+  DEPLOY_TROOPS: ExperienceEvent;
+  TROOP_KILLED: ExperienceEvent;
+  STAKE_VIP: ExperienceEvent;
+  STAKE_MITAMA: ExperienceEvent;
+  ITEM_SOLD_SELLER: ExperienceEvent;
+  OFFER_ACCEPTED_SELLER: ExperienceEvent;
+  ITEM_SOLD_BUYER: ExperienceEvent;
+  CLAIM_PLATFORM_REWARD: ExperienceEvent;
+  COMPOUND_PLATFORM_REWARD: ExperienceEvent;
+  CLAIM_MARKET_STAKING_REWARD: ExperienceEvent;
+  VERIFY_EMAIL: ExperienceEvent;
 }

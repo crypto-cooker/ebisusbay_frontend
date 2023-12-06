@@ -3,7 +3,7 @@ import React from "react";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {Box, SimpleGrid} from "@chakra-ui/react";
-import {isEvoSkullCollection, isLazyHorseCollection, isLazyHorsePonyCollection} from "@src/utils";
+import {isEvoSkullCollection, isLazyHorseCollection, isLazyHorsePonyCollection, isVaultCollection} from "@src/utils";
 
 interface PropertiesProps {
   address: string;
@@ -17,21 +17,20 @@ const Properties = ({ address, slug, attributes, queryKey }: PropertiesProps) =>
     queryKey: ['CollectionTraits', address],
     queryFn: () => ApiService.withoutKey().getCollectionTraits(address),
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 2,
-    initialData: {}
+    staleTime: 1000 * 60 * 2
   });
 
   return (
     <SimpleGrid columns={{base: 1, sm: 2, lg: 3}} gap={3}>
       {attributes.filter((a: any) => a.value !== 'None').map((data: any, i: number) => {
         let occurrence = data.occurrence;
-        if (!!collectionTraits[data.trait_type]?.[data.value]) {
+        if (collectionTraits && !!collectionTraits[data.trait_type]?.[data.value]) {
           occurrence = collectionTraits[data.trait_type][data.value].occurrence;
         }
 
         return (
           <Box key={`property-${i}`} h='full'>
-            {queryKey === 'powertraits' && isEvoSkullCollection(address) ? (
+            {queryKey === 'powertraits' && (isEvoSkullCollection(address) || isVaultCollection(address)) ? (
               <Trait
                 key={i}
                 title={data.key}

@@ -86,6 +86,25 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "minter",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "BurntFortune",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint8",
         "name": "version",
         "type": "uint8"
@@ -391,7 +410,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "whitelistCost",
+            "name": "rewardsPrice",
             "type": "uint256"
           },
           {
@@ -510,6 +529,21 @@
         "internalType": "uint256",
         "name": "maxMintAmount_",
         "type": "uint256"
+      },
+      {
+        "internalType": "contract IERC20Burnable",
+        "name": "_fortune",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_mitama",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IPlatformRewards",
+        "name": "_rewards",
+        "type": "address"
       }
     ],
     "name": "initialize",
@@ -527,6 +561,11 @@
       {
         "internalType": "contract IERC20",
         "name": "_mitama",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IPlatformRewards",
+        "name": "_rewards",
         "type": "address"
       }
     ],
@@ -742,12 +781,38 @@
   },
   {
     "inputs": [],
+    "name": "price",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "proxiableUUID",
     "outputs": [
       {
         "internalType": "bytes32",
         "name": "",
         "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "publicStartTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -797,6 +862,19 @@
         "internalType": "contract IPlatformRewards",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rewardsPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -934,19 +1012,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_price",
-        "type": "uint256"
-      }
-    ],
-    "name": "setDiscountPrice",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint16",
         "name": "maxAmount",
         "type": "uint16"
@@ -974,24 +1039,21 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_startTime",
+        "name": "_regularPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_discountPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_rewardsPrice",
         "type": "uint256"
       }
     ],
-    "name": "setPublicStartTime",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_rewards",
-        "type": "address"
-      }
-    ],
-    "name": "setRewards",
+    "name": "setPrices",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1000,11 +1062,11 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_price",
+        "name": "_startTime",
         "type": "uint256"
       }
     ],
-    "name": "setTokenPrice",
+    "name": "setPublicStartTime",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1074,19 +1136,6 @@
       }
     ],
     "name": "tokenOfOwnerByIndex",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "tokenPrice",
     "outputs": [
       {
         "internalType": "uint256",

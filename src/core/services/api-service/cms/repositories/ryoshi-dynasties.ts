@@ -1,10 +1,14 @@
 import CmsRepository from "@src/core/services/api-service/cms/repositories/index";
 import {
   BankStakeNft,
-  BarracksStakeNft, RdBattleLog,
+  BarracksStakeNft,
+  RdBattleLog,
   RdFaction,
   RdGameContext,
-  RdUserContext, RdUserContextNoOwnerFactionTroops, RdUserContextOwnerFactionTroops, StakedTokenType, TownHallStakeNft
+  RdUserContext,
+  RdUserContextGameTroops,
+  StakedTokenType,
+  TownHallStakeNft
 } from "@src/core/services/api-service/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
@@ -243,7 +247,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
         signature
       }
     });
-    return response.data.data as RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops;
+    return response.data.data as RdUserContextGameTroops;
   }
 
   async getStakedTokenTotals(type: StakedTokenType): Promise<{[key: string]: number}> {
@@ -253,6 +257,24 @@ class RyoshiDynastiesRepository extends CmsRepository {
       }
     });
     return response.data.data;
+  }
+
+  async deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string) {
+    const response = await this.cms.patch(
+      `ryoshi-dynasties/armies`,
+      {troops, controlPointId, gameId, factionId},
+      {params: {address, signature, action: "DEPLOY"}}
+    );
+    return response.data;
+  }
+
+  async relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string) {
+    const response = await this.cms.patch(
+      `ryoshi-dynasties/armies`,
+      {troops, fromControlPointId, toControlPointId, fromFactionId, toFactionId},
+      {params: {address, signature, action: "RELOCATE"}}
+    );
+    return response.data;
   }
 }
 

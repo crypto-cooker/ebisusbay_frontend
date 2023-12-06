@@ -11,6 +11,7 @@ import {
   Center,
   Flex,
   HStack,
+  Icon,
   Image,
   SimpleGrid,
   Spinner,
@@ -42,6 +43,8 @@ import {ApiService} from "@src/core/services/api-service";
 import {useQuery} from "@tanstack/react-query";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faGem} from "@fortawesome/free-solid-svg-icons";
 
 const config = appConfig();
 
@@ -49,9 +52,10 @@ interface StakePageProps {
   onEditVault: (vault: FortuneStakingAccount, type: string) => void;
   onCreateVault: (vaultIndex: number) => void;
   onWithdrawVault: (vault: FortuneStakingAccount) => void;
+  onTokenizeVault: (vault: FortuneStakingAccount) => void;
 }
 
-const StakePage = ({onEditVault, onCreateVault, onWithdrawVault}: StakePageProps) => {
+const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault}: StakePageProps) => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
 
@@ -100,6 +104,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault}: StakePageProps
                             index={index}
                             onEditVault={(type: string) => onEditVault(vault, type)}
                             onWithdrawVault={() => onWithdrawVault(vault)}
+                            onTokenizeVault={() => onTokenizeVault(vault)}
                             onClosed={refetch}
                           />
                         </Box>
@@ -146,10 +151,11 @@ interface VaultProps {
   index: number;
   onEditVault: (type: string) => void;
   onWithdrawVault: () => void;
+  onTokenizeVault: () => void;
   onClosed: () => void;
 }
 
-const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProps) => {
+const Vault = ({vault, index, onEditVault, onWithdrawVault, onTokenizeVault, onClosed}: VaultProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useAppSelector((state) => state.user);
 
@@ -250,7 +256,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
               <Box>APR</Box>
               <Box textAlign='end'>
                 <VStack align='end' spacing={0}>
-                  <Box fontWeight='bold'>{totalApr}%</Box>
+                  <Box fontWeight='bold'>{round(totalApr, 2)}%</Box>
                   <Box fontSize='xs'>{baseApr}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
                 </VStack>
               </Box>
@@ -273,6 +279,12 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onClosed}: VaultProp
                         + Increase Duration
                       </Button>
                     )}
+                    <Button
+                      leftIcon={<Icon as={FontAwesomeIcon} icon={faGem} />}
+                      onClick={onTokenizeVault}
+                    >
+                      Tokenize Vault
+                    </Button>
                   </Stack>
                 </Center>
                 <Center mt={4}>

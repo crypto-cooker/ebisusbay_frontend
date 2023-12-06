@@ -43,6 +43,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
 
   const [canClaim, setCanClaim] = useState(false);
   const [nextClaim, setNextClaim] = useState<number>();
+  const snowTheme = true ? '_snow' : ''
 
 
   useEffect(() => {
@@ -62,7 +63,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
       }
   }, [user.address, rdUserContext])
 
-  //src='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
+  //src=`/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
   const adSpot = useMemo(() => {
     return (
       <Box>
@@ -81,11 +82,13 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
             {ads.map((ad, index) => (
               <SwiperSlide key={ad.name} virtualIndex={index}>
                 <Center>
-                  <Image
-                    alt={ad.name}
-                    src={ImageService.translate(ad.details.imageSm).convert()}
-                    maxH='300px'
-                  />
+                  <Link as={NextLink} href={ad.details.link.url} isExternal={ad.details.link.external}>
+                    <Image
+                      alt={ad.name}
+                      src={ImageService.translate(ad.details.imageSm).convert()}
+                      maxH='300px'
+                    />
+                  </Link>
                 </Center>
               </SwiperSlide>
             ))}
@@ -95,10 +98,10 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
             gridHeight={'15px 1fr 15px'}
             gridWidth={'18px 1fr 18px'}
             w='626px'
-            topFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
-            rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
-            bottomFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'
-            leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'
+            topFrame={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/large_frame_top_1200${snowTheme}.png`).convert()}
+            rightFrame={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_frame_right${snowTheme}.png`).convert()}
+            bottomFrame={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/large_frame_top_1200${snowTheme}.png`).convert()}
+            leftFrame={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_frame_left${snowTheme}.png`).convert()}
             mb={10}
           >
             <Swiper
@@ -154,72 +157,6 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
       </Box>
 
       {adSpot}
-      {/*<Flex h={isMobile ? "300px" :"200px"}>*/}
-
-      {/*</Flex>*/}
-
-      {/*<Flex h={isMobile ? "300px" :"200px"} >*/}
-      {/*  <Swiper*/}
-      {/*    spaceBetween={10}*/}
-      {/*    slidesPerView={1}*/}
-      {/*    navigation={true}*/}
-      {/*    loop={true}*/}
-      {/*    modules={[Navigation, Pagination]}*/}
-      {/*    className="mySwiper"*/}
-      {/*  >*/}
-      {/*  {ads.map((ad) => (*/}
-      {/*    <SwiperSlide>*/}
-      {/*      <Link as={NextLink} href={ad.details.link.url} isExternal={ad.details.link.external}>*/}
-      {/*        {isMobile ? (*/}
-      {/*          <Image*/}
-      {/*            alt={ad.name}*/}
-      {/*            src={ImageService.translate(ad.details.imageSm).convert()}*/}
-      {/*            maxH='300px'*/}
-      {/*          />*/}
-      {/*        ) : (*/}
-      {/*          // <Image*/}
-      {/*          //   alt="Buy FRTN on VVS"*/}
-      {/*          //   src={ImageService.translate('/img/ryoshi-dynasties/announcements/time-machines.webp').convert()}*/}
-      {/*          // />*/}
-      {/*          <MapFrame*/}
-      {/*            gridHeight={'15px 1fr 15px'}*/}
-      {/*            gridWidth={'18px 1fr 18px'}*/}
-      {/*            h='75px'*/}
-      {/*            w='590px'*/}
-      {/*            topFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'*/}
-      {/*            rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'*/}
-      {/*            bottomFrame='/img/ryoshi-dynasties/announcements/base/large_frame_top_1200.png'*/}
-      {/*            leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'*/}
-      {/*          >*/}
-      {/*            <Box*/}
-      {/*              rounded='md'*/}
-      {/*              minWidth='100%'*/}
-      {/*              minHeight='100%'*/}
-      {/*              position='relative'*/}
-      {/*              mt={[0, "0rem !important"]}*/}
-      {/*            >*/}
-      {/*              <Box*/}
-      {/*                cursor='pointer'*/}
-      {/*                onClick={() => {*/}
-      {/*                  // router.push('/drops/ballies-cheerleaders');*/}
-      {/*                }}*/}
-      {/*              >*/}
-      {/*                <Link as={NextLink} href={ad.details.link.url} isExternal={ad.details.link.external}>*/}
-      {/*                  <Image*/}
-      {/*                    alt={ad.name}*/}
-      {/*                    src={ImageService.translate(ad.details.imageLg).convert()}*/}
-      {/*                  />*/}
-      {/*                </Link>*/}
-      {/*              </Box>*/}
-      {/*            </Box>*/}
-      {/*          </MapFrame>*/}
-      {/*        )}*/}
-      {/*      </Link>*/}
-      {/*    </SwiperSlide>*/}
-      {/*  ))}*/}
-      {/*  </Swiper>*/}
-      {/*</Flex>*/}
-
 
       <Grid
         h='100px'
@@ -243,7 +180,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
               w='250px'
               fontSize={{base: '12px', sm: 'md'}}
               zIndex={1}
-              src='/img/ryoshi-dynasties/announcements/base/small_header.png'
+              src= {ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_header${snowTheme}.png`).convert()}
               >
             </Image>
           </Flex>
@@ -251,7 +188,10 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
 
       <VStack spacing={0} >
 
-        <Text w='100%' mt={'2'} zIndex={9} as='b' fontSize={'24px'} mb='12px' textColor={'#fefaee'}>
+        <Text
+          w='100%' mt={'2'} zIndex={9} as='b' fontSize={'24px'} mb='12px' textColor={'#fefaee'}
+          textShadow={'2px 2px 5px black'}
+        >
           Information
         </Text>
 
@@ -315,10 +255,10 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
               gridWidth={'16px 1fr 16px'}
               h='75px'
               w='250px'
-              topFrame='/img/ryoshi-dynasties/announcements/base/small_frame_top.png'
-              rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
-              bottomFrame='/img/ryoshi-dynasties/announcements/base/small_frame_bottom.png'
-              leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'
+              topFrame={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_frame_top${snowTheme}.png`).convert()}
+              rightFrame={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_frame_right${snowTheme}.png`).convert()}
+              bottomFrame={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_frame_bottom${snowTheme}.png`).convert()}
+              leftFrame={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_frame_left${snowTheme}.png`).convert()}
             >
               <Flex justifyContent={'center'} >
                 <Image
@@ -365,10 +305,10 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
               gridWidth={'16px 1fr 16px'}
               h='75px'
               w='250px'
-              topFrame='/img/ryoshi-dynasties/announcements/base/small_frame_top.png'
-              rightFrame='/img/ryoshi-dynasties/announcements/base/small_frame_right.png'
-              bottomFrame='/img/ryoshi-dynasties/announcements/base/small_frame_bottom.png'
-              leftFrame='/img/ryoshi-dynasties/announcements/base/small_frame_left.png'
+              topFrame={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_frame_top${snowTheme}.png`).convert()}
+              rightFrame={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_frame_right${snowTheme}.png`).convert()}
+              bottomFrame={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_frame_bottom${snowTheme}.png`).convert()}
+              leftFrame={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_frame_left${snowTheme}.png`).convert()}
             >
               <Flex justifyContent={'center'} >
                 <Image

@@ -106,7 +106,8 @@ export function mapDrop(drop: any): Drop {
     redirect: drop.redirect,
     erc20Only: drop.erc20Only ?? false,
     memberMitama: drop.memberMitama ?? 0,
-    collection: drop.collection
+    collection: drop.collection,
+    supplyOffset: drop.supplyOffset ?? 0
   }
 
   if (!!drop.memberCost) obj.memberCost = Number(drop.memberCost);
@@ -114,6 +115,7 @@ export function mapDrop(drop: any): Drop {
   if (!!drop.erc20Cost) obj.erc20Cost = Number(drop.erc20Cost);
   if (!!drop.erc20MemberCost) obj.erc20MemberCost = Number(drop.erc20MemberCost);
   if (!!drop.erc20WhitelistCost) obj.erc20WhitelistCost = Number(drop.erc20WhitelistCost);
+  if (!!drop.rewardCost) obj.rewardCost = Number(drop.rewardCost);
 
   if (!!drop.salePeriods) {
     obj.salePeriods = {};

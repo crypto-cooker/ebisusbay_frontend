@@ -8,6 +8,7 @@ import React from 'react';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {motion} from "framer-motion";
 import ImageService from "@src/core/services/image";
+import Meeple from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/meeple";
 
 const gothamBook = localFont({
   src: '../../../../../../fonts/Gotham-Book.woff2',
@@ -20,6 +21,8 @@ interface BarracksProps {
 
 const TownHall = ({onBack}: BarracksProps) => {
   const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
+  const { isOpen: isOpenMeeple, onOpen: onOpenMeeple, onClose: onCloseMeeple} = useDisclosure();
+
   const [handleAuthedNavigation] = useAuthedFunction();
 
 
@@ -77,6 +80,7 @@ const TownHall = ({onBack}: BarracksProps) => {
                 border='8px solid #F48F0C'
                 w={14}
                 h={14}
+                color='white'
                 onClick={onBack}
                 _groupHover={{
                   bg: '#de8b08',
@@ -95,9 +99,11 @@ const TownHall = ({onBack}: BarracksProps) => {
           </Flex>
 
           <Flex align={'center'} minH={'calc(100vh - 175px)'} justifyContent={'center'}>
+            <Meeple isOpen={isOpenMeeple} onClose={onCloseMeeple} />
             <StakeNfts isOpen={isOpenStakeNFTs} onClose={onCloseStakeNFTs} />
             <VStack spacing={4} align='stretch'>
               <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
+              <RdButton fontSize='18' onClick={() => handleAuthedNavigation(onOpenMeeple)}>Ryoshi Management</RdButton>
             </VStack>
           </Flex>
         </Flex>

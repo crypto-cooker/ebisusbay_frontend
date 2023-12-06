@@ -85,12 +85,13 @@
       "0xB929D3002208f405180D3C07616F88EDa45F3e14",
       "0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9",
       "0xA9448e3e496f75488306195F34e49a7fCE5cbD0c",
-      "0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8"
+      "0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8",
+      "0x400e237c4F88e5728E0D6088315DeCD856a10EDd"
     ],
     "socials": {
       "website": "https://app.croskull.com/",
       "twitter": "https://twitter.com/CroskullNFT",
-      "discord": "https://discord.gg/q3nWxw8QRY",
+      "discord": "https://discord.gg/snB7Hngjyd",
       "medium": "https://medium.com/@croskullnft"
     },
     "featured": true,
@@ -134,7 +135,8 @@
       "0x4Ce0B9608006533dA056170f1efe8eEa771e0d19",
       "0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14",
       "0x28Fc9DaCa33E0a3Ada666064F54B400E63596c6C",
-      "0xFd14Cb97102eC422ADF507138580798cb2e6B824"
+      "0xFd14Cb97102eC422ADF507138580798cb2e6B824",
+      "0x4F410976c6687193dDC0da9C4F3ca1Dfd0ba0209"
     ],
     "socials": {
       "website": "https://hidethefish.com/",
@@ -226,7 +228,7 @@
     "socials": {
       "website": "https://www.boomersquad.io/",
       "twitter": "https://twitter.com/BoomerSquadNFT1",
-      "discord": "https://discord.gg/boomersquad",
+      "discord": "https://discord.gg/boomer-squad-nft-939820143486320650",
       "medium": "https://medium.com/@BoomerSquadNFT"
     },
     "featured": true,
@@ -513,13 +515,41 @@
       "0xad350404b1564c732f3ed6673cfd8bdf93206a97",
       "0xb9efdd70E93DbE4C700a229deCAf09e24C4Aef8C",
       "0x0d511FAA531d8D36aDE88daFcBbb9cE83Be42111",
-      "0x5141E99523002317BE6D63214Bf300cBD8269bE6"
+      "0x5141E99523002317BE6D63214Bf300cBD8269bE6",
+      "0xbf21dD4385fee72106bf235814AEf29d454c1a93"
     ],
     "socials": {
       "website": "https://0xluckless.com",
       "twitter": "https://twitter.com/0xLuckless",
       "discord": "https://discord.gg/REbVZ9rACc",
       "medium": "https://medium.com/@0xLuckless"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "ballies",
+    "name": "Ballies",
+    "description": "Ballies is a gaming platform with an on-ramping lend-to-earn system, which operates as a web2 game while incorporating all the benefits of web3.\n\nOur mission is to continue creating a strong social community of gamers. The platform has already begun onboarding thousands of players and is projected to attact millions more.",
+    "images": {
+      "banner": "/img/brands/ballies/banner.webp",
+      "preview": "/img/brands/ballies/preview.webp"
+    },
+    "collections": [
+      "0xF12B07570804c56B4ce8f63e7121BEC8C7CA1542",
+      "0x9E38e9FE0b613be34F1826A5a3d63d9759d29873",
+      "0x861C150f818A882AAA3aFA91694Fc9a6C5CCcA1C",
+      "0x5c18d5eb211203eb80b591aa71a269b1e16e9eba",
+      "0xd4390FF0122E9E79aF2054bF9B23103d20bFd155"
+    ],
+    "socials": {
+      "website": "https://ballies.gg/",
+      "twitter": "https://twitter.com/Ballies_NFT",
+      "discord": "https://discord.gg/Hec5CgFKfX",
+      "medium": "https://medium.com/@BalliesNFT",
+      "instagram": "https://www.instagram.com/ballies_nft",
+      "youtube": "https://www.youtube.com/@Ballies"
     },
     "featured": true,
     "categories": [],
@@ -789,6 +819,38 @@
     "style": {}
   },
   {
+    "slug": "time-machine-nfts",
+    "name": "Time Machine NFTs",
+    "description": "Time Machine NFTs is an immersive ecosystem with plenty of moving parts to keep you entertained and earning passive income weekly.  From soft staking to adventures, beginning earning today for our strategy game (currently in development). Each project in our ecosystem has their purpose. Join our discord today to learn.",
+    "images": {
+      "banner": "/img/brands/time-machine-nfts/banner.webp",
+      "preview": "/img/brands/time-machine-nfts/preview.webp"
+    },
+    "collections": [
+      "0x9b72f7d5aecee857cc3d1a1a3357aff0e342d0a8",
+      "0x146cf0ee7b6b986769782ea832e8327f9dff55e7",
+      "0x482eBe3063ED2d2281AAfec31941705787432A1A",
+      "0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35",
+      "0x55c8f67e6D3f037297Daf94AD2bCC67CC477BEa9",
+      "0x1c4924f36Fe60374DB6ac206894D82F03d522933",
+      "0x15Af2503a934D211A1936684fEd986E7E3f417db",
+      "0x6cC790CAE45EC057f9637784279A475CC91cf517",
+      "0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645",
+      "0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475",
+      "0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F",
+      "0xfF567a62d7BF2CF984F02175C8bd485E3C4E2c0e",
+      "0x739b5380156Fa14C7956145048d52dF27EDedfCE"
+    ],
+    "socials": {
+      "website": "https://timemachine101.com/",
+      "twitter": "https://twitter.com/TimeMachines101",
+      "discord": "https://discord.gg/34ezMF2M5P"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "cr00ts-club",
     "name": "Cr00ts Club",
     "description": "Welcome in the growing ecosystem of the Cr00ts, we are here to takeover the Cronos chain \uD83D\uDE0E",
@@ -799,7 +861,9 @@
     "collections": [
       "0xf8c82cc093D22f6dC782F0D781f4770E17266C23",
       "0xca00aba7689e3c0f9f74e1f8d82e61c04c787734",
-      "0x08FB1f6625d034019f2F6a3E70bab2FaA55CA068"
+      "0x08FB1f6625d034019f2F6a3E70bab2FaA55CA068",
+      "0xd4E29bdba77c948b04C3ACd67C1dAC17264d2983",
+      "0x0521217B36a1482E6798692687f836c68c7F3837"
     ],
     "socials": {
       "website": "https://cr00tsnft.ca/",
@@ -841,49 +905,6 @@
     "style": {}
   },
   {
-    "slug": "zap-projects",
-    "name": "Zap Projects",
-    "description": "",
-    "images": {
-      "banner": "/img/brands/zap-projects/banner.webp"
-    },
-    "collections": [
-      "0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc",
-      "0xF257E02D8c5c9a405589F99859f8b28b0Ccc5474",
-      "0x63dF2BB08bcc9807c0ef5BD0C169FF3b4b289543"
-    ],
-    "socials": {
-      "website": "https://zap7art.club/",
-      "twitter": "https://twitter.com/zap7project",
-      "discord": "https://discord.gg/tBgUbvsSZX"
-    },
-    "featured": true,
-    "categories": [],
-    "style": {}
-  },
-  {
-    "slug": "sleazy-weasel",
-    "name": "Sleazy Weasel",
-    "description": "Welcome to #StaySleazy, where style, success, and self-empowerment converge. Our brand page is a hub for the Sleazy Weasels movement, inspiring individuals to manifest their own success. Discover our fashion-forward pieces, embrace your unique style, and find financial freedom within. Join our elite community as we celebrate ambition, resilience, and the relentless pursuit of success. #StaySleazy, where the world is yours for the taking.",
-    "images": {
-      "banner": "/img/brands/sleazy-weasel/banner.webp",
-      "preview": "/img/brands/sleazy-weasel/preview.webp"
-    },
-    "collections": [
-      "0x07BEa69887Ce393F91b3D5697bADB53b92367C71",
-      "0xEeCA8a560F0b7069E7a310F883A8aff435ffDd92"
-    ],
-    "socials": {
-      "website": "https://staysleazy.com/",
-      "twitter": "https://twitter.com/sleazy_weasel",
-      "discord": "https://discord.gg/7FN3P8evtE",
-      "telegram": "https://t.me/sleazywsal"
-    },
-    "featured": false,
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "kaiju-of-cronos",
     "name": "Kaiju of Cronos",
     "description": "Kaiju of Cronos, a double KYC'd project, utilizes IRL business to maintain a consistent cash flow within the ecosystem, while systemically providing longevity to the NFT project. \nOur IRL business brand is crucial to creating rewards, IRL products and services to all, no matter the market conditions.",
@@ -906,8 +927,29 @@
     "style": {}
   },
   {
+    "slug": "zap-projects",
+    "name": "Zap Projects",
+    "description": "",
+    "images": {
+      "banner": "/img/brands/zap-projects/banner.webp"
+    },
+    "collections": [
+      "0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc",
+      "0xF257E02D8c5c9a405589F99859f8b28b0Ccc5474",
+      "0x63dF2BB08bcc9807c0ef5BD0C169FF3b4b289543"
+    ],
+    "socials": {
+      "website": "https://zap7art.club/",
+      "twitter": "https://twitter.com/zap7project",
+      "discord": "https://discord.gg/tBgUbvsSZX"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "daolab",
-    "name": "DaoLab",
+    "name": "DaoLabs",
     "description": "The DaoLabs project is an Ecosystem inspired by two concepts:\n• Dao is a decentralized autonomous organization and\n• Dao (Tao) as a term from East Asian philosophy, which represents the natural order of the universe, the greater whole, that unites all the individual elements of the universe.\nDr Dao, main collection, was born with the aim of uniting artists, developers and builders to improve Cronos Projects, providing Incubator services and giving a percentage back from minting revenues.",
     "images": {
       "banner": "/img/brands/daolab/banner.webp",
@@ -935,22 +977,22 @@
     "style": {}
   },
   {
-    "slug": "baby-joey-nft",
-    "name": "BabyJoey NFT",
-    "description": "Bringing together the BabyJoeyNFT collections under one brand page. Brought to you by The BabyHop project. Play to earn, royalty distributions and much more!",
+    "slug": "sleazy-weasel",
+    "name": "Sleazy Weasel",
+    "description": "Welcome to #StaySleazy, where style, success, and self-empowerment converge. Our brand page is a hub for the Sleazy Weasels movement, inspiring individuals to manifest their own success. Discover our fashion-forward pieces, embrace your unique style, and find financial freedom within. Join our elite community as we celebrate ambition, resilience, and the relentless pursuit of success. #StaySleazy, where the world is yours for the taking.",
     "images": {
-      "banner": "/img/brands/baby-joey-nft/banner.webp"
+      "banner": "/img/brands/sleazy-weasel/banner.webp",
+      "preview": "/img/brands/sleazy-weasel/preview.webp"
     },
     "collections": [
-      "0x04eE3890b7d6c5e1D9B7FEcd19bADA7Fa60A2770",
-      "0xee40C7EeB6bA2E1B9Bf5caA73D29B133175aAF1F",
-      "0x6f6F280786Aeb03c08e79C50fc553102FB6AB498"
+      "0x07BEa69887Ce393F91b3D5697bADB53b92367C71",
+      "0xEeCA8a560F0b7069E7a310F883A8aff435ffDd92"
     ],
     "socials": {
-      "website": "https://www.babyhop.finance/",
-      "twitter": "https://twitter.com/BabyHop__",
-      "discord": "https://discord.gg/fnVzKYPbg/",
-      "telegram": "https://t.me/BabyHopToken"
+      "website": "https://staysleazy.com/",
+      "twitter": "https://twitter.com/sleazy_weasel",
+      "discord": "https://discord.gg/7FN3P8evtE",
+      "telegram": "https://t.me/sleazywsal"
     },
     "featured": false,
     "categories": [],
@@ -1006,27 +1048,6 @@
     "style": {}
   },
   {
-    "slug": "dripcro",
-    "name": "DripCro",
-    "description": "An NFT club community",
-    "images": {
-      "banner": "/img/brands/dripcro/banner.webp",
-      "preview": "/img/brands/dripcro/preview.webp"
-    },
-    "collections": [
-      "0x079B32D7a72b58588d62164927cEF13C4c3657D0",
-      "0x5529B34ea252B57B239738D3CD81DE1B11c47D3F",
-      "0x966B18Afe9D9062d611D0C246A1959b7a25FCdDe"
-    ],
-    "socials": {
-      "website": "https://dripderivatives.com/",
-      "discord": "https://discord.gg/ttaPM95WcR"
-    },
-    "featured": false,
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "titans-of-cronos",
     "name": "Titans of Cronos",
     "description": "3 cro to the moon",
@@ -1078,6 +1099,50 @@
     "style": {}
   },
   {
+    "slug": "dripcro",
+    "name": "DripCro",
+    "description": "An NFT club community",
+    "images": {
+      "banner": "/img/brands/dripcro/banner.webp",
+      "preview": "/img/brands/dripcro/preview.webp"
+    },
+    "collections": [
+      "0x079B32D7a72b58588d62164927cEF13C4c3657D0",
+      "0x5529B34ea252B57B239738D3CD81DE1B11c47D3F",
+      "0x966B18Afe9D9062d611D0C246A1959b7a25FCdDe"
+    ],
+    "socials": {
+      "website": "https://dripderivatives.com/",
+      "discord": "https://discord.gg/ttaPM95WcR"
+    },
+    "featured": false,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "the-cronos-club",
+    "name": "The Cronos Club",
+    "description": "The Cronos Club originally emerged to provide support and guidance to the community. \nProviding a beacon of light. \nWe have since introduced iconic collections like Punk Weapons, Cyberpunk Chronicles, and Origami Legends. Our soft staking innovation empowers holders for rewards on both Ryoshi Dynasties and within the Club.\nOur journey knows no bounds as we strive to enrich the Clubber experience. Expect more fun, greater rewards, and heightened excitement. Join us on this epic adventure!",
+    "images": {
+      "banner": "/img/brands/the-cronos-club/banner.webp",
+      "preview": "/img/brands/the-cronos-club/preview.webp"
+    },
+    "collections": [
+      "0xc6Cfb3f2D9D33FF1D0B77cE78c5dD6f790B5605A",
+      "0x6625e0b113CC4f4E70Fc409Cd1ABFcE8Cf7E747b",
+      "0x690B7743c8A5ae50882B8829650a9CF3F2e84f91"
+    ],
+    "socials": {
+      "website": "https://thecronosclub.com/",
+      "twitter": "https://twitter.com/The_Cronos_Club",
+      "discord": "https://t.co/jC4gQo64Kj",
+      "medium": "https://medium.com/@the_cronos_club/the-cronos-club-white-paper-3da971441d02"
+    },
+    "featured": false,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "the-rainbowland-metaverse",
     "name": "The Rainbowland Metaverse",
     "description": "Introducing the Rainbowland Metaverse: A World of Infinite Possibilities\n\nWelcome to the Rainbowland Metaverse, a groundbreaking digital realm where endless adventures, lucrative opportunities, and artistic creativity converge. Our metaverse comprises three remarkable collections, all proudly listed on EbisusBay, each offering a unique experience that invites you to be part of something extraordinary.",
@@ -1096,6 +1161,28 @@
       "discord": "https://discord.gg/vPrsBGEngd",
       "telegram": "https://t.me/newsrainbowland",
       "medium": "https://medium/.com/@the-rainbowland-metaverse"
+    },
+    "featured": false,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "baby-joey-nft",
+    "name": "BabyJoey NFT",
+    "description": "Bringing together the BabyJoeyNFT collections under one brand page. Brought to you by The BabyHop project. Play to earn, royalty distributions and much more!",
+    "images": {
+      "banner": "/img/brands/baby-joey-nft/banner.webp"
+    },
+    "collections": [
+      "0x04eE3890b7d6c5e1D9B7FEcd19bADA7Fa60A2770",
+      "0xee40C7EeB6bA2E1B9Bf5caA73D29B133175aAF1F",
+      "0x6f6F280786Aeb03c08e79C50fc553102FB6AB498"
+    ],
+    "socials": {
+      "website": "https://www.babyhop.finance/",
+      "twitter": "https://twitter.com/BabyHop__",
+      "discord": "https://discord.gg/fnVzKYPbg/",
+      "telegram": "https://t.me/BabyHopToken"
     },
     "featured": false,
     "categories": [],

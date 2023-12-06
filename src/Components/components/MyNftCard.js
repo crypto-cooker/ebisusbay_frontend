@@ -3,10 +3,11 @@ import {useRouter} from 'next/router';
 import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import {
+  faBank,
   faBoltLightning,
   faEllipsisH,
-  faExchangeAlt,
-  faHand,
+  faExchangeAlt, faFileImport,
+  faHand, faImage,
   faLink,
   faPen,
   faPlusCircle,
@@ -49,12 +50,14 @@ const MyNftCard = ({
   isStaked = false,
   canCancel = false,
   canUpdate = false,
+  isVault = false,
   onTransferButtonPressed,
   onSellButtonPressed,
   onCancelButtonPressed,
   onUpdateButtonPressed,
   onAddToBatchListingButtonPressed,
   onRemoveFromBatchListingButtonPressed,
+  onImportVaultButtonPressed,
   newTab = false,
 }) => {
   const history = useRouter();
@@ -131,6 +134,14 @@ const MyNftCard = ({
         icon: faTimes,
         label: 'Cancel',
         handleClick: onCancelButtonPressed,
+      });
+    }
+
+    if (isVault) {
+      options.push({
+        icon: faBank,
+        label: 'Import Vault',
+        handleClick: onImportVaultButtonPressed,
       });
     }
 
@@ -213,7 +224,7 @@ const MyNftCard = ({
               onClick={() => navigateTo(nftUrl)}
               cursor="pointer"
             >
-                <DynamicNftImage address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
+                <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
                   <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
                             title={nft.name}
                             newTab={true}
@@ -313,9 +324,7 @@ const MyNftCard = ({
                   <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onUpdateButtonPressed}>Update</Text>
                 )}
               </Box>
-              <MenuPopup options={getOptions()}>
-                <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
-              </MenuPopup>
+              <MenuPopup options={getOptions()} />
             </div>
           </Box>
         </Flex>

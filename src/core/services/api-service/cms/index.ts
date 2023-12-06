@@ -12,9 +12,9 @@ import {PagedList} from "@src/core/services/api-service/paginated-list";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 
 class Cms {
-  private profiles;
-  private gdcClaims;
-  private ryoshiDynasties;
+  private profiles: ProfilesRepository;
+  private gdcClaims: GdcClaimsRepository;
+  private ryoshiDynasties: RyoshiDynastiesRepository;
 
   constructor(apiKey?: string) {
     this.profiles = new ProfilesRepository(apiKey);
@@ -118,6 +118,14 @@ class Cms {
 
   async getStakedTokenTotals(type: StakedTokenType) {
     return this.ryoshiDynasties.getStakedTokenTotals(type);
+  }
+
+  async deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string) {
+    return this.ryoshiDynasties.deployTroops(troops, controlPointId, gameId, factionId, address, signature)
+  }
+
+  async relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string) {
+    return this.ryoshiDynasties.relocateTroops(troops, fromControlPointId, toControlPointId, fromFactionId, toFactionId, address, signature)
   }
 }
 

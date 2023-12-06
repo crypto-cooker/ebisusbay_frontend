@@ -32,7 +32,7 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import React, {ChangeEvent, useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {ArrowBackIcon, CopyIcon, DownloadIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
 import RdButton from "../../../../components/rd-button";
@@ -42,6 +42,7 @@ import {useDispatch} from "react-redux";
 import {getRegistrationCost} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {
   RdFaction,
+  RdUserContextGameTroops,
   RdUserContextNoOwnerFactionTroops,
   RdUserContextOwnerFactionTroops
 } from "@src/core/services/api-service/types";
@@ -66,6 +67,7 @@ import {motion} from "framer-motion";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import axios from 'axios';
+import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 
 const config = appConfig();
 const gothamBook = localFont({
@@ -108,12 +110,13 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
   }
 
   return (
-<Box
+    <Box
       position='relative'
       h='calc(100vh - 74px)'
       overflow={'scroll'}
       minH={{base: '900px', xl: '100vh' }}
-      >
+      color='white'
+    >
      <motion.div
         variants={item}
         initial="hidden"
@@ -164,6 +167,7 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
                 border='8px solid #F48F0C'
                 w={14}
                 h={14}
+                color='white'
                 onClick={onClose}
                 _groupHover={{
                   bg: '#de8b08',
@@ -233,6 +237,11 @@ const AllianceCenter = ({onClose}: AllianceCenterProps) => {
 
 export default AllianceCenter;
 
+const breakdownTabs = {
+  user: 'user',
+  faction: 'faction'
+};
+
 const CurrentFaction = () => {
   const user = useAppSelector((state) => state.user);
   const {requestSignature} = useEnforceSignature();
@@ -247,9 +256,11 @@ const CurrentFaction = () => {
   const [isRegisteredCurrentSeason, setIsRegisteredCurrentSeason] = useState(false);
   const [isRegisteredNextSeason, setIsRegisteredNextSeason] = useState(false);
 
-  const [troopsByGame, setTroopsByGame] = useState(rdContext.user?.season.troops);
+  const [troopsByGame, setTroopsByGame] = useState<RdUserContextGameTroops | undefined>(rdContext.user?.game.troops);
   const [loadingTroopsBreakdown, setLoadingTroopsBreakdown] = useState(false);
   const [selectedGame, setSelectedGame] = useState<string>('current');
+
+  const [currentTab, setCurrentTab] = useState(breakdownTabs.user);
 
   const getDaysSinceGameStart = () => {
     if(!rdContext.game) return 0;
@@ -332,6 +343,8 @@ const CurrentFaction = () => {
 
   const [focusedGameId, setFocusedGameId] = useState<number>(rdContext.game?.game.id ?? 0);
   const handleGameChange = async (game?: string) => {
+    if (!rdContext.user) return;
+
     if (game === 'previous' && !!rdContext.game) {
       try {
         setLoadingTroopsBreakdown(true);
@@ -342,16 +355,20 @@ const CurrentFaction = () => {
         setFocusedGameId(previousGameId);
       } catch (e) {
         console.log(e);
-        setTroopsByGame(rdContext.user?.season.troops);
+        setTroopsByGame(rdContext.user.game.troops);
         setFocusedGameId(rdContext.game.game.id);
       } finally {
         setLoadingTroopsBreakdown(false);
       }
     } else {
-      setTroopsByGame(rdContext.user?.season.troops);
+      setTroopsByGame(rdContext.user.game.troops);
     }
   }
-  
+
+  const handleBtnClick = (key: string) => (e: any) => {
+    setCurrentTab(key);
+  };
+
   useEffect(() => {
     if(!rdContext.user) return;
 
@@ -360,7 +377,7 @@ const CurrentFaction = () => {
     setIsRegisteredCurrentSeason(rdContext.user.season.registrations.current);
     setIsRegisteredNextSeason(rdContext.user.season.registrations.next);
 
-    setTroopsByGame(rdContext.user.season.troops);
+    setTroopsByGame(rdContext.user.game.troops);
     setSelectedGame('current');
   }, [rdContext.user]);
 
@@ -370,53 +387,75 @@ const CurrentFaction = () => {
 
   return (
     <Box mt={4}>
-          {!!rdContext.user?.faction ? (
-            <VStack>
-              <Avatar
-                size='2xl'
-                src={rdContext.user?.faction.image}
-                filter={factionCreatedAndEnabled ? 'none' : 'grayscale(100%)'}
-                // w='150px'
-                // rounded='lg
-              />
-              <Text paddingTop='40px' position='absolute' fontSize='lg' as='i' fontWeight='bold' textColor='red'>{factionCreatedAndEnabled ? '':'Faction Disbanded'}</Text>
-              <Stack direction='row' align='center'>
-                <Text fontSize='lg' fontWeight='bold'>{rdContext.user.faction.name}</Text>
-                <IconButton
-                  aria-label='Edit Faction'
-                  icon={<EditIcon />}
-                  variant='ghost'
-                  color={getDaysSinceGameStart() > rdContext.config.factions.editableDays ? 'red' :'#FFD700'}
-                  onClick={OpenEditFaction}
-                />
-              </Stack>
-              {factionCreatedAndEnabled ? (
-                <>
-                  <Box bg='#564D4A' p={2} rounded='lg' w='full'>
-                    <SimpleGrid columns={2}>
-                      <VStack align='start' spacing={0} my='auto'>
-                        <Text fontSize='sm'>Current Season {!!rdContext.game?.season && <>({rdContext.game?.season.blockId})</>}</Text>
-                        <Text fontSize='lg' fontWeight='bold'>{!!rdContext.user.season.faction ? 'Registered' : 'Unregistered'}</Text>
-                      </VStack>
-                      {!rdContext.user.season.faction && !!rdContext.game?.season && (
-                        <RdButton
-                          hoverIcon={false}
-                          onClick={() => handleRegister(rdContext.game!.season.blockId)}
-                          isLoading={isExecutingRegister}
-                          isDisabled={isExecutingRegister}
-                        >
-                          Register
-                        </RdButton>
-                      )}
-                    </SimpleGrid>
-                    {!rdContext.user.season.faction && (
-                      <Box textAlign='start' mt={2} fontSize='sm'>
-                        <Text>Regular Cost: {commify(rdContext.config.factions.registration.fortuneCost)} Fortune + {rdContext.config.factions.registration.mitamaCost} Mitama</Text>
-                      </Box>
-                    )}
+      {!!rdContext.user?.faction ? (
+        <VStack>
+          <Avatar
+            size='2xl'
+            src={rdContext.user?.faction.image}
+            filter={factionCreatedAndEnabled ? 'none' : 'grayscale(100%)'}
+            // w='150px'
+            // rounded='lg
+          />
+          <Text paddingTop='40px' position='absolute' fontSize='lg' as='i' fontWeight='bold' textColor='red'>{factionCreatedAndEnabled ? '':'Faction Disbanded'}</Text>
+          <Stack direction='row' align='center'>
+            <Text fontSize='lg' fontWeight='bold'>{rdContext.user.faction.name}</Text>
+            <IconButton
+              aria-label='Edit Faction'
+              icon={<EditIcon />}
+              variant='ghost'
+              color={getDaysSinceGameStart() > rdContext.config.factions.editableDays ? 'red' :'#FFD700'}
+              onClick={OpenEditFaction}
+            />
+          </Stack>
+          {factionCreatedAndEnabled && (
+            <>
+              <Box bg='#564D4A' p={2} rounded='lg' w='full'>
+                <SimpleGrid columns={2}>
+                  <VStack align='start' spacing={0} my='auto'>
+                    <Text fontSize='sm'>Current Season {!!rdContext.game?.season && <>({rdContext.game?.season.blockId})</>}</Text>
+                    <Text fontSize='lg' fontWeight='bold'>{!!rdContext.user.season.faction ? 'Registered' : 'Unregistered'}</Text>
+                  </VStack>
+                  {!rdContext.user.season.faction && !!rdContext.game?.season && (
+                    <RdButton
+                      hoverIcon={false}
+                      onClick={() => handleRegister(rdContext.game!.season.blockId)}
+                      isLoading={isExecutingRegister}
+                      isDisabled={isExecutingRegister}
+                    >
+                      Register
+                    </RdButton>
+                  )}
+                </SimpleGrid>
+                {!rdContext.user.season.faction && (
+                  <Box textAlign='start' mt={2} fontSize='sm'>
+                    <Text>Regular Cost: {commify(rdContext.config.factions.registration.fortuneCost)} Fortune + {rdContext.config.factions.registration.mitamaCost} Mitama</Text>
                   </Box>
-                </>
-              ) : (!!rdContext.user && rdContext.user.season.troops.available.total > 0) && (
+                )}
+              </Box>
+            </>
+          )}
+          {(!!rdContext.user && rdContext.user.game.troops.user.available.total > 0) && (
+            <RdButton
+              onClick={onOpenDelegate}
+              maxH='50px'
+              size='sm'
+            >
+              Delegate
+            </RdButton>
+          )}
+        </VStack>
+      ) : (
+        <Center>
+          <VStack spacing={6} mb={2} w='full'>
+            <Text>You are not the owner of any faction yet</Text>
+            <Stack direction='row' justify='space-around' w='full'>
+              <RdButton
+                onClick={onOpenCreateFaction}
+                size='sm'
+              >
+                Create Faction
+              </RdButton>
+              {(!!rdContext.user && rdContext.user.game.troops.user.available.total > 0 && !factionCreatedAndEnabled) && (
                 <RdButton
                   onClick={onOpenDelegate}
                   maxH='50px'
@@ -425,59 +464,66 @@ const CurrentFaction = () => {
                   Delegate
                 </RdButton>
               )}
-            </VStack>
-          ) : (
-            <Center>
-              <VStack spacing={6} mb={2} w='full'>
-                <Text>You are not the owner of any faction yet</Text>
-                <Stack direction='row' justify='space-around' w='full'>
-                  <RdButton
-                    onClick={onOpenCreateFaction}
-                    size='sm'
-                  >
-                    Create Faction
-                  </RdButton>
-                  {(!!rdContext.user && rdContext.user.season.troops.available.total > 0 && !factionCreatedAndEnabled) && (
-                    <RdButton
-                      onClick={onOpenDelegate}
-                      maxH='50px'
-                      size='sm'
-                    >
-                      Delegate
-                    </RdButton>
-                  )}
-                </Stack>
-              </VStack>
-            </Center>
-          )}
+            </Stack>
+          </VStack>
+        </Center>
+      )}
 
-          {!!rdContext.user && (
-            <>
-              <Flex mt={4} justify='space-between'>
-                <HStack>
-                  <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={6}/>
-                  <Text fontSize='xl' fontWeight='bold'textAlign='start'>Troops</Text>
-                </HStack>
-                <Select
-                  onChange={(e) => setSelectedGame(e.target.value)}
-                  value={selectedGame}
-                  maxW='175px'
-                  size='sm'
-                  rounded='md'
-                >
-                  <option value='current'>Current Game</option>
-                  <option value='previous'>Previous Game</option>
-                </Select>
-              </Flex>
-              {!!troopsByGame && (
-                <TroopsBreakdown
-                  faction={rdContext.user.faction}
-                  troops={troopsByGame}
-                  gameId={focusedGameId}
-                />
+      {!!rdContext.user && (
+        <>
+          <Flex mt={4} justify='space-between'>
+            <HStack>
+              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={6}/>
+              <Text fontSize='xl' fontWeight='bold'textAlign='start'>Ryoshi On Duty</Text>
+            </HStack>
+            {!!rdContext.game && rdContext.game.history.previousGameId > 0 && (
+              <Select
+                onChange={(e) => setSelectedGame(e.target.value)}
+                value={selectedGame}
+                maxW='175px'
+                size='sm'
+                rounded='md'
+              >
+                <option value='current'>Current Game</option>
+                <option value='previous'>Previous Game</option>x
+              </Select>
+            )}
+          </Flex>
+
+          <Flex direction='row' justify='center' mt={2}>
+            <SimpleGrid columns={!!troopsByGame?.faction ? 2 : 1}>
+              <RdTabButton size='sm' isActive={currentTab === breakdownTabs.user} onClick={handleBtnClick(breakdownTabs.user)}>
+                User Owned
+              </RdTabButton>
+              {!!troopsByGame?.faction && (
+                <RdTabButton size='sm' isActive={currentTab === breakdownTabs.faction} onClick={handleBtnClick(breakdownTabs.faction)}>
+                  Faction Owned
+                </RdTabButton>
               )}
-            </>
+            </SimpleGrid>
+          </Flex>
+          {!!troopsByGame && (
+            <Box mt={4}>
+              {currentTab === breakdownTabs.user ? (
+                <Box>
+                  <TroopsBreakdown
+                    troops={troopsByGame.user}
+                    gameId={focusedGameId}
+                  />
+                </Box>
+              ) : currentTab === breakdownTabs.faction && !!troopsByGame.faction && (
+                <Box>
+                  <TroopsBreakdown
+                    faction={rdContext.user.faction}
+                    troops={troopsByGame.faction}
+                    gameId={focusedGameId}
+                  />
+                </Box>
+              )}
+            </Box>
           )}
+        </>
+      )}
 
       {!!rdContext.user && (
         <>
@@ -519,7 +565,7 @@ const CurrentFaction = () => {
   );
 }
 
-const TroopsBreakdown = ({faction, troops, gameId}: {faction: RdFaction, gameId: number, troops: RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops}) => {
+const TroopsBreakdown = ({faction, troops, gameId}: {faction?: RdFaction, gameId: number, troops: RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops}) => {
   const user = useAppSelector((state) => state.user);
   const {signature} = useEnforceSignature();
 
@@ -537,7 +583,7 @@ const TroopsBreakdown = ({faction, troops, gameId}: {faction: RdFaction, gameId:
           <SimpleGrid columns={2} w='full'>
             <Box textAlign='start'>Owned</Box>
             <Box textAlign='end'>{commify(troops.overall.owned)}</Box>
-            {faction && faction.isEnabled && (
+            {!!faction && faction.isEnabled && (
               <>
                 <Box textAlign='start'>Delegated</Box>
                 <Box textAlign='end'>{commify(troops.overall.delegated)}</Box>
@@ -853,6 +899,7 @@ const ExportDataComponent = ({data, gameId, address, signature}: {data: any, gam
         size='xs'
         leftIcon={<DownloadIcon />}
         onClick={onOpen}
+        color='#FDAB1A'
       >
         Export Options
       </Button>

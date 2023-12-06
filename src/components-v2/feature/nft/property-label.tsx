@@ -5,6 +5,7 @@ import Blockies from 'react-blockies';
 import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 
 import LayeredIcon from '../../../Components/components/LayeredIcon';
+import {Image} from "@chakra-ui/react";
 
 const VerifiedIcon = styled.span`
   font-size: 8px;
@@ -38,7 +39,14 @@ const NftPropertyLabel = ({label, value, avatar, address, verified, to, hover, p
         <div className="author_list_pp">
           <span>
             {!!avatar ? (
-              <img className="lazy" src={avatar} alt={value} title={hover} />
+              <Image
+                src={avatar}
+                alt={value}
+                title={hover}
+                w={50}
+                h={50}
+                objectFit='cover'
+              />
             ) : !!address && (
               <Blockies seed={address.toLowerCase()} size={10} scale={5} />
             )}

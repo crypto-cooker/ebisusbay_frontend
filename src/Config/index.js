@@ -21,7 +21,6 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.com/',
       app: 'https://app.ebisusbay.com/',
-      subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
       cmsSocket: 'wss://cms.ebisusbay.com/socket/',
       explorer: 'https://cronoscan.com/',
@@ -34,6 +33,13 @@ export const configData = {
         files: 'https://cdn-prod.ebisusbay.com/files/',
         apng: 'https://ebisusbay-prod-no-op.b-cdn.net/',
         app: 'https://cdn-prod.ebisusbay.com/'
+      },
+      subgraph: {
+        root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+        ryoshiDynasties: 'ryoshi-dynasties-meeple',
+        ryoshiPresale: 'ryoshi-presale',
+        stakedOwners: 'staked-owners',
+        staking: 'staking'
       }
     },
     rpc: {
@@ -63,7 +69,8 @@ export const configData = {
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
-      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8'
+      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
+      vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F'
     },
     tokens: {
       loot: {
@@ -110,6 +117,11 @@ export const configData = {
         name: 'Candy',
         symbol: 'CANDY',
         address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977'
+      },
+      ttt: {
+        name: 'TTT',
+        symbol: 'TTT',
+        address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6'
       }
     },
     collections: rpcConfig.known_contracts,
@@ -138,7 +150,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt'],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -203,6 +215,27 @@ export const configData = {
           '0x1368a855545724B165F8c3e466ec30e1fB2A3683': ['cro', 'frtn', 'bcro'], // Football Squares S2
           '0x5c18d5eb211203eb80b591aa71a269b1e16e9eba': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Ballies: The Gear v2
           '0xE1049178296ce004996AFb16B0816c5A95aC8482': ['cro', 'frtn', 'candy'], // Bored Candy
+          '0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW
+          '0x65AB0251d29c9C473c8d01BFfa2966F891fB1181': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // MAD CROW
+          '0x937879726455531dB135F9b8D88F38dF5D4Eb13b': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW NEST
+          '0x0f1439a290e86a38157831fe27a3dcd302904055': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CROW PUNKS
+          '0x13d13e2410A34Bfe5502D50ea4FCFBd591D7589E': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Wrapped Cronos Punk
+          '0xd33CFeF82377fef83703B9D84151a477B08Ab3b8': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW Airdrops
+          '0xccc777777ac85999fc9fe355f25cd908060ec9ea': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW Customs
+          '0x3d7777ff1908B54b57038A2556d6904f71468e2D': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // 3D CROW
+          '0x9b72f7d5aecee857cc3d1a1a3357aff0e342d0a8': ['cro', 'frtn', 'ttt'], // Time Machine 101
+          '0x146cf0ee7b6b986769782ea832e8327f9dff55e7': ['cro', 'frtn', 'ttt'], // Tata's Guardians
+          '0x482eBe3063ED2d2281AAfec31941705787432A1A': ['cro', 'frtn', 'ttt'], // Time Machine 102: The Travellers
+          '0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35': ['cro', 'frtn', 'ttt'], // Time Ship Blueprints
+          '0x55c8f67e6D3f037297Daf94AD2bCC67CC477BEa9': ['cro', 'frtn', 'ttt'], // Time Troops
+          '0x1c4924f36Fe60374DB6ac206894D82F03d522933': ['cro', 'frtn', 'ttt'], // Time Creatures Class A
+          '0x15Af2503a934D211A1936684fEd986E7E3f417db': ['cro', 'frtn', 'ttt'], // Time Creatures Class B
+          '0x6cC790CAE45EC057f9637784279A475CC91cf517': ['cro', 'frtn', 'ttt'], // Animated Time Gods
+          '0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645': ['cro', 'frtn', 'ttt'], // Time Commanders
+          '0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475': ['cro', 'frtn', 'ttt'], // Time Creature Ships
+          '0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F': ['cro', 'frtn', 'ttt'], // Time Cronos Planets
+          '0xfF567a62d7BF2CF984F02175C8bd485E3C4E2c0e': ['cro', 'frtn', 'ttt'], // Time Ship Components
+          '0x739b5380156Fa14C7956145048d52dF27EDedfCE': ['cro', 'frtn', 'ttt'], // Tata's Twisted Tonics
         }
       }
     }
@@ -216,7 +249,6 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.biz/',
       app: 'https://app.ebisusbay.biz/',
-      subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.biz/api/',
       cmsSocket: 'wss://cms.ebisusbay.biz/socket/',
       explorer: 'https://cronoscan.com/',
@@ -229,6 +261,13 @@ export const configData = {
         files: 'https://cdn-dev.ebisusbay.biz/files/',
         apng: 'https://ebisusbay-prod-no-op.b-cdn.net/',
         app: 'https://cdn-dev.ebisusbay.biz/'
+      },
+      subgraph: {
+        root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+        ryoshiDynasties: 'ryoshi-dynasties-meeple',
+        ryoshiPresale: 'ryoshi-presale',
+        stakedOwners: 'staked-owners',
+        staking: 'staking'
       }
     },
     rpc: {
@@ -258,7 +297,8 @@ export const configData = {
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
-      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8'
+      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
+      vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F'
     },
     tokens: {
       loot: {
@@ -358,7 +398,6 @@ export const configData = {
     urls: {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
-      subgraph: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
       cms: 'https://testcms.ebisusbay.biz/api/',
       // cms: "http://localhost:4000/api/",
       cmsSocket: 'wss://testcms.ebisusbay.biz/socket/',
@@ -372,6 +411,13 @@ export const configData = {
         files: 'https://cdn-test.ebisusbay.biz/files/',
         apng: 'https://ebisusbay-test-no-op.b-cdn.net/',
         app: 'https://cdn-test.ebisusbay.biz/'
+      },
+      subgraph: {
+        root: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
+        ryoshiDynasties: 'ryoshi-dynasties',
+        ryoshiPresale: 'ryoshi-presale',
+        stakedOwners: 'staked-owners',
+        staking: 'staking'
       }
     },
     rpc: {
@@ -401,7 +447,8 @@ export const configData = {
       rewards: '0xB775F2Ef8E007F6719fF0fc113048180b4482e2c',
       presaleVaults: '0x677a4B2910e0e5667907B5bf4cD4fdb188e99281',
       seasonUnlocks: '0x107ca22a421b24b0986150E51ce03b772b56440f',
-      townHall: '0xEe68452B79653298Af5109Dae5cD4ABA3c4E1934'
+      townHall: '0xEe68452B79653298Af5109Dae5cD4ABA3c4E1934',
+      vaultNft: '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74'
     },
     tokens: {
       loot: {
@@ -486,7 +533,8 @@ export const configData = {
           '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0': ['frtn'],
           '0xa937e814A2c5e99E9e86c4F34162c4F012F75a52': ['cro', 'frtn'],
           '0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9': ['cro', 'frtn'],
-          '0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f': ['cro', 'frtn']
+          '0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f': ['cro', 'frtn'],
+          '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74': ['cro']
         }
       }
     }
@@ -500,7 +548,6 @@ export const configData = {
     urls: {
       api: 'https://api.ebisusbay.com/',
       app: 'http://localhost:3000/',
-      subgraph: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
       cms: 'https://cms.ebisusbay.com/api/',
       cmsSocket: 'wss://cms.ebisusbay.com/socket/',
       explorer: 'https://cronoscan.com/',
@@ -513,6 +560,13 @@ export const configData = {
         files: 'https://cdn-prod.ebisusbay.com/files/',
         apng: 'https://ebisusbay-prod-no-op.b-cdn.net/',
         app: 'https://cdn-prod.ebisusbay.com/'
+      },
+      subgraph: {
+        root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
+        ryoshiDynasties: 'ryoshi-dynasties-meeple',
+        ryoshiPresale: 'ryoshi-presale',
+        stakedOwners: 'staked-owners',
+        staking: 'staking'
       }
     },
     rpc: {
@@ -541,7 +595,9 @@ export const configData = {
       fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
       presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
-      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af'
+      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
+      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
+      vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F'
     },
     tokens: {
       loot: {

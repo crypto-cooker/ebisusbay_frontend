@@ -235,7 +235,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                     />
                   </Watermarked>
                 ) : (
-                  <DynamicNftImage address={listing.nftAddress} id={listing.nftId}>
+                  <DynamicNftImage nft={listing.nft} address={listing.nftAddress} id={listing.nftId}>
                     <AnyMedia
                       image={nftCardUrl(listing.nftAddress, listing.nft.image)}
                       className={`card-img-top ${imgClass}`}
@@ -317,9 +317,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                     <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleAddToCart}>Add to Cart</Text>
                   )}
                 </Box>
-                <MenuPopup options={getOptions()}>
-                  <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
-                </MenuPopup>
+                <MenuPopup options={getOptions()} />
               </div>
             </Box>
           </Flex>

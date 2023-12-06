@@ -7,7 +7,7 @@ import WalletNft from "@src/core/models/wallet-nft";
 import {Listing} from "@src/core/models/listing";
 import {
     Erc20Account,
-    FortuneStakingAccount, PresaleVault,
+    FortuneStakingAccount, Meeple, PresaleVault,
     StakedToken,
     StakingAccount
 } from "@src/core/services/api-service/graph/types";
@@ -52,7 +52,10 @@ export interface RyoshiDynastiesApi {
     getBankStakingAccount(address: string): Promise<StakingAccount | null>;
     getFactions(gameId?: number): Promise<RdFaction[]>;
     getBattleLog(query: GetBattleLog): Promise<PagedList<RdBattleLog>>;
-    getTroopsBreakdown(gameId: number, address: string, signature: string): Promise<RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops>;
+    getTroopsBreakdown(gameId: number, address: string, signature: string): Promise<RdUserContextGameTroops>;
+    getUserMeeples(address: string): Promise<Meeple | null>;
+    deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string): Promise<any>;
+    relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string): Promise<any>
 }
 
 export enum ListingState {
@@ -135,6 +138,7 @@ export interface RdControlPoint {
     points: number;
     regionId: number;
     rewardId: number;
+    paths: number[];
     uuid: string;
     leaderBoard: RdControlPointLeaderBoard[];
 }
@@ -150,6 +154,7 @@ export interface RdUserContext {
     faction: RdFaction;
     armies: RdUserContextArmies;
     season: RdUserContextSeason;
+    game: RdUserContextGame;
     bank: {
         nfts: any[];
         bonus: {
@@ -174,8 +179,16 @@ export interface RdUserContext {
 
 interface RdUserContextSeason {
     faction: RdFaction;
-    troops: RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops;
     registrations: RdUserContextSeasonRegistration;
+}
+
+interface RdUserContextGame {
+    troops: RdUserContextGameTroops
+}
+
+export interface RdUserContextGameTroops {
+    user: RdUserContextNoOwnerFactionTroops;
+    faction: RdUserContextOwnerFactionTroops;
 }
 
 export interface RdUserContextOwnerFactionTroops {
@@ -328,6 +341,7 @@ interface RdSeasonRegionControlPoint {
     name: string;
     coordinates: string;
     uuid: string;
+    paths?: number[];
 }
 
 interface RdGameRewards {

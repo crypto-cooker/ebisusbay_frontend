@@ -9,6 +9,8 @@ import CreateVaultPage
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/create-vault-page";
 import WithdrawVaultPage
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/withdraw-vault-page";
+import TokenizeVaultPage
+  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/tokenize-vault-page";
 
 interface StakeFortuneProps {
   address: string;
@@ -53,6 +55,11 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
     setTitle('Emergency Withdraw');
   }, [returnHome]);
 
+  const handleTokenizeVault = useCallback((vault: FortuneStakingAccount) => {
+    setPage(<TokenizeVaultPage vault={vault} onReturn={returnHome} />);
+    setTitle('Tokenize Vault');
+  }, [returnHome]);
+
   return (
     <RdModal
       isOpen={isOpen}
@@ -69,6 +76,7 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
           onEditVault={handleEditVault}
           onCreateVault={handleCreateVault}
           onWithdrawVault={handleWithdrawVault}
+          onTokenizeVault={handleTokenizeVault}
         />
       )}
     </RdModal>

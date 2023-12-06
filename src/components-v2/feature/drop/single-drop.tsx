@@ -7,7 +7,7 @@ import {useRouter} from 'next/router';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
-import {isFounderDrop, isPlayingCardsCollection, newlineText,} from '@src/utils';
+import {isFounderDrop, newlineText,} from '@src/utils';
 import {DropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi, ERC20} from '@src/Contracts/Abis';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
@@ -19,10 +19,10 @@ import {MintBox} from "@src/components-v2/feature/drop/mint-box";
 import {useAppSelector} from "@src/Store/hooks";
 import {Drop, SpecialWhitelist} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
-import {commify} from "ethers/lib/utils";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import Markdown from "react-markdown";
+
+const Markdown= dynamic(() => import('react-markdown'),{ ssr: false });
 
 const config = appConfig();
 
@@ -207,11 +207,8 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     if (infos.whitelistCost) setWhitelistCost(Number(ethers.utils.formatEther(infos.whitelistCost)));
     setCanMintQuantity(Math.min(canMint, infos.maxMintPerTx));
 
-
-    if (isPlayingCardsCollection(drop.collection)) {
-      setTotalSupply(infos.totalSupply - 8000);
-      setMaxSupply(infos.maxSupply - 8000);
-    }
+    setTotalSupply(infos.totalSupply - drop.supplyOffset);
+    setMaxSupply(infos.maxSupply - drop.supplyOffset);
   };
 
   const calculateStatus = (drop: any, totalSupply: number, maxSupply: number) => {

@@ -89,6 +89,7 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
                     w={14}
                     h={14}
                     fontSize='28px'
+                    color='white'
                     onClick={onUtilBtnClick}
                     _groupHover={{
                       bg: '#de8b08',
@@ -117,6 +118,7 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
                     border='8px solid #F48F0C'
                     w={14}
                     h={14}
+                    color='white'
                     onClick={onClose}
                     _groupHover={{
                       bg: '#de8b08',
@@ -167,34 +169,34 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
   )
 }
 
-export const RdModalBody = ({children}: {children: ReactNode}) => {
+export const RdModalBody = ({ children, ...props }: BoxProps & { children?: ReactNode }) => {
   return (
-    <Box p={2}>
+    <Box px={2} pb={2} pt={1} {...props}>
       {children}
     </Box>
   )
 }
 
-export const RdModalFooter = ({children}: {children: ReactNode}) => {
+export const RdModalFooter = ({ children, ...props }: BoxProps & { children?: ReactNode }) => {
   return (
-    <Box p={4}>
+    <Box p={4} {...props}>
       {children}
     </Box>
   )
 }
 
-export const RdModalBox = (props: BoxProps) => {
+export const RdModalBox = ({ children, ...props }: BoxProps & { children?: ReactNode }) => {
   return (
     <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' {...props}>
-      {props.children}
+      {children}
     </Box>
   )
 }
 
-export const RdModalAlert = (props: BoxProps) => {
+export const RdModalAlert = ({ children, ...props }: BoxProps & { children?: ReactNode }) => {
   return (
-    <Box p={4} textAlign='center'>
-      {props.children}
+    <Box p={4} textAlign='center' {...props}>
+      {children}
     </Box>
   )
 }

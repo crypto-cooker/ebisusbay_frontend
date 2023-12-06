@@ -274,25 +274,14 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
           <VStack ms={2} textAlign='center' px={3}>
             <HStack>
               <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
-              <Text fontWeight='bold' textDecoration='underline'>DEADLINE: {new Date(1699738898000).toDateString()}, {new Date(1699738898000).toTimeString()}!</Text>
+              <Text>
+                As of 11 November 2023, all member and staking benefits have now ended for this NFT. This NFT is now a collectible only.
+              </Text>
             </HStack>
-            <Text>
-              Staking benefits have now ended for this NFT.
-            </Text>
-            <Text>
-              But you can still swap your Ebisu's Bay VIP Founding Member for <strong>10x Ryoshi Tales VIP</strong> NFTs and enjoy increased benefits in the Ebisu's Bay ecosystem. Click the "View drop" link below to get started.
-            </Text>
-            <Text>
-              VIPs will will no longer be able to be swapped after this date
-            </Text>
             <Box>
               <Link href="https://blog.ebisusbay.com/ebisus-bay-vip-split-506b05c619c7" isExternal fontWeight="bold">
                 Learn more
               </Link>
-              <span className="mx-2">|</span>
-              <NextLink href="/drops/ryoshi-tales-vip" >
-                <Link fontWeight="bold">View drop</Link>
-              </NextLink>
             </Box>
           </VStack>
         </Box>

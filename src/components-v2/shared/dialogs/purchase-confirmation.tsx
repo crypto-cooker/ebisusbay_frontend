@@ -101,12 +101,21 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   }
 
   const handleBuyErc20 = (address: string) => {
-    const url = new URL('https://vvs.finance/swap');
-    if (user.address) {
-      url.searchParams.append('outputCurrency', address);
-      url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
+    if (token?.symbol === 'TTT') {
+      const url = new URL('https://app.cronaswap.org/swap');
+      if (user.address) {
+        url.searchParams.append('outputCurrency', address);
+        url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
+      }
+      window.open(url, '_blank');
+    } else {
+      const url = new URL('https://vvs.finance/swap');
+      if (user.address) {
+        url.searchParams.append('outputCurrency', address);
+        url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
+      }
+      window.open(url, '_blank');
     }
-    window.open(url, '_blank');
   }
 
   const handleExecutePurchase = async () => {
@@ -216,7 +225,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                   {isBundle(listing.nftAddress) ? (
                     <ImagesContainer nft={listing.nft} />
                   ) : (
-                    <DynamicNftImage address={listing.nft.address ?? listing.nft.nftAddress} id={listing.nft.id ?? listing.nft.nftId} showStats={false}>
+                    <DynamicNftImage nft={listing.nft} address={listing.nft.address ?? listing.nft.nftAddress} id={listing.nft.id ?? listing.nft.nftId} showStats={false}>
                       <AnyMedia
                         image={specialImageTransform(listing.nft.nftAddress, listing.nft.image)}
                         video={listing.nft.video ?? listing.nft.animation_url}

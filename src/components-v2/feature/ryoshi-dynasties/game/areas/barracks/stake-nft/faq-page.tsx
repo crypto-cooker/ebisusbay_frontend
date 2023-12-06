@@ -1,18 +1,18 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {
   Accordion,
   AccordionButton,
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box, Icon,
+  Box,
+  Icon,
   ListItem,
   Stack,
   Text,
   UnorderedList,
 } from "@chakra-ui/react"
 import localFont from 'next/font/local';
-import {useAppSelector} from "@src/Store/hooks";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
@@ -21,13 +21,15 @@ import {titleCase} from "@src/utils";
 import {commify} from "ethers/lib/utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
+import {
+  RyoshiConfigBarracksStakingNFTCollection,
+  RyoshiConfigTraitInclusionType
+} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
 const FaqPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const user = useAppSelector((state) => state.user);
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   return (
@@ -59,94 +61,11 @@ const FaqPage = () => {
               <Text>The amount of bonus troops depends on the collection type and rank of the NFT. See the below FAQ items for more information specific to each collection</Text>
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem>
-            <AccordionButton fontSize='sm' fontWeight='bold'>
-              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Ryoshi VIP Information
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text>Ryoshi VIP NFTs must contain any of the following for the "Tools" trait:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-vip')!.traits[0].values.map((value) => (
-                  <ListItem key={value}>{titleCase(value.toUpperCase())}</ListItem>
-                ))}
-              </UnorderedList>
-              <Text mt={4}>Eligible NFTs will then be calculated:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-vip')!.multipliers.map((multiplier, i) => (
-                  <ListItem key={i}>{multiplier.percentile}th percentile: {commify(multiplier.value)}</ListItem>
-                ))}
-              </UnorderedList>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton fontSize='sm' fontWeight='bold'>
-              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Ryoshi Halloween Information
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text>Ryoshi Halloween NFTs must contain any value for the "Tools" trait EXCEPT:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-halloween')!.traits[0].values.map((value) => (
-                  <ListItem key={value}>{titleCase(value.toUpperCase())}</ListItem>
-                ))}
-              </UnorderedList>
-              <Text mt={4}>Eligible NFTs will then be calculated:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-halloween')!.multipliers.map((multiplier, i) => (
-                  <ListItem key={i}>{multiplier.percentile}th percentile: {commify(multiplier.value)}</ListItem>
-                ))}
-              </UnorderedList>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton fontSize='sm' fontWeight='bold'>
-              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Ryoshi Christmas Information
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text>Ryoshi Christmas NFTs must contain any of the following for the "Miscellaneous" trait:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-christmas')!.traits[0].values.map((value) => (
-                  <ListItem key={value}>{titleCase(value.toUpperCase())}</ListItem>
-                ))}
-              </UnorderedList>
-              <Text mt={4}>Eligible NFTs will then be calculated:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-christmas')!.multipliers.map((multiplier, i) => (
-                  <ListItem key={i}>{multiplier.percentile}th percentile: {commify(multiplier.value)}</ListItem>
-                ))}
-              </UnorderedList>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton fontSize='sm' fontWeight='bold'>
-              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Ryoshi Tales (Goblin Gala) Information
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text>Ryoshi Tales (Goblin Gala) NFTs must contain any value for the "Accessories" trait EXCEPT:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales')!.traits[0].values.map((value) => (
-                  <ListItem key={value}>{titleCase(value.toUpperCase())}</ListItem>
-                ))}
-              </UnorderedList>
-              <Text mt={4}>Eligible NFTs will then be calculated:</Text>
-              <UnorderedList>
-                {rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales')!.multipliers.map((multiplier, i) => (
-                  <ListItem key={i}>{multiplier.percentile}th percentile: {commify(multiplier.value)}</ListItem>
-                ))}
-              </UnorderedList>
-            </AccordionPanel>
-          </AccordionItem>
+          <EligibilityCriteriaItem name='Ryoshi VIP' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-vip')!} />
+          <EligibilityCriteriaItem name='Ryoshi Halloween' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-halloween')!} />
+          <EligibilityCriteriaItem name='Ryoshi Christmas' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-christmas')!} />
+          <EligibilityCriteriaItem name='Ryoshi Tales (Goblin Gala)' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales' && c.minId === 1 && c.maxId === 500)!} />
+          <EligibilityCriteriaItem name='Ryoshi Tales (Celestial Celebration)' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales' && c.minId === 501 && c.maxId === 700)!} />
         </Accordion>
       </Box>
     </Stack>
@@ -154,3 +73,55 @@ const FaqPage = () => {
 }
 
 export default FaqPage;
+
+const EligibilityCriteriaItem = ({ name, collectionStakingConfig }: { name: string, collectionStakingConfig: RyoshiConfigBarracksStakingNFTCollection }) => {
+  return (
+    <AccordionItem>
+      <AccordionButton fontSize='sm' fontWeight='bold'>
+        <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+          {name} Information
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
+      <AccordionPanel pb={4}>
+        <Text>{name} NFTs must adhere to specific trait specifications:</Text>
+          {collectionStakingConfig!.traits.map((trait) => (
+            <Box mt={2}>
+              <Text>For the "{titleCase(trait.type)}" trait, NFTs must {trait.inclusion === RyoshiConfigTraitInclusionType.EXCLUDE && <>NOT</>} contain any of the following:</Text>
+              <UnorderedList>
+                {trait.values.map((value) => (
+                  <ListItem key={`${trait.type}${value}`}>{titleCase(value.toUpperCase())}</ListItem>
+                ))}
+              </UnorderedList>
+            </Box>
+          ))}
+        <Text mt={4}>Eligible NFTs will then be calculated:</Text>
+        <UnorderedList>
+          {collectionStakingConfig.multipliers.map((multiplier, i) => (
+            <ListItem key={i}>{multiplier.percentile}th percentile: {commify(multiplier.value)}</ListItem>
+          ))}
+        </UnorderedList>
+        {collectionStakingConfig.bonus.length > 0 && (
+          <Box mt={2}>
+            {collectionStakingConfig!.bonus.sort((a, b) => a.value - b.value).map((bonus) => (
+              <Box mt={2}>
+                <Text>NFTs adhering to the following specific trait specifications will gain an additional <strong>{bonus.value}</strong> troops:</Text>
+                <Box mt={2}>
+                  {bonus.traits.map((trait) => (
+                    <>
+                      <UnorderedList>
+                        {trait.values.map((value) => (
+                          <ListItem key={`${trait.type}${value}`}>{titleCase(trait.type)} - {titleCase(value.toUpperCase())}</ListItem>
+                        ))}
+                      </UnorderedList>
+                    </>
+                  ))}
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        )}
+      </AccordionPanel>
+    </AccordionItem>
+  )
+}
