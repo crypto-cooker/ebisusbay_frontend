@@ -341,6 +341,7 @@ interface RdSeasonRegionControlPoint {
     name: string;
     coordinates: string;
     uuid: string;
+    paths?: number[];
 }
 
 interface RdGameRewards {

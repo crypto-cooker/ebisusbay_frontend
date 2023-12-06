@@ -173,7 +173,7 @@ const FaqPage = () => {
                 })}
               </UnorderedList>
               <Text mt={4}>Note: Formula in the future will be adjusted to include food and other resources acquired from holding Izanami Lands</Text>
-              <Text mt={4}>Furthermore, 10% of <b>Ryoshi</b> deployed in battles or resource farming will not come back to the owner. This includes when recalling troops to move them to a new location.</Text>
+              <Text mt={4}>Furthermore, 10% of <b>Ryoshi</b> deployed in battles or resource farming will not come back to the owner. This includes when relocating troops to other locations.</Text>
             </AccordionPanel>
           </AccordionItem>
           
