@@ -353,4 +353,12 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async getUserMeeples(address: string) {
     return await this.graph.getUserMeeples(address);
   }
+
+  async deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string) {
+    return this.cms.deployTroops(troops, controlPointId, gameId, factionId, address, signature)
+  }
+
+  async relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string) {
+    return this.cms.relocateTroops(troops, fromControlPointId, toControlPointId, fromFactionId, toFactionId, address, signature)
+  }
 }

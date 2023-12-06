@@ -1,27 +1,16 @@
-import React, {ReactElement, useEffect, useRef, useState, useContext } from 'react';
-import {
-  useDisclosure,
-  Button,
-  AspectRatio,
-  useBreakpointValue,
-  Box,
-  Flex,
-  Image,
-  Avatar,
-  WrapItem,
-  Text
-} from '@chakra-ui/react'
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import React, {ReactElement, useContext, useEffect, useRef, useState} from 'react';
+import {Avatar, Box, Flex, Image, Text, useDisclosure} from '@chakra-ui/react'
+import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
-import {getControlPoint, getAllFactionsSeasonId, getLeadersForSeason} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getAllFactionsSeasonId, getControlPoint, getLeadersForSeason} from "@src/core/api/RyoshiDynastiesAPICalls";
 import ControlPointModal from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point';
 import ImageService from '@src/core/services/image';
 import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/hud";
 import {io} from "socket.io-client";
 import {useAppSelector} from "@src/Store/hooks";
 
-import {Contract, ethers, BigNumber} from "ethers";
+import {BigNumber, Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
 import Battlefield from "@src/Contracts/Battlefield.json";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
@@ -38,7 +27,6 @@ import localFont from "next/font/local";
 import {RdGameState} from "@src/core/services/api-service/types";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import { all } from 'axios';
 
 const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Black.woff2' })
 
@@ -215,7 +203,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
       setCurrentIcons(newIcons);
       setCurrentIconsAqcuired(true);
     } catch (error: any) {
-      console.log(error.response.data.message);
+      console.log(error);
     }
   }
   const GetPreviousIcons = async() => {
@@ -335,7 +323,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
         allFactions={allFactions}
         showActiveGame={showActiveGame}
         useCurrentGameId={useCurrentGameId}
-        />
+      />
       <Box
         position='relative' 
         h={height}
