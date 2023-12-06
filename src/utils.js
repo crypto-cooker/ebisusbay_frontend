@@ -129,12 +129,21 @@ export function getTimeDifference(date) {
 }
 
 export function getLengthOfTime(duration) {
-  if (duration < 60) return `${Math.floor(duration)} seconds`;
-  else if (duration < 3600) return `${Math.floor(duration / 60)} minutes`;
-  else if (duration < 86400) return `${Math.floor(duration / 3660)} hours`;
-  else if (duration < 86400 * 30) return `${Math.floor(duration / 86400)} days`;
-  else if (duration < 86400 * 30 * 12) return `${Math.floor(duration / 86400 / 30)} months`;
-  else return `${(duration / 86400 / 30 / 12).toFixed(1)} years`;
+  const timeUnits = [
+    { unit: 'year', threshold: 86400 * 30 * 12, roundFunc: val => (val / 86400 / 30 / 12).toFixed(1) },
+    { unit: 'month', threshold: 86400 * 30, roundFunc: val => Math.floor(val / 86400 / 30) },
+    { unit: 'day', threshold: 86400, roundFunc: val => Math.floor(val / 86400) },
+    { unit: 'hour', threshold: 3600, roundFunc: val => Math.floor(val / 3600) },
+    { unit: 'minute', threshold: 60, roundFunc: val => Math.floor(val / 60) },
+    { unit: 'second', threshold: 1, roundFunc: val => Math.floor(val) }
+  ];
+
+  for (const { unit, threshold, roundFunc } of timeUnits) {
+    if (duration >= threshold) {
+      const value = roundFunc(duration);
+      return `${value} ${pluralize(value, unit)}`;
+    }
+  }
 }
 
 export function generateRandomId() {
