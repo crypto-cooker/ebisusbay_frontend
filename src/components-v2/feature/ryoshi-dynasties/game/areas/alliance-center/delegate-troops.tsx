@@ -224,7 +224,7 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsForm
             <Flex mt='16px'>
               <Text as='i' fontSize={14} color='#aaa'>
                 {delegateMode==='delegate' ?
-                  'Once delegated, troops may be recalled but will not be unallocated until the end of the game.'
+                  'Once delegated, these troops will remain with the faction for the remainder of the game'
                   : 'Recalling troops will return them to you at the end of the game'} </Text>
             </Flex>
             <Flex mt='16px' justifyContent='center'>
