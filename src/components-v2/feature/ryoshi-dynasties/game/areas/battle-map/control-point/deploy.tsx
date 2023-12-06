@@ -262,7 +262,7 @@ const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}:
       setSelectedQuantity(0);
       await rdContext.refreshUser();
       onSuccess();
-      toast.success(`${selectedQuantity} troops deployed on behalf of ${toFactionId}`);
+      toast.success(`${selectedQuantity} troops deployed on behalf of ${selectedToFaction!.name}`);
     } catch (error: any) {
       console.log(error);
       toast.error(parseErrorMessage(error));
