@@ -22,12 +22,24 @@ const metadata = {
     icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
 
+const primaryNetwork = (isTestnet() ? cronosTestnet : cronos);
+
+const rpcUrls = {
+    default: {
+        http: [config.rpc.read, ...primaryNetwork.rpcUrls.default.http]
+    },
+    public: {
+        http: [config.rpc.read, ...primaryNetwork.rpcUrls.public.http]
+    }
+}
+
 const chains = [
     {
-        ...(isTestnet() ? cronosTestnet : cronos),
-        rpcUrl: config.rpc.read
+        ...primaryNetwork,
+        rpcUrls
     }
-]
+];
+
 const wagmiConfig = defaultWagmiConfig({
     chains,
     projectId,
@@ -41,10 +53,7 @@ createWeb3Modal({
     wagmiConfig,
     projectId,
     chains,
-    defaultChain: {
-        ...cronos,
-        rpcUrls: config.rpc.read
-    },
+    defaultChain: chains[0],
     tokens: {
         [config.chain.id]: {
             address: config.tokens.frtn.address,
@@ -61,5 +70,5 @@ createWeb3Modal({
 })
 
 export function Web3Modal({ children }: { children: React.ReactNode }) {
-    return <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>;
+    return <WagmiConfig config={wagmiConfig as any}>{children}</WagmiConfig>;
 }
