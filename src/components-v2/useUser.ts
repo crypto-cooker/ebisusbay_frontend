@@ -42,7 +42,7 @@ const useLegacyProviderFunctions = () => {
 }
 
 export const useContractService = () => {
-  const user = useUser(12);
+  const user = useUser();
   const { walletProvider } = useWeb3ModalProvider()
   const [contractService, setContractService] = useState<UserContractService | null>(null);
 
