@@ -6,8 +6,6 @@ import Village from "@src/components-v2/feature/ryoshi-dynasties/game/areas/vill
 import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {Box, Center, Spinner, Text, useDisclosure, VStack} from "@chakra-ui/react";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {useRouter} from "next/router";
 import {RyoshiDynastiesContext} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
@@ -15,15 +13,17 @@ import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useUser} from "@src/components-v2/useUser";
+import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
 
 interface GameSyncProps {
   initialRdConfig: RyoshiConfig;
   children: ReactNode;
 }
 const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
-  const dispatch = useDispatch();
   const router = useRouter();
-  const user = useAppSelector((state) => state.user);
+  // const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const queryClient = useQueryClient();
 
   const [currentPage, setCurrentPage] = useState<string>();
@@ -85,17 +85,6 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
     queryClient.invalidateQueries({queryKey: ['RyoshiDynastiesGameContext']});
     refetchGameContext();
   }
-
-  const connectWalletPressed = async () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
-  };
 
   const handleCloseWelcomeModal = useCallback(() => {
     if (!authInitFinished || !!user.address) {
@@ -220,27 +209,13 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
               </Text>
               {authInitFinished ? (
                 <>
-                  {!!user.address && user.correctChain ? (
-                    <>
-                      <Center>
-                        <RdButton stickyIcon={true} onClick={onCloseWelcomeModal}>
-                          Play Now
-                        </RdButton>
-                      </Center>
-                    </>
-                  ) : (!!user.address && !user.correctChain) ? (
+                  <AuthenticationRdButton>
                     <Center>
-                      <RdButton stickyIcon={true} onClick={connectWalletPressed}>
-                        Switch Network
+                      <RdButton stickyIcon={true} onClick={onCloseWelcomeModal}>
+                        Play Now
                       </RdButton>
                     </Center>
-                  ) : (
-                    <Center>
-                      <RdButton stickyIcon={true} onClick={connectWalletPressed}>
-                        Connect
-                      </RdButton>
-                    </Center>
-                  )}
+                  </AuthenticationRdButton>
                   <Text fontSize='sm'>
                     Users wishing to visit the Ebisu's Bay marketplace experience can still do so by using the links at the top of the page.
                   </Text>

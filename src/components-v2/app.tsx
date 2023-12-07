@@ -19,6 +19,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import {AppProps} from "next/app";
 import {ExchangePricesContext} from "@src/components-v2/shared/contexts/exchange-prices";
 import {useGlobalPrices} from "@src/hooks/useGlobalPrices";
+import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -54,6 +55,8 @@ function App({ Component, ...pageProps }: AppProps) {
   const dispatch = useDispatch();
   const { colorMode } = useColorMode()
   const exchangePrices = useGlobalPrices();
+  const { setThemeMode } = useWeb3ModalTheme()
+
 
   const userTheme = useAppSelector((state) => {
     return state.user.theme;
@@ -62,6 +65,7 @@ function App({ Component, ...pageProps }: AppProps) {
   if (typeof window !== 'undefined') {
     document.documentElement.setAttribute('data-theme', userTheme);
   }
+  setThemeMode(userTheme)
 
   useEffect(() => {
     dispatch(appInitializer());

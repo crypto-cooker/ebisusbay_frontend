@@ -1,7 +1,6 @@
 import React, {memo, SVGProps, useEffect, useState} from 'react';
 import Blockies from 'react-blockies';
 import {useDispatch} from 'react-redux';
-import {useRouter} from 'next/router';
 import NextLink from 'next/link';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
@@ -21,26 +20,16 @@ import {
   faWallet
 } from '@fortawesome/free-solid-svg-icons';
 import {toast} from 'react-toastify';
-import MetaMaskOnboarding from '@metamask/onboarding';
 import {ethers} from 'ethers';
-import {round, shortAddress, useInterval, username} from '@src/utils';
+import {round, shortAddress, username} from '@src/utils';
 import styles from './accountmenu.module.scss';
-import { useWeb3Modal } from '@web3modal/wagmi/react'
+import {useWeb3Modal} from '@web3modal/wagmi/react'
 
-import {
-  AccountMenuActions,
-  balanceUpdated,
-  chainConnect,
-  connectAccount,
-  onLogout,
-  setShowWrongChainModal,
-  setTheme,
-} from '@src/GlobalState/User';
+import {AccountMenuActions, onLogout, setTheme,} from '@src/GlobalState/User';
 
 import {getThemeInStorage, setThemeInStorage} from '@src/helpers/storage';
 import {appConfig} from '@src/Config';
 import classnames from "classnames";
-import {useWindowSize} from "@src/hooks/useWindowSize";
 import Button from "@src/Components/components/Button";
 import {
   Box,
@@ -51,7 +40,8 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  Heading, Image,
+  Heading,
+  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -65,7 +55,6 @@ import {
   useBreakpointValue,
   useClipboard,
   useColorMode,
-  useMediaQuery,
   Wrap
 } from "@chakra-ui/react";
 import {useQuery} from "@tanstack/react-query";
@@ -77,21 +66,17 @@ import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/butt
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {getTheme} from "@src/Theme/theme";
-import {useAccount} from "wagmi";
-import {useProfile} from "@src/components-v2/useProfile";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 const Index = function () {
-  const user = useProfile();
-  const { open } = useWeb3Modal();
+  const user = useUser();
+  const { open: openWeb3Modal, close: closeWeb3Modal } = useWeb3Modal();
 
   const dispatch = useDispatch();
-  const history = useRouter();
-  const [mobileSize] = useMediaQuery('(max-width: 400px)')
-  const { colorMode, setColorMode } = useColorMode();
-  const windowSize = useWindowSize();
+  const { setColorMode } = useColorMode();
   const [showMenu, setShowMenu] = useState(false);
   const slideDirection = useBreakpointValue<'bottom' | 'right'>(
     {
@@ -105,14 +90,11 @@ const Index = function () {
   const [isGdcConfirmationOpen, setIsGdcConfirmationOpen] = useState(false);
   const [showWrongChainModal, setShowWrongChainModal] = useState(false);
 
-  const { setValue:setClipboardValue, onCopy } = useClipboard(user.walletAddress ?? '');
+  const { setValue:setClipboardValue, onCopy } = useClipboard(user.wallet.address ?? '');
 
   const theme = useAppSelector((state) => {
     return state.user.theme;
   });
-  // const user: any = useAppSelector((state) => {
-  //   return state.user;
-  // });
   const pendingGdcItem = useAppSelector((state) => {
     return state.user.profile?.pendingGdcItem;
   });
@@ -121,64 +103,26 @@ const Index = function () {
   });
 
   const { data: balance } = useQuery({
-    queryKey: ['getBalance', user.walletAddress, 'latest'],
-    queryFn: async () => await readProvider.getBalance(user.walletAddress!),
-    enabled: !!user.walletAddress
+    queryKey: ['getBalance', user.wallet.address, 'latest'],
+    queryFn: async () => await readProvider.getBalance(user.wallet.address!),
+    enabled: !!user.wallet.address
   });
 
   const closeMenu = () => {
     setShowMenu(false);
   };
 
-  // useEffect(() => {
-  //   dispatch(
-  //     balanceUpdated({
-  //       balance: ethers.utils.formatEther(balance || 0),
-  //     })
-  //   );
-  // }, [balance]);
-  //
-  // useInterval(() => {
-  //   async function func() {
-  //     if (user && !user.connectingWallet && user.provider) {
-  //       const sales = ethers.utils.formatEther(await user.contractService.market.payments(walletAddress));
-  //       const stakingRewards = ethers.utils.formatEther(await user.contractService.staking.getReward(walletAddress));
-  //       dispatch(
-  //         balanceUpdated({
-  //           marketBalance: sales || 0,
-  //           stakingRewards: stakingRewards || 0,
-  //         })
-  //       );
-  //     }
-  //   }
-  //   func();
-  // }, 1000 * 60);
-  //
-  // const navigateTo = (pathname: string, query?: any) => {
-  //   closeMenu();
-  //   history.push({pathname, query});
-  // };
-
   const logout = async () => {
     closeMenu();
-    dispatch(onLogout());
+    user.disconnect();
   };
 
   useEffect(() => {
-    if (user.walletAddress) {
-      setClipboardValue(user.walletAddress);
+    if (user.wallet.address) {
+      setClipboardValue(user.wallet.address);
     }
     // eslint-disable-next-line
-  }, [user.walletAddress]);
-
-  const connectWalletPressed = async () => {
-    if (needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else {
-      dispatch(connectAccount());
-    }
-  };
+  }, [user.wallet.address]);
 
   const handleCopy = () => {
     onCopy();
@@ -205,7 +149,7 @@ const Index = function () {
   const handleBuyCro = () => {
     const url = new URL(config.vendors.transak.url)
     url.searchParams.append('cryptoCurrencyCode', 'CRO');
-    url.searchParams.append('walletAddress', user.walletAddress!);
+    url.searchParams.append('walletAddress', user.wallet.address!);
     
     window.open(url, '_blank');
   }
@@ -228,6 +172,12 @@ const Index = function () {
     }
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (user.wallet.correctChain) {
+      closeWeb3Modal()
+    }
+  }, [user.wallet.correctChain]);
 
   const onWrongChainModalClose = () => {
     setShowWrongChainModal(false);
@@ -265,17 +215,17 @@ const Index = function () {
 
   return (
     <div>
-      {!user.isConnected && (
-        <div className="de-menu-notification" onClick={() => open()} style={{background: '#218cff', marginLeft:'5px'}}>
+      {!user.wallet.isConnected && (
+        <div className="de-menu-notification" onClick={() => openWeb3Modal()} style={{background: '#218cff', marginLeft:'5px'}}>
           <FontAwesomeIcon icon={faWallet} color="white" />
         </div>
       )}
-      {user.isConnected && !user.correctChain && !showWrongChainModal && (
-        <div className="de-menu-notification" onClick={onWrongChainModalChangeChain} style={{background: '#218cff', marginLeft:'5px'}}>
+      {user.wallet.isConnected && !user.wallet.correctChain && !showWrongChainModal && (
+        <div className="de-menu-notification" onClick={() => openWeb3Modal({view: 'Networks'})} style={{background: '#218cff', marginLeft:'5px'}}>
           <FontAwesomeIcon icon={faArrowRightArrowLeft} color="white" />
         </div>
       )}
-      {user.isConnected && user.correctChain && (
+      {user.wallet.isConnected && user.wallet.correctChain && (
         <Box className="de-menu-profile" onClick={() => setShowMenu(!showMenu)}>
           {user.profile?.profilePicture ? (
             <Image
@@ -287,12 +237,12 @@ const Index = function () {
               objectFit='cover'
             />
           ) : (
-            <Blockies seed={`${user.walletAddress}`} size={9} scale={4} />
+            <Blockies seed={`${user.wallet.address}`} size={9} scale={4} />
           )}
         </Box>
       )}
 
-      <Modal onClose={onWrongChainModalClose} isOpen={showWrongChainModal}>
+      <Modal onClose={onWrongChainModalClose} isOpen={user.wallet.isConnected && !user.wallet.correctChain}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader className="text-center">
@@ -308,7 +258,7 @@ const Index = function () {
               <SecondaryButton onClick={onWrongChainModalClose}>
                 Close
               </SecondaryButton>
-              <PrimaryButton onClick={onWrongChainModalChangeChain}>
+              <PrimaryButton onClick={() => openWeb3Modal({view: 'Networks'})}>
                 Switch
               </PrimaryButton>
             </ButtonGroup>
@@ -316,7 +266,7 @@ const Index = function () {
         </ModalContent>
       </Modal>
 
-      {user.isConnected && user.correctChain && (
+      {user.wallet.isConnected && user.wallet.correctChain && (
         <Drawer
           isOpen={showMenu}
           onClose={closeMenu}
@@ -332,7 +282,7 @@ const Index = function () {
                   {user.profile.profilePicture ? (
                     <img src={ImageService.translate(user.profile.profilePicture).avatar()} alt={user.profile.username} />
                   ) : (
-                    <Blockies seed={`${user.walletAddress}`} size={9} scale={4}/>
+                    <Blockies seed={`${user.wallet.address}`} size={9} scale={4}/>
                   )}
                 </span>
                 <div>
@@ -343,12 +293,12 @@ const Index = function () {
                     <button className="btn_menu me-2" title="Copy Address" onClick={handleCopy}>
                       <FontAwesomeIcon icon={faCopy} />
                     </button>
-                    <button className="btn_menu me-2" title="Copy Address" onClick={() => window.open(`https://cronoscan.com/address/${user.walletAddress}`, '_blank')}>
+                    <button className="btn_menu me-2" title="Copy Address" onClick={() => window.open(`https://cronoscan.com/address/${user.wallet.address}`, '_blank')}>
                       <FontAwesomeIcon icon={faSearch} />
                     </button>
                     {user.profile.username && (
                       <span className={styles.username}>
-                        {shortAddress(user.walletAddress)}
+                        {shortAddress(user.wallet.address)}
                       </span>
                     )}
                   </div>
@@ -358,7 +308,7 @@ const Index = function () {
             <DrawerBody>
 
               <SimpleGrid columns={2} gap={2} className={styles.navigation}>
-                <NextLink href={`/account/${user.walletAddress}`} onClick={closeMenu}>
+                <NextLink href={`/account/${user.wallet.address}`} onClick={closeMenu}>
                   <div className={styles.col}>
                     <span>
                       <FontAwesomeIcon icon={faUser} />
@@ -374,7 +324,7 @@ const Index = function () {
                     <span className="ms-2">Edit Account</span>
                   </div>
                 </NextLink>
-                <NextLink href={`/account/${user.walletAddress}?tab=offers`} onClick={closeMenu}>
+                <NextLink href={`/account/${user.wallet.address}?tab=offers`} onClick={closeMenu}>
                   <div className={styles.col}>
                     <span>
                       <FontAwesomeIcon icon={faHand} />
@@ -390,7 +340,7 @@ const Index = function () {
                     <span className="ms-2">Staking</span>
                   </div>
                 </NextLink>
-                <NextLink href={`/account/${user.walletAddress}?tab=listings`} onClick={closeMenu}>
+                <NextLink href={`/account/${user.wallet.address}?tab=listings`} onClick={closeMenu}>
                   <div className={styles.col}>
                     <span>
                       <FontAwesomeIcon icon={faCoins} />
@@ -398,7 +348,7 @@ const Index = function () {
                     <span className="ms-2">Listings</span>
                   </div>
                 </NextLink>
-                <NextLink href={`/account/${user.walletAddress}?tab=sales`} onClick={closeMenu}>
+                <NextLink href={`/account/${user.wallet.address}?tab=sales`} onClick={closeMenu}>
                   <div className={styles.col}>
                     <span>
                       <FontAwesomeIcon icon={faDollarSign} />
@@ -406,7 +356,7 @@ const Index = function () {
                     <span className="ms-2">Sales</span>
                   </div>
                 </NextLink>
-                <NextLink href={`/account/${user.walletAddress}?tab=favorites`} onClick={closeMenu}>
+                <NextLink href={`/account/${user.wallet.address}?tab=favorites`} onClick={closeMenu}>
                   <div className={styles.col}>
                     <span>
                       <FontAwesomeIcon icon={faHeart} />
@@ -442,7 +392,7 @@ const Index = function () {
                 <div className="flex-fill">
                   <div className="text-muted">$Fortune</div>
                   <div>
-                    {!user.connectingWallet ? (
+                    {!user.initializing ? (
                       <span className="d-wallet-value">
                         <div className="d-flex">
                           <FortuneIcon boxSize={6} />
@@ -468,7 +418,7 @@ const Index = function () {
                 <div className="flex-fill">
                   <div className="text-muted">CRO Balance</div>
                   <div>
-                    {!user.connectingWallet ? (
+                    {!user.initializing ? (
                       <span className="d-wallet-value">
                       {user.balances ? (
                         <div className="d-flex">
@@ -499,7 +449,7 @@ const Index = function () {
               <div className="d-flex mt-2">
                 <div className="flex-fill">
                   <div className="text-muted">Market Escrow</div>
-                  {!user.connectingWallet ? (
+                  {!user.initializing ? (
                     <div>
                       {user.escrow.balance ? (
                         <>
@@ -521,31 +471,25 @@ const Index = function () {
                   )}
                 </div>
                 <div className="my-auto">
-                  {!user.connectingWallet && (
+                  {!user.initializing && (
                     <>
                       <Wrap>
                         {Number(user.escrow.balance) > 0 && (
-                          <Button type="legacy"
-                                  onClick={withdrawBalance}
-                                  isLoading={user.withdrawingMarketBalance}
-                                  disabled={user.withdrawingMarketBalance}>
-                            Claim
-                          </Button>
+                          <FunctionButton
+                            title='Claim'
+                            fn={withdrawBalance}
+                          />
                         )}
                         {user.escrow.enabled ? (
-                          <Button type="legacy"
-                                  onClick={() => toggleEscrowOptIn(false)}
-                                  isLoading={user.updatingEscrowStatus}
-                                  disabled={user.updatingEscrowStatus}>
-                            Opt-Out
-                          </Button>
+                          <FunctionButton
+                            title='Opt-Out'
+                            fn={() => toggleEscrowOptIn(false)}
+                          />
                         ) : (
-                          <Button type="legacy"
-                                  onClick={() => toggleEscrowOptIn(true)}
-                                  isLoading={user.updatingEscrowStatus}
-                                  disabled={user.updatingEscrowStatus}>
-                            Opt-In to Escrow
-                          </Button>
+                          <FunctionButton
+                            title='Opt-In to Escrow'
+                            fn={() => toggleEscrowOptIn(true)}
+                          />
                         )}
                       </Wrap>
                     </>
@@ -561,7 +505,7 @@ const Index = function () {
                 <div className="flex-fill">
                   <div className="text-muted">Staking Rewards</div>
                   <div className="">
-                    {!user.connectingWallet ? (
+                    {!user.initializing ? (
                       <>
                         {user.balances.staking ? (
                           <>
@@ -582,12 +526,10 @@ const Index = function () {
                 </div>
                 <div className="my-auto">
                   {user.balances.staking > 0 && (
-                    <Button type="legacy"
-                            onClick={harvestStakingRewards}
-                            isLoading={user.harvestingStakingRewards}
-                            disabled={user.harvestingStakingRewards}>
-                      Harvest
-                    </Button>
+                    <FunctionButton
+                      title='Harvest'
+                      fn={harvestStakingRewards}
+                    />
                   )}
                 </div>
               </div>
@@ -616,3 +558,22 @@ const Index = function () {
 };
 
 export default memo(Index);
+
+const FunctionButton = ({title, fn}: {title: string, fn: () => Promise<void>}) => {
+  const [isExecuting, setIsExecuting] = useState(false);
+
+  const handleExecution = async () => {
+    setIsExecuting(true);
+    await fn();
+    setIsExecuting(false);
+  }
+
+  return (
+    <Button type="legacy"
+            onClick={handleExecution}
+            isLoading={isExecuting}
+            disabled={isExecuting}>
+      {title}
+    </Button>
+  )
+}

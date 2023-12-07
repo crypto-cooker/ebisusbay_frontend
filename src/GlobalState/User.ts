@@ -430,13 +430,13 @@ export const connectAccount =
         window.location.reload();
       });
 
-      web3provider.on('chainChanged', (chainId: any) => {
-        // Handle the new chain.
-        // Correctly handling chain changes can be complicated.
-        // We recommend reloading the page unless you have good reason not to.
-
-        window.location.reload();
-      });
+      // web3provider.on('chainChanged', (chainId: any) => {
+      //   // Handle the new chain.
+      //   // Correctly handling chain changes can be complicated.
+      //   // We recommend reloading the page unless you have good reason not to.
+      //
+      //   window.location.reload();
+      // });
 
       let balance;
       let sales;
@@ -740,6 +740,7 @@ export class AccountMenuActions {
     const { user } = getState();
     try {
       dispatch(updatingEscrowStatus());
+
       const tx = await user.contractService.market.setUseEscrow(user.address, optIn);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
