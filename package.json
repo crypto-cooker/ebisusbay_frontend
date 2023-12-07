@@ -75,7 +75,7 @@
     "framer-motion": "^10.16.4",
     "graphql-codegen": "^0.4.0",
     "image-size": "^1.0.2",
-    "jotai": "^2.5.0",
+    "jotai": "^2.6.0",
     "moment": "^2.29.4",
     "next": "^14.0.2",
     "react": "^18.2.0",
