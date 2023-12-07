@@ -1,7 +1,6 @@
-import {atom} from "jotai";
 import {atomWithReducer} from "jotai/utils";
 
-interface User {
+export interface JotaiUser {
   wallet: {
     address?: string;
     isConnecting: boolean;
@@ -19,10 +18,7 @@ interface User {
     balance: number;
   },
   initializing: boolean;
-  // disconnect: () => void;
-  // address?: string;
-  // provider?: any;
-  // theme: string;
+  initialized: boolean;
 }
 
 export enum UserActionType {
@@ -31,8 +27,6 @@ export enum UserActionType {
   SET_TOKEN_BALANCES,
   SET_CONTRACT_BALANCES,
   SET_INITIALIZING,
-  // SET_THEME,
-  // SET_PROVIDER,
   RESET_USER // For disconnecting
 }
 
@@ -42,10 +36,10 @@ type RecursivePartial<T> = {
 
 type UserAction = {
   type: UserActionType;
-  payload: RecursivePartial<User>;
+  payload: RecursivePartial<JotaiUser>;
 };
 
-function userReducer(state: User, action: UserAction): User {
+function userReducer(state: JotaiUser, action: UserAction): JotaiUser {
   switch (action.type) {
     case UserActionType.SET_WALLET:
       return { ...state, wallet: { ...state.wallet, ...action.payload.wallet } };
@@ -58,7 +52,7 @@ function userReducer(state: User, action: UserAction): User {
         balances: { ...state.balances, ...action.payload.balances },
       };
     case UserActionType.SET_INITIALIZING:
-      return { ...state, initializing: !!action.payload.initializing };
+      return { ...state, initializing: !!action.payload.initializing, initialized: !!action.payload.initialized };
     // Add cases for other actions
     case UserActionType.RESET_USER:
       return initialUserState;
@@ -79,7 +73,7 @@ function deepMerge(target: any, source: any) {
   Object.assign(target || {}, source);
   return target;
 }
-const initialUserState: User = {
+const initialUserState: JotaiUser = {
   wallet: {
     address: undefined,
     isConnecting: false,
@@ -97,12 +91,7 @@ const initialUserState: User = {
     balance: 0
   },
   initializing: false,
-  // disconnect: () => null,
-
-  // Legacy
-  // address: undefined,
-  // provider: undefined,
-  // theme: 'dark'
+  initialized: false
 };
 
-export const userAtom = atomWithReducer<User, UserAction>(initialUserState, userReducer);
+export const userAtom = atomWithReducer<JotaiUser, UserAction>(initialUserState, userReducer);

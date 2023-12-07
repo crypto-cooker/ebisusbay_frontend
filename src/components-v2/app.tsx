@@ -20,6 +20,7 @@ import {AppProps} from "next/app";
 import {ExchangePricesContext} from "@src/components-v2/shared/contexts/exchange-prices";
 import {useGlobalPrices} from "@src/hooks/useGlobalPrices";
 import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
+import {UserProvider} from "@src/components-v2/shared/contexts/user";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -84,33 +85,35 @@ function App({ Component, ...pageProps }: AppProps) {
   }, []);
 
   return (
-    <ThemeProvider theme={getTheme(userTheme)}>
-      <ExchangePricesContext.Provider value={{prices: exchangePrices.data ?? []}}>
-        <DefaultHead />
-        <div className="wraper">
-          {loading ? (
-            <div id="initialLoader">
-              <div className="loader"></div>
-            </div>
-          ) : (
-            <>
-              <GlobalStyles isDark={userTheme === 'dark'} />
-              <Header />
-              <div style={{paddingTop:'74px'}}>
-                <Component {...pageProps} />
+    <UserProvider>
+      <ThemeProvider theme={getTheme(userTheme)}>
+        <ExchangePricesContext.Provider value={{prices: exchangePrices.data ?? []}}>
+          <DefaultHead />
+          <div className="wraper">
+            {loading ? (
+              <div id="initialLoader">
+                <div className="loader"></div>
               </div>
-              <Footer />
-              <ScrollToTopBtn />
-              <ToastContainer
-                position={toast.POSITION.BOTTOM_LEFT}
-                hideProgressBar={true}
-                theme={colorMode}
-              />
-            </>
-          )}
-        </div>
-      </ExchangePricesContext.Provider>
-    </ThemeProvider>
+            ) : (
+              <>
+                <GlobalStyles isDark={userTheme === 'dark'} />
+                <Header />
+                <div style={{paddingTop:'74px'}}>
+                  <Component {...pageProps} />
+                </div>
+                <Footer />
+                <ScrollToTopBtn />
+                <ToastContainer
+                  position={toast.POSITION.BOTTOM_LEFT}
+                  hideProgressBar={true}
+                  theme={colorMode}
+                />
+              </>
+            )}
+          </div>
+        </ExchangePricesContext.Provider>
+      </ThemeProvider>
+    </UserProvider>
   );
 }
 
