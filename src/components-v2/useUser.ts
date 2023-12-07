@@ -8,135 +8,188 @@ import {portABI, stakeABI} from "@src/Contracts/types";
 import {ethers} from "ethers";
 import {useWeb3ModalProvider} from "@web3modal/ethers5/react";
 import {getThemeInStorage} from "@src/helpers/storage";
+import UserContractService from "@src/core/contractService";
+import {UserActionType, userAtom} from "@src/jotai/atoms/user";
+import {useAtom} from "jotai";
 
 const config = appConfig();
 
 export const useUser = () => {
-    const { address, isConnecting, isConnected } = useAccount();
-    const { chain, chains } = useNetwork();
-    const { disconnect: disconnectWallet } = useDisconnect();
-    const [correctChain, setCorrectChain] = useState(false);
-    const croBalance = useBalance({
-        address: address,
-    });
-    const frtnBalance = useBalance({
-        address: address,
-        token: config.tokens.frtn.address
-    });
+  const [user, dispatch] = useAtom(userAtom);
+  const { address, isConnecting, isConnected } = useAccount();
+  const { chain, chains } = useNetwork();
+  const { disconnect: disconnectWallet } = useDisconnect();
+  const croBalance = useBalance({
+    address: address,
+  });
+  const frtnBalance = useBalance({
+    address: address,
+    token: config.tokens.frtn.address
+  });
 
-    const [escrowBalance, setEscrowBalance] = useState(0);
-    const [usesEscrow, setUsesEscrow] = useState(false);
-    const [stakingRewards, setStakingRewards] = useState(0);
-    const [initializing, setInitializing] = useState(false);
+  const {data: profile} = useQuery({
+    queryKey: ['UserProfile', address],
+    queryFn: () => getProfile(address),
+    enabled: !!address,
+  });
 
-    // Legacy functions from old redux store to deprecate
-    const provider = useLegacyProviderFunctions();
+  const initialize = async () => {
+    if (!address) return;
+    try {
+      dispatch({ type: UserActionType.SET_INITIALIZING, payload: { initializing: true } });
+      const data = await multicall({
+        contracts: [
+          {
+            address: config.contracts.market,
+            abi: portABI,
+            functionName: 'isMember',
+            args: [address],
+          },
+          {
+            address: config.contracts.market,
+            abi: portABI,
+            functionName: 'useEscrow',
+            args: [address],
+          },
+          {
+            address: config.contracts.market,
+            abi: portABI,
+            functionName: 'payments',
+            args: [address],
+          },
+          {
+            address: config.contracts.market,
+            abi: portABI,
+            functionName: 'fee',
+            args: [address],
+          },
+          {
+            address: config.contracts.stake,
+            abi: stakeABI,
+            functionName: 'getReward',
+            args: [address],
+          },
+        ],
+      });
 
-    const {data: profile} = useQuery({
-        queryKey: ['UserProfile', address],
-        queryFn: () => getProfile(address),
-        enabled: !!address,
-    });
-
-    useEffect(() => {
-        setCorrectChain(isConnected && !!chain && chain.id === parseInt(config.chain.id));
-        if (isConnected) initialize();
-    }, [address, isConnected, chain]);
-
-    const initialize = async () => {
-        if (!address) return;
-        try {
-            setInitializing(true);
-            const data = await multicall({
-                contracts: [
-                    {
-                        address: config.contracts.market,
-                        abi: portABI,
-                        functionName: 'isMember',
-                        args: [address],
-                    },
-                    {
-                        address: config.contracts.market,
-                        abi: portABI,
-                        functionName: 'useEscrow',
-                        args: [address],
-                    },
-                    {
-                        address: config.contracts.market,
-                        abi: portABI,
-                        functionName: 'payments',
-                        args: [address],
-                    },
-                    {
-                        address: config.contracts.market,
-                        abi: portABI,
-                        functionName: 'fee',
-                        args: [address],
-                    },
-                    {
-                        address: config.contracts.stake,
-                        abi: stakeABI,
-                        functionName: 'getReward',
-                        args: [address],
-                    },
-                ],
-            });
-            setUsesEscrow(data[1].result ?? false);
-            setEscrowBalance(parseInt(ethers.utils.formatEther(data[2].result ?? 0)));
-            setStakingRewards(parseInt(ethers.utils.formatEther(data[4].result ?? 0)));
-        } catch (e) {
-            console.log(e);
-        } finally {
-            setInitializing(false);
-        }
+      dispatch({
+        type: UserActionType.SET_CONTRACT_BALANCES,
+        payload: {
+          escrow: {
+            enabled: data[1].result ?? false,
+            balance: parseInt(ethers.utils.formatEther(data[2].result ?? 0)),
+          },
+          balances: {
+            staking: parseInt(ethers.utils.formatEther(data[4].result ?? 0)),
+          },
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      dispatch({ type: UserActionType.SET_INITIALIZING, payload: { initializing: false } });
     }
+  }
 
+  const disconnect = () => {
+    disconnectWallet();
+    localStorage.clear();
+    dispatch({ type: UserActionType.RESET_USER, payload: {} });
+    // TODO: reset all other state from User.ts
+  }
 
-    const disconnect = () => {
-        disconnectWallet();
-        localStorage.clear();
-        // TODO: reset all other state from User.ts
-    }
-
-    const theme = getThemeInStorage();
-
-    return {
+  // Set Wallet
+  useEffect(() => {
+    dispatch({
+      type: UserActionType.SET_WALLET,
+      payload: {
         wallet: {
-            address,
-            isConnecting,
-            isConnected,
-            correctChain,
-        },
-        profile: profile?.data ?? {},
-        balances: {
-            cro: croBalance.data?.formatted ?? 0,
-            frtn: frtnBalance.data?.formatted ?? 0,
-            staking: stakingRewards
-        },
-        escrow: {
-            enabled: usesEscrow,
-            balance: escrowBalance
-        },
-        initializing,
-        disconnect,
+          address,
+          isConnecting,
+          isConnected,
+          correctChain: isConnected && !!chain && chain.id === parseInt(config.chain.id)
+        }
+      }
+    });
 
-        // Legacy
-        address,
-        provider,
-        theme
+    if (isConnected) {
+      initialize();
     }
+  }, [address, isConnected, isConnected, chain]);
+
+  // Set Profile
+  useEffect(() => {
+    dispatch({
+      type: UserActionType.SET_PROFILE,
+      payload: { profile: profile?.data ?? {} }
+    });
+  }, [profile]);
+
+  // Set Token Balances
+  useEffect(() => {
+    dispatch({
+      type: UserActionType.SET_TOKEN_BALANCES,
+      payload: {
+        balances: {
+          cro: croBalance.data?.formatted ?? 0,
+          frtn: frtnBalance.data?.formatted ?? 0,
+        }
+      }
+    });
+  }, [croBalance.data, frtnBalance.data]);
+
+  return {
+    ...user,
+
+    // Non-atom values
+    disconnect,
+
+    // Legacy
+    address: user.wallet.address,
+    provider: useLegacyProviderFunctions(),
+    theme: getThemeInStorage() ?? 'dark'
+  };
 }
 
 const useLegacyProviderFunctions = () => {
-    const { walletProvider } = useWeb3ModalProvider();
+  const { walletProvider } = useWeb3ModalProvider();
 
-    const getSigner = () => {
-        if (!walletProvider) return;
+  const getSigner = () => {
+    console.log('getSigner?', walletProvider)
+    if (!walletProvider) return;
 
-        return new ethers.providers.Web3Provider(walletProvider)
+    return new ethers.providers.Web3Provider(walletProvider)
+  }
+
+  return {
+    getSigner
+  }
+}
+
+export const useContractService = () => {
+  const user = useUser();
+  const { walletProvider } = useWeb3ModalProvider()
+  const [contractService, setContractService] = useState<UserContractService | null>(null);
+
+  useEffect(() => {
+    async function initSigner() {
+      if (!walletProvider) {
+        setContractService(null);
+        return;
+      }
+
+      const ethersProvider = new ethers.providers.Web3Provider(walletProvider)
+      const signer = await ethersProvider.getSigner()
+      setContractService(new UserContractService(signer));
     }
 
-    return {
-        getSigner
+    console.log('NULL CHECK?', user.wallet.isConnected, walletProvider)
+    if (user.wallet.isConnected) {
+      initSigner();
+    } else {
+      setContractService(null);
     }
+  }, [user.wallet.address, user.wallet.isConnected, walletProvider]);
+
+  return contractService;
 }
