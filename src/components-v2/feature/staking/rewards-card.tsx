@@ -9,17 +9,15 @@ import {appConfig} from "@src/Config";
 import {Box, Center, SimpleGrid, Spinner} from "@chakra-ui/react";
 import {useAppSelector} from "@src/Store/hooks";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 const stakeContract = new Contract(config.contracts.stake, StakeABI.abi, readProvider);
 
 const RewardsCard = () => {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
-  const userTheme = useAppSelector((state) => {
-    return state.user.theme;
-  });
+  const user = useUser();
+  const userTheme = user.theme;
 
   const [firstRunComplete, setFirstRunComplete] = useState(false);
   const [isHarvesting, setIsHarvesting] = useState(false);

@@ -26,6 +26,7 @@ import customTheme from "@src/Theme/theme";
 import {AppProps} from "next/app";
 import App from "@src/components-v2/app";
 import {Web3Modal} from "@src/components-v2/web3modal";
+import {UserProvider} from "@src/components-v2/shared/contexts/user";
 
 Site24x7LoggingService.init();
 
@@ -52,7 +53,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <QueryClientProvider client={queryClient} >
             <ChakraProvider theme={customTheme}>
               <Web3Modal>
-                <App Component={Component} {...pageProps} />
+                <UserProvider>
+                  <App Component={Component} {...pageProps} />
+                </UserProvider>
               </Web3Modal>
             </ChakraProvider>
           </QueryClientProvider>

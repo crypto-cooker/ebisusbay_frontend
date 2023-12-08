@@ -1,6 +1,5 @@
 import React, {memo} from 'react';
 import Select from 'react-select';
-import {useSelector} from 'react-redux';
 
 import {SortOption} from '../Models/sort-option.model';
 import {getTheme} from '../../Theme/theme';
@@ -9,6 +8,7 @@ import Switch from './common/Switch';
 import useFeatureFlag from '@src/hooks/useFeatureFlag';
 import Constants from '@src/constants';
 import {Input, InputGroup} from "@chakra-ui/react";
+import {useUser} from "@src/components-v2/useUser";
 
 const CollectionFilterBarContainer = styled.div`
   margin: 0 0 22px;
@@ -34,9 +34,7 @@ const TopFilterBar = ({
   onlyVerified = false,
   setOnlyVerified = (onlyVerified) => { }
 }) => {
-  const userTheme = useSelector((state) => {
-    return state.user.theme;
-  });
+  const {theme: userTheme} = useUser();
   const customStyles = {
     option: (base, state) => ({
       ...base,

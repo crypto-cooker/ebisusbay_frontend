@@ -1,13 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import {round, shortAddress} from '../../utils';
-import { utils } from 'ethers';
+import {utils} from 'ethers';
 import styles from './styles.module.scss';
+import {useUser} from "@src/components-v2/useUser";
 
 export default function Table({ headers, items }) {
-  const userTheme = useSelector((state) => {
-    return state.user.theme;
-  });
+  const {theme: userTheme} = useUser();
   return (
     <table className={`table ${styles.table} table-${userTheme} table-borderless`}>
       <thead className="border-bottom">

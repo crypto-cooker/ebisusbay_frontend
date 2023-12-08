@@ -7,6 +7,7 @@ import Reveal from 'react-awesome-reveal';
 import { theme } from '../src/Theme/theme';
 import {hostedImage} from "../src/helpers/image";
 import {useAppSelector} from "@src/Store/hooks";
+import {useUser} from "@src/components-v2/useUser";
 
 const fadeInUp = keyframes`
   0% {
@@ -103,9 +104,7 @@ const Jumbotron = {
 const Custom500 = () => {
   const dispatch = useDispatch();
 
-  const userTheme = useAppSelector((state) => {
-    return state.user.theme;
-  });
+  const {theme: userTheme} = useUser();
 
   const [mobile, setMobile] = useState(typeof window !== 'undefined' && window.innerWidth < theme.breakpointsNum.md);
 

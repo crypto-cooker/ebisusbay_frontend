@@ -11,7 +11,6 @@ import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
-import {connectAccount} from '@src/GlobalState/User';
 import {createSuccessfulTransactionToastContent, isCmbDrop, newlineText, percentage} from '@src/utils';
 import {DropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi} from '@src/Contracts/Abis';
@@ -19,6 +18,8 @@ import {appConfig} from "@src/Config";
 import {useAppSelector} from "@src/Store/hooks";
 import {formatEther} from "ethers/lib/utils";
 import {FormLabel, Progress, Spinner} from "@chakra-ui/react";
+import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const config = appConfig();
 const drops = config.drops;
@@ -82,9 +83,7 @@ const MultiDrop = () => {
   const [canMintQuantity, setCanMintQuantity] = useState<number[]>([0, 0, 0]);
   const [factionCurrentSupply, setFactionCurrentSupply] = useState<any>({});
 
-  const user = useAppSelector((state) => {
-    return state.user;
-  });
+  const user = useUser();
 
   const drop = useAppSelector((state) => {
     return drops.find((n: any) => n.slug === slug);
@@ -93,6 +92,7 @@ const MultiDrop = () => {
   const membership = useAppSelector((state) => {
     return state.memberships;
   });
+  const [runAuthedFunction] = useAuthedFunction();
 
   useEffect(() => {
     async function retrieveInfo() {
@@ -229,7 +229,7 @@ const MultiDrop = () => {
   };
 
   const mintNow = async (quantity: number, faction: string) => {
-    if (user.address) {
+    runAuthedFunction(async() => {
       if (!dropObject.writeContract) {
         return;
       }
@@ -301,9 +301,7 @@ const MultiDrop = () => {
       } finally {
         // setMinting(false);
       }
-    } else {
-      dispatch(connectAccount());
-    }
+    });
   };
 
   // const convertTime = (time) => {

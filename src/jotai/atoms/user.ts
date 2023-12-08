@@ -20,6 +20,7 @@ export interface JotaiUser {
   fee: number;
   initializing: boolean;
   initialized: boolean;
+  theme: string;
 }
 
 export enum UserActionType {
@@ -28,6 +29,7 @@ export enum UserActionType {
   SET_TOKEN_BALANCES,
   SET_CONTRACT_BALANCES,
   SET_INITIALIZING,
+  TOGGLE_THEME,
   RESET_USER // For disconnecting
 }
 
@@ -54,7 +56,8 @@ function userReducer(state: JotaiUser, action: UserAction): JotaiUser {
       };
     case UserActionType.SET_INITIALIZING:
       return { ...state, initializing: !!action.payload.initializing, initialized: !!action.payload.initialized };
-    // Add cases for other actions
+    case UserActionType.TOGGLE_THEME:
+      return { ...state, theme: action.payload.theme ?? 'dark' };
     case UserActionType.RESET_USER:
       return initialUserState;
     // For other actions, do a deep merge if necessary
@@ -93,7 +96,8 @@ const initialUserState: JotaiUser = {
   },
   fee: 3,
   initializing: false,
-  initialized: false
+  initialized: false,
+  theme: 'dark'
 };
 
 export const userAtom = atomWithReducer<JotaiUser, UserAction>(initialUserState, userReducer);

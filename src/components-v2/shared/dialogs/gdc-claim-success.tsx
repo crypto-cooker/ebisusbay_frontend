@@ -30,6 +30,7 @@ import {useAppSelector} from "@src/Store/hooks";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
 import {retrieveProfile} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -43,8 +44,7 @@ export default function GdcClaimSuccess({ onClose, isOpen, tx}: GdcClaimSuccessD
   const dispatch = useDispatch();
   const { onCopy, setValue } = useClipboard(appUrl(`/account}`).toString());
 
-  const user = useAppSelector((state) => state.user);
-  const userTheme = useAppSelector((state) => state.user.theme);
+  const user = useUser();
 
   const handleCopy = useCallback(() => {
     onCopy();

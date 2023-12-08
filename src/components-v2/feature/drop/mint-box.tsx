@@ -16,15 +16,11 @@ import {DropState, DropState as statuses} from "@src/core/api/enums";
 import {constants, Contract, ethers} from "ethers";
 import {createSuccessfulTransactionToastContent, percentage, round} from "@src/utils";
 import React, {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {commify, parseUnits} from "ethers/lib/utils";
 import {toast} from "react-toastify";
 import {getAnalytics, logEvent} from "@firebase/analytics";
 import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/Config";
-import {useAppSelector} from "@src/Store/hooks";
 import {Drop} from "@src/core/models/drop";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
@@ -33,6 +29,8 @@ import Link from "next/link";
 import {ApiService} from "@src/core/services/api-service";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -60,14 +58,10 @@ interface MintBoxProps {
 }
 
 export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescription, onMintSuccess, canMintQuantity, regularCost, memberCost, whitelistCost, specialWhitelist, maxMintPerTx, maxMintPerAddress}: MintBoxProps) => {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => {
-    return state.user;
-  });
-  const userTheme = useAppSelector((state) => {
-    return state.user.theme;
-  });
+  const user = useUser();
+  const userTheme = user.theme;
   const {requestSignature} = useEnforceSigner();
+  const [runAuthedFunction] = useAuthedFunction();
 
   const [mintingWithType, setMintingWithType] = useState<FundingType>();
   const [numToMint, setNumToMint] = useState(1);
@@ -75,14 +69,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   const [erc20Token, setErc20Token] = useState<{name: string, symbol: string, address: string} | null>(null);
 
   const connectWalletPressed = () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
+    user.connect();
   };
   
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
@@ -129,7 +116,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   };
 
   const mintNow = async (fundingType: FundingType) => {
-    if (user.address) {
+    runAuthedFunction(async () => {
       if (!drop.writeContract) {
         console.log('missing write contract')
         return;
@@ -187,9 +174,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       } finally {
         setMintingWithType(undefined);
       }
-    } else {
-      dispatch(connectAccount());
-    }
+    });
   };
 
   const mintWithCro = async (contract: Contract, finalCost: number) => {

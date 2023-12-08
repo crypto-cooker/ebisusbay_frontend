@@ -1,6 +1,5 @@
 import React, {ReactNode} from "react";
 import {getTheme} from "@src/Theme/theme";
-import {useAppSelector} from "@src/Store/hooks";
 import {
   Drawer,
   DrawerBody,
@@ -11,6 +10,7 @@ import {
   HStack
 } from "@chakra-ui/react";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
+import {useUser} from "@src/components-v2/useUser";
 
 interface MobileFiltersProps {
   show: boolean;
@@ -20,7 +20,7 @@ interface MobileFiltersProps {
 }
 
 export const MobileFilters = ({show, onHide, onClearAll, filters}: MobileFiltersProps) => {
-  const theme = useAppSelector((state) => state.user.theme);
+  const { theme } = useUser();
 
   return (
     <Drawer isOpen={show} placement="bottom" onClose={onHide}>

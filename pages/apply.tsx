@@ -80,10 +80,6 @@ const choice = {
 const Application = ({type}: { type: string }) => {
   const router = useRouter();
 
-  const userTheme = useAppSelector((state) => {
-    return state.user.theme;
-  });
-
   const [openTab, setOpenTab] = useState(type);
   const handleBtnClick = (index: string) => (element: any) => {
     if (choice[index as keyof typeof choice]) {

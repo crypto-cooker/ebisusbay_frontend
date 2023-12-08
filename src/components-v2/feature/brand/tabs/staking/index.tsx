@@ -17,7 +17,6 @@ import React, {useCallback, useEffect, useState} from "react";
 import {caseInsensitiveCompare, round} from "@src/utils";
 import {motion} from "framer-motion";
 import {useQuery} from "@tanstack/react-query";
-import {useAppSelector} from "@src/Store/hooks";
 import {
     BoosterSlot,
     StakerWithRewards,
@@ -27,14 +26,12 @@ import StakingNftCard from "@src/components-v2/feature/brand/tabs/staking/stakin
 import {useStaker} from "@src/components-v2/feature/brand/tabs/staking/useStaker";
 import Filters from "@src/components-v2/feature/brand/tabs/staking/filters";
 import Button from "@src/Components/components/Button";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
 import Taskbar from "@src/components-v2/feature/brand/tabs/staking/taskbar";
 import BoostSlotCard from "@src/components-v2/feature/brand/tabs/staking/boost-slot-card";
 import {Contract, ethers} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {JsonRpcProvider} from "@ethersproject/providers";
+import {useUser} from "@src/components-v2/useUser";
 
 const MotionGrid = motion(Grid);
 
@@ -47,9 +44,8 @@ type StakingTabProps = {
 }
 
 const StakingTab = ({ brand, collections }: StakingTabProps) => {
-    const dispatch = useDispatch();
     const { staker, isBoosterCollection } = useStaker(brand.slug);
-    const user = useAppSelector((state) => state.user);
+    const user = useUser();
     const useMobileViews = useBreakpointValue(
         {base: true, lg: false},
         {fallback: 'lg'},
@@ -84,16 +80,7 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
     });
 
     const handleConnect = () => {
-        if (!user.address) {
-            if (user.needsOnboard) {
-                const onboarding = new MetaMaskOnboarding();
-                onboarding.startOnboarding();
-            } else if (!user.address) {
-                dispatch(connectAccount());
-            } else if (!user.correctChain) {
-                dispatch(chainConnect());
-            }
-        }
+        user.connect();
     };
 
     const handleCollectionFilter = useCallback((address: string) => {
@@ -213,7 +200,7 @@ type StakeViewProps = {
     nfts: any;
 }
 const StakeView = ({slug, collectionAddress, filterType, nfts}: StakeViewProps) => {
-    const user = useAppSelector((state) => state.user);
+    const user = useUser();
     const { staker, stakeMutation, unstakeMutation } = useStaker(slug);
 
     const handleStake = useCallback(async (nftAddress: string, nftId: string) => {
@@ -265,7 +252,7 @@ type BoostViewProps = {
     nfts: any;
 }
 const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) => {
-    const user = useAppSelector((state) => state.user);
+    const user = useUser();
     const { staker, boostMutation, unboostMutation } = useStaker(slug);
     const [selectedSlot, setSelectedSlot] = useState<BoosterSlot>();
     const [slots, setSlots] = useState<BoosterSlot[]>([]);
@@ -354,7 +341,7 @@ const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) 
 }
 
 const RewardsComponent = ({staker}: {staker: StakerWithRewards}) => {
-    const user = useAppSelector((state) => state.user);
+    const user = useUser();
     const [executingClaim, setExecutingClaim] = useState(false);
 
     const fetcher = async () => {

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {constants, Contract, ethers} from 'ethers';
-import MetaMaskOnboarding from '@metamask/onboarding';
 import {toast} from 'react-toastify';
 import Countdown from 'react-countdown';
 
@@ -9,16 +8,19 @@ import AuctionContract from '../../Contracts/DegenAuction.json';
 import {caseInsensitiveCompare, createSuccessfulTransactionToastContent, devLog, isEventValidNumber} from '../../utils';
 import {auctionState} from '@src/core/api/enums';
 import {getAuctionDetails, updateAuctionFromBidEvent} from '@src/GlobalState/auctionSlice';
-import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {ERC20} from "@src/Contracts/Abis";
 import Button from "../components/Button";
 import {appConfig} from "@src/Config";
 import {Card, CardBody, CardFooter, Input, Spinner} from "@chakra-ui/react";
+import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const config = appConfig();
 
 const BuyerActionBar = () => {
   const dispatch = useDispatch();
+  const user = useUser();
+  const [runAuthedFunction] = useAuthedFunction();
 
   const [bidAmount, setBidAmount] = useState(0);
   const [rebidAmount, setRebidAmount] = useState(0);
@@ -34,7 +36,6 @@ const BuyerActionBar = () => {
   const [executingCancelBid, setExecutingCancelBid] = useState(false);
   const [executingApproveContract, setExecutingApproveContract] = useState(false);
 
-  const user = useSelector((state) => state.user);
   const bidHistory = useSelector((state) => state.auction.bidHistory.filter((i) => !i.withdrawn));
   const listing = useSelector((state) => state.auction.auction);
   const minBid = useSelector((state) => state.auction.minBid);
@@ -142,7 +143,7 @@ const BuyerActionBar = () => {
   };
 
   const runFunction = async (fn) => {
-    if (user.address) {
+    runAuthedFunction(async() => {
       try {
         let writeContract = user.contractService.auction;
         await ensureApproved(writeContract);
@@ -160,16 +161,7 @@ const BuyerActionBar = () => {
           toast.error('Unknown Error');
         }
       }
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   };
 
   const refreshMadBalance = async () => {
@@ -254,14 +246,7 @@ const BuyerActionBar = () => {
   };
 
   const connectWalletPressed = () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
+    user.connect();
   };
 
   const ActionButtons = () => {

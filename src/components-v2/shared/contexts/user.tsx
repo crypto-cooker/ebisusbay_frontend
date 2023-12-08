@@ -1,5 +1,5 @@
 import {useAccount, useBalance, useDisconnect, useNetwork} from "wagmi";
-import {createContext, ReactNode, useEffect} from "react";
+import {createContext, ReactNode, useEffect, useState} from "react";
 import {appConfig} from "@src/Config";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {useQuery} from "@tanstack/react-query";
@@ -9,6 +9,9 @@ import {ethers} from "ethers";
 import {JotaiUser, UserActionType, userAtom} from "@src/jotai/atoms/user";
 import {useAtom} from "jotai";
 import {isUserBlacklisted} from "@src/utils";
+import {setThemeInStorage} from "@src/helpers/storage";
+import {useColorMode} from "@chakra-ui/react";
+import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
 
 const config = appConfig();
 
@@ -16,6 +19,7 @@ const config = appConfig();
 interface UserContextType {
   user: JotaiUser;
   disconnect: () => void;
+  toggleTheme: (theme: string) => void;
 }
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -31,6 +35,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const { disconnect: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
   const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address });
+  const [theme, setTheme] = useState<string>('dark'); // default theme
+  const { setColorMode } = useColorMode();
+  const { setThemeMode } = useWeb3ModalTheme();
 
   const { data: profile } = useQuery({
     queryKey: ['UserProfile', address],
@@ -110,6 +117,18 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     // TODO: reset all other state from User.ts
   }
 
+  const toggleTheme = (theme: string) => {
+    if (theme === 'light' || theme === 'dark') {
+      setThemeMode(theme);
+      setThemeInStorage(theme);
+      setColorMode(theme);
+      if (typeof window !== 'undefined') {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+      dispatch({ type: UserActionType.TOGGLE_THEME, payload: { theme } });
+    }
+  }
+
   // Set Wallet
   useEffect(() => {
     dispatch({
@@ -154,5 +173,5 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     });
   }, [croBalance.data, frtnBalance.data]);
 
-  return <UserContext.Provider value={{ user, disconnect }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user, disconnect, toggleTheme }}>{children}</UserContext.Provider>;
 };

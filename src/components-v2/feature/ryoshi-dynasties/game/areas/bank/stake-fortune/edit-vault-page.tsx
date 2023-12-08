@@ -2,11 +2,9 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Center,
   Flex,
   FormControl,
   FormErrorMessage,
-  Image,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -18,28 +16,25 @@ import {
   Text,
   VStack
 } from "@chakra-ui/react";
-import ImageService from "@src/core/services/image";
 import React, {ChangeEvent, useCallback, useContext, useEffect, useState} from "react";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import RdButton from "../../../../components/rd-button";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useAppSelector} from "@src/Store/hooks";
 import {BigNumber, Contract, ethers} from "ethers";
 import Fortune from "@src/Contracts/Fortune.json";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, findNextLowestNumber, pluralize, round} from "@src/utils";
 import Bank from "@src/Contracts/Bank.json";
 import {appConfig} from "@src/Config";
-import {useDispatch} from "react-redux";
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
 import {commify} from "ethers/lib/utils";
 import moment from "moment/moment";
 import {useQueryClient} from "@tanstack/react-query";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -55,10 +50,10 @@ interface EditVaultPageProps {
 }
 
 const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const {config: rdConfig, refreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const queryClient = useQueryClient();
+  const [runAuthedFunction] = useAuthedFunction();
 
   const [currentStep, setCurrentStep] = useState(steps.form);
   const [isExecuting, setIsExecuting] = useState(false);
@@ -138,19 +133,10 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
   }
 
   const handleStake = async () => {
-    if (user.address) {
+    runAuthedFunction(async() => {
       if (!await validateInput()) return;
       await executeStakeFortune();
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   }
 
   const executeStakeFortune = async () => {

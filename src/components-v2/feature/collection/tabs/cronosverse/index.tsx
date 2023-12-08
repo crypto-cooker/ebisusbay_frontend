@@ -1,24 +1,22 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {useRouter} from 'next/router';
 import styled from 'styled-components';
-import MetaMaskOnboarding from '@metamask/onboarding';
 import {commify} from 'ethers/lib/utils';
 import {TransformComponent, TransformWrapper} from 'react-zoom-pan-pinch';
 import {devLog} from '@src/utils';
 import Button from '../../../../../Components/components/Button';
-import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 
 import styles from './cronosverse.module.scss';
 import nextApiService from "@src/core/services/api-service/next";
 import {useQuery} from "@tanstack/react-query";
-import {useAppSelector} from "@src/Store/hooks";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {useUser} from "@src/components-v2/useUser";
 
 const CollectionCronosverse = ({ collection }: {collection: any}) => {
-  const dispatch = useDispatch();
   const router = useRouter();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const [runAuthedFunction] = useAuthedFunction();
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [nftOffer, setNftOffer] = useState<any>(null);
@@ -36,19 +34,10 @@ const CollectionCronosverse = ({ collection }: {collection: any}) => {
   });
 
   const handleMakeOffer = (nft: any) => {
-    if (user.address) {
+    runAuthedFunction(async () => {
       setNftOffer(nft);
       setOpenMakeOfferDialog(!openMakeOfferDialog);
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   };
 
   const handleBuy = (listing: any) => {

@@ -1,15 +1,10 @@
-import {
-  Menu as MenuCK,
-  MenuList,
-  MenuItem,
-} from '@chakra-ui/react'
+import {Menu as MenuCK, MenuItem, MenuList,} from '@chakra-ui/react'
 
-import { getTheme } from '@src/Theme/theme';
-import { useDispatch, useSelector } from "react-redux";
+import {getTheme} from '@src/Theme/theme';
+import {useUser} from "@src/components-v2/useUser";
 
 const Menu = ({MenuButton, MenuItems = []}) => {
-
-  const userTheme = useSelector((state) => state.user.theme);
+  const {theme: userTheme} = useUser();
 
   return (
     <MenuCK bg={getTheme(userTheme).colors.bgColor1} >

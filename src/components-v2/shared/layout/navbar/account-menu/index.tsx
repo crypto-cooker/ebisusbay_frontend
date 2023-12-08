@@ -10,7 +10,6 @@ import {
   faCopy,
   faDollarSign,
   faEdit,
-  faGift,
   faHand,
   faHeart,
   faMoon,
@@ -25,15 +24,9 @@ import {createSuccessfulTransactionToastContent, round, shortAddress, username} 
 import styles from './accountmenu.module.scss';
 import {useWeb3Modal} from '@web3modal/wagmi/react'
 
-import {
-  AccountMenuActions,
-  onLogout,
-  setTheme,
-  updatedEscrowStatus,
-  updatingEscrowStatus,
-} from '@src/GlobalState/User';
+import {AccountMenuActions, onLogout,} from '@src/GlobalState/User';
 
-import {getThemeInStorage, setThemeInStorage} from '@src/helpers/storage';
+import {getThemeInStorage} from '@src/helpers/storage';
 import {appConfig} from '@src/Config';
 import classnames from "classnames";
 import Button from "@src/Components/components/Button";
@@ -60,12 +53,9 @@ import {
   Text,
   useBreakpointValue,
   useClipboard,
-  useColorMode,
   Wrap
 } from "@chakra-ui/react";
-import {useQuery} from "@tanstack/react-query";
 import CronosIconFlat from "@src/components-v2/shared/icons/cronos";
-import {useAppSelector} from "@src/Store/hooks";
 import GdcClaimConfirmation from "@src/components-v2/shared/dialogs/gdc-claim-confirmation";
 import ImageService from "@src/core/services/image";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
@@ -84,7 +74,6 @@ const Index = function () {
   const contractService = useContractService();
 
   const dispatch = useDispatch();
-  const { setColorMode } = useColorMode();
   const [showMenu, setShowMenu] = useState(false);
   const slideDirection = useBreakpointValue<'bottom' | 'right'>(
     {
@@ -100,21 +89,7 @@ const Index = function () {
 
   const { setValue:setClipboardValue, onCopy } = useClipboard(user.wallet.address ?? '');
 
-  const theme = useAppSelector((state) => {
-    return state.user.theme;
-  });
-  const pendingGdcItem = useAppSelector((state) => {
-    return state.user.profile?.pendingGdcItem;
-  });
-  const needsOnboard = useAppSelector((state) => {
-    return state.user.needsOnboard;
-  });
-
-  const { data: balance } = useQuery({
-    queryKey: ['getBalance', user.wallet.address, 'latest'],
-    queryFn: async () => await readProvider.getBalance(user.wallet.address!),
-    enabled: !!user.wallet.address
-  });
+  const {theme, profile} = useUser();
 
   const closeMenu = () => {
     setShowMenu(false);
@@ -181,13 +156,7 @@ const Index = function () {
 
   useEffect(() => {
     const themeInStorage = getThemeInStorage();
-
-    if (themeInStorage) {
-      dispatch(setTheme(themeInStorage));
-    } else {
-      setThemeInStorage('dark');
-    }
-    // eslint-disable-next-line
+    user.toggleTheme(themeInStorage ?? 'dark');
   }, []);
 
   useEffect(() => {
@@ -206,8 +175,7 @@ const Index = function () {
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
-    dispatch(setTheme(newTheme));
-    setColorMode(newTheme);
+    user.toggleTheme(newTheme);
   };
 
   const SvgComponent = (props: SVGProps<any>) => (
@@ -390,15 +358,6 @@ const Index = function () {
                   </Box>
                 </Box>
               </SimpleGrid>
-
-              {!!pendingGdcItem && (
-                <SimpleGrid columns={1} gap={2} mt={8} className={styles.navigation}>
-                  <Box textAlign='center' className={styles.col} onClick={() => setIsGdcConfirmationOpen(true)}>
-                    <FontAwesomeIcon icon={faGift} />
-                    <Box as='span' ms={2}>Claim NFT from GDC</Box>
-                  </Box>
-                </SimpleGrid>
-              )}
 
               <Heading as="h3" size="md" className="mt-4 mb-3">
                 <FontAwesomeIcon icon={faWallet} className="me-2"/>

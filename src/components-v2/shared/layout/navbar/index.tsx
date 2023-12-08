@@ -1,5 +1,4 @@
 import React, {RefObject, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import Link from 'next/link';
 import {createGlobalStyle} from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -7,7 +6,6 @@ import {faMoon, faSun} from '@fortawesome/free-solid-svg-icons';
 
 import AccountMenu from './account-menu';
 import NotificationMenu from './notification-menu';
-import {setTheme} from '@src/GlobalState/User';
 import {
   Box,
   Button,
@@ -26,7 +24,6 @@ import {
   Stack,
   Text,
   useBreakpointValue,
-  useColorMode,
   useDisclosure,
   useMediaQuery,
   useOutsideClick,
@@ -62,10 +59,8 @@ const NavLink = ({name, to, onClick}: {name: string, to: string, onClick?: any})
 }
 
 const Header = function () {
-  const dispatch = useDispatch();
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const { colorMode, setColorMode } = useColorMode()
-  const {theme, profile, address} = useUser();
+  const {theme, profile, setTheme} = useUser();
   const shouldUseMobileSearch = useBreakpointValue(
     { base: true, lg: false },
     { fallback: 'lg'},
@@ -82,8 +77,7 @@ const Header = function () {
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
-    dispatch(setTheme(newTheme));
-    setColorMode(newTheme);
+    setTheme(newTheme);
   };
 
   useEffect(() => {

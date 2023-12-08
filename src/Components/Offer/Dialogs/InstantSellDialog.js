@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {specialImageTransform} from "@src/hacks";
-import {useSelector} from "react-redux";
 import {Contract, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
@@ -360,7 +359,7 @@ const ImageContainer = styled.div`
   }
 `;
 const NftPicker = ({collectionAddress, nfts, onSelect, initialNft}) => {
-  const userTheme = useSelector((state) => state.user.theme);
+  const {theme: userTheme} = useUser();
   const [chosenNft, setChosenNft] = useState(initialNft);
 
   const handleNftChange = useCallback((chosenNft) => {

@@ -4,11 +4,11 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Icon, IconButton, Menu, MenuButton, MenuItem, MenuList, Text,} from '@chakra-ui/react'
 
 import {getTheme} from '@src/Theme/theme';
-import {useSelector} from "react-redux";
 import {faEllipsisH} from "@fortawesome/free-solid-svg-icons";
+import {useUser} from "@src/components-v2/useUser";
 
 const MenuPopup = ({ options = [] }) => {
-  const userTheme = useSelector((state) => state.user.theme);
+  const {theme: userTheme} = useUser();
 
   return (
     <Menu>

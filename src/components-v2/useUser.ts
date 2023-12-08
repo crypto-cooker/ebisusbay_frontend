@@ -1,29 +1,30 @@
 import {useContext, useEffect, useMemo, useState} from "react";
 import {providers} from "ethers";
-import {useWeb3ModalProvider} from "@web3modal/ethers5/react";
-import {getThemeInStorage} from "@src/helpers/storage";
 import UserContractService from "@src/core/contractService";
 import {UserContext} from "@src/components-v2/shared/contexts/user";
 import {useWalletClient, WalletClient} from "wagmi";
+import {useWeb3Modal} from "@web3modal/wagmi/react";
 
 export const useUser = () => {
   const context = useContext(UserContext);
+  const { open: connect } = useWeb3Modal();
 
   if (context === null) {
     throw new Error('useUser must be used within a UserProvider');
   }
 
-  const { user, disconnect } = context;
+  const { user, disconnect, toggleTheme } = context;
 
   return {
     ...user,
 
+    connect,
     disconnect,
+    toggleTheme,
 
     // Legacy
     address: context.user.wallet.address,
     provider: useLegacyProviderFunctions(),
-    theme: getThemeInStorage() ?? 'dark'
   };
 }
 

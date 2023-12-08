@@ -1,16 +1,12 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {Box, Center, Flex, HStack, SimpleGrid, Spacer, Spinner, Text, useMediaQuery, VStack} from "@chakra-ui/react"
+import {Box, Center, Flex, HStack, Spinner, Text, useMediaQuery, VStack} from "@chakra-ui/react"
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {useAppSelector} from "@src/Store/hooks";
 import HelpPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/help";
 import {appConfig} from "@src/Config";
-
-import {useDispatch} from 'react-redux';
-import MetaMaskOnboarding from '@metamask/onboarding';
-import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const tabs = {
   info: 'info',
@@ -36,6 +32,7 @@ interface LandModalFormProps {
 }
 
 const LandModal = ({ isOpen, onClose, plot}: LandModalFormProps) => {
+  const [runAuthedFunction] = useAuthedFunction();
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
 
@@ -57,9 +54,7 @@ const LandModal = ({ isOpen, onClose, plot}: LandModalFormProps) => {
     }
   };
 
-  const dispatch = useDispatch();
   // const router = useRouter();
-  const user = useAppSelector(state => state.user);
   
   // const user = useSelector((state) => state.user);
   // const items = useSelector((state) => state.collection.listings);
@@ -78,19 +73,10 @@ const LandModal = ({ isOpen, onClose, plot}: LandModalFormProps) => {
   // }, [dispatch]);
 
   const handleMakeOffer = (nft:any) => {
-    if (user.address) {
+    runAuthedFunction(async() => {
       setNftOffer(nft.nft ?? nft);
       setOpenMakeOfferDialog(!openMakeOfferDialog);
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   };
   
   const GetNftImages = async () => {

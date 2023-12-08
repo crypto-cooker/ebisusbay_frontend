@@ -44,6 +44,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCog, faEllipsisV} from "@fortawesome/free-solid-svg-icons";
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import ImageService from "@src/core/services/image";
+import {useUser} from "@src/components-v2/useUser";
 
 const MotionGrid = motion(Grid)
 
@@ -84,7 +85,7 @@ interface ProfileProps {
 
 export default function Profile({ address, profile, tab }: ProfileProps) {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const router = useRouter();
   const variants = {
@@ -126,10 +127,10 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
   }, [tab]);
 
   useEffect(() => {
-    if (!user.address && batchListingCart.isDrawerOpen) {
+    if (!user.wallet.address && batchListingCart.isDrawerOpen) {
       dispatch(closeBatchListingCart());
     }
-  }, [user.address]);
+  }, [user.wallet.address]);
 
   if (typeof window !== 'undefined') {
     useLayoutEffect(() => {

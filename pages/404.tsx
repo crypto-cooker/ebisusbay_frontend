@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createGlobalStyle, default as styled } from 'styled-components';
-import { keyframes } from '@emotion/react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {createGlobalStyle, default as styled} from 'styled-components';
+import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 
-import { theme } from '@src/Theme/theme';
+import {theme} from '@src/Theme/theme';
 import {hostedImage} from "@src/helpers/image";
-import {useAppSelector} from "@src/Store/hooks";
+import {useUser} from "@src/components-v2/useUser";
 
 const fadeInUp = keyframes`
   0% {
@@ -103,9 +103,7 @@ const Jumbotron = {
 const Custom404 = () => {
   const dispatch = useDispatch();
 
-  const userTheme = useAppSelector((state) => {
-    return state.user.theme;
-  });
+  const {theme: userTheme} = useUser();
 
   const [mobile, setMobile] = useState(typeof window !== 'undefined' && window.innerWidth < theme.breakpointsNum.md);
 

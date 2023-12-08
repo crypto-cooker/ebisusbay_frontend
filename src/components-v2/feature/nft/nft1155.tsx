@@ -9,7 +9,6 @@ import {
   faSync
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import MetaMaskOnboarding from '@metamask/onboarding';
 
 import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import {
@@ -24,7 +23,7 @@ import {
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {specialImageTransform} from '@src/hacks';
-import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
+import {retrieveProfile} from '@src/GlobalState/User';
 import PriceActionBar from '@src/components-v2/feature/nft/price-action-bar';
 import ListingsTab from '@src/components-v2/feature/nft/tabs/listings';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';

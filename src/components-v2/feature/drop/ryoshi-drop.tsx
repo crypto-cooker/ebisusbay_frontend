@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import Countdown from 'react-countdown';
@@ -10,8 +9,6 @@ import {useRouter} from 'next/router';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
-
-import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {createSuccessfulTransactionToastContent, isFounderDrop, percentage,} from '@src/utils';
 import {DropState as statuses} from '@src/core/api/enums';
 import {ERC1155} from '@src/Contracts/Abis';
@@ -36,11 +33,12 @@ import {
   useColorModeValue,
   useNumberInput
 } from "@chakra-ui/react";
-import MetaMaskOnboarding from "@metamask/onboarding";
 import Link from "next/link";
 import {useAppSelector} from "@src/Store/hooks";
 import {Drop} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
+import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const config = appConfig();
 const collections = config.collections;
@@ -87,7 +85,7 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
   const { slug } = router.query;
 
   const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-  const dispatch = useDispatch();
+  const [runAuthedFunction] = useAuthedFunction();
 
   // const [loading, setLoading] = useState(true);
   const [minting, setMinting] = useState(false);
@@ -116,17 +114,13 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
   //   // eslint-disable-next-line
   // }, []);
 
-  const user = useAppSelector((state) => {
-    return state.user;
-  });
+  const user = useUser();
 
   const collection = useAppSelector((state) => {
     return collections.find((n: any) => n.slug === slug);
   });
 
-  const userTheme = useAppSelector((state) => {
-    return state.user.theme;
-  });
+  const userTheme = user.theme;
 
   useEffect(() => {
     async function fetchData() {
@@ -186,7 +180,8 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
   };
 
   const mintNow = async () => {
-    if (user.address) {
+    runAuthedFunction(async() => {
+
       setMinting(true);
       setMintingState("Swapping...");
       const ryoshiContract = await new ethers.Contract(drop.address, abi, user.provider.getSigner());
@@ -263,9 +258,7 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
         setMinting(false);
         setMintingState(null);
       }
-    } else {
-      dispatch(connectAccount());
-    }
+    });
   };
 
   const convertTime = (time: any) => {
@@ -277,14 +270,7 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
   };
 
   const connectWalletPressed = () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
+    user.connect();
   };
 
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =

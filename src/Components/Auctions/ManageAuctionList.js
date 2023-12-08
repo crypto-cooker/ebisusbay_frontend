@@ -12,19 +12,15 @@ import {
   isEventValidNumber,
   secondsToDhms
 } from "@src/utils";
-import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {appConfig} from "@src/Config";
 import {Input, Spinner} from "@chakra-ui/react";
-
-const config = appConfig();
+import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const ManageAuctionList = () => {
-  const dispatch = useDispatch();
+  const user = useUser();
+  const [runAuthedFunction] = useAuthedFunction();
 
-  const user = useSelector((state) => state.user);
   const [activeAuctions, setActiveAuctions] = useState([]);
   const [unwithdrawnAuctions, setUnwithdrawnAuctions] = useState([]);
   const [openStartConfirmationDialog, setStartConfirmationDialog] = useState(false);
@@ -106,7 +102,7 @@ const ManageAuctionList = () => {
       return;
     }
 
-    if (user.address) {
+    runAuthedFunction(async() => {
       let writeContract = user.contractService.auction;
       try {
         setExecutingStart(true);
@@ -119,16 +115,7 @@ const ManageAuctionList = () => {
       } finally {
         setExecutingStart(false);
       }
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   };
 
   const mapStateToHumanReadable = (listing) => {
@@ -147,7 +134,7 @@ const ManageAuctionList = () => {
   };
 
   const handleReturnBids = async (auction) => {
-    if (user.address) {
+    runAuthedFunction(async() => {
       let writeContract = user.contractService.auction;
       try {
         setExecutingStart(true);
@@ -166,44 +153,8 @@ const ManageAuctionList = () => {
       } finally {
         setExecutingStart(false);
       }
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   };
-
-  /* const handleCancelClick = (auction) => async () => {
-    if (user.address) {
-      let writeContract = await new ethers.Contract(
-        config.auction_contract,
-        AuctionContract.abi,
-        user.provider.getSigner()
-      );
-      console.log('cancelling auction...', auction);
-      try {
-        const tx = await writeContract.cancel(auction.auctionHash);
-        const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
-  };*/
 
   return (
     <div>

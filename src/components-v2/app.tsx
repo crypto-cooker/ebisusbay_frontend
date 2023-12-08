@@ -8,18 +8,15 @@ import {getAnalytics} from "@firebase/analytics";
 import ScrollToTopBtn from '@src/components-v2/shared/layout/scroll-to-top';
 import Header from '@src/components-v2/shared/layout/navbar';
 import firebaseConfig from '../third-party/firebase';
-import {appInitializer} from '../GlobalState/InitSlice';
 import {getTheme} from '../Theme/theme';
 import DefaultHead from "@src/components-v2/shared/layout/default-head";
 import {useColorMode} from "@chakra-ui/react";
 import {syncCartStorage} from "@src/GlobalState/cartSlice";
 import Footer from "@src/components-v2/shared/layout/footer";
-import {useAppSelector} from "@src/Store/hooks";
 import {AppProps} from "next/app";
 import {ExchangePricesContext} from "@src/components-v2/shared/contexts/exchange-prices";
 import {useGlobalPrices} from "@src/hooks/useGlobalPrices";
-import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
-import {UserProvider} from "@src/components-v2/shared/contexts/user";
+import {useUser} from "@src/components-v2/useUser";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -55,26 +52,11 @@ function App({ Component, ...pageProps }: AppProps) {
   const dispatch = useDispatch();
   const { colorMode } = useColorMode()
   const exchangePrices = useGlobalPrices();
-  const { setThemeMode } = useWeb3ModalTheme()
-
-
-  const userTheme = useAppSelector((state) => {
-    return state.user.theme;
-  });
-
-  if (typeof window !== 'undefined') {
-    document.documentElement.setAttribute('data-theme', userTheme);
-  }
-  setThemeMode(userTheme)
-
-  // useEffect(() => {
-  //   dispatch(appInitializer());
-  // }, [dispatch]);
+  const {theme: userTheme} = useUser();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       getAnalytics(firebase);
-      // dispatch(initProvider());
     }
   }, []);
 
@@ -84,35 +66,33 @@ function App({ Component, ...pageProps }: AppProps) {
   }, []);
 
   return (
-    <UserProvider>
-      <ThemeProvider theme={getTheme(userTheme)}>
-        <ExchangePricesContext.Provider value={{prices: exchangePrices.data ?? []}}>
-          <DefaultHead />
-          <div className="wraper">
-            {loading ? (
-              <div id="initialLoader">
-                <div className="loader"></div>
+    <ThemeProvider theme={getTheme(userTheme)}>
+      <ExchangePricesContext.Provider value={{prices: exchangePrices.data ?? []}}>
+        <DefaultHead />
+        <div className="wraper">
+          {loading ? (
+            <div id="initialLoader">
+              <div className="loader"></div>
+            </div>
+          ) : (
+            <>
+              <GlobalStyles isDark={userTheme === 'dark'} />
+              <Header />
+              <div style={{paddingTop:'74px'}}>
+                <Component {...pageProps} />
               </div>
-            ) : (
-              <>
-                <GlobalStyles isDark={userTheme === 'dark'} />
-                <Header />
-                <div style={{paddingTop:'74px'}}>
-                  <Component {...pageProps} />
-                </div>
-                <Footer />
-                <ScrollToTopBtn />
-                <ToastContainer
-                  position={toast.POSITION.BOTTOM_LEFT}
-                  hideProgressBar={true}
-                  theme={colorMode}
-                />
-              </>
-            )}
-          </div>
-        </ExchangePricesContext.Provider>
-      </ThemeProvider>
-    </UserProvider>
+              <Footer />
+              <ScrollToTopBtn />
+              <ToastContainer
+                position={toast.POSITION.BOTTOM_LEFT}
+                hideProgressBar={true}
+                theme={colorMode}
+              />
+            </>
+          )}
+        </div>
+      </ExchangePricesContext.Provider>
+    </ThemeProvider>
   );
 }
 

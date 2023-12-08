@@ -28,8 +28,6 @@ import {commify} from "ethers/lib/utils";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
 import {caseInsensitiveCompare, isBundle, knownErc20Token, round} from "@src/utils";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import Button from "@src/Components/components/common/Button";
 import {listingState} from "@src/core/api/enums";
 import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";

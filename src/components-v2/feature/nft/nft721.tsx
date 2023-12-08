@@ -13,7 +13,6 @@ import {
   faSync
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import MetaMaskOnboarding from '@metamask/onboarding';
 
 import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
@@ -46,7 +45,7 @@ import {
   shortAddress,
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
-import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
+import {retrieveProfile} from '@src/GlobalState/User';
 import {specialImageTransform} from '@src/hacks';
 import PriceActionBar from './price-action-bar';
 import {ERC721} from '@src/Contracts/Abis';

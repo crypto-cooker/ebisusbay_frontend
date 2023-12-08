@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Contract, ethers} from 'ethers';
 import styled from 'styled-components';
-import {useDispatch, useSelector} from 'react-redux';
 import {toast} from 'react-toastify';
-import MetaMaskOnboarding from '@metamask/onboarding';
 import styles from './rugsurance.module.scss';
 import {getCRC721NftsFromIds, getCRC721NftsFromWallet} from "@src/core/api/chain";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
@@ -25,6 +23,7 @@ import {
 import RugsuranceAbi from "@src/Contracts/SlothtyRugsurance.json";
 import {getTheme} from "@src/Theme/theme";
 import Button from "@src/Components/components/Button";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const knownContracts = config.collections;
@@ -43,8 +42,7 @@ const txExtras = {
 const targetSlug = 'ssc-access-cards';
 const audioURL = 'https://files.ebisusbay.com/slothty/slothty-burning.mp4';
 const Rugsurance = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useUser();
 
   const [nfts, setNfts] = useState([]);
   const [nonRefundableNfts, setNonRefundableNfts] = useState([]);
@@ -75,16 +73,7 @@ const Rugsurance = () => {
   };
 
   const connectWallet = async () => {
-    if (!user.address) {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    user.connect();
   };
 
   const calculateBurnEligibility = async () => {
