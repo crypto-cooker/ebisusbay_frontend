@@ -236,6 +236,9 @@ export const configData = {
           '0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F': ['cro', 'frtn', 'ttt'], // Time Cronos Planets
           '0xfF567a62d7BF2CF984F02175C8bd485E3C4E2c0e': ['cro', 'frtn', 'ttt'], // Time Ship Components
           '0x739b5380156Fa14C7956145048d52dF27EDedfCE': ['cro', 'frtn', 'ttt'], // Tata's Twisted Tonics
+          '0xb76415D33268391bfaE2E671f45CeDAD9bC99dc9': ['cro', 'frtn', 'ttt'], // Animated Guardians
+          '0xCF926cB69b860Da8c33a2a601217856536ed0bcA': ['cro', 'frtn', 'ttt'], // Animated Time Machine 102s
+          '0x975238Ce3c593060a9b549e1654dC992f0Bc11aC': ['cro', 'frtn', 'ttt'], // Power Tonics
         }
       }
     }
