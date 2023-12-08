@@ -22597,7 +22597,7 @@
     {
       "name": "Blumies Specials",
       "slug": "blumies-specials",
-      "address": "0xF40c194df868df86e73Ea1f208dE02959deaE36d",
+      "address": "0x88Eb0813Ce2efFbf5b5a846Efc8B11Bb75f34B76",
       "multiToken": true,
       "tokens": [
         {
@@ -24036,7 +24036,7 @@
       "name": "Blumies Tickets",
       "slug": "blumies-tickets",
       "multiToken": false,
-      "address": "0x4Eeeb2684b51AbB93660C0EAFA98a9185EE46A3F",
+      "address": "0x3415300bAC72187277510b271fEa6f91603B593e",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -24638,7 +24638,7 @@
       "name": "Blumies Customs",
       "slug": "blumies-customs",
       "multiToken": false,
-      "address": "0x3478c03926BAaB968b7A24A451ec8686892e3C4C",
+      "address": "0x0894EbCd3f7a8EC9461a6C7D45B3cDf20f13FB41",
       "onChain": false,
       "listable": true,
       "metadata": {
