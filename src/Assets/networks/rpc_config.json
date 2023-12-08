@@ -24954,6 +24954,29 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Coolbeans Garden Evolution Bean",
+      "slug": "coolbeans-garden-evolution-bean",
+      "multiToken": false,
+      "address": "0x80c69f3A8560668E4809cA0e76c700a8C6DA62bD",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Coolbeans Garden Evolution Beans are the memberships that give you 50% discount on all product NFTs when you have at least one of them staked and also earn rollium while staked with options to earn bonus % rollium using Coolbeans O.G.s , also join the discord for information on Coolbeans Entertainment where you can get access to the movies and music server.",
+        "avatar": "/img/collections/coolbeans-garden-evolution-bean/avatar.webp",
+        "website": "https://coolbeansgarden.wixsite.com/my-site/shop",
+        "twitter": "https://twitter.com/bscraver",
+        "discord": "https://discord.gg/SYx7wjhmQa",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
