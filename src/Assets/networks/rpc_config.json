@@ -18565,7 +18565,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "For My Brothers is a charity focused NFT collection created by Troopz.",
+        "description": "For My Brothers is a charity focused NFT collection created by Troopz. \n\nThe collection will focus on 3 key goals;\n\n- Kick-start 'Hearts of Gold' charity fund (40%)\n- Raise awareness and support Mens Mental Health in the Crypto/NFT space\n- Support the development of the CroDraw Lottery (and give holder discount!)\n\n420 hand-crafted, algorithmically generated, unique NFTs.",
         "avatar": "/img/collections/for-my-brothers/avatar.webp",
         "card": "/img/collections/for-my-brothers/card.webp",
         "banner": "/img/collections/for-my-brothers/banner.webp",
@@ -21965,7 +21965,7 @@
       "metadata": {
         "description": "The main purpose of this collection is to act as a Give an enemy to the Time Troops, these creatures out power a troop 10:1",
         "avatar": "/img/collections/time-creatures-class-a/avatar.webp",
-        "card": "/img/collections/time-creatures-class-a/card.webp",
+        "card": "/img/collections/time-creatures-class-a/card2.webp",
         "banner": "/img/collections/time-creatures-class-a/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
@@ -21988,7 +21988,7 @@
       "metadata": {
         "description": "The main purpose of this collection is to act as a Give an enemy\uD83D\uDC40 to the Time Troops, these creatures out power a troop 10:1",
         "avatar": "/img/collections/time-creatures-class-b/avatar.webp",
-        "card": "/img/collections/time-creatures-class-b/card.webp",
+        "card": "/img/collections/time-creatures-class-b/card2.webp",
         "banner": "/img/collections/time-creatures-class-b/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
@@ -23889,7 +23889,7 @@
       "metadata": {
         "description": "Time Cronos Planets are a collection from the Time Machine Eco, To provide our Resource mining for Time Wars Web3 game, Minting a Time Planet guarantees you weekly passive resources (before mint out) AND a boost in Time Adventures for resources gathered on adventures.",
         "avatar": "/img/collections/time-cronos-planets/avatar.webp",
-        "card": "/img/collections/time-cronos-planets/card.webp",
+        "card": "/img/collections/time-cronos-planets/card2.webp",
         "banner": "/img/collections/time-cronos-planets/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
@@ -24770,6 +24770,8 @@
       "metadata": {
         "description": "Meme token NFT. dedicated to create passive income for holders in the form of staking and future innovations",
         "avatar": "/img/collections/shrook/avatar.webp",
+        "card": "/img/collections/shrook/card.webp",
+        "banner": "/img/collections/shrook/banner.webp",
         "website": "https://mint-shrook.netlify.app/",
         "twitter": "https://twitter.com/shrook_token",
         "discord": "https://discord.gg/cUgyvPaW",
@@ -24847,6 +24849,7 @@
         "card": "/img/collections/dbd-jafc-battle-token/card.webp",
         "banner": "/img/collections/dbd-jafc-battle-token/banner.webp",
         "website": "https://dbd-jafc.netlify.app/",
+        "discord": "https://discord.gg/KnRmEA4u8v",
         "categories": [
           "collectibles"
         ]
