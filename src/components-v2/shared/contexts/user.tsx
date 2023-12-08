@@ -8,6 +8,7 @@ import {portABI, stakeABI} from "@src/Contracts/types";
 import {ethers} from "ethers";
 import {JotaiUser, UserActionType, userAtom} from "@src/jotai/atoms/user";
 import {useAtom} from "jotai";
+import {isUserBlacklisted} from "@src/utils";
 
 const config = appConfig();
 
@@ -41,6 +42,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     if (!address) return;
     try {
       dispatch({ type: UserActionType.SET_INITIALIZING, payload: { initializing: true, initialized: false } });
+
+      if (isUserBlacklisted(address)) {
+        disconnect();
+        throw {err: 'Unable to connect'};
+      }
+
       const data = await multicall({
         contracts: [
           {
