@@ -24884,6 +24884,76 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Animated Guardians",
+      "slug": "animated-guardians",
+      "multiToken": false,
+      "address": "0xb76415D33268391bfaE2E671f45CeDAD9bC99dc9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Animated Guardians are the overseers of the Time Ecosystem. They will earn a percentage of everything Time and Tonic related.",
+        "avatar": "/img/collections/animated-guardians/avatar.gif",
+        "banner": "/img/collections/animated-guardians/banner.webp",
+        "website": "https://timemachine101.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/timemachinenfts",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Animated Time Machine 102s",
+      "slug": "animated-time-machine-102",
+      "multiToken": false,
+      "address": "0xCF926cB69b860Da8c33a2a601217856536ed0bcA",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Animated Time Machine 102s, are the overseers of the Time Ecosystem. They will earn a percentage of everything Time and Tonic related.",
+        "avatar": "/img/collections/animated-time-machine-102/avatar.webp",
+        "banner": "/img/collections/animated-time-machine-102/banner.gif",
+        "website": "https://timemachine101.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/timemachinenfts",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Power Tonics",
+      "slug": "power-tonics",
+      "multiToken": false,
+      "address": "0x975238Ce3c593060a9b549e1654dC992f0Bc11aC",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This is a unlimited mint for our Time Ecosystems Native token $Abyss, These tonics will be used in burn trade for upgrading your Guardians and 102s cards in our in discord Trading Card Game, And in our future Web3 game.",
+        "avatar": "/img/collections/power-tonics/avatar.webp",
+        "banner": "/img/collections/power-tonics/banner.webp",
+        "website": "https://timemachine101.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/timemachinenfts",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
