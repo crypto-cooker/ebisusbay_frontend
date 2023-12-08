@@ -672,25 +672,6 @@ export const retrieveProfile = () => async (dispatch: any, getState: any) => {
 };
 
 export class AccountMenuActions {
-  // static withdrawRewards = () => async (dispatch, getState) => {
-  //   const { user } = getState();
-  //   try {
-  //     const tx = await user.contractService.membership.withdrawPayments(user.address);
-  //     const receipt = await tx.wait();
-  //     toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-  //     dispatch(updateBalance());
-  //   } catch (error) {
-  //     if (error.data) {
-  //       toast.error(error.data.message);
-  //     } else if (error.message) {
-  //       toast.error(error.message);
-  //     } else {
-  //       console.log(error);
-  //       toast.error('Unknown Error');
-  //     }
-  //   }
-  // };
-
   static withdrawMarketBalance = () => async (dispatch: any, getState: any) => {
     const { user } = getState();
     try {
@@ -733,29 +714,6 @@ export class AccountMenuActions {
         console.log(error);
         toast.error('Unknown Error');
       }
-    }
-  };
-
-  static toggleEscrowOptIn = (optIn: boolean) => async (dispatch: any, getState: any) => {
-    const { user } = getState();
-    try {
-      dispatch(updatingEscrowStatus());
-
-      const tx = await user.contractService.market.setUseEscrow(user.address, optIn);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(updatedEscrowStatus(optIn));
-    } catch (error: any) {
-      dispatch(updatedEscrowStatus(undefined));
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        console.log(error);
-        toast.error('Unknown Error');
-      }
-    } finally {
     }
   };
 }

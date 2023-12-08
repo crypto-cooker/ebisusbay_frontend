@@ -17,6 +17,7 @@ export interface JotaiUser {
     enabled: boolean;
     balance: number;
   },
+  fee: number;
   initializing: boolean;
   initialized: boolean;
 }
@@ -90,6 +91,7 @@ const initialUserState: JotaiUser = {
     enabled: false,
     balance: 0
   },
+  fee: 3,
   initializing: false,
   initialized: false
 };

@@ -61,6 +61,8 @@ import ImageService from "@src/core/services/image";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
 import {ApiService} from "@src/core/services/api-service";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const tabs = {
@@ -81,6 +83,7 @@ interface Nft721Props {
 const Nft1155 = ({ address, id, collection }: Nft721Props) => {
   const dispatch = useDispatch();
   const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`).toString());
+  const [runAuthedFunction] = useAuthedFunction();
 
   const { nft, refreshing, favorites } = useAppSelector((state) => state.nft);
 
@@ -95,7 +98,7 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
     return collection?.slug;
   });
   const isLoading = useAppSelector((state) => state.nft.loading);
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [{ isLoading: isFavoriting, response, error }, toggleFavorite] = useToggleFavorite();
   const [showFullDescription, setShowFullDescription] = useState(false);
 
@@ -210,19 +213,8 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
 
-  const handleMakeOffer = () => {
-    if (user.address) {
-      setOpenMakeOfferDialog(!openMakeOfferDialog);
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+  const handleMakeOffer = async () => {
+    await runAuthedFunction(() => setOpenMakeOfferDialog(!openMakeOfferDialog));
   };
 
   const onRefreshMetadata = useCallback(() => {

@@ -53,6 +53,7 @@ import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/butt
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import ReactSelect from "react-select";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -151,15 +152,10 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
 
   const windowSize = useWindowSize();
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [upsertGaslessListings, responseUpsert] = useUpsertGaslessListings();
   const { tokenToUsdValue, tokenToCroValue, croToTokenValue } = useTokenExchangeRate(selectedCurrency?.address);
   const { usdValueForToken, croValueForToken } = useExchangeRate();
-
-  const izanamiImageSize = useBreakpointValue(
-    {base: 250, sm: 368, lg: 456},
-    {fallback: 'md'}
-  )
 
   const isBelowFloorPrice = (price: number) => {
     const croPrice = tokenToCroValue(price);
@@ -203,10 +199,10 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && user.provider) {
+    if (nft && user.wallet.isConnected) {
       asyncFunc();
     }
-  }, [nft, user.provider]);
+  }, [nft, user.wallet.isConnected]);
 
   const getInitialProps = async () => {
     try {

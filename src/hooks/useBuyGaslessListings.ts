@@ -4,6 +4,7 @@ import {toast} from 'react-toastify';
 import {getServerSignature} from '@src/core/cms/endpoints/gaslessListing';
 import {pluralize} from "@src/utils";
 import {useAppSelector} from "@src/Store/hooks";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 type ResponseProps = {
   loading: boolean;
@@ -24,7 +25,8 @@ const useBuyGaslessListings = () => {
     tx: undefined
   });
 
-  const {contractService, address} = useAppSelector((state) => state.user);
+  const {address} = useUser();
+  const contractService = useContractService();
 
   const buyGaslessListings = async (pendingPurchases: PendingGaslessPurchase[]) => {
     setResponse({

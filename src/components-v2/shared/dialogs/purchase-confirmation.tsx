@@ -50,6 +50,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {getPrices} from "@src/core/api/endpoints/prices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import Link from "next/link";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -66,7 +67,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const [executingPurchase, setExecutingPurchase] = useState(false);
   const [buyGaslessListings, response] = useBuyGaslessListings();
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const [isComplete, setIsComplete] = useState(false);
   const [tx, setTx] = useState<ContractReceipt>();
@@ -274,7 +275,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                               <Text as="span" ms={1}>CRO</Text>
                             </Flex>
                             <Flex mt={1}>
-                              <Text as="span" className="text-muted">Balance: {commify(round(user.balance, 3))}</Text>
+                              <Text as="span" className="text-muted">Balance: {commify(round(user.balances.cro, 3))}</Text>
                             </Flex>
                           </>
                         )}

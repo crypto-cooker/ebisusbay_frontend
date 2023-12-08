@@ -86,6 +86,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           balances: {
             staking: parseInt(ethers.utils.formatEther(data[4].result ?? 0)),
           },
+          fee: data[4].result ? (Number(data[4].result) / 10000) * 100 : 3
         },
       });
     } catch (e) {

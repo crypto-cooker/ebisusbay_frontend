@@ -40,12 +40,11 @@ const useLegacyProviderFunctions = () => {
 
 export const useContractService = () => {
   const user = useUser();
-  const { walletProvider } = useWeb3ModalProvider()
+  const signer = useEthersSigner();
   const [contractService, setContractService] = useState<UserContractService | null>(null);
 
   useEffect(() => {
     async function initSigner() {
-      const signer = user.provider.getSigner()
       if (!signer) {
         setContractService(null);
         return;
@@ -54,12 +53,12 @@ export const useContractService = () => {
       setContractService(new UserContractService(signer));
     }
 
-    if (user.wallet.isConnected) {
+    if (user.wallet.isConnected && signer) {
       initSigner();
     } else {
       setContractService(null);
     }
-  }, [user.wallet.address, user.wallet.isConnected, walletProvider]);
+  }, [user.wallet.address, user.wallet.isConnected, signer]);
 
   return contractService;
 }

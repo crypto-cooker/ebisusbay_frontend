@@ -35,7 +35,6 @@ const NotificationMenu = function () {
   const [requestDeleteNotifications] = useDeleteNotifications();
   const cardBg = useColorModeValue('white', '#333');
 
-  console.log('USER', address, theme, profile);
   const { isPending, isError, error, data: notifications, refetch } = useQuery({
     queryKey: ['Notifications', address],
     queryFn: () => getNotifications(address!),

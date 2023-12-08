@@ -21,11 +21,17 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {toast} from 'react-toastify';
 import {ethers} from 'ethers';
-import {round, shortAddress, username} from '@src/utils';
+import {createSuccessfulTransactionToastContent, round, shortAddress, username} from '@src/utils';
 import styles from './accountmenu.module.scss';
 import {useWeb3Modal} from '@web3modal/wagmi/react'
 
-import {AccountMenuActions, onLogout, setTheme,} from '@src/GlobalState/User';
+import {
+  AccountMenuActions,
+  onLogout,
+  setTheme,
+  updatedEscrowStatus,
+  updatingEscrowStatus,
+} from '@src/GlobalState/User';
 
 import {getThemeInStorage, setThemeInStorage} from '@src/helpers/storage';
 import {appConfig} from '@src/Config';
@@ -66,7 +72,8 @@ import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/butt
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {getTheme} from "@src/Theme/theme";
-import {useUser} from "@src/components-v2/useUser";
+import {useContractService, useUser} from "@src/components-v2/useUser";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -74,6 +81,7 @@ const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 const Index = function () {
   const user = useUser();
   const { open: openWeb3Modal, close: closeWeb3Modal } = useWeb3Modal();
+  const contractService = useContractService();
 
   const dispatch = useDispatch();
   const { setColorMode } = useColorMode();
@@ -138,7 +146,16 @@ const Index = function () {
   };
 
   const toggleEscrowOptIn = async (optIn: boolean) => {
-    dispatch(AccountMenuActions.toggleEscrowOptIn(optIn));
+    if (!contractService) return;
+
+    try {
+      const tx = await contractService.market.setUseEscrow(user.wallet.address, optIn);
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    }
   };
 
   const clearCookies = async () => {
