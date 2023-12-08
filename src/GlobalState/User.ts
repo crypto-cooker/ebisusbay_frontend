@@ -1,11 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {BigNumber, Contract, ethers} from 'ethers';
-import Web3Modal from 'web3modal';
 
-import detectEthereumProvider from '@metamask/detect-provider';
-import {DeFiWeb3Connector} from 'deficonnect';
-import WalletConnectProvider from '@walletconnect/web3-provider';
-import * as DefiWalletConnectProvider from '@deficonnect/web3-provider';
 import {toast} from 'react-toastify';
 import {createSuccessfulTransactionToastContent, isUserBlacklisted,} from '../utils';
 import {appAuthInitFinished} from './InitSlice';
@@ -211,11 +206,11 @@ const userSlice = createSlice({
     },
     onLogout(state) {
       state.connectingWallet = false;
-      const web3Modal = new Web3Modal({
-        cacheProvider: false, // optional
-        providerOptions: [] as any, // required
-      });
-      web3Modal.clearCachedProvider();
+      // const web3Modal = new Web3Modal({
+      //   cacheProvider: false, // optional
+      //   providerOptions: [] as any, // required
+      // });
+      // web3Modal.clearCachedProvider();
       if (state.web3modal != null) {
         state.web3modal.clearCachedProvider();
       }
@@ -303,133 +298,132 @@ export const user = userSlice.reducer;
 export const connectAccount =
   (firstRun = false, type = '') =>
   async (dispatch: any, getState: any) => {
-    const state = getState();
-    const providerOptions = {
-      'custom-defiwallet': {
-        display: {
-          logo: '/img/logos/cdc_logo.svg',
-          name: 'Crypto.com DeFi Wallet',
-          description: 'Connect with the CDC DeFi Wallet',
-        },
-        options: {},
-        package: DefiWalletConnectProvider,
-        connector: async (ProviderPackage: any, options: any) => {
-          const connector = new DeFiWeb3Connector({
-            supportedChainIds: [25],
-            rpc: { 25: 'https://rpc.ebisusbay.com' },
-            pollingInterval: 15000,
-          });
+    // const state = getState();
+    // const providerOptions = {
+    //   'custom-defiwallet': {
+    //     display: {
+    //       logo: '/img/logos/cdc_logo.svg',
+    //       name: 'Crypto.com DeFi Wallet',
+    //       description: 'Connect with the CDC DeFi Wallet',
+    //     },
+    //     options: {},
+    //     package: DefiWalletConnectProvider,
+    //     connector: async (ProviderPackage: any, options: any) => {
+    //       const connector = new DeFiWeb3Connector({
+    //         supportedChainIds: [25],
+    //         rpc: { 25: 'https://rpc.ebisusbay.com' },
+    //         pollingInterval: 15000,
+    //       });
+    //
+    //       await connector.activate();
+    //       let provider = await connector.getProvider();
+    //       return provider;
+    //     },
+    //   },
+    // } as any;
+    //
+    // if (type !== 'defi') {
+    //   providerOptions.walletconnect = {
+    //     package: WalletConnectProvider, // required
+    //     options: {
+    //       chainId: 25,
+    //       rpc: {
+    //         25: 'https://rpc.ebisusbay.com',
+    //       },
+    //       network: 'cronos',
+    //       metadata: {
+    //         icons: ['https://ebisusbay.com/vector%20-%20face.svg'],
+    //         description: 'Cronos NFT Marketplace',
+    //       },
+    //     },
+    //   };
+    // }
+    //
+    // const web3ModalWillShowUp = !localStorage.getItem('WEB3_CONNECT_CACHED_PROVIDER');
+    //
+    // if (process.env.NODE_ENV !== 'production') {
+    //   console.log('web3ModalWillShowUp: ', web3ModalWillShowUp);
+    // }
 
-          await connector.activate();
-          let provider = await connector.getProvider();
-          return provider;
-        },
-      },
-    } as any;
+    // const web3Modal = new Web3Modal({
+    //   cacheProvider: true, // optional
+    //   providerOptions, // required
+    //   theme: state.user.theme,
+    // });
 
-    if (type !== 'defi') {
-      providerOptions.walletconnect = {
-        package: WalletConnectProvider, // required
-        options: {
-          chainId: 25,
-          rpc: {
-            25: 'https://rpc.ebisusbay.com',
-          },
-          network: 'cronos',
-          metadata: {
-            icons: ['https://ebisusbay.com/vector%20-%20face.svg'],
-            description: 'Cronos NFT Marketplace',
-          },
-        },
-      };
-    }
+    // const web3provider = await web3Modal
+    //   .connect()
+    //   .then((web3provider) => web3provider)
+    //   .catch((error) => {
+    //     captureException(error, { extra: { firstRun } });
+    //     console.log('Could not get a wallet connection', error);
+    //     return null;
+    //   });
 
-    const web3ModalWillShowUp = !localStorage.getItem('WEB3_CONNECT_CACHED_PROVIDER');
+    // if (!web3provider) {
+    //   dispatch(onLogout());
+    //   return;
+    // }
 
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('web3ModalWillShowUp: ', web3ModalWillShowUp);
-    }
-
-    const web3Modal = new Web3Modal({
-      cacheProvider: true, // optional
-      providerOptions, // required
-      theme: state.user.theme,
-    });
-
-    const web3provider = await web3Modal
-      .connect()
-      .then((web3provider) => web3provider)
-      .catch((error) => {
-        captureException(error, { extra: { firstRun } });
-        console.log('Could not get a wallet connection', error);
-        return null;
-      });
-
-    if (!web3provider) {
-      dispatch(onLogout());
-      return;
-    }
-
-    try {
-      dispatch(connectingWallet({ connecting: true }));
-      const provider = new ethers.providers.Web3Provider(web3provider);
-
-      const cid = await web3provider.request({
-        method: 'net_version',
-      });
-
-      const correctChain = cid === config.chain.id || cid === Number(config.chain.id);
-
-      const accounts = await web3provider.request({
-        method: 'eth_accounts',
-        params: [{ chainId: cid }],
-      });
-
-      const address = accounts[0];
-      const signer = provider.getSigner();
-
-      if (isUserBlacklisted(address)) {
-        const error = { err: 'Unable to connect' };
-        throw error;
-      }
-
-      if (!correctChain) {
-        if (firstRun) {
-          dispatch(appAuthInitFinished());
-        }
-        await dispatch(setShowWrongChainModal(true));
-      }
-
-      //console.log(correctChain);
-      await dispatch(
-        onBasicAccountData({
-          address: address,
-          provider: provider,
-          web3modal: web3Modal,
-          needsOnboard: false,
-          correctChain: correctChain,
-        })
-      );
-      if (firstRun) {
-        dispatch(appAuthInitFinished());
-      }
-      web3provider.on('DeFiConnectorDeactivate', (error: any) => {
-        dispatch(onLogout());
-      });
-
-      web3provider.on('disconnect', (error: any) => {
-        dispatch(onLogout());
-      });
-
-      web3provider.on('accountsChanged', (accounts: any) => {
-        dispatch(onLogout());
-        dispatch(connectAccount());
-      });
-
-      web3provider.on('DeFiConnectorUpdate', (accounts: any) => {
-        window.location.reload();
-      });
-
+    // try {
+    //   dispatch(connectingWallet({ connecting: true }));
+      // const provider = new ethers.providers.Web3Provider(web3provider);
+      //
+      // const cid = await web3provider.request({
+      //   method: 'net_version',
+      // });
+      //
+      // const correctChain = cid === config.chain.id || cid === Number(config.chain.id);
+      //
+      // const accounts = await web3provider.request({
+      //   method: 'eth_accounts',
+      //   params: [{ chainId: cid }],
+      // });
+      //
+      // const address = accounts[0];
+      // const signer = provider.getSigner();
+      //
+      // if (isUserBlacklisted(address)) {
+      //   const error = { err: 'Unable to connect' };
+      //   throw error;
+      // }
+      //
+      // if (!correctChain) {
+      //   if (firstRun) {
+      //     dispatch(appAuthInitFinished());
+      //   }
+      //   await dispatch(setShowWrongChainModal(true));
+      // }
+      //
+      // //console.log(correctChain);
+      // await dispatch(
+      //   onBasicAccountData({
+      //     address: address,
+      //     provider: provider,
+      //     web3modal: web3Modal,
+      //     needsOnboard: false,
+      //     correctChain: correctChain,
+      //   })
+      // );
+      // if (firstRun) {
+      //   dispatch(appAuthInitFinished());
+      // }
+      // web3provider.on('DeFiConnectorDeactivate', (error: any) => {
+      //   dispatch(onLogout());
+      // });
+      //
+      // web3provider.on('disconnect', (error: any) => {
+      //   dispatch(onLogout());
+      // });
+      //
+      // web3provider.on('accountsChanged', (accounts: any) => {
+      //   dispatch(onLogout());
+      //   dispatch(connectAccount());
+      // });
+      //
+      // web3provider.on('DeFiConnectorUpdate', (accounts: any) => {
+      //   window.location.reload();
+      // });
       // web3provider.on('chainChanged', (chainId: any) => {
       //   // Handle the new chain.
       //   // Correctly handling chain changes can be complicated.
@@ -437,162 +431,119 @@ export const connectAccount =
       //
       //   window.location.reload();
       // });
-
-      let balance;
-      let sales;
-      let stakingRewards: number | string = 0;
-      let isMember = false;
-      let fee = 3;
-      let usesEscrow = false;
-
-      dispatch(retrieveProfile());
-
-      if (signer && correctChain) {
-        const contractService = new UserContractService(signer);
-        dispatch(onContractServiceInitialized(contractService));
-        sales = ethers.utils.formatEther(await contractService.market.payments(address));
-        stakingRewards = ethers.utils.formatEther(await contractService.staking.getReward(address));
-        isMember = await contractService.market.isMember(address);
-        usesEscrow = await contractService.market.useEscrow(address);
-
-        try {
-          balance = ethers.utils.formatEther(await provider.getBalance(address));
-
-          fee = await contractService.market.fee(address);
-          fee = (fee / 10000) * 100;
-        } catch (error) {
-          console.log('Error checking CRO balance', error);
-        }
-      }
-      await dispatch(
-        accountChanged({
-          address: address,
-          provider: provider,
-          web3modal: web3Modal,
-          needsOnboard: false,
-          correctChain: correctChain,
-          balance: balance,
-          isMember,
-          marketBalance: sales,
-          stakingRewards: stakingRewards,
-          fee,
-          usesEscrow
-        })
-      );
-
-      dispatch(updateFortuneBalance());
-      dispatch(updateMitamaBalance());
-
-    } catch (error) {
-      captureException(error, {
-        extra: {
-          firstRun,
-          WEB3_CONNECT_CACHED_PROVIDER: localStorage.getItem('WEB3_CONNECT_CACHED_PROVIDER'),
-          DeFiLink_session_storage_extension: localStorage.getItem('DeFiLink_session_storage_extension'),
-        },
-      });
-      if (firstRun) {
-        dispatch(appAuthInitFinished());
-      }
-      console.log(error);
-      console.log('Error connecting wallet!');
-      await web3Modal.clearCachedProvider();
-      dispatch(onLogout());
-    }
-    dispatch(connectingWallet({ connecting: false }));
+      //
+      // let balance;
+      // let sales;
+      // let stakingRewards: number | string = 0;
+      // let isMember = false;
+      // let fee = 3;
+      // let usesEscrow = false;
+      //
+      // dispatch(retrieveProfile());
+      //
+      // if (signer && correctChain) {
+      //   const contractService = new UserContractService(signer);
+      //   dispatch(onContractServiceInitialized(contractService));
+      //   sales = ethers.utils.formatEther(await contractService.market.payments(address));
+      //   stakingRewards = ethers.utils.formatEther(await contractService.staking.getReward(address));
+      //   isMember = await contractService.market.isMember(address);
+      //   usesEscrow = await contractService.market.useEscrow(address);
+      //
+      //   try {
+      //     balance = ethers.utils.formatEther(await provider.getBalance(address));
+      //
+      //     fee = await contractService.market.fee(address);
+      //     fee = (fee / 10000) * 100;
+      //   } catch (error) {
+      //     console.log('Error checking CRO balance', error);
+      //   }
+      // }
+      // await dispatch(
+      //   accountChanged({
+      //     address: address,
+      //     provider: provider,
+      //     web3modal: web3Modal,
+      //     needsOnboard: false,
+      //     correctChain: correctChain,
+      //     balance: balance,
+      //     isMember,
+      //     marketBalance: sales,
+      //     stakingRewards: stakingRewards,
+      //     fee,
+      //     usesEscrow
+      //   })
+      // );
+      //
+      // dispatch(updateFortuneBalance());
+      // dispatch(updateMitamaBalance());
+    //
+    // } catch (error) {
+      // captureException(error, {
+      //   extra: {
+      //     firstRun,
+      //     WEB3_CONNECT_CACHED_PROVIDER: localStorage.getItem('WEB3_CONNECT_CACHED_PROVIDER'),
+      //     DeFiLink_session_storage_extension: localStorage.getItem('DeFiLink_session_storage_extension'),
+      //   },
+      // });
+      // if (firstRun) {
+      //   dispatch(appAuthInitFinished());
+      // }
+      // console.log(error);
+      // console.log('Error connecting wallet!');
+      // await web3Modal.clearCachedProvider();
+      // dispatch(onLogout());
+    // }
+    // dispatch(connectingWallet({ connecting: false }));
   };
 
-export const initProvider = () => async (dispatch: any) => {
-  const ethereum = await detectEthereumProvider();
-
-  if (ethereum == null || ethereum !== window.ethereum) {
-    console.log('not metamask detected');
-  } else {
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    // const signer = provider.getSigner();
-    // const cid = await ethereum.request({
-    //   method: 'net_version',
-    // });
-
-    // const correctChain = cid === config.chain_id;
-
-    // let mc;
-    // if (signer && correctChain) {
-    //   mc = new Contract(config.membership_contract, Membership.abi, signer);
-    // }
-    // const obj = {
-    //   provider: provider,
-    //   needsOnboard: false,
-    //   membershipContract: mc,
-    //   correctChain: correctChain,
-    // };
-
-    provider.on('accountsChanged', (accounts) => {
-      dispatch(
-        accountChanged({
-          address: accounts[0],
-        })
-      );
-    });
-
-    provider.on('chainChanged', (chainId) => {
-      // Handle the new chain.
-      // Correctly handling chain changes can be complicated.
-      // We recommend reloading the page unless you have good reason not to.
-
-      window.location.reload();
-    });
-  }
-};
-
 export const chainConnect = () => async (dispatch: any) => {
-  if (window.ethereum) {
-    const cid = ethers.utils.hexValue(BigNumber.from(config.chain.id));
-    try {
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: cid }],
-      });
-    } catch (error: any) {
-      // This error code indicates that the chain has not been added to MetaMask
-      // if it is not, then install it into the user MetaMask
-      if (error.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [
-              {
-                chainName: config.chain.name,
-                chainId: cid,
-                rpcUrls: [config.rpc.write],
-                blockExplorerUrls: null,
-                nativeCurrency: {
-                  name: config.chain.symbol,
-                  symbol: config.chain.symbol,
-                  decimals: 18,
-                },
-              },
-            ],
-          });
-          await window.ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: cid }],
-          });
-        } catch (addError) {
-          console.error(addError);
-          window.location.reload();
-        }
-      }
-      console.log(error);
-    }
-  } else {
-    new WalletConnectProvider({
-      rpc: {
-        25: 'https://evm.cronos.org',
-      },
-      chainId: 25,
-    });
-  }
+  // if (window.ethereum) {
+  //   const cid = ethers.utils.hexValue(BigNumber.from(config.chain.id));
+  //   try {
+  //     await window.ethereum.request({
+  //       method: 'wallet_switchEthereumChain',
+  //       params: [{ chainId: cid }],
+  //     });
+  //   } catch (error: any) {
+  //     // This error code indicates that the chain has not been added to MetaMask
+  //     // if it is not, then install it into the user MetaMask
+  //     if (error.code === 4902) {
+  //       try {
+  //         await window.ethereum.request({
+  //           method: 'wallet_addEthereumChain',
+  //           params: [
+  //             {
+  //               chainName: config.chain.name,
+  //               chainId: cid,
+  //               rpcUrls: [config.rpc.write],
+  //               blockExplorerUrls: null,
+  //               nativeCurrency: {
+  //                 name: config.chain.symbol,
+  //                 symbol: config.chain.symbol,
+  //                 decimals: 18,
+  //               },
+  //             },
+  //           ],
+  //         });
+  //         await window.ethereum.request({
+  //           method: 'wallet_switchEthereumChain',
+  //           params: [{ chainId: cid }],
+  //         });
+  //       } catch (addError) {
+  //         console.error(addError);
+  //         window.location.reload();
+  //       }
+  //     }
+  //     console.log(error);
+  //   }
+  // } else {
+  //   new WalletConnectProvider({
+  //     rpc: {
+  //       25: 'https://evm.cronos.org',
+  //     },
+  //     chainId: 25,
+  //   });
+  // }
 };
 
 export const setTheme = (theme: string) => async (dispatch: any) => {

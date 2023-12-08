@@ -8,7 +8,6 @@ import {getAnalytics} from "@firebase/analytics";
 import ScrollToTopBtn from '@src/components-v2/shared/layout/scroll-to-top';
 import Header from '@src/components-v2/shared/layout/navbar';
 import firebaseConfig from '../third-party/firebase';
-import {initProvider} from '../GlobalState/User';
 import {appInitializer} from '../GlobalState/InitSlice';
 import {getTheme} from '../Theme/theme';
 import DefaultHead from "@src/components-v2/shared/layout/default-head";
@@ -68,16 +67,16 @@ function App({ Component, ...pageProps }: AppProps) {
   }
   setThemeMode(userTheme)
 
-  useEffect(() => {
-    dispatch(appInitializer());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(appInitializer());
+  // }, [dispatch]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       getAnalytics(firebase);
-      dispatch(initProvider());
+      // dispatch(initProvider());
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     dispatch(syncCartStorage());
