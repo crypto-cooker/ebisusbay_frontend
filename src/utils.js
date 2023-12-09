@@ -205,6 +205,7 @@ export function humanize(str) {
 export function humanizeAdvanced(s) {
   if (s === null || s === undefined) return '';
   if (!s) return s;
+  if (typeof s !== 'string') s = s.toString();
 
   // Insert spaces before uppercase letters that follow lowercase letters
   const spacedString = s.replace(/([a-z])([A-Z])/g, '$1 $2');
