@@ -12,6 +12,7 @@ import {
   MultiSelectContextProps
 } from "@src/components-v2/feature/account/profile/tabs/listings/context";
 import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useCancelGaslessListing";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 interface BatchPreviewProps {
   mutationKey: any;
@@ -20,7 +21,8 @@ interface BatchPreviewProps {
 const BatchPreview = ({mutationKey}: BatchPreviewProps) => {
   const sliderBackground = useColorModeValue('gray.50', 'gray.700')
   const [executingCancel, setIsExecutingCancel] = useState(false);
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
   const queryClient = useQueryClient();
   const { selected: listings, setSelected } = useContext(MultiSelectContext) as MultiSelectContextProps;
   const [cancelGaslessListing, response] = useCancelGaslessListing();
@@ -41,8 +43,8 @@ const BatchPreview = ({mutationKey}: BatchPreviewProps) => {
         await cancelGaslessListing(cancelIds.gasless);
       }
 
-      if (cancelIds.legacy.length > 0 && !!user?.contractService) {
-        const port = user.contractService.market;
+      if (cancelIds.legacy.length > 0 && !!contractService) {
+        const port = contractService.market;
         await port.cancelListings(cancelIds.legacy)
       }
 

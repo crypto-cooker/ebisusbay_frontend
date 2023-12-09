@@ -5,11 +5,12 @@ import {createSuccessfulTransactionToastContent} from '@src/utils';
 import {auctionState} from '@src/core/api/enums';
 import {getAuctionDetails} from '@src/GlobalState/auctionSlice';
 import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {useUser} from "@src/components-v2/useUser";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const SellerActionBar = () => {
   const dispatch = useDispatch();
   const user = useUser();
+  const contractService = useContractService();
   const [runAuthedFunction] = useAuthedFunction();
 
   const [awaitingAcceptace, setAwaitingAcceptace] = useState(false);
@@ -56,7 +57,7 @@ const SellerActionBar = () => {
   const runFunction = async (fn) => {
     runAuthedFunction(async() => {
       try {
-        let writeContract = user.contractService.auction;
+        let writeContract = contractService.auction;
         const receipt = await fn(writeContract);
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         dispatch(getAuctionDetails(listing.getAuctionId));

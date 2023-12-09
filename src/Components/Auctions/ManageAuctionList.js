@@ -14,11 +14,12 @@ import {
 } from "@src/utils";
 import {toast} from "react-toastify";
 import {Input, Spinner} from "@chakra-ui/react";
-import {useUser} from "@src/components-v2/useUser";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const ManageAuctionList = () => {
   const user = useUser();
+  const contractService = useContractService();
   const [runAuthedFunction] = useAuthedFunction();
 
   const [activeAuctions, setActiveAuctions] = useState([]);
@@ -103,7 +104,7 @@ const ManageAuctionList = () => {
     }
 
     runAuthedFunction(async() => {
-      let writeContract = user.contractService.auction;
+      let writeContract = contractService.auction;
       try {
         setExecutingStart(true);
         const tx = await writeContract.start(selectedAuction.getAuctionHash, selectedAuction.getAuctionIndex, runTime);
@@ -135,7 +136,7 @@ const ManageAuctionList = () => {
 
   const handleReturnBids = async (auction) => {
     runAuthedFunction(async() => {
-      let writeContract = user.contractService.auction;
+      let writeContract = contractService.auction;
       try {
         setExecutingStart(true);
         const tx = await writeContract.returnBidsToWallets(auction.getAuctionHash, auction.getAuctionIndex);

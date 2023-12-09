@@ -50,7 +50,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {getPrices} from "@src/core/api/endpoints/prices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import Link from "next/link";
-import {useUser} from "@src/components-v2/useUser";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -68,6 +68,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const [buyGaslessListings, response] = useBuyGaslessListings();
 
   const user = useUser();
+  const contractService = useContractService();
 
   const [isComplete, setIsComplete] = useState(false);
   const [tx, setTx] = useState<ContractReceipt>();
@@ -366,7 +367,7 @@ const CurrencyOption = ({currency}: {currency: {address: string, symbol: string,
   const { data: tokenBalance, isLoading } = useQuery({
     queryKey: ['UserTokenBalance', currency.address, user.address],
     queryFn: async () => {
-      const tokenContract = user.contractService!.erc20(currency.address);
+      const tokenContract = contractService!.erc20(currency.address);
       const balance = await tokenContract.balanceOf(user.address);
       // const decimals = await tokenContract.decimals();
       return ethers.utils.formatEther(balance);  // assuming

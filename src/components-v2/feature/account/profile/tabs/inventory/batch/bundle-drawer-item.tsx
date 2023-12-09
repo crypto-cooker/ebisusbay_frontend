@@ -41,10 +41,11 @@ import {Contract} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {appConfig} from "@src/Config";
 import {createSuccessfulTransactionToastContent, isBundle, isKoban} from "@src/utils";
-import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
+import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -57,7 +58,7 @@ interface BundleDrawerItemProps {
 
 const BundleDrawerItem = ({ item, disabled, onAddCollection }: BundleDrawerItemProps) => {
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [quantity, setQuantity] = useState('');

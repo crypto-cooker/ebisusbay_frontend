@@ -378,7 +378,7 @@ const ImageContainer = styled.div`
   }
 `;
 const NftPicker = ({collectionAddress, nfts, onSelect, initialNft}) => {
-  const {theme: userTheme} = useUser();;
+  const {theme: userTheme} = useUser();
   const [chosenNft, setChosenNft] = useState(initialNft);
 
   const handleNftChange = useCallback((chosenNft) => {

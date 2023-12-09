@@ -352,7 +352,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const dec = getDecrementButtonProps()
   const input = getInputProps()
 
-  const {theme: userTheme} = user.theme;
+  const userTheme = user.theme;
   const customStyles = {
     menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
     option: (base: any, state: any) => ({

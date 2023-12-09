@@ -23,7 +23,7 @@ import {
 import RugsuranceAbi from "@src/Contracts/SlothtyRugsurance.json";
 import {getTheme} from "@src/Theme/theme";
 import Button from "@src/Components/components/Button";
-import {useUser} from "@src/components-v2/useUser";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const knownContracts = config.collections;
@@ -43,6 +43,7 @@ const targetSlug = 'ssc-access-cards';
 const audioURL = 'https://files.ebisusbay.com/slothty/slothty-burning.mp4';
 const Rugsurance = () => {
   const user = useUser();
+  const contractService = useContractService();
 
   const [nfts, setNfts] = useState([]);
   const [nonRefundableNfts, setNonRefundableNfts] = useState([]);
@@ -208,7 +209,7 @@ const Rugsurance = () => {
   useEffect(() => {
     async function asyncFunc() {
       if (!user.connectingWallet) {
-        if (user.contractService?.membership && user.provider) {
+        if (contractService?.membership && user.provider) {
           try {
             const sscAddress = knownContracts.find((c) => c.slug === targetSlug).address;
             const sscContract = new Contract(sscAddress, ERC721, user.provider.getSigner());

@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { cancelListing } from '@src/core/cms/endpoints/gaslessListing';
-import {useAppSelector} from "@src/Store/hooks";
+import {useState} from 'react';
+import {cancelListing} from '@src/core/cms/endpoints/gaslessListing';
 import ContractService from "@src/core/contractService";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 type ResponseProps = {
   loading: boolean;
@@ -14,7 +14,8 @@ const useCancelGaslessListing = () => {
     error: undefined,
   });
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
 
   const cancelGaslessListing = async (listingIds: string[]) => {
     if (!Array.isArray(listingIds)) listingIds = [listingIds];
@@ -28,7 +29,7 @@ const useCancelGaslessListing = () => {
     try {
       const { data: orders } = await cancelListing(listingIds);
 
-      const ship = (user.contractService! as ContractService).ship;
+      const ship = (contractService! as ContractService).ship;
       const tx = await ship.cancelOrders(orders);
       await tx.wait();
 

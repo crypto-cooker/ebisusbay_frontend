@@ -2,6 +2,7 @@ import {useCallback, useState} from 'react';
 import {appConfig} from "@src/Config";
 import {BigNumber, ethers} from "ethers";
 import {useAppSelector} from "@src/Store/hooks";
+import {useUser} from "@src/components-v2/useUser";
 
 export interface ListingSignerProps {
   price: string;
@@ -68,7 +69,7 @@ export type OfferItem = {
 }
 
 const useSignature = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const config = appConfig();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -102,10 +103,10 @@ const useSignature = () => {
 
   const signMessage = useCallback(
     async (value: Order) => {
-      if (!user.provider) throw new Error();
+      if (!user.wallet.isConnected) throw new Error();
       try {
         const provider = user.provider;
-        const signer = provider.getSigner();
+        const signer = provider.getSigner()!;
 
         const objectHash = ethers.utils._TypedDataEncoder.hash(domain, typeOrder, value);
         const objectSignature = await signer._signTypedData(domain, typeOrder, value);

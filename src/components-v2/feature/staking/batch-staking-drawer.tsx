@@ -40,6 +40,7 @@ import {parseUnits} from "ethers/lib/utils";
 import {useAppSelector} from "@src/Store/hooks";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import ImageService from "@src/core/services/image";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -50,7 +51,8 @@ interface BatchStakingDrawer {
 export const BatchStakingDrawer = ({onClose, ...gridProps}: BatchStakingDrawer & GridProps) => {
   const dispatch = useDispatch();
   const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
   const [executingAction, setExecutingAction] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
@@ -72,21 +74,21 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}: BatchStakingDrawer &
       const gasPrice = parseUnits('5000', 'gwei');
       let tx;
       if (ryoshiStakingCart.context === 'stake') {
-        const gasEstimate = await user.contractService!.staking.estimateGas.stakeRyoshi(nftAddresses);
+        const gasEstimate = await contractService!.staking.estimateGas.stakeRyoshi(nftAddresses);
         const gasLimit = gasEstimate.mul(2);
         let extra = {
           gasPrice,
           gasLimit
         };
-        tx = await user.contractService!.staking.stakeRyoshi(nftAddresses, extra);
+        tx = await contractService!.staking.stakeRyoshi(nftAddresses, extra);
       } else {
-        const gasEstimate = await user.contractService!.staking.estimateGas.unstakeRyoshi(nftAddresses);
+        const gasEstimate = await contractService!.staking.estimateGas.unstakeRyoshi(nftAddresses);
         const gasLimit = gasEstimate.mul(2);
         let extra = {
           gasPrice,
           gasLimit
         };
-        tx = await user.contractService!.staking.unstakeRyoshi(nftAddresses, extra);
+        tx = await contractService!.staking.unstakeRyoshi(nftAddresses, extra);
       }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));

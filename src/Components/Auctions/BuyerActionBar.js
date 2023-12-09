@@ -12,7 +12,7 @@ import {ERC20} from "@src/Contracts/Abis";
 import Button from "../components/Button";
 import {appConfig} from "@src/Config";
 import {Card, CardBody, CardFooter, Input, Spinner} from "@chakra-ui/react";
-import {useUser} from "@src/components-v2/useUser";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const config = appConfig();
@@ -20,6 +20,7 @@ const config = appConfig();
 const BuyerActionBar = () => {
   const dispatch = useDispatch();
   const user = useUser();
+  const contractService = useContractService();
   const [runAuthedFunction] = useAuthedFunction();
 
   const [bidAmount, setBidAmount] = useState(0);
@@ -145,7 +146,7 @@ const BuyerActionBar = () => {
   const runFunction = async (fn) => {
     runAuthedFunction(async() => {
       try {
-        let writeContract = user.contractService.auction;
+        let writeContract = contractService.auction;
         await ensureApproved(writeContract);
         const receipt = await fn(writeContract);
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));

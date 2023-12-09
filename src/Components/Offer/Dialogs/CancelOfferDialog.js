@@ -8,7 +8,6 @@ import EmptyData from "@src/Components/Offer/EmptyData";
 import {specialImageTransform} from "@src/hacks";
 import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import * as Sentry from "@sentry/react";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {
@@ -18,15 +17,17 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, Spinner
+  ModalOverlay,
+  Spinner
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "../../Bundle/ImagesContainer";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {useQuery} from "@tanstack/react-query";
+import {useContractService} from "@src/components-v2/useUser";
 
 export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffer, offer}) => {
-  const offerContract = useSelector((state) => state.user.contractService.offer);
+  const contractService = useContractService();
   const [executingCancelOffer, setExecutingCancelOffer] = useState(false);
   const user = useSelector((state) => state.user);
 
@@ -52,9 +53,9 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
       // Sentry.captureEvent({message: 'handleCancelOffer', extra: {address: offer.nftAddress}});
       let tx;
       if (isCollectionOffer) {
-        tx = await offerContract.cancelCollectionOffer(offer.nftAddress, offer.offerIndex);
+        tx = await contractService.offer.cancelCollectionOffer(offer.nftAddress, offer.offerIndex);
       } else {
-        tx = await offerContract.cancelOffer(offer.hash, offer.offerIndex);
+        tx = await contractService.offer.cancelOffer(offer.hash, offer.offerIndex);
       }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
