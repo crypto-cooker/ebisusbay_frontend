@@ -60,7 +60,7 @@ const NavLink = ({name, to, onClick}: {name: string, to: string, onClick?: any})
 
 const Header = function () {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {theme, profile, setTheme} = useUser();
+  const {theme, profile, toggleTheme} = useUser();
   const shouldUseMobileSearch = useBreakpointValue(
     { base: true, lg: false },
     { fallback: 'lg'},
@@ -75,9 +75,9 @@ const Header = function () {
     handler: onClose,
   });
 
-  const toggleTheme = () => {
+  const handleToggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
+    toggleTheme(newTheme);
   };
 
   useEffect(() => {
@@ -222,7 +222,7 @@ const Header = function () {
                 {/*<NavLink name={'Stats'} to={'/stats'} onClick={onClose} />*/}
                 {/*<NavLink name={'Auction'} to={'/auctions/mutant-serum'} />*/}
 
-                <Box onClick={toggleTheme} fontSize="14px" fontWeight="bold" color="#fff" cursor="pointer">
+                <Box onClick={handleToggleTheme} fontSize="14px" fontWeight="bold" color="#fff" cursor="pointer">
                   <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" className="me-2"/> Dark mode
                 </Box>
               </Stack>

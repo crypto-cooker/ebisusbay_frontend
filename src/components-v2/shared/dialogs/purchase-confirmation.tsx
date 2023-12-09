@@ -7,10 +7,10 @@ import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {
   caseInsensitiveCompare,
-  isBundle, isEbVipCollection,
+  isBundle,
+  isEbVipCollection,
   isErc20Token,
   isGaslessListing,
-  isLandDeedsCollection,
   knownErc20Token,
   round
 } from "@src/utils";
@@ -42,7 +42,6 @@ import DotIcon from "@src/Components/components/DotIcon";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
-import {useAppSelector} from "@src/Store/hooks";
 import PurchaseSuccessDialog from './purchase-success';
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
@@ -362,7 +361,8 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
 }
 
 const CurrencyOption = ({currency}: {currency: {address: string, symbol: string, name: string}}) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
 
   const { data: tokenBalance, isLoading } = useQuery({
     queryKey: ['UserTokenBalance', currency.address, user.address],

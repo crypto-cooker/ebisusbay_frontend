@@ -2,7 +2,6 @@ import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {useSelector} from "react-redux";
 import {Contract, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {getCollectionMetadata} from "@src/core/api";
@@ -32,7 +31,7 @@ import {getNft} from "@src/core/api/endpoints/nft";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import NextApiService from "@src/core/services/api-service/next";
-import {useUser} from "@src/components-v2/useUser";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -55,8 +54,8 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
   const [collectionNfts, setCollectionNfts] = useState([]);
   const [chosenCollectionNft, setChosenCollectionNft] = useState(null);
 
-  const user = useSelector((state) => state.user);
-  const {contractService} = user;
+  const user = useUser();
+  const contractService = useContractService();
 
   const isBelowFloorPrice = (price) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);

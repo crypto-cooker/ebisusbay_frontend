@@ -9,6 +9,7 @@ import {appConfig} from "@src/Config";
 import {ERC721} from "@src/Contracts/Abis";
 import {JsonRpcProvider} from "@ethersproject/providers";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {useUser} from "@src/components-v2/useUser";
 
 const readProvider = new JsonRpcProvider(appConfig().rpc.read);
 
@@ -25,7 +26,7 @@ function Test() {
 export default Test;
 
 const Metadata = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [isExecuting, setIsExecuting] = useState(false);
   const [value, setValue] = useState<string | number>();
 
