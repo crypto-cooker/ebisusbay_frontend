@@ -124,34 +124,8 @@ const userSlice = createSlice({
     },
   } as UserState,
   reducers: {
-    accountChanged(state, action) {
-      state.balance = action.payload.balance;
-      // state.code = action.payload.code;
-      // state.rewards = action.payload.rewards;
-      state.isMember = action.payload.isMember;
-      // state.vipCount = action.payload.vipCount;
-      // state.stakeCount = action.payload.stakeCount;
-      state.marketBalance = action.payload.marketBalance;
-      state.stakingRewards = action.payload.stakingRewards;
-      state.gettingContractData = false;
-      state.fee = action.payload.fee;
-      state.usesEscrow = action.payload.usesEscrow;
-    },
-
     setAuthSigner(state, action) {
       state.authSignature = action.payload;
-    },
-
-    onBasicAccountData(state, action) {
-      state.address = action.payload.address;
-      state.provider = action.payload.provider;
-      state.web3modal = action.payload.web3modal;
-      state.correctChain = action.payload.correctChain;
-      state.needsOnboard = action.payload.needsOnboard;
-    },
-
-    onContractServiceInitialized(state, action) {
-      state.contractService = action.payload;
     },
     setMyNftPageTransferDialog(state, action) {
       state.myNftPageTransferDialog = action.payload;
@@ -171,9 +145,6 @@ const userSlice = createSlice({
     setMyNftPageActiveFilterOption(state, action) {
       state.myNftPageActiveFilterOption = action.payload;
     },
-    connectingWallet(state, action) {
-      state.connectingWallet = action.payload.connecting;
-    },
     withdrawingMarketBalance(state) {
       state.withdrawingMarketBalance = true;
     },
@@ -191,16 +162,6 @@ const userSlice = createSlice({
       if (action.payload.success) {
         state.stakingRewards = 0;
       }
-    },
-    updatingEscrowStatus(state) {
-      state.updatingEscrowStatus = true;
-    },
-    updatedEscrowStatus(state, action) {
-      state.updatingEscrowStatus = false;
-      if (action.payload !== undefined) state.usesEscrow = action.payload;
-    },
-    setShowWrongChainModal(state, action) {
-      state.showWrongChainModal = action.payload;
     },
     onLogout(state) {
       state.connectingWallet = false;
@@ -234,70 +195,29 @@ const userSlice = createSlice({
       state.mitamaBalance = 0;
       state.loadedMitamaBalance = false;
     },
-    onThemeChanged(state, action) {
-      state.theme = action.payload;
-    },
-    balanceUpdated(state, action) {
-      if (action.payload.balance) {
-        state.balance = action.payload.balance;
-      }
-      if (action.payload.marketBalance) {
-        state.marketBalance = action.payload.marketBalance;
-      }
-      if (action.payload.stakingRewards) {
-        state.stakingRewards = action.payload.stakingRewards;
-      }
-    },
-    onOutstandingOffersFound(state, action) {
-      state.hasOutstandingOffers = action.payload;
-    },
     setProfile(state, action) {
       state.profile = action.payload;
-    },
-    setTokenPresaleStats(state, action) {
-      state.tokenSale.usdc = action.payload.usdc;
-      state.tokenSale.fortune = action.payload.fortune;
     },
     setFortuneBalance(state, action: PayloadAction<number>) {
       state.fortuneBalance = action.payload;
       state.loadedFortuneBalance = true;
     },
-    setMitamaBalance(state, action: PayloadAction<number>) {
-      state.mitamaBalance = action.payload;
-      state.loadedMitamaBalance = true;
-    }
   },
 });
 
 export const {
-  accountChanged,
-  setAuthSigner,
-  onContractServiceInitialized,
-  connectingWallet,
   withdrawingMarketBalance,
   withdrewMarketBalance,
   harvestingStakingRewards,
   harvestedStakingRewards,
-  updatingEscrowStatus,
-  updatedEscrowStatus,
-  setShowWrongChainModal,
-  onBasicAccountData,
   onLogout,
-  onThemeChanged,
-  balanceUpdated,
-  onOutstandingOffersFound,
   setProfile,
-  setTokenPresaleStats,
   setFortuneBalance,
-  setMitamaBalance
 } = userSlice.actions;
 export const user = userSlice.reducer;
 
 export const updateBalance = () => async (dispatch: any, getState: any) => {
-  const { user } = getState();
-  const { address, provider } = user;
-  const balance = ethers.utils.formatEther(await provider.getBalance(address));
-  dispatch(userSlice.actions.balanceUpdated(balance));
+
 };
 
 export const updateFortuneBalance = () => async (dispatch: any, getState: any) => {
@@ -391,26 +311,9 @@ export class AccountMenuActions {
  * after ts migration we can add private keyword.
  */
 export class MyNftPageActions {
-  static showMyNftPageTransferDialog = (nft: any) => async (dispatch: any) => {
-    dispatch(userSlice.actions.setMyNftPageTransferDialog(nft));
-  };
-
-  static hideMyNftPageTransferDialog = () => async (dispatch: any) => {
-    dispatch(userSlice.actions.setMyNftPageTransferDialog(null));
-  };
-
-  static showMyNftPageListDialog = (nft: any, listing: any) => async (dispatch: any) => {
-    dispatch(userSlice.actions.setMyNftPageListDialog({ nft, listing }));
-  };
-
   static hideMyNftPageListDialog = () => async (dispatch: any) => {
     dispatch(userSlice.actions.setMyNftPageListDialog(null));
   };
-
-  static showMyNftPageCancelDialog = (nft: any) => async (dispatch: any) => {
-    dispatch(userSlice.actions.setMyNftPageCancelDialog(nft));
-  };
-
   static hideNftPageCancelDialog = () => async (dispatch: any) => {
     dispatch(userSlice.actions.setMyNftPageCancelDialog(null));
   };
