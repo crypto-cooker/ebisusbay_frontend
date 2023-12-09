@@ -30,6 +30,7 @@ import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 
 const Watermarked = styled.div`

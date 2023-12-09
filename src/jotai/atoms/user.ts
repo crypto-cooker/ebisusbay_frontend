@@ -84,7 +84,7 @@ const initialUserState: JotaiUser = {
     isConnected: false,
     correctChain: false,
   },
-  profile: null,
+  profile: {},
   balances: {
     cro: 0,
     frtn: 0,

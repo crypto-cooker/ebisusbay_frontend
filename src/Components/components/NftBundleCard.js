@@ -29,6 +29,7 @@ import Slider from '../Account/Profile/Inventory/components/Slider';
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import {useExchangeRate} from "@src/hooks/useGlobalPrices";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const Watermarked = styled.div`
   position: relative;

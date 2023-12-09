@@ -35,7 +35,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const { disconnect: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
   const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address });
-  const [theme, setTheme] = useState<string>('dark'); // default theme
   const { setColorMode } = useColorMode();
   const { setThemeMode } = useWeb3ModalTheme();
 
