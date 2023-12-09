@@ -9,10 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonGroup, MenuButton as MenuButtonCK, useClipboard } from "@chakra-ui/react";
 import { refreshMetadata, tickFavorite } from '@src/GlobalState/nftSlice';
 import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
+import {useUser} from "@src/components-v2/useUser";
 
 const ImageSubMenu = ({navigator, address, id}) => {
-
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const { nft, refreshing, favorites } = useSelector((state) => state.nft);
   const { onCopy } = useClipboard(window.location);
 

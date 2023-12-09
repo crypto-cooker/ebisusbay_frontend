@@ -134,7 +134,7 @@ const BuyerActionBar = () => {
   };
 
   const checkApproval = async (auctionContract) => {
-    if (!user.provider) return false;
+    if (!user.wallet.isConnected) return false;
 
     const tokenAddress = config.tokens.mad.address;
     let tokenContract = await new ethers.Contract(tokenAddress, ERC20, user.provider.getSigner());
@@ -166,7 +166,7 @@ const BuyerActionBar = () => {
   };
 
   const refreshMadBalance = async () => {
-    if (user.provider) {
+    if (user.wallet.isConnected) {
       const tokenAddress = config.tokens.mad.address;
       let tokenContract = await new ethers.Contract(tokenAddress, ERC20, user.provider.getSigner());
       const balance = await tokenContract.balanceOf(user.address);
@@ -186,11 +186,11 @@ const BuyerActionBar = () => {
       setIsApproved(approved);
     }
     func();
-  }, [user.provider]);
+  }, [user.wallet.isConnected]);
 
   useEffect(() => {
     refreshMadBalance();
-  }, [user.provider]);
+  }, [user.wallet.isConnected]);
 
   useEffect(() => {
     readContract.on('Bid', async (auctionHash, auctionIndex, bidIndex, sender, amount) => {

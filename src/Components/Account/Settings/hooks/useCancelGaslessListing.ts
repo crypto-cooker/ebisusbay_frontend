@@ -14,7 +14,6 @@ const useCancelGaslessListing = () => {
     error: undefined,
   });
 
-  const user = useUser();
   const contractService = useContractService();
 
   const cancelGaslessListing = async (listingIds: string[]) => {
@@ -29,7 +28,7 @@ const useCancelGaslessListing = () => {
     try {
       const { data: orders } = await cancelListing(listingIds);
 
-      const ship = (contractService! as ContractService).ship;
+      const ship = contractService!.ship;
       const tx = await ship.cancelOrders(orders);
       await tx.wait();
 

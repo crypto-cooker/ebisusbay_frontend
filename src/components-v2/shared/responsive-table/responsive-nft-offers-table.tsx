@@ -56,7 +56,6 @@ const ResponsiveNftOffersTable = ({data, onUpdate, onCancel, onSort, breakpointV
 
 const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveNftOffersTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
-  const user = useAppSelector((state) => state.user);
 
   const getOfferDate = (timestamp: number) => {
     return timeSince(new Date(timestamp * 1000));

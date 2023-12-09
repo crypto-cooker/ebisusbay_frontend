@@ -1,6 +1,5 @@
 import React, {ChangeEvent, memo, useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {MyListingsCollectionPageActions, MyNftPageActions,} from '@src/GlobalState/User';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listing";
 import {useInfiniteQuery} from "@tanstack/react-query";
@@ -25,7 +24,6 @@ import {
   Text,
   useBreakpointValue
 } from "@chakra-ui/react";
-import {useAppSelector} from "@src/Store/hooks";
 import MyNftCancelDialog from '@src/Components/components/MyNftCancelDialog';
 import ListingsFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/listings/listings-filter-container";
@@ -39,6 +37,7 @@ import {faAngleLeft, faCheckDouble, faFilter} from "@fortawesome/free-solid-svg-
 import useDebounce from "@src/core/hooks/useDebounce";
 import BatchPreview from "@src/components-v2/feature/account/profile/tabs/listings/batch-preview";
 import {MultiSelectContext} from './context';
+import {useUser} from "@src/components-v2/useUser";
 
 interface UserPrivateListingsProps {
   walletAddress: string
@@ -62,9 +61,12 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
     { base: true, lg: false },
     { fallback: 'lg' },
   );
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [selected, setSelected] = useState<any[]>([]);
   const [mobileMultiSelectMode, setMobileMultiSelectMode] = useState(false);
+
+  const [cancelDialogNft, setCancelDialogNft] = useState<any>(null);
+  const [createListingNft, setCreateListingNft] = useState<any>(null);
 
   const fetcher = async ({ pageParam = 1 }) => {
     const listings = await nextApiService.getUserUnfilteredListings(walletAddress, {
@@ -269,10 +271,10 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
                   if (!!collection) {
                     nft = {...listing.nft, multiToken: collection.multiToken};
                   }
-                  dispatch(MyListingsCollectionPageActions.showMyNftPageListDialog(nft, listing))
+                  setCreateListingNft(nft);
                 }}
                 onCancel={(listing) => {
-                  dispatch(MyListingsCollectionPageActions.showMyNftPageCancelDialog(listing))
+                  setCancelDialogNft(listing);
                 }}
                 onSort={handleSort}
                 breakpointValue={filtersVisible ? 'xl' : 'lg'}
@@ -282,13 +284,19 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
         </ListingsFilterContainer>
       </Box>
 
-      <MyNftCancelDialog/>
-      {user.myNftPageListDialog?.nft && (
+      {!!cancelDialogNft && (
+        <MyNftCancelDialog
+          isOpen={!!cancelDialogNft}
+          listing={cancelDialogNft}
+          onClose={() => setCancelDialogNft(null)}
+        />
+      )}
+      {!!createListingNft && (
         <CreateListingDialog
-          isOpen={!!user.myNftPageListDialog?.nft}
-          nft={user.myNftPageListDialog?.nft}
-          onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}
-          listing={user.myNftPageListDialog?.listing}
+          isOpen={!!createListingNft}
+          nft={createListingNft}
+          onClose={() => setCreateListingNft(null)}
+          listing={null}
         />
       )}
       <BatchPreview

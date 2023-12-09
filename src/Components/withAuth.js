@@ -2,11 +2,12 @@ import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import {Center, Spinner} from "@chakra-ui/react";
 import React from "react";
+import {useUser} from "@src/components-v2/useUser";
 
 const withAuth = (Component) => {
   const Auth = (props) => {
     const router = useRouter();
-    const walletAddress = useSelector((state) => state.user.address);
+    const user = useUser();
     const authInitFinished = useSelector((state) => state.appInitialize.authInitFinished);
 
     if (!authInitFinished) {
@@ -17,7 +18,7 @@ const withAuth = (Component) => {
       );
     }
 
-    if (!walletAddress) {
+    if (!user.wallet.address) {
       router.push('/');
       return <></>;
     }

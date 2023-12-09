@@ -3,7 +3,6 @@ import {ContractReceipt, ethers} from "ethers";
 import {toast} from 'react-toastify';
 import {getServerSignature} from '@src/core/cms/endpoints/gaslessListing';
 import {pluralize} from "@src/utils";
-import {useAppSelector} from "@src/Store/hooks";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 
 type ResponseProps = {

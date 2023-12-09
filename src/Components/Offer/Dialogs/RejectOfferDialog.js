@@ -24,12 +24,12 @@ import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {useQuery} from "@tanstack/react-query";
-import {useContractService} from "@src/components-v2/useUser";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffer, offer}) => {
   const contractService = useContractService();
   const [executingRejectOffer, setExecutingRejectOffer] = useState(false);
-  const user = useSelector((state) => state.user);
+  const user = useUser();
 
   const fetchNft = async () => {
     if (isCollectionOffer) return null;
@@ -41,7 +41,7 @@ export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
   const { error, data: nft, status } = useQuery({
     queryKey: ['RejectOffer', user.address, offer.nftAddress, offer.nftId],
     queryFn: fetchNft,
-    enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
+    enabled: user.wallet.isConnected && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
     refetchOnWindowFocus: false
   });
 

@@ -123,7 +123,7 @@ const MultiDrop = () => {
     }
     setAbi(abi);
 
-    if (user.provider) {
+    if (user.wallet.isConnected) {
       try {
         let writeContract = await new ethers.Contract(currentDrop.address, abi, user.provider.getSigner());
         currentDrop = Object.assign({ writeContract: writeContract }, currentDrop);
@@ -531,9 +531,7 @@ interface MultiDropCardProps {
 }
 
 const MultiDropCard = ({ title, img, canMintQuantity, mintNow, currentSupply, maxSupply, dropStatus }: MultiDropCardProps) => {
-  const user = useAppSelector((state) => {
-    return state.user;
-  });
+  const user = useUser();
 
   const [minting, setMinting] = useState(false);
   const [numToMint, setNumToMint] = useState(1);

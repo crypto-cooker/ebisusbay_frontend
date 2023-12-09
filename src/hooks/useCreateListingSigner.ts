@@ -1,7 +1,6 @@
 import {useCallback, useState} from 'react';
 import {appConfig} from "@src/Config";
 import {BigNumber, ethers} from "ethers";
-import {useAppSelector} from "@src/Store/hooks";
 import {useUser} from "@src/components-v2/useUser";
 
 export interface ListingSignerProps {
@@ -117,7 +116,7 @@ const useSignature = () => {
         throw err;
       }
     },
-    [user.provider]
+    [user.wallet.isConnected]
   );
 
   const createSigner = useCallback(async (signatureValues: ListingSignerProps) => {

@@ -29,6 +29,7 @@ import axios from "axios";
 import {appConfig} from "@src/Config";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -44,7 +45,7 @@ const CropperModal = ({isOpen, onClose, src, setPreview}:CropperProps) => {
   const [slideValue, setSlideValue] = useState(10);
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const cropRef = useRef<any>(null);
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const {requestSignature} = useEnforceSignature();
 
   const CallPatchFaction = async (newData:any, faction:any) => {

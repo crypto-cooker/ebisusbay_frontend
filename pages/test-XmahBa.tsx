@@ -1,5 +1,4 @@
 import {useState} from "react";
-import {useAppSelector} from "@src/Store/hooks";
 import {Contract} from "ethers";
 import {Box, Button, Text, VStack} from "@chakra-ui/react";
 import {toast} from "react-toastify";

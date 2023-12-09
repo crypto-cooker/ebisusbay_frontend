@@ -1,34 +1,26 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {
   Accordion,
   AccordionButton,
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box, HStack, Icon, Image,
+  Box,
   ListItem,
   Stack,
   Text,
   UnorderedList,
 } from "@chakra-ui/react"
 import localFont from 'next/font/local';
-import {useAppSelector} from "@src/Store/hooks";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {titleCase} from "@src/utils";
 import {commify} from "ethers/lib/utils";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
-import ImageService from "@src/core/services/image";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
-const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
 const FaqPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const user = useAppSelector((state) => state.user);
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   return (

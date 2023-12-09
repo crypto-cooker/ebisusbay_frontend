@@ -3,7 +3,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {Box, Center, Spinner, Text, useBreakpointValue} from "@chakra-ui/react";
 import NextApiService from "@src/core/services/api-service/next";
-import {useAppSelector} from "@src/Store/hooks";
 import ResponsiveOffersTable from "@src/components-v2/shared/responsive-table/responsive-offers-table";
 import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import MadeOffersFilterContainer
@@ -13,6 +12,7 @@ import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
 import MakeOfferDialog from "@src/components-v2/shared/dialogs/make-offer";
 import MakeCollectionOfferDialog from "@src/components-v2/shared/dialogs/make-collection-offer";
 import {CancelOfferDialog} from "@src/Components/Offer/Dialogs/CancelOfferDialog";
+import {useUser} from "@src/components-v2/useUser";
 
 interface MadeOffersProps {
   address: string;
@@ -22,7 +22,7 @@ interface MadeOffersProps {
 }
 
 export default function MadeOffers({ address, filtersVisible, setFiltersVisible, search }: MadeOffersProps) {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [offerAction, setOfferAction] = useState(OFFER_TYPE.none);
   const [selectedOffer, setSelectedOffer] = useState<any | null>(null);
   const useMobileMenu = useBreakpointValue(

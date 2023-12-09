@@ -80,7 +80,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
   const { error, data: nft, status } = useQuery({
     queryKey: ['AcceptOffer', user.address, offer.nftAddress, offer.nftId],
     queryFn: fetchNft,
-    enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
+    enabled: user.wallet.isConnected && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
     refetchOnWindowFocus: false
   });
 

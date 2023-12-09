@@ -21,6 +21,7 @@ import {Drop, SpecialWhitelist} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import {useUser} from "@src/components-v2/useUser";
 
 const Markdown= dynamic(() => import('react-markdown'),{ ssr: false });
 
@@ -97,9 +98,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     setOpenMenu(key);
   };
 
-  const user = useAppSelector((state) => {
-    return state.user;
-  });
+  const user = useUser();
 
   const membership = useAppSelector((state) => {
     return state.memberships;
@@ -141,7 +140,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     }
     setAbi(abi!);
 
-    if (user.provider) {
+    if (user.wallet.isConnected) {
       try {
         let writeContract = await new ethers.Contract(currentDrop.address, abi!, user.provider.getSigner());
         currentDrop = Object.assign({ writeContract: writeContract }, currentDrop);

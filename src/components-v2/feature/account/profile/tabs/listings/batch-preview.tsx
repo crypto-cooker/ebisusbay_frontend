@@ -1,10 +1,8 @@
 import {useCallback, useContext, useState} from "react";
 import {Box, Button, Flex, HStack, Slide, Text} from "@chakra-ui/react";
-import {createSuccessfulTransactionToastContent, isGaslessListing, pluralize} from "@src/utils";
+import {isGaslessListing, pluralize} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {useAppSelector} from "@src/Store/hooks";
-import {cancelListing} from "@src/core/cms/endpoints/gaslessListing";
 import {toast} from "react-toastify";
 import {useQueryClient} from "@tanstack/react-query";
 import {

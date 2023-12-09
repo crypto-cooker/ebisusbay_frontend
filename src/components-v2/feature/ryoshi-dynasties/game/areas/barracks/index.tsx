@@ -1,6 +1,5 @@
 import {AspectRatio, Box, Button, Flex, Image, Text, useDisclosure, VStack,} from '@chakra-ui/react';
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useAppSelector} from "@src/Store/hooks";
 
 import localFont from 'next/font/local';
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
@@ -15,6 +14,7 @@ import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnfor
 import StakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft";
 import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
 import Meeple from "src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/meeple";
+import {useUser} from "@src/components-v2/useUser";
 
 const gothamBook = localFont({
   src: '../../../../../../fonts/Gotham-Book.woff2',
@@ -27,7 +27,7 @@ interface BarracksProps {
 
 const Barracks = ({onBack}: BarracksProps) => {
   const [handleAuthedNavigation] = useAuthedFunction();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [battleRewardsClaimed, setBattleRewardsClaimed] = useState(false);
   const {requestSignature} = useEnforceSignature();
 

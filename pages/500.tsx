@@ -6,7 +6,6 @@ import Reveal from 'react-awesome-reveal';
 
 import { theme } from '../src/Theme/theme';
 import {hostedImage} from "../src/helpers/image";
-import {useAppSelector} from "@src/Store/hooks";
 import {useUser} from "@src/components-v2/useUser";
 
 const fadeInUp = keyframes`

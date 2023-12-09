@@ -1,4 +1,3 @@
-import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {
@@ -29,7 +28,8 @@ import {
   Tr,
   useBreakpointValue,
   useDisclosure,
-  VStack, Wrap
+  VStack,
+  Wrap
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import RdButton from "../../../../components/rd-button";
@@ -58,7 +58,7 @@ const config = appConfig();
 
 const FortuneRewardsTab = () => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [seasonTimeRemaining, setSeasonTimeRemaining] = useState(0);
   const [burnMalus, setBurnMalus] = useState(0);
 
@@ -442,7 +442,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 export default FortuneRewardsTab;
 
 const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isExecutingCompound}: SeasonRecordProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
   const [isExpanded, setIsExpanded] = useState(false);

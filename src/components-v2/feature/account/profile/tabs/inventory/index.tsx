@@ -10,7 +10,6 @@ import {
   isVaultCollection
 } from "@src/utils";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
-import {MyNftPageActions} from "@src/GlobalState/User";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {useInfiniteQuery} from "@tanstack/react-query";
@@ -426,7 +425,14 @@ export default function Inventory({ address }: InventoryProps) {
         onSort={handleSort}
         onHide={() => setSortVisible(false)}
       />
-      <MyNftCancelDialog />
+
+      {!!cancelDialogNft && (
+        <MyNftCancelDialog
+          isOpen={!!cancelDialogNft}
+          listing={cancelDialogNft}
+          onClose={() => setCancelDialogNft(null)}
+        />
+      )}
       {!!transferDialogNft && (
         <TransferNftDialog
           isOpen={!!transferDialogNft}

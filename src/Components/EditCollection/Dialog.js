@@ -9,10 +9,10 @@ import {
   ModalOverlay
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
-import {useSelector} from "react-redux";
+import {useUser} from "@src/components-v2/useUser";
 
 export default function CustomizedDialogs({propsDialog}) {
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const {title, body, dialogActions, isOpen, setIsOpen} = propsDialog;
 
   const handleClose = () => {

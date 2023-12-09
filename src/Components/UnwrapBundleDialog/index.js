@@ -16,11 +16,11 @@ import useUnwrapBundle from "../Account/Settings/hooks/useUnwrapBundle";
 import {toast} from 'react-toastify';
 import {setRefetchNfts,} from "@src/GlobalState/user-batch";
 import ImageContainer from "../Bundle/ImagesContainer";
+import {useUser} from "@src/components-v2/useUser";
 
 
 const UnwrapBundleDialog = ({ isOpen, onClose, nftBundle }) => {
-
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const [unwrapBundle, value] = useUnwrapBundle();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();

@@ -9,7 +9,6 @@ import {useRouter} from "next/router";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 import {GetServerSidePropsContext} from "next";
-import {useAppSelector} from "@src/Store/hooks";
 
 const fadeInUp = keyframes`
   0% {

@@ -16,6 +16,7 @@ import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
 import axios from "axios";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -36,7 +37,7 @@ interface StakeNftsProps {
 // }
 
 const ClaimRewards = ({isOpen, onClose, battleRewards}: StakeNftsProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [executingLabel, setExecutingLabel] = useState('');
   const [isExecutingClaim, setIsExecutingClaim] = useState(false);
   const [nftImages, setNftImages] = useState<any[]>([]);

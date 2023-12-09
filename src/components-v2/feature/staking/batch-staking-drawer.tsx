@@ -1,7 +1,4 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Box,
   Button as ChakraButton,
   Center,
@@ -175,7 +172,7 @@ interface BatchStakingDrawerItemProps {
 
 const BatchStakingDrawerItem = ({item, disabled}: BatchStakingDrawerItemProps) => {
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
   // Approvals
@@ -188,7 +185,7 @@ const BatchStakingDrawerItem = ({item, disabled}: BatchStakingDrawerItemProps) =
   };
 
   const checkApproval = async () => {
-    if (!user.provider) return false;
+    if (!user.wallet.isConnected) return false;
     const contract = new Contract(item.nft.nftAddress, ERC721, user.provider.getSigner());
     return await contract.isApprovedForAll(user.address, config.contracts.stake);
   };

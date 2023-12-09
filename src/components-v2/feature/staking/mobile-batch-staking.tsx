@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {Box, Drawer, DrawerContent, DrawerOverlay, Flex, HStack, Slide, Text} from "@chakra-ui/react";
 import {closeCart, openCart} from "@src/GlobalState/ryoshi-staking-cart-slice";
 import {useDispatch} from "react-redux";
-import Button from "@src/Components/components/Button";
 import {pluralize} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {BatchStakingDrawer} from "@src/components-v2/feature/staking/batch-staking-drawer";

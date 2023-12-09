@@ -32,6 +32,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {useUser} from "@src/components-v2/useUser";
 
 interface DelegateTroopsFormProps {
   isOpen: boolean;
@@ -45,7 +46,7 @@ const DelegateTroopsForm = ({ isOpen, onClose, delegateMode}: DelegateTroopsForm
   const [dataForm, setDataForm] = useState({
     faction: "" ?? null,
   })
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [troopsAvailable, setTroopsAvailable] = useState(0);
   const [selectedFaction, setSelectedFaction] = useState<string>(dataForm.faction);
 

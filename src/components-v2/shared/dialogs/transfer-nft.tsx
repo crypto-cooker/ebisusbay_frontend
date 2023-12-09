@@ -59,10 +59,10 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && user.provider) {
+    if (nft && user.wallet.isConnected) {
       asyncFunc();
     }
-  }, [nft, user.provider]);
+  }, [nft, user.wallet.isConnected]);
 
   const getInitialProps = async () => {
     try {

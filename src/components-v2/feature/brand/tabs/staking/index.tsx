@@ -204,7 +204,7 @@ const StakeView = ({slug, collectionAddress, filterType, nfts}: StakeViewProps) 
     const { staker, stakeMutation, unstakeMutation } = useStaker(slug);
 
     const handleStake = useCallback(async (nftAddress: string, nftId: string) => {
-        const nftContract = new Contract(nftAddress, ERC721, (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer);
+        const nftContract = new Contract(nftAddress, ERC721, user.provider.getSigner() as ethers.Signer);
         const transferEnabled = await nftContract.isApprovedForAll(user.address, staker?.address);
         if (!transferEnabled) {
             const tx = await nftContract.setApprovalForAll(staker?.address, true);
@@ -212,11 +212,11 @@ const StakeView = ({slug, collectionAddress, filterType, nfts}: StakeViewProps) 
         }
 
         await stakeMutation.mutateAsync({ nftAddress, nftId, statusFilter: filterType });
-    }, [staker, user.provider, filterType]);
+    }, [staker, user.wallet.isConnected, filterType]);
 
     const handleUnstake = useCallback(async (nftAddress: string, nftId: string) => {
         await unstakeMutation.mutateAsync({ nftAddress, nftId, statusFilter: filterType });
-    }, [staker, user.provider, filterType]);
+    }, [staker, user.wallet.isConnected, filterType]);
 
     return (
         <>
@@ -258,7 +258,7 @@ const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) 
     const [slots, setSlots] = useState<BoosterSlot[]>([]);
 
     const handleStake = useCallback(async (nftAddress: string, nftId: string, slot?: BoosterSlot) => {
-        if (!user.provider) throw 'Not connected';
+        if (!user.wallet.isConnected) throw 'Not connected';
 
         let emptySlot = slot;
         if (emptySlot === undefined) {
@@ -267,7 +267,7 @@ const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) 
         }
         if (!emptySlot) throw 'Invalid slot';
 
-        const nftContract = new Contract(nftAddress, ERC721, (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer);
+        const nftContract = new Contract(nftAddress, ERC721, user.provider.getSigner() as ethers.Signer);
         const transferEnabled = await nftContract.isApprovedForAll(user.address, staker?.booster?.address);
         if (!transferEnabled) {
             const tx = await nftContract.setApprovalForAll(staker?.booster?.address, true);
@@ -276,12 +276,12 @@ const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) 
 
         await boostMutation.mutateAsync({ nftAddress, nftId, slot: emptySlot.slot, statusFilter: filterType });
         await getSlots();
-    }, [staker, user.provider, filterType, slots]);
+    }, [staker, user.wallet.isConnected, filterType, slots]);
 
     const handleUnstake = useCallback(async (nftAddress: string, nftId: string, slot: number) => {
         await unboostMutation.mutateAsync({ nftAddress, nftId, slot, statusFilter: filterType });
         await getSlots();
-    }, [staker, user.provider, filterType]);
+    }, [staker, user.wallet.isConnected, filterType]);
 
     const getSlots = async () => {
         if (!staker?.booster || !user.address) return [];
@@ -360,8 +360,8 @@ const RewardsComponent = ({staker}: {staker: StakerWithRewards}) => {
     const handleClaimRewards = useCallback(async () => {
         try {
             setExecutingClaim(true);
-            if (!user.address || !user.provider) throw 'Not connected';
-            const tx = await staker.claimRewards(user.address, (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer);
+            if (!user.address || !user.wallet.isConnected) throw 'Not connected';
+            const tx = await staker.claimRewards(user.address,  user.provider.getSigner()!);
             await tx.wait();
             await refetch();
         } finally {
