@@ -6,20 +6,18 @@ import {cronos, cronosTestnet} from 'viem/chains'
 import {appConfig as applicationConfig, isTestnet} from "@src/Config";
 import ImageService from "@src/core/services/image";
 import {walletConnectProvider} from "@web3modal/wagmi";
-import {publicProvider} from "wagmi/providers/public";
 import {jsonRpcProvider} from "wagmi/providers/jsonRpc";
 
 const appConfig = applicationConfig();
 
-// 1. Get projectId
-const projectId = '8002f872986e034df168060193915223'
+const projectId = process.env.NEXT_PUBLIC_WEB3MODAL_API_KEY;
+if (!projectId) throw 'Web3Modal API Key not defined';
 
-// 2. Create wagmiConfig
 const metadata = {
   name: 'Ebisu\'s Bay',
-  description: 'Cronos Numba 1 Market',
+  description: 'The Leading GameFi NFT Marketplace',
   url: appConfig.urls.app,
-  icons: ['https://avatars.githubusercontent.com/u/37784886']
+  icons: ['https://cdn-prod.ebisusbay.com/img/logo-dark.svg']
 }
 
 const primaryNetwork = (isTestnet() ? cronosTestnet : cronos);
@@ -48,7 +46,7 @@ function setupDefaultConfig() {
 
   const config =  defaultWagmiConfig({
     chains: wagmiChains,
-    projectId,
+    projectId: projectId!,
     metadata,
   });
 
@@ -59,7 +57,7 @@ function setupDefaultConfig() {
 function setupCustomConfig(connectors: Array<Connector>) {
   const { chains, publicClient } = configureChains(
     [primaryNetwork],
-    [walletConnectProvider({ projectId }), jsonRpcProvider({
+    [walletConnectProvider({ projectId: projectId! }), jsonRpcProvider({
       rpc: (chain) => ({
         http: appConfig.rpc.read,
         websocket: 'wss://ws-rpc.ebisusbay.com'

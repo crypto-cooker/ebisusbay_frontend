@@ -1,12 +1,13 @@
 import { defineConfig } from '@wagmi/cli'
 import {blockExplorer, react} from '@wagmi/cli/plugins'
+import * as process from "process";
 
 export default defineConfig({
     out: 'src/Contracts/types.ts',
     contracts: [],
     plugins: [
         blockExplorer({
-            apiKey: '6XET2BCQ2WHVQ3U8YQD297K3QSWDMA96BY',
+            apiKey: process.env.WAGMI_API_KEY,
             baseUrl: 'https://api.cronoscan.com/api',
             contracts: [
                 {
