@@ -4,16 +4,23 @@ import UserContractService from "@src/core/contractService";
 import {UserContext} from "@src/components-v2/shared/contexts/user";
 import {useWalletClient, WalletClient} from "wagmi";
 import {useWeb3Modal} from "@web3modal/wagmi/react";
+import {useQueryClient} from "@tanstack/react-query";
 
 export const useUser = () => {
   const context = useContext(UserContext);
   const { open: connect } = useWeb3Modal();
+  const queryClient = useQueryClient();
+
 
   if (context === null) {
     throw new Error('useUser must be used within a UserProvider');
   }
 
   const { user, disconnect, toggleTheme, onEscrowClaimed, onEscrowToggled, onStakingHarvested } = context;
+
+  const refreshProfile = () => {
+    queryClient.refetchQueries({ queryKey: ['UserProfile', user.wallet.address], exact: true});
+  }
 
   return {
     ...user,
@@ -24,6 +31,7 @@ export const useUser = () => {
     onEscrowClaimed,
     onEscrowToggled,
     onStakingHarvested,
+    refreshProfile,
 
     // Legacy
     address: context.user.wallet.address,

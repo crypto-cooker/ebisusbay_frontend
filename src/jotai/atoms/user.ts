@@ -21,6 +21,7 @@ export interface JotaiUser {
   initializing: boolean;
   initialized: boolean;
   theme: string;
+  isMember: boolean;
 }
 
 export enum UserActionType {
@@ -103,7 +104,8 @@ const initialUserState: JotaiUser = {
   fee: 3,
   initializing: false,
   initialized: false,
-  theme: 'dark'
+  theme: 'dark',
+  isMember: false
 };
 
 export const userAtom = atomWithReducer<JotaiUser, UserAction>(initialUserState, userReducer);

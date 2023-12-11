@@ -45,7 +45,6 @@ import {
   shortAddress,
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
-import {retrieveProfile} from '@src/GlobalState/User';
 import {specialImageTransform} from '@src/hacks';
 import PriceActionBar from './price-action-bar';
 import {ERC721} from '@src/Contracts/Abis';
@@ -689,7 +688,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     await toggleFavorite(user.address, address, id, !isCurrentFav);
     toast.success(`Item ${isCurrentFav ? 'removed from' : 'added to'} favorites`);
     dispatch(tickFavorite(isCurrentFav ? -1 : 1));
-    dispatch(retrieveProfile());
+    user.refreshProfile();
   };
 
   const isFavorite = () => {

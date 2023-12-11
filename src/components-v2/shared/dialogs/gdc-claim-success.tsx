@@ -26,9 +26,7 @@ import {faFacebook, faTelegram, faTwitter} from "@fortawesome/free-brands-svg-ic
 import {CheckCircleIcon} from "@chakra-ui/icons";
 import {appConfig} from "@src/Config";
 import {ContractReceipt} from "ethers";
-import {useAppSelector} from "@src/Store/hooks";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
-import {retrieveProfile} from "@src/GlobalState/User";
 import {useDispatch} from "react-redux";
 import {useUser} from "@src/components-v2/useUser";
 
@@ -75,7 +73,6 @@ export default function GdcClaimSuccess({ onClose, isOpen, tx}: GdcClaimSuccessD
   ];
 
   const handleClose = () => {
-    dispatch(retrieveProfile());
     onClose();
   };
 

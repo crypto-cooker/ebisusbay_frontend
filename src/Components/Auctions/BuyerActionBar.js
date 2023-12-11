@@ -382,7 +382,7 @@ const BuyerActionBar = () => {
                   <>
                     {user.address ? (
                       <>
-                        {user.correctChain ? (
+                        {user.wallet.correctChain ? (
                           <>
                             {isApproved ? (
                               <ActionButtons />

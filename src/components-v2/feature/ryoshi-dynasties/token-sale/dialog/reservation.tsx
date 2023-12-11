@@ -30,10 +30,8 @@ import {ERC20} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, round, timeSince} from "@src/utils";
 import {appConfig} from "@src/Config";
-import {useDispatch} from "react-redux";
 import FortunePresale from "@src/Contracts/FortunePresale.json";
 import {commify} from "ethers/lib/utils";
-import {updateFortuneBalance} from "@src/GlobalState/User";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {useQueryClient} from "@tanstack/react-query";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
@@ -153,7 +151,6 @@ const FortuneReservationPage = ({onFaq, onClose}: FortuneReservationPageProps) =
 export default FortuneReservationPage;
 
 const FortunePurchaseForm = () => {
-  const dispatch = useDispatch();
   const [runAuthedFunction] = useAuthedFunction();
   const contractService = useContractService();
 
@@ -261,7 +258,6 @@ const FortunePurchaseForm = () => {
       const receipt = await tx.wait();
 
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(updateFortuneBalance());
       await queryClient.invalidateQueries({ queryKey: ['TokenSale'] });
     } catch (error: any) {
       console.log(error);

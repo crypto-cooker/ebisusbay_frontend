@@ -23,7 +23,6 @@ import {
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {specialImageTransform} from '@src/hacks';
-import {retrieveProfile} from '@src/GlobalState/User';
 import PriceActionBar from '@src/components-v2/feature/nft/price-action-bar';
 import ListingsTab from '@src/components-v2/feature/nft/tabs/listings';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
@@ -249,7 +248,7 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
     await toggleFavorite(user.address, address, id, !isCurrentFav);
     toast.success(`Item ${isCurrentFav ? 'removed from' : 'added to'} favorites`);
     dispatch(tickFavorite(isCurrentFav ? -1 : 1));
-    dispatch(retrieveProfile());
+    user.refreshProfile();
   };
 
   const isFavorite = () => {

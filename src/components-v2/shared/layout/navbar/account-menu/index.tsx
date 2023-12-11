@@ -23,9 +23,6 @@ import {ethers} from 'ethers';
 import {createSuccessfulTransactionToastContent, round, shortAddress, username} from '@src/utils';
 import styles from './accountmenu.module.scss';
 import {useWeb3Modal} from '@web3modal/wagmi/react'
-
-import {AccountMenuActions, onLogout,} from '@src/GlobalState/User';
-
 import {getThemeInStorage} from '@src/helpers/storage';
 import {appConfig} from '@src/Config';
 import classnames from "classnames";
@@ -66,7 +63,6 @@ import {useContractService, useUser} from "@src/components-v2/useUser";
 import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
-const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 const Index = function () {
   const user = useUser();
@@ -141,7 +137,7 @@ const Index = function () {
   };
 
   const clearCookies = async () => {
-    dispatch(onLogout());
+    user.disconnect();
     toast.success(`Cookies cleared!`);
   };
 
