@@ -3708,7 +3708,7 @@
       "multiToken": false,
       "address": "0xBB3b93a962442ef33246DA27eB1636e15A3b9065",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "avatar": "/img/collections/cronosbullsandbears/avatar.png",
         "banner": "/img/collections/cronosbullsandbears/banner.jpg",
@@ -21031,7 +21031,7 @@
       "multiToken": false,
       "address": "0xE2Ac439bD7FdF924903d22799C11c6C600Ffb6B3",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "The Bulls are the match to the Cowz you've all been waiting for! Bulls will collect royalties for Cowz, Bulls and ranches and to emit \"Calf NFT's\" via breeding! Jump in if you're feeling BULLISH!",
         "avatar": "/img/collections/bulls/avatar.webp",
