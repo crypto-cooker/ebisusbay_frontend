@@ -13,7 +13,7 @@ export const useUser = () => {
     throw new Error('useUser must be used within a UserProvider');
   }
 
-  const { user, disconnect, toggleTheme, onEscrowClaimed, onEscrowToggled } = context;
+  const { user, disconnect, toggleTheme, onEscrowClaimed, onEscrowToggled, onStakingHarvested } = context;
 
   return {
     ...user,
@@ -23,6 +23,7 @@ export const useUser = () => {
     toggleTheme,
     onEscrowClaimed,
     onEscrowToggled,
+    onStakingHarvested,
 
     // Legacy
     address: context.user.wallet.address,

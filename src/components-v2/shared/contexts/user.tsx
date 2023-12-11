@@ -24,6 +24,7 @@ interface UserContextType {
   toggleTheme: (theme: string) => void;
   onEscrowClaimed: () => void;
   onEscrowToggled: () => void;
+  onStakingHarvested: () => void;
 }
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -152,6 +153,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }});
   }
 
+  const onStakingHarvested = () => {
+    dispatch({ type: UserActionType.STAKING_HARVESTED, payload: {} });
+  }
+
   // Set Wallet
   useEffect(() => {
     dispatch({
@@ -196,5 +201,18 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     });
   }, [croBalance.data, frtnBalance.data]);
 
-  return <UserContext.Provider value={{ user, disconnect, toggleTheme, onEscrowClaimed, onEscrowToggled }}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider
+      value={{
+        user,
+        disconnect,
+        toggleTheme,
+        onEscrowClaimed,
+        onEscrowToggled,
+        onStakingHarvested
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 };

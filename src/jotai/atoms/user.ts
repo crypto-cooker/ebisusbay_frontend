@@ -29,8 +29,10 @@ export enum UserActionType {
   SET_TOKEN_BALANCES,
   SET_CONTRACT_BALANCES,
   SET_INITIALIZING,
+  SET_ESCROW,
+  STAKING_HARVESTED,
   TOGGLE_THEME,
-  RESET_USER // For disconnecting
+  RESET_USER
 }
 
 type RecursivePartial<T> = {
@@ -58,6 +60,10 @@ function userReducer(state: JotaiUser, action: UserAction): JotaiUser {
       return { ...state, initializing: !!action.payload.initializing, initialized: !!action.payload.initialized };
     case UserActionType.TOGGLE_THEME:
       return { ...state, theme: action.payload.theme ?? 'dark' };
+    case UserActionType.SET_ESCROW:
+      return { ...state, escrow: { ...state.escrow, ...action.payload.escrow }};
+    case UserActionType.STAKING_HARVESTED:
+      return { ...state, balances: { ...state.balances, staking: 0 }};
     case UserActionType.RESET_USER:
       return initialUserState;
     // For other actions, do a deep merge if necessary

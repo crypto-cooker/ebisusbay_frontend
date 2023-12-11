@@ -113,11 +113,17 @@ const Index = function () {
   };
 
   const withdrawBalance = async () => {
-    dispatch(AccountMenuActions.withdrawMarketBalance());
+    const tx = await contractService!.market.withdrawPayments(user.address);
+    const receipt = await tx.wait();
+    toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+    user.onEscrowClaimed();
   };
 
   const harvestStakingRewards = async () => {
-    dispatch(AccountMenuActions.harvestStakingRewards());
+    const tx = await contractService!.staking.harvest(user.address);
+    const receipt = await tx.wait();
+    toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+    user.onStakingHarvested();
   };
 
   const toggleEscrowOptIn = async (optIn: boolean) => {
