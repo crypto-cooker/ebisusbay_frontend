@@ -22,6 +22,8 @@ interface UserContextType {
   user: JotaiUser;
   disconnect: () => void;
   toggleTheme: (theme: string) => void;
+  onEscrowClaimed: () => void;
+  onEscrowToggled: () => void;
 }
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -32,7 +34,7 @@ interface UserProviderProps {
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, dispatch] = useAtom(userAtom);
-  const [signer, setSigner] = useAtom(storageSignerAtom);
+  const [_, setSigner] = useAtom(storageSignerAtom);
   const { address, isConnecting, isConnected } = useAccount();
   const { chain } = useNetwork();
   const { disconnect: disconnectWallet } = useDisconnect();
@@ -132,6 +134,24 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
   }
 
+  const onEscrowClaimed = () => {
+    dispatch({ type: UserActionType.SET_ESCROW, payload: {
+      escrow: {
+        enabled: true,
+        balance: 0,
+      }
+    }});
+  }
+
+  const onEscrowToggled = () => {
+    dispatch({ type: UserActionType.SET_ESCROW, payload: {
+      escrow: {
+        enabled: !user.escrow.enabled,
+        balance: user.escrow.balance,
+      }
+    }});
+  }
+
   // Set Wallet
   useEffect(() => {
     dispatch({
@@ -176,5 +196,5 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     });
   }, [croBalance.data, frtnBalance.data]);
 
-  return <UserContext.Provider value={{ user, disconnect, toggleTheme }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user, disconnect, toggleTheme, onEscrowClaimed, onEscrowToggled }}>{children}</UserContext.Provider>;
 };

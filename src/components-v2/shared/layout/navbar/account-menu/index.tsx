@@ -126,6 +126,7 @@ const Index = function () {
     try {
       const tx = await contractService.market.setUseEscrow(user.wallet.address, optIn);
       const receipt = await tx.wait();
+      user.onEscrowToggled();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
     } catch (error: any) {
       console.log(error);
@@ -539,17 +540,25 @@ const FunctionButton = ({title, fn}: {title: string, fn: () => Promise<void>}) =
   const [isExecuting, setIsExecuting] = useState(false);
 
   const handleExecution = async () => {
-    setIsExecuting(true);
-    await fn();
-    setIsExecuting(false);
+    try {
+      setIsExecuting(true);
+      await fn();
+    } catch (e) {
+      console.log(e);
+      toast.error(parseErrorMessage(e));
+    } finally {
+      setIsExecuting(false);
+    }
   }
 
   return (
-    <Button type="legacy"
-            onClick={handleExecution}
-            isLoading={isExecuting}
-            disabled={isExecuting}>
+    <PrimaryButton
+      onClick={handleExecution}
+      isLoading={isExecuting}
+      isDisabled={isExecuting}
+      loadingText={title}
+    >
       {title}
-    </Button>
+    </PrimaryButton>
   )
 }
