@@ -21031,7 +21031,7 @@
       "multiToken": false,
       "address": "0xE2Ac439bD7FdF924903d22799C11c6C600Ffb6B3",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "The Bulls are the match to the Cowz you've all been waiting for! Bulls will collect royalties for Cowz, Bulls and ranches and to emit \"Calf NFT's\" via breeding! Jump in if you're feeling BULLISH!",
         "avatar": "/img/collections/bulls/avatar.webp",
@@ -22933,7 +22933,7 @@
       "multiToken": false,
       "address": "0xC0D28282A4780e099884f344A9746A2D75A1BAF7",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Ever wanted to own the libs? Now you can! The Liberators, Cronos Steakhouse's 4th of July Special collection! First minted during 2023 Independence week, These feisty fellows will liberate you from FEEdom across the steakhouse ecosystem! Structured fee discounts on all future smart contracts based on amount held/time consumed",
         "avatar": "/img/collections/the-liberators/avatar.webp",
@@ -22956,7 +22956,7 @@
       "multiToken": false,
       "address": "0x724900a57ED516ba023b1F5F86A92E222BC32D02",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "",
         "avatar": "/img/collections/chefz-army/avatar.webp",
@@ -24571,7 +24571,7 @@
       "multiToken": false,
       "address": "0x5DAf5C61cb6FC86aBBaf3129040e74f8011fbb2D",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Genius Genies are the DAO token used to make decisions regarding ecosystem treasury funds. 1 Genie = 1 vote",
         "avatar": "/img/collections/genius-genies/avatar.webp",
@@ -24895,6 +24895,7 @@
       "metadata": {
         "description": "Animated Guardians are the overseers of the Time Ecosystem. They will earn a percentage of everything Time and Tonic related.",
         "avatar": "/img/collections/animated-guardians/avatar.gif",
+        "card": "/img/collections/animated-guardians/card.webp",
         "banner": "/img/collections/animated-guardians/banner.webp",
         "website": "https://timemachine101.com/",
         "twitter": "https://twitter.com/TimeMachines101",
@@ -24917,6 +24918,7 @@
       "metadata": {
         "description": "Animated Time Machine 102s, are the overseers of the Time Ecosystem. They will earn a percentage of everything Time and Tonic related.",
         "avatar": "/img/collections/animated-time-machine-102/avatar.webp",
+        "card": "/img/collections/animated-time-machine-102/card.webp",
         "banner": "/img/collections/animated-time-machine-102/banner.gif",
         "website": "https://timemachine101.com/",
         "twitter": "https://twitter.com/TimeMachines101",
@@ -24941,6 +24943,7 @@
       "metadata": {
         "description": "This is a unlimited mint for our Time Ecosystems Native token $Abyss, These tonics will be used in burn trade for upgrading your Guardians and 102s cards in our in discord Trading Card Game, And in our future Web3 game.",
         "avatar": "/img/collections/power-tonics/avatar.webp",
+        "card": "/img/collections/power-tonics/card.webp",
         "banner": "/img/collections/power-tonics/banner.webp",
         "website": "https://timemachine101.com/",
         "twitter": "https://twitter.com/TimeMachines101",
