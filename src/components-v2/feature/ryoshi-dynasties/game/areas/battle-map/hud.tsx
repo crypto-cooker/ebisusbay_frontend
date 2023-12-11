@@ -106,7 +106,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     if(!user) return;
 
     GetKoban();
-  }, [user])
+  }, [user.wallet.isConnected])
 
   useEffect(() => {
     setAccordionIndex(isMobile ? -1 : 0);

@@ -115,7 +115,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
   const [isProfileOwner, setIsProfileOwner] = useState(false);
   useEffect(() => {
     setIsProfileOwner(user && caseInsensitiveCompare(address, user.address));
-  }, [user, address])
+  }, [user.wallet.address, address])
 
   const profilePicture = profile.profilePicture ?
     ImageService.translate(profile.profilePicture).custom({width: 200, height: 200}) :

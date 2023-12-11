@@ -100,7 +100,7 @@ const MultiDrop = () => {
     }
     retrieveInfo();
     // eslint-disable-next-line
-  }, [user, membership]);
+  }, [user.wallet.isConnected, membership]);
 
   const retrieveDropInfo = async () => {
     setDropObject(drop);

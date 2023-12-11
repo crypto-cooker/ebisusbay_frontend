@@ -105,7 +105,7 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }: BundleDrawerItemP
     } finally {
       setExecutingApproval(false);
     }
-  }, [item.nft, user]);
+  }, [item.nft, user.address]);
 
   useEffect(() => {
     async function func() {

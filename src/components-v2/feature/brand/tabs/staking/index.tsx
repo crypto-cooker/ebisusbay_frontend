@@ -367,7 +367,7 @@ const RewardsComponent = ({staker}: {staker: StakerWithRewards}) => {
         } finally {
             setExecutingClaim(false)
         }
-    }, [setExecutingClaim, user, staker]);
+    }, [setExecutingClaim, user.address, staker]);
 
     return (
         <Box ps={{base:4, lg:0}} my={2} w='full'>

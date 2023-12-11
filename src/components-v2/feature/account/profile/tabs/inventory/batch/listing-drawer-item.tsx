@@ -254,7 +254,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
     } finally {
       setExecutingApproval(false);
     }
-  }, [item.nft, user]);
+  }, [item.nft, user.address]);
 
   useEffect(() => {
     async function func() {

@@ -45,7 +45,7 @@ const useEnforceSignature = () => {
     }
 
     return signer.signature;
-  }, [user, getSigner]);
+  }, [user.wallet.address, getSigner]);
 
   const requestSignature = async (fn?: (signature?: string) => void) => {
     const signature = await retrieveSignature();

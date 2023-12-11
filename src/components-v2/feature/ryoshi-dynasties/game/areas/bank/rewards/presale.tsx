@@ -169,7 +169,7 @@ const PresaleVaultTab = () => {
     } finally {
       setExecutingOpenVault(false);
     }
-  }, [user]);
+  }, [user.wallet.isConnected]);
 
   const handleExchangeTellers = useCallback(async () => {
     setExecutingExchangeTellers(true);
@@ -189,7 +189,7 @@ const PresaleVaultTab = () => {
     } finally {
       setExecutingExchangeTellers(false);
     }
-  }, [user, data]);
+  }, [user.wallet.isConnected, data]);
 
   const handleClaimFortune = useCallback(async () => {
     setExecutingClaimFortune(true);
@@ -206,7 +206,7 @@ const PresaleVaultTab = () => {
     } finally {
       setExecutingClaimFortune(false);
     }
-  }, [user, data]);
+  }, [user.wallet.isConnected, data]);
 
   const releaseTellers = async () => {
     setExecutingReleaseTellers(true);

@@ -178,7 +178,7 @@ const BuyerActionBar = () => {
     setAwaitingAcceptance(listing.state === auctionState.ACTIVE && listing.getEndAt < Date.now());
     setIsComplete(listing.state === auctionState.SOLD || listing.state === auctionState.CANCELLED);
     setIsAuctionOwner(caseInsensitiveCompare(listing.seller, user.address));
-  }, [listing, user]);
+  }, [listing, user.address]);
 
   useEffect(() => {
     async function func() {

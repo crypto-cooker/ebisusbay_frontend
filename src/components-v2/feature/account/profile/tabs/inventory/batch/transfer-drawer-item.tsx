@@ -109,7 +109,7 @@ const TransferDrawerItem = ({ item, onAddCollection }: TransferDrawerItemProps) 
     } finally {
       setExecutingApproval(false);
     }
-  }, [item.nft, user]);
+  }, [item.nft, user.address]);
 
   useEffect(() => {
     async function func() {

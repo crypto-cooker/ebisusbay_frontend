@@ -7,7 +7,7 @@ export default defineConfig({
     contracts: [],
     plugins: [
         blockExplorer({
-            apiKey: process.env.WAGMI_API_KEY,
+            apiKey: process.env.CRONOSCAN_API_KEY,
             baseUrl: 'https://api.cronoscan.com/api',
             contracts: [
                 {
