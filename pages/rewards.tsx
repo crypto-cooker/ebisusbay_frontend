@@ -14,7 +14,7 @@ import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config = appConfig();
-const currentGameId = 104;
+const currentGameId = 105;
 
 const Rewards = () => {
   const user = useAppSelector(state => state.user);
