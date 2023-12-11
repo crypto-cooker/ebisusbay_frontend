@@ -3708,7 +3708,7 @@
       "multiToken": false,
       "address": "0xBB3b93a962442ef33246DA27eB1636e15A3b9065",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "avatar": "/img/collections/cronosbullsandbears/avatar.png",
         "banner": "/img/collections/cronosbullsandbears/banner.jpg",
@@ -22933,7 +22933,7 @@
       "multiToken": false,
       "address": "0xC0D28282A4780e099884f344A9746A2D75A1BAF7",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Ever wanted to own the libs? Now you can! The Liberators, Cronos Steakhouse's 4th of July Special collection! First minted during 2023 Independence week, These feisty fellows will liberate you from FEEdom across the steakhouse ecosystem! Structured fee discounts on all future smart contracts based on amount held/time consumed",
         "avatar": "/img/collections/the-liberators/avatar.webp",
@@ -22956,7 +22956,7 @@
       "multiToken": false,
       "address": "0x724900a57ED516ba023b1F5F86A92E222BC32D02",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "",
         "avatar": "/img/collections/chefz-army/avatar.webp",
@@ -24571,7 +24571,7 @@
       "multiToken": false,
       "address": "0x5DAf5C61cb6FC86aBBaf3129040e74f8011fbb2D",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Genius Genies are the DAO token used to make decisions regarding ecosystem treasury funds. 1 Genie = 1 vote",
         "avatar": "/img/collections/genius-genies/avatar.webp",
