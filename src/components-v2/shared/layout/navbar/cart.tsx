@@ -285,11 +285,11 @@ const Cart = function () {
                         
                         <VStack align="left" spacing={0}>
                           {!nft.isBundle? (
-                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref>
+                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref legacyBehavior>
                               <NftLink name={nft.name} />
                             </Link>
                           ) : (
-                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref>
+                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref legacyBehavior>
                               <NftLink name={nft.name} />
                             </Link>
                           )}
