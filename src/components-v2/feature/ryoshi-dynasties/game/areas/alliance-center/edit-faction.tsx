@@ -38,6 +38,7 @@ import Cropper from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alli
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/search";
 import {parseErrorMessage} from "@src/helpers/validator";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useUser} from "@src/components-v2/useUser";
 
 interface EditFactionProps {
   isOpen: boolean;
@@ -66,7 +67,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
   const [alertMessage, setAlertMessage] = useState("")
 
   //other
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [isMobile] = useMediaQuery("(max-width: 768px)") 
   //pfp editor

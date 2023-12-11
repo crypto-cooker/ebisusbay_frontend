@@ -1,4 +1,17 @@
-import {Box, Fade, Modal, ModalContent, ModalOverlay, Button, Text, keyframes, usePrefersReducedMotion, useBreakpointValue, useDisclosure, VStack} from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Fade,
+  keyframes,
+  Modal,
+  ModalContent,
+  ModalOverlay,
+  Text,
+  useBreakpointValue,
+  useDisclosure,
+  usePrefersReducedMotion,
+  VStack
+} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
@@ -6,7 +19,6 @@ import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
 //contracts
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
-import {useAppSelector} from "@src/Store/hooks";
 import AnnouncementBoardModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/inline";
 import {VillageHud} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/hud";
 import BattleLog from "@src/components-v2/feature/ryoshi-dynasties/game/modals/battle-log";
@@ -24,7 +36,9 @@ import {RdGameState} from "@src/core/services/api-service/types";
 import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
 import {motion} from "framer-motion";
 import xmasMessages from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/xmasMessages.json";
-import { RdModalFooter } from "../../../components/rd-announcement-modal";
+import {RdModalFooter} from "../../../components/rd-announcement-modal";
+import {useUser} from "@src/components-v2/useUser";
+
 // import FactionDirectory from "@src/components-v2/feature/ryoshi-dynasties/game/modals/xp-leaderboard";
 interface VillageProps {
   onChange: (value: string) => void;
@@ -34,7 +48,7 @@ interface VillageProps {
 const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const xmasTheme = true ? '_xmas' : '';
   const { config: rdConfig, game: rdGameContext, user: rdUser, refreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const { isOpen:isOpenOverlay, onToggle } = useDisclosure()
 
   const transformComponentRef = useRef<any>(null)
@@ -612,7 +626,7 @@ const animation3 = prefersReducedMotion
 
   useEffect(() => {
     setMapInitialized(true);
-  }, [user.mitamaBalance]);
+  }, []);
 
 
   useEffect(() => {

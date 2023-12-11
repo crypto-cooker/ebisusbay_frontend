@@ -17,13 +17,13 @@ import {
 import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import ResponsiveXPLeaderboardTable from "@src/components-v2/shared/responsive-table/responsive-xp-leaderboard-table";
 import ImageService from "@src/core/services/image";
-import {useAppSelector} from "@src/Store/hooks";
 import {appConfig} from "@src/Config";
 import axios from "axios";
 import {XPProfile} from "@src/core/services/api-service/types";
 import Blockies from "react-blockies";
 import {PagedList} from "@src/core/services/api-service/paginated-list";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const api = axios.create({
@@ -44,7 +44,7 @@ const tabs = {
 };
 
 const XPLeaderboard = () => {
-  const user = useAppSelector(state => state.user);
+  const user = useUser();
   const [queryParams, setQueryParams] = useState<QueryParams>({
     timeframe: 'week',
     pageSize: 50

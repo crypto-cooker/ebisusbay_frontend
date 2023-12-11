@@ -1,9 +1,7 @@
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import {useAppSelector} from "@src/Store/hooks";
 import {ReactNode} from "react";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
+import {useUser} from "@src/components-v2/useUser";
+import {useWeb3Modal} from "@web3modal/wagmi/react";
 
 type AuthRenderProps = (props: {
   isConnected: boolean;
@@ -20,29 +18,18 @@ interface AuthenticationGuardProps {
 }
 
 const AuthenticationGuard = ({ children }: AuthenticationGuardProps) => {
-  const dispatch = useDispatch();
   const {isSignedIn, signin, isSigningIn} = useEnforceSigner();
-  const user = useAppSelector(state => state.user);
-
-  const handleConnect = async () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
-  };
+  const user = useUser();
+  const { open } = useWeb3Modal();
 
   return <>
     {children({
-      isConnected: !!user.address,
+      isConnected: user.wallet.isConnected,
       isSignedIn: isSignedIn,
-      isConnecting: user.connectingWallet,
+      isConnecting: user.initializing,
       isSigningIn: isSigningIn,
       signin,
-      connect: handleConnect,
+      connect: () => open(),
       error: null,
     })}
   </>;

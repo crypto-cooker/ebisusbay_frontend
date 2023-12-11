@@ -30,7 +30,7 @@ import {useRouter} from "next/router";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
 import {addToSearchVisitsInStorage, getSearchVisitsInStorage, removeSearchVisitFromStorage} from "@src/helpers/storage";
-import {useAppSelector} from "@src/Store/hooks";
+import {useUser} from "@src/components-v2/useUser";
 
 const minChars = 3;
 
@@ -39,7 +39,7 @@ const knownContracts = appConfig('collections');
 
 const MobileSearchDrawer = () => {
   const router = useRouter();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const {isOpen, onOpen, onClose} = useDisclosure();
   const [value, setValue] = React.useState('');
   const searchIconColor = useColorModeValue('black', 'gray.300');

@@ -1,4 +1,3 @@
-import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {
@@ -29,7 +28,8 @@ import {
   Tr,
   useBreakpointValue,
   useDisclosure,
-  VStack, Wrap
+  VStack,
+  Wrap
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import RdButton from "../../../../components/rd-button";
@@ -52,12 +52,13 @@ import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types"
 import moment from 'moment';
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
 const FortuneRewardsTab = () => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [seasonTimeRemaining, setSeasonTimeRemaining] = useState(0);
   const [burnMalus, setBurnMalus] = useState(0);
 
@@ -229,7 +230,8 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
 
 const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: number, onRefresh: () => void}) => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
   const [executingClaim, setExecutingClaim] = useState(false);
   const [executingCompound, setExecutingCompound] = useState(false);
   const [executingCancelCompound, setExecutingCancelCompound] = useState(false);
@@ -269,7 +271,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       }
 
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signature)
-      const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+      const tx = await contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
       await tx.wait();
 
       queryClient.setQueryData(
@@ -304,7 +306,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 
       const signature = await requestSignature();
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signature)
-      const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+      const tx = await contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
       await tx.wait();
       toast.success('Previous request cancelled');
     }
@@ -344,7 +346,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vault.index, signature)
 
-      const tx = await user.contractService?.ryoshiPlatformRewards.compound(auth.data.reward, auth.data.signature);
+      const tx = await contractService?.ryoshiPlatformRewards.compound(auth.data.reward, auth.data.signature);
       await tx.wait();
 
       queryClient.setQueryData(
@@ -379,7 +381,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 
       const signature = await requestSignature();
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vaultIndex, signature)
-      const tx = await user.contractService?.ryoshiPlatformRewards.cancelCompound(auth.data.reward, auth.data.signature);
+      const tx = await contractService?.ryoshiPlatformRewards.cancelCompound(auth.data.reward, auth.data.signature);
       await tx.wait();
       toast.success('Previous request cancelled');
     }
@@ -440,7 +442,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 export default FortuneRewardsTab;
 
 const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isExecutingCompound}: SeasonRecordProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
   const [isExpanded, setIsExpanded] = useState(false);

@@ -1,11 +1,22 @@
-import {Avatar, Box, Flex, HStack, Image, Progress, SimpleGrid, Spacer, Text, Tooltip, useMediaQuery} from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Flex,
+  HStack,
+  Image,
+  Progress,
+  SimpleGrid,
+  Spacer,
+  Text,
+  Tooltip,
+  useMediaQuery
+} from "@chakra-ui/react";
 import RdButton from "../../../components/rd-button";
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import NextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import {Contract, ethers} from "ethers";
-import {useAppSelector} from "@src/Store/hooks";
-import {round, shortAddress, siPrefixedNumber, username} from "@src/utils";
+import {round, siPrefixedNumber, username} from "@src/utils";
 import ImageService from "@src/core/services/image";
 import {appConfig} from "@src/Config";
 import {
@@ -18,6 +29,7 @@ import {faBuilding, faClipboardList} from "@fortawesome/free-solid-svg-icons";
 import {ERC1155} from "@src/Contracts/Abis";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import Countdown, {zeroPad} from "react-countdown";
+import {useUser} from "@src/components-v2/useUser";
 
 interface VillageHudProps {
   onOpenBuildings: () => void;
@@ -28,7 +40,7 @@ interface VillageHudProps {
 }
 
 export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog, onOpenXPLeaderboard, forceRefresh}: VillageHudProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const { config: rdConfig, user: rdUserContext, game: rdGameContext, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const config = appConfig();
   const {isSignedIn} = useEnforceSigner();
@@ -236,7 +248,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
             icon1 ='/img/ryoshi-dynasties/icons/fortune.svg'
             icon2 ='/img/ryoshi-dynasties/icons/mitama.png'
             icon3 ='/img/ryoshi-dynasties/icons/koban.png'
-            address={user.address}
+            address={user.address ?? null}
             amount1={fortune}
             amount2={mitama}
             amount3={koban}

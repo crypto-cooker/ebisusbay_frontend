@@ -9,7 +9,7 @@ import { shortAddress } from '../../../../../utils';
 import {useClipboard} from "@chakra-ui/react";
 
 export default function Pfp({ values, errors, touched, handleChange, setFieldValue, setFieldTouched, handleBlur }) {
-  const user = useSelector((state) => state.user);
+  const user = useUse
   const { onCopy } = useClipboard(user?.address);
 
   const getUserName = (address) => {

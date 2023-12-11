@@ -8,13 +8,13 @@ import {dutchAuctionDataAtom} from "@src/components-v2/feature/drop/types/dutch/
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {commify} from "ethers/lib/utils";
-import {useAppSelector} from "@src/Store/hooks";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {useUser} from "@src/components-v2/useUser";
 
 
 const RefundBox = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [auctionData, setAuctionData] = useAtom(dutchAuctionDataAtom);
   const [isRefunding, setIsRefunding] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);

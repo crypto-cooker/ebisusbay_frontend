@@ -10,14 +10,12 @@ import {
   HStack,
   Image,
   Progress,
-  SimpleGrid,
   Spacer,
   Tag,
   Text,
   useMediaQuery
 } from "@chakra-ui/react";
-import {useAppSelector} from "@src/Store/hooks";
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 import ImageService from "@src/core/services/image";
 import {
@@ -33,7 +31,7 @@ import {appConfig} from "@src/Config";
 import {Contract, ethers} from "ethers";
 import {ERC1155} from "@src/Contracts/Abis";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
-import { set } from "immer/dist/internal";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -42,8 +40,7 @@ interface BattleMapHUDProps {
 }
 
 export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
-    
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const {game: rdGameContext, user:rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const[koban, setKoban] = useState<number | string>(0);
   const[isLoading, setIsLoading] = useState(false);
@@ -109,7 +106,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     if(!user) return;
 
     GetKoban();
-  }, [user])
+  }, [user.wallet.isConnected])
 
   useEffect(() => {
     setAccordionIndex(isMobile ? -1 : 0);

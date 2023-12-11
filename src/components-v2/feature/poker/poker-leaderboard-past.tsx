@@ -1,18 +1,31 @@
 import {useInfiniteQuery} from "@tanstack/react-query";
-import { Center, Spinner, Box, HStack, useMediaQuery, VStack, Link, Button, useColorModeValue, Card,CardBody } from "@chakra-ui/react";
-import { useMemo } from "react";
-import { ApiService } from "@src/core/services/api-service";
-import {Text,Grid, GridItem, Flex,SimpleGrid } from "@chakra-ui/react";
-import {getHandName, getCardName, Player } from "@src/core/poker-rank-players";
-import { useEffect, useState, Fragment } from "react";
-import {RankPlayers} from "@src/core/poker-rank-players"
+import {
+	Box,
+	Button,
+	Card,
+	CardBody,
+	Center,
+	Flex,
+	GridItem,
+	HStack,
+	Link,
+	SimpleGrid,
+	Spinner,
+	Text,
+	useColorModeValue,
+	useMediaQuery,
+	VStack
+} from "@chakra-ui/react";
+import {Fragment, useEffect, useMemo, useState} from "react";
+import {ApiService} from "@src/core/services/api-service";
+import {getCardName, getHandName, Player} from "@src/core/poker-rank-players";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {shortAddress} from "@src/utils";
 import NextLink from "next/link";
-import { InfoIcon, LinkIcon } from "@chakra-ui/icons";
+import {InfoIcon} from "@chakra-ui/icons";
 import {PokerCollection} from "@src/core/services/api-service/types";
-import ImageService from "@src/core/services/image";
 import {useAppSelector} from "@src/Store/hooks";
+import {useUser} from "@src/components-v2/useUser";
 
 interface PokerLeaderboardProps {
 	pokerCollection: PokerCollection;
@@ -21,7 +34,7 @@ interface PokerLeaderboardProps {
 const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) => {
 	const isMobile = useMediaQuery("(max-width: 768px)")[0];
 	const [updatedAt, setUpdatedAt] = useState<string>();
-	const user = useAppSelector(state => state.user);
+	const user = useUser();
 	const hoverBackground = useColorModeValue('gray.100', '#424242');
 
 	const GetRules = () => {

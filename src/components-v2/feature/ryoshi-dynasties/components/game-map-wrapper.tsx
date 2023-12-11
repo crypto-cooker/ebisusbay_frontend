@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Box, useBreakpointValue} from "@chakra-ui/react";
 import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
-import {useAppSelector} from "@src/Store/hooks";
 import {MapProps} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/index";
 
 interface BattleMapWrapperProps {
@@ -11,7 +10,6 @@ interface BattleMapWrapperProps {
 }
 
 const GameMapWrapper = ({showActiveGame, height, blockDeployments}: BattleMapWrapperProps) => {
-  const user = useAppSelector((state) => state.user);
   const [currentModalRef, setCurrentModalRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
   const ref = useRef(null);
 

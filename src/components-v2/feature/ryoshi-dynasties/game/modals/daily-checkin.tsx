@@ -1,5 +1,4 @@
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
 import {Box, HStack, Image, SimpleGrid, Text} from "@chakra-ui/react";
 import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
@@ -8,9 +7,6 @@ import {Contract} from "ethers";
 import {toast} from "react-toastify";
 import {appConfig} from "@src/Config";
 import Resources from "@src/Contracts/Resources.json";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
 import moment from "moment";
 import ImageService from "@src/core/services/image";
 import {
@@ -21,6 +17,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -30,9 +27,8 @@ interface DailyCheckinProps {
   forceRefresh: () => void;
 }
 const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
-  const dispatch = useDispatch();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector(state => state.user);
+  const user = useUser();
 
   const [streak, setStreak] = useState(0);
   const [streakIndex, setStreakIndex] = useState(0);
@@ -80,17 +76,6 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
         setExecutingClaim(false);
       }
   }
-
-  const connectWalletPressed = async () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
-  };
 
   useEffect(() => {
     if (isOpen) {

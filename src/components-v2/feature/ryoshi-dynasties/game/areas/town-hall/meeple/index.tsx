@@ -32,7 +32,6 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import React, {memo, useContext, useEffect, useMemo, useState} from 'react';
-import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {appConfig} from "@src/Config";
 import {
@@ -65,6 +64,7 @@ import WalletNft from "@src/core/models/wallet-nft";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {useIsTouchDevice} from "@src/hooks/use-is-touch-device";
 import moment from "moment";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -86,8 +86,7 @@ interface MeepleProps {
 }
 
 const Meeple = ({isOpen, onClose}: MeepleProps) => {
-
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const { config: rdConfig, user:rdUser, game: rdGameContext, refreshUser: rdRefreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [page, setPage] = useState<string>();
   const collectionAddress = config.contracts.resources
@@ -270,7 +269,7 @@ interface WithdrawRyoshiModalProps {
 }
 
 const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: WithdrawRyoshiModalProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const {requestSignature} = useEnforceSignature();
   const [meepleToMint, setMeepleToMint] = useState(0);
   const [isExecuting, setIsExecuting] = useState(false);
@@ -458,7 +457,7 @@ interface DepositRyoshiModalProps {
 }
 
 const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyActiveAmount}: DepositRyoshiModalProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const collectionAddress = config.contracts.resources
   const [isExecuting, setIsExecuting] = useState(false);
   const queryClient = useQueryClient();
@@ -640,7 +639,7 @@ interface UpkeepModalProps {
 }
 
 const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple, activeMeeple, lastUpkeep}: UpkeepModalProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const {requestSignature} = useEnforceSignature();
   const collectionAddress = config.contracts.resources;
@@ -889,7 +888,7 @@ interface TurnInCardsModalProps {
 }
 
 const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: TurnInCardsModalProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const { config: rdConfig, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const {requestSignature} = useEnforceSignature();
   const collectionAddress = config.contracts.resources

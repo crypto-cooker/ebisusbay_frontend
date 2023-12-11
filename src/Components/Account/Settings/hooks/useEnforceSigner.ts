@@ -1,5 +1,4 @@
 import {useCallback, useEffect, useState} from 'react';
-import {useAppSelector} from "@src/Store/hooks";
 import useCreateSigner, {signinMessage} from "@src/Components/Account/Settings/hooks/useCreateSigner";
 import {ciEquals} from "@src/utils";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
@@ -7,9 +6,10 @@ import {useAtom} from "jotai";
 import {storageSignerAtom} from "@src/jotai/atoms/storage";
 import {RESET} from "jotai/utils";
 import {ethers} from "ethers";
+import {useUser} from "@src/components-v2/useUser";
 
 const useEnforceSignature = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [_, getSigner] = useCreateSigner();
   const [connectWallet] = useAuthedFunction();
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -17,16 +17,16 @@ const useEnforceSignature = () => {
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   const checkSigninStatus = async () => {
-    if (!user.address) return false;
+    if (!user.wallet.address) return false;
 
     let authSigner = signer;
     let signatureInStorage: string | null | undefined = authSigner?.signature;
     if (!signatureInStorage) return false;
 
     try {
-      const signerAddressMatches = !!authSigner?.address && ciEquals(authSigner?.address, user.address);
-      const sigOwnerAddress = ethers.utils.verifyMessage(signinMessage(user.address), signatureInStorage);
-      const signerSigMatches = ciEquals(sigOwnerAddress, user.address);
+      const signerAddressMatches = !!authSigner?.address && ciEquals(authSigner?.address, user.wallet.address);
+      const sigOwnerAddress = ethers.utils.verifyMessage(signinMessage(user.wallet.address), signatureInStorage);
+      const signerSigMatches = ciEquals(sigOwnerAddress, user.wallet.address);
 
       return signerAddressMatches && signerSigMatches;
     } catch (e) {
@@ -45,7 +45,7 @@ const useEnforceSignature = () => {
     }
 
     return signer.signature;
-  }, [user, getSigner]);
+  }, [user.wallet.address, getSigner]);
 
   const requestSignature = async (fn?: (signature?: string) => void) => {
     const signature = await retrieveSignature();

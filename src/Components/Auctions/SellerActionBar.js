@@ -4,16 +4,15 @@ import {toast} from 'react-toastify';
 import {createSuccessfulTransactionToastContent} from '@src/utils';
 import {auctionState} from '@src/core/api/enums';
 import {getAuctionDetails} from '@src/GlobalState/auctionSlice';
-import MetaMaskOnboarding from '@metamask/onboarding';
-import {chainConnect, connectAccount} from '@src/GlobalState/User';
-import {appConfig} from "@src/Config";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
-
-const config = appConfig();
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const SellerActionBar = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
+  const [runAuthedFunction] = useAuthedFunction();
+
   const [awaitingAcceptace, setAwaitingAcceptace] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [executingStart, setExecutingStart] = useState(false);
@@ -56,9 +55,9 @@ const SellerActionBar = () => {
   };
 
   const runFunction = async (fn) => {
-    if (user.address) {
+    runAuthedFunction(async() => {
       try {
-        let writeContract = user.contractService.auction;
+        let writeContract = contractService.auction;
         const receipt = await fn(writeContract);
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         dispatch(getAuctionDetails(listing.getAuctionId));
@@ -72,16 +71,7 @@ const SellerActionBar = () => {
           toast.error('Unknown Error');
         }
       }
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   };
 
   useEffect(() => {

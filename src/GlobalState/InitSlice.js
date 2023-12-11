@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { connectAccount } from './User';
 
 const appInitializeState = createSlice({
   name: 'appInitialize',
@@ -40,27 +39,29 @@ export const publicInitFinished = () => async (dispatch) => {
 };
 
 export const appInitializer = () => async (dispatch) => {
-  dispatch(appInitStarted());
-
-  //  If public routes have initializations then check should be added to Router file to wait for public initialization
   dispatch(publicInitFinished());
-
-  const isConnectSupported =
-    localStorage.getItem('WEB3_CONNECT_CACHED_PROVIDER') ||
-    window.ethereum ||
-    localStorage.getItem('DeFiLink_session_storage_extension') ||
-    window.navigator.userAgent.includes('Crypto.com DeFiWallet');
-
-  if (!isConnectSupported) {
-    dispatch(appAuthInitFinished());
-    return;
-  }
-
-  const web3ModalWillShowUp = !localStorage.getItem('WEB3_CONNECT_CACHED_PROVIDER');
-
-  if (web3ModalWillShowUp) {
-    //  Web3Modal will show up. Let the Router redirect the user to main page.
-    dispatch(appAuthInitFinished());
-  }
-  dispatch(connectAccount(true));
+  dispatch(appAuthInitFinished());
+  // dispatch(appInitStarted());
+  //
+  // //  If public routes have initializations then check should be added to Router file to wait for public initialization
+  // dispatch(publicInitFinished());
+  //
+  // const isConnectSupported =
+  //   localStorage.getItem('WEB3_CONNECT_CACHED_PROVIDER') ||
+  //   window.ethereum ||
+  //   localStorage.getItem('DeFiLink_session_storage_extension') ||
+  //   window.navigator.userAgent.includes('Crypto.com DeFiWallet');
+  //
+  // if (!isConnectSupported) {
+  //   dispatch(appAuthInitFinished());
+  //   return;
+  // }
+  //
+  // const web3ModalWillShowUp = !localStorage.getItem('WEB3_CONNECT_CACHED_PROVIDER');
+  //
+  // if (web3ModalWillShowUp) {
+  //   //  Web3Modal will show up. Let the Router redirect the user to main page.
+  //   dispatch(appAuthInitFinished());
+  // }
+  // dispatch(connectAccount(true));
 };

@@ -1,7 +1,6 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter, faSearch} from "@fortawesome/free-solid-svg-icons";
-import {useAppSelector} from "@src/Store/hooks";
 import {
   Box,
   Button,
@@ -20,13 +19,14 @@ import MadeOffers from "@src/components-v2/feature/account/profile/tabs/offers/m
 import ReceivedOffers from "./received-offers";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {getTheme} from "@src/Theme/theme";
+import {useUser} from "@src/components-v2/useUser";
 
 interface OffersProps {
   address: string;
 }
 
 export default function Offers({ address }: OffersProps) {
-  const userTheme = useAppSelector((state) => state.user.theme);
+  const {theme: userTheme} = useUser();
 
   const [filtersVisible, setFiltersVisible] = useState(true);
   const [hasManuallyToggledFilters, setHasManuallyToggledFilters] = useState(false);

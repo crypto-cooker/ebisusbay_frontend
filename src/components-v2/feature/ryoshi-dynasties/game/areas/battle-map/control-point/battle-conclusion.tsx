@@ -11,6 +11,7 @@ import {appConfig} from "@src/Config";
 import localFont from 'next/font/local';
 import ImageService from "@src/core/services/image";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useUser} from "@src/components-v2/useUser";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -27,9 +28,7 @@ interface BattleConclusionProps {
 }
 
 const BattleConclusion = ({attackerTroops, defenderTroops, battleAttack, displayConclusionCallback, CheckForKoban, attackerImage, defenderImage, attackersFaction, defendersFaction}: BattleConclusionProps) => {
-
-  const config = appConfig();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [attackerFilter, setAttackerFilter] = useState('brightness(1)');
   const [defenderFilter, setDefenderFilter] = useState('brightness(1)');
   const [attackerStyle, setAttackerStyle] = useState({});

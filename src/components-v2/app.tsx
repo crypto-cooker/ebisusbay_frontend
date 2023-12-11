@@ -8,17 +8,15 @@ import {getAnalytics} from "@firebase/analytics";
 import ScrollToTopBtn from '@src/components-v2/shared/layout/scroll-to-top';
 import Header from '@src/components-v2/shared/layout/navbar';
 import firebaseConfig from '../third-party/firebase';
-import {initProvider} from '../GlobalState/User';
-import {appInitializer} from '../GlobalState/InitSlice';
 import {getTheme} from '../Theme/theme';
 import DefaultHead from "@src/components-v2/shared/layout/default-head";
 import {useColorMode} from "@chakra-ui/react";
 import {syncCartStorage} from "@src/GlobalState/cartSlice";
 import Footer from "@src/components-v2/shared/layout/footer";
-import {useAppSelector} from "@src/Store/hooks";
 import {AppProps} from "next/app";
 import {ExchangePricesContext} from "@src/components-v2/shared/contexts/exchange-prices";
 import {useGlobalPrices} from "@src/hooks/useGlobalPrices";
+import {useUser} from "@src/components-v2/useUser";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -54,25 +52,13 @@ function App({ Component, ...pageProps }: AppProps) {
   const dispatch = useDispatch();
   const { colorMode } = useColorMode()
   const exchangePrices = useGlobalPrices();
-
-  const userTheme = useAppSelector((state) => {
-    return state.user.theme;
-  });
-
-  if (typeof window !== 'undefined') {
-    document.documentElement.setAttribute('data-theme', userTheme);
-  }
-
-  useEffect(() => {
-    dispatch(appInitializer());
-  }, [dispatch]);
+  const {theme: userTheme} = useUser();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       getAnalytics(firebase);
-      dispatch(initProvider());
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     dispatch(syncCartStorage());

@@ -26,6 +26,7 @@ class UserContractService {
   private _gdc?: Contract;
   private _ryoshiPlatformRewards?: Contract;
   private _ryoshiPresaleVaults?: Contract;
+  private _custom: { [key: string]: Contract } = {};
 
   constructor(signer: Signer) {
     this.signer = signer;
@@ -99,6 +100,13 @@ class UserContractService {
       this.erc20Tokens[address] = new Contract(address, ERC20, this.signer)
     }
     return this.erc20Tokens[address];
+  }
+
+  public custom(address: string, abi: string) {
+    if (!this._custom[address]) {
+      this._custom[address] = new Contract(address, abi, this.signer)
+    }
+    return this._custom[address];
   }
 }
 //

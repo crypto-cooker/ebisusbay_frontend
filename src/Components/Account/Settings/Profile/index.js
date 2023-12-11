@@ -20,9 +20,10 @@ import {Flex} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {getCroidInfo} from "@src/helpers/croid";
+import {useUser} from "@src/components-v2/useUser";
 
 export default function EditProfile() {
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const [requestNewSettings, { loading }] = useCreateSettings();
   const [requestUpdateSettings, { loading: updateLoading }] = useUpdateSettings();
   const [requestResendEmailVerification, { loading: resendLoading }] = useResendEmailVerification();

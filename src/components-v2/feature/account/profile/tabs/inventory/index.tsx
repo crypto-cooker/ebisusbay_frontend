@@ -10,7 +10,6 @@ import {
   isVaultCollection
 } from "@src/utils";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
-import {MyNftPageActions} from "@src/GlobalState/User";
 import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {useInfiniteQuery} from "@tanstack/react-query";
@@ -59,8 +58,8 @@ import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 import InventoryFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
 import useDebounce from "@src/core/hooks/useDebounce";
-import GdcCard from "@src/components-v2/feature/account/profile/tabs/inventory/gdc-card";
 import GdcClaimConfirmation from "@src/components-v2/shared/dialogs/gdc-claim-confirmation";
+import {useUser} from "@src/components-v2/useUser";
 
 interface InventoryProps {
   address: string;
@@ -69,8 +68,7 @@ interface InventoryProps {
 export default function Inventory({ address }: InventoryProps) {
   const dispatch = useDispatch();
 
-  const user = useAppSelector((state) => state.user);
-  const pendingGdcNft = useAppSelector((state) => state.user.profile?.pendingGdcItem?.nft);
+  const user = useUser();
   const batchListingCart = useAppSelector((state) => state.batchListing);
 
   const [collections, setCollections] = useState([]);
@@ -154,6 +152,10 @@ export default function Inventory({ address }: InventoryProps) {
     dispatch(setBatchType(shortcut));
   };
 
+  const [transferDialogNft, setTransferDialogNft] = useState<any>(null);
+  const [cancelDialogNft, setCancelDialogNft] = useState<any>(null);
+  const [createListingNft, setCreateListingNft] = useState<any>(null);
+
   const historyContent = useMemo(() => {
     return status === 'pending' ? (
       <Center>
@@ -167,14 +169,6 @@ export default function Inventory({ address }: InventoryProps) {
           columns={!useMobileMenu && filtersVisible ? {base: 1, sm: 2, lg: 3, xl: 4, '2xl': 6} : {base: 2, sm: 3, md: 4, lg: 5, xl: 6, '2xl': 7}}
           gap={3}
         >
-          {!!pendingGdcNft && caseInsensitiveCompare(user.address, address) && (
-            <GdcCard
-              key='gdc-promo'
-              nft={pendingGdcNft}
-              onClaim={() => setIsGdcConfirmationOpen(true)}
-            />
-          )}
-
           {data.pages.map((items, index) => (
             <React.Fragment key={index}>
               {items.data.map((nft, index) => {
@@ -188,14 +182,10 @@ export default function Inventory({ address }: InventoryProps) {
                           canSell={nft.listable && !nft.listed && nft.canSell}
                           canCancel={nft.listed && !!nft.listingId}
                           canUpdate={nft.listable && nft.listed}
-                          onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
-                          onSellButtonPressed={() => {
-                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
-                          }}
-                          onUpdateButtonPressed={() => {
-                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
-                          }}
-                          onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft))}
+                          onTransferButtonPressed={() => setTransferDialogNft(nft)}
+                          onSellButtonPressed={() => setCreateListingNft(nft)}
+                          onUpdateButtonPressed={() => setCreateListingNft(nft)}
+                          onCancelButtonPressed={() => setCancelDialogNft(nft)}
                           onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
                           onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
                           newTab={true}
@@ -221,14 +211,10 @@ export default function Inventory({ address }: InventoryProps) {
                           canCancel={nft.listed && !!nft.listingId}
                           canUpdate={nft.listable && nft.listed && !nft.multiToken}
                           isVault={isVaultCollection(nft.nftAddress)}
-                          onTransferButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageTransferDialog(nft))}
-                          onSellButtonPressed={() => {
-                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
-                          }}
-                          onUpdateButtonPressed={() => {
-                            dispatch(MyNftPageActions.showMyNftPageListDialog(nft, null))
-                          }}
-                          onCancelButtonPressed={() => dispatch(MyNftPageActions.showMyNftPageCancelDialog(nft)) }
+                          onTransferButtonPressed={() => setTransferDialogNft(nft)}
+                          onSellButtonPressed={() => setCreateListingNft(nft)}
+                          onUpdateButtonPressed={() => setCreateListingNft(nft)}
+                          onCancelButtonPressed={() => setCancelDialogNft(nft)}
                           onAddToBatchListingButtonPressed={() => dispatch(addToBatchListingCart(nft))}
                           onRemoveFromBatchListingButtonPressed={() => dispatch(removeFromBatchListingCart(nft))}
                           onImportVaultButtonPressed={() => console.log('TBI')}
@@ -265,7 +251,7 @@ export default function Inventory({ address }: InventoryProps) {
     setQueryParams({...queryParams, sortBy: sort as any, direction: direction as any});
   }, [queryParams]);
 
-  const userTheme = useAppSelector((state) => state.user.theme);
+  const userTheme =  user.theme;
   const customStyles = {
     option: (base: any, state: any) => ({
       ...base,
@@ -439,20 +425,27 @@ export default function Inventory({ address }: InventoryProps) {
         onSort={handleSort}
         onHide={() => setSortVisible(false)}
       />
-      <MyNftCancelDialog />
-      {user.myNftPageTransferDialog && (
-        <TransferNftDialog
-          isOpen={!!user.myNftPageTransferDialog}
-          nft={user.myNftPageTransferDialog}
-          onClose={() => dispatch(MyNftPageActions.hideMyNftPageTransferDialog())}
+
+      {!!cancelDialogNft && (
+        <MyNftCancelDialog
+          isOpen={!!cancelDialogNft}
+          listing={cancelDialogNft}
+          onClose={() => setCancelDialogNft(null)}
         />
       )}
-      {user.myNftPageListDialog?.nft && (
+      {!!transferDialogNft && (
+        <TransferNftDialog
+          isOpen={!!transferDialogNft}
+          nft={transferDialogNft}
+          onClose={() => setTransferDialogNft(null)}
+        />
+      )}
+      {!!createListingNft && (
         <CreateListingDialog
-          isOpen={!!user.myNftPageListDialog?.nft}
-          nft={user.myNftPageListDialog?.nft}
-          onClose={() => dispatch(MyNftPageActions.hideMyNftPageListDialog())}
-          listing={user.myNftPageListDialog?.listing}
+          isOpen={!!createListingNft}
+          nft={createListingNft}
+          onClose={() => setCreateListingNft(null)}
+          listing={null}
         />
       )}
       {useMobileMenu && (

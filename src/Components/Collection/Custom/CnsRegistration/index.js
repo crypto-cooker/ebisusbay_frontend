@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import styled from 'styled-components';
 import Link from "next/link";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -36,7 +37,7 @@ const StyledLink = styled.a`
 `;
 
 export const CnsRegistration = () => {
-  const user = useSelector((state) => state.user);
+  const user = useUser();
 
   const [searchTerms, setSearchTerms] = useState(null);
   const [searchResult, setSearchResult] = useState(null);
@@ -207,7 +208,7 @@ const registrationStage = {
 };
 
 const Registration = ({domain, readKit, onRegistrationComplete}) => {
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const [error, setError] = useState(null);
 
   // Workflow

@@ -1,8 +1,8 @@
 import React, {ReactNode} from "react";
 import {Box, Grid, GridItem, Stack, Tag, TagCloseButton, TagLabel, Wrap, WrapItem} from "@chakra-ui/react";
 import {motion, Variants} from "framer-motion";
-import {useAppSelector} from "@src/Store/hooks";
 import {commify} from "ethers/lib/utils";
+import {useUser} from "@src/components-v2/useUser";
 
 const MotionGrid = motion(Grid)
 
@@ -21,7 +21,7 @@ export interface FilteredItem {
 }
 
 const DesktopFilterContainer = ({visible, filters, filteredItems, children, totalCount, onRemoveFilters}: DesktopFilterContainerProps) => {
-  const userTheme = useAppSelector((state) => state.user.theme);
+  const {theme: userTheme} = useUser();
 
   const variants: Variants = {
     expand: {

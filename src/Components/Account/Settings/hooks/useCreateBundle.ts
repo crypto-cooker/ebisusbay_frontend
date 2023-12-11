@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Contract} from "ethers";
 import {appConfig} from "@src/Config";
 import Bundle from "@src/Contracts/Bundle.json";
-import {useAppSelector} from "@src/Store/hooks";
+import {useUser} from "@src/components-v2/useUser";
 
 type ResponseProps = {
   loading: boolean;
@@ -17,7 +17,7 @@ const useCreateBundle = () => {
 
   const config = appConfig();
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const createBundle = async (tokens: string[], ids: string[], title: string, description: string, createListing = false) => {
     setResponse({

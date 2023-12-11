@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import useGetSettings from '../Account/Settings/hooks/useGetSettings';
 import useUpdateBanner from '../Account/Settings/hooks/useUpdateBanner';
 import {Card, CardBody, Stack} from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
+import {useUser} from "@src/components-v2/useUser";
 
 const UploadAsset = ({ id, value, accept = 'image/png, image/jpeg, image/jpg', onChange, onClose }) => {
   const [file, setFile] = useState(null);
@@ -12,7 +12,7 @@ const UploadAsset = ({ id, value, accept = 'image/png, image/jpeg, image/jpg', o
   const isVideo = value?.file?.type?.includes('video');
   const isImage = value?.file?.type?.includes('image');
 
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const { response: settings } = useGetSettings(user?.address);
   const [requestUpdateBanner] = useUpdateBanner();
 

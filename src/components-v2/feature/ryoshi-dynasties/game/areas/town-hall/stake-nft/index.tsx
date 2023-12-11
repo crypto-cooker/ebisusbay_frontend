@@ -1,7 +1,6 @@
 import {Box, Center, Flex, IconButton, Image, SimpleGrid, Spinner, Text, VStack} from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useInfiniteQuery, useQuery, useQueryClient} from "@tanstack/react-query";
 import nextApiService from "@src/core/services/api-service/next";
@@ -34,6 +33,7 @@ import {
   TownHallStakeNftContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/context";
 import {commify} from "ethers/lib/utils";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -50,7 +50,7 @@ interface StakeNftsProps {
 }
 
 const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const queryClient = useQueryClient();
   const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
@@ -260,7 +260,7 @@ interface PendingNft {
 }
 
 const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBlockProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const townHallStakeNftContext = useContext(TownHallStakeNftContext) as TownHallStakeNftContextProps;
   const [isExecutingStake, setIsExecutingStake] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('');

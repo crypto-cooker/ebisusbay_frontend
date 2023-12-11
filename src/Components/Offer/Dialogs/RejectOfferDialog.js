@@ -8,7 +8,6 @@ import EmptyData from "@src/Components/Offer/EmptyData";
 import {specialImageTransform} from "@src/hacks";
 import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import * as Sentry from "@sentry/react";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {
@@ -18,17 +17,19 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, Spinner
+  ModalOverlay,
+  Spinner
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {useQuery} from "@tanstack/react-query";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffer, offer}) => {
-  const offerContract = useSelector((state) => state.user.contractService.offer);
+  const contractService = useContractService();
   const [executingRejectOffer, setExecutingRejectOffer] = useState(false);
-  const user = useSelector((state) => state.user);
+  const user = useUser();
 
   const fetchNft = async () => {
     if (isCollectionOffer) return null;
@@ -40,7 +41,7 @@ export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
   const { error, data: nft, status } = useQuery({
     queryKey: ['RejectOffer', user.address, offer.nftAddress, offer.nftId],
     queryFn: fetchNft,
-    enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
+    enabled: user.wallet.isConnected && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
     refetchOnWindowFocus: false
   });
 
@@ -55,7 +56,7 @@ export const RejectOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
       } else if (collection.multiToken) {
         throw new Error('Cannot reject a public offer');
       } else {
-        const tx = await offerContract.rejectOffer(offer.hash, offer.offerIndex);
+        const tx = await contractService.offer.rejectOffer(offer.hash, offer.offerIndex);
         let receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
         setExecutingRejectOffer(false);

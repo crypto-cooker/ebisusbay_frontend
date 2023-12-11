@@ -1,7 +1,6 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
+import React, {useContext, useEffect, useMemo, useState} from "react";
 import {Box, Center, Flex, Grid, GridItem, Image, Link, Text, useMediaQuery, VStack} from "@chakra-ui/react"
 import localFont from 'next/font/local';
-import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {useRouter} from "next/router";
 import {
@@ -17,6 +16,7 @@ import {Autoplay, Virtual} from "swiper/modules";
 import NextLink from "next/link";
 import Countdown, {zeroPad} from "react-countdown";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useUser} from "@src/components-v2/useUser";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -31,8 +31,8 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
   const { user: rdUserContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [isMobile] = useMediaQuery("(max-width: 750px)");
   const {isSignedIn} = useEnforceSigner();
-  
-  const user = useAppSelector((state) => state.user);
+
+  const user = useUser();
 
   const { data: ads } = useQuery({
     queryKey: ['RdBoardAds'],

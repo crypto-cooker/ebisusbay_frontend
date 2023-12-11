@@ -19,8 +19,10 @@ import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/
 import FishMarketModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/fish-market";
 import Tavern from "@src/components-v2/feature/ryoshi-dynasties/game/areas/tavern";
 import TownHall from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall";
+import {useUser} from "@src/components-v2/useUser";
+
 const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig}) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const [currentPage, setCurrentPage] = useState<string>('village');
   const [previousPage, setPreviousPage] = useState<string>();

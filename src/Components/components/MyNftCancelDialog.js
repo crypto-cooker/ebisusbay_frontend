@@ -1,54 +1,49 @@
-import React, { memo, useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { MyNftCancelDialogActions } from '../../GlobalState/User';
+import React, {useEffect} from 'react';
 import useCancelGaslessListing from '@src/Components/Account/Settings/hooks/useCancelGaslessListing';
-import { MyNftPageActions } from "@src/GlobalState/User";
-import { toast } from 'react-toastify';
-import {isGaslessListing} from "@src/utils";
+import {toast} from 'react-toastify';
+import {createSuccessfulTransactionToastContent, isGaslessListing} from "@src/utils";
+import {parseErrorMessage} from "@src/helpers/validator";
+import {useContractService} from "@src/components-v2/useUser";
 
-const mapStateToProps = (state) => ({
-  walletAddress: state.user.address,
-  myNftPageListDialog: state.user.myNftPageListDialog,
-  myNftPageCancelDialog: state.user.myNftPageCancelDialog,
-});
-
-const MyNftCancelDialog = ({ myNftPageCancelDialog }) => {
-  const dispatch = useDispatch();
-
+const MyNftCancelDialog = ({ isOpen, listing, onClose }) => {
+  const contractService = useContractService();
   const [cancelGaslessListing, response] = useCancelGaslessListing();
 
-  const cancelGaslessListingFun = async () => {
+  const handleCancelGaslessListing = async () => {
     try {
-      const res = await cancelGaslessListing(myNftPageCancelDialog.listingId)
-      dispatch(MyNftPageActions.hideNftPageCancelDialog());
-      toast.success('Canceled successfully')
+      await cancelGaslessListing(listing.listingId);
+      toast.success('Canceled successfully');
+      onClose();
     } catch(error) {
-      dispatch(MyNftPageActions.hideNftPageCancelDialog());
       console.log(error)
-      toast.error('Error')
+      toast.error(parseErrorMessage(error))
+    }
+  }
+
+  const handleCancelLegacyListing = async () => {
+    try {
+      let tx = await contractService.market.cancelListing(listingId);
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      onClose();
+    } catch (error) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
     }
   }
 
   useEffect(() => {
-    if (myNftPageCancelDialog) {
-      if(!isGaslessListing(myNftPageCancelDialog.listingId)){
-        dispatch(
-          MyNftCancelDialogActions.cancelListing({
-            address: myNftPageCancelDialog.address,
-            id: myNftPageCancelDialog.id,
-            listingId: myNftPageCancelDialog.listingId,
-          })
-        );
+    if (isOpen && listing && contractService) {
+      if(!isGaslessListing(listing.listingId)){
+        handleCancelLegacyListing();
       }
       else{
-        cancelGaslessListingFun()
+        handleCancelGaslessListing();
       }
     }
-
-    // eslint-disable-next-line
-  }, [myNftPageCancelDialog, isGaslessListing]);
+  }, [isOpen, listing, contractService]);
 
   return <></>;
 };
 
-export default connect(mapStateToProps)(memo(MyNftCancelDialog));
+export default MyNftCancelDialog;

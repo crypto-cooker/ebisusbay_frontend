@@ -30,18 +30,16 @@ import {ERC20} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, round, timeSince} from "@src/utils";
 import {appConfig} from "@src/Config";
-import {useDispatch} from "react-redux";
-import {useAppSelector} from "@src/Store/hooks";
 import FortunePresale from "@src/Contracts/FortunePresale.json";
 import {commify} from "ethers/lib/utils";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount, updateFortuneBalance, updateFortunePresaleBalance} from "@src/GlobalState/User";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {useQueryClient} from "@tanstack/react-query";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import ImageService from "@src/core/services/image";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -153,7 +151,9 @@ const FortuneReservationPage = ({onFaq, onClose}: FortuneReservationPageProps) =
 export default FortuneReservationPage;
 
 const FortunePurchaseForm = () => {
-  const dispatch = useDispatch();
+  const [runAuthedFunction] = useAuthedFunction();
+  const contractService = useContractService();
+
   const queryClient = useQueryClient();
   const [fortuneToPurchase, setFortuneToPurchase] = useState('5000');
   const [fortunePrice, setFortunePrice] = useState(0.03);
@@ -163,7 +163,7 @@ const FortunePurchaseForm = () => {
   );
   const [isExecuting, setIsExecuting] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('Purchasing');
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [tosCheck, setTosCheck] = useState(false);
 
   const [error, setError] = useState('');
@@ -190,7 +190,7 @@ const FortunePurchaseForm = () => {
     }).length > 0;
 
     // Still always check VIP because wallet doesn't detect staked Ryoshis
-    const isVip = await user.contractService!.market.isVIP(user.address);
+    const isVip = await contractService!.market.isVIP(user.address);
 
     if (Date.now() > config.tokenSale.publicStart) {
       if (!isMember && !isVip) {
@@ -258,7 +258,6 @@ const FortunePurchaseForm = () => {
       const receipt = await tx.wait();
 
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      dispatch(updateFortuneBalance());
       await queryClient.invalidateQueries({ queryKey: ['TokenSale'] });
     } catch (error: any) {
       console.log(error);
@@ -275,19 +274,10 @@ const FortunePurchaseForm = () => {
   }
 
   const handlePurchase = async () => {
-    if (user.address) {
+    runAuthedFunction(async() => {
       if (!await validateInput()) return;
       await attemptPurchase();
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   }
 
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
@@ -313,13 +303,13 @@ const FortunePurchaseForm = () => {
             <Box>
               <HStack>
                 <Image src='/img/battle-bay/bankinterior/usdc.svg' alt="walletIcon" boxSize={6}/>
-                <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? 'USDC ' : ''}${user.tokenSale.usdc}</Text>
+                <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? 'USDC ' : ''}${user.balances.cro}</Text>
               </HStack>
               <Button fontSize={{base: 'xs', md: 'sm'}} variant='unstyled' fontWeight='normal' textDecoration='underline' onClick={handleBuyUsdc}>Purchase USDC <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Button>
             </Box>
             <HStack align='start'>
               <FortuneIcon boxSize={6} />
-              <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Fortune ' : ''}{commify(user.tokenSale.fortune)}</Text>
+              <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Fortune ' : ''}{commify(user.balances.frtn)}</Text>
             </HStack>
           </>
         ) : (

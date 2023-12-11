@@ -1,28 +1,11 @@
-import {
-    Box,
-    Button,
-    Center,
-    Container,
-    Flex,
-    Spacer,
-    Text,
-    useDisclosure,
-    VStack,
-    AspectRatio,
-    Image,
-  } from '@chakra-ui/react';
+import {AspectRatio, Box, Button, Flex, Image, Text, VStack,} from '@chakra-ui/react';
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import StakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft";
-import {useCallback} from "react";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useAppSelector} from "@src/Store/hooks";
-import {useDispatch} from "react-redux";
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {motion} from "framer-motion";
 import ImageService from "@src/core/services/image";
-  
+
 import localFont from 'next/font/local';
+
 const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' })
   
   interface PortalProps {
@@ -30,8 +13,6 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
   }
   
   const PortalModal = ({onBack}: PortalProps) => {
-    const dispatch = useDispatch();
-    const user = useAppSelector((state) => state.user);
 
     const item = {
       hidden: { opacity: 0 },
@@ -40,20 +21,6 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
         }
        }
     }
-    const handleAuthedNavigation = useCallback((fn: () => void) => {
-      if (!!user.address) {
-        fn();
-      } else {
-        if (user.needsOnboard) {
-          const onboarding = new MetaMaskOnboarding();
-          onboarding.startOnboarding();
-        } else if (!user.address) {
-          dispatch(connectAccount());
-        } else if (!user.correctChain) {
-          dispatch(chainConnect());
-        }
-      }
-    }, [user.address]);
   
     return (
       <Box

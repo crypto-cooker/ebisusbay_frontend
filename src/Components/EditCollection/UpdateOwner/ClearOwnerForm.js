@@ -1,21 +1,20 @@
-import { useFormik } from 'formik';
-import { Field } from '@src/Components/Form'
+import {Field} from '@src/Components/Form'
 import * as Yup from 'yup';
 import CustomizedDialogs from '../Dialog';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import useClearOwner from '../hooks/useClearOwner';
-import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import { useQuery } from "@tanstack/react-query";
-import { getOwnerCollections } from "@src/core/api/next/collectioninfo";
-import { useRouter } from "next/router";
+import {toast} from 'react-toastify';
+import {useQuery} from "@tanstack/react-query";
+import {getOwnerCollections} from "@src/core/api/next/collectioninfo";
+import {useRouter} from "next/router";
 import {Spinner} from "@chakra-ui/react";
+import {useUser} from "@src/components-v2/useUser";
 
 const ClearOwnerForm = ({ address: collectionAddress }) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [{ isLoading, response, error }, clearCollectionOwner] = useClearOwner();
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const router = useRouter();
 
   const { data, status, refetch } = useQuery({

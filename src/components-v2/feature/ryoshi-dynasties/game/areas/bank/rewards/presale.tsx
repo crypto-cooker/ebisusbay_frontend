@@ -23,12 +23,14 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 const PresaleVaultTab = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [executingOpenVault, setExecutingOpenVault] = useState(false);
   const [executingExchangeTellers, setExecutingExchangeTellers] = useState(false);
@@ -157,7 +159,7 @@ const PresaleVaultTab = () => {
   const handleCreateVault = useCallback(async () => {
     setExecutingOpenVault(true);
     try {
-      const tx = await user.contractService!.ryoshiPresaleVaults.createVault();
+      const tx = await contractService!.ryoshiPresaleVaults.createVault();
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       await refetch();
@@ -167,14 +169,14 @@ const PresaleVaultTab = () => {
     } finally {
       setExecutingOpenVault(false);
     }
-  }, [user]);
+  }, [user.wallet.isConnected]);
 
   const handleExchangeTellers = useCallback(async () => {
     setExecutingExchangeTellers(true);
     try {
       await setApprovalForAll();
       const tellerParams = data!.fortuneTellers.map((teller: any) => [Number(teller.nftId), teller.balance]);
-      const tx = await user.contractService!.ryoshiPresaleVaults.claimBonus(
+      const tx = await contractService!.ryoshiPresaleVaults.claimBonus(
         tellerParams?.map((teller: any) => teller[0]),
         tellerParams?.map((teller: any) => teller[1])
       );
@@ -187,7 +189,7 @@ const PresaleVaultTab = () => {
     } finally {
       setExecutingExchangeTellers(false);
     }
-  }, [user, data]);
+  }, [user.wallet.isConnected, data]);
 
   const handleClaimFortune = useCallback(async () => {
     setExecutingClaimFortune(true);
@@ -204,12 +206,12 @@ const PresaleVaultTab = () => {
     } finally {
       setExecutingClaimFortune(false);
     }
-  }, [user, data]);
+  }, [user.wallet.isConnected, data]);
 
   const releaseTellers = async () => {
     setExecutingReleaseTellers(true);
     try {
-      const tx = await user.contractService!.ryoshiPresaleVaults.retrieveTellers();
+      const tx = await contractService!.ryoshiPresaleVaults.retrieveTellers();
       await tx.wait();
       toast.success('Fortune Tellers have returned to your wallet!');
     } finally {

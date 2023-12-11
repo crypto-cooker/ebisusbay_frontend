@@ -17,7 +17,7 @@ import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "rea
 import useDebounce from "@src/core/hooks/useDebounce";
 import {sortOptions} from "@src/Components/components/constants/sort-options";
 import {getTheme} from "@src/Theme/theme";
-import {useAppSelector} from "@src/Store/hooks";
+import {useUser} from "@src/components-v2/useUser";
 
 interface TaskbarProps {
   onFilterToggle: () => void;
@@ -36,7 +36,7 @@ const Taskbar = ({onFilterToggle, onSortToggle, initialSearch, onSearch, onSort,
     isManuallySet: false
   });
   const debouncedSearch = useDebounce(searchTerms.value, 500);
-  const userTheme = useAppSelector((state) => state.user.theme);
+  const {theme: userTheme} = useUser();
   const useMobileMenu = useBreakpointValue(
     {base: true, lg: false},
     {fallback: 'lg'},

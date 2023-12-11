@@ -29,6 +29,7 @@ import RefundBox from "@src/components-v2/feature/drop/types/dutch/refund-box";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faRefresh} from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import {useUser} from "@src/components-v2/useUser";
 
 interface ContractInfo {
 
@@ -39,7 +40,7 @@ interface AuctionBoxProps {
 }
 
 const AuctionBox = ({}: AuctionBoxProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [auctionData, setAuctionData] = useAtom(dutchAuctionDataAtom);
 
   const renderer = ({ days, hours, minutes, seconds, completed }: { days:number, hours:number, minutes:number, seconds: number, completed:boolean}) => {

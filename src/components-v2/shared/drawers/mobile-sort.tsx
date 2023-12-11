@@ -1,6 +1,5 @@
 import React, {useCallback} from "react";
 import {getTheme} from "@src/Theme/theme";
-import {useAppSelector} from "@src/Store/hooks";
 import {
   Box,
   Drawer,
@@ -14,6 +13,7 @@ import {
   RadioGroup
 } from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {useUser} from "@src/components-v2/useUser";
 
 export type SortOption = {
   id: string;
@@ -31,7 +31,7 @@ interface MobileSortProps {
 }
 
 export const MobileSort = ({show, onHide, sortOptions, currentSort, onSort}: MobileSortProps) => {
-  const theme = useAppSelector((state) => state.user.theme);
+  const { theme } = useUser();
 
   const handleSort = useCallback((id: string) => {
     const option = sortOptions.find(i => i.id === id);

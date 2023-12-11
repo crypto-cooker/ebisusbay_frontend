@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {specialImageTransform} from "@src/hacks";
-import {useSelector} from "react-redux";
 import {Contract, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
@@ -30,6 +29,8 @@ import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import NextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import {OfferState, ReceivedOfferType} from "@src/core/services/api-service/types";
+import {useContractService, useUser} from "@src/components-v2/useUser";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -54,8 +55,8 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
   const [collectionNfts, setCollectionNfts] = useState([]);
   const [chosenCollectionNft, setChosenCollectionNft] = useState(null);
 
-  const user = useSelector((state) => state.user);
-  const {contractService} = user;
+  const user = useUser();
+  const contractService = useContractService();
 
   const isBelowFloorPrice = (price) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
@@ -74,10 +75,10 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (user.provider) {
+    if (user.wallet.isConnected && contractService) {
       asyncFunc();
     }
-  }, [user.provider]);
+  }, [user.wallet.isConnected, contractService]);
 
   const getInitialProps = async () => {
     try {
@@ -96,7 +97,6 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
         type: ReceivedOfferType.ERC721,
         offertype: 'collection',
       });
-
       if (offers.data.length < 1) {
         setError('No offers were found on this collection');
         return;
@@ -128,14 +128,9 @@ export default function InstantSellDialog({ onClose, isOpen, collection}) {
         setIsTransferApproved(false);
       }
     } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
       console.log(error);
+      toast.error(parseErrorMessage(error));
+      setError('Unknown error. Please refresh and try again');
     } finally {
       setIsLoading(false);
     }
@@ -364,7 +359,7 @@ const ImageContainer = styled.div`
   }
 `;
 const NftPicker = ({collectionAddress, nfts, onSelect, initialNft}) => {
-  const userTheme = useSelector((state) => state.user.theme);
+  const {theme: userTheme} = useUser();
   const [chosenNft, setChosenNft] = useState(initialNft);
 
   const handleNftChange = useCallback((chosenNft) => {

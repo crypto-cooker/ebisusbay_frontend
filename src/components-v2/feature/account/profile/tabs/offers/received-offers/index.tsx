@@ -12,6 +12,7 @@ import ResponsiveReceivedOffersTable from "@src/components-v2/shared/responsive-
 import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
 import AcceptOfferDialog from "@src/Components/Offer/Dialogs/AcceptOfferDialog";
 import {RejectOfferDialog} from "@src/Components/Offer/Dialogs/RejectOfferDialog";
+import {useUser} from "@src/components-v2/useUser";
 
 interface MadeOffersProps {
   address: string;
@@ -21,7 +22,7 @@ interface MadeOffersProps {
 }
 
 export default function MadeOffers({ address, filtersVisible, setFiltersVisible, search }: MadeOffersProps) {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [offerAction, setOfferAction] = useState(OFFER_TYPE.none);
   const [selectedOffer, setSelectedOffer] = useState<any | null>(null);
   const useMobileMenu = useBreakpointValue(

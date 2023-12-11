@@ -2,10 +2,6 @@ import {Box, Flex, Image, Text, VStack} from "@chakra-ui/react"
 import React, {useCallback, useState} from "react";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useAppSelector} from "@src/Store/hooks";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import PresaleVaultTab from "./presale";
 import FortuneRewardsTab from "./fortune";
@@ -13,6 +9,7 @@ import {ArrowBackIcon} from "@chakra-ui/icons";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/rewards/faq-page";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import ImageService from "@src/core/services/image";
+import {useUser} from "@src/components-v2/useUser";
 
 const tabs = {
   fortune: 'fortune',
@@ -26,22 +23,12 @@ interface WithdrawProps {
 }
 
 const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [currentTab, setCurrentTab] = useState(tabs.fortune);
   const [page, setPage] = useState<string>();
 
   const handleConnect = async () => {
-    if (!user.address) {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    user.connect();
   }
 
   const handleBtnClick = (key: string) => (e: any) => {

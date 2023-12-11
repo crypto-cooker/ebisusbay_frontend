@@ -19,6 +19,7 @@ import GdcClaimSuccess from "@src/components-v2/shared/dialogs/gdc-claim-success
 import Cms from "@src/core/services/api-service/cms";
 import {parseErrorMessage} from "@src/helpers/validator";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -32,7 +33,8 @@ type GdcClaimConfirmationProps = {
 export default function GdcClaimConfirmation({ onClose, isOpen}: GdcClaimConfirmationProps) {
   const [executingClaim, setExecutingClaim] = useState(false);
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
   const {requestSignature} = useEnforceSignature();
 
   const [isComplete, setIsComplete] = useState(false);
@@ -44,7 +46,7 @@ export default function GdcClaimConfirmation({ onClose, isOpen}: GdcClaimConfirm
       const service = new Cms();
       const serverSig = await service.getGdcClaimSignature((user.profile as any).email, user.address!, signature);
 
-      const tx = await user.contractService!.gdc.mint((user.profile as any).email, serverSig.data);
+      const tx = await contractService!.gdc.mint((user.profile as any).email, serverSig.data);
       const receipt = await tx.wait();
       setTx(receipt);
       setIsComplete(true);

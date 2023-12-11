@@ -13,7 +13,7 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Center, FormLabel, Heading, Input, Progress, Spinner} from "@chakra-ui/react";
 
 import {getCollections} from "@src/core/api/next/collectioninfo";
-import {useAppSelector} from "@src/Store/hooks";
+import {useUser} from "@src/components-v2/useUser";
 
 const Drop = () => {
   const [ships, setShips] = useState<any[]>([]);
@@ -23,15 +23,13 @@ const Drop = () => {
   const [totalSupply, setTotalSupply] = useState(0);
   const [maxSupply, setMaxSupply] = useState(0);
 
-  const user = useAppSelector((state) => {
-    return state.user;
-  });
+  const user = useUser();
 
   const init = useCallback(async () => {
     setIsLoading(true);
     await refreshDropDetails();
     try {
-      if (user.provider) {
+      if (user.wallet.isConnected) {
         const res = await getCollections({slug: 'crosmocrafts'});
         const spaceShipDrop = res.data.collections[0];
 
@@ -58,8 +56,7 @@ const Drop = () => {
     } finally {
       setIsLoading(false);
     }
-    // eslint-disable-next-line
-  }, [user.address, user.provider]);
+  }, [user.address, user.wallet.isConnected]);
 
   const refreshPartsBalance = async () => {
     const res = await getCollections({slug: 'crosmocrafts-parts'});
@@ -88,10 +85,10 @@ const Drop = () => {
     async function func() {
       await init();
     }
-    if (user.provider && !isLoading) {
+    if (user.wallet.isConnected && !isLoading) {
       func();
     }
-  }, [user.provider]);
+  }, [user.wallet.isConnected]);
 
   const mint = async (address: string, quantity: number) => {
     if (!shipContract) return;

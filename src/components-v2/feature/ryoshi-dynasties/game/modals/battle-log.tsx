@@ -1,5 +1,4 @@
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
 import {
   Avatar,
@@ -22,9 +21,6 @@ import {
 } from "@chakra-ui/react";
 
 import React, {useContext, useEffect, useState} from "react";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
 import ImageService from "@src/core/services/image";
 import {
   RyoshiDynastiesContext,
@@ -37,6 +33,7 @@ import localFont from 'next/font/local';
 import {useInfiniteQuery} from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useUser} from "@src/components-v2/useUser";
 
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
@@ -66,21 +63,13 @@ interface battleLog {
 }[];
 
 const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
-  const dispatch = useDispatch();
-  const { config: rdConfig, game: rdGameContext, user: rdUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector(state => state.user);
+  const { game: rdGameContext} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const user = useUser();
   const [sortOrder, setSortOrder] = useState("desc" as "asc" | "desc");
   const {signature, isSignedIn, requestSignature} = useEnforceSignature();
 
   const connectWalletPressed = async () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
+    user.connect();
   };
 
   const GetBattleLog = async ({ pageParam = 1 }) => {

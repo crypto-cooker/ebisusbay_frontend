@@ -3,15 +3,16 @@ import React, {useEffect, useState} from 'react';
 import {Box, Heading, Text} from "@chakra-ui/react";
 import {useSelector} from "react-redux";
 import MarketRoyaltyForm from "@src/Components/EditCollection/Royalties/MarketRoyaltyForm";
+import {useContractService} from "@src/components-v2/useUser";
 
 const Royalties = ({ address }) => {
-  const user = useSelector((state) => state.user);
+  const contractService = useContractService();
 
   const [isRoyaltyStandard, setIsRoyaltyStandard] = useState(false);
 
   useEffect(() => {
     async function init() {
-      const royalty = await user.contractService.market.isRoyaltyStandard(address)
+      const royalty = await contractService.market.isRoyaltyStandard(address)
       setIsRoyaltyStandard(royalty);
     }
     init();

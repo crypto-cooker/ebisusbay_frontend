@@ -1,7 +1,7 @@
-import React, {memo, useContext, useState} from 'react';
+import React, {memo, useContext} from 'react';
 import {useRouter} from 'next/router';
 import {toast} from 'react-toastify';
-import {faEllipsisH, faInfoCircle, faLink, faMinus, faPlus, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
+import {faInfoCircle, faLink, faMinus, faPlus, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {MenuPopup} from '@src/Components/components/chakra-components';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
@@ -10,7 +10,6 @@ import {Box, Flex, Heading, Spacer, useClipboard} from "@chakra-ui/react";
 import {appUrl, caseInsensitiveCompare} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
-import {useAppSelector} from "@src/Store/hooks";
 import {
   BankStakeNftContext,
   BankStakeNftContextProps
@@ -29,9 +28,6 @@ const StakingNftCard = ({
  }: StakingNftCardProps) => {
   const router = useRouter();
   const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
-  const [isHovered, setIsHovered] = useState(false);
-  const user = useAppSelector((state) => state.user);
-  const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
   const { onCopy } = useClipboard(nftUrl.toString());
   const bankStakeNftContext = useContext(BankStakeNftContext) as BankStakeNftContextProps;
 

@@ -42,6 +42,7 @@ import ImageService from "@src/core/services/image";
 import GameMapWrapper from '@src/components-v2/feature/ryoshi-dynasties/components/game-map-wrapper';
 import {getLeadersForSeason, getSeasonDate} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {commify} from "ethers/lib/utils";
+import {useUser} from "@src/components-v2/useUser";
 
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
@@ -50,8 +51,7 @@ interface leaderBoardProps {
 }
 
 const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
-
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const {data: allFactions, status, error} = useQuery({
     queryKey: ['RyoshiDynastiesGameContext'],
     queryFn: () => ApiService.withoutKey().ryoshiDynasties.getGameContext(),

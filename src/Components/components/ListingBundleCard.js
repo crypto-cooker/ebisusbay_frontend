@@ -3,22 +3,18 @@ import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import Link from 'next/link';
 import {ethers} from 'ethers';
-import MetaMaskOnboarding from '@metamask/onboarding';
 
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {appUrl, createSuccessfulAddCartContent, round, siPrefixedNumber, timeSince} from '@src/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
 import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
-import Image from "next/image";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faBoltLightning,
-  faEllipsisH,
   faExternalLink,
   faHand,
   faLink,
@@ -33,6 +29,8 @@ import Slider from '../Account/Profile/Inventory/components/Slider';
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
+import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 
 const Watermarked = styled.div`
@@ -57,12 +55,13 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   const nftUrl = appUrl(`/collection/${listing.collection.slug}/${listing.nftId}`);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const cart = useSelector((state) => state.cart);
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = cart.nfts.map((o) => o.listingId).includes(listing.listingId);
   const { onCopy } = useClipboard(nftUrl.toString());
   const {tokenUsdRate, tokenToUsdValue} = useTokenExchangeRate(listing.currency);
+  const [runAuthedFunction] = useAuthedFunction();
 
   const getOptions = () => {
     const options = [];
@@ -109,18 +108,9 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   };
 
   const handleMakeOffer = () => {
-    if (user.address) {
+    runAuthedFunction(async() => {
       setOpenMakeOfferDialog(!openMakeOfferDialog);
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   };
 
   const handleAddToCart = () => {

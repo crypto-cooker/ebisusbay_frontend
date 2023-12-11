@@ -1,5 +1,4 @@
 import React, {memo, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {toast} from 'react-toastify';
 import {createSuccessfulTransactionToastContent} from '@src/utils';
 import {ethers} from 'ethers';
@@ -14,10 +13,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {Box, Center, FormLabel, Heading, HStack, Input, Link, Spinner, Tag, Text} from "@chakra-ui/react";
 import {appConfig} from "@src/Config";
-import {useAppSelector} from "@src/Store/hooks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import ImageService from "@src/core/services/image";
+import {useContractService, useUser} from "@src/components-v2/useUser";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const txExtras = {
   gasPrice: ethers.utils.parseUnits('5000', 'gwei'),
@@ -25,8 +25,8 @@ const txExtras = {
 const config = appConfig();
 const stakingAddress = config.contracts.stake
 const LegacyStaking = () => {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService()
   const [isApproved, setIsApproved] = useState(false);
   const [isApproving, setIsApproving] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
@@ -35,9 +35,9 @@ const LegacyStaking = () => {
 
   // Allow exception to be thrown for other functions to catch it
   const setApprovalForAll = async () => {
-    const isApproved = await user.contractService!.membership.isApprovedForAll(config.contracts.stake, user.address);
+    const isApproved = await contractService!.membership.isApprovedForAll(config.contracts.stake, user.address);
     if (!isApproved) {
-      let tx = await user.contractService!.membership.setApprovalForAll(config.contracts.stake, true, txExtras);
+      let tx = await contractService!.membership.setApprovalForAll(config.contracts.stake, true, txExtras);
       await tx.wait();
     }
   };
@@ -48,13 +48,7 @@ const LegacyStaking = () => {
       await setApprovalForAll();
       setIsApproved(true);
     } catch (error: any) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
+      toast.error(parseErrorMessage(error));
     } finally {
       setIsApproving(false);
     }
@@ -79,13 +73,13 @@ const LegacyStaking = () => {
   // };
 
   const unStake = async (quantity: number) => {
-    if (!user.contractService || quantity <= 0) return;
+    if (!contractService || quantity <= 0) return;
     if (quantity > stakeCount) {
       toast.error('You do not have enough available VIPs');
       return;
     }
     try {
-      const tx = await user.contractService.staking.unstake(quantity, { gasPrice: 5000000000000 });
+      const tx = await contractService.staking.unstake(quantity, { gasPrice: 5000000000000 });
       const receipt = await tx.wait();
       setStakeCount(stakeCount - quantity);
       setVipCount(vipCount + quantity);
@@ -99,13 +93,13 @@ const LegacyStaking = () => {
   useEffect(() => {
     async function checkApproval() {
       try {
-        const isApproved = await user.contractService!.membership.isApprovedForAll(user.address, config.contracts.stake);
+        const isApproved = await contractService!.membership.isApprovedForAll(user.address, config.contracts.stake);
         setIsApproved(isApproved);
 
-        const stakeCount = await user.contractService!.staking.amountStaked(user.address);
+        const stakeCount = await contractService!.staking.amountStaked(user.address);
         setStakeCount(Number(stakeCount));
 
-        const vipCount = await user.contractService!.membership.balanceOf(user.address, 2)
+        const vipCount = await contractService!.membership.balanceOf(user.address, 2)
         setVipCount(Number(vipCount));
 
       } catch (e) {
@@ -114,11 +108,11 @@ const LegacyStaking = () => {
         setIsInitializing(false);
       }
     }
-    if (!user.connectingWallet && user.contractService) {
+    if (!user.wallet.isConnected && contractService) {
       checkApproval();
     }
     // eslint-disable-next-line
-  }, [user.connectingWallet]);
+  }, [user.wallet.isConnected]);
 
   // const PromptToPurchase = () => {
   //   return (

@@ -9,7 +9,6 @@ import {useRouter} from "next/router";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 import {GetServerSidePropsContext} from "next";
-import {useAppSelector} from "@src/Store/hooks";
 
 const fadeInUp = keyframes`
   0% {
@@ -79,10 +78,6 @@ const choice = {
 
 const Application = ({type}: { type: string }) => {
   const router = useRouter();
-
-  const userTheme = useAppSelector((state) => {
-    return state.user.theme;
-  });
 
   const [openTab, setOpenTab] = useState(type);
   const handleBtnClick = (index: string) => (element: any) => {

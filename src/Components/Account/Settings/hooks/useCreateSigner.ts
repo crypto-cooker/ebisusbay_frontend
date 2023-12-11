@@ -1,9 +1,9 @@
 import {useCallback, useState} from 'react';
-import {useAppSelector} from "@src/Store/hooks";
-import {JsonRpcProvider} from "@ethersproject/providers";
 import * as Sentry from '@sentry/react';
-import {useAtom} from "jotai/index";
+import {useAtom} from "jotai";
 import {storageSignerAtom} from "@src/jotai/atoms/storage";
+import {useSignMessage} from "wagmi";
+import {useUser} from "@src/components-v2/useUser";
 
 export const signinMessage = (address: string) => {
   return "Welcome to Ebisu's Bay!\n\n" +
@@ -19,30 +19,29 @@ type SignerProps = {
 }
 
 const useSignature = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [getSignatureInStorage, setSignatureInStorage] = useAtom(storageSignerAtom);
 
   const [isLoading, setIsLoading] = useState(false);
+  const { signMessageAsync: performSignMessage } = useSignMessage();
 
   const signMessage = useCallback(
     async (message: string) => {
-      if (!user.provider) throw new Error();
+      if (!user.wallet.isConnected) throw new Error();
 
       try {
-        const provider = user.provider as JsonRpcProvider;
-        const signer = provider.getSigner();
-        return await signer.signMessage(message);
+        return await performSignMessage({message});
       } catch (err: any) {
         Sentry.captureException(err);
         throw new Error(err);
       }
     },
-    [user.provider]
+    [user.wallet.isConnected]
   );
 
   const createSigner = async () => {
     setIsLoading(true);
-    const address = user.address!;
+    const address = user.wallet.address!;
 
     try {
       const signature = await signMessage(signinMessage(address));
