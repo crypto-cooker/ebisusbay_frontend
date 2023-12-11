@@ -7,10 +7,10 @@ import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {
   caseInsensitiveCompare,
-  isBundle, isEbVipCollection,
+  isBundle,
+  isEbVipCollection,
   isErc20Token,
   isGaslessListing,
-  isLandDeedsCollection,
   knownErc20Token,
   round
 } from "@src/utils";
@@ -42,7 +42,6 @@ import DotIcon from "@src/Components/components/DotIcon";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 import Market from "@src/Contracts/Marketplace.json";
-import {useAppSelector} from "@src/Store/hooks";
 import PurchaseSuccessDialog from './purchase-success';
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
@@ -50,6 +49,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {getPrices} from "@src/core/api/endpoints/prices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import Link from "next/link";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -66,7 +66,8 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const [executingPurchase, setExecutingPurchase] = useState(false);
   const [buyGaslessListings, response] = useBuyGaslessListings();
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
 
   const [isComplete, setIsComplete] = useState(false);
   const [tx, setTx] = useState<ContractReceipt>();
@@ -274,7 +275,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                               <Text as="span" ms={1}>CRO</Text>
                             </Flex>
                             <Flex mt={1}>
-                              <Text as="span" className="text-muted">Balance: {commify(round(user.balance, 3))}</Text>
+                              <Text as="span" className="text-muted">Balance: {commify(round(user.balances.cro, 3))}</Text>
                             </Flex>
                           </>
                         )}
@@ -360,12 +361,13 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
 }
 
 const CurrencyOption = ({currency}: {currency: {address: string, symbol: string, name: string}}) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
 
   const { data: tokenBalance, isLoading } = useQuery({
     queryKey: ['UserTokenBalance', currency.address, user.address],
     queryFn: async () => {
-      const tokenContract = user.contractService!.erc20(currency.address);
+      const tokenContract = contractService!.erc20(currency.address);
       const balance = await tokenContract.balanceOf(user.address);
       // const decimals = await tokenContract.decimals();
       return ethers.utils.formatEther(balance);  // assuming

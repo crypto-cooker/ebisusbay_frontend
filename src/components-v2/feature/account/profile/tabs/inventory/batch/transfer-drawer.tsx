@@ -5,7 +5,6 @@ import {useDispatch} from "react-redux";
 import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts} from "@src/GlobalState/user-batch";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, pluralize, shortAddress} from "@src/utils";
-import * as Sentry from "@sentry/react";
 import TransferDrawerItem from "@src/components-v2/feature/account/profile/tabs/inventory/batch/transfer-drawer-item";
 import {FormControl as FormControlCK} from "@src/Components/components/chakra-components";
 import * as Yup from "yup";
@@ -15,12 +14,14 @@ import nextApiService from "@src/core/services/api-service/next";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {getCroidAddressFromName, isCroName} from "@src/helpers/croid";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const MAX_NFTS_IN_CART = 100;
 
 const TransferDrawer = () => {
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const [executingTransfer, setExecutingTransfer] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
@@ -73,7 +74,7 @@ const TransferDrawer = () => {
 
       // Sentry.captureEvent({ message: 'handleBatchTransfer', extra: { nftAddresses, nftIds } });
 
-      let tx = await user.contractService!.market.bulkTransfer(nftAddresses, nftIds, recipient);
+      let tx = await contractService!.market.bulkTransfer(nftAddresses, nftIds, recipient);
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       resetDrawer();

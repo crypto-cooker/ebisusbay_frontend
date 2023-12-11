@@ -1,8 +1,8 @@
-import {Box, BoxProps, Grid, GridItem, GridProps, Image} from "@chakra-ui/react";
+import {Grid, GridItem, GridProps, Image} from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
-import styles from "@src/Components/BattleBay/Areas/BattleBay.module.scss";
 import React, {ReactElement} from "react";
 import {useAppSelector} from "@src/Store/hooks";
+import {useUser} from "@src/components-v2/useUser";
 
 interface MapOutlineProps extends GridProps {
   children: ReactElement[] | ReactElement;
@@ -15,7 +15,7 @@ interface MapOutlineProps extends GridProps {
 }
 
 const MapFrame = ({children, gridHeight, topFrame, rightFrame, bottomFrame, leftFrame, gridWidth, ...props}: MapOutlineProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   return (
     <Grid
       templateAreas={`

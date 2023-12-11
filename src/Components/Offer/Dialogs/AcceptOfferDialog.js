@@ -2,7 +2,6 @@ import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {useSelector} from "react-redux";
 import {Contract, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {getCollectionMetadata} from "@src/core/api";
@@ -11,7 +10,6 @@ import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
 import {createSuccessfulTransactionToastContent, isBundle, isNftBlacklisted} from "@src/utils";
 import {appConfig} from "@src/Config";
-import * as Sentry from '@sentry/react';
 import Select from "react-select";
 import {getTheme} from "@src/Theme/theme";
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -33,6 +31,7 @@ import {getNft} from "@src/core/api/endpoints/nft";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import NextApiService from "@src/core/services/api-service/next";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -55,8 +54,8 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
   const [collectionNfts, setCollectionNfts] = useState([]);
   const [chosenCollectionNft, setChosenCollectionNft] = useState(null);
 
-  const user = useSelector((state) => state.user);
-  const {contractService} = user;
+  const user = useUser();
+  const contractService = useContractService();
 
   const isBelowFloorPrice = (price) => {
     return (floorPrice !== 0 && ((floorPrice - Number(price)) / floorPrice) * 100 > floorThreshold);
@@ -81,7 +80,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
   const { error, data: nft, status } = useQuery({
     queryKey: ['AcceptOffer', user.address, offer.nftAddress, offer.nftId],
     queryFn: fetchNft,
-    enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
+    enabled: user.wallet.isConnected && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
     refetchOnWindowFocus: false
   });
 
@@ -378,7 +377,7 @@ const ImageContainer = styled.div`
   }
 `;
 const NftPicker = ({collectionAddress, nfts, onSelect, initialNft}) => {
-  const userTheme = useSelector((state) => state.user.theme);
+  const {theme: userTheme} = useUser();
   const [chosenNft, setChosenNft] = useState(initialNft);
 
   const handleNftChange = useCallback((chosenNft) => {

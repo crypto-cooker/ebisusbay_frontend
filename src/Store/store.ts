@@ -14,7 +14,6 @@ import leaderBoardReducer from '../GlobalState/leaderBoardSlice';
 import cartReducer from '../GlobalState/cartSlice';
 import batchListingReducer from '../GlobalState/user-batch';
 import ryoshiStakingReducer from '../GlobalState/ryoshi-staking-cart-slice';
-import { user } from '../GlobalState/User';
 
 const rootReducer = combineReducers({
   memberships: memberships,
@@ -22,7 +21,6 @@ const rootReducer = combineReducers({
   auctions: auctionsReducer,
   auction: auctionReducer,
   nft: nftReducer,
-  user: user,
   appInitialize: appInitializeStateReducer,
   collections: collectionsReducer,
   metaverse: metaverseReducer,

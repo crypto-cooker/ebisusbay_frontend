@@ -1,7 +1,4 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Box,
   Button as ChakraButton,
   Center,
@@ -40,6 +37,7 @@ import {parseUnits} from "ethers/lib/utils";
 import {useAppSelector} from "@src/Store/hooks";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import ImageService from "@src/core/services/image";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -50,7 +48,8 @@ interface BatchStakingDrawer {
 export const BatchStakingDrawer = ({onClose, ...gridProps}: BatchStakingDrawer & GridProps) => {
   const dispatch = useDispatch();
   const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
   const [executingAction, setExecutingAction] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
@@ -72,21 +71,21 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}: BatchStakingDrawer &
       const gasPrice = parseUnits('5000', 'gwei');
       let tx;
       if (ryoshiStakingCart.context === 'stake') {
-        const gasEstimate = await user.contractService!.staking.estimateGas.stakeRyoshi(nftAddresses);
+        const gasEstimate = await contractService!.staking.estimateGas.stakeRyoshi(nftAddresses);
         const gasLimit = gasEstimate.mul(2);
         let extra = {
           gasPrice,
           gasLimit
         };
-        tx = await user.contractService!.staking.stakeRyoshi(nftAddresses, extra);
+        tx = await contractService!.staking.stakeRyoshi(nftAddresses, extra);
       } else {
-        const gasEstimate = await user.contractService!.staking.estimateGas.unstakeRyoshi(nftAddresses);
+        const gasEstimate = await contractService!.staking.estimateGas.unstakeRyoshi(nftAddresses);
         const gasLimit = gasEstimate.mul(2);
         let extra = {
           gasPrice,
           gasLimit
         };
-        tx = await user.contractService!.staking.unstakeRyoshi(nftAddresses, extra);
+        tx = await contractService!.staking.unstakeRyoshi(nftAddresses, extra);
       }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -173,7 +172,7 @@ interface BatchStakingDrawerItemProps {
 
 const BatchStakingDrawerItem = ({item, disabled}: BatchStakingDrawerItemProps) => {
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
   // Approvals
@@ -186,7 +185,7 @@ const BatchStakingDrawerItem = ({item, disabled}: BatchStakingDrawerItemProps) =
   };
 
   const checkApproval = async () => {
-    if (!user.provider) return false;
+    if (!user.wallet.isConnected) return false;
     const contract = new Contract(item.nft.nftAddress, ERC721, user.provider.getSigner());
     return await contract.isApprovedForAll(user.address, config.contracts.stake);
   };
@@ -212,7 +211,7 @@ const BatchStakingDrawerItem = ({item, disabled}: BatchStakingDrawerItemProps) =
     } finally {
       setExecutingApproval(false);
     }
-  }, [item.nft, user]);
+  }, [item.nft, user.address]);
 
   useEffect(() => {
     async function func() {

@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
 import {Contract} from "ethers";
 import TownHall from "@src/Contracts/Barracks.json"; // intentional
@@ -8,6 +7,7 @@ import {StakedToken} from "@src/core/services/api-service/graph/types";
 import {caseInsensitiveCompare} from "@src/utils";
 import Constants from "@src/constants";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -30,8 +30,7 @@ const useTownHallStakeNfts = () => {
     error: null,
   });
   const {requestSignature} = useEnforceSignature();
-
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const { Features } = Constants;
 

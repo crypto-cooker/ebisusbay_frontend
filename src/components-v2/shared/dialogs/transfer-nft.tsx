@@ -3,8 +3,7 @@ import {Contract} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {createSuccessfulTransactionToastContent, isDynamicNftImageCollection} from "@src/utils";
-import * as Sentry from '@sentry/react';
+import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {ERC1155, ERC721} from "@src/Contracts/Abis";
@@ -29,9 +28,9 @@ import {
 import {getTheme} from "@src/Theme/theme";
 import {is1155} from "@src/helpers/chain";
 import {parseErrorMessage} from "@src/helpers/validator";
-import {useAppSelector} from "@src/Store/hooks";
 import {getCroidAddressFromName, isCroName} from "@src/helpers/croid";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
+import {useUser} from "@src/components-v2/useUser";
 
 interface TransferNftDialogProps {
   isOpen: boolean;
@@ -49,7 +48,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
   const [quantityError, setQuantityError] = useState<string | null>(null);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const onChangeAddress = useCallback((e: any) => {
     const newRecipientAddress = e.target.value.toString();
@@ -60,10 +59,10 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && user.provider) {
+    if (nft && user.wallet.isConnected) {
       asyncFunc();
     }
-  }, [nft, user.provider]);
+  }, [nft, user.wallet.isConnected]);
 
   const getInitialProps = async () => {
     try {

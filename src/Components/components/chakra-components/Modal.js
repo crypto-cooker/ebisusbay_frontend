@@ -8,10 +8,10 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react';
 import { getTheme } from "@src/Theme/theme";
-import { useSelector } from "react-redux";
+import {useUser} from "@src/components-v2/useUser";
 
 export default function Modal( { title, body, dialogActions, isOpen, onClose } ) {
-  const user = useSelector((state) => state.user);
+  const user = useUser();
 
   return (
     <ModalCK isCentered onClose={onClose} isOpen={isOpen}>

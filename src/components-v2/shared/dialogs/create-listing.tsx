@@ -6,14 +6,7 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {
-  ciEquals,
-  createSuccessfulTransactionToastContent,
-  isBundle,
-  isLandDeedsCollection,
-  round,
-  usdFormat
-} from "@src/utils";
+import {ciEquals, createSuccessfulTransactionToastContent, isBundle, round, usdFormat} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -40,19 +33,19 @@ import {
   Spinner,
   Stack,
   Tag,
-  Text, useBreakpointValue,
+  Text,
   useNumberInput
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import {parseErrorMessage} from "@src/helpers/validator";
-import {useAppSelector} from "@src/Store/hooks";
 import {useExchangeRate, useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import ReactSelect from "react-select";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -151,15 +144,10 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
 
   const windowSize = useWindowSize();
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [upsertGaslessListings, responseUpsert] = useUpsertGaslessListings();
   const { tokenToUsdValue, tokenToCroValue, croToTokenValue } = useTokenExchangeRate(selectedCurrency?.address);
   const { usdValueForToken, croValueForToken } = useExchangeRate();
-
-  const izanamiImageSize = useBreakpointValue(
-    {base: 250, sm: 368, lg: 456},
-    {fallback: 'md'}
-  )
 
   const isBelowFloorPrice = (price: number) => {
     const croPrice = tokenToCroValue(price);
@@ -203,10 +191,10 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && user.provider) {
+    if (nft && user.wallet.isConnected) {
       asyncFunc();
     }
-  }, [nft, user.provider]);
+  }, [nft, user.wallet.isConnected]);
 
   const getInitialProps = async () => {
     try {
@@ -356,7 +344,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const dec = getDecrementButtonProps()
   const input = getInputProps()
 
-  const userTheme = useAppSelector((state) => state.user.theme);
+  const userTheme = user.theme;
   const customStyles = {
     menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
     option: (base: any, state: any) => ({

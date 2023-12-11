@@ -17,6 +17,7 @@ import BundleDrawer from "@src/components-v2/feature/account/profile/tabs/invent
 import {setBatchType} from "@src/GlobalState/user-batch";
 import {useAppSelector} from "@src/Store/hooks";
 import {getTheme} from "@src/Theme/theme";
+import {useUser} from "@src/components-v2/useUser";
 
 const MAX_NFTS_IN_CART = 40;
 
@@ -33,7 +34,7 @@ interface BatchDrawerProps {
 const BatchDrawer = ({ onClose, ...gridProps }: BatchDrawerProps & GridProps) => {
   const dispatch = useDispatch();
   const batchListingCart = useAppSelector((state) => state.batchListing);
-  const userTheme = useAppSelector((state) => state.user.theme);
+  const {theme: userTheme} = useUser();
   const batchListingBorderColor = useColorModeValue('#000', '#FFF');
   const useMobileCartView = useBreakpointValue(
     {base: true, lg: false},

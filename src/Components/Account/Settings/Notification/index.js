@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import useGetSettings from "@src/Components/Account/Settings/hooks/useGetSettings";
 import {toast} from "react-toastify";
 import {Heading} from "@chakra-ui/react";
+import {useUser} from "@src/components-v2/useUser";
 
 const NotificationItems = [
   { key: 'FAVORITE_LISTED', title: 'Favorited Item Listed', description: 'When an item from your favorites gets listed' },
@@ -17,7 +18,7 @@ const NotificationItems = [
 ];
 
 export default function Notification() {
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const [isOnSave, setIsOnSave] = useState(false);
   const [requestUpdateNotifications, { loading: updateLoading }] = useUpdateNotifications();
   const [notificationMethods, setNotificationMethods] = useState([]);

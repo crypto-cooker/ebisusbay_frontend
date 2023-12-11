@@ -27,6 +27,7 @@ import RyoshiDynasties from "@src/components-v2/feature/ryoshi-dynasties/game";
 import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import fallbackConfig from "@src/core/configs/fallbacks/rd-config";
+import {useUser} from "@src/components-v2/useUser";
 
 const fadeInUp = keyframes`
   0% {
@@ -141,9 +142,7 @@ const Home = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
   const marketData = useAppSelector((state) => {
     return state.marketplace.marketData;
   });
-  const userTheme = useAppSelector((state) => {
-    return state.user.theme;
-  });
+  const {theme: userTheme} = useUser();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

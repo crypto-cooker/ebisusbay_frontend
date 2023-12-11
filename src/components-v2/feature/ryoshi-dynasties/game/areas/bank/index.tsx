@@ -1,10 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {AspectRatio, Box, Icon, Image, Modal, ModalContent, ModalOverlay, Text, useDisclosure, useMediaQuery, VStack} from '@chakra-ui/react';
+import {AspectRatio, Box, Icon, Image, Text, useDisclosure, useMediaQuery, VStack} from '@chakra-ui/react';
 
 import StakeFortune from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune';
 import StakeNFTs from './stake-nft';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import {useAppSelector} from "@src/Store/hooks";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import BankerBubbleBox, {
   TypewriterText
@@ -12,13 +11,12 @@ import BankerBubbleBox, {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightFromBracket, faCoins, faGift, faImage} from "@fortawesome/free-solid-svg-icons";
 import Rewards from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/rewards";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from 'react-redux';
 import ImageService from "@src/core/services/image";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {motion} from "framer-motion";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {useUser} from "@src/components-v2/useUser";
 
 interface BankerSceneProps {
   address: string;
@@ -31,7 +29,7 @@ const bankerImages = {
 };
 
 const Bank = ({address, onBack} : BankerSceneProps) => {
-  const dispatch = useDispatch();
+  const [runAuthedFunction] = useAuthedFunction();
 
   const { isOpen: isOpenStakeFortune, onOpen: onOpenStakeFortune, onClose: onCloseStakeFortune} = useDisclosure();
   const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
@@ -39,7 +37,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
 
   const [bankerImage, setBankerImage] = useState(bankerImages.talking);
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const windowSize = useWindowSize();
   const [shouldAbbreviateHorizontal] = useMediaQuery('(max-width: 800px)');
   const [abbreviateButtonText, setAbbreviateButtonText] = useState(false);
@@ -63,18 +61,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
                   'Blessings, traveler! Let me guess, you want me to help with your Fortune possessions. Say no more. What can I do for you today?']
 
   const handleAuthedNavigation = useCallback((fn: () => void) => {
-    if (!!user.address) {
-      fn();
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    runAuthedFunction(fn);
   }, [user.address]);
 
   const item = {

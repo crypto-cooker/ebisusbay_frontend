@@ -6,8 +6,8 @@ import UUID from "uuid-int";
 import {ciEquals, isGaslessListing} from "@src/utils";
 import NextApiService from "@src/core/services/api-service/next";
 import {getItemType} from "@src/helpers/chain";
-import {useAppSelector} from "@src/Store/hooks";
 import {appConfig} from "@src/Config";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const generator = UUID(0);
 const config = appConfig();
@@ -36,7 +36,8 @@ const useUpsertGaslessListings = () => {
 
   const [_, createListingSigner] = useCreateListingSigner();
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
 
   const upsertGaslessListings = async (pendingListings: PendingListing[] | PendingListing) => {
     if (!Array.isArray(pendingListings)) pendingListings = [pendingListings];
@@ -77,7 +78,7 @@ const useUpsertGaslessListings = () => {
     // Cancel the old gasless
     if (cancelIds.gasless.length > 0) {
       const { data: orders } = await cancelListing(cancelIds.gasless);
-      const ship = user.contractService!.ship;
+      const ship = contractService!.ship;
       const tx = await ship.cancelOrders(orders);
       await tx.wait()
     }

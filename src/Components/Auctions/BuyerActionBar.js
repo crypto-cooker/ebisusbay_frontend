@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {constants, Contract, ethers} from 'ethers';
-import MetaMaskOnboarding from '@metamask/onboarding';
 import {toast} from 'react-toastify';
 import Countdown from 'react-countdown';
 
@@ -9,16 +8,20 @@ import AuctionContract from '../../Contracts/DegenAuction.json';
 import {caseInsensitiveCompare, createSuccessfulTransactionToastContent, devLog, isEventValidNumber} from '../../utils';
 import {auctionState} from '@src/core/api/enums';
 import {getAuctionDetails, updateAuctionFromBidEvent} from '@src/GlobalState/auctionSlice';
-import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {ERC20} from "@src/Contracts/Abis";
 import Button from "../components/Button";
 import {appConfig} from "@src/Config";
 import {Card, CardBody, CardFooter, Input, Spinner} from "@chakra-ui/react";
+import {useContractService, useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const config = appConfig();
 
 const BuyerActionBar = () => {
   const dispatch = useDispatch();
+  const user = useUser();
+  const contractService = useContractService();
+  const [runAuthedFunction] = useAuthedFunction();
 
   const [bidAmount, setBidAmount] = useState(0);
   const [rebidAmount, setRebidAmount] = useState(0);
@@ -34,7 +37,6 @@ const BuyerActionBar = () => {
   const [executingCancelBid, setExecutingCancelBid] = useState(false);
   const [executingApproveContract, setExecutingApproveContract] = useState(false);
 
-  const user = useSelector((state) => state.user);
   const bidHistory = useSelector((state) => state.auction.bidHistory.filter((i) => !i.withdrawn));
   const listing = useSelector((state) => state.auction.auction);
   const minBid = useSelector((state) => state.auction.minBid);
@@ -132,7 +134,7 @@ const BuyerActionBar = () => {
   };
 
   const checkApproval = async (auctionContract) => {
-    if (!user.provider) return false;
+    if (!user.wallet.isConnected) return false;
 
     const tokenAddress = config.tokens.mad.address;
     let tokenContract = await new ethers.Contract(tokenAddress, ERC20, user.provider.getSigner());
@@ -142,9 +144,9 @@ const BuyerActionBar = () => {
   };
 
   const runFunction = async (fn) => {
-    if (user.address) {
+    runAuthedFunction(async() => {
       try {
-        let writeContract = user.contractService.auction;
+        let writeContract = contractService.auction;
         await ensureApproved(writeContract);
         const receipt = await fn(writeContract);
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -160,20 +162,11 @@ const BuyerActionBar = () => {
           toast.error('Unknown Error');
         }
       }
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   };
 
   const refreshMadBalance = async () => {
-    if (user.provider) {
+    if (user.wallet.isConnected) {
       const tokenAddress = config.tokens.mad.address;
       let tokenContract = await new ethers.Contract(tokenAddress, ERC20, user.provider.getSigner());
       const balance = await tokenContract.balanceOf(user.address);
@@ -185,7 +178,7 @@ const BuyerActionBar = () => {
     setAwaitingAcceptance(listing.state === auctionState.ACTIVE && listing.getEndAt < Date.now());
     setIsComplete(listing.state === auctionState.SOLD || listing.state === auctionState.CANCELLED);
     setIsAuctionOwner(caseInsensitiveCompare(listing.seller, user.address));
-  }, [listing, user]);
+  }, [listing, user.address]);
 
   useEffect(() => {
     async function func() {
@@ -193,11 +186,11 @@ const BuyerActionBar = () => {
       setIsApproved(approved);
     }
     func();
-  }, [user.provider]);
+  }, [user.wallet.isConnected]);
 
   useEffect(() => {
     refreshMadBalance();
-  }, [user.provider]);
+  }, [user.wallet.isConnected]);
 
   useEffect(() => {
     readContract.on('Bid', async (auctionHash, auctionIndex, bidIndex, sender, amount) => {
@@ -254,14 +247,7 @@ const BuyerActionBar = () => {
   };
 
   const connectWalletPressed = () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
+    user.connect();
   };
 
   const ActionButtons = () => {
@@ -396,7 +382,7 @@ const BuyerActionBar = () => {
                   <>
                     {user.address ? (
                       <>
-                        {user.correctChain ? (
+                        {user.wallet.correctChain ? (
                           <>
                             {isApproved ? (
                               <ActionButtons />

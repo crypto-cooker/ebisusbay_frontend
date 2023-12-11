@@ -3,7 +3,7 @@ import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {createSuccessfulTransactionToastContent, isBundle, isLandDeedsCollection, round} from "@src/utils";
+import {createSuccessfulTransactionToastContent, isBundle, round} from "@src/utils";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -29,12 +29,12 @@ import {
 import {getTheme} from "@src/Theme/theme";
 import {getCollection} from "@src/core/api/next/collectioninfo";
 import ImagesContainer from "../../../Components/Bundle/ImagesContainer";
-import {useAppSelector} from "@src/Store/hooks";
 import {parseErrorMessage} from "@src/helpers/validator";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {ApiService} from "@src/core/services/api-service";
 import {OfferState} from "@src/core/services/api-service/types";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 25;
@@ -48,7 +48,7 @@ interface MakeOfferDialogProps {
 }
 
 export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nftAddress }: MakeOfferDialogProps) {
-  const walletAddress = useAppSelector((state) => state.user.address);
+  const user = useUser();
 
   const [nft, setNft] = useState(initialNft);
   const [offerPrice, setOfferPrice] = useState<string | number | null>(null);
@@ -62,8 +62,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
   const windowSize = useWindowSize();
-  const user = useAppSelector((state) => state.user);
-  const {contractService} = user;
+  const contractService = useContractService();
   const [runAuthedFunction] = useAuthedFunction();
 
   const isAboveFloorPrice = (price: string | number) => {
@@ -93,10 +92,10 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (user.provider && (initialNft || nftId) && nftAddress) {
+    if (user.wallet.address && (initialNft || nftId) && nftAddress) {
       asyncFunc();
     }
-  }, [user.provider, initialNft, nftId, nftAddress]);
+  }, [user.wallet.address, initialNft, nftId, nftAddress]);
 
   const getInitialProps = async () => {
     try {
@@ -117,7 +116,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
         setFloorPrice(collection.stats.total.floorPrice ?? 0);
       }
 
-      const myOffers = await ApiService.withoutKey().getMadeOffersByUser(walletAddress!, {
+      const myOffers = await ApiService.withoutKey().getMadeOffersByUser(user.wallet.address!, {
         collection: [nftAddress!],
         tokenId: nftId ?? fetchedNft.id ?? fetchedNft.nftId,
         pageSize: 1,

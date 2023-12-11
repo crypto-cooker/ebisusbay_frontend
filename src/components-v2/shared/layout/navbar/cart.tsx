@@ -28,8 +28,6 @@ import {commify} from "ethers/lib/utils";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
 import {caseInsensitiveCompare, isBundle, knownErc20Token, round} from "@src/utils";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import Button from "@src/Components/components/common/Button";
 import {listingState} from "@src/core/api/enums";
 import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
@@ -44,6 +42,8 @@ import {specialImageTransform} from "@src/hacks";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {getPrices} from "@src/core/api/endpoints/prices";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -51,7 +51,7 @@ const readMarket = new Contract(config.contracts.market, Market.abi, readProvide
 
 const Cart = function () {
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const cart = useAppSelector((state) => state.cart);
   const [showMenu, setShowMenu] = useState(false);
   const [executingBuy, setExecutingBuy] = useState(false);
@@ -59,6 +59,7 @@ const Cart = function () {
   const [invalidItems, setInvalidItems] = useState<string[]>([]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [buyGaslessListings, response] = useBuyGaslessListings();
+  const [runAuthedFunction] = useAuthedFunction();
   const slideDirection = useBreakpointValue<'bottom' | 'right'>(
     {
       base: 'bottom',
@@ -115,8 +116,9 @@ const Cart = function () {
     handleClearCart();
   };
 
+
   const preparePurchase = async () => {
-    if (user.address) {
+    await runAuthedFunction(async () => {
       try {
         setExecutingBuy(true);
         const listingIds = cart.nfts.map((o) => o.listingId);
@@ -141,16 +143,7 @@ const Cart = function () {
       } finally {
         setExecutingBuy(false);
       }
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   }
 
   const NftLink = forwardRef<HTMLAnchorElement, any & {name: string}>(({ onClick, href, name }, ref) => {
@@ -292,11 +285,11 @@ const Cart = function () {
                         
                         <VStack align="left" spacing={0}>
                           {!nft.isBundle? (
-                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref>
+                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref legacyBehavior>
                               <NftLink name={nft.name} />
                             </Link>
                           ) : (
-                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref>
+                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref legacyBehavior>
                               <NftLink name={nft.name} />
                             </Link>
                           )}

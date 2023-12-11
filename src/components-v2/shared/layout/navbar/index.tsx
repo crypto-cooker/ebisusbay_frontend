@@ -1,5 +1,4 @@
 import React, {RefObject, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import Link from 'next/link';
 import {createGlobalStyle} from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -7,7 +6,6 @@ import {faMoon, faSun} from '@fortawesome/free-solid-svg-icons';
 
 import AccountMenu from './account-menu';
 import NotificationMenu from './notification-menu';
-import {setTheme} from '@src/GlobalState/User';
 import {
   Box,
   Button,
@@ -26,7 +24,6 @@ import {
   Stack,
   Text,
   useBreakpointValue,
-  useColorMode,
   useDisclosure,
   useMediaQuery,
   useOutsideClick,
@@ -36,12 +33,12 @@ import Cart from "./cart";
 import {ChevronDownIcon, CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
 import Search from "@src/components-v2/shared/layout/navbar/search";
 import MobileSearchDrawer from "@src/components-v2/shared/layout/navbar/search/drawer";
-import {useAppSelector} from "@src/Store/hooks";
 import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {round} from "@src/utils";
 import ImageService from "@src/core/services/image";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -62,10 +59,8 @@ const NavLink = ({name, to, onClick}: {name: string, to: string, onClick?: any})
 }
 
 const Header = function () {
-  const dispatch = useDispatch();
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const { colorMode, setColorMode } = useColorMode()
-  const {theme, profile, address} = useAppSelector((state) => state.user);
+  const {theme, profile, toggleTheme} = useUser();
   const shouldUseMobileSearch = useBreakpointValue(
     { base: true, lg: false },
     { fallback: 'lg'},
@@ -80,10 +75,9 @@ const Header = function () {
     handler: onClose,
   });
 
-  const toggleTheme = () => {
+  const handleToggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
-    dispatch(setTheme(newTheme));
-    setColorMode(newTheme);
+    toggleTheme(newTheme);
   };
 
   useEffect(() => {
@@ -228,7 +222,7 @@ const Header = function () {
                 {/*<NavLink name={'Stats'} to={'/stats'} onClick={onClose} />*/}
                 {/*<NavLink name={'Auction'} to={'/auctions/mutant-serum'} />*/}
 
-                <Box onClick={toggleTheme} fontSize="14px" fontWeight="bold" color="#fff" cursor="pointer">
+                <Box onClick={handleToggleTheme} fontSize="14px" fontWeight="bold" color="#fff" cursor="pointer">
                   <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" className="me-2"/> Dark mode
                 </Box>
               </Stack>

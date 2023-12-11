@@ -11,6 +11,7 @@ import RewardsCard from "@src/components-v2/feature/staking/rewards-card";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {MobileBatchStaking} from "@src/components-v2/feature/staking/mobile-batch-staking";
 import {useAppSelector} from "@src/Store/hooks";
+import {useUser} from "@src/components-v2/useUser";
 
 const MotionGrid = motion(Grid)
 const tabs = {
@@ -20,7 +21,7 @@ const tabs = {
 
 const MyStaking = () => {
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
 
   const batchListingBorderColor = useColorModeValue('#000', '#FFF');

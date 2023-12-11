@@ -39,6 +39,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/search";
 import {shortAddress} from "@src/utils";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useUser} from "@src/components-v2/useUser";
 
 interface FactionRegistrationFormProps {
   isOpen: boolean;
@@ -56,7 +57,7 @@ const CreateFactionForm = ({ isOpen, onClose, handleClose}: FactionRegistrationF
  
   // const [isLoading, setIsLoading] = useState(false);
   const [factionType, setFactionType] = useState("COLLECTION")
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [isExecuting, setIsExecuting] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [understood, setUnderstood] = useState(false);

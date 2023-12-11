@@ -1,34 +1,21 @@
-import React, {useContext, useState} from "react";
+import React from "react";
 import {
   Accordion,
   AccordionButton,
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box, Icon,
-  ListItem, OrderedList,
+  Box,
+  ListItem,
+  OrderedList,
   Stack,
   Text,
-  UnorderedList,
 } from "@chakra-ui/react"
 import localFont from 'next/font/local';
-import {useAppSelector} from "@src/Store/hooks";
-import {
-  RyoshiDynastiesContext,
-  RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {titleCase} from "@src/utils";
-import {commify} from "ethers/lib/utils";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
-const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
 const FaqPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const user = useAppSelector((state) => state.user);
-  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   return (
     <Stack spacing={3} className={gothamBook.className} fontSize={{ base: 'xs', md: 'sm' }}>

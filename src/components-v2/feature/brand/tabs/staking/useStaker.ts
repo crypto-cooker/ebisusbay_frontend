@@ -1,18 +1,16 @@
 import {useEffect, useState} from "react";
 import {Staker, StakingStatusFilters} from "@src/components-v2/feature/brand/tabs/staking/types";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {useAppSelector} from "@src/Store/hooks";
-import {ethers} from "ethers";
-import {JsonRpcProvider} from "@ethersproject/providers";
 import {stakers} from "@src/components-v2/feature/brand/tabs/staking/config";
 import {ciIncludes} from "@src/utils";
+import {useUser} from "@src/components-v2/useUser";
 
 const queryKey = 'BrandStakingTabNfts';
 
 export const useStaker = (slug: string) => {
     const [staker, setStaker] = useState<Staker>();
     const queryClient = useQueryClient();
-    const user = useAppSelector((state) => state.user);
+    const user = useUser();
 
     useEffect(() => {
         setStaker(stakers[slug]);
@@ -20,11 +18,11 @@ export const useStaker = (slug: string) => {
 
     const stakeMutation = useMutation({
         mutationFn: async ({nftAddress, nftId, statusFilter}: {nftAddress: string, nftId: string, statusFilter: StakingStatusFilters}) => {
-            if (!staker || !user.provider) throw 'Undefined staker or provider';
+            if (!staker || !user.wallet.isConnected) throw 'Undefined staker or provider';
 
             const tx = await staker.stake(
                 {nftAddress, nftId},
-                (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer
+                user.provider.getSigner()!
             );
             await tx.wait();
             return { nftAddress, nftId, statusFilter };
@@ -40,11 +38,11 @@ export const useStaker = (slug: string) => {
 
     const unstakeMutation = useMutation({
         mutationFn: async ({nftAddress, nftId, statusFilter}: {nftAddress: string, nftId: string, statusFilter: StakingStatusFilters}) => {
-            if (!staker || !user.provider) throw 'Undefined staker or provider';
+            if (!staker || !user.wallet.isConnected) throw 'Undefined staker or provider';
 
             const tx = await staker.unstake(
                 {nftAddress, nftId},
-                (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer
+                user.provider.getSigner()!
             );
             await tx.wait();
             return { nftAddress, nftId, statusFilter };
@@ -60,11 +58,11 @@ export const useStaker = (slug: string) => {
 
     const boostMutation = useMutation({
         mutationFn: async ({nftAddress, nftId, slot, statusFilter}: {nftAddress: string, nftId: string, slot: number, statusFilter: StakingStatusFilters}) => {
-            if (!staker?.booster || !user.provider) throw 'Undefined booster or provider';
+            if (!staker?.booster || !user.wallet.isConnected) throw 'Undefined booster or provider';
 
             const tx = await staker.booster.stake(
                 {nftAddress, nftId, slot},
-                (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer
+                user.provider.getSigner()!
             );
             await tx.wait();
             return { nftAddress, nftId, statusFilter };
@@ -80,11 +78,11 @@ export const useStaker = (slug: string) => {
 
     const unboostMutation = useMutation({
         mutationFn: async ({nftAddress, nftId, slot, statusFilter}: {nftAddress: string, nftId: string, slot: number, statusFilter: StakingStatusFilters}) => {
-            if (!staker?.booster || !user.provider) throw 'Undefined booster or provider';
+            if (!staker?.booster || !user.wallet.isConnected) throw 'Undefined booster or provider';
 
             const tx = await staker.booster.unstake(
                 {nftAddress, nftId, slot},
-                (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer
+                user.provider.getSigner()!
             );
             await tx.wait();
             return { nftAddress, nftId, statusFilter };

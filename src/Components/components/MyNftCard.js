@@ -63,12 +63,7 @@ const MyNftCard = ({
   const history = useRouter();
   const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
   const [isHovered, setIsHovered] = useState(false);
-  const user = useSelector((state) => state.user);
   const batchListingCart = useSelector((state) => state.batchListing);
-  const canUseBatchListing = useBreakpointValue(
-    {base: false, md: true,},
-    {fallback: 'md'},
-  );
   const { onCopy } = useClipboard(nftUrl.toString());
   const {usdValueForToken} = useExchangeRate();
 

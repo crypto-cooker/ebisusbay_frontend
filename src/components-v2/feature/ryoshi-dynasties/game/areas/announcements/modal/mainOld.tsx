@@ -12,6 +12,7 @@ import {
 import ImageService from "@src/core/services/image";
 import NextImage from "next/image";
 import NextLink from "next/link";
+import {useUser} from "@src/components-v2/useUser";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -24,8 +25,7 @@ const MainPageOld = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
   const router = useRouter();
   const { user: rdUserContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [isMobile] = useMediaQuery("(max-width: 480px)");
-
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   //timer
   const Ref = useRef<NodeJS.Timer | null>(null);

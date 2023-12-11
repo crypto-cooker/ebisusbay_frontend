@@ -10,7 +10,6 @@ import {useQuery} from "@tanstack/react-query";
 import useDeleteNotifications from "@src/hooks/useDeleteNotifications";
 import {getNotifications} from "@src/core/cms/next/notifications";
 import Button from "@src/Components/components/Button";
-import {useAppSelector} from "@src/Store/hooks";
 import {
   Box,
   Center,
@@ -27,18 +26,19 @@ import {
 } from "@chakra-ui/react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import ImageService from "@src/core/services/image";
+import {useUser} from "@src/components-v2/useUser";
 
 const NotificationMenu = function () {
   const history = useRouter();
-  const {address, theme, profile}: {address: any, theme: any, profile: any} = useAppSelector((state) => state.user);
+  const {address, theme, profile} = useUser();
   const [showMenu, setShowMenu] = useState(false);
   const [requestDeleteNotifications] = useDeleteNotifications();
   const cardBg = useColorModeValue('white', '#333');
 
   const { isPending, isError, error, data: notifications, refetch } = useQuery({
     queryKey: ['Notifications', address],
-    queryFn: () => getNotifications(address),
-    enabled: !!profile?.id,
+    queryFn: () => getNotifications(address!),
+    enabled: !!address && !!profile?.id,
     staleTime: 1000 * 60
   });
 
@@ -56,12 +56,12 @@ const NotificationMenu = function () {
   };
 
   const handleClearNotifications = async () => {
-    await requestDeleteNotifications(address);
+    await requestDeleteNotifications(address!);
     await refetch();
   };
 
   const handleDeleteNotification = (notification: any) => async (e: any) => {
-    await requestDeleteNotifications(address, notification.id);
+    await requestDeleteNotifications(address!, notification.id);
     await refetch();
   }
 

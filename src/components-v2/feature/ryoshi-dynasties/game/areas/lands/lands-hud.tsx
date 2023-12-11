@@ -19,6 +19,7 @@ import React, {useEffect, useState} from "react";
 import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 import {appConfig} from "@src/Config";
 import {RdButton} from "../../../components";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -31,8 +32,7 @@ interface BattleMapHUDProps {
 }
 
 export const LandsHUD = ({onBack, showBackButton, setElementToZoomTo, traitTypes, FilterByTraitCallback}: BattleMapHUDProps) => {
-    
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [isNotMobile] = useMediaQuery("(max-width: 768px)") 
   const [value, setValue] = React.useState(0)
   const handleChange = (value:string) => setValue(Number(value))

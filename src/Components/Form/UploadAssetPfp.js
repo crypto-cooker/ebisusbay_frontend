@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Blockies from 'react-blockies';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faEdit} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import useGetSettings from '../Account/Settings/hooks/useGetSettings';
 import useUpdatePfp from '../Account/Settings/hooks/useUpdatePfp';
 import styles from "@src/Components/Account/Settings/Profile/Pfp/pfp.module.scss";
 import {Stack} from "@chakra-ui/react";
+import {useUser} from "@src/components-v2/useUser";
 
 const UploadAssetPfp = ({
   id,
@@ -16,7 +16,7 @@ const UploadAssetPfp = ({
   onChange,
   onClose,
 }) => {
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const [file, setFile] = useState(null);
   const [hover, setHover] = useState(false);
   const inputFile = useRef(null);

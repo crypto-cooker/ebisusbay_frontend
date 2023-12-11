@@ -3,10 +3,8 @@ import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import Link from 'next/link';
 import {ethers} from 'ethers';
-import MetaMaskOnboarding from '@metamask/onboarding';
 
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
-import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {
   appUrl,
   caseInsensitiveCompare,
@@ -18,7 +16,7 @@ import {
 } from '@src/utils';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
-import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useBreakpointValue, useClipboard} from "@chakra-ui/react";
+import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faBoltLightning,
@@ -47,6 +45,8 @@ import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {useExchangeRate} from "@src/hooks/useGlobalPrices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
+import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
@@ -76,17 +76,13 @@ type BaseNftCardProps = {
 const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, canBuy = true }: BaseNftCardProps) => {
   const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const cart = useAppSelector((state) => state.cart);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { onCopy } = useClipboard(nftUrl.toString());
   const {usdValueForToken} = useExchangeRate();
-
-  const izanamiImageSize = useBreakpointValue(
-    {base: 250, sm: 368, lg: 456},
-    {fallback: 'md'}
-  )
+  const [runAuthedFunction] = useAuthedFunction();
 
   const getListing = (): any => {
     if (nft.market?.price) {
@@ -119,18 +115,9 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
     const isBlacklisted = isNftBlacklisted(nft.address, nft.id);
     if (isBlacklisted) return;
 
-    if (user.address) {
+    runAuthedFunction(async() => {
       setOpenMakeOfferDialog(!openMakeOfferDialog);
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   };
 
   const handleAddToCart = () => {

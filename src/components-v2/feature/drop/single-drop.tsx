@@ -21,6 +21,7 @@ import {Drop, SpecialWhitelist} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import {useUser} from "@src/components-v2/useUser";
 
 const Markdown= dynamic(() => import('react-markdown'),{ ssr: false });
 
@@ -97,9 +98,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     setOpenMenu(key);
   };
 
-  const user = useAppSelector((state) => {
-    return state.user;
-  });
+  const user = useUser();
 
   const membership = useAppSelector((state) => {
     return state.memberships;
@@ -111,7 +110,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, membership]);
+  }, [user.wallet.isConnected, membership]);
 
   const retrieveDropInfo = async () => {
     setDropObject(drop);
@@ -141,15 +140,15 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     }
     setAbi(abi!);
 
-    if (user.provider) {
+    if (user.wallet.isConnected) {
       try {
-        let writeContract = await new ethers.Contract(currentDrop.address, abi!, user.provider.getSigner());
+        let writeContract = new ethers.Contract(currentDrop.address, abi!, user.provider.getSigner());
         currentDrop = Object.assign({ writeContract: writeContract }, currentDrop);
 
         if (currentDrop.erc20Token) {
           const token = config.tokens[currentDrop.erc20Token];
-          const erc20Contract = await new ethers.Contract(token.address, ERC20, user.provider.getSigner());
-          const erc20ReadContract = await new ethers.Contract(token.address, ERC20, readProvider);
+          const erc20Contract = new ethers.Contract(token.address, ERC20, user.provider.getSigner());
+          const erc20ReadContract = new ethers.Contract(token.address, ERC20, readProvider);
           currentDrop = {
             ...currentDrop,
             erc20Contract,

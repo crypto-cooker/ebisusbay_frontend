@@ -42,7 +42,6 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
   const [title, setTitle] = useState('');
   // const [info, setInfo] = useState([]);
   // const [rewardID, setRewardID] = useState(0);
-  const user = useAppSelector((state) => state.user);
   const [regionBonus, setRegionBonus] = useState(0);
 
   const [currentTab, setCurrentTab] = useState(tabs.info);

@@ -28,11 +28,11 @@ import {
   Tag
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
-import {useAppSelector} from "@src/Store/hooks";
 import {parseErrorMessage} from "@src/helpers/validator";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {ApiService} from "@src/core/services/api-service";
 import {OfferState, OfferType} from "@src/core/services/api-service/types";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 25;
@@ -54,8 +54,8 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
   const windowSize = useWindowSize();
-  const user = useAppSelector((state) => state.user);
-  const {contractService} = user;
+  const user = useUser();
+  const contractService = useContractService();
   const [runAuthedFunction] = useAuthedFunction();
 
   const isAboveFloorPrice = (price: string | number) => {
@@ -85,10 +85,10 @@ export default function MakeCollectionOfferDialog({ isOpen, collection, onClose 
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (collection && user.provider) {
+    if (collection && user.wallet.address) {
       asyncFunc();
     }
-  }, [collection, user.provider]);
+  }, [collection, user.wallet.address]);
 
   const getInitialProps = async () => {
     try {

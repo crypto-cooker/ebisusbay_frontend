@@ -1,5 +1,4 @@
 import {appConfig} from "@src/Config";
-import {useAppSelector} from "@src/Store/hooks";
 import {
   Accordion,
   AccordionButton,
@@ -36,9 +35,6 @@ import React, {useContext, useEffect, useState} from "react";
 import {ArrowBackIcon, CopyIcon, DownloadIcon, EditIcon} from "@chakra-ui/icons";
 import localFont from "next/font/local";
 import RdButton from "../../../../components/rd-button";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
 import {getRegistrationCost} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {
   RdFaction,
@@ -68,6 +64,7 @@ import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceS
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import axios from 'axios';
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const gothamBook = localFont({
@@ -80,21 +77,11 @@ interface AllianceCenterProps {
 }
 
 const AllianceCenter = ({onClose}: AllianceCenterProps) => {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const {isSignedIn, isSigningIn, signin} = useEnforceSigner();
 
   const handleConnect = async () => {
-    if (!user.address) {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    user.connect();
   }
 
   const handleSignin = async () => {
@@ -243,7 +230,7 @@ const breakdownTabs = {
 };
 
 const CurrentFaction = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const {requestSignature} = useEnforceSignature();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
@@ -566,7 +553,8 @@ const CurrentFaction = () => {
 }
 
 const TroopsBreakdown = ({faction, troops, gameId}: {faction?: RdFaction, gameId: number, troops: RdUserContextOwnerFactionTroops | RdUserContextNoOwnerFactionTroops}) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+
   const {signature} = useEnforceSignature();
 
   return (

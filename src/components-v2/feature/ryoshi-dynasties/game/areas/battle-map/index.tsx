@@ -8,7 +8,6 @@ import ControlPointModal from '@src/components-v2/feature/ryoshi-dynasties/game/
 import ImageService from '@src/core/services/image';
 import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/hud";
 import {io} from "socket.io-client";
-import {useAppSelector} from "@src/Store/hooks";
 
 import {BigNumber, Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
@@ -27,6 +26,7 @@ import localFont from "next/font/local";
 import {RdGameState} from "@src/core/services/api-service/types";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {useUser} from "@src/components-v2/useUser";
 
 const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Black.woff2' })
 
@@ -50,7 +50,7 @@ interface Icon {
 
 const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, height, useCurrentGameId, blockDeployments}: BattleMapProps) => {
   const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
-  const user = useAppSelector(state => state.user);
+  const user = useUser();
   const config = appConfig();
   const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [elementToZoomTo, setElementToZoomTo] = useState("");

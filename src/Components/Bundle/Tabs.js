@@ -1,15 +1,16 @@
-import { Flex, Box, Stack, Text } from "@chakra-ui/react";
-import React, { useState, useCallback } from "react";
+import {Box, Flex, Stack, Text} from "@chakra-ui/react";
+import React, {useCallback, useState} from "react";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import { specialImageTransform } from '@src/hacks';
+import {specialImageTransform} from '@src/hacks';
 import Link from "next/link";
 import {shortAddress, timeSince} from "@src/utils";
 import ListingItem from "@src/components-v2/feature/nft/tabs/listings/item";
-import { Contract, ethers } from 'ethers';
+import {ethers} from 'ethers';
 import {getTheme} from "@src/Theme/theme";
 import {useSelector} from "react-redux";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferType} from "@src/core/services/api-service/types";
+import {useUser} from "@src/components-v2/useUser";
 
 const tabs = {
   properties: 'properties',
@@ -22,9 +23,7 @@ const tabs = {
 };
 
 const Tabs = ({ nft }) => {
-  const user = useSelector((state) => {
-    return state.user;
-  });
+  const user = useUser();
 
   const [currentTab, setCurrentTab] = useState(tabs.properties);
   const [babyWeirdApeBreed, setBabyWeirdApeBreed] = useState(null);

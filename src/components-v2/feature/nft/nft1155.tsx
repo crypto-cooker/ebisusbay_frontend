@@ -9,7 +9,6 @@ import {
   faSync
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import MetaMaskOnboarding from '@metamask/onboarding';
 
 import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import {
@@ -24,7 +23,6 @@ import {
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
 import {specialImageTransform} from '@src/hacks';
-import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
 import PriceActionBar from '@src/components-v2/feature/nft/price-action-bar';
 import ListingsTab from '@src/components-v2/feature/nft/tabs/listings';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
@@ -50,7 +48,6 @@ import {toast} from "react-toastify";
 import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
 import {Menu} from '@src/Components/components/chakra-components';
 import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-svg-icons';
-import NextLink from 'next/link';
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 import {Button as ChakraButton} from "@chakra-ui/button";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
@@ -61,6 +58,8 @@ import ImageService from "@src/core/services/image";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
 import {ApiService} from "@src/core/services/api-service";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const tabs = {
@@ -81,6 +80,7 @@ interface Nft721Props {
 const Nft1155 = ({ address, id, collection }: Nft721Props) => {
   const dispatch = useDispatch();
   const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`).toString());
+  const [runAuthedFunction] = useAuthedFunction();
 
   const { nft, refreshing, favorites } = useAppSelector((state) => state.nft);
 
@@ -95,7 +95,7 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
     return collection?.slug;
   });
   const isLoading = useAppSelector((state) => state.nft.loading);
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [{ isLoading: isFavoriting, response, error }, toggleFavorite] = useToggleFavorite();
   const [showFullDescription, setShowFullDescription] = useState(false);
 
@@ -210,19 +210,8 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
 
-  const handleMakeOffer = () => {
-    if (user.address) {
-      setOpenMakeOfferDialog(!openMakeOfferDialog);
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+  const handleMakeOffer = async () => {
+    await runAuthedFunction(() => setOpenMakeOfferDialog(!openMakeOfferDialog));
   };
 
   const onRefreshMetadata = useCallback(() => {
@@ -259,7 +248,7 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
     await toggleFavorite(user.address, address, id, !isCurrentFav);
     toast.success(`Item ${isCurrentFav ? 'removed from' : 'added to'} favorites`);
     dispatch(tickFavorite(isCurrentFav ? -1 : 1));
-    dispatch(retrieveProfile());
+    user.refreshProfile();
   };
 
   const isFavorite = () => {

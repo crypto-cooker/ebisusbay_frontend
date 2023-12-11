@@ -25,7 +25,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, {ChangeEvent, useContext, useEffect, useMemo, useState} from "react";
-import {useAppSelector} from "@src/Store/hooks";
 import {toast} from "react-toastify";
 import {getTroopsOnControlPoint,} from "@src/core/api/RyoshiDynastiesAPICalls";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
@@ -43,6 +42,7 @@ import {QuestionOutlineIcon} from "@chakra-ui/icons";
 import {getLengthOfTime} from "@src/utils";
 import {ApiService} from "@src/core/services/api-service";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
+import {useUser} from "@src/components-v2/useUser";
 
 const tabs = {
   move: 'move',
@@ -55,7 +55,7 @@ interface DeployTabProps {
 }
 
 const DispatchTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSeason}: DeployTabProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const {requestSignature} = useEnforceSignature();
   const [currentTab, setCurrentTab] = useState(tabs.deploy);
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
@@ -193,7 +193,7 @@ interface DeployFormProps {
 }
 
 const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}: DeployFormProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [toFactionId, setToFactionId] = useState<string>();
@@ -427,7 +427,7 @@ interface RelocateFormProps {
 }
 
 const RelocateForm = ({fromControlPoint, hasFaction, subscribedFactions, troopsDeployed, onSuccess}: RelocateFormProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [fromFactionId, setFromFactionId] = useState<string>();
