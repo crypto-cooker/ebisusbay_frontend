@@ -1,5 +1,5 @@
 import {useAccount, useBalance, useDisconnect, useNetwork} from "wagmi";
-import {createContext, ReactNode, useEffect, useState} from "react";
+import {createContext, ReactNode, useEffect} from "react";
 import {appConfig} from "@src/Config";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {useQuery} from "@tanstack/react-query";
@@ -8,10 +8,12 @@ import {portABI, stakeABI} from "@src/Contracts/types";
 import {ethers} from "ethers";
 import {JotaiUser, UserActionType, userAtom} from "@src/jotai/atoms/user";
 import {useAtom} from "jotai";
+import {RESET} from "jotai/utils";
 import {isUserBlacklisted} from "@src/utils";
 import {setThemeInStorage} from "@src/helpers/storage";
 import {useColorMode} from "@chakra-ui/react";
 import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
+import {storageSignerAtom} from "@src/jotai/atoms/storage";
 
 const config = appConfig();
 
@@ -30,6 +32,7 @@ interface UserProviderProps {
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, dispatch] = useAtom(userAtom);
+  const [signer, setSigner] = useAtom(storageSignerAtom);
   const { address, isConnecting, isConnected } = useAccount();
   const { chain } = useNetwork();
   const { disconnect: disconnectWallet } = useDisconnect();
@@ -112,6 +115,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const disconnect = () => {
     disconnectWallet();
     localStorage.clear();
+    setSigner(RESET);
     dispatch({ type: UserActionType.RESET_USER, payload: {} });
     // TODO: reset all other state from User.ts
   }
