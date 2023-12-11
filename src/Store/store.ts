@@ -6,7 +6,6 @@ import { memberships } from '../GlobalState/Memberships';
 import marketplaceReducer from '../GlobalState/marketplaceSlice';
 import auctionsReducer from '../GlobalState/auctionsSlice';
 import auctionReducer from '../GlobalState/auctionSlice';
-import metaverseReducer from '../GlobalState/metaverseSlice';
 import nftReducer from '../GlobalState/nftSlice';
 import collectionsReducer from '../GlobalState/collectionsSlice';
 import { appInitializeStateReducer } from '../GlobalState/InitSlice';
@@ -23,7 +22,6 @@ const rootReducer = combineReducers({
   nft: nftReducer,
   appInitialize: appInitializeStateReducer,
   collections: collectionsReducer,
-  metaverse: metaverseReducer,
   leaderBoard: leaderBoardReducer,
   cart: cartReducer,
   batchListing: batchListingReducer,
