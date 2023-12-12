@@ -7,9 +7,10 @@ import { UploadPfp } from '../../../../Form';
 import { editProfileFormFields } from '../Form/constants';
 import { shortAddress } from '../../../../../utils';
 import {useClipboard} from "@chakra-ui/react";
+import {useUser} from "@src/components-v2/useUser";
 
 export default function Pfp({ values, errors, touched, handleChange, setFieldValue, setFieldTouched, handleBlur }) {
-  const user = useUse
+  const user = useUser();
   const { onCopy } = useClipboard(user?.address);
 
   const getUserName = (address) => {
