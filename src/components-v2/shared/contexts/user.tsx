@@ -14,6 +14,7 @@ import {setThemeInStorage} from "@src/helpers/storage";
 import {useColorMode} from "@chakra-ui/react";
 import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
 import {storageSignerAtom} from "@src/jotai/atoms/storage";
+import * as Sentry from "@sentry/react";
 
 const config = appConfig();
 
@@ -36,7 +37,7 @@ interface UserProviderProps {
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, dispatch] = useAtom(userAtom);
   const [_, setSigner] = useAtom(storageSignerAtom);
-  const { address, isConnecting, isConnected } = useAccount();
+  const { address, isConnecting, isConnected, status, connector } = useAccount();
   const { chain } = useNetwork();
   const { disconnect: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
@@ -160,6 +161,22 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   // Set Wallet
   useEffect(() => {
+    Sentry.captureMessage("DEBUG: WALLET STATE", {
+      extra: {
+        customData: {
+          address,
+          isConnecting,
+          isConnected,
+          chain: chain?.id,
+          configChain: parseInt(config.chain.id),
+          correctChain: isConnected && !!chain && chain.id === parseInt(config.chain.id),
+          status,
+          connector,
+        }
+      }
+    });
+
+    console.log('debug --- wallet state', address, isConnecting, isConnected, chain?.id, parseInt(config.chain.id), isConnected && !!chain && chain.id === parseInt(config.chain.id))
     dispatch({
       type: UserActionType.SET_WALLET,
       payload: {
@@ -171,7 +188,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         }
       }
     });
-  }, [address, isConnected, isConnected, chain]);
+  }, [address, isConnected, isConnecting, chain?.id]);
 
   // Initialize if freshly connected or wallet switched
   useEffect(() => {
