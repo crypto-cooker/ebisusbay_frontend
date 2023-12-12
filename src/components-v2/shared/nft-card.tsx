@@ -122,6 +122,11 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
 
   const handleAddToCart = () => {
     const listing = getListing();
+    if (!listing) {
+      toast.error('No listing found for NFT');
+      return;
+    }
+
     dispatch(addToCart({
       listingId: listing.id,
       name: nft.name,
