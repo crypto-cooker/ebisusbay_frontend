@@ -24980,6 +24980,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Dark Lions",
+      "slug": "dark-lions",
+      "multiToken": false,
+      "address": "0xa8790f65602363ecC614dB62731965690FAebDf3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Dark Lions have travelled back from 370 years in the future, and they’re hellbent on exterminating every Loaded Lion and Cyber Cub. This collection comprises 10,000 algorithmically-generated ‘Dark Lions’ NFTs, with over 350 traits in total. There’s even a set of legendary ‘Dark Lions’ lying in wait for the luckiest of collectors.\n\nBy owning these collectibles, you’ll enjoy a variety of perks and bonuses across the Crypto.com ecosystem, along with the Loaded Lions: Mane City game. These masters of the battlefield are always looking out for an opportunity to strike.\n\nIt’s time for a new era to begin.",
+        "avatar": "/img/collections/dark-lions/avatar.webp",
+        "card": "/img/collections/dark-lions/card.webp",
+        "banner": "/img/collections/dark-lions/banner.webp",
+        "website": "https://darklions.xyz/",
+        "twitter": "https://twitter.com/loadedlions_CDC",
+        "discord": "https://discord.gg/cryptocom",
+        "instagram": "https://instagram.com/cryptocomnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
