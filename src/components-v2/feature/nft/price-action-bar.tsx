@@ -228,7 +228,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                 {listing && listing.state === listingState.ACTIVE ? (
                   <>
                     <div className="flex-fill mx-1">
-                      <Button type="legacy-outlined" className="w-100" onClick={executeCancel()} disabled={executingCancel}>
+                      <Button type="legacy-outlined" className="w-100" onClick={executeCancel} disabled={executingCancel}>
                         {executingCancel ? (
                           <>
                             Cancelling...
