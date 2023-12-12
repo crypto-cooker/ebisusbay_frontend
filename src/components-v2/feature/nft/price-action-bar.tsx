@@ -117,7 +117,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
       !isUserBlacklisted(listing.seller) &&
       !isNftBlacklisted(listing.nftAddress, listing.nftId)
     );
-  }, [listing.nftAddress, listing.nftId, listing.seller]);
+  }, [listing?.nftAddress, listing?.nftId, listing?.seller]);
 
 
   const ModalBody = () => {
