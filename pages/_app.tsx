@@ -29,22 +29,23 @@ import {Web3Modal} from "@src/components-v2/web3modal";
 import {UserProvider} from "@src/components-v2/shared/contexts/user";
 
 Site24x7LoggingService.init();
+const queryClient = new QueryClient()
 
 config.autoAddCss = false;
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            // With SSR, we usually want to set some default staleTime
-            // above 0 to avoid refetching immediately on the client
-            staleTime: 60 * 1000,
-          },
-        },
-      }),
-  )
+  // const [queryClient] = useState(
+  //   () =>
+  //     new QueryClient({
+  //       defaultOptions: {
+  //         queries: {
+  //           // With SSR, we usually want to set some default staleTime
+  //           // above 0 to avoid refetching immediately on the client
+  //           staleTime: 60 * 1000,
+  //         },
+  //       },
+  //     }),
+  // )
 
   return (
     <>
