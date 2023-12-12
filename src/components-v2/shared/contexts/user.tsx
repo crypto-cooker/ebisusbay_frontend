@@ -161,22 +161,22 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   // Set Wallet
   useEffect(() => {
-    Sentry.captureMessage("DEBUG: WALLET STATE", {
-      extra: {
-        customData: {
-          address,
-          isConnecting,
-          isConnected,
-          chain: chain?.id,
-          configChain: parseInt(config.chain.id),
-          correctChain: isConnected && !!chain && chain.id === parseInt(config.chain.id),
-          status,
-          connector,
-        }
-      }
-    });
-
-    console.log('debug --- wallet state', address, isConnecting, isConnected, chain?.id, parseInt(config.chain.id), isConnected && !!chain && chain.id === parseInt(config.chain.id), status, connector)
+    // Sentry.captureMessage("DEBUG: WALLET STATE", {
+    //   extra: {
+    //     customData: {
+    //       address,
+    //       isConnecting,
+    //       isConnected,
+    //       chain: chain?.id,
+    //       configChain: parseInt(config.chain.id),
+    //       correctChain: isConnected && !!chain && chain.id === parseInt(config.chain.id),
+    //       status,
+    //       connector,
+    //     }
+    //   }
+    // });
+    //
+    // console.log('debug --- wallet state', address, isConnecting, isConnected, chain?.id, parseInt(config.chain.id), isConnected && !!chain && chain.id === parseInt(config.chain.id), status, connector)
     dispatch({
       type: UserActionType.SET_WALLET,
       payload: {
