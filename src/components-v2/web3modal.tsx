@@ -89,9 +89,9 @@ createWeb3Modal({
       image: 'token_image_url' //optional
     }
   },
-  featuredWalletIds: [
-    'f2436c67184f158d1beda5df53298ee84abfc367581e4505134b5bcf5f46697d'
-  ],
+  // featuredWalletIds: [
+  //   'f2436c67184f158d1beda5df53298ee84abfc367581e4505134b5bcf5f46697d'
+  // ],
   termsConditionsUrl: ImageService.staticAsset('terms-of-service.html').convert(),
   privacyPolicyUrl: ImageService.staticAsset('privacy-policy.html').convert(),
 
