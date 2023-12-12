@@ -76,7 +76,7 @@ function setupCustomConfig(connectors: Array<Connector>) {
 
 const defaultConfig = setupDefaultConfig();
 const customConfig = setupCustomConfig(defaultConfig.config.connectors);
-const selectedConfig = customConfig;
+const selectedConfig = defaultConfig;
 
 createWeb3Modal({
   // ethersConfig: defaultConfig({ metadata }),
