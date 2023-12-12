@@ -163,6 +163,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
         setExecutingCreateListing(false);
         onClose();
       } catch (error) {
+        console.log(error);
         toast.error(parseErrorMessage(error));
       } finally {
         setExecutingCreateListing(false);

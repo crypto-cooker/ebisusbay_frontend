@@ -191,10 +191,10 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && user.wallet.isConnected) {
+    if (nft && user.wallet.address) {
       asyncFunc();
     }
-  }, [nft, user.wallet.isConnected]);
+  }, [nft, user.wallet.address]);
 
   const getInitialProps = async () => {
     try {
