@@ -452,9 +452,10 @@ const Vip2Drop = ({drop}: LandDropProps) => {
                 {openMenu === tabs.shop && (
                   <>
                     {(status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete) && (
-                      <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
-                        Supply: {ethers.utils.commify(maxSupply.toString())}
-                      </Text>
+                      <Flex justify='space-between' fontSize='sm' fontWeight='semibold'>
+                        <Box>Supply:</Box>
+                        <Box>{ethers.utils.commify(maxSupply.toString())}</Box>
+                      </Flex>
                     )}
                     {status >= statuses.LIVE && !drop.complete && (
                       <Box>
