@@ -91,7 +91,13 @@ const MintBox = () => {
   const mintWithRewards = async (finalCost: number) => {
     const signature = await requestSignature();
     const finalCostEth = ethers.utils.formatEther(finalCost);
-    const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(finalCostEth, user.address!, signature);
+    const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(
+      finalCostEth,
+      numToMint,
+      `Drop: ${auctionData.drop?.title}`,
+      user.address!,
+      signature
+    );
 
     const gasPrice = parseUnits('5000', 'gwei');
     const gasEstimate = await auctionData.writeContract!.estimateGas.mintWithRewards(numToMint, authorization.reward, authorization.signature);
