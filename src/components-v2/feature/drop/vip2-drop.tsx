@@ -394,25 +394,9 @@ const Vip2Drop = ({drop}: LandDropProps) => {
       <section id="drop_detail" className="gl-legacy container no-top">
         <div className="row mt-md-5 pt-md-4">
           <div className="col-md-6 text-center mt-4 md-md-0">
-            <Box position='relative' pt='125%'>
-              <ReactPlayer
-                className="react-player"
-                url={ImageService.translate(drop.video!).convert()}
-                config={{
-                  file: {
-                    attributes: {
-                      onContextMenu: (e: any) => e.preventDefault(),
-                      controlsList: 'nodownload',
-                    },
-                  },
-                }}
-                muted={true}
-                playing={true}
-                loop={true}
-                width="100%"
-                height="100%"
-              />
-            </Box>
+            {!!drop.images.drop && (
+              <img src={hostedImage(drop.images.drop)} className="img-fluid img-rounded mb-sm-30" alt={drop.title}/>
+            )}
           </div>
           <div className="col-md-6 mt-4 mt-md-0">
             <Flex justify={{base: 'center', md: 'start'}} mb={4}>
