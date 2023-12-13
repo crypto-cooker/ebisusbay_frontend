@@ -389,67 +389,66 @@ const Vip2Drop = ({drop}: LandDropProps) => {
         </div>
       </HeroSection>
 
-
-        <div className="de_tab mt-2">
-          <ul className="de_nav mb-2 text-center">
-            <li className={`tab ${openMenu === tabs.description ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.description)}>About</span>
-            </li>
-            <li className={`tab ${openMenu === tabs.shop ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.shop)}>Mint</span>
-            </li>
-          </ul>
-          <div className="de_tab_content">
-            {openMenu === tabs.shop && (
-              <section id="drop_detail" className="gl-legacy container no-top">
-                <div className="row mt-md-5 pt-md-4">
-                  <div className="col-md-6 text-center mt-4 md-md-0">
-                    <Box position='relative' pt='125%'>
-                      <ReactPlayer
-                        className="react-player"
-                        url={ImageService.translate(drop.video!).convert()}
-                        config={{
-                          file: {
-                            attributes: {
-                              onContextMenu: (e: any) => e.preventDefault(),
-                              controlsList: 'nodownload',
-                            },
-                          },
-                        }}
-                        muted={true}
-                        playing={true}
-                        loop={true}
-                        width="100%"
-                        height="100%"
-                      />
+      <section id="drop_detail" className="gl-legacy container no-top">
+        <div className="row mt-md-5 pt-md-4">
+          <div className="col-md-6 text-center mt-4 md-md-0">
+            <Box position='relative' pt='125%'>
+              <ReactPlayer
+                className="react-player"
+                url={ImageService.translate(drop.video!).convert()}
+                config={{
+                  file: {
+                    attributes: {
+                      onContextMenu: (e: any) => e.preventDefault(),
+                      controlsList: 'nodownload',
+                    },
+                  },
+                }}
+                muted={true}
+                playing={true}
+                loop={true}
+                width="100%"
+                height="100%"
+              />
+            </Box>
+          </div>
+          <div className="col-md-6 mt-4 mt-md-0">
+            <Flex justify={{base: 'center', md: 'start'}} mb={4}>
+              <Stack direction={{base: 'column', md: 'row'}} className="profile_avatar" alignItems='center'>
+                <Image src={hostedImage(drop.images.avatar)} alt={drop.author.name} />
+                <Box className="profile_name" textAlign={{base: 'center', md: 'start'}}>
+                  <Heading as="h4" size="md">
+                    <Box ms={2}>{drop.title}</Box>
+                    <Box mt={2}>
+                      <SocialsBar address={drop.address} socials={drop.author} />
                     </Box>
-                  </div>
-                  <div className="col-md-6 mt-4 mt-md-0">
+                  </Heading>
+                </Box>
+              </Stack>
+            </Flex>
 
-                    <Flex justify={{base: 'center', md: 'start'}} mb={4}>
-                      <Stack direction={{base: 'column', md: 'row'}} className="profile_avatar" alignItems='center'>
-                        <Image src={hostedImage(drop.images.avatar)} alt={drop.author.name} />
-                        <Box className="profile_name" textAlign={{base: 'center', md: 'start'}}>
-                          <Heading as="h4" size="md">
-                            <Box ms={2}>{drop.title}</Box>
-                            <Box mt={2}>
-                              <SocialsBar address={drop.address} socials={drop.author} />
-                            </Box>
-                          </Heading>
-                        </Box>
-                      </Stack>
-                    </Flex>
+            <Flex justify={{base: 'center', md: 'start'}}>
+              <CollectionVerificationRow
+                doxx={drop.verification.doxx}
+                kyc={drop.verification.kyc}
+                escrow={drop.verification.escrow}
+                creativeCommons={drop.verification.creativeCommons}
+              />
 
-                    <Flex justify={{base: 'center', md: 'start'}}>
-                      <CollectionVerificationRow
-                        doxx={drop.verification.doxx}
-                        kyc={drop.verification.kyc}
-                        escrow={drop.verification.escrow}
-                        creativeCommons={drop.verification.creativeCommons}
-                      />
-                    </Flex>
+            </Flex>
 
-
+            <div className="de_tab mt-2">
+              <ul className="de_nav mb-2 text-center">
+                <li className={`tab ${openMenu === tabs.shop ? 'active' : ''} my-1`}>
+                  <span onClick={handleBtnClick(tabs.shop)}>Mint</span>
+                </li>
+                <li className={`tab ${openMenu === tabs.description ? 'active' : ''} my-1`}>
+                  <span onClick={handleBtnClick(tabs.description)}>Description</span>
+                </li>
+              </ul>
+              <div className="de_tab_content">
+                {openMenu === tabs.shop && (
+                  <>
                     {(status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete) && (
                       <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
                         Supply: {ethers.utils.commify(maxSupply.toString())}
@@ -497,13 +496,17 @@ const Vip2Drop = ({drop}: LandDropProps) => {
                         isLastPhase={index === phaseData.length - 1}
                       />
                     ))}
-                  </div>
-                </div>
-              </section>
-            )}
+                  </>
+                )}
+
+                {openMenu === tabs.description && (
+                  <div className="mt-3 mb-4">{newlineText(drop.description)}</div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-
+      </section>
     </div>
   );
 };
