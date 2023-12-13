@@ -636,7 +636,9 @@ const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinti
               onComplete={handleTimerComplete}
             />
           )}
-          <Box textAlign='end' fontSize='sm'>Remaining: {phase.maxMintAmount ?? 'Unlimited'}</Box>
+          {phaseStatus <= statuses.LIVE && (
+            <Box textAlign='end' fontSize='sm'>Remaining: {phase.maxMintAmount ?? 'Unlimited'}</Box>
+          )}
         </Box>
       </Flex>
       <HStack spacing={0}>
