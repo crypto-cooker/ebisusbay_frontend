@@ -10,13 +10,15 @@ import Header from '@src/components-v2/shared/layout/navbar';
 import firebaseConfig from '../third-party/firebase';
 import {getTheme} from '../Theme/theme';
 import DefaultHead from "@src/components-v2/shared/layout/default-head";
-import {useColorMode} from "@chakra-ui/react";
+import {Box, Button, HStack, Text, useColorMode, VStack} from "@chakra-ui/react";
 import {syncCartStorage} from "@src/GlobalState/cartSlice";
 import Footer from "@src/components-v2/shared/layout/footer";
 import {AppProps} from "next/app";
 import {ExchangePricesContext} from "@src/components-v2/shared/contexts/exchange-prices";
 import {useGlobalPrices} from "@src/hooks/useGlobalPrices";
 import {useUser} from "@src/components-v2/useUser";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBullhorn} from "@fortawesome/free-solid-svg-icons";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -77,8 +79,9 @@ function App({ Component, ...pageProps }: AppProps) {
           ) : (
             <>
               <GlobalStyles isDark={userTheme === 'dark'} />
-              <Header />
-              <div style={{paddingTop:'74px'}}>
+              <Notice />
+              <Header/>
+              <div style={{paddingTop: '74px'}}>
                 <Component {...pageProps} />
               </div>
               <Footer />
@@ -97,3 +100,33 @@ function App({ Component, ...pageProps }: AppProps) {
 }
 
 export default App;
+
+
+const Notice = () => {
+  const getInitialVisibility = () => {
+    const storedVisibility = sessionStorage.getItem('showNotice');
+    return storedVisibility !== null ? storedVisibility === 'true' : true;
+  };
+
+  const [isVisible, setIsVisible] = useState(getInitialVisibility);
+
+  useEffect(() => {
+    sessionStorage.setItem('showNotice', isVisible.toString());
+  }, [isVisible]);
+
+  return isVisible ? (
+    <Box py={2} px={3} bg='#b63d15'>
+      <VStack textAlign='center' spacing={0}>
+        <HStack>
+          <FontAwesomeIcon icon={faBullhorn} className="my-auto"/>
+          <Text>
+            The Cronos chain is currently experiencing intermittent issues. Some site functions may be temporarily unavailable until chain issues are resolved
+          </Text>
+          <Box>
+            <Button variant='link' size='sm' onClick={() => setIsVisible(false)}>Hide</Button>
+          </Box>
+        </HStack>
+      </VStack>
+    </Box>
+  ) : null;
+};
