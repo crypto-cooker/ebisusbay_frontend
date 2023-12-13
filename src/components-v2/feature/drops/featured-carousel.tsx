@@ -274,12 +274,7 @@ const FeaturedDrops = () => {
                               </>
                             ) : (
                               <>
-                                {drop.slug === 'ryoshi-tales-vip' ? (
-                                  <>
-                                    <span className="d-title">VIP-only Mint Price</span>
-                                    <Heading as="h3" size="md">1 Ebisu's Bay VIP</Heading>
-                                  </>
-                                ) : <span className="d-title">Mint Price</span>}
+                              {drop.slug !== 'ryoshi-tales-vip-2' && <span className="d-title">Mint Price</span>}
 
                                 {drop.freeMint ? (
                                   <Heading as="h3" size="md">Free Mint</Heading>
@@ -303,7 +298,27 @@ const FeaturedDrops = () => {
                                       </HStack>
                                     )}
                                     {!drop.cost && !drop.erc20Cost && drop.slug !== 'ryoshi-tales-vip' && (
-                                      <h3>TBA</h3>
+                                      <Box>
+                                        <span className="d-title">Start Price</span>
+                                        <Heading as="h3" size="md">
+                                          <HStack>
+                                            <FortuneIcon boxSize={10}/>
+                                            <Text as='span'>
+                                              2,000
+                                            </Text>
+                                          </HStack>
+                                        </Heading>
+
+                                        <span className="d-title">End Price</span>
+                                        <Heading as="h3" size="md">
+                                          <HStack>
+                                            <FortuneIcon boxSize={10}/>
+                                            <Text as='span'>
+                                              3,000
+                                            </Text>
+                                          </HStack>
+                                        </Heading>
+                                      </Box>
                                     )}
                                   </>
                                 )}
