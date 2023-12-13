@@ -27,10 +27,12 @@ import {
   HStack,
   Image,
   Input,
-  Progress, SimpleGrid,
+  Progress,
   Stack,
+  Tag,
   Text,
-  useNumberInput
+  useNumberInput,
+  VStack
 } from "@chakra-ui/react";
 import {Drop} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
@@ -475,7 +477,7 @@ const Vip2Drop = ({drop}: LandDropProps) => {
                           <>
                             {phase.mitamaAmount > 0 ? (
                               <>
-                                For users with {commify(phase.mitamaAmount)}+ Mitama. Earn Mitama by staking Fortune in <Link href='/ryoshi' className='color fw-bold'>Ryoshi Dynasties</Link>
+                                For users with <strong>{commify(phase.mitamaAmount)}+ Mitama</strong>. Earn Mitama by staking FRTN in the <Link href='/ryoshi' className='color fw-bold'>Ryoshi Dynasties Bank</Link>
                               </>
                             ) : (
                               <>
@@ -617,9 +619,9 @@ const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinti
     >
       <Flex justify='space-between'>
         <Box fontSize="xl" fontWeight='bold' className="mb-1">{title}</Box>
-        <Box className='text-muted' textAlign='end' fontSize='sm'>
+        <VStack alignItems='end'>
           {phaseStatus === statuses.LIVE ? (
-            <>
+            <Tag size='sm' variant='solid' colorScheme='blue'>
               {isLastPhase ? (
                 <Countdown
                   date={phase.endTime}
@@ -629,20 +631,22 @@ const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinti
               ) : (
                 <>Live!</>
               )}
-            </>
+            </Tag>
           ) : phaseStatus > statuses.LIVE ? (
-            <>Ended</>
+            <Tag size='sm'>Ended</Tag>
           ) : (
-            <Countdown
-              date={phase.startTime}
-              renderer={startTimeRenderer}
-              onComplete={handleTimerComplete}
-            />
+            <Tag size='sm' variant='solid'>
+              <Countdown
+                date={phase.startTime}
+                renderer={startTimeRenderer}
+                onComplete={handleTimerComplete}
+              />
+            </Tag>
           )}
           {phaseStatus <= statuses.LIVE && (
-            <Box textAlign='end' fontSize='sm'>Remaining: {phase.maxMintAmount ?? maxSupply - currentSupply}</Box>
+            <Tag size='sm' variant='solid' colorScheme='blue'>Remaining: {phase.maxMintAmount > 0 ? phase.maxMintAmount : commify(maxSupply - currentSupply)}</Tag>
           )}
-        </Box>
+        </VStack>
       </Flex>
       <HStack spacing={0}>
         <FortuneIcon boxSize={6} />
