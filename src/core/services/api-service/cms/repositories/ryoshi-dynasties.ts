@@ -99,11 +99,14 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string) {
+  async requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string) {
     const response = await this.cms.post(
       'ryoshi-dynasties/fortune-rewards/spend',
       {
-        amount,
+        user: address,
+        amount: cost,
+        item: id,
+        itemAmount: quantity
       },
       {
         params: {

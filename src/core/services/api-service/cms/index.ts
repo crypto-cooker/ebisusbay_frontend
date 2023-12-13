@@ -54,8 +54,8 @@ class Cms {
     return this.ryoshiDynasties.requestTownHallUnstakeAuthorization(nfts, address, signature);
   }
 
-  async requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string) {
-    return this.ryoshiDynasties.requestRewardsSpendAuthorization(amount, address, signature);
+  async requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string) {
+    return this.ryoshiDynasties.requestRewardsSpendAuthorization(cost, quantity, id, address, signature);
   }
 
   async getDailyRewards(address: string) {
