@@ -39,7 +39,7 @@ export interface RyoshiDynastiesApi {
     requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
     requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string): Promise<any>;
     requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string): Promise<any>;
-    requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string): Promise<any>;
+    requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string): Promise<any>;
     getDailyRewards(address: string): Promise<any>
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
     claimDailyRewards(address: string, signature: string): Promise<any>

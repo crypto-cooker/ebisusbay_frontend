@@ -294,8 +294,8 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.requestTownHallUnstakeAuthorization(nfts, address, signature);
   }
 
-  async requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string) {
-    return this.cms.requestRewardsSpendAuthorization(amount, address, signature);
+  async requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string) {
+    return this.cms.requestRewardsSpendAuthorization(cost, quantity, id, address, signature);
   }
 
   async getDailyRewards(address: string) {

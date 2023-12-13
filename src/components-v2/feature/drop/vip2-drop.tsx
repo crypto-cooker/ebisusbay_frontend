@@ -1,6 +1,6 @@
 import React, {ReactNode, useEffect, useState} from 'react';
 import {BigNumber, constants, Contract, ethers} from 'ethers';
-import Countdown from 'react-countdown';
+import Countdown, {zeroPad} from 'react-countdown';
 import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 import {useRouter} from 'next/router';
@@ -27,7 +27,7 @@ import {
   HStack,
   Image,
   Input,
-  Progress,
+  Progress, SimpleGrid,
   Stack,
   Text,
   useNumberInput
@@ -158,7 +158,6 @@ const Vip2Drop = ({drop}: LandDropProps) => {
       const infos = await readContract.getInfo();
       const canMint = user.address ? await readContract.canMint(user.address) : 0;
 
-      console.log(infos, canMint);
       setDropInfoFromContract(infos, canMint, Number(infos.publicStartTime));
       calculateStatus(drop, infos.totalSupply, infos.maxSupply);
     } catch (error) {
@@ -240,19 +239,20 @@ const Vip2Drop = ({drop}: LandDropProps) => {
     else setStatus(statuses.NOT_STARTED);
   };
 
-  const handleMint = async (fundingType: FundingType, numToMint: number) => {
+  const handleMint = async (fundingType: FundingType, numToMint: number, phase: PhaseData) => {
     runAuthedFunction(async() => {
       setMinting(true);
       setMintingState("Minting...");
       const mintContract = await new ethers.Contract(drop.address, abi, user.provider.getSigner());
       try {
-        const cost = await mintContract.mintCost();
-        let finalCost = cost.mul(numToMint);
+        let finalCost = phase.mintCost * numToMint;
 
         let response;
         if (fundingType === FundingType.REWARDS) {
+          finalCost = phase.redeemCost * numToMint;
           response = await mintWithRewards(numToMint, finalCost);
         } else if (fundingType === FundingType.FORTUNE) {
+          finalCost = phase.mintCost * numToMint;
           response = await mintWithFortune(numToMint, finalCost);
         } else {
           throw new Error('Invalid funding type');
@@ -317,10 +317,15 @@ const Vip2Drop = ({drop}: LandDropProps) => {
   const mintWithRewards = async (numToMint: number, finalCost: number) => {
     const signature = await requestSignature();
     const finalCostEth = ethers.utils.formatEther(finalCost);
-    const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(finalCostEth, user.address!, signature);
+    const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(
+      finalCost,
+      numToMint,
+      `Drop: ${drop.title}`,
+      user.address!,
+      signature
+    );
 
     const gasPrice = parseUnits('5000', 'gwei');
-
     const actualContract = contractService!.custom(drop.address, abi);
     const gasEstimate = await actualContract.estimateGas.mintWithRewards(numToMint, authorization.reward, authorization.signature);
     const gasLimit = gasEstimate.mul(2);
@@ -489,6 +494,7 @@ const Vip2Drop = ({drop}: LandDropProps) => {
                         currentSupply={Number(totalSupply)}
                         maxSupply={Number(maxSupply)}
                         onRefreshDropStatus={() => calculateStatus(drop, totalSupply, maxSupply)}
+                        isLastPhase={index === phaseData.length - 1}
                       />
                     ))}
                   </div>
@@ -508,7 +514,7 @@ interface MintPhaseProps {
   title: string;
   description?: ReactNode;
   phase: PhaseData;
-  onMint: (fundingType: FundingType, numToMint: number) => void;
+  onMint: (fundingType: FundingType, numToMint: number, phase: PhaseData) => void;
   maxMintQuantity: number;
   isMinting: boolean;
   isDropComplete: boolean;
@@ -516,9 +522,10 @@ interface MintPhaseProps {
   currentSupply: number;
   maxSupply: number;
   onRefreshDropStatus: () => void;
+  isLastPhase: boolean;
 }
 
-const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinting, isDropComplete, dropStatus, currentSupply, maxSupply, onRefreshDropStatus }: MintPhaseProps) => {
+const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinting, isDropComplete, dropStatus, currentSupply, maxSupply, onRefreshDropStatus, isLastPhase }: MintPhaseProps) => {
   const user = useUser();
   const [numToMint, setNumToMint] = useState(1);
   const [phaseStatus, setPhaseStatus] = useState(DropState.UNSET);
@@ -551,12 +558,21 @@ const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinti
     func();
   }, 1000);
 
-  const renderer = ({ days, hours, minutes, seconds, completed }: { days:number, hours:number, minutes:number, seconds: number, completed:boolean}) => {
+  const startTimeRenderer = ({ days, hours, minutes, seconds, completed }: { days:number, hours:number, minutes:number, seconds: number, completed:boolean}) => {
     if (completed) {
       return <>Live!</>;
     } else {
       // Render a countdown
-      return <span>Starts in: {days}:{hours}:{minutes}:{seconds}</span>;
+      return <span>Starts in: {zeroPad(days)}:{zeroPad(hours)}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>;
+    }
+  };
+
+  const endTimeRenderer = ({ days, hours, minutes, seconds, completed }: { days:number, hours:number, minutes:number, seconds: number, completed:boolean}) => {
+    if (completed) {
+      return <>Ended</>;
+    } else {
+      // Render a countdown
+      return <span>Ends in: {zeroPad(days)}:{zeroPad(hours)}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>;
     }
   };
 
@@ -600,16 +616,27 @@ const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinti
         <Box fontSize="xl" fontWeight='bold' className="mb-1">{title}</Box>
         <Box className='text-muted' textAlign='end' fontSize='sm'>
           {phaseStatus === statuses.LIVE ? (
-            <>Live!</>
+            <>
+              {isLastPhase ? (
+                <Countdown
+                  date={phase.endTime}
+                  renderer={endTimeRenderer}
+                  onComplete={handleTimerComplete}
+                />
+              ) : (
+                <>Live!</>
+              )}
+            </>
           ) : phaseStatus > statuses.LIVE ? (
             <>Ended</>
           ) : (
             <Countdown
               date={phase.startTime}
-              renderer={renderer}
+              renderer={startTimeRenderer}
               onComplete={handleTimerComplete}
             />
           )}
+          <Box textAlign='end' fontSize='sm'>Remaining: {phase.maxMintAmount ?? 'Unlimited'}</Box>
         </Box>
       </Flex>
       <HStack spacing={0}>
@@ -617,15 +644,14 @@ const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinti
         <span className="ms-2">{phase.mintCost ? commify(phase.mintCost) : 'TBA'}</span>
       </HStack>
       {phase.redeemCost && (
-        <HStack mt={2}>
-          <Text>With rewards:</Text>
+        <HStack mt={2} fontSize='sm'>
+          <Text>From rewards:</Text>
           <HStack spacing={0}>
             <FortuneIcon boxSize={4} />
             <span className="ms-2">{commify(phase.redeemCost)}</span>
           </HStack>
         </HStack>
       )}
-      <Box>Allocation: {phase.maxMintAmount ?? 'Unlimited'}</Box>
 
       {phaseStatus === statuses.LIVE ? (
         <Box mt={2}>
@@ -638,7 +664,7 @@ const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinti
               </HStack>
               <PrimaryButton
                 w='full'
-                onClick={() => onMint(FundingType.FORTUNE, numToMint)}
+                onClick={() => onMint(FundingType.FORTUNE, numToMint, phase)}
                 disabled={isMinting}
                 isLoading={isMinting}
                 loadingText='Minting...'
@@ -647,7 +673,7 @@ const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinti
               </PrimaryButton>
               <PrimaryButton
                 w='full'
-                onClick={() => onMint(FundingType.REWARDS, numToMint)}
+                onClick={() => onMint(FundingType.REWARDS, numToMint, phase)}
                 disabled={isMinting}
                 isLoading={isMinting}
                 loadingText='Minting from FRTN rewards'
