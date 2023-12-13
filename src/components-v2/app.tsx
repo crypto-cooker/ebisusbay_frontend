@@ -79,7 +79,6 @@ function App({ Component, ...pageProps }: AppProps) {
           ) : (
             <>
               <GlobalStyles isDark={userTheme === 'dark'} />
-              <Notice />
               <Header/>
               <div style={{paddingTop: '74px'}}>
                 <Component {...pageProps} />
