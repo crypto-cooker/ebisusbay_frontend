@@ -540,7 +540,7 @@ const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinti
       const now = Date.now();
 
       if (phase.startTime > now) setPhaseStatus(statuses.NOT_STARTED);
-      else if (currentSupply >= maxSupply) setPhaseStatus(statuses.SOLD_OUT);
+      else if (currentSupply >= maxSupply || phase.maxMintAmount < 1) setPhaseStatus(statuses.SOLD_OUT);
       else if (!phase.endTime || phase.endTime > now) setPhaseStatus(statuses.LIVE);
       else if (phase.endTime && phase.endTime < now) setPhaseStatus(statuses.EXPIRED);
       else setPhaseStatus(statuses.NOT_STARTED);
@@ -637,7 +637,7 @@ const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinti
             />
           )}
           {phaseStatus <= statuses.LIVE && (
-            <Box textAlign='end' fontSize='sm'>Remaining: {phase.maxMintAmount ?? 'Unlimited'}</Box>
+            <Box textAlign='end' fontSize='sm'>Remaining: {phase.maxMintAmount ?? maxSupply - currentSupply}</Box>
           )}
         </Box>
       </Flex>
@@ -693,7 +693,7 @@ const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinti
           <Box textAlign='center' fontSize='sm' mt={4}>{description}</Box>
         </Box>
       ) : phaseStatus === statuses.SOLD_OUT ? (
-        <Box textAlign='center' mt={4} className='text-muted'>SOLD OUT</Box>
+        <Box textAlign='center' mt={4}>SOLD OUT</Box>
       ) : phaseStatus === statuses.EXPIRED ? (
         <Box textAlign='center' mt={4}>ENDED</Box>
       ) : (
