@@ -11,7 +11,7 @@ export default function Avatar({ src, alt = 'pfp', address = ZERO_ADDRESS, isVer
   return (
     <div className={styles.avatar}>
       <div className={styles.pfp}>
-        {src ? <img src={src} alt={alt} /> : <Blockies seed={address} size={15} scale={10} />}
+        {src ? <img src={src} alt={alt} /> : <Blockies seed={address.toLowerCase()} size={15} scale={10} />}
         {isVerified && <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass={styles.avatar_badge} />}
       </div>
     </div>

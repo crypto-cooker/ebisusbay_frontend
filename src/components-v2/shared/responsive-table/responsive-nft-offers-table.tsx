@@ -183,7 +183,7 @@ const ProfileCell = ({ address = '' }) => {
             {!isLoading && avatar ? (
               <img src={ImageService.translate(avatar).avatar()} alt={username ?? address} />
             ) : (
-              <Blockies seed={address} size={10} scale={5} />
+              <Blockies seed={address.toLowerCase()} size={10} scale={5} />
             )}
           </Box>
       </Box>

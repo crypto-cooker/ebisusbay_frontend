@@ -40,7 +40,7 @@ const ListingItem = ({
           <Box className="blockies me-3">
             <span>
               {/* <Link href={link}> */}
-              <Blockies seed={user} size={10} scale={5} />
+              <Blockies seed={user.toLowerCase()} size={10} scale={5} />
               {/* </Link> */}
             </span>
           </Box>

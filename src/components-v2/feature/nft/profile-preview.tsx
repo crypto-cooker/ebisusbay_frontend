@@ -46,7 +46,7 @@ const NftProfilePreview = ({ title, address }: NftProfilePreviewProps) => {
                 objectFit='cover'
               />
             ) : (
-              <Blockies seed={address} size={10} scale={5} />
+              <Blockies seed={address.toLowerCase()} size={10} scale={5} />
             )}
             {verified && (
               <VerifiedIcon>

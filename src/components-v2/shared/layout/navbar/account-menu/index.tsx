@@ -215,7 +215,7 @@ const Index = function () {
       )}
       {user.wallet.isConnected && user.wallet.correctChain && (
         <Box className="de-menu-profile" onClick={() => setShowMenu(!showMenu)}>
-          {user.profile?.profilePicture ? (
+          {!!user.profile?.profilePicture ? (
             <Image
               src={ImageService.translate(user.profile.profilePicture).avatar()}
               alt={user.profile.username}
@@ -225,7 +225,7 @@ const Index = function () {
               objectFit='cover'
             />
           ) : (
-            <Blockies seed={`${user.wallet.address}`} size={9} scale={4} />
+            <Blockies seed={`${user.wallet.address?.toLowerCase()}`} size={9} scale={4} />
           )}
         </Box>
       )}
@@ -270,7 +270,7 @@ const Index = function () {
                   {user.profile.profilePicture ? (
                     <img src={ImageService.translate(user.profile.profilePicture).avatar()} alt={user.profile.username} />
                   ) : (
-                    <Blockies seed={`${user.wallet.address}`} size={9} scale={4}/>
+                    <Blockies seed={`${user.wallet.address?.toLowerCase()}`} size={9} scale={4}/>
                   )}
                 </span>
                 <div>
