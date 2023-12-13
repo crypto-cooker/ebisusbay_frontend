@@ -122,10 +122,10 @@ const Notice = () => {
           <Text>
             The Cronos chain is currently experiencing intermittent issues. Some site functions may be temporarily unavailable until chain issues are resolved
           </Text>
-          <Box>
-            <Button variant='link' size='sm' onClick={() => setIsVisible(false)}>Hide</Button>
-          </Box>
         </HStack>
+        <Box>
+          <Button variant='link' size='sm' onClick={() => setIsVisible(false)}>Hide</Button>
+        </Box>
       </VStack>
     </Box>
   ) : null;

@@ -25006,6 +25006,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "TENEBRA's WIZARDS",
+      "slug": "tenebras-wizards",
+      "multiToken": false,
+      "address": "0x04eA91b5f0208ca480b7Efb5aDE0B5444CE1f74F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Pixel art animated Wizards made by ShadowBright. Art and passion mixed in a magical potion. Part of the TENEBRA's DREAM brand.",
+        "avatar": "/img/collections/tenebras-wizards/avatar.gif",
+        "card": "/img/collections/tenebras-wizards/card.gif",
+        "banner": "/img/collections/tenebras-wizards/banner.gif",
+        "website": "https://tenebra.netlify.app/",
+        "twitter": "https://twitter.com/Tenebrasdream",
+        "discord": "https://discord.gg/D7Fj78vGKd",
+        "gitbook": "https://tenebras-dream.gitbook.io/tenebras-dream/",
+        "categories": [
+          "collectibles",
+          "art"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
@@ -32432,7 +32459,7 @@
     {
       "id": 189,
       "slug": "ryoshi-tales-vip-2",
-      "collection": "ryoshi-tales",
+      "collection": "ryoshi-tales-vip",
       "title": "Ryoshi Tales VIP",
       "subtitle": "1400 Ryoshi VIP NFTs available for mint. Don't miss this unique opportunity. Stake VIP NFTs on Ryoshi Dynasties and unleash their power!",
       "description": "The last 1400 Ryoshi VIP NFTs are up for grabs with a tiered VIP sale!\nEach tier will last 10 minutes, here's the schedule:\n\n- 200k+ Mitama: 2000 $FRTN, Allotment 50\n- 100k+ Mitama: 2150 $FRTN, Allotment 150\n- 75k+ Mitama: 2200 $FRTN, Allotment 150\n- 25k+ Mitama: 2300 $FRTN, Allotment 150\n- 10k+ Mitama: 2350 $FRTN, Allotment 300\n- 5k+ Mitama: 2400 $FRTN, Allotment 500\n- Public Sale: 3000 $FRTN, Allotment 100 + all unsold from above\n\nMinting is possible with rewards!\n\n*Note: any VIPs unsold after the 70-minute event will return to the Ebisu's Bay team.",
