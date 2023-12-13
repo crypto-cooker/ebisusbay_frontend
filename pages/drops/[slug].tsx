@@ -11,6 +11,7 @@ import localDataService from "@src/core/services/local-data-service";
 import {Drop} from "@src/core/models/drop";
 import LandDrop from "@src/components-v2/feature/drop/land-drop";
 import DutchAuction from "@src/components-v2/feature/drop/types/dutch";
+import Vip2Drop from "@src/components-v2/feature/drop/vip2-drop";
 
 export const drops = appConfig('drops');
 const config = appConfig();
@@ -44,6 +45,8 @@ const Drop = ({ssrDrop, ssrCollection}: DropProps) => {
             <LandDrop drop={ssrDrop} />
           ) : ssrDrop.slug === 'ryoshi-heroes' ? (
             <DutchAuction drop={ssrDrop} />
+          ) : ssrDrop.slug === 'ryoshi-tales-vip-2' ? (
+            <Vip2Drop drop={ssrDrop} />
           ) : (
             <SingleDrop drop={ssrDrop} />
           )}

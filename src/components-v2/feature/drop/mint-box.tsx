@@ -212,7 +212,13 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   const mintWithRewards = async (finalCost: number) => {
     const signature = await requestSignature();
     const finalCostEth = ethers.utils.formatEther(finalCost);
-    const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(finalCostEth, user.address!, signature);
+    const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(
+      finalCostEth,
+      numToMint,
+      `Drop: ${drop.title}`,
+      user.address!,
+      signature
+    );
 
     const gasPrice = parseUnits('5000', 'gwei');
 
