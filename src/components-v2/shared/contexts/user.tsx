@@ -37,14 +37,15 @@ interface UserProviderProps {
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, dispatch] = useAtom(userAtom);
   const [_, setSigner] = useAtom(storageSignerAtom);
-  const {
-    address,
-    isConnecting,
-    isConnected, // true when explicitly connecting to wallet from dialog
-    isReconnecting, // true when wallet is auto connecting after page refresh
-    status,
-    connector
-  } = useAccount();
+
+  // isConnected - true when explicitly connecting to wallet from dialog
+  // isReconnecting - true when wallet is auto connecting after page refresh
+  const {address, isConnecting, isConnected, isReconnecting, status,connector} = useAccount({
+    onDisconnect() {
+      clearUser();
+    }
+  });
+
   const { chain } = useNetwork();
   const { disconnect: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
@@ -126,10 +127,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const disconnect = () => {
     disconnectWallet();
+  }
+
+  const clearUser = () => {
     localStorage.clear();
     setSigner(RESET);
     dispatch({ type: UserActionType.RESET_USER, payload: {} });
-    // TODO: reset all other state from User.ts
   }
 
   const toggleTheme = (theme: string) => {
@@ -198,7 +201,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         wallet: {
           address,
           isConnecting: isConnecting || isReconnecting,
-          isConnected,
+          isConnected: isConnected && !!connector,
           correctChain: isConnected && !!chain && chain.id === parseInt(config.chain.id)
         }
       }
