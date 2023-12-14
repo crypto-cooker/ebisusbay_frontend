@@ -37,7 +37,14 @@ interface UserProviderProps {
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, dispatch] = useAtom(userAtom);
   const [_, setSigner] = useAtom(storageSignerAtom);
-  const { address, isConnecting, isConnected, status, connector } = useAccount();
+  const {
+    address,
+    isConnecting,
+    isConnected, // true when explicitly connecting to wallet from dialog
+    isReconnecting, // true when wallet is auto connecting after page refresh
+    status,
+    connector
+  } = useAccount();
   const { chain } = useNetwork();
   const { disconnect: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
@@ -182,13 +189,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       payload: {
         wallet: {
           address,
-          isConnecting,
+          isConnecting: isConnecting || isReconnecting,
           isConnected,
           correctChain: isConnected && !!chain && chain.id === parseInt(config.chain.id)
         }
       }
     });
-  }, [address, isConnected, isConnecting, chain?.id]);
+  }, [address, isConnected, isConnecting, chain?.id, status]);
 
   // Initialize if freshly connected or wallet switched
   useEffect(() => {
