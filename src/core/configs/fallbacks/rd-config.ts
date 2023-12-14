@@ -47,7 +47,7 @@ export const ryoshiConfig: RyoshiConfig = {
   bank: {
     staking: {
       fortune: {
-        minimum: 1250,
+        minimum: 400,
         termLength: 90,
         maxTerms: 12,
         mitamaTroopsRatio: 30,

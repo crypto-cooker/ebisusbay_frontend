@@ -276,7 +276,7 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
                   <Box fontSize='sm' fontWeight='bold'>Deposit Amount</Box>
                   <FormControl maxW='200px' isInvalid={!!inputError}>
                     <NumberInput
-                      defaultValue={1250}
+                      defaultValue={rdConfig.bank.staking.fortune.minimum}
                       min={1}
                       name="quantity"
                       onChange={handleChangeFortuneAmount}
