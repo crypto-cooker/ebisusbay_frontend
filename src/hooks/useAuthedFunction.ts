@@ -14,12 +14,10 @@ const useAuthedFunction = () => {
       } catch (error: any) {
         toast.error(parseErrorMessage(error));
       }
-    } else {
-      if (!user.wallet.address) {
-        await open();
-      } else if (!user.wallet.correctChain) {
-        await open({view: 'Networks'});
-      }
+    } else if (!user.wallet.isConnected || !user.wallet.address) {
+      await open();
+    } else if (!user.wallet.correctChain) {
+      await open({view: 'Networks'});
     }
   };
 
