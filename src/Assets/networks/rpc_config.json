@@ -25033,6 +25033,29 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "LIFE OF HEL - REAPERS",
+      "slug": "life-of-hel-reapers",
+      "multiToken": false,
+      "address": "0x770FA15c43b84F61434321F5167814b64790E6Fa",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "First PFP collection of the LIFE OF HEL (LOH) saga. The REAPERS have been created by the Gods following the retirement of HEL, the all-powerful grim reaper, to ensure that the cycle of \"Life and Death\" continues. Each NFT will entitle its holders to exclusive benefits (including access to the future success of the LOH franchise, commercial license rights over the Reapers NFTs, and weekly entry to the LOH Lottery). If you like manga, fun, and ramen, look no further! A HEL of a journey awaits!",
+        "avatar": "/img/collections/life-of-hel-reapers/avatar.webp",
+        "card": "/img/collections/life-of-hel-reapers/card.webp",
+        "banner": "/img/collections/life-of-hel-reapers/banner.webp",
+        "website": "https://www.lifeofhel.xyz/",
+        "twitter": "https://twitter.com/lifeofhel",
+        "discord": "https://discord.gg/life-of-hel",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
