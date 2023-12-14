@@ -247,7 +247,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
                   <Text>Amount to stake</Text>
                   <FormControl maxW='200px' isInvalid={!!inputError}>
                     <NumberInput
-                      defaultValue={1250}
+                      defaultValue={rdConfig.bank.staking.fortune.minimum}
                       min={rdConfig.bank.staking.fortune.minimum}
                       name="quantity"
                       onChange={handleChangeFortuneAmount}
