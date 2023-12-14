@@ -38,7 +38,7 @@ export const configData = {
         root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
         ryoshiDynasties: 'ryoshi-dynasties-meeple',
         ryoshiPresale: 'ryoshi-presale',
-        stakedOwners: 'staked-owners',
+        stakedOwners: 'staked-owners-2',
         staking: 'staking'
       }
     },
@@ -269,7 +269,7 @@ export const configData = {
         root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
         ryoshiDynasties: 'ryoshi-dynasties-meeple',
         ryoshiPresale: 'ryoshi-presale',
-        stakedOwners: 'staked-owners',
+        stakedOwners: 'staked-owners-2',
         staking: 'staking'
       }
     },
