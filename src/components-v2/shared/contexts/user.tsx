@@ -37,7 +37,14 @@ interface UserProviderProps {
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, dispatch] = useAtom(userAtom);
   const [_, setSigner] = useAtom(storageSignerAtom);
-  const { address, isConnecting, isConnected, status, connector } = useAccount();
+  const {
+    address,
+    isConnecting,
+    isConnected, // true when explicitly connecting to wallet from dialog
+    isReconnecting, // true when wallet is auto connecting after page refresh
+    status,
+    connector
+  } = useAccount();
   const { chain } = useNetwork();
   const { disconnect: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
@@ -177,18 +184,26 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     // });
     //
     // console.log('debug --- wallet state', address, isConnecting, isConnected, chain?.id, parseInt(config.chain.id), isConnected && !!chain && chain.id === parseInt(config.chain.id), status, connector)
+    connector?.getProvider().then((p) => {
+      let wallet = 'Unknown';
+      if (p.isDeficonnectProvider) wallet = 'DeFi Wallet'; // isMetaMask also true, so make sure this is before
+      else if (p.isMetaMask) wallet = 'MetaMask';
+      else if (p.isBraveWallet) wallet = 'Brave';
+      Sentry.setTag('wallet', wallet);
+    });
+
     dispatch({
       type: UserActionType.SET_WALLET,
       payload: {
         wallet: {
           address,
-          isConnecting,
+          isConnecting: isConnecting || isReconnecting,
           isConnected,
           correctChain: isConnected && !!chain && chain.id === parseInt(config.chain.id)
         }
       }
     });
-  }, [address, isConnected, isConnecting, chain?.id]);
+  }, [address, isConnected, isConnecting, chain?.id, status]);
 
   // Initialize if freshly connected or wallet switched
   useEffect(() => {
@@ -200,9 +215,22 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   // Set Profile
   useEffect(() => {
+    const _profile = profile?.data;
+
+    if (_profile) {
+      Sentry.setUser({
+        id: address,
+        email: _profile.email,
+        username: _profile.username,
+        ip_address: '{{auto}}'
+      });
+    } else {
+      Sentry.setUser(null);
+    }
+
     dispatch({
       type: UserActionType.SET_PROFILE,
-      payload: { profile: profile?.data ?? {} }
+      payload: { profile: _profile ?? {} }
     });
   }, [profile]);
 

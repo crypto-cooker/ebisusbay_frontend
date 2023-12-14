@@ -131,8 +131,9 @@ class ImageTranslator {
 
   static remapUrl(fromDomain: string, toDomain: string) {
     const isRawData = fromDomain.startsWith('data');
-    if (!isRawData && (isLocalEnv() || !fromDomain.startsWith('http'))) {
-      return urlify(toDomain, fromDomain);
+    if (!isRawData) {
+      if (isLocalEnv() && fromDomain.startsWith('http')) return fromDomain;
+      if (!fromDomain.startsWith('http')) return urlify(toDomain, fromDomain);
     }
     if(!fromDomain || isRawData) return fromDomain;
 

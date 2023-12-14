@@ -24,6 +24,7 @@ import ImagesContainer from "../../Bundle/ImagesContainer";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {useQuery} from "@tanstack/react-query";
 import {useContractService, useUser} from "@src/components-v2/useUser";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffer, offer}) => {
   const contractService = useContractService();
@@ -61,13 +62,8 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
       setExecutingCancelOffer(false);
       onClose();
     } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
+      console.log(error);
+      toast.error(parseErrorMessage(error));
     } finally {
       setExecutingCancelOffer(false);
     }
