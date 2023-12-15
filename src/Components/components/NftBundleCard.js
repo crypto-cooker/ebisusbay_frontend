@@ -123,7 +123,6 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
   };
 
   const handleAddToCart = () => {
-    console.log('adddd',  nft);
     dispatch(addToCart({
       listingId: nft.market.id,
       name: nft.name,
