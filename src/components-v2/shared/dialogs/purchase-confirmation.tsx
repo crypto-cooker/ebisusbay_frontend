@@ -384,7 +384,7 @@ const CurrencyOption = ({currency}: {currency: {address: string, symbol: string,
       <Flex mt={1}>
         <HStack as="span" className="text-muted">
           <Box>Balance: </Box>
-          {isLoading ? <Spinner /> : <>{commify(round(tokenBalance, 2))}</>}
+          {isLoading ? <Spinner /> : <>{commify(round(tokenBalance ?? 0, 2))}</>}
         </HStack>
       </Flex>
     </>
