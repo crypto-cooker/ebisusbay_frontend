@@ -38,6 +38,7 @@ import {
   DrawerOverlay,
   Heading,
   Image,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -61,6 +62,8 @@ import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {getTheme} from "@src/Theme/theme";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {GasWriter} from "@src/core/chain/gas-writer";
+import * as Sentry from "@sentry/nextjs";
 
 const config = appConfig();
 
@@ -109,14 +112,24 @@ const Index = function () {
   };
 
   const withdrawBalance = async () => {
-    const tx = await contractService!.market.withdrawPayments(user.address);
+    if (!contractService) return;
+
+    const tx = await GasWriter.withContract(contractService.market).call(
+      'withdrawPayments',
+      user.wallet.address
+    );
     const receipt = await tx.wait();
     toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
     user.onEscrowClaimed();
   };
 
   const harvestStakingRewards = async () => {
-    const tx = await contractService!.staking.harvest(user.address);
+    if (!contractService) return;
+
+    const tx = await GasWriter.withContract(contractService.staking).call(
+      'harvest',
+      user.wallet.address
+    );
     const receipt = await tx.wait();
     toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
     user.onStakingHarvested();
@@ -125,15 +138,14 @@ const Index = function () {
   const toggleEscrowOptIn = async (optIn: boolean) => {
     if (!contractService) return;
 
-    try {
-      const tx = await contractService.market.setUseEscrow(user.wallet.address, optIn);
-      const receipt = await tx.wait();
-      user.onEscrowToggled();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-    } catch (error: any) {
-      console.log(error);
-      toast.error(parseErrorMessage(error));
-    }
+    const tx = await GasWriter.withContract(contractService.market).call(
+      'setUseEscrow',
+      user.wallet.address,
+      optIn
+    );
+    const receipt = await tx.wait();
+    user.onEscrowToggled();
+    toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
   };
 
   const clearCookies = async () => {
@@ -482,7 +494,7 @@ const Index = function () {
               </Text>
               <div className="d-flex mt-2">
                 <div className="flex-fill">
-                  <div className="text-muted">Staking Rewards</div>
+                  <div className="text-muted">CRO Staking Rewards</div>
                   <div className="">
                     {!user.initializing ? (
                       <>
@@ -512,7 +524,9 @@ const Index = function () {
                   )}
                 </div>
               </div>
-
+              <Text fontSize={'xs'}>
+                From 13 Dec 2023, staking rewards are now issued in <strong>$FRTN</strong>. Visit the <Link as={NextLink} href='/ryoshi' className='color' color='auto' fontWeight='bold'>Ryoshi Dynasties Bank</Link> to claim
+              </Text>
               <div className="row mt-3">
                 <div className="col">
                   <div className="d-flex justify-content-evenly">
@@ -547,6 +561,7 @@ const FunctionButton = ({title, fn}: {title: string, fn: () => Promise<void>}) =
       await fn();
     } catch (e) {
       console.log(e);
+      Sentry.captureException(e);
       toast.error(parseErrorMessage(e));
     } finally {
       setIsExecuting(false);
