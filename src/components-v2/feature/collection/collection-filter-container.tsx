@@ -66,7 +66,7 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
         const valueKey = stripSpaces(value);
         if (params.traits) {
           let traits = JSON.parse(params.traits);
-          traits[categoryKey] = traits[categoryKey].filter((v: string) => stripSpaces(v) !== valueKey);
+          traits[categoryKey] = traits[categoryKey]?.filter((v: string) => stripSpaces(v) !== valueKey) ?? [];
 
           if (traits[categoryKey].length === 0) delete traits[categoryKey];
           params.traits = JSON.stringify(traits);
