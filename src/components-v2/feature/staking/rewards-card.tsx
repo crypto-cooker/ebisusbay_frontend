@@ -1,4 +1,3 @@
-import {useDispatch} from "react-redux";
 import React, {useEffect, useState} from "react";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
@@ -6,10 +5,11 @@ import {createSuccessfulTransactionToastContent, round, siPrefixedNumber, useInt
 import {getTheme} from "@src/Theme/theme";
 import StakeABI from "@src/Contracts/Stake.json";
 import {appConfig} from "@src/Config";
-import {Box, Center, SimpleGrid, Spinner} from "@chakra-ui/react";
-import {useAppSelector} from "@src/Store/hooks";
+import {Box, Center, Link, SimpleGrid, Spinner, Text} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useUser} from "@src/components-v2/useUser";
+import NextLink from "next/link";
+import {GasWriter} from "@src/core/chain/gas-writer";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -78,7 +78,10 @@ const RewardsCard = () => {
       if (amountToHarvest.gt(0)) {
         try {
           const writeContract = new Contract(config.contracts.stake, StakeABI.abi, user.provider.getSigner());
-          const tx = await writeContract.harvest(user.address);
+          const tx = await GasWriter.withContract(writeContract).call(
+            'harvest',
+            user.wallet.address
+          );
           const receipt = await tx.wait();
           await getRewardsInfo();
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -179,7 +182,9 @@ const RewardsCard = () => {
                       </PrimaryButton>
                     </>
                   ) : (
-                    <p className="text-center my-auto">No harvestable rewards yet. Check back later!</p>
+                    <Text textAlign='center'>
+                      From 13 Dec 2023, staking rewards are now issued in <strong>$FRTN</strong>. Visit the <Link as={NextLink} href='/ryoshi' className='color' color='auto' fontWeight='bold'>Ryoshi Dynasties Bank</Link> to claim
+                    </Text>
                   )}
                 </div>
               )}
