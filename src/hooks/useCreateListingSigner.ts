@@ -2,6 +2,7 @@ import {useCallback, useState} from 'react';
 import {appConfig} from "@src/Config";
 import {BigNumber, ethers} from "ethers";
 import {useUser} from "@src/components-v2/useUser";
+import * as Sentry from "@sentry/nextjs";
 
 export interface ListingSignerProps {
   price: string;
@@ -112,6 +113,7 @@ const useSignature = () => {
 
         return { objectSignature, objectHash }
       } catch (err: any) {
+        Sentry.captureException(err);
         console.log(err)
         throw err;
       }
@@ -155,6 +157,7 @@ const useSignature = () => {
 
       return signature;
     } catch (err: any) {
+      Sentry.captureException(err);
       console.log(err?.message);
       throw err;
 

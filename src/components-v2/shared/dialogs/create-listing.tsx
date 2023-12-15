@@ -46,6 +46,7 @@ import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon
 import ReactSelect from "react-select";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useUser} from "@src/components-v2/useUser";
+import * as Sentry from "@sentry/nextjs";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -293,6 +294,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       setExecutingCreateListing(false);
       onClose();
     } catch (error: any) {
+      Sentry.captureException(error);
       toast.error(parseErrorMessage(error));
     } finally {
       setExecutingCreateListing(false);
