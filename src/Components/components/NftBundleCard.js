@@ -123,6 +123,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
   };
 
   const handleAddToCart = () => {
+    console.log('adddd',  nft);
     dispatch(addToCart({
       listingId: nft.market.id,
       name: nft.name,
@@ -131,7 +132,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
       address: nft.address ?? nft.nftAddress,
       id: nft.id ?? nft.nftId,
       rank: nft.rank,
-      currency: listing.currency
+      currency: nft.market.currency
     }));
     toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
   };
