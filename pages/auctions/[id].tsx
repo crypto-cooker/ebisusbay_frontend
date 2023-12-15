@@ -23,10 +23,14 @@ const Auction = ({id}: {id: string}) => {
 
 export const getServerSideProps = async ({ params }: GetServerSidePropsContext) => {
   return {
-    props: {
-      id: params?.id
-    },
+    notFound: true
   };
+  
+  // return {
+  //   props: {
+  //     id: params?.id
+  //   },
+  // };
 };
 
 
