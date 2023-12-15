@@ -18,6 +18,7 @@ import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
 import {useUser} from "@src/components-v2/useUser";
+import {GasWriter} from "@src/core/chain/gas-writer";
 
 const config = appConfig();
 
@@ -61,7 +62,12 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
         // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
         const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
         // console.log('===request', mintRequest, sig, authorization);
-        const tx = await resourcesContract.mintWithSig(mintRequest, sig);
+        const tx = await GasWriter.withContract(resourcesContract).call(
+          'mintWithSig',
+          mintRequest,
+          sig
+        );
+        // const tx = await resourcesContract.mintWithSig(mintRequest, sig);
 
         const receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
