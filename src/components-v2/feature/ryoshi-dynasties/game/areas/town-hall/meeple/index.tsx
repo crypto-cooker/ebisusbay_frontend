@@ -575,9 +575,11 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyActiveAmount}: 
 }
 
 const Upkeep = ({offDutyMeepleData}: {offDutyMeepleData: OffDutyMeepleInfo}) => {
+  const { config: rdConfig} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const nextUpkeep = formatTimeDifference(offDutyMeepleData.nextUpkeep);
+  const upkeepActiveDays = rdConfig.townHall.ryoshi.upkeepActiveDays;
 
   return (
     <>
@@ -592,10 +594,15 @@ const Upkeep = ({offDutyMeepleData}: {offDutyMeepleData: OffDutyMeepleInfo}) => 
               <Text color={'#aaa'}>Upkeep due: <b>{nextUpkeep}</b></Text>
             ) : offDutyMeepleData.lastUpkeep === 0 ? (
               <Text color={'#aaa'}>Take some Ryoshi off-duty first</Text>
-            ) : (
+            ) : (Date.now() > millisecondTimestamp(offDutyMeepleData.nextUpkeep) + upkeepActiveDays * 24 * 60 * 60 * 1000) ? (
               <HStack color='#f8a211'>
                 <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} boxSize={6}/>
                 <Text fontWeight='bold'>Upkeep overdue</Text>
+              </HStack>
+            ) : (
+              <HStack color='yellow.400'>
+                <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} boxSize={6}/>
+                <Text fontWeight='bold'>Upkeep due</Text>
               </HStack>
             )}
             {offDutyMeepleData.offDutyAmount > 0 && (
