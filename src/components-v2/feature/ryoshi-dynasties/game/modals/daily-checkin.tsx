@@ -62,12 +62,12 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
         // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
         const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
         // console.log('===request', mintRequest, sig, authorization);
-        const tx = await GasWriter.withContract(resourcesContract).call(
-          'mintWithSig',
-          mintRequest,
-          sig
-        );
-        // const tx = await resourcesContract.mintWithSig(mintRequest, sig);
+        // const tx = await GasWriter.withContract(resourcesContract).call(
+        //   'mintWithSig',
+        //   mintRequest,
+        //   sig
+        // );
+        const tx = await resourcesContract.mintWithSig(mintRequest, sig);
 
         const receipt = await tx.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
