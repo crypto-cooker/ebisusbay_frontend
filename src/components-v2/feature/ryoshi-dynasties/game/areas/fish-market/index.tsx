@@ -1,10 +1,11 @@
-import {AspectRatio, Box, Button, Flex, Image, Text, VStack,} from '@chakra-ui/react';
+import {AspectRatio, Box, Button, Flex, Image, Link, Text, VStack} from '@chakra-ui/react';
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {motion} from "framer-motion";
 import ImageService from "@src/core/services/image";
 
 import localFont from 'next/font/local';
+import NextLink from "next/link";
 
 const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' })
   
@@ -87,20 +88,21 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
     
 
       <Flex align={'center'} minH={'calc(100vh - 175px)'} justifyContent={'center'}>
-        <VStack spacing={4} align='stretch' >
-  
-        <RdButton onClick={(e) => {
-            window.open('https://app.ebisusbay.com/marketplace','_blank');
-            }}
-            >Visit marketplace</RdButton>
-        <RdButton onClick={(e) => {
-          window.open('https://app.ebisusbay.com/staking','_blank');
-            }}
-            >VIP staking</RdButton>
+        <VStack spacing={4} align='stretch'>
+          <Box>
+            <Link as={NextLink} href='https://app.ebisusbay.com/marketplace' target='_blank'>
+              <RdButton w='full'>Visit Marketplace</RdButton>
+            </Link>
+          </Box>
+          <Box>
+            <Link as={NextLink} href='https://app.ebisusbay.com/staking' target='_blank'>
+              <RdButton w='full'>VIP Staking</RdButton>
+            </Link>
+          </Box>
         </VStack>
       </Flex>
-      </Flex>
-    </Box>
+    </Flex>
+  </Box>
 
 
   <AspectRatio ratio={1920/1080} overflow='visible' >
