@@ -5,6 +5,7 @@ import {UserContext} from "@src/components-v2/shared/contexts/user";
 import {useWalletClient, WalletClient} from "wagmi";
 import {useWeb3Modal} from "@web3modal/wagmi/react";
 import {useQueryClient} from "@tanstack/react-query";
+import ContractService from "@src/core/contractService";
 
 export const useUser = () => {
   const context = useContext(UserContext);
@@ -72,7 +73,7 @@ export const useContractService = () => {
     }
   }, [user.wallet.address, user.wallet.isConnected, signer]);
 
-  return contractService;
+  return contractService ?? (signer ? new ContractService(signer) : null);
 }
 
 /**

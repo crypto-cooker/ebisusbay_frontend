@@ -32,6 +32,7 @@ import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import NextApiService from "@src/core/services/api-service/next";
 import {useContractService, useUser} from "@src/components-v2/useUser";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 const floorThreshold = 5;
@@ -88,8 +89,10 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     async function asyncFunc() {
       await getInitialProps();
     }
-    asyncFunc();
-  }, [nft]);
+    if (nft && contractService) {
+      asyncFunc();
+    }
+  }, [nft, contractService]);
 
   const getInitialProps = async () => {
     try {
@@ -127,14 +130,8 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
 
       setIsLoading(false);
     } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
       console.log(error);
+      toast.error(parseErrorMessage(error));
     }
   };
 
