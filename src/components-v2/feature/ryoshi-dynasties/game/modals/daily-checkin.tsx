@@ -47,7 +47,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
     if (!isInscriptionsPromoLive) return false;
 
     const crosInscription = user.inscriptions.find(inscription => inscription.id === 1);
-    return crosInscription && crosInscription.amount >= 10000
+    return crosInscription && crosInscription.amount >= 1000000
   }, [user.inscriptions]);
 
   const kobanMultiplier = isEligibleForBonus ? 10 : 1;
