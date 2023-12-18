@@ -392,9 +392,9 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
                   <div className={[styles.verdant_forest, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Verdant Forest")}>
                     <div className={[styles.worldmap_label, styles.verdant_forest_label].filter(e => !!e).join(' ')}>
                     <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Verdant Forest")}></Avatar>Verdant Forest</div> </div>
-                  <div className={[styles.infinite_nexus, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Infinte Nexus")}>
+                  <div className={[styles.infinite_nexus, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Infinite Nexus")}>
                     <div className={[styles.worldmap_label, styles.infinite_nexus_label].filter(e => !!e).join(' ')}>
-                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("The Infinte Nexus")}></Avatar>Infinite Nexus</div></div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("The Infinite Nexus")}></Avatar>Infinite Nexus</div></div>
                   <div className={[styles.venoms_descent, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Venoms Descent")}>
                     <div className={[styles.worldmap_label, styles.venoms_descent_label].filter(e => !!e).join(' ')}>
                     <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Venoms Descent")}></Avatar>Venom's Descent</div></div>
