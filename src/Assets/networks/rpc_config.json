@@ -20183,7 +20183,7 @@
         "banner": "/img/collections/moonwolves/banner.webp",
         "website": "https://moonflow.club",
         "twitter": "https://twitter.com/Moonflownft",
-        "discord": "https://discord.gg/moonflow",
+        "discord": "https://discord.gg/moonflowlabs",
         "medium": "https://medium.com/@moonflowclubnft",
         "categories": [
           "collectibles",
@@ -22557,7 +22557,7 @@
         "banner": "/img/collections/cronos-factions/banner.webp",
         "website": "https://cronosfactions.com/",
         "twitter": "https://www.twitter.com/factions_nft",
-        "discord": "https://discord.gg/factionsnft",
+        "discord": "https://discord.gg/moonflowlabs",
         "categories": [
           "utility"
         ]
@@ -24569,7 +24569,7 @@
       "name": "Genius Genies",
       "slug": "genius-genies",
       "multiToken": false,
-      "address": "0x5DAf5C61cb6FC86aBBaf3129040e74f8011fbb2D",
+      "address": "0x26ba6Bd9436cf2BE636b32cCf40b1c3843c6ac13",
       "onChain": false,
       "listable": false,
       "metadata": {
