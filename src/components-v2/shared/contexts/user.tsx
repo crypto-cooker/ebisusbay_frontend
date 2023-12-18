@@ -15,6 +15,7 @@ import {useColorMode} from "@chakra-ui/react";
 import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
 import {storageSignerAtom} from "@src/jotai/atoms/storage";
 import * as Sentry from "@sentry/react";
+import Croscribe from "@src/third-party/croscribe";
 
 const config = appConfig();
 
@@ -118,6 +119,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           isMember: data[0].result ?? false
         },
       });
+
+      const inscriptionApi = new Croscribe();
+      const inscriptionBalances = await inscriptionApi.getBalance(address);
+      dispatch({type: UserActionType.SET_INSCRIPTION_BALANCES, payload: {inscriptions: inscriptionBalances}});
     } catch (e) {
       console.log(e);
     } finally {
@@ -171,22 +176,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   // Set Wallet
   useEffect(() => {
-    // Sentry.captureMessage("DEBUG: WALLET STATE", {
-    //   extra: {
-    //     customData: {
-    //       address,
-    //       isConnecting,
-    //       isConnected,
-    //       chain: chain?.id,
-    //       configChain: parseInt(config.chain.id),
-    //       correctChain: isConnected && !!chain && chain.id === parseInt(config.chain.id),
-    //       status,
-    //       connector,
-    //     }
-    //   }
-    // });
-    //
-    // console.log('debug --- wallet state', address, isConnecting, isConnected, chain?.id, parseInt(config.chain.id), isConnected && !!chain && chain.id === parseInt(config.chain.id), status, connector)
     connector?.getProvider().then((p) => {
       let wallet = 'Unknown';
       if (p.isDeficonnectProvider) wallet = 'DeFi Wallet'; // isMetaMask also true, so make sure this is before

@@ -154,6 +154,14 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
         <Text mt={4} textColor={'#fefaee'} >
           Users wishing to visit the <b>Ebisu's Bay</b> marketplace experience can still do so by <b>using the links at the top of the page.</b>
         </Text>
+        <Box mt={4}>
+          <Text textColor={'#fefaee'} fontWeight='bold'>
+            LIMITED TIME: Earn 10x Koban from your check-ins by holding 1M of the new $CROS inscription!
+          </Text>
+          <Text textColor={'#fefaee'} fontSize='sm'>
+            Offer ends 1 Jan 2024.
+          </Text>
+        </Box>
       </Box>
 
       {adSpot}

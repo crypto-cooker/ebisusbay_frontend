@@ -17,6 +17,7 @@ export interface JotaiUser {
     enabled: boolean;
     balance: number;
   },
+  inscriptions: UserInscription[];
   fee: number;
   initializing: boolean;
   initialized: boolean;
@@ -24,11 +25,18 @@ export interface JotaiUser {
   isMember: boolean;
 }
 
+interface UserInscription {
+  id: number;
+  tick: string;
+  amount: number;
+}
+
 export enum UserActionType {
   SET_WALLET,
   SET_PROFILE,
   SET_TOKEN_BALANCES,
   SET_CONTRACT_BALANCES,
+  SET_INSCRIPTION_BALANCES,
   SET_INITIALIZING,
   SET_ESCROW,
   STAKING_HARVESTED,
@@ -57,6 +65,8 @@ function userReducer(state: JotaiUser, action: UserAction): JotaiUser {
         escrow: { ...state.escrow, ...action.payload.escrow },
         balances: { ...state.balances, ...action.payload.balances },
       };
+    case UserActionType.SET_INSCRIPTION_BALANCES:
+      return { ...state, inscriptions: action.payload.inscriptions as UserInscription[] };
     case UserActionType.SET_INITIALIZING:
       return { ...state, initializing: !!action.payload.initializing, initialized: !!action.payload.initialized };
     case UserActionType.TOGGLE_THEME:
@@ -101,6 +111,7 @@ const initialUserState: JotaiUser = {
     enabled: false,
     balance: 0
   },
+  inscriptions: [],
   fee: 3,
   initializing: false,
   initialized: false,

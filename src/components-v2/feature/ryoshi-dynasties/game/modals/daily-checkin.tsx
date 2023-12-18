@@ -2,7 +2,7 @@ import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/com
 import {ApiService} from "@src/core/services/api-service";
 import {Box, HStack, Image, SimpleGrid, Text} from "@chakra-ui/react";
 import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useMemo, useState} from "react";
 import {Contract} from "ethers";
 import {toast} from "react-toastify";
 import {appConfig} from "@src/Config";
@@ -18,7 +18,6 @@ import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
 import {useUser} from "@src/components-v2/useUser";
-import {GasWriter} from "@src/core/chain/gas-writer";
 
 const config = appConfig();
 
@@ -40,6 +39,18 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
 
   const [runAuthedFunction] = useAuthedFunction();
   const {isSignedIn, signin, requestSignature} = useEnforceSigner();
+
+  const isEligibleForBonus = useMemo(() => {
+
+    const inscriptionsPromoEndDate = new Date('2024-01-01');
+    const isInscriptionsPromoLive = new Date() < inscriptionsPromoEndDate;
+    if (!isInscriptionsPromoLive) return false;
+
+    const crosInscription = user.inscriptions.find(inscription => inscription.id === 1);
+    return crosInscription && crosInscription.amount >= 10000
+  }, [user.inscriptions]);
+
+  const kobanMultiplier = isEligibleForBonus ? 10 : 1;
 
   const authCheckBeforeClaim = async () => {
     await runAuthedFunction(claimDailyRewards);
@@ -117,6 +128,11 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
         <Text align='center'>
           Earn Koban by checking in daily. Multiply your rewards by claiming multiple days in a row!
         </Text>
+        {isEligibleForBonus && (
+          <Text align='center' fontWeight='bold' color='#FFD700' mt={2}>
+            You are eligible for a 10x bonus!
+          </Text>
+        )}
         <AuthenticationRdButton
           connectText='Connect and sign in to claim your daily reward'
           signinText='Sign in to claim your daily reward'
@@ -127,7 +143,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
                 <Box key={index} w='100%' h='55' rounded="lg" color={'#FFD700'}  border={streakIndex == index + 1 ? '2px' : ''}>
                   <Text fontSize={16} color='#aaa' textAlign={'center'}>Day {index + 1}</Text>
                   <HStack justifyContent={'center'} spacing={0.5}>
-                    <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >{reward}</Text>
+                    <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >{reward * kobanMultiplier}</Text>
                     <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
                   </HStack>
                 </Box>
@@ -138,7 +154,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
               <Text as='span'>Your current streak is <strong>{streak} {pluralize(streak, 'day')}</strong>. </Text>
               {canClaim ? (
                 <Text as='span'>
-                  Claim now to increase your streak and earn {rdContext.config.rewards.daily[streakIndex]} Koban
+                  Claim now to increase your streak and earn {rdContext.config.rewards.daily[streakIndex] * kobanMultiplier} Koban
                 </Text>
               ) : (
                 <Text as='span'>
