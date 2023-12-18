@@ -10,6 +10,7 @@ import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
+import ResourcesTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/rewards/resources";
 
 const tabs = {
   fortune: 'fortune',
@@ -90,17 +91,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
                   // </RdModalBox>
                 )}
                 {currentTab === tabs.resources && (
-                  // <ResourcesTab />
-                  <RdModalBox>
-                    <VStack>
-                      <Image
-                        src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
-                        alt="lockIcon"
-                        boxSize={12}
-                      />
-                      <Text>Coming Soon</Text>
-                    </VStack>
-                  </RdModalBox>
+                  <ResourcesTab />
                 )}
                 {currentTab === tabs.presale && (
                   <PresaleVaultTab />

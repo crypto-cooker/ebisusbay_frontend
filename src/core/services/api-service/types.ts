@@ -43,6 +43,8 @@ export interface RyoshiDynastiesApi {
     getDailyRewards(address: string): Promise<any>
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
     claimDailyRewards(address: string, signature: string): Promise<any>
+    getResourcesBalances(address: string, signature: string): Promise<Array<{tokenId: number, amount: number}>>;
+    requestResourcesWithdrawalAuthorization(tokenId: number, amount: number, address: string, signature: string): Promise<any>;
     requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string): Promise<any>;
     requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string): Promise<any>;
     getPendingFortuneAuthorizations(address: string, signature: string): Promise<any>;

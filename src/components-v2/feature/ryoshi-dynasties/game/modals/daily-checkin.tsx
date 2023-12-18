@@ -1,12 +1,10 @@
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {ApiService} from "@src/core/services/api-service";
 import {Box, HStack, Image, SimpleGrid, Text} from "@chakra-ui/react";
-import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
+import {pluralize} from "@src/utils";
 import {useContext, useEffect, useState} from "react";
-import {Contract} from "ethers";
 import {toast} from "react-toastify";
 import {appConfig} from "@src/Config";
-import Resources from "@src/Contracts/Resources.json";
 import moment from "moment";
 import ImageService from "@src/core/services/image";
 import {
@@ -18,7 +16,6 @@ import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
 import {useUser} from "@src/components-v2/useUser";
-import {GasWriter} from "@src/core/chain/gas-writer";
 
 const config = appConfig();
 
@@ -54,23 +51,8 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
       try {
         setExecutingClaim(true);
         const signature = await requestSignature();
-        const authorization = await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signature);
-
-        const sig = authorization.data.signature;
-        const mintRequest = JSON.parse(authorization.data.metadata);
-
-        // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
-        const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-        // console.log('===request', mintRequest, sig, authorization);
-        // const tx = await GasWriter.withContract(resourcesContract).call(
-        //   'mintWithSig',
-        //   mintRequest,
-        //   sig
-        // );
-        const tx = await resourcesContract.mintWithSig(mintRequest, sig);
-
-        const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signature);
+        toast.success('Success!');
         setCanClaim(false);
         setNextClaim('in 24 hours');
         rdContext.refreshUser();
