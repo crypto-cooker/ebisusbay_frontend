@@ -32,4 +32,19 @@ Sentry.init({
   // ],
 
   maxBreadcrumbs: 50,
+
+  beforeSend(event) {
+    if (event.exception?.values) {
+      const ignorableTypes = [
+        'ResourceUnavailableRpcError',
+        'UserRejectedRequestError',
+        'ConnectorNotFoundError'
+      ];
+      if (event.exception.values[0].type && ignorableTypes.includes(event.exception.values[0].type)) {
+        return null;
+      }
+    }
+
+    return event;
+  },
 });
