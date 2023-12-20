@@ -17,7 +17,7 @@ class Croscription {
       const response = await this.axios.get(url);
       return response.data.balance;
     } catch (e) {
-      return [];
+      return 0;
     }
   }
 
@@ -25,7 +25,7 @@ class Croscription {
     try {
       return this.getBalance(address, 'cros');
     } catch (e) {
-      return [];
+      return 0;
     }
   }
 }
