@@ -15,7 +15,7 @@ import {useColorMode} from "@chakra-ui/react";
 import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
 import {storageSignerAtom} from "@src/jotai/atoms/storage";
 import * as Sentry from "@sentry/react";
-import Croscribe from "@src/third-party/croscribe";
+import axios from "axios";
 
 const config = appConfig();
 
@@ -120,9 +120,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         },
       });
 
-      const inscriptionApi = new Croscribe();
-      const inscriptionBalances = await inscriptionApi.getBalance(address);
-      dispatch({type: UserActionType.SET_INSCRIPTION_BALANCES, payload: {inscriptions: inscriptionBalances}});
+      const inscriptionBalance = await axios.get('api/inscriptions/balance', { params: { address}});
+      dispatch({type: UserActionType.SET_INSCRIPTION_BALANCES, payload: {inscriptions: [
+        {id: 1, tick: 'cros', amount: inscriptionBalance.data},
+      ]}});
     } catch (e) {
       console.log(e);
     } finally {
