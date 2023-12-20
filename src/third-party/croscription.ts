@@ -7,7 +7,7 @@ class Croscription {
     this.axios = axios.create({baseURL: 'http://154.56.56.249:8081/indexer'});
   }
 
-  async getBalance(address: string, tick?: string) {
+  async getBalance(address: string, tick?: string): Promise<number> {
     try {
       let url = `balance/${address.toLowerCase()}`;
       if (tick) {
@@ -15,7 +15,7 @@ class Croscription {
       }
 
       const response = await this.axios.get(url);
-      return response.data.balance;
+      return response.data.balance as number;
     } catch (e) {
       return 0;
     }

@@ -302,7 +302,7 @@ const Vip2Drop = ({drop}: LandDropProps) => {
     }
 
     const actualContract = new Contract(drop.address, abi, user.provider.getSigner());
-    const gasPrice = parseUnits('5000', 'gwei');
+    const gasPrice = parseUnits('12000', 'gwei');
     const gasEstimate = await actualContract.estimateGas.mintWithToken(numToMint);
     const gasLimit = gasEstimate.mul(2);
     let extra = {
