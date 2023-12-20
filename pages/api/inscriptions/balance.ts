@@ -1,9 +1,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
-import WalletNft from "@src/core/models/wallet-nft";
 import Croscription from "@src/third-party/croscription";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<IPaginatedList<WalletNft>>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<number>) {
   const { query } = req;
   const { address  } = query;
 
