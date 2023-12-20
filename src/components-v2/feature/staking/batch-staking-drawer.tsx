@@ -38,6 +38,8 @@ import {useAppSelector} from "@src/Store/hooks";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import ImageService from "@src/core/services/image";
 import {useContractService, useUser} from "@src/components-v2/useUser";
+import * as Sentry from "@sentry/nextjs";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 const config = appConfig();
 
@@ -99,14 +101,8 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}: BatchStakingDrawer &
     try {
       await executeAction();
     } catch (error: any) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        console.log(error);
-        toast.error('Unknown Error');
-      }
+      Sentry.captureException(error);
+      toast.error(parseErrorMessage(error));
     }
   }
 
