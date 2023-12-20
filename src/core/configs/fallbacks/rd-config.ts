@@ -454,18 +454,18 @@ export const ryoshiConfig: RyoshiConfig = {
         collections: [
           {
             ...collections.find(c => c.slug === 'cowz')!,
-            active: true,
-            fortune: 35000
+            active: false,
+            fortune: 0
           },
           {
             ...collections.find(c => c.slug === 'aiko-legends')!,
-            active: true,
-            fortune: 25000
+            active: false,
+            fortune: 0
           },
           {
             ...collections.find(c => c.slug === 'mad-meerkat')!,
-            active: true,
-            fortune: 15000
+            active: false,
+            fortune: 0
           }
         ]
       }
