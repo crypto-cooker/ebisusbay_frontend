@@ -50,6 +50,7 @@ import {getPrices} from "@src/core/api/endpoints/prices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import Link from "next/link";
 import {useContractService, useUser} from "@src/components-v2/useUser";
+import * as Sentry from "@sentry/nextjs";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -129,6 +130,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       }]);
       setIsComplete(true);
     } catch (error: any) {
+      Sentry.captureException(error);
       toast.error(parseErrorMessage(error));
     } finally {
       setExecutingPurchase(false);
