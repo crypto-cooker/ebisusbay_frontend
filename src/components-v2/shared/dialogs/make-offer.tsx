@@ -35,6 +35,7 @@ import {ApiService} from "@src/core/services/api-service";
 import {OfferState} from "@src/core/services/api-service/types";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useContractService, useUser} from "@src/components-v2/useUser";
+import * as Sentry from "@sentry/nextjs";
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 25;
@@ -164,6 +165,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
         onClose();
       } catch (error) {
         console.log(error);
+        Sentry.captureException(error);
         toast.error(parseErrorMessage(error));
       } finally {
         setExecutingCreateListing(false);
