@@ -37,7 +37,7 @@ const LegacyStaking = () => {
   const setApprovalForAll = async () => {
     const isApproved = await contractService!.membership.isApprovedForAll(config.contracts.stake, user.address);
     if (!isApproved) {
-      let tx = await contractService!.membership.setApprovalForAll(config.contracts.stake, true, txExtras);
+      let tx = await contractService!.membership.setApprovalForAll(config.contracts.stake, true);
       await tx.wait();
     }
   };
@@ -79,7 +79,7 @@ const LegacyStaking = () => {
       return;
     }
     try {
-      const tx = await contractService.staking.unstake(quantity, { gasPrice: 5000000000000 });
+      const tx = await contractService.staking.unstake(quantity);
       const receipt = await tx.wait();
       setStakeCount(stakeCount - quantity);
       setVipCount(vipCount + quantity);
