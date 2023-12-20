@@ -79,7 +79,7 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}: BatchStakingDrawer &
           gasPrice,
           gasLimit
         };
-        tx = await contractService!.staking.stakeRyoshi(nftAddresses, extra);
+        tx = await contractService!.staking.stakeRyoshi(nftAddresses);
       } else {
         const gasEstimate = await contractService!.staking.estimateGas.unstakeRyoshi(nftAddresses);
         const gasLimit = gasEstimate.mul(2);
@@ -87,7 +87,7 @@ export const BatchStakingDrawer = ({onClose, ...gridProps}: BatchStakingDrawer &
           gasPrice,
           gasLimit
         };
-        tx = await contractService!.staking.unstakeRyoshi(nftAddresses, extra);
+        tx = await contractService!.staking.unstakeRyoshi(nftAddresses);
       }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
