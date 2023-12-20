@@ -202,37 +202,46 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         <FaqPage />
       ) : (
         <TownHallStakeNftContext.Provider value={{pendingNfts, stakedNfts, totals: stakedTokenTotals}}>
-          <Text align='center' p={2}>Collection winners of the September volume competition are now stakable in the Town Hall! Each staked NFT from the below collections are eligible to receive daily FRTN rewards🔥</Text>
-          <StakingBlock
-            pendingNfts={pendingNfts}
-            stakedNfts={stakedNfts}
-            onRemove={handleRemoveNft}
-            onStaked={handleStakeSuccess}
-          />
-          <Box p={4}>
-            <Flex direction='row' justify='center' mb={2}>
-              <SimpleGrid columns={{base: 2, sm: 3}}>
-                <RdTabButton isActive={currentTab === tabs.cowz} onClick={handleBtnClick(tabs.cowz)}>
-                  Cowz
-                </RdTabButton>
-                <RdTabButton isActive={currentTab === tabs.aikoLegends} onClick={handleBtnClick(tabs.aikoLegends)}>
-                  Aiko Legends
-                </RdTabButton>
-                <RdTabButton isActive={currentTab === tabs.madMeerkat} onClick={handleBtnClick(tabs.madMeerkat)}>
-                  Mad Meerkat
-                </RdTabButton>
-              </SimpleGrid>
-            </Flex>
-            <Box>
-              <UnstakedNfts
-                isReady={isOpen}
-                collection={currentCollection}
-                address={user.address ?? undefined}
-                onAdd={handleAddNft}
-                onRemove={handleRemoveNft}
-              />
-            </Box>
+          <Box p={2} textAlign='center'>
+            <Text>
+              Staking benefits for the winners of the September volume competition have now ended.
+            </Text>
+            <Text mt={2}>
+              Coming soon will be be eligible collections from the winners of each weekly game. Each staked NFT from eligible collection will receive daily FRTN rewards🔥
+            </Text>
           </Box>
+          <Box pb={2}>
+            <StakingBlock
+              pendingNfts={pendingNfts}
+              stakedNfts={stakedNfts}
+              onRemove={handleRemoveNft}
+              onStaked={handleStakeSuccess}
+            />
+          </Box>
+          {/*<Box p={4}>*/}
+          {/*  <Flex direction='row' justify='center' mb={2}>*/}
+          {/*    <SimpleGrid columns={{base: 2, sm: 3}}>*/}
+          {/*      <RdTabButton isActive={currentTab === tabs.cowz} onClick={handleBtnClick(tabs.cowz)}>*/}
+          {/*        Cowz*/}
+          {/*      </RdTabButton>*/}
+          {/*      <RdTabButton isActive={currentTab === tabs.aikoLegends} onClick={handleBtnClick(tabs.aikoLegends)}>*/}
+          {/*        Aiko Legends*/}
+          {/*      </RdTabButton>*/}
+          {/*      <RdTabButton isActive={currentTab === tabs.madMeerkat} onClick={handleBtnClick(tabs.madMeerkat)}>*/}
+          {/*        Mad Meerkat*/}
+          {/*      </RdTabButton>*/}
+          {/*    </SimpleGrid>*/}
+          {/*  </Flex>*/}
+          {/*  <Box>*/}
+          {/*    <UnstakedNfts*/}
+          {/*      isReady={isOpen}*/}
+          {/*      collection={currentCollection}*/}
+          {/*      address={user.address ?? undefined}*/}
+          {/*      onAdd={handleAddNft}*/}
+          {/*      onRemove={handleRemoveNft}*/}
+          {/*    />*/}
+          {/*  </Box>*/}
+          {/*</Box>*/}
         </TownHallStakeNftContext.Provider>
       )}
     </RdModal>
@@ -335,7 +344,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
                         {/*</Box>*/}
                         <VStack align='end' spacing={0} fontWeight='bold'>
                           <Box>
-                            + {round((1/(townHallStakeNftContext.totals[pendingNfts[index].nftAddress.toLowerCase()] ?? 0))*100, 2)}%
+                            + 0%
                           </Box>
                         </VStack>
                       </Flex>
