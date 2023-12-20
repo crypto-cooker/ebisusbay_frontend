@@ -25056,6 +25056,28 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Crononymous",
+      "slug": "crononymous",
+      "multiToken": false,
+      "address": "0x9cFB6b1F67abFe4d02d99DbA00A25F8F82E0Df63",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crononymous is a collection created by a group of Cronos users who wanted to collaborate to create a real DAO project. The main goal of this project is to create an active and constructive community that actively plays the Ryoshi Dynasties game by Ebisus Bay and other future web3 GameFi and P2E games. Also works to add more benefits to the collection in the future.  The art is inspired by the anonymous organization that we all know, representing the anonymity (or pseudo-anonymity) of the web3 world.  Our project wallet is protected by a multi-signature smart contract wallet. This secure wallet requires a set of owners and a transaction approval policy. Our policy specifies that at least 3 owners are required to authorize a transaction.  Join the movement, join Crononymous.",
+        "avatar": "/img/collections/crononymous/avatar.webp",
+        "card": "/img/collections/crononymous/card.webp",
+        "banner": "/img/collections/crononymous/banner.webp",
+        "twitter": "https://twitter.com/CrononymousNFT",
+        "discord": "https://discord.gg/YBjGEQrjv7",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
