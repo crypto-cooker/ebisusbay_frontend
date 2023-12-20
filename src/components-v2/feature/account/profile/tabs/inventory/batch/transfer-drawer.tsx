@@ -98,7 +98,7 @@ const TransferDrawer = () => {
           setMappedCnsAddress(`Found ${shortAddress(croidAddress)}`)
           setRecipient(croidAddress);
         } else {
-          setFieldError('recipient', 'Invalid CNS name');
+          setFieldError('recipient', 'Invalid Cronos ID');
           return;
         }
       }
@@ -168,7 +168,7 @@ const TransferDrawer = () => {
           <FormControlCK
             name={'recipient'}
             label={'Recipient'}
-            helperText={mappedCnsAddress ?? 'Address or CNS name'}
+            helperText={mappedCnsAddress ?? 'Address or Cronos ID'}
             value={values?.recipient}
             error={errors?.recipient}
             touched={touched?.recipient}

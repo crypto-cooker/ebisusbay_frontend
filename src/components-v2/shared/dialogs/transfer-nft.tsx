@@ -93,7 +93,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
           targetAddress = croidAddress;
           setExecutingCnsLookup(false);
         } else {
-          setFieldError('No matching profiles for this CNS name');
+          setFieldError('No matching profiles for this Cronos ID');
           setExecutingCnsLookup(false);
           return;
         }
@@ -141,7 +141,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
     }
 
     if (!recipientAddress || (!recipientAddress.endsWith('.cro') && !recipientAddress.startsWith('0x'))) {
-      setFieldError('Please enter a valid Cronos address or CNS name');
+      setFieldError('Please enter a valid Cronos address or Cronos ID');
       return false;
     }
 
@@ -213,11 +213,11 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
                   <Box className="mt-4 mt-sm-0 mb-3 mb-sm-0">
                     <FormControl className="form-field" isInvalid={!!fieldError}>
                       <FormLabel w='full' className="formLabel">
-                        Recipient Address or CNS Name
+                        Recipient Address or Cronos ID
                       </FormLabel>
                       <Input
                         type="text"
-                        placeholder="Address or CNS name"
+                        placeholder="Address or Cronos ID"
                         value={recipientAddress}
                         onChange={onChangeAddress}
                         disabled={showConfirmButton || executingTransferNft}
