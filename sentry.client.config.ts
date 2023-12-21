@@ -46,6 +46,13 @@ Sentry.init({
       }
     }
 
+    const serializedData = event.extra?.__serialized__ as { code: number };
+
+    // UserRejectedRequestError also found here. https://eips.ethereum.org/EIPS/eip-1193#provider-errors
+    if (serializedData?.code === 4001) {
+      return null;
+    }
+
     return event;
   },
 });
