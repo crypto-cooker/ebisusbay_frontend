@@ -908,6 +908,9 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
   const [showAll, setShowAll] = useState<boolean>(true);
   const [ryoshiToReceive, setRyoshiToReceive] = useState<number>(0);
   const [selectedCardsSum, setSelectedCardsSum] = useState<number>(0);
+  const [manuallySelectedAll, setManuallySelectedAll] = useState<boolean>(false);
+
+  const cardsPerSet = 3;
 
   const getLocationData = async () => {
     try {
@@ -920,7 +923,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
 
       //filter out only locations
       for(let i = 0; i < data.data.length; i++){
-        for(let j=0; j < data.data[i].attributes?.length; j++){
+        for(let j= 0; j < data.data[i].attributes?.length; j++){
           if(data.data[i].attributes[j].trait_type == "Location"){
             locations.push({
               name: data.data[i].attributes[j].value,
@@ -951,10 +954,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
   const handleClose = () => {
     setSelectedTab(0);
     setCardsToTurnIn([]);
-    // SetUpCardsInWallet();
     onClose();
-    // ResetCardsInWallet();
-    console.log("Closed");
   }
 
   const handleTurnInCards = async () => {
@@ -985,7 +985,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
     }
   }
 
-  const handleSelectCards = (nftId: number, quantity: number) => {
+  const handleSelectCards = (nftId: number, quantity: number, resetSelectAllToggle: boolean = false) => {
     setCardsToTurnIn((prevState) => {
       const updatedState = { ...prevState };
 
@@ -997,6 +997,20 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
 
       return updatedState;
     });
+    if (resetSelectAllToggle) setManuallySelectedAll(false);
+  }
+
+  const handleSelectAll = () => {
+    if (manuallySelectedAll) {
+      setCardsToTurnIn({});
+      setManuallySelectedAll(false);
+      return;
+    }
+
+    locationsWithUserQty.filter(card => card.quantity >= 3).forEach((card) => {
+      handleSelectCards(card.id, Math.floor(card.quantity - (card.quantity % cardsPerSet)), true);
+    });
+    setManuallySelectedAll(true);
   }
 
   useEffect(() => {
@@ -1010,7 +1024,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
       if (!card) return;
       const base = rdConfig.townHall.ryoshi.tradeIn.base[key];
       const multiplier = rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[card.tier - 1];
-      const sets = cardsToTurnIn[key] / 3;
+      const sets = cardsToTurnIn[key] / cardsPerSet;
       totalRyoshi += base * sets * multiplier;
     });
     setRyoshiToReceive(totalRyoshi);
@@ -1046,10 +1060,13 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
         </Flex>
         {!isInitializing ? (
           <>
-            <Flex justify='space-between' align='center'>
+            <Stack justify='space-between' align={{base: 'start', sm: 'center'}} direction={{base: 'column', sm: 'row'}}>
               <Box fontSize='sm'>This tier has a <Text as='span' fontWeight='bold' textDecoration='underline'>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</Text> multiplier</Box>
-              <Button size='sm' variant='unstyled' onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide Empty' : 'Show All'}</Button>
-            </Flex>
+              <Stack direction='row' spacing={2} justify='space-between' w={{base: 'full', sm: 'auto'}}>
+                <Button size='sm' variant='unstyled' onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide Empty' : 'Show All'}</Button>
+                <Button size='sm' variant='outline' onClick={handleSelectAll}>{manuallySelectedAll ? 'Unselect' : 'Select'} All</Button>
+              </Stack>
+            </Stack>
             <SimpleGrid columns={{base: 1, md: 2}} spacing={2} mt={1}>
               {locationsWithUserQty.filter((location) => location.tier == selectedTab+1).map((card) => (
                 <>
