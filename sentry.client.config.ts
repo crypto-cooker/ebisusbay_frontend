@@ -38,7 +38,8 @@ Sentry.init({
       const ignorableTypes = [
         'ResourceUnavailableRpcError',
         'UserRejectedRequestError',
-        'ConnectorNotFoundError'
+        'ConnectorNotFoundError',
+        'ChainDoesNotSupportContract'
       ];
       if (event.exception.values[0].type && ignorableTypes.includes(event.exception.values[0].type)) {
         return null;
