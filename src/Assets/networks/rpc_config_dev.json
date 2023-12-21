@@ -1260,7 +1260,7 @@
         "card": "/img/collections/croskull/card.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": [
           "collectibles"
@@ -1766,7 +1766,7 @@
         "banner": "/img/collections/croskull/bluepotions/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": [
           "utility"
@@ -1792,7 +1792,7 @@
         "banner": "/img/collections/croskull/redpotions/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": [
           "utility"
@@ -2968,7 +2968,7 @@
         "banner": "/img/collections/croskull/eggs/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": [
           "collectibles"
@@ -5083,7 +5083,7 @@
         "banner": "/img/collections/croskull/purplepotions/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": [
           "utility"
@@ -6108,7 +6108,7 @@
         "banner": "/img/collections/croskull/evo-skulls/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": [
           "collectibles",
@@ -6608,7 +6608,7 @@
         "banner": "/img/collections/croskull/pets/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": [
           "collectibles"
@@ -8200,7 +8200,7 @@
         "banner": "/img/collections/croskull-pets-eggs-s2/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": [
           "collectibles"
@@ -11138,7 +11138,7 @@
         "banner": "/img/collections/world-of-cats/banner.webp",
         "website": "https://worldofcats.xyz/",
         "twitter": "https://twitter.com/worldofcatsnft",
-        "discord": "https://discord.gg/worldofcats",
+        "discord": "https://discord.gg/worldofcatsnft",
         "categories": [
           "collectibles"
         ]
@@ -12882,7 +12882,7 @@
         "banner": "/img/collections/croskull-founder-pets/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": []
       },
@@ -13005,7 +13005,7 @@
         "banner": "/img/collections/croskull-pets-s2/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": []
       },
@@ -13284,7 +13284,7 @@
         "banner": "/img/collections/world-of-cats-seasonal/banner.webp",
         "website": "https://worldofcats.xyz/",
         "twitter": "https://twitter.com/worldofcatsnft",
-        "discord": "https://discord.gg/worldofcats",
+        "discord": "https://discord.gg/worldofcatsnft",
         "categories": []
       },
       "verification": {
@@ -13312,7 +13312,7 @@
         "banner": "/img/collections/world-of-cats-seasonal/banner.webp",
         "website": "https://worldofcats.xyz/",
         "twitter": "https://twitter.com/worldofcatsnft",
-        "discord": "https://discord.gg/worldofcats",
+        "discord": "https://discord.gg/worldofcatsnft",
         "categories": []
       },
       "verification": {
@@ -14259,13 +14259,13 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A collection of 7777 Degen Apes that know how to have a good time.\nClaim royalties here -> https://dacc.netlify.app/",
+        "description": "A collection of 7777 Degen Apes that know how to have a good time.",
         "avatar": "/img/collections/degen-ape-cronos-club/avatar.webp",
         "banner": "/img/collections/degen-ape-cronos-club/banner.webp",
         "card": "/img/collections/degen-ape-cronos-club/card.webp",
         "website": "https://daccdisco.club/",
         "twitter": "https://twitter.com/degenapecroclub",
-        "discord": "https://discord.gg/yzsHeAr49c",
+        "discord": "https://discord.gg/5gR4t58z8f",
         "categories": [
           "collectibles"
         ],
@@ -15706,7 +15706,7 @@
         "banner": "/img/collections/croskull-pets-s3/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": []
       },
@@ -16200,7 +16200,7 @@
         "card": "/img/collections/croskull-soulbound-token/card.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": [
           "collectibles"
@@ -16297,7 +16297,7 @@
         "banner": "/img/collections/croskull-pets-eggs-s3/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": [
           "collectibles"
@@ -18565,7 +18565,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "For My Brothers is a charity focused NFT collection created by Elkay, the artist behind Trooprz. \n\nThe collection will focus on 3 key goals;\n\n- Kick-start 'Hearts of Gold' charity fund (40%)\n- Raise awareness and support Mens Mental Health in the Crypto/NFT space\n- Support the development of the CroDraw Lottery (and give holder discount!)\n\n420 hand-crafted, algorithmically generated, unique NFTs.",
+        "description": "For My Brothers is a charity focused NFT collection created by Troopz. \n\nThe collection will focus on 3 key goals;\n\n- Kick-start 'Hearts of Gold' charity fund (40%)\n- Raise awareness and support Mens Mental Health in the Crypto/NFT space\n- Support the development of the CroDraw Lottery (and give holder discount!)\n\n420 hand-crafted, algorithmically generated, unique NFTs.",
         "avatar": "/img/collections/for-my-brothers/avatar.webp",
         "card": "/img/collections/for-my-brothers/card.webp",
         "banner": "/img/collections/for-my-brothers/banner.webp",
@@ -20015,7 +20015,7 @@
         "banner": "/img/collections/world-of-cats-milk/banner.webp",
         "website": "https://worldofcats.xyz/",
         "twitter": "https://twitter.com/worldofcatsnft",
-        "discord": "https://discord.gg/worldofcats",
+        "discord": "https://discord.gg/worldofcatsnft",
         "categories": [
           "collectibles"
         ]
@@ -20183,7 +20183,7 @@
         "banner": "/img/collections/moonwolves/banner.webp",
         "website": "https://moonflow.club",
         "twitter": "https://twitter.com/Moonflownft",
-        "discord": "https://discord.gg/moonflow",
+        "discord": "https://discord.gg/moonflowlabs",
         "medium": "https://medium.com/@moonflowclubnft",
         "categories": [
           "collectibles",
@@ -20235,7 +20235,7 @@
         "banner": "/img/collections/croskull-pets-s4/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": []
       },
@@ -20259,7 +20259,7 @@
         "banner": "/img/collections/croskull-pets-eggs-s4/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/q3nWxw8QRY",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": [
           "collectibles"
@@ -20306,10 +20306,8 @@
         "avatar": "/img/collections/the-pogo/avatar.webp",
         "card": "/img/collections/the-pogo/card.webp",
         "banner": "/img/collections/the-pogo/banner.webp",
-        "website": "https://thepogonft.xyz/",
-        "twitter": "https://twitter.com/ThePogoNFT",
+        "twitter": "https://twitter.com/pogo_revival",
         "discord": "https://discord.gg/JupNGe7t7k",
-        "medium": "https://the-pogo.gitbook.io/the-pogo/",
         "categories": [
           "collectibles"
         ]
@@ -20480,6 +20478,8 @@
       "metadata": {
         "description": "The main purpose of this collection is to act as a Booster NFT for different percentage yields depending on which tier you hold. A MAX of 2 troops can be staked under a 102 Time Machine, 101 Time Machine, or Tata’s Guardian to increase payout yields by up to 10%. From our own ecosystems tokens.",
         "avatar": "/img/collections/time-troops/avatar.webp",
+        "card": "/img/collections/time-troops/card.webp",
+        "banner": "/img/collections/time-troops/banner.webp",
         "website": "https://tatastwistedtonics.com/",
         "twitter": "https://twitter.com/TimeMachines101",
         "discord": "https://discord.gg/8whpvt3WEr",
@@ -21031,7 +21031,7 @@
       "multiToken": false,
       "address": "0xE2Ac439bD7FdF924903d22799C11c6C600Ffb6B3",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "The Bulls are the match to the Cowz you've all been waiting for! Bulls will collect royalties for Cowz, Bulls and ranches and to emit \"Calf NFT's\" via breeding! Jump in if you're feeling BULLISH!",
         "avatar": "/img/collections/bulls/avatar.webp",
@@ -21291,7 +21291,7 @@
         "description": "Animated Time Gods are the overseers of the Time Ecosystem. They will earn a percentage of everything Time and Tonic related.",
         "avatar": "/img/collections/animated-time-gods/avatar.webp",
         "banner": "/img/collections/animated-time-gods/banner.webp",
-        "card": "/img/collections/animated-time-gods/card.webp",
+        "card": "/img/collections/animated-time-gods/card2.webp",
         "website": "https://tatastwistedtonics.com/",
         "twitter": "https://twitter.com/TimeMachines101",
         "discord": "https://discord.gg/8whpvt3WEr",
@@ -21579,7 +21579,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "666 EXCLUSIVE ApeX NFTs by Troopz - Completely random and algorithmically generated. The old fashioned NFT way! Hand-draw artwork, layer by layer, by our very own artist, with NO AI, NO Pixels, No BS! ApeX are the top of the food chain, with no natural predators...place these NFTs into ANY battle....and they are guaranteed to come out on top! EXCLUSIVELY available to Troopz holders by burning a set of Sketchz NFTs.",
+        "description": "444 EXCLUSIVE ApeX NFTs by Troopz - Completely random and algorithmically generated. The old fashioned NFT way! Hand-draw artwork, layer by layer, by our very own artist, with NO AI, NO Pixels, No BS! ApeX are the top of the food chain, with no natural predators...place these NFTs into ANY battle....and they are guaranteed to come out on top! EXCLUSIVELY available to Troopz holders by burning a set of Sketchz NFTs.",
         "avatar": "/img/collections/trooprz-apex/avatar.webp",
         "card": "/img/collections/trooprz-apex/card.webp",
         "banner": "/img/collections/trooprz-apex/banner.webp",
@@ -21965,7 +21965,7 @@
       "metadata": {
         "description": "The main purpose of this collection is to act as a Give an enemy to the Time Troops, these creatures out power a troop 10:1",
         "avatar": "/img/collections/time-creatures-class-a/avatar.webp",
-        "card": "/img/collections/time-creatures-class-a/card.webp",
+        "card": "/img/collections/time-creatures-class-a/card2.webp",
         "banner": "/img/collections/time-creatures-class-a/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
@@ -21988,7 +21988,7 @@
       "metadata": {
         "description": "The main purpose of this collection is to act as a Give an enemy\uD83D\uDC40 to the Time Troops, these creatures out power a troop 10:1",
         "avatar": "/img/collections/time-creatures-class-b/avatar.webp",
-        "card": "/img/collections/time-creatures-class-b/card.webp",
+        "card": "/img/collections/time-creatures-class-b/card2.webp",
         "banner": "/img/collections/time-creatures-class-b/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
@@ -22318,6 +22318,7 @@
       "metadata": {
         "description": "\"Time Commanders\"    \uD83D\uDC8EWILL stealth drop within the next 6 hours MAKE sure to keep an eye on our drops page   https://time-launcher.com/drops/  \uD83D\uDC40   Supply: 5000 Public price: 50 cro  WL price: 45 cro   IF you are not WL and should be please open a ticket!!!  \uD83D\uDCAA This collections main purpose is reinforcements to time troops. depending on which tier you hold. A MAX of 2 Commanders to increase payout yields by up to 15%.  \uD83D\uDEA8\uD83D\uDEA8Boosters for ATGs, Creatures, tonics, and outside collections(possibly) and future releases   Orange bottom = 100 pieces - 15% Purple = 400 pieces - 10% Red top = 2000 pieces - 5% Green = 2500 pieces - 2% @everyone  **IF you are not WL and should be please open a ticket and i will WL you ASAP**",
         "avatar": "/img/collections/time-commanders/avatar.webp",
+        "card": "/img/collections/time-commanders/card.webp",
         "banner": "/img/collections/time-commanders/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
@@ -22556,7 +22557,7 @@
         "banner": "/img/collections/cronos-factions/banner.webp",
         "website": "https://cronosfactions.com/",
         "twitter": "https://www.twitter.com/factions_nft",
-        "discord": "https://discord.gg/factionsnft",
+        "discord": "https://discord.gg/moonflowlabs",
         "categories": [
           "utility"
         ]
@@ -22596,7 +22597,7 @@
     {
       "name": "Blumies Specials",
       "slug": "blumies-specials",
-      "address": "0xF40c194df868df86e73Ea1f208dE02959deaE36d",
+      "address": "0x88Eb0813Ce2efFbf5b5a846Efc8B11Bb75f34B76",
       "multiToken": true,
       "tokens": [
         {
@@ -22765,9 +22766,9 @@
       "listable": true,
       "metadata": {
         "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
-        "avatar": "/img/collections/coom-cats/avatar.webp",
+        "avatar": "/img/collections/coom-cats/avatar2.webp",
         "card": "/img/collections/coom-cats/card.webp",
-        "banner": "/img/collections/coom-cats/banner.webp",
+        "banner": "/img/collections/coom-cats/banner2.webp",
         "website": "https://coomcats.com/",
         "twitter": "https://twitter.com/CoomCatsNFT",
         "discord": "https://discord.gg/fDgERHyUzC",
@@ -22932,7 +22933,7 @@
       "multiToken": false,
       "address": "0xC0D28282A4780e099884f344A9746A2D75A1BAF7",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Ever wanted to own the libs? Now you can! The Liberators, Cronos Steakhouse's 4th of July Special collection! First minted during 2023 Independence week, These feisty fellows will liberate you from FEEdom across the steakhouse ecosystem! Structured fee discounts on all future smart contracts based on amount held/time consumed",
         "avatar": "/img/collections/the-liberators/avatar.webp",
@@ -22955,7 +22956,7 @@
       "multiToken": false,
       "address": "0x724900a57ED516ba023b1F5F86A92E222BC32D02",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "",
         "avatar": "/img/collections/chefz-army/avatar.webp",
@@ -23122,6 +23123,7 @@
       "metadata": {
         "description": "The Time Ship Blueprints are the first, OG collection of Time Ship hull blueprints for the Time Machine Ecosystem's web3 game in the making. Time Wars, These Blueprints will come with a few ship components, some of our in house token $tatastwistedtime ($TTT) and 1 blueprint, per box minted. Be on the lookout for the best hull skins/prints!!",
         "avatar": "/img/collections/time-ship-blueprints/avatar.webp",
+        "card": "/img/collections/time-ship-blueprints/card.webp",
         "banner": "/img/collections/time-ship-blueprints/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
@@ -23146,6 +23148,8 @@
       "metadata": {
         "description": "Time Creature Ships is partly a free drop for holding matching ID numbers of Time Creatures during the snapshot, The remaining will be sold for TTT only and 100% of the TTT will be BURNED!! Time Creature Ships will be required to send your Time Creatures off to gather resources in order to build your Time Ships for the Time Wars web3 game coming soon, Resources will start to be gathered for war BEFORE war!!",
         "avatar": "/img/collections/time-creature-ships/avatar.webp",
+        "card": "/img/collections/time-creature-ships/card.webp",
+        "banner": "/img/collections/time-creature-ships/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
         "discord": "https://discord.gg/8whpvt3WEr",
@@ -23710,7 +23714,7 @@
       "listable": true,
       "metadata": {
         "description": "The Cronos Chickens are a collection of 5,555 fun-loving chickens that live on the Cronos blockchain.",
-        "avatar": "/img/collections/cronos-chickens/avatar2.webp",
+        "avatar": "/img/collections/cronos-chickens/avatar3.webp",
         "banner": "/img/collections/cronos-chickens/banner2.webp",
         "card": "/img/collections/cronos-chickens/card.webp",
         "website": "https://cronos-chickens.netlify.app/",
@@ -23721,9 +23725,9 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -23740,7 +23744,7 @@
         "banner": "/img/collections/croskull-pets-s5/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/gPCawZBQMF",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": []
       },
@@ -23764,7 +23768,7 @@
         "banner": "/img/collections/croskull-pets-eggs-s5/banner.webp",
         "website": "https://app.croskull.com/",
         "twitter": "https://twitter.com/CroskullNFT",
-        "discord": "https://discord.gg/gPCawZBQMF",
+        "discord": "https://discord.gg/snB7Hngjyd",
         "medium": "https://medium.com/@croskullnft",
         "categories": [
           "collectibles"
@@ -23786,6 +23790,7 @@
       "metadata": {
         "description": "222 extremely striking charged lions make their way through Cronos for the best possible passive income",
         "avatar": "/img/collections/loaded-innovators/avatar.webp",
+        "banner": "/img/collections/loaded-innovators/banner.webp",
         "website": "https://liquor-token-cronos.com/",
         "twitter": "https://twitter.com/LiquorTokenCro",
         "discord": "https://discord.gg/NqqFZsvMJE",
@@ -23884,7 +23889,7 @@
       "metadata": {
         "description": "Time Cronos Planets are a collection from the Time Machine Eco, To provide our Resource mining for Time Wars Web3 game, Minting a Time Planet guarantees you weekly passive resources (before mint out) AND a boost in Time Adventures for resources gathered on adventures.",
         "avatar": "/img/collections/time-cronos-planets/avatar.webp",
-        "card": "/img/collections/time-cronos-planets/card.webp",
+        "card": "/img/collections/time-cronos-planets/card2.webp",
         "banner": "/img/collections/time-cronos-planets/banner.webp",
         "website": "https://time-dapp.netlify.app/",
         "twitter": "https://twitter.com/TimeMachines101",
@@ -24031,7 +24036,7 @@
       "name": "Blumies Tickets",
       "slug": "blumies-tickets",
       "multiToken": false,
-      "address": "0x4Eeeb2684b51AbB93660C0EAFA98a9185EE46A3F",
+      "address": "0x3415300bAC72187277510b271fEa6f91603B593e",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -24564,9 +24569,9 @@
       "name": "Genius Genies",
       "slug": "genius-genies",
       "multiToken": false,
-      "address": "0x5DAf5C61cb6FC86aBBaf3129040e74f8011fbb2D",
+      "address": "0x26ba6Bd9436cf2BE636b32cCf40b1c3843c6ac13",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Genius Genies are the DAO token used to make decisions regarding ecosystem treasury funds. 1 Genie = 1 vote",
         "avatar": "/img/collections/genius-genies/avatar.webp",
@@ -24595,6 +24600,7 @@
       "metadata": {
         "description": "Prepare for an NFT-Airdrop per 10 you hold and earn $Moonshine through staking",
         "avatar": "/img/collections/pint-sized-liquor-heroes/avatar.webp",
+        "banner": "/img/collections/pint-sized-liquor-heroes/banner.webp",
         "website": "https://www.liquor-token-cronos.com/",
         "twitter": "https://twitter.com/LiquorTokenCro",
         "discord": "https://discord.gg/mz9WXNpmEV",
@@ -24616,6 +24622,7 @@
       "metadata": {
         "description": "Staking + exclusive access",
         "avatar": "/img/collections/liquor-coin-nft/avatar.webp",
+        "banner": "/img/collections/liquor-coin-nft/banner.webp",
         "website": "https://www.liquor-token-cronos.com/",
         "twitter": "https://twitter.com/LiquorTokenCro",
         "discord": "https://discord.gg/7QQDvChjNq",
@@ -24631,7 +24638,7 @@
       "name": "Blumies Customs",
       "slug": "blumies-customs",
       "multiToken": false,
-      "address": "0x3478c03926BAaB968b7A24A451ec8686892e3C4C",
+      "address": "0x0894EbCd3f7a8EC9461a6C7D45B3cDf20f13FB41",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -24701,6 +24708,375 @@
         "doxx": true,
         "kyc": "hidden",
         "verified": true
+      }
+    },
+    {
+      "name": "Degen Royale: Guns on Cronos",
+      "slug": "degen-royale-guns-on-cronos",
+      "multiToken": false,
+      "address": "0xd4E29bdba77c948b04C3ACd67C1dAC17264d2983",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The first $CRO nfts to hit mainstream gaming as in-game assets. \uD83C\uDFAE  Degen Royale / Skully-X / The Monsters",
+        "avatar": "/img/collections/degen-royale-guns-on-cronos/avatar.webp",
+        "card": "/img/collections/degen-royale-guns-on-cronos/card.webp",
+        "banner": "/img/collections/degen-royale-guns-on-cronos/banner.webp",
+        "website": "https://monsters-wyverns-nft.ca/",
+        "twitter": "https://twitter.com/babymonstersnft",
+        "discord": "https://discord.gg/jrtCza5Gee",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Under Water Oasis - Tanks",
+      "slug": "under-water-oasis-tanks",
+      "multiToken": false,
+      "address": "0x1570Ce2bcbe7d720b2A4D49318D88f5D31Fce03A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "\uD83D\uDC21\uD83D\uDC20\uD83D\uDC1FHey there, fellow ocean explorers and NFT enthusiasts! Introducing Under Water Oasis - Tank mint!! \uD83E\uDD3F Ready to Dive In: Under Water Oasis isn't just your typical NFT collection- it's a full-on passion project that's all about shining a spotlight on the awesomeness of tropical and saltwater fish-keeping. We're making waves in the crypto world like never before! \uD83C\uDF0A\uD83C\uDF0A\uD83C\uDF0AThree epic NFT waves: We're rolling out our project in three epic waves, each one more awesome than a mermaid's tail\uD83E\uDDDC\u200D♀\uFE0F \uD83D\uDC1A The Aquarium Collection: Custom aquariums that'll make you go \"whoa.\" \uD83E\uDDEC The Components Collection: Equip your virtual aquarium with all it needs to thrive. \uD83D\uDC20 Fish and Aquatic Species: The holy grail- collecting and breeding a boatload of fish and aquatic creatures \uD83D\uDCB0\uD83E\uDDAA\uD83D\uDCB0 The Pearl Token: You're probably wondering, \"How can I turn my virtual fish tanks into cold, hard cash?\" The Pearl token will play a big role in how your aquariums generate passive income! \uD83D\uDEE5\uFE0F",
+        "avatar": "/img/collections/under-water-oasis-tanks/avatar.webp",
+        "card": "/img/collections/under-water-oasis-tanks/card.webp",
+        "banner": "/img/collections/under-water-oasis-tanks/banner.webp",
+        "website": "https://time-launcher.com/drops/under-water-oasis-tanks",
+        "twitter": "https://twitter.com/NftsOasis",
+        "discord": "https://discord.gg/hSBRvZjxDs",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "SHROOK",
+      "slug": "shrook",
+      "multiToken": false,
+      "address": "0xDA556F996f864d0E8Fc833cF66f3813d4642897b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Meme token NFT. dedicated to create passive income for holders in the form of staking and future innovations",
+        "avatar": "/img/collections/shrook/avatar.webp",
+        "card": "/img/collections/shrook/card.webp",
+        "banner": "/img/collections/shrook/banner.webp",
+        "website": "https://mint-shrook.netlify.app/",
+        "twitter": "https://twitter.com/shrook_token",
+        "discord": "https://discord.gg/cUgyvPaW",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroSkull Kimera Items",
+      "slug": "croskull-kimera-items",
+      "multiToken": false,
+      "address": "0x400e237c4F88e5728E0D6088315DeCD856a10EDd",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dust, Amulets, Potions... discover the secrets of the Project Kimera. The legend of the Bonesville obelisk had become something far greater than anyone could have imagined, a true blueprint for the evolution of the species.",
+        "avatar": "/img/collections/croskull-kimera-items/avatar.webp",
+        "banner": "/img/collections/croskull-kimera-items/banner.webp",
+        "card": "/img/collections/croskull-kimera-items/card.webp",
+        "website": "https://app.croskull.com/",
+        "twitter": "https://twitter.com/CroskullNFT",
+        "discord": "https://discord.gg/snB7Hngjyd",
+        "medium": "https://medium.com/@croskullnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "World Of Cats - P**sy Collection",
+      "slug": "world-of-cats-psy-collection",
+      "multiToken": false,
+      "address": "0xA1A9C8CEC42c00191d7F3DBe7EEC3ee5728C5C66",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "\"The P**sy Collection: The Queens of the White Void\"  An exquisite assemblage of 4,444 unique female cat NFTs, crafted to complement the vibrant community of the Cronos blockchain. Each digital feline in this collection mirrors the diversity and charm of their male counterparts, weaving together a tapestry of stories in an ever-expanding universe known as the white void. With each season unveiling novel attributes and legendary figures, these cat NFTs are not merely collectibles; they are pivotal characters that will shape the destiny of our digital realm.",
+        "avatar": "/img/collections/world-of-cats-psy-collection/avatar.webp",
+        "card": "/img/collections/world-of-cats-psy-collection/card.webp",
+        "banner": "/img/collections/world-of-cats-psy-collection/banner.webp",
+        "website": "https://worldofcats.xyz/",
+        "twitter": "https://twitter.com/worldofcatsnft",
+        "discord": "https://discord.gg/worldofcatsnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": "ebisu",
+        "verified": true
+      }
+    },
+    {
+      "name": "Ryoshi DBD-JAFC Battle Token",
+      "slug": "dbd-jafc-battle-token",
+      "multiToken": false,
+      "address": "0x03987c2441Fdc14e60fbaA1Da822229a32E28259",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ryoshi DBD-JAFC Battle Token is a collaborative collection from JAFC and Dead Beat Dads. A tribute to the alliance within Ryoshi Dynasties, this collection will support the faction and further strengthen the friendship between the two projects.",
+        "avatar": "/img/collections/dbd-jafc-battle-token/avatar.webp",
+        "card": "/img/collections/dbd-jafc-battle-token/card.webp",
+        "banner": "/img/collections/dbd-jafc-battle-token/banner.webp",
+        "website": "https://dbd-jafc.netlify.app/",
+        "discord": "https://discord.gg/KnRmEA4u8v",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Stoneland Survivors",
+      "slug": "stoneland-survivors",
+      "multiToken": false,
+      "address": "0x9bB87eA050629186542f06f32eD4C4e8A1956C73",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Explore Stoneland Survivors: a groundbreaking NFT collection of 10,000 unique tokens on Cronos, Arbitrum, Polygon, Avalchance, and BNB blockchains. Beyond NFTs, these financial pioneers offer passive returns through decentralized trading strategies. Mint and stake your own Survivors with the Stoneland Dapp for a chance to be part of this monumental addition to the Stoneland Ecosystem. Miniting now at stoneland.network",
+        "avatar": "/img/collections/stoneland-survivors/avatar.webp",
+        "card": "/img/collections/stoneland-survivors/card.webp",
+        "banner": "/img/collections/stoneland-survivors/banner.webp",
+        "website": "https://stoneland.network/",
+        "twitter": "https://twitter.com/Stoneland___",
+        "discord": "https://discord.gg/7Qn2wwj9PB",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Animated Guardians",
+      "slug": "animated-guardians",
+      "multiToken": false,
+      "address": "0xb76415D33268391bfaE2E671f45CeDAD9bC99dc9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Animated Guardians are the overseers of the Time Ecosystem. They will earn a percentage of everything Time and Tonic related.",
+        "avatar": "/img/collections/animated-guardians/avatar.gif",
+        "card": "/img/collections/animated-guardians/card.webp",
+        "banner": "/img/collections/animated-guardians/banner.webp",
+        "website": "https://timemachine101.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/timemachinenfts",
+        "categories": []
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Animated Time Machine 102s",
+      "slug": "animated-time-machine-102",
+      "multiToken": false,
+      "address": "0xCF926cB69b860Da8c33a2a601217856536ed0bcA",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Animated Time Machine 102s, are the overseers of the Time Ecosystem. They will earn a percentage of everything Time and Tonic related.",
+        "avatar": "/img/collections/animated-time-machine-102/avatar.webp",
+        "card": "/img/collections/animated-time-machine-102/card.webp",
+        "banner": "/img/collections/animated-time-machine-102/banner.gif",
+        "website": "https://timemachine101.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/timemachinenfts",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Power Tonics",
+      "slug": "power-tonics",
+      "multiToken": false,
+      "address": "0x975238Ce3c593060a9b549e1654dC992f0Bc11aC",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This is a unlimited mint for our Time Ecosystems Native token $Abyss, These tonics will be used in burn trade for upgrading your Guardians and 102s cards in our in discord Trading Card Game, And in our future Web3 game.",
+        "avatar": "/img/collections/power-tonics/avatar.webp",
+        "card": "/img/collections/power-tonics/card.webp",
+        "banner": "/img/collections/power-tonics/banner.webp",
+        "website": "https://timemachine101.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/timemachinenfts",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Coolbeans Garden Evolution Bean",
+      "slug": "coolbeans-garden-evolution-bean",
+      "multiToken": false,
+      "address": "0x80c69f3A8560668E4809cA0e76c700a8C6DA62bD",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Coolbeans Garden Evolution Beans are the memberships that give you 50% discount on all product NFTs when you have at least one of them staked and also earn rollium while staked with options to earn bonus % rollium using Coolbeans O.G.s , also join the discord for information on Coolbeans Entertainment where you can get access to the movies and music server.",
+        "avatar": "/img/collections/coolbeans-garden-evolution-bean/avatar.webp",
+        "website": "https://coolbeansgarden.wixsite.com/my-site/shop",
+        "twitter": "https://twitter.com/bscraver",
+        "discord": "https://discord.gg/SYx7wjhmQa",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Dark Lions",
+      "slug": "dark-lions",
+      "multiToken": false,
+      "address": "0xa8790f65602363ecC614dB62731965690FAebDf3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Dark Lions have travelled back from 370 years in the future, and they’re hellbent on exterminating every Loaded Lion and Cyber Cub. This collection comprises 10,000 algorithmically-generated ‘Dark Lions’ NFTs, with over 350 traits in total. There’s even a set of legendary ‘Dark Lions’ lying in wait for the luckiest of collectors.\n\nBy owning these collectibles, you’ll enjoy a variety of perks and bonuses across the Crypto.com ecosystem, along with the Loaded Lions: Mane City game. These masters of the battlefield are always looking out for an opportunity to strike.\n\nIt’s time for a new era to begin.",
+        "avatar": "/img/collections/dark-lions/avatar.webp",
+        "card": "/img/collections/dark-lions/card.webp",
+        "banner": "/img/collections/dark-lions/banner.webp",
+        "website": "https://darklions.xyz/",
+        "twitter": "https://twitter.com/loadedlions_CDC",
+        "discord": "https://discord.gg/cryptocom",
+        "instagram": "https://instagram.com/cryptocomnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "TENEBRA's WIZARDS",
+      "slug": "tenebras-wizards",
+      "multiToken": false,
+      "address": "0x04eA91b5f0208ca480b7Efb5aDE0B5444CE1f74F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Pixel art animated Wizards made by ShadowBright. Art and passion mixed in a magical potion. Part of the TENEBRA's DREAM brand.",
+        "avatar": "/img/collections/tenebras-wizards/avatar.gif",
+        "card": "/img/collections/tenebras-wizards/card.gif",
+        "banner": "/img/collections/tenebras-wizards/banner.gif",
+        "website": "https://tenebra.netlify.app/",
+        "twitter": "https://twitter.com/Tenebrasdream",
+        "discord": "https://discord.gg/D7Fj78vGKd",
+        "gitbook": "https://tenebras-dream.gitbook.io/tenebras-dream/",
+        "categories": [
+          "collectibles",
+          "art"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "LIFE OF HEL - REAPERS",
+      "slug": "life-of-hel-reapers",
+      "multiToken": false,
+      "address": "0x770FA15c43b84F61434321F5167814b64790E6Fa",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "First PFP collection of the LIFE OF HEL (LOH) saga. The REAPERS have been created by the Gods following the retirement of HEL, the all-powerful grim reaper, to ensure that the cycle of \"Life and Death\" continues. Each NFT will entitle its holders to exclusive benefits (including access to the future success of the LOH franchise, commercial license rights over the Reapers NFTs, and weekly entry to the LOH Lottery). If you like manga, fun, and ramen, look no further! A HEL of a journey awaits!",
+        "avatar": "/img/collections/life-of-hel-reapers/avatar.webp",
+        "card": "/img/collections/life-of-hel-reapers/card.webp",
+        "banner": "/img/collections/life-of-hel-reapers/banner.webp",
+        "website": "https://www.lifeofhel.xyz/",
+        "twitter": "https://twitter.com/lifeofhel",
+        "discord": "https://discord.gg/life-of-hel",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crononymous",
+      "slug": "crononymous",
+      "multiToken": false,
+      "address": "0x9cFB6b1F67abFe4d02d99DbA00A25F8F82E0Df63",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crononymous is a collection created by a group of Cronos users who wanted to collaborate to create a real DAO project. The main goal of this project is to create an active and constructive community that actively plays the Ryoshi Dynasties game by Ebisus Bay and other future web3 GameFi and P2E games. Also works to add more benefits to the collection in the future.  The art is inspired by the anonymous organization that we all know, representing the anonymity (or pseudo-anonymity) of the web3 world.  Our project wallet is protected by a multi-signature smart contract wallet. This secure wallet requires a set of owners and a transaction approval policy. Our policy specifies that at least 3 owners are required to authorize a transaction.  Join the movement, join Crononymous.",
+        "avatar": "/img/collections/crononymous/avatar.webp",
+        "card": "/img/collections/crononymous/card.webp",
+        "banner": "/img/collections/crononymous/banner.webp",
+        "twitter": "https://twitter.com/CrononymousNFT",
+        "discord": "https://discord.gg/YBjGEQrjv7",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -28838,7 +29214,7 @@
         "name": "World Of Cats",
         "website": "https://worldofcats.xyz/",
         "twitter": "https://twitter.com/worldofcatsnft",
-        "discord": "https://discord.gg/worldofcats"
+        "discord": "https://discord.gg/worldofcatsnft"
       },
       "address": "0x4Ce0B9608006533dA056170f1efe8eEa771e0d19",
       "maxMintPerTx": 10,
@@ -30260,7 +30636,7 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/murder-birdz/drop.webp",
         "banner": "/img/collections/murder-birdz/banner.webp",
@@ -31719,8 +32095,8 @@
       "featured": false,
       "images": {
         "drop": "/img/drops/coom-cats/drop2.webp",
-        "avatar": "/img/collections/coom-cats/avatar.webp",
-        "banner": "/img/collections/coom-cats/banner.webp",
+        "avatar": "/img/collections/coom-cats/avatar2.webp",
+        "banner": "/img/collections/coom-cats/banner2.webp",
         "preview": "/img/collections/coom-cats/card.webp"
       },
       "verification": {
@@ -31973,7 +32349,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "images": {
         "drop": "/img/drops/ryoshi-hearts/drop.webp",
@@ -32122,6 +32498,46 @@
         "verified": true,
         "doxx": false,
         "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 189,
+      "slug": "ryoshi-tales-vip-2",
+      "collection": "ryoshi-tales-vip",
+      "title": "Ryoshi Tales VIP",
+      "subtitle": "1400 Ryoshi VIP NFTs available for mint. Don't miss this unique opportunity. Stake VIP NFTs on Ryoshi Dynasties and unleash their power!",
+      "description": "The last 1400 Ryoshi VIP NFTs are up for grabs with a tiered VIP sale!\nEach tier will last 10 minutes, here's the schedule:\n\n- 200k+ Mitama: 2000 $FRTN, Allotment 50\n- 100k+ Mitama: 2150 $FRTN, Allotment 150\n- 75k+ Mitama: 2200 $FRTN, Allotment 150\n- 25k+ Mitama: 2300 $FRTN, Allotment 150\n- 10k+ Mitama: 2350 $FRTN, Allotment 300\n- 5k+ Mitama: 2400 $FRTN, Allotment 500\n- Public Sale: 3000 $FRTN, Allotment 100 + all unsold from above\n\nMinting is possible with rewards!\n\n*Note: any VIPs unsold after the 70-minute event will return to the Ebisu's Bay team.",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0x97dff81d0373f00e77f9c0cb0842fa122463e00b",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1400,
+      "foundersOnly": false,
+      "start": 1703102400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-vip/drop2.webp",
+        "banner": "/img/drops/ryoshi-tales-vip/banner.webp",
+        "avatar": "/img/collections/ryoshi-tales-vip/avatar.webp",
+        "preview": "/img/collections/ryoshi-tales-vip/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": "public",
+        "kyc": "hidden",
         "escrow": false
       }
     }

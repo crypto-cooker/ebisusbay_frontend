@@ -118,14 +118,13 @@ const Vip2Drop = ({drop}: LandDropProps) => {
 
   const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
-  const [minting, setMinting] = useState(false);
+  const [mintingWithType, setMintingWithType] = useState<FundingType>();
   const [status, setStatus] = useState(statuses.UNSET);
 
   const [abi, setAbi] = useState<any>(null);
   const [maxSupply, setMaxSupply] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
   const [canMintQuantity, setCanMintQuantity] = useState(0);
-  const [mintingState, setMintingState] = useState<string | null>(null);
 
   const [phaseData, setPhaseData] = useState<PhaseData[]>([]);
   const contractService = useContractService();
@@ -243,8 +242,7 @@ const Vip2Drop = ({drop}: LandDropProps) => {
 
   const handleMint = async (fundingType: FundingType, numToMint: number, phase: PhaseData) => {
     runAuthedFunction(async() => {
-      setMinting(true);
-      setMintingState("Minting...");
+      setMintingWithType(fundingType);
       const mintContract = await new ethers.Contract(drop.address, abi, user.provider.getSigner());
       try {
         let finalCost = phase.mintCost * numToMint;
@@ -290,8 +288,7 @@ const Vip2Drop = ({drop}: LandDropProps) => {
         Sentry.captureException(error);
         toast.error(parseErrorMessage(error));
       } finally {
-        setMinting(false);
-        setMintingState(null);
+        setMintingWithType(undefined);
       }
     });
   };
@@ -305,7 +302,7 @@ const Vip2Drop = ({drop}: LandDropProps) => {
     }
 
     const actualContract = new Contract(drop.address, abi, user.provider.getSigner());
-    const gasPrice = parseUnits('5000', 'gwei');
+    const gasPrice = parseUnits('12000', 'gwei');
     const gasEstimate = await actualContract.estimateGas.mintWithToken(numToMint);
     const gasLimit = gasEstimate.mul(2);
     let extra = {
@@ -327,7 +324,7 @@ const Vip2Drop = ({drop}: LandDropProps) => {
       signature
     );
 
-    const gasPrice = parseUnits('5000', 'gwei');
+    const gasPrice = parseUnits('12000', 'gwei');
     const actualContract = contractService!.custom(drop.address, abi);
     const gasEstimate = await actualContract.estimateGas.mintWithRewards(numToMint, authorization.reward, authorization.signature);
     const gasLimit = gasEstimate.mul(2);
@@ -474,7 +471,7 @@ const Vip2Drop = ({drop}: LandDropProps) => {
                         phase={phase}
                         onMint={handleMint}
                         maxMintQuantity={canMintQuantity}
-                        isMinting={minting}
+                        mintingWithType={mintingWithType}
                         isDropComplete={drop.complete || status > DropState.LIVE}
                         dropStatus={status}
                         currentSupply={Number(totalSupply)}
@@ -506,7 +503,7 @@ interface MintPhaseProps {
   phase: PhaseData;
   onMint: (fundingType: FundingType, numToMint: number, phase: PhaseData) => void;
   maxMintQuantity: number;
-  isMinting: boolean;
+  mintingWithType: FundingType | undefined;
   isDropComplete: boolean;
   dropStatus: number;
   currentSupply: number;
@@ -515,7 +512,7 @@ interface MintPhaseProps {
   isLastPhase: boolean;
 }
 
-const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinting, isDropComplete, dropStatus, currentSupply, maxSupply, onRefreshDropStatus, isLastPhase }: MintPhaseProps) => {
+const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, mintingWithType, isDropComplete, dropStatus, currentSupply, maxSupply, onRefreshDropStatus, isLastPhase }: MintPhaseProps) => {
   const user = useUser();
   const [numToMint, setNumToMint] = useState(1);
   const [phaseStatus, setPhaseStatus] = useState(DropState.UNSET);
@@ -656,25 +653,29 @@ const MintPhase = ({ title, description, phase, onMint, maxMintQuantity, isMinti
                 <Input {...input} />
                 <Button {...inc}>+</Button>
               </HStack>
-              <PrimaryButton
-                w='full'
-                onClick={() => onMint(FundingType.FORTUNE, numToMint, phase)}
-                disabled={isMinting}
-                isLoading={isMinting}
-                loadingText='Minting...'
-              >
-                Mint
-              </PrimaryButton>
-              <PrimaryButton
-                w='full'
-                onClick={() => onMint(FundingType.REWARDS, numToMint, phase)}
-                disabled={isMinting}
-                isLoading={isMinting}
-                loadingText='Minting from FRTN rewards'
-                whiteSpace='initial'
-              >
-                Mint from FRTN rewards
-              </PrimaryButton>
+              {(!mintingWithType || mintingWithType === FundingType.FORTUNE) && (
+                <PrimaryButton
+                  w='full'
+                  onClick={() => onMint(FundingType.FORTUNE, numToMint, phase)}
+                  disabled={mintingWithType === FundingType.FORTUNE}
+                  isLoading={mintingWithType === FundingType.FORTUNE}
+                  loadingText='Minting...'
+                >
+                  Mint
+                </PrimaryButton>
+              )}
+              {(!mintingWithType || mintingWithType === FundingType.REWARDS) && (
+                <PrimaryButton
+                  w='full'
+                  onClick={() => onMint(FundingType.REWARDS, numToMint, phase)}
+                  disabled={mintingWithType === FundingType.REWARDS}
+                  isLoading={mintingWithType === FundingType.REWARDS}
+                  loadingText='Minting from FRTN rewards'
+                  whiteSpace='initial'
+                >
+                  Mint from FRTN rewards
+                </PrimaryButton>
+              )}
             </Stack>
           )}
           {maxMintQuantity === 0 && !user.address && (

@@ -133,6 +133,7 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}: P
               <ButtonGroup>
                 {shareOptions.map((shareOption) => (
                   <IconButton
+                    key={shareOption.label}
                     icon={<FontAwesomeIcon icon={shareOption.icon} />}
                     aria-label={shareOption.label}
                     onClick={() => shareOption.handleClick ? shareOption.handleClick() : window.open(`${shareOption.url}${window.location}`, '_blank')}

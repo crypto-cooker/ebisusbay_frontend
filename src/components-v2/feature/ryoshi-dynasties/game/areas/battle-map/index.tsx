@@ -44,7 +44,7 @@ export interface MapProps {
   minScale: number;
 }
 interface Icon {
-  name: string;
+  id: number;
   image: string;
 }
 
@@ -178,9 +178,13 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
       )))
   }
   const GetLeaderIcon = (name: any) => {
-    if(!currentIconsAquired) return 'img/avatar.jpg';
+    if(!currentIconsAquired || !rdGameContext) return 'img/avatar.jpg';
 
-    let icon = icons.find((icon) => icon.name === name);
+    const controlPoint = rdGameContext.game.season.map.regions
+      .flatMap(r => r.controlPoints)
+      .find((cp: any) => cp.name === name);
+
+    let icon = icons.find((icon) => icon.id === controlPoint?.id);
     // console.log('GetLeaderIcon', icon);
     if(icon) return icon.image;
   }
@@ -188,19 +192,20 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     if(!rdGameContext) return;
     if(currentIconsAquired) return;
 
-    let newIcons: Icon[] = [];
+    let cpLeaderAvatars: Icon[] = [];
     rdGameContext.game.season.map.regions.map((region: any) =>
       region.controlPoints.map((controlPoint: any) => (
-        newIcons.push({name: controlPoint.name, image: 'img/avatar.jpg'})
-    )))
+        cpLeaderAvatars.push({id: controlPoint.id, image: 'img/avatar.jpg'})
+    )));
 
     try {
-      newIcons.forEach((newIcons: any) => (
-        rdGameContext.gameLeaders.forEach((controlPointWithLeader: any) => (
-          newIcons.name === controlPointWithLeader.name ? newIcons.image = controlPointWithLeader.factions[0].image : null
-      ))))
-
-      setCurrentIcons(newIcons);
+      cpLeaderAvatars.forEach((cpImage) => {
+        const cpLeaderInfo = rdGameContext.gameLeaders.find((controlPointWithLeader: any) => cpImage.id === controlPointWithLeader.id);
+        if (cpLeaderInfo && cpLeaderInfo.factions.length > 0) {
+          cpImage.image = cpLeaderInfo.factions[0].image;
+        }
+      });
+      setCurrentIcons(cpLeaderAvatars);
       setCurrentIconsAqcuired(true);
     } catch (error: any) {
       console.log(error);
@@ -210,20 +215,22 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     if(!rdGameContext) return;
     if(prevIconsAquired) return;
 
-    let prevIcons: Icon[] = [];
+    let cpLeaderAvatars: Icon[] = [];
     rdGameContext.game.season.map.regions.map((region: any) =>
       region.controlPoints.map((controlPoint: any) => (
-        prevIcons.push({name: controlPoint.name, image: 'img/avatar.jpg'})
-    )))
+        cpLeaderAvatars.push({id: controlPoint.id, image: 'img/avatar.jpg'})
+    )));
 
     try {
       const newData = await getLeadersForSeason(rdGameContext.history.previousGameId);
-      newData.forEach((newData: any) => (
-        prevIcons.forEach((prevIcons: any) => (
-          newData.name === prevIcons.name ? prevIcons.image = newData.factions[0].image : null
-      ))))
+      cpLeaderAvatars.forEach((data: any) => {
+        const cpLeaderInfo = newData.find((controlPointWithLeader: any) => data.id === controlPointWithLeader.id);
+        if (cpLeaderInfo && cpLeaderInfo.factions.length > 0) {
+          data.image = cpLeaderInfo.factions[0].image;
+        }
+      });
       
-      setPreviousIcons(prevIcons);
+      setPreviousIcons(cpLeaderAvatars);
       setPrevIconsAqcuired(true);
     } catch (error: any) {
       console.log(error.response.data.message);
@@ -392,9 +399,9 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
                   <div className={[styles.verdant_forest, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Verdant Forest")}>
                     <div className={[styles.worldmap_label, styles.verdant_forest_label].filter(e => !!e).join(' ')}>
                     <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Verdant Forest")}></Avatar>Verdant Forest</div> </div>
-                  <div className={[styles.infinite_nexus, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Infinte Nexus")}>
+                  <div className={[styles.infinite_nexus, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Infinite Nexus")}>
                     <div className={[styles.worldmap_label, styles.infinite_nexus_label].filter(e => !!e).join(' ')}>
-                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("The Infinte Nexus")}></Avatar>Infinite Nexus</div></div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("The Infinite Nexus")}></Avatar>Infinite Nexus</div></div>
                   <div className={[styles.venoms_descent, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Venoms Descent")}>
                     <div className={[styles.worldmap_label, styles.venoms_descent_label].filter(e => !!e).join(' ')}>
                     <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Venoms Descent")}></Avatar>Venom's Descent</div></div>

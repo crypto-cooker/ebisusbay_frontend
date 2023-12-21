@@ -53,6 +53,7 @@ import moment from 'moment';
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useContractService, useUser} from "@src/components-v2/useUser";
+import * as Sentry from "@sentry/nextjs";
 
 const config = appConfig();
 
@@ -293,6 +294,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       toast.success('Withdraw success!');
     } catch (e) {
       console.log(e);
+      Sentry.captureException(e);
       toast.error(parseErrorMessage(e));
     } finally {
       setExecutingClaim(false);
@@ -368,6 +370,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       toast.success('Compound complete!');
     } catch (e) {
       console.log(e);
+      Sentry.captureException(e);
       toast.error(parseErrorMessage(e));
     } finally {
       setExecutingCompound(false);

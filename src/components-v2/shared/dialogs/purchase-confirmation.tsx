@@ -41,7 +41,6 @@ import useBuyGaslessListings from "@src/hooks/useBuyGaslessListings";
 import DotIcon from "@src/Components/components/DotIcon";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
-import Market from "@src/Contracts/Marketplace.json";
 import PurchaseSuccessDialog from './purchase-success';
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
@@ -50,10 +49,9 @@ import {getPrices} from "@src/core/api/endpoints/prices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import Link from "next/link";
 import {useContractService, useUser} from "@src/components-v2/useUser";
+import * as Sentry from "@sentry/nextjs";
 
 const config = appConfig();
-const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
 
 type PurchaseConfirmationDialogProps = {
   onClose: () => void;
@@ -62,12 +60,10 @@ type PurchaseConfirmationDialogProps = {
 };
 
 export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}: PurchaseConfirmationDialogProps) {
-  const [fee, setFee] = useState(0);
   const [executingPurchase, setExecutingPurchase] = useState(false);
   const [buyGaslessListings, response] = useBuyGaslessListings();
 
   const user = useUser();
-  const contractService = useContractService();
 
   const [isComplete, setIsComplete] = useState(false);
   const [tx, setTx] = useState<ContractReceipt>();
@@ -76,9 +72,6 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const getInitialProps = async () => {
     const listingsResponse = await NextApiService.getListingsByIds(listingId);
     const listing = listingsResponse.data[0];
-
-    const fees = await readMarket.fee(user.address);
-    setFee((fees / 10000) * 100);
 
     return listing;
   };
@@ -129,6 +122,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       }]);
       setIsComplete(true);
     } catch (error: any) {
+      Sentry.captureException(error);
       toast.error(parseErrorMessage(error));
     } finally {
       setExecutingPurchase(false);
@@ -256,7 +250,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                           <Flex justify="space-between" align="center">
                             <CronosIconBlue boxSize={4} me={1}/>
                             <Text className="text-muted">
-                              {fee} %
+                              {user.fee} %
                             </Text>
                           </Flex>
                         </Flex>

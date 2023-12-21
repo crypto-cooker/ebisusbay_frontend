@@ -15,6 +15,7 @@ import {useColorMode} from "@chakra-ui/react";
 import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
 import {storageSignerAtom} from "@src/jotai/atoms/storage";
 import * as Sentry from "@sentry/react";
+import axios from "axios";
 
 const config = appConfig();
 
@@ -114,10 +115,15 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           balances: {
             staking: parseInt(ethers.utils.formatEther(data[4].result ?? 0)),
           },
-          fee: data[4].result ? (Number(data[4].result) / 10000) * 100 : 3,
+          fee: data[3].result ? (Number(data[3].result) / 10000) * 100 : 3,
           isMember: data[0].result ?? false
         },
       });
+
+      // const inscriptionBalance = await axios.get('api/inscriptions/balance', { params: { address}});
+      // dispatch({type: UserActionType.SET_INSCRIPTION_BALANCES, payload: {inscriptions: [
+      //   {id: 1, tick: 'cros', amount: inscriptionBalance.data},
+      // ]}});
     } catch (e) {
       console.log(e);
     } finally {
@@ -171,22 +177,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   // Set Wallet
   useEffect(() => {
-    // Sentry.captureMessage("DEBUG: WALLET STATE", {
-    //   extra: {
-    //     customData: {
-    //       address,
-    //       isConnecting,
-    //       isConnected,
-    //       chain: chain?.id,
-    //       configChain: parseInt(config.chain.id),
-    //       correctChain: isConnected && !!chain && chain.id === parseInt(config.chain.id),
-    //       status,
-    //       connector,
-    //     }
-    //   }
-    // });
-    //
-    // console.log('debug --- wallet state', address, isConnecting, isConnected, chain?.id, parseInt(config.chain.id), isConnected && !!chain && chain.id === parseInt(config.chain.id), status, connector)
     connector?.getProvider().then((p) => {
       let wallet = 'Unknown';
       if (p.isDeficonnectProvider) wallet = 'DeFi Wallet'; // isMetaMask also true, so make sure this is before

@@ -13,7 +13,7 @@ export class GasWriter {
   }
 
   public async call(method: string, ...args: any[]) {
-    const gasPrice = parseUnits('23000', 'gwei');
+    const gasPrice = parseUnits('12000', 'gwei');
     const gasEstimate = await this.contract.estimateGas[method](...args);
     const gasLimit = gasEstimate.mul(2);
     let extra = {

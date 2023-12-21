@@ -20183,7 +20183,7 @@
         "banner": "/img/collections/moonwolves/banner.webp",
         "website": "https://moonflow.club",
         "twitter": "https://twitter.com/Moonflownft",
-        "discord": "https://discord.gg/moonflow",
+        "discord": "https://discord.gg/moonflowlabs",
         "medium": "https://medium.com/@moonflowclubnft",
         "categories": [
           "collectibles",
@@ -22557,7 +22557,7 @@
         "banner": "/img/collections/cronos-factions/banner.webp",
         "website": "https://cronosfactions.com/",
         "twitter": "https://www.twitter.com/factions_nft",
-        "discord": "https://discord.gg/factionsnft",
+        "discord": "https://discord.gg/moonflowlabs",
         "categories": [
           "utility"
         ]
@@ -23714,7 +23714,7 @@
       "listable": true,
       "metadata": {
         "description": "The Cronos Chickens are a collection of 5,555 fun-loving chickens that live on the Cronos blockchain.",
-        "avatar": "/img/collections/cronos-chickens/avatar2.webp",
+        "avatar": "/img/collections/cronos-chickens/avatar3.webp",
         "banner": "/img/collections/cronos-chickens/banner2.webp",
         "card": "/img/collections/cronos-chickens/card.webp",
         "website": "https://cronos-chickens.netlify.app/",
@@ -23725,9 +23725,9 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -24569,7 +24569,7 @@
       "name": "Genius Genies",
       "slug": "genius-genies",
       "multiToken": false,
-      "address": "0x5DAf5C61cb6FC86aBBaf3129040e74f8011fbb2D",
+      "address": "0x26ba6Bd9436cf2BE636b32cCf40b1c3843c6ac13",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -25053,6 +25053,28 @@
       },
       "verification": {
         "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crononymous",
+      "slug": "crononymous",
+      "multiToken": false,
+      "address": "0x9cFB6b1F67abFe4d02d99DbA00A25F8F82E0Df63",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crononymous is a collection created by a group of Cronos users who wanted to collaborate to create a real DAO project. The main goal of this project is to create an active and constructive community that actively plays the Ryoshi Dynasties game by Ebisus Bay and other future web3 GameFi and P2E games. Also works to add more benefits to the collection in the future.  The art is inspired by the anonymous organization that we all know, representing the anonymity (or pseudo-anonymity) of the web3 world.  Our project wallet is protected by a multi-signature smart contract wallet. This secure wallet requires a set of owners and a transaction approval policy. Our policy specifies that at least 3 owners are required to authorize a transaction.  Join the movement, join Crononymous.",
+        "avatar": "/img/collections/crononymous/avatar.webp",
+        "card": "/img/collections/crononymous/card.webp",
+        "banner": "/img/collections/crononymous/banner.webp",
+        "twitter": "https://twitter.com/CrononymousNFT",
+        "discord": "https://discord.gg/YBjGEQrjv7",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -32495,7 +32517,7 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "",
+      "address": "0x97dff81d0373f00e77f9c0cb0842fa122463e00b",
       "maxMintPerTx": 10,
       "maxMintPerAddress": 100,
       "totalSupply": 1400,
@@ -32505,7 +32527,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "images": {
         "drop": "/img/drops/ryoshi-tales-vip/drop2.webp",
         "banner": "/img/drops/ryoshi-tales-vip/banner.webp",
