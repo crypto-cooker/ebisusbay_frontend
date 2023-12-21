@@ -120,10 +120,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         },
       });
 
-      const inscriptionBalance = await axios.get('api/inscriptions/balance', { params: { address}});
-      dispatch({type: UserActionType.SET_INSCRIPTION_BALANCES, payload: {inscriptions: [
-        {id: 1, tick: 'cros', amount: inscriptionBalance.data},
-      ]}});
+      // const inscriptionBalance = await axios.get('api/inscriptions/balance', { params: { address}});
+      // dispatch({type: UserActionType.SET_INSCRIPTION_BALANCES, payload: {inscriptions: [
+      //   {id: 1, tick: 'cros', amount: inscriptionBalance.data},
+      // ]}});
     } catch (e) {
       console.log(e);
     } finally {
