@@ -900,44 +900,52 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
   const {requestSignature} = useEnforceSignature();
   const collectionAddress = config.contracts.resources
   const [isExecuting, setIsExecuting] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(true);
 
   const [locationsWithUserQty, setLocationsWithUserQty] = useState<UserLocationCard[]>([]);
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [cardsToTurnIn, setCardsToTurnIn] = useState<{[key: number]: number}>({});
   const [showAll, setShowAll] = useState<boolean>(true);
+  const [ryoshiToReceive, setRyoshiToReceive] = useState<number>(0);
+  const [selectedCardsSum, setSelectedCardsSum] = useState<number>(0);
 
   const getLocationData = async () => {
-    let data = await ApiService.withoutKey().getCollectionItems({
-      address: collectionAddress,
-      pageSize: 100
-    });
-    let locations:LocationCard[] = [];
+    try {
+      setIsInitializing(true);
+      let data = await ApiService.withoutKey().getCollectionItems({
+        address: collectionAddress,
+        pageSize: 100
+      });
+      let locations:LocationCard[] = [];
 
-    //filter out only locations
-    for(let i = 0; i < data.data.length; i++){
-      for(let j=0; j < data.data[i].attributes?.length; j++){
-        if(data.data[i].attributes[j].trait_type == "Location"){
-          locations.push({
-            name: data.data[i].attributes[j].value,
-            image: data.data[i].image,
-            tier: data.data[i].attributes[1].value,
-            id: data.data[i].id
-          })
+      //filter out only locations
+      for(let i = 0; i < data.data.length; i++){
+        for(let j=0; j < data.data[i].attributes?.length; j++){
+          if(data.data[i].attributes[j].trait_type == "Location"){
+            locations.push({
+              name: data.data[i].attributes[j].value,
+              image: data.data[i].image,
+              tier: data.data[i].attributes[1].value,
+              id: data.data[i].id
+            })
+          }
         }
       }
+
+      const locationsWithUserQuantity = locations.map((card) => {
+        const ownedCard = userLocationCards.find((userCard) => userCard.id.toString() === card.id.toString());
+        return {
+          ...card,
+          quantity: ownedCard ? ownedCard.quantity : 0,
+        };
+      });
+
+      const sortedLocations = locationsWithUserQuantity.sort((a, b) => b.quantity - a.quantity);
+
+      setLocationsWithUserQty(sortedLocations);
+    } finally {
+      setIsInitializing(false);
     }
-
-    const locationsWithUserQuantity = locations.map((card) => {
-      const ownedCard = userLocationCards.find((userCard) => userCard.id.toString() === card.id.toString());
-      return {
-        ...card,
-        quantity: ownedCard ? ownedCard.quantity : 0,
-      };
-    });
-
-    const sortedLocations = locationsWithUserQuantity.sort((a, b) => b.quantity - a.quantity);
-
-    setLocationsWithUserQty(sortedLocations);
   }
 
   const handleClose = () => {
@@ -995,6 +1003,22 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
     getLocationData();
   }, [user.address])
 
+  useEffect(() => {
+    let totalRyoshi = 0;
+    Object.keys(cardsToTurnIn).forEach((key: any) => {
+      const card = locationsWithUserQty.find((card) => card.id.toString() === key.toString());
+      if (!card) return;
+      const base = rdConfig.townHall.ryoshi.tradeIn.base[key];
+      const multiplier = rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[card.tier - 1];
+      const sets = cardsToTurnIn[key] / 3;
+      totalRyoshi += base * sets * multiplier;
+    });
+    setRyoshiToReceive(totalRyoshi);
+
+    const sum = Object.values(cardsToTurnIn).reduce((sum, value) => sum + value, 0);
+    setSelectedCardsSum(sum);
+  }, [cardsToTurnIn]);
+
   return (
     <RdModal
       isOpen={isOpen}
@@ -1020,26 +1044,43 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
             </RdTabButton>
           </SimpleGrid>
         </Flex>
-        <Flex justify='space-between' align='center'>
-          <Box fontSize='sm'>This tier has a <Text as='span' fontWeight='bold' textDecoration='underline'>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</Text> multiplier</Box>
-          <Button size='sm' variant='unstyled' onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide Empty' : 'Show All'}</Button>
-        </Flex>
-        <SimpleGrid columns={{base: 1, md: 2}} spacing={2} mt={1}>
-          {locationsWithUserQty.filter((location) => location.tier == selectedTab+1).map((card) => (
-            <>
-              {(showAll || card.quantity > 0) && (
-                <MemoizedLocationCardForm
-                  key={card.id}
-                  card={card}
-                  bonus={rdConfig.townHall.ryoshi.tradeIn.base[card.id]}
-                  quantitySelected={cardsToTurnIn[card.id] || 0}
-                  onChange={(quantity) => handleSelectCards(card.id, quantity)}
-                />
-              )}
-            </>
-          ))}
-        </SimpleGrid>
-
+        {!isInitializing ? (
+          <>
+            <Flex justify='space-between' align='center'>
+              <Box fontSize='sm'>This tier has a <Text as='span' fontWeight='bold' textDecoration='underline'>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</Text> multiplier</Box>
+              <Button size='sm' variant='unstyled' onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide Empty' : 'Show All'}</Button>
+            </Flex>
+            <SimpleGrid columns={{base: 1, md: 2}} spacing={2} mt={1}>
+              {locationsWithUserQty.filter((location) => location.tier == selectedTab+1).map((card) => (
+                <>
+                  {(showAll || card.quantity > 0) && (
+                    <MemoizedLocationCardForm
+                      key={card.id}
+                      card={card}
+                      bonus={rdConfig.townHall.ryoshi.tradeIn.base[card.id]}
+                      quantitySelected={cardsToTurnIn[card.id] || 0}
+                      onChange={(quantity) => handleSelectCards(card.id, quantity)}
+                    />
+                  )}
+                </>
+              ))}
+            </SimpleGrid>
+            <RdModalBox mt={2}>
+              <Flex justify='end'>
+                <SimpleGrid columns={5}>
+                  <GridItem colSpan={3}><Box textAlign={{base: 'start', sm: 'end'}}>Total Cards:</Box></GridItem>
+                  <GridItem colSpan={2}><Box textAlign='end'>{commify(selectedCardsSum)}</Box></GridItem>
+                  <GridItem colSpan={3} alignSelf='end'><Box textAlign={{base: 'start', sm: 'end'}} fontSize='lg'>Ryoshi To Receive:</Box></GridItem>
+                  <GridItem colSpan={2} alignSelf='end'><Box textAlign='end' fontSize='2xl' fontWeight='bold'>{commify(ryoshiToReceive)}</Box></GridItem>
+                </SimpleGrid>
+              </Flex>
+            </RdModalBox>
+          </>
+        ) : (
+          <Center>
+            <Spinner />
+          </Center>
+        )}
       </Box>
       <RdModalFooter>
         <Box textAlign='center' mt={8} mx={2}>
