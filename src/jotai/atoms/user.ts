@@ -64,6 +64,8 @@ function userReducer(state: JotaiUser, action: UserAction): JotaiUser {
         ...state,
         escrow: { ...state.escrow, ...action.payload.escrow },
         balances: { ...state.balances, ...action.payload.balances },
+        fee: action.payload.fee ?? initialUserState.fee,
+        isMember: action.payload.isMember ?? initialUserState.isMember
       };
     case UserActionType.SET_INSCRIPTION_BALANCES:
       return { ...state, inscriptions: action.payload.inscriptions as UserInscription[] };
