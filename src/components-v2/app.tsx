@@ -19,6 +19,7 @@ import {useGlobalPrices} from "@src/hooks/useGlobalPrices";
 import {useUser} from "@src/components-v2/useUser";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBullhorn} from "@fortawesome/free-solid-svg-icons";
+import * as Sentry from "@sentry/nextjs";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -57,14 +58,16 @@ function App({ Component, ...pageProps }: AppProps) {
   const {theme: userTheme} = useUser();
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      getAnalytics(firebase);
+    try {
+      if (typeof window !== 'undefined') {
+        getAnalytics(firebase);
+      }
+      dispatch(syncCartStorage());
+    } catch (e) {
+      Sentry.captureException(e);
+    } finally {
+      setLoading(false);
     }
-  }, []);
-
-  useEffect(() => {
-    dispatch(syncCartStorage());
-    setLoading(false);
   }, []);
 
   return (
