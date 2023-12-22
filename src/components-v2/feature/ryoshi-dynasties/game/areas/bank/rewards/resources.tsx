@@ -182,10 +182,10 @@ const WithdrawForm = ({tokenId, maxAmount}: ActionFormProps) => {
     onSuccess: data => {
       try {
         queryClient.setQueryData(['UserResourcesBalances', user.address], (old: any) => {
-          if (!data) return old;
+          if (!data || !Array.isArray(old)) return old;
           return old.map((balance: any) => {
             if (balance.tokenId === data.tokenId) {
-              balance.amount -= data.amount;
+              return { ...balance, amount: balance.amount - data.amount };
             }
             return balance;
           });
