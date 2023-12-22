@@ -39,12 +39,6 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
   const {isSignedIn, signin, requestSignature} = useEnforceSigner();
 
   const isEligibleForBonus = useMemo(() => {
-    // const inscriptionsPromoEndDate = new Date('2024-01-01');
-    // const isInscriptionsPromoLive = new Date() < inscriptionsPromoEndDate;
-    // if (!isInscriptionsPromoLive) return false;
-    //
-    // const crosInscription = user.inscriptions.find(inscription => inscription.tick === 'cros');
-    // return crosInscription && crosInscription.amount >= 1000000
     return false;
   }, []);
 
