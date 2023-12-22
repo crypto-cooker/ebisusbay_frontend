@@ -207,7 +207,7 @@ const BatchStakingDrawerItem = ({item, disabled}: BatchStakingDrawerItemProps) =
     } finally {
       setExecutingApproval(false);
     }
-  }, [item.nft, user.address]);
+  }, [item.nft, user.address, user.provider.signer]);
 
   useEffect(() => {
     async function func() {

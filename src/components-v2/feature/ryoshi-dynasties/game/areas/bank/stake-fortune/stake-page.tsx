@@ -160,7 +160,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onTokenizeVault, onC
   const handleCloseVault = useCallback(async () => {
     try {
       setIsExecutingClose(true);
-      const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
+      const bank = new Contract(config.contracts.bank, Bank, user.provider.signer);
       const tx = await bank.closeVault(vault.index);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -171,7 +171,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onTokenizeVault, onC
     } finally {
       setIsExecutingClose(false);
     }
-  }, []);
+  }, [vault.index, user.provider.signer]);
 
   const [totalApr, setTotalApr] = useState(baseApr);
   const [bonusApr, setBonusApr] = useState(0);
