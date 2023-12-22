@@ -162,7 +162,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faGift} />
               ) : (
-                <>Rewards</>
+                <>Accounts</>
               )}
             </RdButton>
             <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
