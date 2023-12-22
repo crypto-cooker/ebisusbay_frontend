@@ -70,6 +70,14 @@ class Cms {
     return this.ryoshiDynasties.claimDailyRewards(address, signature);
   }
 
+  async getResourcesBalances(address: string, signature: string) {
+    return this.ryoshiDynasties.getResourcesBalances(address, signature);
+  }
+
+  async requestResourcesWithdrawalAuthorization(tokenId: number, amount: number, address: string, signature: string) {
+    return this.ryoshiDynasties.requestResourcesWithdrawalAuthorization(tokenId, amount, address, signature);
+  }
+
   async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string) {
     return this.ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(address, amount, signature);
   }
