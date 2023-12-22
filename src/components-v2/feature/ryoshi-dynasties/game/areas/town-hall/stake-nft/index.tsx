@@ -316,7 +316,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBloc
       setExecutingLabel('');
     }
 
-  }, [pendingNfts, executingLabel, isExecutingStake]);
+  }, [pendingNfts, executingLabel, isExecutingStake, user.provider.signer]);
 
   return (
     <Box>

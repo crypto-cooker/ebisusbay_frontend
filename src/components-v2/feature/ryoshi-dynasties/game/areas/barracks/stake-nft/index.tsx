@@ -412,7 +412,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
       setExecutingLabel('');
     }
 
-  }, [pendingNfts, executingLabel, isExecutingStake]);
+  }, [pendingNfts, executingLabel, isExecutingStake, user.provider.signer]);
 
   const checkForApproval = async () => {
     const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
