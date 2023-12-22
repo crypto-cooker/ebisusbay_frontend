@@ -53,7 +53,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
     <RdModal
       isOpen={isOpen}
       onClose={handleClose}
-      title='Rewards'
+      title='Accounts'
       isCentered={false}
       utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
       onUtilBtnClick={handleBack}
@@ -62,7 +62,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
         <FaqPage />
       ) : (
         <>
-          <Text textAlign='center' fontSize={14} py={2}>Withdraw accumulated Fortune rewards or your Fortune stake</Text>
+          <Text textAlign='center' fontSize={14} py={2}>View information on Fortune rewards and balances for various in-game resources</Text>
           {user.address ? (
             <Box p={4}>
               <Flex direction='row' justify='center' mb={2}>

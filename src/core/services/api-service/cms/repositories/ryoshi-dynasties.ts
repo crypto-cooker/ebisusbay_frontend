@@ -160,8 +160,9 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
   async requestResourcesWithdrawalAuthorization(tokenId: number, amount: number, address: string, signature: string) {
     const response = await this.cms.post(
-      `ryoshi-dynasties/game-tokens/resources/${tokenId}/withdraw`,
+      `ryoshi-dynasties/game-tokens/resources/withdraw`,
       {
+        tokenId,
         amount,
       },
       {
