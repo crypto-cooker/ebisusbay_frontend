@@ -11,7 +11,7 @@ export const useUser = () => {
   const context = useContext(UserContext);
   const { open: connect } = useWeb3Modal();
   const queryClient = useQueryClient();
-
+  const legacyProvider = useLegacyProviderFunctions();
 
   if (context === null) {
     throw new Error('useUser must be used within a UserProvider');
@@ -36,7 +36,7 @@ export const useUser = () => {
 
     // Legacy
     address: context.user.wallet.address,
-    provider: useLegacyProviderFunctions(),
+    provider: legacyProvider
   };
 }
 
@@ -47,6 +47,7 @@ const useLegacyProviderFunctions = () => {
   }
 
   return {
+    signer,
     getSigner
   }
 }

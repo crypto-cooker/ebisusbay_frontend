@@ -101,25 +101,21 @@ const useSignature = () => {
     ]
   }
 
-  const signMessage = useCallback(
-    async (value: Order) => {
-      if (!user.wallet.isConnected) throw new Error();
-      try {
-        const provider = user.provider;
-        const signer = provider.getSigner()!;
+  const signMessage = useCallback(async (value: Order) => {
+    if (!user.wallet.isConnected) throw new Error();
+    try {
+      const signer = user.provider.signer;
 
-        const objectHash = ethers.utils._TypedDataEncoder.hash(domain, typeOrder, value);
-        const objectSignature = await signer._signTypedData(domain, typeOrder, value);
+      const objectHash = ethers.utils._TypedDataEncoder.hash(domain, typeOrder, value);
+      const objectSignature = await signer!._signTypedData(domain, typeOrder, value);
 
-        return { objectSignature, objectHash }
-      } catch (err: any) {
-        Sentry.captureException(err);
-        console.log(err)
-        throw err;
-      }
-    },
-    [user.wallet.isConnected]
-  );
+      return { objectSignature, objectHash }
+    } catch (err: any) {
+      Sentry.captureException(err);
+      console.log(err)
+      throw err;
+    }
+  }, [user.wallet.isConnected, user.wallet.address, user.provider.signer]);
 
   const createSigner = useCallback(async (signatureValues: ListingSignerProps) => {
     setIsLoading(true);
