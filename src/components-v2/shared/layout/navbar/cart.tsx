@@ -226,7 +226,7 @@ const Cart = function () {
   return (
     <div>
       <div className="de-menu-notification" onClick={openMenu}>
-        {cart.nfts.length > 0 && (
+        {cart.nfts && cart.nfts.length > 0 && (
           <div className="d-count">{cart.nfts.length > 9 ? '+' : cart.nfts.length}</div>
         )}
         <span>
