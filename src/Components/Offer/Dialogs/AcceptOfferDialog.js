@@ -89,7 +89,7 @@ export default function AcceptOfferDialog({ onClose, isOpen, collection, isColle
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && contractService) {
+    if (contractService) {
       asyncFunc();
     }
   }, [nft, contractService]);
