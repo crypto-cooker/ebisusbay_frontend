@@ -58,7 +58,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
         setExecutingClaim(true);
         const signature = await requestSignature();
         await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signature);
-        toast.success('Success!');
+        toast.success('Success! Claimed Koban is now in the Bank');
         setCanClaim(false);
         setNextClaim('in 24 hours');
         rdContext.refreshUser();
