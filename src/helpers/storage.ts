@@ -16,15 +16,14 @@ export const getThemeInStorage = () => {
   return localStorage.getItem(LOCAL_STORAGE_ITEMS.theme);
 };
 
-export const getAuthSignerInStorage = (): { date: Date, signature: string, address: string } | null => {
-  const item = localStorage.getItem(LOCAL_STORAGE_ITEMS.authSignature);
-  return item ? JSON.parse(item) : null;
-};
-
 export const getCartInStorage = () => {
   let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);
-  if (storage) return JSON.parse(storage);
-  return [];
+  try {
+    if (storage) return JSON.parse(storage);
+  } catch (e) {
+    clearCartInStorage();
+    return [];
+  }
 };
 
 type CartItem = {
@@ -39,7 +38,7 @@ type CartItem = {
 }
 
 export const addToCartInStorage = (listingId: string, {name, image, price, address, id, rank, amount = 1, currency}: CartItem) => {
-  let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);
+  let storage = getCartInStorage();
   const cart = storage ? JSON.parse(storage) : [];
   if (!cart.some((o: any) => o.listingId === listingId)) {
     cart.push({listingId, name, image, price, address, id, rank, amount, currency});
@@ -48,7 +47,7 @@ export const addToCartInStorage = (listingId: string, {name, image, price, addre
 };
 
 export const removeFromCartInStorage = (listingId: string) => {
-  let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);
+  let storage = getCartInStorage();
   let cart = storage ? JSON.parse(storage) : [];
   cart = cart.filter((o: any) => o.listingId !== listingId);
   localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, JSON.stringify(cart));
