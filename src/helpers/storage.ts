@@ -19,8 +19,15 @@ export const getThemeInStorage = () => {
 export const getCartInStorage = () => {
   try {
     let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);
-    if (storage) return JSON.parse(storage);
-    else return [];
+    if (!storage) return [];
+
+    const parsedStorage = JSON.parse(storage);
+    if (!Array.isArray(parsedStorage)) {
+      clearCartInStorage();
+      return [];
+    }
+
+    return parsedStorage;
   } catch (e) {
     clearCartInStorage();
     return [];
@@ -40,7 +47,7 @@ type CartItem = {
 
 export const addToCartInStorage = (listingId: string, {name, image, price, address, id, rank, amount = 1, currency}: CartItem) => {
   let storage = getCartInStorage();
-  const cart = storage ? JSON.parse(storage) : [];
+  const cart = storage ?? [];
   if (!cart.some((o: any) => o.listingId === listingId)) {
     cart.push({listingId, name, image, price, address, id, rank, amount, currency});
     localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, JSON.stringify(cart));
@@ -49,7 +56,7 @@ export const addToCartInStorage = (listingId: string, {name, image, price, addre
 
 export const removeFromCartInStorage = (listingId: string) => {
   let storage = getCartInStorage();
-  let cart = storage ? JSON.parse(storage) : [];
+  let cart = storage ?? [];
   cart = cart.filter((o: any) => o.listingId !== listingId);
   localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, JSON.stringify(cart));
 };
