@@ -17,9 +17,10 @@ export const getThemeInStorage = () => {
 };
 
 export const getCartInStorage = () => {
-  let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);
   try {
+    let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);
     if (storage) return JSON.parse(storage);
+    else return [];
   } catch (e) {
     clearCartInStorage();
     return [];
