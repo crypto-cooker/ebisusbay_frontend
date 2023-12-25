@@ -44,6 +44,12 @@ import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceS
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import * as Sentry from "@sentry/nextjs";
+import {Contract} from "ethers";
+import Resources from "@src/Contracts/Resources.json";
+import {parseErrorMessage} from "@src/helpers/validator";
+import { toast } from "react-toastify";
+import {createSuccessfulTransactionToastContent} from "@src/utils";
+import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 
 // import FactionDirectory from "@src/components-v2/feature/ryoshi-dynasties/game/modals/xp-leaderboard";
 const config = appConfig();
@@ -910,6 +916,7 @@ const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
   const [openShakePresent,setOpenShakePresent ] = useState(false);
   const [presentMessage, setPresentMessage] = useState('');
   const [showMessage, setShowMessage] = useState(false);
+  const [isClaimingToken, setIsClaimingToken] = useState<number>();
 
   const animation1 = prefersReducedMotion ? undefined : `${keyframe_dot1} infinite 1s linear`;
   const animation2 = prefersReducedMotion ? undefined : `${keyframe_dot2} infinite 1s linear`;
@@ -947,7 +954,7 @@ const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
           address: config.contracts.resources,
           token: gift.data.nfts.join(',')
         });
-        d.nfts = items.data;
+        d.nftData = items.data;
       }
       setGift(d);
     } catch (e) {
@@ -958,6 +965,29 @@ const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
       setShowMessage(true);
     }
   }
+
+  const handleClaimNft = async (tokenId: number) => {
+    if (!user.address) return;
+
+    try {
+      setIsClaimingToken(tokenId);
+      const signature = await requestSignature();
+      const authorization = await ApiService.withoutKey().ryoshiDynasties.requestResourcesWithdrawalAuthorization(tokenId, 1, user.address, signature);
+      const {signature: approvalSignature, approval} = authorization.data;
+
+      const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
+      const tx = await resourcesContract.mintWithSig(approval, approvalSignature);
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+    } catch (e) {
+      Sentry.captureException(e);
+      console.log(e);
+      toast.error(parseErrorMessage(e));
+    } finally {
+      setIsClaimingToken(undefined);
+    }
+  }
+
 
   useEffect(() => {
     if (!isOpen) return;
@@ -990,9 +1020,9 @@ const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
                       <Box>{gift.frtn} $FRTN. Can be claimed in the bank</Box>
                     </VStack>
                   )}
-                  {gift?.nfts && gift?.nfts?.length > 0 && (
+                  {gift?.nftData && gift?.nftData?.length > 0 ? (
                     <>
-                      {gift.nfts.map((nft: any) => (
+                      {gift.nftData.map((nft: any) => (
                         <VStack>
                           <Image
                             src={ImageService.translate(nft.image).custom({width: 150, height: 150})}
@@ -1000,10 +1030,22 @@ const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
                             rounded="md"
                           />
                           <Box>{nft.description}</Box>
+                          <RdButton
+                            stickyIcon={true}
+                            onClick={() => handleClaimNft(parseInt(nft.id))}
+                            isLoading={isClaimingToken === nft.id}
+                            isDisabled={!!isClaimingToken}
+                            size='md'
+                          >
+                            Claim
+                          </RdButton>
                         </VStack>
                       ))}
-                      <Box>Will be claimable later this week</Box>
                    </>
+                  ) : (gift?.nfts && gift?.nfts?.length > 0) ? (
+                    <Box>A gift has been received but no info was provided yet. Check back later!</Box>
+                  ) : (
+                    <Box>No gifts received yet. Check back later!</Box>
                   )}
                 </VStack>
               </Box>
