@@ -974,7 +974,8 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
       const cmsResponse = await MeepleTradeInCards(user.address, signature, ids, amounts);
       const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
       const tx = await resourcesContract.craftItems(cmsResponse.request, cmsResponse.signature);
-      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       onComplete();
 
     } catch (error: any) {

@@ -135,6 +135,10 @@ class Cms {
   async relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string) {
     return this.ryoshiDynasties.relocateTroops(troops, fromControlPointId, toControlPointId, fromFactionId, toFactionId, address, signature)
   }
+
+  async fetchGift(address: string, signature: string) {
+    return this.ryoshiDynasties.fetchGift(address, signature)
+  }
 }
 
 export default Cms;

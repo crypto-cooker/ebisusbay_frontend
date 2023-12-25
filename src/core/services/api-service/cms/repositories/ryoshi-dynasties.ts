@@ -305,6 +305,17 @@ class RyoshiDynastiesRepository extends CmsRepository {
     );
     return response.data;
   }
+
+  async fetchGift(address: string, signature: string) {
+    const response = await this.cms.get(
+      `ryoshi-dynasties/game-tokens/shake-tree`, {
+        params: {
+          address,
+          signature
+        }
+    });
+    return response.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;
