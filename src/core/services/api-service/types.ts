@@ -58,6 +58,7 @@ export interface RyoshiDynastiesApi {
     getUserMeeples(address: string): Promise<Meeple | null>;
     deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string): Promise<any>;
     relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string): Promise<any>
+    fetchGift(address: string, signature: string): Promise<any>;
 }
 
 export enum ListingState {
