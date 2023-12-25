@@ -1033,7 +1033,7 @@ const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
                           <RdButton
                             stickyIcon={true}
                             onClick={() => handleClaimNft(parseInt(nft.id))}
-                            isLoading={isClaimingToken === nft.id}
+                            isLoading={isClaimingToken === parseInt(nft.id)}
                             isDisabled={!!isClaimingToken}
                             size='md'
                           >
