@@ -19281,7 +19281,7 @@
       "multiToken": false,
       "address": "0x881F66efA7c07376FA6C5db84B31A20154AD6b5F",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Inner Systems of the Crotech Frontier are on the brink of a cataclysmic event as a message from beyond the edges of the the Frontier has left humanity's best minds in a frenzied scramble to decipher its meaning. However, amidst the chaos, one thing has become undeniably clear - whoever sent the message is on their way to the Frontier.  As the people and their Crotech companions brace themselves for the arrival of this unknown entity, dark forces from within their own ranks threaten to tear them apart from the inside. Betrayal, war, and corruption loom on the horizon, with the unfathomable abyss of the Void looming ominously beyond the edges of the Frontier. For decades, all inhabitants of the Inner Systems have lived in peace, but now everything is about to change. Follow the gripping story of the Crotech Frontier and unravel the mystery of the message and experience the first-ever ARGxWeb3 event on Cronos, and immerse yourself in unravelling the story as the fate of the Crotech Frontier hangs in the balance. This is just the beginning. ",
         "avatar": "/img/collections/crotech-redacted/avatar.webp",

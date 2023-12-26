@@ -781,7 +781,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                                 <>
                                   <Box
                                     position='absolute'
-                                    bgImage={'/img/battle-bay/mapImages/shake_present.png'}
+                                    bgImage={'/img/battle-bay/mapImages/open_present.png'}
                                     top={450}
                                     rounded='full'
                                     zIndex={13}
@@ -799,7 +799,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                                       _groupHover={{
                                         cursor: 'pointer',
                                         bg: 'transparent',
-                                        bgImage:'/img/battle-bay/mapImages/shake_present_hover.png',
+                                        bgImage:'/img/battle-bay/mapImages/open_present_hover.png',
                                       }}
                                     >
                                     </Button>
