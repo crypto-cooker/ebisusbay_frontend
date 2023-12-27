@@ -175,12 +175,12 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
                     </Thead>
                     <Tbody>
                       {rewardsHistory.map((reward: any) => (
-                        <Tr>
+                        <Tr key={reward.id}>
                           <Td py={1} ps={3}>{new Date(reward.timestamp).toLocaleString()}</Td>
-                          <Td py={1}>
+                          <Td py={1} maxW={{base: '200', sm: '250px', md: '300px'}}>
                             <Box>{formatString(reward.type)}</Box>
                             {(!!reward.metadata?.type || !!reward.metadata?.name) && (
-                              <Box fontSize='xs'>({reward.metadata.type && <>{reward.metadata.type}: </>}{reward.metadata.name})</Box>
+                              <Box fontSize='xs' color='#aaa' noOfLines={1}>({reward.metadata.type && <>{reward.metadata.type}: </>}{reward.metadata.name})</Box>
                             )}
                           </Td>
                           <Td py={1} pe={3} isNumeric>
@@ -199,23 +199,25 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
                 ) : (
                   <>
                     {rewardsHistory.map((reward: any) => (
-                      <Box my={2}>
-                        <HStack justify='space-between'>
-                          <HStack  justify='end'>
-                            <FortuneIcon boxSize={4}/>
-                            <Box>{commify(round(reward.amount, 3))}</Box>
+                      <Box my={3}>
+                        <Flex direction='column'>
+                          <HStack justify='space-between'>
+                            <HStack justify='end'>
+                              <FortuneIcon boxSize={4}/>
+                              <Box>{commify(round(reward.amount, 3))}</Box>
+                            </HStack>
+                            <Tag variant='solid' alignSelf='end' size='sm'>{new Date(reward.timestamp).toLocaleString()}</Tag>
                           </HStack>
-                          <Wrap justify='end'>
-                            <Tag py={1} colorScheme={reward.status === 'PENDING' ? undefined : 'blue'} variant='solid'>{formatString(reward.type)}</Tag>
+                          <Wrap justify='end' mt={1}>
+                            <Tag py={1} size='sm' colorScheme={reward.status === 'PENDING' ? undefined : 'blue'} variant='solid'>{formatString(reward.type)}</Tag>
                             {reward.status === 'PENDING' && (
-                              <Tag variant='solid'>Pending</Tag>
+                              <Tag variant='solid' size='sm'>Pending</Tag>
                             )}
                           </Wrap>
-                        </HStack>
+                        </Flex>
                         {(!!reward.metadata?.type || !!reward.metadata?.name) && (
-                          <Box>({reward.metadata.type && <>{reward.metadata.type}: </>}{reward.metadata.name})</Box>
+                          <Box color='#aaa' fontSize='xs'>({reward.metadata.type && <>{reward.metadata.type}: </>}{reward.metadata.name})</Box>
                         )}
-                        <Box py={1}>{new Date(reward.timestamp).toLocaleString()}</Box>
                       </Box>
                     ))}
                   </>
