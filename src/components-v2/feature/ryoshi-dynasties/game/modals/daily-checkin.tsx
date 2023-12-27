@@ -1,6 +1,6 @@
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {ApiService} from "@src/core/services/api-service";
-import {Box, HStack, Image, SimpleGrid, Text} from "@chakra-ui/react";
+import {Box, HStack, Image, Link, SimpleGrid, Text} from "@chakra-ui/react";
 import {pluralize} from "@src/utils";
 import {useContext, useEffect, useMemo, useState} from "react";
 import {toast} from "react-toastify";
@@ -128,31 +128,42 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
             </SimpleGrid>
 
             <Box textAlign='center'>
-              <Text as='span'>Your current streak is <strong>{streak} {pluralize(streak, 'day')}</strong>. </Text>
-              {canClaim ? (
-                <Text as='span'>
-                  Claim now to increase your streak and earn {rdContext.config.rewards.daily[streakIndex] * kobanMultiplier} Koban
-                </Text>
+              {rdContext.user && rdContext.user.experience.level > 0 ? (
+                <>
+                  <Text as='span'>Your current streak is <strong>{streak} {pluralize(streak, 'day')}</strong>. </Text>
+                  {canClaim ? (
+                    <Text as='span'>
+                      Claim now to increase your streak and earn {rdContext.config.rewards.daily[streakIndex] * kobanMultiplier} Koban
+                    </Text>
+                  ) : (
+                    <Text as='span'>
+                      Claim again {nextClaim}
+                    </Text>
+                  )}
+                  {canClaim && (
+                    <Box textAlign='center' mt={4}>
+                      <RdButton
+                        stickyIcon={true}
+                        onClick={authCheckBeforeClaim}
+                        isLoading={executingClaim}
+                        disabled={executingClaim}
+                        loadingText='Claiming'
+                      >
+                        Claim Koban
+                      </RdButton>
+                    </Box>
+                  )}
+                </>
               ) : (
-                <Text as='span'>
-                  Claim again {nextClaim}
-                </Text>
+                <Box as='span'>
+                  You must be at least level 1 to perform this action. Levels can be unlocked earning XP by using Ebisu's Bay. Details can be found {''}
+                  <Link href='https://ebisusbay.notion.site/Levels-and-Experience-Points-91658dcfd1b64fcf93b7f5b3af8c069c?pvs=4' color='#FDAB1A' fontWeight='bold' target='_blank'>
+                    here
+                  </Link>
+                </Box>
               )}
             </Box>
 
-            {canClaim && (
-              <Box textAlign='center' mt={4}>
-                <RdButton
-                  stickyIcon={true}
-                  onClick={authCheckBeforeClaim}
-                  isLoading={executingClaim}
-                  disabled={executingClaim}
-                  loadingText='Claiming'
-                >
-                  Claim Koban
-                </RdButton>
-              </Box>
-            )}
           </>
         </AuthenticationRdButton>
       </Box>
