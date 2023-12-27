@@ -25078,6 +25078,73 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "BCK Crowns",
+      "slug": "bck-crowns",
+      "multiToken": false,
+      "address": "0xC86505794D7BD979F75650aA13a24AcAb2Ab7659",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "BCK Crowns is a low cost mint w/ use as a minting payment on future Collections.",
+        "avatar": "/img/collections/bck-crowns/avatar.webp",
+        "banner": "/img/collections/bck-crowns/banner.webp",
+        "website": "https://bckingdoms.xyz/",
+        "twitter": "https://twitter.com/BChainKingdom",
+        "discord": "https://discord.gg/sCab6YQFrk",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Degen Workers",
+      "slug": "degen-workers",
+      "multiToken": false,
+      "address": "0x871a1454584500781f565b3CaB807Bb82A2436C0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Degen Workers stuck on Degen Island, these apes work for FIAT.",
+        "avatar": "/img/collections/degen-workers/avatar.webp",
+        "banner": "/img/collections/degen-workers/banner.webp",
+        "website": "https://degencronosapes.com/adventure",
+        "twitter": "https://twitter.com/DegenCronosApes",
+        "discord": "https://discord.gg/27fdbCmJbV",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Dragon Soldiers",
+      "slug": "dragon-soldiers",
+      "multiToken": false,
+      "address": "0xd67950f401b23db0b0d9f54b36fcb873feeb07f9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "6500 dragon soldiers 96 legendarys Dragon warriors 3rd drop for passive income will also get listing rewards on ryoshi",
+        "avatar": "/img/collections/dragon-soldiers/avatar.webp",
+        "card": "/img/collections/dragon-soldiers/card.webp",
+        "banner": "/img/collections/dragon-soldiers/banner.webp",
+        "website": "https://dragonwarriorscro.netlify.app/",
+        "twitter": "https://twitter.com/crodragons",
+        "discord": "https://discord.gg/pxuNfdjZ6Z",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
