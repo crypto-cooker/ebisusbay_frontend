@@ -32,7 +32,7 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useUser} from "@src/components-v2/useUser";
-
+import * as Sentry from "@sentry/nextjs";
 
 const config = appConfig();
 const guardsAddress = config.collections.find((c: any) => c.slug === 'fortune-guards').address;
@@ -176,6 +176,7 @@ const Mint = () => {
       refetch();
     } catch (e) {
       console.log(e);
+      Sentry.captureException(e);
       toast.error(parseErrorMessage(e));
     } finally {
       setIsMinting(false);
