@@ -177,10 +177,10 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
                       {rewardsHistory.map((reward: any) => (
                         <Tr key={reward.id}>
                           <Td py={1} ps={3}>{new Date(reward.timestamp).toLocaleString()}</Td>
-                          <Td py={1} maxW={{base: '200', sm: '250px', md: '300px'}}>
+                          <Td py={1} maxW={{sm: '140px', md: '180px', lg: '230px'}}>
                             <Box>{formatString(reward.type)}</Box>
                             {(!!reward.metadata?.type || !!reward.metadata?.name) && (
-                              <Box fontSize='xs' color='#aaa' noOfLines={1}>({reward.metadata.type && <>{reward.metadata.type}: </>}{reward.metadata.name})</Box>
+                              <Box fontSize='xs' color='#aaa' noOfLines={2}>({reward.metadata.type && <>{reward.metadata.type}: </>}{reward.metadata.name})</Box>
                             )}
                           </Td>
                           <Td py={1} pe={3} isNumeric>
