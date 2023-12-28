@@ -185,6 +185,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       Sentry.setTag('wallet', wallet);
     });
 
+    // Wallet states:
+    // connected but locked = !!address, !connector, !!isReconnecting, !!chain
+    // connected and ready = !!address, !!isConnected, !!connector, !!chain, status == connected
+    // connected wrong chain = !!address, !!isConnected, !!connector, !!chain, status == connected, chain.id != config.chain.id
+    // clean disconnect = !address, !isConnected, !connector, !chain, status == disconnected
+    // switch address = status == reconnecting?
+
     dispatch({
       type: UserActionType.SET_WALLET,
       payload: {
@@ -196,7 +203,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         }
       }
     });
-  }, [address, isConnected, isConnecting, chain?.id, status]);
+  }, [address, isConnected, isConnecting, isReconnecting, chain?.id, status]);
 
   // Initialize if freshly connected or wallet switched
   useEffect(() => {

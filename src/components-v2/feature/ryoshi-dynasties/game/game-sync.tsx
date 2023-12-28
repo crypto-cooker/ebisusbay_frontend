@@ -122,10 +122,10 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
         }
       }
     }
-    if (!!user.address) {
+    if (!!user.address && user.wallet.isConnected) {
       getSig();
     }
-  }, [user.address, isSignedIn]);
+  }, [user.address, isSignedIn, user.wallet.isConnected]);
 
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [isInMaintenanceMode, setIsInMaintenanceMode] = useState(false);
