@@ -8,14 +8,6 @@ export const LOCAL_STORAGE_ITEMS = {
   dismissRdAnnouncement: 'DISMISS_RD_ANNOUNCEMENT',
 };
 
-export const setThemeInStorage = (theme: string) => {
-  localStorage.setItem(LOCAL_STORAGE_ITEMS.theme, theme);
-};
-
-export const getThemeInStorage = () => {
-  return localStorage.getItem(LOCAL_STORAGE_ITEMS.theme);
-};
-
 export const getCartInStorage = () => {
   try {
     let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);

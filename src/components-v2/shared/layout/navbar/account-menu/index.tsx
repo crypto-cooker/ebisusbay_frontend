@@ -23,7 +23,6 @@ import {ethers} from 'ethers';
 import {createSuccessfulTransactionToastContent, round, shortAddress, username} from '@src/utils';
 import styles from './accountmenu.module.scss';
 import {useWeb3Modal} from '@web3modal/wagmi/react'
-import {getThemeInStorage} from '@src/helpers/storage';
 import {appConfig} from '@src/Config';
 import classnames from "classnames";
 import Button from "@src/Components/components/Button";
@@ -87,8 +86,6 @@ const Index = function () {
   const [showWrongChainModal, setShowWrongChainModal] = useState(false);
 
   const { setValue:setClipboardValue, onCopy } = useClipboard(user.wallet.address ?? '');
-
-  const {theme, profile} = useUser();
 
   const closeMenu = () => {
     setShowMenu(false);
@@ -170,7 +167,7 @@ const Index = function () {
   }
 
   useEffect(() => {
-    const themeInStorage = getThemeInStorage();
+    const themeInStorage = user.theme;
     user.toggleTheme(themeInStorage ?? 'dark');
   }, []);
 
@@ -189,7 +186,7 @@ const Index = function () {
   }
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
+    const newTheme = user.theme === 'light' ? 'dark' : 'light';
     user.toggleTheme(newTheme);
   };
 
@@ -367,7 +364,7 @@ const Index = function () {
                 <Box as='span' onClick={toggleTheme}>
                   <Box className={styles.col}>
                     <span>
-                      <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} />
+                      <FontAwesomeIcon icon={user.theme === 'dark' ? faMoon : faSun} />
                     </span>
                     <span className="ms-2">Dark mode</span>
                   </Box>
