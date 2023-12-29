@@ -129,7 +129,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
       amount: listing.amount,
       currency: listing.currency
     });
-    toast.success(createSuccessfulAddCartContent(() => cart.openCart()));
+    toast.success(createSuccessfulAddCartContent(cart.openCart));
   };
 
   const handleRemoveFromCart = () => {

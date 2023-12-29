@@ -223,7 +223,6 @@ const MyNftCard = ({
                   <AnyMedia image={nftCardUrl(nft.nftAddress, nft.image)}
                             title={nft.name}
                             newTab={true}
-                            className="card-img-top marketplace"
                             height={440}
                             width={440}
                             video={batchListingCart.items.length > 0 ? undefined : (nft.video ?? nft.animationUrl ?? nft.animation_url)}

@@ -133,7 +133,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
       rank: nft.rank,
       currency: nft.market.currency
     });
-    toast.success(createSuccessfulAddCartContent(() => cart.openCart()));
+    toast.success(createSuccessfulAddCartContent(cart.openCart));
   };
 
   const handleRemoveFromCart = () => {
