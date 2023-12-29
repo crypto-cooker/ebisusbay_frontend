@@ -142,7 +142,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
       });
     }
     
-    toast.success(createSuccessfulAddCartContent(() => cart.openCart()));
+    toast.success(createSuccessfulAddCartContent(cart.openCart));
   };
 
   const handleRemoveFromCart = () => {

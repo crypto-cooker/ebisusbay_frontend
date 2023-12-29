@@ -39,7 +39,7 @@ const ListingsTab = ({ nft }: ListingsProps) => {
       amount: listing.amount,
       currency: listing.currency
     });
-    toast.success(createSuccessfulAddCartContent(() => cart.openCart()));
+    toast.success(createSuccessfulAddCartContent(cart.openCart));
   };
 
   const fetcher = ({ pageParam = 1}) => {

@@ -13,6 +13,10 @@ const useCart = () => {
         if (oldItems.length === 0) {
           setIsOpen(true);
         }
+
+        // Sometimes API does not return an amount
+        if (!newItem.amount) newItem.amount = 1;
+
         return [...oldItems, newItem];
       }
       return oldItems;
