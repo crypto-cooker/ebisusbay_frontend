@@ -8,54 +8,6 @@ export const LOCAL_STORAGE_ITEMS = {
   dismissRdAnnouncement: 'DISMISS_RD_ANNOUNCEMENT',
 };
 
-export const getCartInStorage = () => {
-  try {
-    let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.cart);
-    if (!storage) return [];
-
-    const parsedStorage = JSON.parse(storage);
-    if (!Array.isArray(parsedStorage)) {
-      clearCartInStorage();
-      return [];
-    }
-
-    return parsedStorage;
-  } catch (e) {
-    clearCartInStorage();
-    return [];
-  }
-};
-
-type CartItem = {
-  name: string;
-  image: string;
-  price: number;
-  address: string;
-  id: string;
-  rank: number;
-  amount: number;
-  currency: string;
-}
-
-export const addToCartInStorage = (listingId: string, {name, image, price, address, id, rank, amount = 1, currency}: CartItem) => {
-  let storage = getCartInStorage();
-  const cart = storage ?? [];
-  if (!cart.some((o: any) => o.listingId === listingId)) {
-    cart.push({listingId, name, image, price, address, id, rank, amount, currency});
-    localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, JSON.stringify(cart));
-  }
-};
-
-export const removeFromCartInStorage = (listingId: string) => {
-  let storage = getCartInStorage();
-  let cart = storage ?? [];
-  cart = cart.filter((o: any) => o.listingId !== listingId);
-  localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, JSON.stringify(cart));
-};
-
-export const clearCartInStorage = () => {
-  localStorage.setItem(LOCAL_STORAGE_ITEMS.cart, JSON.stringify([]));
-};
 
 export const getSearchVisitsInStorage = () => {
   let storage = localStorage.getItem(LOCAL_STORAGE_ITEMS.searchVisits);
