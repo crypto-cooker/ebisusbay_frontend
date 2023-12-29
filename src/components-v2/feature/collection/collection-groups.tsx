@@ -39,7 +39,7 @@ export const CollectionNftsGroup = ({data, canLoadMore, loadMore, fullWidth, lis
       {data.pages.map((items, index) => (
         <React.Fragment key={index}>
           {items.data?.map((nft, index) => (
-            <Box key={`${nft.name}`}>
+            <Box key={`${nft.id ?? nft.nftId}-${nft.name}`}>
               {isBundle(nft.address ?? nft.nftAddress) ? (
                 <NftBundleCard
                   listing={nft}
