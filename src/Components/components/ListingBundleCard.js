@@ -130,7 +130,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
     else{
       cart.addItem({
         listingId: listing.listingId,
-        name: listing.nft.title,
+        name: listing.nft.name,
         image: listing.nft.nfts[0].image,
         price: listing.price,
         address: listing.nftAddress,
