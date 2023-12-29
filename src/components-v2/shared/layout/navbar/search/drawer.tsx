@@ -29,8 +29,9 @@ import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
-import {addToSearchVisitsInStorage, getSearchVisitsInStorage, removeSearchVisitFromStorage} from "@src/helpers/storage";
 import {useUser} from "@src/components-v2/useUser";
+import useSearch from "@src/hooks/use-search";
+import {SearchHistoryItem} from "@src/jotai/atoms/search";
 
 const minChars = 3;
 
@@ -40,11 +41,12 @@ const knownContracts = appConfig('collections');
 const MobileSearchDrawer = () => {
   const router = useRouter();
   const user = useUser();
+  const searchHistory = useSearch();
   const {isOpen, onOpen, onClose} = useDisclosure();
   const [value, setValue] = React.useState('');
   const searchIconColor = useColorModeValue('black', 'gray.300');
   const headingColor = useColorModeValue('black', 'gray.300');
-  const [searchVisits, setSearchVisits] = useState([]);
+  const [searchVisits, setSearchVisits] = useState<SearchHistoryItem[]>([]);
   const debouncedSearch = useDebounce(value, 500);
 
   const { data, status, error, refetch } = useQuery({
@@ -75,21 +77,21 @@ const MobileSearchDrawer = () => {
   };
 
   const handleCollectionClick = useCallback((collection: any) => {
-    addToSearchVisitsInStorage(collection);
+    searchHistory.addItem(collection);
     onClose();
     setValue('');
     router.push(`/collection/${collection.address}`);
   }, [onClose, router, setValue]);
 
   const handleRemoveVisit = (collection: any) => {
-    removeSearchVisitFromStorage(collection.address);
+    searchHistory.removeItem(collection.address);
     const remainingVisits = getRelevantVisits();
     setSearchVisits(remainingVisits);
     if (remainingVisits?.length < 1 && (!data || data.length < 1)) onClose();
   };
 
   const getRelevantVisits = () => {
-    const visits = getSearchVisitsInStorage();
+    const visits = searchHistory.items;
 
     if (value && value.length >= minChars) {
       return visits.filter((item: any) => {

@@ -13,7 +13,7 @@ import {
   useOutsideClick,
   VStack
 } from "@chakra-ui/react";
-import React, {ChangeEvent, KeyboardEventHandler, RefObject, useCallback, useEffect, useState} from "react";
+import React, {ChangeEvent, RefObject, useCallback, useEffect, useState} from "react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
@@ -24,7 +24,8 @@ import useDebounce from "@src/core/hooks/useDebounce";
 import {appConfig} from "@src/Config";
 import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
 import Scrollbars from "react-custom-scrollbars-2";
-import {addToSearchVisitsInStorage, getSearchVisitsInStorage, removeSearchVisitFromStorage} from "@src/helpers/storage";
+import useSearch from "@src/hooks/use-search";
+import {SearchHistoryItem} from "@src/jotai/atoms/search";
 
 const searchRegex = /^\w+([\s-_]\w+)*$/;
 const minChars = 3;
@@ -36,6 +37,7 @@ const knownContracts = appConfig('collections');
 
 const Search = () => {
   const router = useRouter();
+  const searchHistory = useSearch();
   const headingColor = useColorModeValue('black', 'gray.300');
   const searchIconColor = useColorModeValue('white', 'gray.300');
   const bgColor = useColorModeValue('white', 'gray.700');
@@ -45,7 +47,7 @@ const Search = () => {
   const inputVariant = useColorModeValue('flushed', 'outline');
 
   const [maxResults, setMaxResults] = useState(defaultMaxVisible);
-  const [searchVisits, setSearchVisits] = useState([]);
+  const [searchVisits, setSearchVisits] = useState<SearchHistoryItem[]>([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, setValue] = useState('');
@@ -94,14 +96,14 @@ const Search = () => {
   };
 
   const handleCollectionClick = useCallback((collection: any) => {
-    addToSearchVisitsInStorage(collection);
+    searchHistory.addItem(collection);
     onClose();
     setValue('');
     router.push(`/collection/${collection.address}`);
   }, [onClose, router, setValue]);
 
   const handleRemoveVisit = (collection: any) => {
-    removeSearchVisitFromStorage(collection.address);
+    searchHistory.removeItem(collection.address);
     const remainingVisits = getRelevantVisits();
     setSearchVisits(remainingVisits);
     if (remainingVisits?.length < 1 && (!data || data.length < 1)) onClose();
@@ -122,7 +124,7 @@ const Search = () => {
   }
 
   const getRelevantVisits = () => {
-    const visits = getSearchVisitsInStorage();
+    const visits = searchHistory.items;
 
     if (value && value.length >= minChars) {
       return visits.filter((item: any) => {
