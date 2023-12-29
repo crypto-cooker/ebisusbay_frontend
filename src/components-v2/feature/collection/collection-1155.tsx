@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 import Blockies from 'react-blockies';
-import LayeredIcon from '../../../Components/components/LayeredIcon';
 import {isBundle, isCrosmocraftsPartsCollection} from '@src/utils';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import CollectionInfoBar from '@src/Components/components/CollectionInfoBar';
@@ -9,7 +7,7 @@ import SalesCollection from '@src/Components/components/SalesCollection';
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {pushQueryString} from "@src/helpers/query";
 import {useRouter} from "next/router";
-import {Box, Button, Flex, Heading, Text} from "@chakra-ui/react";
+import {AspectRatio, Avatar, Box, Button, Flex, Heading, Image, Text, useBreakpointValue} from "@chakra-ui/react";
 import MintingButton from "@src/Components/Collection/MintingButton";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import useGetStakingPlatform from "@src/hooks/useGetStakingPlatform";
@@ -19,6 +17,9 @@ import Items from "@src/components-v2/feature/collection/tabs/items";
 import {useQuery} from "@tanstack/react-query";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {getStats} from "@src/components-v2/feature/collection/collection-721";
+import {getTheme} from "@src/Theme/theme";
+import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
+import {useUser} from "@src/components-v2/useUser";
 
 
 const tabs = {
@@ -40,9 +41,11 @@ const hasRank = false;
 
 const Collection1155 = ({ collection, tokenId, ssrTab, ssrQuery, activeDrop = null }: Collection1155Props) => {
   const router = useRouter();
+  const user = useUser();
   const [showFullDescription, setShowFullDescription] = useState(false);
   const { stakingPlatform } = useGetStakingPlatform(collection.address);
   const [openMenu, setOpenMenu] = React.useState(tabs.items);
+  const isMobileLayout = useBreakpointValue({base: true, sm: false}, {fallback: 'sm'});
 
   const { data: collectionStats } = useQuery({
     queryKey: ['CollectionStats', collection.address],
@@ -74,31 +77,38 @@ const Collection1155 = ({ collection, tokenId, ssrTab, ssrQuery, activeDrop = nu
 
   return (
     <Box>
-      <Box
-        as='section'
-        id="profile_banner"
-        className="jumbotron breadcumb no-bg"
-        style={{
-          backgroundImage: `url(${!!collection.metadata.banner ? ImageService.translate(collection.metadata.banner).banner() : ''})`,
-          backgroundPosition: '50% 50%',
-        }}
-      >
-        <Box className="mainbreadcumb"></Box>
-      </Box>
-
+      <AspectRatio ratio={{base: 4/3, sm: 2.66}} maxH='360px'>
+        {(!!collection.metadata.card || !!collection.metadata.banner)  ? (
+          <>
+            {isMobileLayout ? (
+              <Image src={ImageService.translate(collection.metadata.card ?? collection.metadata.banner).banner()} alt='banner' objectFit='cover' />
+            ) : (
+              <Image src={ImageService.translate(collection.metadata.banner).banner()} alt='banner' objectFit='cover' />
+            )}
+          </>
+        ) : <></>}
+      </AspectRatio>
       <Box as='section' className="gl-legacy container d_coll no-top no-bottom">
-        <Box className="profile_avatar">
-          <Box className="d_profile_img">
-            {collection.metadata?.avatar ? (
-              <img src={collection.metadata.avatar} alt={collection.name} />
+        <Flex mt={{base: '-55px', lg: '-73px'}} justify='center'>
+          <Box position='relative'>
+            {collection.metadata.avatar ? (
+              <Avatar
+                src={ImageService.translate(collection.metadata.avatar).fixedWidth(150, 150)}
+                rounded='full'
+                size={{base: 'xl', sm: '2xl'}}
+                border={`6px solid ${getTheme(user.theme).colors.bgColor1}`}
+                bg={getTheme(user.theme).colors.bgColor1}
+              />
             ) : (
               <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
             )}
-            {collection.verification?.verified && (
-              <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
+            {collection.verification.verified && (
+              <Box position='absolute' bottom={2} right={2}>
+                <BlueCheckIcon boxSize={6}/>
+              </Box>
             )}
           </Box>
-        </Box>
+        </Flex>
         <Box className="profile_name">
           <Flex justify="center" align="center" mb={4}>
             <Heading as="h4" size="md" my="auto">

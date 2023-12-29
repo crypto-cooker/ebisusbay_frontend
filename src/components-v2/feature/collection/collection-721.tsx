@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
-import {Box, Button, Flex, Heading, Text} from "@chakra-ui/react";
+import {AspectRatio, Avatar, Box, Button, Flex, Heading, Image, Text, useBreakpointValue} from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import Blockies from "react-blockies";
-import LayeredIcon from "@src/Components/components/LayeredIcon";
-import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
 import MintingButton from "@src/Components/Collection/MintingButton";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
@@ -19,7 +17,8 @@ import {
   isCronosGorillaBusinessCollection,
   isCronosVerseCollection,
   isCrosmocraftsCollection,
-  isLandDeedsCollection, isPlayingCardsCollection
+  isLandDeedsCollection,
+  isPlayingCardsCollection
 } from "@src/utils";
 import useGetStakingPlatform from "@src/hooks/useGetStakingPlatform";
 import CollectionBundlesGroup from "@src/Components/components/CollectionBundlesGroup";
@@ -34,6 +33,9 @@ import {getCollections} from "@src/core/api/next/collectioninfo";
 import Items from "@src/components-v2/feature/collection/tabs/items";
 import PokerLeaderboardComponentPast from "@src/components-v2/feature/poker/poker-leaderboard-past";
 import {PokerCollection} from "@src/core/services/api-service/types";
+import {getTheme} from "@src/Theme/theme";
+import {useUser} from "@src/components-v2/useUser";
+import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
 
 const tabs = {
   items: 'items',
@@ -69,9 +71,11 @@ const hasRank = false;
 
 const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Collection721Props) => {
   const router = useRouter();
+  const user = useUser();
   const [showFullDescription, setShowFullDescription] = useState(false);
   const { stakingPlatform } = useGetStakingPlatform(collection.address);
   const [openMenu, setOpenMenu] = useState(tabs.items);
+  const isMobileLayout = useBreakpointValue({base: true, sm: false}, {fallback: 'sm'});
 
   const emptyFunction = () => {};
 
@@ -105,31 +109,38 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
 
   return (
     <Box>
-      <Box
-        as='section'
-        id="profile_banner"
-        className="jumbotron breadcumb no-bg"
-        style={{
-          backgroundImage: `url(${!!collection.metadata.banner ? ImageService.translate(collection.metadata.banner).banner() : ''})`,
-          backgroundPosition: '50% 50%',
-        }}
-      >
-        <Box className='mainbreadcumb'></Box>
-      </Box>
-
+      <AspectRatio ratio={{base: 4/3, sm: 2.66}} maxH='360px'>
+        {(!!collection.metadata.card || !!collection.metadata.banner)  ? (
+          <>
+            {isMobileLayout ? (
+              <Image src={ImageService.translate(collection.metadata.card ?? collection.metadata.banner).banner()} alt='banner' objectFit='cover' />
+            ) : (
+              <Image src={ImageService.translate(collection.metadata.banner).banner()} alt='banner' objectFit='cover' />
+            )}
+          </>
+        ) : <></>}
+      </AspectRatio>
       <Box as='section' className="gl-legacy container d_coll no-top no-bottom">
-        <Box className="profile_avatar">
-          <Box className="d_profile_img">
+        <Flex mt={{base: '-55px', lg: '-73px'}} justify='center'>
+          <Box position='relative'>
             {collection.metadata.avatar ? (
-              <img src={ImageService.translate(collection.metadata.avatar).fixedWidth(150, 150)} alt={collection.name} />
+              <Avatar
+                src={ImageService.translate(collection.metadata.avatar).fixedWidth(150, 150)}
+                rounded='full'
+                size={{base: 'xl', sm: '2xl'}}
+                border={`6px solid ${getTheme(user.theme).colors.bgColor1}`}
+                bg={getTheme(user.theme).colors.bgColor1}
+              />
             ) : (
               <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
             )}
             {collection.verification.verified && (
-              <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
+              <Box position='absolute' bottom={2} right={2}>
+                <BlueCheckIcon boxSize={6}/>
+              </Box>
             )}
           </Box>
-        </Box>
+        </Flex>
         <Box className="profile_name">
           <Flex justify="center" align="center" mb={4}>
             <Heading as="h4" size="md" my="auto">
@@ -372,6 +383,7 @@ export const getStats = async (collection: any, id = null, extraAddresses = null
         ]
       };
     }
+    console.log('HERP0')
     const traits = await getCollectionTraits(collection.address);
     const powertraits = collection.powertraits ? await getCollectionPowertraits(collection.address) : null;
 
@@ -382,7 +394,10 @@ export const getStats = async (collection: any, id = null, extraAddresses = null
     if (isCronosGorillaBusinessCollection(collection.address)) {
       remainingStats.totalSupply = 4000;
     }
-
+console.log('HERP', {
+  ...combineStats(response.collections, collection.address),
+  ...remainingStats,
+});
     return {
       ...combineStats(response.collections, collection.address),
       ...remainingStats,
