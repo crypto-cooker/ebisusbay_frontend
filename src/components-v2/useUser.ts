@@ -17,7 +17,7 @@ export const useUser = () => {
     throw new Error('useUser must be used within a UserProvider');
   }
 
-  const { user, disconnect, toggleTheme, onEscrowClaimed, onEscrowToggled, onStakingHarvested } = context;
+  const { user, theme, disconnect, toggleTheme, onEscrowClaimed, onEscrowToggled, onStakingHarvested } = context;
 
   const refreshProfile = () => {
     queryClient.refetchQueries({ queryKey: ['UserProfile', user.wallet.address], exact: true});
@@ -26,6 +26,7 @@ export const useUser = () => {
   return {
     ...user,
 
+    theme,
     connect,
     disconnect,
     toggleTheme,

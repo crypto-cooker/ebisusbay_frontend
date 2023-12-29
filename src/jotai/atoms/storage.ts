@@ -7,7 +7,7 @@ type StorageSigner = {
 }
 
 export const storageSignerAtom =  atomWithStorage<StorageSigner>(
-  'AUTH_SIGNATURE',
+  'eb.auth-signature',
   {
     address: '',
     signature: '',
@@ -55,3 +55,4 @@ export const storageSignerAtom =  atomWithStorage<StorageSigner>(
       };
     },
   });
+

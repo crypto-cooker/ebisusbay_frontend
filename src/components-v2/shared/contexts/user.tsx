@@ -10,18 +10,18 @@ import {JotaiUser, UserActionType, userAtom} from "@src/jotai/atoms/user";
 import {useAtom} from "jotai";
 import {RESET} from "jotai/utils";
 import {isUserBlacklisted} from "@src/utils";
-import {setThemeInStorage} from "@src/helpers/storage";
 import {useColorMode} from "@chakra-ui/react";
 import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
 import {storageSignerAtom} from "@src/jotai/atoms/storage";
 import * as Sentry from "@sentry/react";
-import axios from "axios";
+import {themeAtom} from "@src/jotai/atoms/theme";
 
 const config = appConfig();
 
 
 interface UserContextType {
   user: JotaiUser;
+  theme: string;
   disconnect: () => void;
   toggleTheme: (theme: string) => void;
   onEscrowClaimed: () => void;
@@ -38,6 +38,7 @@ interface UserProviderProps {
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, dispatch] = useAtom(userAtom);
   const [_, setSigner] = useAtom(storageSignerAtom);
+  const [theme, setTheme] = useAtom(themeAtom);
 
   // isConnected - true when explicitly connecting to wallet from dialog
   // isReconnecting - true when wallet is auto connecting after page refresh
@@ -51,8 +52,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const { disconnect: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
   const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address });
-  const { setColorMode } = useColorMode();
-  const { setThemeMode } = useWeb3ModalTheme();
+  const { setColorMode: setChakraTheme } = useColorMode();
+  const { setThemeMode: setWeb3ModalTheme } = useWeb3ModalTheme();
 
   const { data: profile } = useQuery({
     queryKey: ['UserProfile', address],
@@ -136,20 +137,25 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   }
 
   const clearUser = () => {
-    localStorage.clear();
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('eb.') && !key.startsWith('eb.theme')) {
+        localStorage.removeItem(key);
+        i--;
+      }
+    }
     setSigner(RESET);
     dispatch({ type: UserActionType.RESET_USER, payload: {} });
   }
 
   const toggleTheme = (theme: string) => {
     if (theme === 'light' || theme === 'dark') {
-      setThemeMode(theme);
-      setThemeInStorage(theme);
-      setColorMode(theme);
+      setWeb3ModalTheme(theme);
+      setTheme(theme);
+      setChakraTheme(theme);
       if (typeof window !== 'undefined') {
         document.documentElement.setAttribute('data-theme', theme);
       }
-      dispatch({ type: UserActionType.TOGGLE_THEME, payload: { theme } });
     }
   }
 
@@ -251,6 +257,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     <UserContext.Provider
       value={{
         user,
+        theme,
         disconnect,
         toggleTheme,
         onEscrowClaimed,

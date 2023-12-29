@@ -21,7 +21,6 @@ export interface JotaiUser {
   fee: number;
   initializing: boolean;
   initialized: boolean;
-  theme: string;
   isMember: boolean;
 }
 
@@ -40,7 +39,6 @@ export enum UserActionType {
   SET_INITIALIZING,
   SET_ESCROW,
   STAKING_HARVESTED,
-  TOGGLE_THEME,
   RESET_USER
 }
 
@@ -71,8 +69,6 @@ function userReducer(state: JotaiUser, action: UserAction): JotaiUser {
       return { ...state, inscriptions: action.payload.inscriptions as UserInscription[] };
     case UserActionType.SET_INITIALIZING:
       return { ...state, initializing: !!action.payload.initializing, initialized: !!action.payload.initialized };
-    case UserActionType.TOGGLE_THEME:
-      return { ...state, theme: action.payload.theme ?? 'dark' };
     case UserActionType.SET_ESCROW:
       return { ...state, escrow: { ...state.escrow, ...action.payload.escrow }};
     case UserActionType.STAKING_HARVESTED:
@@ -117,7 +113,6 @@ const initialUserState: JotaiUser = {
   fee: 3,
   initializing: false,
   initialized: false,
-  theme: 'dark',
   isMember: false
 };
 
