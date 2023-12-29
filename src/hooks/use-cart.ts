@@ -1,23 +1,6 @@
-import { atom, useAtom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
+import { useAtom } from 'jotai';
+import {CartItem, cartItemsAtom, cartOpenAtom} from "@src/jotai/atoms/cart";
 
-// Define the type for a cart item based on provided structure
-type CartItem = {
-  listingId: string;
-  name: string;
-  image: string;
-  price: number | string;
-  address: string;
-  id: string; // Assuming this is a unique identifier for each item
-  rank: number;
-  amount: number; // Assuming this is the quantity of the item
-  currency: string;
-  isBundle?: boolean;
-};
-
-// Define atoms
-const cartOpenAtom = atom<boolean>(false);
-const cartItemsAtom = atomWithStorage<CartItem[]>('CART', []);
 
 // Hook to manage the cart
 const useCart = () => {
