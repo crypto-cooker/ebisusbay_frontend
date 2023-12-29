@@ -11,7 +11,6 @@ import firebaseConfig from '../third-party/firebase';
 import {getTheme} from '../Theme/theme';
 import DefaultHead from "@src/components-v2/shared/layout/default-head";
 import {Box, Button, HStack, Text, useColorMode, VStack} from "@chakra-ui/react";
-import {syncCartStorage} from "@src/GlobalState/cartSlice";
 import Footer from "@src/components-v2/shared/layout/footer";
 import {AppProps} from "next/app";
 import {ExchangePricesContext} from "@src/components-v2/shared/contexts/exchange-prices";
@@ -62,7 +61,6 @@ function App({ Component, ...pageProps }: AppProps) {
       if (typeof window !== 'undefined') {
         getAnalytics(firebase);
       }
-      dispatch(syncCartStorage());
     } catch (e) {
       Sentry.captureException(e);
     } finally {

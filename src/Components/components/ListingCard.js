@@ -1,5 +1,5 @@
 import React, {memo, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import Link from 'next/link';
 import {ethers} from 'ethers';
@@ -21,7 +21,6 @@ import {
   faShoppingBag,
   faSync
 } from "@fortawesome/free-solid-svg-icons";
-import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
@@ -31,6 +30,7 @@ import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useCart from "@src/hooks/use-cart";
 
 const Watermarked = styled.div`
   position: relative;
@@ -55,9 +55,9 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const dispatch = useDispatch();
   const user = useUser();
-  const cart = useSelector((state) => state.cart);
+  const cart = useCart();
   const [isHovered, setIsHovered] = useState(false);
-  const isInCart = cart.nfts.map((o) => o.listingId).includes(listing.listingId);
+  const isInCart = cart.isItemInCart(listing.listingId);
   const { onCopy } = useClipboard(nftUrl.toString());
   const [runAuthedFunction] = useAuthedFunction();
   const {tokenUsdRate, tokenToUsdValue} = useTokenExchangeRate(listing.currency);
@@ -114,7 +114,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   };
 
   const handleAddToCart = () => {
-    dispatch(addToCart({
+    cart.addItem({
       listingId: listing.listingId,
       name: listing.nft.name,
       image: listing.nft.image,
@@ -128,12 +128,12 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
       is1155: listing.is1155,
       amount: listing.amount,
       currency: listing.currency
-    }));
-    toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
+    });
+    toast.success(createSuccessfulAddCartContent(() => cart.openCart()));
   };
 
   const handleRemoveFromCart = () => {
-    dispatch(removeFromCart(listing.listingId));
+    cart.removeItem(listing.listingId);
     toast.success('Removed from cart');
   };
 

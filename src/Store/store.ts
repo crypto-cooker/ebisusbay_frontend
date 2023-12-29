@@ -10,7 +10,6 @@ import nftReducer from '../GlobalState/nftSlice';
 import collectionsReducer from '../GlobalState/collectionsSlice';
 import { appInitializeStateReducer } from '../GlobalState/InitSlice';
 import leaderBoardReducer from '../GlobalState/leaderBoardSlice';
-import cartReducer from '../GlobalState/cartSlice';
 import batchListingReducer from '../GlobalState/user-batch';
 import ryoshiStakingReducer from '../GlobalState/ryoshi-staking-cart-slice';
 
@@ -23,7 +22,6 @@ const rootReducer = combineReducers({
   appInitialize: appInitializeStateReducer,
   collections: collectionsReducer,
   leaderBoard: leaderBoardReducer,
-  cart: cartReducer,
   batchListing: batchListingReducer,
   ryoshiStakingCart: ryoshiStakingReducer,
 });

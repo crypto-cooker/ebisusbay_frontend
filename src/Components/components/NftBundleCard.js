@@ -1,5 +1,5 @@
 import React, {memo, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import Link from 'next/link';
 import {ethers} from 'ethers';
@@ -21,7 +21,6 @@ import {
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
 import {MenuPopup} from "@src/Components/components/chakra-components";
-import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
@@ -30,6 +29,7 @@ import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import {useExchangeRate} from "@src/hooks/useGlobalPrices";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useCart from "@src/hooks/use-cart";
 
 const Watermarked = styled.div`
   position: relative;
@@ -52,10 +52,10 @@ const Watermarked = styled.div`
 const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, canBuy = true }) => {
   const nftUrl = appUrl(`/collection/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`);
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
+  const cart = useCart();
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const isInCart = nft.market?.id && cart.nfts.map((o) => o.listingId).includes(nft.market.id);
+  const isInCart = cart.isItemInCart(nft.market.id);
   const { onCopy } = useClipboard(nftUrl.toString());
   const {usdValueForToken} = useExchangeRate();
   const [runAuthedFunction] = useAuthedFunction();
@@ -123,7 +123,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
   };
 
   const handleAddToCart = () => {
-    dispatch(addToCart({
+    cart.addItem({
       listingId: nft.market.id,
       name: nft.name,
       image: nft.image,
@@ -132,12 +132,12 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
       id: nft.id ?? nft.nftId,
       rank: nft.rank,
       currency: nft.market.currency
-    }));
-    toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
+    });
+    toast.success(createSuccessfulAddCartContent(() => cart.openCart()));
   };
 
   const handleRemoveFromCart = () => {
-    dispatch(removeFromCart(nft.market.id));
+    cart.removeItem(nft.market.id);
     toast.success('Removed from cart');
   };
 
