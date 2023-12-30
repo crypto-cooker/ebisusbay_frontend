@@ -25145,6 +25145,28 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Bounty CRO Hunters",
+      "slug": "bounty-cro-hunters",
+      "multiToken": false,
+      "address": "0x1d12e4c5a90d4ad66aa2e3d457f7ccb3b514a811",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A project designed with unique hunters, at all levels. Each one created individually through hand drawn designs and processed in AI.  I have a few stages planned. Stage one has already been minted and I plan on starting a faction and promoting this project. Road Map:  Stage 1. Launch of the bounty freelancers. Under 600 Freelancers in population. Each hunter individually created.   Stage 2: launch of the Bounty Hunters. Expect to see a limited population size. All individually created.  Phase 3: launch of the Bounty Grand Generals. Population size, rare. Very limited supply. Expect to see even more attention to detail and unique traits.  Stage 4: launch of the Supreme Commanders. Population size, exclusive. With less than 10 in population they are are unique and desirable.   Stage 5: The launch of the bounty wall.",
+        "avatar": "/img/collections/bounty-cro-hunters/avatar.webp",
+        "card": "/img/collections/bounty-cro-hunters/card.webp",
+        "banner": "/img/collections/bounty-cro-hunters/banner.webp",
+        "website": "https://bounty-hunters.netlify.app/",
+        "discord": "https://discord.gg/Jy23cGqc",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
