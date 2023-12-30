@@ -383,6 +383,12 @@ const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: Withdr
               <Text color={'#aaa'} alignContent={'baseline'} py={2}> Remaining Ryoshi On Duty: </Text>
               <Text as={'b'} fontSize='28' p={2}>{onDutyAmount - meepleToMint}</Text>
             </Flex>
+            <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={2}>
+              <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
+              <Text fontSize='14' color='#333' fontWeight='bold'>
+                Any Ryoshi taken off duty will be added to the existing upkeep period. Be sure this is what you wish to do if upkeep is due soon. Otherwise, upkeep costs may be higher than expected.
+              </Text>
+            </Stack>
           </Box>
         </RdModalBox>
       </RdModalBody>
