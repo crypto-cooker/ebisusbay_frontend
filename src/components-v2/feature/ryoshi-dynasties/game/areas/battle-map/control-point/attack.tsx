@@ -394,10 +394,14 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
 
     function onBattleAttackEvent(data:any) {
       console.log('BATTLE_ATTACK', data)
-      const parsedAtack = JSON.parse(data);
+      const parsedAttack = JSON.parse(data);
       // console.log('parsedAtack', parsedAtack)
-      displayConclusionCallback();
-      setBattleAttack(parsedAtack);
+      if (parsedAttack.success) {
+        displayConclusionCallback();
+        setBattleAttack(parsedAttack);
+      } else {
+        toast.error('Unable to process attack. Please try again later.');
+      }
     }
 
     socket.on('connect', onConnect);
