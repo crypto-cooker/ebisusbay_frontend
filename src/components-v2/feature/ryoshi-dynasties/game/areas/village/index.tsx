@@ -53,6 +53,9 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 
 // import FactionDirectory from "@src/components-v2/feature/ryoshi-dynasties/game/modals/xp-leaderboard";
 const config = appConfig();
+const xmasCutoffDate = new Date(Date.UTC(2024, 0, 8, 0, 0, 0));
+const currentDate = new Date();
+const isChristmasTime = currentDate < xmasCutoffDate;
 
 interface VillageProps {
   onChange: (value: string) => void;
@@ -60,7 +63,7 @@ interface VillageProps {
   onFirstRun: () => void;
 }
 const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
-  const xmasTheme = true ? '_xmas' : '';
+  const xmasTheme = isChristmasTime ? '_xmas' : '';
   const { config: rdConfig, game: rdGameContext, user: rdUser, refreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useUser();
   const { isOpen:isOpenOverlay, onToggle } = useDisclosure()

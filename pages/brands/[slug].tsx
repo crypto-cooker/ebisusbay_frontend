@@ -224,9 +224,11 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
     const weirdApesV1 = '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'
     if (caseInsensitiveCompare(c.address, weirdApes)) {
       const v1Collection = collections.data.find((v1c: any) => caseInsensitiveCompare(v1c.address, weirdApesV1));
-      c.stats.total.active = Number(c.stats.total.active) + Number(v1Collection.stats.total.active)
-      c.stats.total.complete = Number(c.stats.total.complete) + Number(v1Collection.stats.total.complete)
-      c.stats.total.volume = Number(c.stats.total.volume) + Number(v1Collection.stats.total.volume)
+      if (v1Collection) {
+        c.stats.total.active = Number(c.stats.total.active) + Number(v1Collection.stats.total.active)
+        c.stats.total.complete = Number(c.stats.total.complete) + Number(v1Collection.stats.total.complete)
+        c.stats.total.volume = Number(c.stats.total.volume) + Number(v1Collection.stats.total.volume)
+      }
     }
     return c;
   });
