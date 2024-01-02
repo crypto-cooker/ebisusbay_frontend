@@ -25167,6 +25167,103 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "The CROjakians",
+      "slug": "the-crojakians",
+      "multiToken": false,
+      "address": "0xa302855005A4f42992bC75e7bb0178878E34fF34",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Step into the world of The CROjakians, a collective of 3000 eccentric and captivating townsfolk who call the sleepy town of CRONOS their home. CRONOS in 2021, a buzzing haven teeming with fintech trailblazers. Fast forward to today, the digital gold rush has waned, and our beloved township is left grappling with the aftermath of its past glory. But fear not! Our charismatic hero, CROjak, has a gleaming vision for the town's revival. With the rallying cry #makecronosgreatagain, he's determined to ignite the spirit of the townspeople and unleash the limitless possibilities that lie within CRONOS. Prepare to embark on an extraordinary journey as you join CROjak in this captivating collection. Together, we'll embark on a quest to inspire the townsfolk, reignite their dreams, and transform CRONOS into a vibrant metropolis bursting with life, joy, and endless excitement!",
+        "avatar": "/img/collections/the-crojakians/avatar.webp",
+        "card": "/img/collections/the-crojakians/card.webp",
+        "banner": "/img/collections/the-crojakians/banner.webp",
+        "website": "https://www.crojak.com/",
+        "twitter": "https://twitter.com/CROjak_Token",
+        "discord": "https://discord.gg/hQ7DetPFng",
+        "telegram": "https://t.me/CROjak_official",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ICY VIP",
+      "slug": "icy-vip",
+      "multiToken": false,
+      "address": "0x8062B7adc035fb513316CC83EB82856E5A90eBF0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Explore a set of 300 exclusive ICY VIP NFTs and join the premier community validator project on Cronos and across the entire Cosmos ecosystem. IcyCRO, a rapidly expanding platform, has emerged as a leading validator and top-tier relayer across five prominent chains: Cronos POS, ATOM, OSMO, Stride, and JUNO. Become a part of this thriving community and witness the evolution of decentralized validation.",
+        "avatar": "/img/collections/icy-vip/avatar.webp",
+        "card": "/img/collections/icy-vip/card.webp",
+        "banner": "/img/collections/icy-vip/banner.webp",
+        "website": "https://www.icycro.org/",
+        "twitter": "https://twitter.com/IcyCro",
+        "discord": "https://discord.gg/hiddenfishdao",
+        "medium": "https://medium.com/@IcyCRO",
+        "telegram": "https://t.me/4YfP_QCGnw82Y2Nk",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Degen Motor Vehicles",
+      "slug": "degen-motor-vehicles",
+      "multiToken": false,
+      "address": "0xcA22Af89a5044d16de1bf31a760D8403c79aea69",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Degen Motor Vehicles Cruise the blockchain degen style.",
+        "avatar": "/img/collections/degen-motor-vehicles/avatar.webp",
+        "banner": "/img/collections/degen-motor-vehicles/banner.webp",
+        "website": "https://degencronosapes.com/adventure",
+        "twitter": "https://twitter.com/DegenCronosApes",
+        "discord": "https://discord.gg/27fdbCmJbV",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Degen Dingys",
+      "slug": "degen-dingys",
+      "multiToken": false,
+      "address": "0xc24112A0D9915A434082117EC7d4C02b1f1ea40d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Degen Dingys sail on adventure in the Degen Capitalist Adventure. Use the Degen Dingys to Raid or Trade, and explore the Degen Island.",
+        "avatar": "/img/collections/degen-dingys/avatar.webp",
+        "banner": "/img/collections/degen-dingys/banner.webp",
+        "website": "https://degencronosapes.com/adventure",
+        "twitter": "https://twitter.com/DegenCronosApes",
+        "discord": "https://discord.gg/27fdbCmJbV",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
