@@ -21031,7 +21031,7 @@
       "multiToken": false,
       "address": "0xF78fe9DA54d56c9aC53313464EAD10A99aFF5463",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Bulls are the match to the Cowz you've all been waiting for! Bulls will collect royalties for Cowz, Bulls and ranches and to emit \"Calf NFT's\" via breeding! Jump in if you're feeling BULLISH!",
         "avatar": "/img/collections/bulls/avatar.webp",
@@ -22933,7 +22933,7 @@
       "multiToken": false,
       "address": "0x0384a87fc281C42E44822C3964217E5FD1A1A16d",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Ever wanted to own the libs? Now you can! The Liberators, Cronos Steakhouse's 4th of July Special collection! First minted during 2023 Independence week, These feisty fellows will liberate you from FEEdom across the steakhouse ecosystem! Structured fee discounts on all future smart contracts based on amount held/time consumed",
         "avatar": "/img/collections/the-liberators/avatar.webp",
@@ -22956,7 +22956,7 @@
       "multiToken": false,
       "address": "0x83b38D6e55ffA2A90B7223bdEbF86AFE50E20a39",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "",
         "avatar": "/img/collections/chefz-army/avatar.webp",
