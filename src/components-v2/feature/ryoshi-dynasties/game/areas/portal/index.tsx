@@ -91,10 +91,10 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
             window.open('https://seashrine.ebisusbay.com/','_blank');
             }}
             >Visit Seashrine</RdButton>
-        <RdButton onClick={(e) => {
-          window.open('https://seashrine.ebisusbay.com/portal?tab=cronos','_blank');
-            }}
-            >Bridge VIPs</RdButton>
+        {/*<RdButton onClick={(e) => {*/}
+        {/*  window.open('https://seashrine.ebisusbay.com/portal?tab=cronos','_blank');*/}
+        {/*    }}*/}
+        {/*    >Bridge VIPs</RdButton>*/}
         </VStack>
       </Flex>
 
