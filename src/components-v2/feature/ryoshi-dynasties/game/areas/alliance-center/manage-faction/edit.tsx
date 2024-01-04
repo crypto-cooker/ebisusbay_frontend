@@ -31,7 +31,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import Cropper from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline/Cropper';
+import Cropper from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-faction/cropper';
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/search";
 import {parseErrorMessage} from "@src/helpers/validator";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";

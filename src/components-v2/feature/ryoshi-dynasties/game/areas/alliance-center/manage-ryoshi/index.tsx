@@ -25,7 +25,8 @@ import {
   Stack,
   Text,
   useClipboard,
-  useDisclosure
+  useDisclosure,
+  VStack
 } from "@chakra-ui/react";
 import {commify, isAddress} from "ethers/lib/utils";
 import {shortAddress} from "@src/utils";
@@ -41,6 +42,9 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {appConfig} from "@src/Config";
 import {ApiService} from "@src/core/services/api-service";
+import RdButton from "../../../../components/rd-button";
+import DelegateTroopsForm
+  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-ryoshi/delegate";
 
 const config = appConfig();
 
@@ -63,6 +67,7 @@ const RyoshiTotals = ({isOpen, onClose}: RyoshiTotalsProps) => {
   const [currentTab, setCurrentTab] = useState(breakdownTabs.user);
   const [focusedGameId, setFocusedGameId] = useState<number>(rdContext.game?.game.id ?? 0);
   const [loadingTroopsBreakdown, setLoadingTroopsBreakdown] = useState(false);
+  const { isOpen: isOpenDelegate, onOpen: onOpenDelegate, onClose: onCloseDelegate } = useDisclosure();
 
   const handleTabChange = (key: string) => (e: any) => {
     setCurrentTab(key);
@@ -103,73 +108,101 @@ const RyoshiTotals = ({isOpen, onClose}: RyoshiTotalsProps) => {
   }, [selectedGame]);
 
   return (
-    <RdModal
-      isOpen={isOpen}
-      onClose={onClose}
-      title='Ryoshi Totals'
-      isCentered={false}
-    >
-      <RdModalBody>
-        <RdModalBox>
-          {!!rdContext.user && (
-            <>
-              <Stack direction={{base: 'column', sm: 'row'}} mb={8} justify='space-between'>
-                <HStack>
-                  <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={6}/>
-                  <Text fontSize='xl' fontWeight='bold'textAlign='start'>Ryoshi On Duty</Text>
-                </HStack>
-                {!!rdContext.game && rdContext.game.history.previousGameId > 0 && (
-                  <Select
-                    onChange={(e) => setSelectedGame(e.target.value)}
-                    value={selectedGame}
-                    maxW='175px'
+    <>
+      <RdModal
+        isOpen={isOpen}
+        onClose={onClose}
+        title='Manage Ryoshi'
+        isCentered={false}
+      >
+        <RdModalBody>
+          <RdModalBox>
+            <Box textAlign='left' as="b" fontSize={18}>
+              Delegate Ryoshi
+            </Box>
+            <VStack spacing={0} alignItems='start' mt={2}>
+              <Text color={'#aaa'}>Delegate your Ryoshi to let any of your favorite factions manage your deployments and battles.</Text>
+              <Stack direction={{base: 'column', sm: 'row'}} justify='end' w='full'>
+                {(!!rdContext.user && rdContext.user.game.troops.user.available.total > 0) ? (
+                  <RdButton
+                    onClick={onOpenDelegate}
+                    maxH='50px'
                     size='sm'
-                    rounded='md'
-                    alignSelf='end'
                   >
-                    <option value='current'>Current Game</option>
-                    <option value='previous'>Previous Game</option>x
-                  </Select>
+                    Delegate
+                  </RdButton>
+                ) : (
+                  <Box>Help</Box>
                 )}
               </Stack>
+            </VStack>
+          </RdModalBox>
+          <RdModalBox mt={2}>
+            {!!rdContext.user && (
+              <>
+                <Stack direction={{base: 'column', sm: 'row'}} mb={8} justify='space-between'>
+                  <HStack>
+                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={6}/>
+                    <Text fontSize='xl' fontWeight='bold'textAlign='start'>Ryoshi On Duty</Text>
+                  </HStack>
+                  {!!rdContext.game && rdContext.game.history.previousGameId > 0 && (
+                    <Select
+                      onChange={(e) => setSelectedGame(e.target.value)}
+                      value={selectedGame}
+                      maxW='175px'
+                      size='sm'
+                      rounded='md'
+                      alignSelf='end'
+                    >
+                      <option value='current'>Current Game</option>
+                      <option value='previous'>Previous Game</option>x
+                    </Select>
+                  )}
+                </Stack>
 
-              <Flex direction='row' justify='center' mt={2}>
-                <SimpleGrid columns={!!troopsByGame?.faction ? 2 : 1}>
-                  <RdTabButton size='sm' isActive={currentTab === breakdownTabs.user} onClick={handleTabChange(breakdownTabs.user)}>
-                    User Owned
-                  </RdTabButton>
-                  {!!troopsByGame?.faction && (
-                    <RdTabButton size='sm' isActive={currentTab === breakdownTabs.faction} onClick={handleTabChange(breakdownTabs.faction)}>
-                      Faction Owned
+                <Flex direction='row' justify='center' mt={2}>
+                  <SimpleGrid columns={!!troopsByGame?.faction ? 2 : 1}>
+                    <RdTabButton size='sm' isActive={currentTab === breakdownTabs.user} onClick={handleTabChange(breakdownTabs.user)}>
+                      User Owned
                     </RdTabButton>
-                  )}
-                </SimpleGrid>
-              </Flex>
-              {!!troopsByGame && (
-                <Box mt={4}>
-                  {currentTab === breakdownTabs.user ? (
-                    <Box>
-                      <TroopsBreakdown
-                        troops={troopsByGame.user}
-                        gameId={focusedGameId}
-                      />
-                    </Box>
-                  ) : currentTab === breakdownTabs.faction && !!troopsByGame.faction && (
-                    <Box>
-                      <TroopsBreakdown
-                        faction={rdContext.user.faction}
-                        troops={troopsByGame.faction}
-                        gameId={focusedGameId}
-                      />
-                    </Box>
-                  )}
-                </Box>
-              )}
-            </>
-          )}
-        </RdModalBox>
-      </RdModalBody>
-    </RdModal>
+                    {!!troopsByGame?.faction && (
+                      <RdTabButton size='sm' isActive={currentTab === breakdownTabs.faction} onClick={handleTabChange(breakdownTabs.faction)}>
+                        Faction Owned
+                      </RdTabButton>
+                    )}
+                  </SimpleGrid>
+                </Flex>
+                {!!troopsByGame && (
+                  <Box mt={4}>
+                    {currentTab === breakdownTabs.user ? (
+                      <Box>
+                        <TroopsBreakdown
+                          troops={troopsByGame.user}
+                          gameId={focusedGameId}
+                        />
+                      </Box>
+                    ) : currentTab === breakdownTabs.faction && !!troopsByGame.faction && (
+                      <Box>
+                        <TroopsBreakdown
+                          faction={rdContext.user.faction}
+                          troops={troopsByGame.faction}
+                          gameId={focusedGameId}
+                        />
+                      </Box>
+                    )}
+                  </Box>
+                )}
+              </>
+            )}
+          </RdModalBox>
+        </RdModalBody>
+      </RdModal>
+      <DelegateTroopsForm
+        isOpen={isOpenDelegate}
+        onClose={onCloseDelegate}
+        delegateMode='delegate'
+      />
+    </>
   )
 }
 

@@ -16,8 +16,8 @@ import {useUser} from "@src/components-v2/useUser";
 import CreateFactionForm
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-faction/create";
 import RyoshiTotals
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-faction/ryoshi-totals";
-import Diplomacy from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-faction/diplomacy";
+  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-ryoshi";
+import Diplomacy from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/diplomacy";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {toast} from "react-toastify";
 
@@ -116,7 +116,7 @@ const AllianceCenter = ({onBack}: AllianceCenterSceneProps) => {
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faShield} />
             ) : (
-              <>Ryoshi On Duty</>
+              <>Manage Ryoshi</>
             )}
           </RdButton>
           <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenDiplomacy)}>
