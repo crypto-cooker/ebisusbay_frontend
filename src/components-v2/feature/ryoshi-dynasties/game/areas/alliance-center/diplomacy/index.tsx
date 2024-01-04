@@ -93,6 +93,9 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
     >
       <RdModalBody>
         <RdModalBox>
+          <Box textAlign='center'>Interact with factions to establish reputation. Positive actions such as deployments and delegations will create positive reputation while other actions such as battles will create negative reputation.</Box>
+        </RdModalBox>
+        <RdModalBox mt={2}>
           <Stack direction={{base: 'column', sm: 'row'}} mb={8} justify='space-between'>
             <HStack>
               <Icon as={FontAwesomeIcon} icon={faBalanceScale} boxSize={6} />
