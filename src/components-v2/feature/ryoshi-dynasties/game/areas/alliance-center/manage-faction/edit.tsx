@@ -8,20 +8,20 @@ import {
   Divider,
   Flex,
   FormControl,
-  FormLabel,
+  FormLabel, GridItem,
   HStack,
   Input,
   ListItem,
-  OrderedList,
+  OrderedList, SimpleGrid,
   Spacer,
-  Stack,
+  Stack, Tag,
   Text,
   useMediaQuery,
   VStack
 } from "@chakra-ui/react"
 import {useFormik} from 'formik';
-import {disbandFaction, editFaction} from "@src/core/api/RyoshiDynastiesAPICalls";
-import {shortAddress} from "@src/utils";
+import {disbandFaction, editFaction, getRegistrationCost} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {createSuccessfulTransactionToastContent, shortAddress} from "@src/utils";
 
 //contracts
 import {toast} from "react-toastify";
@@ -36,6 +36,15 @@ import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/allia
 import {parseErrorMessage} from "@src/helpers/validator";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
+import {RdModalBody, RdModalBox, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {commify} from "ethers/lib/utils";
+import {BigNumber, Contract, ethers} from "ethers";
+import Fortune from "@src/Contracts/Fortune.json";
+import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
+import {appConfig} from "@src/Config";
+import {CheckCircleIcon} from "@chakra-ui/icons";
+
+const config = appConfig();
 
 interface EditFactionProps {
   isOpen: boolean;
@@ -268,91 +277,73 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
       {/*    </RdModalBox>*/}
       {/*  </RdModalBody>*/}
       {/*</AuthenticationRdButton>*/}
-      <Box pb={1}>
-        <Box mx={1} mb={1} roundedBottom='lrg'>
-          {user.address ? (
-            <Box textAlign='center' w='full'>
-              <Flex>
-                <Spacer/>
-                <VStack
-                  spacing={2}
-                  align='center'
-                  justify='center'
-                  w='full'
-                  h='full'
-                  p={2}
-                  bg='#272523'
-                >
-                  <Cropper editsAllowed={canEditFaction()}/>
+      <RdModalBody>
+        <SeasonRegistration />
+        <RdModalBox mt={2}>
+          <VStack spacing={2} p={2}>
+            <Cropper editsAllowed={canEditFaction()}/>
 
-                  <Flex w='95%' direction='row' justify='space-between' mt={2} mb={2}>
-                    <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
-                      Current Status:
-                    </Text>
-                    <Text as='i' color='#aaa' fontSize={{base: '12', sm: '14'}}>
-                      {isRegistered === true ? "Registered" : "Not Registered"}
-                    </Text>
-                  </Flex>
+            <Flex w='95%' direction='row' justify='space-between' mt={2} mb={2}>
+              <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
+                Current Status:
+              </Text>
+              <Text as='i' color='#aaa' fontSize={{base: '12', sm: '14'}}>
+                {isRegistered === true ? "Registered" : "Not Registered"}
+              </Text>
+            </Flex>
 
-                  <Flex w='95%' direction='row' justify='space-between' mt={2} mb={2}>
-                    <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
-                      Faction Type:
-                    </Text>
-                    <Text as='i' color='#aaa' fontSize={{base: '12', sm: '14'}}>
-                      {factionType}
-                    </Text>
-                  </Flex>
+            <Flex w='95%' direction='row' justify='space-between' mt={2} mb={2}>
+              <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
+                Faction Type:
+              </Text>
+              <Text as='i' color='#aaa' fontSize={{base: '12', sm: '14'}}>
+                {factionType}
+              </Text>
+            </Flex>
 
-                  {showDeleteAlert ? (
-                    <Alert status='error'>
-                      <VStack>
-                        <HStack>
-                          <AlertIcon/>
-                          <AlertTitle>Warning! If you disband a registered faction you will be unable to register
-                            another faction this season.</AlertTitle>
-                        </HStack>
-                        <HStack>
-                          <Button type="submit" style={{display: 'flex', marginTop: '4px'}}
-                                  onClick={DisbandFaction} variant='outline' colorScheme='red'
-                          >Confirm Disband</Button>
-                          <Button type="submit" style={{display: 'flex', marginTop: '4px'}}
-                                  onClick={() => setShowDeleteAlert(false)} variant='outline' colorScheme='white'
-                          >Cancel</Button>
-                        </HStack>
-                      </VStack>
-                    </Alert>
-                  ) : (
-                    <>
-                      {rdContext.user?.faction.isEnabled ? (
-                        <Button type="submit"
-                                onClick={showDeleteWarning}
-                                colorScheme='red'
-                                fontSize={{base: '12', sm: '14'}}
-                                variant={"outline"}
-                        >x Disband Faction</Button>
-
-                      ) : (
-                        <Button type="submit"
-                                onClick={ReenableFaction}
-                                colorScheme='green'
-                                fontSize={{base: '12', sm: '14'}}
-                                variant={"outline"}
-                        >Reenable Faction</Button>
-                      )}
-                    </>
-
-                  )}
+            {showDeleteAlert ? (
+              <Alert status='error'>
+                <VStack>
+                  <HStack>
+                    <AlertIcon/>
+                    <AlertTitle>Warning! If you disband a registered faction you will be unable to register
+                      another faction this season.</AlertTitle>
+                  </HStack>
+                  <HStack>
+                    <Button type="submit" style={{display: 'flex', marginTop: '4px'}}
+                            onClick={DisbandFaction} variant='outline' colorScheme='red'
+                    >Confirm Disband</Button>
+                    <Button type="submit" style={{display: 'flex', marginTop: '4px'}}
+                            onClick={() => setShowDeleteAlert(false)} variant='outline' colorScheme='white'
+                    >Cancel</Button>
+                  </HStack>
                 </VStack>
-                <Spacer/>
-              </Flex>
-            </Box>
-          ) : (
-            <Box fontSize='sm' textAlign='center' w='full'>Connect wallet to purchase</Box>
-          )}
+              </Alert>
+            ) : (
+              <>
+                {rdContext.user?.faction.isEnabled ? (
+                  <Button type="submit"
+                          onClick={showDeleteWarning}
+                          colorScheme='red'
+                          fontSize={{base: '12', sm: '14'}}
+                          variant={"outline"}
+                  >x Disband Faction</Button>
 
-        </Box>
+                ) : (
+                  <Button type="submit"
+                          onClick={ReenableFaction}
+                          colorScheme='green'
+                          fontSize={{base: '12', sm: '14'}}
+                          variant={"outline"}
+                  >Reenable Faction</Button>
+                )}
+              </>
 
-        <Box mx={1} bg='#272523' p={2} roundedBottom='xl'>
+            )}
+          </VStack>
+        </RdModalBox>
+        <RdModalBox mt={2} roundedBottom='xl'>
+
           <Box margin='auto' mb='4'>
 
             <form onSubmit={formik.handleSubmit} style={{marginTop: '24px'}}>
@@ -427,10 +418,127 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
               </Box>
             </Flex>
           )}
-        </Box>
-      </Box>
+        </RdModalBox>
+      </RdModalBody>
     </RdModal>
   )
 }
 
 export default EditFaction;
+
+const SeasonRegistration = () => {
+  const user = useUser();
+  const {requestSignature} = useEnforceSignature();
+  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+
+  const [factionCreatedAndEnabled, setFactionCreatedAndEnabled] = useState(false);
+  const [isRegisteredCurrentSeason, setIsRegisteredCurrentSeason] = useState(false);
+  const [isRegisteredNextSeason, setIsRegisteredNextSeason] = useState(false);
+  const [isExecutingRegister, setIsExecutingRegister] = useState(false);
+
+  const checkForApproval = async () => {
+    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+    const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
+    const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.allianceCenter);
+    return totalApproved as BigNumber;
+  }
+
+  const handleRegister = async (seasonBlockId : number) => {
+    if (!user.address) return;
+
+    const currentSeasonBlockId = rdContext.game?.season.blockId;
+    if (!currentSeasonBlockId) {
+      console.log('No active season');
+      return;
+    }
+    const nextSeasonBlockId = currentSeasonBlockId + 1;
+
+    if(isRegisteredCurrentSeason && seasonBlockId === currentSeasonBlockId ||
+      isRegisteredNextSeason && seasonBlockId === nextSeasonBlockId) {
+      console.log('Already Registered');
+    } else {
+      try {
+        setIsExecutingRegister(true);
+        const signinSignature = await requestSignature();
+        const { signature, ...registrationStruct } = await getRegistrationCost(
+          user.address?.toLowerCase(),
+          signinSignature,
+          seasonBlockId,
+          rdContext.game?.game.id,
+          rdContext.user?.faction.id
+        );
+
+        const totalApproved = await checkForApproval();
+        if(totalApproved.lt(registrationStruct.cost)) {
+          toast.warning('Please approve the contract to spend your tokens');
+          const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
+          const tx1 = await fortuneContract.approve(config.contracts.allianceCenter, registrationStruct.cost);
+          const receipt1 = await tx1.wait();
+          toast.success(createSuccessfulTransactionToastContent(receipt1.transactionHash));
+        }
+
+        const registerFactionContract = new Contract(config.contracts.allianceCenter, AllianceCenterContract, user.provider.getSigner());
+        const tx = await registerFactionContract.registerFaction(registrationStruct, signature)
+        const receipt = await tx.wait();
+        rdContext.refreshUser();
+        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      } catch (error: any) {
+        console.log(error);
+        toast.error(parseErrorMessage(error));
+      } finally {
+        setIsExecutingRegister(false);
+      }
+    }
+  }
+
+  useEffect(() => {
+    if(!rdContext.user) return;
+
+    setFactionCreatedAndEnabled(rdContext.user?.faction?.id !== undefined && rdContext.user?.faction.isEnabled);
+    setIsRegisteredCurrentSeason(rdContext.user.season.registrations.current);
+    setIsRegisteredNextSeason(rdContext.user.season.registrations.next);
+  }, [rdContext.user]);
+
+  if (!rdContext.user) return <></>;
+
+  return (
+    <RdModalBox>
+      <Box textAlign='start'>
+        <Flex justify='space-between'>
+          <Box fontWeight='bold' fontSize='lg'>Season Registration</Box>
+          {!!rdContext.user.season.faction && (
+            <SimpleGrid columns={4} minW={'115px'}>
+              <GridItem textAlign='end' colSpan={3}>Current:</GridItem>
+              <GridItem ps={2} textAlign='end'>
+                <Flex align='center' justify='end' h='full'>
+                  <CheckCircleIcon color="green" bg="white" rounded="full" border="1px solid white"/>
+                </Flex>
+              </GridItem>
+              <GridItem textAlign='end' colSpan={3}>Next:</GridItem>
+              <GridItem ps={2} textAlign='end'>
+                -
+              </GridItem>
+            </SimpleGrid>
+          )}
+        </Flex>
+      </Box>
+      <VStack spacing={0} alignItems='start' mt={2}>
+        {!isRegisteredCurrentSeason ? (
+          <Text color={'#aaa'}>Register for the current season. Current cost is {commify(rdContext.config.factions.registration.fortuneCost)} Fortune + {rdContext.config.factions.registration.mitamaCost} Mitama</Text>
+        ) : (
+          <Text color={'#aaa'}>Your faction is registered!</Text>
+        )}
+        <Stack direction={{base: 'column', sm: 'row'}} justify='end' w='full' mt={2}>
+          {factionCreatedAndEnabled && !isRegisteredCurrentSeason && (
+            <RdButton
+              onClick={() => handleRegister(rdContext.game!.season.blockId)}
+              size='sm'
+            >
+              Register
+            </RdButton>
+          )}
+        </Stack>
+      </VStack>
+    </RdModalBox>
+  )
+}

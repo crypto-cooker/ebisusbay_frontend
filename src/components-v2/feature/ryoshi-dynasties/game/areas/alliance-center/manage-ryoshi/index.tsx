@@ -132,7 +132,7 @@ const RyoshiTotals = ({isOpen, onClose}: RyoshiTotalsProps) => {
                     Delegate
                   </RdButton>
                 ) : (
-                  <Box>Help</Box>
+                  <Text color='#aaa' mt={2}>No Ryoshi available</Text>
                 )}
               </Stack>
             </VStack>

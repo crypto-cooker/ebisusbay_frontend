@@ -8,6 +8,7 @@ import {
   AccordionPanel,
   Box,
   Button,
+  Center,
   Flex,
   HStack,
   Icon,
@@ -182,11 +183,18 @@ interface ReputationListProps {
   extractSecondaryValue?: (reputation: Reputation) => string | number;
 }
 
+const reputationListPageSize = 50;
 const ReputationList = ({reputations, hasMixedTypes, extractPrimaryValue, extractSecondaryValue}: ReputationListProps) => {
   const [factionsOnly, setFactionsOnly] = useState(true);
+  const [limit, setLimit] = useState(reputationListPageSize);
+
+  const filteredReputations = useMemo(() => {
+    return reputations.filter(entry => factionsOnly ? entry.isFaction : !entry.isFaction);
+  }, [reputations, factionsOnly]);
 
   const handleFactionsOnlyChange = () => {
     setFactionsOnly(!factionsOnly);
+    setLimit(reputationListPageSize);
   };
 
   return (
@@ -197,8 +205,8 @@ const ReputationList = ({reputations, hasMixedTypes, extractPrimaryValue, extrac
           <Button size='sm' ms={2} onClick={handleFactionsOnlyChange}>Show {factionsOnly ? 'Users' : 'Factions'}</Button>
         </Flex>
       )}
-      {reputations.filter(entry => factionsOnly ? entry.isFaction : !entry.isFaction).map((entry, index) => (
-        <AccordionItem bgColor='#564D4A' rounded='md' mt={2}>
+      {filteredReputations.slice(0, limit).map((entry, index) => (
+        <AccordionItem key={index} bgColor='#564D4A' rounded='md' mt={2}>
           <AccordionButton>
             <Flex w='full'>
               <Box flex='1' textAlign='left' my='auto'>
@@ -223,6 +231,11 @@ const ReputationList = ({reputations, hasMixedTypes, extractPrimaryValue, extrac
           </AccordionPanel>
         </AccordionItem>
       ))}
+      {filteredReputations.length > limit && (
+        <Center mt={4}>
+          <Button onClick={() => setLimit(limit + reputationListPageSize)}>View More</Button>
+        </Center>
+      )}
     </>
   )
 }
