@@ -130,7 +130,7 @@ const RyoshiTotals = ({isOpen, onClose}: RyoshiTotalsProps) => {
             </RdModalBoxHeader>
             <VStack spacing={0} alignItems='start' mt={2}>
               <Text color={'#aaa'}>Delegate your Ryoshi to let any of your favorite factions manage your deployments and battles.</Text>
-              <Stack direction={{base: 'column', sm: 'row'}} justify='end' w='full'>
+              <Stack direction={{base: 'column', sm: 'row'}} justify='end' w='full' mt={2}>
                 {(!!rdContext.user && rdContext.user.game.troops.user.available.total > 0) ? (
                   <RdButton
                     onClick={onOpenDelegate}

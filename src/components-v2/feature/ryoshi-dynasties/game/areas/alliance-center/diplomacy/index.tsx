@@ -100,7 +100,7 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
         <RdModalBox mt={2}>
           <Stack direction={{base: 'column', sm: 'row'}} mb={8} justify='space-between'>
             <Text fontSize='xl' fontWeight='bold' textAlign='start'>{selectedType === TypeTab.user ? 'User' : 'Faction'} Reputation</Text>
-            {!!rdContext.user?.faction ? (
+            {!!rdContext.user?.faction && (
               <Select
                 onChange={(e) => setSelectedType(e.target.value as TypeTab)}
                 value={selectedType}
@@ -112,8 +112,6 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
                 <option value={TypeTab.user}>As User</option>
                 <option value={TypeTab.faction}>As Faction</option>
               </Select>
-            ) : (
-              <Box>As User</Box>
             )}
           </Stack>
 
@@ -211,36 +209,44 @@ const ReputationList = ({reputations, hasMixedTypes, extractPrimaryValue, extrac
           <Button size='sm' ms={2} onClick={handleFactionsOnlyChange}>Show {factionsOnly ? 'Users' : 'Factions'}</Button>
         </Flex>
       )}
-      {filteredReputations.slice(0, limit).map((entry, index) => (
-        <AccordionItem key={index} bgColor='#564D4A' rounded='md' mt={2}>
-          <AccordionButton>
-            <Flex w='full'>
-              <Box flex='1' textAlign='left' my='auto'>
-                <HStack>
-                  <Icon as={FontAwesomeIcon} icon={entry.isFaction ? faShieldAlt : faUser} boxSize={4} />
-                  <Box>
-                    <Box>{extractPrimaryValue(entry.reputation)}</Box>
-                    {!!extractSecondaryValue && (
-                      <Box fontSize='xs'>
-                        {extractSecondaryValue(entry.reputation)}
+      {filteredReputations.length > 0 ? (
+        <>
+          {filteredReputations.slice(0, limit).map((entry, index) => (
+            <AccordionItem key={index} bgColor='#564D4A' rounded='md' mt={2}>
+              <AccordionButton>
+                <Flex w='full'>
+                  <Box flex='1' textAlign='left' my='auto'>
+                    <HStack>
+                      <Icon as={FontAwesomeIcon} icon={entry.isFaction ? faShieldAlt : faUser} boxSize={4} />
+                      <Box>
+                        <Box>{extractPrimaryValue(entry.reputation)}</Box>
+                        {!!extractSecondaryValue && (
+                          <Box fontSize='xs'>
+                            {extractSecondaryValue(entry.reputation)}
+                          </Box>
+                        )}
                       </Box>
-                    )}
+                    </HStack>
                   </Box>
-                </HStack>
-              </Box>
-              <Box ms={2} my='auto' fontWeight='bold'>{entry.reputation.level}</Box>
-              <AccordionIcon ms={4} my='auto'/>
-            </Flex>
-          </AccordionButton>
-          <AccordionPanel pb={1} fontSize='sm'>
-            <ReputationMeter reputation={entry.reputation.points} />
-          </AccordionPanel>
-        </AccordionItem>
-      ))}
-      {filteredReputations.length > limit && (
-        <Center mt={4}>
-          <Button onClick={() => setLimit(limit + reputationListPageSize)}>View More</Button>
-        </Center>
+                  <Box ms={2} my='auto' fontWeight='bold'>{entry.reputation.level}</Box>
+                  <AccordionIcon ms={4} my='auto'/>
+                </Flex>
+              </AccordionButton>
+              <AccordionPanel pb={1} fontSize='sm'>
+                <ReputationMeter reputation={entry.reputation.points} />
+              </AccordionPanel>
+            </AccordionItem>
+          ))}
+          {filteredReputations.length > limit && (
+            <Center mt={4}>
+              <Button onClick={() => setLimit(limit + reputationListPageSize)}>View More</Button>
+            </Center>
+          )}
+        </>
+      ) : (
+        <Box textAlign='center'>
+          No reputation to display yet. Interact with some factions and check back again.
+        </Box>
       )}
     </>
   )
