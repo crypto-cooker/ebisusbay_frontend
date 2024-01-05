@@ -26,7 +26,7 @@ const TransferDrawer = () => {
   const [executingTransfer, setExecutingTransfer] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
   const [recipient, setRecipient] = useState<string | null>(null);
-  const [mappedCnsAddress, setMappedCnsAddress] = useState<string | null>(null);
+  const [mappedCidAddress, setMappedCidAddress] = useState<string | null>(null);
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -48,7 +48,7 @@ const TransferDrawer = () => {
     handleClearCart();
     handleReset(null);
     setRecipient(null);
-    setMappedCnsAddress(null);
+    setMappedCidAddress(null);
   }
 
   const executeTransfer = async () => {
@@ -95,7 +95,7 @@ const TransferDrawer = () => {
       if (isCroName(values.recipient)) {
         const croidAddress = await getCroidAddressFromName(values.recipient);
         if (croidAddress) {
-          setMappedCnsAddress(`Found ${shortAddress(croidAddress)}`)
+          setMappedCidAddress(`Found ${shortAddress(croidAddress)}`)
           setRecipient(croidAddress);
         } else {
           setFieldError('recipient', 'Invalid Cronos ID');
@@ -168,7 +168,7 @@ const TransferDrawer = () => {
           <FormControlCK
             name={'recipient'}
             label={'Recipient'}
-            helperText={mappedCnsAddress ?? 'Address or Cronos ID'}
+            helperText={mappedCidAddress ?? 'Address or Cronos ID'}
             value={values?.recipient}
             error={errors?.recipient}
             touched={touched?.recipient}

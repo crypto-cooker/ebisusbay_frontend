@@ -13,7 +13,6 @@ import CollectionInfoBar from "@src/Components/components/CollectionInfoBar";
 import {
   caseInsensitiveCompare,
   isBundle,
-  isCnsCollection,
   isCronosGorillaBusinessCollection,
   isCronosVerseCollection,
   isCrosmocraftsCollection,
@@ -25,7 +24,6 @@ import CollectionBundlesGroup from "@src/Components/components/CollectionBundles
 import SalesCollection from "@src/Components/components/SalesCollection";
 import CollectionCronosverse from "@src/components-v2/feature/collection/tabs/cronosverse";
 import DynastiesLands from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands";
-import {CnsRegistration} from "@src/Components/Collection/Custom/CnsRegistration";
 import {pushQueryString} from "@src/helpers/query";
 import styled from "styled-components";
 import {getCollectionMetadata, getCollectionPowertraits, getCollectionTraits} from "@src/core/api";
@@ -47,7 +45,6 @@ const tabs = {
   clubsPokerGame: 'clubsPokerGame',
   heartsPokerGame: 'heartsPokerGame',
   // currentPokerGame: 'currentPokerGame',
-  cns: 'cns'
 };
 
 const NegativeMargin = styled.div`
@@ -240,11 +237,6 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
               <span onClick={handleBtnClick(tabs.cronosverseMap)}>Map</span>
             </li>
           )}
-          {isCnsCollection(collection.address) && (
-            <li className={`tab ${openMenu === tabs.cns ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.cns)}>Register Domain</span>
-            </li>
-          )}
           {isLandDeedsCollection(collection.address) && (
             <li className={`tab ${openMenu === tabs.dynastiesMap ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.dynastiesMap)}>Map</span>
@@ -312,9 +304,6 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
             <NegativeMargin className="tab-2 onStep fadeIn overflow-auto mt-2">
               <PokerLeaderboardComponentPast pokerCollection={PokerCollection.Hearts} />
             </NegativeMargin>
-          )}
-          {openMenu === tabs.cns && (
-            <CnsRegistration />
           )}
         </Box>
       </Box>

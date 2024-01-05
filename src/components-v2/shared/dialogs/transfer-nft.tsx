@@ -43,7 +43,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
   const [fieldError, setFieldError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [executingTransferNft, setExecutingTransferNft] = useState(false);
-  const [executingCnsLookup, setExecutingCnsLookup] = useState(false);
+  const [executingCidLookup, setExecutingCidLookup] = useState(false);
   const [quantity, setQuantity] = useState<string>('1');
   const [quantityError, setQuantityError] = useState<string | null>(null);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
@@ -87,14 +87,14 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
 
       let targetAddress = recipientAddress;
       if (!!recipientAddress && isCroName(recipientAddress)) {
-        setExecutingCnsLookup(true);
+        setExecutingCidLookup(true);
         const croidAddress = await getCroidAddressFromName(recipientAddress);
         if (croidAddress) {
           targetAddress = croidAddress;
-          setExecutingCnsLookup(false);
+          setExecutingCidLookup(false);
         } else {
           setFieldError('No matching profiles for this Cronos ID');
-          setExecutingCnsLookup(false);
+          setExecutingCidLookup(false);
           return;
         }
       }
@@ -120,7 +120,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
       toast.error(parseErrorMessage(error));
     } finally {
       setExecutingTransferNft(false);
-      setExecutingCnsLookup(false);
+      setExecutingCidLookup(false);
     }
   };
 
@@ -249,8 +249,8 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
                       </Button>
                       <Button type="legacy-outlined"
                               onClick={handleTransfer}
-                              isLoading={executingTransferNft || executingCnsLookup}
-                              disabled={executingTransferNft || executingCnsLookup}
+                              isLoading={executingTransferNft || executingCidLookup}
+                              disabled={executingTransferNft || executingCidLookup}
                               className="flex-fill">
                         Continue
                       </Button>
@@ -266,8 +266,8 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
                     <div className="d-flex">
                       <Button type="legacy"
                               onClick={processTransferRequest}
-                              isLoading={executingTransferNft || executingCnsLookup}
-                              disabled={executingTransferNft || executingCnsLookup}
+                              isLoading={executingTransferNft || executingCidLookup}
+                              disabled={executingTransferNft || executingCidLookup}
                               className="flex-fill">
                         Confirm Transfer
                       </Button>
