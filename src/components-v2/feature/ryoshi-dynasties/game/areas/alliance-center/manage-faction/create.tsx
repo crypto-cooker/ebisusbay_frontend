@@ -1,4 +1,4 @@
-import {ChangeEvent, ReactElement, useContext, useEffect, useRef, useState} from "react";
+import React, {ChangeEvent, ReactElement, useContext, useEffect, useRef, useState} from "react";
 import {
     Alert,
     AlertIcon,
@@ -32,7 +32,7 @@ import {
     RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
+import {faExclamationTriangle, faShieldAlt} from "@fortawesome/free-solid-svg-icons";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {parseErrorMessage} from "@src/helpers/validator";
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/search";
@@ -706,6 +706,7 @@ const CreateFactionForm = ({ isOpen, onClose, handleClose}: FactionRegistrationF
           isOpen={isOpen}
           onClose={onClose}
           title='Create a Faction'
+          titleIcon={<Icon as={FontAwesomeIcon} icon={faShieldAlt} />}
         >
             <Flex alignContent={'center'} justifyContent={'center'} >
             {currentTab === tabs.page1 && (

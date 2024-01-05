@@ -18,6 +18,7 @@ import {
   Collapse,
   Flex,
   HStack,
+  Icon,
   Image,
   Link,
   Select,
@@ -33,7 +34,11 @@ import {shortAddress} from "@src/utils";
 import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {CopyIcon, DownloadIcon} from "@chakra-ui/icons";
-import {RdModalBody, RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {
+  RdModalBody,
+  RdModalBox,
+  RdModalBoxHeader
+} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import ImageService from "@src/core/services/image";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {
@@ -45,6 +50,8 @@ import {ApiService} from "@src/core/services/api-service";
 import RdButton from "../../../../components/rd-button";
 import DelegateTroopsForm
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-ryoshi/delegate";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUsers} from "@fortawesome/free-solid-svg-icons";
 
 const config = appConfig();
 
@@ -113,13 +120,14 @@ const RyoshiTotals = ({isOpen, onClose}: RyoshiTotalsProps) => {
         isOpen={isOpen}
         onClose={onClose}
         title='Manage Ryoshi'
+        titleIcon={<Icon as={FontAwesomeIcon} icon={faUsers} />}
         isCentered={false}
       >
         <RdModalBody>
           <RdModalBox>
-            <Box textAlign='left' as="b" fontSize={18}>
+            <RdModalBoxHeader>
               Delegate Ryoshi
-            </Box>
+            </RdModalBoxHeader>
             <VStack spacing={0} alignItems='start' mt={2}>
               <Text color={'#aaa'}>Delegate your Ryoshi to let any of your favorite factions manage your deployments and battles.</Text>
               <Stack direction={{base: 'column', sm: 'row'}} justify='end' w='full'>

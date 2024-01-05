@@ -89,6 +89,7 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
       isOpen={isOpen}
       onClose={onClose}
       title='Diplomacy'
+      titleIcon={<Icon as={FontAwesomeIcon} icon={faBalanceScale} />}
       isCentered={false}
     >
       <RdModalBody>
@@ -97,10 +98,7 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
         </RdModalBox>
         <RdModalBox mt={2}>
           <Stack direction={{base: 'column', sm: 'row'}} mb={8} justify='space-between'>
-            <HStack>
-              <Icon as={FontAwesomeIcon} icon={faBalanceScale} boxSize={6} />
-              <Text fontSize='xl' fontWeight='bold' textAlign='start'>Faction Reputation</Text>
-            </HStack>
+            <Text fontSize='xl' fontWeight='bold' textAlign='start'>Faction Reputation</Text>
             <Select
               onChange={(e) => setSelectedType(e.target.value as TypeTab)}
               value={selectedType}

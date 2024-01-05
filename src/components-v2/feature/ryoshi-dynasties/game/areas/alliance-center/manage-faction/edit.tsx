@@ -8,13 +8,15 @@ import {
   Divider,
   Flex,
   FormControl,
-  FormLabel, GridItem,
+  FormLabel,
+  GridItem,
   HStack,
+  Icon,
   Input,
   ListItem,
-  OrderedList, SimpleGrid,
-  Spacer,
-  Stack, Tag,
+  OrderedList,
+  SimpleGrid,
+  Stack,
   Text,
   useMediaQuery,
   VStack
@@ -36,13 +38,15 @@ import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/allia
 import {parseErrorMessage} from "@src/helpers/validator";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
-import {RdModalBody, RdModalBox, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import {RdModalBody, RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {commify} from "ethers/lib/utils";
 import {BigNumber, Contract, ethers} from "ethers";
 import Fortune from "@src/Contracts/Fortune.json";
 import AllianceCenterContract from "@src/Contracts/AllianceCenterContract.json";
 import {appConfig} from "@src/Config";
 import {CheckCircleIcon} from "@chakra-ui/icons";
+import {faShieldAlt} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const config = appConfig();
 
@@ -269,6 +273,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
       isOpen={isOpen}
       onClose={onClose}
       title='Edit Faction'
+      titleIcon={<Icon as={FontAwesomeIcon} icon={faShieldAlt} />}
     >
       {/*<AuthenticationRdButton>*/}
       {/*  <RdModalBody>*/}
