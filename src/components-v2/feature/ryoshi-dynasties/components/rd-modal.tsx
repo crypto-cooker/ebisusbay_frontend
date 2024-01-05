@@ -56,6 +56,7 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
         size={size ?? '2xl'}
         scrollBehavior={size === 'full' ? 'outside' : 'inside'}
         isCentered={isCentered ?? true}
+        blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent
