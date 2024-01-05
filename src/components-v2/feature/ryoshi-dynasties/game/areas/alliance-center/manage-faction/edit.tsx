@@ -134,7 +134,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
     }
   }
 
-  const DisbandFaction = async() => {
+  const handleDisbandFaction = async() => {
     try {
       const signature = await requestSignature();
       await disbandFaction(user.address!.toLowerCase(), signature, "DEACTIVATE");
@@ -149,7 +149,8 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
       toast.error(parseErrorMessage(error));
     }
   }
-  const ReenableFaction = async() => {
+
+  const handleReactivateFaction = async() => {
     try {
       const signature = await requestSignature();
       await disbandFaction(user.address!.toLowerCase(), signature, "ACTIVE");
@@ -316,7 +317,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
                   </HStack>
                   <HStack>
                     <Button type="submit" style={{display: 'flex', marginTop: '4px'}}
-                            onClick={DisbandFaction} variant='outline' colorScheme='red'
+                            onClick={handleDisbandFaction} variant='outline' colorScheme='red'
                     >Confirm Disband</Button>
                     <Button type="submit" style={{display: 'flex', marginTop: '4px'}}
                             onClick={() => setShowDeleteAlert(false)} variant='outline' colorScheme='white'
@@ -336,7 +337,7 @@ const EditFaction = ({ isOpen, onClose, faction, handleClose, isRegistered}: Edi
 
                 ) : (
                   <Button type="submit"
-                          onClick={ReenableFaction}
+                          onClick={handleReactivateFaction}
                           colorScheme='green'
                           fontSize={{base: '12', sm: '14'}}
                           variant={"outline"}

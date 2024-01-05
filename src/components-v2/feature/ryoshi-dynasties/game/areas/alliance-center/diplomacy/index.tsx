@@ -51,6 +51,11 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
   const [selectedDirection, setSelectedDirection] = useState<DirectionTab>(DirectionTab.outgoing);
   const [selectedType, setSelectedType] = useState<TypeTab>(!!rdContext.user?.faction ? TypeTab.faction : TypeTab.user);
 
+  const handleTypeChange = (key: TypeTab) => {
+    setSelectedDirection(DirectionTab.outgoing);
+    setSelectedType(key);
+  };
+
   const handleDirectionChange = (key: DirectionTab) => (e: any) => {
     setSelectedDirection(key);
   };
@@ -102,7 +107,7 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
             <Text fontSize='xl' fontWeight='bold' textAlign='start'>{selectedType === TypeTab.user ? 'User' : 'Faction'} Reputation</Text>
             {!!rdContext.user?.faction && (
               <Select
-                onChange={(e) => setSelectedType(e.target.value as TypeTab)}
+                onChange={(e) => handleTypeChange(e.target.value as TypeTab)}
                 value={selectedType}
                 maxW='175px'
                 size='sm'
@@ -116,16 +121,16 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
           </Stack>
 
           {selectedType === TypeTab.faction && (
-          <Flex direction='row' justify='center' mt={2}>
-            <SimpleGrid columns={selectedType === TypeTab.faction ? 2 : 1}>
-              <RdTabButton size='sm' isActive={selectedDirection === DirectionTab.outgoing} onClick={handleDirectionChange(DirectionTab.outgoing)}>
-                Outgoing
-              </RdTabButton>
-              <RdTabButton size='sm' isActive={selectedDirection === DirectionTab.incoming} onClick={handleDirectionChange(DirectionTab.incoming)}>
-                Incoming
-              </RdTabButton>
-            </SimpleGrid>
-          </Flex>
+            <Flex direction='row' justify='center' mt={2}>
+              <SimpleGrid columns={selectedType === TypeTab.faction ? 2 : 1}>
+                <RdTabButton size='sm' isActive={selectedDirection === DirectionTab.outgoing} onClick={handleDirectionChange(DirectionTab.outgoing)}>
+                  Outgoing
+                </RdTabButton>
+                <RdTabButton size='sm' isActive={selectedDirection === DirectionTab.incoming} onClick={handleDirectionChange(DirectionTab.incoming)}>
+                  Incoming
+                </RdTabButton>
+              </SimpleGrid>
+            </Flex>
           )}
           <Box mt={2}>
             {selectedType === TypeTab.faction && selectedDirection === DirectionTab.incoming ? (
@@ -203,14 +208,14 @@ const ReputationList = ({reputations, hasMixedTypes, extractPrimaryValue, extrac
 
   return (
     <>
-      {hasMixedTypes && (
-        <Flex justify={{base: 'space-between', sm: 'end'}} align='center'>
-          <Box>Viewing {factionsOnly ? 'factions' : 'users'}</Box>
-          <Button size='sm' ms={2} onClick={handleFactionsOnlyChange}>Show {factionsOnly ? 'Users' : 'Factions'}</Button>
-        </Flex>
-      )}
       {filteredReputations.length > 0 ? (
         <>
+          {hasMixedTypes && (
+            <Flex justify={{base: 'space-between', sm: 'end'}} align='center'>
+              <Box>Viewing {factionsOnly ? 'factions' : 'users'}</Box>
+              <Button size='sm' ms={2} onClick={handleFactionsOnlyChange}>Show {factionsOnly ? 'Users' : 'Factions'}</Button>
+            </Flex>
+          )}
           {filteredReputations.slice(0, limit).map((entry, index) => (
             <AccordionItem key={index} bgColor='#564D4A' rounded='md' mt={2}>
               <AccordionButton>
