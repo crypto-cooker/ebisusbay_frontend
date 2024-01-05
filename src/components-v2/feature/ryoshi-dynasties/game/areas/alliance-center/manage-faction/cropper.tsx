@@ -182,41 +182,39 @@ const Cropper = ({editsAllowed} : {editsAllowed : boolean}): ReactElement => {
   };
   return (
     <>
-        <CropperModal
-          isOpen={isOpen}
-          onClose={onClose}
-          src={src}
-          setPreview={setPreview}
-        //   setModalOpen={setModalOpen}
-        />
-        <VStack>
-        <Center>
-        <div className="img-container">
-          <Avatar
-            size={'2xl'}
-            src={preview || rdContext.user?.faction.image}
-            // rounded="lg"
-            // width="150"
-            // height="150"
-          />
-        </div>
-        </Center>
+      <CropperModal
+        isOpen={isOpen}
+        onClose={onClose}
+        src={src}
+        setPreview={setPreview}
+      //   setModalOpen={setModalOpen}
+      />
+      <VStack align='start'>
+          <div className="img-container">
+            <Avatar
+              size={'2xl'}
+              src={preview || rdContext.user?.faction.image}
+              // rounded="lg"
+              // width="150"
+              // height="150"
+            />
+          </div>
         <Flex maxW={{base: '300', sm: '100%'}} justifyContent='center'>
-        <Center>
-        {editsAllowed && (
-          <Input
-            // variant='filled' 
-            variant='ghost'
-            type="file"
-            // accept="image/*"
-            ref={inputRef}
-            onChange={handleImgChange}
-            placeholder="Upload Image"
-          />
-        )}
-        </Center>
+          {editsAllowed && (
+            <Input
+              // variant='filled'
+              variant='ghost'
+              type="file"
+              // accept="image/*"
+              ref={inputRef}
+              onChange={handleImgChange}
+              placeholder="Upload Image"
+              px={0}
+              rounded='none'
+            />
+          )}
         </Flex>
-        </VStack>
+      </VStack>
     </>
   );
 };

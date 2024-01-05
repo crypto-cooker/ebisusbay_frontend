@@ -351,10 +351,22 @@ interface RdGameRewards {
     burnPercentage: number;
 }
 
-interface Reputation {
-    profileId: number;
-    otherFactionId: number;
+export interface Reputation {
+    // profileId: number;
+    // otherFactionId: number;
     points: number;
+    sendingUser: {
+        walletAddress: string;
+        username: string;
+    },
+    sendingFaction?: {
+        id: number;
+        name: string;
+    },
+    receivingFaction: {
+        id: number;
+        name: string;
+    },
     level: ReputationLevel;
 }
 
