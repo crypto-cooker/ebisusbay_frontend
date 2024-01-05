@@ -28,6 +28,7 @@ import {faBalanceScale, faShieldAlt, faUser} from "@fortawesome/free-solid-svg-i
 import {useUser} from "@src/components-v2/useUser";
 import {ciEquals, isAddress, shortAddress} from "@src/utils";
 import {Reputation} from "@src/core/services/api-service/types";
+import {commify} from "ethers/lib/utils";
 
 interface DiplomacyProps {
   isOpen: boolean;
@@ -48,7 +49,7 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
   const user = useUser();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [selectedDirection, setSelectedDirection] = useState<DirectionTab>(DirectionTab.outgoing);
-  const [selectedType, setSelectedType] = useState<TypeTab>(TypeTab.user);
+  const [selectedType, setSelectedType] = useState<TypeTab>(!!rdContext.user?.faction ? TypeTab.faction : TypeTab.user);
 
   const handleDirectionChange = (key: DirectionTab) => (e: any) => {
     setSelectedDirection(key);
@@ -79,7 +80,7 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
   const userSentToFactions = useMemo(() => {
       if (!rdContext.user?.reputations) return [];
       return rdContext.user.reputations
-        .filter(reputation => ciEquals(reputation.sendingUser.walletAddress, user.address))
+        .filter(reputation => !!reputation.sendingFaction && ciEquals(reputation.sendingUser.walletAddress, user.address))
         .sort((a, b) => b.points - a.points)
         .map(reputation => ({isFaction: true, reputation}));
   }, [rdContext.user?.reputations, user.address]);
@@ -94,36 +95,40 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
     >
       <RdModalBody>
         <RdModalBox>
-          <Box textAlign='center'>Interact with factions to establish reputation. Positive actions such as deployments and delegations will create positive reputation while other actions such as battles will create negative reputation.</Box>
+          <Box textAlign='center'>Interact with factions to establish reputation. Actions such as deployments and delegations will create positive reputation while other actions such as battles will create negative reputation.</Box>
         </RdModalBox>
         <RdModalBox mt={2}>
           <Stack direction={{base: 'column', sm: 'row'}} mb={8} justify='space-between'>
-            <Text fontSize='xl' fontWeight='bold' textAlign='start'>Faction Reputation</Text>
-            <Select
-              onChange={(e) => setSelectedType(e.target.value as TypeTab)}
-              value={selectedType}
-              maxW='175px'
-              size='sm'
-              rounded='md'
-              alignSelf='end'
-            >
-              <option value={TypeTab.user}>As User</option>
-              {!!rdContext.user?.faction && <option value={TypeTab.faction}>As Faction</option>}
-            </Select>
+            <Text fontSize='xl' fontWeight='bold' textAlign='start'>{selectedType === TypeTab.user ? 'User' : 'Faction'} Reputation</Text>
+            {!!rdContext.user?.faction ? (
+              <Select
+                onChange={(e) => setSelectedType(e.target.value as TypeTab)}
+                value={selectedType}
+                maxW='175px'
+                size='sm'
+                rounded='md'
+                alignSelf='end'
+              >
+                <option value={TypeTab.user}>As User</option>
+                <option value={TypeTab.faction}>As Faction</option>
+              </Select>
+            ) : (
+              <Box>As User</Box>
+            )}
           </Stack>
 
+          {selectedType === TypeTab.faction && (
           <Flex direction='row' justify='center' mt={2}>
             <SimpleGrid columns={selectedType === TypeTab.faction ? 2 : 1}>
               <RdTabButton size='sm' isActive={selectedDirection === DirectionTab.outgoing} onClick={handleDirectionChange(DirectionTab.outgoing)}>
                 Outgoing
               </RdTabButton>
-              {selectedType === TypeTab.faction && (
-                <RdTabButton size='sm' isActive={selectedDirection === DirectionTab.incoming} onClick={handleDirectionChange(DirectionTab.incoming)}>
-                  Incoming
-                </RdTabButton>
-              )}
+              <RdTabButton size='sm' isActive={selectedDirection === DirectionTab.incoming} onClick={handleDirectionChange(DirectionTab.incoming)}>
+                Incoming
+              </RdTabButton>
             </SimpleGrid>
           </Flex>
+          )}
           <Box mt={2}>
             {selectedType === TypeTab.faction && selectedDirection === DirectionTab.incoming ? (
               <>
@@ -246,16 +251,41 @@ type ReputationMeterProps = {
 }
 
 const ReputationMeter: React.FC<ReputationMeterProps> = ({ reputation }) => {
-  // Convert the reputation value to a percentage for positioning the marker
-  const markerPosition = ((reputation + 1000000) / 2000000) * 100;
+  // Array of reputation points from lowest to highest
+  const pointsArray = [
+    -1000000, -250000, -100000, -50000, -24000, -12000, -6000, -3000, -1500, -500,
+    0,
+    500, 1500, 3000, 6000, 12000, 24000, 50000, 100000, 250000, 1000000
+  ];
+
+  // Set marker position so that it smoothly follows an evenly distributed path based on the pointsArray
+  const markerPosition = useMemo(() => {
+    const boundedReputation = Math.min(Math.max(reputation, -1000000), 1000000);
+
+    let lowerIndex = pointsArray.length - 2;
+    for (let i = 1; i < pointsArray.length; i++) {
+      if (boundedReputation <= pointsArray[i]) {
+        lowerIndex = i - 1;
+        break;
+      }
+    }
+
+    const rangeMin = pointsArray[lowerIndex];
+    const rangeMax = pointsArray[lowerIndex + 1];
+    const rangeRatio = (boundedReputation - rangeMin) / (rangeMax - rangeMin);
+
+    const totalLevels = pointsArray.length - 1;
+    return ((lowerIndex + rangeRatio) / totalLevels) * 100;
+
+  }, [reputation]);
 
   return (
     <Box width='full' p={4}>
-      <Text mb={2}>Reputation: <strong>{reputation}</strong></Text>
+      <Text mb={2}>Reputation: <strong>{commify(reputation)}</strong></Text>
       <Box
         position='relative'
         height='10px'
-        bgGradient={`linear(to-r, #7D3500, #B45402, #808080, #0087d3, #2ec2e5)`}
+        bgGradient='linear(to-r, #7D3500, #B45402, #FFD700 43%, #808080 48%, #808080 52%, #2ec2e5 57%, #00b377 75%, #00ff7f)'
         borderRadius='md'
         border='1px solid #FDAB1A'
       >
