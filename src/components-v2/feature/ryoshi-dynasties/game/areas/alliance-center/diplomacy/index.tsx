@@ -80,7 +80,7 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
   const userSentToFactions = useMemo(() => {
       if (!rdContext.user?.reputations) return [];
       return rdContext.user.reputations
-        .filter(reputation => !!reputation.sendingFaction && ciEquals(reputation.sendingUser.walletAddress, user.address))
+        .filter(reputation => !!reputation.receivingFaction && ciEquals(reputation.sendingUser.walletAddress, user.address))
         .sort((a, b) => b.points - a.points)
         .map(reputation => ({isFaction: true, reputation}));
   }, [rdContext.user?.reputations, user.address]);
