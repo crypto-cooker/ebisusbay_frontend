@@ -543,24 +543,12 @@ export const isCroniesCollection = (address) => {
   return isCollection(address, 'cronies', '0xD961956B319A10CBdF89409C0aE7059788A4DaBb');
 };
 
-export const isCarkayousCollection = (address) => {
-  return isCollection(address, 'carkayous-feral-fish', '0x72af9c869a4759e6d50e9656c0741b395532c3dd');
-};
-
 export const isLazyHorseCollection = (address) => {
   return isCollection(address, 'lazy-horse', '0xD504ed871d33dbD4f56f523A37dceC86Ee918cb6');
 };
 
 export const isLazyHorsePonyCollection = (address) => {
   return isCollection(address, 'lazy-horse-pony', '0x7d0259070B5f513CA543afb6a906d42af5884B1B');
-};
-
-export const isCnsCollection = (address) => {
-  return isCollection(address, 'cronos-name-service', '0x15F7A67075C8b0883c355814Aa4e6C1e19994Af3');
-};
-
-export const isSscCollection = (address) => {
-  return isCollection(address, 'ssc-access-cards', '0x45Fe45e5623a129d652F15962d901C7B609e5194');
 };
 
 export const isCroskullSbtCollection = (address) => {
