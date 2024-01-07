@@ -483,6 +483,16 @@ const BattleDrawer = ({isOpen, onClose}: BattleDrawerProps) => {
               </Text>
             </Box>
           </DrawerHeader>
+          <Image
+            position='absolute'
+            left={0}
+            top={0}
+            bottom={0}
+            src={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_frame_left.png`).convert()}
+            alt='Edge'
+            w='16px'
+            h='full'
+          />
           <DrawerBody>
             <AuthenticationRdButton>
               <HStack justify='space-between'>
@@ -622,6 +632,16 @@ const LeaderboardDrawer = ({isOpen, onClose}: LeaderboardDrawerProps) => {
               </Text>
             </Box>
           </DrawerHeader>
+          <Image
+            position='absolute'
+            left={0}
+            top={0}
+            bottom={0}
+            src={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_frame_left.png`).convert()}
+            alt='Edge'
+            w='16px'
+            h='full'
+          />
           <DrawerBody>
             <Box mt={2}>
               <TableContainer w={{base: '95%', sm: '100%'}}>

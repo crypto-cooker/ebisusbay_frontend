@@ -317,8 +317,8 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async getFactionsByPoints(gameId: number, page?: number) {
-    const response = await this.cms.get(`ryoshi-dynasties/games/${gameId}/daily-points`);
+  async getFactionsByPoints(gameId: number) {
+    const response = await this.cms.get(`ryoshi-dynasties/games/${gameId}/interval-points`);
     return response.data.data;
   }
 }
