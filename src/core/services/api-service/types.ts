@@ -59,6 +59,7 @@ export interface RyoshiDynastiesApi {
     deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string): Promise<any>;
     relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string): Promise<any>
     fetchGift(address: string, signature: string): Promise<any>;
+    getFactionsByPoints(gameId: number): Promise<any>;
 }
 
 export enum ListingState {

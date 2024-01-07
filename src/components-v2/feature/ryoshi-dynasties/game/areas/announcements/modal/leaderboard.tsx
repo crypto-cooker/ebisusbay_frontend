@@ -34,7 +34,6 @@ import {
 import localFont from 'next/font/local';
 import moment from 'moment';
 import {useQuery} from "@tanstack/react-query";
-import {ApiService} from "@src/core/services/api-service";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
@@ -43,7 +42,8 @@ import ImageService from "@src/core/services/image";
 import GameMapWrapper from '@src/components-v2/feature/ryoshi-dynasties/components/game-map-wrapper';
 import {getLeadersForSeason, getSeasonDate} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {commify} from "ethers/lib/utils";
-import {useUser} from "@src/components-v2/useUser";
+import {ApiService} from "@src/core/services/api-service";
+import {ChevronLeftIcon, ChevronRightIcon} from "@chakra-ui/icons";
 
 const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
@@ -57,13 +57,6 @@ enum LeaderType {
 }
 
 const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
-  // const user = useUser();
-  // const {data: allFactions, status, error} = useQuery({
-  //   queryKey: ['RyoshiDynastiesGameContext'],
-  //   queryFn: () => ApiService.withoutKey().ryoshiDynasties.getGameContext(),
-  //   enabled: !!user.address,
-  // });
-
   const {game: rdGameContext} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [previousSeasonTime, setPreviousSeasonTime] = useState('');
   const [currentSeasonTime, setCurrentSeasonTime] = useState('');
@@ -99,101 +92,96 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
     getGameDates();
   }, [rdGameContext]);
 
-  // useEffect(() => {
-  //   if(status === 'success' && allFactions !== undefined) {
-  //     allFactions.game !== null ? setNoGameActive(false) : setNoGameActive(true);
-  //   }
-  // }, [status, allFactions]);
-
   return (
     <>
       {noGameActive ? (
-        <Box minH={'250px'} marginTop={10}>
+        <Box minH='250px' marginTop={10}>
           <Center>
             <Text margin='100'>No game currently active</Text>
           </Center>
         </Box>
       ) : (
-        <>
-          <Stack spacing={3} p={4} marginTop={10}>
-            <Grid templateColumns="repeat(2, 1fr)" justifyContent={'space-between'}>
-              <GridItem colSpan={{base:2, sm:1}} justifySelf={{base:'center', sm:'left'}} my='auto'>
-                <ButtonGroup isAttached>
-                  <Button
-                    variant={leaderType === LeaderType.TROOPS ? 'solid' : 'outline'}
-                    colorScheme={leaderType === LeaderType.TROOPS ? 'blue' : undefined}
-                    color='white'
-                    onClick={() => setLeaderType(LeaderType.TROOPS)}
-                  >
-                    Troops
-                  </Button>
-                  <Button
-                    variant={leaderType === LeaderType.POINTS ? 'solid' : 'outline'}
-                    colorScheme={leaderType === LeaderType.POINTS ? 'blue' : undefined}
-                    color='white'
-                    onClick={() => setLeaderType(LeaderType.POINTS)}
-                  >
-                    Points
-                  </Button>
-                </ButtonGroup>
-              </GridItem>
+        <Stack spacing={3} p={4} marginTop={10}>
+          <Grid templateColumns="repeat(2, 1fr)" justifyContent={'space-between'}>
+            <GridItem colSpan={{base:2, sm:1}} justifySelf={{base:'center', sm:'left'}} my='auto'>
+              <ButtonGroup isAttached>
+                <Button
+                  variant={leaderType === LeaderType.TROOPS ? 'solid' : 'outline'}
+                  colorScheme={leaderType === LeaderType.TROOPS ? 'blue' : undefined}
+                  color='white'
+                  onClick={() => setLeaderType(LeaderType.TROOPS)}
+                >
+                  Troops
+                </Button>
+                <Button
+                  variant={leaderType === LeaderType.POINTS ? 'solid' : 'outline'}
+                  colorScheme={leaderType === LeaderType.POINTS ? 'blue' : undefined}
+                  color='white'
+                  onClick={() => setLeaderType(LeaderType.POINTS)}
+                >
+                  Points
+                </Button>
+              </ButtonGroup>
+            </GridItem>
 
-              <GridItem
-                colSpan={{base:2, sm:1}}
-                maxW={{base: '300px', sm: '500px'}}
-                justifySelf={{base:'center', sm:'right'}}
-              >
-                <Tabs isLazy> 
-                  <TabList>
-                    <Tab onClick={() => setShowCurrentGame(true)}>
-                      <VStack>
-                        <Text as={'b'} className={gothamXLight.className}> Current Game </Text>
-                        <Text fontSize={12}> {currentSeasonTime} </Text>
-                      </VStack>
-                    </Tab>
-                    <Tab onClick={() => setShowCurrentGame(false)}>
-                      <VStack>
-                        <Text as={'b'} className={gothamXLight.className}> Previous Game </Text>
-                        <Text fontSize={12}> {previousSeasonTime} </Text>
-                      </VStack>
-                    </Tab>
-                  </TabList>
-                </Tabs>
+            <GridItem
+              colSpan={{base:2, sm:1}}
+              maxW={{base: '300px', sm: '500px'}}
+              justifySelf={{base:'center', sm:'right'}}
+            >
+              <Tabs isLazy>
+                <TabList>
+                  <Tab onClick={() => setShowCurrentGame(true)}>
+                    <VStack>
+                      <Text as={'b'} className={gothamXLight.className}> Current Game </Text>
+                      <Text fontSize={12}> {currentSeasonTime} </Text>
+                    </VStack>
+                  </Tab>
+                  <Tab onClick={() => setShowCurrentGame(false)}>
+                    <VStack>
+                      <Text as={'b'} className={gothamXLight.className}> Previous Game </Text>
+                      <Text fontSize={12}> {previousSeasonTime} </Text>
+                    </VStack>
+                  </Tab>
+                </TabList>
+              </Tabs>
 
-                <Flex>
-                  {!rdGameContext ? <Spinner size='sm'/> : <></>}
-                </Flex>
+              <Flex>
+                {!rdGameContext ? <Spinner size='sm'/> : <></>}
+              </Flex>
 
-              </GridItem>
-            </Grid>
+            </GridItem>
+          </Grid>
 
+          {leaderType === LeaderType.TROOPS ? (
             <TroopsLeaderboard showCurrentGame={showCurrentGame} />
+          ) : (
+            <PointsLeaderboard showCurrentGame={showCurrentGame} />
+          )}
 
-            {!showCurrentGame && (
-              <Accordion allowToggle={true} w={{base: '100%', sm:'100%'}}>
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box as="span" flex='1' textAlign='left'>
-                        Map
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel
-                    pb={4}
-                    h={isMobile ?'525px': '320px'}
-                    w={{base:'350px', sm:'500px', md:'100%'}}
-                  >
-                    <GameMapWrapper showActiveGame={showCurrentGame} height={isMobile ?'525px': '450px'} blockDeployments={true}/>
+          {!showCurrentGame && leaderType === LeaderType.TROOPS && (
+            <Accordion allowToggle={true} w={{base: '100%', sm:'100%'}}>
+              <AccordionItem>
+                <h2>
+                  <AccordionButton>
+                    <Box as="span" flex='1' textAlign='left'>
+                      Map
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel
+                  pb={4}
+                  h={isMobile ?'525px': '320px'}
+                  w={{base:'350px', sm:'500px', md:'100%'}}
+                >
+                  <GameMapWrapper showActiveGame={showCurrentGame} height={isMobile ?'525px': '450px'} blockDeployments={true}/>
 
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
-            )}
-
-          </Stack>
-        </>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+          )}
+        </Stack>
       )}
     </>
   );
@@ -203,7 +191,7 @@ export default LeaderBoardPage;
 
 const TroopsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
   const {game: rdGameContext} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false, '2xl': false })
+  const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false, '2xl': false });
 
   const [selectedControlPoint, setSelectedControlPoint] = useState('');
   const [previousGameFetched, setPreviousGameFetched] = useState(false);
@@ -287,26 +275,26 @@ const TroopsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
 
   return (
     <Box>
-      <Select
-        name='attackersFaction'
-        backgroundColor=''
-        w={'250px'}
-        me={2}
-        placeholder='Select a Control Point'
-        marginTop={2}
-        value={selectedControlPoint}
-        onChange={onChangeSelectedControlPoint}
-      >
-        {controlPoints.map((controlPoint: any) =>
-          <option value={controlPoint.id} key={controlPoint.id}>
-            {controlPoint.name}
-          </option>
-        )}
-      </Select>
+      <Flex  justify='end'>
+        <Select
+          w='250px'
+          me={2}
+          placeholder='Select a Control Point'
+          marginTop={2}
+          value={selectedControlPoint}
+          onChange={onChangeSelectedControlPoint}
+        >
+          {controlPoints.map((controlPoint: any) =>
+            <option value={controlPoint.id} key={controlPoint.id}>
+              {controlPoint.name}
+            </option>
+          )}
+        </Select>
+      </Flex>
       {selectedControlPoint ? (
         <Box mt={2}>
-          <TableContainer w={{base: '95%', sm: '100%'}} h={'250px'}>
-            <Table size='m'>
+          <TableContainer w={{base: '95%', sm: '100%'}} h='250px'>
+            <Table size='sm'>
               <Thead>
                 <Tr>
                   <Th textAlign='left'>Rank</Th>
@@ -345,7 +333,7 @@ const TroopsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
           </TableContainer>
         </Box>
       ) : (
-        <Box h={'250px'}>
+        <Box h='250px'>
           <Center>
             <Text margin='100'>
               Select a control point above to view the top factions
@@ -355,4 +343,84 @@ const TroopsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
       )}
     </Box>
   );
+}
+
+
+const PointsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
+  const {game: rdGameContext} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false, '2xl': false });
+  const gameId = showCurrentGame ? rdGameContext?.game.id : rdGameContext?.history.previousGameId;
+  const [page, setPage] = useState(0)
+  const pageSize = 5;
+
+  const {data: factionsByPoints} = useQuery({
+    queryKey: ['RdPointLeaders', showCurrentGame],
+    queryFn: async () => ApiService.withoutKey().ryoshiDynasties.getFactionsByPoints(gameId!),
+    enabled: !!rdGameContext
+  });
+
+  const pagedFactions = factionsByPoints?.slice(page * pageSize, (page + 1) * pageSize) ?? [];
+
+  return (
+    <Box mt={2}>
+      <TableContainer w={{base: '95%', sm: '100%'}} h='250px'>
+        <Table size='m'>
+          <Thead>
+            <Tr>
+              <Th textAlign='left'>Rank</Th>
+              <Th textAlign='left'>Faction</Th>
+              <Th textAlign='left' isNumeric>Points</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {pagedFactions.map((entry: any, index: any) => (
+              <Tr key={entry.faction.name}>
+                <Td w={16}>{(page * pageSize) + index + 1}</Td>
+                <Td
+                  textAlign='left'
+                  alignSelf={'center'}
+                  alignContent={'center'}
+                  alignItems={'center'}
+                  display={'flex'}
+                  h={43.5}
+                >
+                  <HStack>
+                    <Avatar
+                      width='40px'
+                      height='40px'
+                      padding={1}
+                      src={ImageService.translate(entry.faction.image).avatar()}
+                      rounded='xs'
+                    />
+                    <Text isTruncated={isMobile} maxW={isMobile ?'150px': '200px'}>{entry.faction.name}</Text>
+                  </HStack>
+                </Td>
+                <Td textAlign='left' maxW={'200px'} isNumeric>{commify(entry.points)}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+      <Box textAlign='center' mt={2}>
+        <ButtonGroup>
+          <Button
+            onClick={() => setPage(page - 1)}
+            isDisabled={page === 0}
+            size='sm'
+            leftIcon={<ChevronLeftIcon />}
+          >
+            Previous
+          </Button>
+          <Button
+            onClick={() => setPage(page + 1)}
+            isDisabled={pagedFactions.length < pageSize}
+            size='sm'
+            rightIcon={<ChevronRightIcon />}
+          >
+            Next
+          </Button>
+        </ButtonGroup>
+      </Box>
+    </Box>
+  )
 }

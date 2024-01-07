@@ -316,6 +316,11 @@ class RyoshiDynastiesRepository extends CmsRepository {
     });
     return response.data;
   }
+
+  async getFactionsByPoints(gameId: number, page?: number) {
+    const response = await this.cms.get(`ryoshi-dynasties/games/${gameId}/daily-points`);
+    return response.data.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;
