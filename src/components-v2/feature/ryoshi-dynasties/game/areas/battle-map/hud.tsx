@@ -458,10 +458,30 @@ const BattleDrawer = ({isOpen, onClose}: BattleDrawerProps) => {
     <>
       <Drawer isOpen={isOpen} onClose={onClose} size='sm'>
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent bg='linear-gradient(#1f1818, #332727, #1f1818)'>
           <DrawerCloseButton />
           <DrawerHeader>
-            Battle Info
+            <Box position='relative' maxW='250px' h='56px' mx='auto'>
+              <Image
+                position='absolute'
+                maxW='250px'
+                zIndex={1}
+                src={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_header.png`).convert()}
+              />
+              <Text
+                position='absolute'
+                zIndex={2}
+                color='white'
+                fontSize='lg'
+                w='full'
+                display='flex'
+                alignItems='center'
+                justifyContent='center'
+                p={4}
+              >
+                Battle Info
+              </Text>
+            </Box>
           </DrawerHeader>
           <DrawerBody>
             <AuthenticationRdButton>
@@ -577,10 +597,30 @@ const LeaderboardDrawer = ({isOpen, onClose}: LeaderboardDrawerProps) => {
     <>
       <Drawer isOpen={isOpen} onClose={onClose} size='lg'>
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent bg='linear-gradient(#1f1818, #332727, #1f1818)'>
           <DrawerCloseButton />
           <DrawerHeader>
-            Points Leaderboard
+            <Box position='relative' maxW='250px' h='56px' mx='auto'>
+              <Image
+                position='absolute'
+                maxW='250px'
+                zIndex={1}
+                src={ImageService.translate(`/img/ryoshi-dynasties/announcements/base/small_header.png`).convert()}
+              />
+              <Text
+                position='absolute'
+                zIndex={2}
+                color='white'
+                fontSize='lg'
+                w='full'
+                display='flex'
+                alignItems='center'
+                justifyContent='center'
+                p={4}
+              >
+                Points Leaderboard
+              </Text>
+            </Box>
           </DrawerHeader>
           <DrawerBody>
             <Box mt={2}>
