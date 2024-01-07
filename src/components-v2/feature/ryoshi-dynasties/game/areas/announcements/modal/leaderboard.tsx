@@ -102,7 +102,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
         </Box>
       ) : (
         <Stack spacing={3} p={4} marginTop={10}>
-          <Grid templateColumns="repeat(2, 1fr)" justifyContent={'space-between'}>
+          <Grid templateColumns="repeat(2, 1fr)" justifyContent={'space-between'} gap={2}>
             <GridItem colSpan={{base:2, sm:1}} justifySelf={{base:'center', sm:'left'}} my='auto'>
               <ButtonGroup isAttached>
                 <Button
@@ -172,7 +172,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
                 </h2>
                 <AccordionPanel
                   pb={4}
-                  h={isMobile ?'525px': '320px'}
+                  h={isMobile ? '525px': '320px'}
                   w={{base:'350px', sm:'500px', md:'100%'}}
                 >
                   <GameMapWrapper showActiveGame={showCurrentGame} height={isMobile ?'525px': '450px'} blockDeployments={true}/>
@@ -275,7 +275,7 @@ const TroopsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
 
   return (
     <Box>
-      <Flex  justify='end'>
+      <Flex justify={{base:'center', sm:'end'}}>
         <Select
           w='250px'
           me={2}
@@ -308,11 +308,12 @@ const TroopsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
                     <Td w={16}>{index+1}</Td>
                     <Td
                       textAlign='left'
-                      alignSelf={'center'}
-                      alignContent={'center'}
-                      alignItems={'center'}
-                      display={'flex'}
-                      h={43.5}
+                      alignSelf='center'
+                      alignContent='center'
+                      alignItems='center'
+                      display='flex'
+                      h='43px'
+                      w={isMobile ? '140px': '200px'}
                     >
                       <HStack>
                         <Avatar
@@ -322,10 +323,10 @@ const TroopsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
                           src={ImageService.translate(faction.image).avatar()}
                           rounded='xs'
                         />
-                        <Text isTruncated={isMobile} maxW={isMobile ?'150px': '200px'}>{faction.name}</Text>
+                        <Text isTruncated={isMobile} maxW={isMobile ? '140px': '200px'}>{faction.name}</Text>
                       </HStack>
                     </Td>
-                    <Td textAlign='left' maxW={'200px'} isNumeric>{commify(faction.totalTroops)}</Td>
+                    <Td textAlign='left' maxW='200px' isNumeric>{commify(faction.totalTroops)}</Td>
                   </Tr>
                 ))}
               </Tbody>
@@ -348,13 +349,13 @@ const TroopsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
 
 const PointsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
   const {game: rdGameContext} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false, '2xl': false });
+  const isMobile = useBreakpointValue({ base: true, md: false });
   const gameId = showCurrentGame ? rdGameContext?.game.id : rdGameContext?.history.previousGameId;
   const [page, setPage] = useState(0)
   const pageSize = 5;
 
   const {data: factionsByPoints} = useQuery({
-    queryKey: ['RdPointLeaders', showCurrentGame],
+    queryKey: ['RdPointLeaders', gameId],
     queryFn: async () => ApiService.withoutKey().ryoshiDynasties.getFactionsByPoints(gameId!),
     enabled: !!rdGameContext
   });
@@ -364,7 +365,7 @@ const PointsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
   return (
     <Box mt={2}>
       <TableContainer w={{base: '95%', sm: '100%'}} h='250px'>
-        <Table size='m'>
+        <Table size='sm'>
           <Thead>
             <Tr>
               <Th textAlign='left'>Rank</Th>
@@ -378,11 +379,12 @@ const PointsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
                 <Td w={16}>{(page * pageSize) + index + 1}</Td>
                 <Td
                   textAlign='left'
-                  alignSelf={'center'}
-                  alignContent={'center'}
-                  alignItems={'center'}
-                  display={'flex'}
-                  h={43.5}
+                  alignSelf='center'
+                  alignContent='center'
+                  alignItems='center'
+                  display='flex'
+                  h='43px'
+                  w={isMobile ? '140px': '200px'}
                 >
                   <HStack>
                     <Avatar
@@ -390,12 +392,11 @@ const PointsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
                       height='40px'
                       padding={1}
                       src={ImageService.translate(entry.faction.image).avatar()}
-                      rounded='xs'
                     />
-                    <Text isTruncated={isMobile} maxW={isMobile ?'150px': '200px'}>{entry.faction.name}</Text>
+                    <Text isTruncated={isMobile} maxW={isMobile ? '140px': '200px'}>{entry.faction.name}</Text>
                   </HStack>
                 </Td>
-                <Td textAlign='left' maxW={'200px'} isNumeric>{commify(entry.points)}</Td>
+                <Td textAlign='left' maxW='200px' isNumeric>{commify(entry.points)}</Td>
               </Tr>
             ))}
           </Tbody>
