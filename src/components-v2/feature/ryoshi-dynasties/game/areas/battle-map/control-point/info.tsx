@@ -19,6 +19,7 @@ import {RdControlPoint} from "@src/core/services/api-service/types";
 import ImageService from "@src/core/services/image";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {pluralize} from "@src/utils";
+import {commify} from "ethers/lib/utils";
 
 interface InfoTabProps {
   controlPoint: RdControlPoint;
@@ -29,14 +30,15 @@ interface InfoTabProps {
 const InfoTab = ({controlPoint, refreshControlPoint, useCurrentGameId}: InfoTabProps) => {
   const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false, '2xl': false })
   const [gameEndDate, setGameEndDate] = useState('');
-  const [isLoaded, setIsLoaded] = useState(false);
+
+  const topFiveLeaders = controlPoint?.leaderBoard ? controlPoint.leaderBoard?.slice(0, 5) : [];
 
   const controlPointLeaders = useMemo(() => {
     if (!controlPoint.leaderBoard) return <></>;
 
-    return controlPoint.leaderBoard.filter((faction, index) => index < 5).map((faction, index ) =>  (
+    return topFiveLeaders.map((faction, index ) =>  (
       <Tr key={index}>
-        <Td  textAlign='center' w={16}>{index+1}</Td>
+        <Td textAlign='start' w={16}>{index+1}</Td>
         <Td
           textAlign='left'
           alignSelf='center'
@@ -55,13 +57,12 @@ const InfoTab = ({controlPoint, refreshControlPoint, useCurrentGameId}: InfoTabP
             <Text isTruncated={isMobile} maxW='100px'>{faction.name}</Text>
           </HStack>
         </Td>
-        <Td textAlign='left' maxW='200px'>{faction.totalTroops}</Td>
+        <Td textAlign='left' maxW='200px' isNumeric>{commify(faction.totalTroops)}</Td>
       </Tr>
     ));
-  }, [controlPoint]);
+  }, [controlPoint, topFiveLeaders]);
 
   useEffect(() => {
-    setIsLoaded(false);
     refreshControlPoint();
   }, []);
 
@@ -69,14 +70,14 @@ const InfoTab = ({controlPoint, refreshControlPoint, useCurrentGameId}: InfoTabP
     <>
       <Flex mx={4}>
         <Flex flexDirection='column' textAlign='center' justifyContent='space-around'>
-          {isLoaded && !!controlPoint?.leaderBoard[0]?.totalTroops ? (
+          {!!topFiveLeaders[0]?.totalTroops ? (
             <TableContainer w={{base: '100%', sm:'100%'}} h='250px'>
               <Table size='m'>
                 <Thead>
                   <Tr>
                     <Th textAlign='left' color='gray.400'>Rank</Th>
                     <Th textAlign='left' color='gray.400'>Faction</Th>
-                    <Th textAlign='left' color='gray.400'>Troops</Th>
+                    <Th textAlign='left' color='gray.400' isNumeric>Troops</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
