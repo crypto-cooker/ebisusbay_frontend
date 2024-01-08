@@ -285,17 +285,18 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
                       <Text fontSize='xs' color="#aaa" zIndex='9'>Game End:</Text>
                     </HStack>
                     <Box fontWeight='bold' color='white' flex='1' textAlign='end'>
-                      <Countdown
-                        date={gameStopTime ?? 0}
-                        renderer={({days, hours, minutes, seconds, completed }) => {
-                          return (days > 0 ?
-                            <span>{days} days</span>
-                            :
-                            <span>{hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>
-                          )
-                        }
-                        }
-                      />
+                      {gameStopTime && (
+                        <Countdown
+                          date={gameStopTime ?? 0}
+                          renderer={({days, hours, minutes, seconds, completed }) => {
+                            return (days > 0 ?
+                                <span>{days} days</span>
+                                :
+                                <span>{hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>
+                            )
+                          }}
+                        />
+                      )}
                     </Box>
                     <AccordionIcon color='#ffffff' ms={1} />
                   </Flex>
@@ -307,7 +308,14 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
                       <Text fontSize='xs' color="#aaa" zIndex='9'>Interval:</Text>
                     </HStack>
                     <Box color='white' flex='1' textAlign='end' pe='21px'>
-                      <FiveMinuteIntervalCountdown startDate={new Date(rdGameContext?.game.startAt ?? 0)} />
+                      {rdGameContext?.nextInterval && (
+                        <Countdown
+                          date={rdGameContext?.nextInterval ?? 0}
+                          renderer={({minutes, seconds, completed }) => {
+                            return <span>{zeroPad(minutes)}:{zeroPad(seconds)}</span>
+                          }}
+                        />
+                      )}
                     </Box>
                   </Flex>
                 </AccordionPanel>
@@ -503,10 +511,10 @@ const BattleDrawer = ({isOpen, onClose}: BattleDrawerProps) => {
                 <Text>{kobanBalance ? commify(kobanBalance) : ''}</Text>
               </HStack>
               {!!rdUser && (
-                <>
+                <Box ps={2}>
                   {!!rdUser.faction && (
                     <Box mt={4}>
-                      <Text fontSize='lg' fontWeight='bold' color='white'>Faction</Text>
+                      {/*<Text fontSize='lg' fontWeight='bold' color='white'>Faction</Text>*/}
                       <Box border='1px solid #F48F0C' rounded='md' p={2}>
                         <HStack>
                           <Avatar
@@ -538,7 +546,7 @@ const BattleDrawer = ({isOpen, onClose}: BattleDrawerProps) => {
                     </Box>
                   )}
                   <Box mt={4}>
-                    <Text fontSize='lg' fontWeight='bold' color='white'>User</Text>
+                    {/*<Text fontSize='lg' fontWeight='bold' color='white'>User</Text>*/}
                     <Box border='1px solid #F48F0C' rounded='md' p={2}>
                       <HStack>
                         <Avatar
@@ -568,7 +576,7 @@ const BattleDrawer = ({isOpen, onClose}: BattleDrawerProps) => {
                       )}
                     </Box>
                   </Box>
-                </>
+                </Box>
               )}
             </AuthenticationRdButton>
             <Box>
