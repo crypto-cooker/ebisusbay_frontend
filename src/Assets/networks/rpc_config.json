@@ -25264,6 +25264,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Time Base",
+      "slug": "time-base",
+      "multiToken": false,
+      "address": "0x35B832bE9546fCad67526Be2801228194250378A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Time Bases are an expansion of Time Ship Wars, providing layer 2 for different battle types, resources, and ways to earn in our Time Wars Web3 game.",
+        "avatar": "/img/collections/time-base/avatar.webp",
+        "banner": "/img/collections/time-base/banner.webp",
+        "card": "/img/collections/time-base/card.webp",
+        "website": "https://timemachine101.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/timemachinenfts",
+        "medium": "https://medium.com/@tashaandluke96/before-the-time-wars-66654b9132a",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
