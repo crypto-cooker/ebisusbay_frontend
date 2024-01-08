@@ -300,6 +300,7 @@ export interface RdGameContext {
     history: {
         previousGameId: number;
     };
+    nextInterval: Date;
 }
 
 interface RdGameBase {

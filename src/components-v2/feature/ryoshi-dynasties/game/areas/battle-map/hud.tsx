@@ -55,6 +55,7 @@ import ImageService from "@src/core/services/image";
 import {commify} from "ethers/lib/utils";
 import {ChevronLeftIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
+import {RdGameState} from "@src/core/services/api-service/types";
 
 const config = appConfig();
 
@@ -73,6 +74,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
 
   const [troopTimer, setTroopTimer] = useState('');
   const [gameStopTime, setGameStopTime] = useState('');
+  const [nextInterval, setNextInterval] = useState<Date>();
 
 
   const [isMobile] = useMediaQuery("(max-width: 750px)");
@@ -140,6 +142,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   useEffect(() => {
     if(!rdGameContext) return;
     setGameStopTime(rdGameContext.game.stopAt);
+    setNextInterval(rdGameContext.state === RdGameState.IN_PROGRESS ? rdGameContext.nextInterval : undefined);
   }, [rdGameContext]);
 
   return (
@@ -289,9 +292,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
                         <Countdown
                           date={gameStopTime ?? 0}
                           renderer={({days, hours, minutes, seconds, completed }) => {
-                            return (days > 0 ?
-                                <span>{days} days</span>
-                                :
+                            return (days > 0 ? <span>{days} days</span> :
                                 <span>{hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>
                             )
                           }}
@@ -308,9 +309,9 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
                       <Text fontSize='xs' color="#aaa" zIndex='9'>Interval:</Text>
                     </HStack>
                     <Box color='white' flex='1' textAlign='end' pe='21px'>
-                      {rdGameContext?.nextInterval && (
+                      {nextInterval && (
                         <Countdown
-                          date={rdGameContext?.nextInterval ?? 0}
+                          date={nextInterval ?? 0}
                           renderer={({minutes, seconds, completed }) => {
                             return <span>{zeroPad(minutes)}:{zeroPad(seconds)}</span>
                           }}
