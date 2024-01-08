@@ -139,6 +139,10 @@ class Cms {
   async fetchGift(address: string, signature: string) {
     return this.ryoshiDynasties.fetchGift(address, signature)
   }
+
+  async getFactionsByPoints(gameId: number) {
+    return this.ryoshiDynasties.getFactionsByPoints(gameId);
+  }
 }
 
 export default Cms;

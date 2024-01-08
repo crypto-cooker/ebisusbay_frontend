@@ -14,7 +14,6 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {secondsToDhms} from "@src/utils";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -129,7 +128,7 @@ const HelpPage = () => {
               </Text>
               <UnorderedList>
                 {rdConfig.armies.redeploymentDelay.map((delay, i) => (
-                  <ListItem>Day {i+1}: {secondsToDhms(delay)}</ListItem>
+                  <ListItem>Day {i+1}: {delay} minutes</ListItem>
                 ))}
               </UnorderedList>
             </AccordionPanel>
