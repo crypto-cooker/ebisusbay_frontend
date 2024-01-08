@@ -65,7 +65,7 @@ interface BattleMapHUDProps {
 
 export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   const user = useUser();
-  const {game: rdGameContext, user:rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const {game: rdGameContext, user: rdUser, refreshGame } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [koban, setKoban] = useState<number | string>(0);
   const [isLoading, setIsLoading] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
@@ -117,6 +117,16 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     deadline.setSeconds(deadline.getSeconds() + redeploymentDelay);
     setTroopTimer(deadline.toISOString());
     setShowTimer(redeploymentDelay > 0)
+  }
+
+  const handleIntervalComplete = async () => {
+    if(!rdGameContext) return;
+
+    // Wait 1 second to better guarantee a new value
+    await new Promise(r => setTimeout(r, 1000));
+
+    // Refresh to get new interval
+    await refreshGame();
   }
 
   useEffect(() => {
@@ -316,6 +326,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
                           renderer={({minutes, seconds, completed }) => {
                             return <span>{zeroPad(minutes)}:{zeroPad(seconds)}</span>
                           }}
+                          onComplete={handleIntervalComplete}
                         />
                       )}
                     </Box>
