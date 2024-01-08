@@ -9,6 +9,7 @@ import {commify} from "ethers/lib/utils";
 import brands from '../src/core/data/brands.json';
 import ImageService from "@src/core/services/image";
 import {ethers} from "ethers";
+import {Box, Link} from "@chakra-ui/react";
 
 const config = appConfig();
 const drops = config.drops;
@@ -68,58 +69,6 @@ function elmYPosition(elm) {
     y += node.offsetTop;
   }
   return y;
-}
-
-export function scrollTo(scrollableElement, elmID) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-  var elm = document.getElementById(elmID);
-  if (!elmID || !elm) {
-    return;
-  }
-  var startY = currentYPosition();
-  var stopY = elmYPosition(elm);
-  var distance = stopY > startY ? stopY - startY : startY - stopY;
-  if (distance < 100) {
-    scrollTo(0, stopY);
-    return;
-  }
-  var speed = Math.round(distance / 50);
-  if (speed >= 20) speed = 20;
-  var step = Math.round(distance / 25);
-  var leapY = stopY > startY ? startY + step : startY - step;
-  var timer = 0;
-  if (stopY > startY) {
-    for (var i = startY; i < stopY; i += step) {
-      setTimeout(
-        (function (leapY) {
-          return () => {
-            scrollableElement.scrollTo(0, leapY);
-          };
-        })(leapY),
-        timer * speed
-      );
-      leapY += step;
-      if (leapY > stopY) leapY = stopY;
-      timer++;
-    }
-    return;
-  }
-  for (let i = startY; i > stopY; i -= step) {
-    setTimeout(
-      (function (leapY) {
-        return () => {
-          scrollableElement.scrollTo(0, leapY);
-        };
-      })(leapY),
-      timer * speed
-    );
-    leapY -= step;
-    if (leapY < stopY) leapY = stopY;
-    timer++;
-  }
-  return false;
 }
 
 export function getTimeDifference(date) {
@@ -328,18 +277,26 @@ export function timeSince(timestamp) {
   return `${interval} ${pluralize(interval, 'second')}`;
 }
 
-export function secondsToDhms(seconds) {
-  seconds = Number(seconds);
-  var d = Math.floor(seconds / (3600 * 24));
-  var h = Math.floor((seconds % (3600 * 24)) / 3600);
-  var m = Math.floor((seconds % 3600) / 60);
-  var s = Math.floor(seconds % 60);
+export function secondsToDhms(totalSeconds, abbreviated = false) {
+  const days = Math.floor(totalSeconds / (3600 * 24));
+  const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
 
-  var dDisplay = d > 0 ? d + (d == 1 ? ' d ' : ' d ') : '';
-  var hDisplay = h > 0 ? h + (h == 1 ? ' h ' : ' h ') : '';
-  var mDisplay = m > 0 ? m + (m == 1 ? ' m ' : ' m ') : '';
-  var sDisplay = s > 0 ? s + (s == 1 ? ' s' : ' s') : '';
-  return dDisplay + hDisplay + mDisplay + sDisplay;
+  // Formatting the output based on abbreviated parameter
+  let result = '';
+  if (!abbreviated) {
+    if (days > 0) result += `${days} ${pluralize(days, 'day')} `;
+    if (hours > 0) result += `${hours} ${pluralize(hours, 'hour')} `;
+    if (minutes > 0) result += `${minutes} ${pluralize(minutes, 'minute')} `;
+    if (seconds > 0) result += `${seconds} ${pluralize(seconds, 'second')}`;
+  } else {
+    if (days > 0) result += `${days}d `;
+    if (hours > 0) result += `${hours}h `;
+    if (minutes > 0) result += `${minutes}m `;
+    if (seconds > 0) result += `${seconds}s`;
+  }
+  return result.trim();
 }
 
 /**
@@ -380,6 +337,17 @@ export function createSuccessfulAddCartContent(onClickView) {
         View cart
       </span>
     </span>
+  );
+}
+
+export function createToastMessageWithLink(message, link, linkText) {
+  return (
+    <Box as='span'>
+      {message}
+      <Link href={link}>
+        {linkText}
+      </Link>
+    </Box>
   );
 }
 
