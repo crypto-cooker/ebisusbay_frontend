@@ -311,6 +311,7 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
                     <Box color='white' flex='1' textAlign='end' pe='21px'>
                       {nextInterval && (
                         <Countdown
+                          key={nextInterval.toString()}
                           date={nextInterval ?? 0}
                           renderer={({minutes, seconds, completed }) => {
                             return <span>{zeroPad(minutes)}:{zeroPad(seconds)}</span>
