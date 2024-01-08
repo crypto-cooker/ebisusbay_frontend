@@ -617,9 +617,9 @@ const LeaderboardDrawer = ({isOpen, onClose}: LeaderboardDrawerProps) => {
   const pageSize = 10;
 
   const {data: factionsByPoints} = useQuery({
-    queryKey: ['RdPointLeaders', gameId],
+    queryKey: ['RdPointLeaders', gameId, isOpen],
     queryFn: async () => ApiService.withoutKey().ryoshiDynasties.getFactionsByPoints(gameId!),
-    enabled: !!rdGameContext
+    enabled: !!rdGameContext && isOpen
   });
 
   const pagedFactions = factionsByPoints?.slice(page * pageSize, (page + 1) * pageSize) ?? [];
@@ -665,7 +665,7 @@ const LeaderboardDrawer = ({isOpen, onClose}: LeaderboardDrawerProps) => {
           />
           <DrawerBody>
             <Box mt={2}>
-              <TableContainer w={{base: '95%', sm: '100%'}}>
+              <TableContainer>
                 <Table size='sm'>
                   <Thead>
                     <Tr>
