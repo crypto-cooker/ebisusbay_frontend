@@ -15,6 +15,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
+  Grid, GridItem,
   HStack,
   Icon,
   Image,
@@ -64,60 +65,13 @@ interface BattleMapHUDProps {
 }
 
 export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
-  const user = useUser();
   const {game: rdGameContext, user: rdUser, refreshGame } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const [koban, setKoban] = useState<number | string>(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [showTimer, setShowTimer] = useState(false);
   const {isOpen: isBattleMenuOpen, onOpen: onOpenBattleMenu, onClose: onCloseBattleMenu} = useDisclosure();
   const {isOpen: isLeaderboardMenuOpen, onOpen: onOpenLeaderboardMenu, onClose: onCloseLeaderboardeMenu} = useDisclosure();
 
-  const [troopTimer, setTroopTimer] = useState('');
   const [gameStopTime, setGameStopTime] = useState('');
   const [nextInterval, setNextInterval] = useState<Date>();
 
-
-  const [isMobile] = useMediaQuery("(max-width: 750px)");
-  const [accordionIndex, setAccordionIndex] = useState<number>(0);
-
-  const[availableUserTroops, setAvailableUserTroops] = useState(0);
-  const[availableFactionTroops, setAvailableFactionTroops] = useState(0);
-  const[totalUserTroops, setTotalUserTroops] = useState(0);
-  const[totalFactionTroops, setTotalFactionTroops] = useState(0);
-
-  const getKobanBalance = async () => {
-    try {
-      setIsLoading(true);
-      let nfts = await NextApiService.getWallet(user!.address!, {
-        collection: config.contracts.resources,
-      });
-      let kobanBalance = 0;
-      if (nfts.data.length > 0) {
-        kobanBalance = Number(nfts.data.find(nft => nft.nftId === '1')?.balance ?? 0);
-      } else {
-        const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-        const contract = new Contract(config.contracts.resources, ERC1155, readProvider);
-        kobanBalance = await contract.balanceOf(user!.address!, 1);
-        kobanBalance = Number(kobanBalance);
-      }
-      setKoban(siPrefixedNumber(round(kobanBalance)));
-
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const checkTroopCooldown = () => {
-    if(!rdUser) return;
-
-    const redeploymentDelay = rdUser?.armies.redeploymentDelay;
-    let deadline = new Date();
-    deadline.setSeconds(deadline.getSeconds() + redeploymentDelay);
-    setTroopTimer(deadline.toISOString());
-    setShowTimer(redeploymentDelay > 0)
-  }
 
   const handleIntervalComplete = async () => {
     if(!rdGameContext) return;
@@ -130,26 +84,6 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
   }
 
   useEffect(() => {
-    if(!rdUser) return;
-
-    setAvailableUserTroops(rdUser.game.troops.user.available.total);
-    setTotalUserTroops(rdUser.game.troops.user.overall.total);
-    setAvailableFactionTroops(rdUser.game.troops.faction?.available.total ?? 0);
-    setTotalFactionTroops(rdUser.game.troops.faction?.overall.total ?? 0);
-    checkTroopCooldown();
-  }, [rdUser]); 
-
-  useEffect(() => {
-    if(!user) return;
-
-    getKobanBalance();
-  }, [user.wallet.isConnected])
-
-  useEffect(() => {
-    setAccordionIndex(isMobile ? -1 : 0);
-  }, [isMobile]); 
-
-  useEffect(() => {
     if(!rdGameContext) return;
     setGameStopTime(rdGameContext.game.stopAt);
     setNextInterval(rdGameContext.state === RdGameState.IN_PROGRESS ? rdGameContext.nextInterval : undefined);
@@ -159,125 +93,9 @@ export const BattleMapHUD = ({onBack}: BattleMapHUDProps) => {
     <Box position='absolute' top={0} left={0}  w='100%' pointerEvents='none' >
       <Flex direction='row' justify='space-between'>
         <ReturnToVillageButton onBack={onBack} />
+
         <Spacer />
 
-        {/*<Box mb={4} mt={6} mr={2}*/}
-        {/*  justifyContent='right'*/}
-        {/*  bg={user.theme === 'dark' ? '#272523EE' : '#272523EE'}*/}
-        {/*  rounded='md'*/}
-        {/*  w={{base: '200px', sm: '200px'}}*/}
-        {/*>*/}
-        {/*  <Accordion*/}
-        {/*    // defaultIndex={[isMobile ? -1 : 0]}*/}
-        {/*    index={accordionIndex}*/}
-        {/*    allowToggle*/}
-        {/*    paddingRight={0}*/}
-        {/*    justifyContent='right'*/}
-        {/*  >*/}
-        {/*    <AccordionItem border='none'>*/}
-        {/*      <AccordionButton*/}
-        {/*        pointerEvents='auto'*/}
-        {/*        onClick={() => setAccordionIndex(accordionIndex === 0 ? -1 : 0)}*/}
-        {/*      >*/}
-        {/*        {!isLoading ? (*/}
-        {/*          <>*/}
-        {/*            {!!user.address ? (*/}
-        {/*              <>*/}
-        {/*                <Flex justify="right" align="right">*/}
-        {/*                  <HStack justifyContent='right' marginTop='0'>*/}
-        {/*                    <Text fontSize='xs' color="#aaa" zIndex='9'>Game End:</Text>*/}
-        {/*                    <Text fontWeight='bold' zIndex='9' color='white'>*/}
-        {/*                      <Countdown*/}
-        {/*                        date={gameStopTime ?? 0}*/}
-        {/*                        renderer={({days, hours, minutes, seconds, completed }) => {*/}
-        {/*                          return (days > 0 ?*/}
-        {/*                            <span>{days} days</span>*/}
-        {/*                            :*/}
-        {/*                            <span>{hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>)*/}
-        {/*                          }*/}
-        {/*                        }*/}
-        {/*                      />*/}
-        {/*                    </Text>*/}
-        {/*                    <AccordionIcon color='#ffffff'/>*/}
-        {/*                  </HStack>*/}
-        {/*                </Flex>*/}
-        {/*              </>*/}
-        {/*            ) : (*/}
-        {/*              <Text align='center'>Connect wallet for stats</Text>*/}
-        {/*            )}*/}
-        {/*          </>*/}
-        {/*        ) : (*/}
-        {/*          <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>*/}
-        {/*        )}*/}
-        {/*      </AccordionButton>*/}
-
-        {/*      <AccordionPanel pb={4} alignItems={'right'} pointerEvents='auto'>*/}
-        {/*        <AuthenticationRdButton*/}
-        {/*          connectText=''*/}
-        {/*          signinText=''*/}
-        {/*          size={'sm'}*/}
-        {/*        >*/}
-        {/*          <Center>*/}
-        {/*            <Tag  variant='outline'>*/}
-        {/*              <Image*/}
-        {/*                src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()}*/}
-        {/*                alt="troopsIcon"*/}
-        {/*                boxSize={4}*/}
-        {/*              />*/}
-        {/*              <Box ms={1}>*/}
-        {/*                {!isLoading ? (*/}
-        {/*                  <>{koban}</>*/}
-        {/*                ) : (*/}
-        {/*                  <Progress size='xs' colorScheme='orange' isIndeterminate w='full'/>*/}
-        {/*                )}*/}
-        {/*              </Box>*/}
-        {/*            </Tag>*/}
-        {/*          </Center>*/}
-        {/*          <Box mt={4} fontSize='sm'>*/}
-        {/*            <HStack justify='space-between'>*/}
-        {/*              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={4}/>*/}
-        {/*              <Text fontWeight='bold' color='white'>Ryoshi On Duty</Text>*/}
-        {/*            </HStack>*/}
-        {/*            <HStack justify='space-between'>*/}
-        {/*              <Box color="#aaa">User:</Box>*/}
-        {/*              <Box fontWeight='bold' color='white'>{availableUserTroops} / {totalUserTroops}</Box>*/}
-        {/*            </HStack>*/}
-        {/*            <HStack justify='space-between'>*/}
-        {/*              <Box color="#aaa">Faction:</Box>*/}
-        {/*              <Box fontWeight='bold' color='white'>{availableFactionTroops} / {totalFactionTroops}</Box>*/}
-        {/*            </HStack>*/}
-        {/*          </Box>*/}
-        {/*        </AuthenticationRdButton>*/}
-        {/*      </AccordionPanel>*/}
-        {/*    </AccordionItem>*/}
-        {/*  </Accordion>*/}
-        {/*  {!isLoading && (*/}
-        {/*    <>*/}
-        {/*      {showTimer &&  (*/}
-        {/*        <Box*/}
-        {/*          mt={-3} bg='#cc2828'*/}
-        {/*          p={2} roundedBottom='md'*/}
-        {/*          w={{base: '200px', sm: '200px'}}*/}
-        {/*          h={{base: '35px', sm: '35px'}}*/}
-        {/*        >*/}
-        {/*          <HStack justifyContent='space-between'>*/}
-        {/*            <Text fontSize='xs' >Troop Cooldown:</Text>*/}
-        {/*            <Text verticalAlign='bottom' fontWeight='bold'>*/}
-        {/*              <Countdown*/}
-        {/*                date={troopTimer ?? 0}*/}
-        {/*                onComplete={()=> setShowTimer(false)}*/}
-        {/*                renderer={({hours, minutes, seconds }) => {*/}
-        {/*                  return (<span>{hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>)*/}
-        {/*                  }*/}
-        {/*                }*/}
-        {/*              />*/}
-        {/*            </Text>*/}
-        {/*          </HStack>*/}
-        {/*        </Box>*/}
-        {/*      )}*/}
-        {/*    </>*/}
-        {/*  )}*/}
-        {/*</Box>*/}
         <Box mb={4} mt={6} mr={2}>
           <SimpleGrid columns={1} gap={2}>
             <Accordion
@@ -395,49 +213,6 @@ const DarkButton = ({onClick, icon}: ButtonProps) => {
   )
 }
 
-interface FiveMinuteIntervalCountdownProps {
-  startDate: Date;
-}
-
-const FiveMinuteIntervalCountdown = ({ startDate }: FiveMinuteIntervalCountdownProps) => {
-
-  const calculateNextTarget = (): Date => {
-    const now = new Date();
-    const elapsed = now.getTime() - startDate.getTime();
-    const remainder = elapsed % (5 * 60 * 1000);
-    const nextInterval = (5 * 60 * 1000) - remainder;
-    return new Date(now.getTime() + nextInterval);
-  };
-
-  const [targetDate, setTargetDate] = useState<Date>(calculateNextTarget());
-
-  useEffect(() => {
-    const updateAfterNextInterval = () => {
-      const now = new Date();
-      const timeUntilNextTarget = targetDate.getTime() - now.getTime();
-      return setTimeout(() => {
-        setTargetDate(calculateNextTarget());
-      }, timeUntilNextTarget);
-    };
-
-    const timer = updateAfterNextInterval();
-
-    return () => clearTimeout(timer);
-  }, [targetDate]);
-
-  const renderer = ({ minutes, seconds }: CountdownRenderProps) => {
-    return <span>{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</span>;
-  };
-
-  return (
-    <Countdown
-      key={targetDate.toString()}
-      date={targetDate}
-      renderer={renderer}
-    />
-  );
-};
-
 interface BattleDrawerProps {
   isOpen: boolean;
   onClose: () => void;
@@ -446,12 +221,28 @@ interface BattleDrawerProps {
 const BattleDrawer = ({isOpen, onClose}: BattleDrawerProps) => {
   const user = useUser();
   const {game: rdGameContext, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const [showCooldownTimer, setShowCooldownTimer] = useState(false);
+  const [currentCooldown, setCurrentCooldown] = useState('');
+  const [availableUserTroops, setAvailableUserTroops] = useState(0);
+  const [availableFactionTroops, setAvailableFactionTroops] = useState(0);
+  const [totalUserTroops, setTotalUserTroops] = useState(0);
+  const [totalFactionTroops, setTotalFactionTroops] = useState(0);
 
   const {data: kobanBalance} = useQuery({
     queryKey: ['KobanBalance', user.address],
     queryFn: async () => getKobanBalance(),
     enabled: !!user.address
   });
+
+  const checkTroopCooldown = () => {
+    if(!rdUser) return;
+
+    const redeploymentDelay = rdUser?.armies.redeploymentDelay;
+    let deadline = new Date();
+    deadline.setSeconds(deadline.getSeconds() + redeploymentDelay);
+    setCurrentCooldown(deadline.toISOString());
+    setShowCooldownTimer(redeploymentDelay > 0)
+  }
 
   const getKobanBalance = async () => {
     let nfts = await NextApiService.getWallet(user!.address!, {
@@ -474,6 +265,16 @@ const BattleDrawer = ({isOpen, onClose}: BattleDrawerProps) => {
     .filter((user) => user.profileId === 0)?.flatMap((user) => user.controlPoints) ?? [];
 
   const deployedUserTroops = rdUser?.game.troops.user?.deployed.factions.flatMap((user) => user.controlPoints) ?? [];
+
+  useEffect(() => {
+    if (!rdUser) return;
+
+    setAvailableUserTroops(rdUser.game.troops.user.available.total);
+    setTotalUserTroops(rdUser.game.troops.user.overall.total);
+    setAvailableFactionTroops(rdUser.game.troops.faction?.available.total ?? 0);
+    setTotalFactionTroops(rdUser.game.troops.faction?.overall.total ?? 0);
+    checkTroopCooldown();
+  }, [rdUser]);
 
   return (
     <>
@@ -516,13 +317,33 @@ const BattleDrawer = ({isOpen, onClose}: BattleDrawerProps) => {
           />
           <DrawerBody>
             <AuthenticationRdButton>
-              <HStack justify='space-between'>
-                <HStack fontWeight='bold' color='white'>
+              <Grid
+                gap={2}
+                templateColumns='20px 1fr 65px'
+              >
+                <GridItem>
                   <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/>
-                  <Box>Koban</Box>
-                </HStack>
-                <Text>{kobanBalance ? commify(kobanBalance) : ''}</Text>
-              </HStack>
+                </GridItem>
+                <GridItem>Koban</GridItem>
+                <GridItem textAlign='end'>{kobanBalance ? commify(kobanBalance) : ''}</GridItem>
+                <GridItem>
+                  <Icon as={FontAwesomeIcon} icon={faStopwatch} color='white' alignSelf='center' />
+                </GridItem>
+                <GridItem>Current cooldown</GridItem>
+                <GridItem textAlign='end'>
+                  {showCooldownTimer ? (
+                    <Countdown
+                      date={currentCooldown ?? 0}
+                      onComplete={()=> setShowCooldownTimer(false)}
+                      renderer={({hours, minutes, seconds }) => {
+                        return (<span>{hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>)
+                      }}
+                    />
+                  ) : (
+                    <Box>-</Box>
+                  )}
+                </GridItem>
+              </Grid>
               {!!rdUser && (
                 <Box ps={2}>
                   {!!rdUser.faction && (
@@ -542,7 +363,12 @@ const BattleDrawer = ({isOpen, onClose}: BattleDrawerProps) => {
                           <hr/>
                         </Box>
 
-                        <Box fontSize='sm'>Deployed Troops</Box>
+                        <HStack justify='space-between'>
+                          <Box>Available Troops</Box>
+                          <Box fontWeight='bold' color='white'>{availableFactionTroops} / {totalFactionTroops}</Box>
+                        </HStack>
+
+                        <Box fontSize='sm' mt={2}>Deployed Troops</Box>
                         {deployedFactionTroops.length > 0 ? (
                           <>
                             {deployedFactionTroops.map((controlPoint, index) => (
@@ -574,7 +400,12 @@ const BattleDrawer = ({isOpen, onClose}: BattleDrawerProps) => {
                         <hr/>
                       </Box>
 
-                      <Box fontSize='sm'>Deployed Troops</Box>
+                      <HStack justify='space-between'>
+                        <Box>Available Troops</Box>
+                        <Box fontWeight='bold' color='white'>{availableUserTroops} / {totalUserTroops}</Box>
+                      </HStack>
+
+                      <Box fontSize='sm' mt={2}>Deployed Troops</Box>
                       {deployedUserTroops.length > 0 ? (
                         <>
                           {deployedUserTroops.map((controlPoint, index) => (
@@ -624,9 +455,14 @@ const LeaderboardDrawer = ({isOpen, onClose}: LeaderboardDrawerProps) => {
 
   const pagedFactions = factionsByPoints?.slice(page * pageSize, (page + 1) * pageSize) ?? [];
 
+  const handleClose = () => {
+    setPage(0);
+    onClose();
+  }
+
   return (
     <>
-      <Drawer isOpen={isOpen} onClose={onClose} size='lg'>
+      <Drawer isOpen={isOpen} onClose={handleClose} size='lg'>
         <DrawerOverlay />
         <DrawerContent bg='linear-gradient(#1f1818, #332727, #1f1818)'>
           <DrawerCloseButton />
