@@ -133,7 +133,7 @@ const DispatchTab = ({controlPoint, refreshControlPoint, factionsSubscribedToSea
               </PopoverTrigger>
               <PopoverContent>
                 <PopoverArrow />
-                <PopoverBody>After deploying/relocating, you can only do so again after the cooldown period. Click the "?" at the top right to learn more.</PopoverBody>
+                <PopoverBody>After deploying/relocating, you can only do so again after the cooldown period. Click the "?" at the top left to learn more.</PopoverBody>
               </PopoverContent>
             </Popover>
             <Text as='span' ms={1}>:</Text>
