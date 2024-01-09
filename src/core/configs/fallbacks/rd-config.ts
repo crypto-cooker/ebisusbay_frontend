@@ -50,7 +50,7 @@ export const ryoshiConfig: RyoshiConfig = {
         minimum: 400,
         termLength: 90,
         maxTerms: 12,
-        mitamaTroopsRatio: 30,
+        mitamaTroopsRatio: 20,
         startingDebt: 100,
         apr: {
           1: 0.12,

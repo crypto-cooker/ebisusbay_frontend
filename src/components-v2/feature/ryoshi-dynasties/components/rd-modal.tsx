@@ -190,9 +190,9 @@ export const RdModalFooter = ({ children, ...props }: BoxProps & { children?: Re
   )
 }
 
-export const RdModalBox = ({ children, ...props }: BoxProps & { children?: ReactNode }) => {
+export const RdModalBox = ({ isFooter, children, ...props }: {isFooter?: boolean} & BoxProps & { children?: ReactNode }) => {
   return (
-    <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' {...props}>
+    <Box bgColor='#292626' rounded='md' roundedBottom={isFooter ? 'lg' : 'md'} p={4} fontSize='sm' {...props}>
       {children}
     </Box>
   )
