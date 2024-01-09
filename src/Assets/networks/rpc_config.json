@@ -25290,6 +25290,53 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Houndz",
+      "slug": "houndz",
+      "multiToken": false,
+      "address": "0x4E0f0Ec1498B0FEc3cE0Ea0f9Cd8f9A95d567127",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of battle hardened HoundZ. Ready for war and vying for power in a world ruled by KillaKatZ.",
+        "avatar": "/img/collections/houndz/avatar.webp",
+        "card": "/img/collections/houndz/card.webp",
+        "banner": "/img/collections/houndz/banner.webp",
+        "website": "https://katznkidz.com/",
+        "twitter": "https://twitter.com/KillaKatzNFT",
+        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "verified": true
+      }
+    },
+    {
+      "name": "THUNDER Godz",
+      "slug": "thunder-godz",
+      "multiToken": false,
+      "address": "0x8ae1083d93d47b35758f2bBeEC83694408B19E0B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Thunder Godz is an NFT collection of Thunder Tokens. The function of the NFTs is staking with distribution in Thunder Tokens.",
+        "avatar": "/img/collections/thunder-godz/avatar.webp",
+        "card": "/img/collections/thunder-godz/card.webp",
+        "banner": "/img/collections/thunder-godz/banner.webp",
+        "website": "https://thunder.clubcro.com/",
+        "twitter": "https://twitter.com/THNDR2023",
+        "discord": "https://discord.gg/Qct3PqjMN8",
+        "telegram": "https://t.me/+PiH_3h5zoQUwZWE8",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
