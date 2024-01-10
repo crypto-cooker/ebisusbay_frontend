@@ -22,6 +22,11 @@ definitions:
     unzip awscliv2.zip &&
     ./aws/install &&
     aws --version
+  install_aws_cli_arm64: &install_aws_cli_arm64
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip" &&
+    unzip awscliv2.zip &&
+    ./aws/install &&
+    aws --version
   upgrade_npm: &upgrade_npm
     npm install -g npm@latest
   print_versions: &print_versions
@@ -115,7 +120,7 @@ pipelines:
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
-                  - *install_aws_cli
+                  - *install_aws_cli_arm64
                   # RPC config
                   - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
                   # Login to ECR
