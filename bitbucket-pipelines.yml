@@ -104,7 +104,8 @@ pipelines:
                 image: public.ecr.aws/docker/library/node:18
                 runs-on:
                   - 'self.hosted'
-                  - 'linux'
+                  # - 'linux'
+                  - 'linux.arm64'
                   - 'web'
                 services:
                   - docker
