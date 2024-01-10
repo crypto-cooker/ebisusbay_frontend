@@ -25337,6 +25337,55 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "Friday13",
+      "slug": "friday13",
+      "multiToken": false,
+      "address": "0xAF5A03d05aA85CA20E03473d02ba050be918B725",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "13 Characthers with various abilities to create a mess. Use in the Haunted Hill House.",
+        "avatar": "/img/collections/friday13/avatar.webp",
+        "banner": "/img/collections/friday13/banner.webp",
+        "card": "/img/collections/friday13/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/MNvcEe7g4E",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "CroSquitos",
+      "slug": "crosquitos",
+      "multiToken": false,
+      "address": "0xd653957EC84608fd9e74A3D6B1009EF1CE73313e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Buzzing creatures living in the realms of MetaMorphis. These ancient creatures can unlock paths to the lower realms.",
+        "banner": "/img/collections/crosquitos/banner.webp",
+        "card": "/img/collections/crosquitos/card.webp",
+        "website": "https://www.cromorphs.com/",
+        "twitter": "https://twitter.com/CroMorphs",
+        "discord": "https://discord.gg/MNvcEe7g4E",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
