@@ -14,7 +14,7 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
 RUN --mount=type=cache,target=/var/cache/apt apt-get update
 
-# RUN npm install -g npm@latest
+RUN npm install -g npm@latest
 
 # Print Node.js & npm versions
 RUN node --version
@@ -40,7 +40,7 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
 RUN --mount=type=cache,target=/var/cache/apt apt-get update
 
-# RUN npm install -g npm@latest
+RUN npm install -g npm@latest
 
 # Print Node.js & npm versions
 RUN node --version
@@ -99,7 +99,7 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
 RUN --mount=type=cache,target=/var/cache/apt apt-get update && apt-get --no-install-recommends install -y git curl procps htop net-tools dnsutils dumb-init
 
-# RUN npm install -g npm@latest
+RUN npm install -g npm@latest
 
 # Print Node.js & npm versions
 RUN node --version
