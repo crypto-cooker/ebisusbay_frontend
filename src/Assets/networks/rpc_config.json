@@ -25386,6 +25386,29 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Ryoshi Zayon Army",
+      "slug": "ryoshi-zayon-army",
+      "multiToken": false,
+      "address": "0x9fABbd4d6D63428B757DB2d56330b2661097ea75",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Zayon Ryoshi main Army. Earn FRTN$ Forever.",
+        "avatar": "/img/collections/ryoshi-zayon-army/avatar.webp",
+        "website": "https://tatastwistedtonics.com/zayon",
+        "twitter": "https://twitter.com/zayonproject",
+        "discord": "https://discord.gg/wKzzwDxGAA",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
