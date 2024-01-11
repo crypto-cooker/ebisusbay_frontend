@@ -20,6 +20,7 @@ import RyoshiTotals
 import Diplomacy from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/diplomacy";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {toast} from "react-toastify";
+import * as Sentry from "@sentry/nextjs";
 
 interface AllianceCenterSceneProps {
   onBack: () => void;
@@ -58,6 +59,7 @@ const AllianceCenter = ({onBack}: AllianceCenterSceneProps) => {
     try {
       await requestSignature();
     } catch (e) {
+      Sentry.captureException(e);
       toast.error('Please sign in to continue');
     }
 
