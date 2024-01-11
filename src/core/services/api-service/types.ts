@@ -60,6 +60,7 @@ export interface RyoshiDynastiesApi {
     relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string): Promise<any>
     fetchGift(address: string, signature: string): Promise<any>;
     getFactionsByPoints(gameId: number): Promise<any>;
+    requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string): Promise<any>;
 }
 
 export enum ListingState {

@@ -143,6 +143,10 @@ class Cms {
   async getFactionsByPoints(gameId: number) {
     return this.ryoshiDynasties.getFactionsByPoints(gameId);
   }
+
+  async requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string) {
+    return this.ryoshiDynasties.requestCardTradeInAuthorization(nftIds, nftAmounts, direct, address, signature);
+  }
 }
 
 export default Cms;
