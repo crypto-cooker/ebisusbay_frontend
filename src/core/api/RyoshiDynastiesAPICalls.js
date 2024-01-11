@@ -234,14 +234,3 @@ export const MeepleMint = async (address, signature, amount) => {
     throw error;
   }
 }
-export const MeepleTradeInCards = async (address, signature, nftId, amount) => {
-  try{
-    var data = await api.post("ryoshi-dynasties/meeple/trading-card?", 
-      {nftId, amount},
-      {params: {address, signature}});
-    return data.data.data;
-  }
-  catch(error){
-    throw error;
-  }
-}

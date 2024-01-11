@@ -238,6 +238,26 @@ export const configData = {
           '0xb76415D33268391bfaE2E671f45CeDAD9bC99dc9': ['cro', 'frtn', 'ttt'], // Animated Guardians
           '0xCF926cB69b860Da8c33a2a601217856536ed0bcA': ['cro', 'frtn', 'ttt'], // Animated Time Machine 102s
           '0x975238Ce3c593060a9b549e1654dC992f0Bc11aC': ['cro', 'frtn', 'ttt'], // Power Tonics
+          '0x87e04f1d64619994a5320450E19C184a2dDE09c7': ['cro', 'frtn', 'ttt'], // CroTops
+          '0x35B832bE9546fCad67526Be2801228194250378A': ['cro', 'frtn', 'ttt'], // Time Base
+          '0xF87A517A5CaecaA03d7cCa770789BdB61e09e05F': ['cro'], // CroSkill Brand Start
+          '0xbf4E430cD0ce8b93d4760958fe4ae66cDaCDB6c6': ['cro'],
+          '0x14e9ef197C0bfaf7C1328ebed7151f53616Af3C5': ['cro'],
+          '0x6d54590Ed6950EcD3987778c004d4773a7e99dAC': ['cro'],
+          '0x5DD5d3140Fe619Ef8F4655383283BB555E219A27': ['cro'],
+          '0x635D66972453E20F5f2EA2787361C752232F07D2': ['cro'],
+          '0x27fE0fA269DeAC471aC07014d6ED9973ce69bd96': ['cro'],
+          '0xB77959DC7a12F7549ACC084Af01259Fc48813c89': ['cro'],
+          '0x54655D5468f072D5bcE1577c4a46F701C28a41A7': ['cro'],
+          '0x31B378ac025a341839CD81C4D29A8457324D3EbC': ['cro'],
+          '0x77aE45b634a829B002293E554fA67ADC0EB78Bc2': ['cro'],
+          '0xed9BDf3E103332C853DDb9933BA3B45acfDB9B2e': ['cro'],
+          '0xB9eCFF7e01a48C434a3B8A034906e4b34Da62f90': ['cro'],
+          '0xB929D3002208f405180D3C07616F88EDa45F3e14': ['cro'],
+          '0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9': ['cro'],
+          '0xA9448e3e496f75488306195F34e49a7fCE5cbD0c': ['cro'],
+          '0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8': ['cro'],
+          '0x400e237c4F88e5728E0D6088315DeCD856a10EDd': ['cro'], // CroSkill Brand End
         }
       }
     }

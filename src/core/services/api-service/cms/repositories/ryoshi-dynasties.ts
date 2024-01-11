@@ -321,6 +321,24 @@ class RyoshiDynastiesRepository extends CmsRepository {
     const response = await this.cms.get(`ryoshi-dynasties/games/${gameId}/interval-points`);
     return response.data.data;
   }
+
+  async requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string) {
+    const response = await this.cms.post(
+      'ryoshi-dynasties/meeple/trading-card',
+      {
+        nftId: nftIds,
+        amount: nftAmounts,
+        direct: direct
+      },
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;

@@ -377,4 +377,8 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async getFactionsByPoints(gameId: number) {
     return this.cms.getFactionsByPoints(gameId);
   }
+
+  async requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string) {
+    return this.cms.requestCardTradeInAuthorization(nftIds, nftAmounts, direct, address, signature);
+  }
 }

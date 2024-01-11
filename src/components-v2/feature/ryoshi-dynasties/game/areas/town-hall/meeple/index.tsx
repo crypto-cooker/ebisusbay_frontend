@@ -26,7 +26,7 @@ import {
   SimpleGrid,
   Spacer,
   Spinner,
-  Stack,
+  Stack, Switch,
   Text,
   useDisclosure,
   VStack,
@@ -51,7 +51,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
-import {MeepleMint, MeepleTradeInCards, MeepleUpkeep} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {MeepleMint, MeepleUpkeep} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {Contract} from "ethers";
 import Resources from "@src/Contracts/Resources.json";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
@@ -911,10 +911,11 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
   const [locationsWithUserQty, setLocationsWithUserQty] = useState<UserLocationCard[]>([]);
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [cardsToTurnIn, setCardsToTurnIn] = useState<{[key: number]: number}>({});
-  const [showAll, setShowAll] = useState<boolean>(true);
+  const [showAll, setShowAll] = useState<boolean>(false);
   const [ryoshiToReceive, setRyoshiToReceive] = useState<number>(0);
   const [selectedCardsSum, setSelectedCardsSum] = useState<number>(0);
   const [manuallySelectedAll, setManuallySelectedAll] = useState<boolean>(false);
+  const [ryoshiDestination, setRyoshiDestination] = useState('off-duty');
 
   const cardsPerSet = 3;
 
@@ -975,9 +976,17 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
       return;
     }
 
+    const direct = ryoshiDestination === 'on-duty';
+
     try {
       setIsExecuting(true);
-      const cmsResponse = await MeepleTradeInCards(user.address, signature, ids, amounts);
+      const cmsResponse = await ApiService.withoutKey().ryoshiDynasties.requestCardTradeInAuthorization(
+        ids,
+        amounts,
+        direct,
+        user.address,
+        signature,
+      );
       const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
       const tx = await resourcesContract.craftItems(cmsResponse.request, cmsResponse.signature);
       const receipt = await tx.wait();
@@ -1089,16 +1098,42 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
                 </>
               ))}
             </SimpleGrid>
-            <RdModalBox mt={2}>
-              <Flex justify='end'>
-                <SimpleGrid columns={5}>
-                  <GridItem colSpan={3}><Box textAlign={{base: 'start', sm: 'end'}}>Total Cards:</Box></GridItem>
-                  <GridItem colSpan={2}><Box textAlign='end'>{commify(selectedCardsSum)}</Box></GridItem>
-                  <GridItem colSpan={3} alignSelf='end'><Box textAlign={{base: 'start', sm: 'end'}} fontSize='lg'>Ryoshi To Receive:</Box></GridItem>
-                  <GridItem colSpan={2} alignSelf='end'><Box textAlign='end' fontSize='2xl' fontWeight='bold'>{commify(ryoshiToReceive)}</Box></GridItem>
-                </SimpleGrid>
-              </Flex>
-            </RdModalBox>
+            <SimpleGrid columns={2} gap={2}>
+              <RdModalBox mt={2}>
+                <Box>
+                  <Box fontWeight='bold'>Options</Box>
+                  <Box mt={2}>
+                    <Flex justify='space-between'>
+                      <Box>Destination</Box>
+                      <Switch onChange={() => {
+                        if (ryoshiDestination === 'off-duty') {
+                          setRyoshiDestination('on-duty');
+                        } else {
+                          setRyoshiDestination('off-duty');
+                        }
+                      }}/>
+                    </Flex>
+                    <Text color='#aaa' fontSize='xs'>Received Ryoshi will be {' '}
+                      {ryoshiDestination === 'off-duty' ? (
+                        <>taken <Text display='inline' color='orange' fontWeight='bold'>Off Duty</Text> for storage and can be used to take on-duty later or sell on the marketplace</>
+                      ) : (
+                        <>put <Text display='inline' color='orange' fontWeight='bold'>On Duty</Text> and can be immediately used on the battle map</>
+                      )}
+                    </Text>
+                  </Box>
+                </Box>
+              </RdModalBox>
+              <RdModalBox mt={2}>
+                <Flex justify='end' h='full' align='end'>
+                  <SimpleGrid columns={5}>
+                    <GridItem colSpan={3}><Box textAlign={{base: 'start', sm: 'end'}}>Total Cards:</Box></GridItem>
+                    <GridItem colSpan={2}><Box textAlign='end'>{commify(selectedCardsSum)}</Box></GridItem>
+                    <GridItem colSpan={3} alignSelf='end'><Box textAlign={{base: 'start', sm: 'end'}} fontSize='lg'>Ryoshi To Receive:</Box></GridItem>
+                    <GridItem colSpan={2} alignSelf='end'><Box textAlign='end' fontSize='2xl' fontWeight='bold'>{commify(ryoshiToReceive)}</Box></GridItem>
+                  </SimpleGrid>
+                </Flex>
+              </RdModalBox>
+            </SimpleGrid>
           </>
         ) : (
           <Center>
