@@ -1098,8 +1098,8 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
                 </>
               ))}
             </SimpleGrid>
-            <SimpleGrid columns={2} gap={2}>
-              <RdModalBox mt={2}>
+            <SimpleGrid columns={{base: 1, md: 2}} gap={2} mt={2}>
+              <RdModalBox>
                 <Box>
                   <Box fontWeight='bold'>Options</Box>
                   <Box mt={2}>
@@ -1123,7 +1123,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
                   </Box>
                 </Box>
               </RdModalBox>
-              <RdModalBox mt={2}>
+              <RdModalBox>
                 <Flex justify='end' h='full' align='end'>
                   <SimpleGrid columns={5}>
                     <GridItem colSpan={3}><Box textAlign={{base: 'start', sm: 'end'}}>Total Cards:</Box></GridItem>
