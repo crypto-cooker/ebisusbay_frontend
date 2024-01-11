@@ -25154,7 +25154,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "Welcome to the journey of BHC (Bounty Cro Hunters). A project designed with unique hunters, at all levels. Each one created individually through hand drawn designs and processed in AI. \n\nRoad Map:\n\nStage 1. Launch of the bounty freelancers. 581 Freelancers in population. They were privately minted and made available on EB. They allow access to \"The Bounty Wall\" where Cro can be won.\n\n\nStage 2: launch of the Bounty\nHunters. Expect to see a limited population size. All individually created. The hunters again allow access to \"The Bounty Wall\". Each hunter is equipped with unique fire power. Mint date TBA.\n\nPhase 3: launch of the Bounty Grand Generals. Population size, rare. Very limited supply. Expect to see even more attention to detail and unique traits. Access to The Bounty Wall at discounted prices. Mint date TBA.\n\nStage 4: launch of the\nSupreme Commanders. Population size, exclusive. With less than 10 in population they are are beyond unique and desirable. Mint date TBA.\n\nStage 5: The full launch of The Bounty Wall. Imagine a place you can win upto 1,000,000 Cro with little exposure or cost. (A test wall will be available in due course on the website)",
+        "description": "Welcome to the journey of BCH (Bounty Cro Hunters). A project designed with unique hunters, at all levels. Each one created individually through hand drawn designs and processed in AI. \n\nRoad Map:\n\nStage 1. Launch of the bounty freelancers. 581 Freelancers in population. They were privately minted and made available on EB. They allow access to \"The Bounty Wall\" where Cro can be won.\n\n\nStage 2: launch of the Bounty\nHunters. Expect to see a limited population size. All individually created. The hunters again allow access to \"The Bounty Wall\". Each hunter is equipped with unique fire power. Mint date TBA.\n\nPhase 3: launch of the Bounty Grand Generals. Population size, rare. Very limited supply. Expect to see even more attention to detail and unique traits. Access to The Bounty Wall at discounted prices. Mint date TBA.\n\nStage 4: launch of the\nSupreme Commanders. Population size, exclusive. With less than 10 in population they are are beyond unique and desirable. Mint date TBA.\n\nStage 5: The full launch of The Bounty Wall. Imagine a place you can win upto 1,000,000 Cro with little exposure or cost. (A test wall will be available in due course on the website)",
         "avatar": "/img/collections/bounty-cro-hunters/avatar.webp",
         "card": "/img/collections/bounty-cro-hunters/card.webp",
         "banner": "/img/collections/bounty-cro-hunters/banner.webp",
@@ -25198,7 +25198,7 @@
       "name": "ICY VIP",
       "slug": "icy-vip",
       "multiToken": false,
-      "address": "0x8062B7adc035fb513316CC83EB82856E5A90eBF0",
+      "address": "0xabae2fd87bdc719165dc31a5b22316f974df5bdf",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -25385,6 +25385,29 @@
         "verified": true,
         "doxx": false,
         "kyc": true
+      }
+    },
+    {
+      "name": "Ryoshi Zayon Army",
+      "slug": "ryoshi-zayon-army",
+      "multiToken": false,
+      "address": "0x9fABbd4d6D63428B757DB2d56330b2661097ea75",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Zayon Ryoshi main Army. Earn FRTN$ Forever.",
+        "avatar": "/img/collections/ryoshi-zayon-army/avatar.webp",
+        "website": "https://tatastwistedtonics.com/zayon",
+        "twitter": "https://twitter.com/zayonproject",
+        "discord": "https://discord.gg/wKzzwDxGAA",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
