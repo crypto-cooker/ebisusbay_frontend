@@ -104,31 +104,31 @@ const AllianceCenter = ({onBack}: AllianceCenterSceneProps) => {
         bottom={20}
         zIndex={10}
         h='auto'
-        w={abbreviateButtonText ? '60px' : '269px'}
+        w={{base: '200px', sm: '269px'}}
       >
         <VStack spacing={4} align='end' h='full'>
-          <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(handleManageFaction)}>
+          <RdButton size={{base: 'sm', sm: 'lg'}} w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(handleManageFaction)}>
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faShield} />
             ) : (
               <>Manage Faction</>
             )}
           </RdButton>
-          <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenRyoshiTotals)}>
+          <RdButton size={{base: 'sm', sm: 'lg'}} w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenRyoshiTotals)}>
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faShield} />
             ) : (
-              <>Manage Ryoshi</>
+              <>Ryoshi Dispatch</>
             )}
           </RdButton>
-          <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenDiplomacy)}>
+          <RdButton size={{base: 'sm', sm: 'lg'}} w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenDiplomacy)}>
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faShield} />
             ) : (
               <>Diplomacy</>
             )}
           </RdButton>
-          <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
+          <RdButton size={{base: 'sm', sm: 'lg'}} w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
             {abbreviateButtonText ? (
               <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
             ) : (
