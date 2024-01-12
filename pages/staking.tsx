@@ -1,7 +1,19 @@
 import React, {useEffect, useState} from 'react';
 
 import LegacyStaking from '@src/components-v2/feature/staking/legacy-staking';
-import {Container, Grid, GridItem, Heading, Text, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  Container,
+  Grid,
+  GridItem,
+  Heading,
+  Link,
+  Text,
+  useBreakpointValue,
+  useColorModeValue
+} from "@chakra-ui/react";
 import RyoshiStaking from "@src/components-v2/feature/staking/ryoshi-staking";
 import {motion} from "framer-motion";
 import {useDispatch} from "react-redux";
@@ -12,6 +24,7 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import {MobileBatchStaking} from "@src/components-v2/feature/staking/mobile-batch-staking";
 import {useAppSelector} from "@src/Store/hooks";
 import {useUser} from "@src/components-v2/useUser";
+import NextLink from "next/link";
 
 const MotionGrid = motion(Grid)
 const tabs = {
@@ -70,6 +83,21 @@ const MyStaking = () => {
               </div>
             </div>
           </section>
+
+
+          <Alert
+            status='info'
+            variant='subtle'
+            flexDirection='row'
+            alignItems='center'
+            justifyContent='center'
+            textAlign='center'
+          >
+            <AlertIcon  />
+            <AlertDescription >
+              From 13 Dec 2023, staking rewards are now issued in <strong>$FRTN</strong>. Visit the <Link as={NextLink} href='/ryoshi' className='color' color='auto' fontWeight='bold'>Ryoshi Dynasties Bank</Link> to claim
+            </AlertDescription>
+          </Alert>
 
           <Container my={4}>
             <RewardsCard />

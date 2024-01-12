@@ -163,7 +163,7 @@ const RewardsCard = () => {
               </Box>
               {user.address && (
                 <div className="mt-4">
-                  {Number(userPendingRewards) > 0 ? (
+                  {Number(userPendingRewards) > 0 && (
                     <>
                       <p className="text-center my-xl-auto fs-5" style={{ color: getTheme(userTheme).colors.textColor3 }}>
                         You have <strong>{ethers.utils.commify(round(userPendingRewards, 3))} CRO</strong> available for
@@ -181,10 +181,6 @@ const RewardsCard = () => {
                         Harvest
                       </PrimaryButton>
                     </>
-                  ) : (
-                    <Text textAlign='center'>
-                      From 13 Dec 2023, staking rewards are now issued in <strong>$FRTN</strong>. Visit the <Link as={NextLink} href='/ryoshi' className='color' color='auto' fontWeight='bold'>Ryoshi Dynasties Bank</Link> to claim
-                    </Text>
                   )}
                 </div>
               )}

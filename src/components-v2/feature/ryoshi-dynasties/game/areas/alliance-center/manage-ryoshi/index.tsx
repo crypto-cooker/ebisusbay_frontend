@@ -119,7 +119,7 @@ const RyoshiTotals = ({isOpen, onClose}: RyoshiTotalsProps) => {
       <RdModal
         isOpen={isOpen}
         onClose={onClose}
-        title='Manage Ryoshi'
+        title='Ryoshi Dispatch'
         titleIcon={<Icon as={FontAwesomeIcon} icon={faUsers} />}
         isCentered={false}
       >
