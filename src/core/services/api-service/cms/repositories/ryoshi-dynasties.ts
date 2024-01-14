@@ -399,7 +399,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
     //   }
     // }
     // return mockData.faction;
-    return response.data?.data ? response.data.data.data.faction : null;
+    return response.data?.data ? response.data.data.faction : null;
   }
 }
 

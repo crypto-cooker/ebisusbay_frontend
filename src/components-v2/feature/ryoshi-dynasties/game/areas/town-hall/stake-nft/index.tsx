@@ -160,6 +160,8 @@ const UnstakePreviousNfts = () => {
     queryKey: ['RyoshiDynastiesStakedInvalidNfts'],
     queryFn: () => ApiService.withoutKey().ryoshiDynasties.getTownHallUserInvalidStaked(user.address!, signature),
     enabled: !!user.address && !!signature,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 6
   });
 
   const handleUnstakeAll = async () => {
