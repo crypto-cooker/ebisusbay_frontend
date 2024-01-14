@@ -10,6 +10,10 @@ import {
 import RyoshiDynastiesRepository from "@src/core/services/api-service/cms/repositories/ryoshi-dynasties";
 import {PagedList} from "@src/core/services/api-service/paginated-list";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
+import {
+  TownHallStakeRequest,
+  TownHallUnstakeRequest
+} from "@src/core/services/api-service/cms/queries/staking/town-hall";
 
 class Cms {
   private profiles: ProfilesRepository;
@@ -46,12 +50,12 @@ class Cms {
     return this.ryoshiDynasties.requestBarracksUnstakeAuthorization(nfts, address, signature);
   }
 
-  async requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
-    return this.ryoshiDynasties.requestTownHallStakeAuthorization(nfts, address, signature);
+  async requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string) {
+    return this.ryoshiDynasties.requestTownHallStakeAuthorization(request, address, signature);
   }
 
-  async requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
-    return this.ryoshiDynasties.requestTownHallUnstakeAuthorization(nfts, address, signature);
+  async requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string) {
+    return this.ryoshiDynasties.requestTownHallUnstakeAuthorization(request, address, signature);
   }
 
   async requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string) {
@@ -128,6 +132,10 @@ class Cms {
     return this.ryoshiDynasties.getStakedTokenTotals(type);
   }
 
+  async getTownHallUserStaked(collectionAddress: string, collection: string, signature: string) {
+    return this.ryoshiDynasties.getTownHallUserStaked(collectionAddress, collection, signature);
+  }
+
   async deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string) {
     return this.ryoshiDynasties.deployTroops(troops, controlPointId, gameId, factionId, address, signature)
   }
@@ -146,6 +154,10 @@ class Cms {
 
   async requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string) {
     return this.ryoshiDynasties.requestCardTradeInAuthorization(nftIds, nftAmounts, direct, address, signature);
+  }
+
+  async getTownHallWinningFaction() {
+    return this.ryoshiDynasties.getTownHallWinningFaction();
   }
 }
 

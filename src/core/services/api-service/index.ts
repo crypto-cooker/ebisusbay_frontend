@@ -26,6 +26,10 @@ import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/qu
 import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
 import {PokerCollection} from "@src/core/services/api-service/types";
 import {Meeple} from "@src/core/services/api-service/graph/types";
+import {
+  TownHallStakeRequest,
+  TownHallUnstakeRequest
+} from "@src/core/services/api-service/cms/queries/staking/town-hall";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -266,6 +270,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.graph.getStakedTokens(address, type);
   }
 
+  async getTownHallUserStaked(address: string, collection: string, signature: string) {
+    return this.cms.getTownHallUserStaked(address, collection, signature);
+  }
+
   async getStakedTokenTotals(type: StakedTokenType) {
     return this.cms.getStakedTokenTotals(type);
   }
@@ -286,12 +294,12 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.requestBarracksUnstakeAuthorization(nfts, address, signature);
   }
 
-  async requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
-    return this.cms.requestTownHallStakeAuthorization(nfts, address, signature);
+  async requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string) {
+    return this.cms.requestTownHallStakeAuthorization(request, address, signature);
   }
 
-  async requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
-    return this.cms.requestTownHallUnstakeAuthorization(nfts, address, signature);
+  async requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string) {
+    return this.cms.requestTownHallUnstakeAuthorization(request, address, signature);
   }
 
   async requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string) {
@@ -380,5 +388,9 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string) {
     return this.cms.requestCardTradeInAuthorization(nftIds, nftAmounts, direct, address, signature);
+  }
+
+  async getTownHallWinningFaction() {
+    return this.cms.getTownHallWinningFaction();
   }
 }
