@@ -3657,7 +3657,7 @@
       "multiToken": false,
       "address": "0xADFf544D633747aE216c85421b6e9Ad7445a4681",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Slavik Fruit Farm is a Vibrant Community Focused on Innovation, Positivity & Sustainability.",
         "avatar": "/img/collections/slavikfruitfarm/avatar.webp",
