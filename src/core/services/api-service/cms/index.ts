@@ -136,6 +136,10 @@ class Cms {
     return this.ryoshiDynasties.getTownHallUserStaked(collectionAddress, collection, signature);
   }
 
+  async getTownHallUserInvalidStaked(address: string, signature: string) {
+    return this.ryoshiDynasties.getTownHallUserInvalidStaked(address, signature);
+  }
+
   async deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string) {
     return this.ryoshiDynasties.deployTroops(troops, controlPointId, gameId, factionId, address, signature)
   }

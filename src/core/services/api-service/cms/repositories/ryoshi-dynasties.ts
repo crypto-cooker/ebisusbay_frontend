@@ -310,6 +310,16 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data.data;
   }
 
+  async getTownHallUserInvalidStaked(address: string, signature: string) {
+    const response = await this.cms.get(`ryoshi-dynasties/staking/town-hall/invalid`, {
+      params: {
+        address,
+        signature
+      }
+    });
+    return response.data.data;
+  }
+
   async deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string) {
     const response = await this.cms.patch(
       `ryoshi-dynasties/armies`,
@@ -364,20 +374,32 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
   async getTownHallWinningFaction() {
     const response = await this.cms.get(`ryoshi-dynasties/staking/town-hall/winners`);
-    const mockData = {
-      faction: {
-        id: 1,
-        name: 'Faction 1',
-        image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
-        addresses: [
-          '0xCF7aedEbC5223c4C620625A560300582B77D8719',
-          '0xe51377a260043381b8B525D33B9fFBC601A1469b',
-          '0xa3a9bd5142bfaf3126734096cacc96a71103611f'
-        ]
-      }
-    }
-    return mockData.faction;
-    return response.data.data.data.faction;
+    // const mockData = {
+    //   faction: {
+    //     id: 1,
+    //     name: 'Faction 1',
+    //     image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
+    //     factionCollectionsSnapshot: {
+    //       '0xcf7aedebc5223c4c620625a560300582b77d8719': {
+    //         name: 'Ryoshi Tales VIP',
+    //         image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
+    //         slug: 'ryoshi-tales-vip',
+    //       },
+    //       '0xe51377a260043381b8b525d33b9ffbc601a1469b': {
+    //         name: 'Ryoshi Tales Halloween',
+    //         image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
+    //         slug: 'ryoshi-tales-halloween',
+    //       },
+    //       '0xa3a9bd5142bfaf3126734096cacc96a71103611f': {
+    //         name: 'Elf Citizens',
+    //         image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
+    //         slug: 'elf-citizens',
+    //       }
+    //     }
+    //   }
+    // }
+    // return mockData.faction;
+    return response.data?.data ? response.data.data.data.faction : null;
   }
 }
 

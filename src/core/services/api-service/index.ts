@@ -25,7 +25,7 @@ import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/o
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
 import {PokerCollection} from "@src/core/services/api-service/types";
-import {Meeple} from "@src/core/services/api-service/graph/types";
+import {Meeple, StakedToken} from "@src/core/services/api-service/graph/types";
 import {
   TownHallStakeRequest,
   TownHallUnstakeRequest
@@ -272,6 +272,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async getTownHallUserStaked(address: string, collection: string, signature: string) {
     return this.cms.getTownHallUserStaked(address, collection, signature);
+  }
+
+  async getTownHallUserInvalidStaked(address: string, signature: string) {
+    return this.cms.getTownHallUserInvalidStaked(address, signature);
   }
 
   async getStakedTokenTotals(type: StakedTokenType) {

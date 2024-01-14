@@ -16,6 +16,9 @@ import {StakedNfts} from "@src/components-v2/feature/ryoshi-dynasties/game/areas
 import useTownHallStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-town-hall-stake-nfts";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {useUser} from "@src/components-v2/useUser";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
 
 const config = appConfig();
 
@@ -54,7 +57,10 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
   useEffect(() => {
     if (winningFaction && !selectedAddress) {
-      setSelectedAddress(winningFaction.addresses[0])
+      const collections = Object.keys(winningFaction.factionCollectionsSnapshot);
+      if (collections && collections.length > 0) {
+        setSelectedAddress(collections[0]);
+      }
     }
   }, [winningFaction]);
 
@@ -98,8 +104,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
                 </RdModalBox>
                 <UnstakePreviousNfts />
                 <Flex direction='row' justify='center' my={2}>
-                  <SimpleGrid columns={winningFaction.addresses.length}>
-                    {winningFaction.addresses.map((address: string) => (
+                  <SimpleGrid columns={Object.keys(winningFaction.factionCollectionsSnapshot).length}>
+                    {Object.entries(winningFaction.factionCollectionsSnapshot).map(([address, collection]: [string, any]) => (
                       <RdTabButton
                         isActive={selectedAddress === address}
                         onClick={handleSelectAddress(address)}
@@ -108,23 +114,28 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
                         minH='40px'
                         py={2}
                       >
-                        {config.collections.find((collection: any) => ciEquals(collection.address, address))?.name}
+                        {collection.name}
                       </RdTabButton>
                     ))}
                   </SimpleGrid>
                 </Flex>
-                {!!selectedCollection && (
-                  <StakeNftsContent
-                    collectionAddress={selectedAddress!}
-                  />
-                )}
+                <AuthenticationRdButton
+                  connectText='Connect and sign-in to manage your staked NFTs'
+                  signinText='Connect and sign-in to manage your staked NFTs'
+                >
+                  {!!selectedCollection && (
+                    <StakeNftsContent
+                      collectionAddress={selectedAddress!}
+                    />
+                  )}
+                </AuthenticationRdButton>
               </>
             ) : (
               <>
                 <RdModalBox>
-                  <Flex direction='row' justify='center' mb={2}>
+                  <Box textAlign='center'>
                     There is no winning faction yet.
-                  </Flex>
+                  </Box>
                 </RdModalBox>
                 <UnstakePreviousNfts />
               </>
@@ -140,8 +151,16 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 export default StakeNfts;
 
 const UnstakePreviousNfts = () => {
+  const user = useUser();
+  const {signature} = useEnforceSignature();
   const {unstakeNfts} = useTownHallStakeNfts();
   const [isExecutingUnstakeAll, setIsExecutingUnstakeAll] = useState(false);
+
+  const {data} = useQuery({
+    queryKey: ['RyoshiDynastiesStakedInvalidNfts'],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getTownHallUserInvalidStaked(user.address!, signature),
+    enabled: !!user.address && !!signature,
+  });
 
   const handleUnstakeAll = async () => {
     try {
@@ -155,7 +174,7 @@ const UnstakePreviousNfts = () => {
     }
   }
 
-  return (
+  return !!data && data.length > 0 && (
     <RdModalBox mt={2}>
       <Stack direction={{base: 'column', sm: 'row'}} justify='space-between' align='center'  spacing={4}>
         <Box>You have staked NFTs from previous games that are not earning anymore. Click <strong>Unstake All</strong> to return them to your wallet</Box>
