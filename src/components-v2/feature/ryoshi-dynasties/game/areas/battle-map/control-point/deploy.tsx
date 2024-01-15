@@ -433,7 +433,6 @@ const RelocateForm = ({fromControlPoint, hasFaction, subscribedFactions, troopsD
   const [fromFactionId, setFromFactionId] = useState<string>();
   const [toFactionId, setToFactionId] = useState<string>();
   const [toControlPointId, setToControlPointId] = useState<string>();
-  // const [troopsDeployed, setTroopsDeployed] = useState<{armies: Array<{factionId: number, troops: number}>, sum: number}>({armies: [], sum: 0});
   const [isExecuting, setIsExecuting] = useState(false);
   const {requestSignature} = useEnforceSignature();
 
@@ -464,8 +463,11 @@ const RelocateForm = ({fromControlPoint, hasFaction, subscribedFactions, troopsD
   }, [rdContext.game?.game.season.map.regions]);
 
   const handleQuantityChange = (stringValue: string, numValue: number) => setSelectedQuantity(numValue);
-  const handleChangeFromFaction = (e: ChangeEvent<HTMLSelectElement>) => setFromFactionId(e.target.value);
-  const handleChangeToFaction = (e: ChangeEvent<HTMLSelectElement>) => setToFactionId(e.target.value);
+  const handleChangeFromFaction = (e: ChangeEvent<HTMLSelectElement>) => {
+    setFromFactionId(e.target.value);
+    setToFactionId(e.target.value);
+  }
+  // const handleChangeToFaction = (e: ChangeEvent<HTMLSelectElement>) => setToFactionId(e.target.value);
   const handleChangeToControlPoint = (e: ChangeEvent<HTMLSelectElement>) => setToControlPointId(e.target.value);
 
   const handleRelocateTroops = async () => {
@@ -545,10 +547,10 @@ const RelocateForm = ({fromControlPoint, hasFaction, subscribedFactions, troopsD
     }
   }
 
-  const handleSelectSearchedFaction = (factionName: string) => {
-    const faction = subscribedFactions.find(faction => faction.name === factionName);
-    if (faction) setToFactionId(faction.id.toString());
-  }
+  // const handleSelectSearchedFaction = (factionName: string) => {
+  //   const faction = subscribedFactions.find(faction => faction.name === factionName);
+  //   if (faction) setToFactionId(faction.id.toString());
+  // }
 
   useEffect(() => {
     if (hasFaction) {
@@ -634,48 +636,49 @@ const RelocateForm = ({fromControlPoint, hasFaction, subscribedFactions, troopsD
 
           <Spacer h='8'/>
 
-          <SimpleGrid columns={{base: 1, sm: 2}} spacing={4}>
-            <FormControl>
-              <FormLabel fontSize='sm' color='#aaa'>
-                To Faction:
-              </FormLabel>
-              <Box>
-                {hasFaction ? (
-                  <Flex fontWeight='bold' h={{base: 'auto', sm: '40px'}} align='center'>{playerFaction!.name}</Flex>
-                ) : (
-                  <>
-                    <SearchFaction
-                      handleSelectCollectionCallback={handleSelectSearchedFaction}
-                      allFactions={subscribedFactions}
-                      imgSize={"lrg"}
-                    />
-                    <Select
-                      bg='none'
-                      style={{ background: '#272523' }}
-                      value={toFactionId}
-                      onChange={handleChangeToFaction}
-                      placeholder='Select a faction'
-                      mt={2}
-                    >
-                      {subscribedFactions.map((faction, index) => (
-                        <option
-                          style={{ background: '#272523' }}
-                          value={faction.id.toString()}
-                          key={faction.id}
-                        >
-                          <Image
-                            src={faction.image}
-                            width='50px'
-                            height='50px'
-                          />
-                          {faction.name}
-                        </option>
-                      ))}
-                    </Select>
-                  </>
-                )}
-              </Box>
-            </FormControl>
+          <SimpleGrid columns={1} spacing={4}>
+            {/*<FormControl>*/}
+            {/*  <FormLabel fontSize='sm' color='#aaa'>*/}
+            {/*    To Faction:*/}
+            {/*  </FormLabel>*/}
+            {/*  <Box>*/}
+            {/*    {hasFaction ? (*/}
+            {/*      <Flex fontWeight='bold' h={{base: 'auto', sm: '40px'}} align='center'>{playerFaction!.name}</Flex>*/}
+            {/*    ) : (*/}
+            {/*      <>*/}
+            {/*        <Flex fontWeight='bold' h={{base: 'auto', sm: '40px'}} align='center'>{selectedFromFaction?.name}</Flex>*/}
+            {/*        <SearchFaction*/}
+            {/*          handleSelectCollectionCallback={handleSelectSearchedFaction}*/}
+            {/*          allFactions={subscribedFactions}*/}
+            {/*          imgSize={"lrg"}*/}
+            {/*        />*/}
+            {/*        <Select*/}
+            {/*          bg='none'*/}
+            {/*          style={{ background: '#272523' }}*/}
+            {/*          value={toFactionId}*/}
+            {/*          onChange={handleChangeToFaction}*/}
+            {/*          placeholder='Select a faction'*/}
+            {/*          mt={2}*/}
+            {/*        >*/}
+            {/*          {subscribedFactions.map((faction, index) => (*/}
+            {/*            <option*/}
+            {/*              style={{ background: '#272523' }}*/}
+            {/*              value={faction.id.toString()}*/}
+            {/*              key={faction.id}*/}
+            {/*            >*/}
+            {/*              <Image*/}
+            {/*                src={faction.image}*/}
+            {/*                width='50px'*/}
+            {/*                height='50px'*/}
+            {/*              />*/}
+            {/*              {faction.name}*/}
+            {/*            </option>*/}
+            {/*          ))}*/}
+            {/*        </Select>*/}
+            {/*      </>*/}
+            {/*    )}*/}
+            {/*  </Box>*/}
+            {/*</FormControl>*/}
             <FormControl mt={{base: 4, sm: 0}}>
               <FormLabel fontSize='sm' color='#aaa'>
                 To Control Point:
