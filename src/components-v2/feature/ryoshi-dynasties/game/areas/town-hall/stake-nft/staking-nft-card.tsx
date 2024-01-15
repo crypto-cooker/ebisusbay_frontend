@@ -1,16 +1,15 @@
-import React, {memo, useContext, useState} from 'react';
+import React, {memo, useContext} from 'react';
 import {useRouter} from 'next/router';
 import {toast} from 'react-toastify';
-import {faEllipsisH, faInfoCircle, faLink, faMinus, faPlus, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
+import {faInfoCircle, faLink, faMinus, faPlus, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {MenuPopup} from '@src/Components/components/chakra-components';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {nftCardUrl} from "@src/helpers/image";
 import {Box, Flex, Heading, Spacer, useClipboard} from "@chakra-ui/react";
-import {appUrl, caseInsensitiveCompare} from "@src/utils";
+import {appUrl} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
-import {useAppSelector} from "@src/Store/hooks";
 import WalletNft from "@src/core/models/wallet-nft";
 import {
   TownHallStakeNftContext,
@@ -32,7 +31,7 @@ const StakingNftCard = ({
   const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
   const { onCopy } = useClipboard(nftUrl.toString());
   const townHallStakeNftContext = useContext(TownHallStakeNftContext) as TownHallStakeNftContextProps;
-
+  const isSelected = townHallStakeNftContext.selectedNfts.find((selectedNft) => selectedNft.nftAddress === nft.nftAddress && selectedNft.nftId === nft.nftId);
 
   const handleCopyLinkButtonPressed = () => {
     onCopy();
@@ -44,10 +43,7 @@ const StakingNftCard = ({
   };
 
   const handleSelect = () => {
-    const count = cartCount();
-    const newAdds = count - stakedCount();
-
-    if (count > 0 && newAdds >= (nft.balance ?? 1)) {
+    if (isSelected) {
       onRemove();
     } else {
       onAdd();
@@ -56,9 +52,8 @@ const StakingNftCard = ({
 
   const getOptions = () => {
     const options = [];
-    const count = cartCount();
 
-    if (count > 0 && count >= (nft.balance ?? 1)) {
+    if (isSelected) {
       options.push({
         icon: faMinus,
         label: 'Unstake',
@@ -87,20 +82,12 @@ const StakingNftCard = ({
     return options;
   };
 
-  const cartCount = () => {
-    return townHallStakeNftContext.pendingNfts.filter((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress)).length;
-  };
-
-  const stakedCount = () => {
-    return townHallStakeNftContext.stakedNfts.filter((o) => o.tokenId === nft.nftId && caseInsensitiveCompare(o.contractAddress, nft.nftAddress)).length;
-  };
-
   return (
     <Box
       className="card eb-nft__card h-100 shadow"
       data-group
-      borderColor={cartCount() > 0 ? '#F48F0C' : 'inherit'}
-      borderWidth={cartCount() > 0 ? '3px' : '1px'}
+      borderColor={isSelected ? '#F48F0C' : 'inherit'}
+      borderWidth={isSelected ? '3px' : '1px'}
       _hover={{
         borderColor:'#F48F0C',
       }}
@@ -118,7 +105,7 @@ const StakingNftCard = ({
         <Flex direction="column" height="100%">
           <div className="card-img-container position-relative">
             <>
-              {cartCount() > 0 ? (
+              {isSelected ? (
                 <Box
                   top={0}
                   right={0}
@@ -128,22 +115,7 @@ const StakingNftCard = ({
                   cursor="pointer"
                   onClick={onRemove}
                 >
-                  {nft.balance && nft.multiToken && cartCount() + nft.balance > 0 ? (
-                    <Box
-                      rounded='full'
-                      bg='dodgerblue'
-                      border='2px solid white'
-                      w={6}
-                      h={6}
-                      textAlign='center'
-                      fontWeight='bold'
-                      fontSize='sm'
-                    >
-                      {cartCount()}
-                    </Box>
-                  ) : (
-                    <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
-                  )}
+                  <FontAwesomeIcon icon={faCheckCircle} size="xl" style={{background:'dodgerblue', color:'white'}} className="rounded-circle"/>
                 </Box>
               ) : (
                 <Box
@@ -180,22 +152,13 @@ const StakingNftCard = ({
               />
             </Box>
           </div>
-          {nft.rank && typeof nft.rank === 'number' && (
-            <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>
-          )}
-          <div className="d-flex flex-column p-2 pb-1">
-            <div className="card-title mt-auto">
-              <span onClick={handleSelect} style={{ cursor: 'pointer' }}>
-                {nft.balance && nft.balance > 1 ? (
-                  <Heading as="h6" size="sm">
-                    {nft.name} (x{nft.balance})
-                  </Heading>
-                ) : (
-                  <Heading as="h6" size="sm">{nft.name}</Heading>
-                )}
-              </span>
-            </div>
-          </div>
+          <Flex p={2} pb={1}>
+            <Box mt='auto' className="card-title">
+              <Box onClick={handleSelect} style={{ cursor: 'pointer' }} fontSize='sm' fontWeight='bold'>
+                {nft.name}
+              </Box>
+            </Box>
+          </Flex>
           <Spacer />
           <Box
             borderBottomRadius={15}

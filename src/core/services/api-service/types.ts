@@ -13,6 +13,10 @@ import {
 } from "@src/core/services/api-service/graph/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
+import {
+    TownHallStakeRequest,
+    TownHallUnstakeRequest
+} from "@src/core/services/api-service/cms/queries/staking/town-hall";
 
 export interface Api {
     getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>>;
@@ -32,13 +36,15 @@ export interface RyoshiDynastiesApi {
     getUserStakedFortune(address: string): Promise<FortuneStakingAccount | null>;
     getErc20Account(address: string): Promise<Erc20Account | null>;
     getStakedTokens(address: string, type: StakedTokenType): Promise<StakedToken[]>;
+    getTownHallUserStaked(address: string, collection: string, signature: string): Promise<StakedToken[]>;
+    getTownHallUserInvalidStaked(address: string, signature: string): Promise<StakedToken[]>;
     getStakedTokenTotals(type: StakedTokenType): Promise<{[key: string]: number}>;
     requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
     requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
-    requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string): Promise<any>;
-    requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string): Promise<any>;
+    requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string): Promise<any>;
+    requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string): Promise<any>;
     requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string): Promise<any>;
     getDailyRewards(address: string): Promise<any>
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
@@ -61,6 +67,7 @@ export interface RyoshiDynastiesApi {
     fetchGift(address: string, signature: string): Promise<any>;
     getFactionsByPoints(gameId: number): Promise<any>;
     requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string): Promise<any>;
+    getTownHallWinningFaction(): Promise<any>;
 }
 
 export enum ListingState {
