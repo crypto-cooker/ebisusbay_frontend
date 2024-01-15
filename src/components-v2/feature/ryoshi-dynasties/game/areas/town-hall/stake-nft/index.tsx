@@ -2,13 +2,12 @@ import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import React, {useEffect, useState} from "react";
-import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
+import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/faq-page";
 import {Box, Button, Flex, Image, SimpleGrid, Spinner, Stack, Text} from "@chakra-ui/react";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {appConfig} from "@src/Config";
 import {ciEquals} from "@src/utils";
-import EmptyData from "@src/Components/Offer/EmptyData";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import ImageService from "@src/core/services/image";
 import {UnstakedNfts} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/unstaked-nfts";
@@ -78,10 +77,10 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         <FaqPage />
       ) : (
         <>
-        {status === 'pending' ? (
-          <EmptyData>
-            <Spinner size='sm' ms={1} />
-          </EmptyData>
+        {status === "pending"  ? (
+          <Box textAlign='center' py={4}>
+            <Spinner />
+          </Box>
         ) : status === "error" ? (
           <p>Error: {error.message}</p>
         ) : (
@@ -94,7 +93,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
                       <Text>The winning faction of the previous game at the Ebisu's Bay control point is <strong>{winningFaction.name}</strong>!</Text>
                       <Text mt={1}>All NFTs under the collections of this faction can be staked below until the end of the current game.</Text>
                     </Box>
-                    <Box w='40px' flexShrink={0} flexGrow={0} flexBasis='40px'>
+                    <Box w='50px' flexShrink={0} flexGrow={0} flexBasis='50px'>
                       <Image
                         src={ImageService.translate(winningFaction.image).avatar()}
                         rounded='md'
@@ -134,7 +133,8 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
               <>
                 <RdModalBox>
                   <Box textAlign='center'>
-                    There is no winning faction yet.
+                    <Text>The winning faction of the previous game at the Ebisu's Bay control point will have their collections available here for staking.</Text>
+                    <Text mt={4}>There is no winning faction yet.</Text>
                   </Box>
                 </RdModalBox>
                 <UnstakePreviousNfts />
@@ -180,7 +180,7 @@ const UnstakePreviousNfts = () => {
     <RdModalBox mt={2}>
       <Stack direction={{base: 'column', sm: 'row'}} justify='space-between' align='center'  spacing={4}>
         <Box>You have staked NFTs from previous games that are not earning anymore. Click <strong>Unstake All</strong> to return them to your wallet</Box>
-        <Box flexShrink={0} flexGrow={0} >
+        <Box flexShrink={0} flexGrow={0}>
           <Button
             size='sm'
             onClick={handleUnstakeAll}

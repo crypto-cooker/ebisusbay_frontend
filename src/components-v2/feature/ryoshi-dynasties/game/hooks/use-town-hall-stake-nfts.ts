@@ -36,45 +36,6 @@ const useTownHallStakeNfts = () => {
     if (!isAll && (!nfts || !collectionAddress)) throw 'No NFTs to stake';
 
     try {
-      // const signature = await requestSignature();
-      // const townHall = new Contract(config.contracts.townHall, TownHall, user.provider.getSigner());
-      //
-      // // Note that stakedNfts are not flattened like pendingNfts
-      // // i.e. multiple entries for the same nft in pendingNfts will consolidate into one entry in stakedNfts with an amount
-      // let withdrawNfts = [];
-      // for (const stakedNft of stakedNfts) {
-      //   const pendingAmount = pendingNfts.filter((nft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId).length;
-      //   if (Number(stakedNft.amount) > pendingAmount) {
-      //     const amountToWithdraw = Number(stakedNft.amount) - pendingAmount;
-      //     for (let i = 0; i < amountToWithdraw; i++) {
-      //       withdrawNfts.push({...stakedNft, amount: amountToWithdraw});
-      //     }
-      //   }
-      // }
-      //
-      // const newNfts = pendingNfts.filter((nft) => !nft.isAlreadyStaked);
-      //
-      // if (withdrawNfts.length > 0) {
-      //   const approval = await ApiService.withoutKey().ryoshiDynasties.requestTownHallUnstakeAuthorization(
-      //     withdrawNfts.map((nft) => ({
-      //       nftAddress: nft.contractAddress,
-      //       nftId: nft.tokenId,
-      //       amount: Number(nft.amount),
-      //     })),
-      //     user.address,
-      //     signature
-      //   );
-      //   const withdrawTx = await townHall.endStake(approval.data.unstakeApproval, approval.data.signature);
-      //   await withdrawTx.wait();
-      // }
-      //
-      // if (newNfts.length > 0) {
-      //   const approval = await ApiService.withoutKey().ryoshiDynasties.requestTownHallStakeAuthorization(newNfts, user.address, signature);
-      //   console.log('START STAKE', approval.data.stakeApproval, approval.data.signature);
-      //   const stakeTx = await townHall.startStake(approval.data.stakeApproval, approval.data.signature);
-      //   await stakeTx.wait();
-      // }
-
       const nftContract = new Contract(collectionAddress, ERC721, user.provider.signer);
       const isApproved = await nftContract.isApprovedForAll(user.address!.toLowerCase(), config.contracts.townHall);
       if (!isApproved) {
