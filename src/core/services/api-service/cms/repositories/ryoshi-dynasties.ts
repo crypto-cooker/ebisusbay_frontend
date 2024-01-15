@@ -12,6 +12,10 @@ import {
 } from "@src/core/services/api-service/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
+import {
+  TownHallStakeRequest,
+  townHallStakeRequestSchema, TownHallUnstakeRequest, townHallUnstakeRequestSchema
+} from "@src/core/services/api-service/cms/queries/staking/town-hall";
 
 class RyoshiDynastiesRepository extends CmsRepository {
 
@@ -71,13 +75,16 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
+  async requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string) {
+    await townHallStakeRequestSchema.validate(request);
+
     const response = await this.cms.get('ryoshi-dynasties/staking/authorize/town-hall', {
       params: {
+        tokenId: request.nfts.map(nft => nft.nftId),
+        amount: request.nfts.map(nft => nft.amount),
+        contractAddress: request.collectionAddress,
+        isAll: request.isAll,
         user: address,
-        contractAddress: nfts.map(nft => nft.nftAddress),
-        tokenId: nfts.map(nft => nft.nftId),
-        amount: nfts.map(nft => nft.amount),
         address,
         signature
       }
@@ -85,13 +92,17 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
+  async requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string) {
+    await townHallUnstakeRequestSchema.validate(request);
+
     const response = await this.cms.get('ryoshi-dynasties/staking/authorize/town-hall/withdraw', {
       params: {
+        tokenId: request.nfts.map(nft => nft.nftId),
+        amount: request.nfts.map(nft => nft.amount),
+        contractAddress: request.collectionAddress,
+        isAll: request.isAll,
+        invalidOnly: request.invalidOnly,
         user: address,
-        contractAddress: nfts.map(nft => nft.nftAddress),
-        tokenId: nfts.map(nft => nft.nftId),
-        amount: nfts.map(nft => nft.amount),
         address,
         signature
       }
@@ -288,6 +299,27 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data.data;
   }
 
+  async getTownHallUserStaked(address: string, collection: string, signature: string) {
+    const response = await this.cms.get(`ryoshi-dynasties/staking/town-hall/staked`, {
+      params: {
+        collection,
+        address,
+        signature
+      }
+    });
+    return response.data.data;
+  }
+
+  async getTownHallUserInvalidStaked(address: string, signature: string) {
+    const response = await this.cms.get(`ryoshi-dynasties/staking/town-hall/invalid`, {
+      params: {
+        address,
+        signature
+      }
+    });
+    return response.data.data;
+  }
+
   async deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string) {
     const response = await this.cms.patch(
       `ryoshi-dynasties/armies`,
@@ -338,6 +370,36 @@ class RyoshiDynastiesRepository extends CmsRepository {
       }
     );
     return response.data.data;
+  }
+
+  async getTownHallWinningFaction() {
+    const response = await this.cms.get(`ryoshi-dynasties/staking/town-hall/winners`);
+    // const mockData = {
+    //   faction: {
+    //     id: 1,
+    //     name: 'Faction 1',
+    //     image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
+    //     factionCollectionsSnapshot: {
+    //       '0xcf7aedebc5223c4c620625a560300582b77d8719': {
+    //         name: 'Ryoshi Tales VIP',
+    //         image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
+    //         slug: 'ryoshi-tales-vip',
+    //       },
+    //       '0xe51377a260043381b8b525d33b9ffbc601a1469b': {
+    //         name: 'Ryoshi Tales Halloween',
+    //         image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
+    //         slug: 'ryoshi-tales-halloween',
+    //       },
+    //       '0xa3a9bd5142bfaf3126734096cacc96a71103611f': {
+    //         name: 'Elf Citizens',
+    //         image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
+    //         slug: 'elf-citizens',
+    //       }
+    //     }
+    //   }
+    // }
+    // return mockData.faction;
+    return response.data?.data ? response.data.data.faction : null;
   }
 }
 
