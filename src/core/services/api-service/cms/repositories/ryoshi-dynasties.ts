@@ -16,6 +16,7 @@ import {
   TownHallStakeRequest,
   townHallStakeRequestSchema, TownHallUnstakeRequest, townHallUnstakeRequestSchema
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
+import {FactionUpdateRequest, factionUpdateRequestSchema} from "@src/core/services/api-service/cms/queries/faction";
 
 class RyoshiDynastiesRepository extends CmsRepository {
 
@@ -400,6 +401,22 @@ class RyoshiDynastiesRepository extends CmsRepository {
     // }
     // return mockData.faction;
     return response.data?.data ? response.data.data.faction : null;
+  }
+
+  async updateFaction(request: FactionUpdateRequest, address: string, signature: string) {
+    await factionUpdateRequestSchema.validate(request);
+
+    const response = await this.cms.patch(
+      'ryoshi-dynasties/factions',
+      {...request},
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data.data;
   }
 }
 

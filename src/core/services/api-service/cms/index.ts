@@ -14,6 +14,7 @@ import {
   TownHallStakeRequest,
   TownHallUnstakeRequest
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
+import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
 
 class Cms {
   private profiles: ProfilesRepository;
@@ -162,6 +163,10 @@ class Cms {
 
   async getTownHallWinningFaction() {
     return this.ryoshiDynasties.getTownHallWinningFaction();
+  }
+
+  async updateFaction(request: FactionUpdateRequest, address: string, signature: string) {
+    return this.ryoshiDynasties.updateFaction(request, address, signature);
   }
 }
 

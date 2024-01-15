@@ -17,6 +17,7 @@ import {
     TownHallStakeRequest,
     TownHallUnstakeRequest
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
+import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
 
 export interface Api {
     getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>>;
@@ -68,6 +69,7 @@ export interface RyoshiDynastiesApi {
     getFactionsByPoints(gameId: number): Promise<any>;
     requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string): Promise<any>;
     getTownHallWinningFaction(): Promise<any>;
+    updateFaction(request: FactionUpdateRequest, address: string, signature: string): Promise<any>;
 }
 
 export enum ListingState {

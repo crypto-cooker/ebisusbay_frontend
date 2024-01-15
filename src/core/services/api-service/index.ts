@@ -30,6 +30,7 @@ import {
   TownHallStakeRequest,
   TownHallUnstakeRequest
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
+import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -396,5 +397,9 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async getTownHallWinningFaction() {
     return this.cms.getTownHallWinningFaction();
+  }
+
+  async updateFaction(request: FactionUpdateRequest, address: string, signature: string) {
+    return this.cms.updateFaction(request, address, signature);
   }
 }
