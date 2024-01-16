@@ -4,8 +4,8 @@ import {ArrowBackIcon} from "@chakra-ui/icons";
 import React, {useEffect, useState} from "react";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/faq-page";
-import {Box, Button, Flex, Image, SimpleGrid, Spinner, Stack, Text} from "@chakra-ui/react";
-import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
+import {Box, Button, Flex, Image, Spinner, Stack, Text} from "@chakra-ui/react";
+import RdTabButton, {RdTabGroup} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {appConfig} from "@src/Config";
 import {ciEquals} from "@src/utils";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
@@ -103,9 +103,10 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
                 </RdModalBox>
                 <UnstakePreviousNfts />
                 <Flex direction='row' justify='center' my={2}>
-                  <SimpleGrid columns={Object.keys(winningFaction.factionCollectionsSnapshot).length}>
+                  <RdTabGroup>
                     {Object.entries(winningFaction.factionCollectionsSnapshot).map(([address, collection]: [string, any]) => (
                       <RdTabButton
+                        key={collection.name}
                         isActive={selectedAddress === address}
                         onClick={handleSelectAddress(address)}
                         whiteSpace='initial'
@@ -116,7 +117,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
                         {collection.name}
                       </RdTabButton>
                     ))}
-                  </SimpleGrid>
+                  </RdTabGroup>
                 </Flex>
                 <AuthenticationRdButton
                   connectText='Connect and sign-in to manage your staked NFTs'
@@ -204,16 +205,14 @@ const StakeNftsContent = ({collectionAddress}: StakeNftsContentProps) => {
 
   return (
     <Box>
-      <Flex direction='row' justify='center' mb={2}>
-        <SimpleGrid columns={2}>
-          <RdTabButton isActive={!showStaked} onClick={() => setShowStaked(false)}>
-            Unstaked
-          </RdTabButton>
-          <RdTabButton isActive={showStaked} onClick={() => setShowStaked(true)}>
-            Staked
-          </RdTabButton>
-        </SimpleGrid>
-      </Flex>
+      <RdTabGroup>
+        <RdTabButton isActive={!showStaked} onClick={() => setShowStaked(false)}>
+          Unstaked
+        </RdTabButton>
+        <RdTabButton isActive={showStaked} onClick={() => setShowStaked(true)}>
+          Staked
+        </RdTabButton>
+      </RdTabGroup>
       {!showStaked ? (
         <UnstakedNfts
           collectionAddress={collectionAddress}

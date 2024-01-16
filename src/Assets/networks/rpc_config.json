@@ -25409,6 +25409,56 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Y-Plush NFT",
+      "slug": "y-plush-nft",
+      "multiToken": false,
+      "address": "0xCEb4fD89842A39a55840492a2E5013207Aef62e1",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A colorful and awesome collection consisting of 5,000 Bears. The collection has 146 different traits including background, eyes, mouth, heart, head, neck, feet, skin, weapons and clothes. It was created with AI and edition by the great artist Vesture who gave life to the crazy ideas of project owner Desiree.",
+        "avatar": "/img/collections/y-plush-nft/avatar.webp",
+        "card": "/img/collections/y-plush-nft/card.webp",
+        "banner": "/img/collections/y-plush-nft/banner.webp",
+        "twitter": "https://twitter.com/YplushNft",
+        "discord": "https://discord.gg/SKQdGwgWwS",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "DegenBrains Legends",
+      "slug": "degen-brains-legends",
+      "multiToken": false,
+      "address": "0xAf0970fDEf7174080fe0ccd3bBbB9ea174A2aEa7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The DegenBrains Legends collection distinguishes itself with an exclusive ensemble of less then 150 one-of-a-kind NFTs, each a masterpiece of individuality and creativity. What makes the DegenBrain Legends truly exceptional is that they are entirely customized and created by the individuals who minted at least 50 DegenBrains NFTs during our original minting phase, down to the individual traits crafted by our artist.",
+        "avatar": "/img/collections/degen-brains-legends/avatar.webp",
+        "card": "/img/collections/degen-brains-legends/card.webp",
+        "banner": "/img/collections/degen-brains-legends/banner.webp",
+        "website": "https://www.degenbrain.finance/",
+        "twitter": "https://twitter.com/degenbrains",
+        "discord": "https://discord.gg/degenbrains",
+        "medium": "https://medium.com/@degenbrains",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [

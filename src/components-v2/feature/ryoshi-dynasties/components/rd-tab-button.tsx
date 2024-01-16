@@ -1,5 +1,5 @@
-import {Button, ButtonProps} from "@chakra-ui/react";
-import {ReactNode} from "react";
+import {Button, ButtonProps, Flex, Wrap} from "@chakra-ui/react";
+import React, {ReactNode} from "react";
 
 interface RdTabButtonProps {
   children?: ReactNode;
@@ -35,3 +35,13 @@ const RdTabButton = ({children, ...props}: RdTabButtonProps | ButtonProps) => {
 };
 
 export default RdTabButton;
+
+export const RdTabGroup = ({children}: { children: ReactNode }) => {
+  return (
+    <Flex justify="center" align="center">
+      <Wrap justify="center" align="center">
+        {children}
+      </Wrap>
+    </Flex>
+  )
+}

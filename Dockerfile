@@ -4,7 +4,7 @@
 ### Deps stage ###
 ###################
 
-FROM node:18 AS deps-stage
+FROM node:20 AS deps-stage
 
 # Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
 RUN set -e
@@ -14,7 +14,7 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
 RUN --mount=type=cache,target=/var/cache/apt apt-get update
 
-# RUN npm install -g npm@latest
+RUN npm install -g npm@latest
 
 # Print Node.js & npm versions
 RUN node --version
@@ -30,7 +30,7 @@ RUN --mount=type=cache,target=/root/.npm npm ci --omit dev
 ### Build stage ###
 ###################
 
-FROM node:18 AS build-stage
+FROM node:20 AS build-stage
 
 # Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
 RUN set -e
@@ -40,7 +40,7 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
 RUN --mount=type=cache,target=/var/cache/apt apt-get update
 
-# RUN npm install -g npm@latest
+RUN npm install -g npm@latest
 
 # Print Node.js & npm versions
 RUN node --version
@@ -78,7 +78,7 @@ RUN --mount=type=cache,target=/usr/src/app/.next/cache NEXT_PUBLIC_ENV=$NEXT_PUB
 ### Runtime stage ###
 #####################
 
-FROM node:18-slim AS runtime-stage
+FROM node:20-slim AS runtime-stage
 
 # Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
 RUN set -e
@@ -88,7 +88,7 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
 RUN --mount=type=cache,target=/var/cache/apt apt-get update && apt-get --no-install-recommends install -y git curl procps htop net-tools dnsutils dumb-init
 
-# RUN npm install -g npm@latest
+RUN npm install -g npm@latest
 
 # Print Node.js & npm versions
 RUN node --version
