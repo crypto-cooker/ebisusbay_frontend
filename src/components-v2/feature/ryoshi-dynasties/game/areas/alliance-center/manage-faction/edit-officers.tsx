@@ -12,6 +12,7 @@ import {ciEquals, isAddress} from "@src/utils";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {ApiService} from "@src/core/services/api-service";
+import {ethers} from "ethers";
 
 interface EditOfficersProps {
   faction: any;
@@ -52,11 +53,13 @@ const EditOfficers = ({faction}: EditOfficersProps) => {
 
       for (const index in newOfficers) {
         const address = newOfficers[index];
-        if (!!address && !isAddress(address)) {
+        if (!!address && !ethers.utils.isAddress(address)) {
           setErrors({...errors, [index]: 'Invalid address'});
+          return;
         }
         if (ciEquals(address, user.address)) {
           setErrors({...errors, [index]: 'Cannot assign your own address'});
+          return;
         }
       }
 
