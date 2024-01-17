@@ -124,7 +124,7 @@ const EditInfo = ({faction, canEdit, isRegistered, onComplete}: EditInfoProps) =
   }
 
   const handleSelectCollection = (collectionAddress: string) => {
-    console.log(collectionAddress);
+    // console.log(collectionAddress);
     setAddressesToAdd(collectionAddress);
   }
 
@@ -423,14 +423,14 @@ const SeasonRegistration = () => {
 
     const currentSeasonBlockId = rdContext.game?.season.blockId;
     if (!currentSeasonBlockId) {
-      console.log('No active season');
+      toast.error('No active season');
       return;
     }
     const nextSeasonBlockId = currentSeasonBlockId + 1;
 
-    if(isRegisteredCurrentSeason && seasonBlockId === currentSeasonBlockId ||
+    if (isRegisteredCurrentSeason && seasonBlockId === currentSeasonBlockId ||
       isRegisteredNextSeason && seasonBlockId === nextSeasonBlockId) {
-      console.log('Already Registered');
+      toast.error('Already registered for this season');
     } else {
       try {
         setIsExecutingRegister(true);
