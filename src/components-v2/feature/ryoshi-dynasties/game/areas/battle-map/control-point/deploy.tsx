@@ -200,7 +200,7 @@ const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}:
   const [factionError, setFactionError] = useState('');
   const [troopsAvailable, setTroopsAvailable] = useState(0);
   const [isExecuting, setIsExecuting] = useState(false);
-  const [troopsSource, setTroopsSource] = useState('0');
+  const [troopsSource, setTroopsSource] = useState<string>('0');
 
   const {requestSignature} = useEnforceSignature();
 
@@ -223,6 +223,11 @@ const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}:
 
     if (!troopsSource) {
       toast.error(`You must select a source`);
+      return;
+    }
+
+    if (!Object.keys(sourceOptions).includes(troopsSource)) {
+      toast.error(`You must select a valid source`);
       return;
     }
 
@@ -319,6 +324,15 @@ const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}:
     }
   }, []);
 
+  const sourceOptions = useMemo(() => {
+    let options: {[key: number]: string} = {};
+    if (!hasFaction) options[0] = 'User Troops';
+    if (hasFaction && playerFaction) options[playerFaction.id] = playerFaction.name;
+    if (officerDesignations) officerDesignations.forEach(designation => options[designation.id] = designation.name);
+
+    return options;
+  }, [hasFaction, playerFaction, officerDesignations]);
+
   return (
     <Box mt={2}>
       <SimpleGrid columns={{base: 1, sm: 2}} spacing={4}>
@@ -336,21 +350,8 @@ const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}:
               placeholder='Select a source'
               mt={2}
             >
-              {!hasFaction && (
-                <option style={{background: '#272523'}} value={0}>User Troops</option>
-              )}
-              {hasFaction && (
-                <option style={{background: '#272523'}} value={playerFaction!.id}>{playerFaction!.name}</option>
-              )}
-
-              {officerDesignations && officerDesignations.map((designation, index) => (
-                <option
-                  style={{ background: '#272523' }}
-                  value={designation.id}
-                  key={index}
-                >
-                  {designation.name}
-                </option>
+              {Object.entries(sourceOptions).map(([key, value]) => (
+                <option style={{background: '#272523'}} value={key}>{value}</option>
               ))}
             </Select>
           {/*) : (*/}
