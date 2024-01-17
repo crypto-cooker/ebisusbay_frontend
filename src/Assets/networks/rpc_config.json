@@ -20202,15 +20202,15 @@
       "multiToken": false,
       "address": "0x90d976B61F5C05F064D4F5272919B7fD1499C0A8",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "Ninja Turtle Factions (NTF) - A set of 5000 hand drawn NFTs inspired by sensei Crypto Turtle. Each Ninja is known for their stealthy approach to combat, armour, powerful weaponry and skilled in the art of Ninja magic",
+        "description": "Ninja OG's are the first step in the growing worldwide battle for dominance, with multiple factions fighting to gain control of the highly valued PZZA trade!",
         "avatar": "/img/collections/ninja-turtle-factions/avatar.webp",
         "card": "/img/collections/ninja-turtle-factions/card.webp",
         "banner": "/img/collections/ninja-turtle-factions/banner.webp",
-        "website": "https://lnk.bio/NINJA_TURTLE_FACTION",
+        "website": "https://ninjaturtlefctn.org/",
         "twitter": "https://twitter.com/NinjaTurtleFctn",
-        "discord": "https://discord.gg/ZCp5GgTWSb",
+        "discord": "https://discord.gg/ninjaturtlefctn",
         "categories": [
           "collectibles"
         ]
