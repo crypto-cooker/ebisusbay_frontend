@@ -200,17 +200,18 @@ const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}:
   const [factionError, setFactionError] = useState('');
   const [troopsAvailable, setTroopsAvailable] = useState(0);
   const [isExecuting, setIsExecuting] = useState(false);
-  const [troopsSource, setTroopsSource] = useState('user');
+  const [troopsSource, setTroopsSource] = useState('0');
 
   const {requestSignature} = useEnforceSignature();
 
   const playerFaction = rdContext.user?.faction;
+  const officerDesignations = rdContext.user?.designations;
   const maxTroops = troopsAvailable > 0 ? troopsAvailable : 0;
   const selectedToFaction = subscribedFactions.find(faction => faction.id.toString() === toFactionId);
 
   const handleQuantityChange = (stringValue: string, numValue: number) => setSelectedQuantity(numValue);
   const handleChangeToFaction = (e: ChangeEvent<HTMLSelectElement>) => setToFactionId(e.target.value);
-  // const handleChangeTroopsSource = (e: ChangeEvent<HTMLSelectElement>) => setTroopsSource(e.target.value);
+  const handleChangeTroopsSource = (e: ChangeEvent<HTMLSelectElement>) => setTroopsSource(e.target.value);
 
   const handleDeployTroops = async () => {
     if (!user.address) return;
@@ -218,6 +219,11 @@ const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}:
     if (rdContext.game?.state === RdGameState.RESET) {
       toast.error("Game has ended. Please wait until the next game begins")
       return
+    }
+
+    if (!troopsSource) {
+      toast.error(`You must select a source`);
+      return;
     }
 
     if (!toFactionId || !selectedToFaction) {
@@ -250,12 +256,14 @@ const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}:
     try {
       setIsExecuting(true);
       const signature = await requestSignature();
-      await ApiService.withoutKey().ryoshiDynasties.deployTroops(
-        selectedQuantity,
-        controlPointId,
-        rdContext.game.game.id,
-        parseInt(toFactionId!),
-        user.address.toLowerCase(),
+      await ApiService.withoutKey().ryoshiDynasties.deployTroops({
+          troops: selectedQuantity,
+          toControlPointId: controlPointId,
+          fromFactionId: troopsSource === '0' ? undefined : parseInt(troopsSource),
+          fromProfileId: troopsSource === '0' ? user.profile.id : undefined,
+          toFactionId: parseInt(toFactionId!),
+        },
+        user.address,
         signature
       )
 
@@ -279,18 +287,35 @@ const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}:
   useEffect(() => {
     if(!rdContext?.user) return;
 
-    const canSetFactionTroops = rdContext.user.game.troops.faction?.available.total !== undefined && hasFaction;
-    if (troopsSource === 'user') {
+    async function syncOfficerFactionState(factionId: number) {
+      const signature = await requestSignature();
+      const faction = await ApiService.withoutKey().ryoshiDynasties.getFaction(factionId, user.address!, signature);
+      if (faction) {
+        setTroopsAvailable(faction.troops);
+        setToFactionId(faction.id.toString());
+      }
+    }
+
+    if (troopsSource === '0') {
+      // Picked User Source
       setTroopsAvailable(rdContext.user.game.troops.user.available.total);
-    } else if (troopsSource === 'faction' && canSetFactionTroops) {
-      setTroopsAvailable(rdContext.user.game.troops.faction.available.total);
+    } else if (hasFaction && playerFaction && playerFaction.id === parseInt(troopsSource)) {
+      // Picked own faction source
+      const canSetFactionTroops = rdContext.user.game.troops.faction?.available.total !== undefined;
+      if (canSetFactionTroops) {
+        setToFactionId(playerFaction!.id.toString());
+        setTroopsAvailable(rdContext.user.game.troops.faction.available.total);
+      }
+    } else if (officerDesignations && officerDesignations.find(designation => designation.id === parseInt(troopsSource))) {
+      // Picked officer faction source
+      syncOfficerFactionState(parseInt(troopsSource));
     }
   }, [rdContext, troopsSource]);
 
   useEffect(() => {
     if (hasFaction) {
       setToFactionId(playerFaction!.id.toString());
-      setTroopsSource('faction')
+      setTroopsSource(playerFaction!.id.toString())
     }
   }, []);
 
@@ -301,22 +326,36 @@ const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}:
           <FormLabel fontSize='sm' color='#aaa'>
             From Source:
           </FormLabel>
-          {hasFaction ? (
-            <Flex fontWeight='bold' h={{base: 'auto', sm: '40px'}} align='center'>{playerFaction!.name}</Flex>
-            // <Select
-            //   bg='none'
-            //   style={{ background: '#272523' }}
-            //   value={troopsSource}
-            //   onChange={handleChangeTroopsSource}
-            //   placeholder='Select a source'
-            //   mt={2}
-            // >
-            //   <option style={{ background: '#272523' }} value='user'>User Troops</option>
-            //   <option style={{ background: '#272523' }} value='faction'>{playerFaction!.name}</option>
-            // </Select>
-          ) : (
-            <Flex fontWeight='bold' h={{base: 'auto', sm: '40px'}} align='center'>User Troops</Flex>
-          )}
+          {/*{hasFaction ? (*/}
+          {/*  // <Flex fontWeight='bold' h={{base: 'auto', sm: '40px'}} align='center'>{playerFaction!.name}</Flex>*/}
+            <Select
+              bg='none'
+              style={{ background: '#272523' }}
+              value={troopsSource}
+              onChange={handleChangeTroopsSource}
+              placeholder='Select a source'
+              mt={2}
+            >
+              {!hasFaction && (
+                <option style={{background: '#272523'}} value={0}>User Troops</option>
+              )}
+              {hasFaction && (
+                <option style={{background: '#272523'}} value={playerFaction!.id}>{playerFaction!.name}</option>
+              )}
+
+              {officerDesignations && officerDesignations.map((designation, index) => (
+                <option
+                  style={{ background: '#272523' }}
+                  value={designation.id}
+                  key={index}
+                >
+                  {designation.name}
+                </option>
+              ))}
+            </Select>
+          {/*) : (*/}
+          {/*  <Flex fontWeight='bold' h={{base: 'auto', sm: '40px'}} align='center'>User Troops</Flex>*/}
+          {/*)}*/}
         </FormControl>
         <FormControl>
           <FormLabel fontSize='sm' color='#aaa'>
@@ -365,8 +404,14 @@ const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}:
           To Faction:
         </FormLabel>
         <Box>
-          {hasFaction ? (
-            <Flex fontWeight='bold'>{playerFaction!.name}</Flex>
+          {troopsSource !== '0' ? (
+            <>
+              {playerFaction?.id === parseInt(troopsSource) ? (
+                <Flex fontWeight='bold'>{playerFaction!.name}</Flex>
+              ) : (
+                <Flex fontWeight='bold'>{officerDesignations?.find(designation => designation.id === parseInt(troopsSource))?.name}</Flex>
+              )}
+            </>
           ) : (
             <>
               <SearchFaction

@@ -14,6 +14,8 @@ import {
   TownHallStakeRequest,
   TownHallUnstakeRequest
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
+import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
+import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
 
 class Cms {
   private profiles: ProfilesRepository;
@@ -140,8 +142,8 @@ class Cms {
     return this.ryoshiDynasties.getTownHallUserInvalidStaked(address, signature);
   }
 
-  async deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string) {
-    return this.ryoshiDynasties.deployTroops(troops, controlPointId, gameId, factionId, address, signature)
+  async deployTroops(request: DeployTroopsRequest, address: string, signature: string) {
+    return this.ryoshiDynasties.deployTroops(request, address, signature)
   }
 
   async relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string) {
@@ -162,6 +164,14 @@ class Cms {
 
   async getTownHallWinningFaction() {
     return this.ryoshiDynasties.getTownHallWinningFaction();
+  }
+
+  async updateFaction(request: FactionUpdateRequest, address: string, signature: string) {
+    return this.ryoshiDynasties.updateFaction(request, address, signature);
+  }
+
+  async getFaction(id: number, address: string, signature: string) {
+    return this.ryoshiDynasties.getFaction(id, address, signature);
   }
 }
 

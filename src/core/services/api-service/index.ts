@@ -30,6 +30,8 @@ import {
   TownHallStakeRequest,
   TownHallUnstakeRequest
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
+import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
+import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -374,8 +376,8 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return await this.graph.getUserMeeples(address);
   }
 
-  async deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string) {
-    return this.cms.deployTroops(troops, controlPointId, gameId, factionId, address, signature)
+  async deployTroops(request: DeployTroopsRequest, address: string, signature: string) {
+    return this.cms.deployTroops(request, address, signature)
   }
 
   async relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string) {
@@ -396,5 +398,13 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async getTownHallWinningFaction() {
     return this.cms.getTownHallWinningFaction();
+  }
+
+  async updateFaction(request: FactionUpdateRequest, address: string, signature: string) {
+    return this.cms.updateFaction(request, address, signature);
+  }
+
+  async getFaction(id: number, address: string, signature: string) {
+    return this.cms.getFaction(id, address, signature);
   }
 }
