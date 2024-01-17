@@ -64,7 +64,7 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
   const [showCurrentGame, setShowCurrentGame] = useState(true);
   const [noGameActive, setNoGameActive] = useState(false);
   const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false, '2xl': false })
-  const [leaderType, setLeaderType] = useState<LeaderType>(LeaderType.TROOPS);
+  const [leaderType, setLeaderType] = useState<LeaderType>(LeaderType.POINTS);
 
   const getGameDates = async () => {
     if(!rdGameContext) return;
@@ -106,20 +106,20 @@ const LeaderBoardPage = ({onReturn}: leaderBoardProps) => {
             <GridItem colSpan={{base:2, sm:1}} justifySelf={{base:'center', sm:'left'}} my='auto'>
               <ButtonGroup isAttached>
                 <Button
-                  variant={leaderType === LeaderType.TROOPS ? 'solid' : 'outline'}
-                  colorScheme={leaderType === LeaderType.TROOPS ? 'blue' : undefined}
-                  color='white'
-                  onClick={() => setLeaderType(LeaderType.TROOPS)}
-                >
-                  Troops
-                </Button>
-                <Button
                   variant={leaderType === LeaderType.POINTS ? 'solid' : 'outline'}
                   colorScheme={leaderType === LeaderType.POINTS ? 'blue' : undefined}
                   color='white'
                   onClick={() => setLeaderType(LeaderType.POINTS)}
                 >
                   Points
+                </Button>
+                <Button
+                  variant={leaderType === LeaderType.TROOPS ? 'solid' : 'outline'}
+                  colorScheme={leaderType === LeaderType.TROOPS ? 'blue' : undefined}
+                  color='white'
+                  onClick={() => setLeaderType(LeaderType.TROOPS)}
+                >
+                  Troops
                 </Button>
               </ButtonGroup>
             </GridItem>
