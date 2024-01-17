@@ -221,6 +221,11 @@ const DeployForm = ({controlPointId, hasFaction, subscribedFactions, onSuccess}:
       return
     }
 
+    if (!troopsSource) {
+      toast.error(`You must select a source`);
+      return;
+    }
+
     if (!toFactionId || !selectedToFaction) {
       toast.error(`You must select a faction`);
       return;
