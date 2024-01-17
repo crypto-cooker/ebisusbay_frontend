@@ -140,7 +140,7 @@ const AllianceCenter = ({onBack}: AllianceCenterSceneProps) => {
       {!!rdContext.user && (
         <>
           {!!rdContext.user.faction && (
-            <EditFactionForm isOpen={isOpenEditFaction} onClose={onCloseEditFaction} faction={rdContext.user.faction} handleClose={onCloseEditFaction} isRegistered={!!rdContext.user.season.faction} />
+            <EditFactionForm isOpen={isOpenEditFaction} onClose={onCloseEditFaction} faction={rdContext.user.faction} isRegistered={!!rdContext.user.season.faction} />
           )}
           <CreateFactionForm isOpen={isOpenCreateFaction} onClose={onCloseCreateFaction} handleClose={onCloseCreateFaction} />
           <RyoshiTotals isOpen={isOpenRyoshiTotals} onClose={onCloseRyoshiTotals} />
