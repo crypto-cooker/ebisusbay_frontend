@@ -23,7 +23,7 @@ const EditOfficers = ({faction}: EditOfficersProps) => {
   const {requestSignature} = useEnforceSignature();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
-  const [newOfficers, setNewOfficers] = useState<string[]>(faction.officers.map((officer: any) => officer.profile.walletAddress));
+  const [newOfficers, setNewOfficers] = useState<string[]>(faction.officers?.map((officer: any) => officer.profile.walletAddress) || []);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [isExecuting, setIsExecuting] = useState(false);
 
@@ -82,42 +82,49 @@ const EditOfficers = ({faction}: EditOfficersProps) => {
   }
 
   return (
-    <RdModalBox>
-      <VStack align='start' w='full' spacing={6}>
-        {[...Array(maxOfficers).fill(0)].map((_, index) => (
-          <Box w='full'>
-            <FormControl isInvalid={!!errors[index]}>
-              <FormLabel fontWeight='bold'>
-                Officer {index + 1}:
-              </FormLabel>
-              <Box>
-                <Input
-                  placeholder='Wallet address'
-                  value={newOfficers[index]}
-                  onChange={(e) => {
-                    const newOfficersCopy = [...newOfficers];
-                    newOfficersCopy[index] = e.target.value;
-                    setNewOfficers(newOfficersCopy);
-                  }}
-                />
-              </Box>
-              <FormHelperText>Wallet address for your {getOrdinal(index + 1)} officer</FormHelperText>
-              <FormErrorMessage>{errors[index]}</FormErrorMessage>
-            </FormControl>
-          </Box>
-        ))}
-      </VStack>
-      <Flex justify='end' mt={4}>
-        <RdButton
-          size='md'
-          onClick={handleSave}
-          isLoading={isExecuting}
-          isDisabled={isExecuting}
-        >
-          Save Changes
-        </RdButton>
-      </Flex>
-    </RdModalBox>
+    <Box>
+      <RdModalBox>
+        <Box textAlign='center'>
+          Add officers to your faction to help manage your faction's duties. Currently, this is limited to deployments, but will soon be extended to include relocations and attacks.
+        </Box>
+      </RdModalBox>
+      <RdModalBox mt={2}>
+        <VStack align='start' w='full' spacing={6}>
+          {[...Array(maxOfficers).fill(0)].map((_, index) => (
+            <Box w='full'>
+              <FormControl isInvalid={!!errors[index]}>
+                <FormLabel fontWeight='bold'>
+                  Officer {index + 1}:
+                </FormLabel>
+                <Box>
+                  <Input
+                    placeholder='Wallet address'
+                    value={newOfficers[index]}
+                    onChange={(e) => {
+                      const newOfficersCopy = [...newOfficers];
+                      newOfficersCopy[index] = e.target.value;
+                      setNewOfficers(newOfficersCopy);
+                    }}
+                  />
+                </Box>
+                <FormHelperText>Wallet address for your {getOrdinal(index + 1)} officer</FormHelperText>
+                <FormErrorMessage>{errors[index]}</FormErrorMessage>
+              </FormControl>
+            </Box>
+          ))}
+        </VStack>
+        <Flex justify='end' mt={4}>
+          <RdButton
+            size='md'
+            onClick={handleSave}
+            isLoading={isExecuting}
+            isDisabled={isExecuting}
+          >
+            Save Changes
+          </RdButton>
+        </Flex>
+      </RdModalBox>
+    </Box>
   )
 }
 
