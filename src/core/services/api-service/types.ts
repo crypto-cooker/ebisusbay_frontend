@@ -18,6 +18,7 @@ import {
     TownHallUnstakeRequest
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
 import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
+import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
 
 export interface Api {
     getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>>;
@@ -63,13 +64,14 @@ export interface RyoshiDynastiesApi {
     getBattleLog(query: GetBattleLog): Promise<PagedList<RdBattleLog>>;
     getTroopsBreakdown(gameId: number, address: string, signature: string): Promise<RdUserContextGameTroops>;
     getUserMeeples(address: string): Promise<Meeple | null>;
-    deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string): Promise<any>;
+    deployTroops(request: DeployTroopsRequest, address: string, signature: string): Promise<any>;
     relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string): Promise<any>
     fetchGift(address: string, signature: string): Promise<any>;
     getFactionsByPoints(gameId: number): Promise<any>;
     requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string): Promise<any>;
     getTownHallWinningFaction(): Promise<any>;
     updateFaction(request: FactionUpdateRequest, address: string, signature: string): Promise<any>;
+    getFaction(id: number, address: string, signature: string): Promise<any>;
 }
 
 export enum ListingState {
@@ -166,6 +168,7 @@ export interface RdControlPointLeaderBoard {
 
 export interface RdUserContext {
     faction: RdFaction;
+    designations: RdOfficerDesignation[];
     armies: RdUserContextArmies;
     season: RdUserContextSeason;
     game: RdUserContextGame;
@@ -189,6 +192,11 @@ export interface RdUserContext {
     },
     reputations: Reputation[];
     experience: Experience;
+}
+
+export interface RdOfficerDesignation {
+    id: number;
+    name: string;
 }
 
 interface RdUserContextSeason {

@@ -17,6 +17,7 @@ import {
   townHallStakeRequestSchema, TownHallUnstakeRequest, townHallUnstakeRequestSchema
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
 import {FactionUpdateRequest, factionUpdateRequestSchema} from "@src/core/services/api-service/cms/queries/faction";
+import {DeployTroopsRequest, deployTroopsRequestSchema} from "@src/core/services/api-service/cms/queries/deploy";
 
 class RyoshiDynastiesRepository extends CmsRepository {
 
@@ -321,11 +322,15 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data.data;
   }
 
-  async deployTroops(troops: number, controlPointId: number, gameId: number, factionId: number, address: string, signature: string) {
+  async deployTroops(request: DeployTroopsRequest, address: string, signature: string) {
+    await deployTroopsRequestSchema.validate(request);
+
     const response = await this.cms.patch(
-      `ryoshi-dynasties/armies`,
-      {troops, controlPointId, gameId, factionId},
-      {params: {address, signature, action: "DEPLOY"}}
+      `ryoshi-dynasties/armies/deploy`,
+      {
+        ...request
+      },
+      {params: {address, signature}}
     );
     return response.data;
   }
@@ -416,6 +421,19 @@ class RyoshiDynastiesRepository extends CmsRepository {
         }
       }
     );
+    return response.data.data;
+  }
+
+  async getFaction(id: number, address: string, signature: string) {
+    const response = await this.cms.get(
+      `ryoshi-dynasties/factions/${id}`, {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+
     return response.data.data;
   }
 }
