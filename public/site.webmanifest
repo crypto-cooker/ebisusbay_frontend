@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "short_name": "Ebisu's Bay",
+    "name": "Ebisu's Bay Marketplace",
     "icons": [
         {
             "src": "/android-chrome-192x192.png?v=6",
@@ -11,6 +11,21 @@
             "src": "/android-chrome-512x512.png?v=6",
             "sizes": "512x512",
             "type": "image/png"
+        },
+        {
+            "src": "favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "favicon.png",
+            "type": "image/png",
+            "sizes": "128x128"
+        },
+        {
+            "src": "logo512.png",
+            "type": "image/png",
+            "sizes": "512x512"
         }
     ],
     "theme_color": "#ffffff",
