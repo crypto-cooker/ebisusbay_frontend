@@ -247,7 +247,7 @@ const WithdrawForm = ({tokenId, maxAmount}: ActionFormProps) => {
               w='full'
               onClick={() => handleWithdrawal(tokenId, selectedQuantity)}
               isLoading={isExecuting}
-              loadingText='Confirming...'
+              isDisabled={isExecuting}
             >
               Confirm
             </RdButton>
