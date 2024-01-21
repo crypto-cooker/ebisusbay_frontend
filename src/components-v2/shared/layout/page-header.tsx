@@ -1,6 +1,7 @@
 import {Box, Flex, Heading, Text} from "@chakra-ui/react";
 import React from "react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
+import {DefaultContainer} from "@src/components-v2/shared/default-container";
 
 interface HeaderProps {
   title: string;
@@ -11,7 +12,6 @@ const PageHeader = ({ title, subtitle }: HeaderProps) => {
   const bgImage = useColorModeValue('/img/background/Ebisu-DT-Header.webp', '/img/background/header-dark.webp');
 
   return (
-
     <Flex
       minH={{base:'100px', md:'150px'}}
       bg='black'
@@ -29,19 +29,19 @@ const PageHeader = ({ title, subtitle }: HeaderProps) => {
         w="100%"
         position="absolute"
       />
-      <Flex
-        position='relative'
-        // ps={{base: 5, sm: 10}}
-        px={4}
-        py={6}
-        direction='column'
-        h='full'
-      >
-        <Heading textAlign='center' as='h1' size={{base: 'xl', sm: '2xl'}} color='white' textShadow='2px 2px 4px rgba(0, 0, 0, 0.5)'>{title}</Heading>
-        {subtitle && (
-          <Text textAlign='center' fontWeight='bold' color='white' fontSize={{base: 'sm', sm: 'md'}}>{subtitle}</Text>
-        )}
-      </Flex>
+      <DefaultContainer>
+        <Flex
+          position='relative'
+          py={6}
+          direction='column'
+          h='full'
+        >
+          <Heading as='h1' size={{base: 'xl', sm: '2xl'}} color='white' textShadow='2px 2px 4px rgba(0, 0, 0, 0.5)'>{title}</Heading>
+          {subtitle && (
+            <Text fontWeight='bold' color='white' fontSize={{base: 'sm', sm: 'md'}}>{subtitle}</Text>
+          )}
+        </Flex>
+      </DefaultContainer>
     </Flex>
   )
 }

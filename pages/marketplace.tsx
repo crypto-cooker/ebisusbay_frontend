@@ -11,6 +11,7 @@ import PageHeader from "@src/components-v2/shared/layout/page-header";
 import {pushQueryString} from "@src/helpers/query";
 import {useQuery} from "@tanstack/react-query";
 import {getMarketMetadata} from "@src/core/api";
+import {DefaultContainer} from "@src/components-v2/shared/default-container";
 
 
 const tabs = {
@@ -88,7 +89,7 @@ const Marketplace = () => {
             </ul>
           </Box>
 
-          <Box className="de_tab_content" px={2}>
+          <DefaultContainer>
             {openMenu === tabs.listings && (
               <Listings/>
             )}
@@ -97,7 +98,7 @@ const Marketplace = () => {
                 <SalesCollection cacheName="marketplace"/>
               </Box>
             )}
-          </Box>
+          </DefaultContainer>
         </Box>
       </MarketplacePageContext.Provider>
     </Box>
