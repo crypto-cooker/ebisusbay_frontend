@@ -57,6 +57,7 @@
     "@types/styled-components": "^5.1.30",
     "@web3modal/ethers5": "^3.5.7",
     "@web3modal/wagmi": "^3.5.7",
+    "@web3modal/wallet": "^3.5.7",
     "axios": "^1.6.2",
     "bad-words": "^3.0.4",
     "bootstrap": "^5.2.3",
