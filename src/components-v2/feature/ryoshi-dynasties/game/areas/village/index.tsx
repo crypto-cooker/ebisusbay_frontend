@@ -50,6 +50,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
+import {VillageMerchant} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/merchant";
 
 const config = appConfig();
 const xmasCutoffDate = new Date(Date.UTC(2024, 0, 8, 0, 0, 0));
@@ -76,6 +77,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const { isOpen: isOpenBuildings, onOpen: onOpenBuildings, onClose: onCloseBuildings } = useDisclosure();
   const { isOpen: isOpenAnnouncementBoard, onOpen: onOpenAnnouncementBoard, onClose: onCloseAnnouncementBoard } = useDisclosure();
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
+  const { isOpen: isOpenMerchant, onOpen: onOpenMerchant, onClose: onCloseMerchant } = useDisclosure();
   const [forceRefreshBool, setForceRefreshBool] = useState(false);
   const { isOpen: isOpenBattleLog, onOpen: onOpenBattleLog, onClose: onCloseBattleLog } = useDisclosure();
   const { isOpen: isOpenXPLeaderboard, onOpen: onOpenXPLeaderboard, onClose: onCloseXPLeaderboard } = useDisclosure();
@@ -148,7 +150,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     'fishmarket_label': {height: 545, width: 793, top: '36.5%', left: '55%'},
     'bank_label': {height: 456, width: 579, top: '7%', left: '33%'},
 
-    'merchant': {height: 311, width: 783, top: '0%', left: '65%'}
+    'merchant': {top: '18.5%', left: '28.5%'}
   }
 
   const handleEnterScene = async (elementId: string) => {
@@ -394,6 +396,13 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         image={ImageService.translate(`/img/battle-bay/mapImages/pond${xmasTheme}.apng`).convert()}
                         zIndex={8}
                       />
+                      <Sprite
+                        id='merchant'
+                        position={{x: buildings.merchant.left, y: buildings.merchant.top}}
+                        image={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-open.apng`).convert()}
+                        zIndex={9}
+                        onClick={onOpenMerchant}
+                      />
 
                       { xmasTheme ? ( <>
                           <Box
@@ -488,9 +497,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
         <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
         <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
-        {/* <FactionDirectory isOpen={isOpenXPLeaderboard} onClose={onCloseXPLeaderboard} /> */}
-        {/* x-mas */}
         <ShakeTreeDialog isOpen={isPresentModalOpen} onClose={onClosePresentModal} />
+        <VillageMerchant isOpen={isOpenMerchant} onClose={onCloseMerchant} forceRefresh={forceRefresh} />
 
         <Fade in={isOpenOverlay}>
           <Modal
@@ -738,6 +746,7 @@ const Sprite = ({id, position, image, layers, zIndex, onClick}: SpriteProps) => 
       ms={position.x}
       zIndex={zIndex ?? 9}
       onClick={() => onClick?.(id) ?? {}}
+      cursor={onClick ? 'pointer' : undefined}
     >
       <Image src={image} alt={id} />
       {layers?.map((layer, key) => (
