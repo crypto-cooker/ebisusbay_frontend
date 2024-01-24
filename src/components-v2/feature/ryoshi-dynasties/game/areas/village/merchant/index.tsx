@@ -152,15 +152,12 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
             }
           }
         });
-      } catch (e) {
-        console.log(e);
       } finally {
         toast.success(createSuccessfulTransactionToastContent(data.transactionHash));
       }
     },
     onError: (error: any) => {
       console.log(error);
-      toast.error(parseErrorMessage(error));
     }
   });
 
