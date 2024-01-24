@@ -1,1508 +1,1696 @@
 [
   {
-    "type": "constructor",
+    "inputs": [],
     "stateMutability": "nonpayable",
-    "inputs": []
+    "type": "constructor"
   },
   {
-    "type": "event",
-    "name": "AdminChanged",
+    "anonymous": false,
     "inputs": [
       {
-        "type": "address",
-        "name": "previousAdmin",
-        "internalType": "address",
-        "indexed": false
-      },
-      {
-        "type": "address",
-        "name": "newAdmin",
-        "internalType": "address",
-        "indexed": false
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "ApprovalForAll",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "operator",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "bool",
-        "name": "approved",
-        "internalType": "bool",
-        "indexed": false
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "BeaconUpgraded",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "internalType": "address",
-        "indexed": true
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "Craft",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "digest",
-        "internalType": "bytes32",
-        "indexed": true
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "Deposit",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "from",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "uint256[]",
-        "name": "ids",
-        "internalType": "uint256[]",
-        "indexed": false
-      },
-      {
-        "type": "uint256[]",
-        "name": "amounts",
-        "internalType": "uint256[]",
-        "indexed": false
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "Initialized",
-    "inputs": [
-      {
-        "type": "uint8",
-        "name": "version",
-        "internalType": "uint8",
-        "indexed": false
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "MeepleActive",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "player",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "uint256",
-        "name": "amount",
-        "internalType": "uint256",
-        "indexed": false
-      },
-      {
-        "type": "uint256",
-        "name": "lastUpkeep",
-        "internalType": "uint256",
-        "indexed": false
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "MintRequestByAdmin",
-    "inputs": [
-      {
-        "type": "tuple",
-        "name": "request",
-        "internalType": "struct Resources.MintRequest",
         "indexed": false,
+        "internalType": "address",
+        "name": "previousAdmin",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
+      }
+    ],
+    "name": "ApprovalForAll",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "beacon",
+        "type": "address"
+      }
+    ],
+    "name": "BeaconUpgraded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "digest",
+        "type": "bytes32"
+      }
+    ],
+    "name": "Craft",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "Deposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "version",
+        "type": "uint8"
+      }
+    ],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lastUpkeep",
+        "type": "uint256"
+      }
+    ],
+    "name": "MeepleActive",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "components": [
           {
-            "type": "address",
+            "internalType": "address",
             "name": "to",
-            "internalType": "address"
+            "type": "address"
           },
           {
-            "type": "uint256[]",
+            "internalType": "uint256[]",
             "name": "ids",
-            "internalType": "uint256[]"
+            "type": "uint256[]"
           },
           {
-            "type": "uint256[]",
+            "internalType": "uint256[]",
             "name": "amounts",
-            "internalType": "uint256[]"
+            "type": "uint256[]"
           },
           {
-            "type": "uint256",
+            "internalType": "uint256",
             "name": "expire",
-            "internalType": "uint256"
+            "type": "uint256"
           },
           {
-            "type": "uint256",
+            "internalType": "uint256",
             "name": "nonce",
-            "internalType": "uint256"
+            "type": "uint256"
           }
-        ]
+        ],
+        "indexed": false,
+        "internalType": "struct Resources.MintRequest",
+        "name": "request",
+        "type": "tuple"
       }
     ],
-    "anonymous": false
+    "name": "MintRequestByAdmin",
+    "type": "event"
   },
   {
-    "type": "event",
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "digest",
+        "type": "bytes32"
+      }
+    ],
     "name": "MintRequestCancelled",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "digest",
-        "internalType": "bytes32",
-        "indexed": true
-      }
-    ],
-    "anonymous": false
+    "type": "event"
   },
   {
-    "type": "event",
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "digest",
+        "type": "bytes32"
+      }
+    ],
     "name": "MintRequestSuccess",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "digest",
-        "internalType": "bytes32",
-        "indexed": true
-      }
-    ],
-    "anonymous": false
+    "type": "event"
   },
   {
-    "type": "event",
-    "name": "RoleAdminChanged",
+    "anonymous": false,
     "inputs": [
       {
-        "type": "bytes32",
-        "name": "role",
+        "indexed": true,
         "internalType": "bytes32",
-        "indexed": true
+        "name": "role",
+        "type": "bytes32"
       },
       {
-        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32",
         "name": "previousAdminRole",
-        "internalType": "bytes32",
-        "indexed": true
+        "type": "bytes32"
       },
       {
-        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32",
         "name": "newAdminRole",
-        "internalType": "bytes32",
-        "indexed": true
+        "type": "bytes32"
       }
     ],
-    "anonymous": false
+    "name": "RoleAdminChanged",
+    "type": "event"
   },
   {
-    "type": "event",
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
     "name": "RoleGranted",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role",
-        "internalType": "bytes32",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "sender",
-        "internalType": "address",
-        "indexed": true
-      }
-    ],
-    "anonymous": false
+    "type": "event"
   },
   {
-    "type": "event",
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
     "name": "RoleRevoked",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role",
-        "internalType": "bytes32",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "sender",
-        "internalType": "address",
-        "indexed": true
-      }
-    ],
-    "anonymous": false
+    "type": "event"
   },
   {
-    "type": "event",
-    "name": "TaxPaid",
+    "anonymous": false,
     "inputs": [
       {
-        "type": "address",
-        "name": "from",
+        "indexed": true,
         "internalType": "address",
-        "indexed": true
+        "name": "from",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "id",
+        "indexed": false,
         "internalType": "uint256",
-        "indexed": false
+        "name": "id",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256",
         "name": "amount",
-        "internalType": "uint256",
-        "indexed": false
+        "type": "uint256"
       }
     ],
-    "anonymous": false
+    "name": "TaxPaid",
+    "type": "event"
   },
   {
-    "type": "event",
-    "name": "TransferBatch",
+    "anonymous": false,
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
+        "internalType": "address",
         "name": "operator",
-        "internalType": "address",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
+        "internalType": "address",
         "name": "from",
-        "internalType": "address",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
+        "internalType": "address",
         "name": "to",
-        "internalType": "address",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256[]",
+        "indexed": false,
+        "internalType": "uint256[]",
         "name": "ids",
-        "internalType": "uint256[]",
-        "indexed": false
+        "type": "uint256[]"
       },
       {
-        "type": "uint256[]",
+        "indexed": false,
+        "internalType": "uint256[]",
         "name": "values",
-        "internalType": "uint256[]",
-        "indexed": false
+        "type": "uint256[]"
       }
     ],
-    "anonymous": false
+    "name": "TransferBatch",
+    "type": "event"
   },
   {
-    "type": "event",
-    "name": "TransferSingle",
+    "anonymous": false,
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
+        "internalType": "address",
         "name": "operator",
-        "internalType": "address",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
+        "internalType": "address",
         "name": "from",
-        "internalType": "address",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
+        "internalType": "address",
         "name": "to",
-        "internalType": "address",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256",
         "name": "id",
-        "internalType": "uint256",
-        "indexed": false
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "value",
+        "indexed": false,
         "internalType": "uint256",
-        "indexed": false
+        "name": "value",
+        "type": "uint256"
       }
     ],
-    "anonymous": false
+    "name": "TransferSingle",
+    "type": "event"
   },
   {
-    "type": "event",
-    "name": "URI",
+    "anonymous": false,
     "inputs": [
       {
-        "type": "string",
-        "name": "value",
+        "indexed": false,
         "internalType": "string",
-        "indexed": false
+        "name": "value",
+        "type": "string"
       },
       {
-        "type": "uint256",
-        "name": "id",
+        "indexed": true,
         "internalType": "uint256",
-        "indexed": true
+        "name": "id",
+        "type": "uint256"
       }
     ],
-    "anonymous": false
+    "name": "URI",
+    "type": "event"
   },
   {
-    "type": "event",
-    "name": "Upgraded",
+    "anonymous": false,
     "inputs": [
       {
-        "type": "address",
-        "name": "implementation",
+        "indexed": true,
         "internalType": "address",
-        "indexed": true
+        "name": "implementation",
+        "type": "address"
       }
     ],
-    "anonymous": false
+    "name": "Upgraded",
+    "type": "event"
   },
   {
-    "type": "event",
-    "name": "Upkeep",
+    "anonymous": false,
     "inputs": [
       {
-        "type": "bytes32",
-        "name": "digest",
+        "indexed": true,
         "internalType": "bytes32",
-        "indexed": true
+        "name": "digest",
+        "type": "bytes32"
       }
     ],
-    "anonymous": false
+    "name": "Upkeep",
+    "type": "event"
   },
   {
-    "type": "function",
-    "stateMutability": "view",
-    "outputs": [
-      {
-        "type": "bytes32",
-        "name": "",
-        "internalType": "bytes32"
-      }
-    ],
+    "inputs": [],
     "name": "DEFAULT_ADMIN_ROLE",
-    "inputs": []
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "bytes32",
+        "internalType": "bytes32",
         "name": "",
-        "internalType": "bytes32"
+        "type": "bytes32"
       }
     ],
-    "name": "WHITELISTED_OPERATOR_ROLE",
-    "inputs": []
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "type": "function",
-    "stateMutability": "view",
+    "inputs": [],
+    "name": "WHITELISTED_OPERATOR_ROLE",
     "outputs": [
       {
-        "type": "uint256",
+        "internalType": "bytes32",
         "name": "",
-        "internalType": "uint256"
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "_crafted",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "_limits",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "name": "activeMeeples",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "uint256",
+        "internalType": "uint256",
         "name": "",
-        "internalType": "uint256"
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "_receipients",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "airdrop",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
       }
     ],
     "name": "balanceOf",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address"
-      },
-      {
-        "type": "uint256",
-        "name": "id",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "uint256[]",
+        "internalType": "uint256",
         "name": "",
-        "internalType": "uint256[]"
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "accounts",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
       }
     ],
     "name": "balanceOfBatch",
-    "inputs": [
-      {
-        "type": "address[]",
-        "name": "accounts",
-        "internalType": "address[]"
-      },
-      {
-        "type": "uint256[]",
-        "name": "ids",
-        "internalType": "uint256[]"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "burn",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address"
-      },
-      {
-        "type": "uint256",
-        "name": "id",
-        "internalType": "uint256"
-      },
-      {
-        "type": "uint256",
-        "name": "value",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "burnBatch",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address"
-      },
-      {
-        "type": "uint256[]",
-        "name": "ids",
-        "internalType": "uint256[]"
-      },
-      {
-        "type": "uint256[]",
-        "name": "values",
-        "internalType": "uint256[]"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "craftItems",
-    "inputs": [
-      {
-        "type": "tuple",
-        "name": "request",
-        "internalType": "struct Resources.CraftRequest",
-        "components": [
-          {
-            "type": "address",
-            "name": "from",
-            "internalType": "address"
-          },
-          {
-            "type": "uint256",
-            "name": "fortuneRequired",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256[]",
-            "name": "resourcesIdsRequired",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256[]",
-            "name": "resourcesAmountsRequired",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256[]",
-            "name": "resourcesIdsCrafted",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256[]",
-            "name": "resourcesAmountsCrafted",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256",
-            "name": "expire",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256",
-            "name": "nonce",
-            "internalType": "uint256"
-          }
-        ]
-      },
-      {
-        "type": "bytes",
-        "name": "signature",
-        "internalType": "bytes"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "deposit",
-    "inputs": [
-      {
-        "type": "uint256[]",
-        "name": "ids",
-        "internalType": "uint256[]"
-      },
-      {
-        "type": "uint256[]",
-        "name": "amounts",
-        "internalType": "uint256[]"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "bytes32",
+        "internalType": "uint256[]",
         "name": "",
-        "internalType": "bytes32"
+        "type": "uint256[]"
       }
     ],
-    "name": "domainSeparator",
-    "inputs": []
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "type": "function",
-    "stateMutability": "view",
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "burn",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "values",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "burnBatch",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "clearCrafted",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fortuneRequired",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "resourcesIdsRequired",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "resourcesAmountsRequired",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "resourcesIdsCrafted",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "resourcesAmountsCrafted",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expire",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nonce",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Resources.CraftRequest",
+        "name": "request",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes",
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "craftItems",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fortuneRequired",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "resourcesIdsRequired",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "resourcesAmountsRequired",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "resourcesIdsCrafted",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "resourcesAmountsCrafted",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expire",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nonce",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Resources.CraftRequest",
+        "name": "request",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes",
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "craftWithLimits",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "deposit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "domainSeparator",
     "outputs": [
       {
-        "type": "bool",
+        "internalType": "bytes32",
         "name": "",
-        "internalType": "bool"
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
       }
     ],
     "name": "exists",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "id",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "address",
+        "internalType": "bool",
         "name": "",
-        "internalType": "contract IERC20Burnable"
+        "type": "bool"
       }
     ],
-    "name": "fortune",
-    "inputs": []
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "type": "function",
-    "stateMutability": "view",
+    "inputs": [],
+    "name": "fortune",
     "outputs": [
       {
-        "type": "bytes32",
+        "internalType": "contract IERC20Burnable",
         "name": "",
-        "internalType": "bytes32"
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
       }
     ],
     "name": "getRoleAdmin",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role",
-        "internalType": "bytes32"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "grantRole",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role",
-        "internalType": "bytes32"
-      },
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "bool",
+        "internalType": "bytes32",
         "name": "",
-        "internalType": "bool"
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "grantRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
       }
     ],
     "name": "hasRole",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role",
-        "internalType": "bytes32"
-      },
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "bytes32",
+        "internalType": "bool",
         "name": "",
-        "internalType": "bytes32"
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fortuneRequired",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "resourcesIdsRequired",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "resourcesAmountsRequired",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "resourcesIdsCrafted",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "resourcesAmountsCrafted",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expire",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nonce",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Resources.CraftRequest",
+        "name": "craftRequest",
+        "type": "tuple"
       }
     ],
     "name": "hashCraftRequest",
-    "inputs": [
-      {
-        "type": "tuple",
-        "name": "craftRequest",
-        "internalType": "struct Resources.CraftRequest",
-        "components": [
-          {
-            "type": "address",
-            "name": "from",
-            "internalType": "address"
-          },
-          {
-            "type": "uint256",
-            "name": "fortuneRequired",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256[]",
-            "name": "resourcesIdsRequired",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256[]",
-            "name": "resourcesAmountsRequired",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256[]",
-            "name": "resourcesIdsCrafted",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256[]",
-            "name": "resourcesAmountsCrafted",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256",
-            "name": "expire",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256",
-            "name": "nonce",
-            "internalType": "uint256"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "bytes32",
+        "internalType": "bytes32",
         "name": "",
-        "internalType": "bytes32"
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "ids",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "amounts",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expire",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nonce",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Resources.MintRequest",
+        "name": "mintRequest",
+        "type": "tuple"
       }
     ],
     "name": "hashMintRequest",
-    "inputs": [
-      {
-        "type": "tuple",
-        "name": "mintRequest",
-        "internalType": "struct Resources.MintRequest",
-        "components": [
-          {
-            "type": "address",
-            "name": "to",
-            "internalType": "address"
-          },
-          {
-            "type": "uint256[]",
-            "name": "ids",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256[]",
-            "name": "amounts",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256",
-            "name": "expire",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256",
-            "name": "nonce",
-            "internalType": "uint256"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "bytes32",
+        "internalType": "bytes32",
         "name": "",
-        "internalType": "bytes32"
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "meeple",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "costIds",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "costAmounts",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expire",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nonce",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Resources.UpkeepRequest",
+        "name": "upkeepRequest",
+        "type": "tuple"
       }
     ],
     "name": "hashUpkeepRequest",
-    "inputs": [
-      {
-        "type": "tuple",
-        "name": "upkeepRequest",
-        "internalType": "struct Resources.UpkeepRequest",
-        "components": [
-          {
-            "type": "address",
-            "name": "from",
-            "internalType": "address"
-          },
-          {
-            "type": "uint256",
-            "name": "meeple",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256[]",
-            "name": "costIds",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256[]",
-            "name": "costAmounts",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256",
-            "name": "expire",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256",
-            "name": "nonce",
-            "internalType": "uint256"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "initialize",
-    "inputs": []
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "invalidateRequest",
-    "inputs": [
-      {
-        "type": "tuple",
-        "name": "request",
-        "internalType": "struct Resources.MintRequest",
-        "components": [
-          {
-            "type": "address",
-            "name": "to",
-            "internalType": "address"
-          },
-          {
-            "type": "uint256[]",
-            "name": "ids",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256[]",
-            "name": "amounts",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256",
-            "name": "expire",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256",
-            "name": "nonce",
-            "internalType": "uint256"
-          }
-        ]
-      },
-      {
-        "type": "bytes",
-        "name": "signature",
-        "internalType": "bytes"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "bool",
+        "internalType": "bytes32",
         "name": "",
-        "internalType": "bool"
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "ids",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "amounts",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expire",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nonce",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Resources.MintRequest",
+        "name": "request",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes",
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "invalidateRequest",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
       }
     ],
     "name": "isApprovedForAll",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address"
-      },
-      {
-        "type": "address",
-        "name": "operator",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "uint256",
+        "internalType": "bool",
         "name": "",
-        "internalType": "uint256"
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "name": "lastUpkeep",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "mint",
-    "inputs": [
-      {
-        "type": "tuple",
-        "name": "request",
-        "internalType": "struct Resources.MintRequest",
-        "components": [
-          {
-            "type": "address",
-            "name": "to",
-            "internalType": "address"
-          },
-          {
-            "type": "uint256[]",
-            "name": "ids",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256[]",
-            "name": "amounts",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256",
-            "name": "expire",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256",
-            "name": "nonce",
-            "internalType": "uint256"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "mintWithSig",
-    "inputs": [
-      {
-        "type": "tuple",
-        "name": "request",
-        "internalType": "struct Resources.MintRequest",
-        "components": [
-          {
-            "type": "address",
-            "name": "to",
-            "internalType": "address"
-          },
-          {
-            "type": "uint256[]",
-            "name": "ids",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256[]",
-            "name": "amounts",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256",
-            "name": "expire",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256",
-            "name": "nonce",
-            "internalType": "uint256"
-          }
-        ]
-      },
-      {
-        "type": "bytes",
-        "name": "signature",
-        "internalType": "bytes"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "bytes32",
+        "internalType": "uint256",
         "name": "",
-        "internalType": "bytes32"
+        "type": "uint256"
       }
     ],
-    "name": "proxiableUUID",
-    "inputs": []
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "renounceRole",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role",
-        "internalType": "bytes32"
-      },
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "revokeRole",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role",
-        "internalType": "bytes32"
-      },
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "function",
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "ids",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "amounts",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expire",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nonce",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Resources.MintRequest",
+        "name": "request",
+        "type": "tuple"
+      }
+    ],
+    "name": "mint",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "ids",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "amounts",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expire",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nonce",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Resources.MintRequest",
+        "name": "request",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes",
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "mintWithSig",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proxiableUUID",
     "outputs": [
       {
-        "type": "address",
+        "internalType": "bytes32",
         "name": "",
-        "internalType": "address"
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
       },
       {
-        "type": "uint256",
-        "name": "",
-        "internalType": "uint256"
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "renounceRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "revokeRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_salePrice",
+        "type": "uint256"
       }
     ],
     "name": "royaltyInfo",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_tokenId",
-        "internalType": "uint256"
-      },
-      {
-        "type": "uint256",
-        "name": "_salePrice",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "safeBatchTransferFrom",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "from",
-        "internalType": "address"
-      },
-      {
-        "type": "address",
-        "name": "to",
-        "internalType": "address"
-      },
-      {
-        "type": "uint256[]",
-        "name": "ids",
-        "internalType": "uint256[]"
-      },
-      {
-        "type": "uint256[]",
-        "name": "amounts",
-        "internalType": "uint256[]"
-      },
-      {
-        "type": "bytes",
-        "name": "data",
-        "internalType": "bytes"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "safeTransferFrom",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "from",
-        "internalType": "address"
-      },
-      {
-        "type": "address",
-        "name": "to",
-        "internalType": "address"
-      },
-      {
-        "type": "uint256",
-        "name": "id",
-        "internalType": "uint256"
-      },
-      {
-        "type": "uint256",
-        "name": "amount",
-        "internalType": "uint256"
-      },
-      {
-        "type": "bytes",
-        "name": "data",
-        "internalType": "bytes"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "setApprovalForAll",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "operator",
-        "internalType": "address"
-      },
-      {
-        "type": "bool",
-        "name": "approved",
-        "internalType": "bool"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "setDefaultRoyalty",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "receiver",
-        "internalType": "address"
-      },
-      {
-        "type": "uint96",
-        "name": "feeNumerator",
-        "internalType": "uint96"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "setTokenRoyalty",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId",
-        "internalType": "uint256"
-      },
-      {
-        "type": "address",
-        "name": "receiver",
-        "internalType": "address"
-      },
-      {
-        "type": "uint96",
-        "name": "feeNumerator",
-        "internalType": "uint96"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "setTokenTax",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "id",
-        "internalType": "uint256"
-      },
-      {
-        "type": "uint8",
-        "name": "tax",
-        "internalType": "uint8"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "setUpkeepInterval",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "interval",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "setUri",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_tokenId",
-        "internalType": "uint256"
-      },
-      {
-        "type": "string",
-        "name": "_uri",
-        "internalType": "string"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "bool",
+        "internalType": "address",
         "name": "",
-        "internalType": "bool"
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "safeBatchTransferFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
+      }
+    ],
+    "name": "setApprovalForAll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "setDefaultRoyalty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20Burnable",
+        "name": "_fortune",
+        "type": "address"
+      }
+    ],
+    "name": "setFortune",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "setLimit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_player",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_lastUpkeep",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_activeMeeples",
+        "type": "uint256"
+      }
+    ],
+    "name": "setTestUpkeepValues",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "setTokenRoyalty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "tax",
+        "type": "uint8"
+      }
+    ],
+    "name": "setTokenTax",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "interval",
+        "type": "uint256"
+      }
+    ],
+    "name": "setUpkeepInterval",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_uri",
+        "type": "string"
+      }
+    ],
+    "name": "setUri",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes4",
+        "name": "interfaceId",
+        "type": "bytes4"
       }
     ],
     "name": "supportsInterface",
-    "inputs": [
-      {
-        "type": "bytes4",
-        "name": "interfaceId",
-        "internalType": "bytes4"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "uint256",
+        "internalType": "bool",
         "name": "",
-        "internalType": "uint256"
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
       }
     ],
     "name": "totalSupply",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "id",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "uint8",
+        "internalType": "uint256",
         "name": "",
-        "internalType": "uint8"
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "name": "transferTaxForId",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "upgradeTo",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "payable",
-    "outputs": [],
-    "name": "upgradeToAndCall",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation",
-        "internalType": "address"
-      },
-      {
-        "type": "bytes",
-        "name": "data",
-        "internalType": "bytes"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "upkeep",
-    "inputs": [
-      {
-        "type": "tuple",
-        "name": "request",
-        "internalType": "struct Resources.UpkeepRequest",
-        "components": [
-          {
-            "type": "address",
-            "name": "from",
-            "internalType": "address"
-          },
-          {
-            "type": "uint256",
-            "name": "meeple",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256[]",
-            "name": "costIds",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256[]",
-            "name": "costAmounts",
-            "internalType": "uint256[]"
-          },
-          {
-            "type": "uint256",
-            "name": "expire",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256",
-            "name": "nonce",
-            "internalType": "uint256"
-          }
-        ]
-      },
-      {
-        "type": "bytes",
-        "name": "signature",
-        "internalType": "bytes"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
     "outputs": [
       {
-        "type": "uint256",
+        "internalType": "uint8",
         "name": "",
-        "internalType": "uint256"
+        "type": "uint8"
       }
     ],
-    "name": "upkeepInterval",
-    "inputs": []
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "type": "function",
-    "stateMutability": "view",
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      }
+    ],
+    "name": "upgradeTo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "meeple",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "costIds",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "costAmounts",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expire",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nonce",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Resources.UpkeepRequest",
+        "name": "request",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes",
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "upkeep",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "upkeepInterval",
     "outputs": [
       {
-        "type": "string",
+        "internalType": "uint256",
         "name": "",
-        "internalType": "string"
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
       }
     ],
     "name": "uri",
-    "inputs": [
+    "outputs": [
       {
-        "type": "uint256",
-        "name": "_tokenId",
-        "internalType": "uint256"
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
-    ]
+    ],
+    "stateMutability": "view",
+    "type": "function"
   }
 ]

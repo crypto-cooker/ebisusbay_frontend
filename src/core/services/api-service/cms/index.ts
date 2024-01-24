@@ -16,6 +16,7 @@ import {
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
 import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
 import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
+import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 
 class Cms {
   private profiles: ProfilesRepository;
@@ -172,6 +173,14 @@ class Cms {
 
   async getFaction(id: number, address: string, signature: string) {
     return this.ryoshiDynasties.getFaction(id, address, signature);
+  }
+
+  async getMerchantItems() {
+    return this.ryoshiDynasties.getMerchantItems();
+  }
+
+  async requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string) {
+    return this.ryoshiDynasties.requestMerchantPurchaseAuthorization(payload, address, signature);
   }
 }
 
