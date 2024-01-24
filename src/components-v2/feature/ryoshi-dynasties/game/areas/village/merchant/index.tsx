@@ -88,6 +88,10 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
       toast.error('Please select an item');
       return;
     }
+    if (selectedItem.packs.length < 1) {
+      toast.error('No packs available');
+      return;
+    }
     if (!selectedPack) {
       toast.error('Please select a pack');
       return;
@@ -264,15 +268,20 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
                 <FormLabel fontWeight='bold'>
                   Available {selectedItem.name} Packs
                 </FormLabel>
+
                 <Box>
-                  <Select
-                    onChange={handleSelectPack}
-                    value={selectedPack?.id}
-                  >
-                    {selectedItem.packs.filter((pack) => pack.available > 0).map((pack) => (
-                      <option value={pack.id}>{commify(pack.itemsPerPack)} ({commify(pack.price)} FRTN)</option>
-                    ))}
-                  </Select>
+                  {selectedItem.packs.length > 0 ? (
+                    <Select
+                      onChange={handleSelectPack}
+                      value={selectedPack?.id}
+                    >
+                      {selectedItem.packs.filter((pack) => pack.available > 0).map((pack) => (
+                        <option value={pack.id}>{commify(pack.itemsPerPack)} ({commify(pack.price)} FRTN)</option>
+                      ))}
+                    </Select>
+                  ) : (
+                    <Text>No packs currently available</Text>
+                  )}
                 </Box>
               </FormControl>
             </RdModalBox>
