@@ -7,17 +7,20 @@ import {
   RdGameContext,
   RdUserContext,
   RdUserContextGameTroops,
-  StakedTokenType,
-  TownHallStakeNft
+  StakedTokenType
 } from "@src/core/services/api-service/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 import {
   TownHallStakeRequest,
-  townHallStakeRequestSchema, TownHallUnstakeRequest, townHallUnstakeRequestSchema
+  townHallStakeRequestSchema,
+  TownHallUnstakeRequest,
+  townHallUnstakeRequestSchema
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
 import {FactionUpdateRequest, factionUpdateRequestSchema} from "@src/core/services/api-service/cms/queries/faction";
 import {DeployTroopsRequest, deployTroopsRequestSchema} from "@src/core/services/api-service/cms/queries/deploy";
+import {MerchantItem, MerchantPurchaseRequestResponse} from "@src/core/services/api-service/cms/response-types";
+import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 
 class RyoshiDynastiesRepository extends CmsRepository {
 
@@ -435,6 +438,27 @@ class RyoshiDynastiesRepository extends CmsRepository {
     );
 
     return response.data.data;
+  }
+
+  async getMerchantItems() {
+    const response = await this.cms.get('ryoshi-dynasties/game-tokens/merchant/available');
+
+    return response.data.data as MerchantItem[];
+  }
+
+  async requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string) {
+    const response = await this.cms.get(
+      'ryoshi-dynasties/game-tokens/merchant/authorize/purchase',
+      {
+        params: {
+          ...payload,
+          address,
+          signature
+        }
+      }
+    );
+
+    return response.data.data as MerchantPurchaseRequestResponse;
   }
 }
 

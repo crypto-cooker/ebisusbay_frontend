@@ -7,7 +7,9 @@ import WalletNft from "@src/core/models/wallet-nft";
 import {Listing} from "@src/core/models/listing";
 import {
     Erc20Account,
-    FortuneStakingAccount, Meeple, PresaleVault,
+    FortuneStakingAccount,
+    Meeple,
+    PresaleVault,
     StakedToken,
     StakingAccount
 } from "@src/core/services/api-service/graph/types";
@@ -19,6 +21,8 @@ import {
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
 import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
 import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
+import {MerchantItem} from "@src/core/services/api-service/cms/response-types";
+import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 
 export interface Api {
     getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>>;
@@ -72,6 +76,8 @@ export interface RyoshiDynastiesApi {
     getTownHallWinningFaction(): Promise<any>;
     updateFaction(request: FactionUpdateRequest, address: string, signature: string): Promise<any>;
     getFaction(id: number, address: string, signature: string): Promise<any>;
+    getMerchantItems(): Promise<MerchantItem[]>;
+    requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string): Promise<any>;
 }
 
 export enum ListingState {
