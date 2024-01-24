@@ -25462,6 +25462,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Crooks Empire Weapons",
+      "slug": "crooks-empire-weapons",
+      "multiToken": false,
+      "address": "0xB09b903403775Ac0e294B845bF157Bd6A5e8e329",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Its time to work your way up in the Crooks Empire. Show those other Crooks who is the real boss in this Empire. Collect your weapons, stake them and build on your strength. More strength means more power!",
+        "avatar": "/img/collections/crooks-empire-weapons/avatar.webp",
+        "card": "/img/collections/crooks-empire-weapons/card.webp",
+        "banner": "/img/collections/crooks-empire-weapons/banner.webp",
+        "website": "https://app.crooks.finance/",
+        "twitter": "https://twitter.com/crooksfinance",
+        "discord": "https://discord.gg/crooksfinance",
+        "telegram": "https://t.me/crookstoken",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
