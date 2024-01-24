@@ -21,10 +21,22 @@ import {CloseIcon} from "@chakra-ui/icons";
 import {useIsTouchDevice} from "@src/hooks/use-is-touch-device";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {commify} from "ethers/lib/utils";
-import {round} from "@src/utils";
+import {createSuccessfulTransactionToastContent, round, siPrefixedNumber} from "@src/utils";
 import {useUser} from "@src/components-v2/useUser";
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {ApiService} from "@src/core/services/api-service";
+import {MerchantItem, MerchantItemPack} from "@src/core/services/api-service/cms/response-types";
+import {toast} from "react-toastify";
+import {parseErrorMessage} from "@src/helpers/validator";
+import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {constants, Contract} from "ethers";
+import Resources from "@src/Contracts/Resources.json";
+import {appConfig} from "@src/Config";
+import Fortune from "@src/Contracts/Fortune.json";
+
+const config = appConfig();
 
 interface VillageMerchantProps {
   isOpen: boolean;
@@ -34,19 +46,120 @@ interface VillageMerchantProps {
 
 export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchantProps) => {
   const user = useUser();
-  const [selectedItem, setSelectedItem] = useState<string>();
-  const [amountToPurchase, setAmountToPurchase] = useState('');
+  const {requestSignature} = useEnforceSigner();
+  const queryClient = useQueryClient();
+  const [selectedItem, setSelectedItem] = useState<MerchantItem>();
+  const [selectedPack, setSelectedPack] = useState<MerchantItemPack>();
+  const [isExecuting, setIsExecuting] = useState(false);
 
-  const handleSelectItem = (key: string, selected: boolean) => {
-    setSelectedItem(selected ? key : undefined)
+  const { data: merchantItems} = useQuery({
+    queryKey: ['VillageMerchant'],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getMerchantItems(),
+    enabled: isOpen,
+    refetchOnWindowFocus: false,
+  });
+
+  const resetForm = () => {
+    setSelectedItem(undefined);
+    setSelectedPack(undefined);
   }
 
-  const handleQuantityChange = (e: ChangeEvent<HTMLSelectElement>) => setAmountToPurchase(e.target.value);
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  }
+
+  const handleSelectItem = (item: MerchantItem, selected: boolean) => {
+    setSelectedItem(selected ? item : undefined);
+    setSelectedPack(item.packs[0]);
+  }
+
+  const handleSelectPack = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPack(selectedItem?.packs.find((pack) => pack.id === e.target.value));
+  }
+
+  const handlePurchase = async () => {
+    if (!user.address) return;
+    if (!selectedItem) {
+      toast.error('Please select an item');
+      return;
+    }
+    if (!selectedPack) {
+      toast.error('Please select a pack');
+      return;
+    }
+
+    mutation.mutate()
+  }
+
+  const purchase = async () => {
+    if (!user.address || !selectedItem || !selectedPack) return;
+
+    try {
+      setIsExecuting(true);
+      const signature = await requestSignature();
+      const cmsResponse = await ApiService.withoutKey().ryoshiDynasties.requestMerchantPurchaseAuthorization({
+        tokenAddress: selectedItem.tokenAddress,
+        tokenId: selectedItem.tokenId,
+        packId: selectedPack.id,
+        quantity: 1,
+      }, user.address, signature);
+
+      const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
+      const allowance = await fortuneContract.allowance(user.address, config.contracts.resources);
+      if (allowance.sub(cmsResponse.request.fortuneRequired) < 0) {
+        const approvalTx = await fortuneContract.approve(config.contracts.resources, constants.MaxUint256);
+        await approvalTx.wait();
+      }
+
+      const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.signer);
+      const tx = await resourcesContract.craftWithLimits(cmsResponse.request, cmsResponse.signature);
+      return await tx.wait();
+    } catch (error) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } finally {
+      setIsExecuting(false);
+    }
+  }
+
+  const mutation = useMutation({
+    mutationFn: purchase,
+    onSuccess: data => {
+      try {
+        queryClient.setQueryData(['VillageMerchant'], (old: any) => {
+          if (!data) return old;
+          const item = old.find((a: any) => a.tokenId === selectedItem?.tokenId);
+          if (item && selectedPack) {
+            item.remaining -= selectedPack?.itemsPerPack;
+            item.packs = item.packs.map((pack: any) => {
+              if (pack.id === selectedPack.id) {
+                pack.available -= 1;
+              }
+              return pack;
+            });
+            if (item.remaining < 1) {
+              item.remaining = 0;
+              resetForm();
+            }
+          }
+        });
+      } catch (e) {
+        console.log(e);
+      } finally {
+        toast.success(createSuccessfulTransactionToastContent(data.transactionHash));
+      }
+    },
+    onError: (error: any) => {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    }
+  });
 
   return (
     <RdModal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       title='Merchant'
       isCentered={false}
     >
@@ -91,59 +204,60 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
               <Text mt={2}>Select any available item below to view details.</Text>
             </Box>
           </Stack>
-          <SimpleGrid columns={{base: 2, sm: 3, md: 4}} gap={2}  mt={4}>
-            <SelectableImageComponent2
-              image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/koban-common.png`).fixedWidth(100, 100)}
-              label='96,244 / 100k'
-              isAvailable={true}
-              isDisabled={false}
-              isSelected={selectedItem === 'koban-common'}
-              onSelected={(selected) => handleSelectItem('koban-common', selected)}
-            />
-            <SelectableImageComponent2
-              image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/battle-supplies-uncommon.png`).fixedWidth(100, 100)}
-              label='Unavailable'
-              isAvailable={false}
-              isDisabled={true}
-              isSelected={selectedItem === 'battle-supplies-uncommon'}
-              onSelected={(selected) => handleSelectItem('battle-supplies-uncommon', selected)}
-            />
-            <SelectableImageComponent2
-              image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/mushroom-uncommon.png`).fixedWidth(100, 100)}
-              label='Unavailable'
-              isAvailable={false}
-              isDisabled={true}
-              isSelected={selectedItem === 'mushroom-uncommon'}
-              onSelected={(selected) => handleSelectItem('mushroom-uncommon', selected)}
-            />
-            <SelectableImageComponent2
-              image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/potion-uncommon.png`).fixedWidth(100, 100)}
-              label='Unavailable'
-              isAvailable={false}
-              isDisabled={true}
-              isSelected={selectedItem === 'potion-uncommon'}
-              onSelected={(selected) => handleSelectItem('potion-uncommon', selected)}
-            />
-          </SimpleGrid>
+          {!!merchantItems && (
+            <SimpleGrid columns={{base: 2, sm: 3, md: 4}} gap={2}  mt={4}>
+              {merchantItems.map((item) => (
+                <SelectableImageComponent2
+                  image={ImageService.translate(item.image).fixedWidth(100, 100)}
+                  label={item.remaining > 0 ? `${siPrefixedNumber(item.total - item.remaining)} / ${siPrefixedNumber(item.total)}` : 'Sold Out'}
+                  isAvailable={item.remaining > 0}
+                  isDisabled={false}
+                  isSelected={selectedItem?.tokenId === item.tokenId}
+                  onSelected={(selected) => handleSelectItem(item, selected)}
+                />
+              ))}
+              <SelectableImageComponent2
+                image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/battle-supplies-uncommon.png`).fixedWidth(100, 100)}
+                label='Unavailable'
+                isAvailable={false}
+                isDisabled={true}
+                isSelected={false}
+                onSelected={(selected) => {}}
+              />
+              <SelectableImageComponent2
+                image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/mushroom-uncommon.png`).fixedWidth(100, 100)}
+                label='Unavailable'
+                isAvailable={false}
+                isDisabled={true}
+                isSelected={false}
+                onSelected={(selected) => {}}
+              />
+              <SelectableImageComponent2
+                image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/potion-uncommon.png`).fixedWidth(100, 100)}
+                label='Unavailable'
+                isAvailable={false}
+                isDisabled={true}
+                isSelected={false}
+                onSelected={(selected) => {}}
+              />
+            </SimpleGrid>
+          )}
         </RdModalBox>
         {!!selectedItem && (
           <SimpleGrid columns={{base: 1, md: 2}} gap={2} mt={2}>
             <RdModalBox>
               <FormControl>
                 <FormLabel fontWeight='bold'>
-                  Available Koban Packs
+                  Available {selectedItem.name} Packs
                 </FormLabel>
                 <Box>
                   <Select
-                    onChange={handleQuantityChange}
-                    value={amountToPurchase}
+                    onChange={handleSelectPack}
+                    value={selectedPack?.id}
                   >
-                    <option value='500'>500 (50 FRTN)</option>
-                    <option value='2600'>2,600 (250 FRTN)</option>
-                    <option value='5300'>5,300 (500 FRTN)</option>
-                    <option value='11000'>11,000 (1,000 FRTN)</option>
-                    <option value='28000'>28,000 (2,500 FRTN)</option>
-                    <option value='57000'>57,000 (5,000 FRTN)</option>
+                    {selectedItem.packs.filter((pack) => pack.available > 0).map((pack) => (
+                      <option value={pack.id}>{commify(pack.itemsPerPack)} ({commify(pack.price)} FRTN)</option>
+                    ))}
                   </Select>
                 </Box>
               </FormControl>
@@ -154,18 +268,22 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
                   <GridItem ><Box textAlign={{base: 'start', sm: 'end'}}>FRTN Price:</Box></GridItem>
                   <GridItem>
                     <Box textAlign='end'>
-                      <HStack justify='end' spacing={1} ps={2}>
-                        <FortuneIcon boxSize={5} />
-                        <Text  fontWeight='bold'>1,234</Text>
-                      </HStack>
+                      {!!selectedPack && (
+                        <HStack justify='end' spacing={1} ps={2}>
+                          <FortuneIcon boxSize={5} />
+                          <Text fontWeight='bold'>{commify(selectedPack.price)}</Text>
+                        </HStack>
+                      )}
                     </Box>
                   </GridItem>
                   <GridItem alignSelf='end'><Box textAlign={{base: 'start', sm: 'end'}} fontSize='xl'>Receive:</Box></GridItem>
                   <GridItem alignSelf='end'>
-                    <HStack justify='end' fontSize='2xl' fontWeight='bold' spacing={1} ps={2}>
-                      <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/>
-                      <Text  fontWeight='bold'>57,000</Text>
-                    </HStack>
+                    {!!selectedPack && (
+                      <HStack justify='end' fontSize='2xl' fontWeight='bold' spacing={1} ps={2}>
+                        <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/>
+                        <Text fontWeight='bold'>{commify(selectedPack.itemsPerPack)}</Text>
+                      </HStack>
+                    )}
                   </GridItem>
                 </SimpleGrid>
               </Flex>
@@ -180,10 +298,10 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
             <Box textAlign='center' mx={2} ps='20px'>
               <RdButton
                 stickyIcon={true}
-                onClick={() => {}}
+                onClick={handlePurchase}
                 fontSize={{base: 'xl', sm: '2xl'}}
-                // isLoading={isExecuting}
-                // isDisabled={isExecuting}
+                isLoading={isExecuting}
+                isDisabled={isExecuting}
               >
                 Purchase
               </RdButton>

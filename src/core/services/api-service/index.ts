@@ -32,6 +32,7 @@ import {
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
 import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
 import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
+import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -406,5 +407,13 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async getFaction(id: number, address: string, signature: string) {
     return this.cms.getFaction(id, address, signature);
+  }
+
+  async getMerchantItems() {
+    return this.cms.getMerchantItems();
+  }
+
+  async requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string) {
+    return this.cms.requestMerchantPurchaseAuthorization(payload, address, signature);
   }
 }

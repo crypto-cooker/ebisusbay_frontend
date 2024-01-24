@@ -18,6 +18,13 @@ import {
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
 import {FactionUpdateRequest, factionUpdateRequestSchema} from "@src/core/services/api-service/cms/queries/faction";
 import {DeployTroopsRequest, deployTroopsRequestSchema} from "@src/core/services/api-service/cms/queries/deploy";
+import {
+  MerchantItem,
+  MerchantItems,
+  MerchantItemsResponse,
+  MerchantPurchaseRequestResponse
+} from "@src/core/services/api-service/cms/response-types";
+import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 
 class RyoshiDynastiesRepository extends CmsRepository {
 
@@ -435,6 +442,27 @@ class RyoshiDynastiesRepository extends CmsRepository {
     );
 
     return response.data.data;
+  }
+
+  async getMerchantItems() {
+    const response = await this.cms.get('ryoshi-dynasties/game-tokens/merchant/available');
+
+    return response.data.data as MerchantItem[];
+  }
+
+  async requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string) {
+    const response = await this.cms.get(
+      'ryoshi-dynasties/game-tokens/merchant/authorize/purchase',
+      {
+        params: {
+          ...payload,
+          address,
+          signature
+        }
+      }
+    );
+
+    return response.data.data as MerchantPurchaseRequestResponse;
   }
 }
 
