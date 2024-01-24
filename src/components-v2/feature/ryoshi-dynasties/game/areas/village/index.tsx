@@ -399,7 +399,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       <Sprite
                         id='merchant'
                         position={{x: buildings.merchant.left, y: buildings.merchant.top}}
-                        image={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-open.apng`).convert()}
+                        image={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-looped.apng`).convert()}
                         zIndex={9}
                         onClick={onOpenMerchant}
                       />

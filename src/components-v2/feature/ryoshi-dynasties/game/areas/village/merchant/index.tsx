@@ -202,7 +202,11 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
 
         <RdModalBox mt={2}>
           <Stack direction='row'>
-            <Image src={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-open.apng`).convert()} />
+            {hasAnythingAvailable ? (
+              <Image src={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-opened.png`).convert()} />
+            ) : (
+              <Image src={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-closed.png`).convert()} />
+            )}
             <Box textAlign='center'>
               {hasAnythingAvailable ? (
                 <Box>
