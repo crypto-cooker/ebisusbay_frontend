@@ -59,6 +59,10 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
     refetchOnWindowFocus: false,
   });
 
+  const hasAnythingAvailable = useMemo(() => {
+    return !!merchantItems?.find((item: any) => item.remaining > 0);
+  }, [merchantItems]);
+
   const resetForm = () => {
     setSelectedItem(undefined);
     setSelectedPack(undefined);
@@ -200,12 +204,18 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
           <Stack direction='row'>
             <Image src={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-open.apng`).convert()} />
             <Box textAlign='center'>
-              <Text>Greetings traveler do you need something? Rio has got you covered.</Text>
-              <Text mt={2}>Select any available item below to view details.</Text>
+              {hasAnythingAvailable ? (
+                <Box>
+                  <Text>Greetings traveler do you need something? Rio has got you covered.</Text>
+                  <Text mt={2}>Select any available item below to view details.</Text>
+                </Box>
+              ) : (
+                <Text>Greetings traveler, Rio is all out of wares. Check back next week.</Text>
+              )}
             </Box>
           </Stack>
           {!!merchantItems && (
-            <SimpleGrid columns={{base: 2, sm: 3, md: 4}} gap={2}  mt={4}>
+            <SimpleGrid columns={{base: 2, sm: 3, md: 4}} gap={2} mt={4} justifyItems='center'>
               {merchantItems.map((item) => (
                 <SelectableImageComponent2
                   image={ImageService.translate(item.image).fixedWidth(100, 100)}
@@ -290,24 +300,26 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
             </RdModalBox>
           </SimpleGrid>
         )}
-        <AuthenticationRdButton
-          connectText='Connect wallet to purchase'
-          requireSignin={false}
-        >
-          <RdModalFooter>
-            <Box textAlign='center' mx={2} ps='20px'>
-              <RdButton
-                stickyIcon={true}
-                onClick={handlePurchase}
-                fontSize={{base: 'xl', sm: '2xl'}}
-                isLoading={isExecuting}
-                isDisabled={isExecuting}
-              >
-                Purchase
-              </RdButton>
-            </Box>
-          </RdModalFooter>
-        </AuthenticationRdButton>
+        {hasAnythingAvailable && (
+          <AuthenticationRdButton
+            connectText='Connect wallet to purchase'
+            requireSignin={false}
+          >
+            <RdModalFooter>
+              <Box textAlign='center' mx={2} ps='20px'>
+                <RdButton
+                  stickyIcon={true}
+                  onClick={handlePurchase}
+                  fontSize={{base: 'xl', sm: '2xl'}}
+                  isLoading={isExecuting}
+                  isDisabled={isExecuting}
+                >
+                  Purchase
+                </RdButton>
+              </Box>
+            </RdModalFooter>
+          </AuthenticationRdButton>
+        )}
       </RdModalBody>
     </RdModal>
   )
