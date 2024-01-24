@@ -442,7 +442,7 @@ export const configData = {
       }
     },
     rpc: {
-      read: 'https://rpc.ebisusbay.biz/',
+      read: 'https://testnet-archive.cronoslabs.com/v1/9e45d288f24ea538e34bc9919da2d360/',
       write: 'https://evm-t3.cronos.org/',
     },
     contracts: {
