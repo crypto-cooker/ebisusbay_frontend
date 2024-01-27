@@ -25300,7 +25300,7 @@
       "multiToken": false,
       "address": "0x4E0f0Ec1498B0FEc3cE0Ea0f9Cd8f9A95d567127",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of battle hardened HoundZ. Ready for war and vying for power in a world ruled by KillaKatZ.",
         "avatar": "/img/collections/houndz/avatar.webp",
