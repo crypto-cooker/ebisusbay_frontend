@@ -25488,6 +25488,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "BSD/LSD",
+      "slug": "bsd-lsd",
+      "multiToken": false,
+      "address": "0xaE843862c98968847273848D4947b312E93D660C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Honoring the blue and leafy sea dragons of Gaia, BSD/LSD are a collection of staking boosters for all cronos Gaian collections. ",
+        "avatar": "/img/collections/bsd-lsd/avatar.webp",
+        "card": "/img/collections/bsd-lsd/card.webp",
+        "banner": "/img/collections/bsd-lsd/banner.webp",
+        "website": "https://gaia-eco.netlify.app/",
+        "twitter": "https://twitter.com/GaiaEcoNFT",
+        "discord": "https://discord.gg/gaiaeconft",
+        "categories": [
+          "utility",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
