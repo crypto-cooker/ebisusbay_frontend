@@ -13774,7 +13774,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Rich Kids is a three part set of 10,000 boys, 10,000 girls, and 10,000 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst.",
+        "description": "The Rich Kids is a three part set of 7,500 boys, 7,500 girls, and 7,500 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst.",
         "avatar": "/img/collections/the-rich-kids/avatar.webp",
         "card": "/img/collections/the-rich-kids/card.webp",
         "banner": "/img/collections/the-rich-kids/banner.webp",
@@ -18095,7 +18095,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Rich Kids is a three part set of 10,000 boys, 10,000 girls, and 10,000 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst. The Girls compliment the Boys to pilot the jets.",
+        "description": "The Rich Kids is a three part set of 7,500 boys, 7,500 girls, and 7,500 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst. The Girls compliment the Boys to pilot the jets.",
         "avatar": "/img/collections/the-rich-girls/avatar.webp",
         "card": "/img/collections/the-rich-girls/card.webp",
         "banner": "/img/collections/the-rich-girls/banner.webp",
@@ -25481,6 +25481,32 @@
         "telegram": "https://t.me/crookstoken",
         "categories": [
           "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BSD/LSD",
+      "slug": "bsd-lsd",
+      "multiToken": false,
+      "address": "0xaE843862c98968847273848D4947b312E93D660C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Honoring the blue and leafy sea dragons of Gaia, BSD/LSD are a collection of staking boosters for all cronos Gaian collections. ",
+        "avatar": "/img/collections/bsd-lsd/avatar.webp",
+        "card": "/img/collections/bsd-lsd/card.webp",
+        "banner": "/img/collections/bsd-lsd/banner.webp",
+        "website": "https://gaia-eco.netlify.app/",
+        "twitter": "https://twitter.com/GaiaEcoNFT",
+        "discord": "https://discord.gg/gaiaeconft",
+        "categories": [
+          "utility",
+          "collectibles"
         ]
       },
       "verification": {
