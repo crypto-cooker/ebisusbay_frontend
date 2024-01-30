@@ -1,5 +1,7 @@
-import {Heading, Text} from "@chakra-ui/react";
+import {Box, Flex, Heading, Text} from "@chakra-ui/react";
 import React from "react";
+import {useColorModeValue} from "@chakra-ui/color-mode";
+import {DefaultContainer} from "@src/components-v2/shared/default-container";
 
 interface HeaderProps {
   title: string;
@@ -7,22 +9,40 @@ interface HeaderProps {
 }
 
 const PageHeader = ({ title, subtitle }: HeaderProps) => {
+  const bgImage = useColorModeValue('/img/background/Ebisu-DT-Header.webp', '/img/background/header-dark.webp');
 
   return (
-    <section className="jumbotron breadcumb no-bg tint">
-      <div className="mainbreadcumb">
-        <div className="container">
-          <div className="row m-10-hor">
-            <div className="col-12">
-              <Heading as="h1" size="2xl" className="text-center">{title}</Heading>
-              {subtitle && (
-                <Text align="center" fontWeight='bold'>{subtitle}</Text>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <Flex
+      minH={{base:'100px', md:'150px'}}
+      bg='black'
+      position='relative'
+      alignItems='center'
+      justify='center'
+    >
+      <Box
+        h='full'
+        backgroundImage={`linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.75) 90%), url(${bgImage})`}
+        backgroundRepeat='no-repeat'
+        backgroundSize='cover'
+        backgroundPosition='center'
+        filter='brightness(0.8)'
+        w="100%"
+        position="absolute"
+      />
+      <DefaultContainer>
+        <Flex
+          position='relative'
+          py={6}
+          direction='column'
+          h='full'
+        >
+          <Heading as='h1' size={{base: 'xl', sm: '2xl'}} color='white' textShadow='2px 2px 4px rgba(0, 0, 0, 0.5)'>{title}</Heading>
+          {subtitle && (
+            <Text fontWeight='bold' color='white' fontSize={{base: 'sm', sm: 'md'}}>{subtitle}</Text>
+          )}
+        </Flex>
+      </DefaultContainer>
+    </Flex>
   )
 }
 

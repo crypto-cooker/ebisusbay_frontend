@@ -70,7 +70,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
                   Fortune
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.resources} onClick={handleBtnClick(tabs.resources)}>
-                  Resources
+                  Koban
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.presale} onClick={handleBtnClick(tabs.presale)}>
                   Presale

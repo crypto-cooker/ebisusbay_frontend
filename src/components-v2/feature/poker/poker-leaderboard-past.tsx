@@ -45,6 +45,8 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				return'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'
 			case PokerCollection.Hearts:	
 				return 'https://blog.ebisusbay.com/crypto-hodlem-round-3-ryoshi-hearts-%EF%B8%8F-playing-cards-collection-e5ae3361c32e'
+			case PokerCollection.Spades:
+				return 'https://blog.ebisusbay.com/announcing-the-exciting-spades-mint-for-ryoshi-playing-cards-join-the-crazy-eights-challenge-5b554d78330d'
 		}
 	}
 	
@@ -100,9 +102,21 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		download(JSON.stringify(fortuneRewards), "ryoshi-clubs-fortune.json", "text/plain");
 		download(JSON.stringify(nftRewards), "ryoshi-clubs-NFTS.json", "text/plain");
 	}
+	const GetSuite = (suite: number) => {
+		switch(suite){
+			case 3:
+				return "♠️";
+			case 2:
+				return "♥️";
+			case 1:
+				return "♦️";
+			case 0:
+				return "♣️";
+		}
+	}
 
 	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt, refetch } = useInfiniteQuery({
-		queryKey: ['RyoshiDiamondsLeaderboard'],
+		queryKey: ['RyoshiPlayingCardsLeaderboard', pokerCollection],
 		queryFn: ({pageParam = 1}) => ApiService.withoutKey().getPokerLeaderboardAtBlock(pageParam, 500, pokerCollection),
 		initialPageParam: 1,
 		getNextPageParam: (lastPage, pages) => {
@@ -314,11 +328,12 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 					{ pokerCollection === PokerCollection.Hearts ?
 						<Text textColor={i%2 ? 'red':'white'}>{getCardName(player.bestHand.secondaryValue)}</Text>
 						: <Text>{getCardName(player.bestHand.secondaryValue)}</Text>}
+
 						{player?.bestHand?.secondaryCardEdition! >= 0 &&
 							<Text
 							fontSize={{base: 8, md:12}}
 							color={'gray.500'}
-						>id:{player.bestHand.secondaryCardEdition!}</Text>
+						>id:{player.bestHand.secondaryCardEdition!} {GetSuite(player.bestHand.secondaryCardSuit!)}</Text>
 						}
 					</HStack>
 				</GridItem>

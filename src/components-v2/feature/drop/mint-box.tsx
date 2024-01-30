@@ -31,6 +31,7 @@ import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceS
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import Bank from "@src/Contracts/Bank.json";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -96,17 +97,30 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     return typeof dropAbi === 'undefined' || dropAbi.length === 0;
   };
   
-  const calculateCost = async (user: any) => {
-    if (isUsingDefaultDropAbi(drop.abi) || isUsingAbiFile(drop.abi)) {
-      let readContract = await new ethers.Contract(drop.address, abi, readProvider);
-      if (abi.find((m: any) => m.name === 'cost')) {
-        return await readContract.cost(user.address);
-      }
-      return await readContract.mintCost(user.address);
-    }
+  const calculateCost = async (user: any, fundingType?: FundingType) => {
     const regCost = ethers.utils.parseEther(regularCost.toString() ?? '0');
     const mbrCost = ethers.utils.parseEther(memberCost?.toString() ?? '0');
-    return user.isMember && !!memberCost ? mbrCost : regCost;
+
+    if (drop.memberMitama) {
+      if (fundingType === FundingType.REWARDS) {
+        return ethers.utils.parseEther(drop.rewardCost?.toString() ?? '0');
+      }
+      const bankContract = await new ethers.Contract(config.contracts.bank, Bank, readProvider);
+      const mitamaAmount = await bankContract.getMitamaFor(user.address);
+      const isMember = mitamaAmount.gte(drop.memberMitama);
+      return isMember && !!memberCost ? mbrCost : regCost;
+    } else {
+      if (isUsingDefaultDropAbi(drop.abi) || isUsingAbiFile(drop.abi)) {
+        let readContract = await new ethers.Contract(drop.address, abi, readProvider);
+        if (abi.find((m: any) => m.name === 'cost')) {
+          return await readContract.cost(user.address);
+        }
+        return await readContract.mintCost(user.address);
+      }
+
+      return user.isMember && !!memberCost ? mbrCost : regCost;
+    }
+
   };
 
   const convertTime = (time: any) => {
@@ -120,7 +134,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     runAuthedFunction(async () => {
       setMintingWithType(fundingType)
       try {
-        const cost = await calculateCost(user);
+        const cost = await calculateCost(user, fundingType);
         let finalCost = cost.mul(numToMint);
 
         if (!isUsingDefaultDropAbi(drop.abi) && !isUsingAbiFile(drop.abi)) {
@@ -175,7 +189,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   const mintWithCro = async (finalCost: number) => {
     const actualContract = contractService!.custom(drop.address, abi);
 
-    const gasPrice = parseUnits('5000', 'gwei');
+    const gasPrice = parseUnits('20000', 'gwei');
     const gasEstimate = await actualContract.estimateGas.mint(numToMint, {value: finalCost});
     const gasLimit = gasEstimate.mul(2);
     let extra = {
@@ -198,7 +212,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     }
 
     const actualContract = contractService!.custom(drop.address, abi);
-    const gasPrice = parseUnits('5000', 'gwei');
+    const gasPrice = parseUnits('20000', 'gwei');
     const gasEstimate = await actualContract.estimateGas.mintWithToken(numToMint);
     const gasLimit = gasEstimate.mul(2);
     let extra = {
@@ -220,7 +234,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       signature
     );
 
-    const gasPrice = parseUnits('5000', 'gwei');
+    const gasPrice = parseUnits('20000', 'gwei');
 
     const actualContract = contractService!.custom(drop.address, abi);
     const gasEstimate = await actualContract.estimateGas.mintWithRewards(numToMint, authorization.reward, authorization.signature);

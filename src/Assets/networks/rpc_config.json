@@ -13774,7 +13774,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Rich Kids is a three part set of 10,000 boys, 10,000 girls, and 10,000 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst.",
+        "description": "The Rich Kids is a three part set of 7,500 boys, 7,500 girls, and 7,500 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst.",
         "avatar": "/img/collections/the-rich-kids/avatar.webp",
         "card": "/img/collections/the-rich-kids/card.webp",
         "banner": "/img/collections/the-rich-kids/banner.webp",
@@ -18095,7 +18095,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Rich Kids is a three part set of 10,000 boys, 10,000 girls, and 10,000 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst. The Girls compliment the Boys to pilot the jets.",
+        "description": "The Rich Kids is a three part set of 7,500 boys, 7,500 girls, and 7,500 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst. The Girls compliment the Boys to pilot the jets.",
         "avatar": "/img/collections/the-rich-girls/avatar.webp",
         "card": "/img/collections/the-rich-girls/card.webp",
         "banner": "/img/collections/the-rich-girls/banner.webp",
@@ -24719,7 +24719,7 @@
       "multiToken": false,
       "address": "0xd4E29bdba77c948b04C3ACd67C1dAC17264d2983",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The first $CRO nfts to hit mainstream gaming as in-game assets. \uD83C\uDFAE  Degen Royale / Skully-X / The Monsters",
         "avatar": "/img/collections/degen-royale-guns-on-cronos/avatar.webp",
@@ -25300,7 +25300,7 @@
       "multiToken": false,
       "address": "0x4E0f0Ec1498B0FEc3cE0Ea0f9Cd8f9A95d567127",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of battle hardened HoundZ. Ready for war and vying for power in a world ruled by KillaKatZ.",
         "avatar": "/img/collections/houndz/avatar.webp",
@@ -25454,6 +25454,58 @@
         "discord": "https://discord.gg/degenbrains",
         "medium": "https://medium.com/@degenbrains",
         "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crooks Empire Weapons",
+      "slug": "crooks-empire-weapons",
+      "multiToken": false,
+      "address": "0xB09b903403775Ac0e294B845bF157Bd6A5e8e329",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Its time to work your way up in the Crooks Empire. Show those other Crooks who is the real boss in this Empire. Collect your weapons, stake them and build on your strength. More strength means more power!",
+        "avatar": "/img/collections/crooks-empire-weapons/avatar.webp",
+        "card": "/img/collections/crooks-empire-weapons/card.webp",
+        "banner": "/img/collections/crooks-empire-weapons/banner.webp",
+        "website": "https://app.crooks.finance/",
+        "twitter": "https://twitter.com/crooksfinance",
+        "discord": "https://discord.gg/crooksfinance",
+        "telegram": "https://t.me/crookstoken",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "BSD/LSD",
+      "slug": "bsd-lsd",
+      "multiToken": false,
+      "address": "0xaE843862c98968847273848D4947b312E93D660C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Honoring the blue and leafy sea dragons of Gaia, BSD/LSD are a collection of staking boosters for all cronos Gaian collections. ",
+        "avatar": "/img/collections/bsd-lsd/avatar.webp",
+        "card": "/img/collections/bsd-lsd/card.webp",
+        "banner": "/img/collections/bsd-lsd/banner.webp",
+        "website": "https://gaia-eco.netlify.app/",
+        "twitter": "https://twitter.com/GaiaEcoNFT",
+        "discord": "https://discord.gg/gaiaeconft",
+        "categories": [
+          "utility",
           "collectibles"
         ]
       },
@@ -32922,6 +32974,55 @@
         "verified": true,
         "doxx": "public",
         "kyc": "hidden",
+        "escrow": false
+      }
+    },
+    {
+      "id": 190,
+      "slug": "ryoshi-spades",
+      "collection": "ryoshi-playing-cards",
+      "title": "Ryoshi Spades",
+      "subtitle": "Ryoshi Spades: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #4 Ryoshi Spades, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
+      "description": "Mint directly from your Rewards pool:\nUsers can mint from their Rewards Pool at the full price without altering or affecting their Karmic Debt \n\nMaximum Mints per Wallet:\nThe maximum mint per wallet is now set at 30 NFTs\n\nCrypto Hodl'em #3 eligibility criteria: \nUsers' hand must be composed of a minimum of 5 “Ryoshi Playing Cards” collectibles. Of these, at least 3 out of 5 cards must belong to the Spades Suit Collection. The remaining 2 out of 5 cards can belong to any available suit (Spades, Hearts, Diamonds, or Clubs)",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xd87838a982a401510255ec27e603b0f5fea98d24",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 4000,
+      "supplyOffset": 12000,
+      "erc20Cost": "100",
+      "erc20MemberCost": "50",
+      "rewardCost": "60",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "memberMitama": 1000,
+      "foundersOnly": false,
+      "abi": "mint-from-rewards.json",
+      "start": 1706648400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-spades/drop.webp",
+        "avatar": "/img/drops/ryoshi-hearts/avatar.webp",
+        "banner": "/img/drops/ryoshi-spades/banner.webp",
+        "preview": "/img/drops/ryoshi-spades/preview.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
         "escrow": false
       }
     }

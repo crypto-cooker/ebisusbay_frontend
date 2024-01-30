@@ -27,6 +27,7 @@ import {
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
+import Markdown from "react-markdown";
 
 const NotificationMenu = function () {
   const history = useRouter();
@@ -158,9 +159,11 @@ const NotificationMenu = function () {
                               <Box className='text-muted fst-italic'>
                                 {timeSince(new Date(item.createdAt))} ago
                               </Box>
-                              <span className="cursor-pointer" onClick={() => navigateTo(item.link)}>
-                                {item.message}
-                              </span>
+                              <Box cursor='pointer' onClick={() => navigateTo(item.link)}>
+                                <Markdown>
+                                  {item.message}
+                                </Markdown>
+                              </Box>
                             </Box>
                             <Box my='auto' ms={4} me={1} cursor='pointer' onClick={handleDeleteNotification(item)}>
                               <FontAwesomeIcon icon={faTrash} />
@@ -221,5 +224,9 @@ const imageMappings: {[key:string]: {icon: string, alt: string}} = {
   ANNOUNCEMENT: {
     icon: '/img/icons/notifications/announcement.svg',
     alt: 'Announcement'
+  },
+  REMINDER: {
+    icon: '/img/icons/notifications/general.svg',
+    alt: 'Reminder'
   }
 }

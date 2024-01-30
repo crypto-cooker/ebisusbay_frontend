@@ -32,6 +32,7 @@ import {
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
 import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
 import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
+import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -97,7 +98,7 @@ export class ApiService implements Api {
     //info from subgraph
     const owners = await getOwners(pokerCollection);
 
-    let gameNumber = 2;
+    let gameNumber = 0;
 
     if (pokerCollection == PokerCollection.Diamonds) {
       gameNumber = 1;
@@ -105,6 +106,8 @@ export class ApiService implements Api {
       gameNumber = 2;
     } else if (pokerCollection == PokerCollection.Hearts) {
       gameNumber = 3;
+    } else if (pokerCollection == PokerCollection.Spades) {
+      gameNumber = 4;
     }
 
     const response = await RankPlayers(owners, gameNumber);
@@ -406,5 +409,13 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async getFaction(id: number, address: string, signature: string) {
     return this.cms.getFaction(id, address, signature);
+  }
+
+  async getMerchantItems() {
+    return this.cms.getMerchantItems();
+  }
+
+  async requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string) {
+    return this.cms.requestMerchantPurchaseAuthorization(payload, address, signature);
   }
 }
