@@ -116,7 +116,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 	}
 
 	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt, refetch } = useInfiniteQuery({
-		queryKey: ['RyoshiDiamondsLeaderboard'],
+		queryKey: ['RyoshiPlayingCardsLeaderboard', pokerCollection],
 		queryFn: ({pageParam = 1}) => ApiService.withoutKey().getPokerLeaderboardAtBlock(pageParam, 500, pokerCollection),
 		initialPageParam: 1,
 		getNextPageParam: (lastPage, pages) => {
