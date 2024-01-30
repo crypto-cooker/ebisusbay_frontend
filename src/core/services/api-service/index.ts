@@ -98,7 +98,7 @@ export class ApiService implements Api {
     //info from subgraph
     const owners = await getOwners(pokerCollection);
 
-    let gameNumber = 2;
+    let gameNumber = 0;
 
     if (pokerCollection == PokerCollection.Diamonds) {
       gameNumber = 1;
@@ -106,6 +106,8 @@ export class ApiService implements Api {
       gameNumber = 2;
     } else if (pokerCollection == PokerCollection.Hearts) {
       gameNumber = 3;
+    } else if (pokerCollection == PokerCollection.Spades) {
+      gameNumber = 4;
     }
 
     const response = await RankPlayers(owners, gameNumber);
