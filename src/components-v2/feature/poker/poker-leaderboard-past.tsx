@@ -46,7 +46,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 			case PokerCollection.Hearts:	
 				return 'https://blog.ebisusbay.com/crypto-hodlem-round-3-ryoshi-hearts-%EF%B8%8F-playing-cards-collection-e5ae3361c32e'
 			case PokerCollection.Spades:
-				return 'https://blog.ebisusbay.com/crypto-hodlem-round-4-ryoshi-spades-%EF%B8%8F-playing-cards-collection-8f0f9e8d2d1b'
+				return 'https://blog.ebisusbay.com/announcing-the-exciting-spades-mint-for-ryoshi-playing-cards-join-the-crazy-eights-challenge-5b554d78330d'
 		}
 	}
 	
