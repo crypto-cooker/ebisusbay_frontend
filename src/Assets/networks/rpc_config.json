@@ -32976,6 +32976,55 @@
         "kyc": "hidden",
         "escrow": false
       }
+    },
+    {
+      "id": 190,
+      "slug": "ryoshi-spades",
+      "collection": "ryoshi-playing-cards",
+      "title": "Ryoshi Spades",
+      "subtitle": "Ryoshi Spades: A new rewarded game-fi experience for the Crofam! \nTo celebrate the launch of the Playing Cards Collection #4 Ryoshi Spades, the Ebisu’s Bay team introduces the “Crypto Hodl’em” contest, with over 500k $FRTN and exclusive NFT rewards, adding new layers of utilities and possibilities to the Ebisu’s Bay Ecosystem.",
+      "description": "Mint directly from your Rewards pool:\nUsers can mint from their Rewards Pool at the full price without altering or affecting their Karmic Debt \n\nMaximum Mints per Wallet:\nThe maximum mint per wallet is now set at 30 NFTs\n\nCrypto Hodl'em #3 eligibility criteria: \nUsers' hand must be composed of a minimum of 5 “Ryoshi Playing Cards” collectibles. Of these, at least 3 out of 5 cards must belong to the Spades Suit Collection. The remaining 2 out of 5 cards can belong to any available suit (Spades, Hearts, Diamonds, or Clubs)",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0xd87838a982a401510255ec27e603b0f5fea98d24",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 4000,
+      "supplyOffset": 12000,
+      "erc20Cost": "1000",
+      "erc20MemberCost": "50",
+      "rewardCost": "60",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "memberMitama": 1000,
+      "foundersOnly": false,
+      "abi": "mint-from-rewards.json",
+      "start": 1706648400000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-spades/drop.webp",
+        "avatar": "/img/drops/ryoshi-hearts/avatar.webp",
+        "banner": "/img/drops/ryoshi-hearts/banner.webp",
+        "preview": "/img/drops/ryoshi-spades/preview.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
     }
   ]
 }
