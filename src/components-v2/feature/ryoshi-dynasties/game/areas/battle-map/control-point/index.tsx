@@ -6,7 +6,7 @@ import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/
 import {useAppSelector} from "@src/Store/hooks";
 import {RdGameState} from "@src/core/services/api-service/types";
 
-import DeployTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/deploy";
+import DispatchTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/deploy";
 import InfoTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/info";
 import AttackTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/attack";
 import HelpPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/help";
@@ -42,7 +42,6 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
   const [title, setTitle] = useState('');
   // const [info, setInfo] = useState([]);
   // const [rewardID, setRewardID] = useState(0);
-  const user = useAppSelector((state) => state.user);
   const [regionBonus, setRegionBonus] = useState(0);
 
   const [currentTab, setCurrentTab] = useState(tabs.info);
@@ -176,7 +175,7 @@ const ControlPointModal = ({ isOpen, onClose, controlPoint, refreshControlPoint,
                     )}
                     {currentTab === tabs.deploy && (
                       battleEnabled ? (
-                        <DeployTab
+                        <DispatchTab
                           controlPoint={controlPoint}
                           refreshControlPoint={refreshControlPoint}
                           factionsSubscribedToSeason={allFactions.sort((a:any, b:any) => a.name.localeCompare(b.name))}

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 
-import {Contract, ethers} from 'ethers';
+import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import {
   createSuccessfulTransactionToastContent,
@@ -13,8 +12,6 @@ import {
   timeSince,
   usdFormat
 } from '@src/utils';
-import MetaMaskOnboarding from '@metamask/onboarding';
-import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {listingState} from '@src/core/api/enums';
 import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
 import Button from "@src/Components/components/Button";
@@ -41,14 +38,12 @@ import {
 } from '@chakra-ui/react';
 import PurchaseConfirmationDialog from "@src/components-v2/shared/dialogs/purchase-confirmation";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
-import {TransactionReceipt} from "@ethersproject/abstract-provider";
 import {useAppSelector} from "@src/Store/hooks";
-import ContractService from "@src/core/contractService";
 import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {commify} from "ethers/lib/utils";
-import {parseErrorMessage} from "@src/helpers/validator";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -63,14 +58,15 @@ interface PriceActionBarProps {
 }
 
 const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }: PriceActionBarProps) => {
-  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [runAuthedFunction] = useAuthedFunction();
 
   const { Features } = Constants;
   const isWarningMessageEnabled = useFeatureFlag(Features.UNVERIFIED_WARNING);
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
+
   const { currentListing: listing, nft } = useAppSelector((state) => state.nft);
   const [executingCancel, setExecutingCancel] = useState(false);
   const [canBuy, setCanBuy] = useState(false);
@@ -83,15 +79,13 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     await runAuthedFunction(() => setIsPurchaseDialogOpen(true));
   };
 
-  const executeCancel = () => async () => {
+  const executeCancel = () => runAuthedFunction(async () => {
     try {
       setExecutingCancel(true);
       if(!isGaslessListing(listing.listingId)){
-        await runFunction(async (writeContract) => {
-          return (
-            await writeContract.cancelListing(listing.listingId)
-          ).wait();
-        });
+        const tx = await contractService!.market.cancelListing(listing.listingId);
+        const receipt = await tx.wait();
+        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       }
       else{
         await cancelGaslessListing(listing.listingId)
@@ -108,27 +102,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     } finally {
       setExecutingCancel(false);
     }
-  };
-
-  const runFunction = async (fn: (c: Contract) => Promise<TransactionReceipt>) => {
-    if (user.address) {
-      try {
-        const receipt = await fn((user.contractService! as ContractService).market);
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-      } catch (error: any) {
-        toast.error(parseErrorMessage(error));
-      }
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
-  };
+  });
 
   const onSellSelected = () => {
     setIsSellDialogOpen(true);
@@ -143,7 +117,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
       !isUserBlacklisted(listing.seller) &&
       !isNftBlacklisted(listing.nftAddress, listing.nftId)
     );
-  }, [listing]);
+  }, [listing?.nftAddress, listing?.nftId, listing?.seller]);
 
 
   const ModalBody = () => {
@@ -254,7 +228,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                 {listing && listing.state === listingState.ACTIVE ? (
                   <>
                     <div className="flex-fill mx-1">
-                      <Button type="legacy-outlined" className="w-100" onClick={executeCancel()} disabled={executingCancel}>
+                      <Button type="legacy-outlined" className="w-100" onClick={executeCancel} disabled={executingCancel}>
                         {executingCancel ? (
                           <>
                             Cancelling...

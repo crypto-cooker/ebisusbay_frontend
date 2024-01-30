@@ -1,31 +1,26 @@
 import React, {memo, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import Link from 'next/link';
 import {ethers} from 'ethers';
-import MetaMaskOnboarding from '@metamask/onboarding';
 
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {appUrl, createSuccessfulAddCartContent, round, siPrefixedNumber, timeSince} from '@src/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
 import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
-import Image from "next/image";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faBoltLightning,
-  faEllipsisH,
   faExternalLink,
   faHand,
   faLink,
   faShoppingBag,
   faSync
 } from "@fortawesome/free-solid-svg-icons";
-import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
@@ -33,6 +28,9 @@ import Slider from '../Account/Profile/Inventory/components/Slider';
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
+import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useCart from "@src/hooks/use-cart";
 
 
 const Watermarked = styled.div`
@@ -57,12 +55,13 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   const nftUrl = appUrl(`/collection/${listing.collection.slug}/${listing.nftId}`);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const cart = useSelector((state) => state.cart);
+  const user = useUser();
+  const cart = useCart();
   const [isHovered, setIsHovered] = useState(false);
-  const isInCart = cart.nfts.map((o) => o.listingId).includes(listing.listingId);
+  const isInCart = cart.isItemInCart(listing.listingId);
   const { onCopy } = useClipboard(nftUrl.toString());
   const {tokenUsdRate, tokenToUsdValue} = useTokenExchangeRate(listing.currency);
+  const [runAuthedFunction] = useAuthedFunction();
 
   const getOptions = () => {
     const options = [];
@@ -109,23 +108,14 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   };
 
   const handleMakeOffer = () => {
-    if (user.address) {
+    runAuthedFunction(async() => {
       setOpenMakeOfferDialog(!openMakeOfferDialog);
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   };
 
   const handleAddToCart = () => {
     if(!listing.nft.nfts){
-      dispatch(addToCart({
+      cart.addItem({
         listingId: listing.listingId,
         name: listing.nft.name,
         image: listing.nft.image,
@@ -135,12 +125,12 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
         rank: listing.nft.rank,
         isBundle: false,
         currency: listing.currency
-      }));
+      });
     }
     else{
-      dispatch(addToCart({
+      cart.addItem({
         listingId: listing.listingId,
-        name: listing.nft.title,
+        name: listing.nft.name,
         image: listing.nft.nfts[0].image,
         price: listing.price,
         address: listing.nftAddress,
@@ -149,14 +139,14 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
         isBundle: true,
         slug: listing.nft.slug,
         currency: listing.currency
-      }));
+      });
     }
     
-    toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
+    toast.success(createSuccessfulAddCartContent(cart.openCart));
   };
 
   const handleRemoveFromCart = () => {
-    dispatch(removeFromCart(listing.listingId));
+    cart.removeItem(listing.listingId);
     toast.success('Removed from cart');
   };
 
@@ -320,9 +310,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                     <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleAddToCart}>Add to Cart</Text>
                   )}
                 </Box>
-                <MenuPopup options={getOptions()}>
-                  <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
-                </MenuPopup>
+                <MenuPopup options={getOptions()} />
               </div>
             </Box>
           </Flex>

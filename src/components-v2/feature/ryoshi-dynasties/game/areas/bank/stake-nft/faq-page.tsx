@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {
   Accordion,
   AccordionButton,
@@ -13,7 +13,6 @@ import {
   UnorderedList,
 } from "@chakra-ui/react"
 import localFont from 'next/font/local';
-import {useAppSelector} from "@src/Store/hooks";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
@@ -28,11 +27,8 @@ import {
 import {titleCase} from "@src/utils";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
-const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
 const FaqPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const user = useAppSelector((state) => state.user);
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   return (

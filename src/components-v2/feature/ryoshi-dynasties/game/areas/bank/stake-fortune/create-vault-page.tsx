@@ -19,7 +19,8 @@ import {
   Stack,
   Tag,
   Text,
-  VStack, Wrap
+  VStack,
+  Wrap
 } from "@chakra-ui/react";
 import {createSuccessfulTransactionToastContent, findNextLowestNumber, pluralize, round} from "@src/utils";
 import {commify} from "ethers/lib/utils";
@@ -29,21 +30,19 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useAppSelector} from "@src/Store/hooks";
 import {toast} from "react-toastify";
 import {BigNumber, Contract, ethers} from "ethers";
 import Fortune from "@src/Contracts/Fortune.json";
 import Bank from "@src/Contracts/Bank.json";
 import {appConfig} from "@src/Config";
-import {useDispatch} from "react-redux";
 import ImageService from "@src/core/services/image";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery} from "@tanstack/react-query";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -61,9 +60,9 @@ interface CreateVaultPageProps {
 }
 
 const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
-  const dispatch = useDispatch();
   const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const [runAuthedFunction] = useAuthedFunction();
 
   const [currentStep, setCurrentStep] = useState(steps.choice);
   const [isExecuting, setIsExecuting] = useState(false);
@@ -134,19 +133,10 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
   }
 
   const handleStake = async () => {
-    if (user.address) {
+    runAuthedFunction(async() => {
       if (!await validateInput()) return;
       await executeStakeFortune();
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   }
 
   const executeStakeFortune = async () => {
@@ -257,7 +247,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
                   <Text>Amount to stake</Text>
                   <FormControl maxW='200px' isInvalid={!!inputError}>
                     <NumberInput
-                      defaultValue={1250}
+                      defaultValue={rdConfig.bank.staking.fortune.minimum}
                       min={rdConfig.bank.staking.fortune.minimum}
                       name="quantity"
                       onChange={handleChangeFortuneAmount}
@@ -361,7 +351,7 @@ interface ImportVaultFormProps {
 const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [isExecuting, setIsExecuting] = useState(false);
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [selectedVaultId, setSelectedVaultId] = useState<string>();
   const availableAprs = rdConfig.bank.staking.fortune.apr as any;
 

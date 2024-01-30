@@ -1,23 +1,22 @@
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import PageHeader from "@src/components-v2/shared/layout/page-header";
 import React, {useMemo} from "react";
-import {Box, Card, CardBody, Center, Flex, Heading, HStack, Image, Link, Spinner, Text} from "@chakra-ui/react";
+import {Box, Card, CardBody, Center, Flex, Heading, HStack, Link, Spinner, Text} from "@chakra-ui/react";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import ResponsiveRewardsCollectionsTable
   from "@src/components-v2/shared/responsive-table/responsive-rewards-collections-table";
 import {round} from "@src/utils";
-import ImageService from "@src/core/services/image";
-import {useAppSelector} from "@src/Store/hooks";
 import {useFortunePrice} from "@src/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
-const currentGameId = 103;
+const currentGameId = 136;
 
 const Rewards = () => {
-  const user = useAppSelector(state => state.user);
+  const user = useUser();
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
 
   const {data, error, status,} = useQuery({

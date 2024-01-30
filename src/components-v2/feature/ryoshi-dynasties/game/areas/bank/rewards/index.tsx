@@ -2,10 +2,6 @@ import {Box, Flex, Image, Text, VStack} from "@chakra-ui/react"
 import React, {useCallback, useState} from "react";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useAppSelector} from "@src/Store/hooks";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import PresaleVaultTab from "./presale";
 import FortuneRewardsTab from "./fortune";
@@ -13,6 +9,8 @@ import {ArrowBackIcon} from "@chakra-ui/icons";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/rewards/faq-page";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import ImageService from "@src/core/services/image";
+import {useUser} from "@src/components-v2/useUser";
+import ResourcesTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/rewards/resources";
 
 const tabs = {
   fortune: 'fortune',
@@ -26,22 +24,12 @@ interface WithdrawProps {
 }
 
 const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [currentTab, setCurrentTab] = useState(tabs.fortune);
   const [page, setPage] = useState<string>();
 
   const handleConnect = async () => {
-    if (!user.address) {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    user.connect();
   }
 
   const handleBtnClick = (key: string) => (e: any) => {
@@ -65,7 +53,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
     <RdModal
       isOpen={isOpen}
       onClose={handleClose}
-      title='Rewards'
+      title='Accounts'
       isCentered={false}
       utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
       onUtilBtnClick={handleBack}
@@ -74,7 +62,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
         <FaqPage />
       ) : (
         <>
-          <Text textAlign='center' fontSize={14} py={2}>Withdraw accumulated Fortune rewards or your Fortune stake</Text>
+          <Text textAlign='center' fontSize={14} py={2}>View information on Fortune rewards and balances for various in-game resources</Text>
           {user.address ? (
             <Box p={4}>
               <Flex direction='row' justify='center' mb={2}>
@@ -82,7 +70,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
                   Fortune
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.resources} onClick={handleBtnClick(tabs.resources)}>
-                  Resources
+                  Koban
                 </RdTabButton>
                 <RdTabButton isActive={currentTab === tabs.presale} onClick={handleBtnClick(tabs.presale)}>
                   Presale
@@ -103,17 +91,7 @@ const Rewards = ({ isOpen, onClose}: WithdrawProps) => {
                   // </RdModalBox>
                 )}
                 {currentTab === tabs.resources && (
-                  // <ResourcesTab />
-                  <RdModalBox>
-                    <VStack>
-                      <Image
-                        src={ImageService.translate('/img/ryoshi-dynasties/icons/lock.png').convert()}
-                        alt="lockIcon"
-                        boxSize={12}
-                      />
-                      <Text>Coming Soon</Text>
-                    </VStack>
-                  </RdModalBox>
+                  <ResourcesTab />
                 )}
                 {currentTab === tabs.presale && (
                   <PresaleVaultTab />

@@ -6,8 +6,6 @@ import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import Bank from "@src/Contracts/Bank.json";
 import {createSuccessfulTransactionToastContent} from '@src/utils';
-import {useAppSelector} from "@src/Store/hooks";
-import {useDispatch} from "react-redux";
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
 import {
   RyoshiDynastiesContext,
@@ -16,6 +14,7 @@ import {
 import {parseErrorMessage} from "@src/helpers/validator";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
 import Link from "next/link";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -30,9 +29,7 @@ interface TokenizeVaultProps {
 }
 
 const TokenizeVaultPage = ({ vault, onReturn }: TokenizeVaultProps) => {
-  const dispatch = useDispatch();
   const { refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector((state) => state.user);
   const [currentStep, setCurrentStep] = useState(steps.form);
 
   const handleComplete = () => {
@@ -63,7 +60,7 @@ interface TokenizeFormProps {
 }
 const TokenizeForm = ({vault, onComplete}: TokenizeFormProps) => {
   const [isExecuting, setIsExecuting] = useState(false);
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const handleTokenize = async () => {
     try {
@@ -100,7 +97,7 @@ const TokenizeForm = ({vault, onComplete}: TokenizeFormProps) => {
 }
 
 const TokenizeComplete = ({onReturn}: {onReturn: () => void}) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   return (
     <Box py={4}>

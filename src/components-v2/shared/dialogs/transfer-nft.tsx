@@ -3,8 +3,7 @@ import {Contract} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {createSuccessfulTransactionToastContent, isDynamicNftImageCollection} from "@src/utils";
-import * as Sentry from '@sentry/react';
+import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {ERC1155, ERC721} from "@src/Contracts/Abis";
@@ -29,9 +28,9 @@ import {
 import {getTheme} from "@src/Theme/theme";
 import {is1155} from "@src/helpers/chain";
 import {parseErrorMessage} from "@src/helpers/validator";
-import {useAppSelector} from "@src/Store/hooks";
 import {getCroidAddressFromName, isCroName} from "@src/helpers/croid";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
+import {useUser} from "@src/components-v2/useUser";
 
 interface TransferNftDialogProps {
   isOpen: boolean;
@@ -44,12 +43,12 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
   const [fieldError, setFieldError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [executingTransferNft, setExecutingTransferNft] = useState(false);
-  const [executingCnsLookup, setExecutingCnsLookup] = useState(false);
+  const [executingCidLookup, setExecutingCidLookup] = useState(false);
   const [quantity, setQuantity] = useState<string>('1');
   const [quantityError, setQuantityError] = useState<string | null>(null);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const onChangeAddress = useCallback((e: any) => {
     const newRecipientAddress = e.target.value.toString();
@@ -60,10 +59,10 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && user.provider) {
+    if (nft && user.wallet.isConnected) {
       asyncFunc();
     }
-  }, [nft, user.provider]);
+  }, [nft, user.wallet.isConnected]);
 
   const getInitialProps = async () => {
     try {
@@ -88,14 +87,14 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
 
       let targetAddress = recipientAddress;
       if (!!recipientAddress && isCroName(recipientAddress)) {
-        setExecutingCnsLookup(true);
+        setExecutingCidLookup(true);
         const croidAddress = await getCroidAddressFromName(recipientAddress);
         if (croidAddress) {
           targetAddress = croidAddress;
-          setExecutingCnsLookup(false);
+          setExecutingCidLookup(false);
         } else {
-          setFieldError('No matching profiles for this CNS name');
-          setExecutingCnsLookup(false);
+          setFieldError('No matching profiles for this Cronos ID');
+          setExecutingCidLookup(false);
           return;
         }
       }
@@ -121,7 +120,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
       toast.error(parseErrorMessage(error));
     } finally {
       setExecutingTransferNft(false);
-      setExecutingCnsLookup(false);
+      setExecutingCidLookup(false);
     }
   };
 
@@ -142,7 +141,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
     }
 
     if (!recipientAddress || (!recipientAddress.endsWith('.cro') && !recipientAddress.startsWith('0x'))) {
-      setFieldError('Please enter a valid Cronos address or CNS name');
+      setFieldError('Please enter a valid Cronos address or Cronos ID');
       return false;
     }
 
@@ -214,11 +213,11 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
                   <Box className="mt-4 mt-sm-0 mb-3 mb-sm-0">
                     <FormControl className="form-field" isInvalid={!!fieldError}>
                       <FormLabel w='full' className="formLabel">
-                        Recipient Address or CNS Name
+                        Recipient Address or Cronos ID
                       </FormLabel>
                       <Input
                         type="text"
-                        placeholder="Address or CNS name"
+                        placeholder="Address or Cronos ID"
                         value={recipientAddress}
                         onChange={onChangeAddress}
                         disabled={showConfirmButton || executingTransferNft}
@@ -250,8 +249,8 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
                       </Button>
                       <Button type="legacy-outlined"
                               onClick={handleTransfer}
-                              isLoading={executingTransferNft || executingCnsLookup}
-                              disabled={executingTransferNft || executingCnsLookup}
+                              isLoading={executingTransferNft || executingCidLookup}
+                              disabled={executingTransferNft || executingCidLookup}
                               className="flex-fill">
                         Continue
                       </Button>
@@ -267,8 +266,8 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
                     <div className="d-flex">
                       <Button type="legacy"
                               onClick={processTransferRequest}
-                              isLoading={executingTransferNft || executingCnsLookup}
-                              disabled={executingTransferNft || executingCnsLookup}
+                              isLoading={executingTransferNft || executingCidLookup}
+                              disabled={executingTransferNft || executingCidLookup}
                               className="flex-fill">
                         Confirm Transfer
                       </Button>

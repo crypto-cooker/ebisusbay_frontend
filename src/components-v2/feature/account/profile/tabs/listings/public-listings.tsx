@@ -23,8 +23,8 @@ import ListingsGroup from "@src/components-v2/shared/listings-group";
 import Select from "react-select";
 import {SortOption, sortOptions} from "@src/components-v2/feature/account/profile/tabs/listings/sort-options";
 import {getTheme} from "@src/Theme/theme";
-import {useAppSelector} from "@src/Store/hooks";
 import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
+import {useUser} from "@src/components-v2/useUser";
 
 interface UserPrivateListingsProps {
   walletAddress: string
@@ -92,7 +92,7 @@ const UserPublicListings = ({ walletAddress }: UserPrivateListingsProps) => {
     func();
   }, [walletAddress]);
 
-  const userTheme = useAppSelector((state) => state.user.theme);
+  const {theme: userTheme} = useUser();
   const customStyles = {
     option: (base: any, state: any) => ({
       ...base,

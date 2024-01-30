@@ -13,14 +13,16 @@ import {Box, useBreakpointValue} from "@chakra-ui/react";
 import DynastiesLands from "./areas/lands";
 import {MapProps} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
 
-import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/inline";
+import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center";
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
 import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/portal";
 import FishMarketModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/fish-market";
 import Tavern from "@src/components-v2/feature/ryoshi-dynasties/game/areas/tavern";
 import TownHall from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall";
+import {useUser} from "@src/components-v2/useUser";
+
 const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig}) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const [currentPage, setCurrentPage] = useState<string>('village');
   const [previousPage, setPreviousPage] = useState<string>();
@@ -109,7 +111,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig}) => 
             ) : currentPage === 'bank' ? (
               <Bank address={user.address ?? ''} onBack={returnToPreviousPage} />
             ) : currentPage === 'allianceCenter' ? (
-              <AllianceCenter onClose={returnToPreviousPage} />
+              <AllianceCenter onBack={returnToPreviousPage} />
             ) : currentPage === 'academy' ? (
               <Academy onBack={returnToPreviousPage} />
             ) : currentPage === 'market' ? (

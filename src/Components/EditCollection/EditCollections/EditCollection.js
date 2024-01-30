@@ -17,12 +17,13 @@ import Pfp from './Pfp';
 import * as DOMPurify from 'dompurify';
 import CustomizedDialogs from '../Dialog';
 import {Spinner} from "@chakra-ui/react";
+import {useUser} from "@src/components-v2/useUser";
 
 const EditCollection = ({ address: collectionAddress }) => {
 
   const [{ isLoading: isLoadingRequest, response, error }, update] = useUpdate();
   const [isOpen, setIsOpen] = useState(false);
-  const user = useSelector((state) => state.user);
+  const user = useUser();
 
   const onSubmit = async () => {
     try {

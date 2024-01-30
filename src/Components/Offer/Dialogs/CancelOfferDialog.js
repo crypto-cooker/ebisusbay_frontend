@@ -6,9 +6,7 @@ import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
 import Button from "@src/Components/components/Button";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {specialImageTransform} from "@src/hacks";
-import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import * as Sentry from "@sentry/react";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {
@@ -18,17 +16,20 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, Spinner
+  ModalOverlay,
+  Spinner
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
 import ImagesContainer from "../../Bundle/ImagesContainer";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {useQuery} from "@tanstack/react-query";
+import {useContractService, useUser} from "@src/components-v2/useUser";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffer, offer}) => {
-  const offerContract = useSelector((state) => state.user.contractService.offer);
+  const contractService = useContractService();
   const [executingCancelOffer, setExecutingCancelOffer] = useState(false);
-  const user = useSelector((state) => state.user);
+  const user = useUser();
 
   const fetchNft = async () => {
     if (isCollectionOffer) return null;
@@ -40,7 +41,7 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
   const { isPending, error, data: nft, status } = useQuery({
     queryKey: ['CancelOffer', user.address, offer.nftAddress, offer.nftId],
     queryFn: fetchNft,
-    enabled: !!user.provider && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
+    enabled: user.wallet.isConnected && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
     refetchOnWindowFocus: false
   });
 
@@ -52,22 +53,17 @@ export const CancelOfferDialog = ({onClose, isOpen, collection, isCollectionOffe
       // Sentry.captureEvent({message: 'handleCancelOffer', extra: {address: offer.nftAddress}});
       let tx;
       if (isCollectionOffer) {
-        tx = await offerContract.cancelCollectionOffer(offer.nftAddress, offer.offerIndex);
+        tx = await contractService.offer.cancelCollectionOffer(offer.nftAddress, offer.offerIndex);
       } else {
-        tx = await offerContract.cancelOffer(offer.hash, offer.offerIndex);
+        tx = await contractService.offer.cancelOffer(offer.hash, offer.offerIndex);
       }
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       setExecutingCancelOffer(false);
       onClose();
     } catch (error) {
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
+      console.log(error);
+      toast.error(parseErrorMessage(error));
     } finally {
       setExecutingCancelOffer(false);
     }

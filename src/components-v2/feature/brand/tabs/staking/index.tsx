@@ -17,7 +17,6 @@ import React, {useCallback, useEffect, useState} from "react";
 import {caseInsensitiveCompare, round} from "@src/utils";
 import {motion} from "framer-motion";
 import {useQuery} from "@tanstack/react-query";
-import {useAppSelector} from "@src/Store/hooks";
 import {
     BoosterSlot,
     StakerWithRewards,
@@ -27,14 +26,12 @@ import StakingNftCard from "@src/components-v2/feature/brand/tabs/staking/stakin
 import {useStaker} from "@src/components-v2/feature/brand/tabs/staking/useStaker";
 import Filters from "@src/components-v2/feature/brand/tabs/staking/filters";
 import Button from "@src/Components/components/Button";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
 import Taskbar from "@src/components-v2/feature/brand/tabs/staking/taskbar";
 import BoostSlotCard from "@src/components-v2/feature/brand/tabs/staking/boost-slot-card";
 import {Contract, ethers} from "ethers";
 import {ERC721} from "@src/Contracts/Abis";
 import {JsonRpcProvider} from "@ethersproject/providers";
+import {useUser} from "@src/components-v2/useUser";
 
 const MotionGrid = motion(Grid);
 
@@ -47,9 +44,8 @@ type StakingTabProps = {
 }
 
 const StakingTab = ({ brand, collections }: StakingTabProps) => {
-    const dispatch = useDispatch();
     const { staker, isBoosterCollection } = useStaker(brand.slug);
-    const user = useAppSelector((state) => state.user);
+    const user = useUser();
     const useMobileViews = useBreakpointValue(
         {base: true, lg: false},
         {fallback: 'lg'},
@@ -84,16 +80,7 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
     });
 
     const handleConnect = () => {
-        if (!user.address) {
-            if (user.needsOnboard) {
-                const onboarding = new MetaMaskOnboarding();
-                onboarding.startOnboarding();
-            } else if (!user.address) {
-                dispatch(connectAccount());
-            } else if (!user.correctChain) {
-                dispatch(chainConnect());
-            }
-        }
+        user.connect();
     };
 
     const handleCollectionFilter = useCallback((address: string) => {
@@ -213,11 +200,11 @@ type StakeViewProps = {
     nfts: any;
 }
 const StakeView = ({slug, collectionAddress, filterType, nfts}: StakeViewProps) => {
-    const user = useAppSelector((state) => state.user);
+    const user = useUser();
     const { staker, stakeMutation, unstakeMutation } = useStaker(slug);
 
     const handleStake = useCallback(async (nftAddress: string, nftId: string) => {
-        const nftContract = new Contract(nftAddress, ERC721, (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer);
+        const nftContract = new Contract(nftAddress, ERC721, user.provider.getSigner() as ethers.Signer);
         const transferEnabled = await nftContract.isApprovedForAll(user.address, staker?.address);
         if (!transferEnabled) {
             const tx = await nftContract.setApprovalForAll(staker?.address, true);
@@ -225,11 +212,11 @@ const StakeView = ({slug, collectionAddress, filterType, nfts}: StakeViewProps) 
         }
 
         await stakeMutation.mutateAsync({ nftAddress, nftId, statusFilter: filterType });
-    }, [staker, user.provider, filterType]);
+    }, [staker, user.wallet.isConnected, filterType]);
 
     const handleUnstake = useCallback(async (nftAddress: string, nftId: string) => {
         await unstakeMutation.mutateAsync({ nftAddress, nftId, statusFilter: filterType });
-    }, [staker, user.provider, filterType]);
+    }, [staker, user.wallet.isConnected, filterType]);
 
     return (
         <>
@@ -265,13 +252,13 @@ type BoostViewProps = {
     nfts: any;
 }
 const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) => {
-    const user = useAppSelector((state) => state.user);
+    const user = useUser();
     const { staker, boostMutation, unboostMutation } = useStaker(slug);
     const [selectedSlot, setSelectedSlot] = useState<BoosterSlot>();
     const [slots, setSlots] = useState<BoosterSlot[]>([]);
 
     const handleStake = useCallback(async (nftAddress: string, nftId: string, slot?: BoosterSlot) => {
-        if (!user.provider) throw 'Not connected';
+        if (!user.wallet.isConnected) throw 'Not connected';
 
         let emptySlot = slot;
         if (emptySlot === undefined) {
@@ -280,7 +267,7 @@ const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) 
         }
         if (!emptySlot) throw 'Invalid slot';
 
-        const nftContract = new Contract(nftAddress, ERC721, (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer);
+        const nftContract = new Contract(nftAddress, ERC721, user.provider.getSigner() as ethers.Signer);
         const transferEnabled = await nftContract.isApprovedForAll(user.address, staker?.booster?.address);
         if (!transferEnabled) {
             const tx = await nftContract.setApprovalForAll(staker?.booster?.address, true);
@@ -289,12 +276,12 @@ const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) 
 
         await boostMutation.mutateAsync({ nftAddress, nftId, slot: emptySlot.slot, statusFilter: filterType });
         await getSlots();
-    }, [staker, user.provider, filterType, slots]);
+    }, [staker, user.wallet.isConnected, filterType, slots]);
 
     const handleUnstake = useCallback(async (nftAddress: string, nftId: string, slot: number) => {
         await unboostMutation.mutateAsync({ nftAddress, nftId, slot, statusFilter: filterType });
         await getSlots();
-    }, [staker, user.provider, filterType]);
+    }, [staker, user.wallet.isConnected, filterType]);
 
     const getSlots = async () => {
         if (!staker?.booster || !user.address) return [];
@@ -354,7 +341,7 @@ const BoostView = ({slug, collectionAddress, filterType, nfts}: BoostViewProps) 
 }
 
 const RewardsComponent = ({staker}: {staker: StakerWithRewards}) => {
-    const user = useAppSelector((state) => state.user);
+    const user = useUser();
     const [executingClaim, setExecutingClaim] = useState(false);
 
     const fetcher = async () => {
@@ -373,14 +360,14 @@ const RewardsComponent = ({staker}: {staker: StakerWithRewards}) => {
     const handleClaimRewards = useCallback(async () => {
         try {
             setExecutingClaim(true);
-            if (!user.address || !user.provider) throw 'Not connected';
-            const tx = await staker.claimRewards(user.address, (user.provider! as JsonRpcProvider).getSigner() as ethers.Signer);
+            if (!user.address || !user.wallet.isConnected) throw 'Not connected';
+            const tx = await staker.claimRewards(user.address,  user.provider.getSigner()!);
             await tx.wait();
             await refetch();
         } finally {
             setExecutingClaim(false)
         }
-    }, [setExecutingClaim, user, staker]);
+    }, [setExecutingClaim, user.address, staker]);
 
     return (
         <Box ps={{base:4, lg:0}} my={2} w='full'>

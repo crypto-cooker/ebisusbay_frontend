@@ -1,4 +1,3 @@
-import {useState} from "react";
 import {
   Accordion,
   AccordionButton,
@@ -10,15 +9,10 @@ import {
   Text,
 } from "@chakra-ui/react"
 import localFont from 'next/font/local';
-import {useAppSelector} from "@src/Store/hooks";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
-const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
 
 const FaqPage = () => {
- 
-  const [isLoading, setIsLoading] = useState(false);
-  const user = useAppSelector((state) => state.user);
 
   return (
     <Stack spacing={3}className={gothamBook.className} mt={10} fontSize={{ base: 'xs', md: 'sm' }}>

@@ -73,6 +73,7 @@ import {getPrices} from "@src/core/api/endpoints/prices";
 import {useExchangeRate} from "@src/hooks/useGlobalPrices";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const MAX_NFTS_IN_GAS_CART = 100;
@@ -82,7 +83,8 @@ const numberRegexValidation = /^[1-9]+[0-9]*$/;
 
 export const ListingDrawer = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
@@ -287,7 +289,7 @@ export const ListingDrawer = () => {
 
     Sentry.captureEvent({ message: 'handleBatchExpressListings', extra: { nftAddresses, nftIds, nftPrices } });
 
-    let tx = await user.contractService!.market.makeListings(nftAddresses, nftIds, nftPrices);
+    let tx = await contractService!.market.makeListings(nftAddresses, nftIds, nftPrices);
     let receipt = await tx.wait();
 
     toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));

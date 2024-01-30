@@ -7,11 +7,20 @@ import {
   RdGameContext,
   RdUserContext,
   RdUserContextGameTroops,
-  StakedTokenType,
-  TownHallStakeNft
+  StakedTokenType
 } from "@src/core/services/api-service/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
+import {
+  TownHallStakeRequest,
+  townHallStakeRequestSchema,
+  TownHallUnstakeRequest,
+  townHallUnstakeRequestSchema
+} from "@src/core/services/api-service/cms/queries/staking/town-hall";
+import {FactionUpdateRequest, factionUpdateRequestSchema} from "@src/core/services/api-service/cms/queries/faction";
+import {DeployTroopsRequest, deployTroopsRequestSchema} from "@src/core/services/api-service/cms/queries/deploy";
+import {MerchantItem, MerchantPurchaseRequestResponse} from "@src/core/services/api-service/cms/response-types";
+import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 
 class RyoshiDynastiesRepository extends CmsRepository {
 
@@ -71,13 +80,16 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
+  async requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string) {
+    await townHallStakeRequestSchema.validate(request);
+
     const response = await this.cms.get('ryoshi-dynasties/staking/authorize/town-hall', {
       params: {
+        tokenId: request.nfts.map(nft => nft.nftId),
+        amount: request.nfts.map(nft => nft.amount),
+        contractAddress: request.collectionAddress,
+        isAll: request.isAll,
         user: address,
-        contractAddress: nfts.map(nft => nft.nftAddress),
-        tokenId: nfts.map(nft => nft.nftId),
-        amount: nfts.map(nft => nft.amount),
         address,
         signature
       }
@@ -85,13 +97,17 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
+  async requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string) {
+    await townHallUnstakeRequestSchema.validate(request);
+
     const response = await this.cms.get('ryoshi-dynasties/staking/authorize/town-hall/withdraw', {
       params: {
+        tokenId: request.nfts.map(nft => nft.nftId),
+        amount: request.nfts.map(nft => nft.amount),
+        contractAddress: request.collectionAddress,
+        isAll: request.isAll,
+        invalidOnly: request.invalidOnly,
         user: address,
-        contractAddress: nfts.map(nft => nft.nftAddress),
-        tokenId: nfts.map(nft => nft.nftId),
-        amount: nfts.map(nft => nft.amount),
         address,
         signature
       }
@@ -99,11 +115,14 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string) {
+  async requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string) {
     const response = await this.cms.post(
       'ryoshi-dynasties/fortune-rewards/spend',
       {
-        amount,
+        user: address,
+        amount: cost,
+        item: id,
+        itemAmount: quantity
       },
       {
         params: {
@@ -136,7 +155,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
   }
 
   async claimDailyRewards(address: string, signature: string) {
-    const response = await this.cms.get('ryoshi-dynasties/game-tokens/daily-reward', {
+    const response = await this.cms.get('ryoshi-dynasties/game-tokens/daily-reward/claim', {
       params: {
         address,
         signature
@@ -145,6 +164,32 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
+  async getResourcesBalances(address: string, signature: string) {
+    const response = await this.cms.get('ryoshi-dynasties/game-tokens/resources/user-balances', {
+      params: {
+        address,
+        signature
+      }
+    })
+    return response.data.data;
+  }
+
+  async requestResourcesWithdrawalAuthorization(tokenId: number, amount: number, address: string, signature: string) {
+    const response = await this.cms.post(
+      `ryoshi-dynasties/game-tokens/resources/withdraw`,
+      {
+        tokenId,
+        amount,
+      },
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data;
+  }
 
   async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string) {
     const response = await this.cms.post(
@@ -257,6 +302,163 @@ class RyoshiDynastiesRepository extends CmsRepository {
       }
     });
     return response.data.data;
+  }
+
+  async getTownHallUserStaked(address: string, collection: string, signature: string) {
+    const response = await this.cms.get(`ryoshi-dynasties/staking/town-hall/staked`, {
+      params: {
+        collection,
+        address,
+        signature
+      }
+    });
+    return response.data.data;
+  }
+
+  async getTownHallUserInvalidStaked(address: string, signature: string) {
+    const response = await this.cms.get(`ryoshi-dynasties/staking/town-hall/invalid`, {
+      params: {
+        address,
+        signature
+      }
+    });
+    return response.data.data;
+  }
+
+  async deployTroops(request: DeployTroopsRequest, address: string, signature: string) {
+    await deployTroopsRequestSchema.validate(request);
+
+    const response = await this.cms.patch(
+      `ryoshi-dynasties/armies/deploy`,
+      {
+        ...request
+      },
+      {params: {address, signature}}
+    );
+    return response.data;
+  }
+
+  async relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string) {
+    const response = await this.cms.patch(
+      `ryoshi-dynasties/armies`,
+      {troops, fromControlPointId, toControlPointId, fromFactionId, toFactionId},
+      {params: {address, signature, action: "RELOCATE"}}
+    );
+    return response.data;
+  }
+
+  async fetchGift(address: string, signature: string) {
+    const response = await this.cms.get(
+      `ryoshi-dynasties/game-tokens/shake-tree`, {
+        params: {
+          address,
+          signature
+        }
+    });
+    return response.data;
+  }
+
+  async getFactionsByPoints(gameId: number) {
+    const response = await this.cms.get(`ryoshi-dynasties/games/${gameId}/interval-points`);
+    return response.data.data;
+  }
+
+  async requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string) {
+    const response = await this.cms.post(
+      'ryoshi-dynasties/meeple/trading-card',
+      {
+        nftId: nftIds,
+        amount: nftAmounts,
+        direct: direct
+      },
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data.data;
+  }
+
+  async getTownHallWinningFaction() {
+    const response = await this.cms.get(`ryoshi-dynasties/staking/town-hall/winners`);
+    // const mockData = {
+    //   faction: {
+    //     id: 1,
+    //     name: 'Faction 1',
+    //     image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
+    //     factionCollectionsSnapshot: {
+    //       '0xcf7aedebc5223c4c620625a560300582b77d8719': {
+    //         name: 'Ryoshi Tales VIP',
+    //         image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
+    //         slug: 'ryoshi-tales-vip',
+    //       },
+    //       '0xe51377a260043381b8b525d33b9ffbc601a1469b': {
+    //         name: 'Ryoshi Tales Halloween',
+    //         image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
+    //         slug: 'ryoshi-tales-halloween',
+    //       },
+    //       '0xa3a9bd5142bfaf3126734096cacc96a71103611f': {
+    //         name: 'Elf Citizens',
+    //         image: 'https://cdn-prod.ebisusbay.com/storage/DreadTeslaRadiance-1687109338105.jpg',
+    //         slug: 'elf-citizens',
+    //       }
+    //     }
+    //   }
+    // }
+    // return mockData.faction;
+    return response.data?.data ? response.data.data.faction : null;
+  }
+
+  async updateFaction(request: FactionUpdateRequest, address: string, signature: string) {
+    await factionUpdateRequestSchema.validate(request);
+
+    const response = await this.cms.patch(
+      'ryoshi-dynasties/factions',
+      {...request},
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data.data;
+  }
+
+  async getFaction(id: number, address: string, signature: string) {
+    const response = await this.cms.get(
+      `ryoshi-dynasties/factions/${id}`, {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+
+    return response.data.data;
+  }
+
+  async getMerchantItems() {
+    const response = await this.cms.get('ryoshi-dynasties/game-tokens/merchant/available');
+
+    return response.data.data as MerchantItem[];
+  }
+
+  async requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string) {
+    const response = await this.cms.get(
+      'ryoshi-dynasties/game-tokens/merchant/authorize/purchase',
+      {
+        params: {
+          ...payload,
+          address,
+          signature
+        }
+      }
+    );
+
+    return response.data.data as MerchantPurchaseRequestResponse;
   }
 }
 

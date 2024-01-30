@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createGlobalStyle, default as styled } from 'styled-components';
-import { keyframes } from '@emotion/react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {createGlobalStyle, default as styled} from 'styled-components';
+import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 
-import { getMarketData } from '../GlobalState/marketplaceSlice';
-import { theme } from '../Theme/theme';
+import {getMarketData} from '../GlobalState/marketplaceSlice';
+import {theme} from '../Theme/theme';
 import {hostedImage} from "../helpers/image";
+import {useUser} from "@src/components-v2/useUser";
 
 const fadeInUp = keyframes`
   0% {
@@ -97,9 +98,7 @@ const Jumbotron = {
 export const ErrorPage = () => {
   const dispatch = useDispatch();
 
-  const userTheme = useSelector((state) => {
-    return state.user.theme;
-  });
+  const {theme: userTheme} = useUser();
 
   const [mobile, setMobile] = useState(typeof window !== 'undefined' && window.innerWidth < theme.breakpointsNum.md);
 

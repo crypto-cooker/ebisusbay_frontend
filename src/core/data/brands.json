@@ -85,12 +85,13 @@
       "0xB929D3002208f405180D3C07616F88EDa45F3e14",
       "0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9",
       "0xA9448e3e496f75488306195F34e49a7fCE5cbD0c",
-      "0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8"
+      "0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8",
+      "0x400e237c4F88e5728E0D6088315DeCD856a10EDd"
     ],
     "socials": {
       "website": "https://app.croskull.com/",
       "twitter": "https://twitter.com/CroskullNFT",
-      "discord": "",
+      "discord": "https://discord.gg/snB7Hngjyd",
       "medium": "https://medium.com/@croskullnft"
     },
     "featured": true,
@@ -134,7 +135,8 @@
       "0x4Ce0B9608006533dA056170f1efe8eEa771e0d19",
       "0x7dE8BeC3ACf03997CDf3052c769571bbbBb7eE14",
       "0x28Fc9DaCa33E0a3Ada666064F54B400E63596c6C",
-      "0xFd14Cb97102eC422ADF507138580798cb2e6B824"
+      "0xFd14Cb97102eC422ADF507138580798cb2e6B824",
+      "0x4F410976c6687193dDC0da9C4F3ca1Dfd0ba0209"
     ],
     "socials": {
       "website": "https://hidethefish.com/",
@@ -303,7 +305,8 @@
       "0x3ffcb84507c6d5a2b963d5f367feffa496e964c1",
       "0xa808030692001dd562f437fc676cd63eb232bc2a",
       "0x8721b9ad32d1c7869f19d62ac4b764e3038cc1d2",
-      "0x7Da8e3ACda33FFA01396fF00e2c4b36Ad899f8AD"
+      "0x7Da8e3ACda33FFA01396fF00e2c4b36Ad899f8AD",
+      "0xe6aBe7e49129900f8C6b6C2FAe51eD5573f4E3f0"
     ],
     "socials": {
       "website": "https://trooprz.army/",
@@ -489,9 +492,7 @@
       "0x8333624EEb54E0c9FF6C96D41645d60463CE9b22",
       "0x8f97Bb2352fb1DD78C0A108a6ed279a3c2b6d9D1",
       "0x13Eb301c0AC03D777dE915423B34195D56C14a21",
-      "0x9e3b86a057778b94EdAA7EffD8B5C30408f804eE",
-      "0xd4E29bdba77c948b04C3ACd67C1dAC17264d2983",
-      "0x0521217B36a1482E6798692687f836c68c7F3837"
+      "0x9e3b86a057778b94EdAA7EffD8B5C30408f804eE"
     ],
     "socials": {
       "website": "https://thedegenerated.art/",
@@ -838,7 +839,13 @@
       "0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645",
       "0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475",
       "0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F",
-      "0xfF567a62d7BF2CF984F02175C8bd485E3C4E2c0e"
+      "0xfF567a62d7BF2CF984F02175C8bd485E3C4E2c0e",
+      "0x739b5380156Fa14C7956145048d52dF27EDedfCE",
+      "0xb76415D33268391bfaE2E671f45CeDAD9bC99dc9",
+      "0xCF926cB69b860Da8c33a2a601217856536ed0bcA",
+      "0x975238Ce3c593060a9b549e1654dC992f0Bc11aC",
+      "0x87e04f1d64619994a5320450E19C184a2dDE09c7",
+      "0x35B832bE9546fCad67526Be2801228194250378A"
     ],
     "socials": {
       "website": "https://timemachine101.com/",
@@ -860,7 +867,9 @@
     "collections": [
       "0xf8c82cc093D22f6dC782F0D781f4770E17266C23",
       "0xca00aba7689e3c0f9f74e1f8d82e61c04c787734",
-      "0x08FB1f6625d034019f2F6a3E70bab2FaA55CA068"
+      "0x08FB1f6625d034019f2F6a3E70bab2FaA55CA068",
+      "0xd4E29bdba77c948b04C3ACd67C1dAC17264d2983",
+      "0x0521217B36a1482E6798692687f836c68c7F3837"
     ],
     "socials": {
       "website": "https://cr00tsnft.ca/",

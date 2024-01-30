@@ -17,6 +17,7 @@ import {
   useBreakpointValue
 } from "@chakra-ui/react";
 import useDebounce from "@src/core/hooks/useDebounce";
+import {DefaultContainer} from "@src/components-v2/shared/default-container";
 
 
 const Collections = () => {
@@ -49,7 +50,7 @@ const Collections = () => {
       />
       <PageHeader title={'Collections'} />
 
-      <section className="gl-legacy container no-top">
+      <DefaultContainer>
         <Stack direction={{base: 'column', md: 'row'}} mt={4} w='full'>
           <Box flex='1'>
             <InputGroup>
@@ -94,7 +95,7 @@ const Collections = () => {
           </Box>
         </Stack>
         <Table timeFrame={timeFrame} searchTerms={debouncedSearch} onlyVerified={onlyVerified} showMobileSort={showMobileSort && isMobileLayout!} />
-      </section>
+      </DefaultContainer>
     </div>
   );
 };

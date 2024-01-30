@@ -3,18 +3,26 @@ version: '3'
 services:
   ebisusbay-web:
     container_name: ebisusbay-web
+    # platform: linux/arm64
     restart: no
     read_only: true
     build:
       context: .
       dockerfile: Dockerfile_local
+      args:
+        - NEXT_PUBLIC_ENV=development
+        - NEXT_PUBLIC_SITE24X7_KEY=73ac6244ca4b768bc456621704482f32
+        - NEXT_PUBLIC_SENTRY_DSN=https://16da1112457840e789e4a1ac93d191d7@o1128536.ingest.sentry.io/6172222
+        - NEXT_PUBLIC_SENTRY_ENVIRONMENT=development
+        - SENTRY_AUTH_TOKEN=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
+        - NEXT_PUBLIC_WEB3MODAL_API_KEY=8002f872986e034df168060193915223
     environment:
       PORT: '3000'
-      NEXT_PUBLIC_ENV: production
-      # APMINSIGHT_ENABLED: 'false'
-      # APMINSIGHT_LICENSE_KEY: us_25e4846c624d0af156763484be1e7e31
-      # APMINSIGHT_APP_NAME: local-ebisusbay-web-arm64-us-east-1
-      # APMINSIGHT_APP_PORT: '3000'
+      EB_API_KEY: s48kQNFcCmC79NKm9CzQ
+      APMINSIGHT_ENABLED: 'false'
+      APMINSIGHT_LICENSE_KEY: us_25e4846c624d0af156763484be1e7e31
+      APMINSIGHT_APP_NAME: local-ebisusbay-web-arm64-us-east-1
+      APMINSIGHT_APP_PORT: '3000'
     healthcheck:
       test: ["CMD-SHELL", "curl -f -s http://localhost:3000/api/health || exit 1"]
       interval: 5s
@@ -34,6 +42,7 @@ services:
 
   ebisusbay-web-nginx:
     container_name: ebisusbay-web-nginx
+    # platform: linux/arm64
     restart: no
     read_only: true
     build:

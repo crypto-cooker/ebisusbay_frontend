@@ -28,7 +28,6 @@ import {
 } from "@chakra-ui/react"
 
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useInfiniteQuery, useQuery, useQueryClient} from "@tanstack/react-query";
 import nextApiService from "@src/core/services/api-service/next";
@@ -62,6 +61,7 @@ import Fortune from "@src/Contracts/Fortune.json";
 import {parseErrorMessage} from "@src/helpers/validator";
 import localFont from "next/font/local";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -81,7 +81,7 @@ interface StakeNftsProps {
 }
 
 const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const queryClient = useQueryClient();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
@@ -387,7 +387,7 @@ interface PendingNft {
 }
 
 const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockContext, refetchSlotUnlockContext}: StakingBlockProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [isExecutingStake, setIsExecutingStake] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('');
   const [stakeNfts, response] = useBankStakeNfts();
@@ -436,7 +436,7 @@ const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked, slotUnlockCo
       setExecutingLabel('');
     }
 
-  }, [pendingNfts, executingLabel, isExecutingStake]);
+  }, [pendingNfts, executingLabel, isExecutingStake, user.provider.signer]);
 
   const checkForApproval = async () => {
     const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
@@ -709,7 +709,7 @@ interface SlotUnlockDialogProps {
 }
 
 const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState, slotUnlockContext}: SlotUnlockDialogProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [executingFortuneApproval, setExecutingFortuneApproval] = useState(false);
   const [executingResourcesApproval, setExecutingResourcesApproval] = useState(false);
   const [executingUnlock, setExecutingUnlock] = useState(false);

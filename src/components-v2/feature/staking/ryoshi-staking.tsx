@@ -8,14 +8,12 @@ import RyoshiStakingNftCard from "@src/components-v2/feature/staking/ryoshi-stak
 import {addToCart, clearCart, removeFromCart, setCartContext} from "@src/GlobalState/ryoshi-staking-cart-slice";
 import {sortAndFetchCollectionDetails} from "@src/core/api/endpoints/fullcollections";
 import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {CollectionSortOption} from "@src/Components/Models/collection-sort-option.model";
 import Link from "next/link";
 import nextApiService from "@src/core/services/api-service/next";
-import {useAppSelector} from "@src/Store/hooks";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {ApiService} from "@src/core/services/api-service";
+import {useUser} from "@src/components-v2/useUser";
 
 const ryoshiCollectionAddress = appConfig('collections').find((c: any) => c.slug === 'ryoshi-tales-vip').address;
 const displayTypes = {
@@ -25,7 +23,7 @@ const displayTypes = {
 
 const RyoshiStaking = () => {
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [displayType, setDisplayType] = useState(displayTypes.staked)
 
   const handleDisplayTypeClick = (value: string) => {
@@ -33,14 +31,7 @@ const RyoshiStaking = () => {
   }
 
   const connectWalletPressed = () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
+    user.connect();
   };
 
   useEffect(() => {
@@ -101,7 +92,7 @@ export default memo(RyoshiStaking);
 
 const UnstakedRyoshiNftList = () => {
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const fetcher = async ({ pageParam = 1 }) => {
     return await nextApiService.getWallet(user.address!, {
@@ -187,7 +178,7 @@ const UnstakedRyoshiNftList = () => {
 
 const StakedRyoshiList = () => {
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const fetcher = async ({ pageParam = 1 }) => {
     const stakedRyoshis = await ApiService.withoutKey().getStakedRyoshi(user.address!);

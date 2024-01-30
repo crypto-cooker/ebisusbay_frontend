@@ -27,10 +27,10 @@ export default function Document() {
 
         {/* Site 24x7 */}
         <Script type="module"
-                src="https://js-wc.site24x7static.com/site24x7/client/statusiq_status_widget/statusiq-status-widget.esm.js?11_2022"
+                src="https://js-wc.site24x7static.com/site24x7/client/statusiq_status_widget/statusiq-status-widget.esm.js?12_2024"
                 strategy="beforeInteractive"/>
         <Script noModule
-                src="https://js-wc.site24x7static.com/site24x7/client/statusiq_status_widget/statusiq-status-widget.js?11_2022"
+                src="https://js-wc.site24x7static.com/site24x7/client/statusiq_status_widget/statusiq-status-widget.js?12_2024"
                 strategy="beforeInteractive"/>
 
         {/* Alchemy */}
@@ -43,9 +43,6 @@ export default function Document() {
         />
       </Head>
       <body>
-        <div id="initialLoader">
-          <div className="loader"></div>
-        </div>
         <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
         <Main />
         <NextScript />

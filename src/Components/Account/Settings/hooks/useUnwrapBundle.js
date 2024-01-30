@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import {Contract} from "ethers";
-import {useSelector} from "react-redux";
 import {appConfig} from "@src/Config";
 import Bundle from "@src/Contracts/Bundle.json";
+import {useUser} from "@src/components-v2/useUser";
 
 const useUnwrapBundle = () => {
   const [response, setResponse] = useState({
@@ -12,7 +12,7 @@ const useUnwrapBundle = () => {
 
   const config = appConfig();
 
-  const user = useSelector((state) => state.user);
+  const user = useUser();
 
   const unwrapBundle = async (bundleId) => {
     setResponse({

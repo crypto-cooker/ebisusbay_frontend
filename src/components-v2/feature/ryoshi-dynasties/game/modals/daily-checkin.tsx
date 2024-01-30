@@ -1,16 +1,10 @@
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
-import {Box, HStack, Image, SimpleGrid, Text} from "@chakra-ui/react";
-import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
-import {useContext, useEffect, useState} from "react";
-import {Contract} from "ethers";
+import {Box, HStack, Image, Link, SimpleGrid, Text} from "@chakra-ui/react";
+import {pluralize} from "@src/utils";
+import {useContext, useEffect, useMemo, useState} from "react";
 import {toast} from "react-toastify";
 import {appConfig} from "@src/Config";
-import Resources from "@src/Contracts/Resources.json";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
 import moment from "moment";
 import ImageService from "@src/core/services/image";
 import {
@@ -21,6 +15,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -30,9 +25,8 @@ interface DailyCheckinProps {
   forceRefresh: () => void;
 }
 const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
-  const dispatch = useDispatch();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector(state => state.user);
+  const user = useUser();
 
   const [streak, setStreak] = useState(0);
   const [streakIndex, setStreakIndex] = useState(0);
@@ -43,6 +37,12 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
 
   const [runAuthedFunction] = useAuthedFunction();
   const {isSignedIn, signin, requestSignature} = useEnforceSigner();
+
+  const isEligibleForBonus = useMemo(() => {
+    return false;
+  }, []);
+
+  const kobanMultiplier = isEligibleForBonus ? 10 : 1;
 
   const authCheckBeforeClaim = async () => {
     await runAuthedFunction(claimDailyRewards);
@@ -57,20 +57,10 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
       try {
         setExecutingClaim(true);
         const signature = await requestSignature();
-        const authorization = await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signature);
-
-        const sig = authorization.data.signature;
-        const mintRequest = JSON.parse(authorization.data.metadata);
-
-        // console.log('===contract', config.contracts.resources, Resources, user.provider.getSigner());
-        const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-        // console.log('===request', mintRequest, sig, authorization);
-        const tx = await resourcesContract.mintWithSig(mintRequest, sig);
-
-        const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signature);
+        toast.success('Success! Claimed Koban is now in the Bank');
         setCanClaim(false);
-        setNextClaim('in 24 hours');
+        setNextClaim('tomorrow');
         rdContext.refreshUser();
         forceRefresh();
       } catch (error: any) {
@@ -80,17 +70,6 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
         setExecutingClaim(false);
       }
   }
-
-  const connectWalletPressed = async () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
-  };
 
   useEffect(() => {
     if (isOpen) {
@@ -126,6 +105,11 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
         <Text align='center'>
           Earn Koban by checking in daily. Multiply your rewards by claiming multiple days in a row!
         </Text>
+        {isEligibleForBonus && (
+          <Text align='center' fontWeight='bold' color='#FFD700' mt={2}>
+            You are eligible for a 10x bonus!
+          </Text>
+        )}
         <AuthenticationRdButton
           connectText='Connect and sign in to claim your daily reward'
           signinText='Sign in to claim your daily reward'
@@ -136,7 +120,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
                 <Box key={index} w='100%' h='55' rounded="lg" color={'#FFD700'}  border={streakIndex == index + 1 ? '2px' : ''}>
                   <Text fontSize={16} color='#aaa' textAlign={'center'}>Day {index + 1}</Text>
                   <HStack justifyContent={'center'} spacing={0.5}>
-                    <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >{reward}</Text>
+                    <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >{reward * kobanMultiplier}</Text>
                     <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
                   </HStack>
                 </Box>
@@ -144,31 +128,42 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
             </SimpleGrid>
 
             <Box textAlign='center'>
-              <Text as='span'>Your current streak is <strong>{streak} {pluralize(streak, 'day')}</strong>. </Text>
-              {canClaim ? (
-                <Text as='span'>
-                  Claim now to increase your streak and earn {rdContext.config.rewards.daily[streakIndex]} Koban
-                </Text>
+              {rdContext.user && rdContext.user.experience.level > 0 ? (
+                <>
+                  <Text as='span'>Your current streak is <strong>{streak} {pluralize(streak, 'day')}</strong>. </Text>
+                  {canClaim ? (
+                    <Text as='span'>
+                      Claim now to increase your streak and earn {rdContext.config.rewards.daily[streakIndex] * kobanMultiplier} Koban
+                    </Text>
+                  ) : (
+                    <Text as='span'>
+                      Claim again {nextClaim}
+                    </Text>
+                  )}
+                  {canClaim && (
+                    <Box textAlign='center' mt={4}>
+                      <RdButton
+                        stickyIcon={true}
+                        onClick={authCheckBeforeClaim}
+                        isLoading={executingClaim}
+                        disabled={executingClaim}
+                        loadingText='Claiming'
+                      >
+                        Claim Koban
+                      </RdButton>
+                    </Box>
+                  )}
+                </>
               ) : (
-                <Text as='span'>
-                  Claim again {nextClaim}
-                </Text>
+                <Box as='span'>
+                  You must be at least level 1 to perform this action. Levels can be unlocked earning XP by using Ebisu's Bay. Details can be found {''}
+                  <Link href='https://ebisusbay.notion.site/Levels-and-Experience-Points-91658dcfd1b64fcf93b7f5b3af8c069c?pvs=4' color='#FDAB1A' fontWeight='bold' target='_blank'>
+                    here
+                  </Link>
+                </Box>
               )}
             </Box>
 
-            {canClaim && (
-              <Box textAlign='center' mt={4}>
-                <RdButton
-                  stickyIcon={true}
-                  onClick={authCheckBeforeClaim}
-                  isLoading={executingClaim}
-                  disabled={executingClaim}
-                  loadingText='Claiming'
-                >
-                  Claim Koban
-                </RdButton>
-              </Box>
-            )}
           </>
         </AuthenticationRdButton>
       </Box>

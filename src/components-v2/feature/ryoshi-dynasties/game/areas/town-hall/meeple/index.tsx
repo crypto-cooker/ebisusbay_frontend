@@ -26,13 +26,12 @@ import {
   SimpleGrid,
   Spacer,
   Spinner,
-  Stack,
+  Stack, Switch,
   Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react"
 import React, {memo, useContext, useEffect, useMemo, useState} from 'react';
-import {useAppSelector} from "@src/Store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {appConfig} from "@src/Config";
 import {
@@ -52,7 +51,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
-import {MeepleMint, MeepleTradeInCards, MeepleUpkeep} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {MeepleMint, MeepleUpkeep} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {Contract} from "ethers";
 import Resources from "@src/Contracts/Resources.json";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
@@ -65,6 +64,7 @@ import WalletNft from "@src/core/models/wallet-nft";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {useIsTouchDevice} from "@src/hooks/use-is-touch-device";
 import moment from "moment";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -86,8 +86,7 @@ interface MeepleProps {
 }
 
 const Meeple = ({isOpen, onClose}: MeepleProps) => {
-
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const { config: rdConfig, user:rdUser, game: rdGameContext, refreshUser: rdRefreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [page, setPage] = useState<string>();
   const collectionAddress = config.contracts.resources
@@ -270,7 +269,7 @@ interface WithdrawRyoshiModalProps {
 }
 
 const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: WithdrawRyoshiModalProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const {requestSignature} = useEnforceSignature();
   const [meepleToMint, setMeepleToMint] = useState(0);
   const [isExecuting, setIsExecuting] = useState(false);
@@ -384,6 +383,12 @@ const WithdrawRyoshiModal = ({isOpen, onClose, onComplete, onDutyAmount}: Withdr
               <Text color={'#aaa'} alignContent={'baseline'} py={2}> Remaining Ryoshi On Duty: </Text>
               <Text as={'b'} fontSize='28' p={2}>{onDutyAmount - meepleToMint}</Text>
             </Flex>
+            <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={2}>
+              <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
+              <Text fontSize='14' color='#333' fontWeight='bold'>
+                Any Ryoshi taken off duty will be added to the existing upkeep period. Be sure this is what you wish to do if upkeep is due soon. Otherwise, upkeep costs may be higher than expected.
+              </Text>
+            </Stack>
           </Box>
         </RdModalBox>
       </RdModalBody>
@@ -458,7 +463,7 @@ interface DepositRyoshiModalProps {
 }
 
 const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyActiveAmount}: DepositRyoshiModalProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const collectionAddress = config.contracts.resources
   const [isExecuting, setIsExecuting] = useState(false);
   const queryClient = useQueryClient();
@@ -576,9 +581,11 @@ const DepositRyoshiModal = ({isOpen, onClose, onComplete, offDutyActiveAmount}: 
 }
 
 const Upkeep = ({offDutyMeepleData}: {offDutyMeepleData: OffDutyMeepleInfo}) => {
+  const { config: rdConfig} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const nextUpkeep = formatTimeDifference(offDutyMeepleData.nextUpkeep);
+  const upkeepActiveDays = rdConfig.townHall.ryoshi.upkeepActiveDays;
 
   return (
     <>
@@ -593,10 +600,15 @@ const Upkeep = ({offDutyMeepleData}: {offDutyMeepleData: OffDutyMeepleInfo}) => 
               <Text color={'#aaa'}>Upkeep due: <b>{nextUpkeep}</b></Text>
             ) : offDutyMeepleData.lastUpkeep === 0 ? (
               <Text color={'#aaa'}>Take some Ryoshi off-duty first</Text>
-            ) : (
+            ) : (Date.now() > millisecondTimestamp(offDutyMeepleData.nextUpkeep) + upkeepActiveDays * 24 * 60 * 60 * 1000) ? (
               <HStack color='#f8a211'>
                 <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} boxSize={6}/>
                 <Text fontWeight='bold'>Upkeep overdue</Text>
+              </HStack>
+            ) : (
+              <HStack color='yellow.400'>
+                <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} boxSize={6}/>
+                <Text fontWeight='bold'>Upkeep due</Text>
               </HStack>
             )}
             {offDutyMeepleData.offDutyAmount > 0 && (
@@ -640,7 +652,7 @@ interface UpkeepModalProps {
 }
 
 const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple, activeMeeple, lastUpkeep}: UpkeepModalProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const {requestSignature} = useEnforceSignature();
   const collectionAddress = config.contracts.resources;
@@ -889,58 +901,67 @@ interface TurnInCardsModalProps {
 }
 
 const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: TurnInCardsModalProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const { config: rdConfig, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const {requestSignature} = useEnforceSignature();
   const collectionAddress = config.contracts.resources
   const [isExecuting, setIsExecuting] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(true);
 
   const [locationsWithUserQty, setLocationsWithUserQty] = useState<UserLocationCard[]>([]);
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [cardsToTurnIn, setCardsToTurnIn] = useState<{[key: number]: number}>({});
-  const [showAll, setShowAll] = useState<boolean>(true);
+  const [showAll, setShowAll] = useState<boolean>(false);
+  const [ryoshiToReceive, setRyoshiToReceive] = useState<number>(0);
+  const [selectedCardsSum, setSelectedCardsSum] = useState<number>(0);
+  const [manuallySelectedAll, setManuallySelectedAll] = useState<boolean>(false);
+  const [ryoshiDestination, setRyoshiDestination] = useState('off-duty');
+
+  const cardsPerSet = 3;
 
   const getLocationData = async () => {
-    let data = await ApiService.withoutKey().getCollectionItems({
-      address: collectionAddress,
-      pageSize: 100
-    });
-    let locations:LocationCard[] = [];
+    try {
+      setIsInitializing(true);
+      let data = await ApiService.withoutKey().getCollectionItems({
+        address: collectionAddress,
+        pageSize: 100
+      });
+      let locations:LocationCard[] = [];
 
-    //filter out only locations
-    for(let i = 0; i < data.data.length; i++){
-      for(let j=0; j < data.data[i].attributes?.length; j++){
-        if(data.data[i].attributes[j].trait_type == "Location"){
-          locations.push({
-            name: data.data[i].attributes[j].value,
-            image: data.data[i].image,
-            tier: data.data[i].attributes[1].value,
-            id: data.data[i].id
-          })
+      //filter out only locations
+      for(let i = 0; i < data.data.length; i++){
+        for(let j= 0; j < data.data[i].attributes?.length; j++){
+          if(data.data[i].attributes[j].trait_type == "Location"){
+            locations.push({
+              name: data.data[i].attributes[j].value,
+              image: data.data[i].image,
+              tier: data.data[i].attributes[1].value,
+              id: data.data[i].id
+            })
+          }
         }
       }
+
+      const locationsWithUserQuantity = locations.map((card) => {
+        const ownedCard = userLocationCards.find((userCard) => userCard.id.toString() === card.id.toString());
+        return {
+          ...card,
+          quantity: ownedCard ? ownedCard.quantity : 0,
+        };
+      });
+
+      const sortedLocations = locationsWithUserQuantity.sort((a, b) => b.quantity - a.quantity);
+
+      setLocationsWithUserQty(sortedLocations);
+    } finally {
+      setIsInitializing(false);
     }
-
-    const locationsWithUserQuantity = locations.map((card) => {
-      const ownedCard = userLocationCards.find((userCard) => userCard.id.toString() === card.id.toString());
-      return {
-        ...card,
-        quantity: ownedCard ? ownedCard.quantity : 0,
-      };
-    });
-
-    const sortedLocations = locationsWithUserQuantity.sort((a, b) => b.quantity - a.quantity);
-
-    setLocationsWithUserQty(sortedLocations);
   }
 
   const handleClose = () => {
     setSelectedTab(0);
     setCardsToTurnIn([]);
-    // SetUpCardsInWallet();
     onClose();
-    // ResetCardsInWallet();
-    console.log("Closed");
   }
 
   const handleTurnInCards = async () => {
@@ -955,12 +976,21 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
       return;
     }
 
+    const direct = ryoshiDestination === 'on-duty';
+
     try {
       setIsExecuting(true);
-      const cmsResponse = await MeepleTradeInCards(user.address, signature, ids, amounts);
+      const cmsResponse = await ApiService.withoutKey().ryoshiDynasties.requestCardTradeInAuthorization(
+        ids,
+        amounts,
+        direct,
+        user.address,
+        signature,
+      );
       const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
       const tx = await resourcesContract.craftItems(cmsResponse.request, cmsResponse.signature);
-      toast.success(createSuccessfulTransactionToastContent(tx.transactionHash));
+      const receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       onComplete();
 
     } catch (error: any) {
@@ -971,7 +1001,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
     }
   }
 
-  const handleSelectCards = (nftId: number, quantity: number) => {
+  const handleSelectCards = (nftId: number, quantity: number, resetSelectAllToggle: boolean = false) => {
     setCardsToTurnIn((prevState) => {
       const updatedState = { ...prevState };
 
@@ -983,11 +1013,41 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
 
       return updatedState;
     });
+    if (resetSelectAllToggle) setManuallySelectedAll(false);
+  }
+
+  const handleSelectAll = () => {
+    if (manuallySelectedAll) {
+      setCardsToTurnIn({});
+      setManuallySelectedAll(false);
+      return;
+    }
+
+    locationsWithUserQty.filter(card => card.quantity >= 3).forEach((card) => {
+      handleSelectCards(card.id, Math.floor(card.quantity - (card.quantity % cardsPerSet)), true);
+    });
+    setManuallySelectedAll(true);
   }
 
   useEffect(() => {
     getLocationData();
   }, [user.address])
+
+  useEffect(() => {
+    let totalRyoshi = 0;
+    Object.keys(cardsToTurnIn).forEach((key: any) => {
+      const card = locationsWithUserQty.find((card) => card.id.toString() === key.toString());
+      if (!card) return;
+      const base = rdConfig.townHall.ryoshi.tradeIn.base[key];
+      const multiplier = rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[card.tier - 1];
+      const sets = cardsToTurnIn[key] / cardsPerSet;
+      totalRyoshi += base * sets * multiplier;
+    });
+    setRyoshiToReceive(totalRyoshi);
+
+    const sum = Object.values(cardsToTurnIn).reduce((sum, value) => sum + value, 0);
+    setSelectedCardsSum(sum);
+  }, [cardsToTurnIn]);
 
   return (
     <RdModal
@@ -1014,26 +1074,72 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
             </RdTabButton>
           </SimpleGrid>
         </Flex>
-        <Flex justify='space-between' align='center'>
-          <Box fontSize='sm'>This tier has a <Text as='span' fontWeight='bold' textDecoration='underline'>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</Text> multiplier</Box>
-          <Button size='sm' variant='unstyled' onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide Empty' : 'Show All'}</Button>
-        </Flex>
-        <SimpleGrid columns={{base: 1, md: 2}} spacing={2} mt={1}>
-          {locationsWithUserQty.filter((location) => location.tier == selectedTab+1).map((card) => (
-            <>
-              {(showAll || card.quantity > 0) && (
-                <MemoizedLocationCardForm
-                  key={card.id}
-                  card={card}
-                  bonus={rdConfig.townHall.ryoshi.tradeIn.base[card.id]}
-                  quantitySelected={cardsToTurnIn[card.id] || 0}
-                  onChange={(quantity) => handleSelectCards(card.id, quantity)}
-                />
-              )}
-            </>
-          ))}
-        </SimpleGrid>
-
+        {!isInitializing ? (
+          <>
+            <Stack justify='space-between' align={{base: 'start', sm: 'center'}} direction={{base: 'column', sm: 'row'}}>
+              <Box fontSize='sm'>This tier has a <Text as='span' fontWeight='bold' textDecoration='underline'>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</Text> multiplier</Box>
+              <Stack direction='row' spacing={2} justify='space-between' w={{base: 'full', sm: 'auto'}}>
+                <Button size='sm' variant='unstyled' onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide Empty' : 'Show All'}</Button>
+                <Button size='sm' variant='outline' onClick={handleSelectAll}>{manuallySelectedAll ? 'Unselect' : 'Select'} All</Button>
+              </Stack>
+            </Stack>
+            <SimpleGrid columns={{base: 1, md: 2}} spacing={2} mt={1}>
+              {locationsWithUserQty.filter((location) => location.tier == selectedTab+1).map((card) => (
+                <>
+                  {(showAll || card.quantity > 0) && (
+                    <MemoizedLocationCardForm
+                      key={card.id}
+                      card={card}
+                      bonus={rdConfig.townHall.ryoshi.tradeIn.base[card.id]}
+                      quantitySelected={cardsToTurnIn[card.id] || 0}
+                      onChange={(quantity) => handleSelectCards(card.id, quantity)}
+                    />
+                  )}
+                </>
+              ))}
+            </SimpleGrid>
+            <SimpleGrid columns={{base: 1, md: 2}} gap={2} mt={2}>
+              <RdModalBox>
+                <Box>
+                  <Box fontWeight='bold'>Options</Box>
+                  <Box mt={2}>
+                    <Flex justify='space-between'>
+                      <Box>Destination</Box>
+                      <Switch onChange={() => {
+                        if (ryoshiDestination === 'off-duty') {
+                          setRyoshiDestination('on-duty');
+                        } else {
+                          setRyoshiDestination('off-duty');
+                        }
+                      }}/>
+                    </Flex>
+                    <Text color='#aaa' fontSize='xs'>Received Ryoshi will be {' '}
+                      {ryoshiDestination === 'off-duty' ? (
+                        <>taken <Text display='inline' color='orange' fontWeight='bold'>Off Duty</Text> for storage and can be used to take on-duty later or sell on the marketplace</>
+                      ) : (
+                        <>put <Text display='inline' color='orange' fontWeight='bold'>On Duty</Text> and can be immediately used on the battle map</>
+                      )}
+                    </Text>
+                  </Box>
+                </Box>
+              </RdModalBox>
+              <RdModalBox>
+                <Flex justify='end' h='full' align='end'>
+                  <SimpleGrid columns={5}>
+                    <GridItem colSpan={3}><Box textAlign={{base: 'start', sm: 'end'}}>Total Cards:</Box></GridItem>
+                    <GridItem colSpan={2}><Box textAlign='end'>{commify(selectedCardsSum)}</Box></GridItem>
+                    <GridItem colSpan={3} alignSelf='end'><Box textAlign={{base: 'start', sm: 'end'}} fontSize='lg'>Ryoshi To Receive:</Box></GridItem>
+                    <GridItem colSpan={2} alignSelf='end'><Box textAlign='end' fontSize='2xl' fontWeight='bold'>{commify(ryoshiToReceive)}</Box></GridItem>
+                  </SimpleGrid>
+                </Flex>
+              </RdModalBox>
+            </SimpleGrid>
+          </>
+        ) : (
+          <Center>
+            <Spinner />
+          </Center>
+        )}
       </Box>
       <RdModalFooter>
         <Box textAlign='center' mt={8} mx={2}>

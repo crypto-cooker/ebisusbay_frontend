@@ -7,12 +7,22 @@ import WalletNft from "@src/core/models/wallet-nft";
 import {Listing} from "@src/core/models/listing";
 import {
     Erc20Account,
-    FortuneStakingAccount, Meeple, PresaleVault,
+    FortuneStakingAccount,
+    Meeple,
+    PresaleVault,
     StakedToken,
     StakingAccount
 } from "@src/core/services/api-service/graph/types";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
+import {
+    TownHallStakeRequest,
+    TownHallUnstakeRequest
+} from "@src/core/services/api-service/cms/queries/staking/town-hall";
+import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
+import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
+import {MerchantItem} from "@src/core/services/api-service/cms/response-types";
+import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 
 export interface Api {
     getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>>;
@@ -32,17 +42,21 @@ export interface RyoshiDynastiesApi {
     getUserStakedFortune(address: string): Promise<FortuneStakingAccount | null>;
     getErc20Account(address: string): Promise<Erc20Account | null>;
     getStakedTokens(address: string, type: StakedTokenType): Promise<StakedToken[]>;
+    getTownHallUserStaked(address: string, collection: string, signature: string): Promise<StakedToken[]>;
+    getTownHallUserInvalidStaked(address: string, signature: string): Promise<StakedToken[]>;
     getStakedTokenTotals(type: StakedTokenType): Promise<{[key: string]: number}>;
     requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
     requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
     requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
-    requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string): Promise<any>;
-    requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string): Promise<any>;
-    requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string): Promise<any>;
+    requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string): Promise<any>;
+    requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string): Promise<any>;
+    requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string): Promise<any>;
     getDailyRewards(address: string): Promise<any>
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
     claimDailyRewards(address: string, signature: string): Promise<any>
+    getResourcesBalances(address: string, signature: string): Promise<Array<{tokenId: number, amount: number}>>;
+    requestResourcesWithdrawalAuthorization(tokenId: number, amount: number, address: string, signature: string): Promise<any>;
     requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string): Promise<any>;
     requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string): Promise<any>;
     getPendingFortuneAuthorizations(address: string, signature: string): Promise<any>;
@@ -54,6 +68,16 @@ export interface RyoshiDynastiesApi {
     getBattleLog(query: GetBattleLog): Promise<PagedList<RdBattleLog>>;
     getTroopsBreakdown(gameId: number, address: string, signature: string): Promise<RdUserContextGameTroops>;
     getUserMeeples(address: string): Promise<Meeple | null>;
+    deployTroops(request: DeployTroopsRequest, address: string, signature: string): Promise<any>;
+    relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string): Promise<any>
+    fetchGift(address: string, signature: string): Promise<any>;
+    getFactionsByPoints(gameId: number): Promise<any>;
+    requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string): Promise<any>;
+    getTownHallWinningFaction(): Promise<any>;
+    updateFaction(request: FactionUpdateRequest, address: string, signature: string): Promise<any>;
+    getFaction(id: number, address: string, signature: string): Promise<any>;
+    getMerchantItems(): Promise<MerchantItem[]>;
+    requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string): Promise<any>;
 }
 
 export enum ListingState {
@@ -136,6 +160,7 @@ export interface RdControlPoint {
     points: number;
     regionId: number;
     rewardId: number;
+    paths: number[];
     uuid: string;
     leaderBoard: RdControlPointLeaderBoard[];
 }
@@ -149,6 +174,7 @@ export interface RdControlPointLeaderBoard {
 
 export interface RdUserContext {
     faction: RdFaction;
+    designations: RdOfficerDesignation[];
     armies: RdUserContextArmies;
     season: RdUserContextSeason;
     game: RdUserContextGame;
@@ -172,6 +198,11 @@ export interface RdUserContext {
     },
     reputations: Reputation[];
     experience: Experience;
+}
+
+export interface RdOfficerDesignation {
+    id: number;
+    name: string;
 }
 
 interface RdUserContextSeason {
@@ -293,6 +324,7 @@ export interface RdGameContext {
     history: {
         previousGameId: number;
     };
+    nextInterval: Date;
 }
 
 interface RdGameBase {
@@ -338,16 +370,29 @@ interface RdSeasonRegionControlPoint {
     name: string;
     coordinates: string;
     uuid: string;
+    paths?: number[];
 }
 
 interface RdGameRewards {
     burnPercentage: number;
 }
 
-interface Reputation {
-    profileId: number;
-    otherFactionId: number;
+export interface Reputation {
+    // profileId: number;
+    // otherFactionId: number;
     points: number;
+    sendingUser: {
+        walletAddress: string;
+        username: string;
+    },
+    sendingFaction?: {
+        id: number;
+        name: string;
+    },
+    receivingFaction: {
+        id: number;
+        name: string;
+    },
     level: ReputationLevel;
 }
 

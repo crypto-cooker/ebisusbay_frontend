@@ -1,27 +1,15 @@
-import React, {ReactElement, useEffect, useRef, useState, useContext } from 'react';
-import {
-  useDisclosure,
-  Button,
-  AspectRatio,
-  useBreakpointValue,
-  Box,
-  Flex,
-  Image,
-  Avatar,
-  WrapItem,
-  Text
-} from '@chakra-ui/react'
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import React, {ReactElement, useContext, useEffect, useRef, useState} from 'react';
+import {Avatar, Box, Flex, Image, Text, useDisclosure} from '@chakra-ui/react'
+import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
-import {getControlPoint, getAllFactionsSeasonId, getLeadersForSeason} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {getAllFactionsSeasonId, getControlPoint, getLeadersForSeason} from "@src/core/api/RyoshiDynastiesAPICalls";
 import ControlPointModal from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point';
 import ImageService from '@src/core/services/image';
 import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/hud";
 import {io} from "socket.io-client";
-import {useAppSelector} from "@src/Store/hooks";
 
-import {Contract, ethers, BigNumber} from "ethers";
+import {BigNumber, Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
 import Battlefield from "@src/Contracts/Battlefield.json";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
@@ -38,7 +26,7 @@ import localFont from "next/font/local";
 import {RdGameState} from "@src/core/services/api-service/types";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import { all } from 'axios';
+import {useUser} from "@src/components-v2/useUser";
 
 const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Black.woff2' })
 
@@ -56,13 +44,13 @@ export interface MapProps {
   minScale: number;
 }
 interface Icon {
-  name: string;
+  id: number;
   image: string;
 }
 
 const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, height, useCurrentGameId, blockDeployments}: BattleMapProps) => {
   const { getPreloadedImage } = useContext(RyoshiDynastiesPreloaderContext) as RyoshiDynastiesPreloaderProps;
-  const user = useAppSelector(state => state.user);
+  const user = useUser();
   const config = appConfig();
   const { config: rdConfig, user:rdUser, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [elementToZoomTo, setElementToZoomTo] = useState("");
@@ -190,9 +178,13 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
       )))
   }
   const GetLeaderIcon = (name: any) => {
-    if(!currentIconsAquired) return 'img/avatar.jpg';
+    if(!currentIconsAquired || !rdGameContext) return 'img/avatar.jpg';
 
-    let icon = icons.find((icon) => icon.name === name);
+    const controlPoint = rdGameContext.game.season.map.regions
+      .flatMap(r => r.controlPoints)
+      .find((cp: any) => cp.name === name);
+
+    let icon = icons.find((icon) => icon.id === controlPoint?.id);
     // console.log('GetLeaderIcon', icon);
     if(icon) return icon.image;
   }
@@ -200,42 +192,45 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     if(!rdGameContext) return;
     if(currentIconsAquired) return;
 
-    let newIcons: Icon[] = [];
+    let cpLeaderAvatars: Icon[] = [];
     rdGameContext.game.season.map.regions.map((region: any) =>
       region.controlPoints.map((controlPoint: any) => (
-        newIcons.push({name: controlPoint.name, image: 'img/avatar.jpg'})
-    )))
+        cpLeaderAvatars.push({id: controlPoint.id, image: 'img/avatar.jpg'})
+    )));
 
     try {
-      newIcons.forEach((newIcons: any) => (
-        rdGameContext.gameLeaders.forEach((controlPointWithLeader: any) => (
-          newIcons.name === controlPointWithLeader.name ? newIcons.image = controlPointWithLeader.factions[0].image : null
-      ))))
-
-      setCurrentIcons(newIcons);
+      cpLeaderAvatars.forEach((cpImage) => {
+        const cpLeaderInfo = rdGameContext.gameLeaders.find((controlPointWithLeader: any) => cpImage.id === controlPointWithLeader.id);
+        if (cpLeaderInfo && cpLeaderInfo.factions.length > 0) {
+          cpImage.image = cpLeaderInfo.factions[0].image;
+        }
+      });
+      setCurrentIcons(cpLeaderAvatars);
       setCurrentIconsAqcuired(true);
     } catch (error: any) {
-      console.log(error.response.data.message);
+      console.log(error);
     }
   }
   const GetPreviousIcons = async() => {
     if(!rdGameContext) return;
     if(prevIconsAquired) return;
 
-    let prevIcons: Icon[] = [];
+    let cpLeaderAvatars: Icon[] = [];
     rdGameContext.game.season.map.regions.map((region: any) =>
       region.controlPoints.map((controlPoint: any) => (
-        prevIcons.push({name: controlPoint.name, image: 'img/avatar.jpg'})
-    )))
+        cpLeaderAvatars.push({id: controlPoint.id, image: 'img/avatar.jpg'})
+    )));
 
     try {
       const newData = await getLeadersForSeason(rdGameContext.history.previousGameId);
-      newData.forEach((newData: any) => (
-        prevIcons.forEach((prevIcons: any) => (
-          newData.name === prevIcons.name ? prevIcons.image = newData.factions[0].image : null
-      ))))
+      cpLeaderAvatars.forEach((data: any) => {
+        const cpLeaderInfo = newData.find((controlPointWithLeader: any) => data.id === controlPointWithLeader.id);
+        if (cpLeaderInfo && cpLeaderInfo.factions.length > 0) {
+          data.image = cpLeaderInfo.factions[0].image;
+        }
+      });
       
-      setPreviousIcons(prevIcons);
+      setPreviousIcons(cpLeaderAvatars);
       setPrevIconsAqcuired(true);
     } catch (error: any) {
       console.log(error.response.data.message);
@@ -335,7 +330,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
         allFactions={allFactions}
         showActiveGame={showActiveGame}
         useCurrentGameId={useCurrentGameId}
-        />
+      />
       <Box
         position='relative' 
         h={height}
@@ -404,9 +399,9 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
                   <div className={[styles.verdant_forest, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Verdant Forest")}>
                     <div className={[styles.worldmap_label, styles.verdant_forest_label].filter(e => !!e).join(' ')}>
                     <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Verdant Forest")}></Avatar>Verdant Forest</div> </div>
-                  <div className={[styles.infinite_nexus, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Infinte Nexus")}>
+                  <div className={[styles.infinite_nexus, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("The Infinite Nexus")}>
                     <div className={[styles.worldmap_label, styles.infinite_nexus_label].filter(e => !!e).join(' ')}>
-                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("The Infinte Nexus")}></Avatar>Infinite Nexus</div></div>
+                    <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("The Infinite Nexus")}></Avatar>Infinite Nexus</div></div>
                   <div className={[styles.venoms_descent, styles.enlarge].filter(e => !!e).join(' ')} onClick={()=> GetControlPointId("Venoms Descent")}>
                     <div className={[styles.worldmap_label, styles.venoms_descent_label].filter(e => !!e).join(' ')}>
                     <Avatar position={'absolute'} size={'xl'} className={styles.leader_flag} src={GetLeaderIcon("Venoms Descent")}></Avatar>Venom's Descent</div></div>

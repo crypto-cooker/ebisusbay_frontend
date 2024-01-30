@@ -274,12 +274,10 @@ const FeaturedDrops = () => {
                               </>
                             ) : (
                               <>
-                                {drop.slug === 'ryoshi-tales-vip' ? (
-                                  <>
-                                    <span className="d-title">VIP-only Mint Price</span>
-                                    <Heading as="h3" size="md">1 Ebisu's Bay VIP</Heading>
-                                  </>
-                                ) : <span className="d-title">Mint Price</span>}
+                                {drop.collection === 'ryoshi-playing-cards' && !!drop.erc20MemberCost && !!drop.erc20Token ?
+                                  <span className="d-title">Mitama Price</span> :
+                                  <span className="d-title">Mint Price</span>
+                                }
 
                                 {drop.freeMint ? (
                                   <Heading as="h3" size="md">Free Mint</Heading>
@@ -294,7 +292,14 @@ const FeaturedDrops = () => {
                                       ) : (
                                         <Heading as="h3" size="md">{ethers.utils.commify(drop.cost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
                                       ))}
-                                    {!!drop.erc20Cost && !!drop.erc20Token && (
+                                    {drop.collection === 'ryoshi-playing-cards' && !!drop.erc20MemberCost && !!drop.erc20Token ? (
+                                      <HStack mt={2} mb={4}>
+                                        {drop.erc20Token === 'frtn' ? <FortuneIcon boxSize={10} /> : <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />}
+                                        <Text fontSize="4xl" fontWeight="bold" lineHeight={1}>
+                                          {ethers.utils.commify(drop.erc20MemberCost)}
+                                        </Text>
+                                      </HStack>
+                                    ) : !!drop.erc20Cost && !!drop.erc20Token && (
                                       <HStack mt={2} mb={4}>
                                         {drop.erc20Token === 'frtn' ? <FortuneIcon boxSize={10} /> : <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />}
                                         <Text fontSize="4xl" fontWeight="bold" lineHeight={1}>
@@ -303,7 +308,27 @@ const FeaturedDrops = () => {
                                       </HStack>
                                     )}
                                     {!drop.cost && !drop.erc20Cost && drop.slug !== 'ryoshi-tales-vip' && (
-                                      <h3>TBA</h3>
+                                      <Box>
+                                        <span className="d-title">Start Price</span>
+                                        <Heading as="h3" size="md">
+                                          <HStack>
+                                            <FortuneIcon boxSize={10}/>
+                                            <Text as='span'>
+                                              2,000
+                                            </Text>
+                                          </HStack>
+                                        </Heading>
+
+                                        <span className="d-title">End Price</span>
+                                        <Heading as="h3" size="md">
+                                          <HStack>
+                                            <FortuneIcon boxSize={10}/>
+                                            <Text as='span'>
+                                              3,000
+                                            </Text>
+                                          </HStack>
+                                        </Heading>
+                                      </Box>
                                     )}
                                   </>
                                 )}
@@ -316,13 +341,29 @@ const FeaturedDrops = () => {
                                   ) : (
                                     <Heading as="h5" size="sm">Members: {ethers.utils.commify(drop.memberCost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
                                   ))}
-                                {!!drop.erc20MemberCost && !!drop.erc20Token && (
+
+                                {!!drop.rewardCost && !!drop.erc20Token && (
                                   <HStack mt={2}>
                                     <Text fontSize="md" fontWeight="bold" lineHeight={1} className="ms-0" >
-                                      {drop.collection === 'ryoshi-playing-cards' ? 'Mitama Price' : 'Members'}: {ethers.utils.commify(drop.erc20MemberCost)} {tokens[drop.erc20Token].symbol}
+                                      From Rewards: {ethers.utils.commify(drop.rewardCost)} {tokens[drop.erc20Token].symbol}
                                     </Text>
                                   </HStack>
                                 )}
+
+                                {drop.collection === 'ryoshi-playing-cards' && !!drop.erc20Cost && !!drop.erc20Token ? (
+                                  <HStack mt={2}>
+                                    <Text fontSize="md" fontWeight="bold" lineHeight={1} className="ms-0" >
+                                      Regular Price: {ethers.utils.commify(drop.erc20Cost)} {tokens[drop.erc20Token].symbol}
+                                    </Text>
+                                  </HStack>
+                                ) : !!drop.erc20MemberCost && !!drop.erc20Token && (
+                                  <HStack mt={2}>
+                                    <Text fontSize="md" fontWeight="bold" lineHeight={1} className="ms-0" >
+                                      Members: {ethers.utils.commify(drop.erc20MemberCost)} {tokens[drop.erc20Token].symbol}
+                                    </Text>
+                                  </HStack>
+                                )}
+
                                 {!!drop.whitelistCost &&
                                   (Array.isArray(drop.whitelistCost) ? (
                                     <Heading as="h5" size="sm">

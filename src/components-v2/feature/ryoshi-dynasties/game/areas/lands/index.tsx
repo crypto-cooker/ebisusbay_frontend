@@ -18,6 +18,7 @@ import {getNft} from "@src/core/api/endpoints/nft";
 
 import mapData from './points.json';
 import landsMetadata from './lands-metadata.json';
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -34,7 +35,7 @@ interface BattleMapProps {
 }
 
 const DynastiesLands = ({onBack, showBackButton}: BattleMapProps) => {
-  const user = useAppSelector(state => state.user);
+  const user = useUser();
   const transformComponentRef = useRef<any>(null)
 
   const { isOpen, onOpen, onClose } = useDisclosure();

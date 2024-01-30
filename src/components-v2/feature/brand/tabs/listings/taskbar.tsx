@@ -24,11 +24,11 @@ import React, {useCallback, useEffect, useState} from "react";
 import Filters from "@src/components-v2/feature/brand/tabs/listings/filters";
 import {sortOptions} from "@src/Components/components/constants/sort-options";
 import Button from "@src/Components/components/Button";
-import {useAppSelector} from "@src/Store/hooks";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {SortOption} from "@src/Components/Models/sort-option.model";
 import {getTheme} from "@src/Theme/theme";
 import Select from "react-select";
+import {useUser} from "@src/components-v2/useUser";
 
 interface TaskBarProps {
   onFilterToggle: () => void;
@@ -230,7 +230,7 @@ interface SortDropdownProps {
 }
 
 export const SortDropdown = ({onSort}: SortDropdownProps) => {
-  const userTheme = useAppSelector((state) => state.user.theme);
+  const {theme: userTheme} = useUser();
   const selectDefaultSortValue = SortOption.default();
   const selectCollectionSortOptions = sortOptions;
 

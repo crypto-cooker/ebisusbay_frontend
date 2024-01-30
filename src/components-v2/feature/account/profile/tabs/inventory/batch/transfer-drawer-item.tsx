@@ -42,6 +42,7 @@ import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -53,7 +54,7 @@ interface TransferDrawerItemProps {
 
 const TransferDrawerItem = ({ item, onAddCollection }: TransferDrawerItemProps) => {
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
   // Approvals
@@ -108,7 +109,7 @@ const TransferDrawerItem = ({ item, onAddCollection }: TransferDrawerItemProps) 
     } finally {
       setExecutingApproval(false);
     }
-  }, [item.nft, user]);
+  }, [item.nft, user.address]);
 
   useEffect(() => {
     async function func() {

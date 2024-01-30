@@ -1,5 +1,4 @@
 import React, {forwardRef, memo, useCallback, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faShoppingBag, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {
@@ -23,42 +22,33 @@ import {
   Wrap
 } from "@chakra-ui/react";
 import NextApiService from "@src/core/services/api-service/next";
-import {acknowledgePrompt, clearCart, removeFromCart, syncCartStorage} from "@src/GlobalState/cartSlice";
 import {commify} from "ethers/lib/utils";
-import {Contract, ethers} from "ethers";
+import {ethers} from "ethers";
 import {toast} from "react-toastify";
 import {caseInsensitiveCompare, isBundle, knownErc20Token, round} from "@src/utils";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import Button from "@src/Components/components/common/Button";
 import {listingState} from "@src/core/api/enums";
 import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import Link from "next/link";
-import {LOCAL_STORAGE_ITEMS} from "@src/helpers/storage";
 import useBuyGaslessListings from '@src/hooks/useBuyGaslessListings';
-import Market from "@src/Contracts/Marketplace.json";
-import {appConfig} from "@src/Config";
-import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
 import {specialImageTransform} from "@src/hacks";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {getPrices} from "@src/core/api/endpoints/prices";
 import {parseErrorMessage} from "@src/helpers/validator";
-
-const config = appConfig();
-const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
+import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useCart from "@src/hooks/use-cart";
 
 const Cart = function () {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
-  const cart = useAppSelector((state) => state.cart);
-  const [showMenu, setShowMenu] = useState(false);
+  const user = useUser();
+  const cart = useCart();
   const [executingBuy, setExecutingBuy] = useState(false);
   const [soldItems, setSoldItems] = useState<string[]>([]);
   const [invalidItems, setInvalidItems] = useState<string[]>([]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [buyGaslessListings, response] = useBuyGaslessListings();
+  const [runAuthedFunction] = useAuthedFunction();
   const slideDirection = useBreakpointValue<'bottom' | 'right'>(
     {
       base: 'bottom',
@@ -70,21 +60,14 @@ const Cart = function () {
   )
 
   useEffect(() => {
-    if (cart.shouldPrompt) {
-      setShowMenu(true);
-      dispatch(acknowledgePrompt());
-    }
-  }, [cart]);
-
-  useEffect(() => {
     validateItems();
-  }, [cart]);
+  }, [cart.items]);
 
   const validateItems = () => {
     setInvalidItems([]);
     const invalid = [];
-    for (let item of cart.nfts) {
-      if (isNaN(parseInt(item.price))) {
+    for (let item of cart.items) {
+      if (isNaN(parseInt(item.price.toString()))) {
         invalid.push(item.listingId);
       }
     }
@@ -92,23 +75,23 @@ const Cart = function () {
   };
 
   const handleClose = () => {
-    setShowMenu(false);
+    cart.closeCart();
   };
   const handleClearCart = () => {
-    dispatch(clearCart());
+    cart.clearCart()
   };
   const handleRemoveItem = (nft: any) => {
-    dispatch(removeFromCart(nft.listingId));
+    cart.removeItem(nft.listingId);
   };
 
   const openMenu = useCallback(async () => {
-    setShowMenu(true);
-  }, [showMenu]);
+   cart.openCart();
+  }, [cart]);
 
   const executeBuy = async () => {
-    await buyGaslessListings(cart.nfts.map((nft) => ({
+    await buyGaslessListings(cart.items.map((nft) => ({
       listingId: nft.listingId,
-      price: isNaN(nft.price) ? 0 : nft.price,
+      price: parseInt(nft.price.toString()),
       currency: nft.currency ?? ethers.constants.AddressZero
     })));
     handleClose();
@@ -116,18 +99,18 @@ const Cart = function () {
   };
 
   const preparePurchase = async () => {
-    if (user.address) {
+    await runAuthedFunction(async () => {
       try {
         setExecutingBuy(true);
-        const listingIds = cart.nfts.map((o) => o.listingId);
+        const listingIds = cart.items.map((o) => o.listingId);
         const listings = await NextApiService.getListingsByIds(listingIds);
         const validListings = listings.data
           .filter((o) => o.state === listingState.ACTIVE)
           .map((o) => o.listingId);
 
-        if (validListings.length < cart.nfts.length) {
-          const invalidItems = cart.nfts
-            .filter((o) => o.listingId !== o)
+        if (validListings.length < cart.items.length) {
+          const invalidItems = cart.items
+            .filter((o) => !validListings.includes(o.listingId))
             .map((o) => o.listingId);
           setSoldItems(invalidItems);
           return;
@@ -141,21 +124,12 @@ const Cart = function () {
       } finally {
         setExecutingBuy(false);
       }
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   }
 
   const NftLink = forwardRef<HTMLAnchorElement, any & {name: string}>(({ onClick, href, name }, ref) => {
     const closeAndGo = (event: any) => {
-      setShowMenu(false);
+      cart.closeCart();
       if (!!onClick) {
         onClick(event);
       }
@@ -168,21 +142,6 @@ const Cart = function () {
     )
   });
 
-  useEffect(() => {
-    const onReceiveMessage = (e: any) => {
-      const { key } = e;
-      if (key === LOCAL_STORAGE_ITEMS.cart) {
-        dispatch(syncCartStorage());
-      }
-    };
-    if (typeof window !== 'undefined') {
-      window.addEventListener("storage", onReceiveMessage);
-      return () => {
-        window.removeEventListener("storage", onReceiveMessage);
-      };
-    }
-  }, []);
-
   const [totals, setTotals] = useState<any[]>([]);
   const [serviceFees, setServiceFees] = useState(0);
   useEffect(() => {
@@ -190,12 +149,12 @@ const Cart = function () {
       let fees = 0;
       const exchangeRates = await getPrices();
 
-      const totals = cart.nfts.reduce((acc, nft) => {
+      const totals = cart.items.reduce((acc, nft) => {
         if (!nft.price) return acc;
 
         const currencyToken = knownErc20Token(nft.currency);
 
-        const numericPrice = parseInt(nft.price);
+        const numericPrice = parseInt(nft.price.toString());
         let amt = numericPrice;
 
         let fee =  numericPrice * (user.fee / 100);
@@ -209,39 +168,39 @@ const Cart = function () {
 
         const existing = acc.find((o: any) => o.currency === (currencyToken?.address ?? ethers.constants.AddressZero));
         if (existing) {
-          existing.subtotal += parseInt(nft.price);
+          existing.subtotal += parseInt(nft.price.toString());
           // existing.serviceFees += fee;
           existing.finalTotal += amt;
         } else {
           acc.push({
             currency: currencyToken ? currencyToken.address : ethers.constants.AddressZero,
             symbol: currencyToken ? currencyToken.symbol : 'CRO',
-            subtotal: parseInt(nft.price),
+            subtotal: parseInt(nft.price.toString()),
             // serviceFees: fee,
             finalTotal: amt,
           })
         }
         return acc;
-      }, []);
+      }, [] as Array<{currency: string, symbol: string, subtotal: number, finalTotal: number}>);
 
       setTotals(totals);
       setServiceFees(fees);
     }
     func();
-  }, [cart.nfts, user.fee]);
+  }, [cart.items, user.fee]);
 
   return (
     <div>
       <div className="de-menu-notification" onClick={openMenu}>
-        {cart.nfts.length > 0 && (
-          <div className="d-count">{cart.nfts.length > 9 ? '+' : cart.nfts.length}</div>
+        {cart.items && cart.items.length > 0 && (
+          <div className="d-count">{cart.items.length > 9 ? '+' : cart.items.length}</div>
         )}
         <span>
           <FontAwesomeIcon icon={faShoppingBag} color={user.theme === 'dark' ? '#000' : '#000'} />
         </span>
       </div>
       <Drawer
-        isOpen={showMenu}
+        isOpen={cart.isOpen}
         onClose={handleClose}
         size="sm"
         placement={slideDirection}
@@ -253,13 +212,13 @@ const Cart = function () {
 
           <DrawerBody>
             <Flex mb={2}>
-              <Text fontWeight="bold">{cart.nfts.length} {cart.nfts.length === 1 ? 'Item' : 'Items'}</Text>
+              <Text fontWeight="bold">{cart.items.length} {cart.items.length === 1 ? 'Item' : 'Items'}</Text>
               <Spacer />
               <Text fontWeight="bold" onClick={handleClearCart} cursor="pointer">Clear all</Text>
             </Flex>
-            {cart.nfts.length > 0 ? (
+            {cart.items.length > 0 ? (
               <>
-                {cart.nfts.map((nft, key) => (
+                {cart.items.map((nft, key) => (
                   <Box
                     key={nft.listingId}
                     _hover={{background: hoverBackground}}
@@ -292,11 +251,11 @@ const Cart = function () {
                         
                         <VStack align="left" spacing={0}>
                           {!nft.isBundle? (
-                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref>
+                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref legacyBehavior>
                               <NftLink name={nft.name} />
                             </Link>
                           ) : (
-                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref>
+                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref legacyBehavior>
                               <NftLink name={nft.name} />
                             </Link>
                           )}
@@ -390,7 +349,7 @@ const Cart = function () {
                 className="w-100"
                 title="Refresh Metadata"
                 onClick={preparePurchase}
-                disabled={!(cart.nfts.length > 0) || executingBuy || invalidItems.length > 0 || soldItems.length > 0}
+                disabled={!(cart.items.length > 0) || executingBuy || invalidItems.length > 0 || soldItems.length > 0}
                 isLoading={executingBuy}
               >
                 Complete Purchase

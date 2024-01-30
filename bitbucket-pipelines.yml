@@ -11,32 +11,26 @@ definitions:
       # The total memory for services on each pipeline step must not exceed the remaining memory, which is 3072/7128 MB for 1x/2x steps respectively.
       memory: 4096
       image: public.ecr.aws/docker/library/docker:dind
-  caches:
-    nextcache: .next/cache
 
   install_tools: &install_tools
     apt-get update &&
     apt-get install -y gettext
   install_aws_cli: &install_aws_cli
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip" &&
     unzip awscliv2.zip &&
     ./aws/install &&
     aws --version
-  upgrade_npm: &upgrade_npm
-    npm install -g npm@latest
-  print_versions: &print_versions
-    node --version && npm --version
   aws_ecr_login: &aws_ecr_login
     aws ecr get-login-password | docker login --password-stdin --username AWS "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
   app_build: &app_build
-    CI=false NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN npm run build
+    CI=false NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY npm run build
 
   # Docker BuildKit version
   # https://support.atlassian.com/bitbucket-cloud/docs/run-docker-commands-in-bitbucket-pipelines/#Docker-BuildKit-restrictions
   proxy_container_build: &proxy_container_build
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
-    docker build --build-arg BUILDKIT_INLINE_CACHE=1 --platform linux/amd64 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} -f proxy/Dockerfile ./proxy &&
+    docker build --build-arg BUILDKIT_INLINE_CACHE=1 --platform linux/arm64 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} -f proxy/Dockerfile ./proxy &&
     docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}
 
 pipelines:
@@ -48,10 +42,10 @@ pipelines:
           steps:
             - step:
                 name: Build & deploy
-                image: public.ecr.aws/docker/library/node:18
+                image: public.ecr.aws/docker/library/node:20
                 runs-on:
                   - 'self.hosted'
-                  - 'linux'
+                  - 'linux.arm64'
                   - 'web'
                 services:
                   - docker
@@ -73,7 +67,7 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -87,7 +81,7 @@ pipelines:
                       set -e # turn on error-trapping
                   # Build proxy container
                   - *proxy_container_build
-                  # deploy test-ebisusbay-web-amd64-us-east-1 / testapp.ebisusbay.biz
+                  # deploy test-ebisusbay-web-arm64-us-east-1 / testapp.ebisusbay.biz
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     deploy-to-sandbox:
       - stage:
@@ -96,10 +90,10 @@ pipelines:
           steps:
             - step:
                 name: Build & deploy
-                image: public.ecr.aws/docker/library/node:18
+                image: public.ecr.aws/docker/library/node:20
                 runs-on:
                   - 'self.hosted'
-                  - 'linux'
+                  - 'linux.arm64'
                   - 'web'
                 services:
                   - docker
@@ -121,7 +115,7 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -135,7 +129,7 @@ pipelines:
                       set -e # turn on error-trapping
                   # Build proxy container
                   - *proxy_container_build
-                  # deploy sandbox-ebisusbay-web-amd64-us-east-1 / sandboxapp.ebisusbay.biz
+                  # deploy sandbox-ebisusbay-web-arm64-us-east-1 / sandboxapp.ebisusbay.biz
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"sandbox\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     when-shit-hits-the-fan-prod:
       - stage:
@@ -144,10 +138,10 @@ pipelines:
           steps:
             - step:
                 name: Build & deploy
-                image: public.ecr.aws/docker/library/node:18
+                image: public.ecr.aws/docker/library/node:20
                 runs-on:
                   - 'self.hosted'
-                  - 'linux'
+                  - 'linux.arm64'
                   - 'web'
                 services:
                   - docker
@@ -169,7 +163,7 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -183,7 +177,7 @@ pipelines:
                       set -e # turn on error-trapping
                   # Build proxy container
                   - *proxy_container_build
-                  # deploy prod-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.com
+                  # deploy prod-ebisusbay-web-arm64-us-east-1 / app.ebisusbay.com
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"type\":\"pipeline_ref_target\",\"ref_type\":\"branch\",\"ref_name\":\"prod\",\"selector\":{\"type\":\"custom\",\"pattern\":\"fast_hotfix_deployment_prod\"}}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
   branches:
     dev:
@@ -193,10 +187,10 @@ pipelines:
           steps:
             - step:
                 name: Build & deploy
-                image: public.ecr.aws/docker/library/node:18
+                image: public.ecr.aws/docker/library/node:20
                 runs-on:
                   - 'self.hosted'
-                  - 'linux'
+                  - 'linux.arm64'
                   - 'web'
                 services:
                   - docker
@@ -218,7 +212,7 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -232,7 +226,7 @@ pipelines:
                       set -e # turn on error-trapping
                   # Build proxy container
                   - *proxy_container_build
-                  # deploy dev-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.biz
+                  # deploy dev-ebisusbay-web-arm64-us-east-1 / app.ebisusbay.biz
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"dev\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     prod:
       - stage:
@@ -241,10 +235,10 @@ pipelines:
           steps:
             - step:
                 name: Build & deploy
-                image: public.ecr.aws/docker/library/node:18
+                image: public.ecr.aws/docker/library/node:20
                 runs-on:
                   - 'self.hosted'
-                  - 'linux'
+                  - 'linux.arm64'
                   - 'web'
                 services:
                   - docker
@@ -266,7 +260,7 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -280,5 +274,5 @@ pipelines:
                       set -e # turn on error-trapping
                   # Build proxy container
                   - *proxy_container_build
-                  # deploy prod-ebisusbay-web-amd64-us-east-1 / app.ebisusbay.com
+                  # deploy prod-ebisusbay-web-arm64-us-east-1 / app.ebisusbay.com
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"prod\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'

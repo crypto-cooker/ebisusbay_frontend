@@ -18,7 +18,6 @@ import {
   VStack
 } from "@chakra-ui/react";
 import {useQuery} from "@tanstack/react-query";
-import {useAppSelector} from "@src/Store/hooks";
 import NextApiService from "@src/core/services/api-service/next";
 import {appConfig} from "@src/Config";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
@@ -32,7 +31,8 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
-
+import {useUser} from "@src/components-v2/useUser";
+import * as Sentry from "@sentry/nextjs";
 
 const config = appConfig();
 const guardsAddress = config.collections.find((c: any) => c.slug === 'fortune-guards').address;
@@ -49,7 +49,6 @@ interface MintHeroesProps {
 }
 
 const MintHeroes = ({isOpen, onClose}: MintHeroesProps) => {
-  const user = useAppSelector((state) => state.user);
   const [page, setPage] = useState<string>();
   const [currentTab, setCurrentTab] = useState(tabs.mint);
 
@@ -115,7 +114,7 @@ const MintHeroes = ({isOpen, onClose}: MintHeroesProps) => {
 export default MintHeroes;
 
 const Mint = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const {data: guardsList, error: error1} = useQuery({
     queryKey: ['Guards'],
@@ -177,6 +176,7 @@ const Mint = () => {
       refetch();
     } catch (e) {
       console.log(e);
+      Sentry.captureException(e);
       toast.error(parseErrorMessage(e));
     } finally {
       setIsMinting(false);
@@ -307,7 +307,7 @@ const GuardForm = ({nft, isMinting, onChange}: GuardFormProps) => {
   )
 }
 const Heroes = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const {data, isLoading, error, isError} = useQuery({
     queryKey: ['UserHeroes', user.address],

@@ -1,5 +1,4 @@
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
 import {
   Avatar,
@@ -14,6 +13,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Grid,
+  GridItem,
   HStack,
   SimpleGrid,
   Spinner,
@@ -22,21 +22,19 @@ import {
 } from "@chakra-ui/react";
 
 import React, {useContext, useEffect, useState} from "react";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
 import ImageService from "@src/core/services/image";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {ArrowForwardIcon, MinusIcon} from "@chakra-ui/icons";
+import {ArrowForwardIcon} from "@chakra-ui/icons";
 import {isAddress, pluralize, shortAddress} from "@src/utils";
 
 import localFont from 'next/font/local';
 import {useInfiniteQuery} from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useUser} from "@src/components-v2/useUser";
 
 const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
 
@@ -51,36 +49,30 @@ interface battleLog {
   currentTroops: number;
   controlPoint: string;
   entity1: {
-      image: string;
-      name: string;
-      troops: number;
-      type: string;
+    image: string;
+    name: string;
+    troops: number;
+    type: string;
+    username: string;
   };
   entity2: {
     image: string;
     name: string;
     troops: number;
     type: string;
+    username: string;
   };
   // locationId: number;
 }[];
 
 const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
-  const dispatch = useDispatch();
-  const { config: rdConfig, game: rdGameContext, user: rdUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector(state => state.user);
+  const { game: rdGameContext} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const user = useUser();
   const [sortOrder, setSortOrder] = useState("desc" as "asc" | "desc");
   const {signature, isSignedIn, requestSignature} = useEnforceSignature();
 
   const connectWalletPressed = async () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
+    user.connect();
   };
 
   const GetBattleLog = async ({ pageParam = 1 }) => {
@@ -182,6 +174,8 @@ const BattleLog = ({isOpen, onClose}: BattleLogProps) => {
                               <DefendLog battleLog={logEntry} key={itemIndex}/>
                             ) : logEntry.event === "DEPLOY" ? (
                               <DeployLog battleLog={logEntry} key={itemIndex}/>
+                            ) : logEntry.event === "RELOCATE" ? (
+                              <RelocateLog battleLog={logEntry} key={itemIndex}/>
                             ) : logEntry.event === "DELEGATE" ? (
                               <DelegateLog battleLog={logEntry} key={itemIndex}/>
                             ) : logEntry.event === "ADJUSTMENT" ? (
@@ -226,68 +220,47 @@ interface LogProps {
 const AttackLog = ({battleLog}: LogProps) => {
   return (
     <>
-      <Box
-        // position='absolute'
-        boxSize='20px'
-        marginTop={-6}
-        marginLeft={-12}
-        rounded='full'
-        zIndex={1}
-        _groupHover={{
-          cursor: 'pointer'
-        }}
-        data-group
-      >
-        <Button
-          bg='#C17109'
-          rounded='full'
-          border='4px solid #F48F0C'
-          w={8}
-          h={10}
-          _groupHover={{
-            bg: '#de8b08',
-            borderColor: '#f9a50b',
-          }}
-        >
-          <MinusIcon />
-        </Button>
-      </Box>
-
-
+      <Text fontWeight='bold' fontSize='lg'>Attack</Text>
       <HStack justifyContent={"space-between"}>
         <Text as='b' fontSize={16} className={gothamBook.className}>Lost {battleLog.pastTroops-battleLog.currentTroops} {pluralize(battleLog.pastTroops-battleLog.currentTroops, 'troop')}</Text>
-         <VStack justifyContent="center" spacing='0'>
+        <VStack justifyContent="center" spacing='0'>
           <Text fontSize={10}>({battleLog.controlPoint})</Text>
-           <HStack justifyContent={"space-between"}>
-             <Text>{battleLog.pastTroops}</Text>
-             <ArrowForwardIcon/>
-             <Text as='b'>{battleLog.currentTroops}</Text>
-           </HStack>
-         </VStack>
-       </HStack>
+          <HStack justifyContent={"space-between"}>
+            <Text>{battleLog.pastTroops}</Text>
+            <ArrowForwardIcon/>
+            <Text as='b'>{battleLog.currentTroops}</Text>
+          </HStack>
+        </VStack>
+      </HStack>
 
       <Grid
         marginTop={4}
         marginBottom={4}
-        h='100px'
-        templateRows='repeat(1, 1fr)'
-        templateColumns='repeat(3, 1fr)'
+        templateRows='auto'
+        templateColumns='1fr 16px 1fr'
         gap={4}
       >
-        <VStack justifySelf='center' spacing='0'>
-          <Text>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
-        </VStack>
-        
-        <VStack justifySelf='center' justifyContent="center">
-          <Text marginBottom={-2}>ATTACK</Text>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
+        </GridItem>
+        <GridItem rowSpan={3} display="flex" alignItems="center" justifyContent="center">
           <ArrowForwardIcon/>
-        </VStack>
-
-        <VStack justifySelf='center' spacing='0'>
-          <Text>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
+        </GridItem>
+        <GridItem textAlign='center'>
           <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
-        </VStack>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text fontSize='sm' noOfLines={2}>{battleLog.entity1.username}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text fontSize='sm' noOfLines={2}>{battleLog.entity2.username}</Text>
+        </GridItem>
       </Grid>
     </>
   )
@@ -295,68 +268,47 @@ const AttackLog = ({battleLog}: LogProps) => {
 const DefendLog = ({battleLog}: LogProps) => {
   return (
     <>
-      <Box
-        // position='absolute'
-        boxSize='20px'
-        marginTop={-6}
-        marginLeft={-12}
-        rounded='full'
-        zIndex={1}
-        _groupHover={{
-          cursor: 'pointer'
-        }}
-        data-group
-      >
-        <Button
-          bg='#C17109'
-          rounded='full'
-          border='4px solid #F48F0C'
-          w={8}
-          h={10}
-          _groupHover={{
-            bg: '#de8b08',
-            borderColor: '#f9a50b',
-          }}
-        >
-          <MinusIcon />
-        </Button>
-      </Box>
-
-
+      <Text fontWeight='bold' fontSize='lg'>Defend</Text>
       <HStack justifyContent={"space-between"}>
         <Text as='b' fontSize={16}>Lost {battleLog.pastTroops-battleLog.currentTroops} {pluralize(battleLog.pastTroops-battleLog.currentTroops, 'troop')}</Text>
-         <VStack justifyContent="center" spacing='0'>
+        <VStack justifyContent="center" spacing='0'>
           <Text fontSize={10}>({battleLog.controlPoint})</Text>
-           <HStack justifyContent={"space-between"}>
-             <Text>{battleLog.pastTroops}</Text>
-             <ArrowForwardIcon/>
-             <Text as='b'>{battleLog.currentTroops}</Text>
-           </HStack>
-         </VStack>
-       </HStack>
+          <HStack justifyContent={"space-between"}>
+            <Text>{battleLog.pastTroops}</Text>
+            <ArrowForwardIcon/>
+            <Text as='b'>{battleLog.currentTroops}</Text>
+          </HStack>
+        </VStack>
+      </HStack>
 
       <Grid
         marginTop={4}
         marginBottom={4}
-        h='100px'
-        templateRows='repeat(1, 1fr)'
-        templateColumns='repeat(3, 1fr)'
+        templateRows='auto'
+        templateColumns='1fr 16px 1fr'
         gap={4}
       >
-        <VStack justifySelf='center' spacing='0'>
-          <Text>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
-        </VStack>
-        
-        <VStack justifySelf='center' justifyContent="center">
-          <Text marginBottom={-2}>DEFEND</Text>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
+        </GridItem>
+        <GridItem rowSpan={3} display="flex" alignItems="center" justifyContent="center">
           <ArrowForwardIcon/>
-        </VStack>
-
-        <VStack justifySelf='center' spacing='0'>
-          <Text>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
+        </GridItem>
+        <GridItem textAlign='center'>
           <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
-        </VStack>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text fontSize='sm' noOfLines={2}>{battleLog.entity1.username}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text fontSize='sm' noOfLines={2}>{battleLog.entity2.username}</Text>
+        </GridItem>
       </Grid>
     </>
   )
@@ -364,68 +316,47 @@ const DefendLog = ({battleLog}: LogProps) => {
 const DeployLog = ({battleLog}: LogProps) => {
   return (
     <>
-      <Box
-        // position='absolute'
-        boxSize='20px'
-        marginTop={-6}
-        marginLeft={-12}
-        rounded='full'
-        zIndex={1}
-        _groupHover={{
-          cursor: 'pointer'
-        }}
-        data-group
-      >
-        <Button
-          bg='#C17109'
-          rounded='full'
-          border='4px solid #F48F0C'
-          w={8}
-          h={10}
-          _groupHover={{
-            bg: '#de8b08',
-            borderColor: '#f9a50b',
-          }}
-        >
-          <ArrowForwardIcon />
-        </Button>
-      </Box>
-
-
+      <Text fontWeight='bold' fontSize='lg'>Deploy</Text>
       <HStack justifyContent={"space-between"}>
         <Text as='b' fontSize={16}>Deployed {battleLog.currentTroops-battleLog.pastTroops} {pluralize(battleLog.currentTroops -battleLog.pastTroops, 'troop')}</Text>
-         <VStack justifyContent="center" spacing='0'>
+        <VStack justifyContent="center" spacing='0'>
           <Text fontSize={10}>({battleLog.controlPoint})</Text>
-           <HStack justifyContent={"space-between"}>
-             <Text>{battleLog.pastTroops}</Text>
-             <ArrowForwardIcon/>
-             <Text as='b'>{battleLog.currentTroops}</Text>
-           </HStack>
-         </VStack>
-       </HStack>
+          <HStack justifyContent={"space-between"}>
+            <Text>{battleLog.pastTroops}</Text>
+            <ArrowForwardIcon/>
+            <Text as='b'>{battleLog.currentTroops}</Text>
+          </HStack>
+        </VStack>
+      </HStack>
 
       <Grid
         marginTop={4}
         marginBottom={4}
-        h='100px'
-        templateRows='repeat(1, 1fr)'
-        templateColumns='repeat(3, 1fr)'
+        templateRows='auto'
+        templateColumns='1fr 16px 1fr'
         gap={4}
       >
-        <VStack justifySelf='center' spacing='0'>
-          <Text>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
-        </VStack>
-        
-        <VStack justifySelf='center' justifyContent="center">
-          <Text marginBottom={-2}>DEPLOY</Text>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
+        </GridItem>
+        <GridItem rowSpan={3} display="flex" alignItems="center" justifyContent="center">
           <ArrowForwardIcon/>
-        </VStack>
-
-        <VStack justifySelf='center' spacing='0'>
-          <Text>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
+        </GridItem>
+        <GridItem textAlign='center'>
           <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
-        </VStack>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text fontSize='sm' noOfLines={2}>{battleLog.entity1.username}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text fontSize='sm' noOfLines={2}>{battleLog.entity2.username}</Text>
+        </GridItem>
       </Grid>
     </>
   )
@@ -433,67 +364,40 @@ const DeployLog = ({battleLog}: LogProps) => {
 const DelegateLog = ({battleLog}: LogProps) => {
   return (
     <>
-      <Box
-        // position='absolute'
-        boxSize='20px'
-        marginTop={-6}
-        marginLeft={-12}
-        rounded='full'
-        zIndex={1}
-        _groupHover={{
-          cursor: 'pointer'
-        }}
-        data-group
-      >
-        <Button
-          bg='#C17109'
-          rounded='full'
-          border='4px solid #F48F0C'
-          w={8}
-          h={10}
-          _groupHover={{
-            bg: '#de8b08',
-            borderColor: '#f9a50b',
-          }}
-        >
-          <ArrowForwardIcon />
-        </Button>
-      </Box>
-
-
+      <Text fontWeight='bold' fontSize='lg'>Delegate</Text>
       <HStack justifyContent={"space-between"}>
         <Text as='b' fontSize={16}>Delegated {battleLog.currentTroops-battleLog.pastTroops} {pluralize(battleLog.currentTroops -battleLog.pastTroops, 'troop')}</Text>
-         <VStack justifyContent="center" spacing='0'>
-           <HStack justifyContent={"space-between"}>
-             <Text>{battleLog.pastTroops}</Text>
-             <ArrowForwardIcon/>
-             <Text as='b'>{battleLog.currentTroops}</Text>
-           </HStack>
-         </VStack>
-       </HStack>
+        <VStack justifyContent="center" spacing='0'>
+          <HStack justifyContent={"space-between"}>
+            <Text>{battleLog.pastTroops}</Text>
+            <ArrowForwardIcon/>
+            <Text as='b'>{battleLog.currentTroops}</Text>
+          </HStack>
+        </VStack>
+      </HStack>
 
       <Grid
         marginTop={4}
         marginBottom={4}
-        h='100px'
-        templateRows='repeat(1, 1fr)'
-        templateColumns='repeat(3, 1fr)'
+        templateRows='auto'
+        templateColumns='1fr 16px 1fr'
         gap={4}
       >
-        <VStack justifySelf='center' spacing='0'>
-          <Text>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
-        </VStack>
-        
-        <VStack justifySelf='center' justifyContent="center">
-          <Text marginBottom={-2}>DELEGATE</Text>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
+        </GridItem>
+        <GridItem rowSpan={3} display="flex" alignItems="center" justifyContent="center">
           <ArrowForwardIcon/>
-        </VStack>
-
-        <VStack justifySelf='center' spacing='0'>
-          <Text>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
+        </GridItem>
+        <GridItem textAlign='center'>
           <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
-        </VStack>
+        </GridItem>
       </Grid>
     </>
   )
@@ -501,67 +405,40 @@ const DelegateLog = ({battleLog}: LogProps) => {
 const UndelegateLog = ({battleLog}: LogProps) => {
   return (
     <>
-      <Box
-        // position='absolute'
-        boxSize='20px'
-        marginTop={-6}
-        marginLeft={-12}
-        rounded='full'
-        zIndex={1}
-        _groupHover={{
-          cursor: 'pointer'
-        }}
-        data-group
-      >
-        <Button
-          bg='#C17109'
-          rounded='full'
-          border='4px solid #F48F0C'
-          w={8}
-          h={10}
-          _groupHover={{
-            bg: '#de8b08',
-            borderColor: '#f9a50b',
-          }}
-        >
-          <ArrowForwardIcon />
-        </Button>
-      </Box>
-
-
+      <Text fontWeight='bold' fontSize='lg'>Undelegate</Text>
       <HStack justifyContent={"space-between"}>
         <Text as='b' fontSize={16}>Delegated {battleLog.currentTroops-battleLog.pastTroops} {pluralize(battleLog.currentTroops -battleLog.pastTroops, 'troop')}</Text>
-         <VStack justifyContent="center" spacing='0'>
-           <HStack justifyContent={"space-between"}>
-             <Text>{battleLog.pastTroops}</Text>
-             <ArrowForwardIcon/>
-             <Text as='b'>{battleLog.currentTroops}</Text>
-           </HStack>
-         </VStack>
-       </HStack>
+        <VStack justifyContent="center" spacing='0'>
+          <HStack justifyContent={"space-between"}>
+            <Text>{battleLog.pastTroops}</Text>
+            <ArrowForwardIcon/>
+            <Text as='b'>{battleLog.currentTroops}</Text>
+          </HStack>
+        </VStack>
+      </HStack>
 
       <Grid
         marginTop={4}
         marginBottom={4}
-        h='100px'
-        templateRows='repeat(1, 1fr)'
-        templateColumns='repeat(3, 1fr)'
+        templateRows='auto'
+        templateColumns='1fr 16px 1fr'
         gap={4}
       >
-        <VStack justifySelf='center' spacing='0'>
-          <Text>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
-        </VStack>
-        
-        <VStack justifySelf='center' justifyContent="center">
-          <Text marginBottom={-2}>UNDELEGATE</Text>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
+        </GridItem>
+        <GridItem rowSpan={3} display="flex" alignItems="center" justifyContent="center">
           <ArrowForwardIcon/>
-        </VStack>
-
-        <VStack justifySelf='center' spacing='0'>
-          <Text>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
+        </GridItem>
+        <GridItem textAlign='center'>
           <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
-        </VStack>
+        </GridItem>
       </Grid>
     </>
   )
@@ -569,71 +446,88 @@ const UndelegateLog = ({battleLog}: LogProps) => {
 const AdjustmentLog = ({battleLog}: LogProps) => {
   return (
     <>
-      <Box
-        // position='absolute'
-        boxSize='20px'
-        marginTop={-6}
-        marginLeft={-12}
-        rounded='full'
-        zIndex={1}
-        _groupHover={{
-          cursor: 'pointer'
-        }}
-        data-group
-      >
-        <Button
-          bg='#C17109'
-          rounded='full'
-          border='4px solid #F48F0C'
-          w={8}
-          h={10}
-          _groupHover={{
-            bg: '#de8b08',
-            borderColor: '#f9a50b',
-          }}
-        >
-          <ArrowForwardIcon />
-        </Button>
-      </Box>
-
-
+      <Text fontWeight='bold' fontSize='lg'>Adjustment</Text>
       <HStack justifyContent={"space-between"}>
         <Text as='b' fontSize={16}>Adjusted {battleLog.currentTroops-battleLog.pastTroops} {pluralize(battleLog.currentTroops -battleLog.pastTroops, 'troop')}</Text>
-         <VStack justifyContent="center" spacing='0'>
-           <HStack justifyContent={"space-between"}>
-             <Text>{battleLog.pastTroops}</Text>
-             <ArrowForwardIcon/>
-             <Text as='b'>{battleLog.currentTroops}</Text>
-           </HStack>
-         </VStack>
-       </HStack>
+        <VStack justifyContent="center" spacing='0'>
+          <HStack justifyContent={"space-between"}>
+            <Text>{battleLog.pastTroops}</Text>
+            <ArrowForwardIcon/>
+            <Text as='b'>{battleLog.currentTroops}</Text>
+          </HStack>
+        </VStack>
+      </HStack>
 
       <Grid
         marginTop={4}
         marginBottom={4}
-        h='100px'
-        templateRows='repeat(1, 1fr)'
-        templateColumns='repeat(3, 1fr)'
+        templateRows='auto'
+        templateColumns='1fr 16px 1fr'
         gap={4}
       >
-        <VStack justifySelf='center' spacing='0'>
-          <Text>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
-          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
-        </VStack>
-        
-        <VStack justifySelf='center' justifyContent="center">
-          <Text marginBottom={-2}>ADJUSTMENT</Text>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
+        </GridItem>
+        <GridItem rowSpan={3} display="flex" alignItems="center" justifyContent="center">
           <ArrowForwardIcon/>
-        </VStack>
-
-        <VStack justifySelf='center' spacing='0'>
-          <Text>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
+        </GridItem>
+        <GridItem textAlign='center'>
           <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
-        </VStack>
+        </GridItem>
       </Grid>
     </>
   )
 }
+
+const RelocateLog = ({battleLog}: LogProps) => {
+  return (
+    <>
+      <Text fontWeight='bold' fontSize='lg'>Relocate</Text>
+      <HStack justifyContent={"space-between"}>
+        <Text as='b' fontSize={16}>Relocated {battleLog.currentTroops-battleLog.pastTroops} {pluralize(battleLog.currentTroops -battleLog.pastTroops, 'troop')}</Text>
+        <VStack justifyContent="center" spacing='0'>
+          <Text fontSize={10}>({battleLog.controlPoint})</Text>
+          <HStack justifyContent={"space-between"}>
+            <Text>{battleLog.pastTroops}</Text>
+            <ArrowForwardIcon/>
+            <Text as='b'>{battleLog.currentTroops}</Text>
+          </HStack>
+        </VStack>
+      </HStack>
+
+      <Grid
+        marginTop={4}
+        marginBottom={4}
+        templateRows='auto'
+        templateColumns='1fr 16px 1fr'
+        gap={4}
+      >
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity1.name) ? shortAddress(battleLog.entity1.name) : battleLog.entity1.name}</Text>
+        </GridItem>
+        <GridItem rowSpan={3} display="flex" alignItems="center" justifyContent="center">
+          <ArrowForwardIcon/>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Text noOfLines={2} fontWeight='bold'>{isAddress(battleLog.entity2.name) ? shortAddress(battleLog.entity2.name) : battleLog.entity2.name}</Text>
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Avatar src={ImageService.translate(battleLog.entity1.image).fixedWidth(64, 64)} size='lg' />
+        </GridItem>
+        <GridItem textAlign='center'>
+          <Avatar src={ImageService.translate(battleLog.entity2.image).fixedWidth(64, 64)} size='lg' />
+        </GridItem>
+      </Grid>
+    </>
+  )
+}
+
 // const AddLog = ({spoofTroopLog}: LogProps) => {
 //   return (
 //     <>

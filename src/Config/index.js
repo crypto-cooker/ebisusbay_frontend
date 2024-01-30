@@ -38,7 +38,7 @@ export const configData = {
         root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
         ryoshiDynasties: 'ryoshi-dynasties-meeple',
         ryoshiPresale: 'ryoshi-presale',
-        stakedOwners: 'staked-owners',
+        stakedOwners: 'staked-owners-2',
         staking: 'staking'
       }
     },
@@ -55,7 +55,6 @@ export const configData = {
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
-      cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
       gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
       gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9',
       usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
@@ -117,6 +116,11 @@ export const configData = {
         name: 'Candy',
         symbol: 'CANDY',
         address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977'
+      },
+      ttt: {
+        name: 'TTT',
+        symbol: 'TTT',
+        address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6'
       }
     },
     collections: rpcConfig.known_contracts,
@@ -145,7 +149,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt'],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -218,6 +222,42 @@ export const configData = {
           '0xd33CFeF82377fef83703B9D84151a477B08Ab3b8': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW Airdrops
           '0xccc777777ac85999fc9fe355f25cd908060ec9ea': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW Customs
           '0x3d7777ff1908B54b57038A2556d6904f71468e2D': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // 3D CROW
+          '0x9b72f7d5aecee857cc3d1a1a3357aff0e342d0a8': ['cro', 'frtn', 'ttt'], // Time Machine 101
+          '0x146cf0ee7b6b986769782ea832e8327f9dff55e7': ['cro', 'frtn', 'ttt'], // Tata's Guardians
+          '0x482eBe3063ED2d2281AAfec31941705787432A1A': ['cro', 'frtn', 'ttt'], // Time Machine 102: The Travellers
+          '0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35': ['cro', 'frtn', 'ttt'], // Time Ship Blueprints
+          '0x55c8f67e6D3f037297Daf94AD2bCC67CC477BEa9': ['cro', 'frtn', 'ttt'], // Time Troops
+          '0x1c4924f36Fe60374DB6ac206894D82F03d522933': ['cro', 'frtn', 'ttt'], // Time Creatures Class A
+          '0x15Af2503a934D211A1936684fEd986E7E3f417db': ['cro', 'frtn', 'ttt'], // Time Creatures Class B
+          '0x6cC790CAE45EC057f9637784279A475CC91cf517': ['cro', 'frtn', 'ttt'], // Animated Time Gods
+          '0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645': ['cro', 'frtn', 'ttt'], // Time Commanders
+          '0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475': ['cro', 'frtn', 'ttt'], // Time Creature Ships
+          '0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F': ['cro', 'frtn', 'ttt'], // Time Cronos Planets
+          '0xfF567a62d7BF2CF984F02175C8bd485E3C4E2c0e': ['cro', 'frtn', 'ttt'], // Time Ship Components
+          '0x739b5380156Fa14C7956145048d52dF27EDedfCE': ['cro', 'frtn', 'ttt'], // Tata's Twisted Tonics
+          '0xb76415D33268391bfaE2E671f45CeDAD9bC99dc9': ['cro', 'frtn', 'ttt'], // Animated Guardians
+          '0xCF926cB69b860Da8c33a2a601217856536ed0bcA': ['cro', 'frtn', 'ttt'], // Animated Time Machine 102s
+          '0x975238Ce3c593060a9b549e1654dC992f0Bc11aC': ['cro', 'frtn', 'ttt'], // Power Tonics
+          '0x87e04f1d64619994a5320450E19C184a2dDE09c7': ['cro', 'frtn', 'ttt'], // CroTops
+          '0x35B832bE9546fCad67526Be2801228194250378A': ['cro', 'frtn', 'ttt'], // Time Base
+          '0xF87A517A5CaecaA03d7cCa770789BdB61e09e05F': ['cro'], // CroSkill Brand Start
+          '0xbf4E430cD0ce8b93d4760958fe4ae66cDaCDB6c6': ['cro'],
+          '0x14e9ef197C0bfaf7C1328ebed7151f53616Af3C5': ['cro'],
+          '0x6d54590Ed6950EcD3987778c004d4773a7e99dAC': ['cro'],
+          '0x5DD5d3140Fe619Ef8F4655383283BB555E219A27': ['cro'],
+          '0x635D66972453E20F5f2EA2787361C752232F07D2': ['cro'],
+          '0x27fE0fA269DeAC471aC07014d6ED9973ce69bd96': ['cro'],
+          '0xB77959DC7a12F7549ACC084Af01259Fc48813c89': ['cro'],
+          '0x54655D5468f072D5bcE1577c4a46F701C28a41A7': ['cro'],
+          '0x31B378ac025a341839CD81C4D29A8457324D3EbC': ['cro'],
+          '0x77aE45b634a829B002293E554fA67ADC0EB78Bc2': ['cro'],
+          '0xed9BDf3E103332C853DDb9933BA3B45acfDB9B2e': ['cro'],
+          '0xB9eCFF7e01a48C434a3B8A034906e4b34Da62f90': ['cro'],
+          '0xB929D3002208f405180D3C07616F88EDa45F3e14': ['cro'],
+          '0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9': ['cro'],
+          '0xA9448e3e496f75488306195F34e49a7fCE5cbD0c': ['cro'],
+          '0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8': ['cro'],
+          '0x400e237c4F88e5728E0D6088315DeCD856a10EDd': ['cro'], // CroSkill Brand End
         }
       }
     }
@@ -248,7 +288,7 @@ export const configData = {
         root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
         ryoshiDynasties: 'ryoshi-dynasties-meeple',
         ryoshiPresale: 'ryoshi-presale',
-        stakedOwners: 'staked-owners',
+        stakedOwners: 'staked-owners-2',
         staking: 'staking'
       }
     },
@@ -265,7 +305,6 @@ export const configData = {
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
-      cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
       gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
       gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9',
       usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
@@ -403,7 +442,7 @@ export const configData = {
       }
     },
     rpc: {
-      read: 'https://rpc.ebisusbay.biz/',
+      read: 'https://testnet-archive.cronoslabs.com/v1/9e45d288f24ea538e34bc9919da2d360/',
       write: 'https://evm-t3.cronos.org/',
     },
     contracts: {
@@ -415,7 +454,6 @@ export const configData = {
       madAuction: '0x84356061d598A7bCE028dB6a37b14F84cf4A5905',
       slothtyRugsurance: '0xC54821941Bb036463bDB1eea781f9b29a7f98fAc',
       bundle: '0xEbFB981D5a7A7C2133752F7787263B58495bb923',
-      cnsusd: '0x263818f9693548446A41ad7025923612b490CB0D',
       gaslessListing: '0xBbe0D0715AbCadb8A0Db41C0Bb7f272570907C45',
       gdc: '0xd464f36885163e124e3a15e31c0e581ba3f648ab',
       usdc: '0x1E1d0765439d0d53ee40CC4fB454C2343c84342b',
@@ -564,7 +602,6 @@ export const configData = {
       madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
       slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
       bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
-      cnsusd: '0xCF92513AA42bFf5cae6f28Ed5c4a108D9a328233',
       gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
       gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9',
       usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',

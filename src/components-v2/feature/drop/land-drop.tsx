@@ -34,14 +34,10 @@ import {
   Text,
   useNumberInput
 } from "@chakra-ui/react";
-import {useAppSelector} from "@src/Store/hooks";
 import {Drop} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
 import {ArrowForwardIcon} from '@chakra-ui/icons';
 import {getTheme} from "@src/Theme/theme";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
 import {commify} from "ethers/lib/utils";
 import {toast} from "react-toastify";
 import {getAnalytics, logEvent} from "@firebase/analytics";
@@ -50,6 +46,8 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import Link from "next/link";
 import {parseErrorMessage} from "@src/helpers/validator";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const config = appConfig();
 
@@ -98,9 +96,10 @@ interface LandDropProps {
 const LandDrop = ({drop}: LandDropProps) => {
   const router = useRouter();
   const { slug } = router.query;
+  const user = useUser();
+  const [runAuthedFunction] = useAuthedFunction();
 
   const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-  const dispatch = useDispatch();
 
   // const [loading, setLoading] = useState(true);
   const [minting, setMinting] = useState(false);
@@ -123,10 +122,6 @@ const LandDrop = ({drop}: LandDropProps) => {
   const handleBtnClick = (key: string) => (element: any) => {
     setOpenMenu(key);
   };
-
-  const user = useAppSelector((state) => {
-    return state.user;
-  });
 
   useEffect(() => {
     async function fetchData() {
@@ -201,7 +196,7 @@ const LandDrop = ({drop}: LandDropProps) => {
   };
 
   const mintNow = async (numToMint: number) => {
-    if (user.address) {
+    runAuthedFunction(async() => {
       setMinting(true);
       setMintingState("Minting...");
       const mintContract = await new ethers.Contract(drop.address, abi, user.provider.getSigner());
@@ -251,9 +246,7 @@ const LandDrop = ({drop}: LandDropProps) => {
         setMinting(false);
         setMintingState(null);
       }
-    } else {
-      dispatch(connectAccount());
-    }
+    });
   };
 
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
@@ -563,8 +556,7 @@ interface MintPhaseProps {
 }
 
 const MintPhase = ({ title, description, price, startTime, endTime, onMint, maxMintQuantity, isMinting, isDropComplete, dropStatus, currentSupply, maxSupply, onRefreshDropStatus }: MintPhaseProps) => {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [numToMint, setNumToMint] = useState(1);
   const [phaseStatus, setPhaseStatus] = useState(DropState.UNSET);
   const [countdownFinished, setCountdownFinished] = useState(false);
@@ -613,14 +605,7 @@ const MintPhase = ({ title, description, price, startTime, endTime, onMint, maxM
   }
 
   const connectWalletPressed = () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
+    user.connect();
   };
 
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =

@@ -2,13 +2,12 @@ import React, {memo, useState} from 'react';
 import {useRouter} from 'next/router';
 import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
-import {faEllipsisH, faInfoCircle, faLink, faMinus, faPlus, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
+import {faInfoCircle, faLink, faMinus, faPlus, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {MenuPopup} from '@src/Components/components/chakra-components';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {nftCardUrl} from "@src/helpers/image";
 import {Badge, Box, Center, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
-import Image from "next/image";
 import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
@@ -34,7 +33,6 @@ const RyoshiStakingNftCard = ({
   const router = useRouter();
   const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
   const [isHovered, setIsHovered] = useState(false);
-  const user = useAppSelector((state) => state.user);
   const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
   const { onCopy } = useClipboard(nftUrl.toString());
 
@@ -219,9 +217,7 @@ const RyoshiStakingNftCard = ({
                   <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={onAddToCartButtonPressed}>Stake</Text>
                 )}
               </Box>
-              <MenuPopup options={getOptions()}>
-                <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
-              </MenuPopup>
+              <MenuPopup options={getOptions()} />
             </div>
           </Box>
         </Flex>

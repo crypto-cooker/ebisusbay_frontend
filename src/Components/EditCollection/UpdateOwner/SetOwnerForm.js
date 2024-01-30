@@ -10,12 +10,13 @@ import {useQuery} from "@tanstack/react-query";
 import {getOwnerCollections} from "@src/core/api/next/collectioninfo";
 import { useRouter } from "next/router";
 import {Spinner} from "@chakra-ui/react";
+import {useUser} from "@src/components-v2/useUser";
 
 const SetOwnerForm = ({ address: collectionAddress }) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [{ isLoading, response, error }, setNewOwner] = useSetOwner();
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const router = useRouter();
 
   const { data, status, refetch } = useQuery({

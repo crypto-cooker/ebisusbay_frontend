@@ -4,7 +4,6 @@ import attributes from './core/configs/attributes.json';
 import {useEffect, useRef} from 'react';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
 import {appConfig} from './Config';
-import {getProfile} from "@src/core/cms/endpoints/profile";
 import {commify} from "ethers/lib/utils";
 import brands from '../src/core/data/brands.json';
 import ImageService from "@src/core/services/image";
@@ -70,67 +69,28 @@ function elmYPosition(elm) {
   return y;
 }
 
-export function scrollTo(scrollableElement, elmID) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-  var elm = document.getElementById(elmID);
-  if (!elmID || !elm) {
-    return;
-  }
-  var startY = currentYPosition();
-  var stopY = elmYPosition(elm);
-  var distance = stopY > startY ? stopY - startY : startY - stopY;
-  if (distance < 100) {
-    scrollTo(0, stopY);
-    return;
-  }
-  var speed = Math.round(distance / 50);
-  if (speed >= 20) speed = 20;
-  var step = Math.round(distance / 25);
-  var leapY = stopY > startY ? startY + step : startY - step;
-  var timer = 0;
-  if (stopY > startY) {
-    for (var i = startY; i < stopY; i += step) {
-      setTimeout(
-        (function (leapY) {
-          return () => {
-            scrollableElement.scrollTo(0, leapY);
-          };
-        })(leapY),
-        timer * speed
-      );
-      leapY += step;
-      if (leapY > stopY) leapY = stopY;
-      timer++;
-    }
-    return;
-  }
-  for (let i = startY; i > stopY; i -= step) {
-    setTimeout(
-      (function (leapY) {
-        return () => {
-          scrollableElement.scrollTo(0, leapY);
-        };
-      })(leapY),
-      timer * speed
-    );
-    leapY -= step;
-    if (leapY < stopY) leapY = stopY;
-    timer++;
-  }
-  return false;
-}
-
 export function getTimeDifference(date) {
   let difference = moment(new Date(), 'DD/MM/YYYY HH:mm:ss').diff(moment(date, 'DD/MM/YYYY HH:mm:ss')) / 1000;
 
-  if (difference < 60) return `${Math.floor(difference)} seconds`;
-  else if (difference < 3600) return `${Math.floor(difference / 60)} minutes`;
-  else if (difference < 86400) return `${Math.floor(difference / 3660)} hours`;
-  else if (difference < 86400 * 30) return `${Math.floor(difference / 86400)} days`;
-  else if (difference < 86400 * 30 * 12) return `${Math.floor(difference / 86400 / 30)} months`;
-  else return `${(difference / 86400 / 30 / 12).toFixed(1)} years`;
+  return getLengthOfTime(difference);
+}
+
+export function getLengthOfTime(duration) {
+  const timeUnits = [
+    { unit: 'year', threshold: 86400 * 30 * 12, roundFunc: val => (val / 86400 / 30 / 12).toFixed(1) },
+    { unit: 'month', threshold: 86400 * 30, roundFunc: val => Math.floor(val / 86400 / 30) },
+    { unit: 'day', threshold: 86400, roundFunc: val => Math.floor(val / 86400) },
+    { unit: 'hour', threshold: 3600, roundFunc: val => Math.floor(val / 3600) },
+    { unit: 'minute', threshold: 60, roundFunc: val => Math.floor(val / 60) },
+    { unit: 'second', threshold: 1, roundFunc: val => Math.floor(val) }
+  ];
+
+  for (const { unit, threshold, roundFunc } of timeUnits) {
+    if (duration >= threshold) {
+      const value = roundFunc(duration);
+      return `${value} ${pluralize(value, unit)}`;
+    }
+  }
 }
 
 export function generateRandomId() {
@@ -192,6 +152,7 @@ export function humanize(str) {
 export function humanizeAdvanced(s) {
   if (s === null || s === undefined) return '';
   if (!s) return s;
+  if (typeof s !== 'string') s = s.toString();
 
   // Insert spaces before uppercase letters that follow lowercase letters
   const spacedString = s.replace(/([a-z])([A-Z])/g, '$1 $2');
@@ -314,18 +275,26 @@ export function timeSince(timestamp) {
   return `${interval} ${pluralize(interval, 'second')}`;
 }
 
-export function secondsToDhms(seconds) {
-  seconds = Number(seconds);
-  var d = Math.floor(seconds / (3600 * 24));
-  var h = Math.floor((seconds % (3600 * 24)) / 3600);
-  var m = Math.floor((seconds % 3600) / 60);
-  var s = Math.floor(seconds % 60);
+export function secondsToDhms(totalSeconds, abbreviated = false) {
+  const days = Math.floor(totalSeconds / (3600 * 24));
+  const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
 
-  var dDisplay = d > 0 ? d + (d == 1 ? ' d ' : ' d ') : '';
-  var hDisplay = h > 0 ? h + (h == 1 ? ' h ' : ' h ') : '';
-  var mDisplay = m > 0 ? m + (m == 1 ? ' m ' : ' m ') : '';
-  var sDisplay = s > 0 ? s + (s == 1 ? ' s' : ' s') : '';
-  return dDisplay + hDisplay + mDisplay + sDisplay;
+  // Formatting the output based on abbreviated parameter
+  let result = '';
+  if (!abbreviated) {
+    if (days > 0) result += `${days} ${pluralize(days, 'day')} `;
+    if (hours > 0) result += `${hours} ${pluralize(hours, 'hour')} `;
+    if (minutes > 0) result += `${minutes} ${pluralize(minutes, 'minute')} `;
+    if (seconds > 0) result += `${seconds} ${pluralize(seconds, 'second')}`;
+  } else {
+    if (days > 0) result += `${days}d `;
+    if (hours > 0) result += `${hours}h `;
+    if (minutes > 0) result += `${minutes}m `;
+    if (seconds > 0) result += `${seconds}s`;
+  }
+  return result.trim();
 }
 
 /**
@@ -529,24 +498,12 @@ export const isCroniesCollection = (address) => {
   return isCollection(address, 'cronies', '0xD961956B319A10CBdF89409C0aE7059788A4DaBb');
 };
 
-export const isCarkayousCollection = (address) => {
-  return isCollection(address, 'carkayous-feral-fish', '0x72af9c869a4759e6d50e9656c0741b395532c3dd');
-};
-
 export const isLazyHorseCollection = (address) => {
   return isCollection(address, 'lazy-horse', '0xD504ed871d33dbD4f56f523A37dceC86Ee918cb6');
 };
 
 export const isLazyHorsePonyCollection = (address) => {
   return isCollection(address, 'lazy-horse-pony', '0x7d0259070B5f513CA543afb6a906d42af5884B1B');
-};
-
-export const isCnsCollection = (address) => {
-  return isCollection(address, 'cronos-name-service', '0x15F7A67075C8b0883c355814Aa4e6C1e19994Af3');
-};
-
-export const isSscCollection = (address) => {
-  return isCollection(address, 'ssc-access-cards', '0x45Fe45e5623a129d652F15962d901C7B609e5194');
 };
 
 export const isCroskullSbtCollection = (address) => {

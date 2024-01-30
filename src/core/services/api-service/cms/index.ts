@@ -10,6 +10,13 @@ import {
 import RyoshiDynastiesRepository from "@src/core/services/api-service/cms/repositories/ryoshi-dynasties";
 import {PagedList} from "@src/core/services/api-service/paginated-list";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
+import {
+  TownHallStakeRequest,
+  TownHallUnstakeRequest
+} from "@src/core/services/api-service/cms/queries/staking/town-hall";
+import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
+import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
+import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 
 class Cms {
   private profiles: ProfilesRepository;
@@ -46,16 +53,16 @@ class Cms {
     return this.ryoshiDynasties.requestBarracksUnstakeAuthorization(nfts, address, signature);
   }
 
-  async requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
-    return this.ryoshiDynasties.requestTownHallStakeAuthorization(nfts, address, signature);
+  async requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string) {
+    return this.ryoshiDynasties.requestTownHallStakeAuthorization(request, address, signature);
   }
 
-  async requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
-    return this.ryoshiDynasties.requestTownHallUnstakeAuthorization(nfts, address, signature);
+  async requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string) {
+    return this.ryoshiDynasties.requestTownHallUnstakeAuthorization(request, address, signature);
   }
 
-  async requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string) {
-    return this.ryoshiDynasties.requestRewardsSpendAuthorization(amount, address, signature);
+  async requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string) {
+    return this.ryoshiDynasties.requestRewardsSpendAuthorization(cost, quantity, id, address, signature);
   }
 
   async getDailyRewards(address: string) {
@@ -68,6 +75,14 @@ class Cms {
 
   async claimDailyRewards(address: string, signature: string) {
     return this.ryoshiDynasties.claimDailyRewards(address, signature);
+  }
+
+  async getResourcesBalances(address: string, signature: string) {
+    return this.ryoshiDynasties.getResourcesBalances(address, signature);
+  }
+
+  async requestResourcesWithdrawalAuthorization(tokenId: number, amount: number, address: string, signature: string) {
+    return this.ryoshiDynasties.requestResourcesWithdrawalAuthorization(tokenId, amount, address, signature);
   }
 
   async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string) {
@@ -118,6 +133,54 @@ class Cms {
 
   async getStakedTokenTotals(type: StakedTokenType) {
     return this.ryoshiDynasties.getStakedTokenTotals(type);
+  }
+
+  async getTownHallUserStaked(collectionAddress: string, collection: string, signature: string) {
+    return this.ryoshiDynasties.getTownHallUserStaked(collectionAddress, collection, signature);
+  }
+
+  async getTownHallUserInvalidStaked(address: string, signature: string) {
+    return this.ryoshiDynasties.getTownHallUserInvalidStaked(address, signature);
+  }
+
+  async deployTroops(request: DeployTroopsRequest, address: string, signature: string) {
+    return this.ryoshiDynasties.deployTroops(request, address, signature)
+  }
+
+  async relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string) {
+    return this.ryoshiDynasties.relocateTroops(troops, fromControlPointId, toControlPointId, fromFactionId, toFactionId, address, signature)
+  }
+
+  async fetchGift(address: string, signature: string) {
+    return this.ryoshiDynasties.fetchGift(address, signature)
+  }
+
+  async getFactionsByPoints(gameId: number) {
+    return this.ryoshiDynasties.getFactionsByPoints(gameId);
+  }
+
+  async requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string) {
+    return this.ryoshiDynasties.requestCardTradeInAuthorization(nftIds, nftAmounts, direct, address, signature);
+  }
+
+  async getTownHallWinningFaction() {
+    return this.ryoshiDynasties.getTownHallWinningFaction();
+  }
+
+  async updateFaction(request: FactionUpdateRequest, address: string, signature: string) {
+    return this.ryoshiDynasties.updateFaction(request, address, signature);
+  }
+
+  async getFaction(id: number, address: string, signature: string) {
+    return this.ryoshiDynasties.getFaction(id, address, signature);
+  }
+
+  async getMerchantItems() {
+    return this.ryoshiDynasties.getMerchantItems();
+  }
+
+  async requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string) {
+    return this.ryoshiDynasties.requestMerchantPurchaseAuthorization(payload, address, signature);
   }
 }
 

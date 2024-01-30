@@ -1,5 +1,5 @@
-import {Box, BoxProps, Button, Flex, Modal, ModalBody, ModalContent, ModalOverlay} from "@chakra-ui/react";
-import {ReactNode, useEffect, useState} from "react";
+import {Box, BoxProps, Button, Flex, HStack, Modal, ModalBody, ModalContent, ModalOverlay} from "@chakra-ui/react";
+import React, {ReactNode, useEffect, useState} from "react";
 import localFont from "next/font/local";
 import {CloseIcon} from "@chakra-ui/icons";
 
@@ -18,9 +18,10 @@ interface RdModalProps {
   onUtilBtnClick?: () => void;
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'| '4xl'| '5xl' | 'full';
   isCentered?: boolean;
+  titleIcon?: ReactNode;
 }
 
-const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, isCentered, children}: RdModalProps) => {
+const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, isCentered, titleIcon, children}: RdModalProps) => {
   const [hasUtilBtn, setHasUtilBtn] = useState(false);
   const [maskOuterClass, setMaskOuterClass] = useState('');
   const [maskInnerClass, setMaskInnerClass] = useState('');
@@ -55,6 +56,7 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
         size={size ?? '2xl'}
         scrollBehavior={size === 'full' ? 'outside' : 'inside'}
         isCentered={isCentered ?? true}
+        blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent
@@ -156,7 +158,10 @@ const RdModal = ({isOpen, onClose, title, utilBtnTitle, onUtilBtnClick, size, is
                     justify='center'
                     direction='column'
                   >
-                    {title}
+                    <HStack justify='center'>
+                      {titleIcon}
+                      <Box>{title}</Box>
+                    </HStack>
                   </Flex>
                 </Box>
                 {children}
@@ -185,14 +190,21 @@ export const RdModalFooter = ({ children, ...props }: BoxProps & { children?: Re
   )
 }
 
-export const RdModalBox = ({ children, ...props }: BoxProps & { children?: ReactNode }) => {
+export const RdModalBox = ({ isFooter, children, ...props }: {isFooter?: boolean} & BoxProps & { children?: ReactNode }) => {
   return (
-    <Box bgColor='#292626' rounded='md' p={4} fontSize='sm' {...props}>
+    <Box bgColor='#292626' rounded='md' roundedBottom={isFooter ? 'lg' : 'md'} p={4} fontSize='sm' {...props}>
       {children}
     </Box>
   )
 }
 
+export const RdModalBoxHeader = ({ children, ...props }: BoxProps & { children?: ReactNode }) => {
+  return (
+    <Box textAlign='start' fontWeight='bold' fontSize='lg' {...props}>
+      {children}
+    </Box>
+  )
+}
 export const RdModalAlert = ({ children, ...props }: BoxProps & { children?: ReactNode }) => {
   return (
     <Box p={4} textAlign='center' {...props}>

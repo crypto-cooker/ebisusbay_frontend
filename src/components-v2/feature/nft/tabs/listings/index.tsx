@@ -2,22 +2,21 @@ import React, {useMemo} from 'react';
 import ResponsiveNftListingsTable, {
   SortKeys
 } from "@src/components-v2/shared/responsive-table/responsive-nft-listings-table";
-import {addToCart, openCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {createSuccessfulAddCartContent} from "@src/utils";
-import {useDispatch} from "react-redux";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import useGetNftListings from "@src/components-v2/feature/nft/hooks/useGetNftListings";
 import {ListingState} from "@src/core/services/api-service/types";
 import {Center, Spinner} from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import useCart from "@src/hooks/use-cart";
 
 interface ListingsProps {
   nft: any;
 }
 
 const ListingsTab = ({ nft }: ListingsProps) => {
-  const dispatch = useDispatch();
+  const cart = useCart();
   const [filters, getNftListings, changeFilters] = useGetNftListings({
     collection: [nft.nftAddress],
     tokenId: [nft.nftId],
@@ -29,7 +28,7 @@ const ListingsTab = ({ nft }: ListingsProps) => {
   const handleAddToCart = (listing: any) => {
     if (!listing || !listing.listingId) return;
 
-    dispatch(addToCart({
+    cart.addItem({
       listingId: listing.listingId,
       name: nft.name,
       image: nft.image,
@@ -39,8 +38,8 @@ const ListingsTab = ({ nft }: ListingsProps) => {
       rank: nft.rank,
       amount: listing.amount,
       currency: listing.currency
-    }));
-    toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
+    });
+    toast.success(createSuccessfulAddCartContent(cart.openCart));
   };
 
   const fetcher = ({ pageParam = 1}) => {

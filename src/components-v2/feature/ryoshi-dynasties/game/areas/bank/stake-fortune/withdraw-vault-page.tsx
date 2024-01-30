@@ -9,10 +9,6 @@ import {toast} from "react-toastify";
 import Bank from "@src/Contracts/Bank.json";
 import {createSuccessfulTransactionToastContent} from '@src/utils';
 import moment from 'moment';
-import {useAppSelector} from "@src/Store/hooks";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
 import {commify} from "ethers/lib/utils";
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
 import {
@@ -20,6 +16,7 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -34,22 +31,12 @@ interface WithdrawProps {
 }
 
 const WithdrawVaultPage = ({ vault, onReturn }: WithdrawProps) => {
-  const dispatch = useDispatch();
   const { refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [currentStep, setCurrentStep] = useState(steps.form);
 
   const handleConnect = async () => {
-    if (!user.address) {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    user.connect();
   }
 
   const handleComplete = () => {
@@ -93,7 +80,7 @@ interface WithdrawFormProps {
 }
 const WithdrawForm = ({vault, onComplete}: WithdrawFormProps) => {
   const [isExecuting, setIsExecuting] = useState(false);
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const [amountDeposited, setAmountDeposited] = useState(0);
   const [withdrawDate, setWithdrawDate] = useState<string>();

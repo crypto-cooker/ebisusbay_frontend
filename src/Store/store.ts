@@ -6,15 +6,12 @@ import { memberships } from '../GlobalState/Memberships';
 import marketplaceReducer from '../GlobalState/marketplaceSlice';
 import auctionsReducer from '../GlobalState/auctionsSlice';
 import auctionReducer from '../GlobalState/auctionSlice';
-import metaverseReducer from '../GlobalState/metaverseSlice';
 import nftReducer from '../GlobalState/nftSlice';
 import collectionsReducer from '../GlobalState/collectionsSlice';
 import { appInitializeStateReducer } from '../GlobalState/InitSlice';
 import leaderBoardReducer from '../GlobalState/leaderBoardSlice';
-import cartReducer from '../GlobalState/cartSlice';
 import batchListingReducer from '../GlobalState/user-batch';
 import ryoshiStakingReducer from '../GlobalState/ryoshi-staking-cart-slice';
-import { user } from '../GlobalState/User';
 
 const rootReducer = combineReducers({
   memberships: memberships,
@@ -22,12 +19,9 @@ const rootReducer = combineReducers({
   auctions: auctionsReducer,
   auction: auctionReducer,
   nft: nftReducer,
-  user: user,
   appInitialize: appInitializeStateReducer,
   collections: collectionsReducer,
-  metaverse: metaverseReducer,
   leaderBoard: leaderBoardReducer,
-  cart: cartReducer,
   batchListing: batchListingReducer,
   ryoshiStakingCart: ryoshiStakingReducer,
 });

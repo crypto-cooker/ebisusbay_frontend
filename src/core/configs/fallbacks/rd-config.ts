@@ -47,10 +47,10 @@ export const ryoshiConfig: RyoshiConfig = {
   bank: {
     staking: {
       fortune: {
-        minimum: 1250,
+        minimum: 400,
         termLength: 90,
         maxTerms: 12,
-        mitamaTroopsRatio: 30,
+        mitamaTroopsRatio: 20,
         startingDebt: 100,
         apr: {
           1: 0.12,
@@ -454,18 +454,18 @@ export const ryoshiConfig: RyoshiConfig = {
         collections: [
           {
             ...collections.find(c => c.slug === 'cowz')!,
-            active: true,
-            fortune: 35000
+            active: false,
+            fortune: 0
           },
           {
             ...collections.find(c => c.slug === 'aiko-legends')!,
-            active: true,
-            fortune: 25000
+            active: false,
+            fortune: 0
           },
           {
             ...collections.find(c => c.slug === 'mad-meerkat')!,
-            active: true,
-            fortune: 15000
+            active: false,
+            fortune: 0
           }
         ]
       }

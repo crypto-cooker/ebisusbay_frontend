@@ -20,6 +20,7 @@ import SocialsBar from "@src/Components/Collection/SocialsBar";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import Fortune from "@src/Contracts/Fortune.json";
 import Markdown from "react-markdown";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 let abi = require(`@src/Assets/abis/ryoshi-tales-heroes.json`);
@@ -63,7 +64,7 @@ interface DutchAuctionProps {
 }
 
 const DutchAuction = ({drop}: DutchAuctionProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [auctionData, setAuctionData] = useAtom(dutchAuctionDataAtom);
 
   const calculateStatus = (drop: any, availableTokenCount: number) => {

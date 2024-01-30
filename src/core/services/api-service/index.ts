@@ -25,7 +25,14 @@ import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/o
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
 import {PokerCollection} from "@src/core/services/api-service/types";
-import {Meeple} from "@src/core/services/api-service/graph/types";
+import {Meeple, StakedToken} from "@src/core/services/api-service/graph/types";
+import {
+  TownHallStakeRequest,
+  TownHallUnstakeRequest
+} from "@src/core/services/api-service/cms/queries/staking/town-hall";
+import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
+import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
+import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -268,6 +275,14 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.graph.getStakedTokens(address, type);
   }
 
+  async getTownHallUserStaked(address: string, collection: string, signature: string) {
+    return this.cms.getTownHallUserStaked(address, collection, signature);
+  }
+
+  async getTownHallUserInvalidStaked(address: string, signature: string) {
+    return this.cms.getTownHallUserInvalidStaked(address, signature);
+  }
+
   async getStakedTokenTotals(type: StakedTokenType) {
     return this.cms.getStakedTokenTotals(type);
   }
@@ -288,16 +303,16 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.requestBarracksUnstakeAuthorization(nfts, address, signature);
   }
 
-  async requestTownHallStakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
-    return this.cms.requestTownHallStakeAuthorization(nfts, address, signature);
+  async requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string) {
+    return this.cms.requestTownHallStakeAuthorization(request, address, signature);
   }
 
-  async requestTownHallUnstakeAuthorization(nfts: TownHallStakeNft[], address: string, signature: string) {
-    return this.cms.requestTownHallUnstakeAuthorization(nfts, address, signature);
+  async requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string) {
+    return this.cms.requestTownHallUnstakeAuthorization(request, address, signature);
   }
 
-  async requestRewardsSpendAuthorization(amount: number | string, address: string, signature: string) {
-    return this.cms.requestRewardsSpendAuthorization(amount, address, signature);
+  async requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string) {
+    return this.cms.requestRewardsSpendAuthorization(cost, quantity, id, address, signature);
   }
 
   async getDailyRewards(address: string) {
@@ -310,6 +325,14 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async claimDailyRewards(address: string, signature: string) {
     return this.cms.claimDailyRewards(address, signature);
+  }
+
+  async getResourcesBalances(address: string, signature: string) {
+    return this.cms.getResourcesBalances(address, signature);
+  }
+
+  async requestResourcesWithdrawalAuthorization(tokenId: number, amount: number, address: string, signature: string) {
+    return this.cms.requestResourcesWithdrawalAuthorization(tokenId, amount, address, signature);
   }
 
   async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string) {
@@ -354,5 +377,45 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async getUserMeeples(address: string) {
     return await this.graph.getUserMeeples(address);
+  }
+
+  async deployTroops(request: DeployTroopsRequest, address: string, signature: string) {
+    return this.cms.deployTroops(request, address, signature)
+  }
+
+  async relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string) {
+    return this.cms.relocateTroops(troops, fromControlPointId, toControlPointId, fromFactionId, toFactionId, address, signature)
+  }
+
+  async fetchGift(address: string, signature: string) {
+    return this.cms.fetchGift(address, signature)
+  }
+
+  async getFactionsByPoints(gameId: number) {
+    return this.cms.getFactionsByPoints(gameId);
+  }
+
+  async requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string) {
+    return this.cms.requestCardTradeInAuthorization(nftIds, nftAmounts, direct, address, signature);
+  }
+
+  async getTownHallWinningFaction() {
+    return this.cms.getTownHallWinningFaction();
+  }
+
+  async updateFaction(request: FactionUpdateRequest, address: string, signature: string) {
+    return this.cms.updateFaction(request, address, signature);
+  }
+
+  async getFaction(id: number, address: string, signature: string) {
+    return this.cms.getFaction(id, address, signature);
+  }
+
+  async getMerchantItems() {
+    return this.cms.getMerchantItems();
+  }
+
+  async requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string) {
+    return this.cms.requestMerchantPurchaseAuthorization(payload, address, signature);
   }
 }

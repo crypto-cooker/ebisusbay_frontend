@@ -4,6 +4,7 @@ import {CdnProvider} from "@src/core/services/image/index";
 import BunnyKitProvider from "@src/core/services/image/bunnykit";
 import {urlify} from "@src/utils";
 import {fallbackImageUrl} from "@src/core/constants";
+import LocalCdnProvider from "@src/core/services/image/local";
 
 const config = appConfig();
 
@@ -68,11 +69,17 @@ class ImageTranslator {
       return new BunnyKitProvider(url);
     }
 
+    const isLocalSource = isLocalEnv() && url.startsWith('/img/');
+
     // Important to keep local and proxy at the top because proxy could contain any of the below values being compared
     if (!url.startsWith('http')) {
-      const baseUrl = isLocalEnv() ? config.urls.app : config.urls.cdn.app;
-      const remappedUrl = ImageTranslator.remapUrl(url, baseUrl);
-      provider = new BunnyCdnProvider(remappedUrl);
+      if (isLocalSource) {
+        provider = new LocalCdnProvider(url);
+      } else {
+        const baseUrl = isLocalEnv() ? config.urls.app : config.urls.cdn.app;
+        const remappedUrl = ImageTranslator.remapUrl(url, baseUrl);
+        provider = new BunnyCdnProvider(remappedUrl);
+      }
     } else if (url.includes('/proxy/')) {
       if (hasFileExtension) {
         const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.proxy);
@@ -110,7 +117,7 @@ class ImageTranslator {
     }
 
     // Bunny is currently unable to translate gifs and mp4s
-    if (url.includes('.gif') || url.includes('.mp4')) {
+    if ((url.includes('.gif') || url.includes('.mp4')) && !isLocalSource) {
       const remappedUrl = ImageTranslator.remapUrl(url, config.urls.cdn.bunnykit);
       provider = new BunnyKitProvider(remappedUrl);
     }
@@ -124,8 +131,9 @@ class ImageTranslator {
 
   static remapUrl(fromDomain: string, toDomain: string) {
     const isRawData = fromDomain.startsWith('data');
-    if (!isRawData && (isLocalEnv() || !fromDomain.startsWith('http'))) {
-      return urlify(toDomain, fromDomain);
+    if (!isRawData) {
+      if (isLocalEnv() && fromDomain.startsWith('http')) return fromDomain;
+      if (!fromDomain.startsWith('http')) return urlify(toDomain, fromDomain);
     }
     if(!fromDomain || isRawData) return fromDomain;
 

@@ -4,7 +4,7 @@
 ### Deps stage ###
 ###################
 
-FROM node:18 AS deps-stage
+FROM node:20 AS deps-stage
 
 # Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
 RUN set -e
@@ -30,7 +30,7 @@ RUN --mount=type=cache,target=/root/.npm npm ci --omit dev
 ### Build stage ###
 ###################
 
-FROM node:18 AS build-stage
+FROM node:20 AS build-stage
 
 # Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
 RUN set -e
@@ -69,15 +69,16 @@ ARG NEXT_PUBLIC_SITE24X7_KEY
 ARG NEXT_PUBLIC_SENTRY_DSN
 ARG NEXT_PUBLIC_SENTRY_ENVIRONMENT
 ARG SENTRY_AUTH_TOKEN
+ARG NEXT_PUBLIC_WEB3MODAL_API_KEY
 
 # Build the project
-RUN --mount=type=cache,target=/usr/src/app/.next/cache NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN npm run build
+RUN --mount=type=cache,target=/usr/src/app/.next/cache NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY npm run build
 
 #####################
 ### Runtime stage ###
 #####################
 
-FROM node:18-slim AS runtime-stage
+FROM node:20-slim AS runtime-stage
 
 # Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
 RUN set -e

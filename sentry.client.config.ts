@@ -32,4 +32,27 @@ Sentry.init({
   // ],
 
   maxBreadcrumbs: 50,
+
+  beforeSend(event) {
+    if (event.exception?.values) {
+      const ignorableTypes = [
+        'ResourceUnavailableRpcError',
+        'UserRejectedRequestError',
+        'ConnectorNotFoundError',
+        'ChainDoesNotSupportContract'
+      ];
+      if (event.exception.values[0].type && ignorableTypes.includes(event.exception.values[0].type)) {
+        return null;
+      }
+    }
+
+    const serializedData = event.extra?.__serialized__ as { code: number };
+
+    // UserRejectedRequestError also found here. https://eips.ethereum.org/EIPS/eip-1193#provider-errors
+    if (serializedData?.code === 4001) {
+      return null;
+    }
+
+    return event;
+  },
 });

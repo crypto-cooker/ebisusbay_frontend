@@ -15,6 +15,7 @@ import BundleDrawerForm, {
 } from "@src/components-v2/feature/account/profile/tabs/inventory/batch/bundle-drawer-form";
 import {useAppSelector} from "@src/Store/hooks";
 import nextApiService from "@src/core/services/api-service/next";
+import {useUser} from "@src/components-v2/useUser";
 
 const MAX_NFTS_IN_BUNDLE = 40;
 const MIN_NFTS_IN_BUNDLE = 2;
@@ -22,7 +23,7 @@ const MIN_NFTS_IN_BUNDLE = 2;
 export const BundleDrawer = () => {
   const dispatch = useDispatch();
   const batchListingCart = useAppSelector((state) => state.batchListing);
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [showConfirmButton, setShowConfirmButton] = useState(false);
   const [executingCreateBundle, setExecutingCreateBundle] = useState(false);
   const formRef = useRef<BundleDrawerFormHandle>(null);

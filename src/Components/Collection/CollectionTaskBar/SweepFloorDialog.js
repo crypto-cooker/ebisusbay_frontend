@@ -1,12 +1,10 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
 import {faCheck, faCircle, faCircleQuestion, faDollarSign, faStairs, faStar} from "@fortawesome/free-solid-svg-icons";
-import {useSelector} from "react-redux";
 import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {isBundle, isNftBlacklisted, round, shortString} from "@src/utils";
-import * as Sentry from '@sentry/react';
 import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
@@ -18,12 +16,20 @@ import useBreakpoint from "use-breakpoint";
 import {getListings} from "@src/core/api/endpoints/listings";
 import {specialImageTransform} from "@src/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {Lazy, Navigation} from "swiper/modules";
+import {Navigation} from "swiper/modules";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {
-  Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex,
-  FormControl, FormErrorMessage,
-  FormLabel, Input,
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -31,7 +37,9 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spinner, Switch, Tag,
+  Spinner,
+  Switch,
+  Tag,
   Tooltip
 } from "@chakra-ui/react";
 import {getTheme} from "@src/Theme/theme";
@@ -39,6 +47,7 @@ import useBuyGaslessListings from "@src/hooks/useBuyGaslessListings";
 import ImageService from "@src/core/services/image";
 import {appConfig} from "@src/Config";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {useUser} from "@src/components-v2/useUser";
 
 const numberRegexValidation = /[^0-9]/g;
 const sweepType = {
@@ -72,17 +81,17 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
   const [confirmationItems, setConfirmationItems] = useState([]);
 
   const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const [buyGaslessListings, response] = useBuyGaslessListings();
 
   useEffect(() => {
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (collection && user.provider) {
+    if (collection && user.wallet.isConnected) {
       asyncFunc();
     }
-  }, [collection, user.provider]);
+  }, [collection, user.wallet.isConnected]);
 
   useEffect(() => {
     const isMobileSize = minWidth < BREAKPOINTS.sm;
@@ -379,16 +388,16 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
 }
 
 const BudgetSweeperField = ({onChange, disabled, error}) => {
-  const user = useSelector((state) => state.user);
+  const user = useUser();
   const [budget, setBudget] = useState('');
 
   const onFieldChange = useCallback((e) => {
     const newValue = e.target.value.toString().replace(numberRegexValidation);
-    if ((newValue && parseInt(newValue) < parseInt(user.balance)) || newValue === '') {
+    if ((newValue && parseInt(newValue) < parseInt(user.balances.cro)) || newValue === '') {
       setBudget(newValue);
       onChange(newValue);
     }
-  }, [setBudget, user.balance]);
+  }, [setBudget, user.balances.cro]);
 
   return (
     <FormControl className="form-field" isInvalid={!!error}>
@@ -397,7 +406,7 @@ const BudgetSweeperField = ({onChange, disabled, error}) => {
           <div className="flex-grow-1">Budget</div>
           <div className="my-auto">
             <Tag size='sm' colorScheme='gray' variant='solid' ms={2}>
-              Balance: {round(user.balance, 2)} CRO
+              Balance: {round(user.balances.cro, 2)} CRO
             </Tag>
           </div>
         </Flex>
@@ -501,7 +510,6 @@ const AutoSwapItemsField = ({onChange, disabled}) => {
 }
 
 const ActiveFiltersField = memo(({collection, activeFilters}) => {
-  const user = useSelector((state) => state.user);
   const [filteredItems, setFilteredItems] = useState([]);
 
   useEffect(() => {

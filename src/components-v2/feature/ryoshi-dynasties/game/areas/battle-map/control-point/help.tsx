@@ -14,11 +14,17 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {secondsToDhms} from "@src/utils";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
 const HelpPage = () => {
-  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, game: rdGameConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const controlPoints = rdGameConfig?.game.season.map.regions.flatMap(region => region.controlPoints) || [];
+  const controlPointMap: Record<number, string> = rdGameConfig?.game.season.map.regions.flatMap(region => region.controlPoints).reduce((acc, cp) => {
+    acc[cp.id] = cp.name;
+    return acc;
+  }, {} as Record<number, string>) || {};
 
   return (
     <Stack spacing={3} className={gothamBook.className} fontSize={{ base: 'xs', md: 'sm' }}>
@@ -75,33 +81,55 @@ const HelpPage = () => {
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
               <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                Can I reassign deployed troops?
+                Can I relocate deployed troops?
               </Box>
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
               <Text>
-                Yes, by clicking the "Recall" tab in the Dispatch section, you can recall troops which then can be used elsewhere.
+                Yes, by clicking the "Relocate" tab in the Dispatch section, you can relocate from one control point to another. Troops can move freely to other control points within the same region. However, there are limited pathways to control points outside the region.
               </Text>
               <Text mt={2}>
-                Note that recalling is taxing on your troops. {rdConfig.armies.recallTax * 100}% of them will be lost on the way back to your faction.
+                Note that relocating is taxing on your troops. {rdConfig.armies.recallTax * 100}% of them will be lost on the way to the new control point.
               </Text>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>
               <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-                How often can I deploy and/or recall troops?
+                Relocation Pathways
               </Box>
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
               <Text>
-                Deploying and recalling troops are subject to a variable cooldown period which increases daily. See below:
+                Each control point has additional paths that troops can take beyond their region of origin:
+              </Text>
+              <UnorderedList>
+                {controlPoints.map(cp => (
+                  <ListItem>
+                    <strong>{cp.name}</strong>: {cp.paths && cp.paths.length > 0
+                    ? cp.paths.map(pathId => controlPointMap[pathId]).join(', ')
+                    : 'None'}
+                  </ListItem>
+                ))}
+              </UnorderedList>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                How often can I deploy and/or relocate troops?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>
+                Deploying and relocating troops are subject to a variable cooldown period which increases daily. See below:
               </Text>
               <UnorderedList>
                 {rdConfig.armies.redeploymentDelay.map((delay, i) => (
-                  <ListItem>Day {i+1}: {delay} minutes</ListItem>
+                  <ListItem>Day {i+1}: {secondsToDhms(delay)}</ListItem>
                 ))}
               </UnorderedList>
             </AccordionPanel>

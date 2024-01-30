@@ -4,11 +4,8 @@ import React, {useEffect, useState} from "react";
 import {Box, useBreakpointValue} from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import styles from "@src/Components/BattleBay/Areas/BattleBay.module.scss";
-import {useAppSelector} from "@src/Store/hooks";
 
 const TestMap = () => {
-  const user = useAppSelector((state) => state.user);
-
   const [mapInitialized, setMapInitialized] = useState(false);
   const mapProps = useBreakpointValue<MapProps>(
     {

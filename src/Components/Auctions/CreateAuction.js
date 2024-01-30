@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
-import {useSelector} from 'react-redux';
 
 import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import {createSuccessfulTransactionToastContent} from '@src/utils';
 import {ERC721} from '@src/Contracts/Abis';
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const CreateAuction = () => {
-  const user = useSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
 
   const [nftAddress, setNftAddress] = useState('');
   const [nftId, setNftId] = useState('');
@@ -23,7 +24,7 @@ const CreateAuction = () => {
     try {
       setExecuting(true);
       await setApprovalForAll();
-      const tx = await user.contractService.auction.createAuction(nftAddress, nftId, bid);
+      const tx = await contractService.auction.createAuction(nftAddress, nftId, bid);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       setNftAddress('');
@@ -45,10 +46,10 @@ const CreateAuction = () => {
 
   const setApprovalForAll = async () => {
     try {
-      const isApproved = await user.contractService.auction.isApproved(nftAddress, user.address);
+      const isApproved = await contractService.auction.isApproved(nftAddress, user.address);
       if (!isApproved) {
         let writeContract = await new ethers.Contract(nftAddress, ERC721, user.provider.getSigner());
-        let tx = await writeContract.setApprovalForAll(user.contractService.auction.address, true);
+        let tx = await writeContract.setApprovalForAll(contractService.auction.address, true);
         await tx.wait();
       }
     } catch (error) {

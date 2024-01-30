@@ -1,4 +1,3 @@
-import {useDispatch} from "react-redux";
 import React, {useEffect, useState} from "react";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
@@ -6,20 +5,19 @@ import {createSuccessfulTransactionToastContent, round, siPrefixedNumber, useInt
 import {getTheme} from "@src/Theme/theme";
 import StakeABI from "@src/Contracts/Stake.json";
 import {appConfig} from "@src/Config";
-import {Box, Center, SimpleGrid, Spinner} from "@chakra-ui/react";
-import {useAppSelector} from "@src/Store/hooks";
+import {Box, Center, Link, SimpleGrid, Spinner, Text} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {useUser} from "@src/components-v2/useUser";
+import NextLink from "next/link";
+import {GasWriter} from "@src/core/chain/gas-writer";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 const stakeContract = new Contract(config.contracts.stake, StakeABI.abi, readProvider);
 
 const RewardsCard = () => {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
-  const userTheme = useAppSelector((state) => {
-    return state.user.theme;
-  });
+  const user = useUser();
+  const userTheme = user.theme;
 
   const [firstRunComplete, setFirstRunComplete] = useState(false);
   const [isHarvesting, setIsHarvesting] = useState(false);
@@ -80,7 +78,10 @@ const RewardsCard = () => {
       if (amountToHarvest.gt(0)) {
         try {
           const writeContract = new Contract(config.contracts.stake, StakeABI.abi, user.provider.getSigner());
-          const tx = await writeContract.harvest(user.address);
+          const tx = await GasWriter.withContract(writeContract).call(
+            'harvest',
+            user.wallet.address
+          );
           const receipt = await tx.wait();
           await getRewardsInfo();
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -162,7 +163,7 @@ const RewardsCard = () => {
               </Box>
               {user.address && (
                 <div className="mt-4">
-                  {Number(userPendingRewards) > 0 ? (
+                  {Number(userPendingRewards) > 0 && (
                     <>
                       <p className="text-center my-xl-auto fs-5" style={{ color: getTheme(userTheme).colors.textColor3 }}>
                         You have <strong>{ethers.utils.commify(round(userPendingRewards, 3))} CRO</strong> available for
@@ -180,8 +181,6 @@ const RewardsCard = () => {
                         Harvest
                       </PrimaryButton>
                     </>
-                  ) : (
-                    <p className="text-center my-auto">No harvestable rewards yet. Check back later!</p>
                   )}
                 </div>
               )}

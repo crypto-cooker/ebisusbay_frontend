@@ -1,5 +1,4 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
 import {
   Accordion,
   AccordionButton,
@@ -30,9 +29,6 @@ import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import Bank from "@src/Contracts/Bank.json";
 import {createSuccessfulTransactionToastContent, findNextLowestNumber, round} from '@src/utils';
-import {useAppSelector} from "@src/Store/hooks";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import ImageService from "@src/core/services/image";
 import {
   RyoshiDynastiesContext,
@@ -45,6 +41,7 @@ import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faGem} from "@fortawesome/free-solid-svg-icons";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -56,8 +53,7 @@ interface StakePageProps {
 }
 
 const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault}: StakePageProps) => {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const { data: account, status, error, refetch } = useQuery({
     queryKey: ['UserStakeAccount', user.address],
@@ -66,16 +62,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
   });
 
   const handleConnect = async () => {
-    if (!user.address) {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    user.connect();
   }
 
   return (
@@ -157,7 +144,7 @@ interface VaultProps {
 
 const Vault = ({vault, index, onEditVault, onWithdrawVault, onTokenizeVault, onClosed}: VaultProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const balance = Number(ethers.utils.formatEther(vault.balance));
   const daysToAdd = Number(vault.length / (86400));
@@ -173,7 +160,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onTokenizeVault, onC
   const handleCloseVault = useCallback(async () => {
     try {
       setIsExecutingClose(true);
-      const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
+      const bank = new Contract(config.contracts.bank, Bank, user.provider.signer);
       const tx = await bank.closeVault(vault.index);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -184,7 +171,7 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onTokenizeVault, onC
     } finally {
       setIsExecutingClose(false);
     }
-  }, []);
+  }, [vault.index, user.provider.signer]);
 
   const [totalApr, setTotalApr] = useState(baseApr);
   const [bonusApr, setBonusApr] = useState(0);

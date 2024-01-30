@@ -16,6 +16,7 @@ import {useAtom} from "jotai/index";
 import {dutchAuctionDataAtom} from "@src/components-v2/feature/drop/types/dutch/atom";
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 
@@ -26,7 +27,7 @@ enum FundingType {
 }
 
 const MintBox = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [auctionData, setAuctionData] = useAtom(dutchAuctionDataAtom);
 
   const [mintingWithType, setMintingWithType] = useState<FundingType>();
@@ -90,7 +91,13 @@ const MintBox = () => {
   const mintWithRewards = async (finalCost: number) => {
     const signature = await requestSignature();
     const finalCostEth = ethers.utils.formatEther(finalCost);
-    const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(finalCostEth, user.address!, signature);
+    const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(
+      finalCostEth,
+      numToMint,
+      `Drop: ${auctionData.drop?.title}`,
+      user.address!,
+      signature
+    );
 
     const gasPrice = parseUnits('5000', 'gwei');
     const gasEstimate = await auctionData.writeContract!.estimateGas.mintWithRewards(numToMint, authorization.reward, authorization.signature);

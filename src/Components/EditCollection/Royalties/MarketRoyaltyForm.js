@@ -1,14 +1,14 @@
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {toast} from "react-toastify";
-import {useSelector} from "react-redux";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {Box, Text} from "@chakra-ui/react";
 import {Field} from "@src/Components/Form";
 import React from "react";
+import {useContractService} from "@src/components-v2/useUser";
 
 const MarketRoyaltyForm = ({address: collectionAddress}) => {
-  const user = useSelector((state) => state.user);
+  const contractService = useContractService();
 
   const validationSchema = Yup.object().shape({
     ipHolder: Yup.string().required().label('IP Holder'),
@@ -17,7 +17,7 @@ const MarketRoyaltyForm = ({address: collectionAddress}) => {
 
   const onSubmit = async () => {
     try {
-      const tx = await user.contractService.market.registerRoyaltyAsOwner(collectionAddress, values.ipHolder, values.value);
+      const tx = await contractService.market.registerRoyaltyAsOwner(collectionAddress, values.ipHolder, values.value);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
     } catch (error) {

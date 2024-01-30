@@ -1,48 +1,25 @@
-import {Box, Center, Flex, IconButton, Image, SimpleGrid, Spinner, Text, VStack} from "@chakra-ui/react"
-
-import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {useAppSelector} from "@src/Store/hooks";
-import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useInfiniteQuery, useQuery, useQueryClient} from "@tanstack/react-query";
-import nextApiService from "@src/core/services/api-service/next";
+import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
-import InfiniteScroll from "react-infinite-scroll-component";
-import StakingNftCard
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/staking-nft-card";
-import {appConfig} from "@src/Config";
-import {caseInsensitiveCompare, round} from "@src/utils";
-import WalletNft from "@src/core/models/wallet-nft";
-import ImageService from "@src/core/services/image";
-import {StakedToken} from "@src/core/services/api-service/graph/types";
-import ShrineIcon from "@src/components-v2/shared/icons/shrine";
-import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
-import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {Contract} from "ethers";
-import {ERC721} from "@src/Contracts/Abis";
-import {getNft} from "@src/core/api/endpoints/nft";
-import {toast} from "react-toastify";
-import {StakedTokenType} from "@src/core/services/api-service/types";
-import {
-  RyoshiDynastiesContext,
-  RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {ArrowBackIcon} from "@chakra-ui/icons";
+import React, {useEffect, useState} from "react";
+import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/faq-page";
-import {parseErrorMessage} from "@src/helpers/validator";
+import {Box, Button, Flex, Image, Spinner, Stack, Text} from "@chakra-ui/react";
+import RdTabButton, {RdTabGroup} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
+import {appConfig} from "@src/Config";
+import {ciEquals} from "@src/utils";
+import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import ImageService from "@src/core/services/image";
+import {UnstakedNfts} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/unstaked-nfts";
+import {StakedNfts} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/staked-nfts";
 import useTownHallStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-town-hall-stake-nfts";
-import {
-  TownHallStakeNftContext,
-  TownHallStakeNftContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/context";
-import {commify} from "ethers/lib/utils";
+import {toast} from "react-toastify";
+import {parseErrorMessage} from "@src/helpers/validator";
+import {useUser} from "@src/components-v2/useUser";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
 
 const config = appConfig();
-
-// Maps to collection slug
-const tabs = {
-  cowz: 'cowz',
-  aikoLegends: 'aiko-legends',
-  madMeerkat: 'mad-meerkat'
-};
 
 interface StakeNftsProps {
   isOpen: boolean;
@@ -50,84 +27,22 @@ interface StakeNftsProps {
 }
 
 const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
-  const user = useAppSelector((state) => state.user);
-  const queryClient = useQueryClient();
-  const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-
-  const [currentTab, setCurrentTab] = useState(tabs.cowz);
-  const [currentCollection, setCurrentCollection] = useState<any>();
-  const [stakedNfts, setStakedNfts] = useState<StakedToken[]>([]);
-  const [pendingNfts, setPendingNfts] = useState<PendingNft[]>([]);
   const [page, setPage] = useState<string>();
+  const [selectedAddress, setSelectedAddress] = useState<string>();
+  const selectedCollection = config.collections.find((collection: any) => ciEquals(collection.address, selectedAddress));
 
-  const addressForTab = config.collections.find((c: any) => c.slug === currentTab)?.address;
+  const { data: winningFaction, status, error } = useQuery({
+    queryKey: ['ryoshi-dynasties', 'winning-faction'],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getTownHallWinningFaction(),
+    enabled: isOpen,
+  });
 
-  const handleBtnClick = (key: string) => (e: any) => {
-    setCurrentTab(key);
+
+  const handleSelectAddress = (key: string) => (e: any) => {
+    setSelectedAddress(key);
   };
 
-  const handleAddNft = useCallback((nft: WalletNft) => {
-    const pendingCount = pendingNfts.filter((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress)).length;
-    const withinMaxSlotRange = pendingNfts.length < rdConfig.townHall.staking.nft.maxSlots;
-    const stakedCount = stakedNfts.filter((sNft) => sNft.tokenId === nft.nftId && caseInsensitiveCompare(sNft.contractAddress, nft.nftAddress)).length;
-    const hasRemainingBalance = (nft.balance ?? 1) - (pendingCount - stakedCount) > 0;
-
-    if (hasRemainingBalance && withinMaxSlotRange) {
-      const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
-      const stakeConfig = rdConfig.townHall.staking.nft.collections.find((c) => c.slug === collectionSlug);
-
-      setPendingNfts([...pendingNfts, {
-        nftAddress: nft.nftAddress,
-        nftId: nft.nftId,
-        name: nft.name,
-        image: nft.image,
-        rank: nft.rank,
-        multiplier: stakeConfig?.fortune ?? 0,
-        isAlreadyStaked: stakedCount > pendingCount,
-        refBalance: nft.balance ?? 1,
-      }]);
-    }
-  }, [pendingNfts]);
-
-  const handleRemoveNft = useCallback((nftAddress: string, nftId: string) => {
-    let arrCopy = [...pendingNfts]; // Copy the original array
-
-    let indexToRemove = arrCopy.slice().reverse().findIndex(nft => nft.nftId == nftId && caseInsensitiveCompare(nft.nftAddress, nftAddress));
-    if (indexToRemove !== -1) {
-      arrCopy.splice(arrCopy.length - 1 - indexToRemove, 1);
-    }
-    setPendingNfts(arrCopy);
-  }, [pendingNfts]);
-
-  const handleStakeSuccess = useCallback(() => {
-    queryClient.invalidateQueries({queryKey: ['TownHallStakedNfts', user.address]});
-    queryClient.invalidateQueries({queryKey: ['TownHallUnstakedNfts', user.address, currentCollection]});
-    queryClient.invalidateQueries({queryKey: ['TownHallStakingTotals']});
-    queryClient.setQueryData(['TownHallUnstakedNfts', user.address, currentCollection], (old: any) => {
-      if (!old) return [];
-      old.pages = old.pages.map((page:  any) => {
-        page.data = page.data.filter((nft: any) => !pendingNfts.some((pNft) => pNft.nftId === nft.nftId && caseInsensitiveCompare(pNft.nftAddress, nft.nftAddress)));
-        return page;
-      });
-      return old;
-    })
-    setStakedNfts([...stakedNfts, ...pendingNfts.map((nft) => ({
-      amount: '1',
-      contractAddress: nft.nftAddress,
-      id: '',
-      tokenId: nft.nftId,
-      type: StakedTokenType.TOWN_HALL,
-      user: user.address!
-    }))]);
-    setPendingNfts([...pendingNfts.map((nft) => ({...nft, isAlreadyStaked: true, refBalance: nft.refBalance - 1}))]);
-    refreshUser();
-  }, [queryClient, stakedNfts, pendingNfts, user.address]);
-
   const handleClose = () => {
-    setPendingNfts([]);
-    setStakedNfts([]);
-    setCurrentCollection(addressForTab);
-    setCurrentTab(tabs.cowz);
     onClose();
   }
 
@@ -140,53 +55,13 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   };
 
   useEffect(() => {
-    if (!isOpen) return;
-
-    queryClient.fetchQuery({
-      queryKey: ['TownHallStakedNfts', user.address],
-      queryFn: () => ApiService.withoutKey().ryoshiDynasties.getStakedTokens(user.address!, StakedTokenType.TOWN_HALL)
-    }).then(async (data) => {
-      setStakedNfts(data);
-
-      const nfts: PendingNft[] = [];
-      for (const token of data) {
-        const nft = await getNft(token.contractAddress, token.tokenId);
-        if (nft) {
-          const stakeConfig = rdConfig.townHall.staking.nft.collections.find((c) => caseInsensitiveCompare(c.address, nft.collection.address));
-
-          for (let i = 0; i < Number(token.amount); i++) {
-            nfts.push({
-              nftAddress: token.contractAddress,
-              nftId: token.tokenId,
-              name: nft.nft.name,
-              image: nft.nft.image,
-              rank: nft.nft.rank,
-              multiplier: stakeConfig?.fortune ?? 0,
-              isAlreadyStaked: true,
-              refBalance: 0,
-            })
-          }
-        }
+    if (winningFaction && !selectedAddress) {
+      const collections = Object.keys(winningFaction.factionCollectionsSnapshot);
+      if (collections && collections.length > 0) {
+        setSelectedAddress(collections[0]);
       }
-      setPendingNfts(nfts);
-    });
-  }, [isOpen]);
-
-  const {data: stakedTokenTotals} = useQuery({
-    queryKey: ['TownHallStakingTotals'],
-    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getStakedTokenTotals(StakedTokenType.TOWN_HALL),
-    initialData: {}
-  });
-
-  useEffect(() => {
-    setCurrentCollection(addressForTab);
-  }, [currentTab]);
-
-  useEffect(() => {
-    if (!user.address) {
-      onClose();
     }
-  }, [user.address]);
+  }, [winningFaction]);
 
   return (
     <RdModal
@@ -201,39 +76,74 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       {page === 'faq' ? (
         <FaqPage />
       ) : (
-        <TownHallStakeNftContext.Provider value={{pendingNfts, stakedNfts, totals: stakedTokenTotals}}>
-          <Text align='center' p={2}>Collection winners of the September volume competition are now stakable in the Town Hall! Each staked NFT from the below collections are eligible to receive daily FRTN rewards🔥</Text>
-          <StakingBlock
-            pendingNfts={pendingNfts}
-            stakedNfts={stakedNfts}
-            onRemove={handleRemoveNft}
-            onStaked={handleStakeSuccess}
-          />
-          <Box p={4}>
-            <Flex direction='row' justify='center' mb={2}>
-              <SimpleGrid columns={{base: 2, sm: 3}}>
-                <RdTabButton isActive={currentTab === tabs.cowz} onClick={handleBtnClick(tabs.cowz)}>
-                  Cowz
-                </RdTabButton>
-                <RdTabButton isActive={currentTab === tabs.aikoLegends} onClick={handleBtnClick(tabs.aikoLegends)}>
-                  Aiko Legends
-                </RdTabButton>
-                <RdTabButton isActive={currentTab === tabs.madMeerkat} onClick={handleBtnClick(tabs.madMeerkat)}>
-                  Mad Meerkat
-                </RdTabButton>
-              </SimpleGrid>
-            </Flex>
-            <Box>
-              <UnstakedNfts
-                isReady={isOpen}
-                collection={currentCollection}
-                address={user.address ?? undefined}
-                onAdd={handleAddNft}
-                onRemove={handleRemoveNft}
-              />
-            </Box>
+        <>
+        {status === "pending"  ? (
+          <Box textAlign='center' py={4}>
+            <Spinner />
           </Box>
-        </TownHallStakeNftContext.Provider>
+        ) : status === "error" ? (
+          <p>Error: {error.message}</p>
+        ) : (
+          <Box p={4}>
+            {!!winningFaction ? (
+              <>
+                <RdModalBox>
+                  <Stack direction={{base: 'column-reverse', sm: 'row'}} justify='space-between' align='center'>
+                    <Box textAlign={{base: 'center', sm: 'start'}}>
+                      <Text>The winning faction of the previous game at the Ebisu's Bay control point is <strong>{winningFaction.name}</strong>!</Text>
+                      <Text mt={1}>All NFTs under the collections of this faction can be staked below until the end of the current game.</Text>
+                    </Box>
+                    <Box w='50px' flexShrink={0} flexGrow={0} flexBasis='50px'>
+                      <Image
+                        src={ImageService.translate(winningFaction.image).avatar()}
+                        rounded='md'
+                      />
+                    </Box>
+                  </Stack>
+                </RdModalBox>
+                <UnstakePreviousNfts />
+                <Flex direction='row' justify='center' my={2}>
+                  <RdTabGroup>
+                    {Object.entries(winningFaction.factionCollectionsSnapshot).map(([address, collection]: [string, any]) => (
+                      <RdTabButton
+                        key={collection.name}
+                        isActive={selectedAddress === address}
+                        onClick={handleSelectAddress(address)}
+                        whiteSpace='initial'
+                        h='auto'
+                        minH='40px'
+                        py={2}
+                      >
+                        {collection.name}
+                      </RdTabButton>
+                    ))}
+                  </RdTabGroup>
+                </Flex>
+                <AuthenticationRdButton
+                  connectText='Connect and sign-in to manage your staked NFTs'
+                  signinText='Connect and sign-in to manage your staked NFTs'
+                >
+                  {!!selectedCollection && (
+                    <StakeNftsContent
+                      collectionAddress={selectedAddress!}
+                    />
+                  )}
+                </AuthenticationRdButton>
+              </>
+            ) : (
+              <>
+                <RdModalBox>
+                  <Box textAlign='center'>
+                    <Text>The winning faction of the previous game at the Ebisu's Bay control point will have their collections available here for staking.</Text>
+                    <Text mt={4}>There is no winning faction yet.</Text>
+                  </Box>
+                </RdModalBox>
+                <UnstakePreviousNfts />
+              </>
+            )}
+          </Box>
+        )}
+        </>
       )}
     </RdModal>
   )
@@ -241,237 +151,77 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
 export default StakeNfts;
 
-interface StakingBlockProps {
-  pendingNfts: PendingNft[];
-  stakedNfts: StakedToken[];
-  onRemove: (nftAddress: string, nftId: string) => void;
-  onStaked: () => void;
-}
+const UnstakePreviousNfts = () => {
+  const user = useUser();
+  const {signature} = useEnforceSignature();
+  const {unstakeNfts} = useTownHallStakeNfts();
+  const [isExecutingUnstakeAll, setIsExecutingUnstakeAll] = useState(false);
 
-interface PendingNft {
-  nftAddress: string;
-  nftId: string;
-  name: string;
-  image: string;
-  rank: number;
-  multiplier: number;
-  isAlreadyStaked: boolean;
-  refBalance: number;
-}
+  const {data} = useQuery({
+    queryKey: ['RyoshiDynastiesStakedInvalidNfts'],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getTownHallUserInvalidStaked(user.address!, signature),
+    enabled: !!user.address && !!signature,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 6
+  });
 
-const StakingBlock = ({pendingNfts, stakedNfts, onRemove, onStaked}: StakingBlockProps) => {
-  const user = useAppSelector((state) => state.user);
-  const townHallStakeNftContext = useContext(TownHallStakeNftContext) as TownHallStakeNftContextProps;
-  const [isExecutingStake, setIsExecutingStake] = useState(false);
-  const [executingLabel, setExecutingLabel] = useState('');
-  const [stakeNfts, response] = useTownHallStakeNfts();
-
-  const handleStake = useCallback(async () => {
-    if (pendingNfts.length === 0 && stakedNfts.length === 0) return;
-
-    let hasCompletedApproval = false;
+  const handleUnstakeAll = async () => {
     try {
-      setIsExecutingStake(true);
-      setExecutingLabel('Approving');
-      const approvedCollections: string[] = [];
-      for (let nft of pendingNfts) {
-        if (approvedCollections.includes(nft.nftAddress)) continue;
-
-        const nftContract = new Contract(nft.nftAddress, ERC721, user.provider.getSigner());
-        const isApproved = await nftContract.isApprovedForAll(user.address!.toLowerCase(), config.contracts.townHall);
-
-        if (!isApproved) {
-          let tx = await nftContract.setApprovalForAll(config.contracts.townHall, true);
-          await tx.wait();
-          approvedCollections.push(nft.nftAddress);
-        }
-      }
-      hasCompletedApproval = true;
-
-      setExecutingLabel('Staking');
-      await stakeNfts(
-        pendingNfts.map((nft) => ({...nft, amount: 1})),
-        stakedNfts
-      );
-      onStaked();
-      toast.success('Staking successful!');
-    } catch (e: any) {
+      setIsExecutingUnstakeAll(true);
+      await unstakeNfts({invalidOnly: true});
+    } catch (e) {
       console.log(e);
-      if (!hasCompletedApproval) {
-        toast.error('Approval failed. Please try again.');
-      } else {
-        toast.error(parseErrorMessage(e));
-      }
+      toast.error(parseErrorMessage(e));
     } finally {
-      setIsExecutingStake(false);
-      setExecutingLabel('');
+      setIsExecutingUnstakeAll(false);
     }
+  }
 
-  }, [pendingNfts, executingLabel, isExecutingStake]);
-
-  return (
-    <Box>
-      <VStack my={6} px={4} spacing={8}>
-        <SimpleGrid columns={{base: 2, sm: 3, md: 5}} gap={2}>
-          {[...Array(5).fill(0)].map((_, index) => {
-            return (
-              <Box key={index} w='120px'>
-                {!!pendingNfts[index] ? (
-                  <Box position='relative' h='full'>
-                    <Box
-                      h='full'
-                      bg='#376dcf'
-                      p={2}
-                      rounded='xl'
-                      border='2px dashed'
-                      borderColor={pendingNfts[index].isAlreadyStaked ? 'transparent' : '#ffa71c'}
-                    >
-                      <Box width={100} height={100}>
-                        <Image src={ImageService.translate(pendingNfts[index].image).fixedWidth(100, 100)} rounded='lg'/>
-                      </Box>
-                      <Flex fontSize='xs' mt={1} justify='end'>
-                        {/*<Box verticalAlign='top'>*/}
-                        {/*  {pendingNfts[index].name}*/}
-                        {/*</Box>*/}
-                        <VStack align='end' spacing={0} fontWeight='bold'>
-                          <Box>
-                            + {round((1/(townHallStakeNftContext.totals[pendingNfts[index].nftAddress.toLowerCase()] ?? 0))*100, 2)}%
-                          </Box>
-                        </VStack>
-                      </Flex>
-                    </Box>
-
-                    <Box
-                      position='absolute'
-                      top={0}
-                      right={0}
-                      pe='3px'
-                    >
-                      <IconButton
-                        icon={<CloseIcon boxSize={2} />}
-                        aria-label='Remove'
-                        bg='gray.800'
-                        _hover={{ bg: 'gray.600' }}
-                        size='xs'
-                        rounded='full'
-                        color='white'
-                        onClick={() => onRemove(pendingNfts[index].nftAddress, pendingNfts[index].nftId)}
-                      />
-                    </Box>
-                  </Box>
-                ) : (
-                  <Box position='relative' overflow='hidden'>
-                    <Box
-                      p={2}
-                      rounded='xl'
-                      cursor='pointer'
-                    >
-                      <Box
-                        width={100}
-                        height={100}
-                        bgColor='#716A67'
-                        rounded='xl'
-                        position='relative'
-                      >
-                        <ShrineIcon boxSize='100%' fill='#B1ADAC'/>
-                      </Box>
-                    </Box>
-                  </Box>
-                )}
-              </Box>
-            )
-          })}
-        </SimpleGrid>
-        <Box ms={8} my={{base: 4, md: 'auto'}} textAlign='center'>
-          <RdButton
-            minW='150px'
-            onClick={handleStake}
-            isLoading={isExecutingStake}
-            disabled={isExecutingStake}
-            stickyIcon={true}
-            loadingText={executingLabel}
+  return !!data && data.length > 0 && (
+    <RdModalBox mt={2}>
+      <Stack direction={{base: 'column', sm: 'row'}} justify='space-between' align='center'  spacing={4}>
+        <Box>You have staked NFTs from previous games that are not earning anymore. Click <strong>Unstake All</strong> to return them to your wallet</Box>
+        <Box flexShrink={0} flexGrow={0}>
+          <Button
+            size='sm'
+            onClick={handleUnstakeAll}
+            isLoading={isExecutingUnstakeAll}
+            isDisabled={isExecutingUnstakeAll}
           >
-            Save
-          </RdButton>
+            Unstake All
+          </Button>
         </Box>
-      </VStack>
-    </Box>
+      </Stack>
+    </RdModalBox>
   )
 }
 
-
-interface UnstakedNftsProps {
-  isReady: boolean;
-  address?: string;
-  collection: string;
-  onAdd: (nft: WalletNft) => void;
-  onRemove: (nftAddress: string, nftId: string) => void;
+interface StakeNftsContentProps {
+  collectionAddress: string;
 }
 
-const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedNftsProps) => {
-  const townHallStakeNftContext = useContext(TownHallStakeNftContext) as TownHallStakeNftContextProps;
-  const { data, isLoading, isError, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ['TownHallUnstakedNfts', address, collection],
-    queryFn: () => nextApiService.getWallet(address!, {
-      collection: [collection],
-      sortBy: 'rank',
-      direction: 'asc'
-    }),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, pages) => {
-      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-    },
-    refetchOnWindowFocus: false,
-    enabled: !!address && isReady && !!collection
-  });
+const StakeNftsContent = ({collectionAddress}: StakeNftsContentProps) => {
+  const [showStaked, setShowStaked] = useState(false);
 
   return (
-    <>
-      <Box textAlign='center' fontSize='sm'>
-        Total Staked: {commify(townHallStakeNftContext.totals[collection.toLowerCase()] ?? 0)}
-      </Box>
-      <InfiniteScroll
-        dataLength={data?.pages ? data.pages.flat().length : 0}
-        next={fetchNextPage}
-        hasMore={hasNextPage ?? false}
-        style={{ overflow: 'hidden' }}
-        loader={
-          <Center>
-            <Spinner />
-          </Center>
-        }
-      >
-        {isLoading ? (
-          <Center>
-            <Spinner />
-          </Center>
-        ) : isError ? (
-          <p>Error: {(error as any).message}</p>
-        ) : !!data && data.pages.map((page) => page.data).flat().length > 0 ? (
-          <SimpleGrid
-            columns={{base: 2, sm: 3, md: 4}}
-            gap={3}
-          >
-            {data.pages.map((items, pageIndex) => (
-              <React.Fragment key={pageIndex}>
-                {items.data.map((nft, itemIndex) => (
-                  <StakingNftCard
-                    key={nft.name}
-                    nft={nft}
-                    onAdd={() => onAdd(nft)}
-                    onRemove={() => onRemove(nft.nftAddress, nft.nftId)}
-                  />
-                ))}
-              </React.Fragment>
-            ))}
-          </SimpleGrid>
-        ) : (
-          <Box textAlign='center' mt={8}>
-            <Text>No NFTs available</Text>
-          </Box>
-        )}
-      </InfiniteScroll>
-
-    </>
+    <Box>
+      <RdTabGroup>
+        <RdTabButton isActive={!showStaked} onClick={() => setShowStaked(false)}>
+          Unstaked
+        </RdTabButton>
+        <RdTabButton isActive={showStaked} onClick={() => setShowStaked(true)}>
+          Staked
+        </RdTabButton>
+      </RdTabGroup>
+      {!showStaked ? (
+        <UnstakedNfts
+          collectionAddress={collectionAddress}
+        />
+      ) : (
+        <StakedNfts
+          collectionAddress={collectionAddress}
+        />
+      )}
+    </Box>
   )
 }

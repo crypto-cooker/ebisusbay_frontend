@@ -9307,6 +9307,46 @@
         "kyc": true,
         "escrow": false
       }
+    },
+    {
+      "id": 189,
+      "slug": "ryoshi-tales-vip-2",
+      "collection": "ryoshi-tales-vip",
+      "title": "Ryoshi Tales VIP",
+      "subtitle": "1400 Ryoshi VIP NFTs available for mint. Don't miss this unique opportunity. Stake VIP NFTs on Ryoshi Dynasties and unleash their power!",
+      "description": "The last 1400 Ryoshi VIP NFTs are up for grabs with a tiered VIP sale!\nEach tier will last 10 minutes, here's the schedule:\n\n- 200k+ Mitama: 2000 $FRTN, Allotment 50\n- 100k+ Mitama: 2150 $FRTN, Allotment 150\n- 75k+ Mitama: 2200 $FRTN, Allotment 150\n- 25k+ Mitama: 2300 $FRTN, Allotment 150\n- 10k+ Mitama: 2350 $FRTN, Allotment 300\n- 5k+ Mitama: 2400 $FRTN, Allotment 500\n- Public Sale: 3000 $FRTN, Allotment 100 + all unsold from above\n\nMinting is possible with rewards!\n\n*Note: any VIPs unsold after the 70-minute event will return to the Ebisu's Bay team.",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "0x979b33ff2CF89D02c9AA0cDC2C7dDaFed458c15D",
+      "maxMintPerTx": 10,
+      "maxMintPerAddress": 100,
+      "totalSupply": 1400,
+      "foundersOnly": false,
+      "start": 1702421751000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-vip/drop2.webp",
+        "banner": "/img/drops/ryoshi-tales-vip/banner.webp",
+        "avatar": "/img/collections/ryoshi-tales-vip/avatar.webp",
+        "preview": "/img/collections/ryoshi-tales-vip/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": "public",
+        "kyc": "hidden",
+        "escrow": false
+      }
     }
   ]
 }

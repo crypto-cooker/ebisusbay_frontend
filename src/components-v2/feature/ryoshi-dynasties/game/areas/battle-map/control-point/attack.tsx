@@ -23,7 +23,6 @@ import {attack, getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {createSuccessfulTransactionToastContent} from '@src/utils';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {useAppSelector} from "@src/Store/hooks";
 import BattleConclusion
   from '@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/battle-conclusion';
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
@@ -43,10 +42,8 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
-import {useDispatch} from "react-redux";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useUser} from "@src/components-v2/useUser";
 
 interface AttackTabProps {
   controlPoint: RdControlPoint;
@@ -57,9 +54,8 @@ interface AttackTabProps {
 }
 
 const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPrice, allFactions}: AttackTabProps) => {
-  const dispatch = useDispatch();
   const config = appConfig();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const {requestSignature} = useEnforceSignature();
   const {game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [displayConclusion, setDisplayConclusion] = useState(false);
@@ -109,16 +105,7 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   })
 
   const handleConnect = async () => {
-    if (!user.address) {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    user.connect();
   }
 
   const onChangeInputsAttacker = (e : any) => {
@@ -407,10 +394,14 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
 
     function onBattleAttackEvent(data:any) {
       console.log('BATTLE_ATTACK', data)
-      const parsedAtack = JSON.parse(data);
+      const parsedAttack = JSON.parse(data);
       // console.log('parsedAtack', parsedAtack)
-      displayConclusionCallback();
-      setBattleAttack(parsedAtack);
+      if (parsedAttack.success) {
+        displayConclusionCallback();
+        setBattleAttack(parsedAttack);
+      } else {
+        toast.error('Unable to process attack. Please try again later.');
+      }
     }
 
     socket.on('connect', onConnect);

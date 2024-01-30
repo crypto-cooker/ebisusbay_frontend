@@ -1,4 +1,3 @@
-import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {
@@ -29,7 +28,8 @@ import {
   Tr,
   useBreakpointValue,
   useDisclosure,
-  VStack, Wrap
+  VStack,
+  Wrap
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import RdButton from "../../../../components/rd-button";
@@ -52,12 +52,14 @@ import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types"
 import moment from 'moment';
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {useContractService, useUser} from "@src/components-v2/useUser";
+import * as Sentry from "@sentry/nextjs";
 
 const config = appConfig();
 
 const FortuneRewardsTab = () => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const [seasonTimeRemaining, setSeasonTimeRemaining] = useState(0);
   const [burnMalus, setBurnMalus] = useState(0);
 
@@ -173,12 +175,12 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
                     </Thead>
                     <Tbody>
                       {rewardsHistory.map((reward: any) => (
-                        <Tr>
+                        <Tr key={reward.id}>
                           <Td py={1} ps={3}>{new Date(reward.timestamp).toLocaleString()}</Td>
-                          <Td py={1}>
+                          <Td py={1} maxW={{sm: '140px', md: '180px', lg: '230px'}}>
                             <Box>{formatString(reward.type)}</Box>
                             {(!!reward.metadata?.type || !!reward.metadata?.name) && (
-                              <Box fontSize='xs'>({reward.metadata.type && <>{reward.metadata.type}: </>}{reward.metadata.name})</Box>
+                              <Box fontSize='xs' color='#aaa' noOfLines={2}>({reward.metadata.type && <>{reward.metadata.type}: </>}{reward.metadata.name})</Box>
                             )}
                           </Td>
                           <Td py={1} pe={3} isNumeric>
@@ -197,23 +199,25 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
                 ) : (
                   <>
                     {rewardsHistory.map((reward: any) => (
-                      <Box my={2}>
-                        <HStack justify='space-between'>
-                          <HStack  justify='end'>
-                            <FortuneIcon boxSize={4}/>
-                            <Box>{commify(round(reward.amount, 3))}</Box>
+                      <Box my={3}>
+                        <Flex direction='column'>
+                          <HStack justify='space-between'>
+                            <HStack justify='end'>
+                              <FortuneIcon boxSize={4}/>
+                              <Box>{commify(round(reward.amount, 3))}</Box>
+                            </HStack>
+                            <Tag variant='solid' alignSelf='end' size='sm'>{new Date(reward.timestamp).toLocaleString()}</Tag>
                           </HStack>
-                          <Wrap justify='end'>
-                            <Tag py={1} colorScheme={reward.status === 'PENDING' ? undefined : 'blue'} variant='solid'>{formatString(reward.type)}</Tag>
+                          <Wrap justify='end' mt={1}>
+                            <Tag py={1} size='sm' colorScheme={reward.status === 'PENDING' ? undefined : 'blue'} variant='solid'>{formatString(reward.type)}</Tag>
                             {reward.status === 'PENDING' && (
-                              <Tag variant='solid'>Pending</Tag>
+                              <Tag variant='solid' size='sm'>Pending</Tag>
                             )}
                           </Wrap>
-                        </HStack>
+                        </Flex>
                         {(!!reward.metadata?.type || !!reward.metadata?.name) && (
-                          <Box>({reward.metadata.type && <>{reward.metadata.type}: </>}{reward.metadata.name})</Box>
+                          <Box color='#aaa' fontSize='xs'>({reward.metadata.type && <>{reward.metadata.type}: </>}{reward.metadata.name})</Box>
                         )}
-                        <Box py={1}>{new Date(reward.timestamp).toLocaleString()}</Box>
                       </Box>
                     ))}
                   </>
@@ -229,7 +233,8 @@ const RewardsBreakdown = ({rewardsHistory}: {rewardsHistory: any}) => {
 
 const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: number, onRefresh: () => void}) => {
   const { game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
   const [executingClaim, setExecutingClaim] = useState(false);
   const [executingCompound, setExecutingCompound] = useState(false);
   const [executingCancelCompound, setExecutingCancelCompound] = useState(false);
@@ -269,7 +274,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       }
 
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signature)
-      const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+      const tx = await contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
       await tx.wait();
 
       queryClient.setQueryData(
@@ -291,6 +296,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       toast.success('Withdraw success!');
     } catch (e) {
       console.log(e);
+      Sentry.captureException(e);
       toast.error(parseErrorMessage(e));
     } finally {
       setExecutingClaim(false);
@@ -304,7 +310,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 
       const signature = await requestSignature();
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signature)
-      const tx = await user.contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
+      const tx = await contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
       await tx.wait();
       toast.success('Previous request cancelled');
     }
@@ -344,7 +350,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vault.index, signature)
 
-      const tx = await user.contractService?.ryoshiPlatformRewards.compound(auth.data.reward, auth.data.signature);
+      const tx = await contractService?.ryoshiPlatformRewards.compound(auth.data.reward, auth.data.signature);
       await tx.wait();
 
       queryClient.setQueryData(
@@ -366,6 +372,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       toast.success('Compound complete!');
     } catch (e) {
       console.log(e);
+      Sentry.captureException(e);
       toast.error(parseErrorMessage(e));
     } finally {
       setExecutingCompound(false);
@@ -379,7 +386,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 
       const signature = await requestSignature();
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vaultIndex, signature)
-      const tx = await user.contractService?.ryoshiPlatformRewards.cancelCompound(auth.data.reward, auth.data.signature);
+      const tx = await contractService?.ryoshiPlatformRewards.cancelCompound(auth.data.reward, auth.data.signature);
       await tx.wait();
       toast.success('Previous request cancelled');
     }
@@ -440,7 +447,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 export default FortuneRewardsTab;
 
 const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isExecutingCompound}: SeasonRecordProps) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
   const [isExpanded, setIsExpanded] = useState(false);

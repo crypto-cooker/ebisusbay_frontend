@@ -1,16 +1,22 @@
-import {useEffect, useState} from "react";
-import {useAppSelector} from "@src/Store/hooks";
+import {useState} from "react";
 import {Contract} from "ethers";
 import {Box, Button, Text, VStack} from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {GetServerSidePropsContext} from "next";
 import * as process from "process";
+import {appConfig} from "@src/Config";
+import {ERC721} from "@src/Contracts/Abis";
+import {JsonRpcProvider} from "@ethersproject/providers";
+import {parseErrorMessage} from "@src/helpers/validator";
+import {useUser} from "@src/components-v2/useUser";
+
+const readProvider = new JsonRpcProvider(appConfig().rpc.read);
 
 function Test() {
   return (
     <Box m={4}>
       <VStack align='start'>
-        <SeasonIncrementor />
+        <Metadata />
       </VStack>
     </Box>
   )
@@ -18,72 +24,47 @@ function Test() {
 
 export default Test;
 
-
-const SeasonIncrementor = () => {
-  const user = useAppSelector((state) => state.user);
+const Metadata = () => {
+  const user = useUser();
   const [isExecuting, setIsExecuting] = useState(false);
-  const [gameLoopContract, setGameLoopContract] = useState<Contract | null>(null);
-  const [curSeason, setCurSeason] = useState<number>();
+  const [value, setValue] = useState<string | number>();
 
-  const handleIncrementSeason = async () => {
+  const handleGetMetadata = async () => {
     if (!user.address) {
       toast.error('Please connect your wallet to continue');
       return;
     }
 
-    if (!gameLoopContract) {
-      toast.error('GameLoop contract not initialized');
-      return;
-    }
+    const contract = new Contract(
+      '0x4F410976c6687193dDC0da9C4F3ca1Dfd0ba0209',
+      ERC721,
+      readProvider
+    )
 
     try {
       setIsExecuting(true);
-      const tx = await gameLoopContract.newSeason();
-      const receipt = await tx.wait();
-      toast.success('Success!');
-      await getSeason(gameLoopContract);
+      const tokenURI = await contract.tokenURI(10);
+      setValue(tokenURI);
     } catch (e: any) {
       console.log(e);
-      toast.error(e.message);
+      toast.error(parseErrorMessage(e));
     } finally {
       setIsExecuting(false);
     }
-
   }
-
-  const getSeason = async (contract: Contract) => {
-    const season = await contract.curSeason();
-    setCurSeason(season);
-  }
-
-  useEffect(() => {
-
-
-    if (!!user.address) {
-      const contract = new Contract(
-        '0xC101d78F14d0840619b22B857eB131b402265D3e',
-        gameLoopAbi,
-        user.provider.getSigner()
-      )
-      setGameLoopContract(contract);
-      getSeason(contract);
-    }
-  }, [user.address]);
 
   return (
     <Box>
-      <Text fontWeight='bold'>Current Season: {curSeason}</Text>
-      <Button isLoading={isExecuting} isDisabled={isExecuting} onClick={handleIncrementSeason}>
-        Increment Season
+      <Button isLoading={isExecuting} isDisabled={isExecuting} onClick={handleGetMetadata}>
+        Get Metadata
       </Button>
+      <Box>
+        <Text>{value}</Text>
+      </Box>
     </Box>
   )
-};
 
-const gameLoopAbi = [
-  "function curSeason() view returns (uint16)",
-  "function newSeason()"
-];
+}
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (!context.req.headers.host?.startsWith('localhost') || process.env.NODE_ENV !== 'development') {

@@ -13,7 +13,6 @@ import {
   faSync
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import MetaMaskOnboarding from '@metamask/onboarding';
 
 import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
@@ -46,7 +45,6 @@ import {
   shortAddress,
 } from '@src/utils';
 import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
-import {chainConnect, connectAccount, retrieveProfile} from '@src/GlobalState/User';
 import {specialImageTransform} from '@src/hacks';
 import PriceActionBar from './price-action-bar';
 import {ERC721} from '@src/Contracts/Abis';
@@ -91,6 +89,8 @@ import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
 import {ApiService} from "@src/core/services/api-service";
 import DynamicNftImage from '@src/components-v2/shared/media/dynamic-nft-image';
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const tabs = {
@@ -113,9 +113,10 @@ interface Nft721Props {
 
 const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const { refreshing, favorites, loading:isLoading } = useAppSelector((state) => state.nft);
   const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`).toString());
+  const [runAuthedFunction] = useAuthedFunction();
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [offerType, setOfferType] = useState(OFFER_TYPE.none);
@@ -649,19 +650,8 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     setCurrentTab(tab);
   }, [isBundle, currentTab]);
 
-  const handleMakeOffer = () => {
-    if (user.address) {
-      setOpenMakeOfferDialog(!openMakeOfferDialog);
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+  const handleMakeOffer = async () => {
+    await runAuthedFunction(() => setOpenMakeOfferDialog(!openMakeOfferDialog));
   };
 
   const onRefreshMetadata = useCallback(() => {
@@ -698,7 +688,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     await toggleFavorite(user.address, address, id, !isCurrentFav);
     toast.success(`Item ${isCurrentFav ? 'removed from' : 'added to'} favorites`);
     dispatch(tickFavorite(isCurrentFav ? -1 : 1));
-    dispatch(retrieveProfile());
+    user.refreshProfile();
   };
 
   const isFavorite = () => {

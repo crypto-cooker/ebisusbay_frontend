@@ -1,13 +1,43 @@
 [
   {
-    "name": "Ryoshi Tales: Celestial Celebration",
-    "start": 1699989574,
-    "end":  1700080200,
+    "name": "Ryoshi Tales VIP",
+    "start": 1701890579,
+    "end": 1703107305,
+    "placement": "rd-board",
+    "details": {
+      "weight": 2,
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-tales-vip-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-tales-vip-sm.webp",
+      "link": {
+        "url": "/drops/ryoshi-tales-vip-2",
+        "external": false
+      }
+    }
+  },
+  {
+    "name": "3D Crow",
+    "start": 1701365614,
+    "end": 1701993599,
     "placement": "rd-board",
     "details": {
       "weight": 1,
-      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-tales-celestial-celebration-lg.webp",
-      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-tales-celestial-celebration-sm.webp",
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/3d-crow-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/3d-crow-sm.webp",
+      "link": {
+        "url": "https://www.crocrow.com/3d/public",
+        "external": true
+      }
+    }
+  },
+  {
+    "name": "Ryoshi Tales: Celestial Celebration",
+    "start": 1699989574,
+    "end": 1700080200,
+    "placement": "rd-board",
+    "details": {
+      "weight": 1,
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-tales-celestial-celebration-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-tales-celestial-celebration-sm.webp",
       "link": {
         "url": "/drops/ryoshi-tales-celestial-celebration",
         "external": false
@@ -21,8 +51,8 @@
     "placement": "rd-board",
     "details": {
       "weight": 2,
-      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-heroes-lg.webp",
-      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-heroes-sm.webp",
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-heroes-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-heroes-sm.webp",
       "link": {
         "url": "/drops/ryoshi-heroes",
         "external": false
@@ -36,8 +66,8 @@
     "placement": "rd-board",
     "details": {
       "weight": 3,
-      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-tales-goblin-gala-lg.webp",
-      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-tales-goblin-gala-sm.webp",
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-tales-goblin-gala-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-tales-goblin-gala-sm.webp",
       "link": {
         "url": "/collection/ryoshi-tales",
         "external": false
@@ -51,8 +81,8 @@
     "placement": "rd-board",
     "details": {
       "weight": 1,
-      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-hearts-lg.webp",
-      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-hearts-sm.webp",
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-hearts-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-hearts-sm.webp",
       "link": {
         "url": "/drops/ryoshi-hearts",
         "external": false
@@ -66,8 +96,8 @@
     "placement": "rd-board",
     "details": {
       "weight": 2,
-      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-clubs-lg.webp",
-      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-clubs-sm.webp",
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-clubs-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-clubs-sm.webp",
       "link": {
         "url": "/drops/ryoshi-clubs",
         "external": false
@@ -81,8 +111,8 @@
     "placement": "rd-board",
     "details": {
       "weight": 2,
-      "imageLg": "/img/ryoshi-dynasties/announcements/ads/ryoshi-diamonds-lg.webp",
-      "imageSm": "/img/ryoshi-dynasties/announcements/ads/ryoshi-diamonds-sm.webp",
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-diamonds-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-diamonds-sm.webp",
       "link": {
         "url": "/drops/ryoshi-diamonds",
         "external": false
@@ -96,8 +126,8 @@
     "placement": "rd-board",
     "details": {
       "weight": 1,
-      "imageLg": "/img/ryoshi-dynasties/announcements/ads/time-machines-lg.webp",
-      "imageSm": "/img/ryoshi-dynasties/announcements/ads/time-machines-sm.webp",
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/time-machines-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/time-machines-sm.webp",
       "link": {
         "url": "https://time-launcher.com/drops/preview/time-ship-blueprints/QM5AUlqXan",
         "external": true
@@ -145,8 +175,8 @@
     "placement": "rd-board",
     "details": {
       "weight": 0,
-      "imageLg": "/img/ryoshi-dynasties/announcements/ads/vvs.webp",
-      "imageSm": "/img/ryoshi-dynasties/announcements/ads/vvs-sm.gif",
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/vvs.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/vvs-sm.gif",
       "link": {
         "url": "https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
         "external": true

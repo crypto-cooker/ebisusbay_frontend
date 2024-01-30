@@ -7,10 +7,10 @@ import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {
   caseInsensitiveCompare,
-  isBundle, isEbVipCollection,
+  isBundle,
+  isEbVipCollection,
   isErc20Token,
   isGaslessListing,
-  isLandDeedsCollection,
   knownErc20Token,
   round
 } from "@src/utils";
@@ -41,8 +41,6 @@ import useBuyGaslessListings from "@src/hooks/useBuyGaslessListings";
 import DotIcon from "@src/Components/components/DotIcon";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
-import Market from "@src/Contracts/Marketplace.json";
-import {useAppSelector} from "@src/Store/hooks";
 import PurchaseSuccessDialog from './purchase-success';
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
@@ -50,10 +48,10 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {getPrices} from "@src/core/api/endpoints/prices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import Link from "next/link";
+import {useContractService, useUser} from "@src/components-v2/useUser";
+import * as Sentry from "@sentry/nextjs";
 
 const config = appConfig();
-const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-const readMarket = new Contract(config.contracts.market, Market.abi, readProvider);
 
 type PurchaseConfirmationDialogProps = {
   onClose: () => void;
@@ -62,11 +60,10 @@ type PurchaseConfirmationDialogProps = {
 };
 
 export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}: PurchaseConfirmationDialogProps) {
-  const [fee, setFee] = useState(0);
   const [executingPurchase, setExecutingPurchase] = useState(false);
   const [buyGaslessListings, response] = useBuyGaslessListings();
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
 
   const [isComplete, setIsComplete] = useState(false);
   const [tx, setTx] = useState<ContractReceipt>();
@@ -75,9 +72,6 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const getInitialProps = async () => {
     const listingsResponse = await NextApiService.getListingsByIds(listingId);
     const listing = listingsResponse.data[0];
-
-    const fees = await readMarket.fee(user.address);
-    setFee((fees / 10000) * 100);
 
     return listing;
   };
@@ -101,12 +95,21 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   }
 
   const handleBuyErc20 = (address: string) => {
-    const url = new URL('https://vvs.finance/swap');
-    if (user.address) {
-      url.searchParams.append('outputCurrency', address);
-      url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
+    if (token?.symbol === 'TTT') {
+      const url = new URL('https://app.cronaswap.org/swap');
+      if (user.address) {
+        url.searchParams.append('outputCurrency', address);
+        url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
+      }
+      window.open(url, '_blank');
+    } else {
+      const url = new URL('https://vvs.finance/swap');
+      if (user.address) {
+        url.searchParams.append('outputCurrency', address);
+        url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
+      }
+      window.open(url, '_blank');
     }
-    window.open(url, '_blank');
   }
 
   const handleExecutePurchase = async () => {
@@ -119,6 +122,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       }]);
       setIsComplete(true);
     } catch (error: any) {
+      Sentry.captureException(error);
       toast.error(parseErrorMessage(error));
     } finally {
       setExecutingPurchase(false);
@@ -246,7 +250,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                           <Flex justify="space-between" align="center">
                             <CronosIconBlue boxSize={4} me={1}/>
                             <Text className="text-muted">
-                              {fee} %
+                              {user.fee} %
                             </Text>
                           </Flex>
                         </Flex>
@@ -265,7 +269,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                               <Text as="span" ms={1}>CRO</Text>
                             </Flex>
                             <Flex mt={1}>
-                              <Text as="span" className="text-muted">Balance: {commify(round(user.balance, 3))}</Text>
+                              <Text as="span" className="text-muted">Balance: {commify(round(user.balances.cro, 3))}</Text>
                             </Flex>
                           </>
                         )}
@@ -351,12 +355,13 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
 }
 
 const CurrencyOption = ({currency}: {currency: {address: string, symbol: string, name: string}}) => {
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
+  const contractService = useContractService();
 
   const { data: tokenBalance, isLoading } = useQuery({
     queryKey: ['UserTokenBalance', currency.address, user.address],
     queryFn: async () => {
-      const tokenContract = user.contractService!.erc20(currency.address);
+      const tokenContract = contractService!.erc20(currency.address);
       const balance = await tokenContract.balanceOf(user.address);
       // const decimals = await tokenContract.decimals();
       return ethers.utils.formatEther(balance);  // assuming
@@ -373,7 +378,7 @@ const CurrencyOption = ({currency}: {currency: {address: string, symbol: string,
       <Flex mt={1}>
         <HStack as="span" className="text-muted">
           <Box>Balance: </Box>
-          {isLoading ? <Spinner /> : <>{commify(round(tokenBalance, 2))}</>}
+          {isLoading ? <Spinner /> : <>{commify(round(tokenBalance ?? 0, 2))}</>}
         </HStack>
       </Flex>
     </>

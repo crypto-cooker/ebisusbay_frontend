@@ -1,7 +1,6 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
+import React, {useContext, useEffect, useMemo, useState} from "react";
 import {Box, Center, Flex, Grid, GridItem, Image, Link, Text, useMediaQuery, VStack} from "@chakra-ui/react"
 import localFont from 'next/font/local';
-import {useAppSelector} from "@src/Store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {useRouter} from "next/router";
 import {
@@ -17,6 +16,7 @@ import {Autoplay, Virtual} from "swiper/modules";
 import NextLink from "next/link";
 import Countdown, {zeroPad} from "react-countdown";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useUser} from "@src/components-v2/useUser";
 
 const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
 
@@ -31,8 +31,8 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
   const { user: rdUserContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const [isMobile] = useMediaQuery("(max-width: 750px)");
   const {isSignedIn} = useEnforceSigner();
-  
-  const user = useAppSelector((state) => state.user);
+
+  const user = useUser();
 
   const { data: ads } = useQuery({
     queryKey: ['RdBoardAds'],
@@ -82,11 +82,13 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
             {ads.map((ad, index) => (
               <SwiperSlide key={ad.name} virtualIndex={index}>
                 <Center>
-                  <Image
-                    alt={ad.name}
-                    src={ImageService.translate(ad.details.imageSm).convert()}
-                    maxH='300px'
-                  />
+                  <Link as={NextLink} href={ad.details.link.url} isExternal={ad.details.link.external}>
+                    <Image
+                      alt={ad.name}
+                      src={ImageService.translate(ad.details.imageSm).convert()}
+                      maxH='300px'
+                    />
+                  </Link>
                 </Center>
               </SwiperSlide>
             ))}
@@ -152,6 +154,14 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
         <Text mt={4} textColor={'#fefaee'} >
           Users wishing to visit the <b>Ebisu's Bay</b> marketplace experience can still do so by <b>using the links at the top of the page.</b>
         </Text>
+        {/*<Box mt={4}>*/}
+        {/*  <Text textColor={'#fefaee'} fontWeight='bold'>*/}
+        {/*    LIMITED TIME: Earn 10x Koban from your check-ins by holding 1M of the new $CROS inscription!*/}
+        {/*  </Text>*/}
+        {/*  <Text textColor={'#fefaee'} fontSize='sm'>*/}
+        {/*    Offer ends 1 Jan 2024.*/}
+        {/*  </Text>*/}
+        {/*</Box>*/}
       </Box>
 
       {adSpot}

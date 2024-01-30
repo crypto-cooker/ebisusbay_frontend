@@ -3,10 +3,8 @@ import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import Link from 'next/link';
 import {ethers} from 'ethers';
-import MetaMaskOnboarding from '@metamask/onboarding';
 
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
-import {chainConnect, connectAccount} from '@src/GlobalState/User';
 import {
   appUrl,
   caseInsensitiveCompare,
@@ -18,11 +16,10 @@ import {
 } from '@src/utils';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
-import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useBreakpointValue, useClipboard} from "@chakra-ui/react";
+import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faBoltLightning,
-  faEllipsisH,
   faExchangeAlt,
   faExternalLink,
   faHand,
@@ -38,16 +35,17 @@ import {
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/Theme/theme";
 import {MenuPopup} from "@src/Components/components/chakra-components";
-import {addToCart, openCart, removeFromCart} from "@src/GlobalState/cartSlice";
 import {toast} from "react-toastify";
 import {refreshMetadata} from "@src/GlobalState/nftSlice";
 import {specialImageTransform} from "@src/hacks";
-import {useAppSelector} from "@src/Store/hooks";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {useExchangeRate} from "@src/hooks/useGlobalPrices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
+import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useCart from "@src/hooks/use-cart";
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
@@ -77,17 +75,13 @@ type BaseNftCardProps = {
 const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, canBuy = true }: BaseNftCardProps) => {
   const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
-  const cart = useAppSelector((state) => state.cart);
+  const user = useUser();
+  const cart = useCart();
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { onCopy } = useClipboard(nftUrl.toString());
   const {usdValueForToken} = useExchangeRate();
-
-  const izanamiImageSize = useBreakpointValue(
-    {base: 250, sm: 368, lg: 456},
-    {fallback: 'md'}
-  )
+  const [runAuthedFunction] = useAuthedFunction();
 
   const getListing = (): any => {
     if (nft.market?.price) {
@@ -114,29 +108,25 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
     return null;
   }
 
-  const isInCart = getListing()?.id && cart.nfts.map((o: any) => o.listingId).includes(getListing().id);
+  const isInCart = getListing()?.id && cart.items.map((o: any) => o.listingId).includes(getListing().id);
 
   const handleMakeOffer = () => {
     const isBlacklisted = isNftBlacklisted(nft.address, nft.id);
     if (isBlacklisted) return;
 
-    if (user.address) {
+    runAuthedFunction(async() => {
       setOpenMakeOfferDialog(!openMakeOfferDialog);
-    } else {
-      if (user.needsOnboard) {
-        const onboarding = new MetaMaskOnboarding();
-        onboarding.startOnboarding();
-      } else if (!user.address) {
-        dispatch(connectAccount());
-      } else if (!user.correctChain) {
-        dispatch(chainConnect());
-      }
-    }
+    });
   };
 
   const handleAddToCart = () => {
     const listing = getListing();
-    dispatch(addToCart({
+    if (!listing) {
+      toast.error('No listing found for NFT');
+      return;
+    }
+
+    cart.addItem({
       listingId: listing.id,
       name: nft.name,
       image: nft.image,
@@ -144,15 +134,15 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
       address: nft.address,
       id: nft.id,
       rank: nft.rank,
-      amount: listing.amount,
+      amount: listing.amount ?? 1,
       currency: listing.currency
-    }));
-    toast.success(createSuccessfulAddCartContent(() => dispatch(openCart())));
+    });
+    toast.success(createSuccessfulAddCartContent(cart.openCart));
   };
 
   const handleRemoveFromCart = useCallback(() => {
     const listing = getListing();
-    dispatch(removeFromCart(listing.id));
+    cart.removeItem(listing.id);
     toast.success('Removed from cart');
   }, [nft]);
 
@@ -304,7 +294,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
               px={4}
               py={1}
             >
-              <div className="d-flex justify-content-between">
+              <Flex justify='space-between' align='center'>
                 <Box
                   _groupHover={{visibility:'visible', color:lightTheme.textColor1}}
                   visibility="hidden"
@@ -321,10 +311,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                     <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleMakeOffer}>Make Offer</Text>
                   )}
                 </Box>
-                <MenuPopup options={menuOptions}>
-                  <FontAwesomeIcon icon={faEllipsisH} style={{ cursor: 'pointer' }} className="my-auto" />
-                </MenuPopup>
-              </div>
+                <MenuPopup options={menuOptions} />
+              </Flex>
             </Box>
           </Flex>
         </Box>

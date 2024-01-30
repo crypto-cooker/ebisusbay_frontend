@@ -1,7 +1,9 @@
 import {AspectRatio, Box, Icon, Image, useBreakpointValue, VStack} from "@chakra-ui/react";
 import FortunePurchaseDialog from "@src/components-v2/feature/ryoshi-dynasties/token-sale/dialog";
-import React, {useCallback, useEffect, useState} from "react";
-import BankerBubbleBox, {TypewriterText} from "@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box";
+import React, {useCallback, useState} from "react";
+import BankerBubbleBox, {
+  TypewriterText
+} from "@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightFromBracket, faCircleInfo, faDollarSign} from "@fortawesome/free-solid-svg-icons";
@@ -11,8 +13,8 @@ import {Contract, ethers} from "ethers";
 import FortunePresale from "@src/Contracts/FortunePresale.json";
 import {appConfig} from "@src/Config";
 import {useQuery} from "@tanstack/react-query";
-import {useAppSelector} from "@src/Store/hooks";
 import {ApiService} from "@src/core/services/api-service";
+import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -35,7 +37,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
     {base: true, sm: false},
     {fallback: 'sm'},
   );
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const windowSize = useWindowSize();
 
   const handlePurchaseDialogOpen = (page?: string) => {

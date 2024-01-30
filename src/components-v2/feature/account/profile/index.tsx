@@ -44,6 +44,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCog, faEllipsisV} from "@fortawesome/free-solid-svg-icons";
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import ImageService from "@src/core/services/image";
+import {useUser} from "@src/components-v2/useUser";
 
 const MotionGrid = motion(Grid)
 
@@ -84,7 +85,7 @@ interface ProfileProps {
 
 export default function Profile({ address, profile, tab }: ProfileProps) {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const router = useRouter();
   const variants = {
@@ -114,7 +115,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
   const [isProfileOwner, setIsProfileOwner] = useState(false);
   useEffect(() => {
     setIsProfileOwner(user && caseInsensitiveCompare(address, user.address));
-  }, [user, address])
+  }, [user.wallet.address, address])
 
   const profilePicture = profile.profilePicture ?
     ImageService.translate(profile.profilePicture).custom({width: 200, height: 200}) :
@@ -126,10 +127,10 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
   }, [tab]);
 
   useEffect(() => {
-    if (!user.address && batchListingCart.isDrawerOpen) {
+    if (!user.wallet.address && batchListingCart.isDrawerOpen) {
       dispatch(closeBatchListingCart());
     }
-  }, [user.address]);
+  }, [user.wallet.address]);
 
   if (typeof window !== 'undefined') {
     useLayoutEffect(() => {
@@ -181,12 +182,13 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
           <section className={`px-4 pt-2 ${useMobileCartView ? 'px-4' : 'px-5'}`}>
             <Box mb={6}>
               <Flex>
-                <Flex mt={{base: -16, lg: -20, xl: -20}}>
+                <Flex mt={{base: '-55px', lg: '-73px'}}>
                   <Avatar
                     src={profilePicture}
                     rounded='full'
                     size={{base: 'xl', lg: '2xl'}}
-                    border={`4px solid ${getTheme(user.theme).colors.bgColor1}`}
+                    border={`6px solid ${getTheme(user.theme).colors.bgColor1}`}
+                    bg={getTheme(user.theme).colors.bgColor1}
                   />
                 </Flex>
                 {!useMobileLayout && (

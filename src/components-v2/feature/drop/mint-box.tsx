@@ -13,18 +13,14 @@ import {
   useNumberInput
 } from "@chakra-ui/react";
 import {DropState, DropState as statuses} from "@src/core/api/enums";
-import {constants, Contract, ethers} from "ethers";
+import {constants, ethers} from "ethers";
 import {createSuccessfulTransactionToastContent, percentage, round} from "@src/utils";
 import React, {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {chainConnect, connectAccount} from "@src/GlobalState/User";
 import {commify, parseUnits} from "ethers/lib/utils";
 import {toast} from "react-toastify";
 import {getAnalytics, logEvent} from "@firebase/analytics";
 import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/Config";
-import {useAppSelector} from "@src/Store/hooks";
 import {Drop} from "@src/core/models/drop";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
@@ -33,6 +29,8 @@ import Link from "next/link";
 import {ApiService} from "@src/core/services/api-service";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {useContractService, useUser} from "@src/components-v2/useUser";
+import useAuthedFunction from "@src/hooks/useAuthedFunction";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -60,29 +58,19 @@ interface MintBoxProps {
 }
 
 export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescription, onMintSuccess, canMintQuantity, regularCost, memberCost, whitelistCost, specialWhitelist, maxMintPerTx, maxMintPerAddress}: MintBoxProps) => {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => {
-    return state.user;
-  });
-  const userTheme = useAppSelector((state) => {
-    return state.user.theme;
-  });
+  const user = useUser();
+  const userTheme = user.theme;
   const {requestSignature} = useEnforceSigner();
+  const [runAuthedFunction] = useAuthedFunction();
 
   const [mintingWithType, setMintingWithType] = useState<FundingType>();
   const [numToMint, setNumToMint] = useState(1);
   const isReady = !!maxSupply;
   const [erc20Token, setErc20Token] = useState<{name: string, symbol: string, address: string} | null>(null);
+  const contractService = useContractService();
 
   const connectWalletPressed = () => {
-    if (user.needsOnboard) {
-      const onboarding = new MetaMaskOnboarding();
-      onboarding.startOnboarding();
-    } else if (!user.address) {
-      dispatch(connectAccount());
-    } else if (!user.correctChain) {
-      dispatch(chainConnect());
-    }
+    user.connect();
   };
   
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
@@ -129,14 +117,8 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   };
 
   const mintNow = async (fundingType: FundingType) => {
-    if (user.address) {
-      if (!drop.writeContract) {
-        console.log('missing write contract')
-        return;
-      }
-
+    runAuthedFunction(async () => {
       setMintingWithType(fundingType)
-      const contract = drop.writeContract;
       try {
         const cost = await calculateCost(user);
         let finalCost = cost.mul(numToMint);
@@ -148,11 +130,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
         let response;
         if (fundingType === FundingType.REWARDS) {
-          response = await mintWithRewards(contract, finalCost);
+          response = await mintWithRewards(finalCost);
         } else if (fundingType === FundingType.ERC20) {
-          response = await mintWithErc20(contract, finalCost);
+          response = await mintWithErc20(finalCost);
         } else {
-          response = await mintWithCro(contract, finalCost);
+          response = await mintWithCro(finalCost);
         }
 
         const receipt = await response.wait();
@@ -187,14 +169,14 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       } finally {
         setMintingWithType(undefined);
       }
-    } else {
-      dispatch(connectAccount());
-    }
+    });
   };
 
-  const mintWithCro = async (contract: Contract, finalCost: number) => {
+  const mintWithCro = async (finalCost: number) => {
+    const actualContract = contractService!.custom(drop.address, abi);
+
     const gasPrice = parseUnits('5000', 'gwei');
-    const gasEstimate = await contract.estimateGas.mint(numToMint, {value: finalCost});
+    const gasEstimate = await actualContract.estimateGas.mint(numToMint, {value: finalCost});
     const gasLimit = gasEstimate.mul(2);
     let extra = {
       value: finalCost,
@@ -202,42 +184,53 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       gasLimit
     };
 
-    return await contract.mint(numToMint, extra);
+    return await actualContract.mint(numToMint, extra);
   }
 
-  const mintWithErc20 = async (contract: Contract, finalCost: number) => {
-    const allowance = await drop.erc20ReadContract.allowance(user.address, drop.address);
+  const mintWithErc20 = async (finalCost: number) => {
+    const erc20Token = config.tokens[drop.erc20Token as string];
+    const erc20Contract = contractService!.erc20(erc20Token.address);
+
+    const allowance = await erc20Contract.allowance(user.address, drop.address);
     if (allowance.sub(finalCost) <= 0) {
-      const approvalTx = await drop.erc20Contract.approve(drop.address, constants.MaxUint256);
+      const approvalTx = await erc20Contract.approve(drop.address, constants.MaxUint256);
       await approvalTx.wait();
     }
 
+    const actualContract = contractService!.custom(drop.address, abi);
     const gasPrice = parseUnits('5000', 'gwei');
-    const gasEstimate = await contract.estimateGas.mintWithToken(numToMint);
+    const gasEstimate = await actualContract.estimateGas.mintWithToken(numToMint);
     const gasLimit = gasEstimate.mul(2);
     let extra = {
       gasPrice,
       gasLimit
     };
 
-    return await contract.mintWithToken(numToMint, extra);
+    return await actualContract.mintWithToken(numToMint, extra);
   }
 
-  const mintWithRewards = async (contract: Contract, finalCost: number) => {
+  const mintWithRewards = async (finalCost: number) => {
     const signature = await requestSignature();
     const finalCostEth = ethers.utils.formatEther(finalCost);
-    const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(finalCostEth, user.address!, signature);
+    const authorization = await ApiService.withoutKey().ryoshiDynasties.requestRewardsSpendAuthorization(
+      finalCostEth,
+      numToMint,
+      `Drop: ${drop.title}`,
+      user.address!,
+      signature
+    );
 
     const gasPrice = parseUnits('5000', 'gwei');
 
-    const gasEstimate = await contract.estimateGas.mintWithRewards(numToMint, authorization.reward, authorization.signature);
+    const actualContract = contractService!.custom(drop.address, abi);
+    const gasEstimate = await actualContract.estimateGas.mintWithRewards(numToMint, authorization.reward, authorization.signature);
     const gasLimit = gasEstimate.mul(2);
     let extra = {
       gasPrice,
       gasLimit
     };
 
-    return await contract.mintWithRewards(numToMint, authorization.reward, authorization.signature, extra);
+    return await actualContract.mintWithRewards(numToMint, authorization.reward, authorization.signature, extra);
   }
 
   useEffect(() => {

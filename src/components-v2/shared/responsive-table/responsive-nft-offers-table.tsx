@@ -56,7 +56,6 @@ const ResponsiveNftOffersTable = ({data, onUpdate, onCancel, onSort, breakpointV
 
 const DataTable = ({data, onUpdate, onCancel, onSort}: ResponsiveNftOffersTableProps) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
-  const user = useAppSelector((state) => state.user);
 
   const getOfferDate = (timestamp: number) => {
     return timeSince(new Date(timestamp * 1000));
@@ -184,7 +183,7 @@ const ProfileCell = ({ address = '' }) => {
             {!isLoading && avatar ? (
               <img src={ImageService.translate(avatar).avatar()} alt={username ?? address} />
             ) : (
-              <Blockies seed={address} size={10} scale={5} />
+              <Blockies seed={address.toLowerCase()} size={10} scale={5} />
             )}
           </Box>
       </Box>
