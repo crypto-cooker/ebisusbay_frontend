@@ -45,6 +45,8 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 				return'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'
 			case PokerCollection.Hearts:	
 				return 'https://blog.ebisusbay.com/crypto-hodlem-round-3-ryoshi-hearts-%EF%B8%8F-playing-cards-collection-e5ae3361c32e'
+			case PokerCollection.Spades:
+				return 'https://blog.ebisusbay.com/crypto-hodlem-round-4-ryoshi-spades-%EF%B8%8F-playing-cards-collection-8f0f9e8d2d1b'
 		}
 	}
 	
@@ -99,6 +101,18 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 		// console.log(JSON.stringify(rewards));
 		download(JSON.stringify(fortuneRewards), "ryoshi-clubs-fortune.json", "text/plain");
 		download(JSON.stringify(nftRewards), "ryoshi-clubs-NFTS.json", "text/plain");
+	}
+	const GetSuite = (suite: number) => {
+		switch(suite){
+			case 3:
+				return "♠️";
+			case 2:
+				return "♥️";
+			case 1:
+				return "♦️";
+			case 0:
+				return "♣️";
+		}
 	}
 
 	const { data, fetchNextPage, hasNextPage, status, error, dataUpdatedAt, refetch } = useInfiniteQuery({
@@ -314,11 +328,12 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 					{ pokerCollection === PokerCollection.Hearts ?
 						<Text textColor={i%2 ? 'red':'white'}>{getCardName(player.bestHand.secondaryValue)}</Text>
 						: <Text>{getCardName(player.bestHand.secondaryValue)}</Text>}
+
 						{player?.bestHand?.secondaryCardEdition! >= 0 &&
 							<Text
 							fontSize={{base: 8, md:12}}
 							color={'gray.500'}
-						>id:{player.bestHand.secondaryCardEdition!}</Text>
+						>id:{player.bestHand.secondaryCardEdition!} {GetSuite(player.bestHand.secondaryCardSuit!)}</Text>
 						}
 					</HStack>
 				</GridItem>
