@@ -32998,7 +32998,7 @@
       "maxMintPerAddress": 40,
       "totalSupply": 4000,
       "supplyOffset": 12000,
-      "erc20Cost": "1000",
+      "erc20Cost": "100",
       "erc20MemberCost": "50",
       "rewardCost": "60",
       "erc20Token": "frtn",
@@ -33016,7 +33016,7 @@
       "images": {
         "drop": "/img/drops/ryoshi-spades/drop.webp",
         "avatar": "/img/drops/ryoshi-hearts/avatar.webp",
-        "banner": "/img/drops/ryoshi-hearts/banner.webp",
+        "banner": "/img/drops/ryoshi-spades/banner.webp",
         "preview": "/img/drops/ryoshi-spades/preview.webp"
       },
       "verification": {
