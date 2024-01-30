@@ -24719,7 +24719,7 @@
       "multiToken": false,
       "address": "0xd4E29bdba77c948b04C3ACd67C1dAC17264d2983",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The first $CRO nfts to hit mainstream gaming as in-game assets. \uD83C\uDFAE  Degen Royale / Skully-X / The Monsters",
         "avatar": "/img/collections/degen-royale-guns-on-cronos/avatar.webp",
