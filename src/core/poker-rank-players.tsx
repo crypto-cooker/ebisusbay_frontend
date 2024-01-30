@@ -122,10 +122,10 @@ export const RankPlayers = async (data : any, gameId:number, testcases:boolean=f
   gameNumber = gameId;
   activeGameStartIndex = (gameNumber - 1) * 4000;
 
-  //for testing
-  if(gameNumber === 4) {
-    activeGameStartIndex = 8000;
-  }
+  // //for testing
+  // if(gameNumber === 4) {
+  //   activeGameStartIndex = 8000;
+  // }
 
   rankedPlayers = CreateRankedPlayersFromData(data);
   // const testingAdds = ["0xb762c2bdea9ea8ecc641ad40c3e38ad7031be31e", "0x80075c04f21f8c0ae2e7261a443dd4a57c3f07d0"];
