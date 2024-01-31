@@ -254,9 +254,9 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
             <li className={`tab ${openMenu === tabs.heartsPokerGame ? 'active' : ''} my-1`}>
               <span onClick={handleBtnClick(tabs.heartsPokerGame)}>Hearts Game</span>
             </li>
-            {/*<li className={`tab ${openMenu === tabs.spadesPokerGame ? 'active' : ''} my-1`}>*/}
-            {/*  <span onClick={handleBtnClick(tabs.spadesPokerGame)}>Spades Game</span>*/}
-            {/*</li>*/}
+            <li className={`tab ${openMenu === tabs.spadesPokerGame ? 'active' : ''} my-1`}>
+              <span onClick={handleBtnClick(tabs.spadesPokerGame)}>Spades Game</span>
+            </li>
             </>
           )}
           </ul>
