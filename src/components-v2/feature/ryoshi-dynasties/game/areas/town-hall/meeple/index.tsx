@@ -189,7 +189,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
           <FaqPage />
         ) : (
           <RdModalBody>
-            { isFetchingWallet || isLoadingWallet ? (
+            { isLoadingWallet ? (
               <Center>
                 <Spinner />
               </Center>
