@@ -25514,6 +25514,53 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Top Dog Corgi",
+      "slug": "top-dog-corgi",
+      "multiToken": false,
+      "address": "0x7e378f70816a41c396f19cf9cbebe26ea8c00023",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Top Dog Corgi is our first-ever NFT collection to debut on the Cre8r. This project consists of 2,000 limited-edition Corgis painted comic-style. Top Dog Corgi aims to offer users exclusive and early access to try out our Cre8r tool.",
+        "avatar": "/img/collections/top-dog-corgi/avatar.webp",
+        "banner": "/img/collections/top-dog-corgi/banner.webp",
+        "card": "/img/collections/top-dog-corgi/card.webp",
+        "website": "https://corgiai.xyz/",
+        "twitter": "https://www.twitter.com/corgiaiclub",
+        "discord": "https://discord.gg/HrrmmdAytu",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Boomer Squad - Arcade Game Pass",
+      "slug": "boomer-squad-arcade-game-pass",
+      "multiToken": false,
+      "address": "0x0E0C964a06712F3436128CA7Bc1E2232447bd7D4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Introducing Boomer Squad's Arcade Game Pass! As a top NFT project on Cronos, we're expanding our gaming ecosystem. This pass unlocks game tokens, in-game currency, permanent wallet benefits for our upcoming arcade and existing games, and merch redeemables! Come get a taste of our world affordably, without the full ecosystem commitment and see what Boomer Squad is all about.",
+        "avatar": "/img/collections/boomer-squad-arcade-game-pass/avatar.webp",
+        "banner": "/img/collections/boomer-squad-arcade-game-pass/banner.webp",
+        "card": "/img/collections/boomer-squad-arcade-game-pass/card.webp",
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomer-squad-nft-939820143486320650",
+        "medium": "https://medium.com/@BoomerSquadNFT",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": "ebisu",
+        "verified": true
+      }
     }
   ],
   "drops": [
