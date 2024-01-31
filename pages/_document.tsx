@@ -43,9 +43,12 @@ export default function Document() {
         />
       </Head>
       <body>
-        <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
-        <Main />
-        <NextScript />
+        <div id="initialLoader">
+          <div className="loader"></div>
+        </div>
+        <ColorModeScript initialColorMode={customTheme.config.initialColorMode}/>
+        <Main/>
+        <NextScript/>
         <statusiq-status-widget src="https://status.ebisusbay.com" widget-type="sticky" widget-position="bottom-left"></statusiq-status-widget>
       </body>
     </Html>
