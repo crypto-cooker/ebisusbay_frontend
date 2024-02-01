@@ -103,7 +103,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
     if (drop.memberMitama) {
       if (fundingType === FundingType.REWARDS) {
-        return ethers.utils.parseEther(drop.rewardCost?.toString() ?? '0');
+        return ethers.utils.parseEther(drop.rewardCost?.toString() ?? '5000');
       }
       const bankContract = await new ethers.Contract(config.contracts.bank, Bank, readProvider);
       const mitamaAmount = await bankContract.getMitamaFor(user.address);
