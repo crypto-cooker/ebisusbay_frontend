@@ -23,6 +23,7 @@ import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/f
 import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
 import {MerchantItem} from "@src/core/services/api-service/cms/response-types";
 import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
+import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
 
 export interface Api {
     getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>>;
@@ -78,6 +79,7 @@ export interface RyoshiDynastiesApi {
     getFaction(id: number, address: string, signature: string): Promise<any>;
     getMerchantItems(): Promise<MerchantItem[]>;
     requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string): Promise<any>;
+    attack(request: AttackRequest, address: string, signature: string): Promise<any>;
 }
 
 export enum ListingState {

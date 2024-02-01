@@ -21,6 +21,7 @@ import {FactionUpdateRequest, factionUpdateRequestSchema} from "@src/core/servic
 import {DeployTroopsRequest, deployTroopsRequestSchema} from "@src/core/services/api-service/cms/queries/deploy";
 import {MerchantItem, MerchantPurchaseRequestResponse} from "@src/core/services/api-service/cms/response-types";
 import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
+import {AttackRequest, attackRequestSchema} from "@src/core/services/api-service/cms/queries/attack";
 
 class RyoshiDynastiesRepository extends CmsRepository {
 
@@ -459,6 +460,30 @@ class RyoshiDynastiesRepository extends CmsRepository {
     );
 
     return response.data.data as MerchantPurchaseRequestResponse;
+  }
+
+  async attack(request: AttackRequest, address: string, signature: string) {
+    await attackRequestSchema.validate(request);
+
+    const response = await this.cms.post(
+      'ryoshi-dynasties/battle-transactions',
+      {
+        troops: request.troops,
+        controlPointId: request.controlPointId,
+        factionId: request.factionId,
+        defendingFactionId: request.defendingFactionId,
+        battleType: request.battleType,
+        role: request.role
+      },
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+
+    return response.data.data;
   }
 }
 
