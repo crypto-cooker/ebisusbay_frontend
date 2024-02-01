@@ -46,6 +46,8 @@ import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnfor
 import {useUser} from "@src/components-v2/useUser";
 import {RdModalBody, RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {ApiService} from "@src/core/services/api-service";
+import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
+import * as Sentry from "@sentry/nextjs";
 
 interface AttackerFaction {
   name: string;
@@ -182,10 +184,6 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
 
       const controlPointId = controlPoint.id;
 
-      // console.log("controlPointId", controlPointId);
-      // console.log("attackerFactionId", attackerFactionId + " " + dataForm.attackersFaction);
-      // console.log("defenderFactionId", defenderFactionId + " " + dataForm.defenderFaction);
-      // console.log("attackerTroops", attackerTroops);
       setExecutingLabel('Attacking...');
       const data = await ApiService.withoutKey().ryoshiDynasties.attack({
         troops: Number(attackerTroops),
@@ -195,8 +193,6 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
         battleType: selectedAttackTypeId,
         role: selectedAttacker!.role === 'officer' ? 'officer' : undefined
       }, user.address, signature);
-      console.log('OK DATA', data);
-      // setAttackId(data.data.data.attackId);
 
       const timestamp = Number(data.timestampInSeconds);
       const attacker = data.attacker;
@@ -204,33 +200,44 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
       const troops = Number(data.troops);
       const sig = data.signature;
 
-      var attackTuple = {timestamp: timestamp,
-                        attacker: attacker,
-                        attackId: attackId,
-                        quantity: troops,
-                        battleType: selectedAttackTypeId};
+      var attackPayload = {
+        timestamp: timestamp,
+        attacker: attacker,
+        attackId: attackId,
+        quantity: troops,
+        battleType: selectedAttackTypeId
+      };
 
-      // console.log("attackTuple", attackTuple);
-      // console.log("sig", sig);
-
-      const attackContract = new Contract(config.contracts.battleField, Battlefield, user.provider.getSigner());
-      const tx = await attackContract.attackFaction(attackTuple, sig);
-      setIsWaitingForResult(true);
+      const attackContract = new Contract(config.contracts.battleField, Battlefield, user.provider.signer);
+      await attackContract.attackFaction(attackPayload, sig);
+      toast.success('Battle initiated! Waiting on result');
+      beginWaitingForResult();
     } catch (error: any) {
       console.log(error);
+      Sentry.captureException(error);
       toast.error(parseErrorMessage(error));
     } finally {
       setIsExecuting(false);
     }
   }
 
+  const beginWaitingForResult = () => {
+    setIsWaitingForResult(true);
+    setSocketAttempts(0);
+  }
+
   const [socketAttempts, setSocketAttempts] = useState(0);
+
   useInterval(() => {
     if (socketAttempts > 10) {
+      setIsWaitingForResult(false);
       return;
     }
     if (isWaitingForResult) {
       setSocketAttempts(socketAttempts + 1);
+    } else {
+      setIsWaitingForResult(false);
+      setSocketAttempts(0);
     }
   }, 1000);
 
@@ -305,9 +312,8 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
     setKoban(Number(ethers.utils.hexValue(BigNumber.from(tx))));
   }
 
-  const displayConclusionCallback = () => {
+  const toggleBattleConclusion = () => {
     setDisplayConclusion(!displayConclusion);
-    console.log("displayConclusion", displayConclusion)
   }
   
   useEffect(() => {
@@ -324,23 +330,21 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
 
     function onConnect() {
       setIsSocketConnected(true);
-      // console.log('connected')
     }
 
     function onDisconnect() {
       setIsSocketConnected(false);
-      // console.log('disconnected')
     }
 
     function onBattleAttackEvent(data:any) {
-      console.log('BATTLE_ATTACK', data)
+      // console.log('BATTLE_ATTACK', data)
       const parsedAttack = JSON.parse(data);
       // console.log('parsedAtack', parsedAtack)
       if (parsedAttack && parsedAttack.success) {
         setBattleAttack(parsedAttack);
         setIsExecuting(false);
         setIsWaitingForResult(false);
-        displayConclusionCallback();
+        toggleBattleConclusion();
       } else {
         toast.error('Unable to process attack. Please try again later.');
       }
@@ -360,21 +364,18 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
   return (
     <Box>
       {!!user.address ? (
-        <>
+        <RdModalBody>
           {displayConclusion && !!selectedAttacker && !!selectedDefender ? (
             <BattleConclusion
+              attacker={selectedAttacker}
               attackerTroops={attackerTroops}
-              defenderTroops={selectedDefender.totalTroops}
+              defender={selectedDefender}
               battleAttack={battleAttack}
-              displayConclusionCallback={displayConclusionCallback}
-              CheckForKoban={retrieveKobanBalance}
-              attackerImage={selectedAttacker.image}
-              defenderImage={selectedDefender.image}
-              attackersFaction={selectedAttacker.name}
-              defendersFaction={selectedDefender.name}
+              onAttackAgain={toggleBattleConclusion}
+              onRetrieveKobanBalance={retrieveKobanBalance}
             />
           ) : (
-            <RdModalBody>
+            <>
               <Box textAlign='center' fontSize='sm'>
                 Faction owners can use deployed troops to attack other factions
               </Box>
@@ -524,21 +525,22 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
                 </HStack>
               </Center>
               <Flex alignContent={'center'} justifyContent={'center'}>
-                <Box
-                  ps='20px'>
-                  <RdButton
-                    minW='200px'
-                    size={{base: 'md', sm: 'lg'}}
-                    stickyIcon={true}
-                    onClick={handleAttack}
-                    isLoading={isExecuting}
-                    disabled={isExecuting}
-                    marginTop='2'
-                    marginBottom='2'
-                    loadingText={executingLabel}
-                  >
-                    {user.address ? 'Attack' : 'Connect'}
-                  </RdButton>
+                <Box ps='20px'>
+                  <AuthenticationRdButton>
+                    <RdButton
+                      minW='200px'
+                      size={{base: 'md', sm: 'lg'}}
+                      stickyIcon={true}
+                      onClick={handleAttack}
+                      isLoading={isExecuting || isWaitingForResult}
+                      isDisabled={isExecuting || isWaitingForResult}
+                      marginTop='2'
+                      marginBottom='2'
+                      loadingText={executingLabel}
+                    >
+                      {user.address ? 'Attack' : 'Connect'}
+                    </RdButton>
+                  </AuthenticationRdButton>
                 </Box>
               </Flex>
 
@@ -547,9 +549,9 @@ const AttackTab = ({controlPoint, refreshControlPoint, skirmishPrice, conquestPr
                   <Text fontSize={'12px'}>Your $Koban: {koban}</Text>
                 </Flex>
               </Center>
-            </RdModalBody>
+            </>
           )}
-        </>
+        </RdModalBody>
       ) : (
         <Box textAlign='center' pt={8} pb={4} px={2}>
           <Box ps='20px'>
