@@ -161,12 +161,12 @@ export function humanizeAdvanced(s) {
   const words = spacedString.split(/[\s\-_]/);
 
   // Capitalize first letter of each word and make rest lowercase
-  const formattedWords = words.map(word => capitalizeFirstLetter(word).toLowerCase());
+  const formattedWords = words.map(word => capitalizeFirstLetter(word));
 
   return formattedWords.join(' ').trim();
 }
 
-export const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+export const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
 
 /**
