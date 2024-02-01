@@ -25561,6 +25561,27 @@
         "kyc": "ebisu",
         "verified": true
       }
+    },
+    {
+      "name": "Pixel Ebisu",
+      "slug": "pixel-ebisu",
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/collections/pixel-ebisu/avatar.webp",
+        "banner": "/img/collections/pixel-ebisu/banner.webp",
+        "card": "/img/collections/pixel-ebisu/card.webp",
+        "discord": "https://discord.gg/dripcro-com-1003477871664320525",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -33058,7 +33079,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "images": {
         "drop": "/img/drops/ryoshi-spades/drop.webp",
@@ -33070,6 +33091,96 @@
         "verified": true,
         "doxx": false,
         "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 191,
+      "slug": "ryoshi-tales-wooden-wyrm-welcoming",
+      "collection": "ryoshi-tales",
+      "title": "Ryoshi Tales: Wooden Wyrm Welcoming",
+      "subtitle": "",
+      "description": "",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay"
+      },
+      "address": "",
+      "maxMintPerTx": 25,
+      "maxMintPerAddress": 40,
+      "totalSupply": 300,
+      "supplyOffset": 700,
+      "erc20Cost": "500",
+      "erc20MemberCost": "450",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "rewardCost": "600",
+      "memberMitama": 1000,
+      "foundersOnly": false,
+      "abi": "mint-from-rewards.json",
+      "start": 1707508800000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": false,
+      "complete": false,
+      "featured": true,
+      "images": {
+        "drop": "/img/drops/ryoshi-tales-wooden-wyrm-welcoming/drop.webp",
+        "avatar": "/img/collections/ryoshi-tales/avatar2.webp",
+        "banner": "/img/drops/ryoshi-tales-wooden-wyrm-welcoming/banner.webp",
+        "preview": "/img/drops/ryoshi-tales-wooden-wyrm-welcoming/preview.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true,
+        "escrow": false
+      }
+    },
+    {
+      "id": 192,
+      "slug": "pixel-ebisu",
+      "title": "Pixel Ebisu",
+      "subtitle": "",
+      "description": "",
+      "author": {
+        "name": "ShadowBright",
+        "discord": "https://discord.gg/dripcro-com-1003477871664320525"
+      },
+      "address": "",
+      "maxMintPerTx": 1,
+      "maxMintPerAddress": 1,
+      "totalSupply": 420,
+      "erc20Cost": "100",
+      "erc20MemberCost": "50",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "memberMitama": 1000,
+      "foundersOnly": false,
+      "abi": "mint-from-rewards.json",
+      "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": false,
+      "complete": false,
+      "featured": false,
+      "images": {
+        "drop": "/img/drops/pixel-ebisu/drop.webp",
+        "avatar": "/img/collections/pixel-ebisu/avatar.webp",
+        "banner": "/img/collections/pixel-ebisu/banner.webp",
+        "preview": "/img/collections/pixel-ebisu/card.webp"
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false,
         "escrow": false
       }
     }
