@@ -274,7 +274,7 @@ const FeaturedDrops = () => {
                               </>
                             ) : (
                               <>
-                                {drop.collection === 'ryoshi-playing-cards' && !!drop.erc20MemberCost && !!drop.erc20Token ?
+                                {drop.memberMitama && !!drop.erc20MemberCost && !!drop.erc20Token ?
                                   <span className="d-title">Mitama Price</span> :
                                   <span className="d-title">Mint Price</span>
                                 }
@@ -292,7 +292,7 @@ const FeaturedDrops = () => {
                                       ) : (
                                         <Heading as="h3" size="md">{ethers.utils.commify(drop.cost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
                                       ))}
-                                    {drop.collection === 'ryoshi-playing-cards' && !!drop.erc20MemberCost && !!drop.erc20Token ? (
+                                    {drop.memberMitama && !!drop.erc20MemberCost && !!drop.erc20Token ? (
                                       <HStack mt={2} mb={4}>
                                         {drop.erc20Token === 'frtn' ? <FortuneIcon boxSize={10} /> : <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />}
                                         <Text fontSize="4xl" fontWeight="bold" lineHeight={1}>
@@ -350,7 +350,7 @@ const FeaturedDrops = () => {
                                   </HStack>
                                 )}
 
-                                {drop.collection === 'ryoshi-playing-cards' && !!drop.erc20Cost && !!drop.erc20Token ? (
+                                {drop.memberMitama && !!drop.erc20Cost && !!drop.erc20Token ? (
                                   <HStack mt={2}>
                                     <Text fontSize="md" fontWeight="bold" lineHeight={1} className="ms-0" >
                                       Regular Price: {ethers.utils.commify(drop.erc20Cost)} {tokens[drop.erc20Token].symbol}
