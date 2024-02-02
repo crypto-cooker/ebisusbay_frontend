@@ -66,7 +66,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
   const [mobileMultiSelectMode, setMobileMultiSelectMode] = useState(false);
 
   const [cancelDialogNft, setCancelDialogNft] = useState<any>(null);
-  const [createListingNft, setCreateListingNft] = useState<any>(null);
+  const [updateListingNft, setUpdateListingNft] = useState<any>(null);
 
   const fetcher = async ({ pageParam = 1 }) => {
     const listings = await nextApiService.getUserUnfilteredListings(walletAddress, {
@@ -271,7 +271,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
                   if (!!collection) {
                     nft = {...listing.nft, multiToken: collection.multiToken};
                   }
-                  setCreateListingNft(nft);
+                  setUpdateListingNft({...listing, nft});
                 }}
                 onCancel={(listing) => {
                   setCancelDialogNft(listing);
@@ -291,12 +291,12 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
           onClose={() => setCancelDialogNft(null)}
         />
       )}
-      {!!createListingNft && (
+      {!!updateListingNft && (
         <CreateListingDialog
-          isOpen={!!createListingNft}
-          nft={createListingNft}
-          onClose={() => setCreateListingNft(null)}
-          listing={null}
+          isOpen={!!updateListingNft}
+          nft={updateListingNft.nft}
+          onClose={() => setUpdateListingNft(null)}
+          listing={updateListingNft}
         />
       )}
       <BatchPreview

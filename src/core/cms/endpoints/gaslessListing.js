@@ -22,7 +22,27 @@ export const cancelListing = async (listingIds) => {
   try {
     const response = await api.delete('gasless-listing', {
       params: {
-        listingIds
+        listingIds,
+        express: false
+      }
+    });
+
+    return response.data;
+  } catch (e) {
+    console.log('error', e);
+    throw e;
+
+  }
+}
+
+export const expressCancelListing = async (listingIds, address, signature) => {
+  try {
+    const response = await api.delete('gasless-listing/express-cancel', {
+      params: {
+        listingIds,
+        express: true,
+        address,
+        signature
       }
     });
 

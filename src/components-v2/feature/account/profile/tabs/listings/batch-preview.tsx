@@ -1,5 +1,5 @@
 import {useCallback, useContext, useState} from "react";
-import {Box, Button, Flex, HStack, Slide, Text} from "@chakra-ui/react";
+import {Alert, AlertIcon, Box, Button, Flex, HStack, Slide, Stack, Text} from "@chakra-ui/react";
 import {isGaslessListing, pluralize} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
@@ -10,7 +10,8 @@ import {
   MultiSelectContextProps
 } from "@src/components-v2/feature/account/profile/tabs/listings/context";
 import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useCancelGaslessListing";
-import {useContractService, useUser} from "@src/components-v2/useUser";
+import {useContractService} from "@src/components-v2/useUser";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 interface BatchPreviewProps {
   mutationKey: any;
@@ -19,11 +20,13 @@ interface BatchPreviewProps {
 const BatchPreview = ({mutationKey}: BatchPreviewProps) => {
   const sliderBackground = useColorModeValue('gray.50', 'gray.700')
   const [executingCancel, setIsExecutingCancel] = useState(false);
-  const user = useUser();
+  const [executingExpressCancel, setIsExecutingExpressCancel] = useState(false);
+
   const contractService = useContractService();
   const queryClient = useQueryClient();
   const { selected: listings, setSelected } = useContext(MultiSelectContext) as MultiSelectContextProps;
   const [cancelGaslessListing, response] = useCancelGaslessListing();
+  const [showExpressCancelConfirmation, setShowExpressCancelConfirmation] = useState(false);
 
   const handleCancel = useCallback(async () => {
     try {
@@ -38,7 +41,7 @@ const BatchPreview = ({mutationKey}: BatchPreviewProps) => {
       }
 
       if (cancelIds.gasless.length > 0){
-        await cancelGaslessListing(cancelIds.gasless);
+        await cancelGaslessListing(cancelIds.gasless, false);
       }
 
       if (cancelIds.legacy.length > 0 && !!contractService) {
@@ -47,46 +50,115 @@ const BatchPreview = ({mutationKey}: BatchPreviewProps) => {
       }
 
       toast.success('Listings have been cancelled');
-      await queryClient.invalidateQueries({queryKey: mutationKey})
+      await queryClient.invalidateQueries({queryKey: mutationKey});
+      handleClearAll();
     } catch (error: any) {
       console.log(error);
-      if (error.data) {
-        toast.error(error.data.message);
-      } else if (error.message) {
-        toast.error(error.message);
-      } else {
-        toast.error('Unknown Error');
-      }
+      toast.error(parseErrorMessage(error));
     } finally {
       setIsExecutingCancel(false);
     }
   }, [listings]);
 
-  const handleClearAll = useCallback(() => {
+  const handleExpressCancel = async () => {
+    try {
+      setIsExecutingExpressCancel(true);
+
+      const gaslessListingIds = listings
+          .filter((listing: any) => isGaslessListing(listing.listingId))
+          .map((listing: any) => listing.listingId);
+
+      if (gaslessListingIds.length < 1) {
+        toast.error('No gasless listings to cancel');
+        return;
+      }
+
+      await cancelGaslessListing(gaslessListingIds, true);
+
+      toast.success('Listings have been cancelled');
+      handleClearAll();
+      await queryClient.invalidateQueries({queryKey: mutationKey});
+    } catch (error: any) {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    } finally {
+      setIsExecutingExpressCancel(false);
+    }
+  }
+
+  const handleClearAll = () => {
     setIsExecutingCancel(false);
     setSelected([]);
-  }, []);
+    setIsExecutingExpressCancel(false);
+    setShowExpressCancelConfirmation(false);
+  }
 
   return (
     <>
       <Slide direction='bottom' in={listings.length > 0} style={{ zIndex: 10 }}>
         <Box p={3} backgroundColor={sliderBackground} borderTop='1px solid white'>
-          <Flex justify="space-between">
-            <Text fontSize="14px" my="auto" fontWeight="bold">
+          <Flex direction={{base:'column', sm: showExpressCancelConfirmation ? 'column' : 'row', md: 'row'}} justify="space-between" align={{base: 'start', sm: showExpressCancelConfirmation ? 'start' : 'center', md: 'center'}}>
+            <Text
+              fontSize="sm"
+              fontWeight="bold"
+              mb={{base: 2, sm: showExpressCancelConfirmation ? 2 : 0, md: 0}}
+              w='140px'
+            >
               {listings.length} {pluralize(listings.length, 'listing')} selected
             </Text>
-            <Box my="auto">
-              <HStack>
-                <Button variant='ghost' onClick={handleClearAll}>
-                  Clear all
-                </Button>
-                <PrimaryButton
-                  onClick={handleCancel}
-                  isLoading={executingCancel}
-                >
-                  Cancel
-                </PrimaryButton>
-              </HStack>
+            <Box w='full'>
+              {showExpressCancelConfirmation ? (
+                <Stack direction={{base: 'column', md: 'row'}}>
+                  <Alert status='warning'>
+                    <AlertIcon />
+                    <Box textAlign={{base: 'start', lg: 'end'}} w='full'>
+                      Express cancel is gasless for all non-legacy listings. However, there is small risk of sales still completing while gasless cancel is in progress. Confirm?
+                    </Box>
+                  </Alert>
+
+                  <HStack justify='end'>
+                    {!executingExpressCancel && (
+                      <Button variant='ghost' onClick={() => setShowExpressCancelConfirmation(false)}>
+                        Go Back
+                      </Button>
+                    )}
+                    <PrimaryButton
+                      onClick={handleExpressCancel}
+                      isLoading={executingExpressCancel}
+                      isDisabled={executingExpressCancel}
+                      loadingText='Express Cancel'
+                    >
+                      Confirm
+                    </PrimaryButton>
+                  </HStack>
+                </Stack>
+              ) : (
+                <HStack justify='end'>
+                  <Button variant='ghost' onClick={handleClearAll}>
+                    Clear all
+                  </Button>
+                  {!executingExpressCancel && (
+                    <PrimaryButton
+                      onClick={handleCancel}
+                      isLoading={executingCancel || executingExpressCancel}
+                      isDisabled={executingCancel || executingExpressCancel}
+                      loadingText='Cancel'
+                    >
+                      Cancel
+                    </PrimaryButton>
+                  )}
+                  {!executingCancel && (
+                    <PrimaryButton
+                      onClick={() => setShowExpressCancelConfirmation(true)}
+                      isLoading={executingExpressCancel || executingCancel}
+                      isDisabled={executingExpressCancel || executingCancel}
+                      loadingText='Express Cancel'
+                    >
+                      Express Cancel
+                    </PrimaryButton>
+                  )}
+                </HStack>
+              )}
             </Box>
           </Flex>
         </Box>

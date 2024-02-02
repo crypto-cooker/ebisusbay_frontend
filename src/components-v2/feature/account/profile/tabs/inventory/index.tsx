@@ -445,7 +445,7 @@ export default function Inventory({ address }: InventoryProps) {
           isOpen={!!createListingNft}
           nft={createListingNft}
           onClose={() => setCreateListingNft(null)}
-          listing={null}
+          listing={createListingNft.listingId ? {listingId: createListingNft.listingId} : null}
         />
       )}
       {useMobileMenu && (

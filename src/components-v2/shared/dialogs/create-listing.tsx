@@ -6,7 +6,14 @@ import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {ERC721} from "@src/Contracts/Abis";
-import {ciEquals, createSuccessfulTransactionToastContent, isBundle, round, usdFormat} from "@src/utils";
+import {
+  ciEquals,
+  createSuccessfulTransactionToastContent,
+  isBundle,
+  isGaslessListing,
+  round,
+  usdFormat
+} from "@src/utils";
 import {appConfig} from "@src/Config";
 import {useWindowSize} from "@src/hooks/useWindowSize";
 import {collectionRoyaltyPercent} from "@src/core/chain";
@@ -19,7 +26,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  HStack,
+  HStack, IconButton,
   Input,
   InputGroup,
   Modal,
@@ -28,10 +35,10 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
+  ModalOverlay, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger,
   Select,
   Spinner,
-  Stack,
+  Stack, Switch,
   Tag,
   Text,
   useNumberInput
@@ -47,6 +54,7 @@ import ReactSelect from "react-select";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
+import {QuestionOutlineIcon} from "@chakra-ui/icons";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -119,7 +127,6 @@ interface MakeGaslessListingDialogProps {
 }
 
 export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing }: MakeGaslessListingDialogProps) {
-
   // Input states
   const [salePrice, setSalePrice] = useState<number>();
   const [expirationDate, setExpirationDate] = useState({ type: 'dropdown', value: new Date().getTime() + 2592000000 });
@@ -142,6 +149,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const [showConfirmButton, setShowConfirmButton] = useState(false);
   const [allowedCurrencies, setAllowedCurrencies] = useState<string[]>([]);
   const [selectedCurrency, setSelectedCurrency] = useState<any>();
+  const [expressCancel, setExpressCancel] = useState(false);
 
   const windowSize = useWindowSize();
 
@@ -204,7 +212,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       const nftAddress = nft.address ?? nft.nftAddress;
       const nftId = nft.id ?? nft.nftId;
       const marketContractAddress = config.contracts.market;
-      setSalePrice(listing ? Math.round(listing.price) : undefined)
+      setSalePrice(listing && listing.price ? Math.round(listing.price) : undefined)
 
       const collectionInfo = await getCollectionMetadata(nftAddress);
       if (collectionInfo.collections.length > 0) {
@@ -288,7 +296,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         is1155: nft.multiToken,
         currencySymbol: selectedCurrency.symbol,
         listingId: listing?.listingId,
-      });
+      }, expressCancel);
       toast.success("Listing Successful");
 
       setExecutingCreateListing(false);
@@ -541,10 +549,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                         )}
                       </Flex>
 
-                      <FormControl
-                        maxW='188px'
-                        className="form-field mb-3"
-                      >
+                      <FormControl maxW='188px' className="form-field mb-2">
                         <FormLabel w='full' className="formLabel">Expiration Date</FormLabel>
                         <Box style={{ display: 'flex', gap: '8px' }}>
                           <Select
@@ -557,7 +562,32 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                           </Select>
                         </Box>
                       </FormControl>
+
+                      {listing && isGaslessListing(listing.listingId) && (
+                        <FormControl>
+                          <Flex justify='space-between' align='center'>
+                            <FormLabel className='formLabel' mb={0}>
+                              <HStack align='center' spacing={0}>
+                                <Box pt={1}>Express Cancel</Box>
+                                <Popover>
+                                  <PopoverTrigger>
+                                    <IconButton aria-label='Express Mode Help' icon={<QuestionOutlineIcon />} variant='unstyled'/>
+                                  </PopoverTrigger>
+                                  <PopoverContent>
+                                    <PopoverArrow />
+                                    <PopoverBody>
+                                      Express cancel is gasless for all non-legacy listings. However, there is small risk of sales still completing while gasless cancel is in progress.
+                                    </PopoverBody>
+                                  </PopoverContent>
+                                </Popover>
+                              </HStack>
+                            </FormLabel>
+                            <Switch id='debug-legacy-toggle' isChecked={expressCancel} onChange={() => setExpressCancel(!expressCancel)} />
+                          </Flex>
+                        </FormControl>
+                      )}
                     </Box>
+                    <Box py={4}><hr /></Box>
                     <Box>
                       <Flex justify='space-between'>
                         <Box as='span'>Total Listing Price: </Box>
