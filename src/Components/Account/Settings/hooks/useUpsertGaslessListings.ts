@@ -1,13 +1,14 @@
 import {useState} from 'react';
 
 import useCreateListingSigner, {ListingSignerProps} from '../../../../hooks/useCreateListingSigner';
-import {cancelListing, upsertListing} from '@src/core/cms/endpoints/gaslessListing';
+import {cancelListing, expressCancelListing, upsertListing} from '@src/core/cms/endpoints/gaslessListing';
 import UUID from "uuid-int";
 import {ciEquals, isGaslessListing} from "@src/utils";
 import NextApiService from "@src/core/services/api-service/next";
 import {getItemType} from "@src/helpers/chain";
 import {appConfig} from "@src/Config";
 import {useContractService, useUser} from "@src/components-v2/useUser";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 const generator = UUID(0);
 const config = appConfig();
@@ -35,11 +36,12 @@ const useUpsertGaslessListings = () => {
   });
 
   const [_, createListingSigner] = useCreateListingSigner();
+  const { requestSignature } = useEnforceSignature();
 
   const user = useUser();
   const contractService = useContractService();
 
-  const upsertGaslessListings = async (pendingListings: PendingListing[] | PendingListing) => {
+  const upsertGaslessListings = async (pendingListings: PendingListing[] | PendingListing, expressCancel: boolean = false) => {
     if (!Array.isArray(pendingListings)) pendingListings = [pendingListings];
 
     setResponse({
@@ -77,10 +79,15 @@ const useUpsertGaslessListings = () => {
 
     // Cancel the old gasless
     if (cancelIds.gasless.length > 0) {
-      const { data: orders } = await cancelListing(cancelIds.gasless);
-      const ship = contractService!.ship;
-      const tx = await ship.cancelOrders(orders);
-      await tx.wait()
+      if (expressCancel) {
+        const signature = await requestSignature();
+        await expressCancelListing(cancelIds.gasless, user.address, signature);
+      } else {
+        const { data: orders } = await cancelListing(cancelIds.gasless);
+        const ship = contractService!.ship;
+        const tx = await ship.cancelOrders(orders);
+        await tx.wait()
+      }
     }
 
     try {

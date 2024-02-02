@@ -88,7 +88,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       }
       else{
-        await cancelGaslessListing(listing.listingId)
+        await cancelGaslessListing(listing.listingId, false)
       }
     } catch (error: any) {
       if (error.data) {

@@ -11,7 +11,7 @@ const MyNftCancelDialog = ({ isOpen, listing, onClose }) => {
 
   const handleCancelGaslessListing = async () => {
     try {
-      await cancelGaslessListing(listing.listingId);
+      await cancelGaslessListing(listing.listingId, false);
       toast.success('Canceled successfully');
       onClose();
     } catch(error) {
