@@ -470,7 +470,7 @@ const MultiDrop = () => {
             <div className="d-item col-sm-4 mb-4 px-2">
               <MultiDropCard
                 title={'Aqua Clan'}
-                img={'/img/drops/cronosmb/gorilla/aqua.png'}
+                img={'https://cdn-prod.ebisusbay.com/files/drop-images/cronosmb/gorilla/aqua.png'}
                 currentSupply={
                   factionCurrentSupply.aquaSupplyRemaining
                     ? 1700 - factionCurrentSupply.aquaSupplyRemaining.toNumber()
@@ -485,7 +485,7 @@ const MultiDrop = () => {
             <div className="d-item col-sm-4 mb-4 px-2">
               <MultiDropCard
                 title={'Ignis Gang'}
-                img={'/img/drops/cronosmb/gorilla/fire.png'}
+                img={'https://cdn-prod.ebisusbay.com/files/drop-images/cronosmb/gorilla/fire.png'}
                 currentSupply={
                   factionCurrentSupply.ignisSupplyRemaining
                     ? 1700 - factionCurrentSupply.ignisSupplyRemaining.toNumber()
@@ -500,7 +500,7 @@ const MultiDrop = () => {
             <div className="d-item col-sm-4 mb-4 px-2">
               <MultiDropCard
                 title={'Terra Crew'}
-                img={'/img/drops/cronosmb/gorilla/desert.png'}
+                img={'https://cdn-prod.ebisusbay.com/files/drop-images/cronosmb/gorilla/desert.png'}
                 currentSupply={
                   factionCurrentSupply.terraSupplyRemaining
                     ? 1700 - factionCurrentSupply.terraSupplyRemaining.toNumber()

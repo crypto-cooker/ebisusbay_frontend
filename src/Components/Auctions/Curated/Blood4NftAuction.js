@@ -6,7 +6,7 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 const Blood4NftAuction = () => {
   const name = 'Blood 4 NFT Auction';
   const description = 'Blood 4 NFT is a collection of whimsical blood vials to motivate the blood donors community with the power of the NFT.';
-  const image = '/img/collections/blood-nft/banner.jpg';
+  const image = 'https://cdn-prod.ebisusbay.com/files/collection-images/blood-nft/banner.jpg';
 
   return (
     <>

@@ -352,7 +352,7 @@ const LandDrop = ({drop}: LandDropProps) => {
                   <Box as='section'  id="drop_detail" className="gl-legacy container no-top">
                     <SimpleGrid columns={{base: 1, md: 2}} gap={4}>
                       <Flex justify='center'>
-                        <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/land-beach.webp').custom({width: 400})} w='400px' objectFit='contain' />
+                        <Image src={ImageService.translate('https://cdn-prod.ebisusbay.com/files/drop-images/izanamis-cradle-land-deeds/land-beach.webp').custom({width: 400})} w='400px' objectFit='contain' />
                       </Flex>
                       <Box textAlign={{base: 'center', md: 'end'}}>
                         <Heading mb={4}>Unique & Rare Land Tiles</Heading>
@@ -369,7 +369,7 @@ const LandDrop = ({drop}: LandDropProps) => {
                         <Text fontSize='lg'>Become a stalwart landowner and harvest an array of precious resources. From rare minerals to magical herbs, every land is teeming with resources ready for you to discover and utilize. Use these resources to develop your land, upgrade your buildings for more powerful bonuses and strengthen your faction.</Text>
                       </Box>
                       <Flex justify='center'>
-                        <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/land-resources.webp').custom({width: 400})} w='400px' objectFit='contain' />
+                        <Image src={ImageService.translate('https://cdn-prod.ebisusbay.com/files/drop-images/izanamis-cradle-land-deeds/land-resources.webp').custom({width: 400})} w='400px' objectFit='contain' />
                       </Flex>
                     </SimpleGrid>
                   </Box>
@@ -378,7 +378,7 @@ const LandDrop = ({drop}: LandDropProps) => {
                   <Box as='section'  id="drop_detail" className="gl-legacy container no-top">
                     <SimpleGrid columns={{base: 1, md: 2}} gap={4}>
                       <Flex justify='center'>
-                        <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/land-boss.webp').custom({width: 400})} w='400px' objectFit='contain' />
+                        <Image src={ImageService.translate('https://cdn-prod.ebisusbay.com/files/drop-images/izanamis-cradle-land-deeds/land-boss.webp').custom({width: 400})} w='400px' objectFit='contain' />
                       </Flex>
                       <Box textAlign={{base: 'center', md: 'end'}}>
                         <Heading mb={4}>Powerful Raid Bosses & Quests</Heading>
@@ -395,8 +395,8 @@ const LandDrop = ({drop}: LandDropProps) => {
                         <Text fontSize='lg'>The land of Izanami's Cradle is littered with ancient relics and artifacts, buried weapons of unimaginable power. Invest time in exploration and unearthing these artifacts to augment your prowess and secure your position in Ryoshi Dynasties.</Text>
                       </Box>
                       <Stack justify='center' direction={{base: 'column', lg: 'row'}} spacing={8} alignItems='center'>
-                        <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/land-weapons.webp').custom({width: 300})} w='300px' objectFit='contain' />
-                        <Image src={ImageService.translate('/img/drops/izanamis-cradle-land-deeds/land-artifacts.webp').custom({width: 300})} w='300px' objectFit='contain' />
+                        <Image src={ImageService.translate('https://cdn-prod.ebisusbay.com/files/drop-images/izanamis-cradle-land-deeds/land-weapons.webp').custom({width: 300})} w='300px' objectFit='contain' />
+                        <Image src={ImageService.translate('https://cdn-prod.ebisusbay.com/files/drop-images/izanamis-cradle-land-deeds/land-artifacts.webp').custom({width: 300})} w='300px' objectFit='contain' />
                       </Stack>
                     </SimpleGrid>
                   </Box>
