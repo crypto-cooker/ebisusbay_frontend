@@ -100,7 +100,7 @@ const ListingCollection = ({
                     listing={listing}
                     imgClass="marketplace"
                     watermark={
-                      isMetapixelsCollection(listing.nftAddress) ? '/img/collections/metapixels/avatar.png' : null
+                      isMetapixelsCollection(listing.nftAddress) ? 'https://cdn-prod.ebisusbay.com/files/collection-images/metapixels/avatar.png' : null
                     }
                   />
                 ) : (
@@ -108,7 +108,7 @@ const ListingCollection = ({
                     listing={listing}
                     imgClass="marketplace"
                     watermark={
-                      isMetapixelsCollection(listing.nftAddress) ? '/img/collections/metapixels/avatar.png' : null
+                      isMetapixelsCollection(listing.nftAddress) ? 'https://cdn-prod.ebisusbay.com/files/collection-images/metapixels/avatar.png' : null
                     }
                   />
                 )}
@@ -129,7 +129,7 @@ const ListingCollection = ({
                     listing={listing}
                     imgClass="marketplace"
                     watermark={
-                      isMetapixelsCollection(listing.nftAddress) ? '/img/collections/metapixels/avatar.png' : null
+                      isMetapixelsCollection(listing.nftAddress) ? 'https://cdn-prod.ebisusbay.com/files/collection-images/metapixels/avatar.png' : null
                     }
                   />
                 ) : (
@@ -137,7 +137,7 @@ const ListingCollection = ({
                     listing={listing}
                     imgClass="marketplace"
                     watermark={
-                      isMetapixelsCollection(listing.nftAddress) ? '/img/collections/metapixels/avatar.png' : null
+                      isMetapixelsCollection(listing.nftAddress) ? 'https://cdn-prod.ebisusbay.com/files/collection-images/metapixels/avatar.png' : null
                     }
                   />
                 )}

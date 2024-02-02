@@ -226,7 +226,7 @@ export const getServerSideProps = async ({ query }: GetServerSidePropsContext) =
     if ((time as string).startsWith('bc-')) {
       pageHead.title = 'Bored Candy Volume Competition';
       pageHead.description = 'Daily prizes up for grabs for the top Bored Candy buyers and sellers! Competition runs from Nov 1st - 15th.';
-      pageHead.image = hostedImage('/img/collections/bored-candy/card.webp')
+      pageHead.image = hostedImage('https://cdn-prod.ebisusbay.com/files/collection-images/bored-candy/card.webp')
     }
   }
 

@@ -6,7 +6,7 @@ import PreviewCard from '@src/components-v2/shared/preview-card';
 import {appConfig} from "@src/Config";
 
 const drops = appConfig('drops');
-const defaultCardImage = '/img/collections/default/card.jpg';
+const defaultCardImage = 'https://cdn-prod.ebisusbay.com/files/collection-images/default/card.jpg';
 
 const PastDrops = () => {
   const dispatch = useDispatch();

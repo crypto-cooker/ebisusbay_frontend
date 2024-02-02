@@ -75,7 +75,7 @@ const UpcomingDrops = () => {
             key={index}
             index={index + 1}
             avatar={drop.images.avatar}
-            banner={drop.slug === 'izanamis-cradle-land-deeds' ? '/img/collections/izanamis-cradle-land-deeds/card-animated.webp' : drop.images.preview}
+            banner={drop.slug === 'izanamis-cradle-land-deeds' ? 'https://cdn-prod.ebisusbay.com/files/collection-images/izanamis-cradle-land-deeds/card-animated.webp' : drop.images.preview}
             title={drop.title}
             subtitle={`${drop.start ? new Date(drop.start).toDateString() : 'TBA'}`}
             collectionId={drop.slug}

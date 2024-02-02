@@ -152,9 +152,9 @@
       },
       "author": "Time Machine",
       "images": {
-        "drop": "/img/drops/time-machine-spaceships/drop.webp",
-        "avatar": "/img/collections/time-machine-spaceships/avatar.webp",
-        "preview": "/img/collections/time-machine-spaceships/card.webp"
+        "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/time-machine-spaceships/drop.webp",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-spaceships/avatar.webp",
+        "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-spaceships/card.webp"
       },
       "socials": {
         "website": "https://time-launcher.com/",
