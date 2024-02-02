@@ -432,9 +432,11 @@ export default SingleDrop;
 
 const Container = styled.div`
   p {
-      margin-top: 10px;
+      margin-bottom: 15px;
   }
-  
+  ul {
+      margin-bottom: 15px;
+  }
   li {
     margin-left: 18px;
   }
