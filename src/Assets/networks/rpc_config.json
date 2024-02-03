@@ -25610,6 +25610,28 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Blockchain Banditz Cowboyz",
+      "slug": "blockchain-banditz-cowboyz",
+      "multiToken": false,
+      "address": "0xddea51dd8649e0605770348ceb417c64c1b350c7",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "5000 wild and unpredictable Cowboy Banditz have made their way onto the blockchain and ready to cauase some chaos. Although it isn't all bad these Cowboyz will come jam packed with utility.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/blockchain-banditz-cowboyz/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/blockchain-banditz-cowboyz/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/blockchain-banditz-cowboyz/card.webp",
+        "twitter": "https://twitter.com/Blockchnbanditz",
+        "discord": "https://discord.gg/Cm4ZGC7jCc",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
