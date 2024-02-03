@@ -3,16 +3,15 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {Box, Center, Spinner, Text, useBreakpointValue} from "@chakra-ui/react";
 import NextApiService from "@src/core/services/api-service/next";
-import {useAppSelector} from "@src/Store/hooks";
 import {OfferState, ReceivedOfferType} from "@src/core/services/api-service/types";
 import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 import ReceivedOffersFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/offers/received-offers/received-offers-filter-container";
 import ResponsiveReceivedOffersTable from "@src/components-v2/shared/responsive-table/responsive-received-offers-table";
 import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
-import AcceptOfferDialog from "@src/Components/Offer/Dialogs/AcceptOfferDialog";
-import {RejectOfferDialog} from "@src/Components/Offer/Dialogs/RejectOfferDialog";
+import {ResponsiveAcceptOfferDialog} from "@src/components-v2/shared/dialogs/accept-offer";
 import {useUser} from "@src/components-v2/useUser";
+import {ResponsiveRejectOfferDialog} from "@src/components-v2/shared/dialogs/reject-offer";
 
 interface MadeOffersProps {
   address: string;
@@ -142,19 +141,19 @@ export default function MadeOffers({ address, filtersVisible, setFiltersVisible,
       </ReceivedOffersFilterContainer>
 
       {offerAction === OFFER_TYPE.accept && !!selectedOffer && (
-        <AcceptOfferDialog
+        <ResponsiveAcceptOfferDialog
           isOpen={!!offerAction}
           onClose={handleCloseDialog}
-          collection={selectedOffer.collectionData}
+          collection={selectedOffer.collectionData || selectedOffer.collection}
           isCollectionOffer={!selectedOffer.nftId}
           offer={selectedOffer}
         />
       )}
       {offerAction === OFFER_TYPE.reject && !!selectedOffer && (
-        <RejectOfferDialog
+        <ResponsiveRejectOfferDialog
           isOpen={!!offerAction}
           onClose={handleCloseDialog}
-          collection={selectedOffer.collectionData}
+          collection={selectedOffer.collectionData || selectedOffer.collection}
           isCollectionOffer={!selectedOffer.nftId}
           offer={selectedOffer}
         />
