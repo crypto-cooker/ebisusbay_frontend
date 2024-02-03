@@ -65,7 +65,7 @@ const DialogContent = ({isOpen, onClose, listing, listingId, DialogBody, DialogF
   const [secureCancel, setSecureCancel] = useState(false);
   const [targetListing, setTargetListing] = useState<any>();
 
-  const { error, data: nft, status } = useQuery({
+  const { error, data: nft, isError, isLoading } = useQuery({
     queryKey: ['CancelListing', user.address, (listing ? listing.listingId : listingId)],
     queryFn: async () => {
       const response = await ApiService.withoutKey().getUserUnfilteredListings(user.address!, {
@@ -132,13 +132,13 @@ const DialogContent = ({isOpen, onClose, listing, listingId, DialogBody, DialogF
 
   return (
     <>
-      {status === 'pending' ? (
+      {isLoading ? (
         <Flex h='200px' justify='center'>
           <Center>
             <Spinner />
           </Center>
         </Flex>
-      ) : status === "error" ? (
+      ) : isError ? (
         <Box textAlign='center'>Error: {error.message}</Box>
       ) : !!targetListing && (
         <>
