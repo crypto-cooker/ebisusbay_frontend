@@ -41,7 +41,7 @@ const useUpsertGaslessListings = () => {
   const user = useUser();
   const contractService = useContractService();
 
-  const upsertGaslessListings = async (pendingListings: PendingListing[] | PendingListing, expressCancel: boolean = false) => {
+  const upsertGaslessListings = async (pendingListings: PendingListing[] | PendingListing, secureCancel: boolean = false) => {
     if (!Array.isArray(pendingListings)) pendingListings = [pendingListings];
 
     setResponse({
@@ -79,14 +79,14 @@ const useUpsertGaslessListings = () => {
 
     // Cancel the old gasless
     if (cancelIds.gasless.length > 0) {
-      if (expressCancel) {
-        const signature = await requestSignature();
-        await expressCancelListing(cancelIds.gasless, user.address, signature);
-      } else {
+      if (secureCancel) {
         const { data: orders } = await cancelListing(cancelIds.gasless);
         const ship = contractService!.ship;
         const tx = await ship.cancelOrders(orders);
-        await tx.wait()
+        await tx.wait();
+      } else {
+        const signature = await requestSignature();
+        await expressCancelListing(cancelIds.gasless, user.address, signature);
       }
     }
 

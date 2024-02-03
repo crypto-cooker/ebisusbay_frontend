@@ -287,7 +287,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
       {!!cancelDialogNft && (
         <ResponsiveCancelListingDialog
           isOpen={!!cancelDialogNft}
-          listingId={cancelDialogNft.listingId}
+          listing={cancelDialogNft}
           onClose={() => setCancelDialogNft(null)}
         />
       )}

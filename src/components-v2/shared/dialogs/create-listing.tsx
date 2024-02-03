@@ -149,7 +149,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const [showConfirmButton, setShowConfirmButton] = useState(false);
   const [allowedCurrencies, setAllowedCurrencies] = useState<string[]>([]);
   const [selectedCurrency, setSelectedCurrency] = useState<any>();
-  const [expressCancel, setExpressCancel] = useState(false);
+  const [secureCancel, setSecureCancel] = useState(false);
 
   const windowSize = useWindowSize();
 
@@ -296,7 +296,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         is1155: nft.multiToken,
         currencySymbol: selectedCurrency.symbol,
         listingId: listing?.listingId,
-      }, expressCancel);
+      }, secureCancel);
       toast.success("Listing Successful");
 
       setExecutingCreateListing(false);
@@ -568,21 +568,21 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                           <Flex justify='space-between' align='center'>
                             <FormLabel className='formLabel' mb={0}>
                               <HStack align='center' spacing={0}>
-                                <Box pt={1}>Express Cancel</Box>
+                                <Box pt={1}>Secure Cancel</Box>
                                 <Popover>
                                   <PopoverTrigger>
                                     <IconButton aria-label='Express Mode Help' icon={<QuestionOutlineIcon />} variant='unstyled'/>
                                   </PopoverTrigger>
                                   <PopoverContent>
                                     <PopoverArrow />
-                                    <PopoverBody>
-                                      Express cancel is gasless for all non-legacy listings. However, there is small risk of sales still completing while gasless cancel is in progress.
+                                    <PopoverBody fontWeight='normal'>
+                                      When updating a listing, the old listing will first be cancelled. By default, this is gasless. Secure cancel will guarantee on chain that this item will not be sold while the listing update is in progress.
                                     </PopoverBody>
                                   </PopoverContent>
                                 </Popover>
                               </HStack>
                             </FormLabel>
-                            <Switch id='debug-legacy-toggle' isChecked={expressCancel} onChange={() => setExpressCancel(!expressCancel)} />
+                            <Switch id='debug-legacy-toggle' isChecked={secureCancel} onChange={() => setSecureCancel(!secureCancel)} />
                           </Flex>
                         </FormControl>
                       )}
