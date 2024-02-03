@@ -24,7 +24,6 @@ import {
   Text,
   useBreakpointValue
 } from "@chakra-ui/react";
-import MyNftCancelDialog from '@src/Components/components/MyNftCancelDialog';
 import ListingsFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/listings/listings-filter-container";
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
@@ -38,6 +37,7 @@ import useDebounce from "@src/core/hooks/useDebounce";
 import BatchPreview from "@src/components-v2/feature/account/profile/tabs/listings/batch-preview";
 import {MultiSelectContext} from './context';
 import {useUser} from "@src/components-v2/useUser";
+import {ResponsiveCancelListingDialog} from "@src/components-v2/shared/dialogs/cancel-listing";
 
 interface UserPrivateListingsProps {
   walletAddress: string
@@ -285,9 +285,9 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
       </Box>
 
       {!!cancelDialogNft && (
-        <MyNftCancelDialog
+        <ResponsiveCancelListingDialog
           isOpen={!!cancelDialogNft}
-          listing={cancelDialogNft}
+          listingId={cancelDialogNft.listingId}
           onClose={() => setCancelDialogNft(null)}
         />
       )}

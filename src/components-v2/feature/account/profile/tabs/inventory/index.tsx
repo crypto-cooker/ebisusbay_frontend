@@ -10,7 +10,7 @@ import {
   isVaultCollection
 } from "@src/utils";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
-import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
+import {ResponsiveCancelListingDialog} from "@src/components-v2/shared/dialogs/cancel-listing";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listing";
@@ -427,9 +427,9 @@ export default function Inventory({ address }: InventoryProps) {
       />
 
       {!!cancelDialogNft && (
-        <MyNftCancelDialog
+        <ResponsiveCancelListingDialog
           isOpen={!!cancelDialogNft}
-          listing={cancelDialogNft}
+          listingId={cancelDialogNft.listingId}
           onClose={() => setCancelDialogNft(null)}
         />
       )}
