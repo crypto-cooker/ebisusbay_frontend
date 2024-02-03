@@ -25583,6 +25583,33 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "Zoomer Squad - Playground Game Tokens: Season 3",
+      "slug": "zoomer-squad-playground-tokens-s3",
+      "multiToken": false,
+      "address": "0xcef21f5B89a7A25eac8E005cA25E2CCAecD4dD03",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Playground Season 3 Game Tokens for brought to you by Boomer Squad",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/zoomer-squad-playground-tokens-s1/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/zoomer-squad-playground-tokens-s1/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/zoomer-squad-playground-tokens-s1/card.webp",
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomer-squad-nft-939820143486320650",
+        "medium": "https://medium.com/@BoomerSquadNFT",
+        "categories": [
+          "collectibles",
+          "gaming"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
