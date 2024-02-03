@@ -9,7 +9,7 @@ import ReceivedOffersFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/offers/received-offers/received-offers-filter-container";
 import ResponsiveReceivedOffersTable from "@src/components-v2/shared/responsive-table/responsive-received-offers-table";
 import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
-import AcceptOfferDialog from "@src/Components/Offer/Dialogs/AcceptOfferDialog";
+import {ResponsiveAcceptOfferDialog} from "@src/components-v2/shared/dialogs/accept-offer";
 import {useUser} from "@src/components-v2/useUser";
 import {ResponsiveRejectOfferDialog} from "@src/components-v2/shared/dialogs/reject-offer";
 
@@ -141,10 +141,10 @@ export default function MadeOffers({ address, filtersVisible, setFiltersVisible,
       </ReceivedOffersFilterContainer>
 
       {offerAction === OFFER_TYPE.accept && !!selectedOffer && (
-        <AcceptOfferDialog
+        <ResponsiveAcceptOfferDialog
           isOpen={!!offerAction}
           onClose={handleCloseDialog}
-          collection={selectedOffer.collectionData}
+          collection={selectedOffer.collectionData || selectedOffer.collection}
           isCollectionOffer={!selectedOffer.nftId}
           offer={selectedOffer}
         />
@@ -153,7 +153,7 @@ export default function MadeOffers({ address, filtersVisible, setFiltersVisible,
         <ResponsiveRejectOfferDialog
           isOpen={!!offerAction}
           onClose={handleCloseDialog}
-          collection={selectedOffer.collectionData}
+          collection={selectedOffer.collectionData || selectedOffer.collection}
           isCollectionOffer={!selectedOffer.nftId}
           offer={selectedOffer}
         />

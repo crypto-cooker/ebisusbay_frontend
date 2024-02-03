@@ -15,10 +15,10 @@ import {
   Switch,
   Text
 } from "@chakra-ui/react";
-import {useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
+import {ResponsiveDialogComponents, useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useCancelGaslessListing";
-import React, {ComponentType, ReactNode, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {toast} from "react-toastify";
@@ -28,19 +28,14 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {ethers} from "ethers";
-import Button from "@src/Components/components/Button";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 type CancelListingDialogProps = {
   isOpen: boolean;
   onClose: () => void;
   listing?: any;
   listingId?: string;
-}
-
-type DialogComponents = {
-  DialogBody: ComponentType<BoxProps & { children: ReactNode }>;
-  DialogFooter: ComponentType<BoxProps & { children: ReactNode }>;
 }
 
 export const ResponsiveCancelListingDialog = ({ isOpen, listing, listingId, onClose, ...props }: CancelListingDialogProps & BoxProps) => {
@@ -61,7 +56,7 @@ export const ResponsiveCancelListingDialog = ({ isOpen, listing, listingId, onCl
   );
 };
 
-const DialogContent = ({isOpen, onClose, listing, listingId, DialogBody, DialogFooter}: DialogComponents & CancelListingDialogProps) => {
+const DialogContent = ({isOpen, onClose, listing, listingId, DialogBody, DialogFooter}: ResponsiveDialogComponents & CancelListingDialogProps) => {
   const contractService = useContractService();
   const [cancelGaslessListing, response] = useCancelGaslessListing();
   const user = useUser();
@@ -148,7 +143,7 @@ const DialogContent = ({isOpen, onClose, listing, listingId, DialogBody, DialogF
       ) : !!targetListing && (
         <>
           <DialogBody>
-            <Stack direction={{base: 'row', sm: 'row'}} spacing={4}>
+            <Stack direction='row' spacing={4}>
               <Box w={{base: '30%', sm: 'full'}}>
                 <AnyMedia
                   image={specialImageTransform(targetListing.nftAddress, targetListing.nft.image)}
@@ -204,20 +199,20 @@ const DialogContent = ({isOpen, onClose, listing, listingId, DialogBody, DialogF
           <DialogFooter className="border-0">
             <Box w='full'>
               {isExecutingLegacyCancel && (
-                <Box mb={2} textAlign='center' className="mb-2 text-center fst-italic">
+                <Box mb={2} textAlign='center'>
                   <Text as='i' fontSize='sm'>Please check your wallet for confirmation</Text>
                 </Box>
               )}
               <Flex>
-                <Button
-                  type="legacy"
+                <PrimaryButton
                   onClick={handleCancelListing}
                   isLoading={isExecutingCancel || isExecutingLegacyCancel}
                   isDisabled={isExecutingCancel || isExecutingLegacyCancel}
                   className="flex-fill"
+                  loadingText='Configm'
                 >
                   Confirm
-                </Button>
+                </PrimaryButton>
               </Flex>
             </Box>
           </DialogFooter>

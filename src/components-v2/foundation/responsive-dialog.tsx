@@ -1,4 +1,5 @@
 import {
+  BoxProps,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -15,9 +16,14 @@ import {
   ModalOverlay,
   useBreakpointValue
 } from "@chakra-ui/react";
-import React, {ReactNode} from "react";
+import React, {ComponentType, ReactNode} from "react";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/Theme/theme";
+
+export type ResponsiveDialogComponents = {
+  DialogBody: ComponentType<BoxProps & { children: ReactNode }>;
+  DialogFooter: ComponentType<BoxProps & { children: ReactNode }>;
+}
 
 type DialogProps = {
   isOpen: boolean;

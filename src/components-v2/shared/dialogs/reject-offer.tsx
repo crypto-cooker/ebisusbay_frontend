@@ -1,9 +1,8 @@
-import React, {ComponentType, ReactNode, useState} from "react";
+import React, {useState} from "react";
 import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
-import Button from "@src/Components/components/Button";
 import {specialImageTransform} from "@src/hacks";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
@@ -13,8 +12,9 @@ import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {useQuery} from "@tanstack/react-query";
 import {useContractService, useUser} from "@src/components-v2/useUser";
-import {useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
+import {ResponsiveDialogComponents, useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 type RejectOfferDialogProps = {
   isOpen: boolean;
@@ -22,16 +22,9 @@ type RejectOfferDialogProps = {
   collection: any;
   isCollectionOffer: boolean;
   offer: any;
-  listing?: any;
-  listingId?: string;
 }
 
-type DialogComponents = {
-  DialogBody: ComponentType<BoxProps & { children: ReactNode }>;
-  DialogFooter: ComponentType<BoxProps & { children: ReactNode }>;
-}
-
-export const ResponsiveRejectOfferDialog = ({ isOpen, listing, listingId, onClose, ...props }: RejectOfferDialogProps & BoxProps) => {
+export const ResponsiveRejectOfferDialog = ({ isOpen, collection, isCollectionOffer, offer, onClose, ...props }: RejectOfferDialogProps & BoxProps) => {
   const { DialogComponent, DialogBody, DialogFooter } = useResponsiveDialog();
 
   return (
@@ -39,8 +32,9 @@ export const ResponsiveRejectOfferDialog = ({ isOpen, listing, listingId, onClos
       <DialogContent
         isOpen={isOpen}
         onClose={onClose}
-        listing={listing}
-        listingId={listingId}
+        collection={collection}
+        isCollectionOffer={isCollectionOffer}
+        offer={offer}
         DialogBody={DialogBody}
         DialogFooter={DialogFooter}
         {...props}
@@ -48,7 +42,8 @@ export const ResponsiveRejectOfferDialog = ({ isOpen, listing, listingId, onClos
     </DialogComponent>
   );
 };
-const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, DialogBody, DialogFooter}: DialogComponents & RejectOfferDialogProps) => {
+
+const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, DialogBody, DialogFooter}: ResponsiveDialogComponents & RejectOfferDialogProps) => {
   const contractService = useContractService();
   const [executingRejectOffer, setExecutingRejectOffer] = useState(false);
   const user = useUser();
@@ -103,7 +98,7 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
       ) : (
         <>
           <DialogBody>
-            <Stack direction={{base: 'row', sm: 'row'}} spacing={4}>
+            <Stack direction='row' spacing={4}>
               <Box w={{base: '30%', sm: 'full'}}>
                 {isCollectionOffer ? (
                   <div className="profile_avatar d-flex justify-content-center mb-2">
@@ -152,20 +147,20 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
           <DialogFooter className="border-0">
             <Box w='full'>
               {executingRejectOffer && (
-                <Box mb={2} textAlign='center' className="mb-2 text-center fst-italic">
+                <Box mb={2} textAlign='center'>
                   <Text as='i' fontSize='sm'>Please check your wallet for confirmation</Text>
                 </Box>
               )}
               <Flex>
-                <Button
-                  type="legacy"
+                <PrimaryButton
                   onClick={handleRejectOffer}
                   isLoading={executingRejectOffer}
                   isDisabled={executingRejectOffer}
                   className="flex-fill"
+                  loadingText="Confirm"
                 >
                   Confirm
-                </Button>
+                </PrimaryButton>
               </Flex>
             </Box>
           </DialogFooter>
