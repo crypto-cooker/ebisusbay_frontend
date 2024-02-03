@@ -119,7 +119,14 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     const currentExp = rdUserContext.experience.points;
     const xpLevel = getXpLevel(currentExp);
     const currentLevelStart = xpLevelTiers[xpLevel].min;
-    const currentLevelEnd = xpLevelTiers[xpLevel + 1].min;
+    const nextLevel = xpLevelTiers[xpLevel + 1];
+    if (!nextLevel) {
+      setLevelProgressString('Max Level');
+      setPlayerLevel(rdUserContext.experience.level);
+      setCurrentLevelProgress(100);
+      return;
+    }
+    const currentLevelEnd = nextLevel.min;
     const currentLevelProgress = (currentExp - currentLevelStart) / (currentLevelEnd - currentLevelStart);
 
     setLevelProgressString(round(currentExp - currentLevelStart, 1) +"/" +(currentLevelEnd - currentLevelStart));
