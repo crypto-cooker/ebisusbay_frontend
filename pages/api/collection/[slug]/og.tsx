@@ -28,9 +28,9 @@ const collections = appConfig('collections');
 const getBanner = (collection: any) => {
   let banner = defaultBanner;
   if (!!collection.metadata.card) {
-    banner = urlify(appConfig('urls.app'), collection.metadata.card);
+    banner = collection.metadata.card.startsWith('http') ? collection.metadata.card : urlify(appConfig('urls.app'), collection.metadata.card);
   } else if (!!collection.metadata.banner) {
-    banner = urlify(appConfig('urls.app'), collection.metadata.banner);
+    banner = collection.metadata.banner.startsWith('http') ? collection.metadata.banner : urlify(appConfig('urls.app'), collection.metadata.banner);
   }
 
   return banner;
@@ -71,7 +71,12 @@ export default async function handler(req: NextRequest) {
   }
 
   const banner = await base64Image(getBanner(collection));
-  const avatar = !!collection.metadata.avatar ? await base64Image(urlify(appConfig('urls.app'), collection.metadata.avatar)) : null;
+  let avatarSource = collection.metadata?.avatar;
+  if (!avatarSource && avatarSource.startsWith('http')) {
+    avatarSource = urlify(appConfig('urls.app'), collection.metadata.avatar)
+  }
+
+  const avatar = avatarSource ? await base64Image(avatarSource) : null;
 
   try {
     const data = await fetch(
