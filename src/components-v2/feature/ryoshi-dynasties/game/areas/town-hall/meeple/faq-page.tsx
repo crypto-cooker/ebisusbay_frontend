@@ -27,7 +27,7 @@ const FaqPage = () => {
     <Stack spacing={3} className={gothamBook.className} fontSize={{ base: 'xs', md: 'sm' }}>
 
       <Box p={4}>
-      <Text>Ryoshi are your fearless troops! Your ability to amass Ryoshi warriors is tied to your account level and the NFT power-ups you've unlocked along the way. Time to level up and equip those power-ups to assemble the mightiest Ryoshi army the Cronos Chain has ever seen! </Text>
+        <Text>Ryoshi are your fearless troops! Your ability to amass Ryoshi warriors is tied to your account level and the NFT power-ups you've unlocked along the way. Time to level up and equip those power-ups to assemble the mightiest Ryoshi army the Cronos Chain has ever seen! </Text>
         <Accordion fontSize='sm' mt={4}>
 
           <AccordionItem>
