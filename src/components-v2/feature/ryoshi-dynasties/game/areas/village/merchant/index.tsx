@@ -7,7 +7,7 @@ import {
   FormControl,
   FormLabel,
   GridItem,
-  HStack,
+  HStack, Icon,
   IconButton,
   Image,
   Select,
@@ -35,6 +35,8 @@ import {constants, Contract} from "ethers";
 import Resources from "@src/Contracts/Resources.json";
 import {appConfig} from "@src/Config";
 import Fortune from "@src/Contracts/Fortune.json";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
 
 const config = appConfig();
 
@@ -259,56 +261,64 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
           )}
         </RdModalBox>
         {!!selectedItem && (
-          <SimpleGrid columns={{base: 1, md: 2}} gap={2} mt={2}>
-            <RdModalBox>
-              <FormControl>
-                <FormLabel fontWeight='bold'>
-                  Available {selectedItem.name} Packs
-                </FormLabel>
+          <>
+            <SimpleGrid columns={{base: 1, md: 2}} gap={2} mt={2}>
+              <RdModalBox>
+                <FormControl>
+                  <FormLabel fontWeight='bold'>
+                    Available {selectedItem.name} Packs
+                  </FormLabel>
 
-                <Box>
-                  {selectedItem.packs.length > 0 ? (
-                    <Select
-                      onChange={handleSelectPack}
-                      value={selectedPack?.id}
-                    >
-                      {selectedItem.packs.filter((pack) => pack.available > 0).map((pack) => (
-                        <option value={pack.id}>{commify(pack.itemsPerPack)} ({commify(pack.price)} FRTN)</option>
-                      ))}
-                    </Select>
-                  ) : (
-                    <Text>No packs currently available</Text>
-                  )}
-                </Box>
-              </FormControl>
-            </RdModalBox>
-            <RdModalBox>
-              <Flex justify='end' h='full' align='end'>
-                <SimpleGrid columns={2} gridTemplateColumns="100px 1fr">
-                  <GridItem ><Box textAlign={{base: 'start', sm: 'end'}}>FRTN Price:</Box></GridItem>
-                  <GridItem>
-                    <Box textAlign='end'>
+                  <Box>
+                    {selectedItem.packs.length > 0 ? (
+                      <Select
+                        onChange={handleSelectPack}
+                        value={selectedPack?.id}
+                      >
+                        {selectedItem.packs.filter((pack) => pack.available > 0).map((pack) => (
+                          <option value={pack.id}>{commify(pack.itemsPerPack)} ({commify(pack.price)} FRTN)</option>
+                        ))}
+                      </Select>
+                    ) : (
+                      <Text>No packs currently available</Text>
+                    )}
+                  </Box>
+                </FormControl>
+              </RdModalBox>
+              <RdModalBox>
+                <Flex justify='end' h='full' align='end'>
+                  <SimpleGrid columns={2} gridTemplateColumns="100px 1fr">
+                    <GridItem ><Box textAlign={{base: 'start', sm: 'end'}}>FRTN Price:</Box></GridItem>
+                    <GridItem>
+                      <Box textAlign='end'>
+                        {!!selectedPack && (
+                          <HStack justify='end' spacing={1} ps={2}>
+                            <FortuneIcon boxSize={5} />
+                            <Text fontWeight='bold'>{commify(selectedPack.price)}</Text>
+                          </HStack>
+                        )}
+                      </Box>
+                    </GridItem>
+                    <GridItem alignSelf='end'><Box textAlign={{base: 'start', sm: 'end'}} fontSize='xl'>Receive:</Box></GridItem>
+                    <GridItem alignSelf='end'>
                       {!!selectedPack && (
-                        <HStack justify='end' spacing={1} ps={2}>
-                          <FortuneIcon boxSize={5} />
-                          <Text fontWeight='bold'>{commify(selectedPack.price)}</Text>
+                        <HStack justify='end' fontSize='2xl' fontWeight='bold' spacing={1} ps={2}>
+                          <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/>
+                          <Text fontWeight='bold'>{commify(selectedPack.itemsPerPack)}</Text>
                         </HStack>
                       )}
-                    </Box>
-                  </GridItem>
-                  <GridItem alignSelf='end'><Box textAlign={{base: 'start', sm: 'end'}} fontSize='xl'>Receive:</Box></GridItem>
-                  <GridItem alignSelf='end'>
-                    {!!selectedPack && (
-                      <HStack justify='end' fontSize='2xl' fontWeight='bold' spacing={1} ps={2}>
-                        <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/>
-                        <Text fontWeight='bold'>{commify(selectedPack.itemsPerPack)}</Text>
-                      </HStack>
-                    )}
-                  </GridItem>
-                </SimpleGrid>
-              </Flex>
-            </RdModalBox>
-          </SimpleGrid>
+                    </GridItem>
+                  </SimpleGrid>
+                </Flex>
+              </RdModalBox>
+            </SimpleGrid>
+            <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={2}>
+              <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
+              <Text fontSize='14' color='#333' fontWeight='bold'>
+                Limited to 1 purchase per 5 minutes
+              </Text>
+            </Stack>
+          </>
         )}
         {hasAnythingAvailable && (
           <AuthenticationRdButton
