@@ -25632,6 +25632,31 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "YUROSAKO",
+      "slug": "yurosako",
+      "multiToken": false,
+      "address": "0xa4cbC591c6D20a1B5CE35e52779191F4A35d62D1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the main YUROSAKO collection that includes 3,939 PFPs characters with over 300 traits. Some of\nthese characters are legendaries and very rare and high collectibles, among which includes only one\nYurosako without mask and unique.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/yurosako/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/yurosako/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/yurosako/banner.webp",
+        "website": "https://yurosako.com/",
+        "twitter": "https://twitter.com/yurosako",
+        "discord": "https://discord.gg/yurosako",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [

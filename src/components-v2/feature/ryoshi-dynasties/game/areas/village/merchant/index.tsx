@@ -7,11 +7,13 @@ import {
   FormControl,
   FormLabel,
   GridItem,
-  HStack, Icon,
+  HStack,
+  Icon,
   IconButton,
   Image,
   Select,
-  SimpleGrid, Skeleton,
+  SimpleGrid,
+  Skeleton,
   Stack,
   Text
 } from "@chakra-ui/react";
