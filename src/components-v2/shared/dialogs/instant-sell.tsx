@@ -1,9 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {specialImageTransform} from "@src/hacks";
-import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {Contract, ethers} from "ethers";
-import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import {ERC721} from "@src/Contracts/Abis";
 import {createSuccessfulTransactionToastContent, isBundle, isNftBlacklisted} from "@src/utils";
@@ -13,45 +11,37 @@ import {getTheme} from "@src/Theme/theme";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {Box, BoxProps, Center, Flex, Spinner, Stack, Text, useBreakpointValue} from "@chakra-ui/react";
 import {commify} from "ethers/lib/utils";
-import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
-import {useQuery} from "@tanstack/react-query";
-import {getNft} from "@src/core/api/endpoints/nft";
+import {getCollectionMetadata} from "@src/core/api";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import NextApiService from "@src/core/services/api-service/next";
+import {ApiService} from "@src/core/services/api-service";
+import {OfferState, ReceivedOfferType} from "@src/core/services/api-service/types";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {ResponsiveDialogComponents, useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import WalletNft from "@src/core/models/wallet-nft";
+import {Offer} from "@src/core/models/offer";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 
 const config = appConfig();
 const floorThreshold = 5;
 
-type AcceptOfferDialogProps = {
+type InstantSellDialogProps = {
   isOpen: boolean;
   onClose: () => void;
   collection: any;
-  isCollectionOffer: boolean;
-  offer: any;
 }
 
-export const ResponsiveAcceptOfferDialog = ({ isOpen, collection, isCollectionOffer, offer, onClose, ...props }: AcceptOfferDialogProps & BoxProps) => {
+export const ResponsiveInstantSellDialog = ({ isOpen, onClose, collection, ...props }: InstantSellDialogProps & BoxProps) => {
   const { DialogComponent, DialogBody, DialogFooter } = useResponsiveDialog();
 
-  const title = () => {
-    if (isCollectionOffer) return `Accept Collection Offer`;
-    return `Accept Offer`;
-  }
-
   return (
-    <DialogComponent isOpen={isOpen} onClose={onClose} title={title()} {...props}>
+    <DialogComponent isOpen={isOpen} onClose={onClose} title='Sell Instantly' {...props}>
       <DialogContent
         isOpen={isOpen}
         onClose={onClose}
         collection={collection}
-        isCollectionOffer={isCollectionOffer}
-        offer={offer}
         DialogBody={DialogBody}
         DialogFooter={DialogFooter}
         {...props}
@@ -60,8 +50,10 @@ export const ResponsiveAcceptOfferDialog = ({ isOpen, collection, isCollectionOf
   );
 };
 
-const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, DialogBody, DialogFooter}: ResponsiveDialogComponents & AcceptOfferDialogProps) => {
+const DialogContent = ({isOpen, onClose, collection, DialogBody, DialogFooter}: ResponsiveDialogComponents & InstantSellDialogProps) => {
 
+  const [error, setError] = useState<string>();
+  const [offer, setOffer] = useState<Offer>();
   const [salePrice, setSalePrice] = useState<number>();
   const [floorPrice, setFloorPrice] = useState(0);
   const [fee, setFee] = useState(0);
@@ -97,55 +89,55 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
     }
   };
 
-  const fetchNft = async () => {
-    if (isCollectionOffer) return null;
-
-    const tmpNft = await getNft(offer.nftAddress, offer.nftId);
-    return tmpNft.nft;
-  }
-
-  const { error, data: nft, status } = useQuery({
-    queryKey: ['AcceptOffer', user.address, offer.nftAddress, offer.nftId],
-    queryFn: fetchNft,
-    enabled: user.wallet.isConnected && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
-    refetchOnWindowFocus: false
-  });
-
   useEffect(() => {
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (contractService) {
+    if (user.wallet.isConnected && contractService) {
       asyncFunc();
     }
-  }, [nft, contractService]);
+  }, [user.wallet.isConnected, contractService]);
 
   const getInitialProps = async () => {
     try {
       setIsLoading(true);
-      const nftAddress = offer.nftAddress;
       const marketContractAddress = config.contracts.market;
       const marketContract = contractService!.market;
-      setSalePrice(offer ? Math.round(offer.price) : undefined)
 
-      const floorPrice = await getCollectionMetadata(nftAddress);
+      const walletNfts = await NextApiService.getWallet(user.address!, {pageSize: 100, collection:collection.address, sortBy: 'rank', direction: 'desc'});
+      setCollectionNfts(walletNfts.data.filter((nft) => !isNftBlacklisted(nft.nftAddress, nft.nftId)));
+
+      const offers = await ApiService.withoutKey().getReceivedOffersByUser(user.address!, {
+        collection: [collection.address],
+        state: OfferState.ACTIVE,
+        sortBy: 'price',
+        direction: 'desc',
+        type: ReceivedOfferType.ERC721,
+        offertype: 'collection',
+      });
+      if (offers.data.length < 1) {
+        setError('No offers were found on this collection');
+        return;
+      }
+      if (walletNfts.data.length < 1) {
+        setError('You do not have any NFTs from this collection');
+        return;
+      }
+
+      const floorPrice = await getCollectionMetadata(collection.address);
       if (floorPrice.collections.length > 0) {
         setFloorPrice(floorPrice.collections[0].floorPrice ?? 0);
       }
 
-      if (isCollectionOffer) {
-        const walletNfts = await NextApiService.getWallet(user.address!, {pageSize: 100, collection:collection.address, sortBy: 'rank', direction: 'desc'});
-        setCollectionNfts(walletNfts.data.filter((nft) => !isNftBlacklisted(nft.nftAddress, nft.nftId)));
-        await chooseCollectionNft(walletNfts.data[0])
-      } else {
-        const royalties = await collectionRoyaltyPercent(nftAddress, offer.nftId);
-        setRoyalty(royalties);
-      }
+      const highestOffer = offers.data.sort((a, b) => parseInt(a.price) < parseInt(b.price) ? 1 : -1)[0];
+      setOffer(highestOffer);
+      setSalePrice(Math.round(Number(highestOffer.price)))
+      await chooseCollectionNft(walletNfts.data[0])
 
       const fees = await marketContract.fee(user.address);
       setFee((fees / 10000) * 100);
 
-      const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
+      const contract = new Contract(collection.address, ERC721, user.provider.getSigner());
       const transferEnabled = await contract.isApprovedForAll(user.address, marketContractAddress);
 
       if (transferEnabled) {
@@ -153,19 +145,19 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
       } else {
         setIsTransferApproved(false);
       }
-
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
       toast.error(parseErrorMessage(error));
+      setError('Unknown error. Please refresh and try again');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleApproval = async () => {
     try {
-      const nftAddress = collection.address;
       const marketContractAddress = config.contracts.market;
-      const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
+      const contract = new Contract(collection.address, ERC721, user.provider.getSigner());
       setExecutingApproval(true);
       const tx = await contract.setApprovalForAll(marketContractAddress, true);
       let receipt = await tx.wait();
@@ -181,19 +173,15 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
   };
 
   const handleAcceptOffer = async () => {
+    if (!offer) return;
+    if (!chosenCollectionNft) throw new Error('Please choose an NFT');
+
     try {
-      setShowConfirmButton(false);
       setExecutingAcceptOffer(true);
-      let tx;
-      if (isCollectionOffer) {
-        if (!chosenCollectionNft) throw new Error('Please choose an NFT');
-        // Sentry.captureEvent({message: 'handleAcceptOffer', extra: {nftAddress, price}});
-        tx = await contractService!.offer.acceptCollectionOffer(offer.nftAddress, offer.offerIndex, chosenCollectionNft.nftId);
-      } else {
-        const nftId = nft.id ?? nft.nftId;
-        // Sentry.captureEvent({message: 'handleAcceptOffer', extra: {nftAddress, nftId, price}});
-        tx = await contractService!.offer.acceptOffer(offer.hash, offer.offerIndex);
-      }
+
+      // Sentry.captureEvent({message: 'handleInstantSell', extra: {nftAddress: collection.address, price}});
+      const tx = await contractService!.offer.acceptCollectionOffer(offer.nftAddress, offer.offerIndex, chosenCollectionNft.nftId);
+
       let receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       setExecutingAcceptOffer(false);
@@ -224,7 +212,7 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
     return (
       <Box>
         <Box fontWeight='bold' fontSize='18px'>Fees</Box>
-        <hr />
+        <hr/>
         <Flex justify='space-between' my={2}>
           <span>Service Fee: </span>
           <span>{fee} %</span>
@@ -243,48 +231,28 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
 
   return (
     <>
-      {status === 'pending' || isLoading ? (
+      {isLoading ? (
         <Flex h='200px' justify='center'>
           <Center>
-            <Spinner />
+            <Spinner/>
           </Center>
         </Flex>
-      ) : status === "error" ? (
-        <Box textAlign='center'>Error: {error.message}</Box>
+      ) : error ? (
+        <Box textAlign='center'>Error: {error}</Box>
       ) : (
         <>
           <DialogBody>
-            {isMobile && (
-              <Text mb={2} textAlign='center' fontWeight='bold'>
-                {isCollectionOffer ? <>{collection.name}</> : <>{nft?.name}</>}
-              </Text>
-            )}
+            <Box mb={2} textAlign='center' fontSize='sm'>
+              Instantly sell any of your {collection.name} NFTs at the highest offer price.
+            </Box>
             <Stack direction={{base: 'column-reverse', sm: 'row'}} spacing={4} align={{base: 'center', sm: 'normal'}}>
               <Box w='full'>
-                {!isMobile && (
-                  <Text mb={2} textAlign='center' fontWeight='bold'>
-                    {isCollectionOffer ? <>{collection.name}</> : <>{nft?.name}</>}
-                  </Text>
-                )}
-                {isCollectionOffer ? (
-                  <NftPicker
-                    collectionAddress={collection.address}
-                    nfts={collectionNfts}
-                    initialNft={chosenCollectionNft}
-                    onSelect={(n) => chooseCollectionNft(n)}
-                  />
-                ) : isBundle(nft.address ?? nft.nftAddress) ? (
-                  <ImagesContainer nft={nft} />
-                ) : (
-                  <AnyMedia
-                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
-                    video={nft.video ?? nft.animation_url}
-                    videoProps={{ height: 'auto', autoPlay: true }}
-                    title={nft.name}
-                    usePlaceholder={false}
-                    className="img-fluid img-rounded"
-                  />
-                )}
+                <NftPicker
+                  collectionAddress={collection.address}
+                  nfts={collectionNfts}
+                  initialNft={chosenCollectionNft}
+                  onSelect={(n) => chooseCollectionNft(n)}
+                />
               </Box>
               <Box w='full'>
                 <Box mb={{base: 0, sm: 4}} mt={{base: 4, sm: 0}} textAlign='center'>
@@ -293,7 +261,7 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
                     <Flex justify='center' alignItems='center'>
                       <CronosIconBlue boxSize={10} />
                       <Box as='span' ms={1}>
-                        {commify(offer.price)}
+                        {commify(offer!.price)}
                       </Box>
                     </Flex>
                   </Box>
@@ -334,7 +302,7 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
                           onClick={handleAcceptOffer}
                           isLoading={executingAcceptOffer}
                           isDisabled={executingAcceptOffer}
-                          className='flex-fill'
+                          className="flex-fill"
                         >
                           I understand, continue
                         </SecondaryButton>
@@ -351,7 +319,7 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
                         <PrimaryButton
                           onClick={processAcceptOfferRequest}
                           isLoading={executingAcceptOffer}
-                          isDisabled={(isCollectionOffer && !chosenCollectionNft) || executingAcceptOffer}
+                          isDisabled={!chosenCollectionNft || executingAcceptOffer}
                           className='flex-fill'
                           loadingText='Accept Offer'
                         >
@@ -388,8 +356,8 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
 }
 
 
-
 const ImageContainer = styled.div`
+  width: 232px;
   height: auto;
   margin-top: 6px;
   text-align: center;

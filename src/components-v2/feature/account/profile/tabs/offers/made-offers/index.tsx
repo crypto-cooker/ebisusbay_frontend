@@ -11,7 +11,7 @@ import {OfferType} from "@src/core/services/api-service/types";
 import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
 import MakeOfferDialog from "@src/components-v2/shared/dialogs/make-offer";
 import MakeCollectionOfferDialog from "@src/components-v2/shared/dialogs/make-collection-offer";
-import {CancelOfferDialog} from "@src/Components/Offer/Dialogs/CancelOfferDialog";
+import {ResponsiveCancelOfferDialog} from "@src/components-v2/shared/dialogs/cancel-offer";
 import {useUser} from "@src/components-v2/useUser";
 
 interface MadeOffersProps {
@@ -153,7 +153,7 @@ export default function MadeOffers({ address, filtersVisible, setFiltersVisible,
         />
       )}
       {!!offerAction && offerAction === OFFER_TYPE.cancel && selectedOffer && (
-        <CancelOfferDialog
+        <ResponsiveCancelOfferDialog
           isOpen={!!offerAction}
           onClose={handleCloseDialog}
           collection={selectedOffer.collection}
