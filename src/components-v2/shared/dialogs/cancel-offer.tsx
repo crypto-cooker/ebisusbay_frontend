@@ -3,20 +3,21 @@ import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
+import EmptyData from "@src/Components/Offer/EmptyData";
 import {specialImageTransform} from "@src/hacks";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, isBundle} from "@src/utils";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {Box, BoxProps, Center, Flex, Spinner, Stack, Text} from "@chakra-ui/react";
-import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
+import {Box, BoxProps, Flex, ModalFooter, Spinner, Stack, Text} from "@chakra-ui/react";
+import ImagesContainer from "../../../Components/Bundle/ImagesContainer";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {useQuery} from "@tanstack/react-query";
 import {useContractService, useUser} from "@src/components-v2/useUser";
-import {ResponsiveDialogComponents, useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {ResponsiveDialogComponents, useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 
-type RejectOfferDialogProps = {
+type CancelOfferDialogProps = {
   isOpen: boolean;
   onClose: () => void;
   collection: any;
@@ -24,11 +25,11 @@ type RejectOfferDialogProps = {
   offer: any;
 }
 
-export const ResponsiveRejectOfferDialog = ({ isOpen, collection, isCollectionOffer, offer, onClose, ...props }: RejectOfferDialogProps & BoxProps) => {
+export const ResponsiveCancelOfferDialog = ({ isOpen, collection, isCollectionOffer, offer, onClose, ...props }: CancelOfferDialogProps & BoxProps) => {
   const { DialogComponent, DialogBody, DialogFooter } = useResponsiveDialog();
 
   return (
-    <DialogComponent isOpen={isOpen} onClose={onClose} title='Reject Offer' {...props}>
+    <DialogComponent isOpen={isOpen} onClose={onClose} title='Cancel Offer' {...props}>
       <DialogContent
         isOpen={isOpen}
         onClose={onClose}
@@ -43,9 +44,9 @@ export const ResponsiveRejectOfferDialog = ({ isOpen, collection, isCollectionOf
   );
 };
 
-const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, DialogBody, DialogFooter}: ResponsiveDialogComponents & RejectOfferDialogProps) => {
+const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, DialogBody, DialogFooter}: ResponsiveDialogComponents & CancelOfferDialogProps) => {
   const contractService = useContractService();
-  const [executingRejectOffer, setExecutingRejectOffer] = useState(false);
+  const [executingCancelOffer, setExecutingCancelOffer] = useState(false);
   const user = useUser();
 
   const fetchNft = async () => {
@@ -55,69 +56,69 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
     return tmpNft.nft;
   }
 
-  const { error, data: nft, status } = useQuery({
-    queryKey: ['RejectOffer', user.address, offer.nftAddress, offer.nftId],
+  const { isPending, error, data: nft, status } = useQuery({
+    queryKey: ['CancelOffer', user.address, offer.nftAddress, offer.nftId],
     queryFn: fetchNft,
     enabled: user.wallet.isConnected && !!offer.nftAddress && (isCollectionOffer || !!offer.nftId),
     refetchOnWindowFocus: false
   });
 
-  const handleRejectOffer = async () => {
+  const handleCancelOffer = async () => {
     try {
-      setExecutingRejectOffer(true);
-      // Sentry.captureEvent({message: 'handleRejectOffer', extra: {address: collection.address}});
+      setExecutingCancelOffer(true);
+      // Sentry.captureEvent({message: 'handleCancelOffer', extra: {address: offer.nftAddress}});
+      let tx;
       if (isCollectionOffer) {
-        throw new Error('Cannot reject a collection offer');
-      } else if (collection.multiToken) {
-        throw new Error('Cannot reject a public offer');
+        tx = await contractService!.offer.cancelCollectionOffer(offer.nftAddress, offer.offerIndex);
       } else {
-        const tx = await contractService!.offer.rejectOffer(offer.hash, offer.offerIndex);
-        let receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-        setExecutingRejectOffer(false);
-        onClose();
+        tx = await contractService!.offer.cancelOffer(offer.hash, offer.offerIndex);
       }
+      let receipt = await tx.wait();
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      setExecutingCancelOffer(false);
+      onClose();
     } catch (error) {
       console.log(error);
       toast.error(parseErrorMessage(error));
     } finally {
-      setExecutingRejectOffer(false);
+      setExecutingCancelOffer(false);
     }
   }
 
   return (
     <>
       {status === 'pending' ? (
-        <Flex h='200px' justify='center'>
-          <Center>
-            <Spinner />
-          </Center>
-        </Flex>
+        <EmptyData>
+          <Spinner size='sm' ms={1} />
+        </EmptyData>
       ) : status === "error" ? (
-        <Box textAlign='center'>Error: {error.message}</Box>
+        <p>Error: {error.message}</p>
       ) : (
         <>
           <DialogBody>
+            <Box mb={2} textAlign='center' fontSize='sm'>
+              Cancelling this offer will return the offer amount back to your wallet
+            </Box>
             <Stack direction='row' spacing={4}>
               <Box w={{base: '30%', sm: 'full'}}>
                 {isCollectionOffer ? (
                   <Box className="profile_avatar d-flex justify-content-center mb-2">
-                    <Box className="d_profile_img">
-                      {collection.metadata.avatar ? (
+                    <Box className="dialog_avatar position-relative">
+                      {collection?.metadata?.avatar ? (
                         <img src={hostedImage(collection.metadata.avatar)} alt={collection.name} />
                       ) : (
-                        <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
+                        <Blockies seed={(offer.nftAddress).toLowerCase()} size={15} scale={10} />
                       )}
-                      {collection.verification.verified && (
+                      {collection?.verification?.verified && (
                         <LayeredIcon icon={faCheck} bgIcon={faCircle} shrink={8} stackClass="eb-avatar_badge" />
                       )}
                     </Box>
                   </Box>
-                ) : isBundle(nft.address ?? nft.nftAddress) ? (
+                ) : isBundle(offer.nftAddress) ? (
                   <ImagesContainer nft={nft} />
                 ) : (
                   <AnyMedia
-                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                    image={specialImageTransform(offer.nftAddress, nft.image)}
                     video={nft.video ?? nft.animation_url}
                     videoProps={{ height: 'auto', autoPlay: true }}
                     title={nft.name}
@@ -127,10 +128,12 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
                 )}
               </Box>
               <Box w={{base: '70%', sm: 'full'}}>
-                <Box>
-                  <Box className="text-muted">Collection</Box>
-                  <Box fontWeight='bold'>{collection.name}</Box>
-                </Box>
+                {!!collection && (
+                  <Box>
+                    <Box className="text-muted">Collection</Box>
+                    <Box fontWeight='bold'>{collection.name}</Box>
+                  </Box>
+                )}
                 {!isCollectionOffer && (
                   <Box mt={2}>
                     <Box className="text-muted">NFT</Box>
@@ -145,19 +148,19 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
             </Stack>
           </DialogBody>
           <DialogFooter className="border-0">
-            <Box w='full'>
-              {executingRejectOffer && (
+            <Box className="w-100">
+              {executingCancelOffer && (
                 <Box mb={2} textAlign='center'>
                   <Text as='i' fontSize='sm'>Please check your wallet for confirmation</Text>
                 </Box>
               )}
               <Flex>
                 <PrimaryButton
-                  onClick={handleRejectOffer}
-                  isLoading={executingRejectOffer}
-                  isDisabled={executingRejectOffer}
-                  className="flex-fill"
-                  loadingText="Confirm"
+                  onClick={handleCancelOffer}
+                  isLoading={executingCancelOffer}
+                  isDisabled={executingCancelOffer}
+                  className='flex-fill'
+                  loadingText='Confirm'
                 >
                   Confirm
                 </PrimaryButton>

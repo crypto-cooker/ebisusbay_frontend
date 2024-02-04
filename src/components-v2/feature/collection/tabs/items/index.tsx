@@ -11,7 +11,7 @@ import nextApiService from "@src/core/services/api-service/next";
 import {pushQueryString} from "@src/helpers/query";
 import styled from "styled-components";
 import MakeCollectionOfferDialog from "@src/components-v2/shared/dialogs/make-collection-offer";
-import InstantSellDialog from "@src/Components/Offer/Dialogs/InstantSellDialog";
+import {ResponsiveInstantSellDialog} from "@src/components-v2/shared/dialogs/instant-sell";
 import SweepFloorDialog from "@src/Components/Collection/CollectionTaskBar/SweepFloorDialog";
 import {CollectionPageContext, CollectionPageContextProps} from "@src/components-v2/feature/collection/context";
 import {isFoundingMemberCollection} from "@src/utils";
@@ -204,7 +204,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
       )}
 
       {isOpenInstantSellDialog && (
-        <InstantSellDialog
+        <ResponsiveInstantSellDialog
           isOpen={isOpenInstantSellDialog}
           onClose={onCloseInstantSellDialog}
           collection={collection}
