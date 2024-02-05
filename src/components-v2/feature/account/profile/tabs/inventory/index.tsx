@@ -17,7 +17,7 @@ import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listin
 import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter, faLayerGroup, faMagnifyingGlass, faSort} from "@fortawesome/free-solid-svg-icons";
-import TransferNftDialog from "@src/components-v2/shared/dialogs/transfer-nft";
+import {ResponsiveTransferNftDialog} from "@src/components-v2/shared/dialogs/transfer-nft";
 import {
   addToBatchListingCart,
   closeBatchListingCart,
@@ -432,7 +432,7 @@ export default function Inventory({ address }: InventoryProps) {
         />
       )}
       {!!transferDialogNft && (
-        <TransferNftDialog
+        <ResponsiveTransferNftDialog
           isOpen={!!transferDialogNft}
           nft={transferDialogNft}
           onClose={() => setTransferDialogNft(null)}
