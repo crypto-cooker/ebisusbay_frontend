@@ -58,7 +58,6 @@ import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 import InventoryFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
 import useDebounce from "@src/core/hooks/useDebounce";
-import GdcClaimConfirmation from "@src/components-v2/shared/dialogs/gdc-claim-confirmation";
 import {useUser} from "@src/components-v2/useUser";
 
 interface InventoryProps {
@@ -85,7 +84,6 @@ export default function Inventory({ address }: InventoryProps) {
     sortBy: 'receivedTimestamp',
     direction: 'desc'
   });
-  const [isGdcConfirmationOpen, setIsGdcConfirmationOpen] = useState(false);
 
   const fetcher = async ({ pageParam = 1 }) => {
     const params: WalletsQueryParams = {
@@ -450,9 +448,6 @@ export default function Inventory({ address }: InventoryProps) {
       )}
       {useMobileMenu && (
         <MobileBatchPreview />
-      )}
-      {isGdcConfirmationOpen && (
-        <GdcClaimConfirmation onClose={() => setIsGdcConfirmationOpen(false)} isOpen={isGdcConfirmationOpen} />
       )}
     </>
   )
