@@ -241,7 +241,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
             .find((m: any) => percentile <= m.percentile)?.value || 0;
           const idBonus = stakeConfig!.ids.find((i) => i.id.toString() === nft.nft.nftId)?.bonus || 0;
 
-          const bonusTroops = nft.attributes?.reduce((acc: number, attr: any) => {
+          const bonusTroops = nft.nft.attributes?.reduce((acc: number, attr: any) => {
             const traitType = attr.trait_type.toLowerCase();
             const value = attr.value.toString().toLowerCase();
 

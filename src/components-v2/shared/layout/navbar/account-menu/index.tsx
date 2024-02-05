@@ -53,7 +53,6 @@ import {
   Wrap
 } from "@chakra-ui/react";
 import CronosIconFlat from "@src/components-v2/shared/icons/cronos";
-import GdcClaimConfirmation from "@src/components-v2/shared/dialogs/gdc-claim-confirmation";
 import ImageService from "@src/core/services/image";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
@@ -82,7 +81,6 @@ const Index = function () {
       fallback: 'md',
     },
   );
-  const [isGdcConfirmationOpen, setIsGdcConfirmationOpen] = useState(false);
   const [showWrongChainModal, setShowWrongChainModal] = useState(false);
 
   const { setValue:setClipboardValue, onCopy } = useClipboard(user.wallet.address ?? '');
@@ -539,9 +537,6 @@ const Index = function () {
             </DrawerBody>
           </DrawerContent>
         </Drawer>
-      )}
-      {isGdcConfirmationOpen && (
-        <GdcClaimConfirmation onClose={() => setIsGdcConfirmationOpen(false)} isOpen={isGdcConfirmationOpen} />
       )}
     </div>
   );

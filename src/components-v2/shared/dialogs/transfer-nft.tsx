@@ -1,44 +1,58 @@
-import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Contract} from "ethers";
-import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
-import EmptyData from "@src/Components/Offer/EmptyData";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@src/hacks";
 import {ERC1155, ERC721} from "@src/Contracts/Abis";
 import {
   Box,
+  BoxProps,
   Button as ChakraButton,
+  Center,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
   HStack,
   Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Spinner,
+  Stack,
+  Text,
   useNumberInput
 } from "@chakra-ui/react";
-import {getTheme} from "@src/Theme/theme";
 import {is1155} from "@src/helpers/chain";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {getCroidAddressFromName, isCroName} from "@src/helpers/croid";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useUser} from "@src/components-v2/useUser";
+import {ResponsiveDialogComponents, useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
+import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 
-interface TransferNftDialogProps {
+type TransferNftDialogProps = {
   isOpen: boolean;
   nft: any;
   onClose: () => void;
 }
 
-export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftDialogProps) {
+export const ResponsiveTransferNftDialog = ({ isOpen, onClose, nft, ...props }: TransferNftDialogProps & BoxProps) => {
+  const { DialogComponent, DialogBody, DialogFooter } = useResponsiveDialog();
+
+  return (
+    <DialogComponent isOpen={isOpen} onClose={onClose} title={`Transfer ${nft.name}`} {...props}>
+      <DialogContent
+        isOpen={isOpen}
+        onClose={onClose}
+        nft={nft}
+        DialogBody={DialogBody}
+        DialogFooter={DialogFooter}
+        {...props}
+      />
+    </DialogComponent>
+  );
+};
+
+const DialogContent = ({isOpen, onClose, nft, DialogBody, DialogFooter}: ResponsiveDialogComponents & TransferNftDialogProps) => {
   const [recipientAddress, setRecipientAddress] = useState<string>();
   const [fieldError, setFieldError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -124,7 +138,7 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
     }
   };
 
-  const processTransferRequest = async (e: ChangeEvent<HTMLButtonElement>) => {
+  const processTransferRequest = async () => {
     if (!validateInput()) return;
 
     if (Number(quantity || 1) > 1) {
@@ -170,119 +184,119 @@ export default function TransferNftDialog({ isOpen, nft, onClose }: TransferNftD
   if (!nft) return <></>;
 
   return (
-    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
-      <ModalOverlay />
-      <ModalContent>
-        {!isLoading ? (
-          <>
-            <ModalHeader className="text-center">
-              Transfer {nft.name}
-            </ModalHeader>
-            <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
-            <ModalBody>
-              <div className="nftSaleForm row gx-3">
-                <div className="col-12 col-sm-4 mb-sm-3">
-                  <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
-                    <AnyMedia
-                      image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
-                      video={nft.video ?? nft.animation_url}
-                      videoProps={{ height: 'auto', autoPlay: true }}
-                      title={nft.name}
-                      usePlaceholder={false}
-                      className="img-fluid img-rounded"
-                    />
-                  </DynamicNftImage>
-                </div>
-                <div className="col-12 col-sm-8 my-auto">
-                  {nft.balance > 1 && (
-                    <FormControl className="mb-3" isInvalid={!!quantityError}>
-                      <FormLabel className="formLabel">
-                        Quantity (up to {nft.balance})
-                      </FormLabel>
-                      <HStack>
-                        <ChakraButton {...dec}>-</ChakraButton>
-                        <Input {...input} />
-                        <ChakraButton {...inc}>+</ChakraButton>
-                        <ChakraButton minW='65px' onClick={handleMaxQuantity}>
-                          Max
-                        </ChakraButton>
-                      </HStack>
-                      <FormErrorMessage className="field-description textError">{quantityError}</FormErrorMessage>
-                    </FormControl>
-                  )}
-                  <Box className="mt-4 mt-sm-0 mb-3 mb-sm-0">
-                    <FormControl className="form-field" isInvalid={!!fieldError}>
-                      <FormLabel w='full' className="formLabel">
-                        Recipient Address or Cronos ID
-                      </FormLabel>
-                      <Input
-                        type="text"
-                        placeholder="Address or Cronos ID"
-                        value={recipientAddress}
-                        onChange={onChangeAddress}
-                        disabled={showConfirmButton || executingTransferNft}
-                      />
-                      <FormErrorMessage className="field-description textError">{fieldError}</FormErrorMessage>
-                    </FormControl>
-                  </Box>
-                </div>
-              </div>
-            </ModalBody>
-            <ModalFooter className="border-0">
-              <Box w='full'>
-                {showConfirmButton ? (
-                  <>
-                    <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
-                      {quantity} items selected. Do you wish to continue?
-                    </div>
-                    {executingTransferNft && (
-                      <div className="mb-2 text-center fst-italic">
-                        <small>Please check your wallet for confirmation</small>
-                      </div>
-                    )}
-                    <div className="d-flex">
-                      <Button type="legacy"
-                              onClick={() => setShowConfirmButton(false)}
-                              disabled={executingTransferNft}
-                              className="me-2 flex-fill">
-                        Go Back
-                      </Button>
-                      <Button type="legacy-outlined"
-                              onClick={handleTransfer}
-                              isLoading={executingTransferNft || executingCidLookup}
-                              disabled={executingTransferNft || executingCidLookup}
-                              className="flex-fill">
-                        Continue
-                      </Button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    {executingTransferNft && (
-                      <div className="mb-2 text-center fst-italic">
-                        <small>Please check your wallet for confirmation</small>
-                      </div>
-                    )}
-                    <div className="d-flex">
-                      <Button type="legacy"
-                              onClick={processTransferRequest}
-                              isLoading={executingTransferNft || executingCidLookup}
-                              disabled={executingTransferNft || executingCidLookup}
-                              className="flex-fill">
-                        Confirm Transfer
-                      </Button>
-                    </div>
-                  </>
-                )}
+    <>
+      {isLoading ? (
+        <Flex h='200px' justify='center'>
+          <Center>
+            <Spinner />
+          </Center>
+        </Flex>
+      ) : !nft ? (
+        <Box textAlign='center'>Error: NFT not found</Box>
+      ) : (
+        <>
+          <DialogBody>
+            <Stack direction='row' spacing={4}>
+              <Box w={{base: '30%', sm: 'full'}}>
+                <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
+                  <AnyMedia
+                    image={specialImageTransform(nft.address ?? nft.nftAddress, nft.image)}
+                    video={nft.video ?? nft.animation_url}
+                    videoProps={{ height: 'auto', autoPlay: true }}
+                    title={nft.name}
+                    usePlaceholder={false}
+                    className="img-fluid img-rounded"
+                  />
+                </DynamicNftImage>
               </Box>
-            </ModalFooter>
-          </>
-        ) : (
-          <EmptyData>
-            <Spinner size='sm' ms={1} />
-          </EmptyData>
-        )}
-      </ModalContent>
-    </Modal>
-  );
+              <Box w={{base: '70%', sm: 'full'}}>
+                {nft.balance > 1 && (
+                  <FormControl className="mb-3" isInvalid={!!quantityError}>
+                    <FormLabel className="formLabel">
+                      Quantity (up to {nft.balance})
+                    </FormLabel>
+                    <HStack>
+                      <ChakraButton {...dec}>-</ChakraButton>
+                      <Input {...input} />
+                      <ChakraButton {...inc}>+</ChakraButton>
+                      <ChakraButton minW='65px' onClick={handleMaxQuantity}>
+                        Max
+                      </ChakraButton>
+                    </HStack>
+                    <FormErrorMessage className="field-description textError">{quantityError}</FormErrorMessage>
+                  </FormControl>
+                )}
+                <Box className="mt-4 mt-sm-0 mb-3 mb-sm-0">
+                  <FormControl className="form-field" isInvalid={!!fieldError}>
+                    <FormLabel w='full' className="formLabel">
+                      Recipient Address or Cronos ID
+                    </FormLabel>
+                    <Input
+                      type="text"
+                      placeholder="Address or Cronos ID"
+                      value={recipientAddress}
+                      onChange={onChangeAddress}
+                      disabled={showConfirmButton || executingTransferNft}
+                    />
+                    <FormErrorMessage className="field-description textError">{fieldError}</FormErrorMessage>
+                  </FormControl>
+                </Box>
+              </Box>
+            </Stack>
+          </DialogBody>
+          <DialogFooter className="border-0">
+            <Box w='full'>
+              {showConfirmButton ? (
+                <>
+                  <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
+                    {quantity} items selected. Do you wish to continue?
+                  </div>
+                  {executingTransferNft && (
+                    <Box mb={2} textAlign='center'>
+                      <Text as='i' fontSize='sm'>Please check your wallet for confirmation</Text>
+                    </Box>
+                  )}
+                  <Flex>
+                    <SecondaryButton
+                      onClick={() => setShowConfirmButton(false)}
+                      isDisabled={executingTransferNft}
+                      className="me-2 flex-fill"
+                    >
+                      Go Back
+                    </SecondaryButton>
+                    <PrimaryButton
+                      onClick={handleTransfer}
+                      isLoading={executingTransferNft || executingCidLookup}
+                      isDisabled={executingTransferNft || executingCidLookup}
+                      className="flex-fill"
+                    >
+                      Continue
+                    </PrimaryButton>
+                  </Flex>
+                </>
+              ) : (
+                <>
+                  {executingTransferNft && (
+                    <Box mb={2} textAlign='center'>
+                      <Text as='i' fontSize='sm'>Please check your wallet for confirmation</Text>
+                    </Box>
+                  )}
+                  <Flex>
+                    <PrimaryButton
+                      onClick={processTransferRequest}
+                      isLoading={executingTransferNft || executingCidLookup}
+                      disabled={executingTransferNft || executingCidLookup}
+                      className="flex-fill"
+                    >
+                      Confirm Transfer
+                    </PrimaryButton>
+                  </Flex>
+                </>
+              )}
+            </Box>
+          </DialogFooter>
+        </>
+      )}
+    </>
+  )
 }
