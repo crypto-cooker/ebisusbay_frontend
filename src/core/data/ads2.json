@@ -1,5 +1,20 @@
 [
   {
+    "name": "Chiverse",
+    "start": 1707249499,
+    "end": 1707940737,
+    "placement": "rd-board",
+    "details": {
+      "weight": 2,
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/chiverse-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/chiverse-lg.webp",
+      "link": {
+        "url": " https://app.chiverse.online/my-club/stadium",
+        "external": true
+      }
+    }
+  },
+  {
     "name": "Ryoshi Tales VIP",
     "start": 1701890579,
     "end": 1703107305,
