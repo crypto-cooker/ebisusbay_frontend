@@ -25658,6 +25658,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Gangverse Card",
+      "slug": "gangverse-card",
+      "multiToken": false,
+      "address": "0xC571A1f7fecbC0722eA3100E25fbAb2d05D291E8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Gangverse Card is produced in a limited quantity and is the first type of card that enables you to benefit from various privileges on the Gangverse App Platform.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/gangverse-card/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/gangverse-card/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/gangverse-card/banner.webp",
+        "website": "https://gangverse.club/",
+        "twitter": "https://twitter.com/gangverse",
+        "discord": "https://discord.gg/u9NJ8GBPXA",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
