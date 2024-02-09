@@ -212,10 +212,10 @@ export const ryoshiConfig: RyoshiConfig = {
             apr: {
               multipliers: [],
               adders: [
-                { percentile: 5, value: 0.25 },
-                { percentile: 10, value: 0.2 },
-                { percentile: 20, value: 0.15 },
-                { percentile: 100, value: 0.1 },
+                { percentile: 5, value: 0.5 },
+                { percentile: 10, value: 0.4 },
+                { percentile: 20, value: 0.3 },
+                { percentile: 100, value: 0.2 },
               ],
               ids: []
             }
@@ -228,10 +228,10 @@ export const ryoshiConfig: RyoshiConfig = {
             apr: {
               multipliers: [],
               adders: [
-                { percentile: 5, value: 0.5 },
-                { percentile: 10, value: 0.4 },
-                { percentile: 20, value: 0.3 },
-                { percentile: 100, value: 0.2 },
+                { percentile: 5, value: 0.25 },
+                { percentile: 10, value: 0.2 },
+                { percentile: 20, value: 0.15 },
+                { percentile: 100, value: 0.1 },
               ],
               ids: [
                 { id: 774, bonus: 0.75 }
@@ -468,10 +468,10 @@ export const ryoshiConfig: RyoshiConfig = {
               },
             ],
             multipliers: [
-              { percentile: 5, value: 50 },
-              { percentile: 10, value: 30 },
-              { percentile: 20, value: 20 },
-              { percentile: 100, value: 10 },
+              { percentile: 5, value: 100 },
+              { percentile: 10, value: 60 },
+              { percentile: 20, value: 40 },
+              { percentile: 100, value: 20 },
             ],
             ids: [],
             bonus: []
@@ -498,10 +498,10 @@ export const ryoshiConfig: RyoshiConfig = {
               },
             ],
             multipliers: [
-              { percentile: 5, value: 100 },
-              { percentile: 10, value: 60 },
-              { percentile: 20, value: 40 },
-              { percentile: 100, value: 20 },
+              { percentile: 5, value: 50 },
+              { percentile: 10, value: 30 },
+              { percentile: 20, value: 20 },
+              { percentile: 100, value: 10 },
             ],
             ids: [],
             bonus: [
