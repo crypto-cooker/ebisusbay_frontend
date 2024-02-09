@@ -228,10 +228,10 @@ export const ryoshiConfig: RyoshiConfig = {
             apr: {
               multipliers: [],
               adders: [
-                { percentile: 5, value: 0.25 },
-                { percentile: 10, value: 0.2 },
-                { percentile: 20, value: 0.15 },
-                { percentile: 100, value: 0.1 },
+                { percentile: 5, value: 0.5 },
+                { percentile: 10, value: 0.4 },
+                { percentile: 20, value: 0.3 },
+                { percentile: 100, value: 0.2 },
               ],
               ids: [
                 { id: 774, bonus: 0.75 }
