@@ -212,12 +212,45 @@ export const ryoshiConfig: RyoshiConfig = {
             apr: {
               multipliers: [],
               adders: [
-                { percentile: 5, value: 0.5 },
-                { percentile: 10, value: 0.4 },
-                { percentile: 20, value: 0.3 },
-                { percentile: 100, value: 0.2 },
+                { percentile: 5, value: 0.25 },
+                { percentile: 10, value: 0.2 },
+                { percentile: 20, value: 0.15 },
+                { percentile: 100, value: 0.1 },
               ],
               ids: []
+            }
+          },
+          {
+            ...collections.find(c => c.slug === 'ryoshi-tales')!,
+            active: true,
+            minId: 701,
+            maxId: 1000,
+            apr: {
+              multipliers: [],
+              adders: [
+                { percentile: 5, value: 0.25 },
+                { percentile: 10, value: 0.2 },
+                { percentile: 20, value: 0.15 },
+                { percentile: 100, value: 0.1 },
+              ],
+              ids: [
+                { id: 774, bonus: 0.75 }
+              ]
+            },
+            troops: {
+              values: [],
+              bonus: {
+                value: 50,
+                traits: [
+                  {
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    type: 'accessory',
+                    values: [
+                      'radiant wyvern staff'
+                    ]
+                  }
+                ]
+              }
             }
           }
         ],
@@ -435,13 +468,56 @@ export const ryoshiConfig: RyoshiConfig = {
               },
             ],
             multipliers: [
+              { percentile: 5, value: 50 },
+              { percentile: 10, value: 30 },
+              { percentile: 20, value: 20 },
+              { percentile: 100, value: 10 },
+            ],
+            ids: [],
+            bonus: []
+          },
+          {
+            ...collections.find(c => c.slug === 'ryoshi-tales')!,
+            active: true,
+            minId: 701,
+            maxId: 1000,
+            traits: [
+              {
+                type: 'accessory',
+                inclusion: RyoshiConfigTraitInclusionType.EXCLUDE,
+                values: [
+                  'none'
+                ]
+              },
+              {
+                type: 'companion',
+                inclusion: RyoshiConfigTraitInclusionType.EXCLUDE,
+                values: [
+                  'none'
+                ]
+              },
+            ],
+            multipliers: [
               { percentile: 5, value: 100 },
               { percentile: 10, value: 60 },
               { percentile: 20, value: 40 },
               { percentile: 100, value: 20 },
             ],
             ids: [],
-            bonus: []
+            bonus: [
+              {
+                value: 500,
+                traits: [
+                  {
+                    type: 'accessory',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'nightfall scepter of premonition'
+                    ]
+                  }
+                ]
+              },
+            ]
           }
         ]
       }
