@@ -51,6 +51,9 @@ import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {VillageMerchant} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/merchant";
+import {ShakeTreeDialog} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/christmas";
+import {show} from "cli-cursor";
+import {ValentinesDayDialog} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/valentines";
 
 const config = appConfig();
 const xmasCutoffDate = new Date(Date.UTC(2024, 0, 8, 0, 0, 0));
@@ -81,6 +84,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const [forceRefreshBool, setForceRefreshBool] = useState(false);
   const { isOpen: isOpenBattleLog, onOpen: onOpenBattleLog, onClose: onCloseBattleLog } = useDisclosure();
   const { isOpen: isOpenXPLeaderboard, onOpen: onOpenXPLeaderboard, onClose: onCloseXPLeaderboard } = useDisclosure();
+  const { isOpen: isOpenValentinesDialog, onOpen: onOpenValentiesDialog, onClose: onCloseValentinesDialog } = useDisclosure();
   const forceRefresh = () => {
     setForceRefreshBool(!forceRefreshBool);
   }
@@ -150,7 +154,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     'fishmarket_label': {height: 545, width: 793, top: '36.5%', left: '55%'},
     'bank_label': {height: 456, width: 579, top: '7%', left: '33%'},
 
-    'merchant': {top: '18.5%', left: '28.5%'}
+    'merchant': {top: '18.5%', left: '28.5%'},
+    'valentines': {top: '32%', left: '30%'}
   }
 
   const handleEnterScene = async (elementId: string) => {
@@ -403,6 +408,26 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         zIndex={9}
                         onClick={onOpenMerchant}
                       />
+                      <EventSprite
+                        id='valentines'
+                        position={{x: buildings.valentines.left, y: buildings.valentines.top}}
+                        image={ImageService.translate(`/img/ryoshi-dynasties/village/valentines/cupid.apng`).convert()}
+                        ctaImage={ImageService.translate(`/img/ryoshi-dynasties/village/valentines/poke-cupid.png`).convert()}
+                        ctaImageHover={ImageService.translate(`/img/ryoshi-dynasties/village/valentines/poke-cupid-hover.png`).convert()}
+                        zIndex={9}
+                        onClick={onOpenValentiesDialog}
+                      />
+                      {/*{isChristmasTime && (*/}
+                      {/*  <EventSprite*/}
+                      {/*    id='christmas'*/}
+                      {/*    position={{x: buildings.xmas_tree.left, y: buildings.xmas_tree.top}}*/}
+                      {/*    image={ImageService.translate(`/img/battle-bay/mapImages/xmas_tree.apng`).convert()}*/}
+                      {/*    ctaImage={ImageService.translate(`/img/battle-bay/mapImages/open_present.png`).convert()}*/}
+                      {/*    ctaImageHover={ImageService.translate(`/img/battle-bay/mapImages/open_present_hover.png`).convert()}*/}
+                      {/*    zIndex={9}*/}
+                      {/*    onClick={onOpenPresentModal}*/}
+                      {/*  />*/}
+                      {/*)}*/}
 
                       { xmasTheme ? ( <>
                           <Box
@@ -498,6 +523,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
         <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
         <ShakeTreeDialog isOpen={isPresentModalOpen} onClose={onClosePresentModal} />
+        <ValentinesDayDialog isOpen={isOpenValentinesDialog} onClose={onCloseValentinesDialog} />
         <VillageMerchant isOpen={isOpenMerchant} onClose={onCloseMerchant} forceRefresh={forceRefresh} />
 
         <Fade in={isOpenOverlay}>
@@ -557,169 +583,6 @@ interface MapProps {
   minScale: number;
 }
 
-const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const user = useUser();
-  const {requestSignature, isSignedIn, signin, isSigningIn} = useEnforceSigner();
-  const prefersReducedMotion = usePrefersReducedMotion();
-
-  const [openShakePresent,setOpenShakePresent ] = useState(false);
-  const [presentMessage, setPresentMessage] = useState('');
-  const [showMessage, setShowMessage] = useState(false);
-  const [isClaimingToken, setIsClaimingToken] = useState<number>();
-
-  const animation1 = prefersReducedMotion ? undefined : `${keyframe_dot1} infinite 1s linear`;
-  const animation2 = prefersReducedMotion ? undefined : `${keyframe_dot2} infinite 1s linear`;
-  const animation3 = prefersReducedMotion ? undefined : `${keyframe_dot3} infinite 1s linear`;
-
-  const getRandomEntry = (entries: string[]): string => {
-    const randomIndex = Math.floor(Math.random() * entries.length);
-    return entries[randomIndex];
-  };
-
-  const presentPresent = async () => {
-
-    setShowMessage(false);
-    await new Promise(r => setTimeout(r, 2000));
-    setShowMessage(true);
-
-    setPresentMessage(getRandomEntry(xmasMessages));
-    setOpenShakePresent(false);
-  }
-
-  const [gift, setGift] = useState<any>();
-  const fetchGift = async () => {
-    if (!user.address) {
-      presentPresent();
-      return;
-    }
-
-    try {
-      setShowMessage(false);
-      const signature = await requestSignature();
-      const gift = await ApiService.withoutKey().ryoshiDynasties.fetchGift(user.address, signature);
-      let d = gift.data;
-      if (gift.data.nfts.length > 0) {
-        const items = await ApiService.withoutKey().getCollectionItems({
-          address: config.contracts.resources,
-          token: gift.data.nfts.join(',')
-        });
-        d.nftData = items.data;
-      }
-      setGift(d);
-    } catch (e) {
-      Sentry.captureException(e);
-      console.log(e);
-      presentPresent();
-    } finally {
-      setShowMessage(true);
-    }
-  }
-
-  const handleClaimNft = async (tokenId: number) => {
-    if (!user.address) return;
-
-    try {
-      setIsClaimingToken(tokenId);
-      const signature = await requestSignature();
-      const authorization = await ApiService.withoutKey().ryoshiDynasties.requestResourcesWithdrawalAuthorization(tokenId, 1, user.address, signature);
-      const {signature: approvalSignature, approval} = authorization.data;
-
-      const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-      const tx = await resourcesContract.mintWithSig(approval, approvalSignature);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
-    } catch (e) {
-      Sentry.captureException(e);
-      console.log(e);
-      toast.error(parseErrorMessage(e));
-    } finally {
-      setIsClaimingToken(undefined);
-    }
-  }
-
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    if (user.address) {
-      fetchGift();
-    } else {
-      presentPresent();
-    }
-  }, [isOpen, user.address]);
-
-  return (
-    <RdModal
-      isOpen={isOpen}
-      onClose={onClose}
-      title='Gifts from Ebisu Claus'
-    >
-      <RdModalAlert>
-        {showMessage ? (
-          <>
-            {user.wallet.isConnected ? (
-              <Box>
-                <VStack>
-                  {((gift?.nfts && gift?.nfts?.length > 0) || (!!gift?.frtn && gift.frtn > 0)) && (
-                    <Box fontWeight='bold'>Merry Christmas, you have received gifts!</Box>
-                  )}
-                  {!!gift?.frtn && gift.frtn > 0 && (
-                    <VStack>
-                      <FortuneIcon boxSize={10}/>
-                      <Box>{gift.frtn} $FRTN. Can be claimed in the bank</Box>
-                    </VStack>
-                  )}
-                  {gift?.nftData && gift?.nftData?.length > 0 ? (
-                    <>
-                      {gift.nftData.map((nft: any) => (
-                        <VStack>
-                          <Image
-                            src={ImageService.translate(nft.image).custom({width: 150, height: 150})}
-                            alt={nft.name}
-                            rounded="md"
-                          />
-                          <Box>{nft.description}</Box>
-                          <RdButton
-                            stickyIcon={true}
-                            onClick={() => handleClaimNft(parseInt(nft.id))}
-                            isLoading={isClaimingToken === parseInt(nft.id)}
-                            isDisabled={!!isClaimingToken}
-                            size='md'
-                          >
-                            Claim
-                          </RdButton>
-                        </VStack>
-                      ))}
-                   </>
-                  ) : (gift?.nfts && gift?.nfts?.length > 0) ? (
-                    <Box>A gift has been received but no info was provided yet. Check back later!</Box>
-                  ) : (
-                    <Box>No gifts received yet. Check back later!</Box>
-                  )}
-                </VStack>
-              </Box>
-            ) : (
-              <>
-                <Text>{presentMessage}</Text>
-                <Text fontSize='sm' mt={4}>Connect your wallet for a surprise!</Text>
-              </>
-            )}
-          </>
-        ) : (
-          <Box>
-            <Box style={styles2.dot1} animation={animation1} />
-            <Box style={styles2.dot2} animation={animation2} />
-            <Box style={styles2.dot3} animation={animation3} />
-          </Box>
-        )}
-      </RdModalAlert>
-      <RdModalFooter>
-        <Text textAlign={'center'} fontSize={'12'} textColor={'lightgray'}>Merry Christmas and Happy Holidays from the team at Ebisu's Bay</Text>
-      </RdModalFooter>
-    </RdModal>
-  )
-}
-
 interface SpriteProps {
   id: string;
   position: { x: string | number; y: string | number };
@@ -756,86 +619,53 @@ const Sprite = ({id, position, image, layers, zIndex, onClick}: SpriteProps) => 
   )
 }
 
+interface EventSpriteProps extends SpriteProps {
+  ctaImage: string;
+  ctaImageHover?: string;
+}
 
-const styles2 = {
-  dot1: {
-    width: "10px",
-    height: "10px",
-    borderRadius: "5px",
-    backgroundColor: "#f9a50b",
-    color: "#f9a50b",
-    display: " inline-block",
-    margin: "0 2px"
-  },
-  dot2: {
-    width: "10px",
-    height: "10px",
-    borderRadius: "5px",
-    backgroundColor: "#f9a50b",
-    color: "#f9a50b",
-    display: "inline-block",
-    margin: "0 2px"
-  },
+const EventSprite = ({id, position, image, ctaImage, ctaImageHover, zIndex, onClick}: EventSpriteProps) => {
+  const [showActionButton,setShowActionButton ] = useState(false);
 
-  dot3: {
-    width: "10px",
-    height: "10px",
-    borderRadius: "5px",
-    backgroundColor: "#f9a50b",
-    display: "inline-block",
-    margin: "0 2px"
-  }
-};
-
-
-const keyframe_dot1 = keyframes`
-  0% {
-    transform: scale(1, 1);
-  }
-  25% {
-    transform: scale(1, 1.5);
-  }
-  50% {
-    transform: scale(1, 0.67);
-  }
-  75% {
-    transform: scale(1, 1);
-  }
-  100% {
-    transform: scale(1, 1);
-  }
-`;
-const keyframe_dot2 = keyframes`
- 0% {
-    transform: scale(1, 1);
-  }
-  25% {
-    transform: scale(1, 1);
-  }
-  50% {
-    transform: scale(1, 1.5);
-  }
-  75% {
-    transform: scale(1, 1);
-  }
-  100% {
-    transform: scale(1, 1);
-  }
-`;
-const keyframe_dot3 = keyframes`
- 0% {
-    transform: scale(1, 1);
-  }
-  25% {
-    transform: scale(1, 1);
-  }
-  50% {
-    transform: scale(1, 0.67);
-  }
-  75% {
-    transform: scale(1, 1.5);
-  }
-  100% {
-    transform: scale(1, 1);
-  }
-`;
+  return (
+    <Box
+      id={id}
+      className={onClick ? styles.enlarge : undefined}
+      position='absolute'
+      top={0}
+      left={0}
+      mt={position.y}
+      ms={position.x}
+      zIndex={zIndex ?? 9}
+      onClick={() => setShowActionButton(true)}
+      cursor={onClick ? 'pointer' : undefined}
+    >
+      <Image src={image} alt={id} />
+      {showActionButton && (
+        <Box
+          position='absolute'
+          bgImage={ctaImage}
+          zIndex={13}
+          data-group
+          w={187}
+          h={46}
+          left='120px'
+        >
+          <Button
+            bg={'transparent'}
+            w={187}
+            h={46}
+            fontSize='28px'
+            onClick={() => onClick?.(id) ?? {}}
+            _groupHover={{
+              cursor: 'pointer',
+              bg: 'transparent',
+              bgImage:ctaImageHover,
+            }}
+          >
+          </Button>
+        </Box>
+      )}
+    </Box>
+  )
+}
