@@ -25683,6 +25683,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Blumies Gods",
+      "slug": "blumies-gods",
+      "multiToken": false,
+      "address": "0x345EeC864f28108b0e79554603035A14B9Fe7055",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The silent symphony of our future orchestrating within.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/blumies-gods/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/blumies-gods/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/blumies-gods/banner.webp",
+        "website": "https://www.blumiesofficial.com/",
+        "twitter": "https://twitter.com/BlumiesNFT",
+        "discord": "https://discord.gg/RXPzJSHaj3",
+        "medium": "https://blumies.gitbook.io/blumies-nft/",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -33211,7 +33237,7 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "",
+      "address": "0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 40,
       "totalSupply": 300,
