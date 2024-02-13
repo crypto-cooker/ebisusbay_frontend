@@ -59,7 +59,7 @@ export const ValentinesDayDialog = ({ isOpen, onClose }: { isOpen: boolean; onCl
     try {
       setShowMessage(false);
       const signature = await requestSignature();
-      const gift = await ApiService.withoutKey().ryoshiDynasties.fetchGift(user.address, signature);
+      const gift = await ApiService.withoutKey().ryoshiDynasties.fetchValentinesGift(user.address, signature);
       let d = gift.data;
       if (gift.data.nfts.length > 0) {
         const items = await ApiService.withoutKey().getCollectionItems({
@@ -115,7 +115,7 @@ export const ValentinesDayDialog = ({ isOpen, onClose }: { isOpen: boolean; onCl
     <RdModal
       isOpen={isOpen}
       onClose={onClose}
-      title='Gifts from Ebisu Claus'
+      title='Gifts from Ebisu'
     >
       <RdModalAlert>
         {showMessage ? (
@@ -124,7 +124,7 @@ export const ValentinesDayDialog = ({ isOpen, onClose }: { isOpen: boolean; onCl
               <Box>
                 <VStack>
                   {((gift?.nfts && gift?.nfts?.length > 0) || (!!gift?.frtn && gift.frtn > 0)) && (
-                    <Box fontWeight='bold'>Merry Christmas, you have received gifts!</Box>
+                    <Box fontWeight='bold'>Happy Valentine's, you have recieved gifts!</Box>
                   )}
                   {!!gift?.frtn && gift.frtn > 0 && (
                     <VStack>
@@ -177,7 +177,7 @@ export const ValentinesDayDialog = ({ isOpen, onClose }: { isOpen: boolean; onCl
         )}
       </RdModalAlert>
       <RdModalFooter>
-        <Text textAlign={'center'} fontSize={'12'} textColor={'lightgray'}>Merry Christmas and Happy Holidays from the team at Ebisu's Bay</Text>
+        <Text textAlign={'center'} fontSize={'12'} textColor={'lightgray'}>Happy Valentine's from the team at Ebisu's Bay</Text>
       </RdModalFooter>
     </RdModal>
   )
