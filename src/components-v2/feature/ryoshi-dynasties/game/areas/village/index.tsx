@@ -52,7 +52,6 @@ import {createSuccessfulTransactionToastContent} from "@src/utils";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {VillageMerchant} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/merchant";
 import {ShakeTreeDialog} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/christmas";
-import {show} from "cli-cursor";
 import {ValentinesDayDialog} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/valentines";
 
 const config = appConfig();
