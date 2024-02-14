@@ -359,6 +359,19 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
+  async fetchValentinesGift(address: string, signature: string) {
+    const response = await this.cms.get(
+      `ryoshi-dynasties/game-tokens/valentines`, {
+        params: {
+          address,
+          signature
+        }
+    });
+    return response.data;
+  }
+
+
+
   async getFactionsByPoints(gameId: number) {
     const response = await this.cms.get(`ryoshi-dynasties/games/${gameId}/interval-points`);
     return response.data.data;
