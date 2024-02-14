@@ -156,6 +156,12 @@ class Cms {
     return this.ryoshiDynasties.fetchGift(address, signature)
   }
 
+  async fetchValentinesGift(address: string, signature: string) {
+    return this.ryoshiDynasties.fetchValentinesGift(address, signature)
+  }
+
+
+
   async getFactionsByPoints(gameId: number) {
     return this.ryoshiDynasties.getFactionsByPoints(gameId);
   }
