@@ -392,6 +392,12 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.fetchGift(address, signature)
   }
 
+  async fetchValentinesGift(address: string, signature: string) {
+    return this.cms.fetchValentinesGift(address, signature)
+  }
+
+
+
   async getFactionsByPoints(gameId: number) {
     return this.cms.getFactionsByPoints(gameId);
   }
