@@ -25709,6 +25709,31 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Bad Time",
+      "slug": "bad-time",
+      "multiToken": false,
+      "address": "0x5bF534f095C3b21c4cE71099b33001A6C6662960",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Bad Time is a collection to save the B.A.D project via burning for the collection + Investment pools with the remaining of the mint, that will get disturbed to holders.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/bad-time/avatar.png",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/bad-time/card.png",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/bad-time/banner.png",
+        "website": "https://time-sniper.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/timemachinenfts",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [
