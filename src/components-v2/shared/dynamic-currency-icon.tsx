@@ -40,6 +40,11 @@ const iconMapping: Record<string, (props: ChakraProps) => ReactElement> = {
       <Image src='/img/icons/ttt.png' alt='TTT Icon' title='TTT' {...props} boxSize={undefined} />
     </Box>
   ),
+  'icy': (props) => (
+    <Box width={props.boxSize} height={props.boxSize}>
+      <Image src='/img/icons/icy.png' alt='ICY Icon' title='ICY' {...props} boxSize={undefined} />
+    </Box>
+  ),
 };
 
 interface CurrencyIconMapperProps extends ChakraProps {
