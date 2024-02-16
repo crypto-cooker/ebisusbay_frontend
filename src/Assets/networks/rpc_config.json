@@ -25690,7 +25690,7 @@
       "multiToken": false,
       "address": "0x345EeC864f28108b0e79554603035A14B9Fe7055",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The silent symphony of our future orchestrating within.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/blumies-gods/avatar.webp",
