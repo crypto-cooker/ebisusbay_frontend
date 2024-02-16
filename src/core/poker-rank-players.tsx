@@ -56,6 +56,19 @@ export const cardValueDict = [
   { max: 11800, value: 12 },//Queen
   { max: 11900, value: 13 },//King
   { max: 12000, value: 14 },//Ace
+  { max: 12400, value: 2 },
+  { max: 12800, value: 3 },
+  { max: 13200, value: 4 },
+  { max: 13600, value: 5 },
+  { max: 14000, value: 6 },
+  { max: 14400, value: 7 },
+  { max: 14800, value: 8 },
+  { max: 15200, value: 9 },
+  { max: 15600, value: 10 },
+  { max: 15700, value: 11 },//Jack
+  { max: 15800, value: 12 },//Queen
+  { max: 15900, value: 13 },//King
+  { max: 16000, value: 14 },//Ace
 ]
 const BlackListedWallets = [
   "0x358758277ce0785104ea72acadc1de7e7af7aecd",
