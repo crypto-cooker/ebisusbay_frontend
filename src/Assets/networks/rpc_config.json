@@ -21459,7 +21459,7 @@
       "multiToken": false,
       "address": "0x96adF7839A133da31824113a23e223D02e97c53A",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Trophy Wives is the 2nd collection by Dead Beat Dads. These 3000 well-endowed ladies married far below their standards to satisfy their lifestyle. Trophy Wives must endure a torturous honeymoon with a Dead Beat Dad in order to earn a birth certificate. Birth certificates will allow one to mint our 3rd collection, Teenage Dirtbags. Our family is growing. Come be a part of it, even if it is dysfunctional.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/dbd-trophy-wives/avatar.webp",
@@ -25734,7 +25734,139 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Cyberpunk Warriors",
+      "slug": "cyberpunk-warriors",
+      "multiToken": false,
+      "address": "0x7239B5A029b0263A813cfA98A615Cc9C9a8C3828",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "In the aftermath of a cataclysmic conflict, the Cyberpunk Warriors emerge as the hardened survivors of the Fire Quest. Cyberunk CROnicles are still fighting to master their skills. Join the Fire Quest if you dare.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/bad-time/avatar.png",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cyberpunk-warriors/card.jpg",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cyberpunk-warriors/banner.jpg",
+        "website": "https://thecronosclub.com/",
+        "twitter": "https://twitter.com/the_cronos_club",
+        "medium": "https://medium.com/@the_cronos_club",
+        "discord": "https://discord.gg/49y7edbqy5",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Elements",
+      "slug": "elements",
+      "multiToken": true,
+      "address": "0xb48D5083e29e8612A19FE9783466ad1F7C4CbeD5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Discover the power of the elements. Each token embodies the force of nature inviting you to explore and harness the essence of elements in a digital realm.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/elements/avatar.jpg",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/elements/card.jpg",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/elements/banner.jpg",
+        "website": "https://thecronosclub.com/",
+        "twitter": "https://twitter.com/the_cronos_club",
+        "medium": "https://medium.com/@the_cronos_club",
+        "discord": "https://discord.gg/49y7edbqy5",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crokachu",
+      "slug": "crokachu",
+      "multiToken": false,
+      "address": "0x4f62423c8e3bea683e14477039f2b3438e9890cb",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crokachu is a 5k Cronos NFT collection of unique pixel-art PFPs. Each NFT is algorithmically created to be unique and guarantees its owner a return on subsequent mints and half of the market royalties!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crokachu/avatar.jpg",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/crokachu/card.png",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/crokachu/banner.png",
+        "website": "https://crokachu.vercel.app/",
+        "twitter": "https://twitter.com/crokachu_cro",
+        "discord": "https://discord.gg/BWP23gPAHV",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Lovestruck Hyenas",
+      "slug": "lovestruck-hyenas",
+      "multiToken": false,
+      "address": "0xcb024A5504F88D495B5A28EFE4Da5F093de6c141",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Inspired by the power of love and the strength of hyena packs, we proudly present a collection of unique NFTs crafted specifically for this special time of year. Each artwork tells a story of affection, connection, and the unwavering spirit of hyenas on Valentine's Day.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/lovestruck-hyenas/avatar.png",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/lovestruck-hyenas/card.png",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/lovestruck-hyenas/banner.png",
+        "website": "https://hyenahustlers.xyz/",
+        "twitter": "https://twitter.com/hyenahustlers",
+        "discord": "https://discord.gg/KcWaBQPuv9",
+        "medium": "https://medium.com/@hyenahustersnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ballies: Legends Packs",
+      "slug": "ballies-legends-packs",
+      "multiToken": false,
+      "address": "0xDcfd2fef694F4b98d1180B7aFcf80b6Abe1028fC",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Step into the mystique of the Ballies universe with our Legends Drop – an exhilarating array of Mystery Boxes that await your discovery. Drawing inspiration from the electric energy of a packed arena, these boxes offer a shot at greatness, with the potential to unveil the coveted King Pack, the illustrious All Star Pack, or the legendary Hall of Fame Pack. Each pack is crafted to turbocharge your journey on the Meta-Court, granting not just a boost in your gameplay but a piece of the grand basketball legacy. With limited quantities and infinite possibilities, these NFTs are your gateway to a storied ascent in the Ballies metaverse. Become the KING of the Meta-Court! Do you have what it takes?",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ballies-legends-packs/avatar.png",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/ballies-legends-packs/card.png",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ballies-legends-packs/banner.png",
+        "website": "https://ballies.gg/",
+        "twitter": "https://www.twitter.com/Ballies_NFT",
+        "discord": "https://discord.gg/ballies-nft-903875114133753887",
+        "medium": "https://medium.com/@BalliesNFT",
+        "telegram": "https://t.me/balliesnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
+
+
   ],
   "drops": [
     {
