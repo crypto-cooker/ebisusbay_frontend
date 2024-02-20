@@ -619,6 +619,9 @@ export const ryoshiConfig: RyoshiConfig = {
           157: 10,
           158: 10,
           159: 10,
+          1001: 25,
+          1002: 50,
+          1003: 100,
         }
       }
     }
