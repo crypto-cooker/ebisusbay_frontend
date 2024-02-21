@@ -74,6 +74,7 @@ interface LocationCard {
   tier: number;
   id: number;
   quantity?: number;
+  type?: string;
 }
 
 interface UserLocationCard extends LocationCard {
@@ -951,8 +952,9 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
             locations.push({
               name: data.data[i].name,
               image: data.data[i].image,
-              tier: 4,
-              id: data.data[i].id
+              tier: 1,
+              id: data.data[i].id,
+              type: 'special'
             })
           }
         }
@@ -1109,7 +1111,22 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
               </Stack>
             </Stack>
             <SimpleGrid columns={{base: 1, md: 2}} spacing={2} mt={1}>
-              {locationsWithUserQty.filter((location) => location.tier == selectedTab+1).map((card) => (
+              { selectedTab === 3 && (
+                locationsWithUserQty.filter((location) => location.type == 'special').map((card) => (
+                  <>
+                    {(showAll || card.quantity > 0) && (
+                      <MemoizedLocationCardForm
+                        key={card.id}
+                        card={card}
+                        bonus={rdConfig.townHall.ryoshi.tradeIn.base[card.id]}
+                        quantitySelected={cardsToTurnIn[card.id] || 0}
+                        onChange={(quantity) => handleSelectCards(card.id, quantity)}
+                      />
+                    )}
+                  </>
+                ))
+              )} : {(
+              locationsWithUserQty.filter((location) => location.tier == selectedTab+1 && location.type == null).map((card) => (
                 <>
                   {(showAll || card.quantity > 0) && (
                     <MemoizedLocationCardForm
@@ -1121,7 +1138,8 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
                     />
                   )}
                 </>
-              ))}
+              ))
+            )}
             </SimpleGrid>
             <SimpleGrid columns={{base: 1, md: 2}} gap={2} mt={2}>
               <RdModalBox>
