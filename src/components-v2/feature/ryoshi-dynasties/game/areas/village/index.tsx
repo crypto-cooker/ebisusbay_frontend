@@ -407,7 +407,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         zIndex={9}
                         onClick={onOpenMerchant}
                       />
-                      <EventSprite
+
+                      { /* <EventSprite
                         id='valentines'
                         position={{x: buildings.valentines.left, y: buildings.valentines.top}}
                         image={ImageService.translate(`/img/ryoshi-dynasties/village/valentines/cupid.apng`).convert()}
@@ -416,6 +417,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         zIndex={9}
                         onClick={onOpenValentiesDialog}
                       />
+                      } */}
                       {/*{isChristmasTime && (*/}
                       {/*  <EventSprite*/}
                       {/*    id='christmas'*/}

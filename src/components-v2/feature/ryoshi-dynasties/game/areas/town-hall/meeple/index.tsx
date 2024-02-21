@@ -152,6 +152,14 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
           tier: card.attributes[1].value,
           id: Number(card.nftId),
           quantity: card.balance === undefined ? 0 : card.balance,
+        }) 
+      } else if (card.attributes !== undefined && card.attributes[0].trait_type === "Theme" && card.attributes[0].value === "Valentine's Day") {
+        acc.cards.push({
+          name: card.name,
+          image: card.image,
+          tier: 4,
+          id: Number(card.nftId),
+          quantity: card.balance === undefined ? 0 : card.balance,
         })
       }
       return acc;
