@@ -939,6 +939,14 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
               id: data.data[i].id
             })
           }
+          if (data.data[i].attributes[j].trait_type == "Theme" && data.data[i].attributes[j].value == "Valentine's Day") {
+            locations.push({
+              name: data.data[i].name,
+              image: data.data[i].image,
+              tier: 4,
+              id: data.data[i].id
+            })
+          }
         }
       }
 
@@ -953,6 +961,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
       const sortedLocations = locationsWithUserQuantity.sort((a, b) => b.quantity - a.quantity);
 
       setLocationsWithUserQty(sortedLocations);
+
     } finally {
       setIsInitializing(false);
     }
@@ -1072,12 +1081,20 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
             <RdTabButton isActive={selectedTab === 2} onClick={() => setSelectedTab(2)}>
               Tier 3
             </RdTabButton>
+            <RdTabButton isActive={selectedTab === 3} onClick={() => setSelectedTab(3)}>
+              Special Events
+            </RdTabButton>
           </SimpleGrid>
         </Flex>
         {!isInitializing ? (
           <>
             <Stack justify='space-between' align={{base: 'start', sm: 'center'}} direction={{base: 'column', sm: 'row'}}>
-              <Box fontSize='sm'>This tier has a <Text as='span' fontWeight='bold' textDecoration='underline'>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</Text> multiplier</Box>
+              {selectedTab !== 3 ? (
+                  <Box fontSize='sm'>This tier has a <Text as='span' fontWeight='bold' textDecoration='underline'>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</Text> multiplier</Box>
+                ) : (
+                  <Box fontSize='sm'>Special event cards give a set, one-time troop bonus based on the rarity</Box>
+                ) 
+              };
               <Stack direction='row' spacing={2} justify='space-between' w={{base: 'full', sm: 'auto'}}>
                 <Button size='sm' variant='unstyled' onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide Empty' : 'Show All'}</Button>
                 <Button size='sm' variant='outline' onClick={handleSelectAll}>{manuallySelectedAll ? 'Unselect' : 'Select'} All</Button>
