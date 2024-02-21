@@ -1125,7 +1125,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
                     )}
                   </>
                 ))
-              )};
+              )}
               { selectedTab !== 3 && (
                 locationsWithUserQty.filter((location) => location.tier == selectedTab+1 && location.type == null).map((card) => (
                   <>
