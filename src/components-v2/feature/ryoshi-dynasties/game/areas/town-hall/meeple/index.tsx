@@ -1125,21 +1125,22 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
                     )}
                   </>
                 ))
-              )} : {(
-              locationsWithUserQty.filter((location) => location.tier == selectedTab+1 && location.type == null).map((card) => (
-                <>
-                  {(showAll || card.quantity > 0) && (
-                    <MemoizedLocationCardForm
-                      key={card.id}
-                      card={card}
-                      bonus={rdConfig.townHall.ryoshi.tradeIn.base[card.id]}
-                      quantitySelected={cardsToTurnIn[card.id] || 0}
-                      onChange={(quantity) => handleSelectCards(card.id, quantity)}
-                    />
-                  )}
-                </>
-              ))
-            )}
+              )};
+              { selectedTab !== 3 && (
+                locationsWithUserQty.filter((location) => location.tier == selectedTab+1 && location.type == null).map((card) => (
+                  <>
+                    {(showAll || card.quantity > 0) && (
+                      <MemoizedLocationCardForm
+                        key={card.id}
+                        card={card}
+                        bonus={rdConfig.townHall.ryoshi.tradeIn.base[card.id]}
+                        quantitySelected={cardsToTurnIn[card.id] || 0}
+                        onChange={(quantity) => handleSelectCards(card.id, quantity)}
+                      />
+                    )}
+                  </>
+                ))
+              )}
             </SimpleGrid>
             <SimpleGrid columns={{base: 1, md: 2}} gap={2} mt={2}>
               <RdModalBox>

@@ -43,7 +43,6 @@ import {ApiService} from "@src/core/services/api-service";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import * as Sentry from "@sentry/nextjs";
 import {Contract} from "ethers";
 import Resources from "@src/Contracts/Resources.json";
 import {parseErrorMessage} from "@src/helpers/validator";
