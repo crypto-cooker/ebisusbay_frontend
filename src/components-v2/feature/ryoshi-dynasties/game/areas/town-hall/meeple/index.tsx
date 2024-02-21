@@ -158,9 +158,9 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
         acc.cards.push({
           name: card.name,
           image: card.image,
-          tier: 4,
+          tier: 1,
           id: Number(card.nftId),
-          quantity: card.balance === undefined ? 0 : card.balance,
+          quantity: card.balance == null ? 0 : card.balance,
         })
       }
       return acc;
@@ -962,6 +962,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
 
       const locationsWithUserQuantity = locations.map((card) => {
         const ownedCard = userLocationCards.find((userCard) => userCard.id.toString() === card.id.toString());
+        if (ownedCard != null) console.log(ownedCard);
         return {
           ...card,
           quantity: ownedCard ? ownedCard.quantity : 0,
@@ -1022,14 +1023,16 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
 
   const handleSelectCards = (nftId: number, quantity: number, resetSelectAllToggle: boolean = false) => {
     setCardsToTurnIn((prevState) => {
+      console.log(prevState);
       const updatedState = { ...prevState };
-
+      console.log(updatedState);
+      console.log(nftId, quantity);
       if (quantity === 0) {
         delete updatedState[nftId];
       } else {
         updatedState[nftId] = quantity;
       }
-
+      console.log(updatedState);
       return updatedState;
     });
     if (resetSelectAllToggle) setManuallySelectedAll(false);
@@ -1057,10 +1060,16 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
     Object.keys(cardsToTurnIn).forEach((key: any) => {
       const card = locationsWithUserQty.find((card) => card.id.toString() === key.toString());
       if (!card) return;
-      const base = rdConfig.townHall.ryoshi.tradeIn.base[key];
-      const multiplier = rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[card.tier - 1];
-      const sets = cardsToTurnIn[key] / cardsPerSet;
-      totalRyoshi += base * sets * multiplier;
+
+      // VALENTINES
+      if (card.type === 'special') {
+        totalRyoshi += rdConfig.townHall.ryoshi.tradeIn.base[card.id]
+      } else {
+        const base = rdConfig.townHall.ryoshi.tradeIn.base[key];
+        const multiplier = rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[card.tier - 1];
+        const sets = cardsToTurnIn[key] / cardsPerSet;
+        totalRyoshi += base * sets * multiplier;
+      }
     });
     setRyoshiToReceive(totalRyoshi);
 
@@ -1219,8 +1228,11 @@ const LocationCardForm = ({card, bonus, quantitySelected, onChange}: LocationCar
   }), [isTouchDevice, quantitySelected]);
 
   const handleSelectQuantity = () => {
-    const step = 3;
+    let step = 3;
     let newQuantity = 0;
+    if (+card.id >= 1001 && +card.id <= 1003) {
+      step = 1;
+    }
     if (quantitySelected + step <= card.quantity && card.quantity >= step) {
       newQuantity = quantitySelected + step;
     }
