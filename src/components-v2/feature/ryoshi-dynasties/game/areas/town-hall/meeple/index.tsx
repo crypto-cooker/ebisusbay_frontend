@@ -74,6 +74,7 @@ interface LocationCard {
   tier: number;
   id: number;
   quantity?: number;
+  type?: string;
 }
 
 interface UserLocationCard extends LocationCard {
@@ -152,6 +153,14 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
           tier: card.attributes[1].value,
           id: Number(card.nftId),
           quantity: card.balance === undefined ? 0 : card.balance,
+        }) 
+      } else if (card.attributes !== undefined && card.attributes[0].trait_type === "Theme" && card.attributes[0].value === "Valentine's Day") {
+        acc.cards.push({
+          name: card.name,
+          image: card.image,
+          tier: 1,
+          id: Number(card.nftId),
+          quantity: card.balance == null ? 0 : card.balance,
         })
       }
       return acc;
@@ -939,6 +948,15 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
               id: data.data[i].id
             })
           }
+          if (data.data[i].attributes[j].trait_type == "Theme" && data.data[i].attributes[j].value == "Valentine's Day") {
+            locations.push({
+              name: data.data[i].name,
+              image: data.data[i].image,
+              tier: 1,
+              id: data.data[i].id,
+              type: 'special'
+            })
+          }
         }
       }
 
@@ -953,6 +971,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
       const sortedLocations = locationsWithUserQuantity.sort((a, b) => b.quantity - a.quantity);
 
       setLocationsWithUserQty(sortedLocations);
+
     } finally {
       setIsInitializing(false);
     }
@@ -1003,6 +1022,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
 
   const handleSelectCards = (nftId: number, quantity: number, resetSelectAllToggle: boolean = false) => {
     setCardsToTurnIn((prevState) => {
+
       const updatedState = { ...prevState };
 
       if (quantity === 0) {
@@ -1038,10 +1058,16 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
     Object.keys(cardsToTurnIn).forEach((key: any) => {
       const card = locationsWithUserQty.find((card) => card.id.toString() === key.toString());
       if (!card) return;
-      const base = rdConfig.townHall.ryoshi.tradeIn.base[key];
-      const multiplier = rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[card.tier - 1];
-      const sets = cardsToTurnIn[key] / cardsPerSet;
-      totalRyoshi += base * sets * multiplier;
+
+      // VALENTINES
+      if (card.type === 'special') {
+        totalRyoshi += rdConfig.townHall.ryoshi.tradeIn.base[card.id]
+      } else {
+        const base = rdConfig.townHall.ryoshi.tradeIn.base[key];
+        const multiplier = rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[card.tier - 1];
+        const sets = cardsToTurnIn[key] / cardsPerSet;
+        totalRyoshi += base * sets * multiplier;
+      }
     });
     setRyoshiToReceive(totalRyoshi);
 
@@ -1072,31 +1098,56 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
             <RdTabButton isActive={selectedTab === 2} onClick={() => setSelectedTab(2)}>
               Tier 3
             </RdTabButton>
+            <RdTabButton isActive={selectedTab === 3} onClick={() => setSelectedTab(3)}>
+              Special Events
+            </RdTabButton>
           </SimpleGrid>
         </Flex>
         {!isInitializing ? (
           <>
             <Stack justify='space-between' align={{base: 'start', sm: 'center'}} direction={{base: 'column', sm: 'row'}}>
-              <Box fontSize='sm'>This tier has a <Text as='span' fontWeight='bold' textDecoration='underline'>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</Text> multiplier</Box>
+              {selectedTab !== 3 ? (
+                  <Box fontSize='sm'>This tier has a <Text as='span' fontWeight='bold' textDecoration='underline'>{rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[selectedTab]}x</Text> multiplier</Box>
+                ) : (
+                  <Box fontSize='sm'>Special event cards give a set, one-time troop bonus based on the rarity</Box>
+                ) 
+              };
               <Stack direction='row' spacing={2} justify='space-between' w={{base: 'full', sm: 'auto'}}>
                 <Button size='sm' variant='unstyled' onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide Empty' : 'Show All'}</Button>
                 <Button size='sm' variant='outline' onClick={handleSelectAll}>{manuallySelectedAll ? 'Unselect' : 'Select'} All</Button>
               </Stack>
             </Stack>
             <SimpleGrid columns={{base: 1, md: 2}} spacing={2} mt={1}>
-              {locationsWithUserQty.filter((location) => location.tier == selectedTab+1).map((card) => (
-                <>
-                  {(showAll || card.quantity > 0) && (
-                    <MemoizedLocationCardForm
-                      key={card.id}
-                      card={card}
-                      bonus={rdConfig.townHall.ryoshi.tradeIn.base[card.id]}
-                      quantitySelected={cardsToTurnIn[card.id] || 0}
-                      onChange={(quantity) => handleSelectCards(card.id, quantity)}
-                    />
-                  )}
-                </>
-              ))}
+              { selectedTab === 3 && (
+                locationsWithUserQty.filter((location) => location.type == 'special').map((card) => (
+                  <>
+                    {(showAll || card.quantity > 0) && (
+                      <MemoizedLocationCardForm
+                        key={card.id}
+                        card={card}
+                        bonus={rdConfig.townHall.ryoshi.tradeIn.base[card.id]}
+                        quantitySelected={cardsToTurnIn[card.id] || 0}
+                        onChange={(quantity) => handleSelectCards(card.id, quantity)}
+                      />
+                    )}
+                  </>
+                ))
+              )}
+              { selectedTab !== 3 && (
+                locationsWithUserQty.filter((location) => location.tier == selectedTab+1 && location.type == null).map((card) => (
+                  <>
+                    {(showAll || card.quantity > 0) && (
+                      <MemoizedLocationCardForm
+                        key={card.id}
+                        card={card}
+                        bonus={rdConfig.townHall.ryoshi.tradeIn.base[card.id]}
+                        quantitySelected={cardsToTurnIn[card.id] || 0}
+                        onChange={(quantity) => handleSelectCards(card.id, quantity)}
+                      />
+                    )}
+                  </>
+                ))
+              )}
             </SimpleGrid>
             <SimpleGrid columns={{base: 1, md: 2}} gap={2} mt={2}>
               <RdModalBox>
@@ -1175,8 +1226,11 @@ const LocationCardForm = ({card, bonus, quantitySelected, onChange}: LocationCar
   }), [isTouchDevice, quantitySelected]);
 
   const handleSelectQuantity = () => {
-    const step = 3;
+    let step = 3;
     let newQuantity = 0;
+    if (+card.id >= 1001 && +card.id <= 1003) {
+      step = 1;
+    }
     if (quantitySelected + step <= card.quantity && card.quantity >= step) {
       newQuantity = quantitySelected + step;
     }
