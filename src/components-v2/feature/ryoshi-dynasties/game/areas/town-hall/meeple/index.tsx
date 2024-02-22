@@ -962,7 +962,6 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
 
       const locationsWithUserQuantity = locations.map((card) => {
         const ownedCard = userLocationCards.find((userCard) => userCard.id.toString() === card.id.toString());
-        if (ownedCard != null) console.log(ownedCard);
         return {
           ...card,
           quantity: ownedCard ? ownedCard.quantity : 0,
@@ -1023,16 +1022,15 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
 
   const handleSelectCards = (nftId: number, quantity: number, resetSelectAllToggle: boolean = false) => {
     setCardsToTurnIn((prevState) => {
-      console.log(prevState);
+
       const updatedState = { ...prevState };
-      console.log(updatedState);
-      console.log(nftId, quantity);
+
       if (quantity === 0) {
         delete updatedState[nftId];
       } else {
         updatedState[nftId] = quantity;
       }
-      console.log(updatedState);
+
       return updatedState;
     });
     if (resetSelectAllToggle) setManuallySelectedAll(false);
