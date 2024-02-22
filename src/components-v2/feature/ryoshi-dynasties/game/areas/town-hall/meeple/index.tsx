@@ -1061,7 +1061,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
 
       // VALENTINES
       if (card.type === 'special') {
-        totalRyoshi += rdConfig.townHall.ryoshi.tradeIn.base[card.id]
+        totalRyoshi += cardsToTurnIn[key] * rdConfig.townHall.ryoshi.tradeIn.base[card.id];
       } else {
         const base = rdConfig.townHall.ryoshi.tradeIn.base[key];
         const multiplier = rdConfig.townHall.ryoshi.tradeIn.tierMultiplier[card.tier - 1];
