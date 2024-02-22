@@ -43,7 +43,6 @@ import {ApiService} from "@src/core/services/api-service";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import * as Sentry from "@sentry/nextjs";
 import {Contract} from "ethers";
 import Resources from "@src/Contracts/Resources.json";
 import {parseErrorMessage} from "@src/helpers/validator";
@@ -407,7 +406,8 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         zIndex={9}
                         onClick={onOpenMerchant}
                       />
-                      <EventSprite
+
+                      { /* <EventSprite
                         id='valentines'
                         position={{x: buildings.valentines.left, y: buildings.valentines.top}}
                         image={ImageService.translate(`/img/ryoshi-dynasties/village/valentines/cupid.apng`).convert()}
@@ -416,6 +416,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         zIndex={9}
                         onClick={onOpenValentiesDialog}
                       />
+                      } */}
                       {/*{isChristmasTime && (*/}
                       {/*  <EventSprite*/}
                       {/*    id='christmas'*/}
