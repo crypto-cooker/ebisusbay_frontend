@@ -912,3 +912,8 @@ export const isFortuneToken = (address) => {
 export const isErc20Token = (address) => {
   return !!knownErc20Token(address);
 }
+
+export const uniqueNftId = (nft) => {
+  if (!nft) return null;
+  return `${nft.nftAddress ?? nft.address}${nft.nftId ?? nft.id}`;
+}
