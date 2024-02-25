@@ -53,13 +53,17 @@ export const setUserAAddressAtom = atom(
   null,
   (get, set, address: string) => {
     const currentState = get(barterStateAtom);
-    set(barterStateAtom, {
-      ...currentState,
-      userA: {
-        ...currentState.userA,
-        address,
-      },
-    });
+    if (currentState.userA.address !== address) {
+      set(barterStateAtom, {
+        ...currentState,
+        userA: {
+          ...currentState.userA,
+          address: address,
+          nfts: [],
+          erc20: [],
+        },
+      });
+    }
   }
 );
 
@@ -67,11 +71,46 @@ export const setUserBAddressAtom = atom(
   null,
   (get, set, address: string) => {
     const currentState = get(barterStateAtom);
+    if (currentState.userB.address !== address) {
+      set(barterStateAtom, {
+        ...currentState,
+        userB: {
+          ...currentState.userB,
+          address: address,
+          nfts: [],
+          erc20: [],
+        },
+      });
+    }
+  }
+);
+
+export const clearUserADataAtom = atom(
+  null,
+  (get, set) => {
+    const currentState = get(barterStateAtom);
+    set(barterStateAtom, {
+      ...currentState,
+      userA: {
+        address: '',
+        nfts: [],
+        erc20: [],
+      },
+    });
+  }
+);
+
+// Atom to clear userB's data
+export const clearUserBDataAtom = atom(
+  null,
+  (get, set) => {
+    const currentState = get(barterStateAtom);
     set(barterStateAtom, {
       ...currentState,
       userB: {
-        ...currentState.userB,
-        address,
+        address: '',
+        nfts: [],
+        erc20: [],
       },
     });
   }

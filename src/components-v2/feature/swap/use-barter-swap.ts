@@ -3,7 +3,7 @@ import {
   BarterNft,
   BarterState,
   barterStateAtom,
-  BarterToken,
+  BarterToken, clearUserADataAtom, clearUserBDataAtom,
   setUserAAddressAtom,
   setUserBAddressAtom,
   toggleOfferAERC20Atom,
@@ -20,6 +20,8 @@ interface UseBarterSwap {
   barterState: BarterState;
   setUserAAddress: (address: string) => void;
   setUserBAddress: (address: string) => void;
+  clearUserAData: (address: string) => void;
+  clearUserBData: (address: string) => void;
   toggleSelectionNFT: (nft: BarterNft) => void;
   toggleSelectionERC20: (erc20: BarterToken) => void;
   toggleOfferNFT: (nft: BarterNft) => void;
@@ -35,6 +37,8 @@ const useBarterSwap = (): UseBarterSwap => {
 
   const [, setUserAAddress] = useAtom(setUserAAddressAtom);
   const [, setUserBAddress] = useAtom(setUserBAddressAtom);
+  const [, clearUserAData] = useAtom(clearUserADataAtom);
+  const [, clearUserBData] = useAtom(clearUserBDataAtom);
   const [, toggleSelectionNFT] = useAtom(toggleUserANFTAtom);
   const [, toggleSelectionERC20] = useAtom(toggleUserAERC20Atom);
   const [, toggleOfferNFT] = useAtom(toggleOfferANFTAtom);
@@ -48,6 +52,8 @@ const useBarterSwap = (): UseBarterSwap => {
     barterState,
     setUserAAddress,
     setUserBAddress,
+    clearUserAData,
+    clearUserBData,
     toggleSelectionNFT,
     toggleSelectionERC20,
     toggleOfferNFT,

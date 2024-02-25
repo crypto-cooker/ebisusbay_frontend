@@ -323,7 +323,7 @@ const PreviewNftItem = ({nft, ref, isOpen, onOpen, onClose, onSave, onRemove, is
             {nft.balance > 1 && (
               <AvatarBadge
                 boxSize={6}
-                bg='#218cff'
+                bg={isPaused ? 'gray.500' : '#218cff'}
                 fontSize={nft.amountSelected > 99 ? 'xs' : 'sm'}
                 border={`1px solid ${borderColor}`}
               >
@@ -460,7 +460,7 @@ const PreviewTokenItem = ({token, ref, isOpen, onOpen, onClose, onSave, onRemove
             fontSize='xs'
             w='full'
             textAlign='center'
-            bgColor='#218cff'
+            bgColor={isPaused ? 'gray.500' : '#218cff'}
             fontWeight='bold'
             color='white'
           >
