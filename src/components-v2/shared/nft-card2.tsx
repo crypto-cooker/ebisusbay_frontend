@@ -42,8 +42,9 @@ import NextLink from "next/link";
 // }
 
 enum NftCardMode {
-  LINKED,
-  INTERACTIVE
+  LINKED, // Click to visit hyperlink
+  MULTISELECT, // Click to select
+  INTERACTIVE // Click HUD to select, otherwise hyperlink
 }
 
 interface SelectState {
@@ -75,8 +76,14 @@ const BaseNftCard = ({nft, mode, selectability, linkTo, body, footer}: BaseNftCa
   const hoverBorderColor = useColorModeValue('#595d69', '#ddd');
   const url = `/collection/${nft.nftAddress}/${nft.nftId}`;
 
-  const propagateSelect = (e: any) => {
+  const handleBodySelect = (e: any) => {
+    if (mode !== NftCardMode.MULTISELECT) return;
     e.stopPropagation();
+    selectability?.onSelect(nft);
+  }
+
+  const handleHudSelect = () => {
+    if (mode !== NftCardMode.INTERACTIVE) return;
     selectability?.onSelect(nft);
   }
 
@@ -96,8 +103,8 @@ const BaseNftCard = ({nft, mode, selectability, linkTo, body, footer}: BaseNftCa
         backgroundColor={bgColor}
         overflow='hidden'
         h='full'
-        cursor={mode === NftCardMode.INTERACTIVE ? 'pointer' : 'auto'}
-        onClick={mode === NftCardMode.INTERACTIVE ? propagateSelect : undefined}
+        cursor={mode > NftCardMode.LINKED ? 'pointer' : 'auto'}
+        onClick={handleBodySelect}
       >
         <Box
           width='100%'
@@ -174,7 +181,7 @@ const BaseNftCard = ({nft, mode, selectability, linkTo, body, footer}: BaseNftCa
                           rounded='full'
                         />
                       }
-                      onClick={selectability.onSelect}
+                      onClick={handleHudSelect}
                     />
                   ) : (
                     <IconButton
@@ -190,7 +197,7 @@ const BaseNftCard = ({nft, mode, selectability, linkTo, body, footer}: BaseNftCa
                           rounded='full'
                         />
                       }
-                      onClick={selectability.onSelect}
+                      onClick={handleHudSelect}
                       _groupHover={{transition:'0.3s ease', opacity: 1}}
                       transition="0.3s ease"
                       opacity={0}
@@ -422,7 +429,7 @@ const SelectableNftCard = ({ nft, body, amountSelected, onSelect }: SelectableNf
     <BaseNftCard
       nft={nft}
       linkTo={false}
-      mode={NftCardMode.INTERACTIVE}
+      mode={NftCardMode.MULTISELECT}
       selectability={{
         canSelect: true,
         amountSelected: amountSelected,

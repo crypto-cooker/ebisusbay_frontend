@@ -41,9 +41,10 @@ const previewSize = '50px';
 
 interface SwapPreviewProps {
   onChangeStep: (step: number) => void;
+  onConfirm: () => void;
 }
 
-export const SwapPreview = ({onChangeStep}: SwapPreviewProps) => {
+export const SwapPreview = ({onChangeStep, onConfirm}: SwapPreviewProps) => {
   const user = useUser();
   const {
     barterState,
@@ -59,8 +60,6 @@ export const SwapPreview = ({onChangeStep}: SwapPreviewProps) => {
   const sliderBackground = useColorModeValue('gray.50', 'gray.700')
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [executing, setExecuting] = useState(false);
-
 
   const handleNext = () => {
     if (currentStep === 1) {
@@ -76,15 +75,6 @@ export const SwapPreview = ({onChangeStep}: SwapPreviewProps) => {
   const handleBack = () => {
     setCurrentStep(currentStep - 1);
     onChangeStep(currentStep - 1);
-  }
-
-  const handleConfirm = () => {
-    console.log('confirming...')
-    try {
-      setExecuting(true);
-    } finally {
-      setExecuting(false);
-    }
   }
 
   const initialFocusRef = useRef(null);
@@ -232,11 +222,17 @@ export const SwapPreview = ({onChangeStep}: SwapPreviewProps) => {
                       >
                         Next
                       </PrimaryButton>
+                    ) : currentStep === 2 ? (
+                      <PrimaryButton
+                        onClick={handleNext}
+                        isDisabled={barterState.userA.nfts.length < 1 || barterState.userB.nfts.length < 1  || !user.wallet.isConnected}
+                      >
+                        Review
+                      </PrimaryButton>
                     ) : (
                       <PrimaryButton
-                        onClick={handleConfirm}
-                        isLoading={executing}
-                        isDisabled={executing || barterState.userA.nfts.length < 1 || barterState.userB.nfts.length < 1  || !user.wallet.isConnected}
+                        onClick={onConfirm}
+                        isDisabled={barterState.userA.nfts.length < 1 || barterState.userB.nfts.length < 1  || !user.wallet.isConnected}
                       >
                         Confirm
                       </PrimaryButton>
@@ -299,6 +295,8 @@ const PreviewNftItem = ({nft, ref, isOpen, onOpen, onClose, onSave, onRemove, is
     onOpen();
   }
 
+  const hoverTitle = nft.amountSelected > 1 ? `${nft.amountSelected} x${quantity}` : `${nft.amountSelected}`;
+
   return (
     <Popover
       initialFocusRef={ref}
@@ -312,6 +310,7 @@ const PreviewNftItem = ({nft, ref, isOpen, onOpen, onClose, onSave, onRemove, is
           onClick={handleOpen}
           filter={isPaused ? 'grayscale(80%)' : 'auto'}
           opacity={isPaused ? 0.5 : 'auto'}
+          title={hoverTitle}
         >
           <Avatar
             src={ImageService.translate(nft.image).avatar()}
@@ -454,6 +453,7 @@ const PreviewTokenItem = ({token, ref, isOpen, onOpen, onClose, onSave, onRemove
           direction='column'
           justify='space-between'
           overflow='hidden'
+          title={`${token.amount} ${token.name}`}
         >
           <Box p={1}>{token.image}</Box>
           <Box

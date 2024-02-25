@@ -7,6 +7,7 @@ import {useUser} from "@src/components-v2/useUser";
 import {ciEquals} from "@src/utils";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {DefaultContainer} from "@src/components-v2/shared/default-container";
+import {Step3ReviewDetails} from "@src/components-v2/feature/swap/step-3-review-details";
 
 const sidebarWidth = '400px';
 
@@ -17,9 +18,19 @@ interface UserSwapViewProps {
 export const UserSwapView = ({address}: UserSwapViewProps) => {
   const user = useUser();
   const [currentStep, setCurrentStep] = useState(1);
+  const [executing, setExecuting] = useState(false);
 
   const handleChangeStep = (step: number) => {
     setCurrentStep(step);
+  }
+
+  const handleConfirm = () => {
+    console.log('confirming...')
+    try {
+      setExecuting(true);
+    } finally {
+      setExecuting(false);
+    }
   }
 
   return (
@@ -37,7 +48,16 @@ export const UserSwapView = ({address}: UserSwapViewProps) => {
                       Cannot swap with yourself. Try selecting another user or connecting a different wallet.
                     </Box>
                   ) : (
-                    <Step2ChooseItems address={user.address} />
+                    <>
+                      {currentStep === 2 ? (
+                        <Step2ChooseItems address={user.address} />
+                      ) : currentStep === 3 && (
+                        <Step3ReviewDetails
+                          address={user.address}
+                          onConfirm={handleConfirm}
+                        />
+                      )}
+                    </>
                   )}
                 </>
               ) : (
@@ -53,6 +73,7 @@ export const UserSwapView = ({address}: UserSwapViewProps) => {
       </DefaultContainer>
       <SwapPreview
         onChangeStep={handleChangeStep}
+        onConfirm={handleConfirm}
       />
     </>
   )

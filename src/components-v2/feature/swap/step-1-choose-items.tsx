@@ -422,7 +422,7 @@ const ChooseTokensTab = ({address}: {address: string}) => {
             </NumberInputStepper>
           </NumberInput>
         </Stack>
-        <Flex justify='end'>
+        <Flex justify='end' mt={2}>
           <PrimaryButton onClick={handleAddCurrency}>
             Add
           </PrimaryButton>
