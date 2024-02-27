@@ -22780,7 +22780,7 @@
       },
       "verification": {
         "verified": true,
-        "doxx": false,
+        "doxx": true,
         "kyc": true
       }
     },
