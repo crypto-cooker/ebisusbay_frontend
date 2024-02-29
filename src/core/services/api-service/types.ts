@@ -60,6 +60,7 @@ export interface RyoshiDynastiesApi {
     requestResourcesWithdrawalAuthorization(tokenId: number, amount: number, address: string, signature: string): Promise<any>;
     requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string): Promise<any>;
     requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string): Promise<any>;
+    checkBlacklistStatus(address: string): Promise<any>;
     getPendingFortuneAuthorizations(address: string, signature: string): Promise<any>;
     getGlobalContext(): Promise<RyoshiConfig>;
     getUserContext(address: string, signature: string): Promise<RdUserContext>;
