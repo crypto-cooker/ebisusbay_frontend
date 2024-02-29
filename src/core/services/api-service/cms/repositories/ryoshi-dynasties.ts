@@ -210,7 +210,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
   async checkBlacklistStatus(address: string) {
     const response = await this.cms.get(
-      `ryoshi-dynasties/fortune-rewards/blacklist?address=${address}`,
+      `ryoshi-dynasties/fortune-rewards/blacklist/${address}`,
     );
     return response.data;
   }

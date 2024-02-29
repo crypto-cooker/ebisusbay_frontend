@@ -410,7 +410,7 @@ const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
     try {
       
       const check = await ApiService.withoutKey().ryoshiDynasties.checkBlacklistStatus(user.address!);
-      if (check.blacklisted === true) {
+      if (check.data.blacklisted === true) {
         return;
       };
       setIsExecuting(true);
