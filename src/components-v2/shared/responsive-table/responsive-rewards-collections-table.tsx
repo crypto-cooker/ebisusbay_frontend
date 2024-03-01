@@ -99,6 +99,15 @@ const DataTable = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
               <Td>
                 {commify(entity.points)}
               </Td>
+              <Td>
+                {commify(entity.frtnPerCollection.toFixed(2))}
+              </Td>
+              <Td>
+                {commify(entity.eligibleListings)}
+              </Td>
+              <Td>
+                {commify(entity.frtnPerListing.toFixed(2))}
+              </Td>
             </LinkBox>
           ))}
         </Tbody>
