@@ -31,7 +31,7 @@ import Blockies from "react-blockies";
 import {commify} from "ethers/lib/utils";
 
 interface ResponsiveRewardsCollectionsTableProps {
-  data: Array<{ name: string, address: string; points: number; type: string, avatar?: string, rank: number }>;
+  data: Array<{ name: string, address: string; points: number; type: string, avatar?: string, rank: number, frtnPerListing: number, eligibleListings: number, frtnPerCollection: number }>;
   onSort: (field: string) => void;
   breakpointValue?: string
 }
@@ -155,6 +155,36 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
                     <StatLabel>Points</StatLabel>
                     <StatNumber>
                       <Box fontWeight='bold'>{entity.points}</Box>
+                    </StatNumber>
+                  </Stat>
+                </VStack>
+              </Box>
+              <Box>
+                <VStack align='end' spacing={0} fontSize='sm'>
+                  <Stat size='sm' textAlign='end'>
+                    <StatLabel>FRTN</StatLabel>
+                    <StatNumber>
+                      <Box fontWeight='bold'>{entity.frtnPerCollection}</Box>
+                    </StatNumber>
+                  </Stat>
+                </VStack>
+              </Box>
+              <Box>
+                <VStack align='end' spacing={0} fontSize='sm'>
+                  <Stat size='sm' textAlign='end'>
+                    <StatLabel>Listings</StatLabel>
+                    <StatNumber>
+                      <Box fontWeight='bold'>{entity.eligibleListings}</Box>
+                    </StatNumber>
+                  </Stat>
+                </VStack>
+              </Box>
+              <Box>
+                <VStack align='end' spacing={0} fontSize='sm'>
+                  <Stat size='sm' textAlign='end'>
+                    <StatLabel>FRTN/Listing</StatLabel>
+                    <StatNumber>
+                      <Box fontWeight='bold'>{entity.frtnPerListing}</Box>
                     </StatNumber>
                   </Stat>
                 </VStack>
