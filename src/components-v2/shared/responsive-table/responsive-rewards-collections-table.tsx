@@ -58,6 +58,9 @@ const DataTable = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
             <Th>#</Th>
             <Th cursor='pointer' colSpan={2}>Name</Th>
             <Th onClick={() => onSort('price')} cursor='pointer'>Points</Th>
+            <Th onClick={() => onSort('frtnPerCollection')} cursor='pointer'>FRTN</Th>
+            <Th onClick={() => onSort('eligibleListings')} cursor='pointer'>Listings</Th>
+            <Th onClick={() => onSort('frtnPerListing')} cursor='pointer'>FRTN/Listing</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -159,8 +162,8 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
                 </HStack>
               </Box>
               <Box>
-                <VStack align='end' spacing={0} fontSize='sm'>
-                  <Stat size='sm' textAlign='end'>
+                <VStack  spacing={0} fontSize='sm'>
+                  <Stat size='sm' >
                     <StatLabel>Points</StatLabel>
                     <StatNumber>
                       <Box fontWeight='bold'>{entity.points}</Box>
@@ -169,31 +172,31 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
                 </VStack>
               </Box>
               <Box>
-                <VStack align='end' spacing={0} fontSize='sm'>
-                  <Stat size='sm' textAlign='end'>
+                <VStack  spacing={0} fontSize='sm'>
+                  <Stat size='sm'>
                     <StatLabel>FRTN</StatLabel>
                     <StatNumber>
-                      <Box fontWeight='bold'>{entity.frtnPerCollection}</Box>
+                      <Box fontWeight='bold'>{commify(entity.frtnPerCollection.toFixed(2))}</Box>
                     </StatNumber>
                   </Stat>
                 </VStack>
               </Box>
               <Box>
-                <VStack align='end' spacing={0} fontSize='sm'>
-                  <Stat size='sm' textAlign='end'>
+                <VStack  spacing={0} fontSize='sm'>
+                  <Stat size='sm' >
                     <StatLabel>Listings</StatLabel>
                     <StatNumber>
-                      <Box fontWeight='bold'>{entity.eligibleListings}</Box>
+                      <Box fontWeight='bold'>{commify(entity.eligibleListings)}</Box>
                     </StatNumber>
                   </Stat>
                 </VStack>
               </Box>
               <Box>
-                <VStack align='end' spacing={0} fontSize='sm'>
+                <VStack  spacing={0} fontSize='sm'>
                   <Stat size='sm' textAlign='end'>
                     <StatLabel>FRTN/Listing</StatLabel>
                     <StatNumber>
-                      <Box fontWeight='bold'>{entity.frtnPerListing}</Box>
+                      <Box fontWeight='bold'>{commify(entity.frtnPerListing.toFixed(2))}</Box>
                     </StatNumber>
                   </Stat>
                 </VStack>
