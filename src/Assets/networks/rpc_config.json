@@ -25767,6 +25767,44 @@
       "multiToken": true,
       "address": "0xb48D5083e29e8612A19FE9783466ad1F7C4CbeD5",
       "onChain": false,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        },
+        {
+          "id": 6
+        },
+        {
+          "id": 7
+        },
+        {
+          "id": 8
+        },
+        {
+          "id": 9
+        },
+        {
+          "id": 10
+        },
+        {
+          "id": 11
+        },
+        {
+          "id": 12
+        }
+      ],
       "listable": true,
       "metadata": {
         "description": "Discover the power of the elements. Each token embodies the force of nature inviting you to explore and harness the essence of elements in a digital realm.",
