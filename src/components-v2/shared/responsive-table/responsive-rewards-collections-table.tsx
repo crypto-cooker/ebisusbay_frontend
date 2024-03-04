@@ -172,8 +172,8 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
               </Box>
               <HStack spacing={10}>
               <Box>
-                <VStack  spacing={0} fontSize='sm'>
-                  <Stat size='sm' >
+                <VStack align='end' spacing={0} fontSize='sm'>
+                  <Stat size='sm' textAlign='end' >
                     <StatLabel>Points</StatLabel>
                     <StatNumber>
                       <Box fontWeight='bold'>{entity.points}</Box>
