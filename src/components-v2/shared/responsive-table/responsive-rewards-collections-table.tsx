@@ -181,21 +181,6 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
                   </Stat>
                 </VStack>
               </Box>
-              <Box>
-                <VStack  spacing={5} fontSize='sm'>
-                  <Stat size='sm' textAlign='end'>
-                    <StatLabel>
-                    <Flex alignItems='center'>
-                          <FortuneIcon boxSize={3} />
-                          <Box as='span' ms={1}>/ Listing</Box>
-                      </Flex>
-                    </StatLabel>
-                    <StatNumber>
-                      <Box fontWeight='bold'>{commify(entity.frtnPerListing.toFixed(2))}</Box>
-                    </StatNumber>
-                  </Stat>
-                </VStack>
-              </Box>
               </HStack>
               <AccordionButton w='auto' _hover={{bg: 'none'}}>
                   <AccordionIcon />
@@ -205,21 +190,21 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
             <SimpleGrid columns={3} textAlign='center' fontSize='sm' bg={hoverBackground} rounded='md' py={2}>
               <Stack spacing={0}>
                 <Box fontWeight='bold'>
-                  FRTN/Collection
+                  <FortuneIcon boxSize={3} verticalAlign='middle'></FortuneIcon> / Collection
                 </Box>
                 <HStack spacing={1} w="full" justify="center">
                   <Text>{commify(entity.frtnPerCollection.toFixed(2))}</Text>
                 </HStack>
               </Stack>
               <Stack spacing={0}>
-                <Box fontWeight='bold'>Eligible Listings</Box>
+                <Box fontWeight='bold'>Valid Listings</Box>
                 <HStack spacing={1} w="full" justify="center">
                   <Text>{commify(entity.eligibleListings)}</Text>
                 </HStack>
               </Stack>
               <Stack spacing={0}>
                 <Box fontWeight='bold' verticalAlign='middle'>
-                  FRTN/Listing
+                <FortuneIcon boxSize={3} verticalAlign='middle'></FortuneIcon> / Listing
                 </Box>
                 <HStack spacing={1} w="full" justify="center">
                   <Text>{commify(entity.frtnPerListing.toFixed(2))}</Text>
