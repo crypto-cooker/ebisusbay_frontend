@@ -280,7 +280,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
   async getGameWinners(gameId: number) {
     const response = await this.cms.get(`ryoshi-dynasties/games/${gameId}/winners`);
-    return response.data.data as Array<{ address: string; points: number; type: string }>;
+    return response.data.data as Array<{ address: string; points: number; type: string, frtnPerCollection: number, eligibleListings: number, frtnPerListing: number }>;
   }
 
   async getBattleLog(query: GetBattleLog) {
