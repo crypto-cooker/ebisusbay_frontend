@@ -185,6 +185,9 @@ export class ApiService implements Api {
         address: collection.address,
         avatar: collection.metadata.avatar,
         type: 'COLLECTION',
+        frtnPerCollection: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, collection.address))?.frtnPerCollection,
+        eligibleListings: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, collection.address))?.eligibleListings,
+        frtnPerListing: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, collection.address))?.frtnPerListing,
         points: pointsByAddress
           .filter(entry => caseInsensitiveCompare(entry.address, collection.address))
           .reduce((prev, next) => {
@@ -202,6 +205,9 @@ export class ApiService implements Api {
         address: address,
         avatar: null,
         type: 'WALLET',
+        frtnPerCollection: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, address))?.frtnPerCollection,
+        eligibleListings: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, address))?.eligibleListings,
+        frtnPerListing: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, address))?.frtnPerListing,
         points: pointsByAddress
           .filter(entry => caseInsensitiveCompare(entry.address, address))
           .reduce((prev, next) => {

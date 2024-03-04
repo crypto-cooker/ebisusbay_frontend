@@ -107,6 +107,9 @@ const Rewards = () => {
               <Text as='span'>Users will be able to earn rewards by listing NFTs from any eligible collections below. Eligible users in the list will be able to earn rewards by listing any of their NFTs.{' '}</Text>
               <Text as='span' fontWeight='bold' className='color'><Link href='https://ebisusbay.notion.site/Rewards-aa425cc2207c42a996e1a5e8b03fc00a' isExternal>Learn more</Link></Text>
             </Box>
+            <Box fontSize='sm'>
+            <Text as='span'>The FRTN reward values listed below are based on the previous day's distributions and are approximations - they will change everyday based on collection volume and the number of eligible listings.{' '}</Text>
+            </Box>
           </Flex>
         </Box>
         <Box mt={4}>
