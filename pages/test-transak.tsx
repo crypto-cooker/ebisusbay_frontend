@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {Contract, ethers} from "ethers";
-import {Box, Button, Text, VStack, Wrap} from "@chakra-ui/react";
+import {Box, Button, Text, useClipboard, VStack, Wrap} from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {GetServerSidePropsContext} from "next";
 import * as process from "process";
@@ -174,8 +174,9 @@ export default Test;
 const Transak = () => {
   const user = useUser();
   const [isExecuting, setIsExecuting] = useState(false);
-  const [value, setValue] = useState<string | number>();
+  const [callData, setCallData] = useState<string | number>();
   const [selectedListings, setSelectedListings] = useState<any[]>([]);
+  const { onCopy, value, setValue, hasCopied } = useClipboard("");
 
   const {data} = useQuery({
     queryKey: ['transakGetListings'],
@@ -224,6 +225,7 @@ const Transak = () => {
         signature
       ]);
       setValue(rawCallData);
+      setCallData(rawCallData);
     } catch (e: any) {
       console.log(e);
       toast.error(parseErrorMessage(e));
@@ -252,9 +254,13 @@ const Transak = () => {
       <Button mt={4} isLoading={isExecuting} isDisabled={isExecuting} onClick={handleGenerateCallData}>
         Generate Call Data
       </Button>
-      <Box>
-        <Text w='500px'>{value}</Text>
-      </Box>
+      {!!callData && (
+        <Box mt={2}>
+          <Text fontSize='lg'>Call Data</Text>
+          <Button onClick={onCopy}>{hasCopied ? "Copied!" : "Copy Call Data"}</Button>
+          <Box w='500px'>{callData}</Box>
+        </Box>
+      )}
     </Box>
   )
 }
