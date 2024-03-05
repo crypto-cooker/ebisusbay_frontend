@@ -223,7 +223,6 @@ const Transak = () => {
         sigData,
         signature
       ]);
-      console.log('orderData', orderData);
       setValue(rawCallData);
     } catch (e: any) {
       console.log(e);
@@ -259,13 +258,13 @@ const Transak = () => {
     </Box>
   )
 }
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (!context.req.headers.host?.startsWith('localhost') || process.env.NODE_ENV !== 'development') {
-    return {
-      destination: `/`,
-      permanent: false,
-    }
-  }
-
-  return { props: { } }
-}
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//   if (!context.req.headers.host?.startsWith('localhost') || process.env.NODE_ENV !== 'development') {
+//     return {
+//       destination: `/`,
+//       permanent: false,
+//     }
+//   }
+//
+//   return { props: { } }
+// }
