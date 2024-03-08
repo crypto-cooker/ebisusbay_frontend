@@ -209,7 +209,7 @@ const DialogContent = ({isOpen, onClose, listing, listingId, DialogBody, DialogF
                   isLoading={isExecutingCancel || isExecutingLegacyCancel}
                   isDisabled={isExecutingCancel || isExecutingLegacyCancel}
                   className="flex-fill"
-                  loadingText='Configm'
+                  loadingText='Confirm'
                 >
                   Confirm
                 </PrimaryButton>
