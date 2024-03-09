@@ -4,7 +4,7 @@ import {appConfig} from "@src/Config";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {useQuery} from "@tanstack/react-query";
 import {multicall} from "@wagmi/core";
-import {portABI, stakeABI} from "@src/Contracts/types";
+import {portAbi, stakeAbi} from "@src/Contracts/types";
 import {ethers} from "ethers";
 import {JotaiUser, UserActionType, userAtom} from "@src/jotai/atoms/user";
 import {useAtom} from "jotai";
@@ -77,31 +77,31 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         contracts: [
           {
             address: config.contracts.market,
-            abi: portABI,
+            abi: portAbi,
             functionName: 'isMember',
             args: [address],
           },
           {
             address: config.contracts.market,
-            abi: portABI,
+            abi: portAbi,
             functionName: 'useEscrow',
             args: [address],
           },
           {
             address: config.contracts.market,
-            abi: portABI,
+            abi: portAbi,
             functionName: 'payments',
             args: [address],
           },
           {
             address: config.contracts.market,
-            abi: portABI,
+            abi: portAbi,
             functionName: 'fee',
             args: [address],
           },
           {
             address: config.contracts.stake,
-            abi: stakeABI,
+            abi: stakeAbi,
             functionName: 'getReward',
             args: [address],
           },
