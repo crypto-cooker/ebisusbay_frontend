@@ -22205,7 +22205,7 @@
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/zoodles/card2.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/zoodles/banner.webp",
         "twitter": "https://twitter.com/Secret__Jen",
-        "discord": "https://discord.gg/Zh69mDURNH",
+        "discord": "https://discord.gg/GUWaKaBzUv",
         "categories": []
       },
       "verification": {
@@ -22772,7 +22772,7 @@
         "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/avatar2.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/card.webp",
-        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/banner2.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/banner3.png",
         "website": "https://coomcats.com/",
         "twitter": "https://twitter.com/CoomCatsNFT",
         "discord": "https://discord.gg/fDgERHyUzC",
@@ -22780,7 +22780,7 @@
       },
       "verification": {
         "verified": true,
-        "doxx": false,
+        "doxx": true,
         "kyc": true
       }
     },
@@ -24575,7 +24575,7 @@
       "multiToken": false,
       "address": "0x26ba6Bd9436cf2BE636b32cCf40b1c3843c6ac13",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Genius Genies are the DAO token used to make decisions regarding ecosystem treasury funds. 1 Genie = 1 vote",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/genius-genies/avatar.webp",
@@ -25767,6 +25767,44 @@
       "multiToken": true,
       "address": "0xb48D5083e29e8612A19FE9783466ad1F7C4CbeD5",
       "onChain": false,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        },
+        {
+          "id": 6
+        },
+        {
+          "id": 7
+        },
+        {
+          "id": 8
+        },
+        {
+          "id": 9
+        },
+        {
+          "id": 10
+        },
+        {
+          "id": 11
+        },
+        {
+          "id": 12
+        }
+      ],
       "listable": true,
       "metadata": {
         "description": "Discover the power of the elements. Each token embodies the force of nature inviting you to explore and harness the essence of elements in a digital realm.",
@@ -30310,7 +30348,7 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://furyquackgang.com/",
       "images": {

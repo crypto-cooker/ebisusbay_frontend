@@ -208,6 +208,13 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
+  async checkBlacklistStatus(address: string) {
+    const response = await this.cms.get(
+      `ryoshi-dynasties/fortune-rewards/blacklist/${address}`,
+    );
+    return response.data;
+  }
+
   async requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string) {
     const response = await this.cms.post(
       `ryoshi-dynasties/fortune-rewards/compound/${vaultIndex}`,
@@ -273,7 +280,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
   async getGameWinners(gameId: number) {
     const response = await this.cms.get(`ryoshi-dynasties/games/${gameId}/winners`);
-    return response.data.data as Array<{ address: string; points: number; type: string }>;
+    return response.data.data as Array<{ address: string; points: number; type: string, frtnPerCollection: number, eligibleListings: number, frtnPerListing: number }>;
   }
 
   async getBattleLog(query: GetBattleLog) {

@@ -94,6 +94,10 @@ class Cms {
     return this.ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(address, amount, vaultIndex, signature);
   }
 
+  async checkBlacklistStatus(address: string) {
+    return this.ryoshiDynasties.checkBlacklistStatus(address);
+  }
+
   async getPendingFortuneAuthorizations(address: string, signature: string) {
     return this.ryoshiDynasties.getPendingFortuneAuthorizations(address, signature);
   }

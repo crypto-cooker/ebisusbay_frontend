@@ -533,7 +533,7 @@ const LeaderboardDrawer = ({isOpen, onClose}: LeaderboardDrawerProps) => {
                             <Text isTruncated={isMobile} maxW={isMobile ? '140px': '200px'}>{entry.faction.name}</Text>
                           </HStack>
                         </Td>
-                        <Td textAlign='left' maxW='200px' isNumeric>{commify(entry.points)}</Td>
+                        <Td textAlign='left' maxW='200px' isNumeric>{commify(Math.round(entry.points))}</Td>
                       </Tr>
                     ))}
                   </Tbody>
