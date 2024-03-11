@@ -2,10 +2,11 @@ import {useContext, useEffect, useMemo, useState} from "react";
 import {providers} from "ethers";
 import UserContractService from "@src/core/contractService";
 import {UserContext} from "@src/components-v2/shared/contexts/user";
-import {useWalletClient, WalletClient} from "wagmi";
+import {useWalletClient} from "wagmi";
 import {useWeb3Modal} from "@web3modal/wagmi/react";
 import {useQueryClient} from "@tanstack/react-query";
 import ContractService from "@src/core/contractService";
+import {Account, Chain, Client, Transport} from "viem";
 
 export const useUser = () => {
   const context = useContext(UserContext);
@@ -82,7 +83,7 @@ export const useContractService = () => {
  * Ethers adapters to get signer from viem/wagmi
  * https://wagmi.sh/react/ethers-adapters
  */
-function walletClientToSigner(walletClient: WalletClient) {
+function walletClientToSigner(walletClient: Client<Transport, Chain, Account>) {
   const { account, chain, transport } = walletClient
   const network = {
     chainId: chain.id,

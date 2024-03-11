@@ -1,10 +1,10 @@
-import {useAccount, useBalance, useDisconnect, useNetwork} from "wagmi";
+import {useAccount, useAccountEffect, useBalance, useDisconnect} from "wagmi";
 import {createContext, ReactNode, useEffect} from "react";
 import {appConfig} from "@src/Config";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {useQuery} from "@tanstack/react-query";
 import {multicall} from "@wagmi/core";
-import {portABI, stakeABI} from "@src/Contracts/types";
+import {portAbi, stakeAbi} from "@src/Contracts/types";
 import {ethers} from "ethers";
 import {JotaiUser, UserActionType, userAtom} from "@src/jotai/atoms/user";
 import {useAtom} from "jotai";
@@ -15,6 +15,7 @@ import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
 import {storageSignerAtom} from "@src/jotai/atoms/storage";
 import * as Sentry from "@sentry/react";
 import {themeAtom} from "@src/jotai/atoms/theme";
+import {wagmiConfig} from "@src/components-v2/web3modal";
 
 const config = appConfig();
 
@@ -42,13 +43,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   // isConnected - true when explicitly connecting to wallet from dialog
   // isReconnecting - true when wallet is auto connecting after page refresh
-  const {address, isConnecting, isConnected, isReconnecting, status,connector} = useAccount({
+  const {address, isConnecting, isConnected, isReconnecting, status,connector, chain} = useAccount();
+
+  useAccountEffect({
     onDisconnect() {
       clearUser();
     }
-  });
+  })
 
-  const { chain } = useNetwork();
   const { disconnect: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
   const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address });
@@ -71,35 +73,35 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         throw {err: 'Unable to connect'};
       }
 
-      const data = await multicall({
+      const data = await multicall(wagmiConfig, {
         contracts: [
           {
             address: config.contracts.market,
-            abi: portABI,
+            abi: portAbi,
             functionName: 'isMember',
             args: [address],
           },
           {
             address: config.contracts.market,
-            abi: portABI,
+            abi: portAbi,
             functionName: 'useEscrow',
             args: [address],
           },
           {
             address: config.contracts.market,
-            abi: portABI,
+            abi: portAbi,
             functionName: 'payments',
             args: [address],
           },
           {
             address: config.contracts.market,
-            abi: portABI,
+            abi: portAbi,
             functionName: 'fee',
             args: [address],
           },
           {
             address: config.contracts.stake,
-            abi: stakeABI,
+            abi: stakeAbi,
             functionName: 'getReward',
             args: [address],
           },
@@ -183,13 +185,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   // Set Wallet
   useEffect(() => {
-    connector?.getProvider().then((p) => {
-      let wallet = 'Unknown';
-      if (p.isDeficonnectProvider) wallet = 'DeFi Wallet'; // isMetaMask also true, so make sure this is before
-      else if (p.isMetaMask) wallet = 'MetaMask';
-      else if (p.isBraveWallet) wallet = 'Brave';
-      Sentry.setTag('wallet', wallet);
-    });
+    // connector?.getProvider().then((p) => {
+    //   let wallet = 'Unknown';
+    //   if (p.isDeficonnectProvider) wallet = 'DeFi Wallet'; // isMetaMask also true, so make sure this is before
+    //   else if (p.isMetaMask) wallet = 'MetaMask';
+    //   else if (p.isBraveWallet) wallet = 'Brave';
+    //   Sentry.setTag('wallet', wallet);
+    // });
 
     // Wallet states:
     // connected but locked = !!address, !connector, !!isReconnecting, !!chain
