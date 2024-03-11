@@ -119,7 +119,7 @@ const Drop = () => {
         id="profile_banner"
         className="jumbotron breadcumb no-bg tint"
         style={{
-          backgroundImage: 'url(/img/collections/crosmonauts/ship/banner.webp)',
+          backgroundImage: 'url(https://cdn-prod.ebisusbay.com/files/collection-images/crosmonauts/ship/banner.webp)',
           backgroundPosition: '50% 50%',
         }}
       >
@@ -140,7 +140,7 @@ const Drop = () => {
             <div className="d_profile">
               <div className="profile_avatar">
                 <div className="d_profile_img">
-                  <img src={hostedImage('/img/collections/crosmonauts/ship/avatar.webp')} alt="Crosmonauts" />
+                  <img src={hostedImage('https://cdn-prod.ebisusbay.com/files/collection-images/crosmonauts/ship/avatar.webp')} alt="Crosmonauts" />
                 </div>
                 <p>Combine ship parts to build a Crosmocraft!</p>
                 <p>
@@ -264,10 +264,10 @@ const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected }:
         <div className="row row-cols-1 row-cols-sm-3 row-cols-md-4 g-3">
           <div className="border-0">
             {quantityCollected[0] > 0 ? (
-              <img src={`/img/collections/crosmonauts/parts/${type}-engine.webp`} className="card-img-top" alt="..." />
+              <img src={`https://cdn-prod.ebisusbay.com/files/collection-images/crosmonauts/parts/${type}-engine.webp`} className="card-img-top" alt="..." />
             ) : (
               <GreyscaleImg
-                src={`/img/collections/crosmonauts/parts/${type}-engine.webp`}
+                src={`https://cdn-prod.ebisusbay.com/files/collection-images/crosmonauts/parts/${type}-engine.webp`}
                 className="card-img-top"
                 alt="..."
               />
@@ -279,10 +279,10 @@ const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected }:
           </div>
           <div className="border-0">
             {quantityCollected[1] > 0 ? (
-              <img src={`/img/collections/crosmonauts/parts/${type}-booster.webp`} className="card-img-top" alt="..." />
+              <img src={`https://cdn-prod.ebisusbay.com/files/collection-images/crosmonauts/parts/${type}-booster.webp`} className="card-img-top" alt="..." />
             ) : (
               <GreyscaleImg
-                src={`/img/collections/crosmonauts/parts/${type}-booster.webp`}
+                src={`https://cdn-prod.ebisusbay.com/files/collection-images/crosmonauts/parts/${type}-booster.webp`}
                 className="card-img-top"
                 alt="..."
               />
@@ -294,10 +294,10 @@ const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected }:
           </div>
           <div className="border-0">
             {quantityCollected[2] > 0 ? (
-              <img src={`/img/collections/crosmonauts/parts/${type}-deck.webp`} className="card-img-top" alt="..." />
+              <img src={`https://cdn-prod.ebisusbay.com/files/collection-images/crosmonauts/parts/${type}-deck.webp`} className="card-img-top" alt="..." />
             ) : (
               <GreyscaleImg
-                src={`/img/collections/crosmonauts/parts/${type}-deck.webp`}
+                src={`https://cdn-prod.ebisusbay.com/files/collection-images/crosmonauts/parts/${type}-deck.webp`}
                 className="card-img-top"
                 alt="..."
               />

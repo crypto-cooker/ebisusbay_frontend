@@ -276,7 +276,7 @@ export const ListingDrawer = () => {
     const gaslessListingIds = items
       .filter((item) => !!item.nft.listingId && isGaslessListing(item.nft.listingId))
       .map((item) => item.nft.listingId!);
-    if (gaslessListingIds.length > 0) await cancelGaslessListing(gaslessListingIds);
+    if (gaslessListingIds.length > 0) await cancelGaslessListing(gaslessListingIds, false);
 
     const nftAddresses = items.map((o) => o.nft.nftAddress);
     const nftIds = items.map((o) => o.nft.nftId);

@@ -208,6 +208,9 @@ const SingleDrop = ({drop}: SingleDropProps) => {
 
     setTotalSupply(infos.totalSupply - drop.supplyOffset);
     setMaxSupply(infos.maxSupply - drop.supplyOffset);
+    if (infos.maxSupply - drop.supplyOffset < 1) {
+      console.log('Max supply not set')
+    }
   };
 
   const calculateStatus = (drop: any, totalSupply: number, maxSupply: number) => {
@@ -429,9 +432,11 @@ export default SingleDrop;
 
 const Container = styled.div`
   p {
-      margin-top: 10px;
+      margin-bottom: 15px;
   }
-  
+  ul {
+      margin-bottom: 15px;
+  }
   li {
     margin-left: 18px;
   }

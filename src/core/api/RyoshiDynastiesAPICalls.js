@@ -125,21 +125,6 @@ export const getControlPoint = async (controlPointId, gameId) => {
     throw error;
   }
 }
-export const attack = async (address, signature, troops, controlPointId, factionId, defendingFactionId, battleType) => {
-  try{
-    //cant remove yet as attacktap is still a js file
-    var gameID = await api.get("ryoshi-dynasties/games/0");
-    var gameId = gameID.data.data.id;
-
-    return await api.post("ryoshi-dynasties/battle-transactions?", 
-      {troops, controlPointId, gameId, factionId, defendingFactionId, battleType},
-      {params: {address, signature, gameId}}
-      );
-  }
-  catch(error){
-    throw error;
-  }
-}
 
 export const getBattleRewards = async (address, signature) => {
   try{

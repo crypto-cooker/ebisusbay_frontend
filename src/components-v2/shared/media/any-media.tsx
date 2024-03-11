@@ -43,6 +43,9 @@ export const AnyMedia = ({
   const [transformedImage, setTransformedImage] = useState(image);
   const [videoThumbnail, setVideoThumbNail] = useState<string | null>(thumbnail ?? image);
 
+  // Hack just in case MAPI maps an empty animation_url by mistake
+  if (video === 'https://gateway.ebisusbay.com/ipfs/') video = undefined;
+
   const blurImageUrl = (img: string) => {
     return ImageService.translate(img).blurred();
   };

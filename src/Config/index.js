@@ -121,6 +121,11 @@ export const configData = {
         name: 'TTT',
         symbol: 'TTT',
         address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6'
+      },
+      icy: {
+        name: 'ICY',
+        symbol: 'ICY',
+        address: '0x8F857Af6Ea31447Bb502fE0E3F4e4340CDFCfc6C'
       }
     },
     collections: rpcConfig.known_contracts,
@@ -149,7 +154,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy'],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -258,6 +263,14 @@ export const configData = {
           '0xA9448e3e496f75488306195F34e49a7fCE5cbD0c': ['cro'],
           '0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8': ['cro'],
           '0x400e237c4F88e5728E0D6088315DeCD856a10EDd': ['cro'], // CroSkill Brand End
+          '0xabae2fd87bdc719165dc31a5b22316f974df5bdf': ['icy'], // ICY Brand
+          '0x0Ea3bE4Ca12b7B43e974264a210f4de0e273A027': ['icy'],
+          '0xbEa2F7082ad9B5e1138D5e94E00fbc63d7EC8612': ['icy'],
+          '0x07174D2B657b2243E5C11Df2Cd3D4afD1E45DBBb': ['icy'],
+          '0x4F68b2F90091B6C6012b487Faa7D267FC0Db86dE': ['icy'],
+          '0x45008e129A33368119757496DA762284ff8e2565': ['icy'],
+          '0x7677cbE702Ff3d0e66d3BaC0fD71Cb641A276Ae0': ['icy'],
+          '0xccc598ef1b4d17d9f44a889eee38c8de53f5df00': ['icy'], // ICY Brand End
         }
       }
     }
@@ -366,7 +379,18 @@ export const configData = {
         name: 'Candy',
         symbol: 'CANDY',
         address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977'
+      },
+      ttt: {
+        name: 'TTT',
+        symbol: 'TTT',
+        address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6'
+      },
+      icy: {
+        name: 'ICY',
+        symbol: 'ICY',
+        address: '0x8F857Af6Ea31447Bb502fE0E3F4e4340CDFCfc6C'
       }
+      
     },
     collections: rpcConfigDev.known_contracts,
     drops: rpcConfigDev.drops,
@@ -394,7 +418,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'],
+        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy'],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -405,7 +429,112 @@ export const configData = {
           '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5': ['frtn'],        // EB FM/VIP
           '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'],        // Fortune Guards
           '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],        // FortuneTeller
-          '0x1eca64187AD00A86360D62f1CD4409Dc1A136B45': ['cro', 'frtn'], // Everybody's Not Friends
+          '0xd87838a982a401510255ec27e603b0f5fea98d24': ['frtn'],        // Ryoshi Playing Cards
+          '0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04': ['frtn'],        // Ryoshi Tales
+          '0xF098C2aD290f32c8666ace27222d3E65cECE43b9': ['frtn'],        // Ryoshi Heroes
+          '0x8ac06d8CF5B371bf57723C050C1969f0f23Dbf98': ['cro', 'frtn', 'bcro'], // Project X Access Pass
+          '0xa996aD2b9f240F78b063E47F552037658c4563d1': ['cro', 'frtn', 'bcro'], // Argonauts
+          '0xc3cf2416a69351bf336ff671ad46d92efee4ea75': ['cro', 'frtn', 'bcro'], // Honorary Argonauts
+          '0x0A37674F61a9345f32E277b15E3C9603cDe710f6': ['cro', 'frtn', 'bcro'], // Argonauts Mystery Pill
+          '0xb67A1DE71c8506e4b6326d2a01c421F831b9754d': ['cro', 'frtn', 'bcro'], // Argonauts Odyssey
+          '0x3A19A693a29b43BAE23F32B498d1A24D09F19878': ['cro', 'frtn', 'bcro'], // Atlantis Planets
+          '0xCd8799DcFEe2d5a5bD8f26a3b4f30afb1099bCbc': ['cro', 'frtn', 'bcro'], // Atlantis Spaceships
+          '0xd32c596994a07946699caea4e669c6e284a85958': ['cro', 'frtn', 'bcro'], // ArgoPetz
+          '0xfa6888f9f3602e02507a2bbed661c8cb256949c8': ['cro', 'frtn', 'bcro'], // Atlantis Equipment
+          '0xcbb22330413be9c5de7d80bba4b14ce99d9f3aba': ['cro', 'frtn', 'bcro'], // Atlantis Gemstones
+          '0xdbFDf81D1fDD2e79e8ffaDE50c219452587e9488': ['frtn'],        // Cowz
+          '0xA0edf26589AD4318DAb2354629541cfFd3e5EBDf': ['cro', 'frtn', 'bcro'], // Piggy Bank Finance
+          '0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56': ['cro', 'frtn', 'mad'], // Mad Meerkat
+          '0xDC5bBDb4A4b051BDB85B959eB3cBD1c8C0d0c105': ['cro', 'frtn', 'mad'], // MM Treehouse
+          '0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8': ['cro', 'frtn', 'mad'], // Mad Meerkat Degen
+          '0x23721073592FB452C556fB9322bA4dF6A6675050': ['cro', 'frtn', 'mad'], // Mad Sacks
+          '0x0aCDA31Cf1F301a7Eb8f988D47F708FbA058F8f5': ['cro', 'frtn', 'vrse'], // CronosVerse
+          '0x130a6c2884325d302830179C691D328dDAd9b78C': ['cro', 'frtn', 'vrse'], // Crovilians
+          '0x7Ac7D6d0d981C8A00637234f8026a4f78C5df14a': ['cro', 'frtn', 'vrse'], // Cro Snowmen
+          '0x1eD88baF12Ec3fd8D2955B1b2a883e6E79a10828': ['cro', 'frtn', 'vrse'], // The CronosVerse Suites
+          '0xaf038d14905409de31fb5577c460d18b1013e4f1': ['cro', 'frtn', 'vrse'], // The CronosVerse In-Game Assets
+          '0xd0B45e7bFcc58C99203E60a363E2574e01B0a581': ['cro', 'frtn', 'bcro'], // 0xLuckless
+          '0xad350404b1564c732f3ed6673cfd8bdf93206a97': ['cro', 'frtn', 'bcro'], // 0xLuckless v1.5
+          '0xb9efdd70E93DbE4C700a229deCAf09e24C4Aef8C': ['cro', 'frtn', 'bcro'], // 0xLuckless v1.6
+          '0x0d511FAA531d8D36aDE88daFcBbb9cE83Be42111': ['cro', 'frtn', 'bcro'], // 0xLuckless v2.0
+          '0x5141E99523002317BE6D63214Bf300cBD8269bE6': ['cro', 'frtn', 'bcro'], // 0xluckless-v2-2
+          '0x51084c32AA5ee43a0e7bD8220195da53b5c69868': ['cro', 'frtn', 'bcro'], // Trusted Cases
+          '0x724900a57ED516ba023b1F5F86A92E222BC32D02': ['cro', 'frtn', 'bcro'], // Chefz Army
+          '0x3fF260ce7A8dFCaDAF5E880137ee1750ceae9889': ['cro', 'frtn', 'bcro'], // The Rainbowland LANDs
+          '0x9ac290d92ba63e3e741e5afd0b9da3b78c50fbb7': ['cro', 'frtn', 'bcro'], // Mythical Mafia
+          '0xE46837d6Bf5b6F6C90C1B170aECBFDEc0E4425ea': ['cro', 'frtn', 'bcro'], // DegenzSkulls
+          '0xb650279e3d726B0c75C984cAA55341cB87A7F501': ['cro', 'frtn', 'scratch'], // Boomer Squad
+          '0x3D03292D428fd7d6C81a6E76b4A333A3d8a0E296': ['cro', 'frtn', 'scratch'], // Zoomer Squad
+          '0xacDA8C2818E7a120acd0395BD1f3EF562971A7F8': ['cro', 'frtn', 'scratch'], // Zoomer Squad - Playground Game Tokens: Season 1
+          '0x8Dd9975c78423480a6188F55B0767fbF4478b001': ['cro', 'frtn', 'scratch'], // Boomer Squad - Boom Rooms
+          '0x8Bff49Fc633e0A3eB879449B67500812B27a97B7': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Activity
+          '0x995d38004314836E48485D5fE328ebC17046FE68': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Bed
+          '0xc6a1f1034235F3B389bAb28B75719B3475Edf4AD': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Building
+          '0xf27205535932c7490F227F5bED7e5f7212b455bb': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Couch
+          '0xEa71F7AFA9eEEee5De16ee64b76255E216952511': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Desk
+          '0xAE40d175F2cf9C6777c0E0830E17211c4F5A66D0': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Door
+          '0x18550Cc44779EA72D6Fe6389D08D8Ab234f754CB': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Entertainment
+          '0x48D20305Ad156e44A0f93c3312A876E56c0e9f7E': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Pet
+          '0xb7109F93d780FD3f01eB7EbB0FE9436449F0D8EF': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Table
+          '0xc5B294B557402f8706aED487e155773756A9c400': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Window
+          '0x4AA9F792b51954A8903967375e854Ed7EE4bCBf0': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Cosmetics
+          '0xccE7B3067765FfbA74744C8dB4C1Cd58Bf8D77e7': ['cro', 'frtn', 'scratch'], // Zoomer Squad - Playground Game Tokens: Season 2
+          '0x1220b4E081c04f345C572536EA531Ed2AdE691BD': ['cro', 'frtn', 'bcro'], // AxOl Elites
+          '0x1368a855545724B165F8c3e466ec30e1fB2A3683': ['cro', 'frtn', 'bcro'], // Football Squares S2
+          '0x5c18d5eb211203eb80b591aa71a269b1e16e9eba': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Ballies: The Gear v2
+          '0xE1049178296ce004996AFb16B0816c5A95aC8482': ['cro', 'frtn', 'candy'], // Bored Candy
+          '0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW
+          '0x65AB0251d29c9C473c8d01BFfa2966F891fB1181': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // MAD CROW
+          '0x937879726455531dB135F9b8D88F38dF5D4Eb13b': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW NEST
+          '0x0f1439a290e86a38157831fe27a3dcd302904055': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CROW PUNKS
+          '0x13d13e2410A34Bfe5502D50ea4FCFBd591D7589E': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Wrapped Cronos Punk
+          '0xd33CFeF82377fef83703B9D84151a477B08Ab3b8': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW Airdrops
+          '0xccc777777ac85999fc9fe355f25cd908060ec9ea': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW Customs
+          '0x3d7777ff1908B54b57038A2556d6904f71468e2D': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // 3D CROW
+          '0x9b72f7d5aecee857cc3d1a1a3357aff0e342d0a8': ['cro', 'frtn', 'ttt'], // Time Machine 101
+          '0x146cf0ee7b6b986769782ea832e8327f9dff55e7': ['cro', 'frtn', 'ttt'], // Tata's Guardians
+          '0x482eBe3063ED2d2281AAfec31941705787432A1A': ['cro', 'frtn', 'ttt'], // Time Machine 102: The Travellers
+          '0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35': ['cro', 'frtn', 'ttt'], // Time Ship Blueprints
+          '0x55c8f67e6D3f037297Daf94AD2bCC67CC477BEa9': ['cro', 'frtn', 'ttt'], // Time Troops
+          '0x1c4924f36Fe60374DB6ac206894D82F03d522933': ['cro', 'frtn', 'ttt'], // Time Creatures Class A
+          '0x15Af2503a934D211A1936684fEd986E7E3f417db': ['cro', 'frtn', 'ttt'], // Time Creatures Class B
+          '0x6cC790CAE45EC057f9637784279A475CC91cf517': ['cro', 'frtn', 'ttt'], // Animated Time Gods
+          '0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645': ['cro', 'frtn', 'ttt'], // Time Commanders
+          '0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475': ['cro', 'frtn', 'ttt'], // Time Creature Ships
+          '0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F': ['cro', 'frtn', 'ttt'], // Time Cronos Planets
+          '0xfF567a62d7BF2CF984F02175C8bd485E3C4E2c0e': ['cro', 'frtn', 'ttt'], // Time Ship Components
+          '0x739b5380156Fa14C7956145048d52dF27EDedfCE': ['cro', 'frtn', 'ttt'], // Tata's Twisted Tonics
+          '0xb76415D33268391bfaE2E671f45CeDAD9bC99dc9': ['cro', 'frtn', 'ttt'], // Animated Guardians
+          '0xCF926cB69b860Da8c33a2a601217856536ed0bcA': ['cro', 'frtn', 'ttt'], // Animated Time Machine 102s
+          '0x975238Ce3c593060a9b549e1654dC992f0Bc11aC': ['cro', 'frtn', 'ttt'], // Power Tonics
+          '0x87e04f1d64619994a5320450E19C184a2dDE09c7': ['cro', 'frtn', 'ttt'], // CroTops
+          '0x35B832bE9546fCad67526Be2801228194250378A': ['cro', 'frtn', 'ttt'], // Time Base
+          '0xF87A517A5CaecaA03d7cCa770789BdB61e09e05F': ['cro'], // CroSkill Brand Start
+          '0xbf4E430cD0ce8b93d4760958fe4ae66cDaCDB6c6': ['cro'],
+          '0x14e9ef197C0bfaf7C1328ebed7151f53616Af3C5': ['cro'],
+          '0x6d54590Ed6950EcD3987778c004d4773a7e99dAC': ['cro'],
+          '0x5DD5d3140Fe619Ef8F4655383283BB555E219A27': ['cro'],
+          '0x635D66972453E20F5f2EA2787361C752232F07D2': ['cro'],
+          '0x27fE0fA269DeAC471aC07014d6ED9973ce69bd96': ['cro'],
+          '0xB77959DC7a12F7549ACC084Af01259Fc48813c89': ['cro'],
+          '0x54655D5468f072D5bcE1577c4a46F701C28a41A7': ['cro'],
+          '0x31B378ac025a341839CD81C4D29A8457324D3EbC': ['cro'],
+          '0x77aE45b634a829B002293E554fA67ADC0EB78Bc2': ['cro'],
+          '0xed9BDf3E103332C853DDb9933BA3B45acfDB9B2e': ['cro'],
+          '0xB9eCFF7e01a48C434a3B8A034906e4b34Da62f90': ['cro'],
+          '0xB929D3002208f405180D3C07616F88EDa45F3e14': ['cro'],
+          '0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9': ['cro'],
+          '0xA9448e3e496f75488306195F34e49a7fCE5cbD0c': ['cro'],
+          '0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8': ['cro'],
+          '0x400e237c4F88e5728E0D6088315DeCD856a10EDd': ['cro'], // CroSkill Brand End
+          '0xabae2fd87bdc719165dc31a5b22316f974df5bdf': ['icy'], // ICY Brand
+          '0x0Ea3bE4Ca12b7B43e974264a210f4de0e273A027': ['icy'],
+          '0xbEa2F7082ad9B5e1138D5e94E00fbc63d7EC8612': ['icy'],
+          '0x07174D2B657b2243E5C11Df2Cd3D4afD1E45DBBb': ['icy'],
+          '0x4F68b2F90091B6C6012b487Faa7D267FC0Db86dE': ['icy'],
+          '0x45008e129A33368119757496DA762284ff8e2565': ['icy'],
+          '0x7677cbE702Ff3d0e66d3BaC0fD71Cb641A276Ae0': ['icy'],
+          '0xccc598ef1b4d17d9f44a889eee38c8de53f5df00': ['icy'], // ICY Brand End
         }
       }
     }

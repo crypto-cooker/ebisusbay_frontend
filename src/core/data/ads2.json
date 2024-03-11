@@ -1,5 +1,20 @@
 [
   {
+    "name": "Chiverse",
+    "start": 1707249499,
+    "end": 1707940737,
+    "placement": "rd-board",
+    "details": {
+      "weight": 2,
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/chiverse-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/chiverse-small.webp",
+      "link": {
+        "url": " https://app.chiverse.online/my-club/stadium",
+        "external": true
+      }
+    }
+  },
+  {
     "name": "Ryoshi Tales VIP",
     "start": 1701890579,
     "end": 1703107305,
@@ -152,9 +167,9 @@
       },
       "author": "Time Machine",
       "images": {
-        "drop": "/img/drops/time-machine-spaceships/drop.webp",
-        "avatar": "/img/collections/time-machine-spaceships/avatar.webp",
-        "preview": "/img/collections/time-machine-spaceships/card.webp"
+        "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/time-machine-spaceships/drop.webp",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-spaceships/avatar.webp",
+        "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-spaceships/card.webp"
       },
       "socials": {
         "website": "https://time-launcher.com/",

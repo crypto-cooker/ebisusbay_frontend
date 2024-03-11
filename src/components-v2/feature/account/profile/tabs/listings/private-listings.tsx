@@ -24,7 +24,6 @@ import {
   Text,
   useBreakpointValue
 } from "@chakra-ui/react";
-import MyNftCancelDialog from '@src/Components/components/MyNftCancelDialog';
 import ListingsFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/listings/listings-filter-container";
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
@@ -38,6 +37,7 @@ import useDebounce from "@src/core/hooks/useDebounce";
 import BatchPreview from "@src/components-v2/feature/account/profile/tabs/listings/batch-preview";
 import {MultiSelectContext} from './context';
 import {useUser} from "@src/components-v2/useUser";
+import {ResponsiveCancelListingDialog} from "@src/components-v2/shared/dialogs/cancel-listing";
 
 interface UserPrivateListingsProps {
   walletAddress: string
@@ -66,7 +66,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
   const [mobileMultiSelectMode, setMobileMultiSelectMode] = useState(false);
 
   const [cancelDialogNft, setCancelDialogNft] = useState<any>(null);
-  const [createListingNft, setCreateListingNft] = useState<any>(null);
+  const [updateListingNft, setUpdateListingNft] = useState<any>(null);
 
   const fetcher = async ({ pageParam = 1 }) => {
     const listings = await nextApiService.getUserUnfilteredListings(walletAddress, {
@@ -271,7 +271,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
                   if (!!collection) {
                     nft = {...listing.nft, multiToken: collection.multiToken};
                   }
-                  setCreateListingNft(nft);
+                  setUpdateListingNft({...listing, nft});
                 }}
                 onCancel={(listing) => {
                   setCancelDialogNft(listing);
@@ -285,18 +285,18 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
       </Box>
 
       {!!cancelDialogNft && (
-        <MyNftCancelDialog
+        <ResponsiveCancelListingDialog
           isOpen={!!cancelDialogNft}
           listing={cancelDialogNft}
           onClose={() => setCancelDialogNft(null)}
         />
       )}
-      {!!createListingNft && (
+      {!!updateListingNft && (
         <CreateListingDialog
-          isOpen={!!createListingNft}
-          nft={createListingNft}
-          onClose={() => setCreateListingNft(null)}
-          listing={null}
+          isOpen={!!updateListingNft}
+          nft={updateListingNft.nft}
+          onClose={() => setUpdateListingNft(null)}
+          listing={updateListingNft}
         />
       )}
       <BatchPreview

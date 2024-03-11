@@ -21,6 +21,7 @@ import {FactionUpdateRequest, factionUpdateRequestSchema} from "@src/core/servic
 import {DeployTroopsRequest, deployTroopsRequestSchema} from "@src/core/services/api-service/cms/queries/deploy";
 import {MerchantItem, MerchantPurchaseRequestResponse} from "@src/core/services/api-service/cms/response-types";
 import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
+import {AttackRequest, attackRequestSchema} from "@src/core/services/api-service/cms/queries/attack";
 
 class RyoshiDynastiesRepository extends CmsRepository {
 
@@ -207,6 +208,13 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
+  async checkBlacklistStatus(address: string) {
+    const response = await this.cms.get(
+      `ryoshi-dynasties/fortune-rewards/blacklist/${address}`,
+    );
+    return response.data;
+  }
+
   async requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string) {
     const response = await this.cms.post(
       `ryoshi-dynasties/fortune-rewards/compound/${vaultIndex}`,
@@ -272,7 +280,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
   async getGameWinners(gameId: number) {
     const response = await this.cms.get(`ryoshi-dynasties/games/${gameId}/winners`);
-    return response.data.data as Array<{ address: string; points: number; type: string }>;
+    return response.data.data as Array<{ address: string; points: number; type: string, frtnPerCollection: number, eligibleListings: number, frtnPerListing: number }>;
   }
 
   async getBattleLog(query: GetBattleLog) {
@@ -357,6 +365,19 @@ class RyoshiDynastiesRepository extends CmsRepository {
     });
     return response.data;
   }
+
+  async fetchValentinesGift(address: string, signature: string) {
+    const response = await this.cms.get(
+      `ryoshi-dynasties/game-tokens/valentines`, {
+        params: {
+          address,
+          signature
+        }
+    });
+    return response.data;
+  }
+
+
 
   async getFactionsByPoints(gameId: number) {
     const response = await this.cms.get(`ryoshi-dynasties/games/${gameId}/interval-points`);
@@ -459,6 +480,30 @@ class RyoshiDynastiesRepository extends CmsRepository {
     );
 
     return response.data.data as MerchantPurchaseRequestResponse;
+  }
+
+  async attack(request: AttackRequest, address: string, signature: string) {
+    await attackRequestSchema.validate(request);
+
+    const response = await this.cms.post(
+      'ryoshi-dynasties/battle-transactions',
+      {
+        troops: request.troops,
+        controlPointId: request.controlPointId,
+        factionId: request.factionId,
+        defendingFactionId: request.defendingFactionId,
+        battleType: request.battleType,
+        role: request.role
+      },
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+
+    return response.data.data;
   }
 }
 

@@ -44,6 +44,7 @@ import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
 
+
 const config = appConfig();
 
 const steps = {
@@ -355,6 +356,7 @@ const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
   const [selectedVaultId, setSelectedVaultId] = useState<string>();
   const availableAprs = rdConfig.bank.staking.fortune.apr as any;
 
+
   const { data: vaultNfts, isLoading, isError, error } = useQuery({
     queryKey: ['UserVaultNfts', user.address],
     queryFn: async () => {
@@ -406,6 +408,11 @@ const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
     }
 
     try {
+      
+      const check = await ApiService.withoutKey().ryoshiDynasties.checkBlacklistStatus(user.address!);
+      if (check.data.blacklisted === true) {
+        return;
+      };
       setIsExecuting(true);
       const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
       const tx = await bank.installBox(selectedVaultId);

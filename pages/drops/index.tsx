@@ -28,7 +28,7 @@ const Drops = () => {
       {/*    </p>*/}
       {/*    <div style={{ width: '70px' }} className="my-auto"> */}
       {/*        <a href='https://seashrine.io/#mint' target="_blank" rel="noopener noreferrer" >*/}
-      {/*          <img src={hostedImage('/img/drops/seashrine-vip/drop.webp')} className="img-responsive" alt="Founding Member Membership" />*/}
+      {/*          <img src={hostedImage('https://cdn-prod.ebisusbay.com/files/drop-images/seashrine-vip/drop.webp')} className="img-responsive" alt="Founding Member Membership" />*/}
       {/*        </a>*/}
       {/*    </div>*/}
       {/*  </div>*/}

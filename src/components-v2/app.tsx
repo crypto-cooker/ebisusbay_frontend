@@ -57,6 +57,13 @@ function App({ Component, ...pageProps }: AppProps) {
   const {theme: userTheme} = useUser();
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loader = document.getElementById('initialLoader');
+      if (loader) loader.style.display = 'none';
+    }
+  }, []);
+
+  useEffect(() => {
     try {
       if (typeof window !== 'undefined') {
         getAnalytics(firebase);
@@ -73,26 +80,18 @@ function App({ Component, ...pageProps }: AppProps) {
       <ExchangePricesContext.Provider value={{prices: exchangePrices.data ?? []}}>
         <DefaultHead />
         <div className="wraper">
-          {loading ? (
-            <div id="initialLoader">
-              <div className="loader"></div>
-            </div>
-          ) : (
-            <>
-              <GlobalStyles isDark={userTheme === 'dark'} />
-              <Header/>
-              <div style={{paddingTop: '74px'}}>
-                <Component {...pageProps} />
-              </div>
-              <Footer />
-              <ScrollToTopBtn />
-              <ToastContainer
-                position={toast.POSITION.BOTTOM_LEFT}
-                hideProgressBar={true}
-                theme={colorMode}
-              />
-            </>
-          )}
+          <GlobalStyles isDark={userTheme === 'dark'} />
+          <Header />
+          <div style={{paddingTop:'74px'}}>
+            <Component {...pageProps} />
+          </div>
+          <Footer />
+          <ScrollToTopBtn />
+          <ToastContainer
+            position={toast.POSITION.BOTTOM_LEFT}
+            hideProgressBar={true}
+            theme={colorMode}
+          />
         </div>
       </ExchangePricesContext.Provider>
     </ThemeProvider>

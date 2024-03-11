@@ -18,9 +18,14 @@ import {
   Th,
   Thead,
   Tr,
+  Text,
   useBreakpointValue,
   useColorModeValue,
-  VStack
+  VStack,
+  AccordionButton,
+  AccordionIcon,
+  SimpleGrid,
+  Stack
 } from "@chakra-ui/react";
 import React from "react";
 import {shortAddress} from "@src/utils";
@@ -29,9 +34,11 @@ import ImageService from "@src/core/services/image";
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
 import Blockies from "react-blockies";
 import {commify} from "ethers/lib/utils";
+import DynamicCurrencyIcon from "../dynamic-currency-icon";
+import FortuneIcon from "../icons/fortune";
 
 interface ResponsiveRewardsCollectionsTableProps {
-  data: Array<{ name: string, address: string; points: number; type: string, avatar?: string, rank: number }>;
+  data: Array<{ name: string, address: string; points: number; type: string, avatar?: string, rank: number, frtnPerListing: number, eligibleListings: number, frtnPerCollection: number }>;
   onSort: (field: string) => void;
   breakpointValue?: string
 }
@@ -58,6 +65,9 @@ const DataTable = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
             <Th>#</Th>
             <Th cursor='pointer' colSpan={2}>Name</Th>
             <Th onClick={() => onSort('price')} cursor='pointer'>Points</Th>
+            <Th onClick={() => onSort('frtnPerCollection')} cursor='pointer'><FortuneIcon boxSize={4} /> / Collection</Th>
+            <Th onClick={() => onSort('eligibleListings')} cursor='pointer'>Valid Listings</Th>
+            <Th onClick={() => onSort('frtnPerListing')} cursor='pointer'><FortuneIcon boxSize={4} /> / Listing</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -99,6 +109,15 @@ const DataTable = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
               <Td>
                 {commify(entity.points)}
               </Td>
+              <Td>
+                {commify(entity.frtnPerCollection.toFixed(2))}
+              </Td>
+              <Td>
+                {commify(entity.eligibleListings)}
+              </Td>
+              <Td>
+                {commify(entity.frtnPerListing.toFixed(2))}
+              </Td>
             </LinkBox>
           ))}
         </Tbody>
@@ -108,6 +127,8 @@ const DataTable = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
 };
 
 const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) => {
+  const hoverBackground = useColorModeValue('gray.100', '#424242');
+
   return (
     <>
       <Accordion w='full' allowMultiple>
@@ -149,9 +170,10 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
                   </VStack>
                 </HStack>
               </Box>
+              <HStack spacing={10}>
               <Box>
                 <VStack align='end' spacing={0} fontSize='sm'>
-                  <Stat size='sm' textAlign='end'>
+                  <Stat size='sm' textAlign='end' >
                     <StatLabel>Points</StatLabel>
                     <StatNumber>
                       <Box fontWeight='bold'>{entity.points}</Box>
@@ -159,13 +181,38 @@ const DataAccordion = ({data, onSort}: ResponsiveRewardsCollectionsTableProps) =
                   </Stat>
                 </VStack>
               </Box>
-              {/*<AccordionButton w='auto'>*/}
-              {/*  <AccordionIcon />*/}
-              {/*</AccordionButton>*/}
+              </HStack>
+              <AccordionButton w='auto' _hover={{bg: 'none'}}>
+                  <AccordionIcon />
+                </AccordionButton>
             </Flex>
             <AccordionPanel px={0}>
-            </AccordionPanel>
-          </AccordionItem>
+            <SimpleGrid columns={3} textAlign='center' fontSize='sm' bg={hoverBackground} rounded='md' py={2}>
+              <Stack spacing={0}>
+                <Box fontWeight='bold'>
+                  <FortuneIcon boxSize={3} verticalAlign='middle'></FortuneIcon> / Collection
+                </Box>
+                <HStack spacing={1} w="full" justify="center">
+                  <Text>{commify(entity.frtnPerCollection.toFixed(2))}</Text>
+                </HStack>
+              </Stack>
+              <Stack spacing={0}>
+                <Box fontWeight='bold'>Valid Listings</Box>
+                <HStack spacing={1} w="full" justify="center">
+                  <Text>{commify(entity.eligibleListings)}</Text>
+                </HStack>
+              </Stack>
+              <Stack spacing={0}>
+                <Box fontWeight='bold' verticalAlign='middle'>
+                <FortuneIcon boxSize={3} verticalAlign='middle'></FortuneIcon> / Listing
+                </Box>
+                <HStack spacing={1} w="full" justify="center">
+                  <Text>{commify(entity.frtnPerListing.toFixed(2))}</Text>
+                </HStack>
+              </Stack>
+            </SimpleGrid>
+          </AccordionPanel>
+        </AccordionItem>
         ))}
       </Accordion>
     </>

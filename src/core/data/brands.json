@@ -4,8 +4,8 @@
     "name": "Ebisu's Bay",
     "description": "Discover rare digital art and collect NFTs. Ebisu's Bay is the first and largest NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community.",
     "images": {
-      "banner": "/img/brands/ebisus-bay/banner.webp",
-      "preview": "/img/collections/ebisu/banner.png"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/ebisus-bay/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/ebisu/banner.png"
     },
     "collections": [
       "0xE49709A3B59d708f50AA3712F2E5a84b7707664C",
@@ -42,7 +42,7 @@
     "name": "Mad Meerkat Burrow",
     "description": "The Mad Meerkat is inspired by the cheeky nature of the loveable rogues, who loves nothing more than cavorting together in the sun. An expansion from our OG Ethereum collection, these 10000 Next Gen Cro Meerkats will traverse the novel Cronos chain. Guided by the M.A.D values, we will embark on an adventure to explore and unlock all that lies within Cronos. With each Mad Meerkat sharing and learning from one another regardless the chain, it is our next step forward as one Burrow.",
     "images": {
-      "banner": "/img/brands/mad-meerkat-burrow/banner.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/mad-meerkat-burrow/banner.webp"
     },
     "collections": [
       "0x89dBC8Bd9a6037Cbd6EC66C4bF4189c9747B1C56",
@@ -65,8 +65,8 @@
     "name": "CroSkull",
     "description": "CroSkulls, EVOs, Eggs, Pets, Staking, Missions, and much more. Everything will take shape in this mysterious ecosystem called the Underworld. Get the key to the insane Bonesville's laboratory experiments.",
     "images": {
-      "banner": "/img/brands/croskull/banner.webp",
-      "preview": "/img/brands/croskull/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/croskull/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/croskull/preview.webp"
     },
     "collections": [
       "0xF87A517A5CaecaA03d7cCa770789BdB61e09e05F",
@@ -103,8 +103,8 @@
     "name": "Crypto.com",
     "description": "Own the culture you love. A leading NFT marketplace featuring exclusive collections from A-list creators.",
     "images": {
-      "banner": "/img/brands/crypto-com/banner.webp",
-      "preview": "/img/brands/crypto-com/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/crypto-com/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/crypto-com/preview.webp"
     },
     "collections": [
       "0xEa1635a0E9344d933DF42c0Fd494d39bcE865Dc4",
@@ -126,8 +126,8 @@
     "name": "Hidden Fish",
     "description": "The purpose of the DAO is to accelerate the growth of Ebisu's Bay platform and the entire Cronos ecosystem.",
     "images": {
-      "banner": "/img/collections/hidden-fish-fm-vip/banner.webp",
-      "preview": "/img/collections/hidden-fish-fm-vip/card.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/hidden-fish-fm-vip/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/hidden-fish-fm-vip/card.webp"
     },
     "collections": [
       "0x90665eEd780C027CDef63C31C8dFa296aE168E5A",
@@ -152,7 +152,7 @@
     "name": "D.G.Pals",
     "description": "D.G.P: New World Beta LIVE 23rd May & D.G.P: Legends Beta LIVE 31st May 2022!\nWelcome to the D.G.Verse! Backed by Crypto.com Capital and Spartan Group, D.G.Pals is one of the first to redefine Web3 gaming with the first Interoperable NFT on the Cronos chain. The D.G.Pals Genesis Collection is the most privileged set of 10,000 NFT collection. Genesis NFT holders will be empowered with resources, airdrops and other perks to help the D.G.Pals Team build the D.G.Verse. You can check out how, by owning a Genesis D.G.Pal NFT, you can help expand Panterra, grow the player base and contribute to development on the D.G.Pals Whitepaper or website. On top of these exclusive privileges, these Genesis D.G.Pal NFTs can also participate in all of the games in the D.G.Verse like every other D.G.Pal NFTs.",
     "images": {
-      "banner": "/img/collections/dgpals/banner.png"
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/dgpals/banner.png"
     },
     "collections": [
       "0xeFc73c41EF829C0B87E3245aCF033b867cCD0F84",
@@ -177,7 +177,7 @@
     "name": "CRO CROW",
     "description": "CRO CROW is the very first NFT deployed on the Cronos Chain.\n\nEdition #1 was minted on block #946, just 1 hour and 27 minutes after Cronos was launched.\n\nThe CRO CROW Ecosystem revolves around this historic NFT and the art of Alemf, the artist behind the crows and some other side collections.\n\nThese NFTs can be staked to The Forest to passively earn $CRO which is automatically distributed from secondary market royalties and other sources of income.\n\nCAW CAW!",
     "images": {
-      "banner": "/img/brands/cro-crow/banner.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/cro-crow/banner.webp"
     },
     "collections": [
       "0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5",
@@ -205,7 +205,7 @@
     "name": "Boomer Squad",
     "description": "Collection of 8008 Boomers using crypto in the only way they know how. Everyone has felt like our Boomers at some point in their crypto journey but just like everyone else they will figure it out eventually. Founded by a fully doxed team of 11, Boomer Squad was established to build an ecosystem of on chain games, events, collections, and ecosystem developments that reflects value back to our Gen 0 Boomers through our Verified Distribution Contract called the \"Mattress Fund\" and Boomer DAO. Check out our GitBook for a full breakdown of everything already established and in the works in our ecosystem",
     "images": {
-      "banner": "/img/collections/boomer-squad/banner.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/boomer-squad/banner.webp"
     },
     "collections": [
       "0xb650279e3d726B0c75C984cAA55341cB87A7F501",
@@ -240,8 +240,8 @@
     "name": "Cronos Primate Business",
     "description": "3 generations of uniquely generated primates that make up the Primate World. The original Cronos Primate Business is a collection of 1000 primates that sold out in two minutes. The Primates along with Gorillas and Corrupted give staking, raffles, giveaways and more.\n\nCrotopia is the Metaverse being built by Cronos Primate Business. The OG pass is your key to the metaverse and includes free skin airdrops for life.",
     "images": {
-      "banner": "/img/brands/cronos-primate-business/banner.webp",
-      "preview": "/img/brands/cronos-primate-business/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/cronos-primate-business/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/cronos-primate-business/preview.webp"
     },
     "collections": [
       "0x939b90c529F0e3a2C187E1b190Ca966a95881FDe",
@@ -266,8 +266,8 @@
     "name": "CronosVerse",
     "description": "Buy your digital land plot, develop your property & enter The CronosVerse!",
     "images": {
-      "banner": "/img/collections/cronosverse/banner.webp",
-      "preview": "/img/collections/cronosverse/card.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronosverse/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/cronosverse/card.webp"
     },
     "collections": [
       "0x0aCDA31Cf1F301a7Eb8f988D47F708FbA058F8f5",
@@ -290,7 +290,7 @@
     "name": "Trooprz",
     "description": "Trooprz have got your back",
     "images": {
-      "banner": "/img/collections/trooprz/banner.jpeg"
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/trooprz/banner.jpeg"
     },
     "collections": [
       "0x51112Bf32B9a1C64716DF2e6b82e63a04Bd384Fd",
@@ -322,7 +322,7 @@
     "name": "Argonauts",
     "description": "The Argonauts brand features various NFT collections under the NFT arm of Argo Finance. At it's core, the Argonauts collection is a collection of 8,888 unique utility-enabled characters that represents your unique identity on the Cronos chain. The Argonauts will be the centrepiece of Argo, providing users with massive utility across the suite of Argo products.",
     "images": {
-      "banner": "/img/collections/argonauts/banner.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/argonauts/banner.webp"
     },
     "collections": [
       "0xa996aD2b9f240F78b063E47F552037658c4563d1",
@@ -352,7 +352,7 @@
     "name": "Weird Apes Club",
     "description": "Weird Apes is first ever Apes NFT ecosystem on the Cronos Chain aiming to bring Weirdness all over the Cronos Jungle! Weird Ape Club NFTs are not just PFPs, granting access to an ecosystem of revolutionary utilities: staking, breeding, renting, customization, governance, gamified economy just to mention a few! The best is yet to come with the claiming of 3D Voxel (versions of 2D Weird Apes), our play to earn, Legends of Weirdonite and more features to be announced to continue experimenting on-chain services in the future! Weird Apes do not give up because you either die as a Ape, or you live long enough to get Weird!\nVisit our Discord to join our wonderful community!",
     "images": {
-      "banner": "/img/collections/weirdapesclub/banner.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/weirdapesclub/banner.webp"
     },
     "collections": [
       "0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44",
@@ -380,7 +380,7 @@
     "name": "CRODEX",
     "description": "OG Crxillions and Space Crxillions are Crodex's non-fungible token (NFT) collections of hyper-realistic felines. They are multi-dimensional crypto assets that will enable you to actively utilize your NFTs as yield generators, boosters or tickets for Metaverse Hub adventures and games with various offerings.",
     "images": {
-      "banner": "/img/brands/crodex/banner.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/crodex/banner.webp"
     },
     "collections": [
       "0xE1bAa24525B5f48F9B9df54802E44E85c0D81099",
@@ -401,8 +401,8 @@
     "name": "Undead Community",
     "description": "The mission of The Undead Community is to create ever-lasting and essential solutions, tailored to Cryptocurrency and Non Fungible Tokens. Through providing a variety of products, tools, and services, to help users achieve their personal goals, The Undead Community is accelerating the world's transition to Blockchain Technology.",
     "images": {
-      "banner": "/img/brands/undead-community/banner.webp",
-      "preview": "/img/brands/undead-community/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/undead-community/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/undead-community/preview.webp"
     },
     "collections": [
       "0x40d6eFB6e54EC951301c1508620A6Acb5Fd432A8",
@@ -425,7 +425,7 @@
     "name": "CRO Homes",
     "description": "Your place in the Metaverse",
     "images": {
-      "banner": "/img/collections/cro-homes/banner.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-homes/banner.webp"
     },
     "collections": [
       "0x59b554B12B80cAc8629Bf541a2D6359639AF2A63",
@@ -447,8 +447,8 @@
     "name": "Baby Alien Division",
     "description": "BAD (Baby Alien Division) is a collection of mischievous aliens crossing the galaxy in adventure, war, turmoil, triumph, silliness, and growth. Follow along their journey and get involved - staking, charity work, giveaways, community, metaverse fun, and rich storytelling.",
     "images": {
-      "banner": "/img/brands/baby-alien-division/banner.webp",
-      "preview": "/img/brands/baby-alien-division/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/baby-alien-division/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/baby-alien-division/preview.webp"
     },
     "collections": [
       "0xB340c91182b9fF831bB36232cB3296eD306c79B2",
@@ -478,7 +478,7 @@
     "name": "The Degenerated NFTs",
     "description": "The Degenerated NFTs is a collective of artists / founders who teamed up to deliver the best quality AI product to the Cronos chain, the future is now \uD83D\uDC8E",
     "images": {
-      "banner": "/img/brands/the-degenerated-nfts/banner.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/the-degenerated-nfts/banner.webp"
     },
     "collections": [
       "0xd79a37824bD86e4E945e8385480de3c45B7e5B08",
@@ -508,8 +508,8 @@
     "name": "0xLuckless",
     "description": "",
     "images": {
-      "banner": "/img/brands/0xluckless/banner.webp",
-      "preview": "/img/brands/0xluckless/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/0xluckless/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/0xluckless/preview.webp"
     },
     "collections": [
       "0xd0B45e7bFcc58C99203E60a363E2574e01B0a581",
@@ -534,8 +534,8 @@
     "name": "Ballies",
     "description": "Ballies is a gaming platform with an on-ramping lend-to-earn system, which operates as a web2 game while incorporating all the benefits of web3.\n\nOur mission is to continue creating a strong social community of gamers. The platform has already begun onboarding thousands of players and is projected to attact millions more.",
     "images": {
-      "banner": "/img/brands/ballies/banner.webp",
-      "preview": "/img/brands/ballies/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/ballies/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/ballies/preview.webp"
     },
     "collections": [
       "0xF12B07570804c56B4ce8f63e7121BEC8C7CA1542",
@@ -561,7 +561,7 @@
     "name": "Lost Toys",
     "description": "",
     "images": {
-      "banner": "/img/collections/lost-toys-vip/banner.png"
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/lost-toys-vip/banner.png"
     },
     "collections": [
       "0xEB850b8F7d00B4FaF242888Bef7EfbF229eb1e41",
@@ -584,8 +584,8 @@
     "name": "The Laboratory",
     "description": "The Laboratory aims to be a complete ecosystem on Cronos with NFT utility at the centre of it all. The Crazy Scientists NFT are our genesis collection. Holders of the Crazy Scientists will be able to access our ecosystem and be connected with one of Cronos' top communities for NFTs, DeFi and crypto market information. Your Crazy Scientist can be rewarded in the following ecosystems:\n1/ Crazy Critters Arena\n2/ Lab DEX\n3/ CERN (gamified staking)\n4/ Growth Chambers\n5/ Future projects\nWithin the Laboratory, we have a distinct focus on community. The Laboratory is allocating resources to building its community. A place where members can trust and rely on others in finding opportunities both in crypto and NFTs.",
     "images": {
-      "banner": "/img/brands/the-laboratory/banner.webp",
-      "preview": "/img/brands/the-laboratory/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/the-laboratory/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/the-laboratory/preview.webp"
     },
     "collections": [
       "0xf0B2A653938f0E6A4620A140568D61D97F71978C",
@@ -607,8 +607,8 @@
     "name": "The DooNFT",
     "description": "DooNFT is an innovative and vibrant Cross-Chain ecosystem that thrives on community participation and development. Within this ecosystem, three remarkable collections stand: CroDoo, Dooligans on Cronos chain and  PolyDoo on Polygon!",
     "images": {
-      "banner": "/img/brands/the-doonft/banner.webp",
-      "preview": "/img/brands/the-doonft/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/the-doonft/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/the-doonft/preview.webp"
     },
     "collections": [
       "0xa560c70220c32c81217cf993676d177d43d48349",
@@ -628,8 +628,8 @@
     "name": "Crosmonauts",
     "description": "A community oriented NFT Project that launched alongside the launch of Cronos",
     "images": {
-      "banner": "/img/collections/crosmonauts/banner.webp",
-      "preview": "/img/collections/crosmonauts/card.png"
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/crosmonauts/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/crosmonauts/card.png"
     },
     "collections": [
       "0xDFab622fC4E5CE1420F83cf38E52312f33849a0A",
@@ -654,8 +654,8 @@
     "name": "CROugar Kingdom",
     "description": "A fun and engaging Discord-focused community! Providing long-term value to our holders through a number of initiatives both on and off the Blockchain!",
     "images": {
-      "banner": "/img/brands/crougar-kingdom/banner.webp",
-      "preview": "/img/brands/crougar-kingdom/preview2.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/crougar-kingdom/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/crougar-kingdom/preview2.webp"
     },
     "collections": [
       "0xdCcCEd571dcbC82Bbeadf95Af20ee4442E21208C",
@@ -677,8 +677,8 @@
     "name": "Moon Crew",
     "description": "Moon Crew project is a community driven project that focus on group investing, passive income and holders events. Currently we have 2 Collection, 7000 Moon Crew Apes and 3500 Moon Crew Pandas. Holding atleast 1 will give you acess to our exclusive channesl, Raffle option, trading option, voting power, royalties and much more.",
     "images": {
-      "banner": "/img/brands/moon-crew/banner.webp",
-      "preview": "/img/brands/moon-crew/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/moon-crew/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/moon-crew/preview.webp"
     },
     "collections": [
       "0x3335A43C59b45Ed1F73dd1335A5b2583CD9B0aaA",
@@ -699,8 +699,8 @@
     "name": "CrofamLadies",
     "description": "The beautiful side of #crofam.",
     "images": {
-      "banner": "/img/brands/crofam-ladies/banner.webp",
-      "preview": "/img/brands/crofam-ladies/preview2.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/crofam-ladies/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/crofam-ladies/preview2.webp"
     },
     "collections": [
       "0xF5aF7B3C142aB5545717C7fB6a0Da8fBF6E68612",
@@ -726,8 +726,8 @@
     "name": "Aiko Society",
     "description": "Aiko Society is a Big Ecosystem that includes Aiko NFT with Aiko Cards in crypto.org chain and Aiko Beanz with Mutant Aiko Beanz in Cronos Chain.\n\nAiko Beanz and Mutant Aiko Beanz release benefits, passive income, gifts and more to their Holders. Each collection has an special room in Aiko Society metaverse, special merchandising and both share the same amazing community.",
     "images": {
-      "banner": "/img/brands/aiko-society/banner.webp",
-      "preview": "/img/brands/aiko-society/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/aiko-society/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/aiko-society/preview.webp"
     },
     "collections": [
       "0x8fAe79f9b06E3f1525C1de4F88940279dC70C7C9",
@@ -748,8 +748,8 @@
     "name": "Cronos Apes",
     "description": "The Cronos Apes brand features various iconic NFT collection. Each NFT of these collections has been uniquely and randomly generated from a fully animated traits set. Each NFT gives access to an exclusive Community and set of utilities, such as the distribution of earnings. If you are searching for the most iconic Apes collection on the Cronos Chain, you are in the right place. Join the #CronosApesArmy now!",
     "images": {
-      "banner": "/img/brands/cronos-apes/banner.webp",
-      "preview": "/img/brands/cronos-apes/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/cronos-apes/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/cronos-apes/preview.webp"
     },
     "collections": [
       "0x5Cb9a12d31CF751ACc58B12B47cc4E093A6AB580",
@@ -771,8 +771,8 @@
     "name": "CroArmy Collection",
     "description": "CroArmy is a collection of NFTs that each serve a purpose. We attempt to diversify our holdings so we’re not too heavy in one singular project. Earnings from those projects, are swapped to bcro and airdropped to Coalitions, Soldiers, Burns, and Jackals. On top of our main treasury, we also have side hustles with BTC miners, and Jarheads.",
     "images": {
-      "banner": "/img/brands/croarmy-collection/banner.webp",
-      "preview": "/img/brands/croarmy-collection/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/croarmy-collection/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/croarmy-collection/preview.webp"
     },
     "collections": [
       "0x85aC0eAc55A62840121c5Bc75368987a52267086",
@@ -799,8 +799,8 @@
     "name": "BOB Adventures",
     "description": "BOB Adventures is community driven project on Cronos with our own story and utility. We will be traveling from planet to planet to meet new friends. Join our adventure and let's explore universe together!",
     "images": {
-      "banner": "/img/brands/bob-adventures/banner.webp",
-      "preview": "/img/brands/bob-adventures/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/bob-adventures/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/bob-adventures/preview.webp"
     },
     "collections": [
       "0x7841dA84C0eC87744306C6420Eb039b8Cbd39d70",
@@ -824,8 +824,8 @@
     "name": "Time Machine NFTs",
     "description": "Time Machine NFTs is an immersive ecosystem with plenty of moving parts to keep you entertained and earning passive income weekly.  From soft staking to adventures, beginning earning today for our strategy game (currently in development). Each project in our ecosystem has their purpose. Join our discord today to learn.",
     "images": {
-      "banner": "/img/brands/time-machine-nfts/banner.webp",
-      "preview": "/img/brands/time-machine-nfts/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/time-machine-nfts/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/time-machine-nfts/preview.webp"
     },
     "collections": [
       "0x9b72f7d5aecee857cc3d1a1a3357aff0e342d0a8",
@@ -861,8 +861,8 @@
     "name": "Cr00ts Club",
     "description": "Welcome in the growing ecosystem of the Cr00ts, we are here to takeover the Cronos chain \uD83D\uDE0E",
     "images": {
-      "banner": "/img/brands/cr00ts-club/banner.webp",
-      "preview": "/img/brands/cr00ts-club/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/cr00ts-club/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/cr00ts-club/preview.webp"
     },
     "collections": [
       "0xf8c82cc093D22f6dC782F0D781f4770E17266C23",
@@ -885,8 +885,8 @@
     "name": "Carkayous",
     "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives.",
     "images": {
-      "banner": "/img/brands/carkayous/banner.webp",
-      "preview": "/img/brands/carkayous/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/carkayous/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/carkayous/preview.webp"
     },
     "collections": [
       "0x72af9c869a4759e6d50e9656c0741b395532c3dd",
@@ -915,8 +915,8 @@
     "name": "Kaiju of Cronos",
     "description": "Kaiju of Cronos, a double KYC'd project, utilizes IRL business to maintain a consistent cash flow within the ecosystem, while systemically providing longevity to the NFT project. \nOur IRL business brand is crucial to creating rewards, IRL products and services to all, no matter the market conditions.",
     "images": {
-      "banner": "/img/brands/kaiju-of-cronos/banner.webp",
-      "preview": "/img/brands/kaiju-of-cronos/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/kaiju-of-cronos/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/kaiju-of-cronos/preview.webp"
     },
     "collections": [
       "0x0C5cEA99fEd27c98B505837A8E72cfDF70bcF8F0",
@@ -937,7 +937,7 @@
     "name": "Zap Projects",
     "description": "",
     "images": {
-      "banner": "/img/brands/zap-projects/banner.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/zap-projects/banner.webp"
     },
     "collections": [
       "0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc",
@@ -958,8 +958,8 @@
     "name": "DaoLabs",
     "description": "The DaoLabs project is an Ecosystem inspired by two concepts:\n• Dao is a decentralized autonomous organization and\n• Dao (Tao) as a term from East Asian philosophy, which represents the natural order of the universe, the greater whole, that unites all the individual elements of the universe.\nDr Dao, main collection, was born with the aim of uniting artists, developers and builders to improve Cronos Projects, providing Incubator services and giving a percentage back from minting revenues.",
     "images": {
-      "banner": "/img/brands/daolab/banner.webp",
-      "preview": "/img/brands/daolab/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/daolab/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/daolab/preview.webp"
     },
     "collections": [
       "0x28238122BECBE1D727F2D23631eD83d6cbe833Bc",
@@ -987,8 +987,8 @@
     "name": "Sleazy Weasel",
     "description": "Welcome to #StaySleazy, where style, success, and self-empowerment converge. Our brand page is a hub for the Sleazy Weasels movement, inspiring individuals to manifest their own success. Discover our fashion-forward pieces, embrace your unique style, and find financial freedom within. Join our elite community as we celebrate ambition, resilience, and the relentless pursuit of success. #StaySleazy, where the world is yours for the taking.",
     "images": {
-      "banner": "/img/brands/sleazy-weasel/banner.webp",
-      "preview": "/img/brands/sleazy-weasel/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/sleazy-weasel/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/sleazy-weasel/preview.webp"
     },
     "collections": [
       "0x07BEa69887Ce393F91b3D5697bADB53b92367C71",
@@ -1009,8 +1009,8 @@
     "name": "Barbara Redekop",
     "description": "Hi, I’m Barbara Redekop! I’m creating art with the goal of making dark days a little brighter. After working in a variety of traditional media, I eventually began using digital tools and entered the NFT space in 2021.",
     "images": {
-      "banner": "/img/brands/barbara-redekop/banner.webp",
-      "preview": "/img/brands/barbara-redekop/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/barbara-redekop/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/barbara-redekop/preview.webp"
     },
     "collections": [
       "0x3Bf0a68a03fE82A5D21445f3a2306bB012dd50D9",
@@ -1037,8 +1037,8 @@
     "name": "Cronos Rocks",
     "description": "Cronos Rocks is a reflection of the team's vision, creativity and pure passion for everything Geological. Cronos Rocks consists of 3 collections Cronos Rocks, Cronos Fossils GEN1 and Cronos Fossils GEN2. Throughout the evolution of Cronos Rocks the team continues to build rock solid relationships within the Cronos Chain. Cronos Rocks has also delivered the unique utility that is CRONOS GOLD (Yes real gold alluvial nuggets from Australia!).",
     "images": {
-      "banner": "/img/brands/cronos-rocks/banner.webp",
-      "preview": "/img/brands/cronos-rocks/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/cronos-rocks/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/cronos-rocks/preview.webp"
     },
     "collections": [
       "0xf8e63021C3d757b63eb53a9124271251A964D572",
@@ -1058,8 +1058,8 @@
     "name": "Titans of Cronos",
     "description": "3 cro to the moon",
     "images": {
-      "banner": "/img/brands/titans-of-cronos/banner.webp",
-      "preview": "/img/brands/titans-of-cronos/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/titans-of-cronos/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/titans-of-cronos/preview.webp"
     },
     "collections": [
       "0x671bD56D29216a8C7A43498515A1B629e9B52895",
@@ -1084,8 +1084,8 @@
     "name": "Dead Beat Dads",
     "description": "Dead Beat Dads is a fun-spirited, pixel art project looking to bring the joy back to collecting NFTs while also earning CRO along the way. There are already 3 different collections in the family (Dead Beat Dads, Trophy Wives, and Teenage Dirtbags). Come join our family, even if it is dysfunctional.",
     "images": {
-      "banner": "/img/brands/dead-beat-dads/banner.webp",
-      "preview": "/img/brands/dead-beat-dads/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/dead-beat-dads/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/dead-beat-dads/preview.webp"
     },
     "collections": [
       "0xE971838cED4949E5c51DD7bAA6d2D0188eD772f0",
@@ -1109,8 +1109,8 @@
     "name": "DripCro",
     "description": "An NFT club community",
     "images": {
-      "banner": "/img/brands/dripcro/banner.webp",
-      "preview": "/img/brands/dripcro/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/dripcro/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/dripcro/preview.webp"
     },
     "collections": [
       "0x079B32D7a72b58588d62164927cEF13C4c3657D0",
@@ -1130,8 +1130,8 @@
     "name": "The Cronos Club",
     "description": "The Cronos Club originally emerged to provide support and guidance to the community. \nProviding a beacon of light. \nWe have since introduced iconic collections like Punk Weapons, Cyberpunk Chronicles, and Origami Legends. Our soft staking innovation empowers holders for rewards on both Ryoshi Dynasties and within the Club.\nOur journey knows no bounds as we strive to enrich the Clubber experience. Expect more fun, greater rewards, and heightened excitement. Join us on this epic adventure!",
     "images": {
-      "banner": "/img/brands/the-cronos-club/banner.webp",
-      "preview": "/img/brands/the-cronos-club/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/the-cronos-club/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/the-cronos-club/preview.webp"
     },
     "collections": [
       "0xc6Cfb3f2D9D33FF1D0B77cE78c5dD6f790B5605A",
@@ -1153,8 +1153,8 @@
     "name": "The Rainbowland Metaverse",
     "description": "Introducing the Rainbowland Metaverse: A World of Infinite Possibilities\n\nWelcome to the Rainbowland Metaverse, a groundbreaking digital realm where endless adventures, lucrative opportunities, and artistic creativity converge. Our metaverse comprises three remarkable collections, all proudly listed on EbisusBay, each offering a unique experience that invites you to be part of something extraordinary.",
     "images": {
-      "banner": "/img/brands/the-rainbowland-metaverse/banner.webp",
-      "preview": "/img/brands/the-rainbowland-metaverse/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/the-rainbowland-metaverse/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/the-rainbowland-metaverse/preview.webp"
     },
     "collections": [
       "0x3720cde69E4E997bbDeaEc7b4e7b5f8c3C406869",
@@ -1177,7 +1177,7 @@
     "name": "BabyJoey NFT",
     "description": "Bringing together the BabyJoeyNFT collections under one brand page. Brought to you by The BabyHop project. Play to earn, royalty distributions and much more!",
     "images": {
-      "banner": "/img/brands/baby-joey-nft/banner.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/baby-joey-nft/banner.webp"
     },
     "collections": [
       "0x04eE3890b7d6c5e1D9B7FEcd19bADA7Fa60A2770",

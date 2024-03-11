@@ -8,16 +8,18 @@ import {
   FormLabel,
   GridItem,
   HStack,
+  Icon,
   IconButton,
   Image,
   Select,
   SimpleGrid,
+  Skeleton,
   Stack,
   Text
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import React, {ChangeEvent, ReactNode, useMemo, useState} from "react";
-import {CloseIcon} from "@chakra-ui/icons";
+import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
 import {useIsTouchDevice} from "@src/hooks/use-is-touch-device";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {commify} from "ethers/lib/utils";
@@ -35,6 +37,9 @@ import {constants, Contract} from "ethers";
 import Resources from "@src/Contracts/Resources.json";
 import {appConfig} from "@src/Config";
 import Fortune from "@src/Contracts/Fortune.json";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
+import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/merchant/faq-page";
 
 const config = appConfig();
 
@@ -48,6 +53,7 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
   const user = useUser();
   const {requestSignature} = useEnforceSigner();
   const queryClient = useQueryClient();
+  const [page, setPage] = useState<string>();
   const [selectedItem, setSelectedItem] = useState<MerchantItem>();
   const [selectedPack, setSelectedPack] = useState<MerchantItemPack>();
   const [isExecuting, setIsExecuting] = useState(false);
@@ -72,6 +78,14 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
     resetForm();
     onClose();
   }
+
+  const handleBack = () => {
+    if (!!page) {
+      setPage(undefined);
+    } else {
+      setPage('faq');
+    }
+  };
 
   const handleSelectItem = (item: MerchantItem, selected: boolean) => {
     setSelectedItem(selected ? item : undefined);
@@ -165,172 +179,186 @@ export const VillageMerchant = ({isOpen, onClose, forceRefresh}: VillageMerchant
     <RdModal
       isOpen={isOpen}
       onClose={handleClose}
-      title='Merchant'
+      title='Rio the Merchant'
       isCentered={false}
+      utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
+      onUtilBtnClick={handleBack}
     >
-      <RdModalBody>
-        <RdModalBox>
-          <AuthenticationGuard>
-            {({isConnected, connect}) => (
-              <>
-                {isConnected ? (
-                  <Flex justify='center'>
-                    <HStack>
-                      <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>Your</Text>
-                      <FortuneIcon boxSize={6} />
-                      <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
-                        $FRTN: {commify(round(user.balances.frtn, 2))}
-                      </Text>
-                    </HStack>
-                  </Flex>
-                ) : (
-                  <Flex justify='space-between' align='center'>
-                    <Box>
-                      Connect wallet to view FRTN balance
-                    </Box>
-                    <RdButton
-                      size='sm'
-                      onClick={connect}
-                    >
-                      Connect
-                    </RdButton>
-                  </Flex>
-                )}
-              </>
-            )}
-          </AuthenticationGuard>
-        </RdModalBox>
-
-        <RdModalBox mt={2}>
-          <Stack direction='row'>
-            {hasAnythingAvailable ? (
-              <Image src={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-opened.png`).convert()} />
-            ) : (
-              <Image src={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-closed.png`).convert()} />
-            )}
-            <Box textAlign='center'>
-              {hasAnythingAvailable ? (
-                <Box>
-                  <Text>Greetings traveler do you need something? Rio has got you covered.</Text>
-                  <Text mt={2}>Select any available item below to view details.</Text>
-                </Box>
-              ) : (
-                <Text>Greetings traveler, Rio is all out of wares. Check back next week.</Text>
-              )}
-            </Box>
-          </Stack>
-          {!!merchantItems && (
-            <SimpleGrid columns={{base: 2, sm: 3, md: 4}} gap={2} mt={4} justifyItems='center'>
-              {merchantItems.map((item) => (
-                <SelectableImageComponent2
-                  image={ImageService.translate(item.image).fixedWidth(100, 100)}
-                  label={item.remaining > 0 ? `${siPrefixedNumber(item.total - item.remaining)} / ${siPrefixedNumber(item.total)}` : 'Sold Out'}
-                  isAvailable={item.remaining > 0}
-                  isDisabled={false}
-                  isSelected={selectedItem?.tokenId === item.tokenId}
-                  onSelected={(selected) => handleSelectItem(item, selected)}
-                />
-              ))}
-              <SelectableImageComponent2
-                image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/battle-supplies-uncommon.png`).fixedWidth(100, 100)}
-                label='Unavailable'
-                isAvailable={false}
-                isDisabled={true}
-                isSelected={false}
-                onSelected={(selected) => {}}
-              />
-              <SelectableImageComponent2
-                image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/mushroom-uncommon.png`).fixedWidth(100, 100)}
-                label='Unavailable'
-                isAvailable={false}
-                isDisabled={true}
-                isSelected={false}
-                onSelected={(selected) => {}}
-              />
-              <SelectableImageComponent2
-                image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/potion-uncommon.png`).fixedWidth(100, 100)}
-                label='Unavailable'
-                isAvailable={false}
-                isDisabled={true}
-                isSelected={false}
-                onSelected={(selected) => {}}
-              />
-            </SimpleGrid>
-          )}
-        </RdModalBox>
-        {!!selectedItem && (
-          <SimpleGrid columns={{base: 1, md: 2}} gap={2} mt={2}>
-            <RdModalBox>
-              <FormControl>
-                <FormLabel fontWeight='bold'>
-                  Available {selectedItem.name} Packs
-                </FormLabel>
-
-                <Box>
-                  {selectedItem.packs.length > 0 ? (
-                    <Select
-                      onChange={handleSelectPack}
-                      value={selectedPack?.id}
-                    >
-                      {selectedItem.packs.filter((pack) => pack.available > 0).map((pack) => (
-                        <option value={pack.id}>{commify(pack.itemsPerPack)} ({commify(pack.price)} FRTN)</option>
-                      ))}
-                    </Select>
+      {page === 'faq' ? (
+        <FaqPage />
+      ) : (
+        <RdModalBody>
+          <RdModalBox>
+            <AuthenticationGuard>
+              {({isConnected, connect}) => (
+                <>
+                  {isConnected ? (
+                    <Flex justify='center'>
+                      <HStack>
+                        <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>Your</Text>
+                        <FortuneIcon boxSize={6} />
+                        <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
+                          $FRTN: {commify(round(user.balances.frtn, 2))}
+                        </Text>
+                      </HStack>
+                    </Flex>
                   ) : (
-                    <Text>No packs currently available</Text>
+                    <Flex justify='space-between' align='center'>
+                      <Box>
+                        Connect wallet to view FRTN balance
+                      </Box>
+                      <RdButton
+                        size='sm'
+                        onClick={connect}
+                      >
+                        Connect
+                      </RdButton>
+                    </Flex>
                   )}
-                </Box>
-              </FormControl>
-            </RdModalBox>
-            <RdModalBox>
-              <Flex justify='end' h='full' align='end'>
-                <SimpleGrid columns={2} gridTemplateColumns="100px 1fr">
-                  <GridItem ><Box textAlign={{base: 'start', sm: 'end'}}>FRTN Price:</Box></GridItem>
-                  <GridItem>
-                    <Box textAlign='end'>
-                      {!!selectedPack && (
-                        <HStack justify='end' spacing={1} ps={2}>
-                          <FortuneIcon boxSize={5} />
-                          <Text fontWeight='bold'>{commify(selectedPack.price)}</Text>
-                        </HStack>
+                </>
+              )}
+            </AuthenticationGuard>
+          </RdModalBox>
+
+          <RdModalBox mt={2}>
+            <Stack direction='row'>
+              {hasAnythingAvailable ? (
+                <Image src={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-opened.png`).convert()} />
+              ) : (
+                <Image src={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-closed.png`).convert()} />
+              )}
+              <Box textAlign='center'>
+                {hasAnythingAvailable ? (
+                  <Box>
+                    <Text>Greetings traveler do you need something? Rio has got you covered.</Text>
+                    <Text mt={2}>Select any available item below to view details.</Text>
+                  </Box>
+                ) : (
+                  <Text>Greetings traveler, Rio is all out of wares. Check back next week.</Text>
+                )}
+              </Box>
+            </Stack>
+            {!!merchantItems && (
+              <SimpleGrid columns={{base: 2, sm: 3, md: 4}} gap={2} mt={4} justifyItems='center'>
+                {merchantItems.map((item) => (
+                  <SelectableImageComponent2
+                    image={ImageService.translate(item.image).fixedWidth(100, 100)}
+                    label={item.remaining > 0 ? `${siPrefixedNumber(item.total - item.remaining)} / ${siPrefixedNumber(item.total)}` : 'Sold Out'}
+                    isAvailable={item.remaining > 0}
+                    isDisabled={false}
+                    isSelected={selectedItem?.tokenId === item.tokenId}
+                    onSelected={(selected) => handleSelectItem(item, selected)}
+                  />
+                ))}
+                <SelectableImageComponent2
+                  image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/battle-supplies-uncommon.png`).fixedWidth(100, 100)}
+                  label='Unavailable'
+                  isAvailable={false}
+                  isDisabled={true}
+                  isSelected={false}
+                  onSelected={(selected) => {}}
+                />
+                <SelectableImageComponent2
+                  image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/mushroom-uncommon.png`).fixedWidth(100, 100)}
+                  label='Unavailable'
+                  isAvailable={false}
+                  isDisabled={true}
+                  isSelected={false}
+                  onSelected={(selected) => {}}
+                />
+                <SelectableImageComponent2
+                  image={ImageService.translate(`/img/ryoshi-dynasties/village/merchant/potion-uncommon.png`).fixedWidth(100, 100)}
+                  label='Unavailable'
+                  isAvailable={false}
+                  isDisabled={true}
+                  isSelected={false}
+                  onSelected={(selected) => {}}
+                />
+              </SimpleGrid>
+            )}
+          </RdModalBox>
+          {!!selectedItem && (
+            <>
+              <SimpleGrid columns={{base: 1, md: 2}} gap={2} mt={2}>
+                <RdModalBox>
+                  <FormControl>
+                    <FormLabel fontWeight='bold'>
+                      Available {selectedItem.name} Packs
+                    </FormLabel>
+
+                    <Box>
+                      {selectedItem.packs.length > 0 ? (
+                        <Select
+                          onChange={handleSelectPack}
+                          value={selectedPack?.id}
+                        >
+                          {selectedItem.packs.filter((pack) => pack.available > 0).map((pack) => (
+                            <option value={pack.id}>{commify(pack.itemsPerPack)} ({commify(pack.price)} FRTN)</option>
+                          ))}
+                        </Select>
+                      ) : (
+                        <Text>No packs currently available</Text>
                       )}
                     </Box>
-                  </GridItem>
-                  <GridItem alignSelf='end'><Box textAlign={{base: 'start', sm: 'end'}} fontSize='xl'>Receive:</Box></GridItem>
-                  <GridItem alignSelf='end'>
-                    {!!selectedPack && (
-                      <HStack justify='end' fontSize='2xl' fontWeight='bold' spacing={1} ps={2}>
-                        <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/>
-                        <Text fontWeight='bold'>{commify(selectedPack.itemsPerPack)}</Text>
-                      </HStack>
-                    )}
-                  </GridItem>
-                </SimpleGrid>
-              </Flex>
-            </RdModalBox>
-          </SimpleGrid>
-        )}
-        {hasAnythingAvailable && (
-          <AuthenticationRdButton
-            connectText='Connect wallet to purchase'
-            requireSignin={false}
-          >
-            <RdModalFooter>
-              <Box textAlign='center' mx={2} ps='20px'>
-                <RdButton
-                  stickyIcon={true}
-                  onClick={handlePurchase}
-                  fontSize={{base: 'xl', sm: '2xl'}}
-                  isLoading={isExecuting}
-                  isDisabled={isExecuting}
-                >
-                  Purchase
-                </RdButton>
-              </Box>
-            </RdModalFooter>
-          </AuthenticationRdButton>
-        )}
-      </RdModalBody>
+                  </FormControl>
+                </RdModalBox>
+                <RdModalBox>
+                  <Flex justify='end' h='full' align='end'>
+                    <SimpleGrid columns={2} gridTemplateColumns="100px 1fr">
+                      <GridItem ><Box textAlign={{base: 'start', sm: 'end'}}>FRTN Price:</Box></GridItem>
+                      <GridItem>
+                        <Box textAlign='end'>
+                          {!!selectedPack && (
+                            <HStack justify='end' spacing={1} ps={2}>
+                              <FortuneIcon boxSize={5} />
+                              <Text fontWeight='bold'>{commify(selectedPack.price)}</Text>
+                            </HStack>
+                          )}
+                        </Box>
+                      </GridItem>
+                      <GridItem alignSelf='end'><Box textAlign={{base: 'start', sm: 'end'}} fontSize='xl'>Receive:</Box></GridItem>
+                      <GridItem alignSelf='end'>
+                        {!!selectedPack && (
+                          <HStack justify='end' fontSize='2xl' fontWeight='bold' spacing={1} ps={2}>
+                            <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/>
+                            <Text fontWeight='bold'>{commify(selectedPack.itemsPerPack)}</Text>
+                          </HStack>
+                        )}
+                      </GridItem>
+                    </SimpleGrid>
+                  </Flex>
+                </RdModalBox>
+              </SimpleGrid>
+              <Stack direction='row' align='center' bg='#f8a211' p={2} rounded='sm' mt={2}>
+                <Icon as={FontAwesomeIcon} icon={faExclamationTriangle} color='#333' boxSize={8}/>
+                <Text fontSize='14' color='#333' fontWeight='bold'>
+                  Limited to 1 purchase per 5 minutes
+                </Text>
+              </Stack>
+            </>
+          )}
+          {hasAnythingAvailable && (
+            <AuthenticationRdButton
+              connectText='Connect wallet to purchase'
+              requireSignin={false}
+            >
+              <RdModalFooter>
+                <Box textAlign='center' mx={2} ps='20px'>
+                  <RdButton
+                    stickyIcon={true}
+                    onClick={handlePurchase}
+                    fontSize={{base: 'xl', sm: '2xl'}}
+                    isLoading={isExecuting}
+                    isDisabled={isExecuting}
+                  >
+                    Purchase
+                  </RdButton>
+                </Box>
+              </RdModalFooter>
+            </AuthenticationRdButton>
+          )}
+        </RdModalBody>
+      )}
     </RdModal>
   )
 }
@@ -490,20 +518,24 @@ interface SelectableImageComponentProps2 extends SelectableComponentProps2 {
 }
 
 const SelectableImageComponent2 = ({isAvailable, isSelected, onSelected, image, label, children, ...props}: SelectableImageComponentProps2) => {
-  return (
-    <SelectableComponent2
-      isAvailable={isAvailable}
-      isSelected={isSelected}
-      onSelected={onSelected}
-      {...props}
-    >
-      <Image
-        src={ImageService.translate(image).fixedWidth(100, 100)}
-      />
-      <Box fontSize='xs' ms={1} mt={1} textAlign='end' h='21px'>
-        {label}
-      </Box>
-    </SelectableComponent2>
+  const [isLoaded, setIsLoaded] = useState(false);
 
+  return (
+    <Skeleton isLoaded={isLoaded} fadeDuration={0.6} width={120} height={145}>
+      <SelectableComponent2
+        isAvailable={isAvailable}
+        isSelected={isSelected}
+        onSelected={onSelected}
+        {...props}
+      >
+        <Image
+          src={ImageService.translate(image).fixedWidth(100, 100)}
+          onLoad={() => setIsLoaded(true)}
+        />
+        <Box fontSize='xs' ms={1} mt={1} textAlign='end' h='21px'>
+          {label}
+        </Box>
+      </SelectableComponent2>
+    </Skeleton>
   )
 }

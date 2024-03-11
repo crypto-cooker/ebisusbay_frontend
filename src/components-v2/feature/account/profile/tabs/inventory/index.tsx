@@ -10,14 +10,14 @@ import {
   isVaultCollection
 } from "@src/utils";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
-import MyNftCancelDialog from "@src/Components/components/MyNftCancelDialog";
+import {ResponsiveCancelListingDialog} from "@src/components-v2/shared/dialogs/cancel-listing";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listing";
 import Button from "@src/Components/components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter, faLayerGroup, faMagnifyingGlass, faSort} from "@fortawesome/free-solid-svg-icons";
-import TransferNftDialog from "@src/components-v2/shared/dialogs/transfer-nft";
+import {ResponsiveTransferNftDialog} from "@src/components-v2/shared/dialogs/transfer-nft";
 import {
   addToBatchListingCart,
   closeBatchListingCart,
@@ -58,7 +58,6 @@ import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 import InventoryFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
 import useDebounce from "@src/core/hooks/useDebounce";
-import GdcClaimConfirmation from "@src/components-v2/shared/dialogs/gdc-claim-confirmation";
 import {useUser} from "@src/components-v2/useUser";
 
 interface InventoryProps {
@@ -85,7 +84,6 @@ export default function Inventory({ address }: InventoryProps) {
     sortBy: 'receivedTimestamp',
     direction: 'desc'
   });
-  const [isGdcConfirmationOpen, setIsGdcConfirmationOpen] = useState(false);
 
   const fetcher = async ({ pageParam = 1 }) => {
     const params: WalletsQueryParams = {
@@ -427,14 +425,14 @@ export default function Inventory({ address }: InventoryProps) {
       />
 
       {!!cancelDialogNft && (
-        <MyNftCancelDialog
+        <ResponsiveCancelListingDialog
           isOpen={!!cancelDialogNft}
-          listing={cancelDialogNft}
+          listingId={cancelDialogNft.listingId}
           onClose={() => setCancelDialogNft(null)}
         />
       )}
       {!!transferDialogNft && (
-        <TransferNftDialog
+        <ResponsiveTransferNftDialog
           isOpen={!!transferDialogNft}
           nft={transferDialogNft}
           onClose={() => setTransferDialogNft(null)}
@@ -445,14 +443,11 @@ export default function Inventory({ address }: InventoryProps) {
           isOpen={!!createListingNft}
           nft={createListingNft}
           onClose={() => setCreateListingNft(null)}
-          listing={null}
+          listing={createListingNft.listingId ? {listingId: createListingNft.listingId} : null}
         />
       )}
       {useMobileMenu && (
         <MobileBatchPreview />
-      )}
-      {isGdcConfirmationOpen && (
-        <GdcClaimConfirmation onClose={() => setIsGdcConfirmationOpen(false)} isOpen={isGdcConfirmationOpen} />
       )}
     </>
   )

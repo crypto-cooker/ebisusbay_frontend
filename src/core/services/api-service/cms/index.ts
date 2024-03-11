@@ -17,6 +17,7 @@ import {
 import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
 import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
 import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
+import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
 
 class Cms {
   private profiles: ProfilesRepository;
@@ -93,6 +94,10 @@ class Cms {
     return this.ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(address, amount, vaultIndex, signature);
   }
 
+  async checkBlacklistStatus(address: string) {
+    return this.ryoshiDynasties.checkBlacklistStatus(address);
+  }
+
   async getPendingFortuneAuthorizations(address: string, signature: string) {
     return this.ryoshiDynasties.getPendingFortuneAuthorizations(address, signature);
   }
@@ -155,6 +160,12 @@ class Cms {
     return this.ryoshiDynasties.fetchGift(address, signature)
   }
 
+  async fetchValentinesGift(address: string, signature: string) {
+    return this.ryoshiDynasties.fetchValentinesGift(address, signature)
+  }
+
+
+
   async getFactionsByPoints(gameId: number) {
     return this.ryoshiDynasties.getFactionsByPoints(gameId);
   }
@@ -181,6 +192,10 @@ class Cms {
 
   async requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string) {
     return this.ryoshiDynasties.requestMerchantPurchaseAuthorization(payload, address, signature);
+  }
+
+  async attack(request: AttackRequest, address: string, signature: string) {
+    return this.ryoshiDynasties.attack(request, address, signature);
   }
 }
 

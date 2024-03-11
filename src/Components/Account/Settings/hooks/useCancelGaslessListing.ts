@@ -1,7 +1,7 @@
 import {useState} from 'react';
-import {cancelListing} from '@src/core/cms/endpoints/gaslessListing';
-import ContractService from "@src/core/contractService";
+import {cancelListing, expressCancelListing} from '@src/core/cms/endpoints/gaslessListing';
 import {useContractService, useUser} from "@src/components-v2/useUser";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
 type ResponseProps = {
   loading: boolean;
@@ -14,9 +14,11 @@ const useCancelGaslessListing = () => {
     error: undefined,
   });
 
+  const user = useUser();
+  const { requestSignature } = useEnforceSignature();
   const contractService = useContractService();
 
-  const cancelGaslessListing = async (listingIds: string[]) => {
+  const cancelGaslessListing = async (listingIds: string[], express: boolean) => {
     if (!Array.isArray(listingIds)) listingIds = [listingIds];
 
     setResponse({
@@ -26,11 +28,17 @@ const useCancelGaslessListing = () => {
     });
 
     try {
-      const { data: orders } = await cancelListing(listingIds);
-
-      const ship = contractService!.ship;
-      const tx = await ship.cancelOrders(orders);
-      await tx.wait();
+      if (listingIds.length > 0) {
+        if (express) {
+          const signature = await requestSignature();
+          await expressCancelListing(listingIds, user.address, signature);
+        } else {
+          const { data: orders } = await cancelListing(listingIds);
+          const ship = contractService!.ship;
+          const tx = await ship.cancelOrders(orders);
+          await tx.wait();
+        }
+      }
 
       setResponse({
         ...response,

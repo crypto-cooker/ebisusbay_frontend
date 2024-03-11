@@ -23,6 +23,7 @@ import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/f
 import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
 import {MerchantItem} from "@src/core/services/api-service/cms/response-types";
 import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
+import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
 
 export interface Api {
     getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>>;
@@ -59,6 +60,7 @@ export interface RyoshiDynastiesApi {
     requestResourcesWithdrawalAuthorization(tokenId: number, amount: number, address: string, signature: string): Promise<any>;
     requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string): Promise<any>;
     requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string): Promise<any>;
+    checkBlacklistStatus(address: string): Promise<any>;
     getPendingFortuneAuthorizations(address: string, signature: string): Promise<any>;
     getGlobalContext(): Promise<RyoshiConfig>;
     getUserContext(address: string, signature: string): Promise<RdUserContext>;
@@ -71,6 +73,7 @@ export interface RyoshiDynastiesApi {
     deployTroops(request: DeployTroopsRequest, address: string, signature: string): Promise<any>;
     relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string): Promise<any>
     fetchGift(address: string, signature: string): Promise<any>;
+    fetchValentinesGift(address: string, signature: string): Promise<any>;
     getFactionsByPoints(gameId: number): Promise<any>;
     requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string): Promise<any>;
     getTownHallWinningFaction(): Promise<any>;
@@ -78,6 +81,7 @@ export interface RyoshiDynastiesApi {
     getFaction(id: number, address: string, signature: string): Promise<any>;
     getMerchantItems(): Promise<MerchantItem[]>;
     requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string): Promise<any>;
+    attack(request: AttackRequest, address: string, signature: string): Promise<any>;
 }
 
 export enum ListingState {

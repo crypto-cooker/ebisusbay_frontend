@@ -33,6 +33,7 @@ import {
 import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
 import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
 import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
+import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -184,6 +185,9 @@ export class ApiService implements Api {
         address: collection.address,
         avatar: collection.metadata.avatar,
         type: 'COLLECTION',
+        frtnPerCollection: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, collection.address))?.frtnPerCollection,
+        eligibleListings: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, collection.address))?.eligibleListings,
+        frtnPerListing: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, collection.address))?.frtnPerListing,
         points: pointsByAddress
           .filter(entry => caseInsensitiveCompare(entry.address, collection.address))
           .reduce((prev, next) => {
@@ -201,6 +205,9 @@ export class ApiService implements Api {
         address: address,
         avatar: null,
         type: 'WALLET',
+        frtnPerCollection: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, address))?.frtnPerCollection,
+        eligibleListings: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, address))?.eligibleListings,
+        frtnPerListing: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, address))?.frtnPerListing,
         points: pointsByAddress
           .filter(entry => caseInsensitiveCompare(entry.address, address))
           .reduce((prev, next) => {
@@ -290,6 +297,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
     return this.cms.requestBankStakeAuthorization(nfts, address, signature);
   }
+
+  async checkBlacklistStatus(address: string) {
+    return this.cms.checkBlacklistStatus(address);
+  };
 
   async requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
     return this.cms.requestBankUnstakeAuthorization(nfts, address, signature);
@@ -391,6 +402,12 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.fetchGift(address, signature)
   }
 
+  async fetchValentinesGift(address: string, signature: string) {
+    return this.cms.fetchValentinesGift(address, signature)
+  }
+
+
+
   async getFactionsByPoints(gameId: number) {
     return this.cms.getFactionsByPoints(gameId);
   }
@@ -417,5 +434,9 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string) {
     return this.cms.requestMerchantPurchaseAuthorization(payload, address, signature);
+  }
+
+  async attack(request: AttackRequest, address: string, signature: string) {
+    return this.cms.attack(request, address, signature);
   }
 }
