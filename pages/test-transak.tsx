@@ -1,9 +1,7 @@
 import {useState} from "react";
 import {Contract, ethers} from "ethers";
-import {Box, Button, Text, VStack, Wrap} from "@chakra-ui/react";
+import {Box, Button, HStack, Text, useClipboard, VStack, Wrap} from "@chakra-ui/react";
 import {toast} from "react-toastify";
-import {GetServerSidePropsContext} from "next";
-import * as process from "process";
 import {appConfig} from "@src/Config";
 import {ERC721} from "@src/Contracts/Abis";
 import {JsonRpcProvider} from "@ethersproject/providers";
@@ -13,6 +11,7 @@ import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {shortAddress} from "@src/utils";
 import {getServerSignature} from "@src/core/cms/endpoints/gaslessListing";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 const readProvider = new JsonRpcProvider(appConfig().rpc.read);
 const ShipAbi = [
@@ -174,8 +173,9 @@ export default Test;
 const Transak = () => {
   const user = useUser();
   const [isExecuting, setIsExecuting] = useState(false);
-  const [value, setValue] = useState<string | number>();
+  const [callData, setCallData] = useState<string | number>();
   const [selectedListings, setSelectedListings] = useState<any[]>([]);
+  const { onCopy, value, setValue, hasCopied } = useClipboard("");
 
   const {data} = useQuery({
     queryKey: ['transakGetListings'],
@@ -223,8 +223,8 @@ const Transak = () => {
         sigData,
         signature
       ]);
-      console.log('orderData', orderData);
       setValue(rawCallData);
+      setCallData(rawCallData);
     } catch (e: any) {
       console.log(e);
       toast.error(parseErrorMessage(e));
@@ -235,37 +235,87 @@ const Transak = () => {
 
   return (
     <Box>
-      <Box>
+      <Box h='500px' overflowY='scroll'>
         <Text>Available listings</Text>
         <Wrap>
-          {data && data.data.map((listing: any) => (
-            <Box key={listing.id}>
-              <Button
-                onClick={() => handleToggleListing(listing)}
-                colorScheme={selectedListings?.findIndex((l) => l.listingId === listing.listingId) !== -1 ? 'green' : 'gray'}
-              >
-                {shortAddress(listing.listingId)} <br /> {listing.price} CRO
-              </Button>
-            </Box>
+          {data && data.data.filter((listing: any) => listing.price === '10').map((listing: any) => (
+            <ListingBox
+              key={listing.id}
+              listing={listing}
+              isSelected={selectedListings?.findIndex((l) => l.listingId === listing.listingId) !== -1}
+              onToggle={() => handleToggleListing(listing)}
+            />
           ))}
         </Wrap>
       </Box>
-      <Button mt={4} isLoading={isExecuting} isDisabled={isExecuting} onClick={handleGenerateCallData}>
+      <PrimaryButton
+        mt={4}
+        isLoading={isExecuting}
+        isDisabled={isExecuting}
+        onClick={handleGenerateCallData}
+        loadingText='Generating...'
+      >
         Generate Call Data
-      </Button>
-      <Box>
-        <Text w='500px'>{value}</Text>
-      </Box>
+      </PrimaryButton>
+      {!!callData && (
+        <Box mt={2}>
+          <Text fontSize='lg'>Call Data</Text>
+          <Button onClick={onCopy}>{hasCopied ? "Copied!" : "Copy Call Data"}</Button>
+          <Box  whiteSpace='pre-wrap' wordBreak='break-word' w='full'>{callData}</Box>
+        </Box>
+      )}
     </Box>
   )
 }
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (!context.req.headers.host?.startsWith('localhost') || process.env.NODE_ENV !== 'development') {
-    return {
-      destination: `/`,
-      permanent: false,
-    }
-  }
 
-  return { props: { } }
+interface ListingBoxProps {
+  listing: any;
+  isSelected: boolean;
+  onToggle: (listing: any) => void;
 }
+
+const ListingBox = ({listing, isSelected, onToggle}: ListingBoxProps) => {
+  const { onCopy, value, setValue, hasCopied } = useClipboard(listing.nftAddress);
+
+  return (
+    <Box
+      borderStyle='solid'
+      borderColor={isSelected ? '#218cff' : 'auto'}
+      borderWidth={isSelected ? '2px' : '1px'}
+      rounded='lg'
+      p={1}
+    >
+      <Box fontSize='sm'>
+        ID: {shortAddress(listing.listingId)}
+      </Box>
+      <Box fontSize='sm'>
+        Collection: {listing.nftAddress}
+      </Box>
+      <Box fontSize='sm'>
+        Token ID: {listing.nftId}
+      </Box>
+      <Box fontSize='sm'>
+        Price: {listing.price} CRO
+      </Box>
+      <HStack spacing={2} justify='center'>
+        <Button
+          onClick={() => onToggle(listing)}
+          colorScheme={isSelected ? 'green' : 'gray'}
+        >
+          {isSelected ? 'Selected' : 'Select'}
+        </Button>
+        <Button onClick={onCopy}>{hasCopied ? "Copied!" : "Copy Address"}</Button>
+      </HStack>
+    </Box>
+  )
+}
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//   if (!context.req.headers.host?.startsWith('localhost') || process.env.NODE_ENV !== 'development') {
+//     return {
+//       destination: `/`,
+//       permanent: false,
+//     }
+//   }
+//
+//   return { props: { } }
+// }
