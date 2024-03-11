@@ -55,8 +55,7 @@
     "@types/react-blockies": "^1.4.4",
     "@types/react-dom": "^18.2.15",
     "@types/styled-components": "^5.1.30",
-    "@web3modal/ethers5": "^4.0.13",
-    "@web3modal/wagmi": "^4.0.13",
+    "@web3modal/wagmi": "^4.1.0",
     "axios": "^1.6.2",
     "bad-words": "^3.0.4",
     "bootstrap": "^5.2.3",
@@ -111,14 +110,14 @@
     }
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^4.0.1",
-    "@graphql-codegen/client-preset": "^4.0.0",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.4",
     "@wagmi/cli": "^2.1.2",
-    "babel-plugin-styled-components": "^2.0.7",
-    "eslint": "^8.15.0",
-    "husky": "^7.0.4",
-    "lint-staged": "^12.3.4",
-    "msw": "^0.35.0",
-    "prettier": "^2.5.1"
+    "babel-plugin-styled-components": "^2.1.4",
+    "eslint": "^8.57.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "msw": "^2.2.3",
+    "prettier": "^3.2.5"
   }
 }
