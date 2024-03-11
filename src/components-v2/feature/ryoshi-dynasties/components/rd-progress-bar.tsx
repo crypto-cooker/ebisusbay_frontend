@@ -18,7 +18,7 @@ const RdProgressBar = ({current, max, potential, useGrid = true, segments = 8, f
   const hasFillSegments = segments - 1 > 0;
 
   const getProgress = async () => {
-    const value = (current / max) * 100;
+    const value = (current > max ? max : (current / max)) * 100;
     setProgressValue(value);
     const offsetWidth = progressRef.current?.offsetWidth ?? 0;
     setBarSpot((((value > 0 ? value : 1) / 100) * offsetWidth) - 5);
