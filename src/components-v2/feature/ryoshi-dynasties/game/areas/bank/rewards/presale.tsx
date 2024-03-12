@@ -255,7 +255,10 @@ const PresaleVaultTab = () => {
             <>
               <RdModalBox mt={2}>
                 <Text fontWeight='bold' fontSize='lg' mb={4}>Vesting Vault</Text>
-                <Text>Fortune tokens in the vault have now been fully vested! Claim your vested amount below.</Text>
+                <Text display='inline'>Fortune tokens in the vault have now been fully vested!</Text>
+                {round(data.vault.releasable) > 0 && (
+                  <Text display='inline'> Claim your vested amount below.</Text>
+                )}
                 {data.hasVault ? (
                   <Box mt={4}>
                     <Box mt={2}>
@@ -267,15 +270,17 @@ const PresaleVaultTab = () => {
                             <Text fontSize='lg' fontWeight='bold'>{round(data.vault.releasable, 4)}</Text>
                           </HStack>
                         </Box>
-                        <RdButton
-                          size='sm'
-                          isLoading={executingClaimFortune}
-                          isDisabled={executingClaimFortune}
-                          onClick={handleClaimFortune}
-                          loadingText='Claiming'
-                        >
-                          Claim
-                        </RdButton>
+                        {round(data.vault.releasable) > 0 && (
+                          <RdButton
+                            size='sm'
+                            isLoading={executingClaimFortune}
+                            isDisabled={executingClaimFortune}
+                            onClick={handleClaimFortune}
+                            loadingText='Claiming'
+                          >
+                            Claim
+                          </RdButton>
+                        )}
                       </Stack>
                     </Box>
                     <Box mt={4}>
