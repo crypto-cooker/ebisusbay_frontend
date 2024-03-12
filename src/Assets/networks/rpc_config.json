@@ -25902,9 +25902,82 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "FishTank Finance",
+      "slug": "fishtank-finance",
+      "multiToken": false,
+      "address": "0xe59176511CAb90873dF6eACF6E4c0d7C51411d23",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A new project coming to Cronos hoping to provide safe simple and secure passive income to its holders",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fishtank-finance/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/fishtank-finance/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/fishtank-finance/banner.webp",
+        "twitter": "https://www.twitter.com/Fishtankfinance",
+        "discord": "discord.gg/dHmDztX2X5",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Fury House",
+      "slug": "fury-house",
+      "multiToken": false,
+      "address": "0x79FCf35a146E2E61b04685988658883982Ca08Ba",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The FMG Fury House NFTs are the key to staking your FMG Mice and Quacks for our native token $FURY. You need a House to stake your Mouse. $FURY is currently exchangeable for CRO in our Fury Bank while we walk the path to liquidity and monetization.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-house/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-house/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-house/banner.webp",
+        "website": "https://furymousegang.com/",
+        "twitter": "https://twitter.com/FuryMouseGang",
+        "discord": "https://discord.gg/rTAd6qq9N8",
+        "medium": "https://medium.com/@furymousegang/fury-houses-and-fury-cdba285c044c",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Alien Apes",
+      "slug": "alien-apes",
+      "multiToken": false,
+      "address": "0x7f1decbb126bad83ee76c3547f4b1f7da1248f1e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crolon Mars Alien Apes you can use them to boost your crodex crolon mars staking. giving you a 3% boost ie max 9% by staking 3. Your nft will give you a plot of land in the metaverse EXCLUSIVE only to nft holders you will be part of \"your own city\" that no one can buy.... but you can sell.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/alien-apes/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/alien-apes/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/alien-apes/banner.webp",
+        "website": "https://www.crolonmars.com/",
+        "twitter": "https://twitter.com/CrolonMars",
+        "telegram": "https://t.me/xygU8V7M4b",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
-
-
   ],
   "drops": [
     {
