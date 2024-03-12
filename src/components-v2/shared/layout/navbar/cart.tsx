@@ -82,6 +82,7 @@ const Cart = function () {
   };
   const handleRemoveItem = (nft: any) => {
     cart.removeItem(nft.listingId);
+    setSoldItems(soldItems.filter((listingId) => listingId !== nft.listingId))
   };
 
   const openMenu = useCallback(async () => {
