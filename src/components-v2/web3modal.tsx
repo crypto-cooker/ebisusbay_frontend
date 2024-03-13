@@ -53,13 +53,11 @@ const ethersChains = [
 function setupDefaultConfig() {
   const wagmiChains = [{...primaryNetwork, rpcUrls}];
 
-
-
   const config = defaultWagmiConfig({
     chains: [{...primaryNetwork, rpcUrls}],
     projectId: projectId!,
     metadata,
-    ssr: true,
+    ssr: false, // @todo review if any changes to https://github.com/wevm/wagmi/issues/3589
     storage: createStorage({
       storage: cookieStorage
     })
