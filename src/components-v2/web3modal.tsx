@@ -57,7 +57,7 @@ function setupDefaultConfig() {
     chains: [{...primaryNetwork, rpcUrls}],
     projectId: projectId!,
     metadata,
-    ssr: false, // @todo review if any changes to https://github.com/wevm/wagmi/issues/3589
+    ssr: true,
     storage: createStorage({
       storage: cookieStorage
     })
