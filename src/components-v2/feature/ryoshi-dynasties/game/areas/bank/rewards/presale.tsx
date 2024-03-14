@@ -238,7 +238,7 @@ const PresaleVaultTab = () => {
     <Box>
       <RdModalBox>
         <Box textAlign='center'>
-          Users who participated in the Fortune Token Presale can now begin vesting their tokens. Those also holding Fortune Teller NFTs can exchange them for bonus Fortune tokens and Fortune Guards.
+          Users who participated in the Fortune Token Presale were able to vest their tokens for extra bonuses. Vesting took place over a 3-season period and is now complete.
         </Box>
       </RdModalBox>
       {status === 'pending' ? (
@@ -255,7 +255,10 @@ const PresaleVaultTab = () => {
             <>
               <RdModalBox mt={2}>
                 <Text fontWeight='bold' fontSize='lg' mb={4}>Vesting Vault</Text>
-                <Text>Fortune tokens in the vault will be vested linearly over a 9 month period (approximately 3 seasons).</Text>
+                <Text display='inline'>Fortune tokens in the vault have now been fully vested!</Text>
+                {round(data.vault.releasable) > 0 && (
+                  <Text display='inline'> Claim your vested amount below.</Text>
+                )}
                 {data.hasVault ? (
                   <Box mt={4}>
                     <Box mt={2}>
@@ -267,15 +270,17 @@ const PresaleVaultTab = () => {
                             <Text fontSize='lg' fontWeight='bold'>{round(data.vault.releasable, 4)}</Text>
                           </HStack>
                         </Box>
-                        <RdButton
-                          size='sm'
-                          isLoading={executingClaimFortune}
-                          isDisabled={executingClaimFortune}
-                          onClick={handleClaimFortune}
-                          loadingText='Claiming'
-                        >
-                          Claim
-                        </RdButton>
+                        {round(data.vault.releasable) > 0 && (
+                          <RdButton
+                            size='sm'
+                            isLoading={executingClaimFortune}
+                            isDisabled={executingClaimFortune}
+                            onClick={handleClaimFortune}
+                            loadingText='Claiming'
+                          >
+                            Claim
+                          </RdButton>
+                        )}
                       </Stack>
                     </Box>
                     <Box mt={4}>
@@ -286,7 +291,7 @@ const PresaleVaultTab = () => {
                       <RdProgressBar current={Date.now() - data.vault.start} max={data.vault.duration} />
                       <Flex justify='space-between'>
                         <Spacer />
-                        <Box>Completes: {moment(data.vault.completionDate).format("D MMM yyyy")}</Box>
+                        <Box>Completed: {moment(data.vault.completionDate).format("D MMM yyyy")}</Box>
                       </Flex>
                     </Box>
                   </Box>

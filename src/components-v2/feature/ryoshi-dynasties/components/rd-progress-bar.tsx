@@ -18,10 +18,12 @@ const RdProgressBar = ({current, max, potential, useGrid = true, segments = 8, f
   const hasFillSegments = segments - 1 > 0;
 
   const getProgress = async () => {
-    const value = (current / max) * 100;
+    const value = (current > max ? 100 : (current / max) * 100);
     setProgressValue(value);
-    const offsetWidth = progressRef.current?.offsetWidth ?? 0;
-    setBarSpot((((value > 0 ? value : 1) / 100) * offsetWidth) - 5);
+    if (max < 100) {
+      const offsetWidth = progressRef.current?.offsetWidth ?? 0;
+      setBarSpot((((value > 0 ? value : 1) / 100) * offsetWidth) - 5);
+    }
   }
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const RdProgressBar = ({current, max, potential, useGrid = true, segments = 8, f
           }}
         />
 
-        {!fillColor && (
+        {!fillColor && !!barSpot && (
           <Image position='absolute' src='/img/battle-bay/bankinterior/progress_bar_spark.png'
                  top={0}
                  h='30px'

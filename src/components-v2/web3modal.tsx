@@ -53,8 +53,6 @@ const ethersChains = [
 function setupDefaultConfig() {
   const wagmiChains = [{...primaryNetwork, rpcUrls}];
 
-
-
   const config = defaultWagmiConfig({
     chains: [{...primaryNetwork, rpcUrls}],
     projectId: projectId!,

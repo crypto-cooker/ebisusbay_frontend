@@ -10,6 +10,7 @@ import gdcAbi from "@src/Contracts/GDC.json";
 import PlatformRewards from "@src/Contracts/PlatformRewards.json";
 import PresaleVaults from "@src/Contracts/PresaleVaults.json";
 import {ERC20} from "@src/Contracts/Abis";
+import {JsonRpcSigner} from "@ethersproject/providers";
 
 const config = appConfig();
 
@@ -28,7 +29,7 @@ class UserContractService {
   private _ryoshiPresaleVaults?: Contract;
   private _custom: { [key: string]: Contract } = {};
 
-  constructor(signer: Signer) {
+  constructor(signer: Signer | JsonRpcSigner) {
     this.signer = signer;
   }
 
