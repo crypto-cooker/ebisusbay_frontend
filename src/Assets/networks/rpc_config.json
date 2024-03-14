@@ -25933,7 +25933,7 @@
       "multiToken": false,
       "address": "0x79FCf35a146E2E61b04685988658883982Ca08Ba",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The FMG Fury House NFTs are the key to staking your FMG Mice and Quacks for our native token $FURY. You need a House to stake your Mouse. $FURY is currently exchangeable for CRO in our Fury Bank while we walk the path to liquidity and monetization.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-house/avatar.webp",
