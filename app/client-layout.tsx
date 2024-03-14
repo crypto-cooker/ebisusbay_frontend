@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useEffect, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {Provider} from 'react-redux';
 import * as Sentry from '@sentry/react';
 
@@ -29,6 +29,7 @@ import {initializeApp} from "firebase/app";
 import firebaseConfig from "@src/third-party/firebase";
 import ClientLayoutState from "./client-layout-state";
 import dynamic from "next/dynamic";
+import {State} from "wagmi";
 
 Site24x7LoggingService.init();
 
@@ -41,7 +42,12 @@ const ColorModeScript = dynamic(
   { ssr: false }
 );
 
-export default function ClientLayout({children}: { children: React.ReactNode }) {
+type ClientLayout = {
+  children: ReactNode,
+  initialState: State | undefined,
+}
+
+export default function ClientLayout({children, initialState}: ClientLayout) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -61,9 +67,9 @@ export default function ClientLayout({children}: { children: React.ReactNode }) 
       <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
       <Provider store={store}>
         <Sentry.ErrorBoundary>
-          <QueryClientProvider client={queryClient} >
-            <ChakraProvider theme={customTheme}>
-              <Web3Modal>
+          <ChakraProvider theme={customTheme}>
+            <Web3Modal initialState={initialState}>
+              <QueryClientProvider client={queryClient} >
                 <UserProvider>
                   <ClientLayoutState>
                     <DefaultHead />
@@ -80,9 +86,9 @@ export default function ClientLayout({children}: { children: React.ReactNode }) 
                     </div>
                   </ClientLayoutState>
                 </UserProvider>
-              </Web3Modal>
-            </ChakraProvider>
-          </QueryClientProvider>
+              </QueryClientProvider>
+            </Web3Modal>
+          </ChakraProvider>
         </Sentry.ErrorBoundary>
       </Provider>
     </>

@@ -3,6 +3,10 @@ import ClientLayout from "./client-layout";
 import Script from "next/script";
 import {DM_Sans} from 'next/font/google';
 import Head from "next/head";
+import {headers} from "next/headers";
+import {cookieToInitialState} from "wagmi";
+import {ReactNode} from "react";
+import {wagmiConfig} from "@src/wagmi";
 
 const dmSans = DM_Sans({
   weight: ['200', '300', '400', '500', '600', '700', '800'],
@@ -12,7 +16,12 @@ const dmSans = DM_Sans({
 });
 
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
+  const initialState = cookieToInitialState(
+    wagmiConfig,
+    headers().get('cookie')
+  )
+
   return (
     <html lang="en" className={dmSans.className}>
       <Head>
@@ -33,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
       </Head>
       <body>
-        <ClientLayout>
+        <ClientLayout initialState={initialState}>
           {children}
         </ClientLayout>
         <statusiq-status-widget src="https://status.ebisusbay.com" widget-type="sticky" widget-position="bottom-left"></statusiq-status-widget>
