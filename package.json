@@ -98,7 +98,7 @@
     "typewriter-effect": "^2.21.0",
     "use-breakpoint": "^4.0.1",
     "uuid-int": "^3.1.0",
-    "viem": "^2.8.5",
+    "viem": "^2.8.6",
     "wagmi": "^2.5.7",
     "web-vitals": "^2.1.0",
     "yup": "^0.32.11"
