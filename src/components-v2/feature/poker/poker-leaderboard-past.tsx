@@ -358,6 +358,7 @@ const PokerLeaderboardComponent = ({pokerCollection} : PokerLeaderboardProps) =>
 			{pokerCollection === PokerCollection.Diamonds && updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Snapshot taken at Sep-12-2023 04:00:01 PM +UTC</Text>}
 			{pokerCollection === PokerCollection.Clubs && updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Snapshot taken at Oct-12-2023 04:00:01 PM +UTC</Text>}
 			{pokerCollection === PokerCollection.Hearts && updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Snapshot taken at Nov-13-2023 04:00:01 PM +UTC</Text>}
+			{pokerCollection === PokerCollection.Spades && updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Snapshot taken at Feb-27-2024 09:00:04 PM +UTC</Text>}
 			{pokerCollection === PokerCollection.Live && updatedAt && <Text fontSize={{base: 12, md:14}} as={'i'} textAlign='center'>Last refreshed at {updatedAt}</Text>}
 			{content}
 		</VStack>
