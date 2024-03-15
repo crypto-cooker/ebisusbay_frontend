@@ -71,7 +71,7 @@ export async function getOwners(collection) {
   `
   let querySpades = `
       query owners($lastID: String) {
-        erc721Tokens(where: {contract: "0xd87838a982a401510255ec27e603b0f5fea98d24", id_gt: $lastID}, first: 1000, block: {number: ???????}) {
+        erc721Tokens(where: {contract: "0xd87838a982a401510255ec27e603b0f5fea98d24", id_gt: $lastID}, first: 1000, block: {number: 12760366}) {
               id
               owner {
                     id
@@ -91,7 +91,7 @@ export async function getOwners(collection) {
       } else if(collection == "Hearts") {
         data = await getSubgraphData(SUBGRAPH, queryHearts, {}, "erc721Tokens");
       } else if(collection == "Spades") {
-        data = await getSubgraphData(SUBGRAPH, query, {}, "erc721Tokens");//change to querySpades to lock it to a block
+        data = await getSubgraphData(SUBGRAPH, querySpades, {}, "erc721Tokens");//change to querySpades to lock it to a block
       }
       if (data) {
           // DATA HERE
