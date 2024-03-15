@@ -104,13 +104,19 @@
     "incremental": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/leaderboard.js"  ],
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
   "exclude": [
     "node_modules",
     "dev"

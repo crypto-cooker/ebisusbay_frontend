@@ -18,7 +18,7 @@ import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
 import {caseInsensitiveCompare} from "@src/utils";
-import {useRouter} from "next/router";
+import {useRouter} from "next/navigation";
 import {ChevronDownIcon, SearchIcon} from "@chakra-ui/icons";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {appConfig} from "@src/Config";

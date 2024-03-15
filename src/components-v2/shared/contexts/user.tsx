@@ -15,7 +15,7 @@ import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
 import {storageSignerAtom} from "@src/jotai/atoms/storage";
 import * as Sentry from "@sentry/react";
 import {themeAtom} from "@src/jotai/atoms/theme";
-import {wagmiConfig} from "@src/components-v2/web3modal";
+import {wagmiConfig} from "@src/wagmi";
 
 const config = appConfig();
 
