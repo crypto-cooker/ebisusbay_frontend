@@ -15,9 +15,9 @@ if (!projectId) throw 'Web3Modal API Key not defined';
 
 createWeb3Modal({
   // ethersConfig: defaultConfig({ metadata }),
-  wagmiConfig: wagmiConfig,
+  wagmiConfig: wagmiConfig.config,
   projectId,
-  // chains: wagmiConfig.config.chains,
+  chains: wagmiConfig.config.chains,
   tokens: {
     [appConfig.chain.id]: {
       address: appConfig.tokens.frtn.address,
@@ -39,7 +39,7 @@ createWeb3Modal({
 
 export function Web3Modal({children}: { children: ReactNode }) {
   return (
-    <WagmiConfig config={wagmiConfig}>
+    <WagmiConfig config={wagmiConfig.config}>
       {children}
     </WagmiConfig>
   )

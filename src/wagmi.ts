@@ -1,6 +1,8 @@
 import {cronos, cronosTestnet} from 'viem/chains'
 import {appConfig as applicationConfig, isTestnet} from "@src/Config";
-import {defaultWagmiConfig} from "@web3modal/wagmi";
+import {defaultWagmiConfig, walletConnectProvider} from "@web3modal/wagmi";
+import {configureChains, Connector, createConfig} from "wagmi";
+import {jsonRpcProvider} from "wagmi/providers/jsonRpc";
 
 const appConfig = applicationConfig();
 
@@ -44,32 +46,32 @@ function setupDefaultConfig() {
     metadata
   })
 
-  return config;
+  // return config;
 
-  // return { config, chains: wagmiChains };
+  return { config, chains: wagmiChains };
 }
 
-// // All this setup just to get the autoConnect parameter...
-// function setupCustomConfig(connectors: Array<Connector>) {
-//   const { chains, publicClient } = configureChains(
-//     [primaryNetwork],
-//     [walletConnectProvider({ projectId: projectId! }), jsonRpcProvider({
-//       rpc: (chain) => ({
-//         http: appConfig.rpc.read,
-//         websocket: 'wss://ws-rpc.ebisusbay.com'
-//       })
-//     })]
-//   )
-//
-//   const config = createConfig({
-//     connectors,
-//     autoConnect: true,
-//     publicClient,
-//   });
-//
-//   return { config, chains };
-// }
+// All this setup just to get the autoConnect parameter...
+function setupCustomConfig(connectors: Array<Connector>) {
+  const { chains, publicClient } = configureChains(
+    [primaryNetwork],
+    [walletConnectProvider({ projectId: projectId! }), jsonRpcProvider({
+      rpc: (chain) => ({
+        http: appConfig.rpc.read,
+        websocket: 'wss://ws-rpc.ebisusbay.com'
+      })
+    })]
+  )
+
+  const config = createConfig({
+    connectors,
+    autoConnect: true,
+    publicClient,
+  });
+
+  return { config, chains };
+}
 
 const defaultConfig = setupDefaultConfig();
-// const customConfig = setupCustomConfig(defaultConfig.config.connectors);
-export const wagmiConfig = defaultConfig;
+const customConfig = setupCustomConfig(defaultConfig.config.connectors);
+export const wagmiConfig = customConfig;
