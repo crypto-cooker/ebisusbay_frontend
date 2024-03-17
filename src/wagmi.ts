@@ -1,11 +1,7 @@
-import {defaultWagmiConfig} from '@web3modal/wagmi/react/config';
-import {cookieStorage, createStorage} from 'wagmi'
 import {cronos, cronosTestnet} from 'viem/chains'
 import {appConfig as applicationConfig, isTestnet} from "@src/Config";
-type ChainRpcUrls = {
-  http: readonly string[]
-  webSocket?: readonly string[] | undefined
-}
+import {defaultWagmiConfig} from "@web3modal/wagmi";
+
 const appConfig = applicationConfig();
 
 const projectId = process.env.NEXT_PUBLIC_WEB3MODAL_API_KEY;
@@ -20,15 +16,12 @@ const metadata = {
 
 const primaryNetwork = (isTestnet() ? cronosTestnet : cronos);
 
-const rpcUrls: {
-  [key: string]: ChainRpcUrls;
-  default: ChainRpcUrls;
-} = {
+const rpcUrls = {
   default: {
     http: [appConfig.rpc.read, primaryNetwork.rpcUrls.default.http]
   },
   public: {
-    http: [appConfig.rpc.read, primaryNetwork.rpcUrls.default.http]
+    http: [appConfig.rpc.read, primaryNetwork.rpcUrls.public.http]
   }
 }
 
@@ -46,13 +39,9 @@ function setupDefaultConfig() {
   const wagmiChains = [{...primaryNetwork, rpcUrls}];
 
   const config = defaultWagmiConfig({
-    chains: [{...primaryNetwork, rpcUrls}],
+    chains: wagmiChains,
     projectId: projectId!,
-    metadata,
-    ssr: true,
-    storage: createStorage({
-      storage: cookieStorage
-    })
+    metadata
   })
 
   return config;
