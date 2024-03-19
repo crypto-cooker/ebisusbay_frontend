@@ -11,13 +11,10 @@ import {
   useDisclosure,
   VStack
 } from "@chakra-ui/react";
-import {getBattleRewards} from "@src/core/api/RyoshiDynastiesAPICalls";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
 import localFont from 'next/font/local';
 import ImageService from "@src/core/services/image";
-import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import {useUser} from "@src/components-v2/useUser";
 import {RdControlPointLeaderBoard} from "@src/core/services/api-service/types";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
@@ -44,13 +41,7 @@ interface BattleConclusionProps {
 }
 
 const BattleConclusion = ({attacker, attackerTroops, defender, battleAttack, onAttackAgain, onRetrieveKobanBalance}: BattleConclusionProps) => {
-  const user = useUser();
-
-  const [battleRewards, setBattleRewards] = useState({
-    quantity: []
-  });
   const [battleRewardsClaimed, setBattleRewardsClaimed] = useState(false);
-  const {requestSignature} = useEnforceSignature();
 
   const [showDetailedResults, setShowDetailedResults] = useState(false);
   const { isOpen: isOpenClaimRewards, onOpen: onOpenClaimRewards, onClose: onCloseClaimRewards} = useDisclosure();
@@ -96,17 +87,7 @@ const BattleConclusion = ({attacker, attackerTroops, defender, battleAttack, onA
     return ret;
   }, [battleAttack, attackerTroops]);
 
-  const checkForBattleRewards = async () => {
-    try {
-      const signature = await requestSignature();
-      const data = await getBattleRewards(user.address?.toLowerCase(), signature);
-      setBattleRewards(data);
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const claimedRewards = () => {
+  const onClaimedRewards = () => {
     setBattleRewardsClaimed(true);
     onCloseClaimRewards();
   }
@@ -118,9 +99,6 @@ const BattleConclusion = ({attacker, attackerTroops, defender, battleAttack, onA
   useEffect(() => {
     if (battleAttack.length !== 0) {
       onRetrieveKobanBalance();
-      if(battleDetails.defenderTroopsLost > 0) {
-        checkForBattleRewards();
-      }
       return;
     }
   }, [battleAttack]);
@@ -194,9 +172,9 @@ const BattleConclusion = ({attacker, attackerTroops, defender, battleAttack, onA
             marginBottom='2'>
             Detailed Results
           </RdButton>
-          {!!battleRewards && battleRewards.quantity.length > 0 && !battleRewardsClaimed && (
+          {!battleRewardsClaimed && (
             <RdButton onClick={() => onOpenClaimRewards()} fontSize={{base: 'sm', sm: 'md'}}>
-              Claim Rewards
+              Check Rewards
             </RdButton>
           )}
         </HStack>
@@ -221,7 +199,7 @@ const BattleConclusion = ({attacker, attackerTroops, defender, battleAttack, onA
       )}
 
       {isOpenClaimRewards && (
-        <ClaimRewards isOpen={isOpenClaimRewards} onClose={claimedRewards} battleRewards={battleRewards}/>
+        <ClaimRewards isOpen={isOpenClaimRewards} onClose={onClaimedRewards} />
       )}
     </>
   )
