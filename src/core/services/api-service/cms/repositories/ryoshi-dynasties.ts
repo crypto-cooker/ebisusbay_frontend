@@ -505,6 +505,34 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
     return response.data.data;
   }
+
+  async getBattleCardsByWallet(address: string, signature: string) {
+    const response = await this.cms.get(
+      'ryoshi-dynasties/game-tokens/battle-reward',
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+
+    return response.data.data;
+  }
+
+  async requestBattleCardsWithdrawalAuthorization(address: string, signature: string) {
+    const response = await this.cms.post(
+      `ryoshi-dynasties/game-tokens/resources/battle-cards/withdraw`,
+      {},
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;

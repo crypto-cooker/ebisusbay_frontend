@@ -126,18 +126,6 @@ export const getControlPoint = async (controlPointId, gameId) => {
   }
 }
 
-export const getBattleRewards = async (address, signature) => {
-  try{
-    let data =  await api.get("ryoshi-dynasties/game-tokens/battle-reward?",
-      {params: {address, signature}});
-
-    return data.data.data;
-  }
-  catch(error){
-    throw error;
-  }
-}
-
 export const getTroopsOnControlPoint = async (address, signature, controlPoint, gameId) => {
   try{
     let data = await api.get("ryoshi-dynasties/armies?",

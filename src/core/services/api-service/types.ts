@@ -82,6 +82,8 @@ export interface RyoshiDynastiesApi {
     getMerchantItems(): Promise<MerchantItem[]>;
     requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string): Promise<any>;
     attack(request: AttackRequest, address: string, signature: string): Promise<any>;
+    getBattleCardsByWallet(address: string, signature: string): Promise<Array<{tokenId: number, amount: number}>>;
+    requestBattleCardsWithdrawalAuthorization(address: string, signature: string): Promise<any>;
 }
 
 export enum ListingState {
