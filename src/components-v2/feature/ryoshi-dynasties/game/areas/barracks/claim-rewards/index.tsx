@@ -99,6 +99,9 @@ const ClaimRewards = ({isOpen, onClose}: StakeNftsProps) => {
         isCentered={false}
       >
         <RdModalBody>
+          <Box textAlign='center' mt={4}>
+            <Text>Compete against factions on the battle map for a chance to earn battle cards. Battle cards can be traded in at the Town Hall in exchange for additional Ryoshi.</Text>
+          </Box>
           {status === 'pending' ? (
             <Center>
               <Spinner />
@@ -106,106 +109,108 @@ const ClaimRewards = ({isOpen, onClose}: StakeNftsProps) => {
           ) : status === "error" ? (
             <p>Error: {(error as any).message}</p>
           ) : !!data && data.length > 0 ? (
-            <SimpleGrid
-              columns={{base: 2, sm: 3, md: 5}}
-              gap={3}
-            >
-              {data.map((battleReward) => (
-                <Box position='relative'>
-                  <Box
-                    className="card eb-nft__card h-100 shadow"
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                    _hover={{
-                      borderColor:'#F48F0C',
-                    }}
-                  >
+            <>
+              <SimpleGrid
+                columns={{base: 2, sm: 3, md: 5}}
+                gap={3}
+              >
+                {data.map((battleReward) => (
+                  <Box position='relative'>
                     <Box
-                      _groupHover={{
-                        background:cardBg,
-                        transition:'0.3s ease'
+                      className="card eb-nft__card h-100 shadow"
+                      onMouseEnter={() => setIsHovered(true)}
+                      onMouseLeave={() => setIsHovered(false)}
+                      _hover={{
+                        borderColor:'#F48F0C',
                       }}
-                      borderRadius={'15px'}
-                      transition="0.3s ease"
-                      height="100%"
                     >
-                      <Flex direction="column" height="100%">
-                        <div className="card-img-container">
-                          <Box
-                            _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
-                            transition="0.3s ease"
-                            transform="scale(1.0)"
-                            width={180}
-                            height={225}
-                          >
-                            <Image
-                              src = {GetTokenImage(battleReward.tokenId)}
-                              // image={nftCardUrl(listing.nftAddress, listing.nft.image)}
-                              // className={`card-img-top ${imgClass}`}
-                              // title={listing.nft.name}
-                              // url={`/collection/${listing.nftAddress}/${listing.nftId}`}
-                              // width={440}
-                              // height={440}
-                              // video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
-                              // thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.translate(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url).thumbnail() : undefined}
-                              // usePlaceholder={true}
-                            />
-                          </Box>
-                        </div>
+                      <Box
+                        _groupHover={{
+                          background:cardBg,
+                          transition:'0.3s ease'
+                        }}
+                        borderRadius={'15px'}
+                        transition="0.3s ease"
+                        height="100%"
+                      >
+                        <Flex direction="column" height="100%">
+                          <div className="card-img-container">
+                            <Box
+                              _groupHover={{transform:'scale(1.05)', transition:'0.3s ease'}}
+                              transition="0.3s ease"
+                              transform="scale(1.0)"
+                              width={180}
+                              height={225}
+                            >
+                              <Image
+                                src = {GetTokenImage(battleReward.tokenId)}
+                                // image={nftCardUrl(listing.nftAddress, listing.nft.image)}
+                                // className={`card-img-top ${imgClass}`}
+                                // title={listing.nft.name}
+                                // url={`/collection/${listing.nftAddress}/${listing.nftId}`}
+                                // width={440}
+                                // height={440}
+                                // video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
+                                // thumbnail={!!listing.nft.video || !!listing.nft.animationUrl || !!listing.nft.animation_url ? ImageService.translate(listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url).thumbnail() : undefined}
+                                // usePlaceholder={true}
+                              />
+                            </Box>
+                          </div>
 
-                        {/* {listing.nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>} */}
+                          {/* {listing.nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{listing.nft.rank}</div>} */}
 
-                        <Spacer />
-                        <Box
-                          borderBottomRadius={15}
-                          _groupHover={{background: bg, color:lightTheme.textColor1}}
-                          px={4}
-                          py={1}
-                        >
+                          <Spacer />
                           <Box
-                            maxW={'100%'}
-                            justifyContent='space-between'
+                            borderBottomRadius={15}
+                            _groupHover={{background: bg, color:lightTheme.textColor1}}
+                            px={4}
+                            py={1}
                           >
-                            <Heading isTruncated width={140} as="h6" size="sm" className="card-title mt-auto mb-1">{GetTokenName(battleReward.tokenId)}</Heading>
-                            <Heading  as="h6" size="sm" className="card-title mt-auto mb-1">x{battleReward.amount}</Heading>
+                            <Box
+                              maxW={'100%'}
+                              justifyContent='space-between'
+                            >
+                              <Heading isTruncated width={140} as="h6" size="sm" className="card-title mt-auto mb-1">{GetTokenName(battleReward.tokenId)}</Heading>
+                              <Heading  as="h6" size="sm" className="card-title mt-auto mb-1">x{battleReward.amount}</Heading>
+                            </Box>
                           </Box>
-                        </Box>
+                        </Flex>
+                      </Box>
+                      <Flex fontSize='xs' justify='space-between' mt={4}>
+                        <Flex marginLeft='auto'>
+                          <Text as='b'></Text>
+                        </Flex>
                       </Flex>
                     </Box>
-                    <Flex fontSize='xs' justify='space-between' mt={4}>
-                      <Flex marginLeft='auto'>
-                        <Text as='b'></Text>
-                      </Flex>
-                    </Flex>
-                  </Box>
 
-                  <Box
-                    position='absolute'
-                    top={0}
-                    right={0}
-                    pe='3px'
-                  >
+                    <Box
+                      position='absolute'
+                      top={0}
+                      right={0}
+                      pe='3px'
+                    >
+                    </Box>
                   </Box>
-                </Box>
-              ))}
-            </SimpleGrid>
+                ))}
+              </SimpleGrid>
+              <Flex justify='center' my={4}>
+                <RdButton
+                  minW='150px'
+                  onClick={claimBattleRewards}
+                  isLoading={isExecutingClaim}
+                  disabled={isExecutingClaim}
+                  stickyIcon={true}
+                  loadingText='Claiming'
+                >
+                  Claim
+                </RdButton>
+              </Flex>
+            </>
           ) : (
             <Box textAlign='center' mt={8}>
-              <Text>No rewards to claim</Text>
+              <Text>No rewards to claim. Initiate battles against factions on the battle map to earn more.</Text>
             </Box>
           )}
-          <Flex justify='center' my={4}>
-            <RdButton
-              minW='150px'
-              onClick={claimBattleRewards}
-              isLoading={isExecutingClaim}
-              disabled={isExecutingClaim}
-              stickyIcon={true}
-              loadingText='Claiming'
-            >
-              Claim
-            </RdButton>
-          </Flex>
         </RdModalBody>
       </RdModal>
     </>
