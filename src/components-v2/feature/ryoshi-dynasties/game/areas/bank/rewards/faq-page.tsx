@@ -85,7 +85,9 @@ const FaqPage = () => {
 
       <Box p={4}>
         <Text fontSize='lg' fontWeight='bold'>Presale Rewards</Text>
-        <Text>Users who participated in the Fortune Token Presale can now begin vesting their tokens. Those also holding Fortune Teller NFTs can exchange them for bonus Fortune tokens and Fortune Guards. This is done in the <strong>Presale</strong> tab</Text>
+        <Text>
+          Users who participated in the Fortune Token Presale were able to vest their tokens for extra bonuses. Vesting took place over a 3-season period and is now complete. Claiming presale rewards is done in the <strong>Presale</strong> tab
+        </Text>
         <Accordion fontSize='sm' mt={4}>
           <AccordionItem>
             <AccordionButton fontSize='sm' fontWeight='bold'>

@@ -1,6 +1,6 @@
 {
   "name": "ebisusbay",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "private": true,
   "homepage": "https://app.ebisusbay.com",
   "scripts": {
@@ -55,7 +55,9 @@
     "@types/react-blockies": "^1.4.4",
     "@types/react-dom": "^18.2.15",
     "@types/styled-components": "^5.1.30",
-    "@web3modal/wagmi": "^4.1.0",
+    "@web3modal/ethers5": "^3.5.7",
+    "@web3modal/wagmi": "^3.5.7",
+    "@web3modal/wallet": "^3.5.7",
     "axios": "^1.6.2",
     "bad-words": "^3.0.4",
     "bootstrap": "^5.2.3",
@@ -98,8 +100,8 @@
     "typewriter-effect": "^2.21.0",
     "use-breakpoint": "^4.0.1",
     "uuid-int": "^3.1.0",
-    "viem": "^2.7.22",
-    "wagmi": "^2.5.7",
+    "viem": "^1.21.4",
+    "wagmi": "^1.4.13",
     "web-vitals": "^2.1.0",
     "yup": "^0.32.11"
   },
@@ -112,7 +114,7 @@
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/client-preset": "^4.2.4",
-    "@wagmi/cli": "^2.1.2",
+    "@wagmi/cli": "^1.5.2",
     "babel-plugin-styled-components": "^2.1.4",
     "eslint": "^8.57.0",
     "husky": "^9.0.11",

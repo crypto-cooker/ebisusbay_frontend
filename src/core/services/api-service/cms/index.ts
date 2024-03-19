@@ -197,6 +197,14 @@ class Cms {
   async attack(request: AttackRequest, address: string, signature: string) {
     return this.ryoshiDynasties.attack(request, address, signature);
   }
+
+  async getBattleCardsByWallet(address: string, signature: string) {
+    return this.ryoshiDynasties.getBattleCardsByWallet(address, signature);
+  }
+
+  async requestBattleCardsWithdrawalAuthorization(address: string, signature: string) {
+    return this.ryoshiDynasties.requestBattleCardsWithdrawalAuthorization(address, signature);
+  }
 }
 
 export default Cms;

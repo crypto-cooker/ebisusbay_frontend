@@ -1,6 +1,6 @@
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import {Contract, ethers} from "ethers";
-import {Box, Button, HStack, Text, useClipboard, VStack, Wrap} from "@chakra-ui/react";
+import {Box, Button, HStack, SimpleGrid, Stack, Text, Textarea, useClipboard, VStack} from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {appConfig} from "@src/Config";
 import {ERC721} from "@src/Contracts/Abis";
@@ -9,7 +9,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
-import {shortAddress} from "@src/utils";
+import {ciEquals, shortAddress} from "@src/utils";
 import {getServerSignature} from "@src/core/cms/endpoints/gaslessListing";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 
@@ -235,18 +235,37 @@ const Transak = () => {
 
   return (
     <Box>
-      <Box h='500px' overflowY='scroll'>
-        <Text>Available listings</Text>
-        <Wrap>
-          {data && data.data.filter((listing: any) => listing.price === '10').map((listing: any) => (
-            <ListingBox
-              key={listing.id}
-              listing={listing}
-              isSelected={selectedListings?.findIndex((l) => l.listingId === listing.listingId) !== -1}
-              onToggle={() => handleToggleListing(listing)}
-            />
-          ))}
-        </Wrap>
+      <Box>
+        <Stack direction={{base: 'column', md: 'row'}}>
+          <Box>
+            <Text fontSize='lg' fontWeight='bold'>Available FRTN listings</Text>
+            <SimpleGrid columns={2} gap={2} h='500px' overflowY='scroll'>
+              {data && data.data.filter((listing: any) => listing.price === '10' && ciEquals(listing.currency, '0x119adb5e05e85d55690bc4da7b37c06bfecf2071')).map((listing: any) => (
+                <ListingBox
+                  key={listing.id}
+                  listing={listing}
+                  symbol='FRTN'
+                  isSelected={selectedListings?.findIndex((l) => l.listingId === listing.listingId) !== -1}
+                  onToggle={() => handleToggleListing(listing)}
+                />
+              ))}
+            </SimpleGrid>
+          </Box>
+          <Box>
+            <Text fontSize='lg' fontWeight='bold'>Available CRO listings</Text>
+            <SimpleGrid columns={2} gap={2} h='500px' overflowY='scroll'>
+              {data && data.data.filter((listing: any) => listing.price === '10' && ciEquals(listing.currency, ethers.constants.AddressZero)).map((listing: any) => (
+                <ListingBox
+                  key={listing.id}
+                  listing={listing}
+                  symbol='CRO'
+                  isSelected={selectedListings?.findIndex((l) => l.listingId === listing.listingId) !== -1}
+                  onToggle={() => handleToggleListing(listing)}
+                />
+              ))}
+            </SimpleGrid>
+          </Box>
+        </Stack>
       </Box>
       <PrimaryButton
         mt={4}
@@ -261,7 +280,9 @@ const Transak = () => {
         <Box mt={2}>
           <Text fontSize='lg'>Call Data</Text>
           <Button onClick={onCopy}>{hasCopied ? "Copied!" : "Copy Call Data"}</Button>
-          <Box  whiteSpace='pre-wrap' wordBreak='break-word' w='full'>{callData}</Box>
+          <Textarea mt={2} rows={5}>
+            {callData}
+          </Textarea>
         </Box>
       )}
     </Box>
@@ -270,12 +291,20 @@ const Transak = () => {
 
 interface ListingBoxProps {
   listing: any;
+  symbol: string;
   isSelected: boolean;
   onToggle: (listing: any) => void;
 }
 
-const ListingBox = ({listing, isSelected, onToggle}: ListingBoxProps) => {
+const ListingBox = ({listing, symbol, isSelected, onToggle}: ListingBoxProps) => {
   const { onCopy, value, setValue, hasCopied } = useClipboard(listing.nftAddress);
+  const currencyForListing = useMemo(() => {
+    if (listing.currency === ethers.constants.AddressZero) {
+      return 'CRO';
+    } else if (ciEquals(listing.currency, '0x119adb5e05e85d55690bc4da7b37c06bfecf2071')) {
+      return 'FRTN'
+    }
+  }, [listing.currency]);
 
   return (
     <Box
@@ -295,7 +324,7 @@ const ListingBox = ({listing, isSelected, onToggle}: ListingBoxProps) => {
         Token ID: {listing.nftId}
       </Box>
       <Box fontSize='sm'>
-        Price: {listing.price} CRO
+        Price: {listing.price} {symbol}
       </Box>
       <HStack spacing={2} justify='center'>
         <Button

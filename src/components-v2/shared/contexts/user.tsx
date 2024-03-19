@@ -1,10 +1,10 @@
-import {useAccount, useAccountEffect, useBalance, useDisconnect} from "wagmi";
+import {useAccount, useBalance, useDisconnect, useNetwork} from "wagmi";
 import {createContext, ReactNode, useEffect} from "react";
 import {appConfig} from "@src/Config";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {useQuery} from "@tanstack/react-query";
 import {multicall} from "@wagmi/core";
-import {portAbi, stakeAbi} from "@src/Contracts/types";
+import {portABI, stakeABI} from "@src/Contracts/types";
 import {ethers} from "ethers";
 import {JotaiUser, UserActionType, userAtom} from "@src/jotai/atoms/user";
 import {useAtom} from "jotai";
@@ -15,7 +15,7 @@ import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
 import {storageSignerAtom} from "@src/jotai/atoms/storage";
 import * as Sentry from "@sentry/react";
 import {themeAtom} from "@src/jotai/atoms/theme";
-import {wagmiConfig} from "@src/components-v2/web3modal";
+import {wagmiConfig} from "@src/wagmi";
 
 const config = appConfig();
 
@@ -43,14 +43,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   // isConnected - true when explicitly connecting to wallet from dialog
   // isReconnecting - true when wallet is auto connecting after page refresh
-  const {address, isConnecting, isConnected, isReconnecting, status,connector, chain} = useAccount();
-
-  useAccountEffect({
+  const {address, isConnecting, isConnected, isReconnecting, status,connector} = useAccount({
     onDisconnect() {
       clearUser();
     }
-  })
+  });
 
+  const { chain } = useNetwork();
   const { disconnect: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
   const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address });
@@ -73,35 +72,35 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         throw {err: 'Unable to connect'};
       }
 
-      const data = await multicall(wagmiConfig, {
+      const data = await multicall({
         contracts: [
           {
             address: config.contracts.market,
-            abi: portAbi,
+            abi: portABI,
             functionName: 'isMember',
             args: [address],
           },
           {
             address: config.contracts.market,
-            abi: portAbi,
+            abi: portABI,
             functionName: 'useEscrow',
             args: [address],
           },
           {
             address: config.contracts.market,
-            abi: portAbi,
+            abi: portABI,
             functionName: 'payments',
             args: [address],
           },
           {
             address: config.contracts.market,
-            abi: portAbi,
+            abi: portABI,
             functionName: 'fee',
             args: [address],
           },
           {
             address: config.contracts.stake,
-            abi: stakeAbi,
+            abi: stakeABI,
             functionName: 'getReward',
             args: [address],
           },

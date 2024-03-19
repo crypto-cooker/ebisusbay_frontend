@@ -439,4 +439,12 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async attack(request: AttackRequest, address: string, signature: string) {
     return this.cms.attack(request, address, signature);
   }
+
+  async getBattleCardsByWallet(address: string, signature: string) {
+    return this.cms.getBattleCardsByWallet(address, signature);
+  }
+
+  async requestBattleCardsWithdrawalAuthorization(address: string, signature: string) {
+    return this.cms.requestBattleCardsWithdrawalAuthorization(address, signature);
+  }
 }

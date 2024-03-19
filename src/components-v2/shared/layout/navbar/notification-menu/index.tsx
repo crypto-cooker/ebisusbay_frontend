@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useState} from 'react';
-import {useRouter} from 'next/router';
+import {useRouter} from "next/navigation";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBell, faCog, faTrash} from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
