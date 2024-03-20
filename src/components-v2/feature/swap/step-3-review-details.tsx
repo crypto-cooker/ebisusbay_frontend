@@ -1,6 +1,7 @@
-import {Box, FormControl, FormLabel, Heading, Select, Text, VStack} from "@chakra-ui/react";
+import {Box, Container, FormControl, FormLabel, Heading, Select, Text, VStack} from "@chakra-ui/react";
 import React, {useCallback, useState} from "react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {Card} from "@src/components-v2/foundation/card";
 
 interface Step3ReviewDetailsProps {
   address: string;
@@ -31,25 +32,27 @@ export const Step3ReviewDetails = ({address, onConfirm}: Step3ReviewDetailsProps
           Set how long this swap should be active, then review selections and click the Confirm button at the bottom to create the swap request.
         </Text>
       </Box>
-      <VStack align='start'>
-        <Box>
-          <FormControl>
-            <FormLabel>Duration</FormLabel>
-            <Select
-              defaultValue={2592000000}
-              onChange={handleExpirationDateChange}
-              maxW='200px'
-            >
-              {expirationDatesValues.map((time) => (
-                <option value={time.value}>{time.label}</option>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
-        <PrimaryButton onClick={onConfirm}>
-          Confirm
-        </PrimaryButton>
-      </VStack>
+
+      <Container>
+        <Card>
+          <VStack align='start'>
+            <Box>
+              <FormControl>
+                <FormLabel>Duration</FormLabel>
+                <Select
+                  defaultValue={2592000000}
+                  onChange={handleExpirationDateChange}
+                  maxW='200px'
+                >
+                  {expirationDatesValues.map((time) => (
+                    <option value={time.value}>{time.label}</option>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+          </VStack>
+        </Card>
+      </Container>
     </>
   )
 }

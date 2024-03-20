@@ -18,16 +18,19 @@ import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/f
 import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
 import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
+import OrdersRepository from "@src/core/services/api-service/cms/repositories/orders";
 
 class Cms {
   private profiles: ProfilesRepository;
   private gdcClaims: GdcClaimsRepository;
   private ryoshiDynasties: RyoshiDynastiesRepository;
+  private orders: OrdersRepository;
 
   constructor(apiKey?: string) {
     this.profiles = new ProfilesRepository(apiKey);
     this.gdcClaims = new GdcClaimsRepository(apiKey);
     this.ryoshiDynasties = new RyoshiDynastiesRepository(apiKey);
+    this.orders = new OrdersRepository(apiKey);
   }
 
   async getProfile(addressOrUsername: string): Promise<any> {
@@ -204,6 +207,10 @@ class Cms {
 
   async requestBattleCardsWithdrawalAuthorization(address: string, signature: string) {
     return this.ryoshiDynasties.requestBattleCardsWithdrawalAuthorization(address, signature);
+  }
+
+  async createSwap(request: any, address: string, signature: string) {
+    return await this.orders.createSwap(request, address, signature);
   }
 }
 

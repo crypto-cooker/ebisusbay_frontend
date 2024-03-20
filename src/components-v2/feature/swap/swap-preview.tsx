@@ -345,9 +345,14 @@ const PreviewNftItem = ({nft, ref, isOpen, onOpen, onClose, onSave, onRemove, is
               border={`1px solid ${borderColor}`}
             />
           </Box>
-          <Box textAlign='end' fontSize='sm'>
-            {nft.name}
-          </Box>
+          <VStack spacing={1} align='end' fontSize='sm'>
+            <Box>
+              {nft.name}
+            </Box>
+            <Box>
+              Available: <strong>{commify(nft.balance)}</strong>
+            </Box>
+          </VStack>
         </Flex>
         {nft.balance > 1 ? (
           <Stack spacing={4}>

@@ -248,6 +248,10 @@ export class ApiService implements Api {
   async getStakedRyoshi(address: string) {
     return await this.graph.getStakedRyoshi(address);
   }
+
+  async createSwap(request: any, address: string, signature: string) {
+    return await this.cms.createSwap(request, address, signature);
+  }
 }
 
 class RyoshiDynastiesGroup implements RyoshiDynastiesApi {

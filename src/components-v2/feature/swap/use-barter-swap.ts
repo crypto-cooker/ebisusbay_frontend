@@ -3,7 +3,7 @@ import {
   BarterNft,
   BarterState,
   barterStateAtom,
-  BarterToken, clearUserADataAtom, clearUserBDataAtom,
+  BarterToken, clearUserADataAtom, clearUserBDataAtom, setDurationAtom, setEndDateAtom, setStartDateAtom,
   setUserAAddressAtom,
   setUserBAddressAtom,
   toggleOfferAERC20Atom,
@@ -30,6 +30,9 @@ interface UseBarterSwap {
   updateOfferAmountSelected: ({ nftAddress, nftId, newAmountSelected }: { nftAddress: string; nftId: string; newAmountSelected: number }) => void;
   updateTokenAmountSelected: ({ tokenAddress, newAmountSelected }: { tokenAddress: string; newAmountSelected: number }) => void;
   updateTokenOfferAmountSelected: ({ tokenAddress, newAmountSelected }: { tokenAddress: string; newAmountSelected: number }) => void;
+  setStartDate: (date: Date) => void;
+  setEndDate: (date: Date) => void;
+  setDuration: (duration: number) => void;
 }
 
 const useBarterSwap = (): UseBarterSwap => {
@@ -47,6 +50,9 @@ const useBarterSwap = (): UseBarterSwap => {
   const [, updateOfferAmountSelected] = useAtom(updateOfferAmountSelectedAtom);
   const [, updateTokenAmountSelected] = useAtom(updateERC20AmountSelectedAtom);
   const [, updateTokenOfferAmountSelected] = useAtom(updateOfferERC20AmountSelectedAtom);
+  const [, setStartDate] = useAtom(setStartDateAtom);
+  const [, setEndDate] = useAtom(setEndDateAtom);
+  const [, setDuration] = useAtom(setDurationAtom);
 
   return {
     barterState,
@@ -61,7 +67,10 @@ const useBarterSwap = (): UseBarterSwap => {
     updateAmountSelected,
     updateOfferAmountSelected,
     updateTokenAmountSelected,
-    updateTokenOfferAmountSelected
+    updateTokenOfferAmountSelected,
+    setStartDate,
+    setEndDate,
+    setDuration
   };
 };
 

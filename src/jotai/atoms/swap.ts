@@ -30,6 +30,9 @@ export interface BarterState {
     nfts: BarterNft[];
     erc20: BarterToken[];
   };
+  startDate: Date;
+  endDate?: Date;
+  duration?: number;
 }
 
 // Initial state for the barter swap
@@ -44,6 +47,8 @@ const initialBarterState: BarterState = {
     nfts: [],
     erc20: [],
   },
+  startDate: new Date(),
+  duration: 7 * 24 * 60 * 60 * 1000,
 };
 
 // Atom to hold the entire barter state
@@ -359,6 +364,39 @@ export const updateOfferERC20AmountSelectedAtom = atom(
           erc20: updatedTokens,
         },
       };
+    });
+  }
+);
+
+export const setStartDateAtom = atom(
+  null,
+  (get, set, startDate: Date) => {
+    const currentState = get(barterStateAtom);
+    set(barterStateAtom, {
+      ...currentState,
+      startDate
+    });
+  }
+);
+
+export const setEndDateAtom = atom(
+  null,
+  (get, set, endDate: Date) => {
+    const currentState = get(barterStateAtom);
+    set(barterStateAtom, {
+      ...currentState,
+      endDate
+    });
+  }
+);
+
+export const setDurationAtom = atom(
+  null,
+  (get, set, duration: number) => {
+    const currentState = get(barterStateAtom);
+    set(barterStateAtom, {
+      ...currentState,
+      duration
     });
   }
 );

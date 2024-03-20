@@ -548,9 +548,9 @@ export const configData = {
     urls: {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
-      cms: 'https://testcms.ebisusbay.biz/api/',
-      // cms: "http://localhost:4000/api/",
-      cmsSocket: 'wss://testcms.ebisusbay.biz/socket/',
+      // cms: 'https://testcms.ebisusbay.biz/api/',
+      cms: "http://localhost:4000/api/",
+      cmsSocket: 'ws://localhost:4000/socket/',
       explorer: 'https://testnet.cronoscan.com/',
       cdn: {
         bunnykit: 'https://ik-proxy.b-cdn.net/',

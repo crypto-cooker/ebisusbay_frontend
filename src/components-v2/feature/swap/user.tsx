@@ -8,6 +8,9 @@ import {ciEquals} from "@src/utils";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {DefaultContainer} from "@src/components-v2/shared/default-container";
 import {Step3ReviewDetails} from "@src/components-v2/feature/swap/step-3-review-details";
+import {ApiService} from "@src/core/services/api-service";
+import useCreateSwap from "@src/components-v2/feature/swap/use-create-swap";
+import useBarterSwap from "@src/components-v2/feature/swap/use-barter-swap";
 
 const sidebarWidth = '400px';
 
@@ -19,15 +22,20 @@ export const UserSwapView = ({address}: UserSwapViewProps) => {
   const user = useUser();
   const [currentStep, setCurrentStep] = useState(1);
   const [executing, setExecuting] = useState(false);
+  const [createSwap, _] = useCreateSwap();
+  const { barterState } = useBarterSwap();
 
   const handleChangeStep = (step: number) => {
     setCurrentStep(step);
   }
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     console.log('confirming...')
     try {
       setExecuting(true);
+      await createSwap(barterState);
+    } catch (e) {
+      console.log(e);
     } finally {
       setExecuting(false);
     }
