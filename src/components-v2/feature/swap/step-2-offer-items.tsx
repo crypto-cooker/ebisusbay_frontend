@@ -109,7 +109,7 @@ const ChooseNftsTab = ({address}: {address: string}) => {
   };
 
   const amountSelected = (nftAddress: string, nftId: string) => {
-    const selectedNft = barterState.userB.nfts.find((bNft) => ciEquals(bNft.nftAddress, nftAddress) && bNft.nftId === nftId);
+    const selectedNft = barterState.maker.nfts.find((bNft) => ciEquals(bNft.nftAddress, nftAddress) && bNft.nftId === nftId);
 
     return selectedNft?.amountSelected || 0;
   }

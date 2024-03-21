@@ -64,7 +64,7 @@ export const SwapPreview = ({onChangeStep, onConfirm, isConfirming}: SwapPreview
 
   const handleNext = () => {
     if (currentStep === 1) {
-      if (barterState.userA.nfts.length < 1) {
+      if (barterState.taker.nfts.length < 1) {
         toast.error('At least one NFT is required');
         return;
       }
@@ -94,7 +94,7 @@ export const SwapPreview = ({onChangeStep, onConfirm, isConfirming}: SwapPreview
   }
 
   const shouldOverflow = useMemo(() => {
-    const meetsItemCount = barterState.userA.nfts.length + barterState.userB.nfts.length > 6;
+    const meetsItemCount = barterState.taker.nfts.length + barterState.maker.nfts.length > 6;
     return meetsItemCount;
   }, [barterState]);
 
@@ -105,8 +105,8 @@ export const SwapPreview = ({onChangeStep, onConfirm, isConfirming}: SwapPreview
           <Stack spacing={4} direction={{base:'column', sm: 'row'}} align={{base: 'end', sm: 'center'}}>
             <Stack w='full' direction='row' align='center'>
               <Wrap spacing={2} direction='row' justify='end' w='full'>
-                <PlaceholderPreview nfts={barterState.userA.nfts} tokens={barterState.userA.erc20}>
-                  {barterState.userA.nfts.map((nft) => (
+                <PlaceholderPreview nfts={barterState.taker.nfts} tokens={barterState.taker.erc20}>
+                  {barterState.taker.nfts.map((nft) => (
                     <PreviewNftItem
                       key={uniqueNftId(nft)}
                       nft={nft}
@@ -127,7 +127,7 @@ export const SwapPreview = ({onChangeStep, onConfirm, isConfirming}: SwapPreview
                       isPaused={false}
                     />
                   ))}
-                  {barterState.userA.erc20.map((token) => (
+                  {barterState.taker.erc20.map((token) => (
                     <PreviewTokenItem
                       key={token.address}
                       token={token}
@@ -153,8 +153,8 @@ export const SwapPreview = ({onChangeStep, onConfirm, isConfirming}: SwapPreview
                 <Icon as={FontAwesomeIcon} icon={faHandshake} boxSize={6} />
               </Box>
               <Wrap spacing={2} direction='row' justify='start' w='full'>
-                <PlaceholderPreview nfts={barterState.userB.nfts} tokens={barterState.userB.erc20}>
-                  {barterState.userB.nfts.map((nft) => (
+                <PlaceholderPreview nfts={barterState.maker.nfts} tokens={barterState.maker.erc20}>
+                  {barterState.maker.nfts.map((nft) => (
                     <PreviewNftItem
                       key={uniqueNftId(nft)}
                       nft={nft}
@@ -175,7 +175,7 @@ export const SwapPreview = ({onChangeStep, onConfirm, isConfirming}: SwapPreview
                       isPaused={!user.wallet.isConnected}
                     />
                   ))}
-                  {barterState.userB.erc20.map((token) => (
+                  {barterState.maker.erc20.map((token) => (
                     <PreviewTokenItem
                       key={token.address}
                       token={token}
@@ -219,14 +219,14 @@ export const SwapPreview = ({onChangeStep, onConfirm, isConfirming}: SwapPreview
                     {currentStep < 2 ? (
                       <PrimaryButton
                         onClick={handleNext}
-                        isDisabled={barterState.userA.nfts.length < 1}
+                        isDisabled={barterState.taker.nfts.length < 1}
                       >
                         Next
                       </PrimaryButton>
                     ) : currentStep === 2 ? (
                       <PrimaryButton
                         onClick={handleNext}
-                        isDisabled={barterState.userA.nfts.length < 1 || barterState.userB.nfts.length < 1  || !user.wallet.isConnected}
+                        isDisabled={barterState.taker.nfts.length < 1 || barterState.maker.nfts.length < 1  || !user.wallet.isConnected}
                       >
                         Review
                       </PrimaryButton>
@@ -234,7 +234,7 @@ export const SwapPreview = ({onChangeStep, onConfirm, isConfirming}: SwapPreview
                       <PrimaryButton
                         onClick={onConfirm}
                         isLoading={isConfirming}
-                        isDisabled={barterState.userA.nfts.length < 1 || barterState.userB.nfts.length < 1  || !user.wallet.isConnected}
+                        isDisabled={barterState.taker.nfts.length < 1 || barterState.maker.nfts.length < 1  || !user.wallet.isConnected}
                       >
                         Confirm
                       </PrimaryButton>

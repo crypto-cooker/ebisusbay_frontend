@@ -52,7 +52,7 @@ const useCreateSwap = () => {
       const signature = await requestSignature();
 
       const makerItems: OfferItem[] = [];
-      for (const nft of barterState.userA.nfts) {
+      for (const nft of barterState.taker.nfts) {
         const itemType = await getItemType(nft.nftAddress);
         makerItems.push({
           itemType,
@@ -62,7 +62,7 @@ const useCreateSwap = () => {
           endAmount: nft.amountSelected
         });
       }
-      for (const nft of barterState.userA.erc20) {
+      for (const nft of barterState.taker.erc20) {
         makerItems.push({
           itemType: ciEquals(nft.address, ethers.constants.AddressZero) ? ItemType.NATIVE : ItemType.ERC20,
           token: nft.address,
@@ -73,7 +73,7 @@ const useCreateSwap = () => {
       }
 
       const takerItems: OfferItem[] = [];
-      for (const nft of barterState.userB.nfts) {
+      for (const nft of barterState.maker.nfts) {
         const itemType = await getItemType(nft.nftAddress);
         takerItems.push({
           itemType,
@@ -83,7 +83,7 @@ const useCreateSwap = () => {
           endAmount: nft.amountSelected
         });
       }
-      for (const nft of barterState.userB.erc20) {
+      for (const nft of barterState.maker.erc20) {
         takerItems.push({
           itemType: ciEquals(nft.address, ethers.constants.AddressZero) ? ItemType.NATIVE : ItemType.ERC20,
           token: nft.address,
@@ -100,7 +100,7 @@ const useCreateSwap = () => {
       );
 
       const orderSignerProps: OrderSignerProps = {
-        taker: barterState.userA.address,
+        taker: barterState.taker.address,
         makerItems: makerItems,
         takerItems: takerItems,
         startDate: Math.floor(Date.now() / 1000),
