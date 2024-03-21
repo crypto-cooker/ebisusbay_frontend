@@ -11,6 +11,10 @@ class OrdersRepository extends CmsRepository {
     })
     return response.data;
   }
+
+  async getSwap(id: any) {
+    // stubbed for when we will proxy this request
+  }
 }
 
 export default OrdersRepository;

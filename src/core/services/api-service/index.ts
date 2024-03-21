@@ -252,6 +252,10 @@ export class ApiService implements Api {
   async createSwap(request: any, address: string, signature: string) {
     return await this.cms.createSwap(request, address, signature);
   }
+
+  async getSwap(id: any) {
+    return await this.mapi.getSwap(id);
+  }
 }
 
 class RyoshiDynastiesGroup implements RyoshiDynastiesApi {

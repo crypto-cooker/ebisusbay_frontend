@@ -212,6 +212,10 @@ class Cms {
   async createSwap(request: any, address: string, signature: string) {
     return await this.orders.createSwap(request, address, signature);
   }
+
+  async getSwap(id: any) {
+    return await this.orders.getSwap(id);
+  }
 }
 
 export default Cms;

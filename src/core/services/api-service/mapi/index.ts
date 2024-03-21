@@ -23,6 +23,7 @@ import {
   FullCollectionsQuery,
   FullCollectionsQueryParams
 } from "@src/core/services/api-service/mapi/queries/fullcollections";
+import OrdersRepository from "@src/core/services/api-service/mapi/repositories/orders";
 
 const config = appConfig();
 
@@ -31,12 +32,14 @@ class Mapi {
   private offers;
   private wallets;
   private collections;
+  private orders;
 
   constructor(apiKey?: string) {
     this.listings = new ListingsRepository(apiKey);
     this.offers = new OffersRepository(apiKey);
     this.wallets = new WalletsRepository(apiKey);
     this.collections = new CollectionsRepository(apiKey);
+    this.orders = new OrdersRepository(apiKey);
   }
 
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
@@ -164,6 +167,12 @@ class Mapi {
     }
 
     return {}
+  }
+
+  async getSwap(id: any) {
+    const response = await this.orders.getSwap(id);
+
+    return response.data.swaps[0];
   }
 }
 

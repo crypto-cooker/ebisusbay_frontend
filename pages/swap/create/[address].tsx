@@ -74,8 +74,6 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
     }
   }
 
-  console.log('asf0', user?.data);
-
   return {
     props: {
       address: user?.data?.walletAddress ?? addressOrUsername,
