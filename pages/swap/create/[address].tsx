@@ -21,15 +21,15 @@ interface PageProps {
 const SwapWithUser = ({ address, profile }: PageProps) => {
   const user = useUser();
   const router = useRouter();
-  const { setUserAAddress, setUserBAddress } = useBarterSwap();
+  const { setTakerAddress, setMakerAddress } = useBarterSwap();
 
   useEffect(() => {
-    setUserAAddress(address);
+    setTakerAddress(address);
   }, [router.query.address]);
 
   useEffect(() => {
     if (user.address) {
-      setUserBAddress(user.address);
+      setMakerAddress(user.address);
     }
   }, [user.address]);
 

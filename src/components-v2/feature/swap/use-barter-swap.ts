@@ -3,13 +3,13 @@ import {
   BarterNft,
   BarterState,
   barterStateAtom,
-  BarterToken, clearUserADataAtom, clearUserBDataAtom, setDurationAtom, setEndDateAtom, setStartDateAtom,
-  setUserAAddressAtom,
-  setUserBAddressAtom,
+  BarterToken, clearTakerDataAtom, clearMakerDataAtom, setDurationAtom, setEndDateAtom, setStartDateAtom,
+  setTakerAddressAtom,
+  setMakerAddressAtom,
   toggleOfferAERC20Atom,
   toggleOfferANFTAtom,
-  toggleUserAERC20Atom,
-  toggleUserANFTAtom,
+  toggleTakerERC20Atom,
+  toggleTakerNFTAtom,
   updateAmountSelectedAtom,
   updateERC20AmountSelectedAtom,
   updateOfferAmountSelectedAtom,
@@ -18,10 +18,10 @@ import {
 
 interface UseBarterSwap {
   barterState: BarterState;
-  setUserAAddress: (address: string) => void;
-  setUserBAddress: (address: string) => void;
-  clearUserAData: (address: string) => void;
-  clearUserBData: (address: string) => void;
+  setTakerAddress: (address: string) => void;
+  setMakerAddress: (address: string) => void;
+  clearTakerData: (address: string) => void;
+  clearMakerData: (address: string) => void;
   toggleSelectionNFT: (nft: BarterNft) => void;
   toggleSelectionERC20: (erc20: BarterToken) => void;
   toggleOfferNFT: (nft: BarterNft) => void;
@@ -38,12 +38,12 @@ interface UseBarterSwap {
 const useBarterSwap = (): UseBarterSwap => {
   const [barterState] = useAtom(barterStateAtom);
 
-  const [, setUserAAddress] = useAtom(setUserAAddressAtom);
-  const [, setUserBAddress] = useAtom(setUserBAddressAtom);
-  const [, clearUserAData] = useAtom(clearUserADataAtom);
-  const [, clearUserBData] = useAtom(clearUserBDataAtom);
-  const [, toggleSelectionNFT] = useAtom(toggleUserANFTAtom);
-  const [, toggleSelectionERC20] = useAtom(toggleUserAERC20Atom);
+  const [, setTakerAddress] = useAtom(setTakerAddressAtom);
+  const [, setMakerAddress] = useAtom(setMakerAddressAtom);
+  const [, clearTakerData] = useAtom(clearTakerDataAtom);
+  const [, clearMakerData] = useAtom(clearMakerDataAtom);
+  const [, toggleSelectionNFT] = useAtom(toggleTakerNFTAtom);
+  const [, toggleSelectionERC20] = useAtom(toggleTakerERC20Atom);
   const [, toggleOfferNFT] = useAtom(toggleOfferANFTAtom);
   const [, toggleOfferERC20] = useAtom(toggleOfferAERC20Atom);
   const [, updateAmountSelected] = useAtom(updateAmountSelectedAtom);
@@ -56,10 +56,10 @@ const useBarterSwap = (): UseBarterSwap => {
 
   return {
     barterState,
-    setUserAAddress,
-    setUserBAddress,
-    clearUserAData,
-    clearUserBData,
+    setTakerAddress,
+    setMakerAddress,
+    clearTakerData,
+    clearMakerData,
     toggleSelectionNFT,
     toggleSelectionERC20,
     toggleOfferNFT,

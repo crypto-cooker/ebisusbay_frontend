@@ -53,7 +53,7 @@ const initialBarterState: BarterState = {
 // Atom to hold the entire barter state
 export const barterStateAtom = atom(initialBarterState);
 
-export const setUserAAddressAtom = atom(
+export const setTakerAddressAtom = atom(
   null,
   (get, set, address: string) => {
     const currentState = get(barterStateAtom);
@@ -71,7 +71,7 @@ export const setUserAAddressAtom = atom(
   }
 );
 
-export const setUserBAddressAtom = atom(
+export const setMakerAddressAtom = atom(
   null,
   (get, set, address: string) => {
     const currentState = get(barterStateAtom);
@@ -89,7 +89,7 @@ export const setUserBAddressAtom = atom(
   }
 );
 
-export const clearUserADataAtom = atom(
+export const clearTakerDataAtom = atom(
   null,
   (get, set) => {
     const currentState = get(barterStateAtom);
@@ -105,7 +105,7 @@ export const clearUserADataAtom = atom(
 );
 
 // Atom to clear userB's data
-export const clearUserBDataAtom = atom(
+export const clearMakerDataAtom = atom(
   null,
   (get, set) => {
     const currentState = get(barterStateAtom);
@@ -121,7 +121,7 @@ export const clearUserBDataAtom = atom(
 );
 
 // Function to toggle NFTs in User A's selection
-export const toggleUserANFTAtom = atom(
+export const toggleTakerNFTAtom = atom(
   null,
   (get, set, nftToToggle: BarterNft) => {
     set(barterStateAtom, (prev) => {
@@ -160,7 +160,7 @@ export const toggleUserANFTAtom = atom(
 );
 
 // Function to toggle ERC20 tokens in User A's selection
-export const toggleUserAERC20Atom = atom(
+export const toggleTakerERC20Atom = atom(
   null,
   (get, set, erc20: BarterToken) => {
     set(barterStateAtom, (prev) => {
