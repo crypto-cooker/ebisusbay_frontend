@@ -42,9 +42,10 @@ const previewSize = '50px';
 interface SwapPreviewProps {
   onChangeStep: (step: number) => void;
   onConfirm: () => void;
+  isConfirming: boolean;
 }
 
-export const SwapPreview = ({onChangeStep, onConfirm}: SwapPreviewProps) => {
+export const SwapPreview = ({onChangeStep, onConfirm, isConfirming}: SwapPreviewProps) => {
   const user = useUser();
   const {
     barterState,
@@ -232,6 +233,7 @@ export const SwapPreview = ({onChangeStep, onConfirm}: SwapPreviewProps) => {
                     ) : (
                       <PrimaryButton
                         onClick={onConfirm}
+                        isLoading={isConfirming}
                         isDisabled={barterState.userA.nfts.length < 1 || barterState.userB.nfts.length < 1  || !user.wallet.isConnected}
                       >
                         Confirm

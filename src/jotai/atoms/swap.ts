@@ -30,7 +30,7 @@ export interface BarterState {
     nfts: BarterNft[];
     erc20: BarterToken[];
   };
-  startDate: Date;
+  startDate?: Date;
   endDate?: Date;
   duration?: number;
 }
@@ -47,7 +47,6 @@ const initialBarterState: BarterState = {
     nfts: [],
     erc20: [],
   },
-  startDate: new Date(),
   duration: 7 * 24 * 60 * 60 * 1000,
 };
 

@@ -82,6 +82,7 @@ export const UserSwapView = ({address}: UserSwapViewProps) => {
       <SwapPreview
         onChangeStep={handleChangeStep}
         onConfirm={handleConfirm}
+        isConfirming={executing}
       />
     </>
   )

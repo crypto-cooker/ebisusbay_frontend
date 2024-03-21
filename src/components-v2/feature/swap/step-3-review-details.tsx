@@ -1,7 +1,7 @@
 import {Box, Container, FormControl, FormLabel, Heading, Select, Text, VStack} from "@chakra-ui/react";
-import React, {useCallback, useState} from "react";
-import {PrimaryButton} from "@src/components-v2/foundation/button";
+import React, {ChangeEvent} from "react";
 import {Card} from "@src/components-v2/foundation/card";
+import useBarterSwap from "@src/components-v2/feature/swap/use-barter-swap";
 
 interface Step3ReviewDetailsProps {
   address: string;
@@ -9,18 +9,11 @@ interface Step3ReviewDetailsProps {
 }
 
 export const Step3ReviewDetails = ({address, onConfirm}: Step3ReviewDetailsProps) => {
-  const [expirationDate, setExpirationDate] = useState({ type: 'dropdown', value: new Date().getTime() + 2592000000 });
+  const { setDuration } = useBarterSwap();
 
-  const handleExpirationDateChange = useCallback((e: any) => {
-
-    if (!e.target.value.includes('T')) {
-      setExpirationDate({ type: 'dropdown', value: new Date().getTime() + parseInt(e.target.value) });
-    }
-    else {
-      setExpirationDate({ type: 'select', value: new Date(e.target.value).getTime() });
-    }
-
-  }, [setExpirationDate])
+  const handleExpirationDateChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setDuration(parseInt(e.target.value));
+  }
 
   return (
     <>
@@ -40,7 +33,7 @@ export const Step3ReviewDetails = ({address, onConfirm}: Step3ReviewDetailsProps
               <FormControl>
                 <FormLabel>Duration</FormLabel>
                 <Select
-                  defaultValue={2592000000}
+                  defaultValue={604800000}
                   onChange={handleExpirationDateChange}
                   maxW='200px'
                 >

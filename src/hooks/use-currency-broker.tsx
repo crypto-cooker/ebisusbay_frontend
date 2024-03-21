@@ -20,6 +20,7 @@ const currencyOptions: BrokerCurrency[] = [
   {
     name: 'CRO',
     symbol: 'cro',
+    address: ethers.constants.AddressZero,
     image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
   },
   ...config.listings.currencies.available

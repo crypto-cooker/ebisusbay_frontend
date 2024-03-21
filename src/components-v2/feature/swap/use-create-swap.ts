@@ -93,13 +93,17 @@ const useCreateSwap = () => {
         });
       }
 
-      const endDate = Math.floor(barterState.endDate ? barterState.endDate.getTime() : barterState.duration! / 1000);
+      const startDate = Date.now();
+      const endDate = Math.floor(barterState.endDate ?
+        barterState.endDate.getTime() / 1000 :
+        (startDate + barterState.duration!) / 1000
+      );
 
       const orderSignerProps: OrderSignerProps = {
         taker: barterState.userA.address,
         makerItems: makerItems,
         takerItems: takerItems,
-        startDate: Math.floor(barterState.startDate.getTime() / 1000),
+        startDate: Math.floor(Date.now() / 1000),
         endDate: endDate,
         salt: generator.uuid(),
       };
