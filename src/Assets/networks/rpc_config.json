@@ -26002,6 +26002,31 @@
         "kyc": true,
         "verified": true
       }
+    },
+    {
+      "name": "Kublai's Quest",
+      "slug": "kublais-quest",
+      "multiToken": false,
+      "address": "0xa3D499Cdbb8fE1FAa409749C511580D822000EbA",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Focusing on Kublai Kahn's ambition to conquer Japan! Come join our ranks in pillaging the bay for Fortune & Loot.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/kublais-quest/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/kublais-quest/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/kublais-quest/card.webp",
+        "website": "https://kublais-quest.netlify.app/",
+        "twitter": "https://x.com/SteppeHorde",
+        "discord": "https://discord.gg/xwUg7WsN",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
