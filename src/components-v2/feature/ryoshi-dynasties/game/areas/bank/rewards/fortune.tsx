@@ -74,15 +74,15 @@ const FortuneRewardsTab = () => {
     refetchOnWindowFocus: false
   });
 
-  useEffect(() => {
-    if (rdGameContext) {
-      const totalTime = Date.parse(rdGameContext.season.endAt) - Date.parse(rdGameContext.season.startAt);
-      const currentElapsed = Date.parse(rdGameContext.season.endAt) - Date.now();
-      setSeasonTimeRemaining(Math.floor(((totalTime - currentElapsed) / totalTime) * 100));
-      // setBurnMalus(rdGameContext!.rewards.burnPercentage / 100);
-    }
-
-  }, [rdGameContext]);
+  // useEffect(() => {
+  //   if (rdGameContext) {
+  //     const totalTime = Date.parse(rdGameContext.season.endAt) - Date.parse(rdGameContext.season.startAt);
+  //     const currentElapsed = Date.parse(rdGameContext.season.endAt) - Date.now();
+  //     setSeasonTimeRemaining(Math.floor(((totalTime - currentElapsed) / totalTime) * 100));
+  //     // setBurnMalus(rdGameContext!.rewards.burnPercentage / 100);
+  //   }
+  //
+  // }, [rdGameContext]);
 
   useEffect(() => {
     if (!!rewards?.data?.rewards) {
@@ -92,10 +92,10 @@ const FortuneRewardsTab = () => {
 
   return (
     <Box>
-      <Box>
-        <Text fontWeight='bold' fontSize='lg'>Current Season Progress ({seasonTimeRemaining}%)</Text>
-        <RdProgressBar current={seasonTimeRemaining} max={100} segments={3}/>
-      </Box>
+      {/*<Box>*/}
+      {/*  <Text fontWeight='bold' fontSize='lg'>Current Season Progress ({seasonTimeRemaining}%)</Text>*/}
+      {/*  <RdProgressBar current={seasonTimeRemaining} max={100} segments={3}/>*/}
+      {/*</Box>*/}
       <Box mt={2}>
         <Text fontWeight='bold' fontSize='lg'>Karmic Debt ({round(burnMalus)}%)</Text>
         <RdProgressBar current={burnMalus} max={100} useGrid={false} fillColor='linear-gradient(to left, #B45402, #7D3500)' />
