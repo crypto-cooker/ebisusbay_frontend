@@ -138,7 +138,7 @@
         },
         "website": "https://madmeerkat.io/",
         "twitter": "https://twitter.com/MadMeerkatNFT",
-        "discord": "https://discord.gg/madmeerkat",
+        "discord": "https://discord.gg/madmeerkatnft",
         "medium": "https://medium.com/@madmeerkat0",
         "categories": [
           "utility",
@@ -2893,7 +2893,7 @@
         },
         "website": "https://madmeerkat.io/",
         "twitter": "https://twitter.com/MadMeerkatNFT",
-        "discord": "http://discord.gg/madmeerkat",
+        "discord": "http://discord.gg/madmeerkatnft",
         "medium": " http://medium.com/@madmeerkat0",
         "categories": [
           "collectibles",
@@ -5583,7 +5583,7 @@
         },
         "website": "https://madmeerkat.io/",
         "twitter": "https://twitter.com/MadMeerkatNFT",
-        "discord": "https://discord.gg/madmeerkat",
+        "discord": "https://discord.gg/madmeerkatnft",
         "medium": "https://medium.com/@madmeerkat0",
         "categories": [
           "utility"
@@ -5609,7 +5609,7 @@
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/meerkats/madsacks/card.webp",
         "website": "https://madmeerkat.io/",
         "twitter": "https://twitter.com/MadMeerkatNFT",
-        "discord": "https://discord.gg/madmeerkat",
+        "discord": "https://discord.gg/madmeerkatnft",
         "medium": "https://medium.com/@madmeerkat0",
         "categories": [
           "gaming"
@@ -20052,20 +20052,20 @@
       }
     },
     {
-      "name": "Skeleton Key",
-      "slug": "skeleton-key",
+      "name": "Keys2Clash",
+      "slug": "keys2clash",
       "multiToken": false,
-      "address": "0x6a532dF8C5Fc31C7eEF7b88151012FD180cB55d4",
+      "address": "0xb49aa786B65Ba761B559940b5D8E05392228bf47",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
-        "description": "The Skeleton Keys are required to access Clash⚡City & to Make your Custom Cityzen which will be your Exclusive Pass to access Clash⚡Verse when we go live. The keys will serve as a literal key to Clash⚡\uFE0FCity in Beta. You will also be able to exchange them for relics. Additionally, there are tier exclusive benefits. Tiers of Skeleton Keys include Gold, Silver & Bronze.",
-        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/skeleton-key/avatar.webp",
-        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/skeleton-key/card.webp",
-        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/skeleton-key/banner.webp",
+        "description": "Keys are required to access the server & game. The difference in the Tiers and the amount you hold will unlock different game areas, exchange rates, earning potential, and other benefits.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/keys2clash/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/keys2clash/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/keys2clash/banner.webp",
         "website":"https://clashcity.xyz/",
         "twitter": "https://twitter.com/ClashCityTV",
-        "discord": "https://discord.gg/ad4dh44aVz",
+        "discord": "https://discord.gg/clash-city-923262570540974110",
         "categories": [
           "collectibles"
         ]
@@ -20084,11 +20084,11 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "We Are The Real Ape Kingdom. Revived Stronger Than Ever. Join The Discord And Check Out The Fam",
+        "description": "The Real Ape Kingdom reborn and backed by B.I.C they are here to make a statement. Come and see what the rebuild is all about.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/the-real-ape-kingdom/avatar.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/the-real-ape-kingdom/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/the-real-ape-kingdom/banner.webp",
-        "twitter": "https://twitter.com/realapekingdom",
+        "twitter": "https://twitter.com/Blockchnbanditz",
         "discord": "https://discord.gg/rMquT5caJP",
         "categories": [
           "collectibles"
@@ -21048,7 +21048,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -22951,7 +22951,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -22974,7 +22974,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -25426,6 +25426,7 @@
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/y-plush-nft/avatar.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/y-plush-nft/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/y-plush-nft/banner.webp",
+        "website": "https://time-launcher.com/drops/yplush",
         "twitter": "https://twitter.com/YplushNft",
         "discord": "https://discord.gg/SKQdGwgWwS",
         "categories": [
@@ -25976,6 +25977,55 @@
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "DripFrtn",
+      "slug": "dripfrtn",
+      "multiToken": false,
+      "address": "0x1F627f548dE277D505eEC3eBF9E8B9BdD2E2e924",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A Liquid Fortune Drip NFT",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/dripfrtn/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/dripfrtn/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/dripfrtn/card.webp",
+        "website": "https://dripderivatives.com/drip-frtn",
+        "discord": "https://discord.gg/dripcro-com-1003477871664320525",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Kublai's Quest",
+      "slug": "kublais-quest",
+      "multiToken": false,
+      "address": "0xa3D499Cdbb8fE1FAa409749C511580D822000EbA",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Focusing on Kublai Kahn's ambition to conquer Japan! Come join our ranks in pillaging the bay for Fortune & Loot.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/kublais-quest/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/kublais-quest/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/kublais-quest/card.webp",
+        "website": "https://kublais-quest.netlify.app/",
+        "twitter": "https://x.com/SteppeHorde",
+        "discord": "https://discord.gg/xwUg7WsN",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
       }
     }
   ],
