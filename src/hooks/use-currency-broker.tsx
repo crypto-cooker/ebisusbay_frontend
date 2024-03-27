@@ -46,9 +46,19 @@ const UseCurrencyBroker = (nftAddress?: string) => {
     }
   });
 
+  const getBySymbol = (symbol: string) => {
+    return currencyOptions.find((currency: BrokerCurrency) => ciEquals(currency.symbol, symbol));
+  }
+
+  const getByAddress = (address: string) => {
+    return currencyOptions.find((currency: BrokerCurrency) => ciEquals(currency.address, address));
+  }
+
   return {
     allowedCurrencies,
-    allCurrencies: currencyOptions
+    allCurrencies: currencyOptions,
+    getBySymbol,
+    getByAddress
   }
 }
 

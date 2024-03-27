@@ -1,198 +1,161 @@
 import {
-  Avatar,
-  AvatarBadge,
-  Box, ButtonGroup, Flex, FormControl, FormLabel,
-  Icon, Image, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper,
-  Popover,
-  PopoverArrow, PopoverCloseButton,
-  PopoverContent,
-  PopoverTrigger,
-  Stack, VStack
+  Box,
+  Button,
+  ButtonGroup,
+  Container,
+  Flex,
+  Icon,
+  SimpleGrid,
+  Slide,
+  Spacer,
+  useBreakpointValue,
+  Wrap
 } from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHandshake} from "@fortawesome/free-solid-svg-icons";
-import React, {MutableRefObject, useEffect, useState} from "react";
+import React, {ReactNode, useEffect, useRef, useState} from "react";
 import useGetProfilePreview from "@src/hooks/useGetUsername";
-import {useColorModeValue} from "@chakra-ui/color-mode";
-import {toast} from "react-toastify";
-import ImageService from "@src/core/services/image";
-import {commify} from "ethers/lib/utils";
+import {Card} from "@src/components-v2/foundation/card";
+import {GetSwapItemPreview} from "@src/components-v2/feature/swap/preview-item";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
+import {useColorModeValue} from "@chakra-ui/color-mode";
+import {useUser} from "@src/components-v2/useUser";
+import {ciEquals} from "@src/utils";
 
 interface ManageSwapProps {
   swap: any;
 }
 
 const ManageSwap = ({swap}: ManageSwapProps) => {
+  const user = useUser();
   const {username: makerUsername, avatar: makerAvatar} = useGetProfilePreview(swap.maker);
   const {username: takerUsername, avatar: takerAvatar} = useGetProfilePreview(swap.taker);
-  const editMode = false;
+  const initialFocusRef = useRef(null);
+  const isMobile = useBreakpointValue({base: true, sm: false}, {fallback: 'sm'});
+  const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
+
+  const handleOpenPopover = (index: number, side: string) => {
+    setOpenPopoverId(`${index}${side}`);
+  };
+
+  const matchesPopoverId = (index: number, side: string) => {
+    return openPopoverId === `${index}${side}`;
+  }
+
+  const handleAccept = () => {
+
+  }
+
+  const handleCounterOffer = () => {
+
+  }
+
+  const handleReject = () => {
+
+  }
+
+  const handleCancel = () => {
+
+  }
+
+  const isMaker = !!user.address && ciEquals(user.address, swap.maker);
+  const isTaker = !!user.address && ciEquals(user.address, swap.taker);
 
   useEffect(() => {
     console.log('SWAP', swap);
-
   }, []);
 
+
   return (
-    <Stack direction={{base: 'column', sm: 'row'}} justify='center'>
-      <Box>
-        <Box>{makerUsername}</Box>
-      </Box>
-      <Box>
-        <Icon as={FontAwesomeIcon} icon={faHandshake} />
-      </Box>
-      <Box>
-        <Box>{takerUsername}</Box>
-      </Box>
-    </Stack>
+    <Container size='xl'>
+      <SimpleGrid
+        columns={{base: 1, sm: 3}}
+        templateColumns={{base: undefined, sm:'1fr 30px 1fr'}}
+        templateRows={{base: '1fr 30px 1fr', sm:undefined}}
+        gap={4}
+      >
+        <Card>
+          <Box>{makerUsername}</Box>
+          <Box>
+            <Wrap>
+              {swap.makerItems.map((item: any, index: number) => (
+                <GetSwapItemPreview
+                  key={index}
+                  item={item}
+                  ref={initialFocusRef}
+                  isActive={true}
+                  mode='READ'
+                  isOpen={matchesPopoverId(index, 'maker')}
+                  onOpen={() => handleOpenPopover(index, 'maker')}
+                  onClose={() => setOpenPopoverId(null)}
+                />
+              ))}
+            </Wrap>
+          </Box>
+        </Card>
+        <Box my='auto' mx='auto'>
+          <Icon as={FontAwesomeIcon} icon={faHandshake} boxSize={8} />
+        </Box>
+        <Card>
+          <Box>{takerUsername}</Box>
+          <Box>
+            <Wrap>
+              {swap.takerItems.map((item: any, index: number) => (
+                <GetSwapItemPreview
+                  key={index}
+                  item={item}
+                  ref={initialFocusRef}
+                  isActive={true}
+                  mode='READ'
+                  isOpen={matchesPopoverId(index, 'taker')}
+                  onOpen={() => handleOpenPopover(index, 'taker')}
+                  onClose={() => setOpenPopoverId(null)}
+                />
+              ))}
+            </Wrap>
+          </Box>
+        </Card>
+      </SimpleGrid>
+      {(isMaker || isTaker) && (
+        <ConditionalActionBar condition={isMobile ?? false}>
+          {isTaker ? (
+            <Flex>
+              <Button variant='link' size='sm'>
+                Reject
+              </Button>
+              <Spacer />
+              <ButtonGroup>
+                <SecondaryButton>
+                  Counter Offer
+                </SecondaryButton>
+                <PrimaryButton>
+                  Accept
+                </PrimaryButton>
+              </ButtonGroup>
+            </Flex>
+          ) : isMaker && (
+            <Flex>
+              <PrimaryButton>
+                Cancel
+              </PrimaryButton>
+            </Flex>
+          )}
+        </ConditionalActionBar>
+      )}
+    </Container>
   )
+}
+
+const ConditionalActionBar = ({condition, children}: {condition: boolean, children: ReactNode} ) => {
+  const sliderBackground = useColorModeValue('gray.50', 'gray.700');
+  
+  return condition ? (
+    <Slide direction='bottom' in={true} style={{ zIndex: 10 }}>
+      <Box textAlign='center' p={3} backgroundColor={sliderBackground} borderTop='1px solid white'>
+        {children}
+      </Box>
+    </Slide>
+  ) : children;
 }
 
 export default ManageSwap;
-
-
-const previewSize = '50px';
-interface PreviewItemProps {
-  nft: any;
-  ref: MutableRefObject<any>;
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-  onSave: (nft: any, amount: number) => void;
-  onRemove: (nft: any) => void;
-  isPaused: boolean;
-}
-
-const PreviewNftItem = ({nft, ref, isOpen, onOpen, onClose, onSave, onRemove, isPaused}: PreviewItemProps) => {
-  const [quantity, setQuantity] = useState(nft.amountSelected.toString());
-  const borderColor = useColorModeValue('#000', '#FFF');
-
-  const isValid = () => {
-    if (quantity > nft.balance) return false;
-    return true;
-  }
-
-  const handleUpdateSelectedAmount = () => {
-    if (isPaused) return;
-
-    if (!isValid()) {
-      toast.error('Invalid value')
-      return;
-    }
-
-    if (quantity < 1) {
-      onRemove(nft);
-      return;
-    }
-
-    onSave(nft, Math.floor(parseInt(quantity)));
-    onClose();
-  }
-
-  const handleRemoveItem = () => {
-    if (isPaused) return;
-    onRemove(nft);
-    onClose();
-  }
-
-  const handleOpen = () => {
-    if (isPaused) return;
-    onOpen();
-  }
-
-  const hoverTitle = nft.amountSelected > 1 ? `${nft.amountSelected} x${quantity}` : `${nft.amountSelected}`;
-
-  return (
-    <Popover
-      initialFocusRef={ref}
-      placement='top'
-      isOpen={isOpen}
-      onClose={onClose}
-    >
-      <PopoverTrigger>
-        <Box
-          cursor='pointer'
-          onClick={handleOpen}
-          filter={isPaused ? 'grayscale(80%)' : 'auto'}
-          opacity={isPaused ? 0.5 : 'auto'}
-          title={hoverTitle}
-        >
-          <Avatar
-            src={ImageService.translate(nft.image).avatar()}
-            w={previewSize}
-            h={previewSize}
-            borderRadius='md'
-            border={`1px solid ${borderColor}`}
-          >
-            {nft.balance > 1 && (
-              <AvatarBadge
-                boxSize={6}
-                bg={isPaused ? 'gray.500' : '#218cff'}
-                fontSize={nft.amountSelected > 99 ? 'xs' : 'sm'}
-                border={`1px solid ${borderColor}`}
-              >
-                {nft.amountSelected > 999 ? '+' : nft.amountSelected}
-              </AvatarBadge>
-            )}
-          </Avatar>
-        </Box>
-      </PopoverTrigger>
-      <PopoverContent p={5}>
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <Flex w='full' justify='space-between' my={4}>
-          <Box>
-            <Image
-              src={ImageService.translate(nft.image).avatar()}
-              w={previewSize}
-              h={previewSize}
-              borderRadius='md'
-              border={`1px solid ${borderColor}`}
-            />
-          </Box>
-          <VStack spacing={1} align='end' fontSize='sm'>
-            <Box>
-              {nft.name}
-            </Box>
-            <Box>
-              Available: <strong>{commify(nft.balance)}</strong>
-            </Box>
-          </VStack>
-        </Flex>
-        {nft.balance > 1 ? (
-          <Stack spacing={4}>
-            <FormControl>
-              <FormLabel>Quantity</FormLabel>
-              <NumberInput
-                value={quantity}
-                max={nft.balance ?? 1}
-                onChange={(valueAsString: string) => setQuantity(valueAsString)}
-                precision={0}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
-            <ButtonGroup display='flex' justifyContent='flex-end'>
-              <SecondaryButton onClick={handleRemoveItem}>
-                Remove
-              </SecondaryButton>
-              <PrimaryButton onClick={handleUpdateSelectedAmount}>
-                Save
-              </PrimaryButton>
-            </ButtonGroup>
-          </Stack>
-        ) : (
-          <ButtonGroup display='flex' justifyContent='flex-end'>
-            <SecondaryButton onClick={handleRemoveItem}>
-              Remove
-            </SecondaryButton>
-          </ButtonGroup>
-        )}
-      </PopoverContent>
-    </Popover>
-  )
-}
