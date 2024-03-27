@@ -89,6 +89,11 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
 
       <Flex align={'center'} minH={'calc(100vh - 175px)'} justifyContent={'center'}>
         <VStack spacing={4} align='stretch'>
+        <Box>
+            <Link as={NextLink} href='https://app.ebisusbay.com/swap' target='_blank'>
+              <RdButton w='full'>Visit DEX</RdButton>
+            </Link>
+          </Box>
           <Box>
             <Link as={NextLink} href='https://app.ebisusbay.com/marketplace' target='_blank'>
               <RdButton w='full'>Visit Marketplace</RdButton>

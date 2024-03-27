@@ -384,7 +384,6 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         id='moongate'
                         position={{x: buildings.moongate.left, y: buildings.moongate.top}}
                         image={ImageService.translate(`/img/battle-bay/mapImages/moongate${xmasTheme}.apng`).convert()}
-                        onClick={handleEnterScene}
                       />
                       <Sprite
                         id='torii'
