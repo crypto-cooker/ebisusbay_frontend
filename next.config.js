@@ -227,6 +227,13 @@ const nextConfig = {
         source: '/izanamiscradle/:id',
         destination: '/api/izanamiscradle/:id',
         permanent: false,
+      },
+      {
+        source: '/swap',
+        destination:
+          'https://swap.ebisusbay.com',
+        permanent: false,
+        basePath: false,
       }
     ];
   }
