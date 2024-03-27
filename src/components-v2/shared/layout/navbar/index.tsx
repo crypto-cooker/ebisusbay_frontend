@@ -149,6 +149,7 @@ const Header = function () {
                   <MenuList>
                     <MenuItem as={Link} href='/marketplace' _hover={{color: 'inherit'}} justifyContent='end'>Explore</MenuItem>
                     <MenuItem as={Link} href='/collections' _hover={{color: 'inherit'}} justifyContent='end'>Collections</MenuItem>
+                    <MenuItem as={Link} href='/swap' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
                     <MenuItem as={Link} href='/brands' _hover={{color: 'inherit'}} justifyContent='end'>Brands</MenuItem>
                     <MenuItem as={Link} href='/drops' _hover={{color: 'inherit'}} justifyContent='end'>Drops</MenuItem>
                     <MenuItem as={Link} href='/apply' _hover={{color: 'inherit'}} justifyContent='end'>Become a Creator</MenuItem>
@@ -199,6 +200,7 @@ const Header = function () {
                   <VStack align='start'>
                     <NavLink name='Explore' to='/marketplace' onClick={onClose} />
                     <NavLink name='Collections' to='/collections' onClick={onClose} />
+                    <NavLink name='Swap' to='/swap' onClick={onClose} />
                     <NavLink name='Brands' to='/brands' onClick={onClose} />
                     <NavLink name='Drops' to='/drops' onClick={onClose} />
                     <NavLink name='Become a Creator' to='/apply' onClick={onClose} />
