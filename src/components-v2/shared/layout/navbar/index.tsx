@@ -127,7 +127,7 @@ const Header = function () {
             <Flex alignItems={'center'} className="mainside">
 
               {!!currentFrtnPrice && (
-                <Link href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59' target='_blank'>
+                <Link href='https://swap.ebisusbay.com/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59#/swap' target='_blank'>
                   <HStack fontSize='sm' fontWeight='bold' me={{base: 1, sm: 4}} spacing={1}>
                     <FortuneIcon boxSize={{base: 4, md: 6}} />
                     <Text as='span' className='col-white'>${currentFrtnPrice}</Text>
@@ -149,6 +149,7 @@ const Header = function () {
                   <MenuList>
                     <MenuItem as={Link} href='/marketplace' _hover={{color: 'inherit'}} justifyContent='end'>Explore</MenuItem>
                     <MenuItem as={Link} href='/collections' _hover={{color: 'inherit'}} justifyContent='end'>Collections</MenuItem>
+                    <MenuItem as={Link} href='/swap' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
                     <MenuItem as={Link} href='/brands' _hover={{color: 'inherit'}} justifyContent='end'>Brands</MenuItem>
                     <MenuItem as={Link} href='/drops' _hover={{color: 'inherit'}} justifyContent='end'>Drops</MenuItem>
                     <MenuItem as={Link} href='/apply' _hover={{color: 'inherit'}} justifyContent='end'>Become a Creator</MenuItem>
@@ -199,6 +200,7 @@ const Header = function () {
                   <VStack align='start'>
                     <NavLink name='Explore' to='/marketplace' onClick={onClose} />
                     <NavLink name='Collections' to='/collections' onClick={onClose} />
+                    <NavLink name='Swap' to='/swap' onClick={onClose} />
                     <NavLink name='Brands' to='/brands' onClick={onClose} />
                     <NavLink name='Drops' to='/drops' onClick={onClose} />
                     <NavLink name='Become a Creator' to='/apply' onClick={onClose} />
