@@ -624,6 +624,28 @@
     "style": {}
   },
   {
+    "slug": "aiko-society",
+    "name": "Aiko Society",
+    "description": "Aiko Society is a Big Ecosystem that includes Aiko NFT with Aiko Cards in crypto.org chain and Aiko Beanz with Mutant Aiko Beanz in Cronos Chain.\n\nAiko Beanz and Mutant Aiko Beanz release benefits, passive income, gifts and more to their Holders. Each collection has an special room in Aiko Society metaverse, special merchandising and both share the same amazing community.",
+    "images": {
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/aiko-society/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/aiko-society/preview.webp"
+    },
+    "collections": [
+      "0x8fAe79f9b06E3f1525C1de4F88940279dC70C7C9",
+      "0xA869e4c032D4E3786f211520E20754F4347ec67D",
+      "0xFD90697db5D40B37B86C958106A342088f11AA84"
+    ],
+    "socials": {
+      "website": "https://www.aikosociety.com/",
+      "twitter": "https://twitter.com/AikoSociety",
+      "discord": "https://discord.gg/JdmsRjcgQJ"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "crosmonauts",
     "name": "Crosmonauts",
     "description": "A community oriented NFT Project that launched alongside the launch of Cronos",
@@ -673,22 +695,22 @@
     "style": {}
   },
   {
-    "slug": "moon-crew",
-    "name": "Moon Crew",
-    "description": "Moon Crew project is a community driven project that focus on group investing, passive income and holders events. Currently we have 2 Collection, 7000 Moon Crew Apes and 3500 Moon Crew Pandas. Holding atleast 1 will give you acess to our exclusive channesl, Raffle option, trading option, voting power, royalties and much more.",
+    "slug": "dripcro",
+    "name": "DripCro",
+    "description": "An NFT club community",
     "images": {
-      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/moon-crew/banner.webp",
-      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/moon-crew/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/dripcro/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/dripcro/preview.webp"
     },
     "collections": [
-      "0x3335A43C59b45Ed1F73dd1335A5b2583CD9B0aaA",
-      "0x446808090D43C4b99c5E70C5EAC145384F11128E",
-      "0x5f65A36f55964bb8C2C7983bB2Ede2E0698B15F7"
+      "0x079B32D7a72b58588d62164927cEF13C4c3657D0",
+      "0x1F627f548dE277D505eEC3eBF9E8B9BdD2E2e924",
+      "0x5529B34ea252B57B239738D3CD81DE1B11c47D3F",
+      "0x966B18Afe9D9062d611D0C246A1959b7a25FCdDe"
     ],
     "socials": {
-      "website": "https://mooncrew.club/",
-      "twitter": "https://twitter.com/mooncrew_cro",
-      "discord": "https://discord.gg/scVSpjpmDf"
+      "website": "https://dripderivatives.com/",
+      "discord": "https://discord.gg/ttaPM95WcR"
     },
     "featured": true,
     "categories": [],
@@ -722,22 +744,59 @@
     "style": {}
   },
   {
-    "slug": "aiko-society",
-    "name": "Aiko Society",
-    "description": "Aiko Society is a Big Ecosystem that includes Aiko NFT with Aiko Cards in crypto.org chain and Aiko Beanz with Mutant Aiko Beanz in Cronos Chain.\n\nAiko Beanz and Mutant Aiko Beanz release benefits, passive income, gifts and more to their Holders. Each collection has an special room in Aiko Society metaverse, special merchandising and both share the same amazing community.",
+    "slug": "moon-crew",
+    "name": "Moon Crew",
+    "description": "Moon Crew project is a community driven project that focus on group investing, passive income and holders events. Currently we have 2 Collection, 7000 Moon Crew Apes and 3500 Moon Crew Pandas. Holding atleast 1 will give you acess to our exclusive channesl, Raffle option, trading option, voting power, royalties and much more.",
     "images": {
-      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/aiko-society/banner.webp",
-      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/aiko-society/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/moon-crew/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/moon-crew/preview.webp"
     },
     "collections": [
-      "0x8fAe79f9b06E3f1525C1de4F88940279dC70C7C9",
-      "0xA869e4c032D4E3786f211520E20754F4347ec67D",
-      "0xFD90697db5D40B37B86C958106A342088f11AA84"
+      "0x3335A43C59b45Ed1F73dd1335A5b2583CD9B0aaA",
+      "0x446808090D43C4b99c5E70C5EAC145384F11128E",
+      "0x5f65A36f55964bb8C2C7983bB2Ede2E0698B15F7"
     ],
     "socials": {
-      "website": "https://www.aikosociety.com/",
-      "twitter": "https://twitter.com/AikoSociety",
-      "discord": "https://discord.gg/JdmsRjcgQJ"
+      "website": "https://mooncrew.club/",
+      "twitter": "https://twitter.com/mooncrew_cro",
+      "discord": "https://discord.gg/scVSpjpmDf"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "time-machine-nfts",
+    "name": "Time Machine NFTs",
+    "description": "Time Machine NFTs is an immersive ecosystem with plenty of moving parts to keep you entertained and earning passive income weekly.  From soft staking to adventures, beginning earning today for our strategy game (currently in development). Each project in our ecosystem has their purpose. Join our discord today to learn.",
+    "images": {
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/time-machine-nfts/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/time-machine-nfts/preview.webp"
+    },
+    "collections": [
+      "0x9b72f7d5aecee857cc3d1a1a3357aff0e342d0a8",
+      "0x146cf0ee7b6b986769782ea832e8327f9dff55e7",
+      "0x482eBe3063ED2d2281AAfec31941705787432A1A",
+      "0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35",
+      "0x55c8f67e6D3f037297Daf94AD2bCC67CC477BEa9",
+      "0x1c4924f36Fe60374DB6ac206894D82F03d522933",
+      "0x15Af2503a934D211A1936684fEd986E7E3f417db",
+      "0x6cC790CAE45EC057f9637784279A475CC91cf517",
+      "0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645",
+      "0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475",
+      "0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F",
+      "0xfF567a62d7BF2CF984F02175C8bd485E3C4E2c0e",
+      "0x739b5380156Fa14C7956145048d52dF27EDedfCE",
+      "0xb76415D33268391bfaE2E671f45CeDAD9bC99dc9",
+      "0xCF926cB69b860Da8c33a2a601217856536ed0bcA",
+      "0x975238Ce3c593060a9b549e1654dC992f0Bc11aC",
+      "0x87e04f1d64619994a5320450E19C184a2dDE09c7",
+      "0x35B832bE9546fCad67526Be2801228194250378A"
+    ],
+    "socials": {
+      "website": "https://timemachine101.com/",
+      "twitter": "https://twitter.com/TimeMachines101",
+      "discord": "https://discord.gg/34ezMF2M5P"
     },
     "featured": true,
     "categories": [],
@@ -820,43 +879,6 @@
     "style": {}
   },
   {
-    "slug": "time-machine-nfts",
-    "name": "Time Machine NFTs",
-    "description": "Time Machine NFTs is an immersive ecosystem with plenty of moving parts to keep you entertained and earning passive income weekly.  From soft staking to adventures, beginning earning today for our strategy game (currently in development). Each project in our ecosystem has their purpose. Join our discord today to learn.",
-    "images": {
-      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/time-machine-nfts/banner.webp",
-      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/time-machine-nfts/preview.webp"
-    },
-    "collections": [
-      "0x9b72f7d5aecee857cc3d1a1a3357aff0e342d0a8",
-      "0x146cf0ee7b6b986769782ea832e8327f9dff55e7",
-      "0x482eBe3063ED2d2281AAfec31941705787432A1A",
-      "0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35",
-      "0x55c8f67e6D3f037297Daf94AD2bCC67CC477BEa9",
-      "0x1c4924f36Fe60374DB6ac206894D82F03d522933",
-      "0x15Af2503a934D211A1936684fEd986E7E3f417db",
-      "0x6cC790CAE45EC057f9637784279A475CC91cf517",
-      "0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645",
-      "0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475",
-      "0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F",
-      "0xfF567a62d7BF2CF984F02175C8bd485E3C4E2c0e",
-      "0x739b5380156Fa14C7956145048d52dF27EDedfCE",
-      "0xb76415D33268391bfaE2E671f45CeDAD9bC99dc9",
-      "0xCF926cB69b860Da8c33a2a601217856536ed0bcA",
-      "0x975238Ce3c593060a9b549e1654dC992f0Bc11aC",
-      "0x87e04f1d64619994a5320450E19C184a2dDE09c7",
-      "0x35B832bE9546fCad67526Be2801228194250378A"
-    ],
-    "socials": {
-      "website": "https://timemachine101.com/",
-      "twitter": "https://twitter.com/TimeMachines101",
-      "discord": "https://discord.gg/34ezMF2M5P"
-    },
-    "featured": true,
-    "categories": [],
-    "style": {}
-  },
-  {
     "slug": "cr00ts-club",
     "name": "Cr00ts Club",
     "description": "Welcome in the growing ecosystem of the Cr00ts, we are here to takeover the Cronos chain \uD83D\uDE0E",
@@ -875,6 +897,31 @@
       "website": "https://cr00tsnft.ca/",
       "twitter": "https://twitter.com/cr00tsnft",
       "discord": "https://discord.gg/Xb5xv84mS2"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
+    "slug": "dead-beat-dads",
+    "name": "Dead Beat Dads",
+    "description": "Dead Beat Dads is a fun-spirited, pixel art project looking to bring the joy back to collecting NFTs while also earning CRO along the way. There are already 3 different collections in the family (Dead Beat Dads, Trophy Wives, and Teenage Dirtbags). Come join our family, even if it is dysfunctional.",
+    "images": {
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/dead-beat-dads/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/dead-beat-dads/preview.webp"
+    },
+    "collections": [
+      "0xE971838cED4949E5c51DD7bAA6d2D0188eD772f0",
+      "0x96adF7839A133da31824113a23e223D02e97c53A",
+      "0xBC49267179d67050619CEB59a9870b14c9255C6e",
+      "0xb2a5Fc03533d397943c9Eae3183e409208DDaab3",
+      "0xd265D2fd5BbBbFF42BF226c360c48C17bc24f49b",
+      "0x14769cebC0479e192A465A685844261F16109495"
+    ],
+    "socials": {
+      "website": "https://deadbeatdadscronos.com/",
+      "twitter": "https://twitter.com/zolape01",
+      "discord": "https://discord.gg/KnRmEA4u8v"
     },
     "featured": true,
     "categories": [],
@@ -1074,53 +1121,6 @@
       "website": "https://kingkong-cronos.netlify.app/",
       "twitter": "https://twitter.com/kingkongcronos2",
       "discord": "https://discord.gg/8ZQUXur8hH"
-    },
-    "featured": false,
-    "categories": [],
-    "style": {}
-  },
-  {
-    "slug": "dead-beat-dads",
-    "name": "Dead Beat Dads",
-    "description": "Dead Beat Dads is a fun-spirited, pixel art project looking to bring the joy back to collecting NFTs while also earning CRO along the way. There are already 3 different collections in the family (Dead Beat Dads, Trophy Wives, and Teenage Dirtbags). Come join our family, even if it is dysfunctional.",
-    "images": {
-      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/dead-beat-dads/banner.webp",
-      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/dead-beat-dads/preview.webp"
-    },
-    "collections": [
-      "0xE971838cED4949E5c51DD7bAA6d2D0188eD772f0",
-      "0x96adF7839A133da31824113a23e223D02e97c53A",
-      "0xBC49267179d67050619CEB59a9870b14c9255C6e",
-      "0xb2a5Fc03533d397943c9Eae3183e409208DDaab3",
-      "0xd265D2fd5BbBbFF42BF226c360c48C17bc24f49b",
-      "0x14769cebC0479e192A465A685844261F16109495"
-    ],
-    "socials": {
-      "website": "https://deadbeatdadscronos.com/",
-      "twitter": "https://twitter.com/zolape01",
-      "discord": "https://discord.gg/KnRmEA4u8v"
-    },
-    "featured": false,
-    "categories": [],
-    "style": {}
-  },
-  {
-    "slug": "dripcro",
-    "name": "DripCro",
-    "description": "An NFT club community",
-    "images": {
-      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/dripcro/banner.webp",
-      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/dripcro/preview.webp"
-    },
-    "collections": [
-      "0x079B32D7a72b58588d62164927cEF13C4c3657D0",
-      "0x5529B34ea252B57B239738D3CD81DE1B11c47D3F",
-      "0x966B18Afe9D9062d611D0C246A1959b7a25FCdDe",
-      "0x1F627f548dE277D505eEC3eBF9E8B9BdD2E2e924"
-    ],
-    "socials": {
-      "website": "https://dripderivatives.com/",
-      "discord": "https://discord.gg/ttaPM95WcR"
     },
     "featured": false,
     "categories": [],
