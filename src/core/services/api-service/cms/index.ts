@@ -209,12 +209,12 @@ class Cms {
     return this.ryoshiDynasties.requestBattleCardsWithdrawalAuthorization(address, signature);
   }
 
-  async createSwap(request: any, address: string, signature: string) {
-    return await this.orders.createSwap(request, address, signature);
+  async createDeal(request: any, address: string, signature: string) {
+    return await this.orders.createDeal(request, address, signature);
   }
 
-  async getSwap(id: any) {
-    return await this.orders.getSwap(id);
+  async getDeal(id: any) {
+    return await this.orders.getDeal(id);
   }
 }
 

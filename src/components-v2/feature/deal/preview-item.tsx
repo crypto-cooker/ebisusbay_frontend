@@ -26,7 +26,7 @@ import ImageService from "@src/core/services/image";
 import {commify} from "ethers/lib/utils";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {ItemType} from "@src/hooks/use-create-order-signer";
-import {BarterToken} from "@src/jotai/atoms/swap";
+import {BarterToken} from "@src/jotai/atoms/deal";
 import useCurrencyBroker from "@src/hooks/use-currency-broker";
 
 const previewSize = '50px';
@@ -221,7 +221,7 @@ const UpdateItemForm = ({image, name, quantityAvailable, quantitySelected, isAct
   )
 }
 
-interface GetSwapItemPreviewProps {
+interface GetDealItemPreviewProps {
   item: {token: string, item_type: number, start_amount: string, token_details: {metadata: {image: string, name: string}}}
   ref: MutableRefObject<any>;
   isOpen: boolean;
@@ -233,7 +233,7 @@ interface GetSwapItemPreviewProps {
   mode: 'READ' | 'WRITE';
 }
 
-export const GetSwapItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, onRemove, isActive, mode}: GetSwapItemPreviewProps) => {
+export const GetDealItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, onRemove, isActive, mode}: GetDealItemPreviewProps) => {
   const { getByAddress  } = useCurrencyBroker();
 
   const token = useMemo(() => {

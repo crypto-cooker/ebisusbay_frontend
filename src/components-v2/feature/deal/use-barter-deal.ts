@@ -14,9 +14,9 @@ import {
   updateERC20AmountSelectedAtom,
   updateOfferAmountSelectedAtom,
   updateOfferERC20AmountSelectedAtom
-} from "@src/jotai/atoms/swap";
+} from "@src/jotai/atoms/deal";
 
-interface UseBarterSwap {
+interface UseBarterDeal {
   barterState: BarterState;
   setTakerAddress: (address: string) => void;
   setMakerAddress: (address: string) => void;
@@ -35,7 +35,7 @@ interface UseBarterSwap {
   setDuration: (duration: number) => void;
 }
 
-const useBarterSwap = (): UseBarterSwap => {
+const useBarterDeal = (): UseBarterDeal => {
   const [barterState] = useAtom(barterStateAtom);
 
   const [, setTakerAddress] = useAtom(setTakerAddressAtom);
@@ -74,4 +74,4 @@ const useBarterSwap = (): UseBarterSwap => {
   };
 };
 
-export default useBarterSwap;
+export default useBarterDeal;

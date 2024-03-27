@@ -169,7 +169,7 @@ class Mapi {
     return {}
   }
 
-  async getSwap(id: any) {
+  async getDeal(id: any) {
     const response = await this.orders.getSwap(id);
 
     return response.data.swaps[0];

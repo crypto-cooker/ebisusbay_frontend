@@ -15,33 +15,33 @@ import {
   VStack
 } from "@chakra-ui/react";
 import React, {useState} from "react";
-import {Step1ChooseItems} from "@src/components-v2/feature/swap/step-1-choose-items";
-import {SwapPreview} from "@src/components-v2/feature/swap/swap-preview";
-import {Step2ChooseItems} from "@src/components-v2/feature/swap/step-2-offer-items";
+import {Step1ChooseItems} from "@src/components-v2/feature/deal/create/step-1-choose-items";
+import {DealPreview} from "@src/components-v2/feature/deal/create/deal-preview";
+import {Step2ChooseItems} from "@src/components-v2/feature/deal/create/step-2-offer-items";
 import {useUser} from "@src/components-v2/useUser";
 import {ciEquals} from "@src/utils";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {DefaultContainer} from "@src/components-v2/shared/default-container";
-import {Step3ReviewDetails} from "@src/components-v2/feature/swap/step-3-review-details";
-import useCreateSwap from "@src/components-v2/feature/swap/use-create-swap";
-import useBarterSwap from "@src/components-v2/feature/swap/use-barter-swap";
+import {Step3ReviewDetails} from "@src/components-v2/feature/deal/create/step-3-review-details";
+import useCreateDeal from "@src/components-v2/feature/deal/use-create-deal";
+import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import {CheckCircleIcon} from "@chakra-ui/icons";
 import {useRouter} from "next/router";
 
 const sidebarWidth = '400px';
 
-interface UserSwapViewProps {
+interface CreateDealProps {
   address: string;
 }
 
-export const UserSwapView = ({address}: UserSwapViewProps) => {
+export const CreateDeal = ({address}: CreateDealProps) => {
   const user = useUser();
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [executing, setExecuting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-  const [createSwap, _] = useCreateSwap();
-  const { barterState } = useBarterSwap();
+  const [createDeal, _] = useCreateDeal();
+  const { barterState } = useBarterDeal();
 
   const handleChangeStep = (step: number) => {
     setCurrentStep(step);
@@ -50,7 +50,7 @@ export const UserSwapView = ({address}: UserSwapViewProps) => {
   const handleConfirm = async () => {
     try {
       setExecuting(true);
-      await createSwap(barterState);
+      await createDeal(barterState);
       setIsComplete(true);
     } catch (e) {
       console.log(e);
@@ -61,7 +61,7 @@ export const UserSwapView = ({address}: UserSwapViewProps) => {
 
   const handleExit = () => {
     setIsComplete(false);
-    router.push('/swap');
+    router.push('/deal');
   }
 
   return (
@@ -76,7 +76,7 @@ export const UserSwapView = ({address}: UserSwapViewProps) => {
                 <>
                   {ciEquals(address, user.address) ? (
                     <Box my={4} textAlign='center'>
-                      Cannot swap with yourself. Try selecting another user or connecting a different wallet.
+                      Cannot initiate a deal with yourself. Try selecting another user or connecting a different wallet.
                     </Box>
                   ) : (
                     <>
@@ -102,7 +102,7 @@ export const UserSwapView = ({address}: UserSwapViewProps) => {
           )}
         </Box>
       </DefaultContainer>
-      <SwapPreview
+      <DealPreview
         onChangeStep={handleChangeStep}
         onConfirm={handleConfirm}
         isConfirming={executing}
@@ -126,13 +126,13 @@ const SuccessModal = ({isOpen, onClose}: SuccessModalProps) => {
           <Center>
             <HStack>
               <CheckCircleIcon color="green" bg="white" rounded="full" border="1px solid white"/>
-              <Text>Swap Request Confirmed</Text>
+              <Text>Deal Request Confirmed</Text>
             </HStack>
           </Center>
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          You have successfully initiated a swap with this user!
+          You have successfully initiated a deal with this user!
         </ModalBody>
 
         <ModalFooter alignContent="center">

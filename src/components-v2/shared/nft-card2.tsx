@@ -454,7 +454,7 @@ const SelectableNftCard = ({ nft, body, amountSelected, onSelect }: SelectableNf
   )
 }
 
-export const SwapNftCard = ({ nft, amountSelected, onSelect }: {nft: any, amountSelected: number, onSelect: (nft: any) => void}) => {
+export const DealNftCard = ({ nft, amountSelected, onSelect }: {nft: any, amountSelected: number, onSelect: (nft: any) => void}) => {
   return (
     <SelectableNftCard
       nft={nft}

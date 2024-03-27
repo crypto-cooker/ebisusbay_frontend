@@ -4,13 +4,13 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import PageHeader from "@src/components-v2/shared/layout/page-header";
 import React from "react";
 import {DefaultContainer} from "@src/components-v2/shared/default-container";
-import ManageSwapView from "@src/components-v2/feature/swap/manage";
+import ManageDealView from "@src/components-v2/feature/deal/manage";
 
-interface ManageSwapProps {
-  swap: any;
+interface ManageDealProps {
+  deal: any;
 }
 
-const ManageSwap = ({swap}: ManageSwapProps) => {
+const ManageDeal = ({deal}: ManageDealProps) => {
 
   return (
     <>
@@ -19,29 +19,29 @@ const ManageSwap = ({swap}: ManageSwapProps) => {
         description='Reveal unique value opportunities by swapping NFTs and tokens directly'
       />
       <PageHeader
-        title={'View Swap'}
+        title={'View Deal'}
       />
 
       <DefaultContainer mt={4}>
-        <ManageSwapView swap={swap} />
+        <ManageDealView deal={deal} />
       </DefaultContainer>
     </>
   );
 }
 
-export default ManageSwap;
+export default ManageDeal;
 
 
 export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
-  const swapId = params?.id as string;
-  if (!swapId) {
+  const dealId = params?.id as string;
+  if (!dealId) {
     return {
       notFound: true
     }
   }
 
-  const swap = await ApiService.withoutKey().getSwap(swapId);
-  if (!swap) {
+  const deal = await ApiService.withoutKey().getDeal(dealId);
+  if (!deal) {
     return {
       notFound: true
     }
@@ -49,7 +49,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
 
   return {
     props: {
-      swap
+      deal
     }
   };
 };

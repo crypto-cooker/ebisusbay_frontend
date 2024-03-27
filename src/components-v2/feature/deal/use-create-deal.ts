@@ -5,7 +5,7 @@ import {getItemType} from "@src/helpers/chain";
 import {appConfig} from "@src/Config";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import {BarterState} from "@src/jotai/atoms/swap";
+import {BarterState} from "@src/jotai/atoms/deal";
 import useCreateOrderSigner, {ItemType, OfferItem, OrderSignerProps} from "@src/hooks/use-create-order-signer";
 import {BigNumber, ethers} from "ethers";
 import {ciEquals} from "@src/utils";
@@ -14,7 +14,7 @@ import {ApiService} from "@src/core/services/api-service";
 const generator = UUID(0);
 const config = appConfig();
 
-export interface PendingSwap {
+export interface PendingDeal {
   collectionAddress: string;
   tokenId: string;
   price: number;
@@ -30,7 +30,7 @@ type ResponseProps = {
   error?: any;
 };
 
-const useCreateSwap = () => {
+const useCreateDeal = () => {
   const [response, setResponse] = useState<ResponseProps>({
     loading: false,
     error: null,
@@ -41,7 +41,7 @@ const useCreateSwap = () => {
 
   const user = useUser();
 
-  const createSwap = async (barterState: BarterState) => {
+  const createDeal = async (barterState: BarterState) => {
     setResponse({
       ...response,
       loading: true,
@@ -110,7 +110,7 @@ const useCreateSwap = () => {
 
       const {objectSignature, objectHash} = await signOrder(orderSignerProps);
 
-      const res = await ApiService.withoutKey().createSwap({
+      const res = await ApiService.withoutKey().createDeal({
         makerAddress: user.address!,
         makerTokenAddresses: orderSignerProps.makerItems.map(item => item.token),
         makerTokenIds: orderSignerProps.makerItems.map(item => item.identifierOrCriteria.toString()),
@@ -143,7 +143,7 @@ const useCreateSwap = () => {
     }
   };
 
-  return [createSwap, response] as const;
+  return [createDeal, response] as const;
 };
 
-export default useCreateSwap;
+export default useCreateDeal;

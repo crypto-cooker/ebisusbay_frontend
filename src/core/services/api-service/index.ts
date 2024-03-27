@@ -249,12 +249,12 @@ export class ApiService implements Api {
     return await this.graph.getStakedRyoshi(address);
   }
 
-  async createSwap(request: any, address: string, signature: string) {
-    return await this.cms.createSwap(request, address, signature);
+  async createDeal(request: any, address: string, signature: string) {
+    return await this.cms.createDeal(request, address, signature);
   }
 
-  async getSwap(id: any) {
-    return await this.mapi.getSwap(id);
+  async getDeal(id: any) {
+    return await this.mapi.getDeal(id);
   }
 }
 

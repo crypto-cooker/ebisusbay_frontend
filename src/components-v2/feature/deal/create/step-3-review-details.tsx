@@ -1,7 +1,7 @@
 import {Box, Container, FormControl, FormLabel, Heading, Select, Text, VStack} from "@chakra-ui/react";
 import React, {ChangeEvent} from "react";
 import {Card} from "@src/components-v2/foundation/card";
-import useBarterSwap from "@src/components-v2/feature/swap/use-barter-swap";
+import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 
 interface Step3ReviewDetailsProps {
   address: string;
@@ -9,7 +9,7 @@ interface Step3ReviewDetailsProps {
 }
 
 export const Step3ReviewDetails = ({address, onConfirm}: Step3ReviewDetailsProps) => {
-  const { setDuration } = useBarterSwap();
+  const { setDuration } = useBarterDeal();
 
   const handleExpirationDateChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setDuration(parseInt(e.target.value));
@@ -22,7 +22,7 @@ export const Step3ReviewDetails = ({address, onConfirm}: Step3ReviewDetailsProps
           Step 3: Review details
         </Heading>
         <Text>
-          Set how long this swap should be active, then review selections and click the Confirm button at the bottom to create the swap request.
+          Set how long this deal should be active, then review selections and click the Confirm button at the bottom to create the deal request.
         </Text>
       </Box>
 

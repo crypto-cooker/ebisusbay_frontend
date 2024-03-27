@@ -28,10 +28,10 @@ import {
 import {uniqueNftId} from "@src/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
-import useBarterSwap from "@src/components-v2/feature/swap/use-barter-swap";
+import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import ImageService from "@src/core/services/image";
 import {toast} from "react-toastify";
-import {BarterToken} from "@src/jotai/atoms/swap";
+import {BarterToken} from "@src/jotai/atoms/deal";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHandshake} from "@fortawesome/free-solid-svg-icons";
 import {useUser} from "@src/components-v2/useUser";
@@ -39,13 +39,13 @@ import {commify} from "ethers/lib/utils";
 
 const previewSize = '50px';
 
-interface SwapPreviewProps {
+interface DealPreviewProps {
   onChangeStep: (step: number) => void;
   onConfirm: () => void;
   isConfirming: boolean;
 }
 
-export const SwapPreview = ({onChangeStep, onConfirm, isConfirming}: SwapPreviewProps) => {
+export const DealPreview = ({onChangeStep, onConfirm, isConfirming}: DealPreviewProps) => {
   const user = useUser();
   const {
     barterState,
@@ -57,7 +57,7 @@ export const SwapPreview = ({onChangeStep, onConfirm, isConfirming}: SwapPreview
     toggleSelectionERC20,
     toggleOfferNFT,
     toggleOfferERC20
-  } = useBarterSwap();
+  } = useBarterDeal();
   const sliderBackground = useColorModeValue('gray.50', 'gray.700')
 
   const [currentStep, setCurrentStep] = useState(1);

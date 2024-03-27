@@ -3,10 +3,10 @@ import React, {ChangeEvent, useState} from "react";
 import {FormControl, Icon, IconButton, Input, InputGroup, InputRightAddon, InputRightElement} from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
-import {UserSwapView} from "@src/components-v2/feature/swap/user";
+import {CreateDeal} from "@src/components-v2/feature/deal/create";
 import {useRouter} from "next/router";
 
-const Swap = () => {
+const Deal = () => {
   const router = useRouter();
   const [searchTerms, setSearchTerms] = useState<string>();
   const [address, setAddress] = useState<string>();
@@ -17,14 +17,14 @@ const Swap = () => {
   
   const handleSearch = () => {
     setAddress(searchTerms);
-    router.push(`/swap/create/${searchTerms}`, undefined, { shallow: true });
+    router.push(`/deal/create/${searchTerms}`, undefined, { shallow: true });
   }
   
   return (
     <>
-      <PageHeader title={'Create a Swap'} />
+      <PageHeader title={'Create a Deal'} />
       {!!address ? (
-        <UserSwapView address={address} />
+        <CreateDeal address={address} />
       ) : (
         <>
           <FormControl>
@@ -48,4 +48,4 @@ const Swap = () => {
   )
 }
 
-export default Swap;
+export default Deal;

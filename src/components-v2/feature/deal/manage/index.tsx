@@ -16,20 +16,20 @@ import {faHandshake} from "@fortawesome/free-solid-svg-icons";
 import React, {ReactNode, useEffect, useRef, useState} from "react";
 import useGetProfilePreview from "@src/hooks/useGetUsername";
 import {Card} from "@src/components-v2/foundation/card";
-import {GetSwapItemPreview} from "@src/components-v2/feature/swap/preview-item";
+import {GetDealItemPreview} from "@src/components-v2/feature/deal/preview-item";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useUser} from "@src/components-v2/useUser";
 import {ciEquals} from "@src/utils";
 
-interface ManageSwapProps {
-  swap: any;
+interface ManageDealProps {
+  deal: any;
 }
 
-const ManageSwap = ({swap}: ManageSwapProps) => {
+const ManageDeal = ({deal}: ManageDealProps) => {
   const user = useUser();
-  const {username: makerUsername, avatar: makerAvatar} = useGetProfilePreview(swap.maker);
-  const {username: takerUsername, avatar: takerAvatar} = useGetProfilePreview(swap.taker);
+  const {username: makerUsername, avatar: makerAvatar} = useGetProfilePreview(deal.maker);
+  const {username: takerUsername, avatar: takerAvatar} = useGetProfilePreview(deal.taker);
   const initialFocusRef = useRef(null);
   const isMobile = useBreakpointValue({base: true, sm: false}, {fallback: 'sm'});
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
@@ -58,11 +58,11 @@ const ManageSwap = ({swap}: ManageSwapProps) => {
 
   }
 
-  const isMaker = !!user.address && ciEquals(user.address, swap.maker);
-  const isTaker = !!user.address && ciEquals(user.address, swap.taker);
+  const isMaker = !!user.address && ciEquals(user.address, deal.maker);
+  const isTaker = !!user.address && ciEquals(user.address, deal.taker);
 
   useEffect(() => {
-    console.log('SWAP', swap);
+    console.log('SWAP', deal);
   }, []);
 
 
@@ -78,8 +78,8 @@ const ManageSwap = ({swap}: ManageSwapProps) => {
           <Box>{makerUsername}</Box>
           <Box>
             <Wrap>
-              {swap.makerItems.map((item: any, index: number) => (
-                <GetSwapItemPreview
+              {deal.makerItems.map((item: any, index: number) => (
+                <GetDealItemPreview
                   key={index}
                   item={item}
                   ref={initialFocusRef}
@@ -100,8 +100,8 @@ const ManageSwap = ({swap}: ManageSwapProps) => {
           <Box>{takerUsername}</Box>
           <Box>
             <Wrap>
-              {swap.takerItems.map((item: any, index: number) => (
-                <GetSwapItemPreview
+              {deal.takerItems.map((item: any, index: number) => (
+                <GetDealItemPreview
                   key={index}
                   item={item}
                   ref={initialFocusRef}
@@ -158,4 +158,4 @@ const ConditionalActionBar = ({condition, children}: {condition: boolean, childr
   ) : children;
 }
 
-export default ManageSwap;
+export default ManageDeal;

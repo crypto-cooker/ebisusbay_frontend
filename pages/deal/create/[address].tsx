@@ -1,8 +1,8 @@
-import {UserSwapView} from "@src/components-v2/feature/swap/user";
+import {CreateDeal} from "@src/components-v2/feature/deal/create";
 import PageHeader from "@src/components-v2/shared/layout/page-header";
 import React, {useEffect} from "react";
 import {useRouter} from "next/router";
-import useBarterSwap from "@src/components-v2/feature/swap/use-barter-swap";
+import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import {useUser} from "@src/components-v2/useUser";
 import {GetServerSidePropsContext} from "next";
 import {getProfile} from "@src/core/cms/endpoints/profile";
@@ -18,10 +18,10 @@ interface PageProps {
   profile: any;
 }
 
-const SwapWithUser = ({ address, profile }: PageProps) => {
+const CreateDealPage = ({ address, profile }: PageProps) => {
   const user = useUser();
   const router = useRouter();
-  const { setTakerAddress, setMakerAddress } = useBarterSwap();
+  const { setTakerAddress, setMakerAddress } = useBarterDeal();
 
   useEffect(() => {
     setTakerAddress(address);
@@ -36,22 +36,22 @@ const SwapWithUser = ({ address, profile }: PageProps) => {
   return (
     <>
       <PageHead
-        title={`Swap with ${profile?.username ?? shortAddress(address)}`}
+        title={`Make a deal with ${profile?.username ?? shortAddress(address)}`}
         description='Reveal unique value opportunities by swapping NFTs and tokens directly'
       />
       <PageHeader
-        title={'Create a Swap'}
+        title={'Create a Deal'}
         subtitle='Reveal unique value opportunities by swapping NFTs and tokens directly'
       />
       <DefaultContainer mt={2} fontSize='sm' fontStyle='italic'>
-        Swapping with: <Link as={NextLink} href={`/account/${address}`} color='auto' fontWeight='bold' className='color'>{profile.username ?? address}</Link>
+        Creating a deal with: <Link as={NextLink} href={`/account/${address}`} color='auto' fontWeight='bold' className='color'>{profile.username ?? address}</Link>
       </DefaultContainer>
-      <UserSwapView address={address} />
+      <CreateDeal address={address} />
     </>
   )
 }
 
-export default SwapWithUser;
+export default CreateDealPage;
 
 export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
   const addressOrUsername = params?.address as string;

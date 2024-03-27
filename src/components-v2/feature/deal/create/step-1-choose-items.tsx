@@ -41,8 +41,8 @@ import ReactSelect, {SingleValue} from "react-select";
 import {SortOption, sortOptions} from "@src/components-v2/feature/account/profile/tabs/inventory/sort-options";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {getTheme} from "@src/Theme/theme";
-import {SwapNftCard} from "@src/components-v2/shared/nft-card2";
-import useBarterSwap from "@src/components-v2/feature/swap/use-barter-swap";
+import {DealNftCard} from "@src/components-v2/shared/nft-card2";
+import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import {ciEquals} from "@src/utils";
 import {Tab, Tabs} from "@src/components-v2/foundation/tabs";
 import useCurrencyBroker, {BrokerCurrency} from "@src/hooks/use-currency-broker";
@@ -80,7 +80,7 @@ export const Step1ChooseItems = ({address}: Step1ChooseItemsProps) => {
 
 const ChooseNftsTab = ({address}: {address: string}) => {
   const user = useUser();
-  const { toggleSelectionNFT, barterState } = useBarterSwap();
+  const { toggleSelectionNFT, barterState } = useBarterDeal();
 
 
   const [collections, setCollections] = useState([]);
@@ -199,7 +199,7 @@ const ChooseNftsTab = ({address}: {address: string}) => {
               {items.data.map((nft, index) => {
                 return (
                   <Box key={`${nft.nftAddress}-${nft.nftId}-${index}`}>
-                    <SwapNftCard
+                    <DealNftCard
                       nft={nft}
                       onSelect={handleSelectItem}
                       amountSelected={amountSelected(nft.nftAddress, nft.nftId)}
@@ -328,7 +328,7 @@ const ChooseNftsTab = ({address}: {address: string}) => {
 const ChooseTokensTab = ({address}: {address: string}) => {
   const user = useUser();
   const { allCurrencies  } = useCurrencyBroker();
-  const { toggleSelectionERC20 } = useBarterSwap();
+  const { toggleSelectionERC20 } = useBarterDeal();
   const [quantity, setQuantity] = useState<string>();
   const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(allCurrencies[0]);
 

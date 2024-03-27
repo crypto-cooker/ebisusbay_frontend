@@ -35,7 +35,7 @@ export interface BarterState {
   duration?: number;
 }
 
-// Initial state for the barter swap
+// Initial state for the barter deal
 const initialBarterState: BarterState = {
   taker: {
     address: '',
