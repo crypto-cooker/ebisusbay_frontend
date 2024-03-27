@@ -127,7 +127,7 @@ const Header = function () {
             <Flex alignItems={'center'} className="mainside">
 
               {!!currentFrtnPrice && (
-                <Link href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59' target='_blank'>
+                <Link href='https://swap.ebisusbay.com/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59#/swap' target='_blank'>
                   <HStack fontSize='sm' fontWeight='bold' me={{base: 1, sm: 4}} spacing={1}>
                     <FortuneIcon boxSize={{base: 4, md: 6}} />
                     <Text as='span' className='col-white'>${currentFrtnPrice}</Text>
