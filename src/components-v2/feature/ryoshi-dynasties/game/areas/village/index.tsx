@@ -406,16 +406,14 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         onClick={onOpenMerchant}
                       />
 
-                      { /* <EventSprite
-                        id='valentines'
+                      {  <Sprite
+                        id='ryoshiwithknife'
                         position={{x: buildings.valentines.left, y: buildings.valentines.top}}
-                        image={ImageService.translate(`/img/ryoshi-dynasties/village/valentines/cupid.apng`).convert()}
-                        ctaImage={ImageService.translate(`/img/ryoshi-dynasties/village/valentines/poke-cupid.png`).convert()}
-                        ctaImageHover={ImageService.translate(`/img/ryoshi-dynasties/village/valentines/poke-cupid-hover.png`).convert()}
+                        image={ImageService.translate(`/img/ryoshi-with-knife/ryoshiwithknife_village.apng`).convert()}
                         zIndex={9}
-                        onClick={onOpenValentiesDialog}
+                        onClick={() => window.open('/ryoshi-with-knife', '_blank')}
                       />
-                      } */}
+                      } 
                       {/*{isChristmasTime && (*/}
                       {/*  <EventSprite*/}
                       {/*    id='christmas'*/}
