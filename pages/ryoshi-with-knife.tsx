@@ -18,7 +18,7 @@ const RyoshiWithKnife = () => {
   return (
     <>
       <PageHead
-        title='Ryoshi with knife'
+        title='ryoshi with knife'
         url='/ryoshi-with-knife'
         image={ImageService.translate('/img/ryoshi-with-knife/banner.webp').convert()}
       />
@@ -31,7 +31,7 @@ const RyoshiWithKnife = () => {
         </Box>
         <Stack direction={{base: 'column', sm: 'row'}} mt={4} justify='space-between'>
           <Box>
-            <Heading>Ryoshi with knife</Heading>
+            <Heading>ryoshi with knife</Heading>
             <VStack align='start' mt={2}>
               <Box>
                 Starts in: {isClient ? <Countdown date={1711742400000}/> : 'soon'}
