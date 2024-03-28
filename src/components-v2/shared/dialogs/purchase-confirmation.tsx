@@ -103,7 +103,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       }
       window.open(url, '_blank');
     } else {
-      const url = new URL('https://vvs.finance/swap');
+      const url = new URL('https://swap.ebisusbay.com/#/swap');
       if (user.address) {
         url.searchParams.append('outputCurrency', address);
         url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
