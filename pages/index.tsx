@@ -184,8 +184,7 @@ const Home = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
         </Reveal>
         <Reveal className="onStep" keyframes={fadeInUp} delay={600} duration={900} triggerOnce>
           <p className="lead">
-            Ebisu's Bay is the first and largest NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT
-            community.
+            Ebisu's Bay is dynamic platform that combines NFT and DEX trading with GameFi, enabling users to battle for market dominance.
           </p>
         </Reveal>
         <Reveal className="onStep call-to-action" keyframes={inline} delay={800} duration={900} triggerOnce>

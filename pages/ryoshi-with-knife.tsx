@@ -20,6 +20,7 @@ const RyoshiWithKnife = () => {
       <PageHead
         title='ryoshi with knife'
         url='/ryoshi-with-knife'
+        description='sharpest meme on cronos'
         image={ImageService.translate('/img/ryoshi-with-knife/banner.webp').convert()}
       />
       <Container maxW='container.lg' mt={8}>
