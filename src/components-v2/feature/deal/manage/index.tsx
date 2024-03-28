@@ -19,8 +19,12 @@ import {Card} from "@src/components-v2/foundation/card";
 import {GetDealItemPreview} from "@src/components-v2/feature/deal/preview-item";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {useColorModeValue} from "@chakra-ui/color-mode";
-import {useUser} from "@src/components-v2/useUser";
+import {useContractService, useUser} from "@src/components-v2/useUser";
 import {ciEquals} from "@src/utils";
+import {ApiService} from "@src/core/services/api-service";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {toast} from "react-toastify";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 interface ManageDealProps {
   deal: any;
@@ -33,6 +37,8 @@ const ManageDeal = ({deal}: ManageDealProps) => {
   const initialFocusRef = useRef(null);
   const isMobile = useBreakpointValue({base: true, sm: false}, {fallback: 'sm'});
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
+  const { requestSignature } = useEnforceSignature();
+  const contractService = useContractService();
 
   const handleOpenPopover = (index: number, side: string) => {
     setOpenPopoverId(`${index}${side}`);
@@ -42,7 +48,25 @@ const ManageDeal = ({deal}: ManageDealProps) => {
     return openPopoverId === `${index}${side}`;
   }
 
-  const handleAccept = () => {
+  const handleAccept = async () => {
+    if (!user.address) return;
+
+    try {
+      const walletSignature = await requestSignature();
+      const { data: authorization } = await ApiService.withoutKey().requestAcceptDealAuthorization(deal.id, user.address, walletSignature);
+
+      const { signature, orderData, ...sigData } = authorization;
+      const total = sigData.feeAmount;
+      const tx = await contractService!.ship.fillOrders(orderData, sigData, signature, { value: total });
+      const receipt = await tx.wait()
+      toast.success(`Deal has been finalized!`);
+
+    } catch (e) {
+      console.log(e);
+      toast.error(parseErrorMessage(e));
+    } finally {
+
+    }
 
   }
 
@@ -65,7 +89,6 @@ const ManageDeal = ({deal}: ManageDealProps) => {
     console.log('SWAP', deal);
   }, []);
 
-
   return (
     <Container size='xl'>
       <SimpleGrid
@@ -78,7 +101,7 @@ const ManageDeal = ({deal}: ManageDealProps) => {
           <Box>{makerUsername}</Box>
           <Box>
             <Wrap>
-              {deal.makerItems.map((item: any, index: number) => (
+              {deal.maker_items.map((item: any, index: number) => (
                 <GetDealItemPreview
                   key={index}
                   item={item}
@@ -100,7 +123,7 @@ const ManageDeal = ({deal}: ManageDealProps) => {
           <Box>{takerUsername}</Box>
           <Box>
             <Wrap>
-              {deal.takerItems.map((item: any, index: number) => (
+              {deal.taker_items.map((item: any, index: number) => (
                 <GetDealItemPreview
                   key={index}
                   item={item}
@@ -120,22 +143,22 @@ const ManageDeal = ({deal}: ManageDealProps) => {
         <ConditionalActionBar condition={isMobile ?? false}>
           {isTaker ? (
             <Flex>
-              <Button variant='link' size='sm'>
+              <Button variant='link' size='sm' onClick={handleReject}>
                 Reject
               </Button>
               <Spacer />
               <ButtonGroup>
-                <SecondaryButton>
+                <SecondaryButton onClick={handleCounterOffer}>
                   Counter Offer
                 </SecondaryButton>
-                <PrimaryButton>
+                <PrimaryButton onClick={handleAccept}>
                   Accept
                 </PrimaryButton>
               </ButtonGroup>
             </Flex>
           ) : isMaker && (
             <Flex>
-              <PrimaryButton>
+              <PrimaryButton onClick={handleCancel}>
                 Cancel
               </PrimaryButton>
             </Flex>

@@ -253,8 +253,12 @@ export class ApiService implements Api {
     return await this.cms.createDeal(request, address, signature);
   }
 
-  async getDeal(id: any) {
+  async getDeal(id: string) {
     return await this.mapi.getDeal(id);
+  }
+
+  async requestAcceptDealAuthorization(id: string, address: string, signature: string) {
+    return await this.cms.requestAcceptDealAuthorization(id, address, signature);
   }
 }
 

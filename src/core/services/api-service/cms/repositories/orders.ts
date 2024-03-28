@@ -8,12 +8,25 @@ class OrdersRepository extends CmsRepository {
         address,
         signature
       }
-    })
+    });
+
     return response.data;
   }
 
   async getDeal(id: any) {
     // stubbed for when we will proxy this request
+  }
+
+  async requestAcceptDealAuthorization(id: string, address: string, signature: string) {
+    const response = await this.cms.get('order/deal/authorize', {
+      params: {
+        id,
+        address,
+        signature
+      }
+    });
+
+    return response.data;
   }
 }
 
