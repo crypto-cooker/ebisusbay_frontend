@@ -1,5 +1,20 @@
 [
   {
+    "name": "ryoshi with knife",
+    "start": 1711641589,
+    "end": 1711814389,
+    "placement": "rd-board",
+    "details": {
+      "weight": 1,
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-with-knife-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-with-knife-sm.webp",
+      "link": {
+        "url": "/ryoshi-with-knife",
+        "external": false
+      }
+    }
+  },
+  {
     "name": "Chiverse",
     "start": 1707249499,
     "end": 1707940737,
