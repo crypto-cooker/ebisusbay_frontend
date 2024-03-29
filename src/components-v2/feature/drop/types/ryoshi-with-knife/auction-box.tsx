@@ -110,6 +110,12 @@ const AuctionBox = ({}: AuctionBoxProps) => {
           )}
         </Stack>
       </Center>
+
+      {!!rwkData.address && (
+        <Box textAlign='center' mt={4} fontSize='sm' fontStyle='italic'>
+          Contract: {rwkData.address}
+        </Box>
+      )}
       <Box my={2}>
         <hr />
       </Box>
@@ -222,11 +228,6 @@ const AuctionBox = ({}: AuctionBoxProps) => {
           {!!user.address && (
             <Box mt={4}><ClaimBox /></Box>
           )}
-        </Box>
-      )}
-      {!!rwkData.address && (
-        <Box textAlign='center' mt={4} fontSize='sm' fontStyle='italic'>
-          Contract: {rwkData.address}
         </Box>
       )}
     </Box>
