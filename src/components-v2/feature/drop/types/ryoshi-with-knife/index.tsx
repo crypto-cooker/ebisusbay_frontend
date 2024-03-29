@@ -160,7 +160,7 @@ const RyoshiWithKnife = () => {
       const endTime  = await readContract.saleEndTimestamp();
       const totalContributed  = await readContract.totalFRTNContributed();
       const remainingSupply = defaultInfo.maxSupply - parseInt(totalContributed);
-      console.log('CURRENT SUPPLT', remainingSupply, parseInt(totalContributed));
+
       setRwkData((prev) => ({
         ...prev,
         address: defaultInfo.address,
@@ -239,7 +239,6 @@ const RyoshiWithKnife = () => {
   useEffect(() => {
     if (!!rwkData.readContract) {
       const onMinted = (sender: string, amount: number, totalContributions: number) => {
-        console.log('MINT', Number(amount), rwkData.currentSupply, rwkData.maxSupply);
         setRwkData((prev) => ({
           ...prev,
           currentSupply: prev.currentSupply + Number(amount),
