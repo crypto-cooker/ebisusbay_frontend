@@ -77,7 +77,7 @@ const AuctionBox = ({}: AuctionBoxProps) => {
           )}
         </Stack>
       </Center>
-      <Box  my={2}>
+      <Box my={2}>
         <hr />
       </Box>
       <SimpleGrid columns={2}>

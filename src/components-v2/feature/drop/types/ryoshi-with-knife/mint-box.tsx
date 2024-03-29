@@ -1,5 +1,4 @@
 import {constants, Contract, ethers} from "ethers";
-import {useAppSelector} from "@src/Store/hooks";
 import React, {useState} from "react";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
@@ -8,14 +7,11 @@ import {createSuccessfulTransactionToastContent} from "@src/utils";
 import * as Sentry from "@sentry/react";
 import {parseErrorMessage} from "@src/helpers/validator";
 import Fortune from "@src/Contracts/Fortune.json";
-import {commify, parseUnits} from "ethers/lib/utils";
-import {ApiService} from "@src/core/services/api-service";
+import {parseUnits} from "ethers/lib/utils";
 import {Box, Button, HStack, Input, Stack, useNumberInput} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useAtom} from "jotai/index";
-import {dutchAuctionDataAtom} from "@src/components-v2/feature/drop/types/dutch/atom";
 import {appConfig} from "@src/Config";
-import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {useUser} from "@src/components-v2/useUser";
 import {rwkDataAtom} from "@src/components-v2/feature/drop/types/ryoshi-with-knife/atom";
 
@@ -32,7 +28,7 @@ const MintBox = () => {
   const [rwkData, setRwkData] = useAtom(rwkDataAtom);
 
   const [mintingWithType, setMintingWithType] = useState<FundingType>();
-  const [amountToContribute, setAmountToContribute] = useState(1);
+  const [amountToContribute, setAmountToContribute] = useState(100);
   const {requestSignature} = useEnforceSigner();
   const [runAuthedFunction] = useAuthedFunction();
 
@@ -71,7 +67,7 @@ const MintBox = () => {
   }
 
   const mintWithFrtn = async (finalCost: number) => {
-    const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
+    const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.signer);
     const allowance = await fortuneContract.allowance(user.address, rwkData.address);
 
     if (allowance.sub(finalCost) <= 0) {
@@ -117,7 +113,7 @@ const MintBox = () => {
       step: 100,
       defaultValue: amountToContribute,
       min: 1,
-      max: rwkData.availableTokenCount,
+      max: rwkData.availableTokenCount < 10000 ? rwkData.availableTokenCount : 10000,
       precision: 0,
       onChange(valueAsString, valueAsNumber) {
         setAmountToContribute(valueAsNumber);

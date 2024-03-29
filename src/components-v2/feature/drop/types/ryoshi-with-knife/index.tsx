@@ -43,13 +43,13 @@ const defaultInfo: EventProps = {
 const RyoshiWithKnife = () => {
   const user = useUser();
   const [isClient, setIsClient] = useState(false);
-  const [canEagerlyApprove, setCanEagerlyApprove] = useState(false);
+  // const [canEagerlyApprove, setCanEagerlyApprove] = useState(false);
   // const contractService = useContractService();
-  const [contractData, setContractData] = useState<EventProps>(defaultInfo);
+  // const [contractData, setContractData] = useState<EventProps>(defaultInfo);
   const [rwkData, setRwkData] = useAtom(rwkDataAtom);
 
-  const startDate = `${new Date(contractData.startTime).toDateString()}, ${new Date(contractData.startTime).toTimeString()}`;
-  const hasStarted = Date.now() > contractData.startTime;
+  // const startDate = `${new Date(contractData.startTime).toDateString()}, ${new Date(contractData.startTime).toTimeString()}`;
+  // const hasStarted = Date.now() > contractData.startTime;
 
   // const frtnContract = useMemo(() => {
   //   const frtn = config.tokens['frtn'];
@@ -176,7 +176,9 @@ const RyoshiWithKnife = () => {
       }));
 
       if (!!user.address) {
+        console.log('SET WRITE CONTRACT', defaultInfo.address, user.provider.signer);
         const writeContract = new ethers.Contract(defaultInfo.address, rwkAbi, user.provider.signer);
+        console.log('SET');
         const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
         const userBalance = await fortuneContract.balanceOf(user.address);
         setRwkData((prev) => ({
@@ -228,7 +230,7 @@ const RyoshiWithKnife = () => {
 
   useEffect(() => {
     retrieveEventInfo();
-  }, [user.address]);
+  }, [user.address, user.provider.signer]);
 
   useEffect(() => {
     if (!!rwkData.readContract) {
