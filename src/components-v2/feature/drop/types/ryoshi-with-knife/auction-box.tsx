@@ -1,20 +1,23 @@
 import {useAtom} from "jotai";
-import {Box, Center, Flex, Heading, HStack, Progress, SimpleGrid, Spacer, Stack} from "@chakra-ui/react";
+import {Box, Center, Flex, Heading, HStack, Progress, SimpleGrid, Stack, VStack} from "@chakra-ui/react";
 import {DropState as statuses} from "@src/core/api/enums";
 import {getTheme} from "@src/Theme/theme";
 import Countdown, {zeroPad} from "react-countdown";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {commify} from "ethers/lib/utils";
-import React from "react";
+import React, {useState} from "react";
 import {percentage, round} from "@src/utils";
-import {ethers} from "ethers";
+import {Contract, ethers} from "ethers";
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
-import Link from "next/link";
 import {useUser} from "@src/components-v2/useUser";
 import {rwkDataAtom} from "@src/components-v2/feature/drop/types/ryoshi-with-knife/atom";
 import MintBox from "@src/components-v2/feature/drop/types/ryoshi-with-knife/mint-box";
 import ClaimBox from "@src/components-v2/feature/drop/types/ryoshi-with-knife/claim-box";
+import Fortune from "@src/Contracts/Fortune.json";
+import {appConfig} from "@src/Config";
+import {toast} from "react-toastify";
+import {parseErrorMessage} from "@src/helpers/validator";
 
 interface ContractInfo {
 
@@ -23,6 +26,8 @@ interface ContractInfo {
 interface AuctionBoxProps {
 
 }
+
+const config = appConfig();
 
 const AuctionBox = ({}: AuctionBoxProps) => {
   const user = useUser();
@@ -44,6 +49,34 @@ const AuctionBox = ({}: AuctionBoxProps) => {
 
   const handleTimerComplete = () => {
     rwkData.refreshContract();
+  }
+
+  const [isEagerApproving, setIsEagerApproving] = useState(false);
+  const handleEagerApproval = async () => {
+    if (!user.address) return;
+
+    try {
+      setIsEagerApproving(true);
+      const spendingLimit = '10000';
+      const spendingLimitWei = ethers.utils.parseEther(spendingLimit);
+
+      const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.signer);
+      const allowance = await fortuneContract.allowance(user.address, rwkData.address);
+
+      if (allowance.sub(spendingLimitWei) < 0) {
+        const approvalTx = await fortuneContract.approve(rwkData.address, ethers.utils.parseEther(spendingLimit));
+        await approvalTx.wait();
+        toast.success('Spending limit approved!');
+      } else {
+        toast.info('Already approved');
+      }
+
+    } catch (e) {
+      console.log(e);
+      toast.error(parseErrorMessage(e));
+    } finally {
+      setIsEagerApproving(false);
+    }
   }
 
   return (
@@ -71,7 +104,7 @@ const AuctionBox = ({}: AuctionBoxProps) => {
               <Heading as="h6" size="xs" className="mb-1">Your Balance</Heading>
               <HStack justify='center' my={1}>
                 <FortuneIcon boxSize={4} />
-                <Heading as="h5" size="sm">{commify(round(user.balances.frtn))}</Heading>
+                <Heading as="h5" size="sm">{commify(round(rwkData.userBalance))}</Heading>
               </HStack>
             </Box>
           )}
@@ -106,7 +139,25 @@ const AuctionBox = ({}: AuctionBoxProps) => {
         {!!user.address && rwkData.status >= statuses.LIVE && (
           <>
             <Box>Your spend</Box>
-            <Box textAlign='end'>{rwkData.userContribution}</Box>
+            <Box textAlign='end'>{commify(rwkData.userContribution ?? 0)}</Box>
+          </>
+        )}
+        {!!user.address && !!rwkData.address && rwkData.status < statuses.LIVE && (
+          <>
+            <VStack align='start' spacing={0}>
+              <Box>Approve spending limit</Box>
+              <Box fontSize='sm'>Avoid an extra approval transaction before sale starts</Box>
+            </VStack>
+            <Box textAlign='end' my='auto'>
+              <PrimaryButton
+                size='sm'
+                onClick={handleEagerApproval}
+                isLoading={isEagerApproving}
+                isDisabled={isEagerApproving}
+              >
+                Approve
+              </PrimaryButton>
+            </Box>
           </>
         )}
         {/*<Box>*/}
