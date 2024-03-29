@@ -601,7 +601,7 @@ export const configData = {
       seasonUnlocks: '0x107ca22a421b24b0986150E51ce03b772b56440f',
       townHall: '0xEe68452B79653298Af5109Dae5cD4ABA3c4E1934',
       vaultNft: '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74',
-      ryoshiWithKnife: '0xb46c6A5f47f03813A58A169bF30d402E223B0893'
+      ryoshiWithKnife: '0x149F2017b1C4a206d0F8684563C2F9aa519e3f64'
     },
     tokens: {
       loot: {

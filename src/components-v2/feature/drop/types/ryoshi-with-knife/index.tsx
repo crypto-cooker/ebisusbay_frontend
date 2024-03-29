@@ -176,9 +176,7 @@ const RyoshiWithKnife = () => {
       }));
 
       if (!!user.address) {
-        console.log('SET WRITE CONTRACT', defaultInfo.address, user.provider.signer);
         const writeContract = new ethers.Contract(defaultInfo.address, rwkAbi, user.provider.signer);
-        console.log('SET');
         const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
         const userBalance = await fortuneContract.balanceOf(user.address);
         setRwkData((prev) => ({
@@ -264,7 +262,9 @@ const RyoshiWithKnife = () => {
           <Box>
             sharpest meme on cronos. <NextLink className='color fw-bold' href='https://blog.ebisusbay.com/ryoshi-with-knife-the-new-craze-hitting-cronos-400b743ff569' target='_blank'>view blog post</NextLink>
           </Box>
-          <AuctionBox />
+          <Box my={4}>
+            <AuctionBox />
+          </Box>
           <Box mt={2}>
             <Text fontWeight='bold'>Sale Details</Text>
             <UnorderedList>
@@ -272,6 +272,7 @@ const RyoshiWithKnife = () => {
               <ListItem>500,000 FRTN global contribution limit</ListItem>
               <ListItem>Max 10k FRTN per wallet</ListItem>
               <ListItem>Amount of RYOSHI to claim per user is a percentage of user's contribution to the global contribution amount</ListItem>
+              <ListItem>Button to claim RYOSHI will be available shortly after sale ends</ListItem>
             </UnorderedList>
           </Box>
         </Box>

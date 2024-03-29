@@ -32,7 +32,7 @@ const AuctionBox = ({}: AuctionBoxProps) => {
     if (completed) {
       return (
         <HStack justify='end'>
-          <Box>Starting next round...</Box>
+          <Box>Starting...</Box>
         </HStack>
       );
     } else {
@@ -92,7 +92,7 @@ const AuctionBox = ({}: AuctionBoxProps) => {
             />
           ) : rwkData.status > statuses.LIVE ? (
             <>Ended</>
-          ) : (rwkData.status < statuses.LIVE) ? (
+          ) : (rwkData.status < statuses.LIVE && !rwkData.startTime) ? (
             <>TBA</>
           ) : (
             <Countdown
