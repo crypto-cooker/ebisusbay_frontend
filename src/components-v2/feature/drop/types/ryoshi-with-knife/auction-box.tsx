@@ -60,7 +60,7 @@ const AuctionBox = ({}: AuctionBoxProps) => {
       <Center>
         <Stack direction='row' spacing={6}>
           <Box textAlign="center">
-            <Heading as="h6" size="xs" className="mb-1">Allocation</Heading>
+            <Heading as="h6" size="xs" className="mb-1">Contribution Limit</Heading>
             <HStack justify='center' my={1}>
               <FortuneIcon boxSize={4} />
               <Heading as="h5" size="sm">{commify(rwkData.maxSupply)}</Heading>
@@ -103,7 +103,7 @@ const AuctionBox = ({}: AuctionBoxProps) => {
             />
           )}
         </Box>
-        {!!user.address && (
+        {!!user.address && rwkData.status >= statuses.LIVE && (
           <>
             <Box>Your spend</Box>
             <Box textAlign='end'>{rwkData.userContribution}</Box>
