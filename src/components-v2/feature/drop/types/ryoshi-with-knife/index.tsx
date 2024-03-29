@@ -228,6 +228,9 @@ const RyoshiWithKnife = () => {
 
   useEffect(() => {
     retrieveEventInfo();
+    if (!!user.address) {
+      refreshUserBalance(user.address);
+    }
   }, [user.address, user.provider.signer]);
 
   useEffect(() => {

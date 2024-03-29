@@ -103,8 +103,12 @@ const AuctionBox = ({}: AuctionBoxProps) => {
             />
           )}
         </Box>
-        <Box>Your spend</Box>
-        <Box textAlign='end'>{rwkData.userContribution}</Box>
+        {!!user.address && (
+          <>
+            <Box>Your spend</Box>
+            <Box textAlign='end'>{rwkData.userContribution}</Box>
+          </>
+        )}
         {/*<Box>*/}
         {/*  Estimated reward*/}
         {/*</Box>*/}
