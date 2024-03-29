@@ -127,7 +127,7 @@ const Header = function () {
 
             <Flex alignItems={'center'} className="mainside">
               <Box me={4}>
-                <Link href='/ryoshi-with-knife'>
+                <Link href='https://swap.ebisusbay.com/#/swap?outputCurrency=0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59'>
                   <Image
                     src={ImageService.translate(`/img/ryoshi-with-knife/ryoshiwithknife_village.apng`).fixedWidth(30, 50)}
                     h='50px'
