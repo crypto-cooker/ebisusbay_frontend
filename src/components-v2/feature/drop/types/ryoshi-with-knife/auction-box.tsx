@@ -224,6 +224,11 @@ const AuctionBox = ({}: AuctionBoxProps) => {
           )}
         </Box>
       )}
+      {!!rwkData.address && (
+        <Box textAlign='center' mt={4} fontSize='sm' fontStyle='italic'>
+          Contract: {rwkData.address}
+        </Box>
+      )}
     </Box>
   )
 }
