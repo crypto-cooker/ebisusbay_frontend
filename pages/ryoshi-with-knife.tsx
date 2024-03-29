@@ -35,7 +35,7 @@ const RyoshiWithKnife = () => {
             <Heading>ryoshi with knife</Heading>
             <VStack align='start' mt={2}>
               <Box>
-                Starts in: {isClient ? <Countdown date={1711742400000}/> : 'soon'}
+                Starts in: {isClient ? <Countdown date={1711746000000}/> : 'soon'}
               </Box>
               {isClient && (
                 <Box>
