@@ -11,7 +11,7 @@ import {getTheme} from "@src/Theme/theme";
 import {ciEquals, percentage, pluralize} from "@src/utils";
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
 import RefundBox from "@src/components-v2/feature/drop/types/dutch/refund-box";
-import {DropState as statuses} from "@src/core/api/enums";
+import {DropState, DropState as statuses} from "@src/core/api/enums";
 import Fortune from "@src/Contracts/Fortune.json";
 import * as Sentry from "@sentry/react";
 import {useAtom} from "jotai/index";
@@ -265,76 +265,14 @@ const RyoshiWithKnife = () => {
       <Stack direction={{base: 'column', sm: 'row'}} mt={4} justify='space-between'>
         <Box w='full'>
           <Heading>ryoshi with knife</Heading>
+          <VStack align='start' mt={2}>
+            <Link href='https://blog.ebisusbay.com/ryoshi-with-knife-the-new-craze-hitting-cronos-400b743ff569'>
+              <PrimaryButton>
+                More Info
+              </PrimaryButton>
+            </Link>
+          </VStack>
           <AuctionBox />
-          {/*{hasStarted ? (*/}
-          {/*  <Box*/}
-          {/*    className="card shadow"*/}
-          {/*    mt={2}*/}
-          {/*    borderColor={getTheme(user.theme).colors.borderColor3}*/}
-          {/*    borderWidth={2}*/}
-          {/*    bgColor={getTheme(user.theme).colors.bgColor5}*/}
-          {/*    p={4}*/}
-          {/*    rounded='2xl'*/}
-          {/*  >*/}
-          {/*    <Box mt={2}>*/}
-          {/*      <Box>*/}
-          {/*        <Flex justify='space-between' mt={3} mb={1}>*/}
-          {/*          <Box fontWeight='bold'>{percentage(rwkData.currentSupply.toString(), rwkData.maxSupply.toString())}% minted</Box>*/}
-          {/*          <Box>{ethers.utils.commify(rwkData.currentSupply.toString())} / {ethers.utils.commify(rwkData.maxSupply.toString())}</Box>*/}
-          {/*        </Flex>*/}
-          {/*        <Progress*/}
-          {/*          size='sm'*/}
-          {/*          value={percentage(rwkData.currentSupply.toString(), rwkData.maxSupply.toString())}*/}
-          {/*          bg='white'*/}
-          {/*          rounded='lg'*/}
-          {/*          hasStripe*/}
-          {/*          sx={{*/}
-          {/*            "& > div:first-of-type": {*/}
-          {/*              transitionProperty: "width",*/}
-          {/*            },*/}
-          {/*          }}*/}
-          {/*        />*/}
-          {/*      </Box>*/}
-          {/*      <AuthenticationGuard>*/}
-          {/*        {({isConnected, connect}) => (*/}
-          {/*          <>*/}
-          {/*            {isConnected ? (*/}
-          {/*              <>*/}
-          {/*                /!*<Box textAlign='center' mt={4}>You can mint up to <strong>{rwkData.canMint}</strong> {pluralize(rwkData.canMint, 'Hero', 'Heroes')} at the current price</Box>*!/*/}
-          {/*                <Stack direction={{base: 'column', sm: 'row'}} justify='space-evenly' textAlign='center' mt={4}>*/}
-          {/*                  /!*<MintBox />*!/*/}
-          {/*                  /!*<RefundBox />*!/*/}
-          {/*                </Stack>*/}
-          {/*              </>*/}
-          {/*            ) : (*/}
-          {/*              <Center mt={4}>*/}
-          {/*                <PrimaryButton onClick={connect}>*/}
-          {/*                  Connect Wallet*/}
-          {/*                </PrimaryButton>*/}
-          {/*              </Center>*/}
-          {/*            )}*/}
-          {/*          </>*/}
-          {/*        )}*/}
-          {/*      </AuthenticationGuard>*/}
-          {/*    </Box>*/}
-          {/*  </Box>*/}
-          {/*) : (*/}
-          {/*  <VStack align='start' mt={2}>*/}
-          {/*    <Box>*/}
-          {/*      Starts in: {isClient ? <Countdown date={contractData.startTime}/> : 'soon'}*/}
-          {/*    </Box>*/}
-          {/*    {isClient && (*/}
-          {/*      <Box>*/}
-          {/*        {startDate}*/}
-          {/*      </Box>*/}
-          {/*    )}*/}
-          {/*    <Link href='https://blog.ebisusbay.com/ryoshi-with-knife-the-new-craze-hitting-cronos-400b743ff569'>*/}
-          {/*      <PrimaryButton>*/}
-          {/*        More Info*/}
-          {/*      </PrimaryButton>*/}
-          {/*    </Link>*/}
-          {/*  </VStack>*/}
-          {/*)}*/}
         </Box>
         <Box>
           <Image

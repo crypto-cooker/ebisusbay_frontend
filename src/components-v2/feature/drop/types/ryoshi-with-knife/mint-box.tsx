@@ -114,7 +114,7 @@ const MintBox = () => {
 
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
-      step: 1,
+      step: 100,
       defaultValue: amountToContribute,
       min: 1,
       max: rwkData.availableTokenCount,
@@ -144,10 +144,10 @@ const MintBox = () => {
           onClick={() => handleMint(FundingType.ERC20)}
           disabled={mintingWithType === FundingType.ERC20}
           isLoading={mintingWithType === FundingType.ERC20}
-          loadingText='Minting...'
+          loadingText='Contributing...'
           whiteSpace='initial'
         >
-          Mint
+          Go Fish
         </PrimaryButton>
         {/*<PrimaryButton*/}
         {/*  onClick={() => handleMint(FundingType.REWARDS)}*/}
