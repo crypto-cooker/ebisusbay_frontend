@@ -1,23 +1,17 @@
-import {Box, Center, Container, Flex, Heading, Image, Link, Progress, Stack, VStack} from "@chakra-ui/react";
+import {Box, Container, Heading, Image, ListItem, Stack, Text, UnorderedList} from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
-import Countdown from "react-countdown";
-import {PrimaryButton} from "@src/components-v2/foundation/button";
-import React, {useEffect, useMemo, useState} from "react";
-import {constants, Contract, ethers} from "ethers";
-import {useContractService, useUser} from "@src/components-v2/useUser";
+import React, {useEffect, useState} from "react";
+import {Contract, ethers} from "ethers";
+import {useUser} from "@src/components-v2/useUser";
 import {appConfig} from "@src/Config";
 import rwkAbi from "@src/Assets/abis/ryoshi-with-knife.json";
-import {getTheme} from "@src/Theme/theme";
-import {ciEquals, percentage, pluralize} from "@src/utils";
-import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
-import RefundBox from "@src/components-v2/feature/drop/types/dutch/refund-box";
-import {DropState, DropState as statuses} from "@src/core/api/enums";
+import {DropState as statuses} from "@src/core/api/enums";
 import Fortune from "@src/Contracts/Fortune.json";
 import * as Sentry from "@sentry/react";
 import {useAtom} from "jotai/index";
-import {dutchAuctionDataAtom} from "@src/components-v2/feature/drop/types/dutch/atom";
 import {rwkDataAtom} from "@src/components-v2/feature/drop/types/ryoshi-with-knife/atom";
 import AuctionBox from "@src/components-v2/feature/drop/types/ryoshi-with-knife/auction-box";
+import NextLink from "next/link";
 
 const config = appConfig();
 const rwkAddress = config.contracts.ryoshiWithKnife;
@@ -265,14 +259,19 @@ const RyoshiWithKnife = () => {
       <Stack direction={{base: 'column', sm: 'row'}} mt={4} justify='space-between'>
         <Box w='full'>
           <Heading>ryoshi with knife</Heading>
-          <VStack align='start' mt={2}>
-            <Link href='https://blog.ebisusbay.com/ryoshi-with-knife-the-new-craze-hitting-cronos-400b743ff569'>
-              <PrimaryButton>
-                More Info
-              </PrimaryButton>
-            </Link>
-          </VStack>
+          <Box>
+            sharpest meme on cronos. <NextLink className='color fw-bold' href='https://blog.ebisusbay.com/ryoshi-with-knife-the-new-craze-hitting-cronos-400b743ff569' target='_blank'>view blog post</NextLink>
+          </Box>
           <AuctionBox />
+          <Box mt={2}>
+            <Text fontWeight='bold'>Sale Details</Text>
+            <UnorderedList>
+              <ListItem>50% of RYOSHI supply allocated to public sale</ListItem>
+              <ListItem>500,000 FRTN global contribution limit</ListItem>
+              <ListItem>Max 10k FRTN per wallet</ListItem>
+              <ListItem>Amount of RYOSHI to claim per user is a percentage of user's contribution to the global contribution amount</ListItem>
+            </UnorderedList>
+          </Box>
         </Box>
         <Box>
           <Image

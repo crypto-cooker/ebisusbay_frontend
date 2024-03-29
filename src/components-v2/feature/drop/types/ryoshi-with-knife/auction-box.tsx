@@ -51,7 +51,7 @@ const AuctionBox = ({}: AuctionBoxProps) => {
       className="card shadow"
       mt={2}
       borderColor={getTheme(user.theme).colors.borderColor3}
-      borderWidth={2}
+      borderWidth={1}
       bgColor={getTheme(user.theme).colors.bgColor5}
       p={4}
       rounded='2xl'
