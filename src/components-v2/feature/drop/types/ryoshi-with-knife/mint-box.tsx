@@ -72,7 +72,7 @@ const MintBox = () => {
     const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.signer);
     const allowance = await fortuneContract.allowance(user.address, rwkData.address);
 
-    if (allowance.sub(finalCostWei) <= 0) {
+    if (allowance.sub(finalCostWei) < 0) {
       const approvalTx = await fortuneContract.approve(rwkData.address, ethers.utils.parseEther(maxPerAddress.toString()));
       await approvalTx.wait();
     }
