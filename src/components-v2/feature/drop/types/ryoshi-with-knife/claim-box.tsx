@@ -24,7 +24,7 @@ const ClaimBox = () => {
   const handleClaim = async () => {
     try {
       setIsClaiming(true);
-      const tx = await rwkData.writeContract!.claim(user.address!);
+      const tx = await rwkData.writeContract!.claim();
       const receipt = await tx.wait();
 
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -55,6 +55,7 @@ const ClaimBox = () => {
         setIsClaimOpen(status);
       }
     }
+    checkStatus();
   }, [rwkData.readContract]);
 
   return isClaimOpen && (
