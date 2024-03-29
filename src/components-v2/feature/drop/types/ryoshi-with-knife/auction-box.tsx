@@ -14,6 +14,7 @@ import Link from "next/link";
 import {useUser} from "@src/components-v2/useUser";
 import {rwkDataAtom} from "@src/components-v2/feature/drop/types/ryoshi-with-knife/atom";
 import MintBox from "@src/components-v2/feature/drop/types/ryoshi-with-knife/mint-box";
+import ClaimBox from "@src/components-v2/feature/drop/types/ryoshi-with-knife/claim-box";
 
 interface ContractInfo {
 
@@ -140,7 +141,6 @@ const AuctionBox = ({}: AuctionBoxProps) => {
                     {/*<Box textAlign='center' mt={4}>You can mint up to <strong>{rwkData.canMint}</strong> {pluralize(rwkData.canMint, 'Hero', 'Heroes')} at the current price</Box>*/}
                     <Stack direction={{base: 'column', sm: 'row'}} justify='space-evenly' textAlign='center' mt={4}>
                       <MintBox />
-                      {/*<RefundBox />*/}
                     </Stack>
                   </>
                 ) : (
@@ -157,16 +157,16 @@ const AuctionBox = ({}: AuctionBoxProps) => {
       ) : rwkData.status === statuses.SOLD_OUT ? (
         <Box textAlign='center' mt={4}>
           <Box border='1px solid' rounded='sm'>SOLD OUT</Box>
-          {/*{!!user.address && (*/}
-          {/*  <Box mt={4}><RefundBox /></Box>*/}
-          {/*)}*/}
+          {!!user.address && (
+            <Box mt={4}><ClaimBox /></Box>
+          )}
         </Box>
       ) : rwkData.status === statuses.EXPIRED && (
         <Box textAlign='center' mt={4}>
           <Box border='1px solid' rounded='sm'>ENDED</Box>
-          {/*{!!user.address && (*/}
-          {/*  <Box mt={4}><RefundBox /></Box>*/}
-          {/*)}*/}
+          {!!user.address && (
+            <Box mt={4}><ClaimBox /></Box>
+          )}
         </Box>
       )}
     </Box>
