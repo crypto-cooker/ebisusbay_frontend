@@ -1,14 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Box, HStack, Icon, IconButton} from "@chakra-ui/react";
+import {Box, HStack, Icon, IconButton, Text} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faRefresh} from "@fortawesome/free-solid-svg-icons";
 import {useAtom} from "jotai/index";
-import {dutchAuctionDataAtom} from "@src/components-v2/feature/drop/types/dutch/atom";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
-import {commify} from "ethers/lib/utils";
-import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {createSuccessfulTransactionToastContent} from "@src/utils";
 import {useUser} from "@src/components-v2/useUser";
 import {rwkDataAtom} from "@src/components-v2/feature/drop/types/ryoshi-with-knife/atom";
@@ -65,6 +62,7 @@ const ClaimBox = () => {
       {/*  <FortuneIcon boxSize={4} />*/}
       {/*  <Box fontWeight='bold'>{commify(rwkData.refundDue)}</Box>*/}
       {/*</HStack>*/}
+      <Text>Users who participated in the token sale can now claim their $RYOSHI below</Text>
       <HStack justify='center' mt={2}>
         <PrimaryButton
           onClick={handleClaim}

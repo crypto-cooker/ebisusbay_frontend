@@ -217,7 +217,7 @@ const RyoshiWithKnife = () => {
             <AuctionBox />
           </Box>
           <Box mt={2}>
-            <Text fontWeight='bold'>Sale Details</Text>
+            <Text fontWeight='bold'>Sale Details:</Text>
             <UnorderedList>
               <ListItem>50% of RYOSHI supply allocated to public sale</ListItem>
               <ListItem>500,000 FRTN global contribution limit</ListItem>
