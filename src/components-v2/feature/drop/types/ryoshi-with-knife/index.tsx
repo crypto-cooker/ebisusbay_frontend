@@ -153,7 +153,7 @@ const RyoshiWithKnife = () => {
       const startTime = await readContract.saleStartTimestamp();
       const endTime  = await readContract.saleEndTimestamp();
       const totalContributed  = await readContract.totalFRTNContributed();
-      const remainingSupply = defaultInfo.maxSupply - parseInt(totalContributed);
+      const remainingSupply = defaultInfo.maxSupply - parseInt(ethers.utils.formatEther(totalContributed));
 
       setRwkData((prev) => ({
         ...prev,
@@ -167,7 +167,7 @@ const RyoshiWithKnife = () => {
         readContract,
         maxSupply: defaultInfo.maxSupply,
         availableTokenCount: remainingSupply,
-        currentSupply: parseInt(totalContributed),
+        currentSupply: parseInt(ethers.utils.formatEther(totalContributed)),
         refreshContract: () => {
           retrieveEventInfo();
         },
@@ -207,7 +207,7 @@ const RyoshiWithKnife = () => {
       setRwkData((prev) => ({
         ...prev,
         userBalance: parseInt(ethers.utils.formatEther(userBalance)),
-        userContribution: parseInt(totalContributed)
+        userContribution: parseInt(ethers.utils.formatEther(totalContributed))
       }));
     } catch (e) {
       console.log('Error refreshing user balance', e);
@@ -236,11 +236,12 @@ const RyoshiWithKnife = () => {
   useEffect(() => {
     if (!!rwkData.readContract) {
       const onMinted = (sender: string, amount: number, totalContributions: number) => {
+        const amountEth = parseInt(ethers.utils.formatEther(amount));
         setRwkData((prev) => ({
           ...prev,
-          currentSupply: prev.currentSupply + Number(amount),
-          availableTokenCount: prev.availableTokenCount - Number(amount),
-          status: prev.availableTokenCount - amount < 1 ? statuses.SOLD_OUT : prev.status
+          currentSupply: prev.currentSupply + amountEth,
+          availableTokenCount: prev.availableTokenCount - amountEth,
+          status: prev.availableTokenCount - amountEth < 1 ? statuses.SOLD_OUT : prev.status
         }));
       };
 

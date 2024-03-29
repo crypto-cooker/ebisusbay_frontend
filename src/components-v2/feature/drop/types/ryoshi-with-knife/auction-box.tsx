@@ -71,7 +71,7 @@ const AuctionBox = ({}: AuctionBoxProps) => {
               <Heading as="h6" size="xs" className="mb-1">Your Balance</Heading>
               <HStack justify='center' my={1}>
                 <FortuneIcon boxSize={4} />
-                <Heading as="h5" size="sm">{commify(round(user.balances.frtn))}</Heading>
+                <Heading as="h5" size="sm">{commify(round(rwkData.userBalance))}</Heading>
               </HStack>
             </Box>
           )}
@@ -106,7 +106,7 @@ const AuctionBox = ({}: AuctionBoxProps) => {
         {!!user.address && rwkData.status >= statuses.LIVE && (
           <>
             <Box>Your spend</Box>
-            <Box textAlign='end'>{rwkData.userContribution}</Box>
+            <Box textAlign='end'>{commify(rwkData.userContribution ?? 0)}</Box>
           </>
         )}
         {/*<Box>*/}

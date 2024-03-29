@@ -67,23 +67,24 @@ const MintBox = () => {
   }
 
   const mintWithFrtn = async (finalCost: number) => {
+    const finalCostWei = ethers.utils.parseEther(finalCost.toString());
     const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.signer);
     const allowance = await fortuneContract.allowance(user.address, rwkData.address);
 
-    if (allowance.sub(finalCost) <= 0) {
-      const approvalTx = await fortuneContract.approve(rwkData.address, constants.MaxUint256);
+    if (allowance.sub(finalCostWei) <= 0) {
+      const approvalTx = await fortuneContract.approve(rwkData.address, ethers.utils.parseEther('10000'));
       await approvalTx.wait();
     }
 
     const gasPrice = parseUnits('5000', 'gwei');
-    const gasEstimate = await rwkData.writeContract!.estimateGas.contribute(amountToContribute);
+    const gasEstimate = await rwkData.writeContract!.estimateGas.contribute(finalCostWei);
     const gasLimit = gasEstimate.mul(2);
     let extra = {
       gasPrice,
       gasLimit
     };
 
-    return await rwkData.writeContract!.contribute(amountToContribute, extra);
+    return await rwkData.writeContract!.contribute(finalCostWei, extra);
   }
 
   // const mintWithRewards = async (finalCost: number) => {
@@ -130,7 +131,7 @@ const MintBox = () => {
       {/*  <FortuneIcon boxSize={4} />*/}
       {/*  <Box fontWeight='bold'>{commify(rwkData.userBalance)}</Box>*/}
       {/*</HStack>*/}
-      <Stack spacing={1} mt={2} maxW='170px' mx='auto'>
+      <Stack spacing={1} mt={2} maxW='200px' mx='auto'>
         <HStack mx='auto'>
           <Button {...dec}>-</Button>
           <Input {...input} />
