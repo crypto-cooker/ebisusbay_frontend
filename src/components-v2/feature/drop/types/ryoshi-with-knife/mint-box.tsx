@@ -1,5 +1,5 @@
-import {constants, Contract, ethers} from "ethers";
-import React, {useState} from "react";
+import {Contract, ethers} from "ethers";
+import React, {useMemo, useState} from "react";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import useAuthedFunction from "@src/hooks/useAuthedFunction";
 import {toast} from "react-toastify";
@@ -16,6 +16,7 @@ import {useUser} from "@src/components-v2/useUser";
 import {rwkDataAtom} from "@src/components-v2/feature/drop/types/ryoshi-with-knife/atom";
 
 const config = appConfig();
+const maxPerAddress = 10000;
 
 enum FundingType {
   NATIVE = 'native',
@@ -72,7 +73,7 @@ const MintBox = () => {
     const allowance = await fortuneContract.allowance(user.address, rwkData.address);
 
     if (allowance.sub(finalCostWei) <= 0) {
-      const approvalTx = await fortuneContract.approve(rwkData.address, ethers.utils.parseEther('10000'));
+      const approvalTx = await fortuneContract.approve(rwkData.address, ethers.utils.parseEther(maxPerAddress.toString()));
       await approvalTx.wait();
     }
 
@@ -109,12 +110,25 @@ const MintBox = () => {
   //   return await rwkData.writeContract!.mintWithRewards(numToMint, authorization.reward, authorization.signature, extra);
   // }
 
+  const inputLimit = useMemo(() => {
+    let amount = maxPerAddress;
+    if (rwkData.availableTokenCount < maxPerAddress) {
+      amount = rwkData.availableTokenCount;
+    }
+    if (maxPerAddress - rwkData.userContribution < maxPerAddress) {
+      amount = maxPerAddress - rwkData.userContribution;
+    }
+    if (amount < 0) amount = 0;
+
+    return amount;
+  }, [rwkData.userContribution, rwkData.availableTokenCount, maxPerAddress]);
+
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       step: 100,
       defaultValue: amountToContribute,
       min: 1,
-      max: rwkData.availableTokenCount < 10000 ? rwkData.availableTokenCount : 10000,
+      max: inputLimit,
       precision: 0,
       onChange(valueAsString, valueAsNumber) {
         setAmountToContribute(valueAsNumber);
@@ -139,7 +153,7 @@ const MintBox = () => {
         </HStack>
         <PrimaryButton
           onClick={() => handleMint(FundingType.ERC20)}
-          disabled={mintingWithType === FundingType.ERC20}
+          isDisabled={mintingWithType === FundingType.ERC20 || amountToContribute < 1}
           isLoading={mintingWithType === FundingType.ERC20}
           loadingText='Contributing...'
           whiteSpace='initial'

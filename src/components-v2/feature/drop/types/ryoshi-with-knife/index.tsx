@@ -14,11 +14,8 @@ import AuctionBox from "@src/components-v2/feature/drop/types/ryoshi-with-knife/
 import NextLink from "next/link";
 
 const config = appConfig();
-const rwkAddress = config.contracts.ryoshiWithKnife;
-const eagerApprovalThreshold = 10000;
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
-const startTimestamp = 0;
 // const startTimestamp = 1711746000000;
 type EventProps = {
   startTime: number;
@@ -43,68 +40,7 @@ const defaultInfo: EventProps = {
 const RyoshiWithKnife = () => {
   const user = useUser();
   const [isClient, setIsClient] = useState(false);
-  // const [canEagerlyApprove, setCanEagerlyApprove] = useState(false);
-  // const contractService = useContractService();
-  // const [contractData, setContractData] = useState<EventProps>(defaultInfo);
   const [rwkData, setRwkData] = useAtom(rwkDataAtom);
-
-  // const startDate = `${new Date(contractData.startTime).toDateString()}, ${new Date(contractData.startTime).toTimeString()}`;
-  // const hasStarted = Date.now() > contractData.startTime;
-
-  // const frtnContract = useMemo(() => {
-  //   const frtn = config.tokens['frtn'];
-  //   return contractService?.erc20(frtn.address);
-  // }, [contractService]);
-
-  // const isApproved = useMemo(async () => {
-  //   const allowance = await frtnContract.allowance(user.address, rwkAddress);
-  //   if (allowance.sub(eagerApprovalThreshold) <= 0) {
-  //     user.balances.frtn
-  //     const approvalTx = await frtnContract.approve(rwkAddress, constants.MaxUint256);
-  //     await approvalTx.wait();
-  //   }
-  // }, [frtnContract, rwkAddress, eagerApprovalThreshold, user.address, user.]);
-
-  // const getInitialUserState = async () => {
-  //   if (user.address && frtnContract) {
-  //     // const allowance = await frtnContract.allowance(user.address, rwkAddress);
-  //     // setCanEagerlyApprove(allowance.sub(eagerApprovalThreshold) <= 0);
-  //   }
-  // }
-
-  // const getInitialContractState = async () => {
-  //   const contract = new Contract(rwkAddress, rwkAbi, readProvider);
-  //   const startTime = await contract.saleStartTimestamp();
-  //   const endTime  = await contract.saleEndTimestamp();
-  //   console.log('data', parseInt(startTime), parseInt(endTime))
-  //   setContractData({
-  //     startTime: !!startTime ? parseInt(startTime) * 1000 : defaultInfo.startTime,
-  //     endTime: !!endTime ? parseInt(endTime) * 1000 : defaultInfo.endTime
-  //   });
-  // }
-
-  // const approveFrtn = async () => {
-  //   if (!frtnContract) return;
-  //
-  //   const allowance = await frtnContract.allowance(user.address, rwkAddress);
-  //   if (allowance.sub(eagerApprovalThreshold) <= 0) {
-  //     user.balances.frtn
-  //     const approvalTx = await frtnContract.approve(rwkAddress, constants.MaxUint256);
-  //     await approvalTx.wait();
-  //   }
-  // }
-  //
-  // const handleEagerApproval = async () => {
-  //   if (canEagerlyApprove) {
-  //     await approveFrtn();
-  //   }
-  // }
-  //
-  // const handlePurchase = async (amount: number) => {
-  //   // const tx = await contractService!.ryoshiWithKnife.purchase(amount);
-  //   // await tx.wait();
-  // }
-
 
   const calculateStatus = (availableTokenCount: number) => {
     const sTime = new Date(defaultInfo.startTime);
@@ -207,10 +143,21 @@ const RyoshiWithKnife = () => {
       setRwkData((prev) => ({
         ...prev,
         userBalance: parseInt(ethers.utils.formatEther(userBalance)),
-        userContribution: parseInt(ethers.utils.formatEther(totalContributed))
+        userContribution: roundUpEtherValue(ethers.utils.formatEther(totalContributed))
       }));
     } catch (e) {
       console.log('Error refreshing user balance', e);
+    }
+  }
+
+  function roundUpEtherValue(etherValue: string): number {
+    const [integral, fractional] = etherValue.split('.');
+    if (fractional && fractional.match(/[1-9]/)) {
+      // If there are any non-zero digits after the decimal, round up
+      return parseInt(integral, 10) + 1;
+    } else {
+      // No rounding needed
+      return parseInt(integral, 10);
     }
   }
 
