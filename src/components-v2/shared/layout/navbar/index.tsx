@@ -127,7 +127,7 @@ const Header = function () {
 
             <Flex alignItems={'center'} className="mainside">
               <Box me={4}>
-                <Link href='https://swap.ebisusbay.com/#/swap?outputCurrency=0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59'>
+                <Link href='https://swap.ebisusbay.com/#/swap?outputCurrency=0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C'>
                   <Image
                     src={ImageService.translate(`/img/ryoshi-with-knife/ryoshiwithknife_village.apng`).fixedWidth(30, 50)}
                     h='50px'
@@ -137,7 +137,7 @@ const Header = function () {
               </Box>
 
               {!!currentFrtnPrice && !shouldHideFrtn && (
-                <Link href='https://swap.ebisusbay.com/#/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59' target='_blank'>
+                <Link href='https://swap.ebisusbay.com/#/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21' target='_blank'>
                   <HStack fontSize='sm' fontWeight='bold' me={{base: 1, sm: 4}} spacing={1}>
                     <FortuneIcon boxSize={{base: 4, md: 6}} />
                     <Text as='span' className='col-white'>${currentFrtnPrice}</Text>

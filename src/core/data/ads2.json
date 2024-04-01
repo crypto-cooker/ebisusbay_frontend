@@ -208,7 +208,7 @@
       "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/vvs.webp",
       "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/vvs-sm.gif",
       "link": {
-        "url": "https://swap.ebisusbay.com/#/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
+        "url": "https://swap.ebisusbay.com/#/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21",
         "external": true
       }
     }

@@ -244,7 +244,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
             _hover={{ bg: "yellow.900" }}
             _focus={{ boxShadow: "outline" }}
             onClick={() => {
-              window.open('https://swap.ebisusbay.com/#/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59','_blank');              }}
+              window.open('https://swap.ebisusbay.com/#/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21','_blank');              }}
           >
             Buy FRTN
           </Box>
