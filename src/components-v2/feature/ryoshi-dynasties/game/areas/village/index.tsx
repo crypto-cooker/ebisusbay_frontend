@@ -411,7 +411,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         position={{x: buildings.valentines.left, y: buildings.valentines.top}}
                         image={ImageService.translate(`/img/ryoshi-with-knife/ryoshiwithknife_village.apng`).convert()}
                         zIndex={9}
-                        onClick={() => window.open('https://swap.ebisusbay.com/#/swap?outputCurrency=0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59', '_blank')}
+                        onClick={() => window.open('https://swap.ebisusbay.com/#/swap?outputCurrency=0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C', '_blank')}
                       />
                       } 
                       {/*{isChristmasTime && (*/}
