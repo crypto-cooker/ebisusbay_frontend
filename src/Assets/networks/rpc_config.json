@@ -26024,8 +26024,8 @@
       },
       "verification": {
         "doxx": false,
-        "kyc": false,
-        "verified": false
+        "kyc": true,
+        "verified": true
       }
     }
   ],
