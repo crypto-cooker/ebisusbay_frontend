@@ -2,7 +2,7 @@
   {
     "name": "ryoshi with knife",
     "start": 1711641589,
-    "end": 1711814389,
+    "end": 1718841600,
     "placement": "rd-board",
     "details": {
       "weight": 1,
@@ -201,7 +201,7 @@
   {
     "name": "Buy FRTN on VVS",
     "start": 1687219200,
-    "end": 1718841600,
+    "end": 1711814389,
     "placement": "rd-board",
     "details": {
       "weight": 0,
