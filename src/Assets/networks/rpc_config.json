@@ -20089,7 +20089,7 @@
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/the-real-ape-kingdom/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/the-real-ape-kingdom/banner.webp",
         "twitter": "https://twitter.com/Blockchnbanditz",
-        "discord": "https://discord.gg/rMquT5caJP",
+        "discord": "https://discord.gg/GjyjuYzwp2",
         "categories": [
           "collectibles"
         ]
@@ -26024,8 +26024,8 @@
       },
       "verification": {
         "doxx": false,
-        "kyc": false,
-        "verified": false
+        "kyc": true,
+        "verified": true
       }
     }
   ],
