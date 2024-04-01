@@ -20077,6 +20077,31 @@
       }
     },
     {
+      "name": "Skeleton Key",
+      "slug": "skeleton-key",
+      "multiToken": false,
+      "address": "0x6a532dF8C5Fc31C7eEF7b88151012FD180cB55d4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Skeleton Keys are required to access Clash⚡City & to Make your Custom Cityzen which will be your Exclusive Pass to access Clash⚡Verse when we go live. The keys will serve as a literal key to Clash⚡\uFE0FCity in Beta. You will also be able to exchange them for relics. Additionally, there are tier exclusive benefits. Tiers of Skeleton Keys include Gold, Silver & Bronze.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/skeleton-key/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/skeleton-key/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/skeleton-key/banner.webp",
+        "website":"https://clashcity.xyz/",
+        "twitter": "https://twitter.com/ClashCityTV",
+        "discord": "https://discord.gg/ad4dh44aVz",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
       "name": "The Real Ape Kingdom",
       "slug": "the-real-ape-kingdom",
       "multiToken": false,
