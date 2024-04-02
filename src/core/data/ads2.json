@@ -1,5 +1,20 @@
 [
   {
+    "name": "ryoshi with knife",
+    "start": 1711641589,
+    "end": 1718841600,
+    "placement": "rd-board",
+    "details": {
+      "weight": 1,
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-with-knife-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/ryoshi-with-knife-sm.webp",
+      "link": {
+        "url": "/ryoshi-with-knife",
+        "external": false
+      }
+    }
+  },
+  {
     "name": "Chiverse",
     "start": 1707249499,
     "end": 1707940737,
@@ -186,14 +201,14 @@
   {
     "name": "Buy FRTN on VVS",
     "start": 1687219200,
-    "end": 1718841600,
+    "end": 1711814389,
     "placement": "rd-board",
     "details": {
       "weight": 0,
       "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/vvs.webp",
       "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/vvs-sm.gif",
       "link": {
-        "url": "https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
+        "url": "https://swap.ebisusbay.com/#/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21",
         "external": true
       }
     }

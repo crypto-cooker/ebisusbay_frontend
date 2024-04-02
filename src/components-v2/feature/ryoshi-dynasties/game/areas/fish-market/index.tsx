@@ -95,7 +95,7 @@ const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' 
             </Link>
           </Box>
           <Box>
-            <Link as={NextLink} href='https://app.ebisusbay.com/marketplace' target='_blank'>
+            <Link as={NextLink} href='https://app.ebisusbay.com/collections' target='_blank'>
               <RdButton w='full'>Visit Marketplace</RdButton>
             </Link>
           </Box>

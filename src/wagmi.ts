@@ -11,7 +11,7 @@ if (!projectId) throw 'Web3Modal API Key not defined';
 
 const metadata = {
   name: 'Ebisu\'s Bay',
-  description: 'The Leading GameFi NFT Marketplace',
+  description: 'A dynamic platform that combines NFT and DEX trading with GameFi, enabling users to battle for market dominance.',
   url: appConfig.urls.app,
   icons: ['https://cdn-prod.ebisusbay.com/img/logo-dark.svg']
 }

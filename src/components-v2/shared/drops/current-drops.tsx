@@ -127,7 +127,7 @@ const CurrentDrops = ({ useCarousel = true }) => {
                   />
                 </div>
               ))}
-          {!showAll && (
+          {!showAll && !!currentDrops && currentDrops.length > 0 && (
             <span className="text-end fw-bold pe-4" onClick={onSeeMoreClicked} style={{ cursor: 'pointer' }}>
               See More
             </span>

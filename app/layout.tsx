@@ -44,22 +44,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 }
 
 export const metadata: Metadata = {
-  title: 'Ebisu\'s Bay — The Leading GameFi NFT Marketplace',
-  description: 'The first NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community.',
-  keywords: 'NFT, NFTMarket, Cronos, CronosNFT, NFT Art, CroFam',
+  title: 'Ebisu\'s Bay | GameFi - NFT Market - DEX',
+  description: 'A dynamic platform that combines NFT and DEX trading with GameFi, enabling users to battle for market dominance.',
+  keywords: 'NFT, NFTMarket, DEX, Cronos, CronosNFT, NFT Art, CroFam',
   openGraph: {
     siteName: 'Ebisu\'s Bay Marketplace',
     type: 'website',
     url: 'https://app.ebisusbay.com',
-    title: 'Ebisu\'s Bay — The Leading GameFi NFT Marketplace',
-    description: 'The first NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community.',
+    title: 'Ebisu\'s Bay | GameFi - NFT Market - DEX',
+    description: 'A dynamic platform that combines NFT and DEX trading with GameFi, enabling users to battle for market dominance.',
     images: 'https://app.ebisusbay.com/img/background/banner-ryoshi-light.webp'
   },
   twitter: {
     site: '@EbisusBay',
     card: 'summary_large_image',
-    title: 'Ebisu\'s Bay — The Leading GameFi NFT Marketplace',
-    description: 'The first NFT marketplace on Cronos. Create, buy, sell, trade and enjoy the #CroFam NFT community.',
+    title: 'Ebisu\'s Bay | GameFi - NFT Market - DEX',
+    description: 'A dynamic platform that combines NFT and DEX trading with GameFi, enabling users to battle for market dominance.',
     images: 'https://app.ebisusbay.com/img/background/banner-ryoshi-light.webp'
   },
   manifest: '/manifest.json?v=1',

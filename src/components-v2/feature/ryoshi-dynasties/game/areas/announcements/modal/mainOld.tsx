@@ -103,7 +103,7 @@ const MainPageOld = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
       {/*  // filter={'brightness(0.7)' + ' ' + 'sepia(0.1)'}*/}
       {/*  filter={'brightness(0.8)'}*/}
       {/*/>*/}
-        <Link as={NextLink} href='https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59' isExternal>
+        <Link as={NextLink} href='https://swap.ebisusbay.com/#/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21' isExternal>
           {isMobile ? (
             <Image
               alt="Buy FRTN on VVS"
@@ -192,7 +192,7 @@ const MainPageOld = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               _hover={{ bg: "yellow.900" }}
               _focus={{ boxShadow: "outline" }}
               onClick={() => {
-                window.open('https://vvs.finance/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59','_blank');              }}
+                window.open('https://swap.ebisusbay.com/#/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21','_blank');              }}
             >
               Buy FRTN
             </Box>

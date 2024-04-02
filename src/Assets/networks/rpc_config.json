@@ -20077,6 +20077,31 @@
       }
     },
     {
+      "name": "Skeleton Key",
+      "slug": "skeleton-key",
+      "multiToken": false,
+      "address": "0x6a532dF8C5Fc31C7eEF7b88151012FD180cB55d4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Skeleton Keys are required to access Clash⚡City & to Make your Custom Cityzen which will be your Exclusive Pass to access Clash⚡Verse when we go live. The keys will serve as a literal key to Clash⚡\uFE0FCity in Beta. You will also be able to exchange them for relics. Additionally, there are tier exclusive benefits. Tiers of Skeleton Keys include Gold, Silver & Bronze.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/skeleton-key/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/skeleton-key/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/skeleton-key/banner.webp",
+        "website":"https://clashcity.xyz/",
+        "twitter": "https://twitter.com/ClashCityTV",
+        "discord": "https://discord.gg/ad4dh44aVz",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
       "name": "The Real Ape Kingdom",
       "slug": "the-real-ape-kingdom",
       "multiToken": false,
@@ -20089,7 +20114,7 @@
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/the-real-ape-kingdom/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/the-real-ape-kingdom/banner.webp",
         "twitter": "https://twitter.com/Blockchnbanditz",
-        "discord": "https://discord.gg/rMquT5caJP",
+        "discord": "https://discord.gg/GjyjuYzwp2",
         "categories": [
           "collectibles"
         ]
@@ -26024,8 +26049,8 @@
       },
       "verification": {
         "doxx": false,
-        "kyc": false,
-        "verified": false
+        "kyc": true,
+        "verified": true
       }
     }
   ],
@@ -33573,7 +33598,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "images": {
         "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/ryoshi-tales-wooden-wyrm-welcoming/drop.webp",
@@ -33592,28 +33617,27 @@
       "id": 192,
       "slug": "pixel-ebisu",
       "title": "Pixel Ebisu",
-      "subtitle": "",
-      "description": "",
+      "subtitle": "Pixel art paying homage to the #1 Marketplace on the Cronos chain. “Ebisusbay” Created by Shadowbright",
+      "description": "Pixel art paying homage to the #1 Marketplace on the Cronos chain. “Ebisusbay” Created by Shadowbright",
       "author": {
-        "name": "ShadowBright",
+        "name": "Aces777wild / ShadowBright collaboration",
         "discord": "https://discord.gg/dripcro-com-1003477871664320525"
       },
       "address": "",
       "maxMintPerTx": 1,
       "maxMintPerAddress": 1,
       "totalSupply": 420,
-      "erc20Cost": "100",
-      "erc20MemberCost": "50",
+      "erc20Cost": "500",
+      "erc20MemberCost": "450",
       "erc20Token": "frtn",
       "erc20Only": true,
       "memberMitama": 1000,
       "foundersOnly": false,
-      "abi": "mint-from-rewards.json",
       "start": null,
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "featured": false,
       "images": {

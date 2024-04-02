@@ -1,30 +1,20 @@
-import {Box, Container, Heading, Image, Stack, VStack} from "@chakra-ui/react";
-import Countdown from "react-countdown";
 import React from "react";
+import PageHead from "@src/components-v2/shared/layout/page-head";
+import ImageService from "@src/core/services/image";
+import RyoshiWithKnifeView from "@src/components-v2/feature/drop/types/ryoshi-with-knife";
+
 
 const RyoshiWithKnife = () => {
   return (
-    <Container maxW='container.lg' mt={8}>
-      <Stack direction={{base: 'column', sm: 'row'}}>
-        <Box>
-          <Image
-            src="/img/ryoshi-with-knife.png"
-            w={400}
-          />
-        </Box>
-        <Box>
-          <Heading>Ryoshi With Knife</Heading>
-          <VStack align='start' mt={2}>
-            <Box>
-              Starts in: <Countdown date={1711742400000}/>
-            </Box>
-            <Box>
-              {new Date(1711742400000).toDateString()}, {new Date(1711742400000).toTimeString()}
-            </Box>
-          </VStack>
-        </Box>
-      </Stack>
-    </Container>
+    <>
+      <PageHead
+        title='ryoshi with knife'
+        url='/ryoshi-with-knife'
+        description='sharpest meme on cronos'
+        image={ImageService.translate('/img/ryoshi-with-knife/banner.webp').convert()}
+      />
+      <RyoshiWithKnifeView />
+    </>
   )
 }
 

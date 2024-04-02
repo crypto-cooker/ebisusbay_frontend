@@ -66,6 +66,7 @@ const Header = function () {
     { fallback: 'lg'},
   );
   const [shouldHideTitle] = useMediaQuery('(max-width: 516px)');
+  const [shouldHideFrtn] = useMediaQuery('(max-width: 410px)');
   const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, config.chain.id);
   const [currentFrtnPrice, setCurrentFrtnPrice] = useState(0);
 
@@ -83,7 +84,7 @@ const Header = function () {
   useEffect(() => {
     try {
       if (tokenUsdRate) {
-        setCurrentFrtnPrice(round(tokenUsdRate, 3));
+        setCurrentFrtnPrice(round(tokenUsdRate, shouldUseMobileSearch ? 2 : 3));
       }
     } catch (e) {
       console.error('Error setting global FRTN price', e);
@@ -125,9 +126,18 @@ const Header = function () {
             )}
 
             <Flex alignItems={'center'} className="mainside">
+              <Box me={4}>
+                <Link href='https://swap.ebisusbay.com/#/swap?outputCurrency=0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C'>
+                  <Image
+                    src={ImageService.translate(`/img/ryoshi-with-knife/ryoshiwithknife_village.apng`).fixedWidth(30, 50)}
+                    h='50px'
+                    w='30px'
+                  />
+                </Link>
+              </Box>
 
-              {!!currentFrtnPrice && (
-                <Link href='https://swap.ebisusbay.com/#/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21&inputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59' target='_blank'>
+              {!!currentFrtnPrice && !shouldHideFrtn && (
+                <Link href='https://swap.ebisusbay.com/#/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21' target='_blank'>
                   <HStack fontSize='sm' fontWeight='bold' me={{base: 1, sm: 4}} spacing={1}>
                     <FortuneIcon boxSize={{base: 4, md: 6}} />
                     <Text as='span' className='col-white'>${currentFrtnPrice}</Text>
