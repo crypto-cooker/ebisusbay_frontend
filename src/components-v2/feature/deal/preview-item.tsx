@@ -2,12 +2,14 @@ import React, {MutableRefObject, ReactNode, useMemo, useState} from "react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {toast} from "react-toastify";
 import {
+  AccordionButton, AccordionIcon,
+  AccordionItem, AccordionPanel,
   Avatar,
   AvatarBadge,
   Box, ButtonGroup,
   Flex,
   FormControl,
-  FormLabel,
+  FormLabel, HStack,
   Image,
   NumberDecrementStepper,
   NumberIncrementStepper,
@@ -19,7 +21,7 @@ import {
   PopoverCloseButton,
   PopoverContent,
   PopoverTrigger,
-  Stack,
+  Stack, Stat, StatArrow, StatHelpText, StatLabel, StatNumber, Text,
   VStack
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
@@ -28,6 +30,15 @@ import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/butt
 import {ItemType} from "@src/hooks/use-create-order-signer";
 import {BarterToken} from "@src/jotai/atoms/deal";
 import useCurrencyBroker from "@src/hooks/use-currency-broker";
+import {Image as ChakraImage} from "@chakra-ui/image/dist/image";
+import Blockies from "react-blockies";
+import LayeredIcon from "@src/Components/components/LayeredIcon";
+import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
+import {round, siPrefixedNumber} from "@src/utils";
+import {AnyMedia} from "@src/components-v2/shared/media/any-media";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import {SortKeys} from "@src/components-v2/shared/responsive-table/responsive-collections-table";
 
 const previewSize = '50px';
 
@@ -222,7 +233,24 @@ const UpdateItemForm = ({image, name, quantityAvailable, quantitySelected, isAct
 }
 
 interface GetDealItemPreviewProps {
-  item: {token: string, item_type: number, start_amount: string, token_details: {metadata: {image: string, name: string}}}
+  item: {
+    token: string,
+    identifier_or_criteria: string,
+    item_type: number,
+    start_amount: string,
+    token_details: {
+      metadata: {
+        image: string,
+        name: string,
+        rank: number
+      }
+    },
+    collection: {
+      metadata: {
+        name: string
+      }
+    }
+  };
   ref: MutableRefObject<any>;
   isOpen: boolean;
   onOpen: () => void;
@@ -240,64 +268,84 @@ export const GetDealItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, 
     return getByAddress(item.token);
   }, [item.token]);
 
+  const isToken = [ItemType.NATIVE, ItemType.ERC20].includes(item.item_type);
+  const isNft = [ItemType.ERC721, ItemType.ERC1155].includes(item.item_type);
+
+  const normalizedItem = useMemo(() => {
+    if (isNft) {
+      return {
+        name: item.token_details.metadata.name,
+        image: (
+          <AnyMedia
+            image={ImageService.translate(item.token_details.metadata.image).avatar()}
+            title={item.token_details.metadata.name}
+          />
+        ),
+        amount: parseInt(item.start_amount),
+        category: item.collection.metadata?.name,
+        categoryUrl: `/collection/${item.token}`,
+        itemUrl: `/collection/${item.token}/${item.identifier_or_criteria}`,
+      }
+    } else if (isToken) {
+      const token = getByAddress(item.token);
+      return {
+        name: token?.name,
+        image: token?.image,
+        amount: parseInt(item.start_amount),
+        category: '',
+        categoryUrl: ``,
+        itemUrl: ``,
+      }
+    }
+  }, [item.token]);
+
+  if (!normalizedItem) return;
+
   return (
-    <Popover
-      initialFocusRef={ref}
-      placement='top'
-      isOpen={isOpen}
-      onClose={onClose}
-    >
-      <PopoverTrigger>
-        {[ItemType.ERC721, ItemType.ERC1155].includes(item.item_type) ? (
-          <NftIcon
-            onClick={onOpen}
-            isActive={isActive}
-            name={item.token_details.metadata.name}
-            image={item.token_details.metadata.image}
-            quantityAvailable={parseInt(item.start_amount)}
-            quantitySelected={parseInt(item.start_amount)}
-          />
-        ) : [ItemType.NATIVE, ItemType.ERC20].includes(item.item_type) && (
-          <TokenIcon
-            onClick={onOpen}
-            isActive={isActive}
-            address={item.token}
-            quantityAvailable={parseInt(item.start_amount)}
-            quantitySelected={parseInt(item.start_amount)}
-          />
-        )}
-      </PopoverTrigger>
-      <PopoverContent p={5}>
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverBody>
-          {[ItemType.ERC721, ItemType.ERC1155].includes(item.item_type) ? (
-            <UpdateItemForm
-              image={item.token_details?.metadata.image}
-              name={item.token_details?.metadata.name}
-              quantityAvailable={parseInt(item.start_amount)}
-              quantitySelected={parseInt(item.start_amount)}
-              isActive={isActive}
-              mode={mode}
-              onSave={() => console.log('TBA')}
-              onRemove={() => console.log('TBA')}
-              onClose={() => console.log('TBA')}
-            />
-          ) : [ItemType.NATIVE, ItemType.ERC20].includes(item.item_type) && (
-            <UpdateItemForm
-              image={token!.image}
-              name={token!.name}
-              quantityAvailable={parseInt(item.start_amount)}
-              quantitySelected={parseInt(item.start_amount)}
-              isActive={isActive}
-              mode={mode}
-              onSave={() => console.log('TBA')}
-              onRemove={() => console.log('TBA')}
-              onClose={() => console.log('TBA')}
-            />
-          )}
-        </PopoverBody>
-      </PopoverContent>
-    </Popover>
+    <AccordionItem key={item.token}>
+      <Flex w='100%' my={2}>
+        <Box flex='1' textAlign='left' my='auto'>
+          <HStack>
+            <Box
+              width='40px'
+              position='relative'
+              rounded='md'
+              overflow='hidden'
+            >
+              {normalizedItem!.image}
+            </Box>
+
+            <Box flex='1' fontSize='sm'>
+              <VStack align='start'>
+                {!!normalizedItem.category && (
+                  <Box fontSize='xs' className='color'>{normalizedItem.category}</Box>
+                )}
+                <Box fontWeight='bold'>
+                  <Link href={normalizedItem.itemUrl} target='_blank'>
+                    {normalizedItem!.name}
+                  </Link>
+                </Box>
+              </VStack>
+            </Box>
+          </HStack>
+        </Box>
+        <Box ms={2}>
+          <VStack align='end' spacing={0} fontSize='sm'>
+            <Stat size='sm' textAlign='end'>
+              <StatLabel>Amount</StatLabel>
+              <StatNumber>
+                {commify(normalizedItem!.amount)}
+              </StatNumber>
+            </Stat>
+          </VStack>
+        </Box>
+        <AccordionButton w='auto'>
+          <AccordionIcon />
+        </AccordionButton>
+      </Flex>
+      <AccordionPanel>
+        asdf
+      </AccordionPanel>
+    </AccordionItem>
   )
 }

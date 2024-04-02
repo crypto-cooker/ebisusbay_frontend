@@ -40,16 +40,23 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
     }
   }
 
-  const deal = await ApiService.withoutKey().getDeal(dealId);
-  if (!deal) {
+  try {
+    const deal = await ApiService.withoutKey().getDeal(dealId);
+
+    if (!deal) {
+      return {
+        notFound: true
+      }
+    }
+
+    return {
+      props: {
+        deal
+      }
+    };
+  } catch (e) {
     return {
       notFound: true
     }
   }
-
-  return {
-    props: {
-      deal
-    }
-  };
 };

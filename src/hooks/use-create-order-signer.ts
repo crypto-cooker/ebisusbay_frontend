@@ -63,7 +63,7 @@ export type Order = {
 export type OfferItem = {
   itemType: ItemType,
   token: string,
-  identifierOrCriteria: BigNumber | number,
+  identifierOrCriteria: string | number,
   startAmount: BigNumber | number,
   endAmount: BigNumber | number
 }

@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionButton, AccordionIcon,
+  AccordionItem, AccordionPanel,
   Box,
   Button,
   ButtonGroup,
@@ -15,7 +18,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHandshake} from "@fortawesome/free-solid-svg-icons";
 import React, {ReactNode, useEffect, useRef, useState} from "react";
 import useGetProfilePreview from "@src/hooks/useGetUsername";
-import {Card} from "@src/components-v2/foundation/card";
+import {Card, TitledCard} from "@src/components-v2/foundation/card";
 import {GetDealItemPreview} from "@src/components-v2/feature/deal/preview-item";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {useColorModeValue} from "@chakra-ui/color-mode";
@@ -90,17 +93,16 @@ const ManageDeal = ({deal}: ManageDealProps) => {
   }, []);
 
   return (
-    <Container size='xl'>
+    <Container maxW='container.xl'>
       <SimpleGrid
         columns={{base: 1, sm: 3}}
         templateColumns={{base: undefined, sm:'1fr 30px 1fr'}}
         templateRows={{base: '1fr 30px 1fr', sm:undefined}}
         gap={4}
       >
-        <Card>
-          <Box>{makerUsername}</Box>
+        <TitledCard title={makerUsername ?? ''}>
           <Box>
-            <Wrap>
+            <Accordion w='full' allowMultiple>
               {deal.maker_items.map((item: any, index: number) => (
                 <GetDealItemPreview
                   key={index}
@@ -113,16 +115,15 @@ const ManageDeal = ({deal}: ManageDealProps) => {
                   onClose={() => setOpenPopoverId(null)}
                 />
               ))}
-            </Wrap>
+            </Accordion>
           </Box>
-        </Card>
+        </TitledCard>
         <Box my='auto' mx='auto'>
           <Icon as={FontAwesomeIcon} icon={faHandshake} boxSize={8} />
         </Box>
-        <Card>
-          <Box>{takerUsername}</Box>
+        <TitledCard title={takerUsername ?? ''}>
           <Box>
-            <Wrap>
+            <Accordion w='full' allowMultiple>
               {deal.taker_items.map((item: any, index: number) => (
                 <GetDealItemPreview
                   key={index}
@@ -135,9 +136,9 @@ const ManageDeal = ({deal}: ManageDealProps) => {
                   onClose={() => setOpenPopoverId(null)}
                 />
               ))}
-            </Wrap>
+            </Accordion>
           </Box>
-        </Card>
+        </TitledCard>
       </SimpleGrid>
       {(isMaker || isTaker) && (
         <ConditionalActionBar condition={isMobile ?? false}>
@@ -179,6 +180,22 @@ const ConditionalActionBar = ({condition, children}: {condition: boolean, childr
       </Box>
     </Slide>
   ) : children;
+}
+
+const ItemAccordionItem = ({item, index, side, isOpen, onOpen, onClose, initialFocusRef}: any) => {
+  return (
+    <AccordionItem key={index}>
+      <AccordionButton onClick={onOpen}>
+        <Box flex='1' textAlign='left'>
+          {item.name}
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
+      <AccordionPanel>
+        asdf
+      </AccordionPanel>
+    </AccordionItem>
+  )
 }
 
 export default ManageDeal;

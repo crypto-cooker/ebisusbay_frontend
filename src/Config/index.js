@@ -127,6 +127,11 @@ export const configData = {
         name: 'ICY',
         symbol: 'ICY',
         address: '0x8F857Af6Ea31447Bb502fE0E3F4e4340CDFCfc6C'
+      },
+      wcro: {
+        name: 'WCRO',
+        symbol: 'WCRO',
+        address: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23'
       }
     },
     collections: rpcConfig.known_contracts,
@@ -155,7 +160,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy'],
+        available: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy'],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -392,8 +397,12 @@ export const configData = {
         name: 'ICY',
         symbol: 'ICY',
         address: '0x8F857Af6Ea31447Bb502fE0E3F4e4340CDFCfc6C'
+      },
+      wcro: {
+        name: 'WCRO',
+        symbol: 'WCRO',
+        address: '0x6a3173618859c7cd40faf6921b5e9eb6a76f1fd4'
       }
-      
     },
     collections: rpcConfigDev.known_contracts,
     drops: rpcConfigDev.drops,
@@ -421,7 +430,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy'],
+        available: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy'],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -648,6 +657,11 @@ export const configData = {
         name: 'Candy',
         symbol: 'CANDY',
         address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977'
+      },
+      wcro: {
+        name: 'WCRO',
+        symbol: 'WCRO',
+        address: '0x467604E174c87042fcc4412c5BC70AaBc8733016'
       }
     },
     collections: rpcConfigTestnet.known_contracts,
@@ -673,7 +687,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'vrse'],
+        available: ['cro', 'wcro', 'frtn', 'vrse'],
         global: ['cro', 'frtn'],
         nft: {
           '0xCF7aedEbC5223c4C620625A560300582B77D8719': ['cro', 'frtn'], // Ryoshi VIP
@@ -792,6 +806,11 @@ export const configData = {
         name: 'Scratch',
         symbol: 'SCRATCH',
         address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66'
+      },
+      wcro: {
+        name: 'WCRO',
+        symbol: 'WCRO',
+        address: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23'
       }
     },
     collections: rpcConfig.known_contracts,
@@ -820,7 +839,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'],
+        available: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
