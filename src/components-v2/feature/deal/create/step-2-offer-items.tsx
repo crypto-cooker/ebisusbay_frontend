@@ -7,7 +7,6 @@ import {
   CloseButton,
   Collapse,
   Container,
-  Flex,
   Heading,
   HStack,
   Icon,
@@ -43,12 +42,18 @@ import useDebounce from "@src/core/hooks/useDebounce";
 import {getTheme} from "@src/Theme/theme";
 import {DealNftCard} from "@src/components-v2/shared/nft-card2";
 import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
-import {ciEquals} from "@src/utils";
+import {ciEquals, isWrappedeCro} from "@src/utils";
 import {Tab, Tabs} from "@src/components-v2/foundation/tabs";
 import useCurrencyBroker, {BrokerCurrency} from "@src/hooks/use-currency-broker";
 import {toast} from "react-toastify";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {Card} from "@src/components-v2/foundation/card";
+import {Contract, ethers} from "ethers";
+import WCRO from "@src/Contracts/WCRO.json";
+import {parseErrorMessage} from "@src/helpers/validator";
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
 
 interface Step2ChooseItemsProps {
   address: string;
@@ -328,10 +333,11 @@ const ChooseNftsTab = ({address}: {address: string}) => {
 
 const ChooseTokensTab = ({address}: {address: string}) => {
   const user = useUser();
-  const { allCurrencies  } = useCurrencyBroker();
+  const { allERC20Currencies  } = useCurrencyBroker();
   const { toggleOfferERC20 } = useBarterDeal();
   const [quantity, setQuantity] = useState<string>();
-  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(allCurrencies[0]);
+  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(allERC20Currencies[0]);
+  const [isWrapping, setIsWrapping] = useState(false);
 
   const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
     setSelectedCurrency(currency!);
@@ -351,7 +357,43 @@ const ChooseTokensTab = ({address}: {address: string}) => {
     toggleOfferERC20({
       ...selectedCurrency,
       amount: Math.floor(parseInt(quantity)),
-    })
+    });
+  }
+
+  const handleWrapCro = async () => {
+    if (!selectedCurrency) {
+      toast.error('A currency is required');
+      return;
+    }
+
+    if (!isWrappedeCro(selectedCurrency.address)) {
+      toast.error('CRO must be selected for this action');
+      return;
+    }
+
+    if (!quantity) {
+      toast.error('An amount is required');
+      return;
+    }
+
+    try {
+      setIsWrapping(true);
+      const amountInWei = ethers.utils.parseEther(quantity);
+      const contract = new Contract(config.tokens.wcro.address, WCRO, user.provider.signer)
+      const tx = await contract.deposit({ value: amountInWei });
+      await tx.wait();
+
+      toast.success('CRO wrapped successfully to WCRO');
+      toggleOfferERC20({
+        ...selectedCurrency,
+        amount: Math.floor(parseInt(quantity)),
+      });
+    } catch (e) {
+      console.log(e);
+      toast.error(parseErrorMessage(e));
+    } finally {
+      setIsWrapping(false);
+    }
   }
 
   const userTheme = user.theme;
@@ -399,7 +441,7 @@ const ChooseTokensTab = ({address}: {address: string}) => {
             isSearchable={false}
             menuPortalTarget={document.body} menuPosition={'fixed'}
             styles={customStyles}
-            options={allCurrencies}
+            options={allERC20Currencies}
             formatOptionLabel={({ name, image }) => (
               <HStack>
                 {image}
@@ -407,7 +449,7 @@ const ChooseTokensTab = ({address}: {address: string}) => {
               </HStack>
             )}
             value={selectedCurrency}
-            defaultValue={allCurrencies[0]}
+            defaultValue={allERC20Currencies[0]}
             onChange={handleCurrencyChange}
           />
           <NumberInput
@@ -423,11 +465,26 @@ const ChooseTokensTab = ({address}: {address: string}) => {
             </NumberInputStepper>
           </NumberInput>
         </Stack>
-        <Flex justify='end' mt={2}>
-          <PrimaryButton onClick={handleAddCurrency}>
-            Add
-          </PrimaryButton>
-        </Flex>
+        <Stack direction={{base: 'column', sm: 'row'}} justify='end' mt={2}>
+          {isWrappedeCro(selectedCurrency.address) && (
+            <>
+              <Box fontSize='sm'>If wanting to use native CRO for the deal, you can choose to wrap to WCRO</Box>
+              <PrimaryButton
+                onClick={handleWrapCro}
+                isLoading={isWrapping}
+                isDisabled={isWrapping}
+                loadingText='Wrapping'
+              >
+                Wrap and Add
+              </PrimaryButton>
+            </>
+          )}
+          {!isWrapping && (
+            <PrimaryButton onClick={handleAddCurrency}>
+              Add
+            </PrimaryButton>
+          )}
+        </Stack>
       </Card>
     </Container>
   )

@@ -105,13 +105,13 @@ const useApprovalStatus = () => {
     }));
 
     const tokenContracts: ContractFunctionConfig[] = barterState.maker.erc20.map(token => {
-      let address = token.address;
+      let tokenAddress = token.address;
       if (ciEquals(address, ethers.constants.AddressZero)) {
-        address = config.tokens.wcro.address;
+        tokenAddress = config.tokens.wcro.address;
       }
 
       return {
-        address: address.toLowerCase() as Address,
+        address: tokenAddress.toLowerCase() as Address,
         abi: erc20ABI,
         functionName: 'allowance',
         args: [address, config.contracts.market],

@@ -1,4 +1,5 @@
 import CmsRepository from "@src/core/services/api-service/cms/repositories/index";
+import {OrderState} from "@src/core/services/api-service/types";
 
 class OrdersRepository extends CmsRepository {
 
@@ -33,6 +34,20 @@ class OrdersRepository extends CmsRepository {
     const response = await this.cms.delete('order/deal', {
       params: {
         id,
+        type: OrderState.CANCELLED,
+        address,
+        signature
+      }
+    });
+
+    return response.data;
+  }
+
+  async rejectDeal(id: string, address: string, signature: string) {
+    const response = await this.cms.delete('order/deal', {
+      params: {
+        id,
+        type: OrderState.REJECTED,
         address,
         signature
       }

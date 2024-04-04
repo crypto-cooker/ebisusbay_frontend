@@ -913,6 +913,14 @@ export const isErc20Token = (address) => {
   return !!knownErc20Token(address);
 }
 
+export const isNativeCro = (address) => {
+  return ciEquals(address, ethers.constants.AddressZero);
+}
+
+export const isWrappedeCro = (address) => {
+  return ciEquals(address, config.tokens.wcro.address);
+}
+
 export const uniqueNftId = (nft) => {
   if (!nft) return null;
   return `${nft.nftAddress ?? nft.address}${nft.nftId ?? nft.id}`;

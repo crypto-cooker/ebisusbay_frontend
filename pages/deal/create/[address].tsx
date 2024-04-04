@@ -6,22 +6,30 @@ import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import {useUser} from "@src/components-v2/useUser";
 import {GetServerSidePropsContext} from "next";
 import {getProfile} from "@src/core/cms/endpoints/profile";
-import {caseInsensitiveCompare, shortAddress} from "@src/utils";
+import {caseInsensitiveCompare, ciEquals, shortAddress} from "@src/utils";
 import {isAddress} from "ethers/lib/utils";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {DefaultContainer} from "@src/components-v2/shared/default-container";
 import {Link} from "@chakra-ui/react";
 import NextLink from "next/link";
+import {ApiService} from "@src/core/services/api-service";
+import {OrderState} from "@src/core/services/api-service/types";
 
 interface PageProps {
   address: string;
   profile: any;
+  parentDeal?: any;
 }
 
-const CreateDealPage = ({ address, profile }: PageProps) => {
+const CreateDealPage = ({ address, profile, parentDeal }: PageProps) => {
   const user = useUser();
   const router = useRouter();
-  const { setTakerAddress, setMakerAddress } = useBarterDeal();
+  const { setTakerAddress, setMakerAddress, setParentId } = useBarterDeal();
+
+  const resetParentId = () => {
+    setParentId(undefined);
+    router.replace(`/deal/create/${address}`);
+  }
 
   useEffect(() => {
     setTakerAddress(address);
@@ -30,8 +38,20 @@ const CreateDealPage = ({ address, profile }: PageProps) => {
   useEffect(() => {
     if (user.address) {
       setMakerAddress(user.address);
+      if (parentDeal && !ciEquals(parentDeal.taker, user.address)) {
+        resetParentId();
+      }
     }
   }, [user.address]);
+
+  useEffect(() => {
+    // set parent deal if exists, otherwise reset it
+    if (parentDeal) {
+      setParentId(parentDeal.id);
+    } else {
+      resetParentId();
+    }
+  }, [parentDeal]);
 
   return (
     <>
@@ -73,11 +93,26 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
       notFound: true
     }
   }
+  const userAddress = user?.data?.walletAddress ?? addressOrUsername;
+
+  const parentId = query.parent as string;
+  let parentDeal = null;
+  if (parentId) {
+    const _parentDeal = await ApiService.withoutKey().getDeal(parentId);
+    if (
+      _parentDeal &&
+      _parentDeal.state === OrderState.ACTIVE &&
+      ciEquals(_parentDeal.maker, userAddress)
+    ) {
+      parentDeal = _parentDeal;
+    }
+  }
 
   return {
     props: {
-      address: user?.data?.walletAddress ?? addressOrUsername,
-      profile: user?.data ?? {}
+      address: userAddress,
+      profile: user?.data ?? {},
+      parentDeal: parentDeal ?? null
     }
   };
 };

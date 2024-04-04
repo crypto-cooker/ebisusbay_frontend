@@ -2,7 +2,7 @@ import {useUser} from "@src/components-v2/useUser";
 import useApprovalStatus from "@src/components-v2/feature/deal/use-approval-status";
 import useCurrencyBroker from "@src/hooks/use-currency-broker";
 import {ItemType} from "@src/hooks/use-create-order-signer";
-import {ListingState} from "@src/core/services/api-service/types";
+import {OrderState} from "@src/core/services/api-service/types";
 import React, {useEffect} from "react";
 import {ciEquals} from "@src/utils";
 import {TitledCard} from "@src/components-v2/foundation/card";
@@ -18,7 +18,7 @@ const ApprovalsView = ({deal}: {deal: any}) => {
 
   const isToken = (type: number) => [ItemType.NATIVE, ItemType.ERC20].includes(type);
   const isNft = (type: number) => [ItemType.ERC721, ItemType.ERC1155].includes(type);
-  const isDealOpen = deal.state === ListingState.ACTIVE;
+  const isDealOpen = deal.state === OrderState.ACTIVE;
 
   useEffect(() => {
     if (!!user.address && isDealOpen && ciEquals(user.address, deal.taker)) {

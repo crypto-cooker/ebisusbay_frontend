@@ -1,6 +1,7 @@
 // store/barterStore.ts
 import {atom} from 'jotai';
 import {ciEquals} from "@src/utils";
+import {atomWithReset} from "jotai/utils";
 
 export interface BarterNft {
   nftAddress: string;
@@ -33,6 +34,7 @@ export interface BarterState {
   startDate?: Date;
   endDate?: Date;
   duration?: number;
+  parentId?: string;
 }
 
 // Initial state for the barter deal
@@ -51,7 +53,7 @@ const initialBarterState: BarterState = {
 };
 
 // Atom to hold the entire barter state
-export const barterStateAtom = atom(initialBarterState);
+export const barterStateAtom = atomWithReset(initialBarterState);
 
 export const setTakerAddressAtom = atom(
   null,
@@ -397,5 +399,18 @@ export const setDurationAtom = atom(
       ...currentState,
       duration
     });
+  }
+);
+
+export const setParentIdAtom = atom(
+  null,
+  (get, set, id?: string) => {
+    const currentState = get(barterStateAtom);
+    if (currentState.parentId !== id) {
+      set(barterStateAtom, {
+        ...currentState,
+       parentId: id
+      });
+    }
   }
 );

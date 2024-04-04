@@ -27,9 +27,10 @@ import {ApiService} from "@src/core/services/api-service";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
-import {ListingState} from "@src/core/services/api-service/types";
+import {OrderState} from "@src/core/services/api-service/types";
 import ApprovalsView from "@src/components-v2/feature/deal/manage/approvals";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import Link from "next/link";
 
 interface ManageDealProps {
   deal: any;
@@ -100,12 +101,16 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
         <SimpleGrid columns={2}>
           <Box>Status</Box>
           <Box textAlign='end'>
-            {deal.state === ListingState.ACTIVE ? (
+            {deal.state === OrderState.ACTIVE ? (
               <Badge colorScheme='blue' color='white'>Open</Badge>
-            ) : deal.state === ListingState.CANCELLED ? (
+            ) : deal.state === OrderState.CANCELLED ? (
               <Badge>Cancelled</Badge>
-            ) : deal.state === ListingState.SOLD ? (
+            ) : deal.state === OrderState.REJECTED ? (
+              <Badge colorScheme='red'>Rejected</Badge>
+            ) : deal.state === OrderState.COMPLETED ? (
               <Badge colorScheme='green'>Sold</Badge>
+            ) : deal.state === OrderState.EXPIRED ? (
+              <Badge>Expired</Badge>
             ) : (
               <Badge>N/A</Badge>
             )}
@@ -117,7 +122,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               {creationDate}
             </Box>
           </VStack>
-          {deal.state === ListingState.ACTIVE && (
+          {deal.state === OrderState.ACTIVE && (
             <>
               <Box>Expires</Box>
               <VStack align='end' spacing={0}>
@@ -178,21 +183,27 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
         </TitledCard>
       </SimpleGrid>
 
-      {deal.state === ListingState.ACTIVE && (
+      {deal.state === OrderState.ACTIVE && (
         <ApprovalsView deal={deal} />
       )}
 
-      {(isMaker || isTaker) && deal.state === ListingState.ACTIVE && (
+      {(isMaker || isTaker) && deal.state === OrderState.ACTIVE && (
         <ConditionalActionBar condition={isMobile ?? false}>
           {isTaker ? (
             <Flex>
               <RejectButtonView deal={deal} onSuccess={handleDealRejected}/>
               <Spacer />
               <ButtonGroup>
-                <SecondaryButton onClick={handleCounterOffer}>
-                  Counter Offer
-                </SecondaryButton>
-                <AcceptButtonView deal={deal} onSuccess={handleDealAccepted} />
+                <Link href={`/deal/create/${deal.maker}?parent=${deal.id}`}>
+                  <SecondaryButton>
+                    Counter Offer
+                  </SecondaryButton>
+                </Link>
+                <AcceptButtonView
+                  deal={deal}
+                  onSuccess={handleDealAccepted}
+                  onProgress={(isExecuting: boolean) => console.log('TODO', isExecuting)}
+                />
               </ButtonGroup>
             </Flex>
           ) : isMaker && (
@@ -218,7 +229,7 @@ const ConditionalActionBar = ({condition, children}: {condition: boolean, childr
   ) : <Box mt={4}>{children}</Box>;
 }
 
-const AcceptButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void}) => {
+const AcceptButtonView = ({deal, onProgress, onSuccess}: {deal: any, onProgress: (isExecuting: boolean) => void, onSuccess: () => void}) => {
   const user = useUser();
   const { requestSignature } = useEnforceSignature();
   const contractService = useContractService();
@@ -227,7 +238,7 @@ const AcceptButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void})
   const handleAccept = async () => {
     if (!user.address) return;
 
-    if (deal.state !== ListingState.ACTIVE) {
+    if (deal.state !== OrderState.ACTIVE) {
       toast.error('Deal is not active');
       return;
     }
@@ -239,6 +250,7 @@ const AcceptButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void})
 
     try {
       setIsExecuting(true);
+      onProgress(true);
       const walletSignature = await requestSignature();
       const { data: authorization } = await ApiService.withoutKey().requestAcceptDealAuthorization(deal.id, user.address, walletSignature);
 
@@ -252,6 +264,7 @@ const AcceptButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void})
       toast.error(parseErrorMessage(e));
     } finally {
       setIsExecuting(false);
+      onProgress(false);
     }
 
   }
@@ -279,7 +292,7 @@ const RejectButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void})
     mutationFn: async () => {
       if (!user.address) throw new Error('User address not found.');
 
-      if (deal.state !== ListingState.ACTIVE) {
+      if (deal.state !== OrderState.ACTIVE) {
         throw new Error('Deal is not active');
       }
 
@@ -288,14 +301,14 @@ const RejectButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void})
       }
 
       const walletSignature = await requestSignature();
-      return await ApiService.withoutKey().cancelDeal(deal.id, user.address, walletSignature);
+      return await ApiService.withoutKey().rejectDeal(deal.id, user.address, walletSignature);
     },
     onSuccess: () => {
       queryClient.setQueryData(
         ['deal', deal.id],
         {
           ...deal,
-          state: ListingState.CANCELLED,
+          state: OrderState.REJECTED,
         }
       );
       onSuccess();
@@ -340,7 +353,7 @@ const CancelButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void})
     mutationFn: async () => {
       if (!user.address) throw new Error('User address not found.');
 
-      if (deal.state !== ListingState.ACTIVE) {
+      if (deal.state !== OrderState.ACTIVE) {
         throw new Error('Deal is not active');
       }
 
@@ -356,7 +369,7 @@ const CancelButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void})
         ['deal', deal.id],
         {
           ...deal,
-          state: ListingState.CANCELLED,
+          state: OrderState.CANCELLED,
         }
       );
       onSuccess(); // Assuming onSuccess does something like query refetching or state updates

@@ -1,13 +1,12 @@
 import {useState} from 'react';
-import {upsertListing} from '@src/core/cms/endpoints/gaslessListing';
 import UUID from "uuid-int";
 import {getItemType} from "@src/helpers/chain";
 import {appConfig} from "@src/Config";
-import {useContractService, useUser} from "@src/components-v2/useUser";
+import {useUser} from "@src/components-v2/useUser";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {BarterState} from "@src/jotai/atoms/deal";
 import useCreateOrderSigner, {ItemType, OfferItem, OrderSignerProps} from "@src/hooks/use-create-order-signer";
-import {BigNumber, ethers} from "ethers";
+import {ethers} from "ethers";
 import {ciEquals} from "@src/utils";
 import {ApiService} from "@src/core/services/api-service";
 
@@ -29,6 +28,9 @@ type ResponseProps = {
   loading: boolean;
   error?: any;
 };
+
+export const isTokenAddressType = (type: number) => [ItemType.NATIVE, ItemType.ERC20].includes(type);
+export const isNftAddressType = (type: number) => [ItemType.ERC721, ItemType.ERC1155].includes(type);
 
 const useCreateDeal = () => {
   const [response, setResponse] = useState<ResponseProps>({
@@ -67,8 +69,8 @@ const useCreateDeal = () => {
           itemType: ciEquals(nft.address, ethers.constants.AddressZero) ? ItemType.NATIVE : ItemType.ERC20,
           token: nft.address,
           identifierOrCriteria: 0,
-          startAmount: nft.amount,
-          endAmount: nft.amount
+          startAmount: ethers.utils.parseEther(nft.amount.toString()),
+          endAmount: ethers.utils.parseEther(nft.amount.toString())
         });
       }
 
@@ -88,8 +90,8 @@ const useCreateDeal = () => {
           itemType: ciEquals(nft.address, ethers.constants.AddressZero) ? ItemType.NATIVE : ItemType.ERC20,
           token: nft.address,
           identifierOrCriteria: 0,
-          startAmount: nft.amount,
-          endAmount: nft.amount
+          startAmount: ethers.utils.parseEther(nft.amount.toString()),
+          endAmount: ethers.utils.parseEther(nft.amount.toString())
         });
       }
 
@@ -114,16 +116,21 @@ const useCreateDeal = () => {
         makerAddress: user.address!,
         makerTokenAddresses: orderSignerProps.makerItems.map(item => item.token),
         makerTokenIds: orderSignerProps.makerItems.map(item => item.identifierOrCriteria.toString()),
-        makerQuantities: orderSignerProps.makerItems.map(item => item.startAmount),
+        makerQuantities: orderSignerProps.makerItems.map(item => {
+          return isTokenAddressType(item.itemType) ? ethers.utils.formatEther(item.startAmount) : item.startAmount
+        }),
         takerAddress: orderSignerProps.taker,
         takerTokenAddresses: orderSignerProps.takerItems.map(item => item.token),
         takerTokenIds: orderSignerProps.takerItems.map(item => item.identifierOrCriteria.toString()),
-        takerQuantities: orderSignerProps.takerItems.map(item => item.startAmount),
+        takerQuantities: orderSignerProps.takerItems.map(item => {
+          return isTokenAddressType(item.itemType) ? ethers.utils.formatEther(item.startAmount) : item.startAmount
+        }),
         startDate: orderSignerProps.startDate,
         endDate: orderSignerProps.endDate,
         salt: orderSignerProps.salt,
         signature: objectSignature,
-        digest: objectHash
+        digest: objectHash,
+        parentId: barterState.parentId,
       }, user.address!, signature);
 
       setResponse({

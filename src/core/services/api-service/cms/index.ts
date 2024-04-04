@@ -224,6 +224,10 @@ class Cms {
   async cancelDeal(id: string, address: string, signature: string) {
     return await this.orders.cancelDeal(id, address, signature);
   }
+
+  async rejectDeal(id: string, address: string, signature: string) {
+    return await this.orders.rejectDeal(id, address, signature);
+  }
 }
 
 export default Cms;

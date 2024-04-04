@@ -1,7 +1,7 @@
 import {appConfig} from "@src/Config";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {ethers} from "ethers";
-import {ciEquals} from "@src/utils";
+import {ciEquals, isNativeCro} from "@src/utils";
 import React from "react";
 
 export type BrokerCurrency = {
@@ -57,6 +57,7 @@ const UseCurrencyBroker = (nftAddress?: string) => {
   return {
     allowedCurrencies,
     allCurrencies: currencyOptions,
+    allERC20Currencies: currencyOptions.filter(({address}: { address: string }) => !isNativeCro(address)),
     getBySymbol,
     getByAddress
   }

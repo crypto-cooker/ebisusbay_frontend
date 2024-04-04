@@ -7,18 +7,24 @@ import {
   Heading,
   Select,
   SimpleGrid,
+  Stack,
   Text,
   VStack
 } from "@chakra-ui/react";
-import React, {ChangeEvent, useEffect} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {TitledCard} from "@src/components-v2/foundation/card";
 import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import {useUser} from "@src/components-v2/useUser";
 import {appConfig} from "@src/Config";
 import {ciEquals} from "@src/utils";
-import {ethers} from "ethers";
+import {Contract, ethers} from "ethers";
 import {Erc20ApprovalButton, NftApprovalButton} from "@src/components-v2/feature/deal/approval-buttons";
 import useApprovalStatus from "@src/components-v2/feature/deal/use-approval-status";
+import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
+import {toast} from "react-toastify";
+import WCRO from "@src/Contracts/WCRO.json";
+import {parseErrorMessage} from "@src/helpers/validator";
+import {commify} from "ethers/lib/utils";
 
 const config = appConfig();
 
@@ -32,9 +38,14 @@ export const Step3ReviewDetails = ({address, onConfirm}: Step3ReviewDetailsProps
   const { setDuration, barterState } = useBarterDeal();
   // const [approvals, setApprovals] = useState<{[key: string]: boolean}>({});
   const {approvals, requiresApprovals, checkApprovalStatusesFromCreate: checkApprovalStatuses, updateApproval} = useApprovalStatus();
+  const [croWrappingComplete, setCroWrappingComplete] = useState(false);
 
   const handleExpirationDateChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setDuration(parseInt(e.target.value));
+  }
+
+  const handleCroWrapSuccess = () => {
+    setCroWrappingComplete(true);
   }
 
   // const updateApproval = (address: string, value: boolean | number) => {
@@ -55,7 +66,8 @@ export const Step3ReviewDetails = ({address, onConfirm}: Step3ReviewDetailsProps
   }, [user.address]);
 
   // const requiresApprovals = Object.values(approvals).filter(approval => !approval).length > 0;
-  const requiresCroWrapping = barterState.maker.erc20.some(token => ciEquals(token.address, ethers.constants.AddressZero));
+  const selectedCroAmount = barterState.maker.erc20.find(token => ciEquals(token.address, ethers.constants.AddressZero))?.amount ?? 0;
+  const requiresCroWrapping = selectedCroAmount > 0;
 
   return (
     <>
@@ -87,10 +99,11 @@ export const Step3ReviewDetails = ({address, onConfirm}: Step3ReviewDetailsProps
             </Box>
           </VStack>
         </TitledCard>
-        {requiresCroWrapping && (
-          <TitledCard title='CRO Transfers' mt={2}>
-            <Text>This deal contains CRO and will be automatically wrapped to WCRO</Text>
-          </TitledCard>
+        {requiresCroWrapping && !croWrappingComplete && (
+          <WrapCroCard
+            amount={selectedCroAmount}
+            onSuccess={handleCroWrapSuccess}
+          />
         )}
         {requiresApprovals && (
           <TitledCard title='Approvals' mt={2}>
@@ -124,6 +137,57 @@ export const Step3ReviewDetails = ({address, onConfirm}: Step3ReviewDetailsProps
         )}
       </Container>
     </>
+  )
+}
+
+const WrapCroCard = ({amount, onSuccess}: {amount: number, onSuccess: () => void}) => {
+  const user = useUser();
+  const [isExecuting, setIsExecuting] = useState(false);
+
+  const handleWrapCro = async () => {
+    try {
+      setIsExecuting(true);
+      const amountInWei = ethers.utils.parseEther(amount.toString());
+      const contract = new Contract(config.tokens.wcro.address, WCRO, user.provider.signer)
+      const tx = await contract.deposit({ value: amountInWei });
+      await tx.wait();
+
+      toast.success('CRO wrapped successfully to WCRO');
+      onSuccess();
+    } catch (e) {
+      console.log(e);
+      toast.error(parseErrorMessage(e));
+    } finally {
+      setIsExecuting(false);
+    }
+  }
+
+  const handleDismiss = () => {
+    onSuccess();
+  }
+
+  return (
+    <TitledCard title='CRO Transfers' mt={2}>
+      <Text>This deal contains {commify(amount)} CRO and will need to be wrapped to WCRO</Text>
+      <Stack direction={{base: 'column', sm: 'row'}} justify='end'>
+        {!isExecuting && (
+          <SecondaryButton
+            onClick={handleDismiss}
+            mt={2}
+          >
+            I have already wrapped CRO
+          </SecondaryButton>
+        )}
+        <PrimaryButton
+          onClick={handleWrapCro}
+          mt={2}
+          isLoading={isExecuting}
+          isDisabled={isExecuting}
+        >
+          Wrap
+        </PrimaryButton>
+      </Stack>
+    </TitledCard>
   )
 }
 
