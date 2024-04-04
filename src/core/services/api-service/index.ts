@@ -260,6 +260,10 @@ export class ApiService implements Api {
   async requestAcceptDealAuthorization(id: string, address: string, signature: string) {
     return await this.cms.requestAcceptDealAuthorization(id, address, signature);
   }
+
+  async cancelDeal(id: string, address: string, signature: string) {
+    return await this.cms.cancelDeal(id, address, signature);
+  }
 }
 
 class RyoshiDynastiesGroup implements RyoshiDynastiesApi {

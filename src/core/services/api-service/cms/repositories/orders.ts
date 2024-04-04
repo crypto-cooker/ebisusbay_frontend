@@ -28,6 +28,18 @@ class OrdersRepository extends CmsRepository {
 
     return response.data;
   }
+
+  async cancelDeal(id: string, address: string, signature: string) {
+    const response = await this.cms.delete('order/deal', {
+      params: {
+        id,
+        address,
+        signature
+      }
+    });
+
+    return response.data;
+  }
 }
 
 export default OrdersRepository;

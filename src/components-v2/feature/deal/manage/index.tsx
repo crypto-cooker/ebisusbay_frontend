@@ -1,7 +1,6 @@
 import {
   Accordion,
-  AccordionButton, AccordionIcon,
-  AccordionItem, AccordionPanel,
+  Badge,
   Box,
   Button,
   ButtonGroup,
@@ -12,7 +11,7 @@ import {
   Slide,
   Spacer,
   useBreakpointValue,
-  Wrap
+  VStack
 } from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHandshake} from "@fortawesome/free-solid-svg-icons";
@@ -23,25 +22,34 @@ import {GetDealItemPreview} from "@src/components-v2/feature/deal/preview-item";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useContractService, useUser} from "@src/components-v2/useUser";
-import {ciEquals} from "@src/utils";
+import {ciEquals, getLengthOfTime} from "@src/utils";
 import {ApiService} from "@src/core/services/api-service";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {ListingState} from "@src/core/services/api-service/types";
+import ApprovalsView from "@src/components-v2/feature/deal/manage/approvals";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 interface ManageDealProps {
   deal: any;
 }
 
-const ManageDeal = ({deal}: ManageDealProps) => {
+const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
   const user = useUser();
-  const {username: makerUsername, avatar: makerAvatar} = useGetProfilePreview(deal.maker);
-  const {username: takerUsername, avatar: takerAvatar} = useGetProfilePreview(deal.taker);
+  const {username: makerUsername, avatar: makerAvatar} = useGetProfilePreview(defaultDeal.maker);
+  const {username: takerUsername, avatar: takerAvatar} = useGetProfilePreview(defaultDeal.taker);
   const initialFocusRef = useRef(null);
   const isMobile = useBreakpointValue({base: true, sm: false}, {fallback: 'sm'});
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
-  const { requestSignature } = useEnforceSignature();
-  const contractService = useContractService();
+  const [expiryDate, setExpiryDate] = useState<string>();
+  const [creationDate, setCreationDate] = useState<string>();
+
+  const {data: deal} = useQuery({
+    queryKey: ['deal', defaultDeal.id],
+    queryFn: async () => ApiService.withoutKey().getDeal(defaultDeal.id),
+    initialData: defaultDeal,
+  });
 
   const handleOpenPopover = (index: number, side: string) => {
     setOpenPopoverId(`${index}${side}`);
@@ -51,27 +59,6 @@ const ManageDeal = ({deal}: ManageDealProps) => {
     return openPopoverId === `${index}${side}`;
   }
 
-  const handleAccept = async () => {
-    if (!user.address) return;
-
-    try {
-      const walletSignature = await requestSignature();
-      const { data: authorization } = await ApiService.withoutKey().requestAcceptDealAuthorization(deal.id, user.address, walletSignature);
-
-      const { signature, orderData, ...sigData } = authorization;
-      const total = sigData.feeAmount;
-      const tx = await contractService!.ship.fillOrders(orderData, sigData, signature, { value: total });
-      const receipt = await tx.wait()
-      toast.success(`Deal has been finalized!`);
-
-    } catch (e) {
-      console.log(e);
-      toast.error(parseErrorMessage(e));
-    } finally {
-
-    }
-
-  }
 
   const handleCounterOffer = () => {
 
@@ -85,20 +72,70 @@ const ManageDeal = ({deal}: ManageDealProps) => {
 
   }
 
+  const handleDealAccepted = () => {
+    toast.success(`Deal has been finalized!`);
+  }
+
+  const handleDealRejected = () => {
+    toast.success(`Deal has been rejected!`);
+  }
+
+  const handleDealCancelled = () => {
+    toast.success(`Deal has been cancelled!`);
+  }
+
   const isMaker = !!user.address && ciEquals(user.address, deal.maker);
   const isTaker = !!user.address && ciEquals(user.address, deal.taker);
 
   useEffect(() => {
-    console.log('SWAP', deal);
+    if (deal) {
+      setExpiryDate(`${new Date(deal.end_at * 1000).toDateString()}, ${new Date(deal.end_at * 1000).toTimeString()}`);
+      setCreationDate(`${new Date(deal.start_at * 1000).toDateString()}, ${new Date(deal.start_at * 1000).toTimeString()}`);
+    }
   }, []);
 
   return (
     <Container maxW='container.xl'>
+      <Card>
+        <SimpleGrid columns={2}>
+          <Box>Status</Box>
+          <Box textAlign='end'>
+            {deal.state === ListingState.ACTIVE ? (
+              <Badge colorScheme='blue' color='white'>Open</Badge>
+            ) : deal.state === ListingState.CANCELLED ? (
+              <Badge>Cancelled</Badge>
+            ) : deal.state === ListingState.SOLD ? (
+              <Badge colorScheme='green'>Sold</Badge>
+            ) : (
+              <Badge>N/A</Badge>
+            )}
+          </Box>
+          <Box>Created</Box>
+          <VStack align='end' spacing={0}>
+            <Box>{getLengthOfTime(Math.floor(Date.now() / 1000) - deal.start_at)} ago</Box>
+            <Box textAlign='end' fontSize='sm'>
+              {creationDate}
+            </Box>
+          </VStack>
+          {deal.state === ListingState.ACTIVE && (
+            <>
+              <Box>Expires</Box>
+              <VStack align='end' spacing={0}>
+                <Box>{getLengthOfTime(deal.end_at - Math.floor(Date.now() / 1000))}</Box>
+                <Box textAlign='end' fontSize='sm'>
+                  {expiryDate}
+                </Box>
+              </VStack>
+            </>
+          )}
+        </SimpleGrid>
+      </Card>
       <SimpleGrid
         columns={{base: 1, sm: 3}}
-        templateColumns={{base: undefined, sm:'1fr 30px 1fr'}}
-        templateRows={{base: '1fr 30px 1fr', sm:undefined}}
+        templateColumns={{base: undefined, sm: '1fr 30px 1fr'}}
+        templateRows={{base: '1fr 30px 1fr', sm: 'auto'}}
         gap={4}
+        mt={2}
       >
         <TitledCard title={makerUsername ?? ''}>
           <Box>
@@ -140,28 +177,27 @@ const ManageDeal = ({deal}: ManageDealProps) => {
           </Box>
         </TitledCard>
       </SimpleGrid>
-      {(isMaker || isTaker) && (
+
+      {deal.state === ListingState.ACTIVE && (
+        <ApprovalsView deal={deal} />
+      )}
+
+      {(isMaker || isTaker) && deal.state === ListingState.ACTIVE && (
         <ConditionalActionBar condition={isMobile ?? false}>
           {isTaker ? (
             <Flex>
-              <Button variant='link' size='sm' onClick={handleReject}>
-                Reject
-              </Button>
+              <RejectButtonView deal={deal} onSuccess={handleDealRejected}/>
               <Spacer />
               <ButtonGroup>
                 <SecondaryButton onClick={handleCounterOffer}>
                   Counter Offer
                 </SecondaryButton>
-                <PrimaryButton onClick={handleAccept}>
-                  Accept
-                </PrimaryButton>
+                <AcceptButtonView deal={deal} onSuccess={handleDealAccepted} />
               </ButtonGroup>
             </Flex>
           ) : isMaker && (
             <Flex>
-              <PrimaryButton onClick={handleCancel}>
-                Cancel
-              </PrimaryButton>
+              <CancelButtonView deal={deal} onSuccess={handleDealCancelled} />
             </Flex>
           )}
         </ConditionalActionBar>
@@ -179,22 +215,176 @@ const ConditionalActionBar = ({condition, children}: {condition: boolean, childr
         {children}
       </Box>
     </Slide>
-  ) : children;
+  ) : <Box mt={4}>{children}</Box>;
 }
 
-const ItemAccordionItem = ({item, index, side, isOpen, onOpen, onClose, initialFocusRef}: any) => {
+const AcceptButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void}) => {
+  const user = useUser();
+  const { requestSignature } = useEnforceSignature();
+  const contractService = useContractService();
+  const [isExecuting, setIsExecuting] = useState(false);
+
+  const handleAccept = async () => {
+    if (!user.address) return;
+
+    if (deal.state !== ListingState.ACTIVE) {
+      toast.error('Deal is not active');
+      return;
+    }
+
+    if (!ciEquals(user.address, deal.taker)) {
+      toast.error('You are not the taker of this deal');
+      return;
+    }
+
+    try {
+      setIsExecuting(true);
+      const walletSignature = await requestSignature();
+      const { data: authorization } = await ApiService.withoutKey().requestAcceptDealAuthorization(deal.id, user.address, walletSignature);
+
+      const { signature, orderData, ...sigData } = authorization;
+      const total = sigData.feeAmount;
+      const tx = await contractService!.ship.fillOrders(orderData, sigData, signature, { value: total });
+      const receipt = await tx.wait()
+      onSuccess();
+    } catch (e) {
+      console.log(e);
+      toast.error(parseErrorMessage(e));
+    } finally {
+      setIsExecuting(false);
+    }
+
+  }
+
   return (
-    <AccordionItem key={index}>
-      <AccordionButton onClick={onOpen}>
-        <Box flex='1' textAlign='left'>
-          {item.name}
-        </Box>
-        <AccordionIcon />
-      </AccordionButton>
-      <AccordionPanel>
-        asdf
-      </AccordionPanel>
-    </AccordionItem>
+    <PrimaryButton
+      onClick={handleAccept}
+      isLoading={isExecuting}
+      isDisabled={isExecuting}
+    >
+      Accept
+    </PrimaryButton>
+  )
+}
+
+const RejectButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void}) => {
+  const user = useUser();
+  const { requestSignature } = useEnforceSignature();
+  // const contractService = useContractService();
+  // const [isExecuting, setIsExecuting] = useState(false);
+  const queryClient = useQueryClient();
+
+  // Define the cancel mutation using useMutation
+  const { mutate: rejectDeal, isPending: isExecuting } = useMutation({
+    mutationFn: async () => {
+      if (!user.address) throw new Error('User address not found.');
+
+      if (deal.state !== ListingState.ACTIVE) {
+        throw new Error('Deal is not active');
+      }
+
+      if (!ciEquals(user.address, deal.taker)) {
+        throw new Error('You are not the taker of this deal');
+      }
+
+      const walletSignature = await requestSignature();
+      return await ApiService.withoutKey().cancelDeal(deal.id, user.address, walletSignature);
+    },
+    onSuccess: () => {
+      queryClient.setQueryData(
+        ['deal', deal.id],
+        {
+          ...deal,
+          state: ListingState.CANCELLED,
+        }
+      );
+      onSuccess();
+    },
+    onError: (error: any) => {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    },
+    onSettled: () => {
+      // setIsExecuting(false); // Update the executing state when the mutation is either successful or encounters an error
+    }
+  });
+
+  const handleReject = async () => {
+    // setIsExecuting(true);
+    rejectDeal();
+  }
+
+  return (
+    <Button
+      variant='link'
+      size='sm'
+      onClick={handleReject}
+      isLoading={isExecuting}
+      isDisabled={isExecuting}
+    >
+      Reject
+    </Button>
+  )
+}
+
+const CancelButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void}) => {
+  const user = useUser();
+  const { requestSignature } = useEnforceSignature();
+  // const contractService = useContractService();
+  // const [isExecuting, setIsExecuting] = useState(false);
+  const queryClient = useQueryClient();
+
+
+  // Define the cancel mutation using useMutation
+  const { mutate: cancelDeal, isPending: isExecuting } = useMutation({
+    mutationFn: async () => {
+      if (!user.address) throw new Error('User address not found.');
+
+      if (deal.state !== ListingState.ACTIVE) {
+        throw new Error('Deal is not active');
+      }
+
+      if (!ciEquals(user.address, deal.maker)) {
+        throw new Error('You are not the maker of this deal');
+      }
+
+      const walletSignature = await requestSignature();
+      return await ApiService.withoutKey().cancelDeal(deal.id, user.address, walletSignature);
+    },
+    onSuccess: () => {
+      queryClient.setQueryData(
+        ['deal', deal.id],
+        {
+          ...deal,
+          state: ListingState.CANCELLED,
+        }
+      );
+      onSuccess(); // Assuming onSuccess does something like query refetching or state updates
+    },
+    onError: (error: any) => {
+      console.log(error);
+      toast.error(parseErrorMessage(error)); // Assuming parseErrorMessage parses and returns a readable error message
+    },
+    onSettled: () => {
+      // setIsExecuting(false); // Update the executing state when the mutation is either successful or encounters an error
+    }
+  });
+
+  const handleCancel = async () => {
+    // setIsExecuting(true);
+    cancelDeal();
+  }
+
+  return (
+    <Button
+      variant='link'
+      size='sm'
+      onClick={handleCancel}
+      isLoading={isExecuting}
+      isDisabled={isExecuting}
+    >
+      Cancel
+    </Button>
   )
 }
 

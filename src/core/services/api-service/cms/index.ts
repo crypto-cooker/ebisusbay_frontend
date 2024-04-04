@@ -220,6 +220,10 @@ class Cms {
   async requestAcceptDealAuthorization(id: string, address: string, signature: string) {
     return await this.orders.requestAcceptDealAuthorization(id, address, signature);
   }
+
+  async cancelDeal(id: string, address: string, signature: string) {
+    return await this.orders.cancelDeal(id, address, signature);
+  }
 }
 
 export default Cms;

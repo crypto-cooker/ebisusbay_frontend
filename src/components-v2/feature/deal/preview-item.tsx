@@ -245,10 +245,8 @@ interface GetDealItemPreviewProps {
         rank: number
       }
     },
-    collection: {
-      metadata: {
-        name: string
-      }
+    collection?: {
+      name: string
     }
   };
   ref: MutableRefObject<any>;
@@ -282,7 +280,7 @@ export const GetDealItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, 
           />
         ),
         amount: parseInt(item.start_amount),
-        category: item.collection.metadata?.name,
+        category: item.collection?.name,
         categoryUrl: `/collection/${item.token}`,
         itemUrl: `/collection/${item.token}/${item.identifier_or_criteria}`,
       }
@@ -316,14 +314,18 @@ export const GetDealItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, 
             </Box>
 
             <Box flex='1' fontSize='sm'>
-              <VStack align='start'>
+              <VStack align='start' spacing={0}>
                 {!!normalizedItem.category && (
                   <Box fontSize='xs' className='color'>{normalizedItem.category}</Box>
                 )}
                 <Box fontWeight='bold'>
-                  <Link href={normalizedItem.itemUrl} target='_blank'>
-                    {normalizedItem!.name}
-                  </Link>
+                  {!!normalizedItem.itemUrl ? (
+                    <Link href={normalizedItem.itemUrl} target='_blank'>
+                      {normalizedItem!.name}
+                    </Link>
+                  ) : (
+                    <>{normalizedItem!.name}</>
+                  )}
                 </Box>
               </VStack>
             </Box>
