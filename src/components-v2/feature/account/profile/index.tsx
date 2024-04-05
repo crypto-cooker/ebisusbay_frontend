@@ -21,7 +21,7 @@ import {
   Grid,
   GridItem,
   Heading,
-  HStack,
+  HStack, Icon,
   IconButton,
   Image,
   Menu,
@@ -41,10 +41,12 @@ import {closeBatchListingCart} from "@src/GlobalState/user-batch";
 import {useAppDispatch, useAppSelector} from "@src/Store/hooks";
 import {getTheme} from "@src/Theme/theme";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCog, faEllipsisV} from "@fortawesome/free-solid-svg-icons";
+import {faCog, faEllipsisV, faHandshake} from "@fortawesome/free-solid-svg-icons";
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
+import Link from "next/link";
+import Deals from "@src/components-v2/feature/account/profile/tabs/deals";
 
 const MotionGrid = motion(Grid)
 
@@ -53,6 +55,7 @@ enum TabKey {
   collections = 'collections',
   listings = 'listings',
   offers = 'offers',
+  deals = 'deals',
   sales = 'sales',
   favorites = 'favorites'
 }
@@ -66,6 +69,10 @@ const tabs: {[key: string]: {label: string, overflow?: string}} = {
   },
   offers: {
     label: 'Offers',
+  },
+  deals: {
+    label: 'Deals',
+    overflow: 'Deals',
   },
   sales: {
     label: 'Sales',
@@ -205,14 +212,14 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                     <Text className={styles.bio}>{profile.bio}</Text>
                   </Flex>
                 )}
-                <HStack align='top' flex={useMobileLayout ? 1 : 0}>
+                <HStack align='top' flex={useMobileLayout ? 1 : 0} mt={1}>
                   <Spacer/>
                   {useMobileLayout && (
                     <Box style={{marginTop: '1px !important'}}>
                       <SocialsBar socials={profile} address={address} />
                     </Box>
                   )}
-                  {isProfileOwner && (
+                  {isProfileOwner ? (
                     <>
                       {useMobileLayout ? (
                         <IconButton
@@ -235,6 +242,28 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                         </ChakraButton>
                       )}
                     </>
+                  ) : useMobileLayout ? (
+                    <Link href={`/deal/create/${address}`}>
+                      <IconButton
+                        aria-label='Make a Deal'
+                        variant='primary'
+                        size='sm'
+                        fontSize='sm'
+                        icon={<FontAwesomeIcon icon={faHandshake} />}
+                        rounded='full'
+                      />
+                    </Link>
+                  ) : (
+                    <Link href={`/deal/create/${address}`}>
+                      <ChakraButton
+                        variant='primary'
+                        size='sm'
+                        fontSize='sm'
+                        leftIcon={<Icon as={FontAwesomeIcon} icon={faHandshake} />}
+                      >
+                        Make a Deal
+                      </ChakraButton>
+                    </Link>
                   )}
                 </HStack>
               </Flex>
@@ -310,6 +339,9 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                   )}
                   {currentTab === TabKey.offers && isProfileOwner && (
                     <Offers address={address} />
+                  )}
+                  {currentTab === TabKey.deals && isProfileOwner && (
+                    <Deals address={address} />
                   )}
                   {currentTab === TabKey.sales && (
                     <Sales address={address} />

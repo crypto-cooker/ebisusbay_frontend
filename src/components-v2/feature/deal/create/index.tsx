@@ -75,7 +75,7 @@ export const CreateDeal = ({address}: CreateDealProps) => {
               {!!user.address ? (
                 <>
                   {ciEquals(address, user.address) ? (
-                    <Box my={4} textAlign='center'>
+                    <Box my={4} textAlign='center' px={2}>
                       Cannot initiate a deal with yourself. Try selecting another user or connecting a different wallet.
                     </Box>
                   ) : (

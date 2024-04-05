@@ -34,6 +34,7 @@ import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/f
 import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
 import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
+import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -267,6 +268,10 @@ export class ApiService implements Api {
 
   async rejectDeal(id: string, address: string, signature: string) {
     return await this.cms.rejectDeal(id, address, signature);
+  }
+
+  async getDeals(query?: DealListQueryParams) {
+    return await this.mapi.getDeals(query);
   }
 }
 

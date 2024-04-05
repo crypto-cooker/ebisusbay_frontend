@@ -5,9 +5,10 @@ import PageHeader from "@src/components-v2/shared/layout/page-header";
 import React from "react";
 import {DefaultContainer} from "@src/components-v2/shared/default-container";
 import ManageDealView from "@src/components-v2/feature/deal/manage";
+import {Deal} from "@src/core/services/api-service/mapi/types";
 
 interface ManageDealProps {
-  deal: any;
+  deal: Deal;
 }
 
 const ManageDeal = ({deal}: ManageDealProps) => {

@@ -24,6 +24,8 @@ import {
   FullCollectionsQueryParams
 } from "@src/core/services/api-service/mapi/queries/fullcollections";
 import OrdersRepository from "@src/core/services/api-service/mapi/repositories/orders";
+import {DealListQuery, DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
+import {AbbreviatedDeal, Deal} from "@src/core/services/api-service/mapi/types";
 
 const config = appConfig();
 
@@ -172,7 +174,18 @@ class Mapi {
   async getDeal(id: string) {
     const response = await this.orders.getDeal(id);
 
-    return response.data.deals[0];
+    return response.data.deals[0] as Deal;
+  }
+
+  async getDeals(query?: DealListQueryParams): Promise<PagedList<AbbreviatedDeal>> {
+    const response = await this.orders.getDeals(new DealListQuery(query));
+
+    return new PagedList<AbbreviatedDeal>(
+      response.data.deals ?? [],
+      response.data.page ?? 1,
+      response.data.page < response.data.totalPages,
+      response.data.totalCount ?? 0
+    );
   }
 }
 

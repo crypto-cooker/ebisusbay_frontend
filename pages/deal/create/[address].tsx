@@ -10,15 +10,18 @@ import {caseInsensitiveCompare, ciEquals, shortAddress} from "@src/utils";
 import {isAddress} from "ethers/lib/utils";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {DefaultContainer} from "@src/components-v2/shared/default-container";
-import {Link} from "@chakra-ui/react";
+import {Alert, AlertDescription, AlertIcon, Icon, Link} from "@chakra-ui/react";
 import NextLink from "next/link";
 import {ApiService} from "@src/core/services/api-service";
 import {OrderState} from "@src/core/services/api-service/types";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHandshake} from "@fortawesome/free-solid-svg-icons";
+import {Deal} from "@src/core/services/api-service/mapi/types";
 
 interface PageProps {
   address: string;
   profile: any;
-  parentDeal?: any;
+  parentDeal?: Deal;
 }
 
 const CreateDealPage = ({ address, profile, parentDeal }: PageProps) => {
@@ -63,9 +66,20 @@ const CreateDealPage = ({ address, profile, parentDeal }: PageProps) => {
         title={'Create a Deal'}
         subtitle='Reveal unique value opportunities by swapping NFTs and tokens directly'
       />
-      <DefaultContainer mt={2} fontSize='sm' fontStyle='italic'>
-        Creating a deal with: <Link as={NextLink} href={`/account/${address}`} color='auto' fontWeight='bold' className='color'>{profile.username ?? address}</Link>
-      </DefaultContainer>
+      <Alert
+        status='info'
+        variant='subtle'
+        flexDirection='row'
+        px={0}
+      >
+        <DefaultContainer fontSize='sm' fontStyle='italic'>
+          <Icon as={FontAwesomeIcon} icon={faHandshake} me={2} />
+          <AlertDescription >
+            Dealing with: <Link as={NextLink} href={`/account/${address}`} color='auto' fontWeight='bold' className='color'>{profile.username ?? address}</Link>
+          </AlertDescription>
+        </DefaultContainer>
+      </Alert>
+
       <CreateDeal address={address} />
     </>
   )

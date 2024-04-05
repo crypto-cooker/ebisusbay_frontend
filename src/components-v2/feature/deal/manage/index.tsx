@@ -9,7 +9,7 @@ import {
   Icon,
   SimpleGrid,
   Slide,
-  Spacer,
+  Spacer, Tag,
   useBreakpointValue,
   VStack
 } from "@chakra-ui/react";
@@ -31,9 +31,10 @@ import {OrderState} from "@src/core/services/api-service/types";
 import ApprovalsView from "@src/components-v2/feature/deal/manage/approvals";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import Link from "next/link";
+import {Deal} from "@src/core/services/api-service/mapi/types";
 
 interface ManageDealProps {
-  deal: any;
+  deal: Deal;
 }
 
 const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
@@ -142,7 +143,21 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
         gap={4}
         mt={2}
       >
-        <TitledCard title={makerUsername ?? ''}>
+        <Card>
+          <Flex justify='space-between' mb={2}>
+            <Box fontSize='lg' fontWeight='bold'>
+              {makerUsername}
+            </Box>
+            <Box>
+              {deal.estimated_maker_value > 0 ? (
+                <Tag colorScheme='blue'>
+                  Est. Value: ~ ${deal.estimated_maker_value}
+                </Tag>
+              ) : (
+                <Tag>Est. Value: N/A</Tag>
+              )}
+            </Box>
+          </Flex>
           <Box>
             <Accordion w='full' allowMultiple>
               {deal.maker_items.map((item: any, index: number) => (
@@ -159,11 +174,25 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               ))}
             </Accordion>
           </Box>
-        </TitledCard>
+        </Card>
         <Box my='auto' mx='auto'>
           <Icon as={FontAwesomeIcon} icon={faHandshake} boxSize={8} />
         </Box>
-        <TitledCard title={takerUsername ?? ''}>
+        <Card>
+          <Flex justify='space-between' mb={2}>
+            <Box fontSize='lg' fontWeight='bold'>
+              {takerUsername}
+            </Box>
+            <Box>
+              {deal.estimated_taker_value > 0 ? (
+                <Tag colorScheme='blue'>
+                  Est. Value: ~ ${deal.estimated_taker_value}
+                </Tag>
+              ) : (
+                <Tag>Est. Value: N/A</Tag>
+              )}
+            </Box>
+          </Flex>
           <Box>
             <Accordion w='full' allowMultiple>
               {deal.taker_items.map((item: any, index: number) => (
@@ -180,7 +209,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               ))}
             </Accordion>
           </Box>
-        </TitledCard>
+        </Card>
       </SimpleGrid>
 
       {deal.state === OrderState.ACTIVE && (

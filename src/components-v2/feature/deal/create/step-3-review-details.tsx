@@ -107,7 +107,7 @@ export const Step3ReviewDetails = ({address, onConfirm}: Step3ReviewDetailsProps
         )}
         {requiresApprovals && (
           <TitledCard title='Approvals' mt={2}>
-            <Text>Some approvals are required so that the contract can successfully transfer assets on your behalf once the deal is accepted. Please review these below</Text>
+            <Text>Some approvals are required so that Ebisu's Bay can successfully transfer assets on your behalf once the deal is accepted. Please review these below</Text>
             <SimpleGrid columns={4} mt={4} gap={2}>
               {barterState.maker.nfts.filter((nft) => !approvals?.[nft.nftAddress.toLowerCase()]).map((nft) => (
                 <GridItem key={nft.nftAddress}>

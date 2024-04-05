@@ -30,7 +30,7 @@ const ApprovalsView = ({deal}: {deal: any}) => {
     <>
       {requiresApprovals && (
         <TitledCard title='Approvals' mt={2}>
-          <Text>Some approvals are required so that the contract can successfully transfer assets on your behalf once the deal is accepted. Please review these below</Text>
+          <Text>Some approvals are required so that Ebisu's Bay can successfully transfer assets on your behalf once the deal is accepted. Please review these below</Text>
           <SimpleGrid
             columns={{base: 2, sm: 3, md: 5}}
             mt={4}

@@ -198,7 +198,7 @@ const imageMappings: {[key:string]: {icon: string, alt: string}} = {
     alt: 'Listed'
   },
   OFFER_MADE: {
-    icon: '/img/icons/notifications/offer-made.svg',
+    icon: '/img/icons/notifications/deal-created.webp',
     alt: 'Offer Made'
   },
   OFFER_ACCEPTED: {
