@@ -21,7 +21,7 @@ export interface Deal {
   estimated_taker_value: number;
 }
 
-interface DealItem {
+export interface DealItem {
   offer_item_id: number;
   item_type: number;
   token: string;

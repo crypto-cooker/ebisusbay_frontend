@@ -4,25 +4,45 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Center,
   Container,
   Flex,
+  HStack,
   Icon,
+  IconButton,
+  Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
   SimpleGrid,
   Slide,
-  Spacer, Tag,
+  Spacer,
+  Tag,
+  Text,
   useBreakpointValue,
+  useClipboard,
+  useDisclosure,
   VStack
 } from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHandshake} from "@fortawesome/free-solid-svg-icons";
-import React, {ReactNode, useEffect, useRef, useState} from "react";
+import {faHandshake, faLink} from "@fortawesome/free-solid-svg-icons";
+import React, {ReactNode, useCallback, useEffect, useRef, useState} from "react";
 import useGetProfilePreview from "@src/hooks/useGetUsername";
-import {Card, TitledCard} from "@src/components-v2/foundation/card";
+import {Card} from "@src/components-v2/foundation/card";
 import {GetDealItemPreview} from "@src/components-v2/feature/deal/preview-item";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useContractService, useUser} from "@src/components-v2/useUser";
-import {ciEquals, getLengthOfTime} from "@src/utils";
+import {appUrl, ciEquals, getLengthOfTime} from "@src/utils";
 import {ApiService} from "@src/core/services/api-service";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {toast} from "react-toastify";
@@ -30,8 +50,15 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {OrderState} from "@src/core/services/api-service/types";
 import ApprovalsView from "@src/components-v2/feature/deal/manage/approvals";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import Link from "next/link";
 import {Deal} from "@src/core/services/api-service/mapi/types";
+import {CheckCircleIcon} from "@chakra-ui/icons";
+import {useRouter} from "next/router";
+import {faFacebook, faTelegram, faTwitter} from "@fortawesome/free-brands-svg-icons";
+import CronosIcon from "@src/components-v2/shared/icons/cronos";
+import {ContractReceipt, ethers} from "ethers";
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
 
 interface ManageDealProps {
   deal: Deal;
@@ -59,19 +86,6 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
 
   const matchesPopoverId = (index: number, side: string) => {
     return openPopoverId === `${index}${side}`;
-  }
-
-
-  const handleCounterOffer = () => {
-
-  }
-
-  const handleReject = () => {
-
-  }
-
-  const handleCancel = () => {
-
   }
 
   const handleDealAccepted = () => {
@@ -103,17 +117,17 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
           <Box>Status</Box>
           <Box textAlign='end'>
             {deal.state === OrderState.ACTIVE ? (
-              <Badge colorScheme='blue' color='white'>Open</Badge>
+              <Badge colorScheme='blue' color='white' fontSize='lg'>Open</Badge>
             ) : deal.state === OrderState.CANCELLED ? (
-              <Badge>Cancelled</Badge>
+              <Badge fontSize='lg'>Cancelled</Badge>
             ) : deal.state === OrderState.REJECTED ? (
-              <Badge colorScheme='red'>Rejected</Badge>
+              <Badge colorScheme='red' fontSize='lg'>Rejected</Badge>
             ) : deal.state === OrderState.COMPLETED ? (
-              <Badge colorScheme='green'>Sold</Badge>
+              <Badge colorScheme='green' fontSize='lg'>Sold</Badge>
             ) : deal.state === OrderState.EXPIRED ? (
-              <Badge>Expired</Badge>
+              <Badge fontSize='lg'>Expired</Badge>
             ) : (
-              <Badge>N/A</Badge>
+              <Badge fontSize='lg'>N/A</Badge>
             )}
           </Box>
           <Box>Created</Box>
@@ -149,13 +163,23 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               {makerUsername}
             </Box>
             <Box>
-              {deal.estimated_maker_value > 0 ? (
-                <Tag colorScheme='blue'>
-                  Est. Value: ~ ${deal.estimated_maker_value}
-                </Tag>
-              ) : (
-                <Tag>Est. Value: N/A</Tag>
-              )}
+              <Popover>
+                <PopoverTrigger>
+                  {deal.estimated_maker_value > 0 ? (
+                    <Tag colorScheme='blue'>
+                      Est. Value: ~ ${deal.estimated_maker_value}
+                    </Tag>
+                  ) : (
+                    <Tag>Est. Value: N/A</Tag>
+                  )}
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverBody>
+                    Estimated value of all NFTs and tokens on this side of the deal
+                  </PopoverBody>
+                </PopoverContent>
+              </Popover>
             </Box>
           </Flex>
           <Box>
@@ -184,13 +208,23 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               {takerUsername}
             </Box>
             <Box>
-              {deal.estimated_taker_value > 0 ? (
-                <Tag colorScheme='blue'>
-                  Est. Value: ~ ${deal.estimated_taker_value}
-                </Tag>
-              ) : (
-                <Tag>Est. Value: N/A</Tag>
-              )}
+              <Popover>
+                <PopoverTrigger>
+                  {deal.estimated_taker_value > 0 ? (
+                    <Tag colorScheme='blue'>
+                      Est. Value: ~ ${deal.estimated_taker_value}
+                    </Tag>
+                  ) : (
+                    <Tag>Est. Value: N/A</Tag>
+                  )}
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverBody>
+                    Estimated value of all NFTs and tokens on this side of the deal
+                  </PopoverBody>
+                </PopoverContent>
+              </Popover>
             </Box>
           </Flex>
           <Box>
@@ -223,11 +257,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               <RejectButtonView deal={deal} onSuccess={handleDealRejected}/>
               <Spacer />
               <ButtonGroup>
-                <Link href={`/deal/create/${deal.maker}?parent=${deal.id}`}>
-                  <SecondaryButton>
-                    Counter Offer
-                  </SecondaryButton>
-                </Link>
+                <CounterOfferButtonView deal={deal} />
                 <AcceptButtonView
                   deal={deal}
                   onSuccess={handleDealAccepted}
@@ -236,7 +266,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               </ButtonGroup>
             </Flex>
           ) : isMaker && (
-            <Flex>
+            <Flex justify='end'>
               <CancelButtonView deal={deal} onSuccess={handleDealCancelled} />
             </Flex>
           )}
@@ -258,65 +288,123 @@ const ConditionalActionBar = ({condition, children}: {condition: boolean, childr
   ) : <Box mt={4}>{children}</Box>;
 }
 
-const AcceptButtonView = ({deal, onProgress, onSuccess}: {deal: any, onProgress: (isExecuting: boolean) => void, onSuccess: () => void}) => {
+const AcceptButtonView = ({deal, onProgress, onSuccess}: {deal: Deal, onProgress: (isExecuting: boolean) => void, onSuccess: () => void}) => {
   const user = useUser();
+  const queryClient = useQueryClient();
   const { requestSignature } = useEnforceSignature();
   const contractService = useContractService();
-  const [isExecuting, setIsExecuting] = useState(false);
+  const [tx, setTx] = useState<ContractReceipt>();
+  const { isOpen: isCompleteDialogOpen, onOpen: onOpenCompleteDialog, onClose: onCloseCompleteDialog } = useDisclosure();
 
-  const handleAccept = async () => {
-    if (!user.address) return;
+  const { mutate: acceptDeal, isPending: isExecuting } = useMutation({
+    mutationFn: async () => {
+      if (!user.address) throw new Error('User address not found.');
 
-    if (deal.state !== OrderState.ACTIVE) {
-      toast.error('Deal is not active');
-      return;
-    }
+      if (deal.state !== OrderState.ACTIVE) {
+        throw new Error('Deal is not active');
+      }
 
-    if (!ciEquals(user.address, deal.taker)) {
-      toast.error('You are not the taker of this deal');
-      return;
-    }
-
-    try {
-      setIsExecuting(true);
+      if (!ciEquals(user.address, deal.taker)) {
+        throw new Error('You are not the taker of this deal');
+      }
       onProgress(true);
+
+      const croItem = deal.taker_items.find((item) => ciEquals(item.token, ethers.constants.AddressZero));
+      const croTotal = croItem ? croItem.end_amount : '0';
+      const price = ethers.utils.parseEther(`${croTotal}`);
+
       const walletSignature = await requestSignature();
       const { data: authorization } = await ApiService.withoutKey().requestAcceptDealAuthorization(deal.id, user.address, walletSignature);
 
       const { signature, orderData, ...sigData } = authorization;
-      const total = sigData.feeAmount;
+      const total = price.add(sigData.feeAmount);
+      console.log('TOTAL', price.toString(), sigData, total.toString())
       const tx = await contractService!.ship.fillOrders(orderData, sigData, signature, { value: total });
-      const receipt = await tx.wait()
+      return await tx.wait();
+    },
+    onSuccess: (data: ContractReceipt) => {
+      queryClient.setQueryData(
+        ['deal', deal.id],
+        {
+          ...deal,
+          state: OrderState.COMPLETED,
+        }
+      );
+      setTx(data);
+      onOpenCompleteDialog();
       onSuccess();
-    } catch (e) {
-      console.log(e);
-      toast.error(parseErrorMessage(e));
-    } finally {
-      setIsExecuting(false);
+    },
+    onError: (error: any) => {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    },
+    onSettled: () => {
       onProgress(false);
     }
+  });
 
+  const handleAcceptDeal = () => {
+    acceptDeal();
   }
 
   return (
-    <PrimaryButton
-      onClick={handleAccept}
-      isLoading={isExecuting}
-      isDisabled={isExecuting}
-    >
-      Accept
-    </PrimaryButton>
+    <>
+      <PrimaryButton
+        onClick={handleAcceptDeal}
+        isLoading={isExecuting}
+        isDisabled={isExecuting}
+      >
+        Accept
+      </PrimaryButton>
+      <SuccessModal
+        isOpen={isCompleteDialogOpen}
+        onClose={onCloseCompleteDialog}
+        dealId={deal.id}
+        tx={tx}
+      />
+    </>
   )
 }
 
-const RejectButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void}) => {
+const CounterOfferButtonView = ({deal}: { deal: Deal }) => {
+  const router = useRouter();
+  const { isOpen: isConfirmationOpen, onOpen: onOpenConfirmation, onClose: onCloseConfirmation } = useDisclosure();
+  const [hasConfirmed, setHasConfirmed] = useState(false);
+
+  const handleConfirmAction = () => {
+    setHasConfirmed(false);
+    onOpenConfirmation();
+  }
+
+  const handleExecuteAction = async () => {
+    setHasConfirmed(true);
+    onCloseConfirmation();
+    await router.push(`/deal/create/${deal.maker}?parent=${deal.id}`)
+  }
+
+  return (
+    <>
+      <SecondaryButton onClick={handleConfirmAction}>
+        Counter Offer
+      </SecondaryButton>
+      <ConfirmationModal
+        isOpen={!hasConfirmed && isConfirmationOpen}
+        onConfirm={handleExecuteAction}
+        onClose={onCloseConfirmation}
+        title='Create Counter Offer'
+        text='Proceeding will initiate a new deal with this user. This current deal will be rejected upon creation of the new deal. Continue?'
+      />
+    </>
+  )
+}
+
+const RejectButtonView = ({deal, onSuccess}: {deal: Deal, onSuccess: () => void}) => {
   const user = useUser();
   const { requestSignature } = useEnforceSignature();
-  // const contractService = useContractService();
-  // const [isExecuting, setIsExecuting] = useState(false);
   const queryClient = useQueryClient();
+  const { isOpen: isConfirmationOpen, onOpen: onOpenConfirmation, onClose: onCloseConfirmation } = useDisclosure();
+  const [hasConfirmed, setHasConfirmed] = useState(false);
 
-  // Define the cancel mutation using useMutation
   const { mutate: rejectDeal, isPending: isExecuting } = useMutation({
     mutationFn: async () => {
       if (!user.address) throw new Error('User address not found.');
@@ -347,35 +435,50 @@ const RejectButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void})
       toast.error(parseErrorMessage(error));
     },
     onSettled: () => {
-      // setIsExecuting(false); // Update the executing state when the mutation is either successful or encounters an error
+      //
     }
   });
 
-  const handleReject = async () => {
-    // setIsExecuting(true);
+  const handleConfirmAction = () => {
+    setHasConfirmed(false);
+    onOpenConfirmation();
+  }
+
+  const handleExecuteAction = async () => {
+    setHasConfirmed(true);
+    onCloseConfirmation();
     rejectDeal();
   }
 
   return (
-    <Button
-      variant='link'
-      size='sm'
-      onClick={handleReject}
-      isLoading={isExecuting}
-      isDisabled={isExecuting}
-    >
-      Reject
-    </Button>
+    <>
+      <Button
+        variant='link'
+        size='sm'
+        onClick={handleConfirmAction}
+        isLoading={isExecuting}
+        isDisabled={isExecuting}
+        loadingText='Reject'
+      >
+        Reject
+      </Button>
+      <ConfirmationModal
+        isOpen={!hasConfirmed && isConfirmationOpen}
+        onConfirm={handleExecuteAction}
+        onClose={onCloseConfirmation}
+        title='Confirm Reject'
+        text='Proceeding will immediately reject this deal. Any further action will require a new deal to be made. Alternatively, consider the "Counter Offer" option to offer an alternate deal to this user.'
+      />
+    </>
   )
 }
 
-const CancelButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void}) => {
+const CancelButtonView = ({deal, onSuccess}: {deal: Deal, onSuccess: () => void}) => {
   const user = useUser();
   const { requestSignature } = useEnforceSignature();
-  // const contractService = useContractService();
-  // const [isExecuting, setIsExecuting] = useState(false);
   const queryClient = useQueryClient();
-
+  const { isOpen: isConfirmationOpen, onOpen: onOpenConfirmation, onClose: onCloseConfirmation } = useDisclosure();
+  const [hasConfirmed, setHasConfirmed] = useState(false);
 
   // Define the cancel mutation using useMutation
   const { mutate: cancelDeal, isPending: isExecuting } = useMutation({
@@ -401,33 +504,183 @@ const CancelButtonView = ({deal, onSuccess}: {deal: any, onSuccess: () => void})
           state: OrderState.CANCELLED,
         }
       );
-      onSuccess(); // Assuming onSuccess does something like query refetching or state updates
+      onSuccess();
     },
     onError: (error: any) => {
       console.log(error);
-      toast.error(parseErrorMessage(error)); // Assuming parseErrorMessage parses and returns a readable error message
+      toast.error(parseErrorMessage(error));
     },
     onSettled: () => {
-      // setIsExecuting(false); // Update the executing state when the mutation is either successful or encounters an error
+      //
     }
   });
 
-  const handleCancel = async () => {
-    // setIsExecuting(true);
+  const handleConfirmAction = () => {
+    setHasConfirmed(false);
+    onOpenConfirmation();
+  }
+
+  const handleExecuteAction = async () => {
+    setHasConfirmed(true);
+    onCloseConfirmation();
     cancelDeal();
   }
 
   return (
-    <Button
-      variant='link'
-      size='sm'
-      onClick={handleCancel}
-      isLoading={isExecuting}
-      isDisabled={isExecuting}
-    >
-      Cancel
-    </Button>
+    <>
+      <PrimaryButton
+        onClick={handleConfirmAction}
+        isLoading={isExecuting}
+        isDisabled={isExecuting}
+        loadingText='Cancel'
+      >
+        Cancel
+      </PrimaryButton>
+      <ConfirmationModal
+        isOpen={!hasConfirmed && isConfirmationOpen}
+        onConfirm={handleExecuteAction}
+        onClose={onCloseConfirmation}
+        title='Confirm Cancellation'
+        text='Proceeding will immediately cancel this deal. Any further action will require a new deal to be made. Continue?'
+      />
+    </>
   )
 }
 
 export default ManageDeal;
+
+interface ConfirmationModalProps {
+  isOpen: boolean;
+  onConfirm: () => void;
+  onClose: () => void;
+  title: string;
+  text: string;
+}
+
+const ConfirmationModal = ({isOpen, onConfirm, onClose, title, text}: ConfirmationModalProps) => {
+  return (
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          <Center>
+            <Text>{title}</Text>
+          </Center>
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          {text}
+        </ModalBody>
+
+        <ModalFooter alignContent="center">
+          <VStack w="full">
+            <Flex justify="center">
+              <ButtonGroup>
+                <SecondaryButton onClick={onClose}>
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton onClick={onConfirm}>
+                  Continue
+                </PrimaryButton>
+              </ButtonGroup>
+            </Flex>
+          </VStack>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  )
+}
+
+interface SuccessModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  dealId: string;
+  tx?: ContractReceipt
+}
+
+const SuccessModal = ({isOpen, onClose, dealId, tx}: SuccessModalProps) => {
+  const user = useUser();
+  const { onCopy, setValue } = useClipboard(appUrl(`/deal/${dealId}`).toString());
+
+  const handleCopy = useCallback(() => {
+    onCopy();
+    toast.success('Link copied!');
+  }, [onCopy]);
+
+  const shareOptions = [
+    {
+      url: 'https://www.facebook.com/sharer/sharer.php?u=',
+      label: 'Share on Facebook',
+      icon: faFacebook
+    },
+    {
+      url: 'https://twitter.com/intent/tweet?text=',
+      label: 'Share on Twitter',
+      icon: faTwitter
+    },
+    {
+      url: 'https://telegram.me/share/?url=',
+      label: 'Share on Telegram',
+      icon: faTelegram
+    },
+    {
+      label: 'Share on Telegram',
+      icon: faLink,
+      handleClick: handleCopy
+    }
+  ];
+
+  useEffect(() => {
+    if (dealId) {
+      setValue(appUrl(`/deal/${dealId}`).toString());
+    }
+  }, [dealId]);
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          <Center>
+            <HStack>
+              <CheckCircleIcon color="green" bg="white" rounded="full" border="1px solid white"/>
+              <Text>Deal Complete!</Text>
+            </HStack>
+          </Center>
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <VStack>
+            <Text textAlign="center" mb={2}>Congratulations! This deal is now complete. Check your inventory for your newly claimed items.</Text>
+            {tx && (
+              <Link href={`${config.urls.explorer}tx/${tx.transactionHash}`} isExternal>
+                <HStack>
+                  <CronosIcon boxSize={6}/>
+                  <Text>View on Cronoscan</Text>
+                </HStack>
+              </Link>
+            )}
+          </VStack>
+        </ModalBody>
+
+        <ModalFooter alignContent="center">
+          <VStack w="full">
+            <Text>Share</Text>
+            <Flex justify="center">
+              <ButtonGroup>
+                {shareOptions.map((shareOption) => (
+                  <IconButton
+                    key={shareOption.label}
+                    icon={<FontAwesomeIcon icon={shareOption.icon} />}
+                    aria-label={shareOption.label}
+                    onClick={() => shareOption.handleClick ? shareOption.handleClick() : window.open(`${shareOption.url}${window.location}`, '_blank')}
+                  />
+                ))}
+              </ButtonGroup>
+            </Flex>
+          </VStack>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  )
+}

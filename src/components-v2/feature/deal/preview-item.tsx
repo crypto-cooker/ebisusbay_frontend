@@ -1,44 +1,38 @@
 import React, {MutableRefObject, ReactNode, useMemo, useState} from "react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
-import {toast} from "react-toastify";
 import {
-  AccordionButton, AccordionIcon,
-  AccordionItem, AccordionPanel,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   Avatar,
   AvatarBadge,
-  Box, ButtonGroup,
+  Box,
+  ButtonGroup,
   Flex,
   FormControl,
-  FormLabel, HStack,
+  FormLabel,
+  HStack,
   Image,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  Popover,
-  PopoverArrow, PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverTrigger,
-  Stack, Stat, StatArrow, StatHelpText, StatLabel, StatNumber, Text,
+  Stack,
+  Stat,
+  StatLabel,
+  StatNumber,
   VStack
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import {commify} from "ethers/lib/utils";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {ItemType} from "@src/hooks/use-create-order-signer";
-import {BarterToken} from "@src/jotai/atoms/deal";
 import useCurrencyBroker from "@src/hooks/use-currency-broker";
-import {Image as ChakraImage} from "@chakra-ui/image/dist/image";
-import Blockies from "react-blockies";
-import LayeredIcon from "@src/Components/components/LayeredIcon";
-import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import {round, siPrefixedNumber} from "@src/utils";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
-import {SortKeys} from "@src/components-v2/shared/responsive-table/responsive-collections-table";
+import {DealItem} from "@src/core/services/api-service/mapi/types";
 
 const previewSize = '50px';
 
@@ -233,22 +227,7 @@ const UpdateItemForm = ({image, name, quantityAvailable, quantitySelected, isAct
 }
 
 interface GetDealItemPreviewProps {
-  item: {
-    token: string,
-    identifier_or_criteria: string,
-    item_type: number,
-    start_amount: string,
-    token_details: {
-      metadata: {
-        image: string,
-        name: string,
-        rank: number
-      }
-    },
-    collection?: {
-      name: string
-    }
-  };
+  item: DealItem;
   ref: MutableRefObject<any>;
   isOpen: boolean;
   onOpen: () => void;
@@ -272,11 +251,11 @@ export const GetDealItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, 
   const normalizedItem = useMemo(() => {
     if (isNft) {
       return {
-        name: item.token_details.metadata.name,
+        name: item.token_details!.metadata.name,
         image: (
           <AnyMedia
-            image={ImageService.translate(item.token_details.metadata.image).avatar()}
-            title={item.token_details.metadata.name}
+            image={ImageService.translate(item.token_details!.metadata.image).avatar()}
+            title={item.token_details!.metadata.name}
           />
         ),
         amount: parseInt(item.start_amount),
@@ -341,9 +320,15 @@ export const GetDealItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, 
             </Stat>
           </VStack>
         </Box>
-        <AccordionButton w='auto'>
-          <AccordionIcon />
-        </AccordionButton>
+        {isNft ? (
+          <AccordionButton w='auto'>
+            <AccordionIcon />
+          </AccordionButton>
+        ) : (
+          <Box w='50px'>
+
+          </Box>
+        )}
       </Flex>
       <AccordionPanel>
         asdf

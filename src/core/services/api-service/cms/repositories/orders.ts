@@ -34,7 +34,7 @@ class OrdersRepository extends CmsRepository {
     const response = await this.cms.delete('order/deal', {
       params: {
         id,
-        type: OrderState.CANCELLED,
+        state: OrderState.CANCELLED,
         address,
         signature
       }
@@ -47,7 +47,7 @@ class OrdersRepository extends CmsRepository {
     const response = await this.cms.delete('order/deal', {
       params: {
         id,
-        type: OrderState.REJECTED,
+        state: OrderState.REJECTED,
         address,
         signature
       }

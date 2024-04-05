@@ -8,10 +8,11 @@ import {ciEquals} from "@src/utils";
 import {TitledCard} from "@src/components-v2/foundation/card";
 import {GridItem, SimpleGrid, Text} from "@chakra-ui/react";
 import {Erc20ApprovalButton, NftApprovalButton} from "@src/components-v2/feature/deal/approval-buttons";
+import {Deal} from "@src/core/services/api-service/mapi/types";
 
 const maxColumns = {base: 2, sm: 3, md: 5};
 
-const ApprovalsView = ({deal}: {deal: any}) => {
+const ApprovalsView = ({deal}: {deal: Deal}) => {
   const user = useUser();
   const {approvals, requiresApprovals, checkApprovalStatusesFromMapi: checkApprovalStatuses, updateApproval} = useApprovalStatus();
   const { getByAddress  } = useCurrencyBroker();

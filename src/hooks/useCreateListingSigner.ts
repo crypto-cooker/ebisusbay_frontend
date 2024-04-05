@@ -47,7 +47,9 @@ export enum OrderType {
   TOKEN_TRADES,
 
   //2: NFT -> ERC20
-  SELL_NFT_TOKEN
+  SELL_NFT_TOKEN,
+
+  OFFER
 }
 
 export type Order = {

@@ -7,13 +7,14 @@ import {appConfig} from "@src/Config";
 import {ItemType} from "@src/hooks/use-create-order-signer";
 import {useState} from "react";
 import {BarterState} from "@src/jotai/atoms/deal";
+import {Deal} from "@src/core/services/api-service/mapi/types";
 
 const config = appConfig();
 
 const useApprovalStatus = () => {
   const [approvals, setApprovals] = useState<{[key: string]: boolean}>({});
 
-  const checkApprovalStatusesFromMapi = async (deal: any, side: 'maker' | 'taker') => {
+  const checkApprovalStatusesFromMapi = async (deal: Deal, side: 'maker' | 'taker') => {
     const items = side === 'maker' ? deal.maker_items : deal.taker_items;
     const targetAddress = side === 'maker' ? deal.maker : deal.taker;
 
