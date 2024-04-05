@@ -6,6 +6,7 @@ import {ResponsiveValue} from "@chakra-ui/system";
 import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
 import {ApiService} from "@src/core/services/api-service";
 import ResponsiveDealsTable from "@src/components-v2/feature/account/profile/tabs/deals/responsive-deals-table";
+import {OrderState} from "@src/core/services/api-service/types";
 
 interface DealsDataContainerProps {
   filtersVisible: boolean;
@@ -62,7 +63,7 @@ const DealsDataContainer = ({filtersVisible, queryParams, fullWidth, viewType, o
     ) : data?.pages.map((page) => page.data).flat().length > 0 ? (
       <ResponsiveDealsTable
         data={data}
-        state={queryParams.state}
+        state={queryParams.state ?? OrderState.ACTIVE}
         onUpdate={(offer) => {}}
         onCancel={(offer) => {}}
         onSort={onSort}
