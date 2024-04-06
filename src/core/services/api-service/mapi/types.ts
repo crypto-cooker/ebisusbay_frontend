@@ -58,4 +58,6 @@ export interface AbbreviatedDeal {
   order_type: number;
   start_at: number;
   end_at: number;
+  maker_types: number[];
+  taker_types: number[];
 }
