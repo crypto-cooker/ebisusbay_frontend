@@ -34,7 +34,7 @@ export interface DealItem {
       image: string;
       description: string;
       rank?: number;
-      attributes: any;
+      attributes: Array<{trait_type: string, value: string | number}>;
     }
   },
   collection?: {

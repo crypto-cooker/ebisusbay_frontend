@@ -12,6 +12,7 @@ import {
   Flex,
   FormControl,
   FormLabel,
+  GridItem,
   HStack,
   Image,
   NumberDecrementStepper,
@@ -19,6 +20,7 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  SimpleGrid,
   Stack,
   Stat,
   StatLabel,
@@ -33,6 +35,7 @@ import useCurrencyBroker from "@src/hooks/use-currency-broker";
 import Link from "next/link";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {DealItem} from "@src/core/services/api-service/mapi/types";
+import {isAddress, shortAddress} from "@src/utils";
 
 const previewSize = '50px';
 
@@ -240,6 +243,7 @@ interface GetDealItemPreviewProps {
 
 export const GetDealItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, onRemove, isActive, mode}: GetDealItemPreviewProps) => {
   const { getByAddress  } = useCurrencyBroker();
+  const hoverBackground = useColorModeValue('gray.100', '#424242');
 
   const token = useMemo(() => {
     return getByAddress(item.token);
@@ -280,7 +284,7 @@ export const GetDealItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, 
 
   return (
     <AccordionItem key={item.token}>
-      <Flex w='100%' my={2}>
+      <Flex w='100%' my={2} ps={4}>
         <Box flex='1' textAlign='left' my='auto'>
           <HStack>
             <Box
@@ -295,7 +299,7 @@ export const GetDealItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, 
             <Box flex='1' fontSize='sm'>
               <VStack align='start' spacing={0}>
                 {!!normalizedItem.category && (
-                  <Box fontSize='xs' className='color'>{normalizedItem.category}</Box>
+                  <Box fontSize='xs' className='color'>{isAddress(normalizedItem.category) ? shortAddress(normalizedItem.category) : normalizedItem.category}</Box>
                 )}
                 <Box fontWeight='bold'>
                   {!!normalizedItem.itemUrl ? (
@@ -331,7 +335,29 @@ export const GetDealItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, 
         )}
       </Flex>
       <AccordionPanel>
-        asdf
+        {/*<Flex justify='space-around' textAlign='center' fontSize='sm' bg={hoverBackground} rounded='md' py={2}>*/}
+        {/*  {isNft && item.token_details?.metadata.rank && (*/}
+        {/*    <VStack direction="row" spacing={0}>*/}
+        {/*      <Text fontWeight="bold">Rank:</Text>*/}
+        {/*      <Text>{item.token_details?.metadata.rank}</Text>*/}
+        {/*    </VStack>*/}
+        {/*  )}*/}
+        {/*</Flex>*/}
+        {item.token_details?.metadata.rank ? (
+          <SimpleGrid spacing={2} columns={{base: 1, sm: 2, lg: 3}}>
+            {item.token_details?.metadata.attributes.map((attr) => (
+              <GridItem key={attr.trait_type} bg={hoverBackground} rounded='md'>
+                <VStack fontSize='sm' spacing={0} py={2} textAlign='center'>
+                  <Box fontWeight='bold'>{attr.trait_type}</Box>
+                  <Box>{attr.value}</Box>
+                </VStack>
+
+              </GridItem>
+            ))}
+          </SimpleGrid>
+        )  : (
+          <Box fontSize='sm' textAlign='center'>No additional info found for this item</Box>
+        )}
       </AccordionPanel>
     </AccordionItem>
   )

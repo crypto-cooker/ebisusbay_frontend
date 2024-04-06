@@ -1,14 +1,14 @@
-import React, { ReactNode } from 'react';
-import {Card as ChakraCard, CardProps, CardBody, CardHeader, Heading} from '@chakra-ui/react'; // Alias Chakra's Card
+import React, {ReactNode} from 'react';
+import {Card as ChakraCard, CardBody, CardProps, Heading} from '@chakra-ui/react'; // Alias Chakra's Card
 
-export const Card = ({ children, ...props }: CardProps & { children: ReactNode }) => {
+export const Card = ({ bodyPadding, children, ...props }: CardProps & { bodyPadding?: number | string, children: ReactNode }) => {
   return (
     <ChakraCard
       variant='outline'
       rounded='lg'
       {...props}
     >
-      <CardBody>
+      <CardBody padding={bodyPadding ?? undefined}>
         {children}
       </CardBody>
     </ChakraCard>

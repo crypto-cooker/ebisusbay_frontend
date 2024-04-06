@@ -26,6 +26,7 @@ import {
   SimpleGrid,
   Slide,
   Spacer,
+  Stack,
   Tag,
   Text,
   useBreakpointValue,
@@ -151,14 +152,14 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
         </SimpleGrid>
       </Card>
       <SimpleGrid
-        columns={{base: 1, sm: 3}}
-        templateColumns={{base: undefined, sm: '1fr 30px 1fr'}}
-        templateRows={{base: '1fr 30px 1fr', sm: 'auto'}}
+        columns={{base: 1, md: 3}}
+        templateColumns={{base: undefined, md: '1fr 30px 1fr'}}
+        templateRows={{base: '1fr 30px 1fr', md: 'auto'}}
         gap={4}
         mt={2}
       >
-        <Card>
-          <Flex justify='space-between' mb={2}>
+        <Card bodyPadding={0}>
+          <Stack direction='row' justify='space-between' mb={2} px={5} pt={5}>
             <Box fontSize='lg' fontWeight='bold'>
               {makerUsername}
             </Box>
@@ -181,7 +182,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
                 </PopoverContent>
               </Popover>
             </Box>
-          </Flex>
+          </Stack>
           <Box>
             <Accordion w='full' allowMultiple>
               {deal.maker_items.map((item: any, index: number) => (
@@ -202,8 +203,8 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
         <Box my='auto' mx='auto'>
           <Icon as={FontAwesomeIcon} icon={faHandshake} boxSize={8} />
         </Box>
-        <Card>
-          <Flex justify='space-between' mb={2}>
+        <Card bodyPadding={0}>
+          <Stack direction='row' justify='space-between' mb={2} px={5} pt={5}>
             <Box fontSize='lg' fontWeight='bold'>
               {takerUsername}
             </Box>
@@ -226,7 +227,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
                 </PopoverContent>
               </Popover>
             </Box>
-          </Flex>
+          </Stack>
           <Box>
             <Accordion w='full' allowMultiple>
               {deal.taker_items.map((item: any, index: number) => (
