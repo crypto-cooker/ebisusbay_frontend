@@ -209,7 +209,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
         <Card bodyPadding={0}>
           <Stack direction='row' justify='space-between' mb={2} px={5} pt={5}>
             <Box fontSize='lg' fontWeight='bold'>
-              <NextLink href={`/account/${deal.maker}`}>
+              <NextLink href={`/account/${deal.taker}`}>
                 {takerUsername}
               </NextLink>
             </Box>
