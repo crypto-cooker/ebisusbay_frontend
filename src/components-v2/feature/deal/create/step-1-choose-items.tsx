@@ -327,7 +327,7 @@ const ChooseNftsTab = ({address}: {address: string}) => {
 
 const ChooseTokensTab = ({address}: {address: string}) => {
   const user = useUser();
-  const { allCurrencies  } = useCurrencyBroker();
+  const { allERC20Currencies  } = useCurrencyBroker();
   const { toggleSelectionERC20 } = useBarterDeal();
   const [quantity, setQuantity] = useState<string>();
   const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(allCurrencies[0]);
@@ -398,7 +398,7 @@ const ChooseTokensTab = ({address}: {address: string}) => {
             isSearchable={false}
             menuPortalTarget={document.body} menuPosition={'fixed'}
             styles={customStyles}
-            options={allCurrencies}
+            options={allERC20Currencies}
             formatOptionLabel={({ name, image }) => (
               <HStack>
                 {image}
@@ -406,7 +406,7 @@ const ChooseTokensTab = ({address}: {address: string}) => {
               </HStack>
             )}
             value={selectedCurrency}
-            defaultValue={allCurrencies[0]}
+            defaultValue={allERC20Currencies[0]}
             onChange={handleCurrencyChange}
           />
           <NumberInput
