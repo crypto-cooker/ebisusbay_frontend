@@ -58,6 +58,7 @@ import {faFacebook, faTelegram, faTwitter} from "@fortawesome/free-brands-svg-ic
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
 import {ContractReceipt, ethers} from "ethers";
 import {appConfig} from "@src/Config";
+import NextLink from "next/link";
 
 const config = appConfig();
 
@@ -161,7 +162,9 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
         <Card bodyPadding={0}>
           <Stack direction='row' justify='space-between' mb={2} px={5} pt={5}>
             <Box fontSize='lg' fontWeight='bold'>
-              {makerUsername}
+              <NextLink href={`/account/${deal.maker}`}>
+                {makerUsername}
+              </NextLink>
             </Box>
             <Box>
               <Popover>
@@ -206,7 +209,9 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
         <Card bodyPadding={0}>
           <Stack direction='row' justify='space-between' mb={2} px={5} pt={5}>
             <Box fontSize='lg' fontWeight='bold'>
-              {takerUsername}
+              <NextLink href={`/account/${deal.maker}`}>
+                {takerUsername}
+              </NextLink>
             </Box>
             <Box>
               <Popover>
