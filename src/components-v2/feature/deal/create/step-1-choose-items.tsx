@@ -330,7 +330,7 @@ const ChooseTokensTab = ({address}: {address: string}) => {
   const { allERC20Currencies  } = useCurrencyBroker();
   const { toggleSelectionERC20 } = useBarterDeal();
   const [quantity, setQuantity] = useState<string>();
-  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(allCurrencies[0]);
+  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(allERC20Currencies[0]);
 
   const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
     setSelectedCurrency(currency!);
