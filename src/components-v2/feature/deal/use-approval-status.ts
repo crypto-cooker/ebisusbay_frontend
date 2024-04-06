@@ -47,10 +47,6 @@ const useApprovalStatus = () => {
       contracts: contracts,
     });
 
-    let sumOfCros = {
-      approved: 0,
-      requires: 0
-    };
     const _approvals = contractResults.reduce((acc, approval, index) => {
       const contract = contracts[index];
       const item = items[index];
@@ -63,21 +59,12 @@ const useApprovalStatus = () => {
         acc[key.toLowerCase()] = approval.result as boolean;
       } else if (isToken) {
         const approvedAmount = Number(ethers.utils.formatEther(approval.result as ethers.BigNumber));
-        const requiredAmount = item.start_amount;
-        if (ciEquals(key, ethers.constants.AddressZero) || ciEquals(key, config.tokens.wcro.address)) {
-          sumOfCros.approved += approvedAmount;
-          sumOfCros.requires += requiredAmount;
-        }
+        const requiredAmount = Number(item.start_amount);
         acc[key.toLowerCase()] = approvedAmount >= requiredAmount;
       }
 
       return acc;
     }, {} as {[key: string]: boolean});
-
-    // Combine CRO and WCRO for a single wrapped approval status
-    if (_approvals[config.tokens.wcro.address.toLowerCase()]) {
-      _approvals[config.tokens.wcro.address.toLowerCase()] = sumOfCros.approved >= sumOfCros.requires;
-    }
 
     console.log(contractResults);
     console.log(_approvals);
