@@ -35,7 +35,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHandshake, faLink} from "@fortawesome/free-solid-svg-icons";
+import {faHandshake, faLink, faPlus} from "@fortawesome/free-solid-svg-icons";
 import React, {ReactNode, useCallback, useEffect, useRef, useState} from "react";
 import useGetProfilePreview from "@src/hooks/useGetUsername";
 import {Card} from "@src/components-v2/foundation/card";
@@ -52,7 +52,7 @@ import {OrderState} from "@src/core/services/api-service/types";
 import ApprovalsView from "@src/components-v2/feature/deal/manage/approvals";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {Deal} from "@src/core/services/api-service/mapi/types";
-import {CheckCircleIcon} from "@chakra-ui/icons";
+import {CheckCircleIcon, PlusSquareIcon} from "@chakra-ui/icons";
 import {useRouter} from "next/router";
 import {faFacebook, faTelegram, faTwitter} from "@fortawesome/free-brands-svg-icons";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
@@ -75,6 +75,8 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
   const [expiryDate, setExpiryDate] = useState<string>();
   const [creationDate, setCreationDate] = useState<string>();
+  const { isOpen: isCompleteDialogOpen, onOpen: onOpenCompleteDialog, onClose: onCloseCompleteDialog } = useDisclosure();
+  const [tx, setTx] = useState<ContractReceipt>();
 
   const {data: deal} = useQuery({
     queryKey: ['deal', defaultDeal.id],
@@ -90,8 +92,9 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
     return openPopoverId === `${index}${side}`;
   }
 
-  const handleDealAccepted = () => {
-    toast.success(`Deal has been finalized!`);
+  const handleDealAccepted = (tx?: string) => {
+    setTx(tx);
+    onOpenCompleteDialog();
   }
 
   const handleDealRejected = () => {
@@ -167,23 +170,31 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               </NextLink>
             </Box>
             <Box>
-              <Popover>
-                <PopoverTrigger>
-                  {deal.estimated_maker_value > 0 ? (
-                    <Tag colorScheme='blue'>
-                      Est. Value: ~ ${deal.estimated_maker_value}
-                    </Tag>
-                  ) : (
-                    <Tag>Est. Value: N/A</Tag>
-                  )}
-                </PopoverTrigger>
-                <PopoverContent>
-                  <PopoverArrow />
-                  <PopoverBody>
-                    Estimated value of all NFTs and tokens on this side of the deal
-                  </PopoverBody>
-                </PopoverContent>
-              </Popover>
+              {deal.state === OrderState.ACTIVE ? (
+                <Popover>
+                  <PopoverTrigger>
+                    {deal.estimated_maker_value > 0 ? (
+                      <Tag colorScheme='blue'>
+                        Est. Value: ~ ${deal.estimated_maker_value}
+                      </Tag>
+                    ) : (
+                      <Tag>Est. Value: N/A</Tag>
+                    )}
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverBody>
+                      Estimated value of all NFTs and tokens on this side of the deal
+                    </PopoverBody>
+                  </PopoverContent>
+                </Popover>
+              ) : !isMaker && (
+                <Link href={`/deal/create/${deal.maker}`}>
+                  <PrimaryButton size='xs' leftIcon={<Icon as={FontAwesomeIcon} icon={faPlus} />}>
+                    Make Deal
+                  </PrimaryButton>
+                </Link>
+              )}
             </Box>
           </Stack>
           <Box>
@@ -214,23 +225,31 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               </NextLink>
             </Box>
             <Box>
-              <Popover>
-                <PopoverTrigger>
-                  {deal.estimated_taker_value > 0 ? (
-                    <Tag colorScheme='blue'>
-                      Est. Value: ~ ${deal.estimated_taker_value}
-                    </Tag>
-                  ) : (
-                    <Tag>Est. Value: N/A</Tag>
-                  )}
-                </PopoverTrigger>
-                <PopoverContent>
-                  <PopoverArrow />
-                  <PopoverBody>
-                    Estimated value of all NFTs and tokens on this side of the deal
-                  </PopoverBody>
-                </PopoverContent>
-              </Popover>
+              {deal.state === OrderState.ACTIVE ? (
+                <Popover>
+                  <PopoverTrigger>
+                    {deal.estimated_taker_value > 0 ? (
+                      <Tag colorScheme='blue'>
+                        Est. Value: ~ ${deal.estimated_taker_value}
+                      </Tag>
+                    ) : (
+                      <Tag>Est. Value: N/A</Tag>
+                    )}
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverBody>
+                      Estimated value of all NFTs and tokens on this side of the deal
+                    </PopoverBody>
+                  </PopoverContent>
+                </Popover>
+              ) : !isTaker && (
+                <Link href={`/deal/create/${deal.taker}`}>
+                  <PrimaryButton size='xs' leftIcon={<Icon as={FontAwesomeIcon} icon={faPlus} />}>
+                    Make Deal
+                  </PrimaryButton>
+                </Link>
+              )}
             </Box>
           </Stack>
           <Box>
@@ -278,6 +297,12 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
           )}
         </ConditionalActionBar>
       )}
+      <SuccessModal
+        isOpen={isCompleteDialogOpen}
+        onClose={onCloseCompleteDialog}
+        dealId={deal.id}
+        tx={tx}
+      />
     </Container>
   )
 }
@@ -291,7 +316,11 @@ const ConditionalActionBar = ({condition, children}: {condition: boolean, childr
         {children}
       </Box>
     </Slide>
-  ) : <Box mt={4}>{children}</Box>;
+  ) : (
+    <Box mt={4}>
+      {children}
+    </Box>
+  );
 }
 
 const AcceptButtonView = ({deal, onProgress, onSuccess}: {deal: Deal, onProgress: (isExecuting: boolean) => void, onSuccess: () => void}) => {
@@ -299,8 +328,6 @@ const AcceptButtonView = ({deal, onProgress, onSuccess}: {deal: Deal, onProgress
   const queryClient = useQueryClient();
   const { requestSignature } = useEnforceSignature();
   const contractService = useContractService();
-  const [tx, setTx] = useState<ContractReceipt>();
-  const { isOpen: isCompleteDialogOpen, onOpen: onOpenCompleteDialog, onClose: onCloseCompleteDialog } = useDisclosure();
 
   const { mutate: acceptDeal, isPending: isExecuting } = useMutation({
     mutationFn: async () => {
@@ -335,8 +362,6 @@ const AcceptButtonView = ({deal, onProgress, onSuccess}: {deal: Deal, onProgress
           state: OrderState.COMPLETED,
         }
       );
-      setTx(data);
-      onOpenCompleteDialog();
       onSuccess();
     },
     onError: (error: any) => {
@@ -353,21 +378,13 @@ const AcceptButtonView = ({deal, onProgress, onSuccess}: {deal: Deal, onProgress
   }
 
   return (
-    <>
-      <PrimaryButton
-        onClick={handleAcceptDeal}
-        isLoading={isExecuting}
-        isDisabled={isExecuting}
-      >
-        Accept
-      </PrimaryButton>
-      <SuccessModal
-        isOpen={isCompleteDialogOpen}
-        onClose={onCloseCompleteDialog}
-        dealId={deal.id}
-        tx={tx}
-      />
-    </>
+    <PrimaryButton
+      onClick={handleAcceptDeal}
+      isLoading={isExecuting}
+      isDisabled={isExecuting}
+    >
+      Accept
+    </PrimaryButton>
   )
 }
 
@@ -604,7 +621,6 @@ interface SuccessModalProps {
 }
 
 const SuccessModal = ({isOpen, onClose, dealId, tx}: SuccessModalProps) => {
-  const user = useUser();
   const { onCopy, setValue } = useClipboard(appUrl(`/deal/${dealId}`).toString());
 
   const handleCopy = useCallback(() => {
