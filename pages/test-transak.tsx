@@ -1,6 +1,6 @@
 import {useMemo, useState} from "react";
 import {Contract, ethers} from "ethers";
-import {Box, Button, HStack, SimpleGrid, Stack, Text, Textarea, useClipboard, VStack} from "@chakra-ui/react";
+import {Box, Button, HStack, Input, SimpleGrid, Stack, Text, Textarea, useClipboard, VStack} from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {appConfig} from "@src/Config";
 import {ERC721} from "@src/Contracts/Abis";
@@ -213,7 +213,11 @@ const Transak = () => {
         .filter((purchase) => !purchase.currency || purchase.currency === ethers.constants.AddressZero)
         .reduce((acc, curr) => acc + Number(curr.price), 0);
       const price = ethers.utils.parseEther(`${croTotal}`);
-      const { data: serverSig } = await getServerSignature((user.address), selectedListings.map((purchase) => purchase.listingId));
+      const { data: serverSig } = await getServerSignature(
+        user.address,
+        selectedListings.map((purchase) => purchase.listingId),
+        recipientAddress
+      );
       const { signature, orderData, ...sigData } = serverSig;
       const total = price.add(sigData.feeAmount);
 
@@ -231,6 +235,11 @@ const Transak = () => {
     } finally {
       setIsExecuting(false);
     }
+  }
+
+  const [recipientAddress, setRecipientAddress] = useState<string>('');
+  const handleRecipientAddressChange = (e: any) => {
+    setRecipientAddress(e.target.value);
   }
 
   return (
@@ -267,6 +276,12 @@ const Transak = () => {
           </Box>
         </Stack>
       </Box>
+      <Input
+        mt={4}
+        placeholder='Enter a recipient address'
+        value={recipientAddress}
+        onChange={handleRecipientAddressChange}
+      />
       <PrimaryButton
         mt={4}
         isLoading={isExecuting}
