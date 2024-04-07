@@ -1,5 +1,5 @@
 import {
-  Accordion,
+  Accordion, Alert, AlertDescription, AlertIcon, AlertTitle,
   Badge,
   Box,
   Button,
@@ -59,6 +59,7 @@ import CronosIcon from "@src/components-v2/shared/icons/cronos";
 import {ContractReceipt, ethers} from "ethers";
 import {appConfig} from "@src/Config";
 import NextLink from "next/link";
+import {commify} from "ethers/lib/utils";
 
 const config = appConfig();
 
@@ -166,7 +167,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
           <Stack direction='row' justify='space-between' mb={2} px={5} pt={5}>
             <Box fontSize='lg' fontWeight='bold'>
               <NextLink href={`/account/${deal.maker}`}>
-                {makerUsername}
+                {makerUsername} {isMaker && <>(You)</>}
               </NextLink>
             </Box>
             <Box>
@@ -221,7 +222,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
           <Stack direction='row' justify='space-between' mb={2} px={5} pt={5}>
             <Box fontSize='lg' fontWeight='bold'>
               <NextLink href={`/account/${deal.taker}`}>
-                {takerUsername}
+                {takerUsername} {isTaker && <>(You)</>}
               </NextLink>
             </Box>
             <Box>
@@ -277,6 +278,14 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
 
       {(isMaker || isTaker) && deal.state === OrderState.ACTIVE && (
         <ConditionalActionBar condition={isMobile ?? false}>
+          {!deal.invalid && (
+            <Alert status='warning' mb={4}>
+              <AlertIcon />
+              <AlertDescription>
+                This deal has been marked as invalid and may not complete. Please check both sides have the correct items and quantities in their respective inventories.
+              </AlertDescription>
+            </Alert>
+          )}
           {isTaker ? (
             <Flex>
               <RejectButtonView deal={deal} onSuccess={handleDealRejected}/>
@@ -296,6 +305,11 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
             </Flex>
           )}
         </ConditionalActionBar>
+      )}
+      {isTaker && deal.state === OrderState.ACTIVE && (
+        <Box fontSize='sm' textAlign='center' mt={2}>
+          Users with {commify(2000)} or more Mitama can accept deals at no extra cost. Otherwise, a flat 10 CRO fee is applied upon acceptance of the deal. Earn Mitama by staking FRTN in the <NextLink href='/ryoshi' className='color fw-bold'>Ryoshi Dynasties Bank</NextLink>
+        </Box>
       )}
       <SuccessModal
         isOpen={isCompleteDialogOpen}
@@ -317,9 +331,9 @@ const ConditionalActionBar = ({condition, children}: {condition: boolean, childr
       </Box>
     </Slide>
   ) : (
-    <Box mt={4}>
+    <Card mt={2}>
       {children}
-    </Box>
+    </Card>
   );
 }
 
