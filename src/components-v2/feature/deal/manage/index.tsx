@@ -93,7 +93,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
     return openPopoverId === `${index}${side}`;
   }
 
-  const handleDealAccepted = (tx?: string) => {
+  const handleDealAccepted = (tx?: ContractReceipt) => {
     setTx(tx);
     onOpenCompleteDialog();
   }
