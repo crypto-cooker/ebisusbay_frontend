@@ -61,7 +61,7 @@ export const CreateDeal = ({address}: CreateDealProps) => {
 
   const handleExit = () => {
     setIsComplete(false);
-    router.push('/deal');
+    router.push(`/account/${user.address}?tab=deals`);
   }
 
   return (
