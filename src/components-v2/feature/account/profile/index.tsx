@@ -7,6 +7,7 @@ import Inventory from "@src/components-v2/feature/account/profile/tabs/inventory
 import Collections from "@src/Components/Account/Profile/Collections";
 import Listings from "@src/components-v2/feature/account/profile/tabs/listings";
 import Offers from "@src/components-v2/feature/account/profile/tabs/offers";
+import Deals from "@src/components-v2/feature/account/profile/tabs/deals";
 import Sales from "@src/Components/Account/Profile/Sales";
 import Favorites from "@src/Components/Account/Profile/Favorites";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
@@ -47,7 +48,6 @@ import {ChevronDownIcon} from "@chakra-ui/icons";
 import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
 import Link from "next/link";
-import Deals from "@src/components-v2/feature/account/profile/tabs/deals";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {toast} from "react-toastify";
