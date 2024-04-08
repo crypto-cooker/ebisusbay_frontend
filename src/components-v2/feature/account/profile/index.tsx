@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from '
 import {useRouter} from 'next/router';
 import styles from './profile.module.scss';
 import {hostedImage} from "@src/helpers/image";
-import {caseInsensitiveCompare, isUserBlacklisted, shortAddress, username} from "@src/utils";
+import {appUrl, caseInsensitiveCompare, isUserBlacklisted, username} from "@src/utils";
 import Inventory from "@src/components-v2/feature/account/profile/tabs/inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
 import Listings from "@src/components-v2/feature/account/profile/tabs/listings";
@@ -12,7 +12,6 @@ import Favorites from "@src/Components/Account/Profile/Favorites";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {pushQueryString} from "@src/helpers/query";
-import {ethers} from "ethers";
 import {
   Avatar,
   Box,
@@ -21,7 +20,8 @@ import {
   Grid,
   GridItem,
   Heading,
-  HStack, Icon,
+  HStack,
+  Icon,
   IconButton,
   Image,
   Menu,
@@ -32,6 +32,7 @@ import {
   Tag,
   Text,
   useBreakpointValue,
+  useClipboard,
   useMediaQuery,
   Wrap
 } from "@chakra-ui/react";
@@ -47,6 +48,9 @@ import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
 import Link from "next/link";
 import Deals from "@src/components-v2/feature/account/profile/tabs/deals";
+import {useColorModeValue} from "@chakra-ui/color-mode";
+import LayeredIcon from "@src/Components/components/LayeredIcon";
+import {toast} from "react-toastify";
 
 const MotionGrid = motion(Grid)
 
@@ -95,6 +99,8 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
   const user = useUser();
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const router = useRouter();
+  const { onCopy, value, setValue, hasCopied } = useClipboard(appUrl(`/deal/create/${address}`).toString());
+
   const variants = {
     expand: { gridTemplateColumns: '1fr 358px' },
     collapse: { gridTemplateColumns: '1fr 0px' },
@@ -107,6 +113,10 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
   const overflowCount = useBreakpointValue<number>(
     {base: 2, sm: 1, md: 0},
     {fallback: 'md'},
+  );
+  const pulseColorClass = useColorModeValue(
+    'pulse-animation-light',
+    'pulse-animation-dark'
   );
 
   const navigateTo = (route: string) => {
@@ -153,6 +163,11 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
     setOverflowTabKey(tabKey);
     handleTabChange(TabKey[tabKey as keyof typeof TabKey]);
   };
+
+  const handleCopyDealLink = () => {
+    onCopy();
+    toast.success('Deal link copied!');
+  }
 
   return (
     <div className={styles.profile} >
@@ -202,7 +217,12 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                   <Flex direction='column' ms={4} flex={1}>
                     <Wrap align='center'>
                       <Heading>{username(identifier)}</Heading>
-                      <SocialsBar socials={profile} address={address} />
+                      <SocialsBar socials={profile} address={address}/>
+                      {isProfileOwner && (
+                        <span onClick={handleCopyDealLink} style={{cursor: 'pointer'}} title="Copy Deal Link">
+                          <LayeredIcon icon={faHandshake}/>
+                        </span>
+                      )}
                     </Wrap>
                     {isUserBlacklisted(address) && (
                       <Flex>
@@ -289,6 +309,18 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                     size={{base: 'sm', sm: 'md'}}
                     color={currentTab === key ? 'white' : getTheme(user.theme).colors.textColor3}
                   >
+                    {key === TabKey.deals && isProfileOwner && (
+                      <Box
+                        position='absolute'
+                        top={-1}
+                        right={-1}
+                        bg='#FD8800'
+                        rounded='full'
+                        w='10px'
+                        h='10px'
+                        animation={`${pulseColorClass} 1.5s infinite`}
+                      />
+                    )}
                     {tab.label}
                   </ChakraButton>
                 ))}
