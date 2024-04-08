@@ -15,9 +15,9 @@ import {
   VStack
 } from "@chakra-ui/react";
 import React, {useState} from "react";
-import {Step1ChooseItems} from "@src/components-v2/feature/deal/create/step-1-choose-items";
+import {Step1ChooseItems} from "@src/components-v2/feature/deal/create/step-1-taker-items";
 import {DealPreview} from "@src/components-v2/feature/deal/create/deal-preview";
-import {Step2ChooseItems} from "@src/components-v2/feature/deal/create/step-2-offer-items";
+import {Step2ChooseItems} from "@src/components-v2/feature/deal/create/step-2-maker-items";
 import {useUser} from "@src/components-v2/useUser";
 import {ciEquals} from "@src/utils";
 import {PrimaryButton} from "@src/components-v2/foundation/button";

@@ -1,13 +1,12 @@
-import InventoryFilterContainer
-  from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
-import InfiniteScroll from "react-infinite-scroll-component";
+import {useUser} from "@src/components-v2/useUser";
+import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
+import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
+import useDebounce from "@src/core/hooks/useDebounce";
 import {
   Box,
   Center,
   CloseButton,
   Collapse,
-  Container,
-  Heading,
   HStack,
   Icon,
   IconButton,
@@ -15,78 +14,30 @@ import {
   InputGroup,
   InputRightElement,
   ListItem,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
   SimpleGrid,
   Spinner,
   Stack,
-  Text,
   UnorderedList,
   useBreakpointValue,
   VStack
 } from "@chakra-ui/react";
-import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
-import {useInfiniteQuery} from "@tanstack/react-query";
-import {useUser} from "@src/components-v2/useUser";
 import {ApiService} from "@src/core/services/api-service";
+import {ciEquals} from "@src/utils";
+import {useInfiniteQuery} from "@tanstack/react-query";
+import {getTheme} from "@src/Theme/theme";
+import {DealNftCard} from "@src/components-v2/shared/nft-card2";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter, faMagnifyingGlass, faSort} from "@fortawesome/free-solid-svg-icons";
 import Select from "react-select";
-import ReactSelect, {SingleValue} from "react-select";
 import {SortOption, sortOptions} from "@src/components-v2/feature/account/profile/tabs/inventory/sort-options";
-import useDebounce from "@src/core/hooks/useDebounce";
-import {getTheme} from "@src/Theme/theme";
-import {DealNftCard} from "@src/components-v2/shared/nft-card2";
-import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
-import {ciEquals, isWrappedeCro} from "@src/utils";
-import {Tab, Tabs} from "@src/components-v2/foundation/tabs";
-import useCurrencyBroker, {BrokerCurrency} from "@src/hooks/use-currency-broker";
-import {toast} from "react-toastify";
-import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {Card} from "@src/components-v2/foundation/card";
-import {Contract, ethers} from "ethers";
-import WCRO from "@src/Contracts/WCRO.json";
-import {parseErrorMessage} from "@src/helpers/validator";
-import {appConfig} from "@src/Config";
+import InventoryFilterContainer
+  from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-const config = appConfig();
-
-interface Step2ChooseItemsProps {
-  address: string;
-}
-
-export const Step2ChooseItems = ({address}: Step2ChooseItemsProps) => {
-
-  return (
-    <>
-      <Box my={4}>
-        <Heading>
-          Step 2: Select your items
-        </Heading>
-        <Text>
-          Offer up any NFTs, Tokens, or both!
-        </Text>
-      </Box>
-      <Tabs tabListStyle={{textAlign: 'start'}}>
-        <Tab label='NFTs'>
-          <ChooseNftsTab address={address} />
-        </Tab>
-        <Tab label='Tokens'>
-          <ChooseTokensTab address={address} />
-        </Tab>
-      </Tabs>
-    </>
-  )
-}
-
-
-const ChooseNftsTab = ({address}: {address: string}) => {
+export const ChooseNftsTab = ({address}: {address: string}) => {
   const user = useUser();
-  const { toggleOfferNFT, barterState } = useBarterDeal();
+  const { toggleSelectionNFT, barterState } = useBarterDeal();
 
 
   const [collections, setCollections] = useState([]);
@@ -114,13 +65,13 @@ const ChooseNftsTab = ({address}: {address: string}) => {
   };
 
   const amountSelected = (nftAddress: string, nftId: string) => {
-    const selectedNft = barterState.maker.nfts.find((bNft) => ciEquals(bNft.nftAddress, nftAddress) && bNft.nftId === nftId);
+    const selectedNft = barterState.taker.nfts.find((bNft) => ciEquals(bNft.nftAddress, nftAddress) && bNft.nftId === nftId);
 
     return selectedNft?.amountSelected || 0;
   }
 
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery({
-    queryKey: ['Step2ChooseItems', address, queryParams],
+    queryKey: ['Step1ChooseItems', address, queryParams],
     queryFn: fetcher,
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
@@ -146,7 +97,7 @@ const ChooseNftsTab = ({address}: {address: string}) => {
   }, []);
 
   const handleSelectItem = (nft: any) => {
-    toggleOfferNFT(nft);
+    toggleSelectionNFT(nft);
   }
 
   const userTheme =  user.theme;
@@ -204,13 +155,13 @@ const ChooseNftsTab = ({address}: {address: string}) => {
             <React.Fragment key={index}>
               {items.data.map((nft, index) => {
                 return (
-                  <div key={`${nft.nftAddress}-${nft.nftId}-${index}`}>
+                  <Box key={`${nft.nftAddress}-${nft.nftId}-${index}`}>
                     <DealNftCard
                       nft={nft}
                       onSelect={handleSelectItem}
                       amountSelected={amountSelected(nft.nftAddress, nft.nftId)}
                     />
-                  </div>
+                  </Box>
                 )
               })}
             </React.Fragment>
@@ -317,7 +268,7 @@ const ChooseNftsTab = ({address}: {address: string}) => {
           dataLength={data?.pages ? data.pages.flat().length : 0}
           next={fetchNextPage}
           hasMore={hasNextPage ?? false}
-          style={{ overflow: 'hidden' }}
+          style={{ overflow: 'initial' }}
           loader={
             <Center>
               <Spinner />
@@ -328,164 +279,5 @@ const ChooseNftsTab = ({address}: {address: string}) => {
         </InfiniteScroll>
       </InventoryFilterContainer>
     </>
-  )
-}
-
-const ChooseTokensTab = ({address}: {address: string}) => {
-  const user = useUser();
-  const { allERC20Currencies  } = useCurrencyBroker();
-  const { toggleOfferERC20 } = useBarterDeal();
-  const [quantity, setQuantity] = useState<string>();
-  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(allERC20Currencies[0]);
-  const [isWrapping, setIsWrapping] = useState(false);
-
-  const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
-    setSelectedCurrency(currency!);
-  }, [selectedCurrency]);
-
-  const handleAddCurrency = () => {
-    if (!selectedCurrency) {
-      toast.error('A currency is required');
-      return;
-    }
-
-    if (!quantity) {
-      toast.error('An amount is required');
-      return;
-    }
-
-    toggleOfferERC20({
-      ...selectedCurrency,
-      amount: Math.floor(parseInt(quantity)),
-    });
-  }
-
-  const handleWrapCro = async () => {
-    if (!selectedCurrency) {
-      toast.error('A currency is required');
-      return;
-    }
-
-    if (!isWrappedeCro(selectedCurrency.address)) {
-      toast.error('CRO must be selected for this action');
-      return;
-    }
-
-    if (!quantity) {
-      toast.error('An amount is required');
-      return;
-    }
-
-    try {
-      setIsWrapping(true);
-      const amountInWei = ethers.utils.parseEther(quantity);
-      const contract = new Contract(config.tokens.wcro.address, WCRO, user.provider.signer)
-      const tx = await contract.deposit({ value: amountInWei });
-      await tx.wait();
-
-      toast.success('CRO wrapped successfully to WCRO');
-      toggleOfferERC20({
-        ...selectedCurrency,
-        amount: Math.floor(parseInt(quantity)),
-      });
-    } catch (e) {
-      console.log(e);
-      toast.error(parseErrorMessage(e));
-    } finally {
-      setIsWrapping(false);
-    }
-  }
-
-  const userTheme = user.theme;
-  const customStyles = {
-    menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
-    option: (base: any, state: any) => ({
-      ...base,
-      background: getTheme(userTheme).colors.bgColor2,
-      color: getTheme(userTheme).colors.textColor3,
-      borderRadius: state.isFocused ? '0' : 0,
-      '&:hover': {
-        background: '#eee',
-        color: '#000',
-      },
-    }),
-    menu: (base: any) => ({
-      ...base,
-      borderRadius: 0,
-      marginTop: 0,
-    }),
-    menuList: (base: any) => ({
-      ...base,
-      padding: 0,
-    }),
-    singleValue: (base: any, state: any) => ({
-      ...base,
-      background: getTheme(userTheme).colors.bgColor2,
-      color: getTheme(userTheme).colors.textColor3
-    }),
-    control: (base: any, state: any) => ({
-      ...base,
-      background: getTheme(userTheme).colors.bgColor2,
-      color: getTheme(userTheme).colors.textColor3,
-      padding: 1,
-      minWidth: '132px',
-      borderColor: 'none'
-    }),
-  };
-
-  return (
-    <Container>
-      <Card>
-        <Stack direction={{base: 'column', sm: 'row'}}>
-          <ReactSelect
-            isSearchable={false}
-            menuPortalTarget={document.body} menuPosition={'fixed'}
-            styles={customStyles}
-            options={allERC20Currencies}
-            formatOptionLabel={({ name, image }) => (
-              <HStack>
-                {image}
-                <span>{name}</span>
-              </HStack>
-            )}
-            value={selectedCurrency}
-            defaultValue={allERC20Currencies[0]}
-            onChange={handleCurrencyChange}
-          />
-          <NumberInput
-            value={quantity}
-            max={1000000}
-            onChange={(valueAsString: string) => setQuantity(valueAsString)}
-            precision={0}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </Stack>
-        <Stack direction={{base: 'column', sm: 'row'}} justify='end' mt={2}>
-          {isWrappedeCro(selectedCurrency.address) && (
-            <>
-              <Box fontSize='sm'>If wanting to use native CRO for the deal, you can choose to wrap to WCRO</Box>
-              <PrimaryButton
-                onClick={handleWrapCro}
-                isLoading={isWrapping}
-                isDisabled={isWrapping}
-                loadingText='Wrapping'
-              >
-                Wrap and Add
-              </PrimaryButton>
-            </>
-          )}
-          {!isWrapping && (
-            <PrimaryButton onClick={handleAddCurrency}>
-              Add
-            </PrimaryButton>
-          )}
-        </Stack>
-      </Card>
-    </Container>
   )
 }

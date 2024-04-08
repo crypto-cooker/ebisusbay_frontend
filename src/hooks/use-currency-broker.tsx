@@ -9,6 +9,7 @@ export type BrokerCurrency = {
   symbol: string;
   name: string;
   image: string;
+  decimals: number;
 }
 
 type ConfigCurrency = {

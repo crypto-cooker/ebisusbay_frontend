@@ -64,13 +64,14 @@ const useCreateDeal = () => {
           endAmount: nft.amountSelected
         });
       }
-      for (const nft of barterState.maker.erc20) {
+      for (const token of barterState.maker.erc20) {
+        const amount = ethers.utils.parseUnits(token.amount.toString(), token.decimals);
         makerItems.push({
-          itemType: ciEquals(nft.address, ethers.constants.AddressZero) ? ItemType.NATIVE : ItemType.ERC20,
-          token: nft.address,
+          itemType: ciEquals(token.address, ethers.constants.AddressZero) ? ItemType.NATIVE : ItemType.ERC20,
+          token: token.address,
           identifierOrCriteria: 0,
-          startAmount: ethers.utils.parseEther(nft.amount.toString()),
-          endAmount: ethers.utils.parseEther(nft.amount.toString())
+          startAmount: amount,
+          endAmount: amount
         });
       }
 
@@ -85,13 +86,14 @@ const useCreateDeal = () => {
           endAmount: nft.amountSelected
         });
       }
-      for (const nft of barterState.taker.erc20) {
+      for (const token of barterState.taker.erc20) {
+        const amount = ethers.utils.parseUnits(token.amount.toString(), token.decimals);
         takerItems.push({
-          itemType: ciEquals(nft.address, ethers.constants.AddressZero) ? ItemType.NATIVE : ItemType.ERC20,
-          token: nft.address,
+          itemType: ciEquals(token.address, ethers.constants.AddressZero) ? ItemType.NATIVE : ItemType.ERC20,
+          token: token.address,
           identifierOrCriteria: 0,
-          startAmount: ethers.utils.parseEther(nft.amount.toString()),
-          endAmount: ethers.utils.parseEther(nft.amount.toString())
+          startAmount: amount,
+          endAmount: amount
         });
       }
 

@@ -1,14 +1,12 @@
-import InventoryFilterContainer
-  from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
-import InfiniteScroll from "react-infinite-scroll-component";
+import {useUser} from "@src/components-v2/useUser";
+import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
+import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
+import useDebounce from "@src/core/hooks/useDebounce";
 import {
   Box,
   Center,
   CloseButton,
   Collapse,
-  Container,
-  Flex,
-  Heading,
   HStack,
   Icon,
   IconButton,
@@ -16,71 +14,30 @@ import {
   InputGroup,
   InputRightElement,
   ListItem,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
   SimpleGrid,
   Spinner,
   Stack,
-  Text,
   UnorderedList,
   useBreakpointValue,
   VStack
 } from "@chakra-ui/react";
-import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
-import {useInfiniteQuery} from "@tanstack/react-query";
-import {useUser} from "@src/components-v2/useUser";
 import {ApiService} from "@src/core/services/api-service";
+import {ciEquals} from "@src/utils";
+import {useInfiniteQuery} from "@tanstack/react-query";
+import {getTheme} from "@src/Theme/theme";
+import {DealNftCard} from "@src/components-v2/shared/nft-card2";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter, faMagnifyingGlass, faSort} from "@fortawesome/free-solid-svg-icons";
 import Select from "react-select";
-import ReactSelect, {SingleValue} from "react-select";
 import {SortOption, sortOptions} from "@src/components-v2/feature/account/profile/tabs/inventory/sort-options";
-import useDebounce from "@src/core/hooks/useDebounce";
-import {getTheme} from "@src/Theme/theme";
-import {DealNftCard} from "@src/components-v2/shared/nft-card2";
-import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
-import {ciEquals} from "@src/utils";
-import {Tab, Tabs} from "@src/components-v2/foundation/tabs";
-import useCurrencyBroker, {BrokerCurrency} from "@src/hooks/use-currency-broker";
-import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {toast} from "react-toastify";
-import {Card} from "@src/components-v2/foundation/card";
+import InventoryFilterContainer
+  from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-interface Step1ChooseItemsProps {
-  address: string;
-}
-
-export const Step1ChooseItems = ({address}: Step1ChooseItemsProps) => {
-
-  return (
-    <>
-      <Box my={4}>
-        <Heading>
-          Step 1: Select their items
-        </Heading>
-        <Text>
-          Choose NFTs, Tokens, or both!
-        </Text>
-      </Box>
-      <Tabs tabListStyle={{textAlign: 'start'}}>
-        <Tab label='NFTs'>
-          <ChooseNftsTab address={address} />
-        </Tab>
-        <Tab label='Tokens'>
-          <ChooseTokensTab address={address} />
-        </Tab>
-      </Tabs>
-    </>
-  )
-}
-
-const ChooseNftsTab = ({address}: {address: string}) => {
+export const ChooseNftsTab = ({address}: {address: string}) => {
   const user = useUser();
-  const { toggleSelectionNFT, barterState } = useBarterDeal();
+  const { toggleOfferNFT, barterState } = useBarterDeal();
 
 
   const [collections, setCollections] = useState([]);
@@ -108,13 +65,13 @@ const ChooseNftsTab = ({address}: {address: string}) => {
   };
 
   const amountSelected = (nftAddress: string, nftId: string) => {
-    const selectedNft = barterState.taker.nfts.find((bNft) => ciEquals(bNft.nftAddress, nftAddress) && bNft.nftId === nftId);
+    const selectedNft = barterState.maker.nfts.find((bNft) => ciEquals(bNft.nftAddress, nftAddress) && bNft.nftId === nftId);
 
     return selectedNft?.amountSelected || 0;
   }
 
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery({
-    queryKey: ['Step1ChooseItems', address, queryParams],
+    queryKey: ['Step2ChooseItems', address, queryParams],
     queryFn: fetcher,
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
@@ -140,7 +97,7 @@ const ChooseNftsTab = ({address}: {address: string}) => {
   }, []);
 
   const handleSelectItem = (nft: any) => {
-    toggleSelectionNFT(nft);
+    toggleOfferNFT(nft);
   }
 
   const userTheme =  user.theme;
@@ -198,13 +155,13 @@ const ChooseNftsTab = ({address}: {address: string}) => {
             <React.Fragment key={index}>
               {items.data.map((nft, index) => {
                 return (
-                  <Box key={`${nft.nftAddress}-${nft.nftId}-${index}`}>
+                  <div key={`${nft.nftAddress}-${nft.nftId}-${index}`}>
                     <DealNftCard
                       nft={nft}
                       onSelect={handleSelectItem}
                       amountSelected={amountSelected(nft.nftAddress, nft.nftId)}
                     />
-                  </Box>
+                  </div>
                 )
               })}
             </React.Fragment>
@@ -311,7 +268,7 @@ const ChooseNftsTab = ({address}: {address: string}) => {
           dataLength={data?.pages ? data.pages.flat().length : 0}
           next={fetchNextPage}
           hasMore={hasNextPage ?? false}
-          style={{ overflow: 'initial' }}
+          style={{ overflow: 'hidden' }}
           loader={
             <Center>
               <Spinner />
@@ -324,111 +281,3 @@ const ChooseNftsTab = ({address}: {address: string}) => {
     </>
   )
 }
-
-const ChooseTokensTab = ({address}: {address: string}) => {
-  const user = useUser();
-  const { allERC20Currencies  } = useCurrencyBroker();
-  const { toggleSelectionERC20 } = useBarterDeal();
-  const [quantity, setQuantity] = useState<string>();
-  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(allERC20Currencies[0]);
-
-  const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
-    setSelectedCurrency(currency!);
-  }, [selectedCurrency]);
-
-  const handleAddCurrency = () => {
-    if (!selectedCurrency) {
-      toast.error('A currency is required');
-      return;
-    }
-
-    if (!quantity) {
-      toast.error('An amount is required');
-      return;
-    }
-
-    toggleSelectionERC20({
-      ...selectedCurrency,
-      amount: Math.floor(parseInt(quantity)),
-    })
-  }
-
-  const userTheme = user.theme;
-  const customStyles = {
-    menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
-    option: (base: any, state: any) => ({
-      ...base,
-      background: getTheme(userTheme).colors.bgColor2,
-      color: getTheme(userTheme).colors.textColor3,
-      borderRadius: state.isFocused ? '0' : 0,
-      '&:hover': {
-        background: '#eee',
-        color: '#000',
-      },
-    }),
-    menu: (base: any) => ({
-      ...base,
-      borderRadius: 0,
-      marginTop: 0,
-    }),
-    menuList: (base: any) => ({
-      ...base,
-      padding: 0,
-    }),
-    singleValue: (base: any, state: any) => ({
-      ...base,
-      background: getTheme(userTheme).colors.bgColor2,
-      color: getTheme(userTheme).colors.textColor3
-    }),
-    control: (base: any, state: any) => ({
-      ...base,
-      background: getTheme(userTheme).colors.bgColor2,
-      color: getTheme(userTheme).colors.textColor3,
-      padding: 1,
-      minWidth: '132px',
-      borderColor: 'none'
-    }),
-  };
-
-  return (
-    <Container>
-      <Card>
-        <Stack direction={{base: 'column', sm: 'row'}}>
-          <ReactSelect
-            isSearchable={false}
-            menuPortalTarget={document.body} menuPosition={'fixed'}
-            styles={customStyles}
-            options={allERC20Currencies}
-            formatOptionLabel={({ name, image }) => (
-              <HStack>
-                {image}
-                <span>{name}</span>
-              </HStack>
-            )}
-            value={selectedCurrency}
-            defaultValue={allERC20Currencies[0]}
-            onChange={handleCurrencyChange}
-          />
-          <NumberInput
-            value={quantity}
-            max={1000000}
-            onChange={(valueAsString: string) => setQuantity(valueAsString)}
-            precision={0}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </Stack>
-        <Flex justify='end' mt={2}>
-          <PrimaryButton onClick={handleAddCurrency}>
-            Add
-          </PrimaryButton>
-        </Flex>
-      </Card>
-    </Container>
-  )
-}
-

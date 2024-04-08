@@ -18,6 +18,7 @@ export interface BarterToken {
   name: string;
   image: string;
   amount: number;
+  decimals: number;
 }
 
 export interface BarterState {
@@ -167,14 +168,14 @@ export const toggleTakerERC20Atom = atom(
   (get, set, erc20: BarterToken) => {
     set(barterStateAtom, (prev) => {
       const erc20Tokens = prev.taker.erc20;
-      const exists = erc20Tokens.find((item) => item.symbol === erc20.symbol);
+      const exists = erc20Tokens.find((item) => ciEquals(item.address, erc20.address));
       if (exists) {
         // If the token already exists, remove it
         return {
           ...prev,
           taker: {
             ...prev.taker,
-            erc20: erc20Tokens.filter((item) => item.symbol !== erc20.symbol),
+            erc20: erc20Tokens.filter((item) => !ciEquals(item.symbol, erc20.symbol)),
           },
         };
       } else {
@@ -236,14 +237,14 @@ export const toggleOfferAERC20Atom = atom(
   (get, set, erc20: BarterToken) => {
     set(barterStateAtom, (prev) => {
       const erc20Tokens = prev.maker.erc20; // Note: maker stores what taker offers
-      const exists = erc20Tokens.find((item) => item.symbol === erc20.symbol);
+      const exists = erc20Tokens.find((item) => ciEquals(item.symbol, erc20.symbol));
       if (exists) {
         // If the token already exists in the offer, remove it
         return {
           ...prev,
           maker: {
             ...prev.maker,
-            erc20: erc20Tokens.filter((item) => item.symbol !== erc20.symbol),
+            erc20: erc20Tokens.filter((item) => !ciEquals(item.symbol, erc20.symbol)),
           },
         };
       } else {
