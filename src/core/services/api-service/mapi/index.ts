@@ -23,6 +23,9 @@ import {
   FullCollectionsQuery,
   FullCollectionsQueryParams
 } from "@src/core/services/api-service/mapi/queries/fullcollections";
+import OrdersRepository from "@src/core/services/api-service/mapi/repositories/orders";
+import {DealListQuery, DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
+import {AbbreviatedDeal, Deal} from "@src/core/services/api-service/mapi/types";
 
 const config = appConfig();
 
@@ -31,12 +34,14 @@ class Mapi {
   private offers;
   private wallets;
   private collections;
+  private orders;
 
   constructor(apiKey?: string) {
     this.listings = new ListingsRepository(apiKey);
     this.offers = new OffersRepository(apiKey);
     this.wallets = new WalletsRepository(apiKey);
     this.collections = new CollectionsRepository(apiKey);
+    this.orders = new OrdersRepository(apiKey);
   }
 
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
@@ -164,6 +169,23 @@ class Mapi {
     }
 
     return {}
+  }
+
+  async getDeal(id: string) {
+    const response = await this.orders.getDeal(id);
+
+    return response.data.deals[0] as Deal;
+  }
+
+  async getDeals(query?: DealListQueryParams): Promise<PagedList<AbbreviatedDeal>> {
+    const response = await this.orders.getDeals(new DealListQuery(query));
+
+    return new PagedList<AbbreviatedDeal>(
+      response.data.deals ?? [],
+      response.data.page ?? 1,
+      response.data.page < response.data.totalPages,
+      response.data.totalCount ?? 0
+    );
   }
 }
 

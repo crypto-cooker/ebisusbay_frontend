@@ -3,17 +3,17 @@ import {appConfig} from "@src/Config";
 import {BigNumber, ethers} from "ethers";
 import {useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
+import UUID from "uuid-int";
 
-export interface ListingSignerProps {
-  price: string;
-  itemType: ItemType;
-  collectionAddress: string;
-  tokenId: string;
-  listingTime: number;
-  expirationDate: number;
+const generator = UUID(0);
+
+export interface OrderSignerProps {
+  taker: string;
+  makerItems: OfferItem[];
+  takerItems: OfferItem[];
+  startDate: number;
+  endDate: number;
   salt: number;
-  amount: number;
-  currency?: string;
 }
 
 export enum ItemType {
@@ -47,9 +47,7 @@ export enum OrderType {
   TOKEN_TRADES,
 
   //2: NFT -> ERC20
-  SELL_NFT_TOKEN,
-
-  OFFER
+  SELL_NFT_TOKEN
 }
 
 export type Order = {
@@ -65,7 +63,7 @@ export type Order = {
 export type OfferItem = {
   itemType: ItemType,
   token: string,
-  identifierOrCriteria: BigNumber | number,
+  identifierOrCriteria: string | number,
   startAmount: BigNumber | number,
   endAmount: BigNumber | number
 }
@@ -119,33 +117,17 @@ const useSignature = () => {
     }
   }, [user.wallet.isConnected, user.wallet.address, user.provider.signer]);
 
-  const createSigner = useCallback(async (signatureValues: ListingSignerProps) => {
+  const createSigner = useCallback(async (props: OrderSignerProps) => {
     setIsLoading(true);
-    const considerationPrice= ethers.utils.parseEther(`${signatureValues.price}`);
-    const offerItem = {
-      itemType: signatureValues.itemType,
-      token: signatureValues.collectionAddress.toLowerCase(),
-      identifierOrCriteria: BigNumber.from(signatureValues.tokenId),
-      startAmount: signatureValues.amount ?? 1,
-      endAmount: signatureValues.amount ?? 1
-    };
 
-    const considerationItem = {
-      itemType: signatureValues.currency ? ItemType.ERC20 : ItemType.NATIVE,
-      token: signatureValues.currency ?? ethers.constants.AddressZero,
-      identifierOrCriteria: 0,
-      startAmount: considerationPrice,
-      endAmount: considerationPrice
-    };
-
-    const order = {
+    const order: Order = {
       offerer: user.address!.toLowerCase(),
-      offerings: [offerItem],
-      considerations: [considerationItem],
-      orderType: signatureValues.currency ? OrderType.SELL_NFT_TOKEN : OrderType.SELL_NFT_NATIVE,
-      startAt: signatureValues.listingTime,
-      endAt: signatureValues.expirationDate,
-      salt: signatureValues.salt,
+      offerings: props.makerItems,
+      considerations: props.takerItems,
+      orderType: OrderType.TOKEN_TRADES,
+      startAt: props.startDate,
+      endAt: props.endDate,
+      salt: props.salt,
     };
 
     try {
