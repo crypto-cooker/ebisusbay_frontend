@@ -70,16 +70,19 @@ const useApprovalStatus = () => {
   }
 
   const updateApproval = (address: string, value: boolean) => {
-    if (ciEquals(address, ethers.constants.AddressZero)) {
-      address = config.tokens.wcro.address;
-    }
+    setApprovals(prevApprovals => {
+      // Ensure we're always working with the most up-to-date state
+      let updatedAddress = address;
+      if (ciEquals(address, ethers.constants.AddressZero)) {
+        updatedAddress = config.tokens.wcro.address;
+      }
 
-    setApprovals({
-      ...approvals,
-      [address.toLowerCase()]: value,
+      return {
+        ...prevApprovals,
+        [updatedAddress.toLowerCase()]: value,
+      };
     });
   }
-
 
   const checkApprovalStatusesFromCreate = async (barterState: BarterState, address: string) => {
 
