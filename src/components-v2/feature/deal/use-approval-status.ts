@@ -111,11 +111,12 @@ const useApprovalStatus = () => {
       contracts: nftContracts.concat(tokenContracts),
     });
 
-    let sumOfCros = {
-      approved: 0,
-      requires: 0
-    };
     const _approvals = data.reduce((acc, item, index) => {
+      if (item.status === 'failure') {
+        console.log('Failed to retrieve approval status for token', item.error);
+        return acc;
+      }
+
       const nftsLength = nftContracts.length;
       const erc20sLength = tokenContracts.length;
       const isNft = index < nftsLength;
@@ -128,20 +129,11 @@ const useApprovalStatus = () => {
         const key = tokenContracts[index - nftsLength].address;
         const approvedAmount = Number(ethers.utils.formatEther(item.result as ethers.BigNumber));
         const requiredAmount = barterState.maker.erc20[index - nftsLength].amount;
-        if (ciEquals(key, ethers.constants.AddressZero) || ciEquals(key, config.tokens.wcro.address)) {
-          sumOfCros.approved += approvedAmount;
-          sumOfCros.requires += requiredAmount;
-        }
         acc[key.toLowerCase()] = approvedAmount >= requiredAmount;
       }
 
       return acc;
     }, {} as {[key: string]: boolean});
-
-    // Combine CRO and WCRO for a single wrapped approval status
-    if (_approvals[config.tokens.wcro.address.toLowerCase()]) {
-      _approvals[config.tokens.wcro.address.toLowerCase()] = sumOfCros.approved >= sumOfCros.requires;
-    }
 
     console.log(data);
     console.log(_approvals);
