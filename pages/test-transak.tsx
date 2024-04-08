@@ -175,7 +175,9 @@ const Transak = () => {
   const [isExecuting, setIsExecuting] = useState(false);
   const [callData, setCallData] = useState<string | number>();
   const [selectedListings, setSelectedListings] = useState<any[]>([]);
-  const { onCopy, value, setValue, hasCopied } = useClipboard("");
+  const { onCopy, value, setValue, hasCopied } = useClipboard('');
+  const { onCopy: onCopyCroValue, setValue: setCroValue, hasCopied: hasCopiedCroValue } = useClipboard('');
+  const [croPaymentValue, setCroPaymentValue] = useState<string>('');
 
   const {data} = useQuery({
     queryKey: ['transakGetListings'],
@@ -229,6 +231,8 @@ const Transak = () => {
       ]);
       setValue(rawCallData);
       setCallData(rawCallData);
+      setCroPaymentValue(total.toString());
+      setCroValue(total.toString());
     } catch (e: any) {
       console.log(e);
       toast.error(parseErrorMessage(e));
@@ -292,13 +296,14 @@ const Transak = () => {
         Generate Call Data
       </PrimaryButton>
       {!!callData && (
-        <Box mt={2}>
-          <Text fontSize='lg'>Call Data</Text>
+        <VStack mt={2} align='start'>
+          <Text fontSize='lg' fontWeight='bold'>Call Data:</Text>
+          <Box onClick={onCopyCroValue} cursor='pointer'>Value: {croPaymentValue.toString()}</Box>
           <Button onClick={onCopy}>{hasCopied ? "Copied!" : "Copy Call Data"}</Button>
           <Textarea mt={2} rows={5}>
             {callData}
           </Textarea>
-        </Box>
+        </VStack>
       )}
     </Box>
   )
