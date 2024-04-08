@@ -4,7 +4,7 @@ import useCurrencyBroker from "@src/hooks/use-currency-broker";
 import {ItemType} from "@src/hooks/use-create-order-signer";
 import {OrderState} from "@src/core/services/api-service/types";
 import React, {useEffect} from "react";
-import {ciEquals} from "@src/utils";
+import {ciEquals, shortAddress} from "@src/utils";
 import {TitledCard} from "@src/components-v2/foundation/card";
 import {GridItem, SimpleGrid, Text} from "@chakra-ui/react";
 import {Erc20ApprovalButton, NftApprovalButton} from "@src/components-v2/feature/deal/approval-buttons";
@@ -52,9 +52,9 @@ const ApprovalsView = ({deal}: {deal: Deal}) => {
               <GridItem key={token.address}>
                 <Erc20ApprovalButton
                   token={{
-                    name: getByAddress(token.token)?.name ?? 'N/A',
+                    name: getByAddress(token.token)?.name ?? `Custom Token ${shortAddress(token.token)}`,
                     address: token.token,
-                    amount: token.start_amount,
+                    amountWei: token.start_amount
                   }}
                   onApproved={updateApproval}
                 />

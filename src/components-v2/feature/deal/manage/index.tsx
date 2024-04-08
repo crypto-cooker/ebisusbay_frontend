@@ -1,5 +1,8 @@
 import {
-  Accordion, Alert, AlertDescription, AlertIcon, AlertTitle,
+  Accordion,
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Badge,
   Box,
   Button,
@@ -36,7 +39,7 @@ import {
 } from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHandshake, faLink, faPlus} from "@fortawesome/free-solid-svg-icons";
-import React, {ReactNode, useCallback, useEffect, useRef, useState} from "react";
+import React, {ReactNode, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import useGetProfilePreview from "@src/hooks/useGetUsername";
 import {Card} from "@src/components-v2/foundation/card";
 import {GetDealItemPreview} from "@src/components-v2/feature/deal/preview-item";
@@ -52,7 +55,7 @@ import {OrderState} from "@src/core/services/api-service/types";
 import ApprovalsView from "@src/components-v2/feature/deal/manage/approvals";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {Deal} from "@src/core/services/api-service/mapi/types";
-import {CheckCircleIcon, PlusSquareIcon} from "@chakra-ui/icons";
+import {CheckCircleIcon} from "@chakra-ui/icons";
 import {useRouter} from "next/router";
 import {faFacebook, faTelegram, faTwitter} from "@fortawesome/free-brands-svg-icons";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
@@ -60,6 +63,7 @@ import {ContractReceipt, ethers} from "ethers";
 import {appConfig} from "@src/Config";
 import NextLink from "next/link";
 import {commify} from "ethers/lib/utils";
+import {ItemType} from "@src/hooks/use-create-order-signer";
 
 const config = appConfig();
 
@@ -108,6 +112,15 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
 
   const isMaker = !!user.address && ciEquals(user.address, deal.maker);
   const isTaker = !!user.address && ciEquals(user.address, deal.taker);
+  const hasUnknownTokens = useMemo(() => {
+    function hasUnknownToken(item: any) {
+      const knownTokens = Object.values(config.tokens) as Array<{address: string}>;
+      return item.item_type === ItemType.ERC20 && !knownTokens.find((knownToken: any) => ciEquals(knownToken.address, item.token));
+    }
+    const unknownMakerTokens = deal.maker_items.some((item) => hasUnknownToken(item));
+    const unknownTakerTokens = deal.taker_items.some((item) => hasUnknownToken(item));
+    return unknownMakerTokens || unknownTakerTokens;
+  }, [deal]);
 
   useEffect(() => {
     if (deal) {
@@ -278,11 +291,19 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
 
       {(isMaker || isTaker) && deal.state === OrderState.ACTIVE && (
         <ConditionalActionBar condition={isMobile ?? false}>
-          {!deal.invalid && (
+          {!!deal.invalid && (
             <Alert status='warning' mb={4}>
               <AlertIcon />
               <AlertDescription>
                 This deal has been marked as invalid and may not complete. Please check both sides have the correct items and quantities in their respective inventories.
+              </AlertDescription>
+            </Alert>
+          )}
+          {hasUnknownTokens && (
+            <Alert status='warning' mb={4}>
+              <AlertIcon />
+              <AlertDescription>
+                This deal contains tokens that have not been whitelisted by Ebisu's Bay. Please double check the token addresses and ensure they are legitimate. Trade these are your own risk.
               </AlertDescription>
             </Alert>
           )}
@@ -308,7 +329,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
       )}
       {isTaker && deal.state === OrderState.ACTIVE && (
         <Box fontSize='sm' textAlign='center' mt={2}>
-          Users with {commify(2000)} or more Mitama can accept deals at no extra cost. Otherwise, a flat 10 CRO fee is applied upon acceptance of the deal. Earn Mitama by staking FRTN in the <NextLink href='/ryoshi' className='color fw-bold'>Ryoshi Dynasties Bank</NextLink>
+          Users with {commify(2000)} or more Mitama can accept deals at no extra cost. Otherwise, a flat 20 CRO fee is applied upon acceptance of the deal. Earn Mitama by staking FRTN in the <NextLink href='/ryoshi' className='color fw-bold'>Ryoshi Dynasties Bank</NextLink>
         </Box>
       )}
       <SuccessModal

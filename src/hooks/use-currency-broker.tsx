@@ -2,65 +2,60 @@ import {appConfig} from "@src/Config";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {ethers} from "ethers";
 import {ciEquals, isNativeCro} from "@src/utils";
-import React from "react";
 
 export type BrokerCurrency = {
   address: string;
   symbol: string;
   name: string;
-  image: string;
+  image: any;
   decimals: number;
 }
 
+const config = appConfig();
+
 type ConfigCurrency = {
-  [key: string]: string[];
+  name: string;
+  symbol: string;
+  address: string;
+  decimals: number;
 }
 
-const config = appConfig();
-const currencyOptions: BrokerCurrency[] = [
+const configCurrencies = Object.values(config.tokens) as ConfigCurrency[];
+const knownCurrencies: BrokerCurrency[] = [
   {
     name: 'CRO',
     symbol: 'cro',
     address: ethers.constants.AddressZero,
-    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
+    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />,
+    decimals: 18
   },
-  ...config.listings.currencies.available
-    .filter((symbol: string) => !!config.tokens[symbol.toLowerCase()])
-    .map((symbol: string) => {
-      const token = config.tokens[symbol.toLowerCase()];
-      return {
-        ...token,
-        image: <DynamicCurrencyIcon address={token.address} boxSize={6} />
-      }
-    }),
-];
-
-const UseCurrencyBroker = (nftAddress?: string) => {
-  const availableCurrencySymbols: ConfigCurrency | undefined = Object.entries(config.listings.currencies.nft)
-    .find(([key]) => ciEquals(key, nftAddress)) as ConfigCurrency | undefined;
-
-  const allowedCurrencies = currencyOptions.filter(({symbol}: { symbol: string }) => {
-    if (availableCurrencySymbols) {
-      return availableCurrencySymbols[1].includes(symbol.toLowerCase());
-    } else {
-      return config.listings.currencies.global.includes(symbol.toLowerCase())
+  ...configCurrencies.map((token) => {
+    return {
+      ...token,
+      image: <DynamicCurrencyIcon address={token.address} boxSize={6} />
     }
-  });
+  }),
+]
 
+const UseCurrencyBroker = () => {
   const getBySymbol = (symbol: string) => {
-    return currencyOptions.find((currency: BrokerCurrency) => ciEquals(currency.symbol, symbol));
+    return knownCurrencies.find((currency: BrokerCurrency) => ciEquals(currency.symbol, symbol));
   }
 
   const getByAddress = (address: string) => {
-    return currencyOptions.find((currency: BrokerCurrency) => ciEquals(currency.address, address));
+    return knownCurrencies.find((currency: BrokerCurrency) => ciEquals(currency.address, address));
+  }
+
+  const isDealCurrency = (symbol: string) => {
+    return config.deals.currencies.includes(symbol.toLowerCase());
   }
 
   return {
-    allowedCurrencies,
-    allCurrencies: currencyOptions,
-    allERC20Currencies: currencyOptions.filter(({address}: { address: string }) => !isNativeCro(address)),
+    knownCurrencies,
+    whitelistedDealCurrencies: knownCurrencies.filter((currency: BrokerCurrency) => isDealCurrency(currency.symbol)),
+    whitelistedERC20DealCurrencies: knownCurrencies.filter((currency: BrokerCurrency) => isDealCurrency(currency.symbol) && !isNativeCro(currency.address)),
     getBySymbol,
-    getByAddress
+    getByAddress,
   }
 }
 

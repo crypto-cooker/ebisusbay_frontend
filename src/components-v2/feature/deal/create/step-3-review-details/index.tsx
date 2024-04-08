@@ -126,7 +126,7 @@ export const Step3ReviewDetails = ({address, onConfirm}: Step3ReviewDetailsProps
                     token={{
                       name: token.name,
                       address: token.address,
-                      amount: token.amount,
+                      amountWei: ethers.utils.parseUnits(`${token.amount}`, token.decimals),
                     }}
                     onApproved={updateApproval}
                   />

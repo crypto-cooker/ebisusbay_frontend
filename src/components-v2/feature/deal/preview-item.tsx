@@ -35,7 +35,8 @@ import useCurrencyBroker from "@src/hooks/use-currency-broker";
 import Link from "next/link";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {DealItem} from "@src/core/services/api-service/mapi/types";
-import {isAddress, shortAddress} from "@src/utils";
+import {isAddress, shortAddress, shortString} from "@src/utils";
+import {ethers} from "ethers";
 
 const previewSize = '50px';
 
@@ -269,11 +270,12 @@ export const GetDealItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, 
       }
     } else if (isToken) {
       const token = getByAddress(item.token);
+
       return {
-        name: token?.name,
+        name: token?.name ?? shortString(item.token, 5),
         image: token?.image,
-        amount: parseInt(item.start_amount),
-        category: '',
+        amount: ethers.utils.formatUnits(item.start_amount, 18),
+        category: token ? '' : 'Custom Token',
         categoryUrl: ``,
         itemUrl: ``,
       }

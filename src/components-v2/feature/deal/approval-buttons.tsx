@@ -1,6 +1,6 @@
 import {useUser} from "@src/components-v2/useUser";
 import React, {useState} from "react";
-import {Contract, ethers} from "ethers";
+import {BigNumber, BigNumberish, Contract, ethers} from "ethers";
 import {ERC20, ERC721} from "@src/Contracts/Abis";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
@@ -50,7 +50,7 @@ export const NftApprovalButton = ({nft, onApproved}: NftApprovalButtonProps) => 
 }
 
 interface Erc20ApprovalButtonProps {
-  token: {name: string, address: string, amount: number};
+  token: {name: string, address: string, amountWei: BigNumberish, decimals?: number};
   onApproved: (address: string, value: boolean) => void;
 }
 
@@ -61,7 +61,7 @@ export const Erc20ApprovalButton = ({token, onApproved}: Erc20ApprovalButtonProp
   const handleApproval = async () => {
     try {
       setIsApproving(true);
-      const approvalAmount = ethers.utils.parseEther(token.amount.toString());
+      const approvalAmount = token.amountWei;
       const contract = new Contract(token.address, ERC20, user.provider.getSigner());
       const tx = await contract.approve(config.contracts.market, approvalAmount);
       await tx.wait();

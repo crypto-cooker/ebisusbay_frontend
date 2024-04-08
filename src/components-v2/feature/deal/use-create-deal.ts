@@ -118,15 +118,11 @@ const useCreateDeal = () => {
         makerAddress: user.address!,
         makerTokenAddresses: orderSignerProps.makerItems.map(item => item.token),
         makerTokenIds: orderSignerProps.makerItems.map(item => item.identifierOrCriteria.toString()),
-        makerQuantities: orderSignerProps.makerItems.map(item => {
-          return isTokenAddressType(item.itemType) ? ethers.utils.formatEther(item.startAmount) : item.startAmount
-        }),
+        makerQuantities: orderSignerProps.makerItems.map(item => item.endAmount.toString()),
         takerAddress: orderSignerProps.taker,
         takerTokenAddresses: orderSignerProps.takerItems.map(item => item.token),
         takerTokenIds: orderSignerProps.takerItems.map(item => item.identifierOrCriteria.toString()),
-        takerQuantities: orderSignerProps.takerItems.map(item => {
-          return isTokenAddressType(item.itemType) ? ethers.utils.formatEther(item.startAmount) : item.startAmount
-        }),
+        takerQuantities: orderSignerProps.takerItems.map(item => item.endAmount.toString()),
         startDate: orderSignerProps.startDate,
         endDate: orderSignerProps.endDate,
         salt: orderSignerProps.salt,

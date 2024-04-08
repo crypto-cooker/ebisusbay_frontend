@@ -25,7 +25,7 @@ interface CustomTokenPickerProps {
 }
 
 export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
-  const { allERC20Currencies  } = useCurrencyBroker();
+  const { knownCurrencies  } = useCurrencyBroker();
   const [tokenAddress, setTokenAddress] = useState<string>();
   const [quantity, setQuantity] = useState<string>();
 
@@ -51,10 +51,11 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
     }
 
     try {
-      const whitelistedToken = allERC20Currencies.find((token) => ciEquals(token.address, tokenAddress));
-      if (whitelistedToken) {
+      const knownToken = knownCurrencies.find((token) => ciEquals(token.address, tokenAddress));
+      if (knownToken) {
         onAdd({
-          ...whitelistedToken,
+          ...knownToken,
+          address: knownToken.address.toLowerCase(),
           amount: Math.floor(parseInt(quantity)),
         });
         return;

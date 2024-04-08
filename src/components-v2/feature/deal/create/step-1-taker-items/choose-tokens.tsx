@@ -40,10 +40,10 @@ export const ChooseTokensTab = ({address}: {address: string}) => {
 
 const WhitelistedTokenPicker = () => {
   const user = useUser();
-  const { allERC20Currencies  } = useCurrencyBroker();
+  const { whitelistedERC20DealCurrencies  } = useCurrencyBroker();
   const { toggleSelectionERC20 } = useBarterDeal();
   const [quantity, setQuantity] = useState<string>();
-  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(allERC20Currencies[0]);
+  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(whitelistedERC20DealCurrencies[0]);
 
   const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
     setSelectedCurrency(currency!);
@@ -110,7 +110,7 @@ const WhitelistedTokenPicker = () => {
           isSearchable={false}
           menuPortalTarget={document.body} menuPosition={'fixed'}
           styles={customStyles}
-          options={allERC20Currencies}
+          options={whitelistedERC20DealCurrencies}
           formatOptionLabel={({ name, image }) => (
             <HStack>
               {image}
@@ -118,7 +118,7 @@ const WhitelistedTokenPicker = () => {
             </HStack>
           )}
           value={selectedCurrency}
-          defaultValue={allERC20Currencies[0]}
+          defaultValue={whitelistedERC20DealCurrencies[0]}
           onChange={handleCurrencyChange}
         />
         <NumberInput

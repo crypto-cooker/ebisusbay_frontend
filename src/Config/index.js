@@ -83,7 +83,7 @@ export const configData = {
         name: 'TRPZ',
         symbol: 'TRPZ',
         address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
-        decimals: 18
+        decimals: 0
       },
       vrse: {
         name: 'VRSE',
@@ -280,6 +280,9 @@ export const configData = {
           '0x6A7808f1e84bB173D6fC53Efd9Ebc6E56380AB5E': ['cro'], // Cronos Chickens
         }
       }
+    },
+    deals: {
+      currencies: ['cro', 'wcro', 'frtn']
     }
   },
   [environments.development]: {
@@ -353,7 +356,7 @@ export const configData = {
         name: 'TRPZ',
         symbol: 'TRPZ',
         address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
-        decimals: 18
+        decimals: 0
       },
       vrse: {
         name: 'VRSE',
@@ -549,6 +552,9 @@ export const configData = {
           '0xccc598ef1b4d17d9f44a889eee38c8de53f5df00': ['icy'], // ICY Brand End
         }
       }
+    },
+    deals: {
+      currencies: ['cro', 'wcro', 'frtn']
     }
   },
   [environments.testnet]: {
@@ -624,7 +630,7 @@ export const configData = {
         name: 'TRPZ',
         symbol: 'TRPZ',
         address: '0x574deA750075145CcAD7f659A231721DFF9b5ef0',
-        decimals: 18
+        decimals: 0
       },
       vrse: {
         name: 'VRSE',
@@ -703,6 +709,9 @@ export const configData = {
           '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74': ['cro']
         }
       }
+    },
+    deals: {
+      currencies: ['wcro', 'frtn', 'candy']
     }
   },
   [environments.local]: {
@@ -776,7 +785,7 @@ export const configData = {
         name: 'TRPZ',
         symbol: 'TRPZ',
         address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
-        decimals: 18
+        decimals: 0
       },
       vrse: {
         name: 'VRSE',
@@ -848,6 +857,9 @@ export const configData = {
           '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],        // FortuneTeller
         }
       }
+    },
+    deals: {
+      currencies: ['cro', 'wcro', 'frtn']
     }
   }
 };

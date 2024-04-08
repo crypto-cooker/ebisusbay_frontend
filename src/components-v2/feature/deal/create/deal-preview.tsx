@@ -64,8 +64,14 @@ export const DealPreview = ({onChangeStep, onConfirm, isConfirming}: DealPreview
 
   const handleNext = () => {
     if (currentStep === 1) {
-      if (barterState.taker.nfts.length < 1) {
-        toast.error('At least one NFT is required');
+      if (barterState.taker.nfts.length < 1 && barterState.taker.erc20.length < 1) {
+        toast.error('At least one NFT or Token is required');
+        return;
+      }
+    }
+    if (currentStep === 2) {
+      if (barterState.maker.nfts.length < 1 && barterState.maker.erc20.length < 1) {
+        toast.error('At least one NFT or Token is required');
         return;
       }
     }
@@ -92,11 +98,6 @@ export const DealPreview = ({onChangeStep, onConfirm, isConfirming}: DealPreview
   const tokenPopoverId = (token: BarterToken, side: string) => {
     return `${side}${token.address}`;
   }
-
-  const shouldOverflow = useMemo(() => {
-    const meetsItemCount = barterState.taker.nfts.length + barterState.maker.nfts.length > 6;
-    return meetsItemCount;
-  }, [barterState]);
 
   return (
     <>
@@ -219,14 +220,18 @@ export const DealPreview = ({onChangeStep, onConfirm, isConfirming}: DealPreview
                     {currentStep < 2 ? (
                       <PrimaryButton
                         onClick={handleNext}
-                        isDisabled={barterState.taker.nfts.length < 1}
+                        isDisabled={barterState.taker.nfts.length < 1 && barterState.taker.erc20.length < 1}
                       >
                         Next
                       </PrimaryButton>
                     ) : currentStep === 2 ? (
                       <PrimaryButton
                         onClick={handleNext}
-                        isDisabled={barterState.taker.nfts.length < 1 || barterState.maker.nfts.length < 1  || !user.wallet.isConnected}
+                        isDisabled={
+                          (barterState.taker.nfts.length < 1 && barterState.taker.erc20.length < 1) ||
+                          (barterState.maker.nfts.length < 1 && barterState.maker.erc20.length < 1) ||
+                          !user.wallet.isConnected
+                        }
                       >
                         Review
                       </PrimaryButton>
@@ -234,7 +239,11 @@ export const DealPreview = ({onChangeStep, onConfirm, isConfirming}: DealPreview
                       <PrimaryButton
                         onClick={onConfirm}
                         isLoading={isConfirming}
-                        isDisabled={barterState.taker.nfts.length < 1 || barterState.maker.nfts.length < 1  || !user.wallet.isConnected}
+                        isDisabled={
+                          (barterState.taker.nfts.length < 1 && barterState.taker.erc20.length < 1) ||
+                          (barterState.maker.nfts.length < 1 && barterState.maker.erc20.length < 1) ||
+                          !user.wallet.isConnected
+                        }
                       >
                         Confirm
                       </PrimaryButton>

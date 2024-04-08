@@ -66,8 +66,6 @@ const useApprovalStatus = () => {
       return acc;
     }, {} as {[key: string]: boolean});
 
-    console.log(contractResults);
-    console.log(_approvals);
     setApprovals(_approvals);
   }
 

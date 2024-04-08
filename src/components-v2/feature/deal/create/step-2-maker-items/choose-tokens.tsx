@@ -20,7 +20,7 @@ import {
   NumberInputStepper,
   Stack
 } from "@chakra-ui/react";
-import {Card} from "@src/components-v2/foundation/card";
+import {Card, TitledCard} from "@src/components-v2/foundation/card";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {appConfig} from "@src/Config";
 import {BarterToken} from "@src/jotai/atoms/deal";
@@ -47,10 +47,10 @@ export const ChooseTokensTab = ({address}: {address: string}) => {
 
 const WhitelistedTokenPicker = () => {
   const user = useUser();
-  const { allERC20Currencies  } = useCurrencyBroker();
+  const { whitelistedERC20DealCurrencies  } = useCurrencyBroker();
   const { toggleOfferERC20 } = useBarterDeal();
   const [quantity, setQuantity] = useState<string>();
-  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(allERC20Currencies[0]);
+  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(whitelistedERC20DealCurrencies[0]);
   const [isWrapping, setIsWrapping] = useState(false);
 
   const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
@@ -148,58 +148,56 @@ const WhitelistedTokenPicker = () => {
   };
 
   return (
-    <Container>
-      <Card>
-        <Stack direction={{base: 'column', sm: 'row'}}>
-          <ReactSelect
-            isSearchable={false}
-            menuPortalTarget={document.body} menuPosition={'fixed'}
-            styles={customStyles}
-            options={allERC20Currencies}
-            formatOptionLabel={({ name, image }) => (
-              <HStack>
-                {image}
-                <span>{name}</span>
-              </HStack>
-            )}
-            value={selectedCurrency}
-            defaultValue={allERC20Currencies[0]}
-            onChange={handleCurrencyChange}
-          />
-          <NumberInput
-            value={quantity}
-            max={1000000}
-            onChange={(valueAsString: string) => setQuantity(valueAsString)}
-            precision={0}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </Stack>
-        <Stack direction={{base: 'column', sm: 'row'}} justify='end' mt={2}>
-          {isWrappedeCro(selectedCurrency.address) && (
-            <>
-              <Box fontSize='sm'>If wanting to use native CRO for the deal, you can choose to wrap to WCRO</Box>
-              <PrimaryButton
-                onClick={handleWrapCro}
-                isLoading={isWrapping}
-                isDisabled={isWrapping}
-                loadingText='Wrapping'
-              >
-                Wrap and Add
-              </PrimaryButton>
-            </>
+    <TitledCard title='Available Tokens'>
+      <Stack direction={{base: 'column', sm: 'row'}}>
+        <ReactSelect
+          isSearchable={false}
+          menuPortalTarget={document.body} menuPosition={'fixed'}
+          styles={customStyles}
+          options={whitelistedERC20DealCurrencies}
+          formatOptionLabel={({ name, image }) => (
+            <HStack>
+              {image}
+              <span>{name}</span>
+            </HStack>
           )}
-          {!isWrapping && (
-            <PrimaryButton onClick={handleAddCurrency}>
-              Add
+          value={selectedCurrency}
+          defaultValue={whitelistedERC20DealCurrencies[0]}
+          onChange={handleCurrencyChange}
+        />
+        <NumberInput
+          value={quantity}
+          max={1000000}
+          onChange={(valueAsString: string) => setQuantity(valueAsString)}
+          precision={0}
+        >
+          <NumberInputField />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      </Stack>
+      <Stack direction={{base: 'column', sm: 'row'}} justify='end' mt={2}>
+        {isWrappedeCro(selectedCurrency.address) && (
+          <>
+            <Box fontSize='sm'>If wanting to use native CRO for the deal, you can choose to wrap to WCRO</Box>
+            <PrimaryButton
+              onClick={handleWrapCro}
+              isLoading={isWrapping}
+              isDisabled={isWrapping}
+              loadingText='Wrapping'
+            >
+              Wrap and Add
             </PrimaryButton>
-          )}
-        </Stack>
-      </Card>
-    </Container>
+          </>
+        )}
+        {!isWrapping && (
+          <PrimaryButton onClick={handleAddCurrency}>
+            Add
+          </PrimaryButton>
+        )}
+      </Stack>
+    </TitledCard>
   )
 }
