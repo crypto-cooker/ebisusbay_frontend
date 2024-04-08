@@ -282,7 +282,7 @@ export const configData = {
       }
     },
     deals: {
-      currencies: ['cro', 'wcro', 'frtn']
+      currencies: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy']
     }
   },
   [environments.development]: {
