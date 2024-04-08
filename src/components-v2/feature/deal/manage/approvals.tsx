@@ -25,6 +25,11 @@ const ApprovalsView = ({deal}: {deal: Deal}) => {
     if (!!user.address && isDealOpen && ciEquals(user.address, deal.taker)) {
       checkApprovalStatuses(deal, 'taker');
     }
+
+    // Allow either side to approve in case maker later revoked any approvals
+    if (!!user.address && isDealOpen && ciEquals(user.address, deal.maker)) {
+      checkApprovalStatuses(deal, 'maker');
+    }
   }, [deal.state, user.address, deal.taker]);
 
   return (
