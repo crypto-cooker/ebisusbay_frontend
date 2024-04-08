@@ -90,6 +90,11 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
         return;
       }
 
+      if (tokenInfo[2].result !== 18) {
+        toast.error('Currently only support tokens with 18 decimals');
+        return;
+      }
+
       onAdd({
         address: tokenAddress,
         symbol: tokenInfo[1].result ?? `CT-${shortAddress(tokenAddress)}`,
