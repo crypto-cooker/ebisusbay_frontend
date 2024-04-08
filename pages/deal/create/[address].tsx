@@ -17,6 +17,8 @@ import {OrderState} from "@src/core/services/api-service/types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHandshake} from "@fortawesome/free-solid-svg-icons";
 import {Deal} from "@src/core/services/api-service/mapi/types";
+import ImageService from "@src/core/services/image";
+import {hostedImage} from "@src/helpers/image";
 
 interface PageProps {
   address: string;
@@ -32,6 +34,16 @@ const CreateDealPage = ({ address, profile, parentDeal }: PageProps) => {
   const resetParentId = () => {
     setParentId(undefined);
     router.replace(`/deal/create/${address}`);
+  }
+
+  const profilePicture = () => {
+    if (profile.banner) {
+      return ImageService.translate(profile.banner).convert();
+    } else if (profile.profilePicture) {
+      return ImageService.translate(profile.profilePicture).custom({width: 200, height: 200});
+    } else {
+      return hostedImage('/img/profile-avatar.webp');
+    }
   }
 
   useEffect(() => {
@@ -60,6 +72,7 @@ const CreateDealPage = ({ address, profile, parentDeal }: PageProps) => {
     <>
       <PageHead
         title={`Make a deal with ${profile?.username ?? shortAddress(address)}`}
+        image={profilePicture()}
         description='Reveal unique value opportunities by swapping NFTs and tokens directly'
       />
       <PageHeader
