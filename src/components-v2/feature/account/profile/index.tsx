@@ -242,15 +242,20 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                   {isProfileOwner ? (
                     <>
                       {useMobileLayout ? (
-                        <IconButton
-                          aria-label='User Settings'
-                          variant='primary'
-                          size='sm'
-                          fontSize='sm'
-                          icon={<FontAwesomeIcon icon={faCog} />}
-                          rounded='full'
-                          onClick={() => navigateTo('/account/settings/profile')}
-                        />
+                        <>
+                          <span onClick={handleCopyDealLink} style={{cursor: 'pointer'}} title="Copy Deal Link">
+                            <LayeredIcon icon={faHandshake}/>
+                          </span>
+                          <IconButton
+                            aria-label='User Settings'
+                            variant='primary'
+                            size='sm'
+                            fontSize='sm'
+                            icon={<FontAwesomeIcon icon={faCog} />}
+                            rounded='full'
+                            onClick={() => navigateTo('/account/settings/profile')}
+                          />
+                        </>
                       ) : (
                         <ChakraButton
                           variant='primary'
