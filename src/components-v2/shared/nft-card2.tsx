@@ -142,8 +142,10 @@ const BaseNftCard = ({nft, mode, selectability, linkTo, body, footer}: BaseNftCa
               spacing={1}
               fontSize='sm'
               m={1}
+              bg='#666666AA'
+              rounded='md'
+              border='1px solid #999999AA'
             >
-
               <Tag size='md' variant='rank'>
                 <TagLeftIcon as={FontAwesomeIcon} icon={faAward} color='red.400' />
                 <TagLabel>{commify(nft.rank)}</TagLabel>
