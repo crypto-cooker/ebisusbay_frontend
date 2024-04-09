@@ -109,7 +109,7 @@ const DataTable = ({data, state, onUpdate, onCancel, onSort}: ResponsiveOffersTa
                     )}
                   </Td>
                   <Td>
-                    <Flex>
+                    <Flex justify='end'>
                       <Link href={`/deal/${deal.id}`}>
                         <PrimaryButton leftIcon={<Icon as={FontAwesomeIcon} icon={faEye}/>}>
                           View

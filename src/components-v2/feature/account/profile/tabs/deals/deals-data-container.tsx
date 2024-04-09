@@ -72,7 +72,7 @@ const DealsDataContainer = ({filtersVisible, queryParams, fullWidth, viewType, o
       />
     ) : (
       <Box textAlign='center' mt={8}>
-        <Text>No results found. <Link href='/deal/create' className='color fw-bold'>Create a deal</Link></Text>
+        <Text>No results found. <Link href='/deal' className='color fw-bold'>Create a deal</Link></Text>
       </Box>
     );
   }, [data, error, status]);
