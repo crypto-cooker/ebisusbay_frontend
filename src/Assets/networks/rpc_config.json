@@ -26077,6 +26077,79 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Coolbeans Garden Death Squad",
+      "slug": "coolbeans-garden-death-squad",
+      "multiToken": false,
+      "address": "0xB504eA346dBE7Ad3688F36B27FB56a761495F1c7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Coolbeans Death Squad are the defenders of coolbeans garden faction and friends with fortune rewards",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/coolbeans-garden-death-squad/avatar.webp",
+        "website": "https://coolbeansgarden.wixsite.com/my-site",
+        "twitter": "https://twitter.com/bscraver",
+        "discord": "https://discord.gg/SYx7wjhmQa",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Strategy Series Vol.1",
+      "slug": "strategy-series-v1",
+      "multiToken": false,
+      "address": "0x5dd80779025679D06C9A175a7090FEEe92eA70aa",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to where every NFT mint directly fuels our strategic endeavors. As a cornerstone of this series, with each token, you’re not just acquiring a piece of digital art; you’re gaining access to a realm of possibilities. Embrace the thrill of discovery as you delve into a world where art and chance intertwine. Join us as we embark on this journey of exploration and uncover the treasures that await within the collection. A journey where creativity meets purpose, as 100% of your minting contribution drives real-world execution. Together, we’re not just collecting, but catalyzing change. Explore our collection and be part of a movement where art meets action.  Every mint contributes its funds into the main vault. Half of these funds will be compounded to maximize returns, while the other half will be allocated to create vaults specifically designated for supplying staking opportunities. Join us in building a sustainable ecosystem where every contribution fuels growth and opportunity.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/strategy-series-v1/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/strategy-series-v1/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/strategy-series-v1/banner.webp",
+        "website": "https://linktr.ee/rysknft",
+        "twitter": "https://twitter.com/RYSKnft",
+        "discord": "https://discord.gg/ufgwUQcSmf",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Sou-Sou Bears Den",
+      "slug": "sou-sou-bears-den",
+      "multiToken": false,
+      "address": "0xa01D2269D4AC6531386C488C96732575efCE6990",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Discover charming NFTs from Den Defenders to Den Divulgers. Mint your favorites, stake for $HONI rewards, and unlock perks in Honey Rush Game!!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/sou-sou-bears-den/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/sou-sou-bears-den/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/sou-sou-bears-den/banner.webp",
+        "website": "https://linktr.ee/sousoubears",
+        "twitter": "https://twitter.com/sousoubears",
+        "discord": "https://discord.gg/aTN9pyfgya",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
