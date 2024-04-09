@@ -47,9 +47,9 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/deal',
-        destination: '/deal/create',
-        permanent: true,
+        source: '/deal/create',
+        destination: '/deal',
+        permanent: false,
       },
       {
         source: '/brand/:slug',
