@@ -126,12 +126,12 @@ const Header = function () {
             )}
 
             <Flex alignItems={'center'} className="mainside">
-              <Box me={4}>
+              <Box me={2}>
                 <Link href='https://swap.ebisusbay.com/#/swap?outputCurrency=0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C'>
                   <Image
-                    src={ImageService.translate(`/img/ryoshi-with-knife/ryoshiwithknife_village.apng`).fixedWidth(30, 50)}
-                    h='50px'
-                    w='30px'
+                    src={ImageService.translate(`/img/ryoshi-with-knife/coin-logo.png`).convert()}
+                    h='35px'
+                    w='35px'
                   />
                 </Link>
               </Box>

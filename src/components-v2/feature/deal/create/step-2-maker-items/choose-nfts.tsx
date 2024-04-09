@@ -34,6 +34,7 @@ import {SortOption, sortOptions} from "@src/components-v2/feature/account/profil
 import InventoryFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 
 export const ChooseNftsTab = ({address}: {address: string}) => {
   const user = useUser();
@@ -278,6 +279,13 @@ export const ChooseNftsTab = ({address}: {address: string}) => {
           {historyContent}
         </InfiniteScroll>
       </InventoryFilterContainer>
+      <MobileSort
+        show={!!useMobileMenu && sortVisible}
+        sortOptions={sortOptions}
+        currentSort={sortOptions.find((option) => option.key === queryParams.sortBy && option.direction === queryParams.direction)}
+        onSort={handleSort}
+        onHide={() => setSortVisible(false)}
+      />
     </>
   )
 }
