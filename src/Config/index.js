@@ -290,6 +290,7 @@ export const configData = {
           '0x7677cbE702Ff3d0e66d3BaC0fD71Cb641A276Ae0': ['icy'],
           '0xccc598ef1b4d17d9f44a889eee38c8de53f5df00': ['icy'], // ICY Brand End
           '0x6A7808f1e84bB173D6fC53Efd9Ebc6E56380AB5E': ['cro'], // Cronos Chickens
+          '0x5dd80779025679D06C9A175a7090FEEe92eA70aa': ['frtn'], // Strategy Series Vol.1
         }
       }
     },
