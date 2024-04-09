@@ -79,7 +79,7 @@ const Deal = () => {
   return (
     <>
       <PageHead
-        title='Make a deal'
+        title='Make a Deal'
         description='Reveal unique value opportunities by swapping NFTs and tokens directly'
       />
       <PageHeader title={'Create a Deal'} subtitle='Reveal unique value opportunities by swapping NFTs and tokens directly'/>
