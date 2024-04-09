@@ -7,6 +7,7 @@ import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/d
 import {ApiService} from "@src/core/services/api-service";
 import ResponsiveDealsTable from "@src/components-v2/feature/account/profile/tabs/deals/responsive-deals-table";
 import {OrderState} from "@src/core/services/api-service/types";
+import Link from "next/link";
 
 interface DealsDataContainerProps {
   filtersVisible: boolean;
@@ -71,7 +72,7 @@ const DealsDataContainer = ({filtersVisible, queryParams, fullWidth, viewType, o
       />
     ) : (
       <Box textAlign='center' mt={8}>
-        <Text>No results found</Text>
+        <Text>No results found. <Link href='/deal/create' className='color fw-bold'>Create a deal</Link></Text>
       </Box>
     );
   }, [data, error, status]);
