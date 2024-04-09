@@ -20,6 +20,7 @@ import {TitledCard} from "@src/components-v2/foundation/card";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {CustomTokenPicker} from "@src/components-v2/feature/deal/create/custom-token-picker";
 import {BarterToken} from "@src/jotai/atoms/deal";
+import {ciEquals} from "@src/utils";
 
 export const ChooseTokensTab = ({address}: {address: string}) => {
   const { toggleSelectionERC20 } = useBarterDeal();
@@ -43,7 +44,21 @@ const WhitelistedTokenPicker = () => {
   const { whitelistedERC20DealCurrencies  } = useCurrencyBroker();
   const { toggleSelectionERC20 } = useBarterDeal();
   const [quantity, setQuantity] = useState<string>();
-  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(whitelistedERC20DealCurrencies[0]);
+
+  const sortedWhitelistedERC20DealCurrencies = whitelistedERC20DealCurrencies.sort((a, b) => {
+    // Place FRTN first
+    if (ciEquals(a.symbol, 'FRTN')) return -1;
+    if (ciEquals(b.symbol, 'FRTN')) return 1;
+
+    // Place WCRO second
+    if (ciEquals(a.symbol, 'WCRO')) return -1;
+    if (ciEquals(b.symbol, 'WCRO')) return 1;
+
+    // Alphabetically sort the rest
+    return a.symbol.localeCompare(b.symbol);
+  });
+
+  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(sortedWhitelistedERC20DealCurrencies[0]);
 
   const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
     setSelectedCurrency(currency!);
@@ -110,7 +125,7 @@ const WhitelistedTokenPicker = () => {
           isSearchable={false}
           menuPortalTarget={document.body} menuPosition={'fixed'}
           styles={customStyles}
-          options={whitelistedERC20DealCurrencies}
+          options={sortedWhitelistedERC20DealCurrencies}
           formatOptionLabel={({ name, image }) => (
             <HStack>
               {image}
@@ -118,7 +133,7 @@ const WhitelistedTokenPicker = () => {
             </HStack>
           )}
           value={selectedCurrency}
-          defaultValue={whitelistedERC20DealCurrencies[0]}
+          defaultValue={sortedWhitelistedERC20DealCurrencies[0]}
           onChange={handleCurrencyChange}
         />
         <NumberInput

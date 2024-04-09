@@ -46,7 +46,7 @@ import {GetDealItemPreview} from "@src/components-v2/feature/deal/preview-item";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useContractService, useUser} from "@src/components-v2/useUser";
-import {appUrl, ciEquals, getLengthOfTime} from "@src/utils";
+import {appUrl, ciEquals, getLengthOfTime, round} from "@src/utils";
 import {ApiService} from "@src/core/services/api-service";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {toast} from "react-toastify";
@@ -189,7 +189,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
                   <PopoverTrigger>
                     {deal.estimated_maker_value > 0 ? (
                       <Tag colorScheme='blue'>
-                        Est. Value: ~ ${deal.estimated_maker_value}
+                        Est. Value: ~ ${round(deal.estimated_maker_value, 2)}
                       </Tag>
                     ) : (
                       <Tag>Est. Value: N/A</Tag>
@@ -244,7 +244,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
                   <PopoverTrigger>
                     {deal.estimated_taker_value > 0 ? (
                       <Tag colorScheme='blue'>
-                        Est. Value: ~ ${deal.estimated_taker_value}
+                        Est. Value: ~ ${round(deal.estimated_taker_value, 2)}
                       </Tag>
                     ) : (
                       <Tag>Est. Value: N/A</Tag>
