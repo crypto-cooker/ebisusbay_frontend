@@ -74,10 +74,10 @@ const tabs: {[key: string]: {label: string, overflow?: string}} = {
   offers: {
     label: 'Offers',
   },
-  // deals: {
-  //   label: 'Deals',
-  //   overflow: 'Deals',
-  // },
+  deals: {
+    label: 'Deals',
+    overflow: 'Deals',
+  },
   sales: {
     label: 'Sales',
     overflow: 'Sales',
@@ -218,11 +218,11 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                     <Wrap align='center'>
                       <Heading>{username(identifier)}</Heading>
                       <SocialsBar socials={profile} address={address}/>
-                      {/*{isProfileOwner && (*/}
-                      {/*  <span onClick={handleCopyDealLink} style={{cursor: 'pointer'}} title="Copy Deal Link">*/}
-                      {/*    <LayeredIcon icon={faHandshake}/>*/}
-                      {/*  </span>*/}
-                      {/*)}*/}
+                      {isProfileOwner && (
+                        <span onClick={handleCopyDealLink} style={{cursor: 'pointer'}} title="Copy Deal Link">
+                          <LayeredIcon icon={faHandshake}/>
+                        </span>
+                      )}
                     </Wrap>
                     {isUserBlacklisted(address) && (
                       <Flex>
@@ -264,25 +264,25 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                     </>
                   ) : useMobileLayout ? (
                     <Link href={`/deal/create/${address}`}>
-                      {/*<IconButton*/}
-                      {/*  aria-label='Make a Deal'*/}
-                      {/*  variant='primary'*/}
-                      {/*  size='sm'*/}
-                      {/*  fontSize='sm'*/}
-                      {/*  icon={<FontAwesomeIcon icon={faHandshake} />}*/}
-                      {/*  rounded='full'*/}
-                      {/*/>*/}
+                      <IconButton
+                        aria-label='Make a Deal'
+                        variant='primary'
+                        size='sm'
+                        fontSize='sm'
+                        icon={<FontAwesomeIcon icon={faHandshake} />}
+                        rounded='full'
+                      />
                     </Link>
                   ) : (
                     <Link href={`/deal/create/${address}`}>
-                      {/*<ChakraButton*/}
-                      {/*  variant='primary'*/}
-                      {/*  size='sm'*/}
-                      {/*  fontSize='sm'*/}
-                      {/*  leftIcon={<Icon as={FontAwesomeIcon} icon={faHandshake} />}*/}
-                      {/*>*/}
-                      {/*  Make a Deal*/}
-                      {/*</ChakraButton>*/}
+                      <ChakraButton
+                        variant='primary'
+                        size='sm'
+                        fontSize='sm'
+                        leftIcon={<Icon as={FontAwesomeIcon} icon={faHandshake} />}
+                      >
+                        Make a Deal
+                      </ChakraButton>
                     </Link>
                   )}
                 </HStack>
@@ -309,18 +309,18 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                     size={{base: 'sm', sm: 'md'}}
                     color={currentTab === key ? 'white' : getTheme(user.theme).colors.textColor3}
                   >
-                    {/*{key === TabKey.deals && isProfileOwner && (*/}
-                    {/*  <Box*/}
-                    {/*    position='absolute'*/}
-                    {/*    top={-1}*/}
-                    {/*    right={-1}*/}
-                    {/*    bg='#FD8800'*/}
-                    {/*    rounded='full'*/}
-                    {/*    w='10px'*/}
-                    {/*    h='10px'*/}
-                    {/*    animation={`${pulseColorClass} 1.5s infinite`}*/}
-                    {/*  />*/}
-                    {/*)}*/}
+                    {key === TabKey.deals && isProfileOwner && (
+                      <Box
+                        position='absolute'
+                        top={-1}
+                        right={-1}
+                        bg='#FD8800'
+                        rounded='full'
+                        w='10px'
+                        h='10px'
+                        animation={`${pulseColorClass} 1.5s infinite`}
+                      />
+                    )}
                     {tab.label}
                   </ChakraButton>
                 ))}
