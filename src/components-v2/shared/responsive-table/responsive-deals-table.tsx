@@ -43,7 +43,7 @@ interface ResponsiveOffersTableProps {
   state: OrderState;
   onUpdate?: (offer: Offer) => void;
   onCancel?: (offer: Offer) => void;
-  onSort?: (field: string) => void;
+  onSort: (field: string) => void;
   breakpointValue?: string;
 }
 
