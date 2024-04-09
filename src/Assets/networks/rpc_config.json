@@ -15117,7 +15117,7 @@
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/nft-ringz-aperson-lyeque/avatar.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/nft-ringz-aperson-lyeque/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/nft-ringz-aperson-lyeque/banner.webp",
-        "website": "https://jlcustombentwoodrings.com/",
+        "website": "https://apersonlyeque.com/",
         "twitter": "https://twitter.com/ApersonLyeque",
         "discord": "https://discord.gg/Trooprz",
         "categories": []
@@ -26051,6 +26051,31 @@
         "doxx": false,
         "kyc": true,
         "verified": true
+      }
+    },
+    {
+      "name": "JAFC - GOATs",
+      "slug": "jafc-goats",
+      "multiToken": false,
+      "address": "0x74a9E162CB2b36fB9058D99a1799a5ed5a040c8E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The GOAT - Greatest Of All Time",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/jafc-goats/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/jafc-goats/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/jafc-goats/banner.webp",
+        "website": "https://medium.com/@jungleanimalfc/",
+        "twitter": "https://twitter.com/JAFC_nft",
+        "discord": "https://discord.gg/W3HwbZUwfr",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ],
