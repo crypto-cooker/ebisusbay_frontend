@@ -4,7 +4,7 @@ import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import React, {useCallback, useState} from "react";
 import ReactSelect, {SingleValue} from "react-select";
 import {toast} from "react-toastify";
-import {isWrappedeCro} from "@src/utils";
+import {ciEquals, isWrappedeCro} from "@src/utils";
 import {Contract, ethers} from "ethers";
 import WCRO from "@src/Contracts/WCRO.json";
 import {parseErrorMessage} from "@src/helpers/validator";
@@ -50,8 +50,22 @@ const WhitelistedTokenPicker = () => {
   const { whitelistedERC20DealCurrencies  } = useCurrencyBroker();
   const { toggleOfferERC20 } = useBarterDeal();
   const [quantity, setQuantity] = useState<string>();
-  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(whitelistedERC20DealCurrencies[0]);
   const [isWrapping, setIsWrapping] = useState(false);
+
+  const sortedWhitelistedERC20DealCurrencies = whitelistedERC20DealCurrencies.sort((a, b) => {
+    // Place FRTN first
+    if (ciEquals(a.symbol, 'FRTN')) return -1;
+    if (ciEquals(b.symbol, 'FRTN')) return 1;
+
+    // Place WCRO second
+    if (ciEquals(a.symbol, 'WCRO')) return -1;
+    if (ciEquals(b.symbol, 'WCRO')) return 1;
+
+    // Alphabetically sort the rest
+    return a.symbol.localeCompare(b.symbol);
+  });
+
+  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(sortedWhitelistedERC20DealCurrencies[0]);
 
   const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
     setSelectedCurrency(currency!);
@@ -154,7 +168,7 @@ const WhitelistedTokenPicker = () => {
           isSearchable={false}
           menuPortalTarget={document.body} menuPosition={'fixed'}
           styles={customStyles}
-          options={whitelistedERC20DealCurrencies}
+          options={sortedWhitelistedERC20DealCurrencies}
           formatOptionLabel={({ name, image }) => (
             <HStack>
               {image}
@@ -162,7 +176,7 @@ const WhitelistedTokenPicker = () => {
             </HStack>
           )}
           value={selectedCurrency}
-          defaultValue={whitelistedERC20DealCurrencies[0]}
+          defaultValue={sortedWhitelistedERC20DealCurrencies[0]}
           onChange={handleCurrencyChange}
         />
         <NumberInput

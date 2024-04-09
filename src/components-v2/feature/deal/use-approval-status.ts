@@ -1,7 +1,7 @@
 import {ContractFunctionConfig} from "viem";
 import {Address, erc20ABI, erc721ABI} from "wagmi";
 import {ciEquals} from "@src/utils";
-import {ethers} from "ethers";
+import {BigNumber, ethers} from "ethers";
 import {multicall} from "@wagmi/core";
 import {appConfig} from "@src/Config";
 import {ItemType} from "@src/hooks/use-create-order-signer";
@@ -58,8 +58,8 @@ const useApprovalStatus = () => {
       if (isNft) {
         acc[key.toLowerCase()] = approval.result as boolean;
       } else if (isToken) {
-        const approvedAmount = Number(ethers.utils.formatEther(approval.result as ethers.BigNumber));
-        const requiredAmount = Number(item.start_amount);
+        const approvedAmount = BigNumber.from(approval.result);
+        const requiredAmount = BigNumber.from(item.start_amount);
         acc[key.toLowerCase()] = approvedAmount >= requiredAmount;
       }
 
