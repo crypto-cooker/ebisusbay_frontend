@@ -2,7 +2,7 @@ import PageHeader from "@src/components-v2/shared/layout/page-header";
 import React, {ChangeEvent, useState} from "react";
 import {
   Box,
-  Container,
+  Container, Flex,
   FormControl,
   Icon,
   IconButton,
@@ -21,6 +21,7 @@ import {toast} from "react-toastify";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {getCroidAddressFromName, isCroName} from "@src/helpers/croid";
 import {parseErrorMessage} from "@src/helpers/validator";
+import {RecentDeals} from "@src/components-v2/feature/deal/landing/recent-deals";
 
 const Deal = () => {
   const router = useRouter();
@@ -85,12 +86,12 @@ const Deal = () => {
       {!!address ? (
         <CreateDeal address={address} />
       ) : (
-        <Container mt={4} h='calc(100vh - 174px)'>
-          <VStack justify='center' h='full'>
+        <Container mt={4} minH='calc(100vh - 174px)'  maxW='container.lg'>
+          <VStack justify='center' mt={8}>
             <Box fontWeight='bold' fontSize={{base: 'md', sm: 'lg'}} textAlign='center'>
               Enter your friend's address, EB username, or Cronos ID to get started
             </Box>
-            <FormControl>
+            <FormControl maxW='container.sm'>
               <InputGroup>
                 <Input
                   placeholder='Enter 0x, username, or Cronos ID'
@@ -108,7 +109,9 @@ const Deal = () => {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-            <Box h='200px' />
+            <Box mt={8} w='full'>
+              <RecentDeals />
+            </Box>
           </VStack>
         </Container>
       )}

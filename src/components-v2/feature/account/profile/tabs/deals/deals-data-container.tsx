@@ -5,7 +5,7 @@ import {useInfiniteQuery} from "@tanstack/react-query";
 import {ResponsiveValue} from "@chakra-ui/system";
 import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
 import {ApiService} from "@src/core/services/api-service";
-import ResponsiveDealsTable from "@src/components-v2/feature/account/profile/tabs/deals/responsive-deals-table";
+import ResponsiveDealsTable from "@src/components-v2/shared/responsive-table/responsive-deals-table";
 import {OrderState} from "@src/core/services/api-service/types";
 import Link from "next/link";
 
