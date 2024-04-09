@@ -34,6 +34,7 @@ import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/f
 import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
 import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
+import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -247,6 +248,30 @@ export class ApiService implements Api {
 
   async getStakedRyoshi(address: string) {
     return await this.graph.getStakedRyoshi(address);
+  }
+
+  async createDeal(request: any, address: string, signature: string) {
+    return await this.cms.createDeal(request, address, signature);
+  }
+
+  async getDeal(id: string) {
+    return await this.mapi.getDeal(id);
+  }
+
+  async requestAcceptDealAuthorization(id: string, address: string, signature: string) {
+    return await this.cms.requestAcceptDealAuthorization(id, address, signature);
+  }
+
+  async cancelDeal(id: string, address: string, signature: string) {
+    return await this.cms.cancelDeal(id, address, signature);
+  }
+
+  async rejectDeal(id: string, address: string, signature: string) {
+    return await this.cms.rejectDeal(id, address, signature);
+  }
+
+  async getDeals(query?: DealListQueryParams) {
+    return await this.mapi.getDeals(query);
   }
 }
 

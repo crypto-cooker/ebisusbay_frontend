@@ -21,7 +21,7 @@ const useEnforceSignature = () => {
 
     let authSigner = signer;
     let signatureInStorage: string | null | undefined = authSigner?.signature;
-    if (!signatureInStorage) return false;
+    if (!authSigner?.address || !authSigner?.signature) return false;
 
     try {
       const signerAddressMatches = !!authSigner?.address && ciEquals(authSigner?.address, user.wallet.address);
@@ -40,7 +40,7 @@ const useEnforceSignature = () => {
     const signedIn = await checkSigninStatus();
     if (!signedIn) {
       setSigner(RESET);
-      const { signature } = await getSigner();
+      const { signature } = await getSigner(true);
       return signature;
     }
 

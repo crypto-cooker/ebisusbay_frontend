@@ -1,6 +1,6 @@
 import {useMemo, useState} from "react";
 import {Contract, ethers} from "ethers";
-import {Box, Button, HStack, SimpleGrid, Stack, Text, Textarea, useClipboard, VStack} from "@chakra-ui/react";
+import {Box, Button, HStack, Input, SimpleGrid, Stack, Text, Textarea, useClipboard, VStack} from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {appConfig} from "@src/Config";
 import {ERC721} from "@src/Contracts/Abis";
@@ -175,7 +175,9 @@ const Transak = () => {
   const [isExecuting, setIsExecuting] = useState(false);
   const [callData, setCallData] = useState<string | number>();
   const [selectedListings, setSelectedListings] = useState<any[]>([]);
-  const { onCopy, value, setValue, hasCopied } = useClipboard("");
+  const { onCopy, value, setValue, hasCopied } = useClipboard('');
+  const { onCopy: onCopyCroValue, setValue: setCroValue, hasCopied: hasCopiedCroValue } = useClipboard('');
+  const [croPaymentValue, setCroPaymentValue] = useState<string>('');
 
   const {data} = useQuery({
     queryKey: ['transakGetListings'],
@@ -213,7 +215,11 @@ const Transak = () => {
         .filter((purchase) => !purchase.currency || purchase.currency === ethers.constants.AddressZero)
         .reduce((acc, curr) => acc + Number(curr.price), 0);
       const price = ethers.utils.parseEther(`${croTotal}`);
-      const { data: serverSig } = await getServerSignature((user.address), selectedListings.map((purchase) => purchase.listingId));
+      const { data: serverSig } = await getServerSignature(
+        user.address,
+        selectedListings.map((purchase) => purchase.listingId),
+        recipientAddress
+      );
       const { signature, orderData, ...sigData } = serverSig;
       const total = price.add(sigData.feeAmount);
 
@@ -225,12 +231,19 @@ const Transak = () => {
       ]);
       setValue(rawCallData);
       setCallData(rawCallData);
+      setCroPaymentValue(total.toString());
+      setCroValue(total.toString());
     } catch (e: any) {
       console.log(e);
       toast.error(parseErrorMessage(e));
     } finally {
       setIsExecuting(false);
     }
+  }
+
+  const [recipientAddress, setRecipientAddress] = useState<string>('');
+  const handleRecipientAddressChange = (e: any) => {
+    setRecipientAddress(e.target.value);
   }
 
   return (
@@ -267,6 +280,12 @@ const Transak = () => {
           </Box>
         </Stack>
       </Box>
+      <Input
+        mt={4}
+        placeholder='Enter a recipient address'
+        value={recipientAddress}
+        onChange={handleRecipientAddressChange}
+      />
       <PrimaryButton
         mt={4}
         isLoading={isExecuting}
@@ -277,13 +296,14 @@ const Transak = () => {
         Generate Call Data
       </PrimaryButton>
       {!!callData && (
-        <Box mt={2}>
-          <Text fontSize='lg'>Call Data</Text>
+        <VStack mt={2} align='start'>
+          <Text fontSize='lg' fontWeight='bold'>Call Data:</Text>
+          <Box onClick={onCopyCroValue} cursor='pointer'>Value: {croPaymentValue.toString()}</Box>
           <Button onClick={onCopy}>{hasCopied ? "Copied!" : "Copy Call Data"}</Button>
           <Textarea mt={2} rows={5}>
             {callData}
           </Textarea>
-        </Box>
+        </VStack>
       )}
     </Box>
   )

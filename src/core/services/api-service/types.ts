@@ -86,17 +86,27 @@ export interface RyoshiDynastiesApi {
     requestBattleCardsWithdrawalAuthorization(address: string, signature: string): Promise<any>;
 }
 
+// @deprecated move to OrderState once MAPI migrated
 export enum ListingState {
     ACTIVE,
     SOLD,
     CANCELLED
 }
 
+// @deprecated move to OrderState once MAPI migrated
 export enum OfferState {
     ACTIVE,
     ACCEPTED,
     REJECTED,
     CANCELLED
+}
+
+export enum OrderState {
+    ACTIVE,
+    COMPLETED,
+    CANCELLED,
+    REJECTED,
+    EXPIRED
 }
 
 export enum InvalidState {

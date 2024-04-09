@@ -65,11 +65,11 @@ const useSignature = () => {
     return [null, address];
   };
 
-  const getSigner = async () => {
+  const getSigner = async (forceNew?: boolean) => {
     let signature: string | null = null;
     let address: string | null = null;
 
-    if (getSignatureInStorage && !!getSignatureInStorage.signature) {
+    if (getSignatureInStorage && !!getSignatureInStorage.signature && !forceNew) {
       signature = getSignatureInStorage.signature;
       address = getSignatureInStorage.address;
     } else {

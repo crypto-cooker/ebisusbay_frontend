@@ -54,12 +54,13 @@ export const expressCancelListing = async (listingIds, address, signature) => {
   }
 }
 
-export const getServerSignature = async (address, listingIds) => {
+export const getServerSignature = async (address, listingIds, recipientAddress) => {
   try {
     const response = await api.get('gasless-listing/validator', {
       params: {
         address,
-        listingIds
+        listingIds,
+        recipient: recipientAddress
       }
     });
 

@@ -73,60 +73,65 @@ export const configData = {
       ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C'
     },
     tokens: {
-      loot: {
-        name: 'LOOT',
-        symbol: 'LOOT',
-        address: '0xEd34211cDD2cf76C3cceE162761A72d7b6601E2B',
-      },
       mad: {
         name: 'MAD',
         symbol: 'MAD',
         address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
+        decimals: 18
       },
       trpz: {
         name: 'TRPZ',
         symbol: 'TRPZ',
         address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
-      },
-      bacc: {
-        name: 'BACC',
-        symbol: 'BACC',
-        address: '',
+        decimals: 0
       },
       vrse: {
         name: 'VRSE',
         symbol: 'VRSE',
         address: '0x2ba01269eafce04c8dccc4a9887884ab66e4bcb1',
+        decimals: 18
       },
       frtn: {
         name: 'FRTN',
         symbol: 'FRTN',
         address: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
+        decimals: 18
       },
       bcro: {
         name: 'bCRO',
         symbol: 'bCRO',
         address: '0xebaceb7f193955b946cc5dd8f8724a80671a1f2f',
+        decimals: 18
       },
       scratch: {
         name: 'Scratch',
         symbol: 'SCRATCH',
-        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66'
+        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66',
+        decimals: 18
       },
       candy: {
         name: 'Candy',
         symbol: 'CANDY',
-        address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977'
+        address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977',
+        decimals: 18
       },
       ttt: {
         name: 'TTT',
         symbol: 'TTT',
-        address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6'
+        address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6',
+        decimals: 18
       },
       icy: {
         name: 'ICY',
         symbol: 'ICY',
-        address: '0x8F857Af6Ea31447Bb502fE0E3F4e4340CDFCfc6C'
+        address: '0x8F857Af6Ea31447Bb502fE0E3F4e4340CDFCfc6C',
+        decimals: 18
+      },
+      wcro: {
+        name: 'WCRO',
+        symbol: 'WCRO',
+        address: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -155,7 +160,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy'],
+        available: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy'],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -275,6 +280,9 @@ export const configData = {
           '0x6A7808f1e84bB173D6fC53Efd9Ebc6E56380AB5E': ['cro'], // Cronos Chickens
         }
       }
+    },
+    deals: {
+      currencies: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy']
     }
   },
   [environments.development]: {
@@ -338,62 +346,66 @@ export const configData = {
       ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C'
     },
     tokens: {
-      loot: {
-        name: 'LOOT',
-        symbol: 'LOOT',
-        address: '0xEd34211cDD2cf76C3cceE162761A72d7b6601E2B',
-      },
       mad: {
         name: 'MAD',
         symbol: 'MAD',
         address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
+        decimals: 18
       },
       trpz: {
         name: 'TRPZ',
         symbol: 'TRPZ',
         address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
-      },
-      bacc: {
-        name: 'BACC',
-        symbol: 'BACC',
-        address: '',
+        decimals: 0
       },
       vrse: {
         name: 'VRSE',
         symbol: 'VRSE',
         address: '0x2ba01269eafce04c8dccc4a9887884ab66e4bcb1',
+        decimals: 18
       },
       frtn: {
         name: 'FRTN',
         symbol: 'FRTN',
         address: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
+        decimals: 18
       },
       bcro: {
         name: 'bCRO',
         symbol: 'bCRO',
         address: '0xebaceb7f193955b946cc5dd8f8724a80671a1f2f',
+        decimals: 18
       },
       scratch: {
         name: 'Scratch',
         symbol: 'SCRATCH',
-        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66'
+        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66',
+        decimals: 18
       },
       candy: {
         name: 'Candy',
         symbol: 'CANDY',
-        address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977'
+        address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977',
+        decimals: 18
       },
       ttt: {
         name: 'TTT',
         symbol: 'TTT',
-        address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6'
+        address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6',
+        decimals: 18
       },
       icy: {
         name: 'ICY',
         symbol: 'ICY',
-        address: '0x8F857Af6Ea31447Bb502fE0E3F4e4340CDFCfc6C'
+        address: '0x8F857Af6Ea31447Bb502fE0E3F4e4340CDFCfc6C',
+        decimals: 18
+      },
+      wcro: {
+        name: 'WCRO',
+        symbol: 'WCRO',
+        address: '0x6a3173618859c7cd40faf6921b5e9eb6a76f1fd4',
+        decimals: 18
       }
-      
     },
     collections: rpcConfigDev.known_contracts,
     drops: rpcConfigDev.drops,
@@ -421,7 +433,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy'],
+        available: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy'],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -540,6 +552,9 @@ export const configData = {
           '0xccc598ef1b4d17d9f44a889eee38c8de53f5df00': ['icy'], // ICY Brand End
         }
       }
+    },
+    deals: {
+      currencies: ['cro', 'wcro', 'frtn']
     }
   },
   [environments.testnet]: {
@@ -554,6 +569,7 @@ export const configData = {
       cms: 'https://testcms.ebisusbay.biz/api/',
       // cms: "http://localhost:4000/api/",
       cmsSocket: 'wss://testcms.ebisusbay.biz/socket/',
+      // cmsSocket: 'ws://localhost:4000/socket/',
       explorer: 'https://testnet.cronoscan.com/',
       cdn: {
         bunnykit: 'https://ik-proxy.b-cdn.net/',
@@ -604,50 +620,53 @@ export const configData = {
       ryoshiWithKnife: '0x149F2017b1C4a206d0F8684563C2F9aa519e3f64'
     },
     tokens: {
-      loot: {
-        name: 'LOOT',
-        symbol: 'LOOT',
-        address: '0x2074D6a15c5F908707196C5ce982bd0598A666f9',
-      },
       mad: {
         name: 'MAD',
         symbol: 'MAD',
         address: '0x4DEdeea250d2cbf54F0e156f0e9b55927094867E',
+        decimals: 18
       },
       trpz: {
         name: 'TRPZ',
         symbol: 'TRPZ',
         address: '0x574deA750075145CcAD7f659A231721DFF9b5ef0',
-      },
-      bacc: {
-        name: 'BACC',
-        symbol: 'BACC',
-        address: '',
+        decimals: 0
       },
       vrse: {
         name: 'VRSE',
         symbol: 'VRSE',
         address: '0x100123d24a69bd8862da338129471c41e3ca8791',
+        decimals: 18
       },
       frtn: {
         name: 'FRTN',
         symbol: 'FRTN',
         address: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
+        decimals: 18
       },
       bcro: {
         name: 'bCRO',
         symbol: 'bCRO',
         address: '0x0A3cAaC2F607E38bF1C6533B9CB46aFAD918dE16',
+        decimals: 18
       },
       scratch: {
         name: 'Scratch',
         symbol: 'SCRATCH',
-        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66'
+        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66',
+        decimals: 18
       },
       candy: {
         name: 'Candy',
         symbol: 'CANDY',
-        address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977'
+        address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977',
+        decimals: 18
+      },
+      wcro: {
+        name: 'WCRO',
+        symbol: 'WCRO',
+        address: '0x467604E174c87042fcc4412c5BC70AaBc8733016',
+        decimals: 18
       }
     },
     collections: rpcConfigTestnet.known_contracts,
@@ -673,7 +692,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'vrse'],
+        available: ['cro', 'wcro', 'frtn', 'vrse'],
         global: ['cro', 'frtn'],
         nft: {
           '0xCF7aedEbC5223c4C620625A560300582B77D8719': ['cro', 'frtn'], // Ryoshi VIP
@@ -690,6 +709,9 @@ export const configData = {
           '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74': ['cro']
         }
       }
+    },
+    deals: {
+      currencies: ['wcro', 'frtn', 'candy']
     }
   },
   [environments.local]: {
@@ -753,45 +775,47 @@ export const configData = {
       ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C'
     },
     tokens: {
-      loot: {
-        name: 'LOOT',
-        symbol: 'LOOT',
-        address: '0xEd34211cDD2cf76C3cceE162761A72d7b6601E2B',
-      },
       mad: {
         name: 'MAD',
         symbol: 'MAD',
         address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
+        decimals: 18
       },
       trpz: {
         name: 'TRPZ',
         symbol: 'TRPZ',
         address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
-      },
-      bacc: {
-        name: 'BACC',
-        symbol: 'BACC',
-        address: '',
+        decimals: 0
       },
       vrse: {
         name: 'VRSE',
         symbol: 'VRSE',
         address: '0x2ba01269eafce04c8dccc4a9887884ab66e4bcb1',
+        decimals: 18
       },
       frtn: {
         name: 'FRTN',
         symbol: 'FRTN',
         address: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
+        decimals: 18
       },
       bcro: {
         name: 'bCRO',
         symbol: 'bCRO',
         address: '0xebaceb7f193955b946cc5dd8f8724a80671a1f2f',
+        decimals: 18
       },
       scratch: {
         name: 'Scratch',
         symbol: 'SCRATCH',
-        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66'
+        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66',
+        decimals: 18
+      },
+      wcro: {
+        name: 'WCRO',
+        symbol: 'WCRO',
+        address: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -820,7 +844,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'],
+        available: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -833,6 +857,9 @@ export const configData = {
           '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],        // FortuneTeller
         }
       }
+    },
+    deals: {
+      currencies: ['cro', 'wcro', 'frtn']
     }
   }
 };

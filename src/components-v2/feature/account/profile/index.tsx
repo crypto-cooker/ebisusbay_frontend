@@ -2,17 +2,17 @@ import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from '
 import {useRouter} from 'next/router';
 import styles from './profile.module.scss';
 import {hostedImage} from "@src/helpers/image";
-import {caseInsensitiveCompare, isUserBlacklisted, shortAddress, username} from "@src/utils";
+import {appUrl, caseInsensitiveCompare, isUserBlacklisted, username} from "@src/utils";
 import Inventory from "@src/components-v2/feature/account/profile/tabs/inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
 import Listings from "@src/components-v2/feature/account/profile/tabs/listings";
 import Offers from "@src/components-v2/feature/account/profile/tabs/offers";
+import Deals from "@src/components-v2/feature/account/profile/tabs/deals";
 import Sales from "@src/Components/Account/Profile/Sales";
 import Favorites from "@src/Components/Account/Profile/Favorites";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {pushQueryString} from "@src/helpers/query";
-import {ethers} from "ethers";
 import {
   Avatar,
   Box,
@@ -22,6 +22,7 @@ import {
   GridItem,
   Heading,
   HStack,
+  Icon,
   IconButton,
   Image,
   Menu,
@@ -32,6 +33,7 @@ import {
   Tag,
   Text,
   useBreakpointValue,
+  useClipboard,
   useMediaQuery,
   Wrap
 } from "@chakra-ui/react";
@@ -41,10 +43,14 @@ import {closeBatchListingCart} from "@src/GlobalState/user-batch";
 import {useAppDispatch, useAppSelector} from "@src/Store/hooks";
 import {getTheme} from "@src/Theme/theme";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCog, faEllipsisV} from "@fortawesome/free-solid-svg-icons";
+import {faCog, faEllipsisV, faHandshake} from "@fortawesome/free-solid-svg-icons";
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
+import Link from "next/link";
+import {useColorModeValue} from "@chakra-ui/color-mode";
+import LayeredIcon from "@src/Components/components/LayeredIcon";
+import {toast} from "react-toastify";
 
 const MotionGrid = motion(Grid)
 
@@ -53,6 +59,7 @@ enum TabKey {
   collections = 'collections',
   listings = 'listings',
   offers = 'offers',
+  deals = 'deals',
   sales = 'sales',
   favorites = 'favorites'
 }
@@ -67,6 +74,10 @@ const tabs: {[key: string]: {label: string, overflow?: string}} = {
   offers: {
     label: 'Offers',
   },
+  // deals: {
+  //   label: 'Deals',
+  //   overflow: 'Deals',
+  // },
   sales: {
     label: 'Sales',
     overflow: 'Sales',
@@ -88,6 +99,8 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
   const user = useUser();
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const router = useRouter();
+  const { onCopy, value, setValue, hasCopied } = useClipboard(appUrl(`/deal/create/${address}`).toString());
+
   const variants = {
     expand: { gridTemplateColumns: '1fr 358px' },
     collapse: { gridTemplateColumns: '1fr 0px' },
@@ -100,6 +113,10 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
   const overflowCount = useBreakpointValue<number>(
     {base: 2, sm: 1, md: 0},
     {fallback: 'md'},
+  );
+  const pulseColorClass = useColorModeValue(
+    'pulse-animation-light',
+    'pulse-animation-dark'
   );
 
   const navigateTo = (route: string) => {
@@ -146,6 +163,11 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
     setOverflowTabKey(tabKey);
     handleTabChange(TabKey[tabKey as keyof typeof TabKey]);
   };
+
+  const handleCopyDealLink = () => {
+    onCopy();
+    toast.success('Deal link copied!');
+  }
 
   return (
     <div className={styles.profile} >
@@ -195,7 +217,12 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                   <Flex direction='column' ms={4} flex={1}>
                     <Wrap align='center'>
                       <Heading>{username(identifier)}</Heading>
-                      <SocialsBar socials={profile} address={address} />
+                      <SocialsBar socials={profile} address={address}/>
+                      {/*{isProfileOwner && (*/}
+                      {/*  <span onClick={handleCopyDealLink} style={{cursor: 'pointer'}} title="Copy Deal Link">*/}
+                      {/*    <LayeredIcon icon={faHandshake}/>*/}
+                      {/*  </span>*/}
+                      {/*)}*/}
                     </Wrap>
                     {isUserBlacklisted(address) && (
                       <Flex>
@@ -205,14 +232,14 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                     <Text className={styles.bio}>{profile.bio}</Text>
                   </Flex>
                 )}
-                <HStack align='top' flex={useMobileLayout ? 1 : 0}>
+                <HStack align='top' flex={useMobileLayout ? 1 : 0} mt={1}>
                   <Spacer/>
                   {useMobileLayout && (
                     <Box style={{marginTop: '1px !important'}}>
                       <SocialsBar socials={profile} address={address} />
                     </Box>
                   )}
-                  {isProfileOwner && (
+                  {isProfileOwner ? (
                     <>
                       {useMobileLayout ? (
                         <IconButton
@@ -235,6 +262,28 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                         </ChakraButton>
                       )}
                     </>
+                  ) : useMobileLayout ? (
+                    <Link href={`/deal/create/${address}`}>
+                      {/*<IconButton*/}
+                      {/*  aria-label='Make a Deal'*/}
+                      {/*  variant='primary'*/}
+                      {/*  size='sm'*/}
+                      {/*  fontSize='sm'*/}
+                      {/*  icon={<FontAwesomeIcon icon={faHandshake} />}*/}
+                      {/*  rounded='full'*/}
+                      {/*/>*/}
+                    </Link>
+                  ) : (
+                    <Link href={`/deal/create/${address}`}>
+                      {/*<ChakraButton*/}
+                      {/*  variant='primary'*/}
+                      {/*  size='sm'*/}
+                      {/*  fontSize='sm'*/}
+                      {/*  leftIcon={<Icon as={FontAwesomeIcon} icon={faHandshake} />}*/}
+                      {/*>*/}
+                      {/*  Make a Deal*/}
+                      {/*</ChakraButton>*/}
+                    </Link>
                   )}
                 </HStack>
               </Flex>
@@ -260,6 +309,18 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                     size={{base: 'sm', sm: 'md'}}
                     color={currentTab === key ? 'white' : getTheme(user.theme).colors.textColor3}
                   >
+                    {/*{key === TabKey.deals && isProfileOwner && (*/}
+                    {/*  <Box*/}
+                    {/*    position='absolute'*/}
+                    {/*    top={-1}*/}
+                    {/*    right={-1}*/}
+                    {/*    bg='#FD8800'*/}
+                    {/*    rounded='full'*/}
+                    {/*    w='10px'*/}
+                    {/*    h='10px'*/}
+                    {/*    animation={`${pulseColorClass} 1.5s infinite`}*/}
+                    {/*  />*/}
+                    {/*)}*/}
                     {tab.label}
                   </ChakraButton>
                 ))}
@@ -310,6 +371,9 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                   )}
                   {currentTab === TabKey.offers && isProfileOwner && (
                     <Offers address={address} />
+                  )}
+                  {currentTab === TabKey.deals && isProfileOwner && (
+                    <Deals address={address} />
                   )}
                   {currentTab === TabKey.sales && (
                     <Sales address={address} />
