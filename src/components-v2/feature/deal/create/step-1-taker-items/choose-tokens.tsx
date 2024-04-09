@@ -126,10 +126,10 @@ const WhitelistedTokenPicker = () => {
           menuPortalTarget={document.body} menuPosition={'fixed'}
           styles={customStyles}
           options={sortedWhitelistedERC20DealCurrencies}
-          formatOptionLabel={({ name, image }) => (
+          formatOptionLabel={({ symbol, image }) => (
             <HStack>
               {image}
-              <span>{name}</span>
+              <span>{symbol}</span>
             </HStack>
           )}
           value={selectedCurrency}

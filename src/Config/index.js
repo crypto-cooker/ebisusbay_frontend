@@ -132,6 +132,18 @@ export const configData = {
         symbol: 'WCRO',
         address: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23',
         decimals: 18
+      },
+      ryoshi: {
+        name: 'Ryoshi With Knife',
+        symbol: 'RYOSHI',
+        address: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
+        decimals: 18
+      },
+      caw: {
+        name: 'crow with knife',
+        symbol: 'CAW',
+        address: '0xcCcCcCcCdbEC186DC426F8B5628AF94737dF0E60',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -282,7 +294,7 @@ export const configData = {
       }
     },
     deals: {
-      currencies: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy']
+      currencies: ['ryoshi', 'frtn', 'wcro', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy', 'caw']
     }
   },
   [environments.development]: {
@@ -811,10 +823,40 @@ export const configData = {
         address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66',
         decimals: 18
       },
+      candy: {
+        name: 'Candy',
+        symbol: 'CANDY',
+        address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977',
+        decimals: 18
+      },
+      ttt: {
+        name: 'TTT',
+        symbol: 'TTT',
+        address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6',
+        decimals: 18
+      },
+      icy: {
+        name: 'ICY',
+        symbol: 'ICY',
+        address: '0x8F857Af6Ea31447Bb502fE0E3F4e4340CDFCfc6C',
+        decimals: 18
+      },
       wcro: {
         name: 'WCRO',
         symbol: 'WCRO',
         address: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23',
+        decimals: 18
+      },
+      ryoshi: {
+        name: 'Ryoshi With Knife',
+        symbol: 'RYOSHI',
+        address: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
+        decimals: 18
+      },
+      caw: {
+        name: 'crow with knife',
+        symbol: 'CAW',
+        address: '0xcCcCcCcCdbEC186DC426F8B5628AF94737dF0E60',
         decimals: 18
       }
     },
@@ -859,7 +901,7 @@ export const configData = {
       }
     },
     deals: {
-      currencies: ['cro', 'wcro', 'frtn']
+      currencies: ['ryoshi', 'frtn', 'wcro', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy', 'caw']
     }
   }
 };
