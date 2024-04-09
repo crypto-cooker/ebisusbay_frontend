@@ -3,9 +3,6 @@ import {ApiService} from "@src/core/services/api-service";
 import React, {useCallback, useMemo, useState} from "react";
 import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
 import {Center, Heading, Spinner} from "@chakra-ui/react";
-import ResponsiveCollectionsTable, {
-  SortKeys
-} from "@src/components-v2/shared/responsive-table/responsive-collections-table";
 import ResponsiveDealsTable from "@src/components-v2/shared/responsive-table/responsive-deals-table";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {OrderState} from "@src/core/services/api-service/types";
@@ -30,7 +27,7 @@ export const RecentDeals = () => {
     queryFn: fetcher,
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
-      return pages[pages.length - 1].length > 0 ? pages.length + 1 : undefined;
+      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
     staleTime: 1000 * 60
   });
