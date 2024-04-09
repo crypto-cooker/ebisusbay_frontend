@@ -30,7 +30,7 @@ const ApprovalsView = ({deal}: {deal: Deal}) => {
     if (!!user.address && isDealOpen && ciEquals(user.address, deal.maker)) {
       checkApprovalStatuses(deal, 'maker');
     }
-  }, [deal.state, user.address, deal.taker]);
+  }, [deal.state, user.address, deal.taker, deal.maker, isDealOpen]);
 
   return (
     <>
