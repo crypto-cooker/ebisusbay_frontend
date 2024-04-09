@@ -142,7 +142,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
             ) : deal.state === OrderState.REJECTED ? (
               <Badge colorScheme='red' fontSize='lg'>Rejected</Badge>
             ) : deal.state === OrderState.COMPLETED ? (
-              <Badge colorScheme='green' fontSize='lg'>Sold</Badge>
+              <Badge colorScheme='green' fontSize='lg'>COMPLETE</Badge>
             ) : deal.state === OrderState.EXPIRED ? (
               <Badge fontSize='lg'>Expired</Badge>
             ) : (
