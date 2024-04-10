@@ -6,6 +6,7 @@ import React from "react";
 import {DefaultContainer} from "@src/components-v2/shared/default-container";
 import ManageDealView from "@src/components-v2/feature/deal/manage";
 import {Deal} from "@src/core/services/api-service/mapi/types";
+import ImageService from "@src/core/services/image";
 
 interface ManageDealProps {
   deal: Deal;
@@ -18,6 +19,7 @@ const ManageDeal = ({deal}: ManageDealProps) => {
       <PageHead
         title={'Swap NFTs on Ebisu\'s Bay'}
         description='Reveal unique value opportunities by swapping NFTs and tokens directly'
+        image={ImageService.translate('/img/background/deals.jpg').convert()}
       />
       <PageHeader
         title={'View Deal'}
