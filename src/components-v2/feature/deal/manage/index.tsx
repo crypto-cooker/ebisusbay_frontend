@@ -227,12 +227,6 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
                 <GetDealItemPreview
                   key={index}
                   item={item}
-                  ref={initialFocusRef}
-                  isActive={true}
-                  mode='READ'
-                  isOpen={matchesPopoverId(index, 'maker')}
-                  onOpen={() => handleOpenPopover(index, 'maker')}
-                  onClose={() => setOpenPopoverId(null)}
                 />
               ))}
             </Accordion>
@@ -282,12 +276,6 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
                 <GetDealItemPreview
                   key={index}
                   item={item}
-                  ref={initialFocusRef}
-                  isActive={true}
-                  mode='READ'
-                  isOpen={matchesPopoverId(index, 'taker')}
-                  onOpen={() => handleOpenPopover(index, 'taker')}
-                  onClose={() => setOpenPopoverId(null)}
                 />
               ))}
             </Accordion>
