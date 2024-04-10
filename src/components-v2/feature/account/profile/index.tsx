@@ -64,27 +64,32 @@ enum TabKey {
   favorites = 'favorites'
 }
 
-const tabs: {[key: string]: {label: string, overflow?: string}} = {
+const tabs: {[key: string]: {label: string, overflow?: string, private: boolean}} = {
   inventory: {
     label: 'Inventory',
+    private: false,
   },
   listings: {
     label: 'Listings',
+    private: false,
   },
   offers: {
     label: 'Offers',
+    private: true,
   },
   deals: {
     label: 'Deals',
-    overflow: 'Deals',
+    private: true,
   },
   sales: {
     label: 'Sales',
     overflow: 'Sales',
+    private: false,
   },
   favorites: {
     label: 'Favorites',
     overflow: 'Favs',
+    private: false,
   }
 };
 
@@ -305,7 +310,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
               )}
             </Box>
               <HStack spacing={1} w='full'>
-                {Object.entries(tabs).slice(0, Object.keys(tabs).length - overflowCount!).map(([key, tab]) => (
+                {Object.entries(tabs).filter(([_, tab]) => !tab.private || isProfileOwner).slice(0, Object.keys(tabs).length - overflowCount!).map(([key, tab]) => (
                   <ChakraButton
                     isActive={currentTab === key}
                     onClick={() => handleTabChange(key)}
