@@ -55,7 +55,7 @@ import {OrderState} from "@src/core/services/api-service/types";
 import ApprovalsView from "@src/components-v2/feature/deal/manage/approvals";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {Deal} from "@src/core/services/api-service/mapi/types";
-import {CheckCircleIcon} from "@chakra-ui/icons";
+import {ArrowBackIcon, CheckCircleIcon} from "@chakra-ui/icons";
 import {useRouter} from "next/router";
 import {faFacebook, faTelegram, faTwitter} from "@fortawesome/free-brands-svg-icons";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
@@ -131,6 +131,16 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
 
   return (
     <Container maxW='container.xl'>
+      <Box mb={2}>
+        <NextLink href='/deal'>
+          <Button
+            variant='ghost'
+            leftIcon={<ArrowBackIcon />}
+          >
+            Deals
+          </Button>
+        </NextLink>
+      </Box>
       <Card>
         <SimpleGrid columns={2}>
           <Box>Status</Box>
