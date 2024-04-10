@@ -22,6 +22,7 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import {getCroidAddressFromName, isCroName} from "@src/helpers/croid";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {RecentDeals} from "@src/components-v2/feature/deal/landing/recent-deals";
+import ImageService from "@src/core/services/image";
 
 const Deal = () => {
   const router = useRouter();
@@ -81,6 +82,7 @@ const Deal = () => {
       <PageHead
         title='Make a Deal'
         description='Reveal unique value opportunities by swapping NFTs and tokens directly'
+        image={ImageService.translate('/img/background/deals.jpg').convert()}
       />
       <PageHeader title={'Create a Deal'} subtitle='Reveal unique value opportunities by swapping NFTs and tokens directly'/>
       {!!address ? (
