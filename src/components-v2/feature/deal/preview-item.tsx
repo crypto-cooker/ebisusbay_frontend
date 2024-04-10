@@ -274,7 +274,7 @@ export const GetDealItemPreview = ({item, ref, isOpen, onOpen, onClose, onSave, 
       return {
         name: token?.name ?? shortString(item.token, 5),
         image: token?.image,
-        amount: ethers.utils.formatUnits(item.start_amount, 18),
+        amount: ethers.utils.formatUnits(item.start_amount, item.token_decimals ?? 18),
         category: token ? '' : 'Custom Token',
         categoryUrl: ``,
         itemUrl: ``,

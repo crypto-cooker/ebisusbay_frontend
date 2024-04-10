@@ -28,7 +28,7 @@ export interface DealItem {
   identifier_or_criteria: string | null;
   start_amount: string;
   end_amount: string;
-  token_details?: {
+  token_details?: { // ERC721 only
     metadata: {
       name: string;
       image: string;
@@ -37,11 +37,14 @@ export interface DealItem {
       attributes: Array<{trait_type: string, value: string | number}>;
     }
   },
-  collection?: {
+  collection?: { // ERC721 only
     name: string;
     slug: string;
     metadata: any;
-  }
+  },
+  token_name?: string; // ERC20 only
+  token_symbol?: string; // ERC20 only
+  token_decimals?: number; // ERC20 only
 }
 
 export interface AbbreviatedDeal {
