@@ -156,7 +156,7 @@ const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, on
         [
           {label: 'CRO', key: 'currency-cro', isSelected: filteredItems.some((fi) => fi.key === 'currency-cro')},
           ...currencies.map((c) => (
-            {label: c.name, key: `currency-${c.symbol.toLowerCase()}`, isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)}
+            {label: c.symbol, key: `currency-${c.symbol.toLowerCase()}`, isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)}
           )),
         ]}
         onSelect={handleCurrencyFilter}
