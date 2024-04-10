@@ -13,6 +13,7 @@ import {
   Stat,
   StatLabel,
   StatNumber,
+  Text,
   VStack
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
@@ -55,17 +56,19 @@ export const GetDealItemPreview = ({item}: GetDealItemPreviewProps) => {
         category: item.collection?.name,
         categoryUrl: `/collection/${item.token}`,
         itemUrl: `/collection/${item.token}/${item.identifier_or_criteria}`,
+        custom: false
       }
     } else if (isToken) {
       const token = getByAddress(item.token);
 
       return {
-        name: token?.symbol ?? shortString(item.token, 5),
+        name: item.token_symbol || token?.symbol || shortString(item.token, 5),
         image: token?.image,
         amount: ethers.utils.formatUnits(item.start_amount, item.token_decimals ?? 18),
         category: token ? token.name : 'Custom Token',
         categoryUrl: ``,
         itemUrl: ``,
+        custom: !token
       }
     }
   }, [item.token]);
@@ -83,7 +86,19 @@ export const GetDealItemPreview = ({item}: GetDealItemPreviewProps) => {
               rounded='md'
               overflow='hidden'
             >
-              {normalizedItem!.image}
+              {normalizedItem!.image || (
+                <Flex
+                  w='35px'
+                  h='35px'
+                  bg='gray.400'
+                  rounded='full'
+                  align='center'
+                  justify='center'
+                  fontWeight='bold'
+                >
+                  ?
+                </Flex>
+              )}
             </Box>
 
             <Box flex='1' fontSize='sm'>
@@ -114,7 +129,7 @@ export const GetDealItemPreview = ({item}: GetDealItemPreviewProps) => {
             </Stat>
           </VStack>
         </Box>
-        {isNft ? (
+        {(isNft || (isToken && normalizedItem!.custom)) ? (
           <AccordionButton w='auto'>
             <AccordionIcon />
           </AccordionButton>
@@ -145,7 +160,14 @@ export const GetDealItemPreview = ({item}: GetDealItemPreviewProps) => {
               </GridItem>
             ))}
           </SimpleGrid>
-        )  : (
+        ) : (isToken && normalizedItem!.custom) ? (
+          <Flex justify='space-around' textAlign='center' fontSize='sm' bg={hoverBackground} rounded='md' py={2}>
+            <VStack direction="row" spacing={0}>
+              <Text fontWeight="bold">Token Address:</Text>
+              <Text>{item.token}</Text>
+            </VStack>
+          </Flex>
+        ) : (
           <Box fontSize='sm' textAlign='center'>No additional info found for this item</Box>
         )}
       </AccordionPanel>
