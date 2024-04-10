@@ -74,7 +74,7 @@ export const configData = {
     },
     tokens: {
       mad: {
-        name: 'MAD',
+        name: 'MAD Bucks',
         symbol: 'MAD',
         address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
         decimals: 18
@@ -92,13 +92,13 @@ export const configData = {
         decimals: 18
       },
       frtn: {
-        name: 'FRTN',
+        name: 'Fortune',
         symbol: 'FRTN',
         address: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
         decimals: 18
       },
       bcro: {
-        name: 'bCRO',
+        name: 'Bonded CRO',
         symbol: 'bCRO',
         address: '0xebaceb7f193955b946cc5dd8f8724a80671a1f2f',
         decimals: 18
@@ -116,7 +116,7 @@ export const configData = {
         decimals: 18
       },
       ttt: {
-        name: 'TTT',
+        name: 'Tatas Twisted Time',
         symbol: 'TTT',
         address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6',
         decimals: 18
@@ -128,13 +128,13 @@ export const configData = {
         decimals: 18
       },
       wcro: {
-        name: 'WCRO',
+        name: 'Wrapped CRO',
         symbol: 'WCRO',
         address: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23',
         decimals: 18
       },
       ryoshi: {
-        name: 'Ryoshi With Knife',
+        name: 'ryoshi with knife',
         symbol: 'RYOSHI',
         address: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
         decimals: 18
@@ -144,6 +144,24 @@ export const configData = {
         symbol: 'CAW',
         address: '0xcCcCcCcCdbEC186DC426F8B5628AF94737dF0E60',
         decimals: 18
+      },
+      grve: {
+        name: 'Grave',
+        symbol: 'GRVE',
+        address: '0x9885488cD6864DF90eeBa6C5d07B35f08CEb05e9',
+        decimals: 18
+      },
+      lcro: {
+        name: 'Liquid CRO',
+        symbol: 'LCRO',
+        address: '0x9Fae23A2700FEeCd5b93e43fDBc03c76AA7C08A6',
+        decimals: 18
+      },
+      usdc: {
+        name: 'USD Coin',
+        symbol: 'USDC',
+        address: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
+        decimals: 6
       }
     },
     collections: rpcConfig.known_contracts,
@@ -295,7 +313,7 @@ export const configData = {
       }
     },
     deals: {
-      currencies: ['ryoshi', 'frtn', 'wcro', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy', 'caw']
+      currencies: ['ryoshi', 'frtn', 'wcro', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy', 'caw', 'usdc', 'trpz', 'grve', 'lcro']
     }
   },
   [environments.development]: {
@@ -789,7 +807,7 @@ export const configData = {
     },
     tokens: {
       mad: {
-        name: 'MAD',
+        name: 'MAD Bucks',
         symbol: 'MAD',
         address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
         decimals: 18
@@ -807,13 +825,13 @@ export const configData = {
         decimals: 18
       },
       frtn: {
-        name: 'FRTN',
+        name: 'Fortune',
         symbol: 'FRTN',
         address: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
         decimals: 18
       },
       bcro: {
-        name: 'bCRO',
+        name: 'Bonded CRO',
         symbol: 'bCRO',
         address: '0xebaceb7f193955b946cc5dd8f8724a80671a1f2f',
         decimals: 18
@@ -831,7 +849,7 @@ export const configData = {
         decimals: 18
       },
       ttt: {
-        name: 'TTT',
+        name: 'Tatas Twisted Time',
         symbol: 'TTT',
         address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6',
         decimals: 18
@@ -843,13 +861,13 @@ export const configData = {
         decimals: 18
       },
       wcro: {
-        name: 'WCRO',
+        name: 'Wrapped CRO',
         symbol: 'WCRO',
         address: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23',
         decimals: 18
       },
       ryoshi: {
-        name: 'Ryoshi With Knife',
+        name: 'ryoshi with knife',
         symbol: 'RYOSHI',
         address: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
         decimals: 18
@@ -859,6 +877,24 @@ export const configData = {
         symbol: 'CAW',
         address: '0xcCcCcCcCdbEC186DC426F8B5628AF94737dF0E60',
         decimals: 18
+      },
+      grve: {
+        name: 'Grave',
+        symbol: 'GRVE',
+        address: '0x9885488cD6864DF90eeBa6C5d07B35f08CEb05e9',
+        decimals: 18
+      },
+      lcro: {
+        name: 'Liquid CRO',
+        symbol: 'LCRO',
+        address: '0x9Fae23A2700FEeCd5b93e43fDBc03c76AA7C08A6',
+        decimals: 18
+      },
+      usdc: {
+        name: 'USD Coin',
+        symbol: 'USDC',
+        address: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
+        decimals: 6
       }
     },
     collections: rpcConfig.known_contracts,
@@ -902,7 +938,7 @@ export const configData = {
       }
     },
     deals: {
-      currencies: ['ryoshi', 'frtn', 'wcro', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy', 'caw']
+      currencies: ['ryoshi', 'frtn', 'wcro', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy', 'caw', 'usdc', 'trpz', 'grve', 'lcro']
     }
   }
 };

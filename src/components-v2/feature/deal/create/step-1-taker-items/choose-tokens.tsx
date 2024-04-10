@@ -6,6 +6,7 @@ import ReactSelect, {SingleValue} from "react-select";
 import {toast} from "react-toastify";
 import {getTheme} from "@src/Theme/theme";
 import {
+  Box,
   Container,
   Flex,
   HStack,
@@ -21,6 +22,9 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {CustomTokenPicker} from "@src/components-v2/feature/deal/create/custom-token-picker";
 import {BarterToken} from "@src/jotai/atoms/deal";
 import {ciEquals} from "@src/utils";
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
 
 export const ChooseTokensTab = ({address}: {address: string}) => {
   const { toggleSelectionERC20 } = useBarterDeal();
@@ -47,12 +51,16 @@ const WhitelistedTokenPicker = () => {
 
   const sortedWhitelistedERC20DealCurrencies = whitelistedERC20DealCurrencies.sort((a, b) => {
     // Place FRTN first
-    if (ciEquals(a.symbol, 'FRTN')) return -1;
-    if (ciEquals(b.symbol, 'FRTN')) return 1;
+    if (ciEquals(a.symbol, config.tokens.frtn.symbol)) return -1;
+    if (ciEquals(b.symbol, config.tokens.frtn.symbol)) return 1;
 
     // Place WCRO second
-    if (ciEquals(a.symbol, 'WCRO')) return -1;
-    if (ciEquals(b.symbol, 'WCRO')) return 1;
+    if (ciEquals(a.symbol, config.tokens.wcro.symbol)) return -1;
+    if (ciEquals(b.symbol, config.tokens.wcro.symbol)) return 1;
+
+    // Place USDC third
+    if (ciEquals(a.symbol, config.tokens.usdc.symbol)) return -1;
+    if (ciEquals(b.symbol, config.tokens.usdc.symbol)) return 1;
 
     // Alphabetically sort the rest
     return a.symbol.localeCompare(b.symbol);
@@ -128,7 +136,7 @@ const WhitelistedTokenPicker = () => {
           options={sortedWhitelistedERC20DealCurrencies}
           formatOptionLabel={({ symbol, image }) => (
             <HStack>
-              {image}
+              <Box as='span' minW='30px'>{image}</Box>
               <span>{symbol}</span>
             </HStack>
           )}

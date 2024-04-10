@@ -56,6 +56,26 @@ const iconMapping: Record<string, (props: ChakraProps) => ReactElement> = {
       <Image src='/img/icons/ryoshi.webp' alt='RYOSHI Icon' title='RYOSHI' {...props} boxSize={undefined} />
     </Box>
   ),
+  'trpz': (props) => (
+    <Box width={props.boxSize} height={props.boxSize}>
+      <Image src='/img/icons/trpz.webp' alt='TRPZ Icon' title='TRPZ' {...props} boxSize={undefined} />
+    </Box>
+  ),
+  'usdc': (props) => (
+    <Box width={props.boxSize} height={props.boxSize}>
+      <Image src='/img/icons/usdc.png' alt='USDC Icon' title='USDC' {...props} boxSize={undefined} />
+    </Box>
+  ),
+  'lcro': (props) => (
+    <Box width={props.boxSize} height={props.boxSize}>
+      <Image src='/img/icons/lcro.png' alt='LCRO Icon' title='LCRO' {...props} boxSize={undefined} />
+    </Box>
+  ),
+  'grve': (props) => (
+    <Box width={props.boxSize} height={props.boxSize}>
+      <Image src='/img/icons/grve.png' alt='GRVE Icon' title='GRVE' {...props} boxSize={undefined} />
+    </Box>
+  ),
 };
 
 interface CurrencyIconMapperProps extends ChakraProps {
