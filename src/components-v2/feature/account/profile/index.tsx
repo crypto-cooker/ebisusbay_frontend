@@ -312,6 +312,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
               <HStack spacing={1} w='full'>
                 {Object.entries(tabs).filter(([_, tab]) => !tab.private || isProfileOwner).slice(0, Object.keys(tabs).length - overflowCount!).map(([key, tab]) => (
                   <ChakraButton
+                    key={key}
                     isActive={currentTab === key}
                     onClick={() => handleTabChange(key)}
                     rounded='3px'

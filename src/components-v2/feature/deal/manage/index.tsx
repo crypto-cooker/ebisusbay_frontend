@@ -38,11 +38,11 @@ import {
   VStack
 } from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHandshake, faLink, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faHandshake, faLink, faPlus, faRefresh} from "@fortawesome/free-solid-svg-icons";
 import React, {ReactNode, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import useGetProfilePreview from "@src/hooks/useGetUsername";
 import {Card} from "@src/components-v2/foundation/card";
-import {GetDealItemPreview} from "@src/components-v2/feature/deal/preview-item";
+import {GetDealItemPreview} from "@src/components-v2/feature/deal/manage/preview-item";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useContractService, useUser} from "@src/components-v2/useUser";
@@ -54,7 +54,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {OrderState} from "@src/core/services/api-service/types";
 import ApprovalsView from "@src/components-v2/feature/deal/manage/approvals";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {Deal} from "@src/core/services/api-service/mapi/types";
+import {Deal, DealItem} from "@src/core/services/api-service/mapi/types";
 import {ArrowBackIcon, CheckCircleIcon} from "@chakra-ui/icons";
 import {useRouter} from "next/router";
 import {faFacebook, faTelegram, faTwitter} from "@fortawesome/free-brands-svg-icons";
@@ -186,101 +186,25 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
         gap={4}
         mt={2}
       >
-        <Card bodyPadding={0}>
-          <Stack direction='row' justify='space-between' mb={2} px={5} pt={5}>
-            <Box fontSize='lg' fontWeight='bold'>
-              <NextLink href={`/account/${deal.maker}`}>
-                {makerUsername} {isMaker && <>(You)</>}
-              </NextLink>
-            </Box>
-            <Box>
-              {deal.state === OrderState.ACTIVE ? (
-                <Popover>
-                  <PopoverTrigger>
-                    {deal.estimated_maker_value > 0 ? (
-                      <Tag colorScheme='blue'>
-                        Est. Value: ~ ${round(deal.estimated_maker_value, 2)}
-                      </Tag>
-                    ) : (
-                      <Tag>Est. Value: N/A</Tag>
-                    )}
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <PopoverArrow />
-                    <PopoverBody>
-                      Estimated value of all NFTs and tokens on this side of the deal
-                    </PopoverBody>
-                  </PopoverContent>
-                </Popover>
-              ) : !isMaker && (
-                <Link href={`/deal/create/${deal.maker}`}>
-                  <PrimaryButton size='xs' leftIcon={<Icon as={FontAwesomeIcon} icon={faPlus} />}>
-                    Make Deal
-                  </PrimaryButton>
-                </Link>
-              )}
-            </Box>
-          </Stack>
-          <Box>
-            <Accordion w='full' allowMultiple>
-              {deal.maker_items.map((item: any, index: number) => (
-                <GetDealItemPreview
-                  key={index}
-                  item={item}
-                />
-              ))}
-            </Accordion>
-          </Box>
-        </Card>
+        <DealSide
+          address={deal.maker}
+          username={makerUsername}
+          isOwner={isMaker}
+          estimatedValue={deal.estimated_maker_value}
+          state={deal.state}
+          items={deal.maker_items}
+        />
         <Box my='auto' mx='auto'>
           <Icon as={FontAwesomeIcon} icon={faHandshake} boxSize={8} />
         </Box>
-        <Card bodyPadding={0}>
-          <Stack direction='row' justify='space-between' mb={2} px={5} pt={5}>
-            <Box fontSize='lg' fontWeight='bold'>
-              <NextLink href={`/account/${deal.taker}`}>
-                {takerUsername} {isTaker && <>(You)</>}
-              </NextLink>
-            </Box>
-            <Box>
-              {deal.state === OrderState.ACTIVE ? (
-                <Popover>
-                  <PopoverTrigger>
-                    {deal.estimated_taker_value > 0 ? (
-                      <Tag colorScheme='blue'>
-                        Est. Value: ~ ${round(deal.estimated_taker_value, 2)}
-                      </Tag>
-                    ) : (
-                      <Tag>Est. Value: N/A</Tag>
-                    )}
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <PopoverArrow />
-                    <PopoverBody>
-                      Estimated value of all NFTs and tokens on this side of the deal
-                    </PopoverBody>
-                  </PopoverContent>
-                </Popover>
-              ) : !isTaker && (
-                <Link href={`/deal/create/${deal.taker}`}>
-                  <PrimaryButton size='xs' leftIcon={<Icon as={FontAwesomeIcon} icon={faPlus} />}>
-                    Make Deal
-                  </PrimaryButton>
-                </Link>
-              )}
-            </Box>
-          </Stack>
-          <Box>
-            <Accordion w='full' allowMultiple>
-              {deal.taker_items.map((item: any, index: number) => (
-                <GetDealItemPreview
-                  key={index}
-                  item={item}
-                />
-              ))}
-            </Accordion>
-          </Box>
-        </Card>
+        <DealSide
+          address={deal.taker}
+          username={takerUsername}
+          isOwner={isTaker}
+          estimatedValue={deal.estimated_taker_value}
+          state={deal.state}
+          items={deal.taker_items}
+        />
       </SimpleGrid>
 
       {deal.state === OrderState.ACTIVE && (
@@ -354,6 +278,66 @@ const ConditionalActionBar = ({condition, children}: {condition: boolean, childr
       {children}
     </Card>
   );
+}
+
+interface DealSideProps {
+  address: string;
+  username: string;
+  isOwner: boolean;
+  estimatedValue: number;
+  state: OrderState;
+  items: DealItem[];
+}
+
+const DealSide = ({address, username, isOwner, estimatedValue, state, items}: DealSideProps) => {
+  return (
+    <Card bodyPadding={0}>
+      <Stack direction='row' justify='space-between' mb={2} px={5} pt={5}>
+        <Box fontSize='lg' fontWeight='bold'>
+          <NextLink href={`/account/${address}`}>
+            {username} {isOwner && <>(You)</>}
+          </NextLink>
+        </Box>
+        <Box>
+          {state === OrderState.ACTIVE ? (
+            <Popover>
+              <PopoverTrigger>
+                {estimatedValue > 0 ? (
+                  <Tag colorScheme='blue'>
+                    Est. Value: ~ ${round(estimatedValue, 2)}
+                  </Tag>
+                ) : (
+                  <Tag>Est. Value: N/A</Tag>
+                )}
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverBody>
+                  Estimated value of all NFTs and tokens on this side of the deal
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+          ) : !isOwner && (
+            <Link href={`/deal/create/${address}`}>
+              <PrimaryButton size='xs' leftIcon={<Icon as={FontAwesomeIcon} icon={faPlus} />}>
+                Make Deal
+              </PrimaryButton>
+            </Link>
+          )}
+        </Box>
+      </Stack>
+      <Box>
+        <Accordion w='full' allowMultiple>
+          {items.map((item: any, index: number) => (
+            <GetDealItemPreview
+              key={index}
+              item={item}
+            />
+          ))}
+        </Accordion>
+      </Box>
+    </Card>
+  )
 }
 
 const AcceptButtonView = ({deal, onProgress, onSuccess}: {deal: Deal, onProgress: (isExecuting: boolean) => void, onSuccess: () => void}) => {
