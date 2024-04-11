@@ -55,6 +55,16 @@ class OrdersRepository extends CmsRepository {
 
     return response.data;
   }
+
+  async validateDeal(id: string) {
+    const response = await this.cms.get('order/deal/validate', {
+      params: {
+        id
+      }
+    });
+
+    return response.data.data;
+  }
 }
 
 export default OrdersRepository;

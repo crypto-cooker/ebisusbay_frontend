@@ -30,7 +30,7 @@ const iconMapping: Record<string, (props: ChakraProps) => ReactElement> = {
 
 const IconImage = ({ src, symbol, ...props }: ChakraProps & { src: string; symbol: string }) => (
   <Box width={props.boxSize} height={props.boxSize}>
-    <Image src={src} alt={`${symbol.toUpperCase()} Icon`} title={symbol.toUpperCase()} {...props} boxSize={undefined} />
+    <Image src={src} alt={`${symbol.toUpperCase()} Icon`} rounded='full' title={symbol.toUpperCase()} {...props} boxSize={undefined} />
   </Box>
 );
 

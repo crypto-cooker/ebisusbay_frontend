@@ -273,6 +273,10 @@ export class ApiService implements Api {
   async getDeals(query?: DealListQueryParams) {
     return await this.mapi.getDeals(query);
   }
+
+  async validateDeal(id: string) {
+    return await this.cms.validateDeal(id);
+  }
 }
 
 class RyoshiDynastiesGroup implements RyoshiDynastiesApi {

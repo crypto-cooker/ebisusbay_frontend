@@ -17,7 +17,7 @@ import {
   NumberIncrementStepper,
   NumberInput,
   NumberInputField,
-  NumberInputStepper,
+  NumberInputStepper, Spacer, Spinner,
   Stack
 } from "@chakra-ui/react";
 import {Card, TitledCard} from "@src/components-v2/foundation/card";
@@ -25,8 +25,13 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {appConfig} from "@src/Config";
 import {BarterToken} from "@src/jotai/atoms/deal";
 import {CustomTokenPicker} from "@src/components-v2/feature/deal/create/custom-token-picker";
+import {JsonRpcProvider} from "@ethersproject/providers";
+import {commify} from "ethers/lib/utils";
+import {useQuery} from "@tanstack/react-query";
+import {ERC20} from "@src/Contracts/Abis";
 
 const config = appConfig();
+const readProvider = new JsonRpcProvider(config.rpc.read);
 
 export const ChooseTokensTab = ({address}: {address: string}) => {
   const { toggleOfferERC20 } = useBarterDeal();
@@ -38,14 +43,14 @@ export const ChooseTokensTab = ({address}: {address: string}) => {
   return (
     <Container>
       <Stack spacing={4}>
-        <WhitelistedTokenPicker />
+        <WhitelistedTokenPicker balanceCheckAddress={address} />
         <CustomTokenPicker onAdd={handleAddCustomToken} />
       </Stack>
     </Container>
   )
 }
 
-const WhitelistedTokenPicker = () => {
+const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: string}) => {
   const user = useUser();
   const { whitelistedERC20DealCurrencies  } = useCurrencyBroker();
   const { toggleOfferERC20 } = useBarterDeal();
@@ -71,8 +76,20 @@ const WhitelistedTokenPicker = () => {
 
   const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(sortedWhitelistedERC20DealCurrencies[0]);
 
+  const { data: availableBalance, isLoading } = useQuery({
+    queryKey: ['balance', user.address, selectedCurrency.address],
+    queryFn: async () => {
+      const readContract = new Contract(selectedCurrency.address, ERC20, readProvider);
+      const count = await readContract.balanceOf(balanceCheckAddress);
+      return Number(ethers.utils.formatUnits(count, selectedCurrency.decimals));
+    },
+    enabled: !!selectedCurrency,
+  });
+
   const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
-    setSelectedCurrency(currency!);
+    if (!currency) return;
+
+    setSelectedCurrency(currency);
   }, [selectedCurrency]);
 
   const handleAddCurrency = () => {
@@ -196,25 +213,37 @@ const WhitelistedTokenPicker = () => {
           </NumberInputStepper>
         </NumberInput>
       </Stack>
-      <Stack direction={{base: 'column', sm: 'row'}} justify='end' mt={2}>
-        {isWrappedeCro(selectedCurrency.address) && (
-          <>
+      <Stack direction={{base: 'column', sm: 'row'}} justify='space-between' mt={2}>
+        <Box mt='auto'>
+          {!!selectedCurrency && (
+            <HStack fontSize='sm'>
+              <Box fontWeight='bold'>Balance:</Box>
+              <Box>{isLoading ? <Spinner size='sm' /> : commify(availableBalance || 0)}</Box>
+            </HStack>
+          )}
+          {isWrappedeCro(selectedCurrency.address) && (
             <Box fontSize='sm'>If wanting to use native CRO for the deal, you can choose to wrap to WCRO</Box>
-            <PrimaryButton
-              onClick={handleWrapCro}
-              isLoading={isWrapping}
-              isDisabled={isWrapping}
-              loadingText='Wrapping'
-            >
-              Wrap and Add
+          )}
+        </Box>
+        <Stack direction={{base: 'column', sm: 'row'}} justify='end' mt={2}>
+          {isWrappedeCro(selectedCurrency.address) && (
+            <>
+              <PrimaryButton
+                onClick={handleWrapCro}
+                isLoading={isWrapping}
+                isDisabled={isWrapping}
+                loadingText='Wrapping'
+              >
+                Wrap and Add
+              </PrimaryButton>
+            </>
+          )}
+          {!isWrapping && (
+            <PrimaryButton onClick={handleAddCurrency}>
+              Add
             </PrimaryButton>
-          </>
-        )}
-        {!isWrapping && (
-          <PrimaryButton onClick={handleAddCurrency}>
-            Add
-          </PrimaryButton>
-        )}
+          )}
+        </Stack>
       </Stack>
     </TitledCard>
   )

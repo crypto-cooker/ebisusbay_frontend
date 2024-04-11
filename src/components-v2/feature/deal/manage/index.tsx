@@ -82,20 +82,13 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
   const [creationDate, setCreationDate] = useState<string>();
   const { isOpen: isCompleteDialogOpen, onOpen: onOpenCompleteDialog, onClose: onCloseCompleteDialog } = useDisclosure();
   const [tx, setTx] = useState<ContractReceipt>();
+  const [invalidIds, setInvalidIds] = useState<{maker: {invalid_items: string[]}, taker: {invalid_items: string[]}}>({maker: {invalid_items: []}, taker: {invalid_items: []}});
 
   const {data: deal} = useQuery({
     queryKey: ['deal', defaultDeal.id],
     queryFn: async () => ApiService.withoutKey().getDeal(defaultDeal.id),
     initialData: defaultDeal,
   });
-
-  const handleOpenPopover = (index: number, side: string) => {
-    setOpenPopoverId(`${index}${side}`);
-  };
-
-  const matchesPopoverId = (index: number, side: string) => {
-    return openPopoverId === `${index}${side}`;
-  }
 
   const handleDealAccepted = (tx?: ContractReceipt) => {
     setTx(tx);
@@ -108,6 +101,15 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
 
   const handleDealCancelled = () => {
     toast.success(`Deal has been cancelled!`);
+  }
+
+  const handleDealValidated = (invalids: {maker: {invalid_items: string[]}, taker: {invalid_items: string[]}}) => {
+    setInvalidIds(invalids);
+    if (invalids.maker.invalid_items.length > 0 || invalids.taker.invalid_items.length > 0) {
+      toast.error(`Deal has been marked as invalid!`);
+    } else {
+      toast.success(`Deal has been validated!`);
+    }
   }
 
   const isMaker = !!user.address && ciEquals(user.address, deal.maker);
@@ -193,6 +195,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
           estimatedValue={deal.estimated_maker_value}
           state={deal.state}
           items={deal.maker_items}
+          invalidIds={invalidIds.maker.invalid_items || []}
         />
         <Box my='auto' mx='auto'>
           <Icon as={FontAwesomeIcon} icon={faHandshake} boxSize={8} />
@@ -204,6 +207,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
           estimatedValue={deal.estimated_taker_value}
           state={deal.state}
           items={deal.taker_items}
+          invalidIds={invalidIds.taker.invalid_items || []}
         />
       </SimpleGrid>
 
@@ -213,7 +217,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
 
       {(isMaker || isTaker) && deal.state === OrderState.ACTIVE && (
         <ConditionalActionBar condition={isMobile ?? false}>
-          {!!deal.invalid && (
+          {(!!deal.invalid || invalidIds.maker.invalid_items.length > 0 || invalidIds.taker.invalid_items.length > 0) && (
             <Alert status='warning' mb={4}>
               <AlertIcon />
               <AlertDescription>
@@ -234,6 +238,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               <RejectButtonView deal={deal} onSuccess={handleDealRejected}/>
               <Spacer />
               <ButtonGroup>
+                <ValidateButtonView deal={deal} onSuccess={handleDealValidated} />
                 <CounterOfferButtonView deal={deal} />
                 <AcceptButtonView
                   deal={deal}
@@ -244,7 +249,10 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
             </Flex>
           ) : isMaker && (
             <Flex justify='end'>
-              <CancelButtonView deal={deal} onSuccess={handleDealCancelled} />
+              <ButtonGroup>
+                <ValidateButtonView deal={deal} onSuccess={handleDealValidated} />
+                <CancelButtonView deal={deal} onSuccess={handleDealCancelled} />
+              </ButtonGroup>
             </Flex>
           )}
         </ConditionalActionBar>
@@ -287,9 +295,10 @@ interface DealSideProps {
   estimatedValue: number;
   state: OrderState;
   items: DealItem[];
+  invalidIds: string[];
 }
 
-const DealSide = ({address, username, isOwner, estimatedValue, state, items}: DealSideProps) => {
+const DealSide = ({address, username, isOwner, estimatedValue, state, items, invalidIds}: DealSideProps) => {
   return (
     <Card bodyPadding={0}>
       <Stack direction='row' justify='space-between' mb={2} px={5} pt={5}>
@@ -332,6 +341,7 @@ const DealSide = ({address, username, isOwner, estimatedValue, state, items}: De
             <GetDealItemPreview
               key={index}
               item={item}
+              invalid={invalidIds.includes(item.offer_item_id)}
             />
           ))}
         </Accordion>
@@ -585,6 +595,36 @@ const CancelButtonView = ({deal, onSuccess}: {deal: Deal, onSuccess: () => void}
     </>
   )
 }
+
+const ValidateButtonView = ({deal, onSuccess}: { deal: Deal, onSuccess: (invalids: {maker: {invalid_items: string[]}, taker: {invalid_items: string[]}}) => void }) => {
+  const [isExecuting, setIsExecuting] = useState(false);
+
+  const handleRefresh = async () => {
+    try {
+      setIsExecuting(true);
+      const result = await ApiService.withoutKey().validateDeal(deal.id);
+      onSuccess(result);
+    } catch (e) {
+      console.log(e);
+      toast.error(parseErrorMessage(e));
+    } finally {
+      setIsExecuting(false);
+    }
+  }
+
+  return (
+    <SecondaryButton
+      aria-label='Refresh'
+      variant='outline'
+      onClick={handleRefresh}
+      isLoading={isExecuting}
+      isDisabled={isExecuting}
+    >
+      <Icon as={FontAwesomeIcon} icon={faRefresh} />
+    </SecondaryButton>
+  )
+}
+
 
 export default ManageDeal;
 

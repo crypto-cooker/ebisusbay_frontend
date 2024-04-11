@@ -776,229 +776,13 @@ export const configData = {
     }
   },
   [environments.local]: {
-    chain: {
-      name: 'Cronos Mainnet Beta',
-      id: '25',
-      symbol: 'CRO',
-    },
+    inherits: environments.testnet,
     urls: {
-      api: 'https://api.ebisusbay.com/',
       app: 'http://localhost:3000/',
-      cms: 'https://cms.ebisusbay.com/api/',
-      cmsSocket: 'wss://cms.ebisusbay.com/socket/',
-      explorer: 'https://cronoscan.com/',
-      cdn: {
-        bunnykit: 'https://ik-proxy.b-cdn.net/',
-        ipfs: 'https://cdn.ltsglxy.network/ipfs/',
-        arweave: 'https://cdn.ltsglxy.network/arweave/',
-        proxy: 'https://cdn.ltsglxy.network/proxy/',
-        storage: 'https://cdn-prod.ebisusbay.com/storage/',
-        files: 'https://cdn-prod.ebisusbay.com/files/',
-        apng: 'https://ebisusbay-prod-no-op.b-cdn.net/',
-        app: 'https://cdn-prod.ebisusbay.com/'
-      },
-      subgraph: {
-        root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
-        ryoshiDynasties: 'ryoshi-dynasties-meeple',
-        ryoshiPresale: 'ryoshi-presale',
-        stakedOwners: 'staked-owners',
-        staking: 'staking'
-      }
-    },
-    rpc: {
-      read: 'https://rpc.ebisusbay.com/',
-      write: 'https://evm.cronos.org/',
-    },
-    contracts: {
-      membership: '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5',
-      auction: '0xd488b38d19d5708cbda224c041a24c3e3149bc93',
-      market: '0x7a3CdB2364f92369a602CAE81167d0679087e6a3',
-      stake: '0xeb074cc764F20d8fE4317ab63f45A85bcE2bEcB1',
-      offer: '0x016b347aeb70cc45e3bbaf324feb3c7c464e18b0',
-      madAuction: '0x47E79264A9d1343C04F4A56922bE7e6177aE03a0',
-      slothtyRugsurance: '0x73063E236EadC1e511FbE7313C6D8C5c651009E9',
-      bundle: '0x40874F18922267cc2Ca7933828594aB5078C1065',
-      gaslessListing: '0x523d6f30c4aaca133daad97ee2a0c48235bff137',
-      gdc: '0xe3e564252249ab55b47b84d6a934f4cbb94233a9',
-      usdc: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
-      purchaseFortune: '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566',
-      allianceCenter: '0x74A61DEdD269075a394932860F071D0884E7E805',
-      battleField: '0xe8939d920218e0083F9e00a23eEeDfbad73d6B4D',
-      resources: '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d',
-      bank: '0x1E16Aa4Bb965478Df310E8444CD18Fa56603A25F',
-      barracks: '0xfDE081ACB68Ac6BB7B7702DEba49D99b081Bd1eF',
-      fortune: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
-      rewards: '0x0dC2ad723068B2D1ACab5083fce36E15818BABBB',
-      presaleVaults: '0xd284fc59BfEeceb467b655522b9BDc34B71C55D0',
-      seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
-      townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
-      vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F',
-      ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C'
-    },
-    tokens: {
-      mad: {
-        name: 'MAD Bucks',
-        symbol: 'MAD',
-        address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
-        decimals: 18
-      },
-      trpz: {
-        name: 'TRPZ',
-        symbol: 'TRPZ',
-        address: '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02',
-        decimals: 0
-      },
-      vrse: {
-        name: 'VRSE',
-        symbol: 'VRSE',
-        address: '0x2ba01269eafce04c8dccc4a9887884ab66e4bcb1',
-        decimals: 18
-      },
-      frtn: {
-        name: 'Fortune',
-        symbol: 'FRTN',
-        address: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
-        decimals: 18
-      },
-      bcro: {
-        name: 'Bonded CRO',
-        symbol: 'bCRO',
-        address: '0xebaceb7f193955b946cc5dd8f8724a80671a1f2f',
-        decimals: 18
-      },
-      scratch: {
-        name: 'Scratch',
-        symbol: 'SCRATCH',
-        address: '0x14fB0e7640e7fb7765CFA87cEc973ff5465d1c66',
-        decimals: 18
-      },
-      candy: {
-        name: 'Candy',
-        symbol: 'CANDY',
-        address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977',
-        decimals: 18
-      },
-      ttt: {
-        name: 'Tatas Twisted Time',
-        symbol: 'TTT',
-        address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6',
-        decimals: 18
-      },
-      icy: {
-        name: 'ICY',
-        symbol: 'ICY',
-        address: '0x8F857Af6Ea31447Bb502fE0E3F4e4340CDFCfc6C',
-        decimals: 18
-      },
-      wcro: {
-        name: 'Wrapped CRO',
-        symbol: 'WCRO',
-        address: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23',
-        decimals: 18
-      },
-      ryoshi: {
-        name: 'ryoshi with knife',
-        symbol: 'RYOSHI',
-        address: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
-        decimals: 18
-      },
-      caw: {
-        name: 'crow with knife',
-        symbol: 'CAW',
-        address: '0xcCcCcCcCdbEC186DC426F8B5628AF94737dF0E60',
-        decimals: 18
-      },
-      grve: {
-        name: 'Grave',
-        symbol: 'GRVE',
-        address: '0x9885488cD6864DF90eeBa6C5d07B35f08CEb05e9',
-        decimals: 18
-      },
-      lcro: {
-        name: 'Liquid CRO',
-        symbol: 'LCRO',
-        address: '0x9Fae23A2700FEeCd5b93e43fDBc03c76AA7C08A6',
-        decimals: 18
-      },
-      usdc: {
-        name: 'USD Coin',
-        symbol: 'USDC',
-        address: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
-        decimals: 6
-      },
-      fish: {
-        name: 'FISH',
-        symbol: 'FISH',
-        address: '0xba69b94c2e2c961226d25Cc3d0255e5845Fd34E7',
-        decimals: 18
-      },
-      aiko: {
-        name: 'Aiko Token',
-        symbol: 'AIKO',
-        address: '0x5674B21cC1FBB73E7fccC5120853c3d61A0e2d1E',
-        decimals: 18
-      }
-    },
-    collections: rpcConfig.known_contracts,
-    drops: rpcConfig.drops,
-    auctions: rpcConfig.auctions,
-    vendors: {
-      transak: {
-        url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&cryptoCurrencyCode=CRO&isAutoFillUserData=true'
-      }
-    },
-    tokenSale: {
-      vipStart: 1682871200000,
-      publicStart: 1682871200000,
-      publicEnd: 1683586800000,
-      memberCollections: [
-        '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5', // FM
-        '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29', // Valentine
-        '0x008d4Ab1D8fbC7823422a7cCFe3f1D73c09760Ab', // Holiday Hares
-        '0xD961956B319A10CBdF89409C0aE7059788A4DaBb', // Cronies,
-        '0x54E61e2043f894475D17D344250F1983f7F7e6D3', // Ryoshi Halloween
-        '0xE49709A3B59d708f50AA3712F2E5a84b7707664C', // Ryoshi VIP
-        '0xf54abdcba21e7a740f98307a561b605cb3fdcf63', // Legacy VIP
-        '0x584a16905ca9cb10c0a2a9caa8e37a64de48c506', // SeaShrine VIP
-        '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C', // Ryoshi Christmas
-      ]
-    },
-    listings: {
-      currencies : {
-        available: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'],
-        global: ['cro', 'frtn'],
-        nft: {
-          '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
-          '0x54E61e2043f894475D17D344250F1983f7F7e6D3': ['frtn'],        // Ryoshi Halloween
-          '0xe3Ef45955b507895779a6A8911bBc48E0E17B11C': ['frtn'],        // Ryoshi Christmas
-          '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d': ['frtn'],        // Ryoshi Resources
-          '0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3': ['frtn'],        // Land Deeds
-          '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5': ['frtn'],        // EB FM/VIP
-          '0x013f83434356c0a20698605eBAb337aab966AF88': ['frtn'],        // Fortune Guards
-          '0x04636c536537a8b7F05eDbA2cEBe1FaDd711D566': ['frtn'],        // FortuneTeller
-        }
-      }
-    },
-    deals: {
-      currencies: [
-        'ryoshi',
-        'frtn',
-        'wcro',
-        'bcro',
-        'mad',
-        'vrse',
-        'scratch',
-        'candy',
-        'ttt',
-        'icy',
-        'caw',
-        'usdc',
-        'trpz',
-        'grve',
-        'lcro',
-        'fish',
-        'aiko'
-      ]
+      // cms: 'https://cms.ebisusbay.com/api/',
+      cms: 'http://localhost:4000/api/',
+      // cmsSocket: 'wss://cms.ebisusbay.com/socket/',
+      cmsSocket: 'ws://localhost:4000/socket/',
     }
   }
 };
@@ -1030,15 +814,37 @@ export const appConfig = (key = '') => {
   const fallbackEnv = environments.production;
   if (!env) return configData[fallbackEnv];
 
-  const config = isLocalEnv() ?
-    {...configData[environments.production], ...configData[environments.local]} :
-    configData[env];
+  let config = configData[env];
+  if (!config) return configData[fallbackEnv];
+
+  // If "inherits" is specified, perform a deep merge.
+  if (config.inherits && configData[config.inherits]) {
+    config = deepMerge({}, configData[config.inherits]); // Clone and merge to avoid mutating the original
+    deepMerge(config, configData[env]);
+  }
 
   if (!key) return config;
 
   const keys = key.split('.');
 
   return keys.reduce((o, i) => o[i], env ? config : configData[fallbackEnv]);
+}
+
+function deepMerge(target, source) {
+  // Iterate over source properties
+  for (const key in source) {
+    if (source.hasOwnProperty(key)) {
+      // If the value is an object, recurse.
+      if (source[key] instanceof Object && !(source[key] instanceof Array)) {
+        if (!target[key]) target[key] = {};
+        deepMerge(target[key], source[key]);
+      } else {
+        // Otherwise, just set the value.
+        target[key] = source[key];
+      }
+    }
+  }
+  return target;
 }
 
 export const currentEnv = () => {
@@ -1050,7 +856,7 @@ export const isLocalEnv = () => {
 }
 
 export const isTestnet = () => {
-  return currentEnv() === environments.testnet;
+  return currentEnv() === environments.testnet || configData[currentEnv()]?.inherits === environments.testnet;
 }
 
 export const featureFlags = {
