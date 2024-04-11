@@ -162,6 +162,18 @@ export const configData = {
         symbol: 'USDC',
         address: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
         decimals: 6
+      },
+      fish: {
+        name: 'FISH',
+        symbol: 'FISH',
+        address: '0xba69b94c2e2c961226d25Cc3d0255e5845Fd34E7',
+        decimals: 18
+      },
+      aiko: {
+        name: 'Aiko Token',
+        symbol: 'AIKO',
+        address: '0x5674B21cC1FBB73E7fccC5120853c3d61A0e2d1E',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -913,6 +925,18 @@ export const configData = {
         symbol: 'USDC',
         address: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
         decimals: 6
+      },
+      fish: {
+        name: 'FISH',
+        symbol: 'FISH',
+        address: '0xba69b94c2e2c961226d25Cc3d0255e5845Fd34E7',
+        decimals: 18
+      },
+      aiko: {
+        name: 'Aiko Token',
+        symbol: 'AIKO',
+        address: '0x5674B21cC1FBB73E7fccC5120853c3d61A0e2d1E',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -956,7 +980,25 @@ export const configData = {
       }
     },
     deals: {
-      currencies: ['ryoshi', 'frtn', 'wcro', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy', 'caw', 'usdc', 'trpz', 'grve', 'lcro']
+      currencies: [
+        'ryoshi',
+        'frtn',
+        'wcro',
+        'bcro',
+        'mad',
+        'vrse',
+        'scratch',
+        'candy',
+        'ttt',
+        'icy',
+        'caw',
+        'usdc',
+        'trpz',
+        'grve',
+        'lcro',
+        'fish',
+        'aiko'
+      ]
     }
   }
 };
