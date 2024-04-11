@@ -26150,6 +26150,84 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "FHZ OG",
+      "slug": "fhz-og",
+      "multiToken": false,
+      "address": "0x7b06743e17113D246093c3475254435f60C6740f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Mint up to 180 unique NFTs representing our beloved KREES MEMEs in different poses and rarities. Grants unique benefits to the holders.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fhz-og/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/fhz-og/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/fhz-og/banner.webp",
+        "website": "https://kreescoin.com",
+        "twitter": "https://twitter.com/kreescoin",
+        "telegram": "https://t.me/kreescoin",
+        "categories": [
+          "utility",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crypto.com Expedition Gear: Tools of the Trade",
+      "slug": "cdc-expedition-gear-tott",
+      "multiToken": false,
+      "address": "0x2e826af64dd027ee7029b87490826b4b95d78dfc",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "It’s a big world out there and even the most seasoned explorers need more than a backpack for their travels! Take your explorations to the next level with an all-new set of Crypto.com Expedition Gear, boasting 50,000 ‘Elite’ tool NFTs and 50,000 ‘Core’ tool NFTs. These collectibles join the backpack NFTs from the inaugural ‘Crypto.com Expedition Gear’ collection, and they are equally invaluable.\n\nAs awesome as these rugged tools look, they aren’t just for show. Along with the backpacks, they’ll enhance your Loaded Lions: Mane City experience, turbocharging your progress in building your dream city and decking out your mansion.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cdc-expedition-gear-tott/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cdc-expedition-gear-tott/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cdc-expedition-gear-tott/banner.webp",
+        "website": "https://crypto.com/nft",
+        "twitter": "https://www.twitter.com/cryptocom",
+        "discord": "https://discord.gg/cryptocom",
+        "instagram": "https://instagram.com/cryptocomnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cro Clothes Base",
+      "slug": "cro-clothes-base",
+      "multiToken": false,
+      "address": "0x9e68db447cd44127f43f3c9546ea43d1323d1f99",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cro Clothes Base is the inaugural collection of 999 NFTs that provides its holders with bonuses, early access, and free minting for all future Cro Clothes collections.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-base/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-base/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-base/banner.webp",
+        "website": "https://croclothes.com/",
+        "twitter": "https://www.twitter.com/Cro_Clothes",
+        "discord": "https://discord.gg/QRQb9rkPXK",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
