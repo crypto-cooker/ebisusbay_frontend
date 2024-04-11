@@ -313,7 +313,25 @@ export const configData = {
       }
     },
     deals: {
-      currencies: ['ryoshi', 'frtn', 'wcro', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy', 'caw', 'usdc', 'trpz', 'grve', 'lcro']
+      currencies: [
+        'ryoshi',
+        'frtn',
+        'wcro',
+        'bcro',
+        'mad',
+        'vrse',
+        'scratch',
+        'candy',
+        'ttt',
+        'icy',
+        'caw',
+        'usdc',
+        'trpz',
+        'grve',
+        'lcro',
+        'fish',
+        'aiko'
+      ]
     }
   },
   [environments.development]: {
