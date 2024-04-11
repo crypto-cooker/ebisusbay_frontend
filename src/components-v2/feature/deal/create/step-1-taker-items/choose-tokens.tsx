@@ -1,7 +1,7 @@
 import {useUser} from "@src/components-v2/useUser";
 import useCurrencyBroker, {BrokerCurrency} from "@src/hooks/use-currency-broker";
 import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
-import {useCallback, useState} from "react";
+import React, {useCallback, useState} from "react";
 import ReactSelect, {SingleValue} from "react-select";
 import {toast} from "react-toastify";
 import {getTheme} from "@src/Theme/theme";
@@ -14,7 +14,7 @@ import {
   NumberIncrementStepper,
   NumberInput,
   NumberInputField,
-  NumberInputStepper,
+  NumberInputStepper, Spacer, Spinner,
   Stack
 } from "@chakra-ui/react";
 import {TitledCard} from "@src/components-v2/foundation/card";
@@ -23,8 +23,14 @@ import {CustomTokenPicker} from "@src/components-v2/feature/deal/create/custom-t
 import {BarterToken} from "@src/jotai/atoms/deal";
 import {ciEquals} from "@src/utils";
 import {appConfig} from "@src/Config";
+import {Contract, ethers} from "ethers";
+import {ERC20, ERC721} from "@src/Contracts/Abis";
+import {JsonRpcProvider} from "@ethersproject/providers";
+import {useQuery} from "@tanstack/react-query";
+import {commify} from "ethers/lib/utils";
 
 const config = appConfig();
+const readProvider = new JsonRpcProvider(config.rpc.read);
 
 export const ChooseTokensTab = ({address}: {address: string}) => {
   const { toggleSelectionERC20 } = useBarterDeal();
@@ -36,14 +42,14 @@ export const ChooseTokensTab = ({address}: {address: string}) => {
   return (
     <Container>
       <Stack spacing={4}>
-        <WhitelistedTokenPicker />
+        <WhitelistedTokenPicker balanceCheckAddress={address} />
         <CustomTokenPicker onAdd={handleAddCustomToken} />
       </Stack>
     </Container>
   )
 }
 
-const WhitelistedTokenPicker = () => {
+const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: string}) => {
   const user = useUser();
   const { whitelistedERC20DealCurrencies  } = useCurrencyBroker();
   const { toggleSelectionERC20 } = useBarterDeal();
@@ -68,8 +74,20 @@ const WhitelistedTokenPicker = () => {
 
   const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(sortedWhitelistedERC20DealCurrencies[0]);
 
+  const { data: availableBalance, isLoading } = useQuery({
+    queryKey: ['balance', user.address, selectedCurrency.address],
+    queryFn: async () => {
+      const readContract = new Contract(selectedCurrency.address, ERC20, readProvider);
+      const count = await readContract.balanceOf(balanceCheckAddress);
+      return Number(ethers.utils.formatUnits(count, selectedCurrency.decimals));
+    },
+    enabled: !!selectedCurrency,
+  });
+
   const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
-    setSelectedCurrency(currency!);
+    if (!currency) return;
+
+    setSelectedCurrency(currency);
   }, [selectedCurrency]);
 
   const handleAddCurrency = () => {
@@ -86,7 +104,7 @@ const WhitelistedTokenPicker = () => {
     toggleSelectionERC20({
       ...selectedCurrency,
       amount: Math.floor(parseInt(quantity)),
-    })
+    });
   }
 
   const userTheme = user.theme;
@@ -157,11 +175,19 @@ const WhitelistedTokenPicker = () => {
           </NumberInputStepper>
         </NumberInput>
       </Stack>
-      <Flex justify='end' mt={2}>
+      <Stack direction={{base: 'column', sm: 'row'}} justify='space-between' mt={2}>
+        {!!selectedCurrency ? (
+          <HStack fontSize='sm' align='end'>
+            <Box fontWeight='bold'>Balance:</Box>
+            <Box>{isLoading ? <Spinner size='sm' /> : commify(availableBalance || 0)}</Box>
+          </HStack>
+        ) : (
+          <Spacer />
+        )}
         <PrimaryButton onClick={handleAddCurrency}>
           Add
         </PrimaryButton>
-      </Flex>
+      </Stack>
     </TitledCard>
   )
 }
