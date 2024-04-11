@@ -29,15 +29,12 @@ import {ethers} from "ethers";
 
 interface GetDealItemPreviewProps {
   item: DealItem;
+  invalid: boolean;
 }
 
-export const GetDealItemPreview = ({item}: GetDealItemPreviewProps) => {
+export const GetDealItemPreview = ({item, invalid}: GetDealItemPreviewProps) => {
   const { getByAddress  } = useCurrencyBroker();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
-
-  const token = useMemo(() => {
-    return getByAddress(item.token);
-  }, [item.token]);
 
   const isToken = [ItemType.NATIVE, ItemType.ERC20].includes(item.item_type);
   const isNft = [ItemType.ERC721, ItemType.ERC1155].includes(item.item_type);
@@ -76,7 +73,7 @@ export const GetDealItemPreview = ({item}: GetDealItemPreviewProps) => {
   if (!normalizedItem) return;
 
   return (
-    <AccordionItem key={item.token}>
+    <AccordionItem key={item.token} border={invalid ? '1px solid red' : 'auto'}>
       <Flex w='100%' my={2} ps={4}>
         <Box flex='1' textAlign='left' my='auto'>
           <HStack>
@@ -156,7 +153,6 @@ export const GetDealItemPreview = ({item}: GetDealItemPreviewProps) => {
                   <Box fontWeight='bold'>{attr.trait_type}</Box>
                   <Box>{attr.value}</Box>
                 </VStack>
-
               </GridItem>
             ))}
           </SimpleGrid>

@@ -776,11 +776,13 @@ export const configData = {
     }
   },
   [environments.local]: {
-    inherits: environments.production,
+    inherits: environments.testnet,
     urls: {
       app: 'http://localhost:3000/',
-      cms: 'https://cms.ebisusbay.com/api/',
-      cmsSocket: 'wss://cms.ebisusbay.com/socket/',
+      // cms: 'https://cms.ebisusbay.com/api/',
+      cms: 'http://localhost:4000/api/',
+      // cmsSocket: 'wss://cms.ebisusbay.com/socket/',
+      cmsSocket: 'ws://localhost:4000/socket/',
     }
   }
 };
@@ -854,7 +856,7 @@ export const isLocalEnv = () => {
 }
 
 export const isTestnet = () => {
-  return currentEnv() === environments.testnet;
+  return currentEnv() === environments.testnet || configData[currentEnv()]?.inherits === environments.testnet;
 }
 
 export const featureFlags = {

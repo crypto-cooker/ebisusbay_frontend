@@ -228,6 +228,10 @@ class Cms {
   async rejectDeal(id: string, address: string, signature: string) {
     return await this.orders.rejectDeal(id, address, signature);
   }
+
+  async validateDeal(id: string) {
+    return await this.orders.validateDeal(id);
+  }
 }
 
 export default Cms;
