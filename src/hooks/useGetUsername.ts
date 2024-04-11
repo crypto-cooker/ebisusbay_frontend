@@ -27,7 +27,7 @@ const useGetProfilePreview = (initialAddress?: string) => {
     }
   }, [initialAddress]);
 
-  let username: string | null = shortAddress(address);
+  let username: string = shortAddress(address);
   if (profile?.data?.username) {
     try {
       if (profile.data.username.startsWith('0x')) {

@@ -11,72 +11,28 @@ const iconMapping: Record<string, (props: ChakraProps) => ReactElement> = {
   'frtn': (props) => <FortuneIcon {...props} />,
   'cro': (props) => <CronosIconBlue {...props} />,
   'wcro': (props) => <CronosIconBlue {...props} />,
-  'bcro': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/bcro-outline.png' alt='bCRO Icon' title='bCRO' {...props} boxSize={undefined} />
-    </Box>
-  ),
-  'mad': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/mad.png' alt='MAD Icon' title='MAD' {...props} boxSize={undefined} />
-    </Box>
-  ),
-  'vrse': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/vrse.png' alt='VRSE Icon' title='VRSE' {...props} boxSize={undefined} />
-    </Box>
-  ),
-  'scratch': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/scratch.png' alt='SCRATCH Icon' title='SCRATCH' {...props} boxSize={undefined} />
-    </Box>
-  ),
-  'candy': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/candy.png' alt='CANDY Icon' title='CANDY' {...props} boxSize={undefined} />
-    </Box>
-  ),
-  'ttt': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/ttt.png' alt='TTT Icon' title='TTT' {...props} boxSize={undefined} />
-    </Box>
-  ),
-  'icy': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/icy.png' alt='ICY Icon' title='ICY' {...props} boxSize={undefined} />
-    </Box>
-  ),
-  'caw': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/caw.webp' alt='CAW Icon' title='CAW' {...props} boxSize={undefined} />
-    </Box>
-  ),
-  'ryoshi': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/ryoshi.webp' alt='RYOSHI Icon' title='RYOSHI' {...props} boxSize={undefined} />
-    </Box>
-  ),
-  'trpz': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/trpz.webp' alt='TRPZ Icon' title='TRPZ' {...props} boxSize={undefined} />
-    </Box>
-  ),
-  'usdc': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/usdc.png' alt='USDC Icon' title='USDC' {...props} boxSize={undefined} />
-    </Box>
-  ),
-  'lcro': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/lcro.png' alt='LCRO Icon' title='LCRO' {...props} boxSize={undefined} />
-    </Box>
-  ),
-  'grve': (props) => (
-    <Box width={props.boxSize} height={props.boxSize}>
-      <Image src='/img/icons/grve.png' alt='GRVE Icon' title='GRVE' {...props} boxSize={undefined} />
-    </Box>
-  ),
+  'bcro': (props) => <IconImage src='/img/icons/tokens/bcro-outline.webp' symbol='bcro' {...props} />,
+  'mad': (props) => <IconImage src='/img/icons/tokens/mad.webp' symbol='mad' {...props} />,
+  'vrse': (props) => <IconImage src='/img/icons/tokens/vrse.webp' symbol='vrse' {...props} />,
+  'scratch': (props) => <IconImage src='/img/icons/tokens/scratch.webp' symbol='scratch' {...props} />,
+  'candy': (props) => <IconImage src='/img/icons/tokens/candy.webp' symbol='candy' {...props} />,
+  'ttt': (props) => <IconImage src='/img/icons/tokens/ttt.webp' symbol='ttt' {...props} />,
+  'icy': (props) => <IconImage src='/img/icons/tokens/icy.webp' symbol='icy' {...props} />,
+  'caw': (props) => <IconImage src='/img/icons/tokens/caw.webp' symbol='caw' {...props} />,
+  'ryoshi': (props) => <IconImage src='/img/icons/tokens/ryoshi.webp' symbol='ryoshi' {...props} />,
+  'trpz': (props) => <IconImage src='/img/icons/tokens/trpz.webp' symbol='trpz' {...props} />,
+  'usdc': (props) => <IconImage src='/img/icons/tokens/usdc.webp' symbol='usdc' {...props} />,
+  'lcro': (props) => <IconImage src='/img/icons/tokens/lcro.webp' symbol='lcro' {...props} />,
+  'grve': (props) => <IconImage src='/img/icons/tokens/grve.webp' symbol='grve' {...props} />,
+  'fish': (props) => <IconImage src='/img/icons/tokens/fish.webp' symbol='fish' {...props} />,
+  'aiko': (props) => <IconImage src='/img/icons/tokens/aiko.webp' symbol='aiko' {...props} />,
 };
+
+const IconImage = ({ src, symbol, ...props }: ChakraProps & { src: string; symbol: string }) => (
+  <Box width={props.boxSize} height={props.boxSize}>
+    <Image src={src} alt={`${symbol.toUpperCase()} Icon`} title={symbol.toUpperCase()} {...props} boxSize={undefined} />
+  </Box>
+);
 
 interface CurrencyIconMapperProps extends ChakraProps {
   address: string;
