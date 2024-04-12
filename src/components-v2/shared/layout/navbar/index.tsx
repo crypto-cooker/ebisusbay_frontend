@@ -10,9 +10,9 @@ import {
   Box,
   Button,
   Divider,
-  Flex,
+  Flex, Grid,
   Heading,
-  HStack,
+  HStack, Icon,
   IconButton,
   Image,
   Menu,
@@ -65,7 +65,7 @@ const Header = function () {
     { base: true, lg: false },
     { fallback: 'lg'},
   );
-  const [shouldHideTitle] = useMediaQuery('(max-width: 516px)');
+  const [shouldHideTitle] = useMediaQuery('(max-width: 1080px)');
   const [shouldHideFrtn] = useMediaQuery('(max-width: 410px)');
   const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, config.chain.id);
   const [currentFrtnPrice, setCurrentFrtnPrice] = useState(0);
@@ -152,6 +152,7 @@ const Header = function () {
                 me={4}
               >
                 <NavLink name={'Rewards'} to={'/rewards'} />
+                <NavLink name={'DEX'} to={'https://swap.ebisusbay.com'} />
                 <Menu placement='bottom-end'>
                   <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
                     Marketplace
@@ -212,7 +213,6 @@ const Header = function () {
                     <NavLink name='Explore' to='/marketplace' onClick={onClose} />
                     <NavLink name='Collections' to='/collections' onClick={onClose} />
                     <NavLink name='Deals' to='/deal' onClick={onClose} />
-                    <NavLink name='Swap' to='/swap' onClick={onClose} />
                     <NavLink name='Brands' to='/brands' onClick={onClose} />
                     <NavLink name='Drops' to='/drops' onClick={onClose} />
                     <NavLink name='Become a Creator' to='/apply' onClick={onClose} />
@@ -232,13 +232,32 @@ const Header = function () {
                   </VStack>
                 </Box>
               </SimpleGrid>
-              <Stack mt={2} align='center'>
-                {/*<NavLink name={'Stats'} to={'/stats'} onClick={onClose} />*/}
-                {/*<NavLink name={'Auction'} to={'/auctions/mutant-serum'} />*/}
-
-                <Box onClick={handleToggleTheme} fontSize="14px" fontWeight="bold" color="#fff" cursor="pointer">
-                  <FontAwesomeIcon icon={theme === 'dark' ? faMoon : faSun} color="#fff" className="me-2"/> Dark mode
-                </Box>
+              <Stack spacing={2} justify='stretch' maxW='375px' mx='auto'>
+                <Link href='#'>
+                  <Button
+                    variant='outline'
+                    onClick={onClose}
+                    size='sm'
+                    color='white'
+                    fontWeight='bold'
+                    w='full'
+                    colorScheme='none'
+                  >
+                    DEX
+                  </Button>
+                </Link>
+                <Button
+                  variant='outline'
+                  size='sm'
+                  color='white'
+                  fontWeight='bold'
+                  w='full'
+                  leftIcon={<Icon as={FontAwesomeIcon} icon={theme === 'dark' ? faMoon : faSun} />}
+                  colorScheme='none'
+                  onClick={handleToggleTheme}
+                >
+                  Dark mode
+                </Button>
               </Stack>
             </Box>
           ) : null}
