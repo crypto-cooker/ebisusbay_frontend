@@ -75,7 +75,7 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
   const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(sortedWhitelistedERC20DealCurrencies[0]);
 
   const { data: availableBalance, isLoading } = useQuery({
-    queryKey: ['balance', user.address, selectedCurrency.address],
+    queryKey: ['balance', balanceCheckAddress, selectedCurrency.address],
     queryFn: async () => {
       const readContract = new Contract(selectedCurrency.address, ERC20, readProvider);
       const count = await readContract.balanceOf(balanceCheckAddress);

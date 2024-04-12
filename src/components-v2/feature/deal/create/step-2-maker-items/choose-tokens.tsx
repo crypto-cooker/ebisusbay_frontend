@@ -4,7 +4,7 @@ import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import React, {useCallback, useState} from "react";
 import ReactSelect, {SingleValue} from "react-select";
 import {toast} from "react-toastify";
-import {ciEquals, isWrappedeCro} from "@src/utils";
+import {ciEquals, isWrappedeCro, round} from "@src/utils";
 import {Contract, ethers} from "ethers";
 import WCRO from "@src/Contracts/WCRO.json";
 import {parseErrorMessage} from "@src/helpers/validator";
@@ -18,7 +18,7 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper, Spacer, Spinner,
-  Stack
+  Stack, VStack
 } from "@chakra-ui/react";
 import {Card, TitledCard} from "@src/components-v2/foundation/card";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
@@ -77,11 +77,16 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
   const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(sortedWhitelistedERC20DealCurrencies[0]);
 
   const { data: availableBalance, isLoading } = useQuery({
-    queryKey: ['balance', user.address, selectedCurrency.address],
+    queryKey: ['balance', balanceCheckAddress, selectedCurrency.address],
     queryFn: async () => {
       const readContract = new Contract(selectedCurrency.address, ERC20, readProvider);
       const count = await readContract.balanceOf(balanceCheckAddress);
-      return Number(ethers.utils.formatUnits(count, selectedCurrency.decimals));
+      let native = 0;
+      if (isWrappedeCro(selectedCurrency.address)) {
+        const cro = await readProvider.getBalance(balanceCheckAddress);
+        native = Number(ethers.utils.formatEther(cro));
+      }
+      return {native, selected: Number(ethers.utils.formatUnits(count, selectedCurrency.decimals))};
     },
     enabled: !!selectedCurrency,
   });
@@ -216,13 +221,18 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
       <Stack direction={{base: 'column', sm: 'row'}} justify='space-between' mt={2}>
         <Box mt='auto'>
           {!!selectedCurrency && (
-            <HStack fontSize='sm'>
-              <Box fontWeight='bold'>Balance:</Box>
-              <Box>{isLoading ? <Spinner size='sm' /> : commify(availableBalance || 0)}</Box>
-            </HStack>
-          )}
-          {isWrappedeCro(selectedCurrency.address) && (
-            <Box fontSize='sm'>If wanting to use native CRO for the deal, you can choose to wrap to WCRO</Box>
+            <VStack align='start' spacing={0}>
+              {!!availableBalance && availableBalance.native > 0 && (
+                <HStack fontSize='sm'>
+                  <Box fontWeight='bold'>CRO Balance:</Box>
+                  <Box>{isLoading ? <Spinner size='sm' /> : commify(round(availableBalance.native || 0))}</Box>
+                </HStack>
+              )}
+              <HStack fontSize='sm'>
+                <Box fontWeight='bold'>Balance:</Box>
+                <Box>{isLoading ? <Spinner size='sm' /> : commify(availableBalance?.selected || 0)}</Box>
+              </HStack>
+            </VStack>
           )}
         </Box>
         <Stack direction={{base: 'column', sm: 'row'}} justify='end' mt={2}>
@@ -245,6 +255,10 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
           )}
         </Stack>
       </Stack>
+
+      {isWrappedeCro(selectedCurrency.address) && (
+        <Box fontSize='sm' mt={2}>If wanting to use native CRO for the deal, you can choose to wrap to WCRO</Box>
+      )}
     </TitledCard>
   )
 }
