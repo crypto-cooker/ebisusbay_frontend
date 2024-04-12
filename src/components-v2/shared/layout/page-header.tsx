@@ -9,7 +9,7 @@ interface HeaderProps {
 }
 
 const PageHeader = ({ title, subtitle }: HeaderProps) => {
-  const bgImage = useColorModeValue('/img/background/Ebisu-DT-Header.webp', '/img/background/header-dark.webp');
+  const bgImage = useColorModeValue('/img/background/header-ryoshi.webp', '/img/background/header-ryoshi.webp');
 
   return (
     <Flex
