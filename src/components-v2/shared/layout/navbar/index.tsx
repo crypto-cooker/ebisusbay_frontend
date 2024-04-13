@@ -161,7 +161,6 @@ const Header = function () {
                     <MenuItem as={Link} href='/marketplace' _hover={{color: 'inherit'}} justifyContent='end'>Explore</MenuItem>
                     <MenuItem as={Link} href='/collections' _hover={{color: 'inherit'}} justifyContent='end'>Collections</MenuItem>
                     <MenuItem as={Link} href='/deal' _hover={{color: 'inherit'}} justifyContent='end'>Deals</MenuItem>
-                    <MenuItem as={Link} href='/swap' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
                     <MenuItem as={Link} href='/brands' _hover={{color: 'inherit'}} justifyContent='end'>Brands</MenuItem>
                     <MenuItem as={Link} href='/drops' _hover={{color: 'inherit'}} justifyContent='end'>Drops</MenuItem>
                     <MenuItem as={Link} href='/apply' _hover={{color: 'inherit'}} justifyContent='end'>Become a Creator</MenuItem>
@@ -233,7 +232,7 @@ const Header = function () {
                 </Box>
               </SimpleGrid>
               <Stack spacing={2} justify='stretch' maxW='375px' mx='auto'>
-                <Link href='#'>
+                <Link href='https://swap.ebisusbay.com'>
                   <Button
                     variant='outline'
                     onClick={onClose}
