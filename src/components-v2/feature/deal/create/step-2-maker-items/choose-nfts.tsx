@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import {ApiService} from "@src/core/services/api-service";
-import {ciEquals} from "@src/utils";
+import {caseInsensitiveCompare, ciEquals, findCollectionByAddress} from "@src/utils";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {getTheme} from "@src/Theme/theme";
 import {DealNftCard} from "@src/components-v2/shared/nft-card2";
@@ -35,6 +35,7 @@ import InventoryFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
+import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 
 export const ChooseNftsTab = ({address}: {address: string}) => {
   const user = useUser();
@@ -176,6 +177,29 @@ export const ChooseNftsTab = ({address}: {address: string}) => {
     setQueryParams({...queryParams, search: debouncedSearch});
   }, [debouncedSearch]);
 
+  useEffect(() => {
+    async function func() {
+      const result = await getWalletOverview(address);
+      setCollections(result.data
+        .reduce((arr: any, item: any) => {
+          const coll = findCollectionByAddress(item.nftAddress, item.nftId);
+          if (!coll) return arr;
+          const existingIndex = arr.findIndex((c: any) => caseInsensitiveCompare(coll.address, c.address));
+          if (existingIndex >= 0) {
+            arr[existingIndex].balance += Number(item.balance);
+          } else {
+            coll.balance = Number(item.balance);
+            arr.push(coll);
+          }
+          return arr;
+        }, [])
+        .sort((a: any, b: any) => a.name > b.name ? 1 : -1)
+      );
+    }
+
+    func();
+  }, [address]);
+  
   return (
     <>
       <Stack direction="row" mb={2} align="center">
