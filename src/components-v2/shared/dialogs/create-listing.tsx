@@ -11,6 +11,7 @@ import {
   createSuccessfulTransactionToastContent,
   isBundle,
   isGaslessListing,
+  isRyoshiResourceToken,
   round,
   usdFormat
 } from "@src/utils";
@@ -26,19 +27,27 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  HStack, IconButton,
+  HStack,
+  IconButton,
   Input,
   InputGroup,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger,
+  ModalOverlay,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
   Select,
   Spinner,
-  Stack, Switch,
+  Stack,
+  Switch,
   Tag,
   Text,
   useNumberInput
@@ -150,6 +159,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const [allowedCurrencies, setAllowedCurrencies] = useState<string[]>([]);
   const [selectedCurrency, setSelectedCurrency] = useState<any>();
   const [secureCancel, setSecureCancel] = useState(false);
+  const [isRyoshiToken, setIsRyoshiToken] = useState(false);
 
   const windowSize = useWindowSize();
 
@@ -213,6 +223,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       const nftId = nft.id ?? nft.nftId;
       const marketContractAddress = config.contracts.market;
       setSalePrice(listing && listing.price ? Math.round(listing.price) : undefined)
+      setIsRyoshiToken(isRyoshiResourceToken(nftAddress, nftId));
 
       const collectionInfo = await getCollectionMetadata(nftAddress);
       if (collectionInfo.collections.length > 0) {
@@ -644,6 +655,11 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
               <Box w='full'>
                 {isTransferApproved ? (
                   <>
+                    {isRyoshiToken && (
+                      <div className="alert alert-warning my-auto mb-2 fw-bold text-center">
+                        Note that listing validity is subject to your Ryoshi's current upkeep status. <Link href='https://www.notion.so/ebisusbay/Ryoshi-9284eb03b01e4162bcd3169d9baf4b41?pvs=4#5579dceb311a4806ba59e8481eddf920' target='_blank' color='#0078CB'>Learn More</Link>
+                      </div>
+                    )}
                     {showConfirmButton ? (
                       <>
                         <div className="alert alert-danger my-auto mb-2 fw-bold text-center">

@@ -370,36 +370,8 @@ export const isFounderDrop = (address) => {
   return isDrop(address, 'founding-member');
 };
 
-export const isMagBrewVikingsDrop = (address) => {
-  return isDrop(address, 'mag-brew-vikings');
-};
-
-export const isCreaturesDrop = (address) => {
-  return isDrop(address, 'creatures');
-};
-
-export const isFounderVipDrop = (address) => {
-  return isDrop(address, 'vip-founding-member');
-};
-
-export const isCrosmocraftsPartsDrop = (address) => {
-  return isDrop(address, 'crosmocrafts-parts');
-};
-
 export const isCmbDrop = (address) => {
   return isDrop(address, 'cronos-gorilla-business');
-};
-
-export const isCyberCloneDrop = (address) => {
-  return isDrop(address, 'cyber-clone');
-};
-
-export const isBossFrogzDrop = (address) => {
-  return isDrop(address, 'trooprz-boss-frogz');
-};
-
-export const isRyoshiVipDrop = (address) => {
-  return isDrop(address, 'ryoshi-tales-vip');
 };
 
 export const isDrop = (address, slug) => {
@@ -536,6 +508,10 @@ export const isCronosGorillaBusinessCollection = (address) => {
 
 export const isCroSwapQuartermastersCollection = (address) => {
   return isCollection(address, 'croswap-quartermasters', '0x333580e4B59E74243451c531c29121c02F8E3102');
+};
+
+export const isRyoshiResourceToken = (address, id) => {
+  return isCollection(address, 'ryoshi-resources', config.contracts.resources) && parseInt(id) === 2;
 };
 
 export const isDynamicNftImageCollection = (address) => {
