@@ -181,35 +181,41 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
           )}
         </SimpleGrid>
       </Card>
-      <SimpleGrid
-        columns={{base: 1, md: 3}}
-        templateColumns={{base: undefined, md: '1fr 30px 1fr'}}
-        templateRows={{base: '1fr 30px 1fr', md: 'auto'}}
-        gap={4}
+      <Stack
+        direction={{ base: 'column', md: 'row' }}
+        spacing={4} width="full"
         mt={2}
       >
-        <DealSide
-          address={deal.maker}
-          username={makerUsername}
-          isOwner={isMaker}
-          estimatedValue={deal.estimated_maker_value}
-          state={deal.state}
-          items={deal.maker_items}
-          invalidIds={invalidIds.maker.invalid_items || []}
-        />
-        <Box my='auto' mx='auto'>
+        <Flex flex={1} minW={0}>
+          <Box w='full'>
+            <DealSide
+              address={deal.maker}
+              username={makerUsername}
+              isOwner={isMaker}
+              estimatedValue={deal.estimated_maker_value}
+              state={deal.state}
+              items={deal.maker_items}
+              invalidIds={invalidIds.maker.invalid_items || []}
+            />
+          </Box>
+        </Flex>
+        <Box my='auto' mx='auto' width='30px'>
           <Icon as={FontAwesomeIcon} icon={faHandshake} boxSize={8} />
         </Box>
-        <DealSide
-          address={deal.taker}
-          username={takerUsername}
-          isOwner={isTaker}
-          estimatedValue={deal.estimated_taker_value}
-          state={deal.state}
-          items={deal.taker_items}
-          invalidIds={invalidIds.taker.invalid_items || []}
-        />
-      </SimpleGrid>
+        <Flex flex={1} minW={0}>
+          <Box w='full'>
+            <DealSide
+              address={deal.taker}
+              username={takerUsername}
+              isOwner={isTaker}
+              estimatedValue={deal.estimated_taker_value}
+              state={deal.state}
+              items={deal.taker_items}
+              invalidIds={invalidIds.taker.invalid_items || []}
+            />
+          </Box>
+        </Flex>
+      </Stack>
 
       {deal.state === OrderState.ACTIVE && (
         <ApprovalsView deal={deal} />
