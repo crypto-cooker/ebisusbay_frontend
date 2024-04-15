@@ -1,20 +1,20 @@
-import React, {MutableRefObject, useMemo} from "react";
+import React, {useMemo} from "react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {
   AccordionButton,
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Badge,
   Box,
   Flex,
-  GridItem,
   HStack,
-  SimpleGrid,
+  Icon,
   Stat,
   StatLabel,
   StatNumber,
-  Text,
-  VStack
+  VStack,
+  Wrap
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import {commify} from "ethers/lib/utils";
@@ -25,6 +25,10 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {DealItem} from "@src/core/services/api-service/mapi/types";
 import {isAddress, shortAddress, shortString} from "@src/utils";
 import {ethers} from "ethers";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAward} from "@fortawesome/free-solid-svg-icons";
+import Properties from "@src/components-v2/feature/nft/tabs/properties";
+import Trait from "@src/components-v2/feature/nft/tabs/properties/trait";
 
 
 interface GetDealItemPreviewProps {
@@ -103,7 +107,7 @@ export const GetDealItemPreview = ({item, invalid}: GetDealItemPreviewProps) => 
                 {!!normalizedItem.category && (
                   <Box fontSize='xs' className='color'>{isAddress(normalizedItem.category) ? shortAddress(normalizedItem.category) : normalizedItem.category}</Box>
                 )}
-                <Box fontWeight='bold'>
+                <Wrap fontWeight='bold' spacing={1}>
                   {!!normalizedItem.itemUrl ? (
                     <Link href={normalizedItem.itemUrl} target='_blank'>
                       {normalizedItem!.name}
@@ -111,7 +115,18 @@ export const GetDealItemPreview = ({item, invalid}: GetDealItemPreviewProps) => 
                   ) : (
                     <>{normalizedItem!.name}</>
                   )}
-                </Box>
+                  {!!item.token_details?.metadata.rank && (
+                    <Badge
+                      variant='solid'
+                      colorScheme='blue'
+                    >
+                      <HStack spacing={1} h='full'>
+                        <Icon as={FontAwesomeIcon} icon={faAward} />
+                        <Box>{item.token_details.metadata.rank}</Box>
+                      </HStack>
+                    </Badge>
+                  )}
+                </Wrap>
               </VStack>
             </Box>
           </HStack>
@@ -137,31 +152,17 @@ export const GetDealItemPreview = ({item, invalid}: GetDealItemPreviewProps) => 
         )}
       </Flex>
       <AccordionPanel>
-        {/*<Flex justify='space-around' textAlign='center' fontSize='sm' bg={hoverBackground} rounded='md' py={2}>*/}
-        {/*  {isNft && item.token_details?.metadata.rank && (*/}
-        {/*    <VStack direction="row" spacing={0}>*/}
-        {/*      <Text fontWeight="bold">Rank:</Text>*/}
-        {/*      <Text>{item.token_details?.metadata.rank}</Text>*/}
-        {/*    </VStack>*/}
-        {/*  )}*/}
-        {/*</Flex>*/}
-        {item.token_details?.metadata.rank ? (
-          <SimpleGrid spacing={2} columns={{base: 1, sm: 2, lg: 3}}>
-            {item.token_details?.metadata.attributes.map((attr) => (
-              <GridItem key={attr.trait_type} bg={hoverBackground} rounded='md'>
-                <VStack fontSize='sm' spacing={0} py={2} textAlign='center'>
-                  <Box fontWeight='bold'>{attr.trait_type}</Box>
-                  <Box>{attr.value}</Box>
-                </VStack>
-              </GridItem>
-            ))}
-          </SimpleGrid>
+        {item.token_details?.metadata.attributes ? (
+          <Properties
+            address={item.token}
+            attributes={item.token_details?.metadata.attributes}
+          />
         ) : (isToken && normalizedItem!.custom) ? (
-          <Flex justify='space-around' textAlign='center' fontSize='sm' bg={hoverBackground} rounded='md' py={2}>
-            <VStack direction="row" spacing={0}>
-              <Text fontWeight="bold">Token Address:</Text>
-              <Text>{item.token}</Text>
-            </VStack>
+          <Flex justify='space-around'>
+            <Trait
+              title='Token Address'
+              value={item.token}
+            />
           </Flex>
         ) : (
           <Box fontSize='sm' textAlign='center'>No additional info found for this item</Box>
