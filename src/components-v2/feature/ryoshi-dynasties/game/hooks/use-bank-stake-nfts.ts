@@ -45,9 +45,7 @@ const useBankStakeNfts = () => {
         const pendingAmount = pendingNfts.filter((nft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId).length;
         if (Number(stakedNft.amount) > pendingAmount) {
           const amountToWithdraw = Number(stakedNft.amount) - pendingAmount;
-          for (let i = 0; i < amountToWithdraw; i++) {
-            withdrawNfts.push({...stakedNft, amount: amountToWithdraw});
-          }
+          withdrawNfts.push({...stakedNft, amount: amountToWithdraw});
         }
       }
 
