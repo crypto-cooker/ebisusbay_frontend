@@ -7,8 +7,8 @@ import Blockies from 'react-blockies';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { getAuctionDetails } from '@src/GlobalState/auctionSlice';
-import { caseInsensitiveCompare, humanize, newlineText, shortAddress, timeSince } from '@src/utils';
+import { getAuctionDetails } from '@market/state/redux/slices/auctionSlice';
+import { caseInsensitiveCompare, humanize, newlineText, shortAddress, timeSince } from '@market/helpers/utils';
 import BuyerActionBar from '../Auctions/BuyerActionBar';
 import NftPropertyLabel from '../../components-v2/feature/nft/property-label';
 import { appConfig } from '@src/Config';

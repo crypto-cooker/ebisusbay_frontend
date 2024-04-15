@@ -25,7 +25,7 @@ import {
 } from "@chakra-ui/react";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {appConfig} from "@src/Config";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import RdButton from "../../../../components/rd-button";
 import {ApiService} from "@src/core/services/api-service";
 import {useUser} from "@src/components-v2/useUser";
@@ -34,7 +34,7 @@ import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/
 import ImageService from "@src/core/services/image";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
-import Resources from "@src/Contracts/Resources.json";
+import Resources from "@src/global/contracts/Resources.json";
 
 const config = appConfig();
 enum ActionType {

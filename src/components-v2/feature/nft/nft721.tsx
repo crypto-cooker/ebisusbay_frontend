@@ -43,11 +43,11 @@ import {
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   shortAddress,
-} from '@src/utils';
-import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
-import {specialImageTransform} from '@src/hacks';
+} from '@market/helpers/utils';
+import {getNftDetails, refreshMetadata, tickFavorite} from '@market/state/redux/slices/nftSlice';
+import {specialImageTransform} from '@market/helpers/hacks';
 import PriceActionBar from './price-action-bar';
-import {ERC721} from '@src/Contracts/Abis';
+import {ERC721} from '@src/global/contracts/Abis';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import {commify} from 'ethers/lib/utils';
@@ -77,10 +77,10 @@ import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-
 import {useQuery} from "@tanstack/react-query";
 import {getCollections} from "@src/core/api/next/collectioninfo";
 import {ImageContainer} from "@src/Components/Bundle";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {ContractInterface} from "@ethersproject/contracts";
 import ImageService from "@src/core/services/image";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
@@ -89,7 +89,7 @@ import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
 import {ApiService} from "@src/core/services/api-service";
 import DynamicNftImage from '@src/components-v2/shared/media/dynamic-nft-image';
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
@@ -431,7 +431,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     async function getApeInfo() {
       if (isBabyWeirdApesCollection(address)) {
         const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-        const abiFile = require(`@src/Assets/abis/baby-weird-apes.json`);
+        const abiFile = require(`@market/assets/abis/baby-weird-apes.json`);
         const contract = new Contract(address, abiFile.abi, readProvider);
         try {
           const apeInfo = await contract.apeInfo(id);
@@ -452,9 +452,9 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     async function getApeInfo() {
       if (isAnyWeirdApesCollection(address)) {
         const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-        const abiFile = require(`@src/Assets/abis/weird-apes-bio.json`);
+        const abiFile = require(`@market/assets/abis/weird-apes-bio.json`);
         const contract = new Contract('0x213f9b2ead19522a063b3d5c8429ca759ffda812', abiFile, readProvider);
-        const voxelAbi = require(`@src/Assets/abis/voxel-weird-apes.json`);
+        const voxelAbi = require(`@market/assets/abis/voxel-weird-apes.json`);
         const voxelContract = new Contract('0xe02a74813053e96c5c98f817c0949e0b00728ef6', voxelAbi, readProvider);
         try {
           let apeInfo;
@@ -516,7 +516,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     }
     async function getEvoSkullAttributes() {
       if (isEvoSkullCollection(address)) {
-        const abiFile = require(`@src/Assets/abis/evo-skull.json`);
+        const abiFile = require(`@market/assets/abis/evo-skull.json`);
         const attributes = await getAttributes(abiFile);
         setOnChainPowertraits(attributes);
       } else {
@@ -525,7 +525,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     }
     async function getCroSkullPetsAttributes() {
       if (isCroSkullPetsCollection(address)) {
-        const abiFile = require(`@src/Assets/abis/croskull-pets.json`);
+        const abiFile = require(`@market/assets/abis/croskull-pets.json`);
         const attributes = await getAttributes(abiFile.abi);
         setOnChainPowertraits(attributes);
       } else {
@@ -569,7 +569,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
     async function getLadyApeInfo() {
       if (isLadyWeirdApesCollection(address)) {
         const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-        const abiFile = require(`@src/Assets/abis/lady-weird-apes-children.json`);
+        const abiFile = require(`@market/assets/abis/lady-weird-apes-children.json`);
         const contract = new Contract(address, abiFile.abi, readProvider);
         try {
           const numChildren = await contract.numChildren(id);

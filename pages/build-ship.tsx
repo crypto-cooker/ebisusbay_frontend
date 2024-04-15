@@ -4,9 +4,9 @@ import {toast} from 'react-toastify';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
-import {createSuccessfulTransactionToastContent, humanizeAdvanced, percentage} from '@src/utils';
-import ShipABI from '../src/Contracts/Ship.json';
-import ShipItemABI from '../src/Contracts/ShipItem.json';
+import {createSuccessfulTransactionToastContent, humanizeAdvanced, percentage} from '@market/helpers/utils';
+import ShipABI from '../src/global/contracts/Ship.json';
+import ShipItemABI from '../src/global/contracts/ShipItem.json';
 import {appConfig} from '@src/Config';
 import {hostedImage} from '@src/helpers/image';
 import PageHead from "@src/components-v2/shared/layout/page-head";

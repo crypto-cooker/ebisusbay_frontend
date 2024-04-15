@@ -1,5 +1,5 @@
 import {Contract, ethers} from "ethers";
-import Market from "@src/Contracts/Marketplace.json";
+import Market from "@src/global/contracts/Marketplace.json";
 import {appConfig} from "@src/Config";
 
 const config = appConfig();

@@ -16,13 +16,13 @@ import {TitledCard} from "@src/components-v2/foundation/card";
 import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import {useUser} from "@src/components-v2/useUser";
 import {appConfig} from "@src/Config";
-import {ciEquals} from "@src/utils";
+import {ciEquals} from "@market/helpers/utils";
 import {Contract, ethers} from "ethers";
 import {Erc20ApprovalButton, NftApprovalButton} from "@src/components-v2/feature/deal/approval-buttons";
 import useApprovalStatus from "@src/components-v2/feature/deal/use-approval-status";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {toast} from "react-toastify";
-import WCRO from "@src/Contracts/WCRO.json";
+import WCRO from "@src/global/contracts/WCRO.json";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {commify} from "ethers/lib/utils";
 

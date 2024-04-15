@@ -1,4 +1,4 @@
-import {isEmptyObj} from "../utils";
+import {isEmptyObj} from "@market/helpers/utils";
 
 /**
  * Format traits from checkbox-formatted object to be acceptable in a query string

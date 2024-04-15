@@ -14,13 +14,13 @@ import {
   Stack
 } from "@chakra-ui/react";
 import {DropState as statuses} from "@src/core/api/enums";
-import {getTheme} from "@src/Theme/theme";
-import {useAppSelector} from "@src/Store/hooks";
+import {getTheme} from "@src/global/theme/theme";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import Countdown, {zeroPad} from "react-countdown";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {commify} from "ethers/lib/utils";
 import React from "react";
-import {percentage, pluralize} from "@src/utils";
+import {percentage, pluralize} from "@market/helpers/utils";
 import {ethers} from "ethers";
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
 import {PrimaryButton} from "@src/components-v2/foundation/button";

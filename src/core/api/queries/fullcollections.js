@@ -1,4 +1,4 @@
-import {isEmptyObj} from "../../../utils";
+import {isEmptyObj} from "@market/helpers/utils";
 
 export class FullCollectionsQuery {
   address = null;

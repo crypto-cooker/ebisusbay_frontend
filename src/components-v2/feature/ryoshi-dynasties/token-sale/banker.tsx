@@ -7,10 +7,10 @@ import BankerBubbleBox, {
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightFromBracket, faCircleInfo, faDollarSign} from "@fortawesome/free-solid-svg-icons";
-import {useWindowSize} from "@src/hooks/useWindowSize";
+import {useWindowSize} from "@market/hooks/useWindowSize";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {Contract, ethers} from "ethers";
-import FortunePresale from "@src/Contracts/FortunePresale.json";
+import FortunePresale from "@src/global/contracts/FortunePresale.json";
 import {appConfig} from "@src/Config";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";

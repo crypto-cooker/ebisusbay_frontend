@@ -20,7 +20,7 @@ import {
   updateERC20AmountSelectedAtom,
   updateOfferAmountSelectedAtom,
   updateOfferERC20AmountSelectedAtom
-} from "@src/jotai/atoms/deal";
+} from "@market/state/jotai/atoms/deal";
 import {RESET} from "jotai/utils";
 
 interface UseBarterDeal {

@@ -24,7 +24,7 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {toast} from 'react-toastify';
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import axios from "axios";
 import {appConfig} from "@src/Config";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";

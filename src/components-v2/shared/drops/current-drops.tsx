@@ -6,7 +6,7 @@ import PreviewCard from '@src/components-v2/shared/preview-card';
 import {appConfig} from "@src/Config";
 import Slider from '@src/Components/components/Slider';
 import LocalDataService from "@src/core/services/local-data-service";
-import {millisecondTimestamp} from "@src/utils";
+import {millisecondTimestamp} from "@market/helpers/utils";
 import {Drop} from "@src/core/models/drop";
 
 const drops = appConfig('drops');

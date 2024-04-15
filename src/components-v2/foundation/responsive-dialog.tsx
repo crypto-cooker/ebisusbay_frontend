@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import React, {ComponentType, ReactNode} from "react";
 import {useUser} from "@src/components-v2/useUser";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 
 export type ResponsiveDialogComponents = {
   DialogBody: ComponentType<BoxProps & { children: ReactNode }>;

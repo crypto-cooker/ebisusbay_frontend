@@ -1,6 +1,6 @@
 import {Menu as MenuCK, MenuItem, MenuList,} from '@chakra-ui/react'
 
-import {getTheme} from '@src/Theme/theme';
+import {getTheme} from '@src/global/theme/theme';
 import {useUser} from "@src/components-v2/useUser";
 
 const Menu = ({MenuButton, MenuItems = []}) => {

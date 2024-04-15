@@ -24,16 +24,16 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import {Offer} from "@src/core/models/offer";
-import {shortAddress, timeSince} from "@src/utils";
+import {shortAddress, timeSince} from "@market/helpers/utils";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
 import {commify} from "ethers/lib/utils";
 import Link from "next/link";
 import Blockies from "react-blockies";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
-import useGetProfilePreview from "@src/hooks/useGetUsername";
+import useGetProfilePreview from "@market/hooks/useGetUsername";
 
 interface ResponsiveNftOffersTableProps {
   data: InfiniteData<IPaginatedList<Offer>>;

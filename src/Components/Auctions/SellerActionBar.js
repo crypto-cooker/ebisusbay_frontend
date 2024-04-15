@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {toast} from 'react-toastify';
-import {createSuccessfulTransactionToastContent} from '@src/utils';
+import {createSuccessfulTransactionToastContent} from '@market/helpers/utils';
 import {auctionState} from '@src/core/api/enums';
-import {getAuctionDetails} from '@src/GlobalState/auctionSlice';
+import {getAuctionDetails} from '@market/state/redux/slices/auctionSlice';
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 

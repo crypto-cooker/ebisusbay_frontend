@@ -19,7 +19,7 @@ import {
 import ImageService from "@src/core/services/image";
 
 const gothamBook = localFont({
-  src: '../../../../fonts/Gotham-Book.woff2',
+  src: '../../../../global/assets/fonts/Gotham-Book.woff2',
   fallback: ['Roboto', 'system-ui', 'arial'],
 })
 

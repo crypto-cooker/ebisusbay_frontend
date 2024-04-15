@@ -27,8 +27,8 @@ import moment from 'moment';
 import {Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
-import Bank from "@src/Contracts/Bank.json";
-import {createSuccessfulTransactionToastContent, findNextLowestNumber, round} from '@src/utils';
+import Bank from "@src/global/contracts/Bank.json";
+import {createSuccessfulTransactionToastContent, findNextLowestNumber, round} from '@market/helpers/utils';
 import ImageService from "@src/core/services/image";
 import {
   RyoshiDynastiesContext,

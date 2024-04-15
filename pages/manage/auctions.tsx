@@ -7,7 +7,7 @@ import React from 'react';
 import CreateAuction from '../../src/Components/Auctions/CreateAuction';
 import ManageAuctionList from '../../src/Components/Auctions/ManageAuctionList';
 // import {caseInsensitiveCompare} from "../../src/utils";
-// import AuctionContract from '../../Contracts/Auction.json';
+// import AuctionContract from '../../global/contracts/Auction.json';
 
 const ManageAuctions = () => {
   // const user = useSelector((state) => state.user);

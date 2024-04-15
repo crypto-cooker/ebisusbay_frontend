@@ -45,7 +45,7 @@ import {commify} from "ethers/lib/utils";
 import {ApiService} from "@src/core/services/api-service";
 import {ChevronLeftIcon, ChevronRightIcon} from "@chakra-ui/icons";
 
-const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
+const gothamXLight = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-XLight.woff2' })
 
 interface leaderBoardProps {
   onReturn: () => void;

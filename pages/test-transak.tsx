@@ -3,13 +3,13 @@ import {Contract, ethers} from "ethers";
 import {Box, Button, HStack, Input, SimpleGrid, Stack, Text, Textarea, useClipboard, VStack} from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {appConfig} from "@src/Config";
-import {ERC721} from "@src/Contracts/Abis";
+import {ERC721} from "@src/global/contracts/Abis";
 import {JsonRpcProvider} from "@ethersproject/providers";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
-import {ciEquals, shortAddress} from "@src/utils";
+import {ciEquals, shortAddress} from "@market/helpers/utils";
 import {getServerSignature} from "@src/core/cms/endpoints/gaslessListing";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {round, shortAddress} from '../../utils';
+import {round, shortAddress} from '@market/helpers/utils';
 import {utils} from 'ethers';
 import styles from './styles.module.scss';
 import {useUser} from "@src/components-v2/useUser";

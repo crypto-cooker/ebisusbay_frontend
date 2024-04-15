@@ -21,7 +21,7 @@ import {
 import React, {useCallback} from "react";
 import {AxiosResponse} from "axios";
 import {Offer} from "@src/core/models/offer";
-import {findCollectionByAddress, shortAddress, timeSince} from "@src/utils";
+import {findCollectionByAddress, shortAddress, timeSince} from "@market/helpers/utils";
 import Button from "@src/Components/components/Button";
 import {OfferState} from "@src/core/services/api-service/types";
 import {InfiniteData} from "@tanstack/query-core";

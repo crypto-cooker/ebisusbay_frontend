@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import {toast} from 'react-toastify';
 import styles from './rugsurance.module.scss';
 import {getCRC721NftsFromIds, getCRC721NftsFromWallet} from "@src/core/api/chain";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
-import {ERC721} from "@src/Contracts/Abis";
+import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
+import {ERC721} from "@src/global/contracts/Abis";
 import {appConfig} from "@src/Config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {
@@ -20,8 +20,8 @@ import {
   ModalOverlay,
   Spinner
 } from "@chakra-ui/react";
-import RugsuranceAbi from "@src/Contracts/SlothtyRugsurance.json";
-import {getTheme} from "@src/Theme/theme";
+import RugsuranceAbi from "@src/global/contracts/SlothtyRugsurance.json";
+import {getTheme} from "@src/global/theme/theme";
 import Button from "@src/Components/components/Button";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 

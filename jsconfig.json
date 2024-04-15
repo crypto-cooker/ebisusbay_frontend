@@ -3,7 +3,10 @@
     "baseUrl": "./",
     "paths": {
       "@src/*": ["src/*"],
-      "@public/*": ["public/*"]
+      "@public/*": ["public/*"],
+      "@market/*": ["src/modules/market/*"],
+      "@gamefi/*": ["src/modules/gamefi/*"],
+      "@dex/*": ["src/modules/dex/*"]
     }
   }
 }

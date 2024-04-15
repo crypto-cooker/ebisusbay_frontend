@@ -4,7 +4,7 @@ import React from "react";
 import {Fade} from "react-awesome-reveal";
 import NextLink from "next/link";
 import NextImage from "next/image";
-import {useWindowSize} from "@src/hooks/useWindowSize";
+import {useWindowSize} from "@market/hooks/useWindowSize";
 
 interface LandingSceneProps {
   onEnterTokenSale: () => void;

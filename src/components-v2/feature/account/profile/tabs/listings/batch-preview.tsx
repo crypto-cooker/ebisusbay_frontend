@@ -1,6 +1,6 @@
 import {useCallback, useContext, useState} from "react";
 import {Alert, AlertIcon, Box, Button, Flex, HStack, Slide, Stack, Text} from "@chakra-ui/react";
-import {isGaslessListing, pluralize} from "@src/utils";
+import {isGaslessListing, pluralize} from "@market/helpers/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {toast} from "react-toastify";

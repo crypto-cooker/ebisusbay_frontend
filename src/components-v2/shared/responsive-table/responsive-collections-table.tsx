@@ -32,7 +32,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import {AxiosResponse} from "axios";
-import {round, siPrefixedNumber} from "@src/utils";
+import {round, siPrefixedNumber} from "@market/helpers/utils";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
 import {commify} from "ethers/lib/utils";

@@ -28,7 +28,7 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {ArrowForwardIcon} from "@chakra-ui/icons";
-import {isAddress, pluralize, shortAddress} from "@src/utils";
+import {isAddress, pluralize, shortAddress} from "@market/helpers/utils";
 
 import localFont from 'next/font/local';
 import {useInfiniteQuery} from "@tanstack/react-query";
@@ -36,7 +36,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
 
-const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({ src: '../../../../../global/assets/fonts/Gotham-Book.woff2' })
 
 interface BattleLogProps {
   isOpen: boolean;

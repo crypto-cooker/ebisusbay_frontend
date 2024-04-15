@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {specialImageTransform} from "@src/hacks";
+import {specialImageTransform} from "@market/helpers/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {Contract, ContractReceipt, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
@@ -13,8 +13,8 @@ import {
   isGaslessListing,
   knownErc20Token,
   round
-} from "@src/utils";
-import {getTheme} from "@src/Theme/theme";
+} from "@market/helpers/utils";
+import {getTheme} from "@src/global/theme/theme";
 import {
   Box,
   Button as ChakraButton,
@@ -37,7 +37,7 @@ import {commify} from "ethers/lib/utils";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import {useQuery} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
-import useBuyGaslessListings from "@src/hooks/useBuyGaslessListings";
+import useBuyGaslessListings from "@market/hooks/useBuyGaslessListings";
 import DotIcon from "@src/Components/components/DotIcon";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";

@@ -7,16 +7,16 @@ import {useRouter} from 'next/router';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
-import {isFounderDrop, newlineText,} from '@src/utils';
+import {isFounderDrop, newlineText,} from '@market/helpers/utils';
 import {DropState as statuses} from '@src/core/api/enums';
-import {EbisuDropAbi, ERC20} from '@src/Contracts/Abis';
+import {EbisuDropAbi, ERC20} from '@src/global/contracts/Abis';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {appConfig} from "@src/Config";
 import {hostedImage} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {Box, Heading, Text, VStack} from "@chakra-ui/react";
 import {MintBox} from "@src/components-v2/feature/drop/mint-box";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {Drop, SpecialWhitelist} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
 import Link from "next/link";
@@ -126,7 +126,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     // Use the new contract format if applicable
     let abi = currentDrop.abi;
     if (isUsingAbiFile(abi)) {
-      await import(`@src/Assets/abis/${currentDrop.abi}`)
+      await import(`@market/assets/abis/${currentDrop.abi}`)
         .then((abiJson) => {
           abi = abiJson.default.abi ?? abiJson.default;
           setAbi(abi as any);

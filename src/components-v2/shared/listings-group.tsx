@@ -2,7 +2,7 @@ import React, {memo, useMemo} from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import ListingCard from '@src/Components/components/ListingCard';
-import {isMetapixelsCollection} from '@src/utils';
+import {isMetapixelsCollection} from '@market/helpers/utils';
 import ListingBundleCard from '@src/Components/components/ListingBundleCard';
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 import {Box, Center, SimpleGrid, Spinner} from "@chakra-ui/react";

@@ -20,9 +20,9 @@ import {
   rankingsLogoForCollection,
   rankingsTitleForCollection,
   shortAddress,
-} from '@src/utils';
-import {getNftDetails, refreshMetadata, tickFavorite} from '@src/GlobalState/nftSlice';
-import {specialImageTransform} from '@src/hacks';
+} from '@market/helpers/utils';
+import {getNftDetails, refreshMetadata, tickFavorite} from '@market/state/redux/slices/nftSlice';
+import {specialImageTransform} from '@market/helpers/hacks';
 import PriceActionBar from '@src/components-v2/feature/nft/price-action-bar';
 import ListingsTab from '@src/components-v2/feature/nft/tabs/listings';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
@@ -51,14 +51,14 @@ import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 import {Button as ChakraButton} from "@chakra-ui/button";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferState, OfferType} from "@src/core/services/api-service/types";
 import ImageService from "@src/core/services/image";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
 import {ApiService} from "@src/core/services/api-service";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();

@@ -40,13 +40,13 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHandshake, faLink, faPlus, faRefresh} from "@fortawesome/free-solid-svg-icons";
 import React, {ReactNode, useCallback, useEffect, useMemo, useRef, useState} from "react";
-import useGetProfilePreview from "@src/hooks/useGetUsername";
+import useGetProfilePreview from "@market/hooks/useGetUsername";
 import {Card} from "@src/components-v2/foundation/card";
 import {GetDealItemPreview} from "@src/components-v2/feature/deal/manage/preview-item";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useContractService, useUser} from "@src/components-v2/useUser";
-import {appUrl, ciEquals, getLengthOfTime, round} from "@src/utils";
+import {appUrl, ciEquals, getLengthOfTime, round} from "@market/helpers/utils";
 import {ApiService} from "@src/core/services/api-service";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {toast} from "react-toastify";
@@ -63,7 +63,7 @@ import {ContractReceipt, ethers} from "ethers";
 import {appConfig} from "@src/Config";
 import NextLink from "next/link";
 import {commify} from "ethers/lib/utils";
-import {ItemType} from "@src/hooks/use-create-order-signer";
+import {ItemType} from "@market/hooks/use-create-order-signer";
 
 const config = appConfig();
 

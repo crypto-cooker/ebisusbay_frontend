@@ -3,14 +3,14 @@ import React from 'react';
 import {createGlobalStyle} from 'styled-components';
 import {useRouter} from "next/router";
 
-import useFeatureFlag from '@src/hooks/useFeatureFlag';
+import useFeatureFlag from '@market/hooks/useFeatureFlag';
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
 
 import Constants from '@src/constants';
 import {useQuery} from "@tanstack/react-query";
 import {getOwnerCollections} from "@src/core/cms/next/collections";
 import {Center, Text, Spinner, VStack} from "@chakra-ui/react";
-import {shortAddress} from "@src/utils";
+import {shortAddress} from "@market/helpers/utils";
 import ImageService from "@src/core/services/image";
 
 const { Features } = Constants;

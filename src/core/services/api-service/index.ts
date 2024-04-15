@@ -17,7 +17,7 @@ import {WalletsQueryParams} from "./mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
 import Graph from "@src/core/services/api-service/graph";
 import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 import {getOwners} from "@src/core/subgraph"
 import {Player, RankPlayers, RankPlayersByWorst} from "@src/core/poker-rank-players"

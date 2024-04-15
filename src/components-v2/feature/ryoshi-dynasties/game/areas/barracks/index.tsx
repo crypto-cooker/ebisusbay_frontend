@@ -2,7 +2,7 @@ import {AspectRatio, Box, Button, Flex, Image, Text, useDisclosure, VStack,} fro
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 
 import localFont from 'next/font/local';
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import React, {useState} from 'react';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {motion} from "framer-motion";
@@ -12,7 +12,7 @@ import StakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/ba
 import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
 
 const gothamBook = localFont({
-  src: '../../../../../../fonts/Gotham-Book.woff2',
+  src: '../../../../../../global/assets/fonts/Gotham-Book.woff2',
   fallback: ['Roboto', 'system-ui', 'arial'],
 })
 

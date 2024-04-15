@@ -14,9 +14,9 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {secondsToDhms} from "@src/utils";
+import {secondsToDhms} from "@market/helpers/utils";
 
-const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-Book.woff2' })
 
 const HelpPage = () => {
   const { config: rdConfig, game: rdGameConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;

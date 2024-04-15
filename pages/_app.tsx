@@ -3,7 +3,7 @@ import {Provider} from 'react-redux';
 import * as Sentry from '@sentry/react';
 
 import {ErrorPage} from '@src/Components/ErrorPage';
-import store from '../src/Store/store';
+import store from '@market/state/redux/store';
 import {Site24x7LoggingService} from '@src/third-party/site24x7';
 import {QueryClient, QueryClientProvider,} from '@tanstack/react-query'
 import {ChakraProvider} from '@chakra-ui/react'
@@ -17,9 +17,9 @@ import 'swiper/css';
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import '../src/Assets/styles/style.scss';
-import '../src/Assets/styles/override.scss';
-import customTheme from "@src/Theme/theme";
+import '../src/global/assets/styles/style.scss';
+import '../src/global/assets/styles/override.scss';
+import customTheme from "@src/global/theme/theme";
 import {AppProps} from "next/app";
 import App from "@src/components-v2/app";
 import {Web3Modal} from "@src/components-v2/web3modal";

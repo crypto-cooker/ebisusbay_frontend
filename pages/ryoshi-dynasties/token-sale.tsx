@@ -7,7 +7,7 @@ import localFont from "next/font/local";
 import {useRouter} from "next/router";
 import {hostedImage} from "@src/helpers/image";
 
-const gothamBook = localFont({ src: '../../src/fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({ src: '../../src/global/assets/fonts/Gotham-Book.woff2' })
 
 const TokenSale: NextPage = () => {
   const router = useRouter();

@@ -2,10 +2,10 @@ import React, {memo} from 'react';
 import Select from 'react-select';
 
 import {SortOption} from '../Models/sort-option.model';
-import {getTheme} from '../../Theme/theme';
+import {getTheme} from '../../global/theme/theme';
 import styled from 'styled-components';
 import Switch from './common/Switch';
-import useFeatureFlag from '@src/hooks/useFeatureFlag';
+import useFeatureFlag from '@market/hooks/useFeatureFlag';
 import Constants from '@src/constants';
 import {Input, InputGroup} from "@chakra-ui/react";
 import {useUser} from "@src/components-v2/useUser";

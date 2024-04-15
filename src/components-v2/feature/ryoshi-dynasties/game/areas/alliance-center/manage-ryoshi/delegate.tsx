@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react"
 import {delegateTroops, getAllFactionsSeasonId} from "@src/core/api/RyoshiDynastiesAPICalls";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import SearchFaction from "@src/components-v2/feature/ryoshi-dynasties/components/search-factions";
 import {toast} from "react-toastify";

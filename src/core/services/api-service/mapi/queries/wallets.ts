@@ -1,4 +1,4 @@
-import {isEmptyObj} from "@src/utils";
+import {isEmptyObj} from "@market/helpers/utils";
 import Query from "@src/core/services/api-service/mapi/queries/index";
 import * as Yup from 'yup';
 

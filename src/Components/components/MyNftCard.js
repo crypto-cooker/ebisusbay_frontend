@@ -32,15 +32,15 @@ import {
   useBreakpointValue,
   useClipboard
 } from "@chakra-ui/react";
-import {appUrl, caseInsensitiveCompare, isLandDeedsCollection, round, siPrefixedNumber, timeSince} from "@src/utils";
+import {appUrl, caseInsensitiveCompare, isLandDeedsCollection, round, siPrefixedNumber, timeSince} from "@market/helpers/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
-import {darkTheme, lightTheme} from "@src/Theme/theme";
+import {darkTheme, lightTheme} from "@src/global/theme/theme";
 import {useSelector} from "react-redux";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
-import {useExchangeRate} from "@src/hooks/useGlobalPrices";
+import {useExchangeRate} from "@market/hooks/useGlobalPrices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 
 const MyNftCard = ({

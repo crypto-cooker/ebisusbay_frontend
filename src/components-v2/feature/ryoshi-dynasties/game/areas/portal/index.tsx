@@ -6,7 +6,7 @@ import ImageService from "@src/core/services/image";
 
 import localFont from 'next/font/local';
 
-const gothamBook = localFont({ src: '../../../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({ src: '../../../../../../global/assets/fonts/Gotham-Book.woff2' })
   
   interface PortalProps {
     onBack: () => void;

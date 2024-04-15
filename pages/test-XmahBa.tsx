@@ -5,7 +5,7 @@ import {toast} from "react-toastify";
 import {GetServerSidePropsContext} from "next";
 import * as process from "process";
 import {appConfig} from "@src/Config";
-import {ERC721} from "@src/Contracts/Abis";
+import {ERC721} from "@src/global/contracts/Abis";
 import {JsonRpcProvider} from "@ethersproject/providers";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";

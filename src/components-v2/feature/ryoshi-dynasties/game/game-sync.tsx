@@ -3,7 +3,7 @@ import React, {ReactNode, useCallback, useEffect, useMemo, useState} from "react
 // import UserPage from "@src/Components/BattleBay/Areas/UserPage";
 import {useDispatch} from 'react-redux';
 import Village from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {Box, Center, Spinner, Text, useDisclosure, VStack} from "@chakra-ui/react";
 import {useRouter} from "next/router";

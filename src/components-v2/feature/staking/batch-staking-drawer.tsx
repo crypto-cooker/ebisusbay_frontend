@@ -26,15 +26,15 @@ import {
   removeFromCart,
   setApproval,
   setExtras
-} from "@src/GlobalState/ryoshi-staking-cart-slice";
+} from "@market/state/redux/slices/ryoshi-staking-cart-slice";
 import {Contract} from "ethers";
-import {ERC721} from "@src/Contracts/Abis";
+import {ERC721} from "@src/global/contracts/Abis";
 import {appConfig} from "@src/Config";
-import {createSuccessfulTransactionToastContent, pluralize} from "@src/utils";
+import {createSuccessfulTransactionToastContent, pluralize} from "@market/helpers/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {parseUnits} from "ethers/lib/utils";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import ImageService from "@src/core/services/image";
 import {useContractService, useUser} from "@src/components-v2/useUser";

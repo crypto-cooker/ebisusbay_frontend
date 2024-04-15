@@ -18,7 +18,7 @@ import {
 import MadeOffers from "@src/components-v2/feature/account/profile/tabs/offers/made-offers";
 import ReceivedOffers from "./received-offers";
 import useDebounce from "@src/core/hooks/useDebounce";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 
 interface OffersProps {

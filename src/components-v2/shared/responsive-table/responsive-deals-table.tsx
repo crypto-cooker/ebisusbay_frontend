@@ -28,7 +28,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import {Offer} from "@src/core/models/offer";
-import {getLengthOfTime, shortAddress, timeSince} from "@src/utils";
+import {getLengthOfTime, shortAddress, timeSince} from "@market/helpers/utils";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
 import {AbbreviatedDeal} from "@src/core/services/api-service/mapi/types";

@@ -9,10 +9,10 @@ import {useRouter} from 'next/router';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
-import {createSuccessfulTransactionToastContent, isFounderDrop, percentage,} from '@src/utils';
+import {createSuccessfulTransactionToastContent, isFounderDrop, percentage,} from '@market/helpers/utils';
 import {DropState as statuses} from '@src/core/api/enums';
-import {ERC1155} from '@src/Contracts/Abis';
-import {getTheme} from '@src/Theme/theme';
+import {ERC1155} from '@src/global/contracts/Abis';
+import {getTheme} from '@src/global/theme/theme';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {formatEther, parseUnits} from "ethers/lib/utils";
 import {appConfig} from "@src/Config";
@@ -34,11 +34,11 @@ import {
   useNumberInput
 } from "@chakra-ui/react";
 import Link from "next/link";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {Drop} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 
 const config = appConfig();
 const collections = config.collections;
@@ -138,7 +138,7 @@ const RyoshiDrop = ({drop}: RyoshiDropProps) => {
       return;
     }
 
-    const abiJson = require(`@src/Assets/abis/ryoshi.json`);
+    const abiJson = require(`@market/assets/abis/ryoshi.json`);
     let abi = abiJson;
     setAbi(abiJson);
 

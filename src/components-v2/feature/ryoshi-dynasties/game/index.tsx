@@ -4,7 +4,7 @@ import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/ba
 import Academy from "@src/components-v2/feature/ryoshi-dynasties/game/areas/academy";
 import Bank from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank";
 import Village from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import GameSync from "@src/components-v2/feature/ryoshi-dynasties/game/game-sync";
 import ImagePreloader from "@src/components-v2/feature/ryoshi-dynasties/game/image-preloader";

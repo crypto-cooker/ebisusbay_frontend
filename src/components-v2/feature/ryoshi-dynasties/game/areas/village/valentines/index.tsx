@@ -6,9 +6,9 @@ import xmasMessages from "@src/components-v2/feature/ryoshi-dynasties/game/areas
 import {ApiService} from "@src/core/services/api-service";
 import * as Sentry from "@sentry/nextjs";
 import {Contract} from "ethers";
-import Resources from "@src/Contracts/Resources.json";
+import Resources from "@src/global/contracts/Resources.json";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";

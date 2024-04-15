@@ -7,7 +7,7 @@ import {
   isNftBlacklisted,
   isUserBlacklisted,
   isWeirdApesCollection
-} from "@src/utils";
+} from "@market/helpers/utils";
 import {
   getAntMintPassMetadata,
   getCroSwapQuartermastersStakingStatus,

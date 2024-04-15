@@ -1,6 +1,6 @@
 import {appConfig} from "@src/Config";
 import {Axios} from "@src/core/http/axios";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 
 const config = appConfig();
 const api = Axios.create(config.urls.api);

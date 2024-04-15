@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Slider from '../components/Slider';
 
 import PreviewCard from '../../components-v2/shared/preview-card';
-import { getAllCollections } from '../../GlobalState/collectionsSlice';
+import { getAllCollections } from '@market/state/redux/slices/collectionsSlice';
 
 const HotCollections = () => {
   const dispatch = useDispatch();

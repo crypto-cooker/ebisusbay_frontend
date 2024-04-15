@@ -39,7 +39,7 @@ import SearchFaction from "@src/components-v2/feature/ryoshi-dynasties/component
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
-import {getLengthOfTime} from "@src/utils";
+import {getLengthOfTime} from "@market/helpers/utils";
 import {ApiService} from "@src/core/services/api-service";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
 import {useUser} from "@src/components-v2/useUser";

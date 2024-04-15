@@ -5,7 +5,7 @@ import Filters from "@src/components-v2/feature/brand/tabs/listings/filters";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ListingCard from "@src/Components/components/ListingCard";
-import {isMetapixelsCollection} from "@src/utils";
+import {isMetapixelsCollection} from "@market/helpers/utils";
 import ListingBundleCard from "@src/Components/components/ListingBundleCard";
 import TaskBar from "@src/components-v2/feature/brand/tabs/listings/taskbar";
 import NextApiService from "@src/core/services/api-service/next";

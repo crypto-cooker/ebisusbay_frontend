@@ -5,8 +5,8 @@ import Button from "@src/Components/components/Button";
 import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {createSuccessfulTransactionToastContent, round} from "@src/utils";
-import {useWindowSize} from "@src/hooks/useWindowSize";
+import {createSuccessfulTransactionToastContent, round} from "@market/helpers/utils";
+import {useWindowSize} from "@market/hooks/useWindowSize";
 import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
@@ -27,9 +27,9 @@ import {
   Spinner,
   Tag
 } from "@chakra-ui/react";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {parseErrorMessage} from "@src/helpers/validator";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {ApiService} from "@src/core/services/api-service";
 import {OfferState, OfferType} from "@src/core/services/api-service/types";
 import {useContractService, useUser} from "@src/components-v2/useUser";

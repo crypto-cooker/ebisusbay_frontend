@@ -44,10 +44,10 @@ import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceS
 import {appConfig} from "@src/Config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {Contract} from "ethers";
-import Resources from "@src/Contracts/Resources.json";
+import Resources from "@src/global/contracts/Resources.json";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {VillageMerchant} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/merchant";
 import {ShakeTreeDialog} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/christmas";

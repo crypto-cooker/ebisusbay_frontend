@@ -1,10 +1,10 @@
 import {useState} from 'react';
 import {ApiService} from "@src/core/services/api-service";
 import {Contract} from "ethers";
-import Bank from "@src/Contracts/Bank.json";
+import Bank from "@src/global/contracts/Bank.json";
 import {appConfig} from "@src/Config";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
 

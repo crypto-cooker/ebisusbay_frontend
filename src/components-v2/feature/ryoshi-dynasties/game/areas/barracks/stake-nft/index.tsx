@@ -35,7 +35,7 @@ import {ApiService} from "@src/core/services/api-service";
 import InfiniteScroll from "react-infinite-scroll-component";
 import StakingNftCard from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/staking-nft-card";
 import {appConfig} from "@src/Config";
-import {caseInsensitiveCompare, ciEquals} from "@src/utils";
+import {caseInsensitiveCompare, ciEquals} from "@market/helpers/utils";
 import WalletNft from "@src/core/models/wallet-nft";
 import ImageService from "@src/core/services/image";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
@@ -43,7 +43,7 @@ import ShrineIcon from "@src/components-v2/shared/icons/shrine";
 import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {BigNumber, Contract, ethers} from "ethers";
-import {ERC1155, ERC721} from "@src/Contracts/Abis";
+import {ERC1155, ERC721} from "@src/global/contracts/Abis";
 import useBarracksStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-barracks-stake-nfts";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -58,8 +58,8 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/faq-page";
-import Fortune from "@src/Contracts/Fortune.json";
-import SeasonUnlocks from "@src/Contracts/SeasonUnlocks.json";
+import Fortune from "@src/global/contracts/Fortune.json";
+import SeasonUnlocks from "@src/global/contracts/SeasonUnlocks.json";
 import {parseErrorMessage} from "@src/helpers/validator";
 import localFont from "next/font/local";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
@@ -67,7 +67,7 @@ import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-const gothamBook = localFont({ src: '../../../../../../../../src/fonts/Gotham-Book.woff2' });
+const gothamBook = localFont({ src: '../../../../../../../../src/global/assets/fonts/Gotham-Book.woff2' });
 
 // Maps to collection slug
 const tabs = {

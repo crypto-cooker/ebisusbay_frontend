@@ -7,7 +7,7 @@ import { Menu } from '../components/chakra-components';
 import { useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonGroup, MenuButton as MenuButtonCK, useClipboard } from "@chakra-ui/react";
-import { refreshMetadata, tickFavorite } from '@src/GlobalState/nftSlice';
+import { refreshMetadata, tickFavorite } from '@market/state/redux/slices/nftSlice';
 import Button, { LegacyOutlinedButton } from "@src/Components/components/common/Button";
 import {useUser} from "@src/components-v2/useUser";
 

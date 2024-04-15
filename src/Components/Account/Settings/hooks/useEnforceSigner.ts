@@ -1,9 +1,9 @@
 import {useCallback, useEffect, useState} from 'react';
 import useCreateSigner, {signinMessage} from "@src/Components/Account/Settings/hooks/useCreateSigner";
-import {ciEquals} from "@src/utils";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import {ciEquals} from "@market/helpers/utils";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useAtom} from "jotai";
-import {storageSignerAtom} from "@src/jotai/atoms/storage";
+import {storageSignerAtom} from "@market/state/jotai/atoms/storage";
 import {RESET} from "jotai/utils";
 import {ethers} from "ethers";
 import {useUser} from "@src/components-v2/useUser";

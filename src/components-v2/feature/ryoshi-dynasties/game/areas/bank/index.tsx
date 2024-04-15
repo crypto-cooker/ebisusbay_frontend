@@ -4,7 +4,7 @@ import {AspectRatio, Box, Icon, Image, Text, useDisclosure, useMediaQuery, VStac
 import StakeFortune from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune';
 import StakeNFTs from './stake-nft';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import {useWindowSize} from "@src/hooks/useWindowSize";
+import {useWindowSize} from "@market/hooks/useWindowSize";
 import BankerBubbleBox, {
   TypewriterText
 } from "@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box";
@@ -15,7 +15,7 @@ import ImageService from "@src/core/services/image";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {motion} from "framer-motion";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
 
 interface BankerSceneProps {

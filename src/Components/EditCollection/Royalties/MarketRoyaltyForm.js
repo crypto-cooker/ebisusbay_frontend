@@ -1,7 +1,7 @@
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import {Box, Text} from "@chakra-ui/react";
 import {Field} from "@src/Components/Form";
 import React from "react";

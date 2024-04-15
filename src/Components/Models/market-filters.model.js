@@ -1,4 +1,4 @@
-import {isEmptyObj} from "../../utils";
+import {isEmptyObj} from "@market/helpers/utils";
 import {limitSizeOptions} from "../components/constants/filter-options";
 
 export class MarketFilters {

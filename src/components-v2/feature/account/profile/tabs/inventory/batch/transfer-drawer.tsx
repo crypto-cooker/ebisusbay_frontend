@@ -2,18 +2,18 @@ import {Alert, AlertDescription, AlertIcon, Box, Center, Flex, GridItem, Spacer,
 import Button from "@src/Components/components/Button";
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
-import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts} from "@src/GlobalState/user-batch";
+import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts} from "@market/state/redux/slices/user-batch";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, pluralize, shortAddress} from "@src/utils";
+import {createSuccessfulTransactionToastContent, pluralize, shortAddress} from "@market/helpers/utils";
 import TransferDrawerItem from "@src/components-v2/feature/account/profile/tabs/inventory/batch/transfer-drawer-item";
 import {FormControl as FormControlCK} from "@src/Components/components/chakra-components";
 import * as Yup from "yup";
 import {useFormik} from "formik";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import nextApiService from "@src/core/services/api-service/next";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {parseErrorMessage} from "@src/helpers/validator";
-import {getCroidAddressFromName, isCroName} from "@src/helpers/croid";
+import {getCroidAddressFromName, isCroName} from "@market/helpers/croid";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const MAX_NFTS_IN_CART = 100;

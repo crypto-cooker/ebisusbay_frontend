@@ -7,7 +7,7 @@ import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inv
 import {appConfig} from '@src/Config';
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import AttributeFilter from "@src/components-v2/shared/filter-container/filters/attribute-filter";
-import {ciEquals, stripSpaces} from "@src/utils";
+import {ciEquals, stripSpaces} from "@market/helpers/utils";
 import {CollectionPageContext, CollectionPageContextProps} from "@src/components-v2/feature/collection/context";
 import {ethers} from "ethers";
 import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container/filters/radio-filter";

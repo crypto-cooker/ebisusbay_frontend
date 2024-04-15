@@ -1,7 +1,7 @@
 import {appConfig} from "@src/Config";
-import {isMetapixelsCollection} from "@src/utils";
+import {isMetapixelsCollection} from "@market/helpers/utils";
 import {Contract, ethers} from "ethers";
-import {MetaPixelsAbi} from "@src/Contracts/Abis";
+import {MetaPixelsAbi} from "@src/global/contracts/Abis";
 import * as Sentry from "@sentry/react";
 import {getNftFromFile} from "@src/core/api";
 import {Axios} from "@src/core/http/axios";

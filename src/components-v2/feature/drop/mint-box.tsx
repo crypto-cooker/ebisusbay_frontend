@@ -1,4 +1,4 @@
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {
   Box,
   Button,
@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import {DropState, DropState as statuses} from "@src/core/api/enums";
 import {constants, ethers} from "ethers";
-import {createSuccessfulTransactionToastContent, percentage, round} from "@src/utils";
+import {createSuccessfulTransactionToastContent, percentage, round} from "@market/helpers/utils";
 import React, {useEffect, useState} from "react";
 import {commify, parseUnits} from "ethers/lib/utils";
 import {toast} from "react-toastify";
@@ -30,8 +30,8 @@ import {ApiService} from "@src/core/services/api-service";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useContractService, useUser} from "@src/components-v2/useUser";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
-import Bank from "@src/Contracts/Bank.json";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
+import Bank from "@src/global/contracts/Bank.json";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);

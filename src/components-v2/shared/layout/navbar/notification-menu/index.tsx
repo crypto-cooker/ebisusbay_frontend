@@ -5,9 +5,9 @@ import {faBell, faCog, faTrash} from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 
 import styles from './notificationmenu.module.scss';
-import {timeSince} from '@src/utils';
+import {timeSince} from '@market/helpers/utils';
 import {useQuery} from "@tanstack/react-query";
-import useDeleteNotifications from "@src/hooks/useDeleteNotifications";
+import useDeleteNotifications from "@market/hooks/useDeleteNotifications";
 import {getNotifications} from "@src/core/cms/next/notifications";
 import Button from "@src/Components/components/Button";
 import {

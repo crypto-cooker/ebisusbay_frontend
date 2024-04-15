@@ -4,16 +4,16 @@ import React, {useRef, useState} from "react";
 
 import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
-import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts,} from "@src/GlobalState/user-batch";
+import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts,} from "@market/state/redux/slices/user-batch";
 
 
 import useCreateBundle from '@src/Components/Account/Settings/hooks/useCreateBundle';
 import BundleDrawerItem from "./bundle-drawer-item";
-import {isBundle} from "@src/utils";
+import {isBundle} from "@market/helpers/utils";
 import BundleDrawerForm, {
   BundleDrawerFormHandle
 } from "@src/components-v2/feature/account/profile/tabs/inventory/batch/bundle-drawer-form";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import nextApiService from "@src/core/services/api-service/next";
 import {useUser} from "@src/components-v2/useUser";
 

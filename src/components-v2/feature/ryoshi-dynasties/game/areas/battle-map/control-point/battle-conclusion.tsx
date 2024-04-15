@@ -18,7 +18,7 @@ import ImageService from "@src/core/services/image";
 import {RdControlPointLeaderBoard} from "@src/core/services/api-service/types";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
-const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-Book.woff2' })
 
 interface AttackerFaction {
   name: string;

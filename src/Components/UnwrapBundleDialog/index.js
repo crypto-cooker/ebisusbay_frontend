@@ -10,11 +10,11 @@ import {
 } from "@chakra-ui/react";
 import React, {useState} from 'react';
 import Button from "@src/Components/components/Button";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {useDispatch, useSelector} from "react-redux";
 import useUnwrapBundle from "../Account/Settings/hooks/useUnwrapBundle";
 import {toast} from 'react-toastify';
-import {setRefetchNfts,} from "@src/GlobalState/user-batch";
+import {setRefetchNfts,} from "@market/state/redux/slices/user-batch";
 import ImageContainer from "../Bundle/ImagesContainer";
 import {useUser} from "@src/components-v2/useUser";
 

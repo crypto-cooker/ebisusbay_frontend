@@ -17,12 +17,12 @@ import {
 import RyoshiStaking from "@src/components-v2/feature/staking/ryoshi-staking";
 import {motion} from "framer-motion";
 import {useDispatch} from "react-redux";
-import {closeCart} from "@src/GlobalState/ryoshi-staking-cart-slice";
+import {closeCart} from "@market/state/redux/slices/ryoshi-staking-cart-slice";
 import {BatchStakingDrawer} from "@src/components-v2/feature/staking/batch-staking-drawer";
 import RewardsCard from "@src/components-v2/feature/staking/rewards-card";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {MobileBatchStaking} from "@src/components-v2/feature/staking/mobile-batch-staking";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {useUser} from "@src/components-v2/useUser";
 import NextLink from "next/link";
 

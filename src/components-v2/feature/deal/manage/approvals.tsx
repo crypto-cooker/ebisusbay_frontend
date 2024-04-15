@@ -1,10 +1,10 @@
 import {useUser} from "@src/components-v2/useUser";
 import useApprovalStatus from "@src/components-v2/feature/deal/use-approval-status";
-import useCurrencyBroker from "@src/hooks/use-currency-broker";
-import {ItemType} from "@src/hooks/use-create-order-signer";
+import useCurrencyBroker from "@market/hooks/use-currency-broker";
+import {ItemType} from "@market/hooks/use-create-order-signer";
 import {OrderState} from "@src/core/services/api-service/types";
 import React, {useEffect} from "react";
-import {ciEquals, shortAddress} from "@src/utils";
+import {ciEquals, shortAddress} from "@market/helpers/utils";
 import {TitledCard} from "@src/components-v2/foundation/card";
 import {GridItem, SimpleGrid, Text} from "@chakra-ui/react";
 import {Erc20ApprovalButton, NftApprovalButton} from "@src/components-v2/feature/deal/approval-buttons";

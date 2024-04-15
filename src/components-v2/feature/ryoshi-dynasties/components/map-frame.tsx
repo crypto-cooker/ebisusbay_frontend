@@ -1,7 +1,7 @@
 import {Grid, GridItem, GridProps, Image} from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import React, {ReactElement} from "react";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {useUser} from "@src/components-v2/useUser";
 
 interface MapOutlineProps extends GridProps {

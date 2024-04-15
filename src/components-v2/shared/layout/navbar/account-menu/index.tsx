@@ -20,7 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {toast} from 'react-toastify';
 import {ethers} from 'ethers';
-import {createSuccessfulTransactionToastContent, round, shortAddress, username} from '@src/utils';
+import {createSuccessfulTransactionToastContent, round, shortAddress, username} from '@market/helpers/utils';
 import styles from './accountmenu.module.scss';
 import {useWeb3Modal} from '@web3modal/wagmi/react'
 import {appConfig} from '@src/Config';
@@ -57,7 +57,7 @@ import ImageService from "@src/core/services/image";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {GasWriter} from "@src/core/chain/gas-writer";

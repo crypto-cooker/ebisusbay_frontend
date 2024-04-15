@@ -10,7 +10,7 @@ import WalletNft from "@src/core/models/wallet-nft";
 import {TownHallStakeNftContext} from "./context";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {pluralize} from "@src/utils";
+import {pluralize} from "@market/helpers/utils";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import useTownHallStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-town-hall-stake-nfts";
