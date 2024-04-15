@@ -17,15 +17,15 @@ import React, {ChangeEvent, RefObject, useCallback, useEffect, useState} from "r
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import {useRouter} from "next/navigation";
 import {ChevronDownIcon, SearchIcon} from "@chakra-ui/icons";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {appConfig} from "@src/Config";
 import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
 import Scrollbars from "react-custom-scrollbars-2";
-import useSearch from "@src/hooks/use-search";
-import {SearchHistoryItem} from "@src/jotai/atoms/search";
+import useSearch from "@market/hooks/use-search";
+import {SearchHistoryItem} from "@market/state/jotai/atoms/search";
 
 const searchRegex = /^\w+([\s-_]\w+)*$/;
 const minChars = 3;

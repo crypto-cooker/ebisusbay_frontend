@@ -3,12 +3,12 @@ import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {createSuccessfulTransactionToastContent, isBundle, round} from "@src/utils";
-import {useWindowSize} from "@src/hooks/useWindowSize";
+import {createSuccessfulTransactionToastContent, isBundle, round} from "@market/helpers/utils";
+import {useWindowSize} from "@market/hooks/useWindowSize";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {specialImageTransform} from "@src/hacks";
+import {specialImageTransform} from "@market/helpers/hacks";
 import {
   Box,
   Flex,
@@ -26,11 +26,11 @@ import {
   Spinner,
   Tag
 } from "@chakra-ui/react";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {getCollection} from "@src/core/api/next/collectioninfo";
 import ImagesContainer from "../../../Components/Bundle/ImagesContainer";
 import {parseErrorMessage} from "@src/helpers/validator";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {ApiService} from "@src/core/services/api-service";
 import {OfferState} from "@src/core/services/api-service/types";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";

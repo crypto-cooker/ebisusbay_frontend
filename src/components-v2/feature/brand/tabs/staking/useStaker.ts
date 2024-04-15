@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {Staker, StakingStatusFilters} from "@src/components-v2/feature/brand/tabs/staking/types";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {stakers} from "@src/components-v2/feature/brand/tabs/staking/config";
-import {ciIncludes} from "@src/utils";
+import {ciIncludes} from "@market/helpers/utils";
 import {useUser} from "@src/components-v2/useUser";
 
 const queryKey = 'BrandStakingTabNfts';

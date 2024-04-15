@@ -7,7 +7,7 @@ import {MenuPopup} from '@src/Components/components/chakra-components';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {nftCardUrl} from "@src/helpers/image";
 import {Box, Flex, Heading, Spacer, useClipboard} from "@chakra-ui/react";
-import {appUrl} from "@src/utils";
+import {appUrl} from "@market/helpers/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import WalletNft from "@src/core/models/wallet-nft";

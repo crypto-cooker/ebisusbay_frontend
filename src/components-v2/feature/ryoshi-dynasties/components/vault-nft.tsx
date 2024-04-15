@@ -1,7 +1,7 @@
 import React, {ReactNode, useMemo} from "react";
 import {Tag, Wrap} from "@chakra-ui/react";
 import {ethers} from "ethers";
-import {round} from "@src/utils";
+import {round} from "@market/helpers/utils";
 
 interface VaultNftProps {
   nft: {attributes?: any[]}

@@ -1,5 +1,5 @@
 import React, {useCallback} from "react";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {
   Box,
   Drawer,

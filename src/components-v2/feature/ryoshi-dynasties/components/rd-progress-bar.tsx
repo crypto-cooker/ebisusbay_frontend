@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {useWindowSize} from "@src/hooks/useWindowSize";
+import {useWindowSize} from "@market/hooks/useWindowSize";
 import {Box, Image, Progress, SimpleGrid} from "@chakra-ui/react";
 
 interface RdProgressBarProps {

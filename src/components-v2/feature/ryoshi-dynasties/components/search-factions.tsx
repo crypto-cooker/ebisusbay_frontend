@@ -22,8 +22,8 @@ import {appConfig} from "@src/Config";
 import ResultFaction from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/factionRow";
 import Scrollbars from "react-custom-scrollbars-2";
 import {getMultipleCollections} from "@src/core/api/next/collectioninfo";
-import useSearch from "@src/hooks/use-search";
-import {SearchHistoryItem} from "@src/jotai/atoms/search";
+import useSearch from "@market/hooks/use-search";
+import {SearchHistoryItem} from "@market/state/jotai/atoms/search";
 
 const searchRegex = /^\w+([\s-_]\w+)*$/;
   const minChars = 3;

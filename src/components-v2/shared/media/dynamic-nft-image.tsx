@@ -2,7 +2,7 @@ import React, {memo, ReactNode, useEffect, useState} from 'react';
 import {
   isLandDeedsCollection,
   isHeroesCollection, isVaultCollection,
-} from '@src/utils';
+} from '@market/helpers/utils';
 
 import RdHero from '@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero';
 import RdHeroFrame from '@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero-frame';

@@ -1,13 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {specialImageTransform} from "@src/hacks";
+import {specialImageTransform} from "@market/helpers/hacks";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
-import {ERC721} from "@src/Contracts/Abis";
-import {createSuccessfulTransactionToastContent, isBundle, isNftBlacklisted} from "@src/utils";
+import {ERC721} from "@src/global/contracts/Abis";
+import {createSuccessfulTransactionToastContent, isBundle, isNftBlacklisted} from "@market/helpers/utils";
 import {appConfig} from "@src/Config";
 import Select, {SingleValue} from "react-select";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {Box, BoxProps, Center, Flex, Spinner, Stack, Text, useBreakpointValue} from "@chakra-ui/react";
 import {commify} from "ethers/lib/utils";

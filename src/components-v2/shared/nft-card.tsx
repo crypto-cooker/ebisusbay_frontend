@@ -13,7 +13,7 @@ import {
   round,
   siPrefixedNumber,
   timeSince,
-} from '@src/utils';
+} from '@market/helpers/utils';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
 import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
@@ -33,19 +33,19 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import {useColorModeValue} from "@chakra-ui/color-mode";
-import {darkTheme, lightTheme} from "@src/Theme/theme";
+import {darkTheme, lightTheme} from "@src/global/theme/theme";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {toast} from "react-toastify";
-import {refreshMetadata} from "@src/GlobalState/nftSlice";
-import {specialImageTransform} from "@src/hacks";
+import {refreshMetadata} from "@market/state/redux/slices/nftSlice";
+import {specialImageTransform} from "@market/helpers/hacks";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
-import {useExchangeRate} from "@src/hooks/useGlobalPrices";
+import {useExchangeRate} from "@market/hooks/useGlobalPrices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useUser} from "@src/components-v2/useUser";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
-import useCart from "@src/hooks/use-cart";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
+import useCart from "@market/hooks/use-cart";
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;

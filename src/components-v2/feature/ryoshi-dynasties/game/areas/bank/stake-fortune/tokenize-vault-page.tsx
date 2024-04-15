@@ -4,8 +4,8 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 import {Contract} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
-import Bank from "@src/Contracts/Bank.json";
-import {createSuccessfulTransactionToastContent} from '@src/utils';
+import Bank from "@src/global/contracts/Bank.json";
+import {createSuccessfulTransactionToastContent} from '@market/helpers/utils';
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
 import {
   RyoshiDynastiesContext,

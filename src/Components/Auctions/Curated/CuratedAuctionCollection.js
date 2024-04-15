@@ -2,7 +2,7 @@ import React, {memo, useEffect, useState} from 'react';
 
 import {sortAndFetchAuctions} from "@src/core/api";
 import AuctionCard from "../../components/AuctionCard";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import {auctionState} from "@src/core/api/enums";
 import {Auction} from "@src/core/models/auction";
 import {Center, Heading, Spinner} from "@chakra-ui/react";

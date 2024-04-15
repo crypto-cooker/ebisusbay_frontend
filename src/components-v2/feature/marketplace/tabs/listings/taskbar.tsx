@@ -16,7 +16,7 @@ import {faAngleLeft, faFilter, faSort, faTableCells, faTableCellsLarge} from "@f
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {sortOptions} from "@src/Components/components/constants/sort-options";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 
 interface TaskbarProps {

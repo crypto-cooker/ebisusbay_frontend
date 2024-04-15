@@ -1,13 +1,13 @@
 import {useState} from 'react';
 import UUID from "uuid-int";
-import {getItemType} from "@src/helpers/chain";
+import {getItemType} from "@market/helpers/chain";
 import {appConfig} from "@src/Config";
 import {useUser} from "@src/components-v2/useUser";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import {BarterState} from "@src/jotai/atoms/deal";
-import useCreateOrderSigner, {ItemType, OfferItem, OrderSignerProps} from "@src/hooks/use-create-order-signer";
+import {BarterState} from "@market/state/jotai/atoms/deal";
+import useCreateOrderSigner, {ItemType, OfferItem, OrderSignerProps} from "@market/hooks/use-create-order-signer";
 import {ethers} from "ethers";
-import {ciEquals} from "@src/utils";
+import {ciEquals} from "@market/helpers/utils";
 import {ApiService} from "@src/core/services/api-service";
 
 const generator = UUID(0);

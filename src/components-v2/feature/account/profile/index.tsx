@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from '
 import {useRouter} from 'next/router';
 import styles from './profile.module.scss';
 import {hostedImage} from "@src/helpers/image";
-import {appUrl, caseInsensitiveCompare, isUserBlacklisted, username} from "@src/utils";
+import {appUrl, caseInsensitiveCompare, isUserBlacklisted, username} from "@market/helpers/utils";
 import Inventory from "@src/components-v2/feature/account/profile/tabs/inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
 import Listings from "@src/components-v2/feature/account/profile/tabs/listings";
@@ -39,9 +39,9 @@ import {
 } from "@chakra-ui/react";
 import {motion} from 'framer-motion'
 import BatchDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/batch-drawer";
-import {closeBatchListingCart} from "@src/GlobalState/user-batch";
-import {useAppDispatch, useAppSelector} from "@src/Store/hooks";
-import {getTheme} from "@src/Theme/theme";
+import {closeBatchListingCart} from "@market/state/redux/slices/user-batch";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
+import {getTheme} from "@src/global/theme/theme";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCog, faEllipsisV, faHandshake} from "@fortawesome/free-solid-svg-icons";
 import {ChevronDownIcon} from "@chakra-ui/icons";

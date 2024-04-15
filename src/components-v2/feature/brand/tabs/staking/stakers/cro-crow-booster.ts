@@ -6,8 +6,8 @@ import {
 } from "@src/components-v2/feature/brand/tabs/staking/types";
 import {appConfig} from "@src/Config";
 import {getNfts} from "@src/core/api/endpoints/nft";
-import abi from "@src/Assets/abis/cro-crow-forest.json";
-import {caseInsensitiveCompare} from "@src/utils";
+import abi from "@market/assets/abis/cro-crow-forest.json";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import NextApiService from "@src/core/services/api-service/next";
 
 const config = appConfig();

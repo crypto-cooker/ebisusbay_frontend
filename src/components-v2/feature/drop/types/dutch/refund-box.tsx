@@ -9,7 +9,7 @@ import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {commify} from "ethers/lib/utils";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import {useUser} from "@src/components-v2/useUser";
 
 

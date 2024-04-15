@@ -8,7 +8,7 @@ import {
   isBundle,
   isHeroesCollection,
   relativePrecision
-} from '@src/utils';
+} from '@market/helpers/utils';
 import Nft1155 from '@src/components-v2/feature/nft/nft1155';
 import Nft721 from '@src/components-v2/feature/nft/nft721';
 import {appConfig} from "@src/Config";

@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from 'next/server';
 import {getProfile} from "@src/core/cms/endpoints/profile";
-import {ciEquals} from "@src/utils";
+import {ciEquals} from "@market/helpers/utils";
 import {appConfig} from "@src/Config";
 
 const config =  appConfig();

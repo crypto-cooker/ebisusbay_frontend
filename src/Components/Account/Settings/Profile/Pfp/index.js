@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import { UploadPfp } from '../../../../Form';
 import { editProfileFormFields } from '../Form/constants';
-import { shortAddress } from '../../../../../utils';
+import { shortAddress } from '@market/helpers/utils';
 import {useClipboard} from "@chakra-ui/react";
 import {useUser} from "@src/components-v2/useUser";
 

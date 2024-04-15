@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import Croscription from "@src/third-party/croscription";
+import Croscription from "@market/third-party/croscription";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<number>) {
   const { query } = req;

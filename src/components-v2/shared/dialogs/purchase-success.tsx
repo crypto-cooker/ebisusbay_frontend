@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect} from 'react';
-import {specialImageTransform} from "@src/hacks";
+import {specialImageTransform} from "@market/helpers/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {toast} from "react-toastify";
-import {appUrl, isBundle} from "@src/utils";
-import {getTheme} from "@src/Theme/theme";
+import {appUrl, isBundle} from "@market/helpers/utils";
+import {getTheme} from "@src/global/theme/theme";
 import {
   Box,
   ButtonGroup,
@@ -31,7 +31,7 @@ import {faFacebook, faTelegram, faTwitter} from "@fortawesome/free-brands-svg-ic
 import {CheckCircleIcon} from "@chakra-ui/icons";
 import {appConfig} from "@src/Config";
 import {ContractReceipt} from "ethers";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useUser} from "@src/components-v2/useUser";

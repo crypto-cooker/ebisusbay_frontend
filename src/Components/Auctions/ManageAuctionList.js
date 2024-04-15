@@ -11,11 +11,11 @@ import {
   createSuccessfulTransactionToastContent,
   isEventValidNumber,
   secondsToDhms
-} from "@src/utils";
+} from "@market/helpers/utils";
 import {toast} from "react-toastify";
 import {Input, Spinner} from "@chakra-ui/react";
 import {useContractService, useUser} from "@src/components-v2/useUser";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 
 const ManageAuctionList = () => {
   const user = useUser();

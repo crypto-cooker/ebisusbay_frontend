@@ -6,7 +6,7 @@ import HelpPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bat
 import {appConfig} from "@src/Config";
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 
 const tabs = {
   info: 'info',

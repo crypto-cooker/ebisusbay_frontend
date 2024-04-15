@@ -14,7 +14,7 @@ import {
   useMediaQuery,
   VStack
 } from "@chakra-ui/react";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import React, {useEffect, useState} from "react";
 import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
 import {appConfig} from "@src/Config";

@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server";
 import {ImageResponse} from "next/og";
-import {urlify} from "@src/utils";
+import {urlify} from "@market/helpers/utils";
 import {appConfig} from "@src/Config";
 import landsMetadata from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-metadata.json";
 

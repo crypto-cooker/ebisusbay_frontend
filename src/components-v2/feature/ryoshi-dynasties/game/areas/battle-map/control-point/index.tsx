@@ -3,7 +3,7 @@ import {Box, Center, Flex, Spinner, Text, VStack,} from "@chakra-ui/react"
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {RdGameState} from "@src/core/services/api-service/types";
 
 import DispatchTab from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/deploy";

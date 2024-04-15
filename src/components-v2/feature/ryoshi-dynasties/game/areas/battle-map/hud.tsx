@@ -42,11 +42,11 @@ import {
 import Countdown, {CountdownRenderProps, zeroPad} from "react-countdown";
 
 //for showing koban
-import {round, shortAddress, siPrefixedNumber} from "@src/utils";
+import {round, shortAddress, siPrefixedNumber} from "@market/helpers/utils";
 import NextApiService from "@src/core/services/api-service/next";
 import {appConfig} from "@src/Config";
 import {Contract, ethers} from "ethers";
-import {ERC1155} from "@src/Contracts/Abis";
+import {ERC1155} from "@src/global/contracts/Abis";
 import {useUser} from "@src/components-v2/useUser";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHourglassEnd, faRankingStar, faShield, faStopwatch} from "@fortawesome/free-solid-svg-icons";

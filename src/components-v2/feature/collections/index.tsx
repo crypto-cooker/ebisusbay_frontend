@@ -3,7 +3,7 @@ import Switch from '@src/Components/components/common/Switch';
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import PageHeader from '@src/components-v2/shared/layout/page-header';
 import Table from './table';
-import useFeatureFlag from '@src/hooks/useFeatureFlag';
+import useFeatureFlag from '@market/hooks/useFeatureFlag';
 import Constants from '@src/constants';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSort} from "@fortawesome/free-solid-svg-icons";

@@ -1,15 +1,15 @@
 import {Contract, Signer} from "ethers";
-import Market from "@src/Contracts/Marketplace.json";
+import Market from "@src/global/contracts/Marketplace.json";
 import {appConfig} from "@src/Config";
-import Auction from "@src/Contracts/DegenAuction.json";
-import Offer from "@src/Contracts/Offer.json";
-import StakeABI from "@src/Contracts/Stake.json";
-import Membership from "@src/Contracts/EbisusBayMembership.json";
-import gaslessListingContract from "@src/Contracts/GaslessListing.json";
-import gdcAbi from "@src/Contracts/GDC.json";
-import PlatformRewards from "@src/Contracts/PlatformRewards.json";
-import PresaleVaults from "@src/Contracts/PresaleVaults.json";
-import {ERC20} from "@src/Contracts/Abis";
+import Auction from "@src/global/contracts/DegenAuction.json";
+import Offer from "@src/global/contracts/Offer.json";
+import StakeABI from "@src/global/contracts/Stake.json";
+import Membership from "@src/global/contracts/EbisusBayMembership.json";
+import gaslessListingContract from "@src/global/contracts/GaslessListing.json";
+import gdcAbi from "@src/global/contracts/GDC.json";
+import PlatformRewards from "@src/global/contracts/PlatformRewards.json";
+import PresaleVaults from "@src/global/contracts/PresaleVaults.json";
+import {ERC20} from "@src/global/contracts/Abis";
 import {JsonRpcSigner} from "@ethersproject/providers";
 
 const config = appConfig();

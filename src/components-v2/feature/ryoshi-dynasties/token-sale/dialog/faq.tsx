@@ -3,8 +3,8 @@ import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
 import React from "react";
 import localFont from 'next/font/local';
 
-const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
-const gothamXLight = localFont({ src: '../../../../../fonts/Gotham-XLight.woff2' })
+const gothamBook = localFont({ src: '../../../../../global/assets/fonts/Gotham-Book.woff2' })
+const gothamXLight = localFont({ src: '../../../../../global/assets/fonts/Gotham-XLight.woff2' })
 
 interface FortuneFaqPageProps {
   onBack: () => void;

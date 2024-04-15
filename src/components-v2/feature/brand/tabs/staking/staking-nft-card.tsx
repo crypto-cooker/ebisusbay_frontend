@@ -4,7 +4,7 @@ import {ethers} from 'ethers';
 import {nftCardUrl} from "@src/helpers/image";
 import {Badge, Box, Center, Flex, Heading, Spacer} from "@chakra-ui/react";
 import Image from "next/image";
-import {appUrl, round} from "@src/utils";
+import {appUrl, round} from "@market/helpers/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import Button from "@src/Components/components/Button";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";

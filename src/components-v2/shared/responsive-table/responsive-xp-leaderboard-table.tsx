@@ -23,7 +23,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
-import {round, username} from "@src/utils";
+import {round, username} from "@market/helpers/utils";
 import Link from "next/link";
 import ImageService from "@src/core/services/image";
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";

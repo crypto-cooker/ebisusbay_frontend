@@ -2,7 +2,7 @@ import {appConfig, isLocalEnv} from "@src/Config";
 import BunnyCdnProvider from "@src/core/services/image/bunny";
 import {CdnProvider} from "@src/core/services/image/index";
 import BunnyKitProvider from "@src/core/services/image/bunnykit";
-import {urlify} from "@src/utils";
+import {urlify} from "@market/helpers/utils";
 import {fallbackImageUrl} from "@src/core/constants";
 import LocalCdnProvider from "@src/core/services/image/local";
 

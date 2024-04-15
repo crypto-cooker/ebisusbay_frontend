@@ -8,7 +8,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/inline-modal-context";
 
 const gothamBook = localFont({
-  src: '../../../../fonts/Gotham-Book.woff2',
+  src: '../../../../global/assets/fonts/Gotham-Book.woff2',
   fallback: ['Roboto', 'system-ui', 'arial'],
 })
 

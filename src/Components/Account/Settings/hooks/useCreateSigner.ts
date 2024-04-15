@@ -1,7 +1,7 @@
 import {useCallback, useState} from 'react';
 import * as Sentry from '@sentry/react';
 import {useAtom} from "jotai";
-import {storageSignerAtom} from "@src/jotai/atoms/storage";
+import {storageSignerAtom} from "@market/state/jotai/atoms/storage";
 import {useSignMessage} from "wagmi";
 import {useUser} from "@src/components-v2/useUser";
 

@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
-import {specialImageTransform} from '@src/hacks';
+import {specialImageTransform} from '@market/helpers/hacks';
 import {Box, Center, Flex} from "@chakra-ui/react";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {FreeMode, Navigation, Thumbs} from "swiper/modules";

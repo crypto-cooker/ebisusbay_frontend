@@ -8,7 +8,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {ciEquals, isAddress} from "@src/utils";
+import {ciEquals, isAddress} from "@market/helpers/utils";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {ApiService} from "@src/core/services/api-service";

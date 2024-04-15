@@ -16,7 +16,7 @@ import {
   useBreakpointValue
 } from "@chakra-ui/react";
 import useDebounce from "@src/core/hooks/useDebounce";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 import ListingsGroup from "@src/components-v2/shared/listings-group";
 import DealsFilterContainer from "@src/components-v2/feature/account/profile/tabs/deals/deals-filter-container";

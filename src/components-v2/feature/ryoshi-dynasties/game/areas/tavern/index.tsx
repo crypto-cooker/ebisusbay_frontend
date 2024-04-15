@@ -1,4 +1,4 @@
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {AspectRatio, Box, Button, Flex, Image, Text, useDisclosure, VStack} from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import {ArrowBackIcon} from "@chakra-ui/icons";
@@ -8,7 +8,7 @@ import ImageService from "@src/core/services/image";
 import MintHeroes from "@src/components-v2/feature/ryoshi-dynasties/game/areas/tavern/mint-heroes";
 
 const gothamBook = localFont({
-  src: '../../../../../../fonts/Gotham-Book.woff2',
+  src: '../../../../../../global/assets/fonts/Gotham-Book.woff2',
   fallback: ['Roboto', 'system-ui', 'arial'],
 })
 

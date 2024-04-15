@@ -23,9 +23,9 @@ import {
 } from "@chakra-ui/react";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import {ApiService} from "@src/core/services/api-service";
-import {caseInsensitiveCompare, ciEquals, findCollectionByAddress} from "@src/utils";
+import {caseInsensitiveCompare, ciEquals, findCollectionByAddress} from "@market/helpers/utils";
 import {useInfiniteQuery} from "@tanstack/react-query";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {DealNftCard} from "@src/components-v2/shared/nft-card2";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter, faMagnifyingGlass, faSort} from "@fortawesome/free-solid-svg-icons";

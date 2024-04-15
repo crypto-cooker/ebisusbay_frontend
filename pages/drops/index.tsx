@@ -4,7 +4,7 @@ import DropsCarousel from '@src/components-v2/feature/drops/featured-carousel';
 import CurrentDrops from '@src/components-v2/shared/drops/current-drops';
 import UpcomingDrops from '@src/components-v2/feature/drops/upcoming-drops';
 import PastDrops from '@src/components-v2/feature/drops/past-drops';
-import {getTheme} from '@src/Theme/theme';
+import {getTheme} from '@src/global/theme/theme';
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Heading} from "@chakra-ui/react";
 import {useUser} from "@src/components-v2/useUser";

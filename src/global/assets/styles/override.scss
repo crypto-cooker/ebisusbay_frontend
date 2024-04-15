@@ -1,0 +1,877 @@
+@import 'colors';
+
+textarea {
+  resize: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+// fix when h-vh causes overlapping
+// https://ebisusbay.atlassian.net/browse/WEB-396
+.h-min-100-vh {
+  height: unset !important;
+  min-height: 100vh;
+}
+
+//  Hide partners in other places than homepage.
+footer {
+  &[data-is-in-home-page='false'] {
+    padding-top: 0;
+    & > div:first-child {
+      display: none;
+    }
+    & > div:last-child {
+      border-top: none;
+      margin-top: 0;
+    }
+  }
+}
+
+/* Hot Collections Avatar for Blockies */
+.slick-slide canvas {
+  display: block;
+}
+.nft_coll_pp canvas {
+  width: 60px;
+  height: auto;
+  border: solid 5px #ffffff;
+  background: #ffffff;
+  border-radius: 100%;
+  -moz-border-radius: 100%;
+  -webkit-border-radius: 100%;
+}
+.nft_coll canvas {
+  transition: 0.7s;
+}
+.nft_coll {
+  canvas {
+    transition: 0.7s;
+  }
+  &:hover {
+    canvas {
+      transform: scale(1.05);
+      transition: 0.7s;
+    }
+  }
+}
+
+/* Header Avatar for Blockies */
+.de-menu-profile canvas {
+  width: 38px;
+  border-radius: 30px;
+  -moz-border-radius: 30px;
+  -webkit-border-radius: 30px;
+  margin-left: 5px;
+  margin-bottom: 2px;
+}
+canvas {
+  vertical-align: middle;
+}
+
+/* Rankings Avatar for Blockies */
+.coll_list_pp {
+  canvas {
+    width: 100%;
+    border-radius: 100% !important;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* NFT Details Avatar for Blockies */
+.author_list_pp {
+  &:hover canvas {
+    padding: 3px;
+    -webkit-box-shadow: 0px 0px 0px 2px $blue;
+    transition: 0.3s;
+  }
+}
+.author_list_pp canvas {
+  width: 100%;
+  border-radius: 100% !important;
+  -moz-border-radius: 100% !important;
+  -webkit-border-radius: 100% !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* NFT Details Avatar for Blockies */
+.p_list_pp canvas,
+.blockies canvas {
+  width: 100%;
+  border-radius: 100% !important;
+  cursor: pointer;
+}
+
+/* round border for all Blockies */
+.identicon {
+  border-radius: 100% !important;
+}
+
+/* User menu buttons */
+.btn_menu {
+  font-size: 12px;
+  padding: 4px 10px;
+  line-height: 1em;
+  border: solid 1px #dddddd;
+  display: inline-block;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  outline: none;
+  &:hover {
+    color: $white;
+    background: $blue;
+    border: solid 1px $blue;
+  }
+}
+
+/* Pointer for clicking card images */
+.nft__item_preview {
+  cursor: pointer;
+}
+
+/* Collection Page Avatar for Blockies */
+.d_coll .profile_avatar canvas {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+.profile_avatar canvas {
+  border-radius: 100%;
+  -moz-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  width: 150px;
+  height: auto;
+}
+.d_coll .profile_avatar canvas {
+  display: inline-block;
+  margin-top: -100px;
+  margin-bottom: 30px;
+}
+
+/* Collection Page Avatar outline */
+.d_coll .profile_avatar img,
+.d_coll .profile_avatar canvas {
+  background: white;
+  box-shadow: 0 0 0 1pt grey;
+}
+
+.nft_sold__item {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 20px;
+  margin: 10px;
+  border: solid 1px #ddd;
+  border-radius: 15px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  margin-bottom: 25px;
+  background: $bgColor1;
+  transition: 0.7s;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 2px 2px 30px 0px rgba(10, 10, 10, 0.1);
+    transition: 0.7s;
+  }
+
+  .nft__item_price {
+    span {
+      color: $textColor1;
+    }
+  }
+}
+
+/* Put dropdowns behind wallet connect popup */
+.items_filter .dropdownSelect {
+  z-index: auto !important;
+}
+
+/* Fix equal height issue in traits grid */
+.nft_attr {
+  margin-bottom: 0;
+  height: 100%;
+}
+
+/* Remove blue background from avatar images */
+.author_list_pp {
+  background: none;
+}
+
+.nft-home-carousel {
+  width: 100%;
+  .slick-prev {
+    left: 10px;
+    display: block;
+    width: 40px;
+    height: 60px;
+    overflow: hidden;
+    line-height: 60px;
+    background: none !important;
+    border-radius: 0;
+    z-index: 1;
+    transition: all 0.3s ease;
+    &::before {
+      display: block;
+      content: '\f053' !important;
+      font-size: 0.9rem;
+      font-family: FontAwesome !important;
+      font-style: normal;
+      font-weight: normal;
+      color: $black;
+      position: relative;
+      line-height: 60px;
+      width: 60px;
+      height: 60px;
+      padding-left: 20px;
+      border-radius: 60px;
+      background: $white;
+      left: -25px;
+      opacity: 1;
+    }
+  }
+  .slick-next {
+    right: 9px;
+    display: block;
+    width: 40px;
+    height: 60px;
+    line-height: 60px;
+    background: none !important;
+    border-radius: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    &::before {
+      display: block;
+      content: '\f054' !important;
+      font-size: 0.9rem;
+      font-family: FontAwesome !important;
+      font-style: normal;
+      font-weight: normal;
+      color: $black;
+      position: relative;
+      line-height: 60px;
+      width: 60px;
+      height: 60px;
+      padding-right: 20px;
+      border-radius: 60px;
+      background: $white;
+      right: -4px;
+      opacity: 1;
+    }
+  }
+  &:hover {
+    .slick-prev,
+    .slick-next {
+      opacity: 1;
+      transition: all 0.3s ease;
+    }
+  }
+  .blockquote {
+    font-size: 0.98rem;
+    text-align: left;
+    margin: 15px 30px 30px;
+    display: flex;
+    .fa {
+      font-size: 1.3rem;
+      display: inline-block;
+      margin: 5px 15px 0 0;
+      color: $white;
+      height: max-content;
+    }
+    p {
+      line-height: 1.8;
+      display: inline-block;
+    }
+    .bytesti {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+  }
+  .slick-dots {
+    bottom: -40px;
+    li.slick-active button::before {
+      opacity: 0.75;
+      color: $white;
+    }
+    li button::before {
+      color: $white;
+    }
+  }
+}
+
+/* Custom Listing Cards */
+.eb-nft__card {
+  border: solid 1px $borderColor2;
+  border-radius: 15px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  background: $bgColor1;
+  transition: 0.7s;
+
+  .card-img-container {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    -moz-border-radius-topleft: 15px;
+    -moz-border-radius-topright: 15px;
+    -webkit-border-top-left-radius: 15px;
+    -webkit-border-top-right-radius: 15px;
+    overflow: hidden;
+  }
+
+  img {
+    width: 100%;
+    height: auto !important;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    -moz-border-radius-topleft: 8px;
+    -moz-border-radius-topright: 8px;
+    -webkit-border-top-left-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+  }
+
+  .card-footer {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-top: none;
+  }
+
+  .card-img-top {
+    width: 100% !important;
+  }
+  .card-img-top.marketplace {
+    object-fit: contain;
+  }
+  .card-img-top.collection {
+    object-fit: cover;
+  }
+  .bg-rarity {
+    background-image: linear-gradient(to right, #35669e, #218cff);
+  }
+  .bg-rarity-none {
+    background-image: linear-gradient(to right, #e0e0e0, #e4e5e6);
+    color: #000;
+  }
+  &:hover {
+    box-shadow: 2px 2px 30px 0px rgba(10, 10, 10, 0.1);
+    transition: 0.7s;
+  }
+
+  @media (min-width: 576px) {
+    .card-img-top.marketplace {
+      width: 100% !important;
+      max-height: 222px !important;
+      object-fit: cover !important;
+    }
+  }
+  @media (min-width: 768px) {
+    .card-img-top.marketplace {
+      max-height: 330px !important;
+      object-fit: contain !important;
+    }
+  }
+  @media (min-width: 992px) {
+    .card-img-top.marketplace {
+      max-height: 294px !important;
+      object-fit: contain !important;
+    }
+  }
+  @media (min-width: 1200px) {
+    .card-img-top.marketplace {
+      max-height: 261px !important;
+      object-fit: contain !important;
+    }
+  }
+  @media (min-width: 1400px) {
+    .card-img-top.marketplace {
+      max-height: 306px !important;
+      object-fit: contain !important;
+    }
+  }
+}
+
+/* FontAwesome 5 SVG icon overrides */
+.eb-social-icons .eb-icon_stack {
+  .layer-1 {
+    border-radius: 5px;
+    color: $darkBlue;
+  }
+}
+.profile_avatar .d_profile_img .eb-avatar_badge {
+  margin: -20px 0 0 80px;
+  display: block;
+  position: absolute;
+  padding: 10px;
+}
+.profile_avatar .dialog_avatar .eb-avatar_badge {
+  margin: -38px 0 0 107px;
+  display: block;
+  position: absolute;
+  padding: 10px;
+}
+.d_coll .profile_avatar .eb-avatar_badge {
+  margin-right: -30px;
+}
+#eb-scroll-to-top {
+  cursor: pointer;
+  width: max-content;
+  height: max-content;
+  position: fixed;
+  right: 10px;
+  z-index: 999;
+  &.init {
+    bottom: -60px;
+    transition: all 0.3s ease;
+  }
+  &.show {
+    bottom: 15px;
+    transition: all 0.3s ease;
+  }
+  div {
+    background: none !important;
+  }
+}
+
+.eb-de_countdown {
+  font-size: 0.8rem;
+  right: 20px;
+  background: $bgColor1;
+  padding: 6px 10px;
+  border-radius: 30px;
+  -moz-border-radius: 30px;
+  -webkit-border-radius: 30px;
+  border: solid 2px $blue;
+  z-index: 1;
+  color: $textColor1;
+  margin: 4px 4px;
+  .Clock-days {
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 5px;
+  }
+  .Clock-hours {
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 5px;
+  }
+  .Clock-minutes {
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 5px;
+  }
+  .Clock-seconds {
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 5px;
+  }
+}
+
+.mainside-warning {
+  width: max-content;
+  padding-left: 0;
+  padding-right: 0;
+  .de-menu-profile {
+    position: relative;
+    cursor: pointer;
+  }
+}
+
+/* Prevent full width li items */
+.activity-filter li {
+  width: auto;
+}
+
+.de-table.table-rank.sales-table {
+  tbody th {
+    position: relative;
+    padding-left: 0;
+  }
+
+  tbody td {
+    padding: 0 5px;
+  }
+}
+
+/* accordion */
+.accordion {
+  .accordion-button {
+    background: $bgColor1;
+    color: $textColor1;
+    padding: 0.25rem 1.25rem;
+  }
+
+  .accordion-body {
+    background: $bgColor1;
+  }
+}
+
+/* react-select */
+.dropdownSelect {
+  .css-wenqhu-control,
+  .css-1dxpklc-control,
+  .css-1sflke2-control {
+    background-color: $bgColor1;
+    border: 1px solid $borderColor2;
+    & > div > div {
+      color: $textColor1;
+    }
+  }
+}
+
+/* PriceActionBar */
+.price-action-bar {
+  .pab-card {
+    color: $textColor1;
+    background: $bgColor1;
+    border-color: #cdcfcf;
+
+    .fw-bold {
+      color: $textColor1;
+    }
+  }
+}
+
+.my-listing-card {
+  background: $bgColor1;
+  border-color: $borderColor1;
+}
+
+.modal-content {
+  background: $bgColor1;
+}
+
+/* Responsive Drop Video */
+.player-wrapper {
+  position: relative;
+  padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+}
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.spinner-border {
+  color: $textColor2;
+}
+.btn-main .spinner-border {
+  color: #FFF;
+}
+
+/** Image component styling */
+.image-container {
+  width: 100%;
+
+  > span {
+    position: unset !important;
+  }
+
+  .image {
+    // object-fit: contain;
+    width: 100% !important;
+    position: relative !important;
+    height: unset !important;
+  }
+}
+
+.auction-box-footer {
+  color: $textColor2;
+}
+
+.web3modal-modal-lightbox {
+  z-index: 2000 !important;
+}
+
+#initialLoader {
+  position: fixed;
+  z-index: 1700;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-bgColor1);
+  display: flex;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  --clr: #3498db;
+  /* color of spining  */
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+.loader:before,
+.loader:after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  border: 10px solid transparent;
+  border-top-color: var(--clr);
+}
+.loader:before {
+  z-index: 100;
+  animation: spin 1s infinite;
+}
+.loader:after {
+  border: 10px solid #ccc;
+}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+
+.form-field {
+  label {
+    margin-bottom: 2px;
+  }
+
+  .label-container {
+    display: flex;
+    justify-content: space-between;
+
+    label {
+      font-size: 12px;
+      padding-top: 6px;
+    }
+
+    .required-label {
+      color: $errorColor1;
+    }
+  }
+
+  .title {
+    font-size: 18px !important;
+  }
+
+  .field-description {
+    font-size: 12px !important;
+  }
+
+  input {
+    margin-bottom: 0px;
+  }
+
+  input:disabled {
+    background-color: $bgColor1 !important;
+  }
+}
+
+.link-text-form {
+  font-size: 12px !important;
+  cursor: pointer;
+  position: absolute;
+  margin-top: -8px;
+}
+
+.field-message-error {
+  input {
+    border: 1px solid $errorColor1;
+  }
+
+  .field-description {
+    color: $errorColor1 !important;
+  }
+}
+
+.radio-group {
+  margin-bottom: 2px;
+
+  legend {
+    font-size: 18px;
+  }
+
+  input {
+    margin-right: 8px;
+  }
+}
+
+.upload-container {
+  display: flex;
+  padding-top: 16px;
+  overflow: scroll;
+  overflow-y: hidden;
+
+  .upload-asset {
+    position: relative;
+    margin-right: 28px;
+
+    .closable {
+      position: absolute;
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      border: 1px solid $borderColor2;
+      background-color: $bgColor3;
+      top: -8px;
+      right: -8px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 14px;
+
+      &:hover {
+        color: $textColor1;
+        background-color: $bgColor1;
+        border: 1px solid $textColor1;
+      }
+    }
+
+    .card {
+      width: 90px;
+      height: 90px;
+      cursor: pointer;
+      background-color: $bgColor3;
+
+      .card-body {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0;
+
+        .icon {
+          margin: 0 auto 0 auto;
+          width: 25px;
+          height: 25px;
+        }
+
+        .card-text {
+          font-size: 12px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.pfp-setting {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+}
+
+.react-player__preview {
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  height: 0 !important;
+  position: relative;
+  padding-top: 100% !important;
+}
+
+.react-player__shadow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mySwiper {
+  .swiper-button-prev, &.swiper-container-rtl .swiper-button-next {
+    left: 0;
+    right: auto;
+
+  }
+
+  .swiper-button-next, &.swiper-container-rtl .swiper-button-prev {
+    right: 0;
+    left: auto;
+  }
+
+  .swiper-button-prev, .swiper-button-next {
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border: 1px solid gray;
+    border-radius: 50%;
+    color: #000;
+    font-weight: 700;
+    outline: 0;
+    transition: background-color .2s ease, color .2s ease;
+
+    &::after {
+      font-size: 16px;
+    }
+  }
+
+  .swiper-button-prev {
+    &:after {
+      position: relative;
+      left: -1px;
+    }
+  }
+
+  .swiper-button-next {
+    &:after {
+      position: relative;
+      left: 1px;
+    }
+  }
+
+  .swiper-button-prev.swiper-button-disabled, .swiper-button-next.swiper-button-disabled {
+    opacity: 0;
+    cursor: auto;
+    pointer-events: none;
+  }
+}
+
+html[data-theme='dark'] {
+  .accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+  }
+  .accordion-button::after {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+  }
+}
+
+.filter-pane {
+  .accordion-item {
+    background-color: transparent;
+    border-bottom: 1px solid $dividerSoft;
+    color: $textColor1 !important;
+  }
+  hr {
+    border: 1px solid $dividerSoft;
+  }
+}
+
+//select {
+//  background-color: $bgColor1 !important;
+//  border: 1px solid $borderColor2 !important;
+//  color: $textColor1 !important;
+//}
+
+// Hacks for Chakra UI v2.8+ to suppress bootstrap styles that earlier versions once did
+p {
+  margin-bottom: 0;
+}
+dl, ol, ul {
+  margin-bottom: 0;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0;
+}
+hr {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+w3m-modal {
+  z-index: 5000;
+}

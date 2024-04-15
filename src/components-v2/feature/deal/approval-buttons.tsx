@@ -1,7 +1,7 @@
 import {useUser} from "@src/components-v2/useUser";
 import React, {useState} from "react";
 import {BigNumber, BigNumberish, Contract, ethers} from "ethers";
-import {ERC20, ERC721} from "@src/Contracts/Abis";
+import {ERC20, ERC721} from "@src/global/contracts/Abis";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {Box, Flex} from "@chakra-ui/react";

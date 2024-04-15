@@ -1,5 +1,5 @@
 import React from 'react';
-import { siPrefixedNumber } from '../../utils';
+import { siPrefixedNumber } from '@market/helpers/utils';
 import styled from 'styled-components';
 import { commify } from "ethers/lib/utils";
 import { Box } from '@chakra-ui/react';

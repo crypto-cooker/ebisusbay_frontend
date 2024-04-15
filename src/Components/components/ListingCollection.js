@@ -3,10 +3,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import ListingCard from './ListingCard';
-import {fetchListings, init} from '@src/GlobalState/marketplaceSlice';
+import {fetchListings, init} from '@market/state/redux/slices/marketplaceSlice';
 import {SortOption} from '../Models/sort-option.model';
 
-import {isMetapixelsCollection} from '@src/utils';
+import {isMetapixelsCollection} from '@market/helpers/utils';
 import {MarketFilters} from "../Models/market-filters.model";
 import ListingBundleCard from './ListingBundleCard';
 import {Center, Spinner} from "@chakra-ui/react";

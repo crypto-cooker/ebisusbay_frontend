@@ -20,11 +20,11 @@ import {Fragment, useEffect, useMemo, useState} from "react";
 import {ApiService} from "@src/core/services/api-service";
 import {getCardName, getHandName, Player} from "@src/core/poker-rank-players";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {shortAddress} from "@src/utils";
+import {shortAddress} from "@market/helpers/utils";
 import NextLink from "next/link";
 import {InfoIcon} from "@chakra-ui/icons";
 import {PokerCollection} from "@src/core/services/api-service/types";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {useUser} from "@src/components-v2/useUser";
 
 interface PokerLeaderboardProps {

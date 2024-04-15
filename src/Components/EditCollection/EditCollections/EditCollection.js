@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import EditCollectionForm from "./EditCollectionForm";
 import { initialValues as initialValuesDefault, editProfileFormFields } from './constants';
-import Messages, { getDynamicMessage } from '../../../languages';
+import Messages, { getDynamicMessage } from '../../../modules/market/languages';
 import * as Filter from 'bad-words';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';

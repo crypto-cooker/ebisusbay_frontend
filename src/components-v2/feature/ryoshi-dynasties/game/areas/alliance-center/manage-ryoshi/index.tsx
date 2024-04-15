@@ -30,7 +30,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import {commify, isAddress} from "ethers/lib/utils";
-import {shortAddress} from "@src/utils";
+import {shortAddress} from "@market/helpers/utils";
 import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {CopyIcon, DownloadIcon} from "@chakra-ui/icons";

@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server";
 import {ImageResponse} from "next/og";
-import {caseInsensitiveCompare, isAddress, round, siPrefixedNumber, urlify} from "@src/utils";
+import {caseInsensitiveCompare, isAddress, round, siPrefixedNumber, urlify} from "@market/helpers/utils";
 import {appConfig} from "@src/Config";
 import imageSize from "image-size";
 

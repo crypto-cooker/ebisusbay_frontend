@@ -1,10 +1,10 @@
 'use-client';
 
 import React from "react";
-import {useGlobalPrices} from "@src/hooks/useGlobalPrices";
+import {useGlobalPrices} from "@market/hooks/useGlobalPrices";
 import {ExchangePricesContext} from "@src/components-v2/shared/contexts/exchange-prices";
 import {useUser} from "@src/components-v2/useUser";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {createGlobalStyle, ThemeProvider} from "styled-components";
 import Header from "@src/components-v2/shared/layout/navbar";
 import Footer from "@src/components-v2/shared/layout/footer";

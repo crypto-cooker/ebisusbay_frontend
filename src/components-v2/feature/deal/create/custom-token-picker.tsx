@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from "react";
 import {toast} from "react-toastify";
-import {ciEquals, isAddress, shortAddress} from "@src/utils";
+import {ciEquals, isAddress, shortAddress} from "@market/helpers/utils";
 import {TitledCard} from "@src/components-v2/foundation/card";
 import {
   Flex,
@@ -15,10 +15,10 @@ import {
 } from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {ethers} from "ethers";
-import {BarterToken} from "@src/jotai/atoms/deal";
+import {BarterToken} from "@market/state/jotai/atoms/deal";
 import {multicall} from "@wagmi/core";
 import {Address, erc20ABI} from "wagmi";
-import useCurrencyBroker from "@src/hooks/use-currency-broker";
+import useCurrencyBroker from "@market/hooks/use-currency-broker";
 
 interface CustomTokenPickerProps {
   onAdd: (token: BarterToken) => void;

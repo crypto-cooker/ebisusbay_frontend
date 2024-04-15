@@ -4,7 +4,7 @@ import localFont from "next/font/local";
 import {CloseIcon} from "@chakra-ui/icons";
 
 const gothamBook = localFont({
-  src: '../../../../fonts/Gotham-Book.woff2',
+  src: '../../../../global/assets/fonts/Gotham-Book.woff2',
   fallback: ['Roboto', 'system-ui', 'arial'],
 })
 

@@ -1,12 +1,12 @@
 import {Box, Flex, Stack, Text} from "@chakra-ui/react";
 import React, {useCallback, useState} from "react";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {specialImageTransform} from '@src/hacks';
+import {specialImageTransform} from '@market/helpers/hacks';
 import Link from "next/link";
-import {shortAddress, timeSince} from "@src/utils";
+import {shortAddress, timeSince} from "@market/helpers/utils";
 import ListingItem from "@src/components-v2/feature/nft/tabs/listings/item";
 import {ethers} from 'ethers';
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {useSelector} from "react-redux";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferType} from "@src/core/services/api-service/types";

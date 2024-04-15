@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import {toast} from 'react-toastify';
 import * as Filter from 'bad-words';
 
-import Messages, {getDynamicMessage} from '../../../../languages';
+import Messages, {getDynamicMessage} from '../../../../modules/market/languages';
 import {editProfileFormFields, initialValues} from './Form/constants';
 import useCreateSettings from '../hooks/useCreateSettings';
 import useUpdateSettings from '../hooks/useUpdateSettings';
@@ -19,7 +19,7 @@ import useGetSettings from '../hooks/useGetSettings';
 import {Flex} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {parseErrorMessage} from "@src/helpers/validator";
-import {getCroidInfo} from "@src/helpers/croid";
+import {getCroidInfo} from "@market/helpers/croid";
 import {useUser} from "@src/components-v2/useUser";
 
 export default function EditProfile() {

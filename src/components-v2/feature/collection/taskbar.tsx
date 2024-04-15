@@ -26,9 +26,9 @@ import {
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {sortOptions} from "@src/Components/components/constants/collection-sort-options";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {isBundle} from "@src/utils";
+import {isBundle} from "@market/helpers/utils";
 import {useUser} from "@src/components-v2/useUser";
 
 interface TaskbarProps {

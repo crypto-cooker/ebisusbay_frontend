@@ -4,16 +4,16 @@ import {constants, Contract, ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import Countdown from 'react-countdown';
 
-import AuctionContract from '../../Contracts/DegenAuction.json';
-import {caseInsensitiveCompare, createSuccessfulTransactionToastContent, devLog, isEventValidNumber} from '../../utils';
+import AuctionContract from '../../global/contracts/DegenAuction.json';
+import {caseInsensitiveCompare, createSuccessfulTransactionToastContent, devLog, isEventValidNumber} from '@market/helpers/utils';
 import {auctionState} from '@src/core/api/enums';
-import {getAuctionDetails, updateAuctionFromBidEvent} from '@src/GlobalState/auctionSlice';
-import {ERC20} from "@src/Contracts/Abis";
+import {getAuctionDetails, updateAuctionFromBidEvent} from '@market/state/redux/slices/auctionSlice';
+import {ERC20} from "@src/global/contracts/Abis";
 import Button from "../components/Button";
 import {appConfig} from "@src/Config";
 import {Card, CardBody, CardFooter, Input, Spinner} from "@chakra-ui/react";
 import {useContractService, useUser} from "@src/components-v2/useUser";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 
 const config = appConfig();
 

@@ -3,14 +3,14 @@ import {useRouter} from 'next/router';
 import styled from 'styled-components';
 import {commify} from 'ethers/lib/utils';
 import {TransformComponent, TransformWrapper} from 'react-zoom-pan-pinch';
-import {devLog} from '@src/utils';
+import {devLog} from '@market/helpers/utils';
 import Button from '../../../../../Components/components/Button';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 
 import styles from './cronosverse.module.scss';
 import nextApiService from "@src/core/services/api-service/next";
 import {useQuery} from "@tanstack/react-query";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
 
 const CollectionCronosverse = ({ collection }: {collection: any}) => {

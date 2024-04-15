@@ -21,7 +21,7 @@ import React, {useState} from "react";
 import {sortOptions} from "@src/Components/components/constants/sort-options";
 import Button from "@src/Components/components/Button";
 import {Staker, StakingStatusFilters} from "@src/components-v2/feature/brand/tabs/staking/types";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import Filters from "@src/components-v2/feature/brand/tabs/staking/filters";
 
 type TaskbarProps = {

@@ -4,7 +4,7 @@ import {ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {isBundle, isNftBlacklisted, round, shortString} from "@src/utils";
+import {isBundle, isNftBlacklisted, round, shortString} from "@market/helpers/utils";
 import {hostedImage} from "@src/helpers/image";
 import Blockies from "react-blockies";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
@@ -14,7 +14,7 @@ import {ListingsQuery} from "@src/core/api/queries/listings";
 import {commify} from "ethers/lib/utils";
 import useBreakpoint from "use-breakpoint";
 import {getListings} from "@src/core/api/endpoints/listings";
-import {specialImageTransform} from "@src/hacks";
+import {specialImageTransform} from "@market/helpers/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {Navigation} from "swiper/modules";
 import {Swiper, SwiperSlide} from "swiper/react";
@@ -42,8 +42,8 @@ import {
   Tag,
   Tooltip
 } from "@chakra-ui/react";
-import {getTheme} from "@src/Theme/theme";
-import useBuyGaslessListings from "@src/hooks/useBuyGaslessListings";
+import {getTheme} from "@src/global/theme/theme";
+import useBuyGaslessListings from "@market/hooks/useBuyGaslessListings";
 import ImageService from "@src/core/services/image";
 import {appConfig} from "@src/Config";
 import {parseErrorMessage} from "@src/helpers/validator";

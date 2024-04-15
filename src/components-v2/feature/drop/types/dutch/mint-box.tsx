@@ -1,13 +1,13 @@
 import {constants, Contract, ethers} from "ethers";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import React, {useState} from "react";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import * as Sentry from "@sentry/react";
 import {parseErrorMessage} from "@src/helpers/validator";
-import Fortune from "@src/Contracts/Fortune.json";
+import Fortune from "@src/global/contracts/Fortune.json";
 import {commify, parseUnits} from "ethers/lib/utils";
 import {ApiService} from "@src/core/services/api-service";
 import {Box, Button, HStack, Input, Stack, useNumberInput} from "@chakra-ui/react";

@@ -26,7 +26,7 @@ import {sortOptions} from "@src/Components/components/constants/sort-options";
 import Button from "@src/Components/components/Button";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {SortOption} from "@src/Components/Models/sort-option.model";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import Select from "react-select";
 import {useUser} from "@src/components-v2/useUser";
 

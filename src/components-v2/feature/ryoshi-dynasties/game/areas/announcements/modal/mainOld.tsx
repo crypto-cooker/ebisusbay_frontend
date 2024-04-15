@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {Box, Grid, GridItem, Image, Link, Text, useMediaQuery, VStack} from "@chakra-ui/react"
 import localFont from 'next/font/local';
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {useRouter} from "next/router";
@@ -14,7 +14,7 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 import {useUser} from "@src/components-v2/useUser";
 
-const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-Book.woff2' })
 
 interface Props {
   handleShowLeaderboard: () => void;

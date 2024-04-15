@@ -2,7 +2,7 @@ import {useColorModeValue} from "@chakra-ui/color-mode";
 import React, {useCallback} from "react";
 import {Avatar, Box, Flex, Text, VStack} from "@chakra-ui/react";
 import {commify} from "ethers/lib/utils";
-import {pluralize, round} from "@src/utils";
+import {pluralize, round} from "@market/helpers/utils";
 import NextImage from "next/image";
 import ImageService from "@src/core/services/image";
 

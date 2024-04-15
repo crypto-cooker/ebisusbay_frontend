@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import SalesCollection from '../src/Components/components/SalesCollection';
-import {siPrefixedNumber} from '@src/utils';
+import {siPrefixedNumber} from '@market/helpers/utils';
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Box, Flex, SimpleGrid, Stack} from "@chakra-ui/react";
 import Listings from "@src/components-v2/feature/marketplace/tabs/listings";

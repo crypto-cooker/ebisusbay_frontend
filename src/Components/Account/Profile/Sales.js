@@ -1,6 +1,6 @@
 import React from 'react';
 import MySoldNftCollection from "@src/Components/components/MySoldNftCollection";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import SalesCollection from "@src/Components/components/SalesCollection";
 import {useUser} from "@src/components-v2/useUser";
 

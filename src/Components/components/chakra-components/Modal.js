@@ -7,7 +7,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react';
-import { getTheme } from "@src/Theme/theme";
+import { getTheme } from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 
 export default function Modal( { title, body, dialogActions, isOpen, onClose } ) {

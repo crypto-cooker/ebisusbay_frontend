@@ -8,7 +8,7 @@ import {
   isBundle,
   isNftBlacklisted,
   isVaultCollection
-} from "@src/utils";
+} from "@market/helpers/utils";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
 import {ResponsiveCancelListingDialog} from "@src/components-v2/shared/dialogs/cancel-listing";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
@@ -25,7 +25,7 @@ import {
   removeFromBatchListingCart,
   setBatchType,
   setRefetchNfts
-} from "@src/GlobalState/user-batch";
+} from "@market/state/redux/slices/user-batch";
 import {MobileBatchPreview} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-batch-preview";
 import {
   Box,
@@ -49,9 +49,9 @@ import {
 import MyBundleCard from '@src/Components/Account/Profile/Inventory/components/MyBundleCard';
 import {NftCard} from "@src/components-v2/shared/nft-card";
 import nextApiService from "@src/core/services/api-service/next";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import Select from "react-select";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import {SortOption, sortOptions} from "@src/components-v2/feature/account/profile/tabs/inventory/sort-options";
 import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";

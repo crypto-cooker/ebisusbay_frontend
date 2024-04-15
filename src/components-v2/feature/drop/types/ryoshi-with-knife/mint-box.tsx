@@ -1,12 +1,12 @@
 import {Contract, ethers} from "ethers";
 import React, {useMemo, useState} from "react";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import * as Sentry from "@sentry/react";
 import {parseErrorMessage} from "@src/helpers/validator";
-import Fortune from "@src/Contracts/Fortune.json";
+import Fortune from "@src/global/contracts/Fortune.json";
 import {parseUnits} from "ethers/lib/utils";
 import {Box, Button, HStack, Input, Stack, useNumberInput} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";

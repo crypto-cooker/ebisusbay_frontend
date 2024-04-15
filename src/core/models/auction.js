@@ -1,4 +1,4 @@
-import {millisecondTimestamp} from "../../utils";
+import {millisecondTimestamp} from "@market/helpers/utils";
 import {ethers} from 'ethers';
 
 export class Auction {

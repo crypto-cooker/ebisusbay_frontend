@@ -1,11 +1,11 @@
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {Box, Icon, useDisclosure, VStack} from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import RdButton from "../../../components/rd-button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightFromBracket, faShield} from "@fortawesome/free-solid-svg-icons";
 import React, {useContext, useState} from "react";
-import {useWindowSize} from "@src/hooks/useWindowSize";
+import {useWindowSize} from "@market/hooks/useWindowSize";
 import EditFactionForm
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-faction/edit";
 import {

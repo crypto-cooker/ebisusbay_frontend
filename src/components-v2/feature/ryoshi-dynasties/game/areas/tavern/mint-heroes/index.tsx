@@ -21,11 +21,11 @@ import {useQuery} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
 import {appConfig} from "@src/Config";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {ciEquals, createSuccessfulTransactionToastContent} from "@src/utils";
+import {ciEquals, createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import WalletNft from "@src/core/models/wallet-nft";
 import {Contract} from "ethers";
 import {parseUnits} from "ethers/lib/utils";
-import {ERC1155} from "@src/Contracts/Abis";
+import {ERC1155} from "@src/global/contracts/Abis";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
@@ -37,7 +37,7 @@ import * as Sentry from "@sentry/nextjs";
 const config = appConfig();
 const guardsAddress = config.collections.find((c: any) => c.slug === 'fortune-guards').address;
 const heroesAddress = config.collections.find((c: any) => c.slug === 'ryoshi-heroes').address;
-let abi = require(`@src/Assets/abis/ryoshi-tales-heroes.json`);
+let abi = require(`@market/assets/abis/ryoshi-tales-heroes.json`);
 const tabs = {
   mint: 'mint',
   heroes: 'heroes'

@@ -16,7 +16,7 @@ import React, {useContext, useEffect, useState} from "react";
 import NextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import {Contract, ethers} from "ethers";
-import {round, siPrefixedNumber, username} from "@src/utils";
+import {round, siPrefixedNumber, username} from "@market/helpers/utils";
 import ImageService from "@src/core/services/image";
 import {appConfig} from "@src/Config";
 import {
@@ -26,7 +26,7 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBuilding, faClipboardList} from "@fortawesome/free-solid-svg-icons";
 
-import {ERC1155} from "@src/Contracts/Abis";
+import {ERC1155} from "@src/global/contracts/Abis";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import Countdown, {zeroPad} from "react-countdown";
 import {useUser} from "@src/components-v2/useUser";

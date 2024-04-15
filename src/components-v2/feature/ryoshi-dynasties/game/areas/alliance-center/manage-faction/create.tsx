@@ -36,7 +36,7 @@ import {faExclamationTriangle, faShieldAlt} from "@fortawesome/free-solid-svg-ic
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {parseErrorMessage} from "@src/helpers/validator";
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/search";
-import {shortAddress} from "@src/utils";
+import {shortAddress} from "@market/helpers/utils";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Blockies from 'react-blockies';
-import {isBundle, isCrosmocraftsPartsCollection} from '@src/utils';
+import {isBundle, isCrosmocraftsPartsCollection} from '@market/helpers/utils';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import CollectionInfoBar from '@src/Components/components/CollectionInfoBar';
 import SalesCollection from '@src/Components/components/SalesCollection';
@@ -10,14 +10,14 @@ import {useRouter} from "next/router";
 import {AspectRatio, Avatar, Box, Button, Flex, Heading, Image, Text, useBreakpointValue} from "@chakra-ui/react";
 import MintingButton from "@src/Components/Collection/MintingButton";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
-import useGetStakingPlatform from "@src/hooks/useGetStakingPlatform";
+import useGetStakingPlatform from "@market/hooks/useGetStakingPlatform";
 import ImageService from "@src/core/services/image";
 import CollectionBundlesGroup from "@src/Components/components/CollectionBundlesGroup";
 import Items from "@src/components-v2/feature/collection/tabs/items";
 import {useQuery} from "@tanstack/react-query";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {getStats} from "@src/components-v2/feature/collection/collection-721";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
 import {useUser} from "@src/components-v2/useUser";
 
