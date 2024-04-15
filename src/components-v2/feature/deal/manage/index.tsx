@@ -264,7 +264,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
         </ConditionalActionBar>
       )}
       {isTaker && deal.state === OrderState.ACTIVE && (
-        <Box fontSize='sm' textAlign='center' mt={2}>
+        <Box fontSize='xs' textAlign='center' mt={2}>
           Users with {commify(2000)} or more Mitama can accept deals at no extra cost. Otherwise, a flat 20 CRO fee is applied upon acceptance of the deal. Earn Mitama by staking FRTN in the <NextLink href='/ryoshi' className='color fw-bold'>Ryoshi Dynasties Bank</NextLink>
         </Box>
       )}
