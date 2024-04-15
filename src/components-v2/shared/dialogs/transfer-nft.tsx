@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Contract} from "ethers";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {specialImageTransform} from "@src/hacks";
-import {ERC1155, ERC721} from "@src/Contracts/Abis";
+import {specialImageTransform} from "@market/helpers/hacks";
+import {ERC1155, ERC721} from "@src/global/contracts/Abis";
 import {
   Box,
   BoxProps,
@@ -21,9 +21,9 @@ import {
   Text,
   useNumberInput
 } from "@chakra-ui/react";
-import {is1155} from "@src/helpers/chain";
+import {is1155} from "@market/helpers/chain";
 import {parseErrorMessage} from "@src/helpers/validator";
-import {getCroidAddressFromName, isCroName} from "@src/helpers/croid";
+import {getCroidAddressFromName, isCroName} from "@market/helpers/croid";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useUser} from "@src/components-v2/useUser";
 import {ResponsiveDialogComponents, useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";

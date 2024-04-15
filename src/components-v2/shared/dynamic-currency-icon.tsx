@@ -1,6 +1,6 @@
 import {appConfig} from "@src/Config";
 import {ReactElement, useEffect, useState} from "react";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {Box, ChakraProps, Image} from "@chakra-ui/react";

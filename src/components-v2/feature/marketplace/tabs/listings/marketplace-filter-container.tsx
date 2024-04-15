@@ -9,7 +9,7 @@ import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 import {MarketplacePageContext, MarketplacePageContextProps} from "@src/components-v2/feature/marketplace/context";
 import {CollectionFilter} from "@src/components-v2/shared/filter-container/filters/collection-filter";
-import {ciEquals} from "@src/utils";
+import {ciEquals} from "@market/helpers/utils";
 
 const config = appConfig();
 

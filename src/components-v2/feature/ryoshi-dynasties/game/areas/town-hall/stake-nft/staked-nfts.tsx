@@ -9,7 +9,7 @@ import {ApiService} from "@src/core/services/api-service";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {pluralize} from "@src/utils";
+import {pluralize} from "@market/helpers/utils";
 import {toast} from "react-toastify";
 import useTownHallStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-town-hall-stake-nfts";
 

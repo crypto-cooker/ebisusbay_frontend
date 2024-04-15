@@ -14,7 +14,7 @@ import MakeCollectionOfferDialog from "@src/components-v2/shared/dialogs/make-co
 import {ResponsiveInstantSellDialog} from "@src/components-v2/shared/dialogs/instant-sell";
 import SweepFloorDialog from "@src/Components/Collection/CollectionTaskBar/SweepFloorDialog";
 import {CollectionPageContext, CollectionPageContextProps} from "@src/components-v2/feature/collection/context";
-import {isFoundingMemberCollection} from "@src/utils";
+import {isFoundingMemberCollection} from "@market/helpers/utils";
 import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 import {sortOptions} from "@src/Components/components/constants/collection-sort-options";
 

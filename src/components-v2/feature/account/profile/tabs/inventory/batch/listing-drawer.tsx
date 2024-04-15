@@ -43,7 +43,7 @@ import {
   clearBatchListingCart,
   sortAll,
   UserBatchItem
-} from "@src/GlobalState/user-batch";
+} from "@market/state/redux/slices/user-batch";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
 import {
@@ -53,24 +53,24 @@ import {
   isBundle,
   isGaslessListing,
   pluralize
-} from "@src/utils";
+} from "@market/helpers/utils";
 import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/Config";
 import {ListingDrawerItem} from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-drawer-item";
-import Bundle from "@src/Contracts/Bundle.json";
+import Bundle from "@src/global/contracts/Bundle.json";
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useCancelGaslessListing";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useAppDispatch, useAppSelector} from "@src/Store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import nextApiService from "@src/core/services/api-service/next";
 import ListingBundleDrawerForm, {
   ListingBundleDrawerFormHandle
 } from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-bundle-drawer-form";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {getPrices} from "@src/core/api/endpoints/prices";
-import {useExchangeRate} from "@src/hooks/useGlobalPrices";
+import {useExchangeRate} from "@market/hooks/useGlobalPrices";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useContractService, useUser} from "@src/components-v2/useUser";

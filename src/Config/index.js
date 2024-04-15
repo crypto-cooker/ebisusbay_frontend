@@ -1,6 +1,6 @@
-import rpcConfig from '../Assets/networks/rpc_config.json';
-import rpcConfigDev from '../Assets/networks/rpc_config_dev.json';
-import rpcConfigTestnet from '../Assets/networks/rpc_config_testnet.json';
+import rpcConfig from '../modules/market/assets/networks/rpc_config.json';
+import rpcConfigDev from '../modules/market/assets/networks/rpc_config_dev.json';
+import rpcConfigTestnet from '../modules/market/assets/networks/rpc_config_testnet.json';
 import Constants from '../constants';
 const { Features } = Constants;
 

@@ -11,7 +11,7 @@ import {io} from "socket.io-client";
 
 import {BigNumber, Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
-import Battlefield from "@src/Contracts/Battlefield.json";
+import Battlefield from "@src/global/contracts/Battlefield.json";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 import styles from "./style.module.css";
 import {
@@ -28,7 +28,7 @@ import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {useUser} from "@src/components-v2/useUser";
 
-const gothamCondBlack = localFont({ src: '../../../../../../fonts/GothamCond-Black.woff2' })
+const gothamCondBlack = localFont({ src: '../../../../../../global/assets/fonts/GothamCond-Black.woff2' })
 
 interface BattleMapProps {
   onChange: () => void;

@@ -3,7 +3,7 @@ import { faBook, faCopy, faGlobe, faRocket } from '@fortawesome/free-solid-svg-i
 import { faDiscord, faInstagram, faMedium, faTelegram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import LayeredIcon from '../components/LayeredIcon';
 import { toast } from 'react-toastify';
-import {buildInstagramUrl, buildTwitterUrl, isCrosmocraftsCollection, isCrosmocraftsPartsCollection} from '@src/utils';
+import {buildInstagramUrl, buildTwitterUrl, isCrosmocraftsCollection, isCrosmocraftsPartsCollection} from '@market/helpers/utils';
 import {useClipboard} from "@chakra-ui/react";
 
 const SocialsBar = ({ address, socials, showCopy = true }) => {

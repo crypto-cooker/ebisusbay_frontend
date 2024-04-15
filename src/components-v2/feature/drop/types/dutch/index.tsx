@@ -1,5 +1,5 @@
 import {Drop} from "@src/core/models/drop";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import React, {useEffect} from "react";
 import {useAtom} from "jotai";
 import {dutchAuctionDataAtom} from "@src/components-v2/feature/drop/types/dutch/atom";
@@ -13,17 +13,17 @@ import {hostedImage} from "@src/helpers/image";
 import Reveal from "react-awesome-reveal";
 import Countdown from "react-countdown";
 import {Box, Flex, Heading, Image, Stack} from "@chakra-ui/react";
-import {ciEquals, newlineText} from "@src/utils";
+import {ciEquals, newlineText} from "@market/helpers/utils";
 import {keyframes} from "@emotion/react";
 import styled from "styled-components";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import Fortune from "@src/Contracts/Fortune.json";
+import Fortune from "@src/global/contracts/Fortune.json";
 import Markdown from "react-markdown";
 import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
-let abi = require(`@src/Assets/abis/ryoshi-tales-heroes.json`);
+let abi = require(`@market/assets/abis/ryoshi-tales-heroes.json`);
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 const fadeInUp = keyframes`

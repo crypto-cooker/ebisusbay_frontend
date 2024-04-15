@@ -3,13 +3,13 @@ import ResponsiveNftListingsTable, {
   SortKeys
 } from "@src/components-v2/shared/responsive-table/responsive-nft-listings-table";
 import {toast} from "react-toastify";
-import {createSuccessfulAddCartContent} from "@src/utils";
+import {createSuccessfulAddCartContent} from "@market/helpers/utils";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import useGetNftListings from "@src/components-v2/feature/nft/hooks/useGetNftListings";
 import {ListingState} from "@src/core/services/api-service/types";
 import {Center, Spinner} from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import useCart from "@src/hooks/use-cart";
+import useCart from "@market/hooks/use-cart";
 
 interface ListingsProps {
   nft: any;

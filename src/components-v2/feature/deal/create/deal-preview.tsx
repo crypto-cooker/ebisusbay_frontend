@@ -25,13 +25,13 @@ import {
   VStack,
   Wrap
 } from "@chakra-ui/react";
-import {uniqueNftId} from "@src/utils";
+import {uniqueNftId} from "@market/helpers/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import ImageService from "@src/core/services/image";
 import {toast} from "react-toastify";
-import {BarterToken} from "@src/jotai/atoms/deal";
+import {BarterToken} from "@market/state/jotai/atoms/deal";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHandshake} from "@fortawesome/free-solid-svg-icons";
 import {useUser} from "@src/components-v2/useUser";

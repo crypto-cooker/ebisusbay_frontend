@@ -1,6 +1,6 @@
 import React, {memo, useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
-import {createSuccessfulTransactionToastContent} from '@src/utils';
+import {createSuccessfulTransactionToastContent} from '@market/helpers/utils';
 import {ethers} from 'ethers';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {

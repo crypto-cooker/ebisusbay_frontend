@@ -7,7 +7,7 @@ import {MenuPopup} from '@src/Components/components/chakra-components';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {nftCardUrl} from "@src/helpers/image";
 import {Box, Flex, Heading, Spacer, useClipboard} from "@chakra-ui/react";
-import {appUrl, caseInsensitiveCompare} from "@src/utils";
+import {appUrl, ciEquals} from "@market/helpers/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import {
@@ -86,11 +86,16 @@ const StakingNftCard = ({
   };
 
   const cartCount = () => {
-    return bankStakeNftContext.pendingNfts.filter((o) => o.nftId === nft.nftId && caseInsensitiveCompare(o.nftAddress, nft.nftAddress)).length;
+    return bankStakeNftContext.pendingNfts.filter((o) => o.nftId === nft.nftId && ciEquals(o.nftAddress, nft.nftAddress)).length;
   };
 
   const stakedCount = () => {
-    return bankStakeNftContext.stakedNfts.filter((o) => o.tokenId === nft.nftId && caseInsensitiveCompare(o.contractAddress, nft.nftAddress)).length;
+    return bankStakeNftContext.stakedNfts.reduce((acc, o) => {
+      if (o.tokenId === nft.nftId && ciEquals(o.contractAddress, nft.nftAddress)) {
+        return acc + parseInt(o.amount);
+      }
+      return acc;
+    }, 0);
   };
 
   return (

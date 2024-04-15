@@ -6,8 +6,8 @@ import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 
 import LayeredIcon from '../../../Components/components/LayeredIcon';
 import ImageService from "@src/core/services/image";
-import useGetProfilePreview from "@src/hooks/useGetUsername";
-import {shortAddress} from "@src/utils";
+import useGetProfilePreview from "@market/hooks/useGetUsername";
+import {shortAddress} from "@market/helpers/utils";
 import {Image} from "@chakra-ui/react";
 
 const VerifiedIcon = styled.span`

@@ -26,7 +26,7 @@ import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBalanceScale, faShieldAlt, faUser} from "@fortawesome/free-solid-svg-icons";
 import {useUser} from "@src/components-v2/useUser";
-import {ciEquals, isAddress, shortAddress} from "@src/utils";
+import {ciEquals, isAddress, shortAddress} from "@market/helpers/utils";
 import {Reputation} from "@src/core/services/api-service/types";
 import {commify} from "ethers/lib/utils";
 

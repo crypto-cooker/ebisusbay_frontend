@@ -1,7 +1,7 @@
 import {Box, SimpleGrid, Stat, StatLabel, StatNumber, Text, Wrap, WrapItem} from "@chakra-ui/react";
 import PreviewCard from "@src/components-v2/shared/preview-card";
 import MintingButton from "@src/Components/Collection/MintingButton";
-import {round, siPrefixedNumber} from "@src/utils";
+import {round, siPrefixedNumber} from "@market/helpers/utils";
 import React from "react";
 import {useRouter} from "next/router";
 

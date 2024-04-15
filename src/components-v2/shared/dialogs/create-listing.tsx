@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {specialImageTransform} from "@src/hacks";
+import {specialImageTransform} from "@market/helpers/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {Contract, ethers} from "ethers";
 import {getCollectionMetadata} from "@src/core/api";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
-import {ERC721} from "@src/Contracts/Abis";
+import {ERC721} from "@src/global/contracts/Abis";
 import {
   ciEquals,
   createSuccessfulTransactionToastContent,
@@ -14,9 +14,9 @@ import {
   isRyoshiResourceToken,
   round,
   usdFormat
-} from "@src/utils";
+} from "@market/helpers/utils";
 import {appConfig} from "@src/Config";
-import {useWindowSize} from "@src/hooks/useWindowSize";
+import {useWindowSize} from "@market/hooks/useWindowSize";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {
   Box,
@@ -52,11 +52,11 @@ import {
   Text,
   useNumberInput
 } from "@chakra-ui/react";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import {parseErrorMessage} from "@src/helpers/validator";
-import {useExchangeRate, useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
+import {useExchangeRate, useTokenExchangeRate} from "@market/hooks/useGlobalPrices";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import ReactSelect from "react-select";

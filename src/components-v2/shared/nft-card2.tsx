@@ -1,4 +1,4 @@
-import {isBundle} from "@src/utils";
+import {isBundle} from "@market/helpers/utils";
 
 
 import {useColorModeValue} from "@chakra-ui/color-mode";
@@ -27,7 +27,7 @@ import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import {faAward, faEllipsisH, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
 import {commify} from "ethers/lib/utils";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
-import {darkTheme, lightTheme} from "@src/Theme/theme";
+import {darkTheme, lightTheme} from "@src/global/theme/theme";
 import NextLink from "next/link";
 
 // interface BaseNftCardProps {

@@ -13,7 +13,7 @@ import {
   newlineText,
   percentage,
   useInterval,
-} from '@src/utils';
+} from '@market/helpers/utils';
 import {DropState, DropState as statuses} from '@src/core/api/enums';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {appConfig} from "@src/Config";
@@ -37,17 +37,17 @@ import {
 import {Drop} from "@src/core/models/drop";
 import ImageService from "@src/core/services/image";
 import {ArrowForwardIcon} from '@chakra-ui/icons';
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {commify} from "ethers/lib/utils";
 import {toast} from "react-toastify";
 import {getAnalytics, logEvent} from "@firebase/analytics";
-import Fortune from "@src/Contracts/Fortune.json";
+import Fortune from "@src/global/contracts/Fortune.json";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import Link from "next/link";
 import {parseErrorMessage} from "@src/helpers/validator";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {useUser} from "@src/components-v2/useUser";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 
 const config = appConfig();
 
@@ -139,7 +139,7 @@ const LandDrop = ({drop}: LandDropProps) => {
       return;
     }
 
-    const abiJson = require(`@src/Assets/abis/izanami.json`);
+    const abiJson = require(`@market/assets/abis/izanami.json`);
     let abi = abiJson;
     setAbi(abiJson);
 

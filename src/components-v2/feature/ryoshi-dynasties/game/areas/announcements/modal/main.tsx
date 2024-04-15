@@ -18,7 +18,7 @@ import Countdown, {zeroPad} from "react-countdown";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
 
-const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-Book.woff2' })
 
 interface Props {
   handleShowLeaderboard: () => void;

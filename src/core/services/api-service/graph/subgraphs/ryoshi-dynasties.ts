@@ -1,6 +1,6 @@
 import {appConfig} from "@src/Config";
 import {ApolloClient, gql, InMemoryCache} from '@apollo/client';
-import {urlify} from "@src/utils";
+import {urlify} from "@market/helpers/utils";
 import {StakedTokenType} from "@src/core/services/api-service/types";
 
 const config = appConfig();

@@ -56,11 +56,11 @@ pipelines:
                   # Install AWS CLI
                   - *install_aws_cli
                   # RPC config
-                  - cp -p ./src/Assets/networks/rpc_config_testnet.json ./src/Assets/networks/rpc_config.json
+                  - cp -p ./src/modules/market/assets/networks/rpc_config_testnet.json ./src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
-                  - aws s3 cp ./src/Assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
+                  - aws s3 cp ./src/modules/market/assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
                   - |
                       set +e # turn off error-trapping
@@ -105,11 +105,11 @@ pipelines:
                   # Install AWS CLI
                   - *install_aws_cli
                   # RPC config
-                  - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
+                  - cp -p ./src/modules/market/assets/networks/rpc_config_dev.json ./src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
-                  - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
+                  - aws s3 cp ./src/modules/market/assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
                   - |
                       set +e # turn off error-trapping
@@ -154,11 +154,11 @@ pipelines:
                   # Install AWS CLI
                   - *install_aws_cli
                   # RPC config
-                  # - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
+                  # - cp -p ./src/modules/market/assets/networks/rpc_config_dev.json ./src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
-                  - aws s3 cp ./src/Assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
+                  - aws s3 cp ./src/modules/market/assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
                   - |
                       set +e # turn off error-trapping
@@ -204,11 +204,11 @@ pipelines:
                   # Install AWS CLI
                   - *install_aws_cli
                   # RPC config
-                  - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
+                  - cp -p ./src/modules/market/assets/networks/rpc_config_dev.json ./src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
-                  - aws s3 cp ./src/Assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
+                  - aws s3 cp ./src/modules/market/assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
                   - |
                       set +e # turn off error-trapping
@@ -253,11 +253,11 @@ pipelines:
                   # Install AWS CLI
                   - *install_aws_cli
                   # RPC config
-                  # - cp -p ./src/Assets/networks/rpc_config_dev.json ./src/Assets/networks/rpc_config.json
+                  # - cp -p ./src/modules/market/assets/networks/rpc_config_dev.json ./src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
-                  - aws s3 cp ./src/Assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
+                  - aws s3 cp ./src/modules/market/assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
                   - |
                       set +e # turn off error-trapping

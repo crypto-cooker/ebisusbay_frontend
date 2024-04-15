@@ -4,7 +4,7 @@ import {createGlobalStyle, default as styled} from 'styled-components';
 import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 
-import {theme} from '@src/Theme/theme';
+import {theme} from '@src/global/theme/theme';
 import {hostedImage} from "@src/helpers/image";
 import {useUser} from "@src/components-v2/useUser";
 

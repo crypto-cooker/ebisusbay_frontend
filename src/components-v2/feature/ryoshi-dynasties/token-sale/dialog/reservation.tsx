@@ -26,19 +26,19 @@ import React, {ChangeEvent, useCallback, useContext, useEffect, useRef, useState
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
 import {BigNumber, Contract, ethers} from "ethers";
-import {ERC20} from "@src/Contracts/Abis";
+import {ERC20} from "@src/global/contracts/Abis";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, round, timeSince} from "@src/utils";
+import {createSuccessfulTransactionToastContent, round, timeSince} from "@market/helpers/utils";
 import {appConfig} from "@src/Config";
-import FortunePresale from "@src/Contracts/FortunePresale.json";
+import FortunePresale from "@src/global/contracts/FortunePresale.json";
 import {commify} from "ethers/lib/utils";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {useQueryClient} from "@tanstack/react-query";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
-import {useWindowSize} from "@src/hooks/useWindowSize";
+import {useWindowSize} from "@market/hooks/useWindowSize";
 import ImageService from "@src/core/services/image";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();

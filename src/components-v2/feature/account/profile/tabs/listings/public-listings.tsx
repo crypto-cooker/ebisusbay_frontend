@@ -15,14 +15,14 @@ import ListingsFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/listings/listings-filter-container";
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
-import {caseInsensitiveCompare, findCollectionByAddress} from "@src/utils";
+import {caseInsensitiveCompare, findCollectionByAddress} from "@market/helpers/utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter, faSort} from "@fortawesome/free-solid-svg-icons";
 import useDebounce from "@src/core/hooks/useDebounce";
 import ListingsGroup from "@src/components-v2/shared/listings-group";
 import Select from "react-select";
 import {SortOption, sortOptions} from "@src/components-v2/feature/account/profile/tabs/listings/sort-options";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 import {useUser} from "@src/components-v2/useUser";
 

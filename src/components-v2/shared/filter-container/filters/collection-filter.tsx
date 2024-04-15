@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import Blockies from "react-blockies";
 import {
   AccordionButton,

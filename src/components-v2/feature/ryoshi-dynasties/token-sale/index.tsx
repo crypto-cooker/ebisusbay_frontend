@@ -12,7 +12,7 @@ import {appConfig} from "@src/Config";
 
 const config = appConfig();
 
-const gothamBook = localFont({ src: '../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({ src: '../../../../global/assets/fonts/Gotham-Book.woff2' })
 
 enum Scene {
   LANDING,

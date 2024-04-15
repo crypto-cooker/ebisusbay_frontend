@@ -5,9 +5,9 @@ import Link from 'next/link';
 import {ethers} from 'ethers';
 
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
-import {darkTheme, getTheme, lightTheme} from '@src/Theme/theme';
+import {darkTheme, getTheme, lightTheme} from '@src/global/theme/theme';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {appUrl, createSuccessfulAddCartContent, round, siPrefixedNumber, timeSince} from '@src/utils';
+import {appUrl, createSuccessfulAddCartContent, round, siPrefixedNumber, timeSince} from '@market/helpers/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
 import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
 import {useColorModeValue} from "@chakra-ui/color-mode";
@@ -22,15 +22,15 @@ import {
   faSync
 } from "@fortawesome/free-solid-svg-icons";
 import {toast} from "react-toastify";
-import {refreshMetadata} from "@src/GlobalState/nftSlice";
-import {specialImageTransform} from "@src/hacks";
+import {refreshMetadata} from "@market/state/redux/slices/nftSlice";
+import {specialImageTransform} from "@market/helpers/hacks";
 import Slider from '../Account/Profile/Inventory/components/Slider';
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
-import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
+import {useTokenExchangeRate} from "@market/hooks/useGlobalPrices";
 import {useUser} from "@src/components-v2/useUser";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
-import useCart from "@src/hooks/use-cart";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
+import useCart from "@market/hooks/use-cart";
 
 
 const Watermarked = styled.div`

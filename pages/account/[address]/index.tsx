@@ -1,5 +1,5 @@
 import Profile from '@src/components-v2/feature/account/profile';
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {GetServerSidePropsContext, NextPage} from "next";
 

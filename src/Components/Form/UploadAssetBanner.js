@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import useGetSettings from '../Account/Settings/hooks/useGetSettings';
 import useUpdateBanner from '../Account/Settings/hooks/useUpdateBanner';
 import {Card, CardBody, Stack} from "@chakra-ui/react";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 
 const UploadAsset = ({ id, value, accept = 'image/png, image/jpeg, image/jpg', onChange, onClose }) => {

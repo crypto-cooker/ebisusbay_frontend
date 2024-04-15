@@ -1,7 +1,7 @@
 import {Stack, Text,} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 
-const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-Book.woff2' })
 
 export interface PatchNotesProps {
   changeDate : string;

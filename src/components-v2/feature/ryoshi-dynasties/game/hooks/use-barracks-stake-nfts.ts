@@ -1,10 +1,10 @@
 import {useState} from 'react';
 import {ApiService} from "@src/core/services/api-service";
 import {Contract} from "ethers";
-import Barracks from "@src/Contracts/Barracks.json";
+import Barracks from "@src/global/contracts/Barracks.json";
 import {appConfig} from "@src/Config";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import Constants from "@src/constants";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
@@ -47,9 +47,7 @@ const useBarracksStakeNfts = () => {
         const pendingAmount = pendingNfts.filter((nft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId).length;
         if (Number(stakedNft.amount) > pendingAmount) {
           const amountToWithdraw = Number(stakedNft.amount) - pendingAmount;
-          for (let i = 0; i < amountToWithdraw; i++) {
-            withdrawNfts.push({...stakedNft, amount: amountToWithdraw});
-          }
+          withdrawNfts.push({...stakedNft, amount: amountToWithdraw});
         }
       }
 

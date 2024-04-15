@@ -4,7 +4,7 @@ import {
   mapAttributeString,
   millisecondTimestamp,
   relativePrecision, round
-} from "@src/utils";
+} from "@market/helpers/utils";
 import Link from "next/link";
 import React from "react";
 import {Box, Heading} from "@chakra-ui/react";

@@ -24,7 +24,7 @@ import {
   useColorModeValue
 } from "@chakra-ui/react";
 import React from "react";
-import {round, shortAddress, timeSince} from "@src/utils";
+import {round, shortAddress, timeSince} from "@market/helpers/utils";
 import Link from "next/link";
 import ImageService from "@src/core/services/image";
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";

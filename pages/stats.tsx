@@ -3,8 +3,8 @@ import {useDispatch} from 'react-redux';
 import {utils} from 'ethers';
 import Card from '../src/Components/Leaderboard/Card';
 import Table from '../src/Components/Leaderboard/Table';
-import {getAllLeaderBoard} from '@src/GlobalState/leaderBoardSlice';
-import {shortAddress} from '@src/utils';
+import {getAllLeaderBoard} from '@market/state/redux/slices/leaderBoardSlice';
+import {shortAddress} from '@market/helpers/utils';
 import styles from '../src/Components/Leaderboard/styles.module.scss';
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Navigation, Pagination} from "swiper/modules";
@@ -12,7 +12,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import {Heading, Link, Tag} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {hostedImage} from "@src/helpers/image";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {GetServerSidePropsContext} from "next";
 
 const headers = {

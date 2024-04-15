@@ -1,4 +1,4 @@
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 
 import {
   Button,
@@ -18,7 +18,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 
 import localFont from 'next/font/local';
-const gothamBook = localFont({ src: '../../../../../fonts/Gotham-Book.woff2' })
+const gothamBook = localFont({ src: '../../../../../global/assets/fonts/Gotham-Book.woff2' })
 
 interface BuildingsProps {
   isOpenBuildings: boolean;

@@ -14,9 +14,9 @@ import {useDispatch} from "react-redux";
 import {ListingDrawer} from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-drawer";
 import TransferDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/transfer-drawer";
 import BundleDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/bundle-drawer";
-import {setBatchType} from "@src/GlobalState/user-batch";
-import {useAppSelector} from "@src/Store/hooks";
-import {getTheme} from "@src/Theme/theme";
+import {setBatchType} from "@market/state/redux/slices/user-batch";
+import {useAppSelector} from "@market/state/redux/store/hooks";
+import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 
 const MAX_NFTS_IN_CART = 40;

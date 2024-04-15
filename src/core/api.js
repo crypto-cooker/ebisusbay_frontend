@@ -1,9 +1,8 @@
 import {BigNumber, Contract, ethers} from 'ethers';
 import * as Sentry from '@sentry/react';
 
-import {ERC1155, ERC721, MetaPixelsAbi} from '../Contracts/Abis';
+import {ERC1155, ERC721, MetaPixelsAbi} from '../global/contracts/Abis';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
-import {dataURItoBlob} from '../Store/utils';
 import {
   caseInsensitiveCompare,
   convertIpfsResource,
@@ -11,7 +10,7 @@ import {
   isCroniesCollection,
   isCroskullSbtCollection,
   isMetapixelsCollection,
-} from '../utils';
+} from '@market/helpers/utils';
 import {appConfig} from "../Config";
 import {getCollections} from "@src/core/api/next/collectioninfo";
 import {ApiService} from "@src/core/services/api-service";
@@ -321,4 +320,23 @@ export async function getLeaders(timeframe) {
 
   // Promise.all waits until all jobs are resolved
   return Promise.all(requests).then((responses) => Promise.all(responses.map((r) => r.json())));
+}
+
+export function dataURItoBlob(dataURI, type) {
+  // convert base64 to raw binary data held in a string
+  let byteString = atob(dataURI.split(',')[1]);
+
+  // separate out the mime component
+  // let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+  // write the bytes of the string to an ArrayBuffer
+  let ab = new ArrayBuffer(byteString.length);
+  let ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+
+  // write the ArrayBuffer to a blob, and you're done
+  let bb = new Blob([ab], { type: type });
+  return bb;
 }

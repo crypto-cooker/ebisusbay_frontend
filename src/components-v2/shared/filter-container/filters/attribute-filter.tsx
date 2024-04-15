@@ -10,7 +10,7 @@ import {
   Flex,
   Text
 } from "@chakra-ui/react";
-import {humanizeAdvanced, stripSpaces} from "@src/utils";
+import {humanizeAdvanced, stripSpaces} from "@market/helpers/utils";
 import {FilteredItem} from "@src/components-v2/shared/filter-container";
 import {TableVirtuoso} from "react-virtuoso";
 

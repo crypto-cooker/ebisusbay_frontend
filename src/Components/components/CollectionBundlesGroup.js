@@ -2,7 +2,7 @@ import React, {memo} from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {appConfig} from "@src/Config";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import {Center, Spinner, Text} from "@chakra-ui/react";
 import ListingBundleCard from "@src/Components/components/ListingBundleCard";
 import NextApiService from "@src/core/services/api-service/next";

@@ -5,7 +5,7 @@ import {useInfiniteQuery} from "@tanstack/react-query";
 import {appConfig} from "@src/Config";
 import InfiniteScroll from "react-infinite-scroll-component";
 import RyoshiStakingNftCard from "@src/components-v2/feature/staking/ryoshi-staking-nft-card";
-import {addToCart, clearCart, removeFromCart, setCartContext} from "@src/GlobalState/ryoshi-staking-cart-slice";
+import {addToCart, clearCart, removeFromCart, setCartContext} from "@market/state/redux/slices/ryoshi-staking-cart-slice";
 import {sortAndFetchCollectionDetails} from "@src/core/api/endpoints/fullcollections";
 import {FullCollectionsQuery} from "@src/core/api/queries/fullcollections";
 import {CollectionSortOption} from "@src/Components/Models/collection-sort-option.model";

@@ -1,5 +1,5 @@
 import { BigNumber, Contract, ethers } from 'ethers';
-import { ERC721 } from '@src/Contracts/Abis';
+import { ERC721 } from '@src/global/contracts/Abis';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
 import {appConfig} from "@src/Config";
 

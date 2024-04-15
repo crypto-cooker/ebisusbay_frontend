@@ -1,9 +1,9 @@
 import React, {memo, useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchListings, filterListings, init, searchListings, sortListings} from '@src/GlobalState/marketplaceSlice';
+import {fetchListings, filterListings, init, searchListings, sortListings} from '@market/state/redux/slices/marketplaceSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {SortOption} from '../Models/sort-option.model';
-import {debounce, isBundle, knownErc20Token, shortAddress, timeSince} from '@src/utils';
+import {debounce, isBundle, knownErc20Token, shortAddress, timeSince} from '@market/helpers/utils';
 import Link from 'next/link';
 import {ethers} from 'ethers';
 import TopFilterBar from './TopFilterBar';

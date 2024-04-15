@@ -23,17 +23,17 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import RdButton from "../../../../components/rd-button";
 import {BigNumber, Contract, ethers} from "ethers";
-import Fortune from "@src/Contracts/Fortune.json";
+import Fortune from "@src/global/contracts/Fortune.json";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, findNextLowestNumber, pluralize, round} from "@src/utils";
-import Bank from "@src/Contracts/Bank.json";
+import {createSuccessfulTransactionToastContent, findNextLowestNumber, pluralize, round} from "@market/helpers/utils";
+import Bank from "@src/global/contracts/Bank.json";
 import {appConfig} from "@src/Config";
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
 import {commify} from "ethers/lib/utils";
 import moment from "moment/moment";
 import {useQueryClient} from "@tanstack/react-query";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();

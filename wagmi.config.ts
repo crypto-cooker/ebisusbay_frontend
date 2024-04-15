@@ -3,7 +3,7 @@ import {blockExplorer, react} from '@wagmi/cli/plugins'
 import * as process from "process";
 
 export default defineConfig({
-    out: 'src/Contracts/types.ts',
+    out: 'src/global/contracts/types.ts',
     contracts: [],
     plugins: [
         blockExplorer({

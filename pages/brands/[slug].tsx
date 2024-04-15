@@ -15,7 +15,7 @@ import {
   useBreakpointValue
 } from "@chakra-ui/react";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
-import {caseInsensitiveCompare, ciIncludes, siPrefixedNumber} from "@src/utils";
+import {caseInsensitiveCompare, ciIncludes, siPrefixedNumber} from "@market/helpers/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";

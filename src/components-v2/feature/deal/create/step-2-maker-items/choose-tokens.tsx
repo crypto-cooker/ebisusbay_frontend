@@ -1,14 +1,14 @@
 import {useUser} from "@src/components-v2/useUser";
-import useCurrencyBroker, {BrokerCurrency} from "@src/hooks/use-currency-broker";
+import useCurrencyBroker, {BrokerCurrency} from "@market/hooks/use-currency-broker";
 import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import React, {useCallback, useState} from "react";
 import ReactSelect, {SingleValue} from "react-select";
 import {toast} from "react-toastify";
-import {ciEquals, isWrappedeCro, round} from "@src/utils";
+import {ciEquals, isWrappedeCro, round} from "@market/helpers/utils";
 import {Contract, ethers} from "ethers";
-import WCRO from "@src/Contracts/WCRO.json";
+import WCRO from "@src/global/contracts/WCRO.json";
 import {parseErrorMessage} from "@src/helpers/validator";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {
   Box,
   Container,
@@ -23,12 +23,12 @@ import {
 import {Card, TitledCard} from "@src/components-v2/foundation/card";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {appConfig} from "@src/Config";
-import {BarterToken} from "@src/jotai/atoms/deal";
+import {BarterToken} from "@market/state/jotai/atoms/deal";
 import {CustomTokenPicker} from "@src/components-v2/feature/deal/create/custom-token-picker";
 import {JsonRpcProvider} from "@ethersproject/providers";
 import {commify} from "ethers/lib/utils";
 import {useQuery} from "@tanstack/react-query";
-import {ERC20} from "@src/Contracts/Abis";
+import {ERC20} from "@src/global/contracts/Abis";
 
 const config = appConfig();
 const readProvider = new JsonRpcProvider(config.rpc.read);

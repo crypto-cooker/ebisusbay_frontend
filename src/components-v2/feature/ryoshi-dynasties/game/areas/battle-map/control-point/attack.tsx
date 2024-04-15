@@ -21,7 +21,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import {getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
-import {capitalizeFirstLetter, createSuccessfulTransactionToastContent, useInterval} from '@src/utils';
+import {capitalizeFirstLetter, createSuccessfulTransactionToastContent, useInterval} from '@market/helpers/utils';
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import BattleConclusion
@@ -31,8 +31,8 @@ import BattleConclusion
 import {BigNumber, Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
-import Battlefield from "@src/Contracts/Battlefield.json";
-import Resources from "@src/Contracts/Resources.json";
+import Battlefield from "@src/global/contracts/Battlefield.json";
+import Resources from "@src/global/contracts/Resources.json";
 import {io} from "socket.io-client";
 
 import ImageService from "@src/core/services/image";

@@ -3,7 +3,7 @@ import React from "react";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {Box, SimpleGrid} from "@chakra-ui/react";
-import {isEvoSkullCollection, isLazyHorseCollection, isLazyHorsePonyCollection, isVaultCollection} from "@src/utils";
+import {isEvoSkullCollection, isLazyHorseCollection, isLazyHorsePonyCollection, isVaultCollection} from "@market/helpers/utils";
 
 interface PropertiesProps {
   address: string;

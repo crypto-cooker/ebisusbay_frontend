@@ -3,7 +3,7 @@ import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import StakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft";
 
 import localFont from 'next/font/local';
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import React from 'react';
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import {motion} from "framer-motion";
@@ -11,7 +11,7 @@ import ImageService from "@src/core/services/image";
 import Meeple from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/meeple";
 
 const gothamBook = localFont({
-  src: '../../../../../../fonts/Gotham-Book.woff2',
+  src: '../../../../../../global/assets/fonts/Gotham-Book.woff2',
   fallback: ['Roboto', 'system-ui', 'arial'],
 })
 

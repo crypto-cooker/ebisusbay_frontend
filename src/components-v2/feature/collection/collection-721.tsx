@@ -18,8 +18,8 @@ import {
   isCrosmocraftsCollection,
   isLandDeedsCollection,
   isPlayingCardsCollection
-} from "@src/utils";
-import useGetStakingPlatform from "@src/hooks/useGetStakingPlatform";
+} from "@market/helpers/utils";
+import useGetStakingPlatform from "@market/hooks/useGetStakingPlatform";
 import CollectionBundlesGroup from "@src/Components/components/CollectionBundlesGroup";
 import SalesCollection from "@src/Components/components/SalesCollection";
 import CollectionCronosverse from "@src/components-v2/feature/collection/tabs/cronosverse";
@@ -31,7 +31,7 @@ import {getCollections} from "@src/core/api/next/collectioninfo";
 import Items from "@src/components-v2/feature/collection/tabs/items";
 import PokerLeaderboardComponentPast from "@src/components-v2/feature/poker/poker-leaderboard-past";
 import {PokerCollection} from "@src/core/services/api-service/types";
-import {getTheme} from "@src/Theme/theme";
+import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
 

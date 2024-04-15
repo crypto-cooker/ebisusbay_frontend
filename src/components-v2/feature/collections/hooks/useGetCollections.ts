@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import {appConfig} from "@src/Config";
 import mergedCollections from "@src/core/data/merged-collections.json";
-import {caseInsensitiveCompare, isWeirdApesCollection} from "@src/utils";
+import {caseInsensitiveCompare, isWeirdApesCollection} from "@market/helpers/utils";
 
 const config = appConfig();
 const api = axios.create({

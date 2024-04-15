@@ -6,7 +6,7 @@ import {faRefresh} from "@fortawesome/free-solid-svg-icons";
 import {useAtom} from "jotai/index";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
-import {createSuccessfulTransactionToastContent} from "@src/utils";
+import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import {useUser} from "@src/components-v2/useUser";
 import {rwkDataAtom} from "@src/components-v2/feature/drop/types/ryoshi-with-knife/atom";
 

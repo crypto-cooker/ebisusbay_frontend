@@ -1,12 +1,12 @@
 import {ContractFunctionConfig} from "viem";
 import {Address, erc20ABI, erc721ABI} from "wagmi";
-import {ciEquals} from "@src/utils";
+import {ciEquals} from "@market/helpers/utils";
 import {BigNumber, ethers} from "ethers";
 import {multicall} from "@wagmi/core";
 import {appConfig} from "@src/Config";
-import {ItemType} from "@src/hooks/use-create-order-signer";
+import {ItemType} from "@market/hooks/use-create-order-signer";
 import {useState} from "react";
-import {BarterState} from "@src/jotai/atoms/deal";
+import {BarterState} from "@market/state/jotai/atoms/deal";
 import {Deal} from "@src/core/services/api-service/mapi/types";
 
 const config = appConfig();

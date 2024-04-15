@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 
 import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
-import {createSuccessfulTransactionToastContent} from '@src/utils';
-import {ERC721} from '@src/Contracts/Abis';
+import {createSuccessfulTransactionToastContent} from '@market/helpers/utils';
+import {ERC721} from '@src/global/contracts/Abis';
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 

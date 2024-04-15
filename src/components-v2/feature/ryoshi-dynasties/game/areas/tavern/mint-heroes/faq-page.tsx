@@ -2,8 +2,8 @@ import React from "react";
 import {Box, Heading, Text} from "@chakra-ui/react"
 import localFont from 'next/font/local';
 
-const gothamBook = localFont({ src: '../../../../../../../fonts/Gotham-Book.woff2' })
-const gothamXLight = localFont({ src: '../../../../../../../fonts/Gotham-XLight.woff2' })
+const gothamBook = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-Book.woff2' })
+const gothamXLight = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-XLight.woff2' })
 
 const FaqPage = () => {
 

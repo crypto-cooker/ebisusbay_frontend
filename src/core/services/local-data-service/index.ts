@@ -1,6 +1,6 @@
 import {appConfig} from "@src/Config";
 import {Drop, mapDrop} from "@src/core/models/drop";
-import {caseInsensitiveCompare, millisecondTimestamp} from "@src/utils";
+import {caseInsensitiveCompare, millisecondTimestamp} from "@market/helpers/utils";
 import ads from "@src/core/data/ads2.json";
 import {AdPlacement, DropsAdDetails, RdAdDetails} from "@src/core/services/local-data-service/types";
 

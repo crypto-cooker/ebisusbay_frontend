@@ -28,7 +28,7 @@ import {
   Stack
 } from "@chakra-ui/react";
 import React from "react";
-import {shortAddress} from "@src/utils";
+import {shortAddress} from "@market/helpers/utils";
 import Link from "next/link";
 import ImageService from "@src/core/services/image";
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";

@@ -1,4 +1,4 @@
-import {isEmptyObj} from "@src/utils";
+import {isEmptyObj} from "@market/helpers/utils";
 
 class SearchQuery {
   address?: string;

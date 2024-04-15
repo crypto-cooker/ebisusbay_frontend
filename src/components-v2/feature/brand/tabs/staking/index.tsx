@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import React, {useCallback, useEffect, useState} from "react";
-import {caseInsensitiveCompare, round} from "@src/utils";
+import {caseInsensitiveCompare, round} from "@market/helpers/utils";
 import {motion} from "framer-motion";
 import {useQuery} from "@tanstack/react-query";
 import {
@@ -29,7 +29,7 @@ import Button from "@src/Components/components/Button";
 import Taskbar from "@src/components-v2/feature/brand/tabs/staking/taskbar";
 import BoostSlotCard from "@src/components-v2/feature/brand/tabs/staking/boost-slot-card";
 import {Contract, ethers} from "ethers";
-import {ERC721} from "@src/Contracts/Abis";
+import {ERC721} from "@src/global/contracts/Abis";
 import {JsonRpcProvider} from "@ethersproject/providers";
 import {useUser} from "@src/components-v2/useUser";
 

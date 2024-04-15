@@ -1,7 +1,7 @@
 import {appConfig} from "@src/Config";
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import {PresaleVault, VaultContract} from "@src/core/services/api-service/graph/types";
-import {urlify} from "@src/utils";
+import {urlify} from "@market/helpers/utils";
 
 const config = appConfig();
 

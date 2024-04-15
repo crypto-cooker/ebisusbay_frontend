@@ -11,15 +11,15 @@ import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
 
-import {createSuccessfulTransactionToastContent, isCmbDrop, newlineText, percentage} from '@src/utils';
+import {createSuccessfulTransactionToastContent, isCmbDrop, newlineText, percentage} from '@market/helpers/utils';
 import {DropState as statuses} from '@src/core/api/enums';
-import {EbisuDropAbi} from '@src/Contracts/Abis';
+import {EbisuDropAbi} from '@src/global/contracts/Abis';
 import {appConfig} from "@src/Config";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import {formatEther} from "ethers/lib/utils";
 import {FormLabel, Progress, Spinner} from "@chakra-ui/react";
 import {useUser} from "@src/components-v2/useUser";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 
 const config = appConfig();
 const drops = config.drops;
@@ -116,7 +116,7 @@ const MultiDrop = () => {
     // Use the new contract format if applicable
     let abi = currentDrop.abi;
     if (isUsingAbiFile(abi)) {
-      const abiJson = require(`@src/Assets/abis/${currentDrop.abi}`);
+      const abiJson = require(`@market/assets/abis/${currentDrop.abi}`);
       abi = abiJson.abi ?? abiJson;
     } else if (isUsingDefaultDropAbi(abi)) {
       abi = EbisuDropAbi;

@@ -32,9 +32,9 @@ import {
   useDisclosure
 } from "@chakra-ui/react";
 import Image from "next/image";
-import {appUrl, caseInsensitiveCompare, round, siPrefixedNumber, timeSince} from "@src/utils";
+import {appUrl, caseInsensitiveCompare, round, siPrefixedNumber, timeSince} from "@market/helpers/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
-import {darkTheme, lightTheme} from "@src/Theme/theme";
+import {darkTheme, lightTheme} from "@src/global/theme/theme";
 import {useSelector} from "react-redux";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import Slider from './Slider';

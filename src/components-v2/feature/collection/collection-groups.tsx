@@ -1,7 +1,7 @@
 import {PagedList} from "@src/core/services/api-service/paginated-list";
 import {InfiniteData} from "@tanstack/query-core";
 import {Box, SimpleGrid} from "@chakra-ui/react";
-import {isBundle, isNftBlacklisted} from "@src/utils";
+import {isBundle, isNftBlacklisted} from "@market/helpers/utils";
 import React from "react";
 import NftBundleCard from "@src/Components/components/NftBundleCard";
 import {NftCard} from "@src/components-v2/shared/nft-card";

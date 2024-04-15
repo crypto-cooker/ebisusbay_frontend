@@ -8,11 +8,11 @@ import {MenuPopup} from '@src/Components/components/chakra-components';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {nftCardUrl} from "@src/helpers/image";
 import {Badge, Box, Center, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
-import {appUrl, caseInsensitiveCompare, round} from "@src/utils";
+import {appUrl, caseInsensitiveCompare, round} from "@market/helpers/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
-import {darkTheme, lightTheme} from "@src/Theme/theme";
+import {darkTheme, lightTheme} from "@src/global/theme/theme";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 
 interface RyoshiStakingNftCardProps {

@@ -3,7 +3,7 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Icon, IconButton, Menu, MenuButton, MenuItem, MenuList, Text,} from '@chakra-ui/react'
 
-import {getTheme} from '@src/Theme/theme';
+import {getTheme} from '@src/global/theme/theme';
 import {faEllipsisH} from "@fortawesome/free-solid-svg-icons";
 import {useUser} from "@src/components-v2/useUser";
 

@@ -18,12 +18,12 @@ import {
 } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import {commify} from "ethers/lib/utils";
-import {ItemType} from "@src/hooks/use-create-order-signer";
-import useCurrencyBroker from "@src/hooks/use-currency-broker";
+import {ItemType} from "@market/hooks/use-create-order-signer";
+import useCurrencyBroker from "@market/hooks/use-currency-broker";
 import Link from "next/link";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {DealItem} from "@src/core/services/api-service/mapi/types";
-import {isAddress, shortAddress, shortString} from "@src/utils";
+import {isAddress, shortAddress, shortString} from "@market/helpers/utils";
 import {ethers} from "ethers";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAward} from "@fortawesome/free-solid-svg-icons";

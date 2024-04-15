@@ -4,8 +4,8 @@ import {createGlobalStyle, default as styled} from 'styled-components';
 import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
 
-import {getMarketData} from '../GlobalState/marketplaceSlice';
-import {theme} from '../Theme/theme';
+import {getMarketData} from '@market/state/redux/slices/marketplaceSlice';
+import {theme} from '../global/theme/theme';
 import {hostedImage} from "../helpers/image";
 import {useUser} from "@src/components-v2/useUser";
 

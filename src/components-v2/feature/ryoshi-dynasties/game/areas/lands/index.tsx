@@ -4,7 +4,7 @@ import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import styles0 from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 import ImageService from '@src/core/services/image';
 import {LandsHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-hud";
-import {useAppSelector} from "@src/Store/hooks";
+import {useAppSelector} from "@market/state/redux/store/hooks";
 
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 import LandModal from './land-modal';

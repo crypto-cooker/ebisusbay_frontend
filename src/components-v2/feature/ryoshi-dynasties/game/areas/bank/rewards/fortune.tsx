@@ -39,10 +39,10 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {round, timeSince} from "@src/utils";
+import {round, timeSince} from "@market/helpers/utils";
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {RdModalAlert, RdModalBox, RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import {useFortunePrice} from "@src/hooks/useGlobalPrices";
+import {useFortunePrice} from "@market/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import {toast} from "react-toastify";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";

@@ -20,7 +20,7 @@ import ImageService from "@src/core/services/image";
 import {useRouter} from "next/router";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import LocalDataService from "@src/core/services/local-data-service";
-import {millisecondTimestamp} from "@src/utils";
+import {millisecondTimestamp} from "@market/helpers/utils";
 
 const tokens = appConfig('tokens')
 const drops: Drop[] = appConfig('drops').map((drop: any) => mapDrop(drop));

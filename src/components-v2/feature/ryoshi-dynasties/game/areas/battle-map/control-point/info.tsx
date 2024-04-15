@@ -18,7 +18,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {RdControlPoint} from "@src/core/services/api-service/types";
 import ImageService from "@src/core/services/image";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import {pluralize} from "@src/utils";
+import {pluralize} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 
 interface InfoTabProps {

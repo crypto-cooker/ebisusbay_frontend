@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import {AxiosResponse} from "axios";
-import {shortAddress, timeSince} from "@src/utils";
+import {shortAddress, timeSince} from "@market/helpers/utils";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";

@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 
 import {ethers} from 'ethers';
-import {isNftBlacklisted, isUserBlacklisted, round, timeSince, usdFormat} from '@src/utils';
+import {isNftBlacklisted, isUserBlacklisted, round, timeSince, usdFormat} from '@market/helpers/utils';
 import {listingState} from '@src/core/api/enums';
 import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
 import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listing";
 
 import {Box, Card, CardBody, Flex, Heading, Stack, Text,} from '@chakra-ui/react';
 import PurchaseConfirmationDialog from "@src/components-v2/shared/dialogs/purchase-confirmation";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
-import {useAppSelector} from "@src/Store/hooks";
-import {useTokenExchangeRate} from "@src/hooks/useGlobalPrices";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
+import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useTokenExchangeRate} from "@market/hooks/useGlobalPrices";
 import {appConfig} from "@src/Config";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {commify} from "ethers/lib/utils";

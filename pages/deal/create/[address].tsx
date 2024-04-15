@@ -6,7 +6,7 @@ import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import {useUser} from "@src/components-v2/useUser";
 import {GetServerSidePropsContext} from "next";
 import {getProfile} from "@src/core/cms/endpoints/profile";
-import {caseInsensitiveCompare, ciEquals, shortAddress} from "@src/utils";
+import {caseInsensitiveCompare, ciEquals, shortAddress} from "@market/helpers/utils";
 import {isAddress} from "ethers/lib/utils";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {DefaultContainer} from "@src/components-v2/shared/default-container";

@@ -22,7 +22,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {CloseIcon, SearchIcon} from "@chakra-ui/icons";
 import {appConfig} from "@src/Config";
@@ -30,8 +30,8 @@ import {useRouter} from "next/router";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
 import {useUser} from "@src/components-v2/useUser";
-import useSearch from "@src/hooks/use-search";
-import {SearchHistoryItem} from "@src/jotai/atoms/search";
+import useSearch from "@market/hooks/use-search";
+import {SearchHistoryItem} from "@market/state/jotai/atoms/search";
 
 const minChars = 3;
 

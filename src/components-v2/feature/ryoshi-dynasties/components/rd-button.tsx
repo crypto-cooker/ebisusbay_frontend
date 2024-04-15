@@ -2,7 +2,7 @@ import {Box, BoxProps, ButtonProps, Flex, Image, ResponsiveValue, useBreakpointV
 import React, {useEffect, useState} from "react";
 import localFont from "next/font/local";
 
-const gothamMedium = localFont({ src: '../../../../fonts/GothamMedium.woff2' })
+const gothamMedium = localFont({ src: '../../../../global/assets/fonts/GothamMedium.woff2' })
 
 type Size = 'sm' | 'md' | 'lg';
 

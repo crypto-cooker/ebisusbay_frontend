@@ -19,7 +19,7 @@ import {Step1ChooseItems} from "@src/components-v2/feature/deal/create/step-1-ta
 import {DealPreview} from "@src/components-v2/feature/deal/create/deal-preview";
 import {Step2ChooseItems} from "@src/components-v2/feature/deal/create/step-2-maker-items";
 import {useUser} from "@src/components-v2/useUser";
-import {ciEquals} from "@src/utils";
+import {ciEquals} from "@market/helpers/utils";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {DefaultContainer} from "@src/components-v2/shared/default-container";
 import {Step3ReviewDetails} from "@src/components-v2/feature/deal/create/step-3-review-details";

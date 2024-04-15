@@ -1,7 +1,7 @@
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {ApiService} from "@src/core/services/api-service";
 import {Box, HStack, Image, Link, SimpleGrid, Text} from "@chakra-ui/react";
-import {pluralize} from "@src/utils";
+import {pluralize} from "@market/helpers/utils";
 import {useContext, useEffect, useMemo, useState} from "react";
 import {toast} from "react-toastify";
 import {appConfig} from "@src/Config";
@@ -12,7 +12,7 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {parseErrorMessage} from "@src/helpers/validator";
-import useAuthedFunction from "@src/hooks/useAuthedFunction";
+import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
 import {useUser} from "@src/components-v2/useUser";

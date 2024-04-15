@@ -14,7 +14,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import React, {useState} from "react";
-import {caseInsensitiveCompare} from "@src/utils";
+import {caseInsensitiveCompare} from "@market/helpers/utils";
 import NextLink from 'next/link'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
