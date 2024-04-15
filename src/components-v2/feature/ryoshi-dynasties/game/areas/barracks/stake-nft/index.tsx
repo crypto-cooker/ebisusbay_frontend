@@ -35,7 +35,7 @@ import {ApiService} from "@src/core/services/api-service";
 import InfiniteScroll from "react-infinite-scroll-component";
 import StakingNftCard from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/staking-nft-card";
 import {appConfig} from "@src/Config";
-import {caseInsensitiveCompare, ciEquals} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import WalletNft from "@src/core/models/wallet-nft";
 import ImageService from "@src/core/services/image";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
@@ -119,14 +119,19 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   });
 
   const handleAddNft = useCallback((nft: WalletNft) => {
-    const pendingCount = pendingNfts.filter((sNft) => sNft.nftId === nft.nftId && caseInsensitiveCompare(sNft.nftAddress, nft.nftAddress)).length;
+    const pendingCount = pendingNfts.filter((sNft) => sNft.nftId === nft.nftId && ciEquals(sNft.nftAddress, nft.nftAddress)).length;
     const withinUnlockedRange = pendingNfts.length < (slotUnlockContext.unlocks + 1);
     const withinMaxSlotRange = pendingNfts.length < rdConfig.barracks.staking.nft.maxSlots;
-    const stakedCount = stakedNfts.filter((sNft) => sNft.tokenId === nft.nftId && caseInsensitiveCompare(sNft.contractAddress, nft.nftAddress)).length;
+    const stakedCount = stakedNfts.reduce((acc, sNft) => {
+      if (sNft.tokenId === nft.nftId && ciEquals(sNft.contractAddress, nft.nftAddress)) {
+        return acc + parseInt(sNft.amount);
+      }
+      return acc;
+    }, 0);
     const hasRemainingBalance = (nft.balance ?? 1) - (pendingCount - stakedCount) > 0;
 
     if (hasRemainingBalance && withinUnlockedRange && withinMaxSlotRange) {
-      const collectionSlug = config.collections.find((c: any) => caseInsensitiveCompare(c.address, nft.nftAddress))?.slug;
+      const collectionSlug = config.collections.find((c: any) => ciEquals(c.address, nft.nftAddress))?.slug;
       const stakeConfigs = rdConfig.barracks.staking.nft.collections.filter((c) => c.slug === collectionSlug);
       const stakeConfig = stakeConfigs.length < 2
         ? stakeConfigs[0]
@@ -170,7 +175,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const handleRemoveNft = useCallback((nftAddress: string, nftId: string) => {
     let arrCopy = [...pendingNfts]; // Copy the original array
 
-    let indexToRemove = arrCopy.slice().reverse().findIndex(nft => nft.nftId == nftId && caseInsensitiveCompare(nft.nftAddress, nftAddress));
+    let indexToRemove = arrCopy.slice().reverse().findIndex(nft => nft.nftId == nftId && ciEquals(nft.nftAddress, nftAddress));
     if (indexToRemove !== -1) {
       arrCopy.splice(arrCopy.length - 1 - indexToRemove, 1);
     }
@@ -183,7 +188,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
     queryClient.setQueryData(['BarracksUnstakedNfts', user.address, currentCollection], (old: any) => {
       if (!old) return [];
       old.pages = old.pages.map((page:  any) => {
-        page.data = page.data.filter((nft: any) => !pendingNfts.some((pNft) => pNft.nftId === nft.nftId && caseInsensitiveCompare(pNft.nftAddress, nft.nftAddress)));
+        page.data = page.data.filter((nft: any) => !pendingNfts.some((pNft) => pNft.nftId === nft.nftId && ciEquals(pNft.nftAddress, nft.nftAddress)));
         return page;
       });
       return old;
@@ -229,7 +234,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       for (const token of data) {
         const nft = await getNft(token.contractAddress, token.tokenId);
         if (nft) {
-          let stakeConfigs = rdConfig.barracks.staking.nft.collections.filter((c) => caseInsensitiveCompare(c.address, nft.collection.address));
+          const stakeConfigs = rdConfig.barracks.staking.nft.collections.filter((c) => ciEquals(c.address, nft.collection.address));
           const stakeConfig = stakeConfigs.length < 2
             ? stakeConfigs[0]
             : stakeConfigs.find(c => c.minId <= Number(nft.nft.nftId) && c.maxId >= Number(nft.nft.nftId));
