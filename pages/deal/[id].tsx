@@ -19,7 +19,7 @@ const ManageDeal = ({deal}: ManageDealProps) => {
       <PageHead
         title={'Swap NFTs on Ebisu\'s Bay'}
         description='Reveal unique value opportunities by swapping NFTs and tokens directly'
-        image={ImageService.translate('/img/background/deals.jpg').convert()}
+        image={ImageService.translate('/img/background/deal.png').convert()}
       />
       <PageHeader
         title={'View Deal'}

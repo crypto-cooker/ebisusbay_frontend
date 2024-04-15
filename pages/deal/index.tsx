@@ -82,7 +82,7 @@ const Deal = () => {
       <PageHead
         title='Make a Deal'
         description='Reveal unique value opportunities by swapping NFTs and tokens directly'
-        image={ImageService.translate('/img/background/deals.jpg').convert()}
+        image={ImageService.translate('/img/background/deal.png').convert()}
       />
       <PageHeader title={'Create a Deal'} subtitle='Reveal unique value opportunities by swapping NFTs and tokens directly'/>
       {!!address ? (
