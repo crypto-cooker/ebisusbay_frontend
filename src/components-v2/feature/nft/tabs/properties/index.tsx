@@ -9,7 +9,7 @@ interface PropertiesProps {
   address: string;
   slug?: string;
   attributes: any;
-  queryKey: string;
+  queryKey?: string;
 }
 
 const Properties = ({ address, slug, attributes, queryKey }: PropertiesProps) => {
