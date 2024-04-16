@@ -11,9 +11,9 @@ import {
   createSuccessfulTransactionToastContent,
   isFounderDrop,
   newlineText,
-  percentage,
-  useInterval,
+  percentage
 } from '@market/helpers/utils';
+import {useInterval} from "@market/hooks/use-interval";
 import {DropState, DropState as statuses} from '@src/core/api/enums';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {appConfig} from "@src/Config";
