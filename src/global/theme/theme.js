@@ -154,8 +154,8 @@ const customTheme = extendTheme({
     useSystemColorMode: false,
   },
   fonts: {
-    heading: 'DM_Sans, Helvetica, Arial, sans-serif',
-    body: `DM_Sans, Helvetica, Arial, sans-serif`,
+    heading: 'DM_Sans, DM Sans, Helvetica, Arial, sans-serif',
+    body: `DM_Sans, DM Sans, Helvetica, Arial, sans-serif`,
   },
   colors: {
     light: lightTheme,
