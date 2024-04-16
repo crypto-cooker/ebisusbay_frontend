@@ -9,17 +9,6 @@ import {Site24x7LoggingService} from '@src/third-party/site24x7';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ChakraProvider} from '@chakra-ui/react'
 
-import {config} from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import 'react-toastify/dist/ReactToastify.css';
-import 'swiper/css';
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
-import '../src/global/assets/styles/style.scss';
-import '../src/global/assets/styles/override.scss';
 import customTheme from "@src/global/theme/theme";
 import {Web3Modal} from "@src/components-v2/web3modal";
 import {UserProvider} from "@src/components-v2/shared/contexts/user";
@@ -31,8 +20,6 @@ import ClientLayoutState from "./client-layout-state";
 import dynamic from "next/dynamic";
 
 Site24x7LoggingService.init();
-
-config.autoAddCss = false;
 
 const firebase = initializeApp(firebaseConfig);
 const queryClient = new QueryClient();
