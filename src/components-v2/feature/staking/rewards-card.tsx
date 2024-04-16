@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, round, siPrefixedNumber, useInterval} from "@market/helpers/utils";
+import {createSuccessfulTransactionToastContent, round, siPrefixedNumber} from "@market/helpers/utils";
+import {useInterval} from "@market/hooks/use-interval";
 import {getTheme} from "@src/global/theme/theme";
 import StakeABI from "@src/global/contracts/Stake.json";
 import {appConfig} from "@src/Config";
