@@ -5,17 +5,30 @@ import {DM_Sans} from 'next/font/google';
 import Head from "next/head";
 import {ReactNode} from "react";
 
+import {config} from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
+import 'swiper/css';
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+import '../src/global/assets/styles/style.scss';
+import '../src/global/assets/styles/override.scss';
+
 const dmSans = DM_Sans({
   weight: ['200', '300', '400', '500', '600', '700', '800'],
   style: ['normal'],
   display: 'swap',
-  subsets: ['latin'],
+  subsets: ['latin']
 });
 
+config.autoAddCss = false;
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={dmSans.className}>
+    <html lang="en">
       <Head>
         <Script type="module"
                 src="https://js-wc.site24x7static.com/site24x7/client/statusiq_status_widget/statusiq-status-widget.esm.js?12_2024"
@@ -33,7 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           strategy="beforeInteractive">
         </Script>
       </Head>
-      <body>
+      <body className={dmSans.className}>
         <ClientLayout>
           {children}
         </ClientLayout>

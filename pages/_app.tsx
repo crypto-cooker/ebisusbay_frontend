@@ -24,11 +24,18 @@ import {AppProps} from "next/app";
 import App from "@src/components-v2/app";
 import {Web3Modal} from "@src/components-v2/web3modal";
 import {UserProvider} from "@src/components-v2/shared/contexts/user";
+import {DM_Sans} from "next/font/google";
 
 Site24x7LoggingService.init();
 const queryClient = new QueryClient()
 
 config.autoAddCss = false;
+const dmSans = DM_Sans({
+  weight: ['200', '300', '400', '500', '600', '700', '800'],
+  style: ['normal'],
+  display: 'swap',
+  subsets: ['latin']
+});
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   // const [queryClient] = useState(
@@ -45,7 +52,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   // )
 
   return (
-    <>
+    <main className={dmSans.className}>
       <Provider store={store}>
         <Sentry.ErrorBoundary fallback={() => <ErrorPage />}>
           <QueryClientProvider client={queryClient}>
@@ -59,6 +66,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           </QueryClientProvider>
         </Sentry.ErrorBoundary>
       </Provider>
-    </>
+    </main>
   );
 }

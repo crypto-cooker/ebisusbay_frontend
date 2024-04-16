@@ -72,7 +72,7 @@
     "image-size": "^1.0.2",
     "jotai": "^2.6.0",
     "moment": "^2.29.4",
-    "next": "^14.1.4",
+    "next": "^14.2.1",
     "react": "^18.2.0",
     "react-avatar-editor": "^13.0.0",
     "react-awesome-reveal": "^4.2.3",
