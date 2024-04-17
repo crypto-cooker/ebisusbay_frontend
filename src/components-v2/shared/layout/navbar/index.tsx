@@ -151,7 +151,6 @@ const Header = function () {
                 display={{base: 'none', md: 'flex'}}
                 me={4}
               >
-                <NavLink name={'Rewards'} to={'/rewards'} />
                 <NavLink name={'DEX'} to={'https://swap.ebisusbay.com'} />
                 <Menu placement='bottom-end'>
                   <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
@@ -177,6 +176,7 @@ const Header = function () {
                     <MenuItem as={Link} href='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' _hover={{color: 'inherit'}} justifyContent='end'>Izanami&apos;s Cradle</MenuItem>
                     <MenuItem as={Link} href='/collection/ryoshi-playing-cards?tab=pokerRanks' _hover={{color: 'inherit'}} justifyContent='end'>Crypto HODL&apos;em</MenuItem>
                     <MenuItem as={Link} href='/xp-leaderboard' _hover={{color: 'inherit'}} justifyContent='end'>XP Leaderboard</MenuItem>
+                    <MenuItem as={Link} href='/rewards' _hover={{color: 'inherit'}} justifyContent='end'>Rewards</MenuItem>
                   </MenuList>
                 </Menu>
               </HStack>
