@@ -52,7 +52,6 @@ WORKDIR /usr/src/app
 COPY --from=deps-stage --link /usr/src/app/node_modules ./node_modules
 COPY --link package.json ./
 COPY --link .husky ./.husky
-COPY --link app ./app
 COPY --link pages ./pages
 COPY --link public ./public
 COPY --link src ./src
@@ -99,7 +98,6 @@ RUN npm --version
 WORKDIR /usr/src/app
 
 COPY --from=build-stage --link /usr/src/app/.husky ./.husky
-COPY --from=build-stage --link /usr/src/app/app ./app
 COPY --from=build-stage --link /usr/src/app/pages ./pages
 COPY --from=build-stage --link /usr/src/app/public ./public
 COPY --from=build-stage --link /usr/src/app/src ./src
