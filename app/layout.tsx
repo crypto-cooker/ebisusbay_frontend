@@ -21,7 +21,8 @@ const dmSans = DM_Sans({
   weight: ['200', '300', '400', '500', '600', '700', '800'],
   style: ['normal'],
   display: 'swap',
-  subsets: ['latin']
+  subsets: ['latin'],
+  variable: '--font-dm-sans'
 });
 
 config.autoAddCss = false;

@@ -1413,8 +1413,10 @@ a {
 
 /*** footer ***/
 footer {
-  padding: 80px 0 0 0;
-  &.footer-light {
+  background: $bgColor1;
+  padding-top: 1rem;
+  >.footer-light {
+    padding: 80px 0 0 0;
     background: $bgColor1;
     border-top: solid 1px $borderColor1;
     color: $textColor2;
