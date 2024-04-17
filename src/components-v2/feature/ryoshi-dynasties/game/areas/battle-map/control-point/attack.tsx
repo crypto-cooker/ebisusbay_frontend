@@ -21,7 +21,8 @@ import {
   VStack
 } from "@chakra-ui/react";
 import {getProfileArmies} from "@src/core/api/RyoshiDynastiesAPICalls";
-import {capitalizeFirstLetter, createSuccessfulTransactionToastContent, useInterval} from '@market/helpers/utils';
+import {capitalizeFirstLetter, createSuccessfulTransactionToastContent} from '@market/helpers/utils';
+import {useInterval} from "@market/hooks/use-interval";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import BattleConclusion

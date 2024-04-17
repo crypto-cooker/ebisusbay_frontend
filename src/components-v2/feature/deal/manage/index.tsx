@@ -199,7 +199,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
             />
           </Box>
         </Flex>
-        <Box my='auto' mx='auto' width='30px'>
+        <Box mx='auto' width='30px' pt={{base: 0, md: 3}}>
           <Icon as={FontAwesomeIcon} icon={faHandshake} boxSize={8} />
         </Box>
         <Flex flex={1} minW={0}>
