@@ -9,7 +9,7 @@ definitions:
     docker:
       # default memory is 1024MB
       # The total memory for services on each pipeline step must not exceed the remaining memory, which is 3072/7128 MB for 1x/2x steps respectively.
-      memory: 4096
+      memory: 5120
       image: public.ecr.aws/docker/library/docker:dind
 
   install_tools: &install_tools
