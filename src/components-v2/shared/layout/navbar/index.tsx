@@ -151,7 +151,16 @@ const Header = function () {
                 display={{base: 'none', md: 'flex'}}
                 me={4}
               >
-                <NavLink name={'DEX'} to={'https://swap.ebisusbay.com'} />
+                <Menu placement='bottom-end'>
+                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
+                    DEX
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem as={Link} href='/dex/swap' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
+                    <MenuItem as={Link} href='/dex/liquidity' _hover={{color: 'inherit'}} justifyContent='end'>Liquidity</MenuItem>
+                    <MenuItem as={Link} href='/dex/farms' _hover={{color: 'inherit'}} justifyContent='end'>Farms</MenuItem>
+                  </MenuList>
+                </Menu>
                 <Menu placement='bottom-end'>
                   <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
                     Marketplace
