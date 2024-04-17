@@ -99,7 +99,7 @@ RUN npm --version
 WORKDIR /usr/src/app
 
 COPY --from=build-stage --link /usr/src/app/.husky ./.husky
-COPY --from=build-stage --link /usr/src/app/app ./.app
+COPY --from=build-stage --link /usr/src/app/app ./app
 COPY --from=build-stage --link /usr/src/app/pages ./pages
 COPY --from=build-stage --link /usr/src/app/public ./public
 COPY --from=build-stage --link /usr/src/app/src ./src
