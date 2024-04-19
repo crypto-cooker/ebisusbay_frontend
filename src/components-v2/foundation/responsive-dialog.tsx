@@ -13,12 +13,13 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
+  ModalOverlay, ModalProps,
   useBreakpointValue
 } from "@chakra-ui/react";
 import React, {ComponentType, ReactNode} from "react";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
+import {ResponsiveValue} from "@chakra-ui/system";
 
 export type ResponsiveDialogComponents = {
   DialogBody: ComponentType<BoxProps & { children: ReactNode }>;
@@ -29,6 +30,7 @@ type DialogProps = {
   isOpen: boolean;
   onClose: () => void;
   title: string;
+  modalProps?: Pick<ModalProps, 'size' | 'isCentered'>;
 }
 
 export const useResponsiveDialog = () => {
@@ -50,11 +52,11 @@ export const useResponsiveDialog = () => {
   }
 };
 
-const ModalDialog = ({isOpen, onClose, title, children}: DialogProps & {children: ReactNode}) => {
+const ModalDialog = ({isOpen, onClose, title, modalProps, children}: DialogProps & {children: ReactNode}) => {
   const user = useUser();
 
   return (
-    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
+    <Modal onClose={onClose} isOpen={isOpen} isCentered {...modalProps}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
