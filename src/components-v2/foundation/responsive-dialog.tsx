@@ -20,6 +20,7 @@ import React, {ComponentType, ReactNode} from "react";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
 import {ResponsiveValue} from "@chakra-ui/system";
+import {DrawerDialog, ModalDialog} from "@src/components-v2/foundation/modal";
 
 export type ResponsiveDialogComponents = {
   DialogBody: ComponentType<BoxProps & { children: ReactNode }>;
@@ -51,42 +52,3 @@ export const useResponsiveDialog = () => {
     };
   }
 };
-
-const ModalDialog = ({isOpen, onClose, title, modalProps, children}: DialogProps & {children: ReactNode}) => {
-  const user = useUser();
-
-  return (
-    <Modal onClose={onClose} isOpen={isOpen} isCentered {...modalProps}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader className="text-center">
-          {title}
-        </ModalHeader>
-        <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
-        {children}
-      </ModalContent>
-    </Modal>
-  )
-}
-
-const DrawerDialog = ({isOpen, onClose, title, children}: DialogProps & {children: ReactNode}) => {
-  const user = useUser();
-
-  return (
-    <Drawer
-      isOpen={isOpen}
-      onClose={onClose}
-      size="sm"
-      placement='bottom'
-    >
-      <DrawerOverlay />
-      <DrawerContent>
-        <DrawerHeader>
-          {title}
-        </DrawerHeader>
-        <DrawerCloseButton color={getTheme(user.theme).colors.textColor4} />
-        {children}
-      </DrawerContent>
-    </Drawer>
-  )
-}

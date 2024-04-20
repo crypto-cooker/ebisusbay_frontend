@@ -10,3 +10,13 @@ export interface DexToken {
 export interface DexTokenBalance extends DexToken {
   balance: bigint;
 }
+
+export enum Field {
+  INPUT = 'INPUT',
+  OUTPUT = 'OUTPUT',
+}
+
+export interface ModalState {
+  isOpen: boolean;
+  onClose: () => void;
+}

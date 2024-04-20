@@ -1,24 +1,25 @@
 import {atom, PrimitiveAtom} from 'jotai';
-import {DexToken, DexTokenBalance} from "@dex/types";
+import {DexToken, DexTokenBalance, Field} from "@dex/types";
 import {formatUnits, parseUnits} from 'viem'
 import {ciEquals} from "@market/helpers/utils";
 import {Trade} from "@uniswap/v3-sdk";
 
+
 export interface SwapBoxToken {
-  key: 'tokenA' | 'tokenB';
+  key: Field;
   token: DexToken | null;
   amountEth: string;
   amountWei: bigint;
 }
 
-export const tokenAAtom = atom<SwapBoxToken>({
-  key: 'tokenA',
+export const tokenInAtom = atom<SwapBoxToken>({
+  key: Field.INPUT,
   token: null,
   amountEth: '',
   amountWei: BigInt(0)
 });
-export const tokenBAtom = atom<SwapBoxToken>({
-  key: 'tokenB',
+export const tokenOutAtom = atom<SwapBoxToken>({
+  key: Field.OUTPUT,
   token: null,
   amountEth: '',
   amountWei: BigInt(0)
@@ -55,9 +56,9 @@ export const setTokenAmountFromWei = atom(
 
 export const setTokenAtom = atom(
   null,
-  (get, set, type: 'tokenA' | 'tokenB', token: DexToken) => {
-    const atom = type === 'tokenA' ? tokenAAtom : tokenBAtom;
-    const otherAtom = type === 'tokenA' ? tokenBAtom : tokenAAtom;
+  (get, set, type: Field, token: DexToken) => {
+    const atom = type === Field.INPUT ? tokenInAtom : tokenOutAtom;
+    const otherAtom = type === Field.OUTPUT ? tokenOutAtom : tokenInAtom;
 
     const tokenState = get(atom);
     const otherTokenState = get(otherAtom);
@@ -88,8 +89,8 @@ export const setTokenAtom = atom(
 export const switchTokensAtom = atom(
   null,
   (get, set) => {
-    const tokenAState = get(tokenAAtom);
-    const tokenBState = get(tokenBAtom);
+    const tokenAState = get(tokenInAtom);
+    const tokenBState = get(tokenOutAtom);
 
     // const targetTokenStake = isTokenSwitch ? tokenBState : tokenAState;
     // const targetOtherTokenStake = isTokenSwitch ? tokenAState : tokenBState;

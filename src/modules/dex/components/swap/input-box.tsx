@@ -8,7 +8,7 @@ import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 import {ciEquals} from "@market/helpers/utils";
 import {ethers} from "ethers";
 import {PrimitiveAtom, useAtom, useAtomValue, useSetAtom} from "jotai";
-import {setTokenAmountFromEth, setTokenAtom, SwapBoxToken, userTokenBalancesAtom} from "@dex/components/swap/store";
+import {setTokenAmountFromEth, setTokenAtom, SwapBoxToken, userTokenBalancesAtom} from "@dex/state/swap/atom";
 import {formatUnits, parseUnits} from "viem";
 
 interface InputBoxProps {
