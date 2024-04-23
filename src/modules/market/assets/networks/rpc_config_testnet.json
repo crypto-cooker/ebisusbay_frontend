@@ -3878,6 +3878,23 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "SONORC",
+      "slug": "sonorc",
+      "multiToken": false,
+      "address": "0x1e069e0b828df4cb9aa77b710870ceb0ec63470f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
