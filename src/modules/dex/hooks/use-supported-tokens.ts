@@ -1,6 +1,6 @@
 import {appConfig} from "@src/Config";
 import tokens from '@dex/configs/tokens.json';
-import {DexToken} from "@dex/types";
+import {DexToken} from "@dex/types/types";
 import {useMemo} from "react";
 
 const config = appConfig();

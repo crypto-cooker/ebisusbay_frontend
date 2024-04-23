@@ -707,10 +707,15 @@ export const getAddressFromSlug = (slug) => {
 
 // can use web3.utils.isAddress tho
 export const isAddress = (address) => {
+  if (!value) {
+    return false
+  }
   try {
-    return getAddress(address);
+    // Alphabetical letters must be made lowercase for getAddress to work.
+    // See documentation here: https://docs.ethers.io/v5/api/utils/address/
+    return getAddress(value.toLowerCase())
   } catch {
-    return false;
+    return false
   }
 };
 

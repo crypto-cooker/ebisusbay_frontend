@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import React, {ChangeEvent, ComponentType, ReactNode, useEffect, useRef, useState} from "react";
 import {useWindowSize} from "@market/hooks/useWindowSize";
-import {DexToken} from "@dex/types";
+import {DexToken} from "@dex/types/types";
 import Row from "@dex/components/swap/select-token/row";
 import {useAtomValue} from "jotai";
 import {userTokenBalancesAtom} from "@dex/state/swap/atom";

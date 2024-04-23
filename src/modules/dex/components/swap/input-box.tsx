@@ -1,6 +1,6 @@
 import {Card} from "@src/components-v2/foundation/card";
 import {Box, Button, Flex, HStack, Image, Input, NumberInput, NumberInputField, useDisclosure} from "@chakra-ui/react";
-import {DexToken, DexTokenBalance} from "@dex/types";
+import {DexToken, DexTokenBalance} from "@dex/types/types";
 import {ChangeEvent, useEffect, useState} from "react";
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import {ResponsiveChooseTokenDialog} from "@dex/components/swap/responsive-choose-token-dialog";

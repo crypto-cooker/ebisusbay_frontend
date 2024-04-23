@@ -2,7 +2,7 @@ import {useColorModeValue} from "@chakra-ui/color-mode";
 import {Box, Flex, HStack, Image, VStack} from "@chakra-ui/react";
 import {ethers} from "ethers";
 import React from "react";
-import {DexToken, DexTokenBalance} from "@dex/types";
+import {DexToken, DexTokenBalance} from "@dex/types/types";
 
 interface RowProps {
   token: DexTokenBalance;

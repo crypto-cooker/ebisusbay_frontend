@@ -1,6 +1,10 @@
 // Custom hook for userExpertMode
 import {useAtom} from "jotai";
 import {dexUserStateAtom} from "@dex/state/user/atom";
+import {SlippageTolerance} from "@dex/state/user/types";
+import {Percent} from "@uniswap/sdk-core";
+import JSBI from "jsbi";
+import {RouterPreference} from "@dex/state/routing/types";
 
 export function useUserExpertMode() {
   const [state, setState] = useAtom(dexUserStateAtom);
@@ -18,15 +22,39 @@ export function useUserExpertMode() {
 export function useUserSlippageTolerance() {
   const [state, setState] = useAtom(dexUserStateAtom);
 
-  const setUserSlippageTolerance = (newTolerance: number) => {
+  const userSlippageTolerance = state.userSlippageTolerance === SlippageTolerance.Auto
+    ? SlippageTolerance.Auto
+    : new Percent(state.userSlippageTolerance, 10_000);
+
+  const setUserSlippageTolerance = (newTolerance: Percent | SlippageTolerance.Auto) => {
+    let value: SlippageTolerance.Auto | number
+    try {
+      value =
+        newTolerance === SlippageTolerance.Auto
+          ? SlippageTolerance.Auto
+          : JSBI.toNumber(newTolerance.multiply(10_000).quotient)
+    } catch (error) {
+      value = SlippageTolerance.Auto
+    }
+
     setState({
       ...state,
-      userSlippageTolerance: newTolerance
+      userSlippageTolerance: value
     });
   };
 
-  return [state.userSlippageTolerance, setUserSlippageTolerance] as const;
+  return [userSlippageTolerance, setUserSlippageTolerance] as const;
 }
+
+/**
+ *Returns user slippage tolerance, replacing the auto with a default value
+ * @param defaultSlippageTolerance the value to replace auto with
+ */
+export function useUserSlippageToleranceWithDefault(defaultSlippageTolerance: Percent): Percent {
+  const [allowedSlippage] = useUserSlippageTolerance()
+  return allowedSlippage === SlippageTolerance.Auto ? defaultSlippageTolerance : allowedSlippage
+}
+
 
 export function useUserAllowMultihop() {
   const [state, setState] = useAtom(dexUserStateAtom);
@@ -39,4 +67,17 @@ export function useUserAllowMultihop() {
   };
 
   return [state.userMultihop, setUserAllowMultihops] as const;
+}
+
+export function useRouterPreference(): [RouterPreference, (routerPreference: RouterPreference) => void] {
+  const [state, setState] = useAtom(dexUserStateAtom);
+
+  const setRouterPreference = (routerPreference: RouterPreference) => {
+    setState({
+      ...state,
+      routerPreference: routerPreference
+    });
+  };
+
+  return [state.routerPreference, setRouterPreference]
 }

@@ -1,7 +1,7 @@
 import {BoxProps, ModalProps} from "@chakra-ui/react";
 import {ResponsiveDialogComponents, useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import React, {useState} from "react";
-import {DexToken} from "@dex/types";
+import {DexToken} from "@dex/types/types";
 import SelectToken from "@dex/components/swap/select-token";
 
 type ResponsiveChooseTokenDialogProps = {

@@ -1,6 +1,6 @@
 import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 import {useUser} from "@src/components-v2/useUser";
-import {DexToken, DexTokenBalance} from "@dex/types";
+import {DexToken, DexTokenBalance} from "@dex/types/types";
 import {multicall} from "@wagmi/core";
 import {ContractFunctionConfig} from "viem";
 import {Address, erc20ABI} from "wagmi";
