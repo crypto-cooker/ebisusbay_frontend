@@ -26303,10 +26303,27 @@
     {
       "name": "Quest Masters",
       "slug": "quest-masters",
-      "multiToken": false,
+      "multiToken": true,
       "address": "0x4c91F476ACC1490Cf854461B174602A7e46Fa209",
       "onChain": false,
       "listable": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        }
+      ],
       "metadata": {
         "description": "Quest Masters are the trainers who develop and mentor. Fostering the rise of new heroes in the Quest realm.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/quest-masters/avatar.webp",
