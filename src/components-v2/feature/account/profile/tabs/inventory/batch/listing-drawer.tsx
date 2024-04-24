@@ -124,7 +124,7 @@ export const ListingDrawer = () => {
   const getConvertedRates = async (targetSymbol: string, targetPrice?: number) => {
     const prices = await getPrices();
     const inputToken = config.tokens[targetSymbol.toLowerCase()];
-    const inputPrice = prices.find((price: any) => inputToken ? ciEquals(price.currency, inputToken.address) : ethers.constants.AddressZero);
+    const inputPrice = prices.find((price: any) => ciEquals(price.currency, inputToken ? inputToken.address : ethers.constants.AddressZero));
 
     // const usdPrice = targetPrice * Number(inputPrice?.usdPrice);
 
