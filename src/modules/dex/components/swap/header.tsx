@@ -2,7 +2,7 @@ import {Button, Wrap} from "@chakra-ui/react";
 import React, {useCallback} from "react";
 import {SwapTab} from "@dex/constants";
 import {useRouter} from "next/navigation";
-import {useSwapAndLimitContext} from "@dex/state/swap/hooks";
+import {useSwapAndLimitContext} from "@dex/imported/state/swap/hooks";
 
 export default function SwapHeader({ compact, syncTabToUrl }: { compact: boolean; syncTabToUrl: boolean }) {
   const router = useRouter();

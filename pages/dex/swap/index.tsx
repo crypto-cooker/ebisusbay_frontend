@@ -2,14 +2,14 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import React, {useEffect, useMemo, useState} from "react";
 import PageHeader from "@src/components-v2/shared/layout/page-header";
 import SwapPage from "@dex/components/swap";
-import {asSupportedChain} from "@dex/constants/chains";
+import {asSupportedChain} from "@dex/imported/constants/chains";
 import {useNetwork} from "wagmi";
 import {ChainId} from "@uniswap/sdk-core";
-import {queryParametersToCurrencyState} from "@dex/state/swap/hooks";
+import {queryParametersToCurrencyState} from "@dex/imported/state/swap/hooks";
 // import useParsedQueryString from "@dex/hooks/useParsedQueryString";
-import {useCurrency} from "@dex/hooks/tokens";
-import {BlockNumberProvider} from "@dex/lib/hooks/useBlockNumber";
-import {MulticallUpdater} from "@dex/lib/state/multicall";
+import {useCurrency} from "@dex/imported/hooks/tokens";
+import {BlockNumberProvider} from "@dex/imported/lib/hooks/useBlockNumber";
+import {MulticallUpdater} from "@dex/imported/lib/state/multicall";
 
 export default function Page() {
   const { chain } = useNetwork()

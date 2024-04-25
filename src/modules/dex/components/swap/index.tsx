@@ -1,6 +1,6 @@
 import React from "react";
-import {SwapAndLimitContextProvider, SwapContextProvider} from "@dex/state/swap/SwapContext";
-import {SwapAndLimitContext} from "@dex/state/swap/types";
+import {SwapAndLimitContextProvider, SwapContextProvider} from "@dex/imported/state/swap/SwapContext";
+import {SwapAndLimitContext} from "@dex/imported/state/swap/types";
 import SwapHeader from "@dex/components/swap/header";
 import {Currency} from "@uniswap/sdk-core";
 import {SwapTab} from "@dex/constants";

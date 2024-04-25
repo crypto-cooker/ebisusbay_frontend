@@ -4,7 +4,7 @@ import {dexUserStateAtom} from "@dex/state/user/atom";
 import {SlippageTolerance} from "@dex/state/user/types";
 import {Percent} from "@uniswap/sdk-core";
 import JSBI from "jsbi";
-import {RouterPreference} from "@dex/state/routing/types";
+import {RouterPreference} from "@dex/imported/state/routing/types";
 
 export function useUserExpertMode() {
   const [state, setState] = useAtom(dexUserStateAtom);

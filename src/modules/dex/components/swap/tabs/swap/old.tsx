@@ -1,7 +1,7 @@
 import {useUser} from "@src/components-v2/useUser";
-import useSupportedTokens from "@dex/hooks/use-supported-tokens";
+import useSupportedTokens from "@dex/imported/hooks/use-supported-tokens";
 import {useAtom, useSetAtom} from "jotai/index";
-import {useAllTokenBalances} from "@dex/hooks/use-token-balances";
+import {useAllTokenBalances} from "@dex/imported/hooks/use-token-balances";
 import {Box, Button, Container, Flex, IconButton, useDisclosure, VStack, Wrap} from "@chakra-ui/react";
 import {useUserSlippageTolerance} from "@dex/state/user/hooks";
 import React, {useEffect} from "react";

@@ -1,6 +1,6 @@
 import { atomWithStorage } from 'jotai/utils';
 import {SlippageTolerance} from "@dex/state/user/types";
-import {RouterPreference} from "@dex/state/routing/types";
+import {RouterPreference} from "@dex/imported/state/routing/types";
 
 interface SerializedToken {
   symbol: string;

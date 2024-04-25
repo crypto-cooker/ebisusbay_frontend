@@ -15,7 +15,7 @@ import {useWindowSize} from "@market/hooks/useWindowSize";
 import {DexToken} from "@dex/types/types";
 import Row from "@dex/components/swap/select-token/row";
 import {useAtomValue} from "jotai";
-import {userTokenBalancesAtom} from "@dex/state/swap/atom";
+import {userTokenBalancesAtom} from "@dex/imported/state/swap/atom";
 
 interface SelectTokenProps {
   commonBases: DexToken[];
