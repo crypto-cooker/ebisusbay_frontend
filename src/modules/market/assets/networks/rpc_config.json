@@ -26392,14 +26392,20 @@
       }
     },
     {
-      "name": "SONORC",
-      "slug": "sonorc",
+      "name": "Sonorc Warriors",
+      "slug": "sonorc-warriors",
       "multiToken": false,
       "address": "0x0d006dA3d15F98Cb5733c4fF062B6256c771E8F3",
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "",
+        "description": "Sonorc Warriors is the NFT collection of the Sonorc meme token. It is meant to be a meme NFT collection. SOOOOOONOOOORCCCC!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/sonorc-warriors/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/sonorc-warriors/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/sonorc-warriors/banner.webp",
+        "website": "https://sonorc.xyz/",
+        "twitter": "https://twitter.com/sonorc_coin",
+        "telegram": "https://t.me/sonorc_coin",
         "categories": []
       },
       "verification": {
