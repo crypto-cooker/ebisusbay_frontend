@@ -26368,7 +26368,7 @@
       "name": "Argonauts Gears",
       "slug": "argonauts-gears",
       "multiToken": false,
-      "address": "0xc4475f9629fbf9be72cbc3c512e48740fb97f438",
+      "address": "0x65c6aa6CACC04B15100A5B41F5124ae1321c9085",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -34005,7 +34005,7 @@
         "medium": "https://argofinance.medium.com",
         "telegram": "https://t.me/Argo_Finance"
       },
-      "address": "0xc4475f9629fbf9be72cbc3c512e48740fb97f438",
+      "address": "0x65c6aa6CACC04B15100A5B41F5124ae1321c9085",
       "maxMintPerTx": 3,
       "maxMintPerAddress": 3,
       "totalSupply": 2200,
