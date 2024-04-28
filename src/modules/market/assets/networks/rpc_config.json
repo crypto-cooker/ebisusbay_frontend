@@ -10379,6 +10379,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/dripcro/banner.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/dripcro/card.webp",
         "website": "https://dripcro.com",
+        "twitter": "https://x.com/drip_official_",
         "discord": "https://discord.gg/ttaPM95WcR",
         "categories": [
           "utility"
@@ -15308,13 +15309,13 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Colonel brings his bags of $TENDIES everywhere he goes. Filling the bellies of all crofam. Holding a Colonel NFT will give you OG status, future 1:1 NFT airdrop and whitelist on every future $TENDIE project. 50% of all Colonel Tendies mint proceeds will go to $tendie LP.",
+        "description": "A DripCro.com brand NFT. Associated with the $TENDIES cronos coin.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/colonel-tendies/avatar.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/colonel-tendies/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/colonel-tendies/banner.webp",
-        "website": "https://www.tendiescro.xyz/",
-        "twitter": "https://twitter.com/tendiescro",
-        "discord": "https://discord.gg/5MbjpuFv4P",
+        "website": "https://dripderivatives.com/",
+        "twitter": "https://x.com/drip_official_",
+        "discord": "https://discord.gg/ttaPM95WcR",
         "categories": []
       },
       "verification": {
@@ -16491,6 +16492,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ddmc/banner.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/ddmc/card.webp",
         "website": "https://dripderivatives.com/",
+        "twitter": "https://x.com/drip_official_",
         "discord": "https://discord.gg/x487dqKCQA",
         "categories": []
       },
@@ -26017,6 +26019,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/dripfrtn/banner.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/dripfrtn/card.webp",
         "website": "https://dripderivatives.com/drip-frtn",
+        "twitter": "https://x.com/drip_official_",
         "discord": "https://discord.gg/dripcro-com-1003477871664320525",
         "categories": [
           "utility"
