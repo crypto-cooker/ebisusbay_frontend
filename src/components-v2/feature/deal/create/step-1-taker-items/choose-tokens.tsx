@@ -164,7 +164,7 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
         />
         <NumberInput
           value={quantity}
-          max={1000000}
+          max={100000000000000}
           onChange={(valueAsString: string) => setQuantity(valueAsString)}
           precision={0}
         >
