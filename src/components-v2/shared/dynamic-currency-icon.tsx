@@ -26,6 +26,7 @@ const iconMapping: Record<string, (props: ChakraProps) => ReactElement> = {
   'grve': (props) => <IconImage src='/img/icons/tokens/grve.webp' symbol='grve' {...props} />,
   'fish': (props) => <IconImage src='/img/icons/tokens/fish.webp' symbol='fish' {...props} />,
   'aiko': (props) => <IconImage src='/img/icons/tokens/aiko.webp' symbol='aiko' {...props} />,
+  'coom': (props) => <IconImage src='/img/icons/tokens/coom.webp' symbol='coom' {...props} />,
 };
 
 const IconImage = ({ src, symbol, ...props }: ChakraProps & { src: string; symbol: string }) => (
