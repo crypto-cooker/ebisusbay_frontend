@@ -174,6 +174,12 @@ export const configData = {
         symbol: 'AIKO',
         address: '0x5674B21cC1FBB73E7fccC5120853c3d61A0e2d1E',
         decimals: 18
+      },
+      coom: {
+        name: 'Coom',
+        symbol: 'Coom',
+        address: '0xdcbE80cbf8A5327f32bD8EE45beaaD4cD85660cC',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -202,7 +208,7 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy'],
+        available: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy', 'coom'],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -320,7 +326,8 @@ export const configData = {
           '0x7677cbE702Ff3d0e66d3BaC0fD71Cb641A276Ae0': ['icy'],
           '0xccc598ef1b4d17d9f44a889eee38c8de53f5df00': ['icy'], // ICY Brand End
           '0x6A7808f1e84bB173D6fC53Efd9Ebc6E56380AB5E': ['cro'], // Cronos Chickens
-          '0x5dd80779025679D06C9A175a7090FEEe92eA70aa': ['frtn'], // Strategy Series Vol.1
+          '0x5dd80779025679D06C9A175a7090FEEe92eA70aa': ['frtn'], // Strategy Series Vol.1,
+          '0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845': ['cro', 'frtn', 'coom'], // Coom Cats
         }
       }
     },
@@ -342,7 +349,8 @@ export const configData = {
         'grve',
         'lcro',
         'fish',
-        'aiko'
+        'aiko',
+        'coom'
       ]
     }
   },
