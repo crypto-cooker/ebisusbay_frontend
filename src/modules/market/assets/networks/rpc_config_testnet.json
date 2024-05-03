@@ -3862,7 +3862,7 @@
       "name": "Pixel Ebisu",
       "slug": "pixel-ebisu",
       "multiToken": false,
-      "address": "",
+      "address": "0x24b008ad342eb082347a7689ddb70ae3ede3eeb6",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -9472,7 +9472,7 @@
         "name": "ShadowBright",
         "discord": "https://discord.gg/dripcro-com-1003477871664320525"
       },
-      "address": "",
+      "address": "0x24b008ad342eb082347a7689ddb70ae3ede3eeb6",
       "maxMintPerTx": 1,
       "maxMintPerAddress": 1,
       "totalSupply": 420,
