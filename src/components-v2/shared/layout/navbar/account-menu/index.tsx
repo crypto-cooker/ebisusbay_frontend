@@ -210,17 +210,17 @@ const Index = function () {
 
   return (
     <div>
-      {!user.wallet.isConnected && (
+      {!user.address && (
         <div className="de-menu-notification" onClick={() => openWeb3Modal()} style={{background: '#218cff', marginLeft:'5px'}}>
           <FontAwesomeIcon icon={faWallet} color="white" />
         </div>
       )}
-      {user.wallet.isConnected && !user.wallet.correctChain && !showWrongChainModal && (
+      {!!user.address && !user.wallet.correctChain && !showWrongChainModal && (
         <div className="de-menu-notification" onClick={() => openWeb3Modal({view: 'Networks'})} style={{background: '#218cff', marginLeft:'5px'}}>
           <FontAwesomeIcon icon={faArrowRightArrowLeft} color="white" />
         </div>
       )}
-      {user.wallet.isConnected && user.wallet.correctChain && (
+      {!!user.address && user.wallet.correctChain && (
         <Box className="de-menu-profile" onClick={() => setShowMenu(!showMenu)}>
           {!!user.profile?.profilePicture ? (
             <Image
@@ -237,7 +237,7 @@ const Index = function () {
         </Box>
       )}
 
-      <Modal onClose={onWrongChainModalClose} isOpen={user.wallet.isConnected && !user.wallet.correctChain}>
+      <Modal onClose={onWrongChainModalClose} isOpen={!!user.address && !user.wallet.correctChain}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader className="text-center">

@@ -18,8 +18,13 @@ export const parseErrorMessage = (error: any, defaultError?: string) => {
 
   // Contract errors
   if (error.error?.message) {
+    const message = error.error.message;
     try {
-      const parts = error.error.message.split(':');
+      if (message.includes('viem@')) {
+        const parts = message.split('\n\n');
+        return capitalizeFirstLetter(parts[0].trim());
+      }
+      const parts = message.split(':');
       return capitalizeFirstLetter(parts[parts.length - 1].trim());
     } catch (e: any) {
       console.log('Failed to parse error message', e, error.error.message);
