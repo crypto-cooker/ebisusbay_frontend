@@ -20,11 +20,13 @@ import "swiper/css/pagination";
 import '../src/global/assets/styles/style.scss';
 import '../src/global/assets/styles/override.scss';
 import customTheme from "@src/global/theme/theme";
-import {AppProps} from "next/app";
+import NextApp, {AppProps} from "next/app";
 import App from "@src/components-v2/app";
 import {Web3Modal} from "@src/components-v2/web3modal";
 import {UserProvider} from "@src/components-v2/shared/contexts/user";
 import {DM_Sans} from "next/font/google";
+import {cookieToInitialState} from "wagmi";
+import {wagmiConfig} from "@src/wagmi";
 
 Site24x7LoggingService.init();
 const queryClient = new QueryClient()
@@ -37,7 +39,24 @@ const dmSans = DM_Sans({
   subsets: ['latin']
 });
 
+MyApp.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await NextApp.getInitialProps(appContext);
+  let cookies = '';
+
+  // Check if it's a server-side request
+  if (appContext.ctx.req) {
+    cookies = appContext.ctx.req.headers.cookie || '';
+  }
+
+  return { ...appProps, pageProps: { ...appProps.pageProps, cookies } };
+};
+
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const initialState = cookieToInitialState(
+    wagmiConfig,
+    pageProps.cookies
+  );
+
   // const [queryClient] = useState(
   //   () =>
   //     new QueryClient({
@@ -55,9 +74,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <main className={dmSans.className}>
       <Provider store={store}>
         <Sentry.ErrorBoundary fallback={() => <ErrorPage />}>
-          <QueryClientProvider client={queryClient}>
+          <QueryClientProvider client={queryClient} >
             <ChakraProvider theme={customTheme}>
-              <Web3Modal>
+              <Web3Modal initialState={initialState}>
                 <UserProvider>
                   <App Component={Component} {...pageProps} />
                 </UserProvider>
