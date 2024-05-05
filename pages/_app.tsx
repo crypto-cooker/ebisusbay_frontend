@@ -20,7 +20,7 @@ import "swiper/css/pagination";
 import '../src/global/assets/styles/style.scss';
 import '../src/global/assets/styles/override.scss';
 import customTheme from "@src/global/theme/theme";
-import NextApp, {AppProps} from "next/app";
+import NextApp, { AppContext, AppProps } from 'next/app';
 import App from "@src/components-v2/app";
 import {Web3Modal} from "@src/components-v2/web3modal";
 import {UserProvider} from "@src/components-v2/shared/contexts/user";
