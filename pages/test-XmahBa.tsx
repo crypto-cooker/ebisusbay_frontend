@@ -89,12 +89,12 @@ const WalletDebug = () => {
 // }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (!context.req.headers.host?.startsWith('localhost') || process.env.NODE_ENV !== 'development') {
-    return {
-      destination: `/`,
-      permanent: false,
-    }
-  }
+  // if (!context.req.headers.host?.startsWith('localhost') || process.env.NODE_ENV !== 'development') {
+  //   return {
+  //     destination: `/`,
+  //     permanent: false,
+  //   }
+  // }
 
   return { props: { } }
 }
