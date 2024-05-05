@@ -33,6 +33,8 @@ Sentry.init({
 
   maxBreadcrumbs: 50,
 
+  normalizeDepth: 10,
+
   beforeSend(event) {
     if (event.exception?.values) {
       const ignorableTypes = [

@@ -379,7 +379,6 @@ export const getStats = async (collection: any, id = null, extraAddresses = null
         ]
       };
     }
-    console.log('HERP0')
     const traits = await getCollectionTraits(collection.address);
     const powertraits = collection.powertraits ? await getCollectionPowertraits(collection.address) : null;
 
@@ -390,10 +389,7 @@ export const getStats = async (collection: any, id = null, extraAddresses = null
     if (isCronosGorillaBusinessCollection(collection.address)) {
       remainingStats.totalSupply = 4000;
     }
-console.log('HERP', {
-  ...combineStats(response.collections, collection.address),
-  ...remainingStats,
-});
+
     return {
       ...combineStats(response.collections, collection.address),
       ...remainingStats,
