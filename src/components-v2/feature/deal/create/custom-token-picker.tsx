@@ -17,9 +17,9 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {ethers} from "ethers";
 import {BarterToken} from "@market/state/jotai/atoms/deal";
 import {multicall} from "@wagmi/core";
-import { Address, erc20Abi } from 'wagmi';
 import useCurrencyBroker from "@market/hooks/use-currency-broker";
 import { wagmiConfig } from '@src/wagmi';
+import { Address, erc20Abi } from 'viem';
 
 interface CustomTokenPickerProps {
   onAdd: (token: BarterToken) => void;
