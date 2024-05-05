@@ -17,8 +17,9 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {ethers} from "ethers";
 import {BarterToken} from "@market/state/jotai/atoms/deal";
 import {multicall} from "@wagmi/core";
-import {Address, erc20ABI} from "wagmi";
+import { Address, erc20Abi } from 'wagmi';
 import useCurrencyBroker from "@market/hooks/use-currency-broker";
+import { wagmiConfig } from '@src/wagmi';
 
 interface CustomTokenPickerProps {
   onAdd: (token: BarterToken) => void;
@@ -61,22 +62,25 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
         return;
       }
 
-      const tokenInfo = await multicall({
+      const tokenInfo = await multicall(wagmiConfig as any, {
         contracts: [
           {
             address: tokenAddress as Address,
-            abi: erc20ABI,
-            functionName: 'name'
+            abi: erc20Abi,
+            functionName: 'name',
+            args: []
           },
           {
             address: tokenAddress as Address,
-            abi: erc20ABI,
-            functionName: 'symbol'
+            abi: erc20Abi,
+            functionName: 'symbol',
+            args: []
           },
           {
             address: tokenAddress as Address,
-            abi: erc20ABI,
-            functionName: 'decimals'
+            abi: erc20Abi,
+            functionName: 'decimals',
+            args: []
           }
         ]
       });

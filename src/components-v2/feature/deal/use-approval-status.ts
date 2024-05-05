@@ -1,5 +1,4 @@
-import {ContractFunctionConfig} from "viem";
-import {Address, erc20ABI, erc721ABI} from "wagmi";
+import { ContractFunctionConfig, erc721Abi } from 'viem';
 import {ciEquals} from "@market/helpers/utils";
 import {BigNumber, ethers} from "ethers";
 import {multicall} from "@wagmi/core";
@@ -8,6 +7,8 @@ import {ItemType} from "@market/hooks/use-create-order-signer";
 import {useState} from "react";
 import {BarterState} from "@market/state/jotai/atoms/deal";
 import {Deal} from "@src/core/services/api-service/mapi/types";
+import { wagmiConfig } from '@src/wagmi';
+import { Address, erc20Abi } from 'wagmi';
 
 const config = appConfig();
 
@@ -25,7 +26,7 @@ const useApprovalStatus = () => {
       if (isNft) {
         return {
           address: item.token as Address,
-          abi: erc721ABI,
+          abi: erc721Abi,
           functionName: 'isApprovedForAll',
           args: [targetAddress, config.contracts.market],
         };
@@ -36,14 +37,14 @@ const useApprovalStatus = () => {
         }
         return {
           address: tokenAddress as Address,
-          abi: erc20ABI,
+          abi: erc20Abi,
           functionName: 'allowance',
           args: [targetAddress, config.contracts.market],
         };
       }
     });
 
-    const contractResults = await multicall({
+    const contractResults = await multicall(wagmiConfig as any, {
       contracts: contracts,
     });
 
@@ -88,7 +89,7 @@ const useApprovalStatus = () => {
 
     const nftContracts: ContractFunctionConfig[] = barterState.maker.nfts.map(nft => ({
       address: nft.nftAddress.toLowerCase() as Address,
-      abi: erc721ABI,
+      abi: erc721Abi,
       functionName: 'isApprovedForAll',
       args: [address, config.contracts.market],
     }));
@@ -101,13 +102,13 @@ const useApprovalStatus = () => {
 
       return {
         address: tokenAddress.toLowerCase() as Address,
-        abi: erc20ABI,
+        abi: erc20Abi,
         functionName: 'allowance',
         args: [address, config.contracts.market],
       };
     });
 
-    const data = await multicall({
+    const data = await multicall(wagmiConfig as any, {
       contracts: nftContracts.concat(tokenContracts),
     });
 
