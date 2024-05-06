@@ -102,8 +102,8 @@ const Application = ({type}: { type: string }) => {
     <div>
       {type === choice.marketplace ? (
         <PageHead
-          title="Market Listing Application"
-          description="Get your project listed on Ebisu's Bay Marketplace"
+          title="NFT Listing Application"
+          description="Get your NFT project listed on Ebisu's Bay Marketplace"
           url="/apply?type=marketplace"
         />
       ) : type === choice.dex ? (
@@ -138,10 +138,10 @@ const Application = ({type}: { type: string }) => {
               </Reveal>
               <div className="text">
                 <Reveal className="onStep" keyframes={fadeInUp} delay={100} duration={600} triggerOnce>
-                  <Heading as="h4" size="md">Market Listing Request</Heading>
+                  <Heading as="h4" size="md">NFT Listing Request</Heading>
                 </Reveal>
                 <Reveal className="onStep" keyframes={fadeInUp} delay={200} duration={600} triggerOnce>
-                  <p className="">For established projects that would like to be added to the marketplace.</p>
+                  <p className="">For established NFT projects that would like to be added to the marketplace.</p>
                 </Reveal>
               </div>
             </ChoiceBox>
@@ -172,7 +172,7 @@ const Application = ({type}: { type: string }) => {
             <div className="col-lg-12 mt-4">
               {openTab === choice.marketplace && (
                 <>
-                  <Heading as="h3" size="md" className="text-center">Market Listing Request</Heading>
+                  <Heading as="h3" size="md" className="text-center">NFT Listing Request</Heading>
                   <iframe
                     height="1660px"
                     src="https://noteforms.com/forms/listing-requests-silnni"
