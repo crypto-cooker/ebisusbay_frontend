@@ -48,6 +48,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   useAccountEffect({
     onDisconnect() {
+      Sentry.captureMessage('disconnected captured from useAccountEffect')
       clearUser();
     }
   })
