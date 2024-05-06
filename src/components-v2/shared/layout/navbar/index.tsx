@@ -162,7 +162,7 @@ const Header = function () {
                     <MenuItem as={Link} href='/deal' _hover={{color: 'inherit'}} justifyContent='end'>Deals</MenuItem>
                     <MenuItem as={Link} href='/brands' _hover={{color: 'inherit'}} justifyContent='end'>Brands</MenuItem>
                     <MenuItem as={Link} href='/drops' _hover={{color: 'inherit'}} justifyContent='end'>Drops</MenuItem>
-                    <MenuItem as={Link} href='/apply' _hover={{color: 'inherit'}} justifyContent='end'>Become a Creator</MenuItem>
+                    <MenuItem as={Link} href='/apply' _hover={{color: 'inherit'}} justifyContent='end'>Listing Requests</MenuItem>
                     {/*<MenuItem as='a' href='/stats'>Stats</MenuItem>*/}
                     {/*<MenuItem as='a' href='/auctions'>Auction</MenuItem>*/}
                   </MenuList>
@@ -214,7 +214,7 @@ const Header = function () {
                     <NavLink name='Deals' to='/deal' onClick={onClose} />
                     <NavLink name='Brands' to='/brands' onClick={onClose} />
                     <NavLink name='Drops' to='/drops' onClick={onClose} />
-                    <NavLink name='Become a Creator' to='/apply' onClick={onClose} />
+                    <NavLink name='Listing Requests' to='/apply' onClick={onClose} />
                   </VStack>
                 </Box>
                 <Box>
