@@ -26374,7 +26374,7 @@
       "multiToken": false,
       "address": "0x65c6aa6CACC04B15100A5B41F5124ae1321c9085",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "The Argonauts Gears NFT collection, a crucial lever for dominance in Atlantis Trove V2.\n\nGear is essential to your team’s success in Atlantis V2 and will be a game changer for many. With each team able to equip 5 pieces of gear, it will be a race to see who can achieve the optimal team to win it all.\n\nEquip your teams, boost your points and turn the tide of competition. Gear up, strategize, and race to the top with the power of Argonauts Gears at your side.\n",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/argonauts-gears/avatar.webp",
