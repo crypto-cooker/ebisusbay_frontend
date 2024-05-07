@@ -3,7 +3,7 @@ import {createContext, ReactNode, useEffect} from "react";
 import {appConfig} from "@src/Config";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {useQuery} from "@tanstack/react-query";
-import {multicall} from "@wagmi/core";
+import { multicall, watchAccount, watchChainId, watchClient, watchConnections, watchConnectors } from '@wagmi/core';
 import {portAbi, stakeAbi} from "@src/global/contracts/types";
 import {ethers} from "ethers";
 import {JotaiUser, UserActionType, userAtom} from "@market/state/jotai/atoms/user";
@@ -52,6 +52,47 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       clearUser();
     }
   })
+
+  const listenToAccount = watchAccount(wagmiConfig as any, {
+    onChange(data) {
+      console.log('Account changed!', data)
+      Sentry.captureEvent({ message: 'Account changed!', extra: data});
+    },
+  });
+
+  const listenToChainId = watchChainId(wagmiConfig as any, {
+    onChange(chainId) {
+      console.log('Chain ID changed!', chainId)
+      Sentry.captureEvent({ message: 'Chain ID changed!', extra: chainId});
+    },
+  })
+
+  const listenToClient = watchClient(wagmiConfig as any, {
+    onChange(client) {
+      console.log('Client changed!', client)
+      Sentry.captureEvent({ message: 'Client changed!', extra: client});
+    },
+  })
+  const listenToConnections = watchConnections(wagmiConfig as any, {
+    onChange(data) {
+      console.log('Connections changed!', data)
+      Sentry.captureEvent({ message: 'Connections changed!', extra: {data}});
+    },
+  })
+  const listenToConnectors = watchConnectors(wagmiConfig as any, {
+    onChange(connectors) {
+      console.log('Connectors changed!', connectors)
+      Sentry.captureEvent({ message: 'Connectors changed!', extra: { connectors }});
+    },
+  })
+
+  useEffect(() => {
+    listenToAccount();
+    listenToChainId();
+    listenToClient();
+    listenToConnections();
+    listenToConnectors();
+  }, []);
 
   const { disconnectAsync: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
@@ -137,8 +178,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const disconnect = async () => {
+    Sentry.captureMessage('Calling disconnect...');
     await disconnectWallet();
+    Sentry.captureMessage('Disconnect called. Clearing user...');
     clearUser();
+    Sentry.captureMessage('clearUser complete');
   }
 
   const clearUser = () => {
