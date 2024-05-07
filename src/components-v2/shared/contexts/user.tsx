@@ -53,7 +53,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
   })
 
-  const { disconnect: disconnectWallet } = useDisconnect();
+  const { disconnectAsync: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
   const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address });
   const { setColorMode: setChakraTheme } = useColorMode();
@@ -136,8 +136,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
-  const disconnect = () => {
-    disconnectWallet();
+  const disconnect = async () => {
+    await disconnectWallet();
+    clearUser();
   }
 
   const clearUser = () => {
