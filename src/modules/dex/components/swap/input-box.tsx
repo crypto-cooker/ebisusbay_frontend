@@ -4,7 +4,7 @@ import {DexToken, DexTokenBalance} from "@dex/types/types";
 import {ChangeEvent, useEffect, useState} from "react";
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import {ResponsiveChooseTokenDialog} from "@dex/components/swap/responsive-choose-token-dialog";
-import useSupportedTokens from "@dex/imported/hooks/use-supported-tokens";
+import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 import {ciEquals} from "@market/helpers/utils";
 import {ethers} from "ethers";
 import {PrimitiveAtom, useAtom, useAtomValue, useSetAtom} from "jotai";
@@ -44,12 +44,12 @@ export default function InputBox({title, availableTokens, atom}: InputBoxProps) 
     setUserTokenBalance(tokenBalance);
   }, [selectedToken, tokenBalances]);
 
-  // Set the default item
-  useEffect(() => {
-    if (availableTokens.length > 0) {
-      setSelectedToken((prev) => ({...prev, token: availableTokens[0]}));
-    }
-  }, [setSelectedToken, supportedTokens]);
+  // // Set the default item
+  // useEffect(() => {
+  //   if (availableTokens.length > 0) {
+  //     setSelectedToken((prev) => ({...prev, token: availableTokens[0]}));
+  //   }
+  // }, [setSelectedToken, supportedTokens]);
 
   return (
     <>
@@ -88,7 +88,7 @@ export default function InputBox({title, availableTokens, atom}: InputBoxProps) 
         commonBases={commonBases}
         tokens={supportedTokens}
         modalProps={{size: 'lg', isCentered: false}}
-        onSelectToken={handleSelectToken}
+        onCurrencySelect={handleSelectToken}
       />
     </>
   )

@@ -1,7 +1,7 @@
 import {useUser} from "@src/components-v2/useUser";
-import useSupportedTokens from "@dex/imported/hooks/use-supported-tokens";
+import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 import {useAtom, useSetAtom} from "jotai/index";
-import {useAllTokenBalances} from "@dex/imported/hooks/use-token-balances";
+import {useAllTokenBalances} from "@dex/hooks/use-token-balances";
 import {Box, Button, Container, Flex, IconButton, useDisclosure, VStack, Wrap} from "@chakra-ui/react";
 import {useUserSlippageTolerance} from "@dex/state/user/hooks";
 import React, {useEffect} from "react";
@@ -12,8 +12,13 @@ import InputBox from "@dex/components/swap/input-box";
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import Settings from "@dex/components/swap/settings";
+import {useSwapActionHandlers, useSwapFormState} from "@dex/state/swap/hooks";
+import {Field} from "@dex/constants";
 
 export default function SwapForm() {
+  const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers();
+  const [swapFormState] = useSwapFormState();
+
   const user = useUser();
   const {supportedTokens} = useSupportedTokens();
   const [tokenOut] = useAtom(tokenInAtom);
@@ -54,9 +59,12 @@ export default function SwapForm() {
           </Flex>
           <VStack w='full' align='stretch'>
             <InputBox
-              title='From'
+              title='You pay'
               availableTokens={supportedTokens}
               atom={tokenInAtom}
+
+              currency={swapFormState.derivedSwapInfo.currencies[Field.INPUT]}
+              otherCurrency={swapFormState.derivedSwapInfo.currencies[Field.OUTPUT]}
             />
             <Wrap justify='center'>
               <Button onClick={() => handleQuickChange(25)}>25%</Button>

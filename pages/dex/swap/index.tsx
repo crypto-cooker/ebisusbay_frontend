@@ -9,7 +9,6 @@ import {queryParametersToCurrencyState} from "@dex/imported/state/swap/hooks";
 // import useParsedQueryString from "@dex/hooks/useParsedQueryString";
 import {useCurrency} from "@dex/imported/hooks/tokens";
 import {BlockNumberProvider} from "@dex/imported/lib/hooks/useBlockNumber";
-import {MulticallUpdater} from "@dex/imported/lib/state/multicall";
 
 export default function Page() {
   const { chain } = useNetwork()
@@ -31,7 +30,6 @@ export default function Page() {
   return (
     <>
       <BlockNumberProvider>
-        <MulticallUpdater />
         <PageHead
           title='Ryoshi Swap'
           description='Trade tokens instantly with low fees'

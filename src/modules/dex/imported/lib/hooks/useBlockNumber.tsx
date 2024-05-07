@@ -66,21 +66,21 @@ export function BlockNumberProvider({ children }: PropsWithChildren) {
   // Poll for block number on the active provider.
   const windowVisible = useIsWindowVisible()
   useEffect(() => {
-    if (provider && activeChainId && windowVisible) {
-      setChainBlock((chainBlock) => {
-        if (chainBlock.chainId !== activeChainId) {
-          return { chainId: activeChainId, mainnetBlock: chainBlock.mainnetBlock }
-        }
-        // If chainId hasn't changed, don't invalidate the reference, as it will trigger re-fetching of still-valid data.
-        return chainBlock
-      })
-
-      const onBlock = (block: number) => onChainBlock(activeChainId, block)
-      provider.on('block', onBlock)
-      return () => {
-        provider.removeListener('block', onBlock)
-      }
-    }
+    // if (provider && activeChainId && windowVisible) {
+    //   setChainBlock((chainBlock) => {
+    //     if (chainBlock.chainId !== activeChainId) {
+    //       return { chainId: activeChainId, mainnetBlock: chainBlock.mainnetBlock }
+    //     }
+    //     // If chainId hasn't changed, don't invalidate the reference, as it will trigger re-fetching of still-valid data.
+    //     return chainBlock
+    //   })
+    //
+    //   const onBlock = (block: number) => onChainBlock(activeChainId, block)
+    //   provider.on('block', onBlock)
+    //   return () => {
+    //     provider.removeListener('block', onBlock)
+    //   }
+    // }
     return
   }, [activeChainId, provider, windowVisible, onChainBlock])
 

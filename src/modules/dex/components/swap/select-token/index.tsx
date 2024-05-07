@@ -14,23 +14,24 @@ import React, {ChangeEvent, ComponentType, ReactNode, useEffect, useRef, useStat
 import {useWindowSize} from "@market/hooks/useWindowSize";
 import {DexToken} from "@dex/types/types";
 import Row from "@dex/components/swap/select-token/row";
-import {useAtomValue} from "jotai";
-import {userTokenBalancesAtom} from "@dex/imported/state/swap/atom";
+import {Currency} from "@uniswap/sdk-core";
+import {useAllTokenBalances} from "@dex/hooks/use-token-balances";
 
 interface SelectTokenProps {
   commonBases: DexToken[];
   tokens: DexToken[];
   DialogBody: ComponentType<BoxProps & { children: ReactNode }>;
   DialogFooter: ComponentType<BoxProps & { children: ReactNode }>;
-  onSelect: (token: DexToken) => void;
+  onCurrencySelect: (currency: Currency) => void;
 }
 
-export default function SelectToken({commonBases, tokens, DialogBody, DialogFooter, onSelect}: SelectTokenProps) {
+export default function SelectToken({commonBases, tokens, DialogBody, DialogFooter, onCurrencySelect}: SelectTokenProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [hasVerticalScrollbar, setHasVerticalScrollbar] = useState(false);
   const windowSize = useWindowSize();
   const [searchTerms, setSearchTerms] = useState('');
-  const tokenBalances = useAtomValue(userTokenBalancesAtom);
+  // const tokenBalances = useAtomValue(userTokenBalancesAtom);
+  const tokenBalances = useAllTokenBalances();
 
   const checkForScrollbar = () => {
     if (ref.current) {
@@ -83,7 +84,7 @@ export default function SelectToken({commonBases, tokens, DialogBody, DialogFoot
                     <Button
                       variant='outline'
                       leftIcon={<Image src={token.logoURI} w='30px' />}
-                      onClick={() => onSelect(token)}
+                      onClick={() => onCurrencySelect(token)}
                     >
                       {token.symbol}
                     </Button>
@@ -105,7 +106,7 @@ export default function SelectToken({commonBases, tokens, DialogBody, DialogFoot
                 key={token.address}
                 token={token}
                 hasVerticalScrollbar={hasVerticalScrollbar}
-                onSelect={() => onSelect(token)}
+                onSelect={() => onCurrencySelect(token)}
               />
             ))}
           </VStack>

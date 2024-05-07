@@ -3,17 +3,20 @@ import {ResponsiveDialogComponents, useResponsiveDialog} from "@src/components-v
 import React, {useState} from "react";
 import {DexToken} from "@dex/types/types";
 import SelectToken from "@dex/components/swap/select-token";
+import {Currency} from "@uniswap/sdk-core";
 
 type ResponsiveChooseTokenDialogProps = {
   isOpen: boolean;
   onClose: () => void;
+  selectedCurrency?: Currency | null;
+  onCurrencySelect: (currency: Currency) => void;
+  otherSelectedCurrency?: Currency | null;
   commonBases: DexToken[];
   tokens: DexToken[];
   modalProps?: Pick<ModalProps, 'size' | 'isCentered'>;
-  onSelectToken: (token: DexToken) => void;
 }
 
-export function ResponsiveChooseTokenDialog({ isOpen, onClose, commonBases, tokens, modalProps, onSelectToken, ...props }: ResponsiveChooseTokenDialogProps & BoxProps) {
+export function ResponsiveChooseTokenDialog({ isOpen, onClose, selectedCurrency, onCurrencySelect, otherSelectedCurrency, commonBases, tokens, modalProps, ...props }: ResponsiveChooseTokenDialogProps & BoxProps) {
   const { DialogComponent, DialogBody, DialogFooter } = useResponsiveDialog();
 
   return (
@@ -25,7 +28,7 @@ export function ResponsiveChooseTokenDialog({ isOpen, onClose, commonBases, toke
         tokens={tokens}
         DialogBody={DialogBody}
         DialogFooter={DialogFooter}
-        onSelectToken={onSelectToken}
+        onCurrencySelect={onCurrencySelect}
         {...props}
       />
     </DialogComponent>
@@ -37,7 +40,7 @@ enum Pages {
   MANAGE
 }
 
-function DialogContent({isOpen, onClose, commonBases, tokens, DialogBody, DialogFooter, onSelectToken}: ResponsiveDialogComponents & ResponsiveChooseTokenDialogProps) {
+function DialogContent({isOpen, onClose, commonBases, tokens, DialogBody, DialogFooter, onCurrencySelect}: ResponsiveDialogComponents & ResponsiveChooseTokenDialogProps) {
 
   const [page, setPage] = useState(Pages.SELECT);
 
@@ -50,7 +53,7 @@ function DialogContent({isOpen, onClose, commonBases, tokens, DialogBody, Dialog
             tokens={tokens}
             DialogBody={DialogBody}
             DialogFooter={DialogFooter}
-            onSelect={onSelectToken}
+            onCurrencySelect={onCurrencySelect}
           />
         </>
       ) : page === Pages.MANAGE ? (

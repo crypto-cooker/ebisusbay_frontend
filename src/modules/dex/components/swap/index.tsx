@@ -1,9 +1,9 @@
 import React from "react";
-import {SwapAndLimitContextProvider, SwapContextProvider} from "@dex/imported/state/swap/SwapContext";
-import {SwapAndLimitContext} from "@dex/imported/state/swap/types";
-import SwapHeader from "@dex/components/swap/header";
 import {Currency} from "@uniswap/sdk-core";
-import {SwapTab} from "@dex/constants";
+import SwapHeader from "@dex/components/swap/header";
+import {useSwapPageState} from "@dex/state/swap/hooks";
+import {SwapPageContext} from "@dex/state/swap/contexts/swap-page";
+import {SwapFormContext} from "@dex/state/swap/contexts/swap-form";
 import SwapForm from "@dex/components/swap/tabs/swap";
 
 interface SwapPageProps {
@@ -13,22 +13,34 @@ interface SwapPageProps {
 }
 
 export default function SwapPage({ initialInputCurrency, initialOutputCurrency, syncTabToUrl }: SwapPageProps) {
+  const [swapPageState, setSwapPageState] = useSwapPageState();
+
+  console.log('===debug: SwapPage')
   return (
-    <SwapAndLimitContextProvider>
-      <SwapAndLimitContext.Consumer>
-        {({ currentTab }) => (
-          <SwapContextProvider>
-            <SwapHeader compact={false} syncTabToUrl={syncTabToUrl} />
-            {currentTab === SwapTab.Swap && (
-              <SwapForm />
-            )}
-            {/*{currentTab === SwapTab.Limit && <LimitFormWrapper onCurrencyChange={onCurrencyChange} />}*/}
-            {/*{currentTab === SwapTab.Send && (*/}
-            {/*  <SendForm disableTokenInputs={disableTokenInputs} onCurrencyChange={onCurrencyChange} />*/}
-            {/*)}*/}
-          </SwapContextProvider>
-        )}
-      </SwapAndLimitContext.Consumer>
-    </SwapAndLimitContextProvider>
+    <SwapPageContext
+      initialInputCurrency={initialInputCurrency}
+      initialOutputCurrency={initialOutputCurrency}
+    >
+      <SwapFormContext>
+        <SwapHeader compact={false} syncTabToUrl={syncTabToUrl} />
+        <>herp {swapPageState.currentTab}</>
+        <br />
+        <SwapForm />
+      </SwapFormContext>
+      {/*<SwapAndLimitContext.Consumer>*/}
+      {/*  {({ currentTab }) => (*/}
+          {/* <SwapContextProvider>*/}
+          {/*   <SwapHeader compact={false} syncTabToUrl={syncTabToUrl} />*/}
+          {/*   {currentTab === SwapTab.Swap && (*/}
+          {/*     <SwapForm />*/}
+          {/*   )}*/}
+          {/*   /!*{currentTab === SwapTab.Limit && <LimitFormWrapper onCurrencyChange={onCurrencyChange} />}*!/*/}
+          {/*   /!*{currentTab === SwapTab.Send && (*!/*/}
+          {/*   /!*  <SendForm disableTokenInputs={disableTokenInputs} onCurrencyChange={onCurrencyChange} />*!/*/}
+          {/*   /!*)}*!/*/}
+          {/* </SwapContextProvider>*/}
+        {/*)}*/}
+      {/*</SwapAndLimitContext.Consumer>*/}
+    </SwapPageContext>
   )
 }

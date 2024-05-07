@@ -23,6 +23,7 @@ import tryParseCurrencyAmount from "@dex/imported/utils/tryParseCurrencyAmount";
 import {isClassicTrade, isSubmittableTrade, isUniswapXTrade} from "@dex/imported/state/routing/utils";
 import {useUserSlippageToleranceWithDefault} from "@dex/state/user/hooks";
 import {useUser} from "@src/components-v2/useUser";
+import {useSwapPageState, useSwapPageStateRead} from "@dex/state/swap/hooks";
 
 export function useSwapContext() {
   return useContext(SwapContext)
@@ -121,7 +122,7 @@ export function useDerivedSwapInfo(state: SwapState): SwapInfo {
 
   const {
     currencyState: { inputCurrency, outputCurrency },
-  } = useSwapAndLimitContext()
+  } = useSwapPageStateRead()
   const { independentField, typedValue } = state
 
   const { inputTax, outputTax } = useSwapTaxes(

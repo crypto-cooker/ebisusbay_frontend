@@ -1,4 +1,4 @@
-import useSupportedTokens from "@dex/imported/hooks/use-supported-tokens";
+import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 import {useUser} from "@src/components-v2/useUser";
 import {DexToken, DexTokenBalance} from "@dex/types/types";
 import {multicall} from "@wagmi/core";
@@ -30,7 +30,7 @@ export function useAllTokenBalances(): Array<DexTokenBalance> {
   return balances;
 }
 
-
+// This will be replaced with subgraph call
 export async function getTokenBalances(address: string, tokens: DexToken[]) {
 
   const contracts: ContractFunctionConfig[] = tokens.map((token: any) => {
@@ -41,7 +41,6 @@ export async function getTokenBalances(address: string, tokens: DexToken[]) {
       args: [address],
     };
   });
-
 
   const data = await multicall({
     contracts

@@ -1,23 +1,21 @@
 import {Button, Wrap} from "@chakra-ui/react";
 import React, {useCallback} from "react";
 import {SwapTab} from "@dex/constants";
-import {useRouter} from "next/navigation";
+import {useRouter} from "next/router";
 import {useSwapAndLimitContext} from "@dex/imported/state/swap/hooks";
+import {useSwapPageState} from "@dex/state/swap/hooks";
 
 export default function SwapHeader({ compact, syncTabToUrl }: { compact: boolean; syncTabToUrl: boolean }) {
   const router = useRouter();
+  const [swapPageState, setSwapPageState] = useSwapPageState();
   const { chainId, currentTab, setCurrentTab } = useSwapAndLimitContext();
 
-  const handleChangeTab = useCallback(
-    (tab: SwapTab) => {
-      if (syncTabToUrl) {
-        router.push(`/dex/${tab}`);
-      } else {
-        setCurrentTab(tab)
-      }
-    },
-    [router, setCurrentTab, syncTabToUrl]
-  )
+  const handleChangeTab = useCallback((tab: SwapTab) => {
+    setSwapPageState((prev) => ({
+      ...prev,
+      currentTab: tab,
+    }));
+  }, [router, setCurrentTab, syncTabToUrl])
 
   return (
     <Wrap justify='center'>

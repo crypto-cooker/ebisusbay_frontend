@@ -1,44 +1,10 @@
-import {ChainId, Currency} from '@uniswap/sdk-core'
-import {PropsWithChildren, useEffect} from 'react'
-
+import {useDerivedSwapInfo, useSwapFormDerivedState, useSwapFormState} from "@dex/state/swap/hooks";
 import {useNetwork} from "wagmi";
 import usePrevious from "@dex/imported/hooks/usePrevious";
-import {useDerivedSwapInfo, useSwapFormDerivedState, useSwapFormState, useSwapPageState} from "@dex/state/swap/hooks";
-
-export function SwapPageContext({
-  children,
-  chainId,
-  initialInputCurrency,
-  initialOutputCurrency,
-}: PropsWithChildren<{
-  chainId?: ChainId
-  initialInputCurrency?: Currency
-  initialOutputCurrency?: Currency
-}>) {
-  const [swapPageState, setSwapPageState] = useSwapPageState();
-
-  useEffect(() => {
-    setSwapPageState((prev) => ({
-      ...prev,
-      prefilledState: {
-        inputCurrency: initialInputCurrency,
-        outputCurrency: initialOutputCurrency,
-      },
-    }));
-  }, [initialInputCurrency]);
-
-  useEffect(() => {
-    setSwapPageState((prev) => ({
-      ...prev,
-      chainId: chainId,
-    }));
-  }, [chainId]);
-
-
-  return <>{children}</>
-}
+import {useEffect} from "react";
 
 export function SwapFormContext({ children }: { children: React.ReactNode }) {
+  console.log('===debug: SwapFormContext')
   const [swapFormState, setSwapFormState] = useSwapFormState();
   const [swapFormDerivedState, setSwapFormDerivedState] = useSwapFormDerivedState();
 
@@ -58,6 +24,7 @@ export function SwapFormContext({ children }: { children: React.ReactNode }) {
   }, [connectedChainId, previousConnectedChainId])
 
   useEffect(() => {
+    console.log('SET DERIVED STATE')
     setSwapFormDerivedState((prev) => ({ ...prev, ...derivedSwapInfo }))
   }, [swapFormState]);
 
