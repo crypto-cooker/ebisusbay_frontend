@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {specialImageTransform} from "@market/helpers/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {Contract, ContractReceipt, ethers} from "ethers";
@@ -50,6 +50,17 @@ import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image
 import Link from "next/link";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
+import {Transak, TransakConfig} from "@transak/transak-sdk";
+import Pusher from "pusher-js";
+import {Listing} from "@src/core/models/listing";
+import {getServerSignature} from "@src/core/cms/endpoints/gaslessListing";
+import {shipABI} from "@src/global/contracts/types";
+
+let pusher = new Pusher("1d9ffac87de599c61283", { cluster: "ap2" });
+
+export const DEFAULT_SLIPPAGE = 0.5;
+
+export const ESTIMATED_GAS_FEE_OFFSET = 0.0001;
 
 const config = appConfig();
 
@@ -170,7 +181,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   return isComplete ? (
     <PurchaseSuccessDialog onClose={onClose} isOpen={isOpen} listing={listing} tx={tx} />
   ) : (
-    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
+    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered trapFocus={false}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
@@ -346,6 +357,9 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                   </Button>
                 </div>
               </div>
+              <TransakOption
+                listing={listing}
+              />
             </ModalFooter>
           </>
         )}
@@ -384,3 +398,120 @@ const CurrencyOption = ({currency}: {currency: {address: string, symbol: string,
     </>
   )
 }
+
+const TransakOption = ({listing}: {listing: Listing}) => {
+  const user = useUser();
+  const [transak, setTransak] = useState<Transak | null>(null);
+  const [channel, setChannel] = useState<any>(null);
+
+  const handleOrderCreated = (orderData: any) => {
+    console.log('callback transak order created', orderData);
+    const eventData = orderData;
+    const orderId = eventData.status?.id;
+
+    if (!orderId) {
+      return;
+    }
+
+    subscribeToWebsockets(orderId);
+  };
+
+  const subscribeToWebsockets = (orderId: string) => {
+    const newChannel = pusher.subscribe(orderId);
+    setChannel(newChannel);
+
+    // Receive updates of all events
+    pusher.bind_global((eventId: any, orderData: any) => {
+      console.log(`websocket Event: ${eventId} with order data:`, orderData);
+    });
+
+    // Receive updates of specific events
+    newChannel.bind('ORDER_COMPLETED', (orderData: any) => {
+      console.log('ORDER COMPLETED websocket event', orderData);
+    });
+
+    newChannel.bind('ORDER_FAILED', async (orderData: any) => {
+      console.log('ORDER FAILED websocket event', orderData);
+    });
+  };
+
+  const handlePurchase = async () => {
+    const { data: serverSig } = await getServerSignature(
+      user.address,
+      [listing.listingId],
+      user.address
+    );
+    const { signature, orderData, ...sigData } = serverSig;
+
+    let iface = new ethers.utils.Interface(shipABI);
+    const rawCallData = iface.encodeFunctionData('fillOrders', [
+      orderData,
+      sigData,
+      signature
+    ]);
+
+    const newTransak = new Transak({
+      ...defaultTransakConfig,
+      walletAddress: user.address,
+      calldata: rawCallData,
+      nftData: [
+        {
+          imageURL: listing.nft.image,
+          nftName: listing.nft.name,
+          collectionAddress: listing.nft.nftAddress,
+          tokenID: [listing.nft.nftId],
+          price: [15],
+          quantity: 1,
+          nftType: 'ERC721',
+        },
+      ]
+    });
+    setTransak(newTransak);
+    newTransak.init();
+
+    Transak.on(Transak.EVENTS.TRANSAK_ORDER_CREATED, handleOrderCreated);
+    Transak.on(Transak.EVENTS.TRANSAK_WIDGET_CLOSE, cleanup);
+  };
+
+  const cleanup = () => {
+    if (transak) {
+      transak.close();
+      setTransak(null);
+    }
+
+    if (channel) {
+      channel.unbind_all();
+      pusher.unsubscribe(channel.name);
+      setChannel(null);
+    }
+
+    // Transak.off(Transak.EVENTS.TRANSAK_ORDER_CREATED, handleOrderCreated);
+    // Transak.off(Transak.EVENTS.TRANSAK_WIDGET_CLOSE, cleanup);
+  };
+
+  useEffect(() => {
+    return () => {
+      cleanup();
+    };
+  }, []);
+
+  return (
+    <Button onClick={handlePurchase}>
+      Transak
+    </Button>
+  )
+}
+
+const defaultTransakConfig: TransakConfig = {
+  apiKey: '69feba7f-a1c2-4cfa-a9bd-43072768b0e6',
+  environment: process.env.NEXT_PUBLIC_TRANSAK_ENV as Transak.ENVIRONMENTS,
+  themeColor: '000000',
+  defaultPaymentMethod: 'credit_debit_card',
+  exchangeScreenTitle: 'Buy NFT',
+  disableWalletAddressForm: true,
+  estimatedGasLimit: 70_000,
+  network: 'cronos',
+  cryptoCurrencyCode: 'CRO',
+  isNFT: true,
+  contractId: '65f8577a2460fe929493ee7f',
+};
