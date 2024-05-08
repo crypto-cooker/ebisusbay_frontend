@@ -6,6 +6,7 @@ import {UserContext} from "@src/components-v2/shared/contexts/user";
 import {useWalletClient, WalletClient} from "wagmi";
 import {useWeb3Modal} from "@web3modal/wagmi/react";
 import {useQueryClient} from "@tanstack/react-query";
+import * as Sentry from "@sentry/nextjs";
 
 export const useUser = () => {
   const context = useContext(UserContext);
@@ -23,6 +24,14 @@ export const useUser = () => {
     queryClient.refetchQueries({ queryKey: ['UserProfile', user.wallet.address], exact: true});
   }
 
+  const requestTelemetry = () => {
+    Sentry.captureEvent({ message: 'requestTelemetry--hook', extra: {
+      provider: legacyProvider,
+      signer: legacyProvider?.signer
+    } });
+    context.requestTelemetry();
+  }
+
   return {
     ...user,
 
@@ -34,6 +43,7 @@ export const useUser = () => {
     onEscrowToggled,
     onStakingHarvested,
     refreshProfile,
+    requestTelemetry,
 
     // Legacy
     address: context.user.wallet.address,

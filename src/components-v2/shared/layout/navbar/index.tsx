@@ -171,7 +171,7 @@ const Header = function () {
                     <MenuItem as={Link} href='/deal' _hover={{color: 'inherit'}} justifyContent='end'>Deals</MenuItem>
                     <MenuItem as={Link} href='/brands' _hover={{color: 'inherit'}} justifyContent='end'>Brands</MenuItem>
                     <MenuItem as={Link} href='/drops' _hover={{color: 'inherit'}} justifyContent='end'>Drops</MenuItem>
-                    <MenuItem as={Link} href='/apply' _hover={{color: 'inherit'}} justifyContent='end'>Become a Creator</MenuItem>
+                    <MenuItem as={Link} href='/apply' _hover={{color: 'inherit'}} justifyContent='end'>Listing Requests</MenuItem>
                     {/*<MenuItem as='a' href='/stats'>Stats</MenuItem>*/}
                     {/*<MenuItem as='a' href='/auctions'>Auction</MenuItem>*/}
                   </MenuList>
@@ -182,8 +182,8 @@ const Header = function () {
                   </MenuButton>
                   <MenuList>
                     <MenuItem as={Link} href='/ryoshi' _hover={{color: 'inherit'}} justifyContent='end'>Ryoshi Dynasties</MenuItem>
-                    <MenuItem as={Link} href='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' _hover={{color: 'inherit'}} justifyContent='end'>Izanami&apos;s Cradle</MenuItem>
-                    <MenuItem as={Link} href='/collection/ryoshi-playing-cards?tab=pokerRanks' _hover={{color: 'inherit'}} justifyContent='end'>Crypto HODL&apos;em</MenuItem>
+                    <MenuItem as={Link} href='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' _hover={{color: 'inherit'}} justifyContent='end'>Realm Registry</MenuItem>
+                    <MenuItem as={Link} href='/collection/ryoshi-playing-cards?tab=pokerRanks' _hover={{color: 'inherit'}} justifyContent='end'>Ryoshi Playing Cards</MenuItem>
                     <MenuItem as={Link} href='/xp-leaderboard' _hover={{color: 'inherit'}} justifyContent='end'>XP Leaderboard</MenuItem>
                     <MenuItem as={Link} href='/rewards' _hover={{color: 'inherit'}} justifyContent='end'>Rewards</MenuItem>
                   </MenuList>
@@ -223,7 +223,7 @@ const Header = function () {
                     <NavLink name='Deals' to='/deal' onClick={onClose} />
                     <NavLink name='Brands' to='/brands' onClick={onClose} />
                     <NavLink name='Drops' to='/drops' onClick={onClose} />
-                    <NavLink name='Become a Creator' to='/apply' onClick={onClose} />
+                    <NavLink name='Listing Requests' to='/apply' onClick={onClose} />
                   </VStack>
                 </Box>
                 <Box>
@@ -233,8 +233,8 @@ const Header = function () {
                   </VStack>
                   <VStack align='end'>
                     <NavLink name='Ryoshi Dynasties' to='/ryoshi' onClick={onClose} />
-                    <NavLink name='Izanami&apos;s Cradle' to='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' onClick={onClose} />
-                    <NavLink name='Crypto HODL&apos;em' to='/collection/ryoshi-playing-cards?tab=pokerRanks' onClick={onClose} />
+                    <NavLink name='Realm Registry' to='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' onClick={onClose} />
+                    <NavLink name='Ryoshi Playing Cards' to='/collection/ryoshi-playing-cards?tab=pokerRanks' onClick={onClose} />
                     <NavLink name='XP Leaderboard' to='/xp-leaderboard' onClick={onClose} />
                     <NavLink name='Rewards' to='/rewards' onClick={onClose} />
                   </VStack>

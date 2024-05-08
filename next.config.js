@@ -239,7 +239,7 @@ const nextConfig = {
       {
         source: '/swap',
         destination:
-          'https://swap.ebisusbay.com',
+          'https://swap.ebisusbay.com/#/swap',
         permanent: false,
         basePath: false,
       }

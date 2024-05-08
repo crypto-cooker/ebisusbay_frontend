@@ -3862,7 +3862,7 @@
       "name": "Pixel Ebisu",
       "slug": "pixel-ebisu",
       "multiToken": false,
-      "address": "",
+      "address": "0x24b008ad342eb082347a7689ddb70ae3ede3eeb6",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -3877,6 +3877,50 @@
         "doxx": false,
         "kyc": false,
         "verified": true
+      }
+    },
+    {
+      "name": "SONORC",
+      "slug": "sonorc",
+      "multiToken": false,
+      "address": "0x386628E36B208B83aD119d2a81fB71eD6a86bB83",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Argonauts Gears",
+      "slug": "argonauts-gears",
+      "multiToken": false,
+      "address": "0x3db259075fbf8c509591e17fa583fc89cef8f91d",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Argonauts Gears NFT collection, a crucial lever for dominance in Atlantis Trove V2.\n\nGear is essential to your team’s success in Atlantis V2 and will be a game changer for many. With each team able to equip 5 pieces of gear, it will be a race to see who can achieve the optimal team to win it all.\n\nEquip your teams, boost your points and turn the tide of competition. Gear up, strategize, and race to the top with the power of Argonauts Gears at your side.\n",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/argonauts-gears/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/argonauts-gears/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/argonauts-gears/banner.webp",
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium": "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
@@ -9428,7 +9472,7 @@
         "name": "ShadowBright",
         "discord": "https://discord.gg/dripcro-com-1003477871664320525"
       },
-      "address": "",
+      "address": "0x24b008ad342eb082347a7689ddb70ae3ede3eeb6",
       "maxMintPerTx": 1,
       "maxMintPerAddress": 1,
       "totalSupply": 420,
@@ -9457,6 +9501,45 @@
         "doxx": false,
         "kyc": false,
         "escrow": false
+      }
+    },
+    {
+      "id": 193,
+      "slug": "argonauts-gears",
+      "title": "Argonauts Gears",
+      "subtitle": "The Argonauts Gears NFT collection, a crucial lever for dominance in Atlantis Trove V2.",
+      "description": "The Argonauts Gears NFT collection, a crucial lever for dominance in Atlantis Trove V2.\n\nGear is essential to your team’s success in Atlantis V2 and will be a game changer for many. With each team able to equip 5 pieces of gear, it will be a race to see who can achieve the optimal team to win it all.\n\nEquip your teams, boost your points and turn the tide of competition. Gear up, strategize, and race to the top with the power of Argonauts Gears at your side.",
+      "author": {
+        "name": "Argonauts",
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium": "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance"
+      },
+      "address": "0x3db259075fbf8c509591e17fa583fc89cef8f91d",
+      "maxMintPerTx": 3,
+      "maxMintPerAddress": 3,
+      "totalSupply": 2200,
+      "cost": "149",
+      "foundersOnly": false,
+      "start": 1714062230000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/argonauts-gears/drop.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/drop-images/argonauts-gears/banner.webp",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/argonauts-gears/avatar.webp",
+        "preview": "https://cdn-prod.ebisusbay.com/files/drop-images/argonauts-gears/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]

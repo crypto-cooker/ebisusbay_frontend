@@ -16,7 +16,8 @@ function Test() {
   return (
     <Box m={4}>
       <VStack align='start'>
-        <Metadata />
+        {/*<Metadata />*/}
+        <WalletDebug />
       </VStack>
     </Box>
   )
@@ -24,55 +25,76 @@ function Test() {
 
 export default Test;
 
-const Metadata = () => {
+const WalletDebug = () => {
   const user = useUser();
   const [isExecuting, setIsExecuting] = useState(false);
   const [value, setValue] = useState<string | number>();
 
   const handleGetMetadata = async () => {
-    if (!user.address) {
-      toast.error('Please connect your wallet to continue');
-      return;
-    }
-
-    const contract = new Contract(
-      '0x4F410976c6687193dDC0da9C4F3ca1Dfd0ba0209',
-      ERC721,
-      readProvider
-    )
-
-    try {
-      setIsExecuting(true);
-      const tokenURI = await contract.tokenURI(10);
-      setValue(tokenURI);
-    } catch (e: any) {
-      console.log(e);
-      toast.error(parseErrorMessage(e));
-    } finally {
-      setIsExecuting(false);
-    }
+    user.requestTelemetry();
+    toast.success('Telemetry requested')
   }
 
   return (
     <Box>
       <Button isLoading={isExecuting} isDisabled={isExecuting} onClick={handleGetMetadata}>
-        Get Metadata
+        Request Telemetry
       </Button>
       <Box>
         <Text>{value}</Text>
       </Box>
     </Box>
   )
-
 }
+// const Metadata = () => {
+//   const user = useUser();
+//   const [isExecuting, setIsExecuting] = useState(false);
+//   const [value, setValue] = useState<string | number>();
+//
+//   const handleGetMetadata = async () => {
+//     if (!user.address) {
+//       toast.error('Please connect your wallet to continue');
+//       return;
+//     }
+//
+//     const contract = new Contract(
+//       '0x4F410976c6687193dDC0da9C4F3ca1Dfd0ba0209',
+//       ERC721,
+//       readProvider
+//     )
+//
+//     try {
+//       setIsExecuting(true);
+//       const tokenURI = await contract.tokenURI(10);
+//       setValue(tokenURI);
+//     } catch (e: any) {
+//       console.log(e);
+//       toast.error(parseErrorMessage(e));
+//     } finally {
+//       setIsExecuting(false);
+//     }
+//   }
+//
+//   return (
+//     <Box>
+//       <Button isLoading={isExecuting} isDisabled={isExecuting} onClick={handleGetMetadata}>
+//         Get Metadata
+//       </Button>
+//       <Box>
+//         <Text>{value}</Text>
+//       </Box>
+//     </Box>
+//   )
+//
+// }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (!context.req.headers.host?.startsWith('localhost') || process.env.NODE_ENV !== 'development') {
-    return {
-      destination: `/`,
-      permanent: false,
-    }
-  }
+  // if (!context.req.headers.host?.startsWith('localhost') || process.env.NODE_ENV !== 'development') {
+  //   return {
+  //     destination: `/`,
+  //     permanent: false,
+  //   }
+  // }
 
   return { props: { } }
 }

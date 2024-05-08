@@ -28,6 +28,7 @@ interface UserContextType {
   onEscrowClaimed: () => void;
   onEscrowToggled: () => void;
   onStakingHarvested: () => void;
+  requestTelemetry: () => void;
 }
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -182,6 +183,20 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     dispatch({ type: UserActionType.STAKING_HARVESTED, payload: {} });
   }
 
+  const requestTelemetry = () => {
+    Sentry.captureEvent({ message: 'requestTelemetry--provider', extra: {
+        user: user,
+        address,
+        isConnecting,
+        isConnected,
+        isReconnecting,
+        status,
+        connector,
+        chain,
+        configChain: config.chain.id
+      } });
+  }
+
   // Set Wallet
   useEffect(() => {
     // connector?.getProvider().then((p) => {
@@ -263,7 +278,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         toggleTheme,
         onEscrowClaimed,
         onEscrowToggled,
-        onStakingHarvested
+        onStakingHarvested,
+        requestTelemetry
       }}
     >
       {children}
