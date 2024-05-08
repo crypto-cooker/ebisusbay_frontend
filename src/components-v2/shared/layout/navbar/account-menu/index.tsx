@@ -294,11 +294,13 @@ const Index = function () {
                 src={ImageService.translate('/img/login-wizard.webp').convert()}
                 maxW={400}
               />
-              <PrimaryButton w='full' onClick={handleLoginWizardComplete}>
-                Ok, Got it
-              </PrimaryButton>
             </VStack>
           </ModalBody>
+          <ModalFooter>
+            <PrimaryButton w='full' onClick={handleLoginWizardComplete}>
+              Ok, Got it
+            </PrimaryButton>
+          </ModalFooter>
         </ModalContent>
       </Modal>
 
