@@ -26515,6 +26515,56 @@
         "kyc": true,
         "verified": false
       }
+    },
+    {
+      "name": "A Murder",
+      "slug": "a-murder",
+      "multiToken": false,
+      "address": "0xA1e61fc8Dec97615EbbB2179b583eD0940C5caa1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "...of crows. Cronos chain antics inspired by the OG - Cro-Crow. Project includes $MRDR, NFT staking, LP farming, memecoin games and profit sharing for holders, more...",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/a-murder/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/a-murder/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/a-murder/banner.webp",
+        "website": "https://mrdr.me/",
+        "twitter": "https://twitter.com/MrdrCoin",
+        "discord": "https://discord.gg/8NSFXzxAXZ",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Hellians",
+      "slug": "hellians",
+      "multiToken": false,
+      "address": "0x681FB4525eCe1b151481385cAaFE084A77ADD955",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Pocket Demons Official brings the next generation in digital art. Hellians sets the stage for your favorite Pocket Demons to breed with your favorite Fallen Angels.  A Collection of 3996 with over 180 traits is guaranteed to leave each holder or minter with a unique piece of art.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/hellians/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/hellians/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/hellians/banner.webp",
+        "website": "https://www.pocketdemons.net/",
+        "twitter": "https://twitter.com/PDemon_Official",
+        "discord": "https://discord.gg/fBx4TtAVDc",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
     }
   ],
   "drops": [
