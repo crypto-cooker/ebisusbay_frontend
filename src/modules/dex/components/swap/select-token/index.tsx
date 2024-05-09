@@ -20,12 +20,10 @@ import {useAllTokenBalances} from "@dex/hooks/use-token-balances";
 interface SelectTokenProps {
   commonBases: DexToken[];
   tokens: DexToken[];
-  DialogBody: ComponentType<BoxProps & { children: ReactNode }>;
-  DialogFooter: ComponentType<BoxProps & { children: ReactNode }>;
   onCurrencySelect: (currency: Currency) => void;
 }
 
-export default function SelectToken({commonBases, tokens, DialogBody, DialogFooter, onCurrencySelect}: SelectTokenProps) {
+export default function SelectToken({commonBases, tokens, onCurrencySelect}: SelectTokenProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [hasVerticalScrollbar, setHasVerticalScrollbar] = useState(false);
   const windowSize = useWindowSize();
@@ -61,62 +59,55 @@ export default function SelectToken({commonBases, tokens, DialogBody, DialogFoot
 
   return (
     <>
-      <DialogBody p={0}>
-        <Box>
-          <VStack p={4} align='start' w='full'>
-            <InputGroup>
-              <Input
-                placeholder='Search by name, address, or symbol'
-                value={searchTerms}
-                onChange={handleSetSearchTerms}
+      <Box>
+        <VStack p={4} align='start' w='full'>
+          <InputGroup>
+            <Input
+              placeholder='Search by name, address, or symbol'
+              value={searchTerms}
+              onChange={handleSetSearchTerms}
+            />
+            {searchTerms?.length && (
+              <InputRightElement
+                children={<CloseButton onClick={handleClearSearch} />}
               />
-              {searchTerms?.length && (
-                <InputRightElement
-                  children={<CloseButton onClick={handleClearSearch} />}
-                />
-              )}
-            </InputGroup>
-            <Box mt={2}>
-              <Box fontSize='sm' fontWeight='bold'>Common bases</Box>
-              <Wrap mt={2}>
-                {commonBases.map((token) => (
-                  <Box key={token.symbol}>
-                    <Button
-                      variant='outline'
-                      leftIcon={<Image src={token.logoURI} w='30px' />}
-                      onClick={() => onCurrencySelect(token)}
-                    >
-                      {token.symbol}
-                    </Button>
-                  </Box>
-                ))}
-              </Wrap>
-            </Box>
-          </VStack>
-          <VStack
-            ref={ref}
-            align='stretch'
-            mt={4}
-            maxH='450px'
-            overflowY='auto'
-            spacing={0}
-          >
-            {filteredTokens.map((token) => (
-              <Row
-                key={token.address}
-                token={token}
-                hasVerticalScrollbar={hasVerticalScrollbar}
-                onSelect={() => onCurrencySelect(token)}
-              />
-            ))}
-          </VStack>
-        </Box>
-      </DialogBody>
-      <DialogFooter>
-        <Box w='full' textAlign='center'>
-          <Button variant='link'>Manage Tokens</Button>
-        </Box>
-      </DialogFooter>
+            )}
+          </InputGroup>
+          <Box mt={2}>
+            <Box fontSize='sm' fontWeight='bold'>Common bases</Box>
+            <Wrap mt={2}>
+              {commonBases.map((token) => (
+                <Box key={token.symbol}>
+                  <Button
+                    variant='outline'
+                    leftIcon={<Image src={token.logoURI} w='30px' />}
+                    onClick={() => onCurrencySelect(token)}
+                  >
+                    {token.symbol}
+                  </Button>
+                </Box>
+              ))}
+            </Wrap>
+          </Box>
+        </VStack>
+        <VStack
+          ref={ref}
+          align='stretch'
+          mt={4}
+          maxH='450px'
+          overflowY='auto'
+          spacing={0}
+        >
+          {filteredTokens.map((token) => (
+            <Row
+              key={token.address}
+              token={token}
+              hasVerticalScrollbar={hasVerticalScrollbar}
+              onSelect={() => onCurrencySelect(token)}
+            />
+          ))}
+        </VStack>
+      </Box>
     </>
   )
 }

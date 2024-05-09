@@ -15,7 +15,7 @@ import {getTheme} from "@src/global/theme/theme";
 type ModalDialogProps = {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
+  title?: string;
   modalProps?: Pick<ModalProps, 'size' | 'isCentered'>;
 }
 
@@ -27,10 +27,14 @@ export const ModalDialog = ({isOpen, onClose, title, modalProps, children}: Moda
     <Modal onClose={onClose} isOpen={isOpen} isCentered {...modalProps}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader className="text-center">
-          {title}
-        </ModalHeader>
-        <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
+        {!!title && (
+          <>
+            <ModalHeader className="text-center">
+              {title}
+            </ModalHeader>
+            <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
+          </>
+        )}
         {children}
       </ModalContent>
     </Modal>
@@ -49,10 +53,14 @@ export const DrawerDialog = ({isOpen, onClose, title, children}: ModalDialogProp
     >
       <DrawerOverlay />
       <DrawerContent>
-        <DrawerHeader>
-          {title}
-        </DrawerHeader>
-        <DrawerCloseButton color={getTheme(user.theme).colors.textColor4} />
+        {!!title && (
+          <>
+            <DrawerHeader>
+              {title}
+            </DrawerHeader>
+            <DrawerCloseButton color={getTheme(user.theme).colors.textColor4} />
+          </>
+        )}
         {children}
       </DrawerContent>
     </Drawer>

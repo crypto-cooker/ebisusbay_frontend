@@ -23,18 +23,14 @@ import {ResponsiveValue} from "@chakra-ui/system";
 import {DrawerDialog, ModalDialog} from "@src/components-v2/foundation/modal";
 
 export type ResponsiveDialogComponents = {
+  DialogHeader: ComponentType<BoxProps & { children: ReactNode }>;
   DialogBody: ComponentType<BoxProps & { children: ReactNode }>;
   DialogFooter: ComponentType<BoxProps & { children: ReactNode }>;
 }
 
-type DialogProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
-  modalProps?: Pick<ModalProps, 'size' | 'isCentered'>;
-}
-
 export const useResponsiveDialog = () => {
+  const user = useUser();
+
   const shouldUseDrawer = useBreakpointValue({ base: true, sm: false }, { fallback: 'sm' });
   if (shouldUseDrawer) {
     return {
@@ -42,6 +38,7 @@ export const useResponsiveDialog = () => {
       DialogHeader: DrawerHeader,
       DialogBody: DrawerBody,
       DialogFooter: DrawerFooter,
+      DialogCloseButton: () => <DrawerCloseButton color={getTheme(user.theme).colors.textColor4} />
     };
   } else {
     return {
@@ -49,6 +46,7 @@ export const useResponsiveDialog = () => {
       DialogHeader: ModalHeader,
       DialogBody: ModalBody,
       DialogFooter: ModalFooter,
+      DialogCloseButton: () => <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
     };
   }
 };
