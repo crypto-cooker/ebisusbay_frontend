@@ -16,6 +16,7 @@ import "swiper/css/pagination";
 
 import '../src/global/assets/styles/style.scss';
 import '../src/global/assets/styles/override.scss';
+import GoogleAnalytics from '@src/components-v2/shared/third-party/google-analytics';
 
 const dmSans = DM_Sans({
   weight: ['200', '300', '400', '500', '600', '700', '800'],
@@ -30,6 +31,7 @@ config.autoAddCss = false;
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
+      <GoogleAnalytics  />
       <Head>
         <Script type="module"
                 src="https://js-wc.site24x7static.com/site24x7/client/statusiq_status_widget/statusiq-status-widget.esm.js?12_2024"
