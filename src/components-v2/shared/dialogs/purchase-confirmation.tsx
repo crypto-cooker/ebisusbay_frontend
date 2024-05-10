@@ -6,14 +6,14 @@ import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {
-  caseInsensitiveCompare,
+  caseInsensitiveCompare, ciEquals,
   isBundle,
   isEbVipCollection,
   isErc20Token,
   isGaslessListing,
   knownErc20Token,
   round
-} from "@market/helpers/utils";
+} from '@market/helpers/utils';
 import {getTheme} from "@src/global/theme/theme";
 import {
   Box,
@@ -55,6 +55,7 @@ import Pusher from "pusher-js";
 import {Listing} from "@src/core/models/listing";
 import {getServerSignature} from "@src/core/cms/endpoints/gaslessListing";
 import {shipABI} from "@src/global/contracts/types";
+import { is1155 } from '@market/helpers/chain';
 
 let pusher = new Pusher("1d9ffac87de599c61283", { cluster: "ap2" });
 
@@ -153,9 +154,9 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       let amt = numericPrice;
 
       let fee =  numericPrice * (user.fee / 100);
-      const erc20UsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, listing.currency));
+      const erc20UsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, listing.currency));
       if (!!erc20UsdRate && erc20UsdRate.currency !== ethers.constants.AddressZero) {
-        const croUsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, ethers.constants.AddressZero) && rate.chain === 25);
+        const croUsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, ethers.constants.AddressZero) && rate.chain.toString() === config.chain.id.toString());
         fee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice) * (user.fee / 100);
       }
       amt += listing.currency === ethers.constants.AddressZero ? fee : 0;
@@ -436,19 +437,28 @@ const TransakOption = ({listing}: {listing: Listing}) => {
   };
 
   const handlePurchase = async () => {
+    // console.log('SERVER SIG REQUEST', rawCallData);
     const { data: serverSig } = await getServerSignature(
-      user.address,
+      '0xcb9bd5acd627e8fccf9eb8d4ba72aeb1cd8ff5ef',
       [listing.listingId],
       user.address
     );
     const { signature, orderData, ...sigData } = serverSig;
+    console.log('SERVER SIG RESPONSE', serverSig);
 
     let iface = new ethers.utils.Interface(shipABI);
+    console.log('generate rawCallData', 'fillOrders', [
+      orderData,
+      sigData,
+      signature
+    ]);
     const rawCallData = iface.encodeFunctionData('fillOrders', [
       orderData,
       sigData,
       signature
     ]);
+console.log('rawCallData', rawCallData);
+    const is1155Type = await is1155(listing.nftAddress);
 
     const newTransak = new Transak({
       ...defaultTransakConfig,
@@ -460,12 +470,28 @@ const TransakOption = ({listing}: {listing: Listing}) => {
           nftName: listing.nft.name,
           collectionAddress: listing.nft.nftAddress,
           tokenID: [listing.nft.nftId],
-          price: [15],
-          quantity: 1,
-          nftType: 'ERC721',
+          price: [Number(listing.price)],
+          quantity: Number(listing.amount),
+          nftType: is1155Type ? 'ERC1155' : 'ERC721',
         },
       ]
     });
+    console.log('CONFIG', JSON.stringify({
+      ...defaultTransakConfig,
+      walletAddress: user.address,
+      calldata: rawCallData,
+      nftData: [
+        {
+          imageURL: listing.nft.image,
+          nftName: listing.nft.name,
+          collectionAddress: listing.nft.nftAddress,
+          tokenID: [listing.nft.nftId],
+          price: [Number(listing.price)],
+          quantity: Number(listing.amount),
+          nftType: is1155Type ? 'ERC1155' : 'ERC721',
+        },
+      ]
+    }))
     setTransak(newTransak);
     newTransak.init();
 
@@ -502,9 +528,11 @@ const TransakOption = ({listing}: {listing: Listing}) => {
   )
 }
 
+type TransakConfigEnv = typeof Transak['ENVIRONMENTS']['STAGING'] | typeof Transak['ENVIRONMENTS']['PRODUCTION'];
+
 const defaultTransakConfig: TransakConfig = {
-  apiKey: '69feba7f-a1c2-4cfa-a9bd-43072768b0e6',
-  environment: process.env.NEXT_PUBLIC_TRANSAK_ENV as Transak.ENVIRONMENTS,
+  apiKey: '6bdef2f9-cfab-4d58-bb79-82794642a67e',
+  environment: process.env.NEXT_PUBLIC_TRANSAK_ENV as TransakConfigEnv,
   themeColor: '000000',
   defaultPaymentMethod: 'credit_debit_card',
   exchangeScreenTitle: 'Buy NFT',
