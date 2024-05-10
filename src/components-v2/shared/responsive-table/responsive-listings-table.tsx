@@ -56,7 +56,7 @@ interface MultiSelectProps {
 }
 
 const ResponsiveListingsTable = ({data, onUpdate, onCancel, onSort, breakpointValue}: ResponsiveListingsTableProps) => {
-  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'lg']: false}, {fallback: 'lg'})
+  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'lg']: false}, {fallback: 'lg', ssr: false})
   const { selected, setSelected, isMobileEnabled } = useContext(MultiSelectContext) as MultiSelectContextProps;
 
   const handleCheck = (targetListing: Listing, checked?: boolean) => {
