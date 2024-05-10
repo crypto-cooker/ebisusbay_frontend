@@ -172,7 +172,6 @@ const TransferDrawerItem = ({ item, onAddCollection }: TransferDrawerItemProps) 
                     <Box fontSize='xs'>
                       <Box>Qty</Box>
                       <NumberInput
-                        placeholder="Qty"
                         size="xs"
                         value={quantity}
                         min={1}
