@@ -44,7 +44,7 @@ interface ResponsiveNftOffersTableProps {
 }
 
 const ResponsiveNftOffersTable = ({data, onUpdate, onCancel, onSort, breakpointValue}: ResponsiveNftOffersTableProps) => {
-  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'sm']: false}, {fallback: 'sm'})
+  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'sm']: false}, {fallback: 'sm', ssr: false})
 
   return shouldUseAccordion ? (
     <DataAccordion data={data} onUpdate={onUpdate} onCancel={onCancel} onSort={onSort} />

@@ -239,7 +239,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
       <HeroSection
         className={`jumbotron h-vh tint`}
         style={{
-          backgroundImage: `url(${ImageService.translate(drop.images.banner ?? hostedImage('/img/background/banner-ryoshi-light.webp')).banner()})`
+          backgroundImage: `url(${ImageService.translate(drop.images.banner ?? hostedImage('/img/background/banner-default.webp')).banner()})`
         }}
       >
         <div className="container">

@@ -58,7 +58,7 @@ interface ResponsiveCollectionsTableProps {
 export type SortKeys = 'totalvolume' | 'totalsales' | 'totalfloorprice' | 'totalaveragesaleprice' | 'totalactive';
 
 const ResponsiveCollectionsTable = ({data, timeFrame, onSort, breakpointValue, primarySort = 'totalvolume'}: ResponsiveCollectionsTableProps) => {
-  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'lg']: false}, {fallback: 'lg'})
+  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'lg']: false}, {fallback: 'lg', ssr: false})
 
   return shouldUseAccordion ? (
     <DataAccordion data={data} timeFrame={timeFrame} primarySort={primarySort} />

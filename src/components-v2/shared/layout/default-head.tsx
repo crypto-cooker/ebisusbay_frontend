@@ -26,7 +26,7 @@ export const DefaultHead = () => {
         key="og_desc"
         content="A dynamic platform that combines NFT and DEX trading with GameFi, enabling users to battle for market dominance."
       />
-      <meta property="og:image" key="og_img" content="https://app.ebisusbay.com/img/background/banner-ryoshi-light.webp" />
+      <meta property="og:image" key="og_img" content="https://app.ebisusbay.com/img/background/banner-default.webp" />
 
       {/* Twitter */}
       <meta property="twitter:site" content="@EbisusBay" />
@@ -38,7 +38,7 @@ export const DefaultHead = () => {
         key="twitter_desc"
         content="A dynamic platform that combines NFT and DEX trading with GameFi, enabling users to battle for market dominance."
       />
-      <meta property="twitter:image" key="twitter_img" content="https://app.ebisusbay.com/img/background/banner-ryoshi-light.webp" />
+      <meta property="twitter:image" key="twitter_img" content="https://app.ebisusbay.com/img/background/banner-default.webp" />
     </Head>
   )
 }

@@ -69,14 +69,14 @@ export const metadata: Metadata = {
     url: 'https://app.ebisusbay.com',
     title: 'Ebisu\'s Bay | GameFi - NFT Market - DEX',
     description: 'A dynamic platform that combines NFT and DEX trading with GameFi, enabling users to battle for market dominance.',
-    images: 'https://app.ebisusbay.com/img/background/banner-ryoshi-light.webp'
+    images: 'https://app.ebisusbay.com/img/background/banner-default.webp'
   },
   twitter: {
     site: '@EbisusBay',
     card: 'summary_large_image',
     title: 'Ebisu\'s Bay | GameFi - NFT Market - DEX',
     description: 'A dynamic platform that combines NFT and DEX trading with GameFi, enabling users to battle for market dominance.',
-    images: 'https://app.ebisusbay.com/img/background/banner-ryoshi-light.webp'
+    images: 'https://app.ebisusbay.com/img/background/banner-default.webp'
   },
   manifest: '/manifest.json?v=1',
   icons: {

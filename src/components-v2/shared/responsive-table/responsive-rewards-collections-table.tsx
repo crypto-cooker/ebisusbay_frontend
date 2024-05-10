@@ -44,7 +44,7 @@ interface ResponsiveRewardsCollectionsTableProps {
 }
 
 const ResponsiveRewardsCollectionsTable = ({data, onSort, breakpointValue}: ResponsiveRewardsCollectionsTableProps) => {
-  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'lg'})
+  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'lg', ssr: false})
 
   return shouldUseAccordion ? (
     <DataAccordion data={data} onSort={onSort} />
