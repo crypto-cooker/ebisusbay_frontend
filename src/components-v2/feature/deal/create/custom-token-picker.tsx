@@ -122,7 +122,6 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
         />
         <NumberInput
           max={100000000000000}
-          precision={0}
           value={quantity}
           onChange={(valueAsString: string) => setQuantity(valueAsString)}
         >
