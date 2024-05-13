@@ -26553,7 +26553,7 @@
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/hellians/avatar.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/hellians/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/hellians/banner.webp",
-        "website": "https://www.pocketdemons.net/",
+        "website": "https://hellians.netlify.app/",
         "twitter": "https://twitter.com/PDemon_Official",
         "discord": "https://discord.gg/fBx4TtAVDc",
         "categories": [
@@ -26563,6 +26563,32 @@
       "verification": {
         "doxx": false,
         "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "LIT Investments Santatoshi",
+      "slug": "lit-investments-santatoshi",
+      "multiToken": false,
+      "address": "0xF88c011Bf002aEc5aa0430229c3ac31340A58E01",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Airdrop farming all blockchains, staking and airdrop farming with christmas rewards shared to all holders! Christmas on the 25th all year long!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/lit-investments-santatoshi/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/lit-investments-santatoshi/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/lit-investments-santatoshi/banner.webp",
+        "website": "https://santatoshi.io/",
+        "twitter": "https://twitter.com/Santa_Toshi_",
+        "discord": "https://discord.gg/svGX3fnw",
+        "medium": "https://medium.com/@santatoshinft/l-i-t-investments-71bb609f6886",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
         "verified": true
       }
     }
