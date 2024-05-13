@@ -26591,6 +26591,29 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "Coom Cats VIP",
+      "slug": "coom-cats-vip",
+      "multiToken": false,
+      "address": "0xFB9EE9A43C791A8433aE252c0ffCf059Bc657997",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A select collection for true #coomunity.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats-vip/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats-vip/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats-vip/banner.png",
+        "website": "https://www.coomcatsnft.com",
+        "twitter": "https://twitter.com/CoomCatsNFT",
+        "discord": "https://discord.gg/7QdUYZWBsk",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": true
+      }
     }
   ],
   "drops": [
