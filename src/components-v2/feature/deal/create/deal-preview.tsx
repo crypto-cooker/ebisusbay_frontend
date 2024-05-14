@@ -506,7 +506,6 @@ const PreviewTokenItem = ({token, ref, isOpen, onOpen, onClose, onSave, onRemove
               value={quantity}
               max={1000000}
               onChange={(valueAsString: string) => setQuantity(valueAsString)}
-              precision={0}
             >
               <NumberInputField />
               <NumberInputStepper>
