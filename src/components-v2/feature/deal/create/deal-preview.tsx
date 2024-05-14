@@ -435,7 +435,7 @@ const PreviewTokenItem = ({token, ref, isOpen, onOpen, onClose, onSave, onRemove
       return;
     }
 
-    onSave(token, Math.floor(parseInt(quantity)));
+    onSave(token, Number(quantity));
     onClose();
   }
 
