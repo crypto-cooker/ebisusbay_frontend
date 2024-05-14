@@ -328,6 +328,7 @@ export const configData = {
           '0x6A7808f1e84bB173D6fC53Efd9Ebc6E56380AB5E': ['cro'], // Cronos Chickens
           '0x5dd80779025679D06C9A175a7090FEEe92eA70aa': ['frtn'], // Strategy Series Vol.1,
           '0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845': ['cro', 'frtn', 'coom'], // Coom Cats
+          '0x7577A788247c77569794dFCd86B47d38b9347E95': ['cro', 'frtn', 'coom'], // Coom Cats VIP
         }
       }
     },
