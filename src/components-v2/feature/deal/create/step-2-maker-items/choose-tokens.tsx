@@ -110,7 +110,7 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
 
     toggleOfferERC20({
       ...selectedCurrency,
-      amount: Math.floor(parseInt(quantity)),
+      amount: Number(quantity),
     });
   }
 
