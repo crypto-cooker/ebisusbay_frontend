@@ -361,7 +361,6 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                             <Box fontSize='xs'>
                               <Box>Qty</Box>
                               <NumberInput
-                                placeholder="Qty"
                                 size="xs"
                                 value={quantity}
                                 min={1}

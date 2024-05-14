@@ -22800,7 +22800,7 @@
         "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/avatar2.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/card.webp",
-        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/banner3.png",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/banner4.webp",
         "website": "https://coomcats.com/",
         "twitter": "https://twitter.com/CoomCatsNFT",
         "discord": "https://discord.gg/fDgERHyUzC",
@@ -26514,6 +26514,105 @@
         "doxx": false,
         "kyc": true,
         "verified": false
+      }
+    },
+    {
+      "name": "A Murder",
+      "slug": "a-murder",
+      "multiToken": false,
+      "address": "0xA1e61fc8Dec97615EbbB2179b583eD0940C5caa1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "...of crows. Cronos chain antics inspired by the OG - Cro-Crow. Project includes $MRDR, NFT staking, LP farming, memecoin games and profit sharing for holders, more...",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/a-murder/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/a-murder/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/a-murder/banner.webp",
+        "website": "https://mrdr.me/",
+        "twitter": "https://twitter.com/MrdrCoin",
+        "discord": "https://discord.gg/8NSFXzxAXZ",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Hellians",
+      "slug": "hellians",
+      "multiToken": false,
+      "address": "0x681FB4525eCe1b151481385cAaFE084A77ADD955",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Pocket Demons Official brings the next generation in digital art. Hellians sets the stage for your favorite Pocket Demons to breed with your favorite Fallen Angels.  A Collection of 3996 with over 180 traits is guaranteed to leave each holder or minter with a unique piece of art.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/hellians/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/hellians/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/hellians/banner.webp",
+        "website": "https://hellians.netlify.app/",
+        "twitter": "https://twitter.com/PDemon_Official",
+        "discord": "https://discord.gg/fBx4TtAVDc",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "LIT Investments Santatoshi",
+      "slug": "lit-investments-santatoshi",
+      "multiToken": false,
+      "address": "0xF88c011Bf002aEc5aa0430229c3ac31340A58E01",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Airdrop farming all blockchains, staking and airdrop farming with christmas rewards shared to all holders! Christmas on the 25th all year long!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/lit-investments-santatoshi/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/lit-investments-santatoshi/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/lit-investments-santatoshi/banner.webp",
+        "website": "https://santatoshi.io/",
+        "twitter": "https://twitter.com/Santa_Toshi_",
+        "discord": "https://discord.gg/svGX3fnw",
+        "medium": "https://medium.com/@santatoshinft/l-i-t-investments-71bb609f6886",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Coom Cats VIP",
+      "slug": "coom-cats-vip",
+      "multiToken": false,
+      "address": "0x7577A788247c77569794dFCd86B47d38b9347E95",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A select collection for true #coomunity.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats-vip/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats-vip/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats-vip/banner.webp",
+        "website": "https://www.coomcatsnft.com",
+        "twitter": "https://twitter.com/CoomCatsNFT",
+        "discord": "https://discord.gg/7QdUYZWBsk",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": true
       }
     }
   ],

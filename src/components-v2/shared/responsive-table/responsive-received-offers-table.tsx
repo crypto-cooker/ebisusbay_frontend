@@ -44,7 +44,7 @@ interface ResponsiveReceivedOffersTableProps {
 }
 
 const ResponsiveReceivedOffersTable = ({data, onAccept, onReject, canReject, onSort, breakpointValue}: ResponsiveReceivedOffersTableProps) => {
-  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'md'})
+  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'md', ssr: false})
 
   const handleAccept = useCallback((offer: any) => {
     const collectionData = findCollectionByAddress(offer.nftAddress, offer.nftId);

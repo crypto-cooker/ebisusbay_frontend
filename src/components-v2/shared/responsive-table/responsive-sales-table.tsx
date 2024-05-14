@@ -39,7 +39,7 @@ interface ResponsiveTableProps {
 }
 
 const ResponsiveSalesTable = ({data, onSort, breakpointValue}: ResponsiveTableProps) => {
-  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'lg']: false}, {fallback: 'lg'})
+  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'lg']: false}, {fallback: 'lg', ssr: false})
 
   return shouldUseAccordion ? (
     <DataAccordion data={data} onSort={onSort} />

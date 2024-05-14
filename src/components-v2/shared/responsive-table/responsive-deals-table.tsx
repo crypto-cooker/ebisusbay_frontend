@@ -48,7 +48,7 @@ interface ResponsiveOffersTableProps {
 }
 
 const ResponsiveDealsTable = ({data, state, onUpdate, onCancel, onSort, breakpointValue}: ResponsiveOffersTableProps) => {
-  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'md'})
+  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'md', ssr: false})
 
   return shouldUseAccordion ? (
     <DataAccordion data={data} state={state} onUpdate={onUpdate} onCancel={onCancel} onSort={onSort} />
