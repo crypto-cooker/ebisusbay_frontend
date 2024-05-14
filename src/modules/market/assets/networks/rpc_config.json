@@ -31938,7 +31938,7 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": true,
+      "complete": false,
       "images": {
         "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/piggy-bank-finance/drop.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/piggy-bank-finance/banner.webp",
