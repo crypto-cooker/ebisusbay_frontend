@@ -108,7 +108,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
     if (invalids.maker.invalid_items.length > 0 || invalids.taker.invalid_items.length > 0) {
       toast.error(`Deal has been marked as invalid!`);
     } else {
-      toast.success(`Deal has been validated!`);
+      toast.success(`Deal has been refreshed!`);
     }
   }
 
