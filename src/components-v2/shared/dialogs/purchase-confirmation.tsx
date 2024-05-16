@@ -439,9 +439,9 @@ const TransakOption = ({listing}: {listing: Listing}) => {
   const handlePurchase = async () => {
     // console.log('SERVER SIG REQUEST', rawCallData);
     const { data: serverSig } = await getServerSignature(
-      '0xcb9bd5acd627e8fccf9eb8d4ba72aeb1cd8ff5ef',
+      user.address,
       [listing.listingId],
-      user.address
+      '0xcb9bd5acd627e8fccf9eb8d4ba72aeb1cd8ff5ef'
     );
     const { signature, orderData, ...sigData } = serverSig;
     console.log('SERVER SIG RESPONSE', serverSig);
