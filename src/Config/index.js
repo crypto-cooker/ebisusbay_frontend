@@ -180,6 +180,12 @@ export const configData = {
         symbol: 'Coom',
         address: '0xdcbE80cbf8A5327f32bD8EE45beaaD4cD85660cC',
         decimals: 18
+      },
+      fftb: {
+        name: 'FFTheBozos',
+        symbol: 'FFTB',
+        address: '0x8ebb879557db19d36e69b53b99f0ab938a703bef',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -208,7 +214,20 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy', 'coom'],
+        available: [
+          'cro',
+          'wcro',
+          'frtn',
+          'bcro',
+          'mad',
+          'vrse',
+          'scratch',
+          'candy',
+          'ttt',
+          'icy',
+          'coom',
+          'fftb'
+        ],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -329,6 +348,12 @@ export const configData = {
           '0x5dd80779025679D06C9A175a7090FEEe92eA70aa': ['frtn'], // Strategy Series Vol.1,
           '0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845': ['cro', 'frtn', 'coom'], // Coom Cats
           '0x7577A788247c77569794dFCd86B47d38b9347E95': ['cro', 'frtn', 'coom'], // Coom Cats VIP
+          '0x08FB1f6625d034019f2F6a3E70bab2FaA55CA068': ['cro', 'frtn', 'fftb'], // Skully-X
+          '0xca00aba7689e3c0f9f74e1f8d82e61c04c787734': ['cro', 'frtn', 'fftb'], // Cr00ts
+          '0x0f41Ad1a8A98Cf0Be5880253d6479b5Af9071071': ['cro', 'frtn', 'fftb'], // Cr00ts-X
+          '0x8333624EEb54E0c9FF6C96D41645d60463CE9b22': ['cro', 'frtn', 'fftb'], // Baby Wyverns
+          '0x776BeF0d43Acdc2b49c6885C6d15F9A5308252b2': ['cro', 'frtn', 'fftb'], // Baby Monsters
+          '0x13Eb301c0AC03D777dE915423B34195D56C14a21': ['cro', 'frtn', 'fftb'], // The Wyverns
         }
       }
     },
