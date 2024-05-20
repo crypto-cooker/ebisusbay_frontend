@@ -29,7 +29,7 @@ const PageHead = ({ title, description, image, url }: PageHeadProps) => {
       {url && <meta property="twitter:url" key="twitter_url" content={`${config.urls.app.replace(/\/$/, '')}${url}`} />}
       {image && <meta property="twitter:image" key="twitter_img" content={image} />}
 
-      <link rel="canonical" key="link_canonical" href='https://ebisusbay.com' />
+      {/*<link rel="canonical" key="link_canonical" href='https://ebisusbay.com' />*/}
     </Head>
   );
 };
