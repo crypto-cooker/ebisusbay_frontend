@@ -34323,7 +34323,7 @@
       "erc20Only": true,
       "memberMitama": 1000,
       "foundersOnly": false,
-      "start": null,
+      "start": 1716494400000,
       "end": null,
       "referral": false,
       "is1155": false,
