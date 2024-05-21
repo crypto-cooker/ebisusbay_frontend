@@ -248,7 +248,7 @@ const Home = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
     <div>
       <Head>
         <title>Ebisu's Bay Marketplace</title>
-        <link rel="canonical" key="link_canonical" href={appConfig('urls.app')} />
+        {/*<link rel="canonical" key="link_canonical" href='https://ebisusbay.com' />*/}
       </Head>
       <GlobalStyles />
       {/*<section className="promo">*/}

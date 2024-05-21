@@ -13,7 +13,7 @@ import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
-const currentGameId = 151;
+const currentGameId = 152;
 
 const Rewards = () => {
   const user = useUser();
