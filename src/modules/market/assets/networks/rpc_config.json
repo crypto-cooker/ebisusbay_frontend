@@ -26621,7 +26621,7 @@
       "multiToken": false,
       "address": "0x0f41Ad1a8A98Cf0Be5880253d6479b5Af9071071",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Their DNA have been altered, they are now ready for war \uD83D\uDC4A\uD83C\uDFFD\uD83D\uDCA5 Revenue shares / GameFi accesses / IP rights & more",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cr00ts-x/avatar.webp",
