@@ -26715,6 +26715,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Mistery on  Cro",
+      "slug": "mistery-on-cro",
+      "multiToken": false,
+      "address": "0x40c0e42a626994c1d290ccc8a3a791bb2b490fa9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Mistery on Cro, which debuted in Sydney on the 27th of March, 2024 at 9 PM local time, is a novel memecoin token. It’s part of an evolving ecosystem designed to enhance community engagement through token-driven activities and an upcoming arcade gaming platform, MERY NFT. The MERY NFT community, centered around Profile Picture NFTs, aims to enrich the experience of $MERY token holders with exclusive benefits.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/mistery-on-cro/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/mistery-on-cro/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/mistery-on-cro/banner.webp",
+        "website": "https://www.misteryoncro.io/",
+        "twitter": "https://twitter.com/Misteryoncro",
+        "discord": "https://discord.gg/DCdVreukct",
+        "telegram": "https://t.me/misteryoncro",
+        "categories": [
+          "collectibles",
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
