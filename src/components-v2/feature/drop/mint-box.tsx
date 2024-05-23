@@ -371,7 +371,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                 )}
               </HStack>
             </Flex>
-            {!!maxMintPerAddress && maxMintPerAddress < 20 && (
+            {drop.slug === 'pixel-ebisu' ? (
+              <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
+                Limit: 1 per 5 minutes
+              </Text>
+            ) : (!!maxMintPerAddress && maxMintPerAddress < 20) && (
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
                 Limit: {maxMintPerAddress} per wallet
               </Text>
