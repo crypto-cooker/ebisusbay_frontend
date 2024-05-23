@@ -88,10 +88,10 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (collection && user.wallet.isConnected) {
+    if (collection) {
       asyncFunc();
     }
-  }, [collection, user.wallet.isConnected]);
+  }, [collection]);
 
   useEffect(() => {
     const isMobileSize = minWidth < BREAKPOINTS.sm;
