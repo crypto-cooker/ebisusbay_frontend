@@ -75,7 +75,7 @@ const InfoTab = ({controlPoint, refreshControlPoint, useCurrentGameId}: InfoTabP
               <Table size='m'>
                 <Thead>
                   <Tr>
-                    <Th textAlign='left' color='gray.400'>Rank</Th>
+                    <Th textAlign='left' color='gray.400'>#</Th>
                     <Th textAlign='left' color='gray.400'>Faction</Th>
                     <Th textAlign='left' color='gray.400' isNumeric>Troops</Th>
                   </Tr>

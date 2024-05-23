@@ -505,7 +505,7 @@ const LeaderboardDrawer = ({isOpen, onClose}: LeaderboardDrawerProps) => {
                 <Table size='sm'>
                   <Thead>
                     <Tr>
-                      <Th textAlign='left'>Rank</Th>
+                      <Th textAlign='left'>#</Th>
                       <Th textAlign='left'>Faction</Th>
                       <Th textAlign='left' isNumeric>Points</Th>
                     </Tr>
