@@ -365,6 +365,13 @@ export const configData = {
           '0x688c9c95a7fF91cF1559cdaf098b3038Bc538BE1': ['cro', 'frtn', 'fftb'], // Cronos Baby Apes
           '0x7D89dCC2f35403cFD9B07475826F9a14a340d06A': ['cro', 'frtn', 'fftb'], // Cronos Mutant Apes
           '0x33e0b91c773D500FB4De87957740f5D200Be7371': ['cro', 'frtn', 'fftb'], // Cronos Mutant Apes - Serums
+          '0xeFc73c41EF829C0B87E3245aCF033b867cCD0F84': ['cro', 'frtn', 'fftb'], // D.G.Pals Genesis I
+          '0x86aabe05e885108a8797314e817488c26f0601a1': ['cro', 'frtn', 'fftb'], // D.G.P. Unlimited
+          '0xa072bB6F648a4271ba9CbaF1319Fc373eF907f29': ['cro', 'frtn', 'fftb'], // D.G.Pals Limited and Special Edition
+          '0x500cdf7a96a612BEb9e018035a3E89180a6732fE': ['cro', 'frtn', 'fftb'], // D.G.Pals Limited Edition
+          '0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7': ['cro', 'frtn', 'fftb'], // D.G.Pals Equipment
+          '0x8fb4483d92c045336974c4f8c96ad9b1fae8ac64': ['cro', 'frtn', 'fftb'], // D.G.Pals Special Edition
+          '0x0B3A229aBf88abd08C2fA1f2B6c1bB815bEaf5d5': ['cro', 'frtn', 'fftb'], // The Cronos Eagles
         }
       }
     },
