@@ -7,16 +7,13 @@ import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inv
 import {appConfig} from '@src/Config';
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import AttributeFilter from "@src/components-v2/shared/filter-container/filters/attribute-filter";
-import {ciEquals, stripSpaces} from "@market/helpers/utils";
+import {stripSpaces} from "@market/helpers/utils";
 import {CollectionPageContext, CollectionPageContextProps} from "@src/components-v2/feature/collection/context";
 import {ethers} from "ethers";
 import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container/filters/radio-filter";
+import useCurrencyBroker from '@market/hooks/use-currency-broker';
 
 const config = appConfig();
-
-type CurrencyEntry = {
-  [key: string]: string[];
-}
 
 interface CollectionFilterContainerProps {
   queryParams: FullCollectionsQueryParams;
@@ -31,22 +28,10 @@ interface CollectionFilterContainerProps {
   children: ReactNode;
 }
 
-const collectionCurrencies = Object.entries(config.listings.currencies.nft as CurrencyEntry);
 const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, totalCount, traits, powertraits, children}: CollectionFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
   const { queryParams, setQueryParams  } = useContext(CollectionPageContext) as CollectionPageContextProps;
-
-  const currencies = Object.entries(config.tokens)
-    .filter(([key, token]: [string, any]) => config.listings.currencies.available.includes(key))
-    .filter(([key, token]: [string, any]) => {
-      const availableCurrencySymbols = collectionCurrencies.find(([k, v]) => ciEquals(k, collection.address))
-      if (availableCurrencySymbols) {
-        return availableCurrencySymbols[1].includes(key);
-      } else {
-        return config.listings.currencies.global.includes(key)
-      }
-    })
-    .map(token => token[1]) as {name: string, symbol: string, address: string}[] ?? [];
+  const { getByCollection: currencies } = useCurrencyBroker();
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
     const params = queryParams;
@@ -227,13 +212,9 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
       {/*/>*/}
       <RadioFilter
         title='Currency'
-        items={
-        [
-          {label: 'CRO', key: 'currency-cro', isSelected: filteredItems.some((fi) => fi.key === 'currency-cro')},
-          ...currencies.map((c) => (
-            {label: c.name, key: `currency-${c.symbol.toLowerCase()}`, isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)}
-          )),
-        ]}
+        items={currencies(collection.address).map((c) => (
+          {icon: c.image, label: c.symbol, key: `currency-${c.symbol.toLowerCase()}`, isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)}
+        ))}
         onSelect={handleCurrencyFilter}
       />
       {!collection.multiToken && (
