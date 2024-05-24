@@ -186,6 +186,12 @@ export const configData = {
         symbol: 'FFTB',
         address: '0x8ebb879557db19d36e69b53b99f0ab938a703bef',
         decimals: 18
+      },
+      mery: {
+        name: 'Mistery',
+        symbol: 'MERY',
+        address: '0x3b41B27E74Dd366CE27cB389dc7877D4e1516d4d',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -226,7 +232,8 @@ export const configData = {
           'ttt',
           'icy',
           'coom',
-          'fftb'
+          'fftb',
+          'mery'
         ],
         global: ['cro', 'frtn'],
         nft: {
@@ -372,6 +379,7 @@ export const configData = {
           '0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7': ['cro', 'frtn', 'fftb'], // D.G.Pals Equipment
           '0x8fb4483d92c045336974c4f8c96ad9b1fae8ac64': ['cro', 'frtn', 'fftb'], // D.G.Pals Special Edition
           '0x0B3A229aBf88abd08C2fA1f2B6c1bB815bEaf5d5': ['cro', 'frtn', 'fftb'], // The Cronos Eagles
+          '0x561ffeca612917ccb8900993e9637a9e4a047e76': ['cro', 'frtn', 'mery'], // Mistery on CRO
         }
       }
     },
