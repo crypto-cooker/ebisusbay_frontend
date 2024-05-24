@@ -114,7 +114,7 @@ const expirationDatesValues = [
 const currencyOptions = [
   {
     name: 'CRO',
-    symbol: 'cro',
+    symbol: 'CRO',
     image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
   },
   ...config.listings.currencies.available
@@ -517,10 +517,10 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                               menuPortalTarget={document.body} menuPosition={'fixed'}
                               styles={customStyles}
                               options={allowedCurrencies}
-                              formatOptionLabel={({ name, image }) => (
+                              formatOptionLabel={({ symbol, image }) => (
                                 <HStack>
                                   {image}
-                                  <span>{name}</span>
+                                  <span>{symbol}</span>
                                 </HStack>
                               )}
                               value={selectedCurrency}

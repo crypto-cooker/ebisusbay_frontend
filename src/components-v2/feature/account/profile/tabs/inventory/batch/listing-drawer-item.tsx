@@ -105,7 +105,7 @@ const defaultExpiry = 2592000000;
 const currencyOptions = [
   {
     name: 'CRO',
-    symbol: 'cro',
+    symbol: 'CRO',
     image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
   },
   ...config.listings.currencies.available

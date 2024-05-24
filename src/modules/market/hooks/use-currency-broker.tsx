@@ -24,7 +24,7 @@ const configCurrencies = Object.values(config.tokens) as ConfigCurrency[];
 const knownCurrencies: BrokerCurrency[] = [
   {
     name: 'CRO',
-    symbol: 'cro',
+    symbol: 'CRO',
     address: ethers.constants.AddressZero,
     image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />,
     decimals: 18
