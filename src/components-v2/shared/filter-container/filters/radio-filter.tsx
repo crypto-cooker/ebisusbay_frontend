@@ -1,10 +1,20 @@
 import React from "react";
-import {AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Radio, RadioGroup} from "@chakra-ui/react";
+import {
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  HStack,
+  Radio,
+  RadioGroup
+} from '@chakra-ui/react';
 
 export interface RadioItem {
   label: string;
   key: string;
   isSelected: boolean;
+  icon?: string;
 }
 
 interface RadioFilterProps {
@@ -31,7 +41,16 @@ const RadioFilter = ({title, items, onSelect, defaultSelection}: RadioFilterProp
         >
           {items.map((item) => (
             <Box key={item.key}>
-              <Radio value={item.key}>{item.label}</Radio>
+              <Radio value={item.key}>
+                {!!item.icon ? (
+                  <HStack my={1}>
+                    <>{item.icon}</>
+                    <Box ms={2}>{item.label}</Box>
+                  </HStack>
+                ) : (
+                  <>{item.label}</>
+                )}
+              </Radio>
             </Box>
           ))}
         </RadioGroup>
