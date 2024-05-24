@@ -1,7 +1,7 @@
-import {appConfig} from "@src/Config";
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
-import {ethers} from "ethers";
-import {ciEquals, isNativeCro} from "@market/helpers/utils";
+import { appConfig } from '@src/Config';
+import DynamicCurrencyIcon from '@src/components-v2/shared/dynamic-currency-icon';
+import { ethers } from 'ethers';
+import { ciEquals, ciIncludes, isNativeCro } from '@market/helpers/utils';
 
 export type BrokerCurrency = {
   address: string;
@@ -20,15 +20,20 @@ type ConfigCurrency = {
   decimals: number;
 }
 
+type CollectionCurrencies = {
+  [key: string]: string[];
+}
+
 const configCurrencies = Object.values(config.tokens) as ConfigCurrency[];
+const nativeCurrency: BrokerCurrency = {
+  name: 'CRO',
+  symbol: 'CRO',
+  address: ethers.constants.AddressZero,
+  image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />,
+  decimals: 18
+}
 const knownCurrencies: BrokerCurrency[] = [
-  {
-    name: 'CRO',
-    symbol: 'CRO',
-    address: ethers.constants.AddressZero,
-    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />,
-    decimals: 18
-  },
+  nativeCurrency,
   ...configCurrencies.map((token) => {
     return {
       ...token,
@@ -50,12 +55,30 @@ const UseCurrencyBroker = () => {
     return config.deals.currencies.includes(symbol.toLowerCase());
   }
 
+  const getByCollection = (nftAddress: string) => {
+    const availableCurrencySymbols = Object.entries(config.listings.currencies.nft)
+      .find(([key]) => ciEquals(key, nftAddress)) as CollectionCurrencies | undefined;
+
+    return listingCurrencies.filter(({symbol}: { symbol: string }) => {
+      if (availableCurrencySymbols) {
+        return availableCurrencySymbols[1].includes(symbol.toLowerCase());
+      } else {
+        return config.listings.currencies.global.includes(symbol.toLowerCase())
+      }
+    });
+  }
+
+  const listingCurrencies = knownCurrencies.filter((currency: BrokerCurrency) => ciIncludes(config.listings.currencies.available, currency.symbol));
+
   return {
     knownCurrencies,
     whitelistedDealCurrencies: knownCurrencies.filter((currency: BrokerCurrency) => isDealCurrency(currency.symbol)),
     whitelistedERC20DealCurrencies: knownCurrencies.filter((currency: BrokerCurrency) => isDealCurrency(currency.symbol) && !isNativeCro(currency.address)),
+    listingCurrencies,
     getBySymbol,
     getByAddress,
+    getByCollection,
+    nativeCurrency
   }
 }
 
