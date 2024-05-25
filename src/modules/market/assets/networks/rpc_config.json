@@ -26742,6 +26742,58 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Time Machine 103s",
+      "slug": "time-machine-103",
+      "multiToken": false,
+      "address": "0x3A87FED3F2Af08B18E566BC9Dd497Ff8861b5669",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Time Machine 103s is a free NFT collection used to decrease the amount of gas required to claim royalties and revenue from 101s/102s. Also to increase the payout weekly per nft. by decreasing the supply from 15,000 NFTs to 2700 or less.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-103/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-103/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-103/banner.webp",
+        "website": "https://time-sniper.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/Tfc2Y8Kjyq",
+        "medium": "https://time-machine-nfts.gitbook.io/time-machine-nfts/",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Baby Ryoshi OG",
+      "slug": "baby-ryoshi-og",
+      "multiToken": false,
+      "address": "0x3cb2E346C6cca184B59c4c0D69e60C95Dd3c138F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Yoshi has invaded the Cronos landscape. Come be a part of the journey and fun",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-og/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-og/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-og/banner.webp",
+        "website": "https://croarmy.app/#/Ryoshi",
+        "twitter": "https://twitter.com/RyoshiBaby",
+        "discord": "https://discord.gg/seEQjGArXU",
+        "categories": [
+          "utility",
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
