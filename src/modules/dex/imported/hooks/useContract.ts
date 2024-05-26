@@ -32,7 +32,7 @@ import {
   Erc20,
   Erc721,
   Weth,
-} from 'uniswap/src/abis/types'
+} from '@dex/imported/packages/uniswap/src/abis/types'
 // import { NonfungiblePositionManager, UniswapInterfaceMulticall } from '@dex/packages/uniswap/src/abis/types/v3'
 // import { V3Migrator } from '@dex/packages/uniswap/src/abis/types/v3/V3Migrator'
 import WETH_ABI from '@dex/imported/packages/uniswap/src/abis/weth.json'
@@ -62,7 +62,7 @@ export function useContract<T extends Contract = Contract>(
     else address = addressOrAddressMap[chain?.id]
     if (!address) return null
     try {
-      return getContract(address, ABI, provider, withSignerIfPossible && account ? account : undefined)
+      return getContract(address, ABI, provider as any, withSignerIfPossible && account ? account : undefined)
     } catch (error) {
       console.error('Failed to get contract', error)
       return null

@@ -158,7 +158,7 @@ console.log('HI', inputCurrency, outputCurrency)
   return useMemo(() => ({
     currencies,
     currencyBalances,
-  }), [currencies, currencyBalances]);
+  }) as any, [currencies, currencyBalances]);
 }
 
 
@@ -187,7 +187,7 @@ export function useCurrencyBalances(
       currencies?.map((currency) => {
         if (!account || !currency || currency.chainId !== chain?.id) return undefined
         if (currency.isToken) return tokenBalances[currency.address]
-        if (currency.isNative) return ethBalance[account]
+        if (currency.isNative) return undefined //ethBalance[account as keyof typeof ethBalance]
         return undefined
       }) ?? [],
     [account, chain?.id, currencies, ethBalance, tokenBalances]

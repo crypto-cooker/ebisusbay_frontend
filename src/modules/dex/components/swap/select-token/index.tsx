@@ -31,7 +31,7 @@ export default function SelectToken({commonBases, tokens, onCurrencySelect}: Sel
   // const tokenBalances = useAtomValue(userTokenBalancesAtom);
   const tokenBalances = useAllTokenBalances();
 
-  console.log('===token balances2', Object.values(tokenBalances).map(token => ({name:token.currency.symbol, value:token.toExact()})));
+  console.log('===token balances2', Object.values(tokenBalances).map(token => ({name:token?.currency.symbol, value:token?.toExact()})));
   const checkForScrollbar = () => {
     if (ref.current) {
       const hasScrollbar = ref.current.scrollHeight > ref.current.clientHeight;
@@ -52,11 +52,11 @@ export default function SelectToken({commonBases, tokens, onCurrencySelect}: Sel
   }, [windowSize, searchTerms]);
 
   const filteredTokens = searchTerms ? Object.values(tokenBalances).filter((token) => {
-    if (!token.currency) return false;
+    if (!token?.currency) return false;
 
-    const foundName = token.currency.name?.toLowerCase().includes(searchTerms.toLowerCase()) ?? false;
-    const foundSymbol = token.currency.symbol?.toLowerCase().includes(searchTerms) ?? false;
-    const foundAddress = token.currency.address?.toLowerCase().includes(searchTerms) ?? false;
+    const foundName = token?.currency.name?.toLowerCase().includes(searchTerms.toLowerCase()) ?? false;
+    const foundSymbol = token?.currency.symbol?.toLowerCase().includes(searchTerms) ?? false;
+    const foundAddress = token?.currency.address?.toLowerCase().includes(searchTerms) ?? false;
     return foundName || foundSymbol || foundAddress;
   }) : tokenBalances;
 
@@ -83,7 +83,7 @@ export default function SelectToken({commonBases, tokens, onCurrencySelect}: Sel
                 <Box key={token.symbol}>
                   <Button
                     variant='outline'
-                    leftIcon={<Image src={token.logoURI} w='30px' />}
+                    leftIcon={<Image src={(token as any)?.logoURI} w='30px' />}
                     onClick={() => onCurrencySelect(token)}
                   >
                     {token.symbol}
@@ -101,7 +101,7 @@ export default function SelectToken({commonBases, tokens, onCurrencySelect}: Sel
           overflowY='auto'
           spacing={0}
         >
-          {filteredTokens.map((token) => (
+          {(filteredTokens as any)?.map((token: any) => (
             <Row
               key={token.currency.address}
               token={token}

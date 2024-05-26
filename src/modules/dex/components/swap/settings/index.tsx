@@ -19,6 +19,7 @@ import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 import {CheckIcon, PhoneIcon, WarningIcon} from "@chakra-ui/icons";
 import {round} from "@market/helpers/utils";
+import {Percent} from "@uniswap/sdk-core";
 
 export default function Settings({isOpen, onClose}: ModalState) {
   const [userExpertMode, setUserExpertMode ] = useUserExpertMode();
@@ -86,7 +87,7 @@ function SlippageOptions() {
 
   const handleSlippageChange = (value: number) => {
     setSlippageInput('');
-    setUserSlippageTolerance(value);
+    setUserSlippageTolerance(new Percent(value));
   }
 
   const handleCustomSlippageChange = (value: string) => {
@@ -95,26 +96,26 @@ function SlippageOptions() {
     try {
       const valueAsIntFromRoundedFloat = parseInt((parseFloat(value) * 100).toString());
       if (!Number.isNaN(valueAsIntFromRoundedFloat) && valueAsIntFromRoundedFloat < 5000) {
-        setUserSlippageTolerance(valueAsIntFromRoundedFloat);
+        setUserSlippageTolerance(new Percent(valueAsIntFromRoundedFloat));
       } else {
 
       }
     } catch {}
   }
 
-  const slippageInputIsValid =
-    slippageInput === '' || (userSlippageTolerance / 100).toFixed(2) === Number.parseFloat(slippageInput).toFixed(2);
-
+  // const slippageInputIsValid =
+  //   slippageInput === '' || (userSlippageTolerance / 100).toFixed(2) === Number.parseFloat(slippageInput).toFixed(2);
+  //
   let slippageError: SlippageError | undefined;
-  if (slippageInput !== '' && !slippageInputIsValid) {
-    slippageError = SlippageError.InvalidInput;
-  } else if (slippageInputIsValid && userSlippageTolerance < 50) {
-    slippageError = SlippageError.RiskyLow;
-  } else if (slippageInputIsValid && userSlippageTolerance > 500) {
-    slippageError = SlippageError.RiskyHigh;
-  } else {
-    slippageError = undefined;
-  }
+  // if (slippageInput !== '' && !slippageInputIsValid) {
+  //   slippageError = SlippageError.InvalidInput;
+  // } else if (slippageInputIsValid && userSlippageTolerance < 50) {
+  //   slippageError = SlippageError.RiskyLow;
+  // } else if (slippageInputIsValid && userSlippageTolerance > 500) {
+  //   slippageError = SlippageError.RiskyHigh;
+  // } else {
+  //   slippageError = undefined;
+  // }
 
   const isErrorOnInput = !!slippageInput && !!slippageError;
 
@@ -125,12 +126,12 @@ function SlippageOptions() {
         {suggestedSlippageValues.map((value) => (
           <Button
             key={value}
-            isActive={value === userSlippageTolerance}
+            isActive={new Percent(value) === userSlippageTolerance}
             onClick={() => handleSlippageChange(value)}
             rounded='3px'
             variant='tab'
             size={{base: 'sm', sm: 'md'}}
-            color={value === userSlippageTolerance ? 'white' : getTheme(user.theme).colors.textColor3}
+            color={new Percent(value) === userSlippageTolerance ? 'white' : getTheme(user.theme).colors.textColor3}
           >
             {value / 100}%
           </Button>
@@ -138,14 +139,14 @@ function SlippageOptions() {
         <Box w='100px' flexGrow={1}>
           <InputGroup>
             <Input
-              placeholder={(userSlippageTolerance / 100).toFixed(2).toString()}
+              placeholder={(0 / 100).toFixed(2).toString()}
               size={{base: 'sm', sm: 'md'}}
               type='number'
               pattern='^[0-9]*[.,]?[0-9]{0,2}$'
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleCustomSlippageChange(e.target.value)}
               value={slippageInput}
               borderColor={isErrorOnInput ? (slippageError === SlippageError.InvalidInput ? 'red.600' : 'orange.600') : 'inherit'}
-              onBlur={(e: ChangeEvent<HTMLInputElement>) => handleCustomSlippageChange((userSlippageTolerance / 100).toFixed(2))}
+              onBlur={(e: ChangeEvent<HTMLInputElement>) => handleCustomSlippageChange((0 / 100).toFixed(2))}
             />
             <InputRightElement>
               %

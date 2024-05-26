@@ -7,7 +7,6 @@ import {useNetwork} from "wagmi";
 import {ChainId} from "@uniswap/sdk-core";
 import {queryParametersToCurrencyState} from "@dex/imported/state/swap/hooks";
 // import useParsedQueryString from "@dex/hooks/useParsedQueryString";
-import {useCurrency} from "@dex/imported/hooks/tokens";
 import {BlockNumberProvider} from "@dex/imported/lib/hooks/useBlockNumber";
 
 export default function Page() {

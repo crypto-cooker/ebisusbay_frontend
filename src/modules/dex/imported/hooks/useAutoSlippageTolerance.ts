@@ -85,7 +85,7 @@ export default function useClassicAutoSlippageTolerance(trade?: ClassicTrade): P
   // Skip the gas estimate if we already have a USD estimate, or if there is no trade.
   const skipNativeEstimate = Boolean(gasEstimateUSD || !trade)
   const nativeGasPrice = useGasPrice(/* skip= */ skipNativeEstimate)
-  const nativeCurrency = useNativeCurrency(chain?.id)
+  const nativeCurrency = undefined // useNativeCurrency(chain?.id)
   const gasEstimate = guesstimateGas(trade)
   const nativeGasCost =
     nativeGasPrice && typeof gasEstimate === 'number'

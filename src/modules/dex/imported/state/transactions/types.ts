@@ -183,7 +183,7 @@ export type TransactionInfo =
   | ExactOutputSwapTransactionInfo
   | ExactInputSwapTransactionInfo
   | ClaimTransactionInfo
-  | VoteTransactionInfo
+  // | VoteTransactionInfo
   | QueueTransactionInfo
   | ExecuteTransactionInfo
   | DelegateTransactionInfo

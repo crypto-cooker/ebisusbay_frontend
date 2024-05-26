@@ -139,18 +139,18 @@ export const PUBLIC_RPC_URLS: Record<SupportedInterfaceChain, string[]> = {
  * These are URLs which may only be used by the interface, due to origin policies, &c.
  */
 export const APP_RPC_URLS: Record<SupportedInterfaceChain, string[]> = {
-  [ChainId.MAINNET]: [`https://mainnet.infura.io/v3/${INFURA_KEY}`, QUICKNODE_MAINNET_RPC_URL],
+  [ChainId.MAINNET]: [`https://mainnet.infura.io/v3/${INFURA_KEY}`, QUICKNODE_MAINNET_RPC_URL ?? ''],
   [ChainId.GOERLI]: [`https://goerli.infura.io/v3/${INFURA_KEY}`],
   [ChainId.SEPOLIA]: [`https://sepolia.infura.io/v3/${INFURA_KEY}`],
   [ChainId.OPTIMISM]: [`https://optimism-mainnet.infura.io/v3/${INFURA_KEY}`],
   [ChainId.OPTIMISM_GOERLI]: [`https://optimism-goerli.infura.io/v3/${INFURA_KEY}`],
-  [ChainId.ARBITRUM_ONE]: [`https://arbitrum-mainnet.infura.io/v3/${INFURA_KEY}`, QUICKNODE_ARBITRUM_RPC_URL],
+  [ChainId.ARBITRUM_ONE]: [`https://arbitrum-mainnet.infura.io/v3/${INFURA_KEY}`, QUICKNODE_ARBITRUM_RPC_URL ?? ''],
   [ChainId.ARBITRUM_GOERLI]: [`https://arbitrum-goerli.infura.io/v3/${INFURA_KEY}`],
   [ChainId.POLYGON]: [`https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`],
   [ChainId.POLYGON_MUMBAI]: [`https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`],
   [ChainId.CELO]: [`https://celo-mainnet.infura.io/v3/${INFURA_KEY}`],
   [ChainId.CELO_ALFAJORES]: [`https://celo-alfajores.infura.io/v3/${INFURA_KEY}`],
-  [ChainId.BNB]: [QUICKNODE_BNB_RPC_URL],
+  [ChainId.BNB]: [QUICKNODE_BNB_RPC_URL ?? ''],
   [ChainId.AVALANCHE]: [`https://avalanche-mainnet.infura.io/v3/${INFURA_KEY}`],
   [ChainId.BASE]: [`https://base-mainnet.infura.io/v3/${INFURA_KEY}`],
   [ChainId.BLAST]: [`https://blast-mainnet.infura.io/v3/${INFURA_KEY}`],

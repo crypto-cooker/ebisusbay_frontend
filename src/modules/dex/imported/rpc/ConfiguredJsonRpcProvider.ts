@@ -1,7 +1,7 @@
 import { Networkish } from '@ethersproject/networks'
 import { StaticJsonRpcProvider } from '@ethersproject/providers'
 
-import { SupportedInterfaceChain } from 'constants/chains'
+import { SupportedInterfaceChain } from '@dex/imported/constants/chains'
 import { AVERAGE_L1_BLOCK_TIME } from '../constants/chainInfo'
 
 export default class ConfiguredJsonRpcProvider extends StaticJsonRpcProvider {

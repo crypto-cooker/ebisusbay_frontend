@@ -59,7 +59,7 @@ export default function SwapCurrencyInputPanel({ value, onUserInput, label, onCu
             <HStack>
               {!!currency && (
                 <Box as='span' minW='30px'>
-                  <Image w='30px' src={currency.logoURI} />
+                  <Image w='30px' src={(currency as any).logoURI} />
                 </Box>
               )}
               <span>
@@ -70,7 +70,7 @@ export default function SwapCurrencyInputPanel({ value, onUserInput, label, onCu
           </Button>
         </HStack>
       </Card>
-      {onCurrencySelect && (
+      {!!onCurrencySelect && (
         <ResponsiveChooseTokenDialog
           isOpen={isModalOpen}
           onClose={onModalClose}

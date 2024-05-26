@@ -1,7 +1,7 @@
 import {Box, Button, Container, Flex, IconButton, useDisclosure, VStack, Wrap} from "@chakra-ui/react";
 import {Card} from "@src/components-v2/foundation/card";
 import {ArrowDownIcon, SettingsIcon} from "@chakra-ui/icons";
-import InputBox from "@dex/components/swap/input-box";
+// import InputBox from "@dex/components/swap/input-box";
 import {Field} from "@dex/constants";
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
 import {PrimaryButton} from "@src/components-v2/foundation/button";

@@ -9,9 +9,9 @@ const FEE_ON_TRANSFER_DETECTOR_ADDRESS = '0x19C97dc2a25845C7f9d1d519c8C2d4809c58
 import { WETH_ADDRESS as getWethAddress } from '@uniswap/universal-router-sdk'
 import FOT_DETECTOR_ABI from '@dex/imported/packages/uniswap/src/abis/fee-on-transfer-detector.json'
 
-function useFeeOnTransferDetectorContract(): FeeOnTransferDetector | null {
+function useFeeOnTransferDetectorContract(): any | null {
   const { address: account } = useUser()
-  const contract = useContract<FeeOnTransferDetector>(FEE_ON_TRANSFER_DETECTOR_ADDRESS, FOT_DETECTOR_ABI)
+  const contract = useContract<any>(FEE_ON_TRANSFER_DETECTOR_ADDRESS, FOT_DETECTOR_ABI)
 
   // useEffect(() => {
   //   if (contract && account) {
@@ -34,7 +34,7 @@ const AMOUNT_TO_BORROW = 10000 // smallest amount that has full precision over b
 const FEE_CACHE: { [address in string]?: { sellTax?: Percent; buyTax?: Percent } } = {}
 
 async function getSwapTaxes(
-  fotDetector: FeeOnTransferDetector,
+  fotDetector: any,
   inputTokenAddress: string | undefined,
   outputTokenAddress: string | undefined
 ) {

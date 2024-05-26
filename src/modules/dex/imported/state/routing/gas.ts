@@ -7,6 +7,8 @@ import {getContract} from "@dex/imported/utils/getContract";
 import {erc20ABI} from "wagmi";
 import {RPC_PROVIDERS} from "@dex/imported/constants/providers";
 import {WRAPPED_NATIVE_CURRENCY} from "@dex/imported/constants/tokens";
+import WETH_ABI from '@dex/imported/packages/uniswap/src/abis/weth.json'
+import {Weth} from "@dex/imported/packages/uniswap/src/abis/types";
 
 // TODO(UniswapX): add fallback gas limits per chain? l2s have higher costs
 const WRAP_FALLBACK_GAS_LIMIT = 45_000

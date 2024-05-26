@@ -29,7 +29,6 @@ import type {
 export interface Erc1155Interface extends utils.Interface {
   functions: {
     "uri(uint256)": FunctionFragment;
-    "uri(uint256)": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;

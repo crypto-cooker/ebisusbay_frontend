@@ -24,7 +24,7 @@ function useQuickRouteArguments({
   inputTax: Percent
   outputTax: Percent
 }): GetQuickQuoteArgs | typeof skipToken {
-  const enabledMainnet = useFeatureFlag(FeatureFlags.QuickRouteMainnet)
+  const enabledMainnet = true //useFeatureFlag(FeatureFlags.QuickRouteMainnet)
 
   return useMemo(() => {
     if (!tokenIn || !tokenOut || !amount) return skipToken
@@ -78,51 +78,56 @@ export function usePreviewTrade(
   })
   const isWindowVisible = useIsWindowVisible()
 
-  const { isError, data: tradeResult, error, currentData } = useGetQuickRouteQueryState(queryArgs)
-  useGetQuickRouteQuery(skipFetch || !isWindowVisible ? skipToken : queryArgs, {
-    // If latest quote from cache was fetched > 2m ago, instantly repoll for another instead of waiting for next poll period
-    refetchOnMountOrArgChange: 2 * 60,
-  })
+  return {
+    state: TradeState.INVALID,
+    trade: undefined,
+    currentTrade: undefined
+  };
+  // const { isError, data: tradeResult, error, currentData } = useGetQuickRouteQueryState(queryArgs)
+  // useGetQuickRouteQuery(skipFetch || !isWindowVisible ? skipToken : queryArgs, {
+  //   // If latest quote from cache was fetched > 2m ago, instantly repoll for another instead of waiting for next poll period
+  //   refetchOnMountOrArgChange: 2 * 60,
+  // })
 
-  const isFetching = currentData !== tradeResult || !currentData
-
-  return useMemo(() => {
-    if (amountSpecified && otherCurrency && queryArgs === skipToken) {
-      return {
-        state: TradeState.STALE,
-        trade: tradeResult?.trade,
-        currentTrade: currentData?.trade,
-        swapQuoteLatency: tradeResult?.latencyMs,
-      }
-    } else if (!amountSpecified || isError || queryArgs === skipToken) {
-      return {
-        state: TradeState.INVALID,
-        trade: undefined,
-        currentTrade: currentData?.trade,
-        error: JSON.stringify(error),
-      }
-    } else if (tradeResult?.state === QuoteState.NOT_FOUND && !isFetching) {
-      return TRADE_NOT_FOUND
-    } else if (!tradeResult?.trade) {
-      return TRADE_LOADING
-    } else {
-      return {
-        state: isFetching ? TradeState.LOADING : TradeState.VALID,
-        trade: tradeResult.trade,
-        currentTrade: currentData?.trade,
-        swapQuoteLatency: tradeResult.latencyMs,
-      }
-    }
-  }, [
-    amountSpecified,
-    error,
-    isError,
-    isFetching,
-    queryArgs,
-    tradeResult?.latencyMs,
-    tradeResult?.state,
-    tradeResult?.trade,
-    currentData?.trade,
-    otherCurrency,
-  ])
+  // const isFetching = currentData !== tradeResult || !currentData
+  //
+  // return useMemo(() => {
+  //   if (amountSpecified && otherCurrency && queryArgs === skipToken) {
+  //     return {
+  //       state: TradeState.STALE,
+  //       trade: tradeResult?.trade,
+  //       currentTrade: currentData?.trade,
+  //       swapQuoteLatency: tradeResult?.latencyMs,
+  //     }
+  //   } else if (!amountSpecified || isError || queryArgs === skipToken) {
+  //     return {
+  //       state: TradeState.INVALID,
+  //       trade: undefined,
+  //       currentTrade: currentData?.trade,
+  //       error: JSON.stringify(error),
+  //     }
+  //   } else if (tradeResult?.state === QuoteState.NOT_FOUND && !isFetching) {
+  //     return TRADE_NOT_FOUND
+  //   } else if (!tradeResult?.trade) {
+  //     return TRADE_LOADING
+  //   } else {
+  //     return {
+  //       state: isFetching ? TradeState.LOADING : TradeState.VALID,
+  //       trade: tradeResult.trade,
+  //       currentTrade: currentData?.trade,
+  //       swapQuoteLatency: tradeResult.latencyMs,
+  //     }
+  //   }
+  // }, [
+  //   amountSpecified,
+  //   error,
+  //   isError,
+  //   isFetching,
+  //   queryArgs,
+  //   tradeResult?.latencyMs,
+  //   tradeResult?.state,
+  //   tradeResult?.trade,
+  //   currentData?.trade,
+  //   otherCurrency,
+  // ])
 }
