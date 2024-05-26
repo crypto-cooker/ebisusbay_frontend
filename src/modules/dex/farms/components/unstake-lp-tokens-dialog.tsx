@@ -29,9 +29,10 @@ interface UnstakeLpTokensDialogProps {
   onClose: () => void;
   farm: DerivedFarm;
   userData: UserFarmState;
+  onSuccess: () => void;
 }
 
-export default function UnstakeLpTokensDialog({isOpen, onClose, farm, userData}: UnstakeLpTokensDialogProps) {
+export default function UnstakeLpTokensDialog({isOpen, onClose, farm, userData, onSuccess}: UnstakeLpTokensDialogProps) {
   const user = useUser();
   const [quantity, setQuantity] = useState<string>('');
   const [executing, setExecuting] = useState<boolean>(false);
@@ -59,6 +60,7 @@ export default function UnstakeLpTokensDialog({isOpen, onClose, farm, userData}:
       const tx = await contract.withdraw(farm.data.pid, ethers.utils.parseEther(quantity));
       await tx.wait();
       toast.success('Staked successfully');
+      onSuccess()
     } catch (e) {
       console.log(e);
       toast.error(parseErrorMessage(e));
@@ -113,8 +115,8 @@ export default function UnstakeLpTokensDialog({isOpen, onClose, farm, userData}:
           <NumberInput
             placeholder="Amount"
             value={quantity}
-            min={1}
-            max={100000000}
+            min={0}
+            max={Number(ethers.utils.formatEther(userData.stakedBalance.toString()))}
             step={1}
             onChange={(valueString) => handleQuantityChange(valueString)}
           >

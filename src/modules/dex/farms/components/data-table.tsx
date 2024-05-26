@@ -2,7 +2,8 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getSortedRowModel, Row,
+  getSortedRowModel,
+  Row,
   SortingState,
   useReactTable
 } from "@tanstack/react-table";
@@ -14,15 +15,18 @@ import {
   HStack,
   Icon,
   IconButton,
-  Link, SimpleGrid,
+  Link,
+  SimpleGrid,
   Stack,
   Table,
   Tbody,
   Td,
   Tr,
   useBreakpointValue,
-  useColorModeValue, useDisclosure,
-  VStack
+  useColorModeValue,
+  useDisclosure,
+  VStack,
+  Wrap
 } from "@chakra-ui/react";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {getTheme} from "@src/global/theme/theme";
@@ -39,6 +43,8 @@ import StakeLpTokensDialog from "@dex/farms/components/stake-lp-tokens";
 import {UserFarms, UserFarmState} from "@dex/farms/state/user";
 import {ethers} from "ethers";
 import {round} from "@market/helpers/utils";
+import {commify} from "ethers/lib/utils";
+import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
 
 const config =  appConfig();
 
@@ -104,6 +110,7 @@ export default function DataTable({ data, columns, userData }: DataTableProps) {
 function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row<DerivedFarm>, isSmallScreen: boolean, showLiquidityColumn: boolean, userData?: UserFarmState}) {
   const user = useUser();
   const [enableFarm, enablingFarm] = useEnableFarm();
+  const { refetchBalances } = useUserFarmsRefetch();
   const [harvestRewards, harvestingRewards] = useHarvestRewards();useColorModeValue('#FFFFFF', '#404040')
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
@@ -111,6 +118,13 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
   const { isOpen: isOpenUnstake, onOpen: onOpenUnstake, onClose:  onCloseUnstake } = useDisclosure();
   const { isOpen: isOpenStake, onOpen: onOpenStake, onClose:  onCloseStake } = useDisclosure();
 
+  const handleStakeSuccess = async () => {
+    onCloseStake();
+    onCloseUnstake();
+    await new Promise(r => setTimeout(r, 2000));
+    refetchBalances();
+  }
+// console.log('APPROVED?', row.original.data.pair?.name, userData);
   return (
     <React.Fragment>
       <Tr
@@ -167,7 +181,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
           <Td padding={0} border='none'>
             <Stack direction='row' spacing={0} width='100%'>
               {row.getVisibleCells().slice(1).map((cell) => (
-                <Box flex='1' padding={4}>
+                <Box key={`m-${cell.column.id}`} flex='1' padding={4}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </Box>
               ))}
@@ -226,31 +240,29 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
               >
                 <Card flex={1}>
                   <Box fontSize='sm' fontWeight='bold' mb={2}>EARNED REWARDS</Box>
-                  <Flex justify='space-between' align='center'>
+                  <Wrap justify='space-between' align='center'>
                     <Box
                       fontSize='xl'
                       fontWeight='bold'
-                      overflowX='auto'
                     >
-                      FRTN {round(ethers.utils.formatEther(userData?.earnings ?? 0), 2)}
+                      FRTN {commify(round(ethers.utils.formatEther(userData?.earnings ?? 0), 2))}
                     </Box>
                     <PrimaryButton
-                      isDisabled={harvestingRewards || userData?.earnings === 0}
+                      isDisabled={harvestingRewards || userData?.earnings === 0 || !userData?.approved}
                       isLoading={harvestingRewards}
                       onClick={() => harvestRewards(row.original.data.pid)}
                     >
                       Harvest
                     </PrimaryButton>
-                  </Flex>
+                  </Wrap>
                 </Card>
                 {userData?.approved ? (
                   <Card flex={1}>
                     <Box fontSize='sm' fontWeight='bold' mb={2}>{row.original.derived.name} STAKED</Box>
-                    <Flex justify='space-between' align='center'>
+                    <Wrap justify='space-between' align='center'>
                       <Box
                         fontSize='xl'
                         fontWeight='bold'
-                        overflowX='auto'
                       >
                         {round(ethers.utils.formatEther(userData.stakedBalance), 8)}
                       </Box>
@@ -262,7 +274,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                           <Icon as={FontAwesomeIcon} icon={faPlus} />
                         </SecondaryButton>
                       </HStack>
-                    </Flex>
+                    </Wrap>
                   </Card>
                 ) : (
                   <Card flex={1}>
@@ -289,12 +301,14 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
             onClose={onCloseStake}
             farm={row.original}
             userData={userData}
+            onSuccess={handleStakeSuccess}
           />
           <UnstakeLpTokensDialog
             isOpen={isOpenUnstake}
             onClose={onCloseUnstake}
             farm={row.original}
             userData={userData}
+            onSuccess={handleStakeSuccess}
           />
         </>
       )}

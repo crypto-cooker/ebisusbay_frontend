@@ -35,9 +35,10 @@ interface StakeLpTokensDialogProps {
   onClose: () => void;
   farm: DerivedFarm;
   userData: UserFarmState;
+  onSuccess: () => void;
 }
 
-export default function StakeLpTokensDialog({isOpen, onClose, farm, userData}: StakeLpTokensDialogProps) {
+export default function StakeLpTokensDialog({isOpen, onClose, farm, userData, onSuccess}: StakeLpTokensDialogProps) {
   const user = useUser();
   const [quantity, setQuantity] = useState<string>('');
   const [executing, setExecuting] = useState<boolean>(false);
@@ -65,6 +66,7 @@ export default function StakeLpTokensDialog({isOpen, onClose, farm, userData}: S
       const tx = await contract.deposit(farm.data.pid, ethers.utils.parseEther(quantity));
       await tx.wait();
       toast.success('Staked successfully');
+      onSuccess();
     } catch (e) {
       console.log(e);
       toast.error(parseErrorMessage(e));
@@ -119,8 +121,8 @@ export default function StakeLpTokensDialog({isOpen, onClose, farm, userData}: S
           <NumberInput
             placeholder="Amount"
             value={quantity}
-            min={1}
-            max={100000000}
+            min={0}
+            max={Number(ethers.utils.formatEther(userData.tokenBalance.toString()))}
             step={1}
             onChange={(valueString) => handleQuantityChange(valueString)}
           >

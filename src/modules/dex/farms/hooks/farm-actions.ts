@@ -6,14 +6,14 @@ import {Contract, ethers} from "ethers";
 import {useUser} from "@src/components-v2/useUser";
 import FarmsAbi from "@src/global/contracts/Farms.json";
 import LpAbi from "@src/global/contracts/LP.json";
-import {useFetchApprovals, useFetchBalances} from "@dex/farms/hooks/user-farms";
+import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
 
 const config = appConfig()
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 export function useEnableFarm() {
   const user = useUser();
-  const fetchApprovals = useFetchApprovals();
+  const { refetchApprovals } = useUserFarmsRefetch();
   const [executing, setExecuting] = useState(false);
 
   const enable = async (pairAddress: string) => {
@@ -22,7 +22,7 @@ export function useEnableFarm() {
       const contract = new Contract(pairAddress, LpAbi, user.provider.signer);
       const tx = await contract.approve(config.contracts.farms, ethers.constants.MaxUint256);
       await tx.wait();
-      fetchApprovals();
+      refetchApprovals();
     } catch (e) {
       console.log(e);
       toast.error(parseErrorMessage(e));
@@ -36,7 +36,7 @@ export function useEnableFarm() {
 
 export function useHarvestRewards() {
   const user = useUser();
-  const fetchBalances = useFetchBalances();
+  const { refetchBalances } = useUserFarmsRefetch();
   const [executing, setExecuting] = useState(false);
 
   const enable = async (pid: number) => {
@@ -45,7 +45,7 @@ export function useHarvestRewards() {
       const contract = new Contract(config.contracts.farms, FarmsAbi, user.provider.signer);
       const tx = await contract.withdraw(pid, 0);
       await tx.wait();
-      fetchBalances();
+      refetchBalances();
     } catch (e) {
       console.log(e);
       toast.error(parseErrorMessage(e));

@@ -6,7 +6,7 @@ import {
   refetchBalancesAtom,
   userFarmsAtom
 } from "@dex/farms/state/user";
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
 import {Contract, ethers} from "ethers";
 import FarmsAbi from "@src/global/contracts/Farms.json";
 import {multicall} from "@wagmi/core";
@@ -15,6 +15,7 @@ import LpAbi from "@src/global/contracts/LP.json";
 import {appConfig} from "@src/Config";
 import {useUser} from "@src/components-v2/useUser";
 import {ApiService} from "@src/core/services/api-service";
+import {UserFarmsRefetchContext} from "@dex/farms/components/provider";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -175,4 +176,12 @@ export const useFetchBalances = () => {
   };
 
   return refetch;
+};
+
+export const useUserFarmsRefetch = () => {
+  const context = useContext(UserFarmsRefetchContext);
+  if (!context) {
+    throw new Error('useUserFarmsRefetch must be used within a UserFarmsRefetchProvider');
+  }
+  return context;
 };

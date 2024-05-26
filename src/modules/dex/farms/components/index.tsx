@@ -124,7 +124,7 @@ export default function FarmsPage() {
         No farms found
       </Box>
     )
-  }, [filteredData, farmsStatus]);
+  }, [filteredData, farmsStatus, columns, userFarms]);
 
   return (
     <UserFarmsProvider>

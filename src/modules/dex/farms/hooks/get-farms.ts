@@ -109,46 +109,48 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
   const query = async () => {
     const data = await ApiService.withoutKey().getFarms(queryParams);
 
-    return data.map((farm: MapiFarm): DerivedFarm => {
-      if (farm.pid === 0) {
+    return data
+      .filter((farm: MapiFarm) => farm.pid !== 0 || (farm.pair !== undefined && farm.pair !== null))
+      .map((farm: MapiFarm): DerivedFarm => {
+        if (farm.pid === 0) {
+          return {
+            data: farm,
+            derived: {
+              name: 'FRTN',
+              dailyRewards: '0',
+              stakedLiquidity: '0',
+              apr: '-',
+            }
+          }
+        }
+
+        if (farm.pair === undefined) {
+          return {
+            data: farm,
+            derived: {
+              name: 'N/A',
+              dailyRewards: '0',
+              stakedLiquidity: '0',
+              apr: '-',
+            }
+          }
+        }
+
+        const lpBalance = BigNumber.from(farm.lpBalance);
+        const derivedUSD = farm.pair?.derivedUSD ?? '0';
+        const derivedUSDBigNumber = ethers.utils.parseUnits(derivedUSD, 18);
+        const totalDollarValue = lpBalance.mul(derivedUSDBigNumber).div(ethers.constants.WeiPerEther);
+        const stakedLiquidity = ethers.utils.formatUnits(totalDollarValue, 18);
+
         return {
           data: farm,
           derived: {
-            name: 'FRTN',
-            dailyRewards: '0',
-            stakedLiquidity: '0',
-            apr: '-',
+            name: farm.pair.name,
+            dailyRewards: '0', //((Number(farm.pair!.totalValueUSD) * farm.apr) / 365).toString(),
+            stakedLiquidity: `$${commify(round(stakedLiquidity))}`,
+            apr: `${farm.apr === 99999 ? '-' : `${commify(round(farm.apr, 2))}%`}`,
           }
         }
-      }
-
-      if (farm.pair === undefined) {
-        return {
-          data: farm,
-          derived: {
-            name: 'N/A',
-            dailyRewards: '0',
-            stakedLiquidity: '0',
-            apr: '-',
-          }
-        }
-      }
-
-      const lpBalance = BigNumber.from(farm.lpBalance);
-      const derivedUSD = farm.pair?.derivedUSD ?? '0';
-      const derivedUSDBigNumber = ethers.utils.parseUnits(derivedUSD, 18);
-      const totalDollarValue = lpBalance.mul(derivedUSDBigNumber).div(ethers.constants.WeiPerEther);
-      const stakedLiquidity = ethers.utils.formatUnits(totalDollarValue, 18);
-
-      return {
-        data: farm,
-        derived: {
-          name: farm.pair.name,
-          dailyRewards: '0', //((Number(farm.pair!.totalValueUSD) * farm.apr) / 365).toString(),
-          stakedLiquidity: `$${commify(round(stakedLiquidity))}`,
-          apr: `${farm.apr === 99999 ? '-' : `${commify(round(farm.apr, 2))}%`}`,
-        }
-      }
     });
   }
 
