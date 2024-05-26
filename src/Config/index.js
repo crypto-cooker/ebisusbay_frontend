@@ -70,7 +70,7 @@ export const configData = {
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
       townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
       vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F',
-      ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C'
+      ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
     },
     tokens: {
       mad: {
@@ -655,7 +655,8 @@ export const configData = {
         ryoshiDynasties: 'ryoshi-dynasties',
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners',
-        staking: 'staking'
+        staking: 'staking',
+        farms: 'farms-v2'
       }
     },
     rpc: {
@@ -686,7 +687,8 @@ export const configData = {
       seasonUnlocks: '0x107ca22a421b24b0986150E51ce03b772b56440f',
       townHall: '0xEe68452B79653298Af5109Dae5cD4ABA3c4E1934',
       vaultNft: '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74',
-      ryoshiWithKnife: '0x149F2017b1C4a206d0F8684563C2F9aa519e3f64'
+      ryoshiWithKnife: '0x149F2017b1C4a206d0F8684563C2F9aa519e3f64',
+      farms: '0xABb1C002ecA0f5B9FF60699789bF70Cf65A2e19e'
     },
     tokens: {
       mad: {

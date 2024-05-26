@@ -12,8 +12,8 @@ type ResponsiveChooseTokenDialogProps = {
   selectedCurrency?: Currency | null;
   onCurrencySelect: (currency: Currency) => void;
   otherSelectedCurrency?: Currency | null;
-  commonBases: DexToken[];
-  tokens: DexToken[];
+  commonBases: Currency[];
+  tokens: Currency[];
   modalProps?: Pick<ModalProps, 'size' | 'isCentered'>;
 }
 

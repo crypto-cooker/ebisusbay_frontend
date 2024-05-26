@@ -11,7 +11,7 @@ interface SwapPageContextProps {
 export function SwapPageContext({children, chainId, initialInputCurrency, initialOutputCurrency}: PropsWithChildren<SwapPageContextProps>) {
   const [swapPageState, setSwapPageState] = useSwapPageState();
 
-  console.log('===debug: SwapPageContext')
+  console.log('===debug: SwapPageContext', swapPageState)
   useEffect(() => {
     setSwapPageState((prev) => ({
       ...prev,

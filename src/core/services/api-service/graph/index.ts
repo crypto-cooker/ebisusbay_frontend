@@ -4,20 +4,23 @@ import {
   Erc20Account,
   FortuneStakingAccount, Meeple, PresaleVault,
   StakedToken,
-  StakingAccount, VaultContract
+  StakingAccount, User, VaultContract
 } from "@src/core/services/api-service/graph/types";
 import {StakedTokenType} from "@src/core/services/api-service/types";
 import Staking from "@src/core/services/api-service/graph/subgraphs/staking";
+import Farms from "@src/core/services/api-service/graph/subgraphs/farms";
 
 class Graph {
   private ryoshiPresale;
   private ryoshiDynasties;
   private staking;
+  private farms;
 
   constructor(apiKey?: string) {
     this.ryoshiPresale = new RyoshiPresale();
     this.ryoshiDynasties = new RyoshiDynasties();
     this.staking = new Staking();
+    this.farms = new Farms();
   }
 
   async globalTotalPurchased() {
@@ -68,6 +71,11 @@ class Graph {
   async getUserMeeples(address: string) {
     const result = await this.ryoshiDynasties.meeple(address);
     return result.data.meeple as Meeple;
+  }
+
+  async getFarmsUser(address: string) {
+    const result = await this.farms.getUser(address);
+    return result.data.users as User[];
   }
 }
 

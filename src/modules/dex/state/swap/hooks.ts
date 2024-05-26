@@ -47,20 +47,28 @@ export function useSwapActionHandlers(): {
         field === Field.INPUT ? ['inputCurrency', 'outputCurrency'] : ['outputCurrency', 'inputCurrency']
       const otherCurrency = swapPageState.currencyState[otherCurrencyKey]
       // the case where we have to swap the order
+
+      console.log('onCurrencySelection', otherCurrency, currency);
       if (otherCurrency && currency.equals(otherCurrency)) {
         setSwapPageState((prev) => ({
           ...prev,
-          [currentCurrencyKey]: currency,
-          [otherCurrencyKey]: prev.currencyState[currentCurrencyKey],
+          currencyState: {
+            [currentCurrencyKey]: currency,
+            [otherCurrencyKey]: prev.currencyState[currentCurrencyKey],
+          }
         }));
         setSwapFormState((prev) => ({
           ...prev,
           independentField: prev.independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT,
         }))
       } else {
+        console.log('SET SWAP PAGE STATE', {[currentCurrencyKey]: currency})
         setSwapPageState((prev) => ({
           ...prev,
-          [currentCurrencyKey]: currency,
+          currencyState: {
+            ...prev.currencyState,
+            [currentCurrencyKey]: currency
+          }
         }));
       }
     },
@@ -90,8 +98,10 @@ export function useSwapActionHandlers(): {
 
       setSwapPageState((prev) => ({
         ...prev,
-        inputCurrency: prev.currencyState.outputCurrency,
-        outputCurrency: prev.currencyState.inputCurrency,
+        currencyState: {
+          inputCurrency: prev.currencyState.outputCurrency,
+          outputCurrency: prev.currencyState.inputCurrency,
+        }
       }));
     },
     [setSwapPageState, setSwapFormState, swapFormState.independentField]
@@ -127,7 +137,7 @@ export function useDerivedSwapInfo(state: SwapState): DerivedSwapInfo {
     user.address,
     useMemo(() => [inputCurrency ?? undefined, outputCurrency ?? undefined], [inputCurrency, outputCurrency])
   );
-
+console.log('HI', inputCurrency, outputCurrency)
 
   const currencyBalances = useMemo(
     () => ({
@@ -137,9 +147,18 @@ export function useDerivedSwapInfo(state: SwapState): DerivedSwapInfo {
     [relevantTokenBalances]
   )
 
+  const currencies: { [field in Field]?: Currency } = useMemo(
+    () => ({
+      [Field.INPUT]: inputCurrency,
+      [Field.OUTPUT]: outputCurrency,
+    }),
+    [inputCurrency, outputCurrency]
+  )
+
   return useMemo(() => ({
+    currencies,
     currencyBalances,
-  }), [currencyBalances]);
+  }), [currencies, currencyBalances]);
 }
 
 

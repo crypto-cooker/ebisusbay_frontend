@@ -3,11 +3,13 @@ import {Box, Flex, HStack, Image, VStack} from "@chakra-ui/react";
 import {ethers} from "ethers";
 import React from "react";
 import {DexToken, DexTokenBalance} from "@dex/types/types";
+import {Currency, CurrencyAmount, Token} from "@uniswap/sdk-core";
+import {WrappedTokenInfo} from "@dex/hooks/use-supported-tokens";
 
 interface RowProps {
-  token: DexTokenBalance;
+  token: CurrencyAmount<Currency>;
   hasVerticalScrollbar: boolean;
-  onSelect: (token: DexToken) => void;
+  onSelect: (token: Currency) => void;
 }
 export default function Row({token, hasVerticalScrollbar, onSelect}: RowProps) {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
@@ -23,18 +25,18 @@ export default function Row({token, hasVerticalScrollbar, onSelect}: RowProps) {
       _hover={{
         bg: hoverBackground
       }}
-      onClick={() => onSelect(token)}
+      onClick={() => onSelect(token.currency)}
     >
-      <HStack w='full'>
+      <HStack w='full'>..
         <Box>
-          <Image src={token.logoURI} w='30px' rounded='full' />
+          <Image src={(token.currency as WrappedTokenInfo).logoURI} w='30px' rounded='full' />
         </Box>
         <VStack align='start' spacing={0}>
-          <Box fontWeight='bold'>{token.symbol}</Box>
-          <Box className='text-muted' fontSize='sm'>{token.name}</Box>
+          <Box fontWeight='bold'>{token.currency.symbol}</Box>
+          <Box className='text-muted' fontSize='sm'>{token.currency.name}</Box>
         </VStack>
       </HStack>
-      <Box my='auto'>{ethers.utils.formatUnits(token.balance, token.decimals)}</Box>
+      <Box my='auto'>{token.toExact()}</Box>
     </Flex>
   )
 }

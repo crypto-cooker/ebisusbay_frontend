@@ -33,7 +33,7 @@ export default function SwapForm() {
     inputTax,
     outputTax,
   } = swapFormDerivedState
-
+console.log('DERIVED', swapFormDerivedState)
   const parsedAmounts = useMemo(
     () =>
       showWrap

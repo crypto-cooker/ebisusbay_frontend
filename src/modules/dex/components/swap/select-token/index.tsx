@@ -18,8 +18,8 @@ import {Currency} from "@uniswap/sdk-core";
 import {useAllTokenBalances} from "@dex/hooks/use-token-balances";
 
 interface SelectTokenProps {
-  commonBases: DexToken[];
-  tokens: DexToken[];
+  commonBases: Currency[];
+  tokens: Currency[];
   onCurrencySelect: (currency: Currency) => void;
 }
 
@@ -31,6 +31,7 @@ export default function SelectToken({commonBases, tokens, onCurrencySelect}: Sel
   // const tokenBalances = useAtomValue(userTokenBalancesAtom);
   const tokenBalances = useAllTokenBalances();
 
+  console.log('===token balances2', Object.values(tokenBalances).map(token => ({name:token.currency.symbol, value:token.toExact()})));
   const checkForScrollbar = () => {
     if (ref.current) {
       const hasScrollbar = ref.current.scrollHeight > ref.current.clientHeight;
@@ -50,10 +51,12 @@ export default function SelectToken({commonBases, tokens, onCurrencySelect}: Sel
     checkForScrollbar();
   }, [windowSize, searchTerms]);
 
-  const filteredTokens = searchTerms ? tokenBalances.filter((token) => {
-    const foundName = token.name.toLowerCase().includes(searchTerms.toLowerCase());
-    const foundSymbol = token.symbol.toLowerCase().includes(searchTerms);
-    const foundAddress = token.address.toLowerCase().includes(searchTerms);
+  const filteredTokens = searchTerms ? Object.values(tokenBalances).filter((token) => {
+    if (!token.currency) return false;
+
+    const foundName = token.currency.name?.toLowerCase().includes(searchTerms.toLowerCase()) ?? false;
+    const foundSymbol = token.currency.symbol?.toLowerCase().includes(searchTerms) ?? false;
+    const foundAddress = token.currency.address?.toLowerCase().includes(searchTerms) ?? false;
     return foundName || foundSymbol || foundAddress;
   }) : tokenBalances;
 
@@ -100,10 +103,10 @@ export default function SelectToken({commonBases, tokens, onCurrencySelect}: Sel
         >
           {filteredTokens.map((token) => (
             <Row
-              key={token.address}
+              key={token.currency.address}
               token={token}
               hasVerticalScrollbar={hasVerticalScrollbar}
-              onSelect={() => onCurrencySelect(token)}
+              onSelect={() => onCurrencySelect(token.currency)}
             />
           ))}
         </VStack>

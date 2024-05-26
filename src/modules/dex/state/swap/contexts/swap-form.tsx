@@ -1,4 +1,4 @@
-import {useDerivedSwapInfo, useSwapFormDerivedState, useSwapFormState} from "@dex/state/swap/hooks";
+import {useDerivedSwapInfo, useSwapFormDerivedState, useSwapFormState, useSwapPageState} from "@dex/state/swap/hooks";
 import {useNetwork} from "wagmi";
 import usePrevious from "@dex/imported/hooks/usePrevious";
 import {useEffect} from "react";
@@ -7,6 +7,7 @@ export function SwapFormContext({ children }: { children: React.ReactNode }) {
   console.log('===debug: SwapFormContext')
   const [swapFormState, setSwapFormState] = useSwapFormState();
   const [swapFormDerivedState, setSwapFormDerivedState] = useSwapFormDerivedState();
+  const [swapPageState, setSwapPageState] = useSwapPageState();
 
   const derivedSwapInfo = useDerivedSwapInfo(swapFormState)
 
@@ -24,9 +25,8 @@ export function SwapFormContext({ children }: { children: React.ReactNode }) {
   }, [connectedChainId, previousConnectedChainId])
 
   useEffect(() => {
-    console.log('SET DERIVED STATE')
     setSwapFormDerivedState((prev) => ({ ...prev, ...derivedSwapInfo }))
-  }, [swapFormState]);
+  }, [swapPageState]);
 
   return <>{children}</>
 }

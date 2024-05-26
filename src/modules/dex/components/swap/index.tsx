@@ -15,7 +15,7 @@ interface SwapPageProps {
 export default function SwapPage({ initialInputCurrency, initialOutputCurrency, syncTabToUrl }: SwapPageProps) {
   const [swapPageState, setSwapPageState] = useSwapPageState();
 
-  console.log('===debug: SwapPage')
+  console.log('===debug: SwapPage', swapPageState)
   return (
     <SwapPageContext
       initialInputCurrency={initialInputCurrency}

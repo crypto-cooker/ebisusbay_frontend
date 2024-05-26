@@ -706,7 +706,7 @@ export const getAddressFromSlug = (slug) => {
 };
 
 // can use web3.utils.isAddress tho
-export const isAddress = (address) => {
+export const isAddress = (value) => {
   if (!value) {
     return false
   }

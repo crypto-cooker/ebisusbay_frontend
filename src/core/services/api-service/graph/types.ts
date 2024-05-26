@@ -20,6 +20,11 @@ export type Scalars = {
    *
    */
   Int8: { input: any; output: any; }
+  /**
+   * A string representation of microseconds UNIX timestamp (16 digits)
+   *
+   */
+  Timestamp: { input: any; output: any; }
 };
 
 export type AccessControl = {
@@ -1134,6 +1139,11 @@ export enum Account_OrderBy {
   RoleRevoked = 'roleRevoked',
   RoleRevokedSender = 'roleRevokedSender',
   Vaults = 'vaults'
+}
+
+export enum Aggregation_Interval {
+  Day = 'day',
+  Hour = 'hour'
 }
 
 export type AttackFactionEvent = {
@@ -3807,6 +3817,132 @@ export enum FortuneStakingAccount_OrderBy {
   VaultId = 'vaultId'
 }
 
+export type MasterChef = {
+  __typename?: 'MasterChef';
+  block: Scalars['BigInt']['output'];
+  frtnRate: Scalars['BigInt']['output'];
+  frtnStakingRatio: Scalars['BigInt']['output'];
+  id: Scalars['ID']['output'];
+  migrator?: Maybe<Scalars['Bytes']['output']>;
+  paused: Scalars['Boolean']['output'];
+  poolCount: Scalars['BigInt']['output'];
+  pools?: Maybe<Array<Pool>>;
+  tackleBox: Scalars['Bytes']['output'];
+  timestamp: Scalars['BigInt']['output'];
+  totalRegularAllocPoint: Scalars['BigInt']['output'];
+};
+
+
+export type MasterChefPoolsArgs = {
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Pool_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<Pool_Filter>;
+};
+
+export type MasterChef_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<MasterChef_Filter>>>;
+  block?: InputMaybe<Scalars['BigInt']['input']>;
+  block_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  block_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  block_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  block_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  block_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  block_not?: InputMaybe<Scalars['BigInt']['input']>;
+  block_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  frtnRate?: InputMaybe<Scalars['BigInt']['input']>;
+  frtnRate_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  frtnRate_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  frtnRate_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  frtnRate_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  frtnRate_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  frtnRate_not?: InputMaybe<Scalars['BigInt']['input']>;
+  frtnRate_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  frtnStakingRatio?: InputMaybe<Scalars['BigInt']['input']>;
+  frtnStakingRatio_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  frtnStakingRatio_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  frtnStakingRatio_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  frtnStakingRatio_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  frtnStakingRatio_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  frtnStakingRatio_not?: InputMaybe<Scalars['BigInt']['input']>;
+  frtnStakingRatio_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  id_gt?: InputMaybe<Scalars['ID']['input']>;
+  id_gte?: InputMaybe<Scalars['ID']['input']>;
+  id_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  id_lt?: InputMaybe<Scalars['ID']['input']>;
+  id_lte?: InputMaybe<Scalars['ID']['input']>;
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  migrator?: InputMaybe<Scalars['Bytes']['input']>;
+  migrator_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  migrator_gt?: InputMaybe<Scalars['Bytes']['input']>;
+  migrator_gte?: InputMaybe<Scalars['Bytes']['input']>;
+  migrator_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  migrator_lt?: InputMaybe<Scalars['Bytes']['input']>;
+  migrator_lte?: InputMaybe<Scalars['Bytes']['input']>;
+  migrator_not?: InputMaybe<Scalars['Bytes']['input']>;
+  migrator_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  migrator_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<MasterChef_Filter>>>;
+  paused?: InputMaybe<Scalars['Boolean']['input']>;
+  paused_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+  paused_not?: InputMaybe<Scalars['Boolean']['input']>;
+  paused_not_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+  poolCount?: InputMaybe<Scalars['BigInt']['input']>;
+  poolCount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  poolCount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  poolCount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  poolCount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  poolCount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  poolCount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  poolCount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  pools_?: InputMaybe<Pool_Filter>;
+  tackleBox?: InputMaybe<Scalars['Bytes']['input']>;
+  tackleBox_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  tackleBox_gt?: InputMaybe<Scalars['Bytes']['input']>;
+  tackleBox_gte?: InputMaybe<Scalars['Bytes']['input']>;
+  tackleBox_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  tackleBox_lt?: InputMaybe<Scalars['Bytes']['input']>;
+  tackleBox_lte?: InputMaybe<Scalars['Bytes']['input']>;
+  tackleBox_not?: InputMaybe<Scalars['Bytes']['input']>;
+  tackleBox_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  tackleBox_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  timestamp?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  timestamp_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_not?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalRegularAllocPoint?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRegularAllocPoint_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRegularAllocPoint_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRegularAllocPoint_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalRegularAllocPoint_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRegularAllocPoint_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRegularAllocPoint_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRegularAllocPoint_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+};
+
+export enum MasterChef_OrderBy {
+  Block = 'block',
+  FrtnRate = 'frtnRate',
+  FrtnStakingRatio = 'frtnStakingRatio',
+  Id = 'id',
+  Migrator = 'migrator',
+  Paused = 'paused',
+  PoolCount = 'poolCount',
+  Pools = 'pools',
+  TackleBox = 'tackleBox',
+  Timestamp = 'timestamp',
+  TotalRegularAllocPoint = 'totalRegularAllocPoint'
+}
+
 export type Meeple = {
   __typename?: 'Meeple';
   activeAmount: Scalars['BigInt']['output'];
@@ -4443,6 +4579,189 @@ export enum OwnershipTransferred_OrderBy {
   TransactionValueString = 'transaction__valueString'
 }
 
+export type Pool = {
+  __typename?: 'Pool';
+  accFRTNPerShare: Scalars['BigInt']['output'];
+  allocPoint: Scalars['BigInt']['output'];
+  block: Scalars['BigInt']['output'];
+  id: Scalars['ID']['output'];
+  lastRewardBlock: Scalars['BigInt']['output'];
+  lpBalance: Scalars['BigInt']['output'];
+  masterChef: MasterChef;
+  pair: Scalars['Bytes']['output'];
+  rewarderCount: Scalars['BigInt']['output'];
+  rewarders?: Maybe<Array<Rewarder>>;
+  timestamp: Scalars['BigInt']['output'];
+  totalUsersCount: Scalars['BigInt']['output'];
+  userCount: Scalars['BigInt']['output'];
+  users: Array<User>;
+};
+
+
+export type PoolRewardersArgs = {
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Rewarder_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<Rewarder_Filter>;
+};
+
+
+export type PoolUsersArgs = {
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<User_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<User_Filter>;
+};
+
+export type Pool_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  accFRTNPerShare?: InputMaybe<Scalars['BigInt']['input']>;
+  accFRTNPerShare_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  accFRTNPerShare_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  accFRTNPerShare_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  accFRTNPerShare_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  accFRTNPerShare_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  accFRTNPerShare_not?: InputMaybe<Scalars['BigInt']['input']>;
+  accFRTNPerShare_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  allocPoint?: InputMaybe<Scalars['BigInt']['input']>;
+  allocPoint_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  allocPoint_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  allocPoint_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  allocPoint_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  allocPoint_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  allocPoint_not?: InputMaybe<Scalars['BigInt']['input']>;
+  allocPoint_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  and?: InputMaybe<Array<InputMaybe<Pool_Filter>>>;
+  block?: InputMaybe<Scalars['BigInt']['input']>;
+  block_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  block_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  block_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  block_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  block_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  block_not?: InputMaybe<Scalars['BigInt']['input']>;
+  block_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  id_gt?: InputMaybe<Scalars['ID']['input']>;
+  id_gte?: InputMaybe<Scalars['ID']['input']>;
+  id_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  id_lt?: InputMaybe<Scalars['ID']['input']>;
+  id_lte?: InputMaybe<Scalars['ID']['input']>;
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  lastRewardBlock?: InputMaybe<Scalars['BigInt']['input']>;
+  lastRewardBlock_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  lastRewardBlock_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  lastRewardBlock_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  lastRewardBlock_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  lastRewardBlock_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  lastRewardBlock_not?: InputMaybe<Scalars['BigInt']['input']>;
+  lastRewardBlock_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  lpBalance?: InputMaybe<Scalars['BigInt']['input']>;
+  lpBalance_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  lpBalance_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  lpBalance_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  lpBalance_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  lpBalance_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  lpBalance_not?: InputMaybe<Scalars['BigInt']['input']>;
+  lpBalance_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  masterChef?: InputMaybe<Scalars['String']['input']>;
+  masterChef_?: InputMaybe<MasterChef_Filter>;
+  masterChef_contains?: InputMaybe<Scalars['String']['input']>;
+  masterChef_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  masterChef_ends_with?: InputMaybe<Scalars['String']['input']>;
+  masterChef_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  masterChef_gt?: InputMaybe<Scalars['String']['input']>;
+  masterChef_gte?: InputMaybe<Scalars['String']['input']>;
+  masterChef_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  masterChef_lt?: InputMaybe<Scalars['String']['input']>;
+  masterChef_lte?: InputMaybe<Scalars['String']['input']>;
+  masterChef_not?: InputMaybe<Scalars['String']['input']>;
+  masterChef_not_contains?: InputMaybe<Scalars['String']['input']>;
+  masterChef_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  masterChef_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  masterChef_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  masterChef_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  masterChef_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  masterChef_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  masterChef_starts_with?: InputMaybe<Scalars['String']['input']>;
+  masterChef_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  or?: InputMaybe<Array<InputMaybe<Pool_Filter>>>;
+  pair?: InputMaybe<Scalars['Bytes']['input']>;
+  pair_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  pair_gt?: InputMaybe<Scalars['Bytes']['input']>;
+  pair_gte?: InputMaybe<Scalars['Bytes']['input']>;
+  pair_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  pair_lt?: InputMaybe<Scalars['Bytes']['input']>;
+  pair_lte?: InputMaybe<Scalars['Bytes']['input']>;
+  pair_not?: InputMaybe<Scalars['Bytes']['input']>;
+  pair_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  pair_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  rewarderCount?: InputMaybe<Scalars['BigInt']['input']>;
+  rewarderCount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  rewarderCount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  rewarderCount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  rewarderCount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  rewarderCount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  rewarderCount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  rewarderCount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  rewarders_?: InputMaybe<Rewarder_Filter>;
+  timestamp?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  timestamp_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_not?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalUsersCount?: InputMaybe<Scalars['BigInt']['input']>;
+  totalUsersCount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalUsersCount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalUsersCount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalUsersCount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalUsersCount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalUsersCount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalUsersCount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  userCount?: InputMaybe<Scalars['BigInt']['input']>;
+  userCount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  userCount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  userCount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  userCount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  userCount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  userCount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  userCount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  users_?: InputMaybe<User_Filter>;
+};
+
+export enum Pool_OrderBy {
+  AccFrtnPerShare = 'accFRTNPerShare',
+  AllocPoint = 'allocPoint',
+  Block = 'block',
+  Id = 'id',
+  LastRewardBlock = 'lastRewardBlock',
+  LpBalance = 'lpBalance',
+  MasterChef = 'masterChef',
+  MasterChefBlock = 'masterChef__block',
+  MasterChefFrtnRate = 'masterChef__frtnRate',
+  MasterChefFrtnStakingRatio = 'masterChef__frtnStakingRatio',
+  MasterChefId = 'masterChef__id',
+  MasterChefMigrator = 'masterChef__migrator',
+  MasterChefPaused = 'masterChef__paused',
+  MasterChefPoolCount = 'masterChef__poolCount',
+  MasterChefTackleBox = 'masterChef__tackleBox',
+  MasterChefTimestamp = 'masterChef__timestamp',
+  MasterChefTotalRegularAllocPoint = 'masterChef__totalRegularAllocPoint',
+  Pair = 'pair',
+  RewarderCount = 'rewarderCount',
+  Rewarders = 'rewarders',
+  Timestamp = 'timestamp',
+  TotalUsersCount = 'totalUsersCount',
+  UserCount = 'userCount',
+  Users = 'users'
+}
+
 export type PresaleVault = {
   __typename?: 'PresaleVault';
   address: Scalars['String']['output'];
@@ -4708,6 +5027,8 @@ export type Query = {
   events: Array<Event>;
   fortuneStakingAccount?: Maybe<FortuneStakingAccount>;
   fortuneStakingAccounts: Array<FortuneStakingAccount>;
+  masterChef?: Maybe<MasterChef>;
+  masterChefs: Array<MasterChef>;
   meeple?: Maybe<Meeple>;
   meeples: Array<Meeple>;
   mintRequestCancelledEvent?: Maybe<MintRequestCancelledEvent>;
@@ -4720,12 +5041,16 @@ export type Query = {
   ownables: Array<Ownable>;
   ownershipTransferred?: Maybe<OwnershipTransferred>;
   ownershipTransferreds: Array<OwnershipTransferred>;
+  pool?: Maybe<Pool>;
+  pools: Array<Pool>;
   presaleVault?: Maybe<PresaleVault>;
   presaleVaults: Array<PresaleVault>;
   purchase?: Maybe<Purchase>;
   purchases: Array<Purchase>;
   registeredSeason?: Maybe<RegisteredSeason>;
   registeredSeasons: Array<RegisteredSeason>;
+  rewarder?: Maybe<Rewarder>;
+  rewarders: Array<Rewarder>;
   role?: Maybe<Role>;
   roleAdminChanged?: Maybe<RoleAdminChanged>;
   roleAdminChangeds: Array<RoleAdminChanged>;
@@ -4752,6 +5077,8 @@ export type Query = {
   unstakeds: Array<Unstaked>;
   upkeep?: Maybe<Upkeep>;
   upkeeps: Array<Upkeep>;
+  user?: Maybe<User>;
+  users: Array<User>;
   vaultContract?: Maybe<VaultContract>;
   vaultContracts: Array<VaultContract>;
   withdrawn?: Maybe<Withdrawn>;
@@ -5232,6 +5559,24 @@ export type QueryFortuneStakingAccountsArgs = {
 };
 
 
+export type QueryMasterChefArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryMasterChefsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<MasterChef_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<MasterChef_Filter>;
+};
+
+
 export type QueryMeepleArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
@@ -5340,6 +5685,24 @@ export type QueryOwnershipTransferredsArgs = {
 };
 
 
+export type QueryPoolArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryPoolsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Pool_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Pool_Filter>;
+};
+
+
 export type QueryPresaleVaultArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
@@ -5391,6 +5754,24 @@ export type QueryRegisteredSeasonsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<RegisteredSeason_Filter>;
+};
+
+
+export type QueryRewarderArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryRewardersArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Rewarder_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Rewarder_Filter>;
 };
 
 
@@ -5628,6 +6009,24 @@ export type QueryUpkeepsArgs = {
 };
 
 
+export type QueryUserArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryUsersArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<User_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<User_Filter>;
+};
+
+
 export type QueryVaultContractArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
@@ -5771,6 +6170,64 @@ export enum RegisteredSeason_OrderBy {
   Leader = 'leader',
   Season = 'season',
   Time = 'time'
+}
+
+export type Rewarder = {
+  __typename?: 'Rewarder';
+  id: Scalars['ID']['output'];
+  pool: Pool;
+};
+
+export type Rewarder_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<Rewarder_Filter>>>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  id_gt?: InputMaybe<Scalars['ID']['input']>;
+  id_gte?: InputMaybe<Scalars['ID']['input']>;
+  id_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  id_lt?: InputMaybe<Scalars['ID']['input']>;
+  id_lte?: InputMaybe<Scalars['ID']['input']>;
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<Rewarder_Filter>>>;
+  pool?: InputMaybe<Scalars['String']['input']>;
+  pool_?: InputMaybe<Pool_Filter>;
+  pool_contains?: InputMaybe<Scalars['String']['input']>;
+  pool_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  pool_ends_with?: InputMaybe<Scalars['String']['input']>;
+  pool_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  pool_gt?: InputMaybe<Scalars['String']['input']>;
+  pool_gte?: InputMaybe<Scalars['String']['input']>;
+  pool_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  pool_lt?: InputMaybe<Scalars['String']['input']>;
+  pool_lte?: InputMaybe<Scalars['String']['input']>;
+  pool_not?: InputMaybe<Scalars['String']['input']>;
+  pool_not_contains?: InputMaybe<Scalars['String']['input']>;
+  pool_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  pool_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  pool_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  pool_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  pool_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  pool_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  pool_starts_with?: InputMaybe<Scalars['String']['input']>;
+  pool_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum Rewarder_OrderBy {
+  Id = 'id',
+  Pool = 'pool',
+  PoolAccFrtnPerShare = 'pool__accFRTNPerShare',
+  PoolAllocPoint = 'pool__allocPoint',
+  PoolBlock = 'pool__block',
+  PoolId = 'pool__id',
+  PoolLastRewardBlock = 'pool__lastRewardBlock',
+  PoolLpBalance = 'pool__lpBalance',
+  PoolPair = 'pool__pair',
+  PoolRewarderCount = 'pool__rewarderCount',
+  PoolTimestamp = 'pool__timestamp',
+  PoolTotalUsersCount = 'pool__totalUsersCount',
+  PoolUserCount = 'pool__userCount'
 }
 
 export type Role = {
@@ -6862,6 +7319,8 @@ export type Subscription = {
   events: Array<Event>;
   fortuneStakingAccount?: Maybe<FortuneStakingAccount>;
   fortuneStakingAccounts: Array<FortuneStakingAccount>;
+  masterChef?: Maybe<MasterChef>;
+  masterChefs: Array<MasterChef>;
   meeple?: Maybe<Meeple>;
   meeples: Array<Meeple>;
   mintRequestCancelledEvent?: Maybe<MintRequestCancelledEvent>;
@@ -6874,12 +7333,16 @@ export type Subscription = {
   ownables: Array<Ownable>;
   ownershipTransferred?: Maybe<OwnershipTransferred>;
   ownershipTransferreds: Array<OwnershipTransferred>;
+  pool?: Maybe<Pool>;
+  pools: Array<Pool>;
   presaleVault?: Maybe<PresaleVault>;
   presaleVaults: Array<PresaleVault>;
   purchase?: Maybe<Purchase>;
   purchases: Array<Purchase>;
   registeredSeason?: Maybe<RegisteredSeason>;
   registeredSeasons: Array<RegisteredSeason>;
+  rewarder?: Maybe<Rewarder>;
+  rewarders: Array<Rewarder>;
   role?: Maybe<Role>;
   roleAdminChanged?: Maybe<RoleAdminChanged>;
   roleAdminChangeds: Array<RoleAdminChanged>;
@@ -6906,6 +7369,8 @@ export type Subscription = {
   unstakeds: Array<Unstaked>;
   upkeep?: Maybe<Upkeep>;
   upkeeps: Array<Upkeep>;
+  user?: Maybe<User>;
+  users: Array<User>;
   vaultContract?: Maybe<VaultContract>;
   vaultContracts: Array<VaultContract>;
   withdrawn?: Maybe<Withdrawn>;
@@ -7386,6 +7851,24 @@ export type SubscriptionFortuneStakingAccountsArgs = {
 };
 
 
+export type SubscriptionMasterChefArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionMasterChefsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<MasterChef_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<MasterChef_Filter>;
+};
+
+
 export type SubscriptionMeepleArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
@@ -7494,6 +7977,24 @@ export type SubscriptionOwnershipTransferredsArgs = {
 };
 
 
+export type SubscriptionPoolArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionPoolsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Pool_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Pool_Filter>;
+};
+
+
 export type SubscriptionPresaleVaultArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
@@ -7545,6 +8046,24 @@ export type SubscriptionRegisteredSeasonsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<RegisteredSeason_Filter>;
+};
+
+
+export type SubscriptionRewarderArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionRewardersArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Rewarder_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Rewarder_Filter>;
 };
 
 
@@ -7779,6 +8298,24 @@ export type SubscriptionUpkeepsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<Upkeep_Filter>;
+};
+
+
+export type SubscriptionUserArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionUsersArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<User_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<User_Filter>;
 };
 
 
@@ -8365,6 +8902,116 @@ export enum Upkeep_OrderBy {
   Time = 'time'
 }
 
+export type User = {
+  __typename?: 'User';
+  address: Scalars['Bytes']['output'];
+  amount: Scalars['BigInt']['output'];
+  block: Scalars['BigInt']['output'];
+  id: Scalars['ID']['output'];
+  pool: Pool;
+  rewardDebt: Scalars['BigInt']['output'];
+  timestamp: Scalars['BigInt']['output'];
+};
+
+export type User_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  address?: InputMaybe<Scalars['Bytes']['input']>;
+  address_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  address_gt?: InputMaybe<Scalars['Bytes']['input']>;
+  address_gte?: InputMaybe<Scalars['Bytes']['input']>;
+  address_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  address_lt?: InputMaybe<Scalars['Bytes']['input']>;
+  address_lte?: InputMaybe<Scalars['Bytes']['input']>;
+  address_not?: InputMaybe<Scalars['Bytes']['input']>;
+  address_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  address_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  amount?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  amount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  and?: InputMaybe<Array<InputMaybe<User_Filter>>>;
+  block?: InputMaybe<Scalars['BigInt']['input']>;
+  block_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  block_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  block_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  block_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  block_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  block_not?: InputMaybe<Scalars['BigInt']['input']>;
+  block_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  id_gt?: InputMaybe<Scalars['ID']['input']>;
+  id_gte?: InputMaybe<Scalars['ID']['input']>;
+  id_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  id_lt?: InputMaybe<Scalars['ID']['input']>;
+  id_lte?: InputMaybe<Scalars['ID']['input']>;
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<User_Filter>>>;
+  pool?: InputMaybe<Scalars['String']['input']>;
+  pool_?: InputMaybe<Pool_Filter>;
+  pool_contains?: InputMaybe<Scalars['String']['input']>;
+  pool_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  pool_ends_with?: InputMaybe<Scalars['String']['input']>;
+  pool_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  pool_gt?: InputMaybe<Scalars['String']['input']>;
+  pool_gte?: InputMaybe<Scalars['String']['input']>;
+  pool_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  pool_lt?: InputMaybe<Scalars['String']['input']>;
+  pool_lte?: InputMaybe<Scalars['String']['input']>;
+  pool_not?: InputMaybe<Scalars['String']['input']>;
+  pool_not_contains?: InputMaybe<Scalars['String']['input']>;
+  pool_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  pool_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  pool_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  pool_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  pool_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  pool_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  pool_starts_with?: InputMaybe<Scalars['String']['input']>;
+  pool_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  rewardDebt?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardDebt_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardDebt_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardDebt_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  rewardDebt_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardDebt_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardDebt_not?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardDebt_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  timestamp?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  timestamp_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_not?: InputMaybe<Scalars['BigInt']['input']>;
+  timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+};
+
+export enum User_OrderBy {
+  Address = 'address',
+  Amount = 'amount',
+  Block = 'block',
+  Id = 'id',
+  Pool = 'pool',
+  PoolAccFrtnPerShare = 'pool__accFRTNPerShare',
+  PoolAllocPoint = 'pool__allocPoint',
+  PoolBlock = 'pool__block',
+  PoolId = 'pool__id',
+  PoolLastRewardBlock = 'pool__lastRewardBlock',
+  PoolLpBalance = 'pool__lpBalance',
+  PoolPair = 'pool__pair',
+  PoolRewarderCount = 'pool__rewarderCount',
+  PoolTimestamp = 'pool__timestamp',
+  PoolTotalUsersCount = 'pool__totalUsersCount',
+  PoolUserCount = 'pool__userCount',
+  RewardDebt = 'rewardDebt',
+  Timestamp = 'timestamp'
+}
+
 export type VaultContract = {
   __typename?: 'VaultContract';
   cutoff: Scalars['BigInt']['output'];
@@ -8579,6 +9226,8 @@ export type _Block_ = {
   hash?: Maybe<Scalars['Bytes']['output']>;
   /** The block number */
   number: Scalars['Int']['output'];
+  /** The hash of the parent block */
+  parentHash?: Maybe<Scalars['Bytes']['output']>;
   /** Integer representation of the timestamp stored in blocks for the chain */
   timestamp?: Maybe<Scalars['Int']['output']>;
 };

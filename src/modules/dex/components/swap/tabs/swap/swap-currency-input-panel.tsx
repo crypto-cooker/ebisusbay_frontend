@@ -1,4 +1,4 @@
-import {Currency} from "@uniswap/sdk-core";
+import {Currency, Token} from "@uniswap/sdk-core";
 import {Card} from "@src/components-v2/foundation/card";
 import {Box, Button, Flex, HStack, Image, NumberInput, NumberInputField, useDisclosure} from "@chakra-ui/react";
 import {ChevronDownIcon} from "@chakra-ui/icons";
@@ -7,8 +7,16 @@ import tokenConfig from "@dex/configs/tokens.json";
 import {DexToken} from "@dex/types/types";
 import {useCallback} from "react";
 
-const supportedTokens = tokenConfig.tokens as DexToken[];
-const commonBases = supportedTokens.filter(token => tokenConfig.commonBases.map(symbol =>  symbol.toLowerCase()).includes(token.symbol.toLowerCase()));
+const supportedTokens = tokenConfig.tokens.map(token => {
+  return new Token(
+    token.chainId,
+    token.address,
+    token.decimals,
+    token.symbol,
+    token.name
+  )
+}) as Token[];
+const commonBases = supportedTokens.filter(token => tokenConfig.commonBases.map(symbol =>  symbol.toLowerCase()).includes(token.symbol!.toLowerCase()));
 
 interface SwapCurrencyInputPanelProps {
   value: string;
@@ -51,8 +59,7 @@ export default function SwapCurrencyInputPanel({ value, onUserInput, label, onCu
             <HStack>
               {!!currency && (
                 <Box as='span' minW='30px'>
-                  {currency?.symbol}
-                  {/*<Image w='30px' src={selectedToken.token?.logoURI} />*/}
+                  <Image w='30px' src={currency.logoURI} />
                 </Box>
               )}
               <span>
