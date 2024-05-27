@@ -39,7 +39,7 @@
 export interface MapiFarm {
   pid: number;
   lpBalance: string;
-  pair?: MapiPair;
+  pair: MapiPair | null;
   accFRTNPerShare: string;
   allocPoint: number;
   lastRewardBlock: number;

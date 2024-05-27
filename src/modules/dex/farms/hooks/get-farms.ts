@@ -124,7 +124,7 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
           data: pairFarm,
           derived: {
             name: pairFarm.pair.name,
-            dailyRewards: ethers.utils.formatEther(pairFarm.frtnPerDay),
+            dailyRewards: `${commify(round(ethers.utils.formatEther(pairFarm.frtnPerDay)))} FRTN`,
             stakedLiquidity: `$${commify(round(stakedLiquidity))}`,
             apr: `${pairFarm.apr === 99999 ? '-' : `${commify(round(pairFarm.apr, 2))}%`}`,
           }

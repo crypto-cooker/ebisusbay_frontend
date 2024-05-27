@@ -1,5 +1,6 @@
 import {
   ColumnDef,
+  createColumnHelper,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -9,6 +10,7 @@ import {
 } from "@tanstack/react-table";
 import React, {useEffect, useState} from "react";
 import {
+  Avatar,
   Box,
   Collapse,
   Flex,
@@ -50,11 +52,10 @@ const config =  appConfig();
 
 export type DataTableProps = {
   data: DerivedFarm[];
-  columns: ColumnDef<DerivedFarm, any>[];
   userData: UserFarms;
 };
 
-export default function DataTable({ data, columns, userData }: DataTableProps) {
+export default function DataTable({ data, userData }: DataTableProps) {
   const user = useUser();
   const [sorting, setSorting] = useState<SortingState>([]);
   const showLiquidityColumn = useBreakpointValue({ base: false, lg: true }, { fallback: 'lg' });
@@ -315,3 +316,74 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
     </React.Fragment>
   )
 }
+
+const columnHelper = createColumnHelper<DerivedFarm>();
+const columns: ColumnDef<DerivedFarm, any>[] = [
+  columnHelper.accessor("derived.name", {
+    cell: (info) => {
+      return (
+        <HStack>
+          {info.row.original.data.pair ? (
+            <Box position='relative' w='40px' h='40px'>
+              <Avatar
+                src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${info.row.original.data.pair.token0.symbol.toLowerCase()}.webp`}
+                rounded='full'
+                size='xs'
+              />
+              <Avatar
+                src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${info.row.original.data.pair.token1.symbol.toLowerCase()}.webp`}
+                rounded='full'
+                size='sm'
+                position='absolute'
+                bottom={0}
+                right={0}
+              />
+            </Box>
+          ) : (
+            <Box position='relative' w='40px' h='40px'>
+              <Avatar
+                src='https://cdn-prod.ebisusbay.com/files/dex/images/tokens/frtn.webp'
+                rounded='full'
+                size='sm'
+              />
+            </Box>
+          )}
+          <Box fontWeight='bold'>
+            {info.getValue()}
+          </Box>
+        </HStack>
+      )
+    },
+    header: "Name"
+  }),
+  columnHelper.accessor("derived.dailyRewards", {
+    cell: (info) => {
+      return (
+        <Box>
+          <Box fontSize='xs' fontWeight='bold'>Daily Rewards</Box>
+          <Box>{info.getValue()}</Box>
+        </Box>
+      )
+    }
+  }),
+  columnHelper.accessor("derived.stakedLiquidity", {
+    cell: (info) => {
+      return (
+        <Box>
+          <Box fontSize='xs' fontWeight='bold'>Staked Liquidity</Box>
+          <Box>{info.getValue()}</Box>
+        </Box>
+      )
+    }
+  }),
+  columnHelper.accessor("derived.apr", {
+    cell: (info) => {
+      return (
+        <Box>
+          <Box fontSize='xs' fontWeight='bold'>APR</Box>
+          <Box>{info.getValue()}</Box>
+        </Box>
+      )
+    }
+  })
+];

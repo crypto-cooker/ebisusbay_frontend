@@ -1,7 +1,5 @@
 import DataTable from "@dex/farms/components/data-table";
-import {createColumnHelper} from "@tanstack/react-table";
 import {
-  Avatar,
   Box,
   Button,
   ButtonGroup,
@@ -23,7 +21,6 @@ import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "rea
 import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 import {getFarmsUsingMapi} from "@dex/farms/hooks/get-farms";
-import {DerivedFarm} from "@dex/farms/constants/types";
 import UserFarmsProvider from "@dex/farms/components/provider";
 import {useUserFarms} from "@dex/farms/hooks/user-farms";
 import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
@@ -120,7 +117,7 @@ export default function FarmsPage() {
         {viewType === ViewType.GRID ? (
           <DataGrid data={filteredData ?? []} userData={userFarms} />
         ) : (
-          <DataTable data={filteredData ?? []} columns={columns} userData={userFarms} />
+          <DataTable data={filteredData ?? []} userData={userFarms} />
         )}
       </>
     ) : (
@@ -128,7 +125,7 @@ export default function FarmsPage() {
         No farms found
       </Box>
     )
-  }, [filteredData, farmsStatus, columns, userFarms, viewType]);
+  }, [filteredData, farmsStatus, userFarms, viewType]);
 
   useEffect(() => {
     setQueryParams({...queryParams, search: debouncedSearch});
@@ -213,73 +210,3 @@ export default function FarmsPage() {
 }
 
 
-const columnHelper = createColumnHelper<DerivedFarm>();
-const columns = [
-  columnHelper.accessor("derived.name", {
-    cell: (info) => {
-      return (
-        <HStack>
-          {info.row.original.data.pair ? (
-            <Box position='relative' w='40px' h='40px'>
-              <Avatar
-                src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${info.row.original.data.pair.token0.symbol.toLowerCase()}.webp`}
-                rounded='full'
-                size='xs'
-              />
-              <Avatar
-                src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${info.row.original.data.pair.token1.symbol.toLowerCase()}.webp`}
-                rounded='full'
-                size='sm'
-                position='absolute'
-                bottom={0}
-                right={0}
-              />
-            </Box>
-          ) : (
-            <Box position='relative' w='40px' h='40px'>
-              <Avatar
-                src='https://cdn-prod.ebisusbay.com/files/dex/images/tokens/frtn.webp'
-                rounded='full'
-                size='sm'
-              />
-            </Box>
-          )}
-          <Box fontWeight='bold'>
-            {info.getValue()}
-          </Box>
-        </HStack>
-      )
-    },
-    header: "Name"
-  }),
-  columnHelper.accessor("derived.dailyRewards", {
-    cell: (info) => {
-      return (
-        <Box>
-          <Box fontSize='xs' fontWeight='bold'>Daily Rewards</Box>
-          <Box>{info.getValue()}</Box>
-        </Box>
-      )
-    }
-  }),
-  columnHelper.accessor("derived.stakedLiquidity", {
-    cell: (info) => {
-      return (
-        <Box>
-          <Box fontSize='xs' fontWeight='bold'>Staked Liquidity</Box>
-          <Box>{info.getValue()}</Box>
-        </Box>
-      )
-    }
-  }),
-  columnHelper.accessor("derived.apr", {
-    cell: (info) => {
-      return (
-        <Box>
-          <Box fontSize='xs' fontWeight='bold'>APR</Box>
-          <Box>{info.getValue()}</Box>
-        </Box>
-      )
-    }
-  })
-];
