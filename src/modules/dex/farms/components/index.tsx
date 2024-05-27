@@ -27,6 +27,7 @@ import {DerivedFarm} from "@dex/farms/constants/types";
 import UserFarmsProvider from "@dex/farms/components/provider";
 import {useUserFarms} from "@dex/farms/hooks/user-farms";
 import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
+import DataGrid from "@dex/farms/components/data-grid";
 
 enum ViewType {
   GRID,
@@ -114,7 +115,7 @@ export default function FarmsPage() {
     ) : (!!filteredData && filteredData.length > 0) ? (
       <>
         {viewType === ViewType.GRID ? (
-          <DataTable data={filteredData ?? []} columns={columns} userData={userFarms} />
+          <DataGrid data={filteredData ?? []} userData={userFarms} />
         ) : (
           <DataTable data={filteredData ?? []} columns={columns} userData={userFarms} />
         )}
@@ -124,7 +125,7 @@ export default function FarmsPage() {
         No farms found
       </Box>
     )
-  }, [filteredData, farmsStatus, columns, userFarms]);
+  }, [filteredData, farmsStatus, columns, userFarms, viewType]);
 
   return (
     <UserFarmsProvider>

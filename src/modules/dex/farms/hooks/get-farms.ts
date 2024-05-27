@@ -6,7 +6,7 @@ import FarmsAbi from "@src/global/contracts/Farms.json";
 import LpAbi from "@src/global/contracts/LP.json";
 import {Address, erc20ABI} from "wagmi";
 import {ContractFunctionConfig} from "viem";
-import {DerivedFarm, MapiFarm} from "@dex/farms/constants/types";
+import {DerivedFarm, MapiFarm, MapiPairFarm} from "@dex/farms/constants/types";
 import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
 import {ApiService} from "@src/core/services/api-service";
 import {round} from "@market/helpers/utils";
@@ -112,9 +112,11 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
     return data
       .filter((farm: MapiFarm) => farm.pid !== 0 || (farm.pair !== undefined && farm.pair !== null))
       .map((farm: MapiFarm): DerivedFarm => {
+        const pairFarm: MapiPairFarm = farm as MapiPairFarm;
+
         if (farm.pid === 0) {
           return {
-            data: farm,
+            data: pairFarm,
             derived: {
               name: 'FRTN',
               dailyRewards: '0',
@@ -126,7 +128,7 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
 
         if (farm.pair === undefined) {
           return {
-            data: farm,
+            data: pairFarm,
             derived: {
               name: 'N/A',
               dailyRewards: '0',
@@ -137,13 +139,13 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
         }
 
         const lpBalance = BigNumber.from(farm.lpBalance);
-        const derivedUSD = farm.pair?.derivedUSD ?? '0';
+        const derivedUSD = farm.pair.derivedUSD ?? '0';
         const derivedUSDBigNumber = ethers.utils.parseUnits(derivedUSD, 18);
         const totalDollarValue = lpBalance.mul(derivedUSDBigNumber).div(ethers.constants.WeiPerEther);
         const stakedLiquidity = ethers.utils.formatUnits(totalDollarValue, 18);
 
         return {
-          data: farm,
+          data: pairFarm,
           derived: {
             name: farm.pair.name,
             dailyRewards: '0', //((Number(farm.pair!.totalValueUSD) * farm.apr) / 365).toString(),

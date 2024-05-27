@@ -58,7 +58,7 @@ export default function DataTable({ data, columns, userData }: DataTableProps) {
   const user = useUser();
   const [sorting, setSorting] = useState<SortingState>([]);
   const showLiquidityColumn = useBreakpointValue({ base: false, lg: true }, { fallback: 'lg' });
-  const isSmallScreen = useBreakpointValue({ base: true, sm: false });
+  const isSmallScreen = useBreakpointValue({ base: true, sm: false }, { ssr: false });
   const [columnVisibility, setColumnVisibility] = useState({
     derived_stakedLiquidity: true,
   });
@@ -96,7 +96,7 @@ export default function DataTable({ data, columns, userData }: DataTableProps) {
                   row={row}
                   isSmallScreen={isSmallScreen ?? false}
                   showLiquidityColumn={showLiquidityColumn ?? false}
-                  userData={userData?.[row.original.data.pair?.id ?? config.contracts.frtn]}
+                  userData={userData?.[row.original.data.pair.id]}
                 />
               ))}
             </Tbody>
@@ -124,7 +124,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
     await new Promise(r => setTimeout(r, 2000));
     refetchBalances();
   }
-// console.log('APPROVED?', row.original.data.pair?.name, userData);
+
   return (
     <React.Fragment>
       <Tr
@@ -213,13 +213,13 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                     </Flex>
                   </>
                 )}
-                <Link fontWeight='bold' href={`https://swap.ebisusbay.com/#/add/${row.original.data.pair?.token0.id}/${row.original.data.pair?.token1.id}`} color='#218cff'>
+                <Link fontWeight='bold' href={`https://swap.ebisusbay.com/#/add/${row.original.data.pair.token0.id}/${row.original.data.pair.token1.id}`} color='#218cff'>
                   <HStack>
                     <>Get {row.original.derived.name} LP</>
                     <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} boxSize={3} />
                   </HStack>
                 </Link>
-                <Link fontWeight='bold' href={`${config.urls.explorer}address/${row.original.data.pair?.id}`} color='#218cff'>
+                <Link fontWeight='bold' href={`${config.urls.explorer}address/${row.original.data.pair.id}`} color='#218cff'>
                   <HStack>
                     <>View Contract</>
                     <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} boxSize={3} />
@@ -283,7 +283,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                       w='full'
                       isDisabled={enablingFarm}
                       isLoading={enablingFarm}
-                      onClick={() => enableFarm(row.original.data.pair?.id ?? config.contracts.frtn)}
+                      onClick={() => enableFarm(row.original.data.pair.id)}
                     >
                       Enable
                     </SecondaryButton>

@@ -50,7 +50,7 @@ export default function UnstakeLpTokensDialog({isOpen, onClose, farm, userData, 
       return 0;
     }
 
-    return commify((Number(farm.data.pair?.derivedUSD) * Number(quantity)).toFixed(2));
+    return commify((Number(farm.data.pair.derivedUSD) * Number(quantity)).toFixed(2));
   }, [farm, quantity]);
 
   const handleConfirmUnstake = async () => {
@@ -108,7 +108,7 @@ export default function UnstakeLpTokensDialog({isOpen, onClose, farm, userData, 
                     </Box>
                   )}
                 </Box>
-                <Box>{farm.data.pair?.name} LP</Box>
+                <Box>{farm.data.pair.name} LP</Box>
               </HStack>
             </Flex>
           </FormLabel>

@@ -48,6 +48,11 @@ export interface MapiFarm {
   userCount: number;
   apr: number;
 }
+export interface MapiPairFarm extends MapiFarm {
+  pair: MapiPair;
+}
+
+interface MapiFrtnFarm extends MapiFarm {}
 
 export interface MapiPair {
   id: string;
@@ -72,7 +77,7 @@ export interface MapiPairToken {
 
 export interface DerivedFarm {
   derived: FarmRow;
-  data: MapiFarm;
+  data: MapiPairFarm;
 }
 
 export interface FarmRow {
