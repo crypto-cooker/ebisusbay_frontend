@@ -199,10 +199,10 @@ export default function FarmsPage() {
                 </Button>
               </ButtonGroup>
             </Box>
-            <HStack pb={2}>
+            <Stack pb={2} direction={{base: 'column-reverse', sm: 'row'}}>
               <Switch isChecked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)}/>
-              <Box>Staked only</Box>
-            </HStack>
+              <Box fontSize={{base: 'sm', sm: 'md'}} fontWeight={{base: 'bold', sm: 'normal'}}>Staked only</Box>
+            </Stack>
           </Stack>
           <Stack direction='row' align='center' mt={2}>
             <Box>
