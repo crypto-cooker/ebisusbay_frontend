@@ -47,9 +47,23 @@ export interface MapiFarm {
   totalUsersCount: number;
   userCount: number;
   apr: number;
+  frtnPerLPPerDay: string | null;
+  frtnPerBlockInUSD: string | null;
+  frtnPerBlock: string | null;
+  frtnPerDay: string | null;
+  frtnPerDayInUSD: string | null;
+  frtnPerMonth: string | null;
+  frtnPerMonthInUSD: string | null;
 }
 export interface MapiPairFarm extends MapiFarm {
   pair: MapiPair;
+  frtnPerLPPerDay: string;
+  frtnPerBlockInUSD: string;
+  frtnPerBlock: string;
+  frtnPerDay: string;
+  frtnPerDayInUSD: string;
+  frtnPerMonth: string;
+  frtnPerMonthInUSD: string;
 }
 
 interface MapiFrtnFarm extends MapiFarm {}

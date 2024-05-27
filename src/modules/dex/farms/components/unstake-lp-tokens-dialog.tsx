@@ -59,7 +59,7 @@ export default function UnstakeLpTokensDialog({isOpen, onClose, farm, userData, 
       const contract = new Contract(config.contracts.farms, FarmsAbi, user.provider.signer);
       const tx = await contract.withdraw(farm.data.pid, ethers.utils.parseEther(quantity));
       await tx.wait();
-      toast.success('Staked successfully');
+      toast.success('Unstaked successfully');
       onSuccess()
     } catch (e) {
       console.log(e);
