@@ -168,7 +168,6 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
               aria-label='Expand row'
               icon={row.getIsExpanded() ? <ChevronUpIcon /> : <ChevronDownIcon />}
               variant='unstyled'
-              onClick={() => row.toggleExpanded()}
             />
           </Flex>
         </Td>
