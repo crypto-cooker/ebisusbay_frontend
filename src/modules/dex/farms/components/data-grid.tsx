@@ -99,7 +99,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
               FRTN {commify(round(ethers.utils.formatEther(userData?.earnings ?? 0), 2))}
             </Box>
             <PrimaryButton
-              isDisabled={harvestingRewards || userData?.earnings === 0 || !userData?.approved}
+              isDisabled={harvestingRewards || userData?.earnings === 0n || !userData?.approved}
               isLoading={harvestingRewards}
               onClick={() => harvestRewards(farm.data.pid)}
             >
