@@ -26796,6 +26796,30 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "OKPUSS",
+      "slug": "okpuss",
+      "multiToken": false,
+      "address": "0x62BF1CA81657151e396AD0901B75D9cC760357f4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the world of OKPUSS NFTs, where we're on a mission to bridge two extraordinary realms – like the dynamic duo of Octopuss and Puss!\n\nOur vibrant community unites the realms of Cronos and Base, bringing together the best of both worlds in a thrilling fusion. Rooted in the meme culture of the OKPUSS world, our NFT drop serves as a launchpad for all community members, ensuring a fair and inclusive onboarding experience from the very beginning.\n\nEach holder of the 8,888 OKPUSS collectibles will unlock access to the OKPUSS DAO, empowering them to shape the future of our evolving ecosystem. Curious about the utility and redemption process? Dive deeper into the details on our OKPUSS website and X page, where you'll find information and guidelines to enrich your journey in the OKPUSS universe.\n\nJoin us as we embark on this exciting adventure, where creativity knows no bounds and possibilities are limitless. Welcome to OKPUSS – where the extraordinary awaits! Don't Trip!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/okpuss/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/okpuss/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/okpuss/banner.webp",
+        "website": "https://www.okpuss.com/",
+        "twitter": "https://twitter.com/octopuss_meme",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
