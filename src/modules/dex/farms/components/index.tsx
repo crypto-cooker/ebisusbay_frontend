@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faList, faTableCellsLarge} from "@fortawesome/free-solid-svg-icons";
-import React, {ChangeEvent, useMemo, useState} from "react";
+import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 import {getFarmsUsingMapi} from "@dex/farms/hooks/get-farms";
@@ -28,6 +28,7 @@ import UserFarmsProvider from "@dex/farms/components/provider";
 import {useUserFarms} from "@dex/farms/hooks/user-farms";
 import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
 import DataGrid from "@dex/farms/components/data-grid";
+import useDebounce from "@src/core/hooks/useDebounce";
 
 enum ViewType {
   GRID,
@@ -42,17 +43,17 @@ enum FarmState {
 export default function FarmsPage() {
   const user = useUser();
   const [stakedOnly, setStakedOnly] = useState(false);
-  const [searchTerms, setSearchTerms] = useState('');
+  const [searchTerms, setSearchTerms] = useState<string>();
+  const debouncedSearch = useDebounce(searchTerms, 500);
   const [queryParams, setQueryParams] = useState<FarmsQueryParams>({});
   const [status, setStatus] = useState<FarmState>(FarmState.ACTIVE);
   const [viewType, setViewType] = useState<ViewType>(ViewType.TABLE);
   const { data: farms, status: farmsStatus, error: farmsError } = getFarmsUsingMapi(queryParams);
   const userFarms = useUserFarms();
 
-  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setSearchTerms(value);
-  };
+  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerms(e.target.value);
+  }, []);
 
   const handleSort = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target;
@@ -81,6 +82,8 @@ export default function FarmsPage() {
         sortBy: 'users',
         direction: 'desc'
       });
+    } else if (value === 'earned') {
+      // local sort
     }
   }
 
@@ -126,6 +129,10 @@ export default function FarmsPage() {
       </Box>
     )
   }, [filteredData, farmsStatus, columns, userFarms, viewType]);
+
+  useEffect(() => {
+    setQueryParams({...queryParams, search: debouncedSearch});
+  }, [debouncedSearch]);
 
   return (
     <UserFarmsProvider>
