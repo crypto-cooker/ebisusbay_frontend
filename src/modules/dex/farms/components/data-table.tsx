@@ -18,6 +18,11 @@ import {
   Icon,
   IconButton,
   Link,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
   SimpleGrid,
   Stack,
   Table,
@@ -30,12 +35,12 @@ import {
   VStack,
   Wrap
 } from "@chakra-ui/react";
-import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
+import {ChevronDownIcon, ChevronUpIcon, QuestionOutlineIcon} from "@chakra-ui/icons";
 import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 import {Card} from "@src/components-v2/foundation/card";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
-import {faExternalLinkAlt, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faCalculator, faExternalLinkAlt, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEnableFarm, useHarvestRewards} from "@dex/farms/hooks/farm-actions";
 import {DerivedFarm} from "@dex/farms/constants/types";
@@ -47,6 +52,7 @@ import {ethers} from "ethers";
 import {round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
+import RoiCalculator from "@dex/farms/components/roi-calculator";
 
 const config =  appConfig();
 
@@ -367,20 +373,58 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
   }),
   columnHelper.accessor("derived.stakedLiquidity", {
     cell: (info) => {
+      const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+      };
+
       return (
         <Box>
           <Box fontSize='xs' fontWeight='bold'>Staked Liquidity</Box>
-          <Box>{info.getValue()}</Box>
+          <HStack>
+            <Box>{info.getValue()}</Box>
+            <Popover>
+              <PopoverTrigger>
+                <IconButton onClick={handleClick} aria-label='Express Mode Help' icon={<QuestionOutlineIcon />} variant='unstyled' h='20px' minW='20px'/>
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverBody>Total value of the funds in this farm’s liquidity pool</PopoverBody>
+              </PopoverContent>
+            </Popover>
+          </HStack>
         </Box>
       )
     }
   }),
   columnHelper.accessor("derived.apr", {
     cell: (info) => {
+      const { isOpen: isOpenRoiCalc, onOpen: onOpenRoiCalc, onClose: onCloseRoiCalc } = useDisclosure();
+
+      const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+        onOpenRoiCalc();
+      };
+
       return (
         <Box>
           <Box fontSize='xs' fontWeight='bold'>APR</Box>
-          <Box>{info.getValue()}</Box>
+          <HStack>
+            <Box>{info.getValue()}</Box>
+            <Box>
+              <IconButton
+                aria-label='ROI'
+                onClick={handleClick}
+                variant='unstyled'
+                icon={<Icon as={FontAwesomeIcon} icon={faCalculator} />}
+              />
+            </Box>
+          </HStack>
+          <RoiCalculator
+            isOpen={isOpenRoiCalc}
+            onClose={onCloseRoiCalc}
+            farm={info.row.original}
+            // userData={userData}
+          />
         </Box>
       )
     }

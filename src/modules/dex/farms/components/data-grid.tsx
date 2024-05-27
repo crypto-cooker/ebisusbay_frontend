@@ -82,7 +82,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
 
       >
         <Box p={4}>
-          <SimpleGrid columns={2}>
+          <Flex justify='space-between'>
             <Box>
               <Box position='relative' w='40px' h='24px'>
                 <Avatar
@@ -103,6 +103,8 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
             <Box textAlign='end' fontSize='xl' fontWeight='bold'>
               {farm.data.pair.name}
             </Box>
+          </Flex>
+          <SimpleGrid columns={2}>
             <Box fontWeight='bold'>APR</Box>
             <Box fontWeight='bold' textAlign='end'>{farm.derived.apr}</Box>
             <Box fontWeight='bold'>Rewards / Day</Box>

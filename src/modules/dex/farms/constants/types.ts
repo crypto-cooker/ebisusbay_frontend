@@ -9,24 +9,32 @@ export interface MapiFarm {
   totalUsersCount: number;
   userCount: number;
   apr: number;
-  frtnPerBlockInUSD: string | null;
+  frtnPerBlockInUSD: number | null;
   frtnPerBlock: string | null;
   frtnPerDay: string | null;
-  frtnPerDayInUSD: string | null;
+  frtnPerDayInUSD: number | null;
   frtnPerMonth: string | null;
-  frtnPerMonthInUSD: string | null;
+  frtnPerMonthInUSD: number | null;
 }
 export interface MapiPairFarm extends MapiFarm {
   pair: MapiPair;
-  frtnPerBlockInUSD: string;
+  frtnPerBlockInUSD: number;
   frtnPerBlock: string;
   frtnPerDay: string;
-  frtnPerDayInUSD: string;
+  frtnPerDayInUSD: number;
   frtnPerMonth: string;
-  frtnPerMonthInUSD: string;
+  frtnPerMonthInUSD: number;
 }
 
-interface MapiFrtnFarm extends MapiFarm {}
+interface MapiFrtnFarm extends MapiFarm {
+  pair: null;
+  frtnPerBlockInUSD: null;
+  frtnPerBlock: null;
+  frtnPerDay: null;
+  frtnPerDayInUSD: null;
+  frtnPerMonth: null;
+  frtnPerMonthInUSD: null;
+}
 
 export interface MapiPair {
   id: string;
