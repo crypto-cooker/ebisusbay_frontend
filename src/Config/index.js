@@ -688,7 +688,7 @@ export const configData = {
       townHall: '0xEe68452B79653298Af5109Dae5cD4ABA3c4E1934',
       vaultNft: '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74',
       ryoshiWithKnife: '0x149F2017b1C4a206d0F8684563C2F9aa519e3f64',
-      farms: '0x00eE315332aC18af4d5a461841e7Bc53491bFaf9'
+      farms: '0xef5E16A3849E76eF44012EEdfDF40fFeFffcdC68'
     },
     tokens: {
       mad: {
