@@ -37,6 +37,11 @@ enum FarmState {
   FINISHED = 'finished'
 }
 
+interface LocalQuery {
+  search?: string;
+  sortByEarned?: boolean;
+}
+
 export default function FarmsPage() {
   const user = useUser();
   const [stakedOnly, setStakedOnly] = useState(false);
@@ -47,9 +52,11 @@ export default function FarmsPage() {
   const [viewType, setViewType] = useState<ViewType>(ViewType.TABLE);
   const { data: farms, status: farmsStatus, error: farmsError } = getFarmsUsingMapi(queryParams);
   const userFarms = useUserFarms();
+  const [localQueryParams, setLocalQueryParams] = useState<LocalQuery>({});
 
   const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerms(e.target.value);
+    setLocalQueryParams({...localQueryParams, search: e.target.value});
   }, []);
 
   const handleSort = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -79,13 +86,13 @@ export default function FarmsPage() {
         sortBy: 'users',
         direction: 'desc'
       });
-    } else if (value === 'earned') {
-      // local sort
     }
+
+    setLocalQueryParams({...localQueryParams, sortByEarned: value === 'earned'})
   }
 
   const filteredData = useMemo(() => {
-    return farms?.filter((farm) => {
+    const data = farms?.filter((farm) => {
       const farmState = farm.data.allocPoint > 0 ? FarmState.ACTIVE : FarmState.FINISHED;
       const userStaked = !!farm.data.pair && (userFarms[farm.data.pair.id]?.stakedBalance > 0 ?? false);
       let condition = true;
@@ -99,9 +106,26 @@ export default function FarmsPage() {
         condition = condition && userStaked;
       }
 
+      if (localQueryParams.search && localQueryParams.search.length > 0) {
+        condition = condition && farm.data.pair.name.toLowerCase().includes(localQueryParams.search.toLowerCase());
+      }
+
       return condition;
-    })
-  }, [status, farms, stakedOnly]);
+    });
+
+    if (localQueryParams.sortByEarned) {
+      return data?.sort((a, b) => {
+        const earningsA = userFarms[a.data.pair.id]?.earnings ?? 0n;
+        const earningsB = userFarms[b.data.pair.id]?.earnings ?? 0n;
+
+        if (earningsA < earningsB) return 1;
+        if (earningsA > earningsB) return -1;
+        return 0;
+      });
+    }
+
+    return data;
+  }, [status, farms, stakedOnly, localQueryParams]);
 
   const content = useMemo(() => {
     return farmsStatus === 'pending' ? (
@@ -125,11 +149,11 @@ export default function FarmsPage() {
         No farms found
       </Box>
     )
-  }, [filteredData, farmsStatus, userFarms, viewType]);
+  }, [filteredData, farmsStatus, userFarms, viewType, localQueryParams]);
 
-  useEffect(() => {
-    setQueryParams({...queryParams, search: debouncedSearch});
-  }, [debouncedSearch]);
+  // useEffect(() => {
+  //   setQueryParams({...queryParams, search: debouncedSearch});
+  // }, [debouncedSearch]);
 
   return (
     <UserFarmsProvider>

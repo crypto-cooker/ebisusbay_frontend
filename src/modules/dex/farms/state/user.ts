@@ -4,9 +4,9 @@ import {atomWithReset} from "jotai/utils";
 export interface UserFarmState {
   address: string;
   approved: boolean;
-  stakedBalance: number;
-  earnings: number;
-  tokenBalance: number;
+  stakedBalance: bigint;
+  earnings: bigint;
+  tokenBalance: bigint;
 }
 
 export interface UserFarms {
@@ -35,9 +35,9 @@ export const userFarmsAtom = atom((get) => {
     userFarms[address] = {
       address,
       approved: approvals[address],
-      stakedBalance: balances[address]?.balance || 0,
-      earnings: balances[address]?.harvestable || 0,
-      tokenBalance: balances[address]?.available || 0,
+      stakedBalance: BigInt(balances[address]?.balance || 0),
+      earnings: BigInt(balances[address]?.harvestable || 0),
+      tokenBalance: BigInt(balances[address]?.available || 0),
     };
   });
 
