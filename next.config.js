@@ -249,6 +249,13 @@ const nextConfig = {
           'https://swap.ebisusbay.com/#/swap',
         permanent: false,
         basePath: false,
+      },
+      {
+        source: '/dex/swap',
+        destination:
+          'https://swap.ebisusbay.com/#/swap',
+        permanent: false,
+        basePath: false,
       }
     ];
   }
