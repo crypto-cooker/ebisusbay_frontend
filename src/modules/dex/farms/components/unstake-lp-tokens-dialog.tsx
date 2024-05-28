@@ -113,7 +113,6 @@ export default function UnstakeLpTokensDialog({isOpen, onClose, farm, userData, 
             </Flex>
           </FormLabel>
           <NumberInput
-            placeholder="Amount"
             value={quantity}
             min={0}
             max={Number(ethers.utils.formatEther(userData.stakedBalance.toString()))}
