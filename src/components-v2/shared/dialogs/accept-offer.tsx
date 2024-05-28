@@ -37,7 +37,7 @@ type AcceptOfferDialogProps = {
 }
 
 export const ResponsiveAcceptOfferDialog = ({ isOpen, collection, isCollectionOffer, offer, onClose, ...props }: AcceptOfferDialogProps & BoxProps) => {
-  const { DialogComponent, DialogBody, DialogFooter } = useResponsiveDialog();
+  const { DialogComponent, DialogHeader, DialogBody, DialogFooter } = useResponsiveDialog();
 
   const title = () => {
     if (isCollectionOffer) return `Accept Collection Offer`;
@@ -52,6 +52,7 @@ export const ResponsiveAcceptOfferDialog = ({ isOpen, collection, isCollectionOf
         collection={collection}
         isCollectionOffer={isCollectionOffer}
         offer={offer}
+        DialogHeader={DialogHeader}
         DialogBody={DialogBody}
         DialogFooter={DialogFooter}
         {...props}

@@ -39,7 +39,7 @@ type CancelListingDialogProps = {
 }
 
 export const ResponsiveCancelListingDialog = ({ isOpen, listing, listingId, onClose, ...props }: CancelListingDialogProps & BoxProps) => {
-  const { DialogComponent, DialogBody, DialogFooter } = useResponsiveDialog();
+  const { DialogComponent, DialogHeader, DialogBody, DialogFooter } = useResponsiveDialog();
 
   return (
     <DialogComponent isOpen={isOpen} onClose={onClose} title='Cancel Listing' {...props}>
@@ -48,6 +48,7 @@ export const ResponsiveCancelListingDialog = ({ isOpen, listing, listingId, onCl
         onClose={onClose}
         listing={listing}
         listingId={listingId}
+        DialogHeader={DialogHeader}
         DialogBody={DialogBody}
         DialogFooter={DialogFooter}
         {...props}

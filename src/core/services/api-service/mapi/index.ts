@@ -26,6 +26,9 @@ import {
 import OrdersRepository from "@src/core/services/api-service/mapi/repositories/orders";
 import {DealListQuery, DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
 import {AbbreviatedDeal, Deal} from "@src/core/services/api-service/mapi/types";
+import FarmsRepository from "@src/core/services/api-service/mapi/repositories/farms";
+import {FarmsQuery, FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
+import {MapiFarm} from "@dex/farms/constants/types";
 
 const config = appConfig();
 
@@ -35,6 +38,7 @@ class Mapi {
   private wallets;
   private collections;
   private orders;
+  private farms;
 
   constructor(apiKey?: string) {
     this.listings = new ListingsRepository(apiKey);
@@ -42,6 +46,7 @@ class Mapi {
     this.wallets = new WalletsRepository(apiKey);
     this.collections = new CollectionsRepository(apiKey);
     this.orders = new OrdersRepository(apiKey);
+    this.farms = new FarmsRepository(apiKey);
   }
 
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
@@ -186,6 +191,12 @@ class Mapi {
       response.data.page < response.data.totalPages,
       response.data.totalCount ?? 0
     );
+  }
+
+  async getFarms(query?: FarmsQueryParams): Promise<MapiFarm[]> {
+    const response = await this.farms.getFarms(new FarmsQuery(query));
+
+    return response.data.farms.finalFarmData as MapiFarm[];
   }
 }
 

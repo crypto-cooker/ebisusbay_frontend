@@ -36,7 +36,7 @@ type TransferNftDialogProps = {
 }
 
 export const ResponsiveTransferNftDialog = ({ isOpen, onClose, nft, ...props }: TransferNftDialogProps & BoxProps) => {
-  const { DialogComponent, DialogBody, DialogFooter } = useResponsiveDialog();
+  const { DialogComponent, DialogHeader, DialogBody, DialogFooter } = useResponsiveDialog();
 
   return (
     <DialogComponent isOpen={isOpen} onClose={onClose} title={`Transfer ${nft.name}`} {...props}>
@@ -44,6 +44,7 @@ export const ResponsiveTransferNftDialog = ({ isOpen, onClose, nft, ...props }: 
         isOpen={isOpen}
         onClose={onClose}
         nft={nft}
+        DialogHeader={DialogHeader}
         DialogBody={DialogBody}
         DialogFooter={DialogFooter}
         {...props}
