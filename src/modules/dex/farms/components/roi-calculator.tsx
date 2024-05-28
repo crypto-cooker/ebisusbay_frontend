@@ -24,6 +24,7 @@ import {getTheme} from "@src/global/theme/theme";
 import {Card} from "@src/components-v2/foundation/card";
 import {commify} from "ethers/lib/utils";
 import {ethers} from "ethers";
+import {round} from "@market/helpers/utils";
 
 enum EditableFields {
   USD = 'USD',
@@ -57,21 +58,28 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
   const [compoundInterval, setCompoundInterval] = useState<TimeInterval>(TimeInterval.ONE_DAY);
   const [isCompounding, setIsCompounding] = useState<boolean>(false);
   const [primaryField, setPrimaryField] = useState<EditableFields>(EditableFields.USD);
+  const [roiValue, setRoiValue] = useState<string>('');
 
   // Conversion Functions
   const usdToFrtn = (usd: string, frtnPerDayInUSD: number): ethers.BigNumber => {
+    if (!usd) return ethers.BigNumber.from(0);
     const usdBigNumber = ethers.utils.parseUnits(usd, 18);
     const frtnValue = usdBigNumber.mul(ethers.BigNumber.from(farm.data.frtnPerDay)).div(ethers.utils.parseUnits(frtnPerDayInUSD.toString(), 18));
     return frtnValue;
   };
 
   const lpToFrtn = (lp: string): ethers.BigNumber => {
-    return ethers.BigNumber.from(lp).mul(ethers.BigNumber.from(farm.data.frtnPerLPPerDay));
+    if (!lp) return ethers.BigNumber.from(0);
+    return ethers.BigNumber.from(lp).mul(ethers.BigNumber.from(farm.data.frtnPerLPPerDay)).div(ethers.utils.parseUnits('1', 18));
   };
 
   const frtnToUsd = (frtn: ethers.BigNumber): string => {
     const usdValue = frtn.mul(ethers.utils.parseUnits(farm.data.frtnPerDayInUSD.toString(), 18)).div(ethers.BigNumber.from(farm.data.frtnPerDay));
     return ethers.utils.formatUnits(usdValue, 18);
+  };
+
+  const aprToDailyRate = (apr: string): number => {
+    return parseFloat(apr) / 100 / 365;
   };
 
   const calculateRoi = (value: string, isUsd: boolean, timeInterval: TimeInterval, isCompounding: boolean) => {
@@ -82,12 +90,17 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
       frtnValue = lpToFrtn(value);
     }
 
+    const dailyRate = aprToDailyRate(farm.data.apr);
     let totalFrtn: ethers.BigNumber;
+
     if (isCompounding) {
-      const dailyRate = frtnValue.div(ethers.BigNumber.from(timeInterval));
-      totalFrtn = frtnValue.mul(ethers.BigNumber.from((1 + dailyRate.toNumber()) ** timeInterval - 1));
+      const compoundTimes = timeInterval / compoundInterval;
+      totalFrtn = frtnValue;
+      for (let i = 0; i < compoundTimes; i++) {
+        totalFrtn = totalFrtn.add(totalFrtn.mul(ethers.utils.parseUnits(dailyRate.toString(), 18)).div(ethers.utils.parseUnits('1', 18)));
+      }
     } else {
-      totalFrtn = frtnValue.mul(ethers.BigNumber.from(timeInterval));
+      totalFrtn = frtnValue.add(frtnValue.mul(ethers.utils.parseUnits((dailyRate * timeInterval).toString(), 18)).div(ethers.utils.parseUnits('1', 18)));
     }
 
     const totalUsd = frtnToUsd(totalFrtn);
@@ -117,6 +130,21 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
     }
   };
 
+  // Handle ROI input change
+  const handleRoiChange = (value: string) => {
+    setRoiValue(value);
+    if (value) {
+      const frtnValue = ethers.utils.parseUnits(value, 18);
+      const usdValue = frtnToUsd(frtnValue);
+      const lpValue = frtnValue.mul(ethers.utils.parseUnits('1', 18)).div(ethers.BigNumber.from(farm.data.frtnPerLPPerDay));
+      setUsdValue(usdValue);
+      setLpValue(lpValue.toString());
+    } else {
+      setUsdValue('');
+      setLpValue('');
+    }
+  };
+
   // Handle time interval change
   const handleTimeIntervalChange = (newInterval: TimeInterval) => {
     setSelectedTimeInterval(newInterval);
@@ -124,8 +152,6 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
       calculateRoi(usdValue, true, newInterval, isCompounding);
     } else if (primaryField === EditableFields.LP) {
       calculateRoi(lpValue, false, newInterval, isCompounding);
-    } else {
-      // Handle ROI as primary field
     }
   };
 
@@ -136,8 +162,6 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
       calculateRoi(usdValue, true, selectedTimeInterval, isCompounding);
     } else if (primaryField === EditableFields.LP) {
       calculateRoi(lpValue, false, selectedTimeInterval, isCompounding);
-    } else {
-      // Handle ROI as primary field
     }
   };
 
@@ -149,16 +173,23 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
       calculateRoi(usdValue, true, selectedTimeInterval, newCompounding);
     } else if (primaryField === EditableFields.LP) {
       calculateRoi(lpValue, false, selectedTimeInterval, newCompounding);
-    } else {
-      // Handle ROI as primary field
     }
   };
 
   // Handle primary field change
-  const handlePrimaryFieldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newField = event.target.value as EditableFields;
+  const handlePrimaryFieldChange = (newField: EditableFields) => {
     setPrimaryField(newField);
   };
+
+  useEffect(() => {
+    if (primaryField === EditableFields.USD) {
+      calculateRoi(usdValue, true, selectedTimeInterval, isCompounding);
+    } else if (primaryField === EditableFields.LP) {
+      calculateRoi(lpValue, false, selectedTimeInterval, isCompounding);
+    } else if (primaryField === EditableFields.ROI) {
+      handleRoiChange(roiValue);
+    }
+  }, [usdValue, lpValue, roiValue, selectedTimeInterval, isCompounding, primaryField]);
 
   return (
     <>
@@ -171,7 +202,7 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
                 <ButtonGroup size='xs' isAttached variant='outline'>
                   <Button
                     isActive={primaryField === EditableFields.USD}
-                    onClick={() => setPrimaryField(EditableFields.USD)}
+                    onClick={() => handlePrimaryFieldChange(EditableFields.USD)}
                     _active={{
                       bg: getTheme(user.theme).colors.textColor4,
                       color: 'light'
@@ -181,7 +212,7 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
                   </Button>
                   <Button
                     isActive={primaryField === EditableFields.LP}
-                    onClick={() => setPrimaryField(EditableFields.LP)}
+                    onClick={() => handlePrimaryFieldChange(EditableFields.LP)}
                     _active={{
                       bg: getTheme(user.theme).colors.textColor4,
                       color: 'light'
@@ -251,8 +282,8 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
 
           <Card mt={4}>
             <Box fontSize='sm' fontWeight='bold' mb={2}>ROI AT CURRENT RATES</Box>
-            <Box fontSize='xl' fontWeight='bold'>${commify(roiInFrtn ?? 0)}</Box>
-            <Box fontSize='sm' className='muted'>{commify(roiInUsd)} FRTN</Box>
+            <Box fontSize='xl' fontWeight='bold'>${commify(round(roiInUsd ?? 0, 2))}</Box>
+            <Box fontSize='sm' className='muted'>{commify(roiInFrtn)} FRTN</Box>
           </Card>
         </ModalBody>
       </ModalDialog>

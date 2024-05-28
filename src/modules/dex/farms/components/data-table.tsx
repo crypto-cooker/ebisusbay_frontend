@@ -414,7 +414,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
           <Box fontSize='xs' fontWeight='bold'>APR</Box>
           <HStack>
             <Box>{info.getValue()}</Box>
-            {info.getValue() !== '-' && (
+            {info.getValue() !== '-' && false && (
               <Box>
                 <IconButton
                   aria-label='ROI'
