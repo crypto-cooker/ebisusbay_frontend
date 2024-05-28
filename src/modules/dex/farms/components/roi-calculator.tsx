@@ -54,7 +54,7 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
   const [primaryField, setPrimaryField] = useState<EditableFields>(EditableFields.USD);
   const [usdValue, setUsdValue] = useState<string>('');
   const [lpValue, setLpValue] = useState<string>('');
-  const [roi, setRoi] = useState<string>('');
+  const [roiInFrtn, setRoiInFrtn] = useState<string>('');
   const [roiInUsd, setRoiInUsd] = useState<string>('');
 
   const handleValueChange = (valueString: string) => {
@@ -67,18 +67,18 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
 
   useEffect(() => {
     if (primaryField === EditableFields.USD) {
-      setRoi('123')
+      setRoiInFrtn('123')
     } else if (primaryField === EditableFields.LP) {
-      setRoi('456');
+      setRoiInFrtn('456');
     } else if (primaryField === EditableFields.ROI) {
       setUsdValue('101');
       setLpValue('202');
     }
-  }, [primaryField, selectedStakeLength, selectedCompound, usdValue, lpValue, roi])
+  }, [primaryField, selectedStakeLength, selectedCompound, usdValue, lpValue, roiInFrtn])
 
   useEffect(() => {
     setRoiInUsd('1000')
-  }, [roi]);
+  }, [roiInFrtn]);
 
   return (
     <>
@@ -159,7 +159,7 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
 
           <Card mt={4}>
             <Box fontSize='sm' fontWeight='bold' mb={2}>ROI AT CURRENT RATES</Box>
-            <Box fontSize='xl' fontWeight='bold'>${commify(roi ?? 0)}</Box>
+            <Box fontSize='xl' fontWeight='bold'>${commify(roiInFrtn ?? 0)}</Box>
             <Box fontSize='sm' className='muted'>{commify(roiInUsd)} FRTN</Box>
           </Card>
         </ModalBody>
