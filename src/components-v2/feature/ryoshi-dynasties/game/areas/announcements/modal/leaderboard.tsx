@@ -368,7 +368,7 @@ const PointsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
         <Table size='sm'>
           <Thead>
             <Tr>
-              <Th textAlign='left'>Rank</Th>
+              <Th textAlign='left'>#</Th>
               <Th textAlign='left'>Faction</Th>
               <Th textAlign='left' isNumeric>Points</Th>
             </Tr>
@@ -396,7 +396,7 @@ const PointsLeaderboard = ({showCurrentGame}: {showCurrentGame: boolean}) => {
                     <Text isTruncated={isMobile} maxW={isMobile ? '140px': '200px'}>{entry.faction.name}</Text>
                   </HStack>
                 </Td>
-                <Td textAlign='left' maxW='200px' isNumeric>{commify(entry.points)}</Td>
+                <Td textAlign='left' maxW='200px' isNumeric>{commify(parseInt(entry.points))}</Td>
               </Tr>
             ))}
           </Tbody>

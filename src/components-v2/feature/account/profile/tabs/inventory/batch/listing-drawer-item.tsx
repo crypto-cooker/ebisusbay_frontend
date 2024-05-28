@@ -105,7 +105,7 @@ const defaultExpiry = 2592000000;
 const currencyOptions = [
   {
     name: 'CRO',
-    symbol: 'cro',
+    symbol: 'CRO',
     image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
   },
   ...config.listings.currencies.available
@@ -361,7 +361,6 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                             <Box fontSize='xs'>
                               <Box>Qty</Box>
                               <NumberInput
-                                placeholder="Qty"
                                 size="xs"
                                 value={quantity}
                                 min={1}

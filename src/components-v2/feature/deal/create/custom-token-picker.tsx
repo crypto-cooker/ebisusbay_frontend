@@ -56,7 +56,7 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
         onAdd({
           ...knownToken,
           address: knownToken.address.toLowerCase(),
-          amount: Math.floor(parseInt(quantity)),
+          amount: Number(quantity),
         });
         return;
       }
@@ -102,7 +102,7 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
         name: tokenInfo[0].result ?? `Custom Token (${shortAddress(tokenAddress)})`,
         decimals: tokenInfo[2].result,
         image: '',
-        amount: Math.floor(parseInt(quantity)),
+        amount: Number(quantity),
       });
 
     } catch (e) {
@@ -122,7 +122,6 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
         />
         <NumberInput
           max={100000000000000}
-          precision={0}
           value={quantity}
           onChange={(valueAsString: string) => setQuantity(valueAsString)}
         >

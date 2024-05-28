@@ -25,6 +25,7 @@ import App from "@src/components-v2/app";
 import {Web3Modal} from "@src/components-v2/web3modal";
 import {UserProvider} from "@src/components-v2/shared/contexts/user";
 import {DM_Sans} from "next/font/google";
+import GoogleAnalytics from '@src/components-v2/shared/third-party/google-analytics';
 
 Site24x7LoggingService.init();
 const queryClient = new QueryClient()
@@ -60,6 +61,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
               <Web3Modal>
                 <UserProvider>
                   <App Component={Component} {...pageProps} />
+                  <GoogleAnalytics  />
                 </UserProvider>
               </Web3Modal>
             </ChakraProvider>

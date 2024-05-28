@@ -92,7 +92,6 @@ export const LandsHUD = ({onBack, showBackButton, setElementToZoomTo, traitTypes
                 max={2500} 
                 maxW={100} 
                 mr={2}
-                placeholder='Search for Plot'
                 value={value}
                 onChange={handleChange}
                   >

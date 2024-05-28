@@ -180,6 +180,18 @@ export const configData = {
         symbol: 'Coom',
         address: '0xdcbE80cbf8A5327f32bD8EE45beaaD4cD85660cC',
         decimals: 18
+      },
+      fftb: {
+        name: 'FFTheBozos',
+        symbol: 'FFTB',
+        address: '0x8ebb879557db19d36e69b53b99f0ab938a703bef',
+        decimals: 18
+      },
+      mery: {
+        name: 'Mistery',
+        symbol: 'MERY',
+        address: '0x3b41B27E74Dd366CE27cB389dc7877D4e1516d4d',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -208,7 +220,21 @@ export const configData = {
     },
     listings: {
       currencies : {
-        available: ['cro', 'wcro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch', 'candy', 'ttt', 'icy', 'coom'],
+        available: [
+          'cro',
+          'wcro',
+          'frtn',
+          'bcro',
+          'mad',
+          'vrse',
+          'scratch',
+          'candy',
+          'ttt',
+          'icy',
+          'coom',
+          'fftb',
+          'mery'
+        ],
         global: ['cro', 'frtn'],
         nft: {
           '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -269,7 +295,7 @@ export const configData = {
           '0xc5B294B557402f8706aED487e155773756A9c400': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Window
           '0x4AA9F792b51954A8903967375e854Ed7EE4bCBf0': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Cosmetics
           '0xccE7B3067765FfbA74744C8dB4C1Cd58Bf8D77e7': ['cro', 'frtn', 'scratch'], // Zoomer Squad - Playground Game Tokens: Season 2
-          '0x1220b4E081c04f345C572536EA531Ed2AdE691BD': ['cro', 'frtn', 'bcro'], // AxOl Elites
+          '0x1220b4E081c04f345C572536EA531Ed2AdE691BD': ['cro', 'frtn', 'bcro', 'fftb'], // AxOl Elites
           '0x1368a855545724B165F8c3e466ec30e1fB2A3683': ['cro', 'frtn', 'bcro'], // Football Squares S2
           '0x5c18d5eb211203eb80b591aa71a269b1e16e9eba': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Ballies: The Gear v2
           '0xE1049178296ce004996AFb16B0816c5A95aC8482': ['cro', 'frtn', 'candy'], // Bored Candy
@@ -328,6 +354,32 @@ export const configData = {
           '0x6A7808f1e84bB173D6fC53Efd9Ebc6E56380AB5E': ['cro'], // Cronos Chickens
           '0x5dd80779025679D06C9A175a7090FEEe92eA70aa': ['frtn'], // Strategy Series Vol.1,
           '0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845': ['cro', 'frtn', 'coom'], // Coom Cats
+          '0x7577A788247c77569794dFCd86B47d38b9347E95': ['cro', 'frtn', 'coom'], // Coom Cats VIP
+          '0x08FB1f6625d034019f2F6a3E70bab2FaA55CA068': ['cro', 'frtn', 'fftb'], // Skully-X
+          '0xca00aba7689e3c0f9f74e1f8d82e61c04c787734': ['cro', 'frtn', 'fftb'], // Cr00ts
+          '0x0f41Ad1a8A98Cf0Be5880253d6479b5Af9071071': ['cro', 'frtn', 'fftb'], // Cr00ts-X
+          '0x8333624EEb54E0c9FF6C96D41645d60463CE9b22': ['cro', 'frtn', 'fftb'], // Baby Wyverns
+          '0x776BeF0d43Acdc2b49c6885C6d15F9A5308252b2': ['cro', 'frtn', 'fftb'], // Baby Monsters
+          '0x13Eb301c0AC03D777dE915423B34195D56C14a21': ['cro', 'frtn', 'fftb'], // The Wyverns
+          '0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc': ['cro', 'frtn', 'fftb'], // Tough Lions
+          '0x63dF2BB08bcc9807c0ef5BD0C169FF3b4b289543': ['cro', 'frtn', 'fftb'], // Evolution Hogs
+          '0xF257E02D8c5c9a405589F99859f8b28b0Ccc5474': ['cro', 'frtn', 'fftb'], // Hype Hogs
+          '0xfa8cdd2925a21c78716dFcD20122A57B8eBBECF9': ['cro', 'frtn', 'fftb'], // ChiVerse Online
+          '0xC5Fe01a64e63EDefC40d620A5716B90c52D444f9': ['cro', 'frtn', 'fftb'], // BOB Spaceships
+          '0x257f30fbD890840FA00c2e0f043cF5Ad9A631546': ['cro', 'frtn', 'fftb'], // Alpha Invitations
+          '0xaE843862c98968847273848D4947b312E93D660C': ['cro', 'frtn', 'fftb'], // BSD/LSD
+          '0x50a6aA29b9E99c9B8b81069a12EeFeDAC85919B7': ['cro', 'frtn', 'fftb'], // Cronos Apes
+          '0x688c9c95a7fF91cF1559cdaf098b3038Bc538BE1': ['cro', 'frtn', 'fftb'], // Cronos Baby Apes
+          '0x7D89dCC2f35403cFD9B07475826F9a14a340d06A': ['cro', 'frtn', 'fftb'], // Cronos Mutant Apes
+          '0x33e0b91c773D500FB4De87957740f5D200Be7371': ['cro', 'frtn', 'fftb'], // Cronos Mutant Apes - Serums
+          '0xeFc73c41EF829C0B87E3245aCF033b867cCD0F84': ['cro', 'frtn', 'fftb'], // D.G.Pals Genesis I
+          '0x86aabe05e885108a8797314e817488c26f0601a1': ['cro', 'frtn', 'fftb'], // D.G.P. Unlimited
+          '0xa072bB6F648a4271ba9CbaF1319Fc373eF907f29': ['cro', 'frtn', 'fftb'], // D.G.Pals Limited and Special Edition
+          '0x500cdf7a96a612BEb9e018035a3E89180a6732fE': ['cro', 'frtn', 'fftb'], // D.G.Pals Limited Edition
+          '0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7': ['cro', 'frtn', 'fftb'], // D.G.Pals Equipment
+          '0x8fb4483d92c045336974c4f8c96ad9b1fae8ac64': ['cro', 'frtn', 'fftb'], // D.G.Pals Special Edition
+          '0x0B3A229aBf88abd08C2fA1f2B6c1bB815bEaf5d5': ['cro', 'frtn', 'fftb'], // The Cronos Eagles
+          '0x561ffeca612917ccb8900993e9637a9e4a047e76': ['cro', 'frtn', 'mery'], // Mistery on CRO
         }
       }
     },
