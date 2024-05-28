@@ -35,7 +35,6 @@ export interface MapiPairFarm extends MapiFarm {
 }
 
 interface MapiFrtnFarm extends MapiFarm {
-  apr: null;
   pair: null;
   frtnPerBlockInUSD: null;
   frtnPerBlock: null;
