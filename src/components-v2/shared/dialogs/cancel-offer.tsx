@@ -26,7 +26,7 @@ type CancelOfferDialogProps = {
 }
 
 export const ResponsiveCancelOfferDialog = ({ isOpen, collection, isCollectionOffer, offer, onClose, ...props }: CancelOfferDialogProps & BoxProps) => {
-  const { DialogComponent, DialogBody, DialogFooter } = useResponsiveDialog();
+  const { DialogComponent, DialogHeader, DialogBody, DialogFooter } = useResponsiveDialog();
 
   return (
     <DialogComponent isOpen={isOpen} onClose={onClose} title='Cancel Offer' {...props}>
@@ -36,6 +36,7 @@ export const ResponsiveCancelOfferDialog = ({ isOpen, collection, isCollectionOf
         collection={collection}
         isCollectionOffer={isCollectionOffer}
         offer={offer}
+        DialogHeader={DialogHeader}
         DialogBody={DialogBody}
         DialogFooter={DialogFooter}
         {...props}

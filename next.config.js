@@ -36,12 +36,15 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     config.externals.push(
         "pino-pretty",
         "lokijs",
         "encoding"
     );
+    if (!isServer) {
+      config.resolve.alias.fs = false;
+    }
     return config;
   },
   async redirects() {

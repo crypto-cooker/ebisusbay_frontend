@@ -9,7 +9,7 @@
     // "disableSolutionSearching": true,                 /* Opt a project out of multi-project reference checking when editing. */
     // "disableReferencedProjectLoad": true,             /* Reduce the number of projects loaded automatically by TypeScript. */
     /* Language and Environment */
-    "target": "es2016", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */ // "lib": [],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
+    "target": "es2020", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */ // "lib": [],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
     // "jsx": "preserve",                                /* Specify what JSX code is generated. */
     // "experimentalDecorators": true,                   /* Enable experimental support for TC39 stage 2 draft decorators. */
     // "emitDecoratorMetadata": true,                    /* Emit design-type metadata for decorated declarations in source files. */
@@ -29,7 +29,8 @@
       "@public/*": ["public/*"],
       "@market/*": ["src/modules/market/*"],
       "@gamefi/*": ["src/modules/gamefi/*"],
-      "@dex/*": ["src/modules/dex/*"]
+      "@dex/*": ["src/modules/dex/*"],
+      "uniswap/*": ["src/modules/dex/packages/uniswap/*"],
     }, /* Specify a set of entries that re-map imports to additional lookup locations. */ // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
     // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */

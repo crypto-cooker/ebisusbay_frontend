@@ -35,6 +35,7 @@ import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/de
 import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
 import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
+import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -276,6 +277,14 @@ export class ApiService implements Api {
 
   async validateDeal(id: string) {
     return await this.cms.validateDeal(id);
+  }
+
+  async getFarms(query?: FarmsQueryParams) {
+    return await this.mapi.getFarms(query);
+  }
+
+  async getFarmsUser(address: string) {
+    return await this.graph.getFarmsUser(address);
   }
 }
 

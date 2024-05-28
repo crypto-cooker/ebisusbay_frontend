@@ -2,7 +2,14 @@ import React, {RefObject, useEffect, useState} from 'react';
 import Link from 'next/link';
 import {createGlobalStyle} from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faMoon, faSun} from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowsLeftRightToLine,
+  faArrowsUpDown,
+  faCoins,
+  faMoon,
+  faSackDollar,
+  faSun
+} from '@fortawesome/free-solid-svg-icons';
 
 import AccountMenu from './account-menu';
 import NotificationMenu from './notification-menu';
@@ -151,7 +158,15 @@ const Header = function () {
                 display={{base: 'none', md: 'flex'}}
                 me={4}
               >
-                <NavLink name={'DEX'} to={'https://swap.ebisusbay.com'} />
+                <Menu placement='bottom-end'>
+                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
+                    DEX
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem as={Link} href='https://swap.ebisusbay.com' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
+                    <MenuItem as={Link} href='/dex/farms' _hover={{color: 'inherit'}} justifyContent='end'>Farms</MenuItem>
+                  </MenuList>
+                </Menu>
                 <Menu placement='bottom-end'>
                   <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
                     Marketplace
@@ -232,19 +247,36 @@ const Header = function () {
                 </Box>
               </SimpleGrid>
               <Stack spacing={2} justify='stretch' maxW='375px' mx='auto'>
-                <Link href='https://swap.ebisusbay.com'>
-                  <Button
-                    variant='outline'
-                    onClick={onClose}
-                    size='sm'
-                    color='white'
-                    fontWeight='bold'
-                    w='full'
-                    colorScheme='none'
-                  >
-                    DEX
-                  </Button>
-                </Link>
+                <SimpleGrid columns={2} spacing={2}>
+                  <Link href='https://swap.ebisusbay.com'>
+                    <Button
+                      variant='outline'
+                      onClick={onClose}
+                      size='sm'
+                      color='white'
+                      fontWeight='bold'
+                      w='full'
+                      colorScheme='none'
+                      leftIcon={<Icon as={FontAwesomeIcon} icon={faCoins} />}
+                    >
+                      Swap
+                    </Button>
+                  </Link>
+                  <Link href='/dex/farms'>
+                    <Button
+                      variant='outline'
+                      onClick={onClose}
+                      size='sm'
+                      color='white'
+                      fontWeight='bold'
+                      w='full'
+                      colorScheme='none'
+                      leftIcon={<Icon as={FontAwesomeIcon} icon={faSackDollar} />}
+                    >
+                      Farms
+                    </Button>
+                  </Link>
+                </SimpleGrid>
                 <Button
                   variant='outline'
                   size='sm'
