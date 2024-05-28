@@ -16,6 +16,7 @@ import {appConfig} from "@src/Config";
 import {useUser} from "@src/components-v2/useUser";
 import {ApiService} from "@src/core/services/api-service";
 import {UserFarmsRefetchContext} from "@dex/farms/components/provider";
+import {RESET, useResetAtom} from "jotai/utils";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -134,48 +135,62 @@ export const fetchBalances = async (userAddress: string) => {
 export const useFetchApprovals = () => {
   const user = useUser();
   const setApprovals = useSetAtom(approvalsAtom);
-  const [refetchCounter, setRefetchCounter] = useAtom(refetchApprovalsAtom);
+  // const [refetchCounter, setRefetchCounter] = useAtom(refetchApprovalsAtom);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const approvals = await fetchApprovals(user.address!);
-      setApprovals(approvals);
-    };
-
-    if (user.address) {
-      fetchData();
-    }
-  }, [refetchCounter, setApprovals, user.address]);
-
-  const refetch = () => {
-    setRefetchCounter((prev) => prev + 1);
+  const fetchData = async () => {
+    if (!user.address) return;
+    const approvals = await fetchApprovals(user.address);
+    setApprovals(approvals);
   };
 
-  return refetch;
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const approvals = await fetchApprovals(user.address!);
+  //     setApprovals(approvals);
+  //   };
+  //
+  //   if (user.address) {
+  //     fetchData();
+  //   }
+  // }, [refetchCounter, setApprovals, user.address]);
+  //
+  // const refetch = () => {
+  //   setRefetchCounter((prev) => prev + 1);
+  // };
+
+  return fetchData;
 };
 
 // Hook to fetch balances
 export const useFetchBalances = () => {
   const user = useUser();
   const setBalances = useSetAtom(balancesAtom);
-  const [refetchCounter, setRefetchCounter] = useAtom(refetchBalancesAtom);
+  // const [refetchCounter, setRefetchCounter] = useAtom(refetchBalancesAtom);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const balances = await fetchBalances(user.address!);
-      setBalances(balances);
-    };
-
-    if (user.address) {
-      fetchData();
-    }
-  }, [refetchCounter, setBalances, user.address]);
-
-  const refetch = () => {
-    setRefetchCounter((prev) => prev + 1);
+  const fetchData = async () => {
+    if (!user.address) return;
+    const balances = await fetchBalances(user.address!);
+    setBalances(balances);
   };
 
-  return refetch;
+  return fetchData;
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const balances = await fetchBalances(user.address!);
+  //     setBalances(balances);
+  //   };
+  //
+  //   if (user.address) {
+  //     fetchData();
+  //   }
+  // }, [refetchCounter, setBalances, user.address]);
+  //
+  // const refetch = () => {
+  //   setRefetchCounter((prev) => prev + 1);
+  // };
+  //
+  // return refetch;
 };
 
 export const useUserFarmsRefetch = () => {
