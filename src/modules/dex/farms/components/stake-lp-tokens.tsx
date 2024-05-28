@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import React, {useMemo, useState} from "react";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
-import {DerivedFarm} from "@dex/farms/constants/types";
+import {DerivedFarm, FarmState} from "@dex/farms/constants/types";
 import {UserFarmState} from "@dex/farms/state/user";
 import {BigNumber, Contract, ethers} from "ethers";
 import {commify} from "ethers/lib/utils";
@@ -119,7 +119,6 @@ export default function StakeLpTokensDialog({isOpen, onClose, farm, userData, on
             </Flex>
           </FormLabel>
           <NumberInput
-            placeholder="Amount"
             value={quantity}
             min={0}
             max={Number(ethers.utils.formatEther(userData.tokenBalance.toString()))}
@@ -141,14 +140,16 @@ export default function StakeLpTokensDialog({isOpen, onClose, farm, userData, on
       <ModalFooter>
         <Stack direction='row' w='full'>
           <SecondaryButton flex={1} onClick={onClose}>Cancel</SecondaryButton>
-          <PrimaryButton
-            flex={1}
-            onClick={handleConfirmStake}
-            isLoading={executing}
-            isDisabled={executing || !quantity || Number(quantity) === 0 || Number(quantity) > Number(userData.tokenBalance)}
-          >
-            Confirm
-          </PrimaryButton>
+          {farm.derived.state !== FarmState.FINISHED && (
+            <PrimaryButton
+              flex={1}
+              onClick={handleConfirmStake}
+              isLoading={executing}
+              isDisabled={executing || !quantity || Number(quantity) === 0 || Number(quantity) > Number(userData.tokenBalance)}
+            >
+              Confirm
+            </PrimaryButton>
+          )}
         </Stack>
       </ModalFooter>
     </ModalDialog>

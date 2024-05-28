@@ -6,7 +6,7 @@ import FarmsAbi from "@src/global/contracts/Farms.json";
 import LpAbi from "@src/global/contracts/LP.json";
 import {Address, erc20ABI} from "wagmi";
 import {ContractFunctionConfig} from "viem";
-import {DerivedFarm, MapiFarm, MapiPairFarm} from "@dex/farms/constants/types";
+import {DerivedFarm, FarmState, MapiFarm, MapiPairFarm} from "@dex/farms/constants/types";
 import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
 import {ApiService} from "@src/core/services/api-service";
 import {round} from "@market/helpers/utils";
@@ -119,6 +119,7 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
         const derivedUSDBigNumber = ethers.utils.parseUnits(derivedUSD, 18);
         const totalDollarValue = lpBalance.mul(derivedUSDBigNumber).div(ethers.constants.WeiPerEther);
         const stakedLiquidity = ethers.utils.formatUnits(totalDollarValue, 18);
+        const farmState = farm.allocPoint > 0 ? FarmState.ACTIVE : FarmState.FINISHED;
 
         return {
           data: pairFarm,
@@ -127,6 +128,7 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
             dailyRewards: `${commify(round(ethers.utils.formatEther(pairFarm.frtnPerDay)))} FRTN`,
             stakedLiquidity: `$${commify(round(stakedLiquidity))}`,
             apr: `${pairFarm.apr === 99999 ? '-' : `${commify(round(pairFarm.apr, 2))}%`}`,
+            state: farmState
           }
         }
     });

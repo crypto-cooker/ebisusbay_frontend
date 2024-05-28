@@ -16,7 +16,7 @@ import {
   Wrap
 } from "@chakra-ui/react";
 import React from "react";
-import {DerivedFarm} from "@dex/farms/constants/types";
+import {DerivedFarm, FarmState} from "@dex/farms/constants/types";
 import {UserFarms, UserFarmState} from "@dex/farms/state/user";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {commify} from "ethers/lib/utils";
@@ -137,14 +137,18 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                   >
                     {round(ethers.utils.formatEther(userData.stakedBalance), 8)}
                   </Box>
-                  <HStack w='104px'>
-                    <SecondaryButton onClick={onOpenUnstake}>
-                      <Icon as={FontAwesomeIcon} icon={faMinus} />
-                    </SecondaryButton>
-                    <SecondaryButton onClick={onOpenStake}>
-                      <Icon as={FontAwesomeIcon} icon={faPlus} />
-                    </SecondaryButton>
-                  </HStack>
+                  {round(ethers.utils.formatEther(userData.stakedBalance), 8) > 0 && (
+                    <HStack w='104px'>
+                      <SecondaryButton onClick={onOpenUnstake}>
+                        <Icon as={FontAwesomeIcon} icon={faMinus} />
+                      </SecondaryButton>
+                      {farm.derived.state !== FarmState.FINISHED && (
+                        <SecondaryButton onClick={onOpenStake}>
+                          <Icon as={FontAwesomeIcon} icon={faPlus} />
+                        </SecondaryButton>
+                      )}
+                    </HStack>
+                  )}
                 </Wrap>
               ) : (
                 <PrimaryButton

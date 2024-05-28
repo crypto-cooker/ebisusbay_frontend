@@ -26,16 +26,14 @@ import {useUserFarms} from "@dex/farms/hooks/user-farms";
 import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
 import DataGrid from "@dex/farms/components/data-grid";
 import useDebounce from "@src/core/hooks/useDebounce";
+import {FarmState} from "@dex/farms/constants/types";
 
 enum ViewType {
   GRID,
   TABLE
 }
 
-enum FarmState {
-  ACTIVE = 'active',
-  FINISHED = 'finished'
-}
+
 
 interface LocalQuery {
   search?: string;
@@ -93,14 +91,8 @@ export default function FarmsPage() {
 
   const filteredData = useMemo(() => {
     const data = farms?.filter((farm) => {
-      const farmState = farm.data.allocPoint > 0 ? FarmState.ACTIVE : FarmState.FINISHED;
       const userStaked = !!farm.data.pair && (userFarms[farm.data.pair.id]?.stakedBalance > 0 ?? false);
-      let condition = true;
-      if (status === FarmState.ACTIVE) {
-        condition = condition && farmState === FarmState.ACTIVE;
-      } else {
-        condition = condition && farmState === FarmState.FINISHED;
-      }
+      let condition = status === farm.derived.state;
 
       if (stakedOnly) {
         condition = condition && userStaked;

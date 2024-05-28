@@ -67,4 +67,10 @@ export interface FarmRow {
   dailyRewards: string;
   stakedLiquidity: string;
   apr: string;
-};
+  state: FarmState;
+}
+
+export enum FarmState {
+  ACTIVE = 'active',
+  FINISHED = 'finished'
+}

@@ -43,7 +43,7 @@ import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/butt
 import {faCalculator, faExternalLinkAlt, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEnableFarm, useHarvestRewards} from "@dex/farms/hooks/farm-actions";
-import {DerivedFarm} from "@dex/farms/constants/types";
+import {DerivedFarm, FarmState} from "@dex/farms/constants/types";
 import {appConfig} from "@src/Config";
 import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialog";
 import StakeLpTokensDialog from "@dex/farms/components/stake-lp-tokens";
@@ -272,14 +272,18 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                       >
                         {round(ethers.utils.formatEther(userData.stakedBalance), 8)}
                       </Box>
-                      <HStack w='104px'>
-                        <SecondaryButton onClick={onOpenUnstake}>
-                          <Icon as={FontAwesomeIcon} icon={faMinus} />
-                        </SecondaryButton>
-                        <SecondaryButton onClick={onOpenStake}>
-                          <Icon as={FontAwesomeIcon} icon={faPlus} />
-                        </SecondaryButton>
-                      </HStack>
+                      {round(ethers.utils.formatEther(userData.stakedBalance), 8) > 0 && (
+                        <HStack w='104px' justify='end'>
+                          <SecondaryButton onClick={onOpenUnstake}>
+                            <Icon as={FontAwesomeIcon} icon={faMinus} />
+                          </SecondaryButton>
+                          {row.original.derived.state !== FarmState.FINISHED && (
+                            <SecondaryButton onClick={onOpenStake}>
+                              <Icon as={FontAwesomeIcon} icon={faPlus} />
+                            </SecondaryButton>
+                          )}
+                        </HStack>
+                      )}
                     </Wrap>
                   </Card>
                 ) : (

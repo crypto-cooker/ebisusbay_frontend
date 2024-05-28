@@ -71,6 +71,7 @@ export const configData = {
       townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
       vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F',
       ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
+      farms: '0x62eAEe24A848bEB06B8112D5A37587b3CF21F44D'
     },
     tokens: {
       mad: {
@@ -464,7 +465,8 @@ export const configData = {
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
       townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
       vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F',
-      ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C'
+      ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
+      farms: '0x62eAEe24A848bEB06B8112D5A37587b3CF21F44D'
     },
     tokens: {
       mad: {
