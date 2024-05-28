@@ -45,7 +45,10 @@ export default function FarmsPage() {
   const [stakedOnly, setStakedOnly] = useState(false);
   const [searchTerms, setSearchTerms] = useState<string>();
   const debouncedSearch = useDebounce(searchTerms, 500);
-  const [queryParams, setQueryParams] = useState<FarmsQueryParams>({});
+  const [queryParams, setQueryParams] = useState<FarmsQueryParams>({
+    sortBy: 'users',
+    direction: 'desc'
+  });
   const [status, setStatus] = useState<FarmState>(FarmState.ACTIVE);
   const [viewType, setViewType] = useState<ViewType>(ViewType.TABLE);
   const { data: farms, status: farmsStatus, error: farmsError } = getFarmsUsingMapi(queryParams);
