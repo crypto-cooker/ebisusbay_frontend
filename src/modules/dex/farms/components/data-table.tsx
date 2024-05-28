@@ -425,14 +425,14 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
               </Box>
             )}
           </HStack>
-          {info.getValue() !== '-' && (
-            <RoiCalculator
-              isOpen={isOpenRoiCalc}
-              onClose={onCloseRoiCalc}
-              farm={info.row.original}
-              // userData={userData}
-            />
-          )}
+          {/*{info.getValue() !== '-' && (*/}
+          {/*  <RoiCalculator*/}
+          {/*    isOpen={isOpenRoiCalc}*/}
+          {/*    onClose={onCloseRoiCalc}*/}
+          {/*    farm={info.row.original}*/}
+          {/*    // userData={userData}*/}
+          {/*  />*/}
+          {/*)}*/}
         </Box>
       )
     }
