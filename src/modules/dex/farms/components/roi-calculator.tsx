@@ -23,6 +23,7 @@ import {UserFarmState} from "@dex/farms/state/user";
 import {getTheme} from "@src/global/theme/theme";
 import {Card} from "@src/components-v2/foundation/card";
 import {commify} from "ethers/lib/utils";
+import {ethers} from "ethers";
 
 enum EditableFields {
   USD = 'USD',
@@ -48,37 +49,116 @@ export interface RoiCalculatorProps {
 
 export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalculatorProps) {
   const user = useUser();
-  const [selectedStakeLength, setSelectedStakeLength] = useState<TimeInterval>(TimeInterval.ONE_DAY);
-  const [selectedCompound, setSelectedCompound] = useState<TimeInterval>(TimeInterval.ONE_DAY);
-
-  const [primaryField, setPrimaryField] = useState<EditableFields>(EditableFields.USD);
   const [usdValue, setUsdValue] = useState<string>('');
   const [lpValue, setLpValue] = useState<string>('');
   const [roiInFrtn, setRoiInFrtn] = useState<string>('');
   const [roiInUsd, setRoiInUsd] = useState<string>('');
+  const [selectedTimeInterval, setSelectedTimeInterval] = useState<TimeInterval>(TimeInterval.ONE_DAY);
+  const [compoundInterval, setCompoundInterval] = useState<TimeInterval>(TimeInterval.ONE_DAY);
+  const [isCompounding, setIsCompounding] = useState<boolean>(false);
+  const [primaryField, setPrimaryField] = useState<EditableFields>(EditableFields.USD);
 
-  const handleValueChange = (valueString: string) => {
-    if (primaryField === EditableFields.USD) {
-      setUsdValue(valueString);
-    } else if (primaryField === EditableFields.LP) {
-      setLpValue(valueString);
+  // Conversion Functions
+  const usdToFrtn = (usd: string, frtnPerDayInUSD: number): ethers.BigNumber => {
+    const usdBigNumber = ethers.utils.parseUnits(usd, 18);
+    const frtnValue = usdBigNumber.mul(ethers.BigNumber.from(farm.data.frtnPerDay)).div(ethers.utils.parseUnits(frtnPerDayInUSD.toString(), 18));
+    return frtnValue;
+  };
+
+  const lpToFrtn = (lp: string): ethers.BigNumber => {
+    return ethers.BigNumber.from(lp).mul(ethers.BigNumber.from(farm.data.frtnPerLPPerDay));
+  };
+
+  const frtnToUsd = (frtn: ethers.BigNumber): string => {
+    const usdValue = frtn.mul(ethers.utils.parseUnits(farm.data.frtnPerDayInUSD.toString(), 18)).div(ethers.BigNumber.from(farm.data.frtnPerDay));
+    return ethers.utils.formatUnits(usdValue, 18);
+  };
+
+  const calculateRoi = (value: string, isUsd: boolean, timeInterval: TimeInterval, isCompounding: boolean) => {
+    let frtnValue: ethers.BigNumber;
+    if (isUsd) {
+      frtnValue = usdToFrtn(value, farm.data.frtnPerDayInUSD);
+    } else {
+      frtnValue = lpToFrtn(value);
     }
-  }
 
-  useEffect(() => {
-    if (primaryField === EditableFields.USD) {
-      setRoiInFrtn('123')
-    } else if (primaryField === EditableFields.LP) {
-      setRoiInFrtn('456');
-    } else if (primaryField === EditableFields.ROI) {
-      setUsdValue('101');
-      setLpValue('202');
+    let totalFrtn: ethers.BigNumber;
+    if (isCompounding) {
+      const dailyRate = frtnValue.div(ethers.BigNumber.from(timeInterval));
+      totalFrtn = frtnValue.mul(ethers.BigNumber.from((1 + dailyRate.toNumber()) ** timeInterval - 1));
+    } else {
+      totalFrtn = frtnValue.mul(ethers.BigNumber.from(timeInterval));
     }
-  }, [primaryField, selectedStakeLength, selectedCompound, usdValue, lpValue, roiInFrtn])
 
-  useEffect(() => {
-    setRoiInUsd('1000')
-  }, [roiInFrtn]);
+    const totalUsd = frtnToUsd(totalFrtn);
+    setRoiInFrtn(totalFrtn.toString());
+    setRoiInUsd(totalUsd);
+  };
+
+  // Handle USD input change
+  const handleUsdChange = (value: string) => {
+    setUsdValue(value);
+    if (value) {
+      calculateRoi(value, true, selectedTimeInterval, isCompounding);
+    } else {
+      setRoiInFrtn('');
+      setRoiInUsd('');
+    }
+  };
+
+  // Handle LP input change
+  const handleLpChange = (value: string) => {
+    setLpValue(value);
+    if (value) {
+      calculateRoi(value, false, selectedTimeInterval, isCompounding);
+    } else {
+      setRoiInFrtn('');
+      setRoiInUsd('');
+    }
+  };
+
+  // Handle time interval change
+  const handleTimeIntervalChange = (newInterval: TimeInterval) => {
+    setSelectedTimeInterval(newInterval);
+    if (primaryField === EditableFields.USD) {
+      calculateRoi(usdValue, true, newInterval, isCompounding);
+    } else if (primaryField === EditableFields.LP) {
+      calculateRoi(lpValue, false, newInterval, isCompounding);
+    } else {
+      // Handle ROI as primary field
+    }
+  };
+
+  // Handle compound interval change
+  const handleCompoundIntervalChange = (newInterval: TimeInterval) => {
+    setCompoundInterval(newInterval);
+    if (primaryField === EditableFields.USD) {
+      calculateRoi(usdValue, true, selectedTimeInterval, isCompounding);
+    } else if (primaryField === EditableFields.LP) {
+      calculateRoi(lpValue, false, selectedTimeInterval, isCompounding);
+    } else {
+      // Handle ROI as primary field
+    }
+  };
+
+  // Handle compounding change
+  const handleCompoundingChange = () => {
+    const newCompounding = !isCompounding;
+    setIsCompounding(newCompounding);
+    if (primaryField === EditableFields.USD) {
+      calculateRoi(usdValue, true, selectedTimeInterval, newCompounding);
+    } else if (primaryField === EditableFields.LP) {
+      calculateRoi(lpValue, false, selectedTimeInterval, newCompounding);
+    } else {
+      // Handle ROI as primary field
+    }
+  };
+
+  // Handle primary field change
+  const handlePrimaryFieldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newField = event.target.value as EditableFields;
+    setPrimaryField(newField);
+  };
 
   return (
     <>
@@ -113,17 +193,29 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
               </Flex>
             </FormLabel>
             <InputGroup>
-              <NumberInput
-                placeholder="Amount"
-                value={primaryField === EditableFields.USD ? usdValue : lpValue}
-                min={0}
-                max={1000000000}
-                step={1}
-                onChange={(valueString) => handleValueChange(valueString)}
-                w='full'
-              >
-                <NumberInputField />
-              </NumberInput>
+              {primaryField === EditableFields.USD ? (
+                <NumberInput
+                  value={usdValue}
+                  min={0}
+                  max={1000000000}
+                  step={1}
+                  onChange={handleUsdChange}
+                  w='full'
+                >
+                  <NumberInputField />
+                </NumberInput>
+              ) : (
+                <NumberInput
+                  value={lpValue}
+                  min={0}
+                  max={1000000000}
+                  step={1}
+                  onChange={handleLpChange}
+                  w='full'
+                >
+                  <NumberInputField />
+                </NumberInput>
+              )}
             </InputGroup>
             <FormHelperText fontSize='sm'>~ 0.00</FormHelperText>
             <FormErrorMessage fontSize='sm'>Error</FormErrorMessage>
@@ -134,11 +226,11 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
               <Box>Staked For</Box>
             </FormLabel>
             <ButtonGroup isAttached variant='outline' w='full'>
-              <SwitchButton title='1D' isActive={selectedStakeLength === TimeInterval.ONE_DAY} onClick={() => setSelectedStakeLength(TimeInterval.ONE_DAY)} />
-              <SwitchButton title='7D' isActive={selectedStakeLength === TimeInterval.SEVEN_DAYS} onClick={() => setSelectedStakeLength(TimeInterval.SEVEN_DAYS)} />
-              <SwitchButton title='30D' isActive={selectedStakeLength === TimeInterval.THIRTY_DAYS} onClick={() => setSelectedStakeLength(TimeInterval.THIRTY_DAYS)} />
-              <SwitchButton title='1Y' isActive={selectedStakeLength === TimeInterval.ONE_YEAR} onClick={() => setSelectedStakeLength(TimeInterval.ONE_YEAR)} />
-              <SwitchButton title='5Y' isActive={selectedStakeLength === TimeInterval.FIVE_YEARS} onClick={() => setSelectedStakeLength(TimeInterval.FIVE_YEARS)} />
+              <SwitchButton title='1D' isActive={selectedTimeInterval === TimeInterval.ONE_DAY} onClick={() => handleTimeIntervalChange(TimeInterval.ONE_DAY)} />
+              <SwitchButton title='7D' isActive={selectedTimeInterval === TimeInterval.SEVEN_DAYS} onClick={() => handleTimeIntervalChange(TimeInterval.SEVEN_DAYS)} />
+              <SwitchButton title='30D' isActive={selectedTimeInterval === TimeInterval.THIRTY_DAYS} onClick={() => handleTimeIntervalChange(TimeInterval.THIRTY_DAYS)} />
+              <SwitchButton title='1Y' isActive={selectedTimeInterval === TimeInterval.ONE_YEAR} onClick={() => handleTimeIntervalChange(TimeInterval.ONE_YEAR)} />
+              <SwitchButton title='5Y' isActive={selectedTimeInterval === TimeInterval.FIVE_YEARS} onClick={() => handleTimeIntervalChange(TimeInterval.FIVE_YEARS)} />
             </ButtonGroup>
           </FormControl>
 
@@ -149,10 +241,10 @@ export default function RoiCalculator({isOpen, onClose, farm, userData}: RoiCalc
             <HStack spacing={4}>
               <Checkbox defaultChecked size='lg'/>
               <ButtonGroup isAttached variant='outline' w='full'>
-                <SwitchButton title='1D' isActive={selectedCompound === TimeInterval.ONE_DAY} onClick={() => setSelectedCompound(TimeInterval.ONE_DAY)} />
-                <SwitchButton title='7D' isActive={selectedCompound === TimeInterval.SEVEN_DAYS} onClick={() => setSelectedCompound(TimeInterval.SEVEN_DAYS)} />
-                <SwitchButton title='14D' isActive={selectedCompound === TimeInterval.FOURTEEN_DAYS} onClick={() => setSelectedCompound(TimeInterval.FOURTEEN_DAYS)} />
-                <SwitchButton title='30D' isActive={selectedCompound === TimeInterval.THIRTY_DAYS} onClick={() => setSelectedCompound(TimeInterval.THIRTY_DAYS)} />
+                <SwitchButton title='1D' isActive={compoundInterval === TimeInterval.ONE_DAY} onClick={() => handleCompoundIntervalChange(TimeInterval.ONE_DAY)} />
+                <SwitchButton title='7D' isActive={compoundInterval === TimeInterval.SEVEN_DAYS} onClick={() => handleCompoundIntervalChange(TimeInterval.SEVEN_DAYS)} />
+                <SwitchButton title='14D' isActive={compoundInterval === TimeInterval.FOURTEEN_DAYS} onClick={() => handleCompoundIntervalChange(TimeInterval.FOURTEEN_DAYS)} />
+                <SwitchButton title='30D' isActive={compoundInterval === TimeInterval.THIRTY_DAYS} onClick={() => handleCompoundIntervalChange(TimeInterval.THIRTY_DAYS)} />
               </ButtonGroup>
             </HStack>
           </FormControl>

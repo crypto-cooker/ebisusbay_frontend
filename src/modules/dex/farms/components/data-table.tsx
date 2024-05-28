@@ -414,21 +414,25 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
           <Box fontSize='xs' fontWeight='bold'>APR</Box>
           <HStack>
             <Box>{info.getValue()}</Box>
-            <Box>
-              <IconButton
-                aria-label='ROI'
-                onClick={handleClick}
-                variant='unstyled'
-                icon={<Icon as={FontAwesomeIcon} icon={faCalculator} />}
-              />
-            </Box>
+            {info.getValue() !== '-' && (
+              <Box>
+                <IconButton
+                  aria-label='ROI'
+                  onClick={handleClick}
+                  variant='unstyled'
+                  icon={<Icon as={FontAwesomeIcon} icon={faCalculator} />}
+                />
+              </Box>
+            )}
           </HStack>
-          <RoiCalculator
-            isOpen={isOpenRoiCalc}
-            onClose={onCloseRoiCalc}
-            farm={info.row.original}
-            // userData={userData}
-          />
+          {info.getValue() !== '-' && (
+            <RoiCalculator
+              isOpen={isOpenRoiCalc}
+              onClose={onCloseRoiCalc}
+              farm={info.row.original}
+              // userData={userData}
+            />
+          )}
         </Box>
       )
     }
