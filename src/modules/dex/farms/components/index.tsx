@@ -50,6 +50,7 @@ export default function FarmsPage() {
   const [viewType, setViewType] = useState<ViewType>(ViewType.TABLE);
   const { data: farms, status: farmsStatus, error: farmsError } = getFarmsUsingMapi(queryParams);
   const userFarms = useUserFarms();
+
   const [localQueryParams, setLocalQueryParams] = useState<LocalQuery>({});
 
   const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {

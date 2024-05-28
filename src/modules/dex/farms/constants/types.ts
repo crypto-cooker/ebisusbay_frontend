@@ -8,7 +8,7 @@ export interface MapiFarm {
   rewarderCount: number;
   totalUsersCount: number;
   userCount: number;
-  apr: number;
+  apr: string;
   frtnPerBlockInUSD: number | null;
   frtnPerBlock: string | null;
   frtnPerDay: string | null;
@@ -35,6 +35,7 @@ export interface MapiPairFarm extends MapiFarm {
 }
 
 interface MapiFrtnFarm extends MapiFarm {
+  apr: null;
   pair: null;
   frtnPerBlockInUSD: null;
   frtnPerBlock: null;
