@@ -39,7 +39,8 @@ export const configData = {
         ryoshiDynasties: 'ryoshi-dynasties-meeple',
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners-2',
-        staking: 'staking'
+        staking: 'staking',
+        farms: 'farms-v2'
       }
     },
     rpc: {
@@ -434,7 +435,8 @@ export const configData = {
         ryoshiDynasties: 'ryoshi-dynasties-meeple',
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners-2',
-        staking: 'staking'
+        staking: 'staking',
+        farms: 'farms-v2'
       }
     },
     rpc: {
