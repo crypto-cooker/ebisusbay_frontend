@@ -137,7 +137,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                   >
                     {round(ethers.utils.formatEther(userData.stakedBalance), 8)}
                   </Box>
-                  {round(ethers.utils.formatEther(userData.stakedBalance), 8) > 0 && (
+                  {(farm.derived.state !== FarmState.FINISHED || round(ethers.utils.formatEther(userData.stakedBalance), 8) > 0) && (
                     <HStack w='104px'>
                       <SecondaryButton onClick={onOpenUnstake}>
                         <Icon as={FontAwesomeIcon} icon={faMinus} />

@@ -272,7 +272,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                       >
                         {round(ethers.utils.formatEther(userData.stakedBalance), 8)}
                       </Box>
-                      {round(ethers.utils.formatEther(userData.stakedBalance), 8) > 0 && (
+                      {(row.original.derived.state !== FarmState.FINISHED || round(ethers.utils.formatEther(userData.stakedBalance), 8) > 0) && (
                         <HStack w='104px' justify='end'>
                           <SecondaryButton onClick={onOpenUnstake}>
                             <Icon as={FontAwesomeIcon} icon={faMinus} />

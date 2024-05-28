@@ -15,6 +15,10 @@ export interface MapiFarm {
   frtnPerDayInUSD: number | null;
   frtnPerMonth: string | null;
   frtnPerMonthInUSD: number | null;
+  frtnPerLPPerBlock: string | null;
+  frtnPerLPPerBlockInUSD: number | null;
+  frtnPerLPPerDay: string | null;
+  frtnPerLPPerDayInUSD: number | null;
 }
 export interface MapiPairFarm extends MapiFarm {
   pair: MapiPair;
@@ -24,6 +28,10 @@ export interface MapiPairFarm extends MapiFarm {
   frtnPerDayInUSD: number;
   frtnPerMonth: string;
   frtnPerMonthInUSD: number;
+  frtnPerLPPerBlock: string;
+  frtnPerLPPerBlockInUSD: number;
+  frtnPerLPPerDay: string;
+  frtnPerLPPerDayInUSD: number;
 }
 
 interface MapiFrtnFarm extends MapiFarm {
@@ -34,6 +42,10 @@ interface MapiFrtnFarm extends MapiFarm {
   frtnPerDayInUSD: null;
   frtnPerMonth: null;
   frtnPerMonthInUSD: null;
+  frtnPerLPPerBlock: null;
+  frtnPerLPPerBlockInUSD: null;
+  frtnPerLPPerDay: null;
+  frtnPerLPPerDayInUSD: null;
 }
 
 export interface MapiPair {
