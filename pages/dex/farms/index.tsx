@@ -1,6 +1,5 @@
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import PageHeader from "@src/components-v2/shared/layout/page-header";
-import SwapPage from "@dex/components/swap";
 import React from "react";
 import FarmsPage from "@dex/farms/components";
 
@@ -9,7 +8,7 @@ export default function Page() {
     <>
       <PageHead
         title='Ryoshi Farms'
-        description='Some text'
+        description='Earn Rewards by providing liquidity for your favorite tokens.'
       />
       <PageHeader
         title='Ryoshi Farms'
