@@ -18,8 +18,8 @@ const initialApprovals: { [address: string]: boolean } = {};
 const initialBalances: { [address: string]: { balance: number; harvestable: number; available: number } } = {};
 
 // Atoms for individual data pieces
-export const approvalsAtom = atom<{ [address: string]: boolean }>(initialApprovals);
-export const balancesAtom = atom<{ [address: string]: { balance: number; harvestable: number; available: number } }>(initialBalances);
+export const approvalsAtom = atomWithReset<{ [address: string]: boolean }>(initialApprovals);
+export const balancesAtom = atomWithReset<{ [address: string]: { balance: number; harvestable: number; available: number } }>(initialBalances);
 
 // Refetch trigger atoms
 export const refetchApprovalsAtom = atomWithReset<number>(0);

@@ -254,7 +254,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                       FRTN {commify(round(ethers.utils.formatEther(userData?.earnings ?? 0), 2))}
                     </Box>
                     <PrimaryButton
-                      isDisabled={harvestingRewards || userData?.earnings === 0n || !userData?.approved}
+                      isDisabled={harvestingRewards || userData?.earnings === 0n || !userData?.approved || !user.address}
                       isLoading={harvestingRewards}
                       onClick={() => harvestRewards(row.original.data.pid)}
                     >

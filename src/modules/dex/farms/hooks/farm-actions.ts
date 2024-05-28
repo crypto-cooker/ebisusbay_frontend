@@ -17,6 +17,11 @@ export function useEnableFarm() {
   const [executing, setExecuting] = useState(false);
 
   const enable = async (pairAddress: string) => {
+    if (!user.address) {
+      user.connect();
+      return;
+    }
+
     try {
       setExecuting(true);
       const contract = new Contract(pairAddress, LpAbi, user.provider.signer);
