@@ -1,15 +1,13 @@
 options:
   docker: true
-  size: 2x
+  size: 4x # 16GB steps
   # maximum amount of minutes a step can execute at a global level or at a step level
   max-time: 15
 
 definitions:
   services:
     docker:
-      # default memory is 1024MB
-      # The total memory for services on each pipeline step must not exceed the remaining memory, which is 3072/7128 MB for 1x/2x steps respectively.
-      memory: 7128
+      memory: 10240 # default memory is 1024MB
       image: public.ecr.aws/docker/library/docker:dind
 
   install_tools: &install_tools
