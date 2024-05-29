@@ -26820,6 +26820,108 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "CROMAN Club Pass",
+      "slug": "croman-club-pass",
+      "multiToken": false,
+      "address": "0x05e90D9687A9a3a5abf5D527baa3D635951fb52f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CROMAN Club Pass is a collection of 500 NFTs created to celebrate the lunch of $CROMAN",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/croman-club-pass/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/croman-club-pass/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/croman-club-pass/banner.webp",
+        "website": "https://linktr.ee/cro_magnon",
+        "twitter": "https://twitter.com/Cro_Mangnon",
+        "discord": "https://discord.gg/JzVExjrkhP",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Neko Gang NFT",
+      "slug": "neko-gang-nft",
+      "multiToken": false,
+      "address": "0x507A40a2398b4508f294835E6173Ddf5624692C3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Neko (猫): A symbol of luck and protection in Japanese culture. The Neko Gang will commence with the Genesis Launch of 2,200 hand-drawn collectible PFP NFTs. Each one is completely unique and serves as your key to the Neko ecosystem and our first planned expansion, the robust Dao, alongside the hold-to-earn and passive income features. Powered by $NeKoin",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/neko-gang-nft/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/neko-gang-nft/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/neko-gang-nft/banner.webp",
+        "website": "https://medium.com/@nekogang34",
+        "twitter": "https://twitter.com/nekogangnft",
+        "discord": "https://discord.gg/cKGh5xb58n",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cronos Poultry Society VIP",
+      "slug": "cronos-poultry-society-vip",
+      "multiToken": false,
+      "address": "0x731d2a2977ab0a2164a042a4d69c1d4361c1da7a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Cronos Poultry Society VIP is an exclusive membership for our most loyal Cronos Chickens and $EGG community members.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-poultry-society-vip/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-poultry-society-vip/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-poultry-society-vip/card.webp",
+        "website": "https://cronos-chickens.netlify.app/",
+        "twitter": "https://twitter.com/CROChickens",
+        "discord": "https://discord.gg/KcHNVhDtqs",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "AristoWolves",
+      "slug": "aristowolves",
+      "multiToken": false,
+      "address": "0xb397424D0FEFAD95DB05a0f750222ADcC54fF267",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "AristoWolves isn't merely another addition to the AristoDogs ecosystem; it represents a resurgence. Beyond its remarkable hand-drawn artwork, these Wolves can generate extra income for you through our staking system and will serve as the gateway to unlock exceptional utilities.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/aristowolves/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/aristowolves/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/aristowolves/banner.webp",
+        "website": "https://safeswaps.app/",
+        "twitter": "https://twitter.com/AristoDogNFT",
+        "discord": "https://discord.gg/KzaE6Jqhdh",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
