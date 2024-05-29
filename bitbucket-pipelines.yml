@@ -1,6 +1,6 @@
 options:
   docker: true
-  size: 4x # 16GB steps
+  size: 2x # 8GB steps by default
   # maximum amount of minutes a step can execute at a global level or at a step level
   max-time: 15
 
@@ -40,6 +40,7 @@ pipelines:
             - step:
                 name: Build & deploy
                 image: public.ecr.aws/docker/library/node:20
+                size: 4x # 16GB step
                 runs-on:
                   - 'self.hosted'
                   - 'linux.arm64'
@@ -89,6 +90,7 @@ pipelines:
             - step:
                 name: Build & deploy
                 image: public.ecr.aws/docker/library/node:20
+                size: 4x # 16GB step
                 runs-on:
                   - 'self.hosted'
                   - 'linux.arm64'
@@ -138,6 +140,7 @@ pipelines:
             - step:
                 name: Build & deploy
                 image: public.ecr.aws/docker/library/node:20
+                size: 4x # 16GB step
                 runs-on:
                   - 'self.hosted'
                   - 'linux.arm64'
@@ -188,6 +191,7 @@ pipelines:
             - step:
                 name: Build & deploy
                 image: public.ecr.aws/docker/library/node:20
+                size: 4x # 16GB step
                 runs-on:
                   - 'self.hosted'
                   - 'linux.arm64'
@@ -237,6 +241,7 @@ pipelines:
             - step:
                 name: Build & deploy
                 image: public.ecr.aws/docker/library/node:20
+                size: 4x # 16GB step
                 runs-on:
                   - 'self.hosted'
                   - 'linux.arm64'
