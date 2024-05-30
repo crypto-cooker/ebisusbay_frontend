@@ -1,12 +1,6 @@
 import {useAtom, useSetAtom} from "jotai";
-import {
-  approvalsAtom,
-  balancesAtom,
-  refetchApprovalsAtom,
-  refetchBalancesAtom,
-  userFarmsAtom
-} from "@dex/farms/state/user";
-import {useContext, useEffect} from "react";
+import {approvalsAtom, balancesAtom, userFarmsAtom} from "@dex/farms/state/user";
+import {useContext} from "react";
 import {Contract, ethers} from "ethers";
 import FarmsAbi from "@src/global/contracts/Farms.json";
 import {multicall} from "@wagmi/core";
@@ -16,7 +10,6 @@ import {appConfig} from "@src/Config";
 import {useUser} from "@src/components-v2/useUser";
 import {ApiService} from "@src/core/services/api-service";
 import {UserFarmsRefetchContext} from "@dex/farms/components/provider";
-import {RESET, useResetAtom} from "jotai/utils";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);

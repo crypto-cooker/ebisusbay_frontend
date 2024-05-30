@@ -13,11 +13,12 @@ import {
   Select,
   Spinner,
   Stack,
-  Switch
+  Switch,
+  VStack
 } from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faList, faTableCellsLarge} from "@fortawesome/free-solid-svg-icons";
-import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
+import {faBank, faList, faTableCellsLarge} from "@fortawesome/free-solid-svg-icons";
+import React, {ChangeEvent, useCallback, useMemo, useState} from "react";
 import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 import {getFarmsUsingMapi} from "@dex/farms/hooks/get-farms";
@@ -25,15 +26,15 @@ import UserFarmsProvider from "@dex/farms/components/provider";
 import {useUserFarms} from "@dex/farms/hooks/user-farms";
 import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
 import DataGrid from "@dex/farms/components/data-grid";
-import useDebounce from "@src/core/hooks/useDebounce";
 import {FarmState} from "@dex/farms/constants/types";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
+import Link from "next/link";
 
 enum ViewType {
   GRID,
   TABLE
 }
-
-
 
 interface LocalQuery {
   search?: string;
@@ -44,7 +45,6 @@ export default function FarmsPage() {
   const user = useUser();
   const [stakedOnly, setStakedOnly] = useState(false);
   const [searchTerms, setSearchTerms] = useState<string>();
-  const debouncedSearch = useDebounce(searchTerms, 500);
   const [queryParams, setQueryParams] = useState<FarmsQueryParams>({
     sortBy: 'users',
     direction: 'desc'
@@ -221,6 +221,39 @@ export default function FarmsPage() {
             </Box>
           </Stack>
         </Flex>
+        {status === FarmState.ACTIVE && (
+          <Box
+            border={`1px solid ${getTheme(user.theme).colors.borderColor2}`}
+            bg={getTheme(user.theme).colors.bgColor5}
+            rounded='lg'
+            overflow='hidden'
+            px={6}
+            py={4}
+            mt={4}
+          >
+            <Stack justify='space-between' direction={{base: 'column', sm: 'row'}} align='center' w='full'>
+              <HStack>
+                <Box w='40px' display={{base: 'none', sm: 'block'}}>
+                  <FortuneIcon boxSize={8} />
+                </Box>
+                <VStack align='start' spacing={{base: 1, sm: 0}}>
+                  <HStack fontWeight='bold'>
+                    <Box display={{base: 'block', sm: 'none'}}><FortuneIcon boxSize={8} /></Box>
+                    <Box fontSize='lg'>FRTN</Box>
+                  </HStack>
+                  <Box fontSize='sm'>Single stake FRTN to earn Ryoshi Dynasties Troops and up to 50% APR!</Box>
+                </VStack>
+              </HStack>
+              <Box alignSelf={{base: 'end', sm: 'auto'}}>
+                <Link href='/ryoshi'>
+                  <PrimaryButton leftIcon={<Icon as={FontAwesomeIcon} icon={faBank} />}>
+                    Stake In Bank
+                  </PrimaryButton>
+                </Link>
+              </Box>
+            </Stack>
+          </Box>
+        )}
         <Box mt={4}>
           {content}
         </Box>
