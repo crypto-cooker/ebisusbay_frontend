@@ -382,6 +382,12 @@ export const configData = {
           '0x8fb4483d92c045336974c4f8c96ad9b1fae8ac64': ['cro', 'frtn', 'fftb'], // D.G.Pals Special Edition
           '0x0B3A229aBf88abd08C2fA1f2B6c1bB815bEaf5d5': ['cro', 'frtn', 'fftb'], // The Cronos Eagles
           '0x561ffeca612917ccb8900993e9637a9e4a047e76': ['cro', 'frtn', 'mery'], // Mistery on CRO
+          '0x903B9a9d58742d0699fbd5b0AC7C9C4000B7ce43': ['cro', 'frtn', 'fftb'], // Monkey Of Anarkey
+          '0x8de18EB0bD2C6A6B66bf58e669aD010544937757': ['cro', 'frtn', 'fftb'], // Monkey Of Anarkey License NFT
+          '0xA348E80d3943E097d373b0aC712EFeB700191FE6': ['cro', 'frtn', 'fftb'], // MoA Motorcycles
+          '0xd4E29bdba77c948b04C3ACd67C1dAC17264d2983': ['cro', 'frtn', 'fftb'], // Degen Royale: Guns on Cronos
+          '0x0521217B36a1482E6798692687f836c68c7F3837': ['cro', 'frtn', 'fftb'], // Sp00kies
+          '0x7C144DBF04cf991d932bf6DC404C8B37c8807946': ['cro', 'frtn', 'fftb'], // Elf Citizens
         }
       }
     },

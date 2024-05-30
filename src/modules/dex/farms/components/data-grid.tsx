@@ -31,6 +31,7 @@ import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialo
 import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
 import {appConfig} from "@src/Config";
 import {useUser} from "@src/components-v2/useUser";
+import {getTheme} from "@src/global/theme/theme";
 
 const config =  appConfig();
 
@@ -54,11 +55,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
   const user = useUser();
   const [enableFarm, enablingFarm] = useEnableFarm();
   const { refetchBalances } = useUserFarmsRefetch();
-
-  const bgColor = useColorModeValue('#FFF', '#404040')
-  const hoverBgColor = useColorModeValue('#FFFFFF', '#404040');
   const borderColor = useColorModeValue('#bbb', '#ffffff33');
-  const hoverBorderColor = useColorModeValue('#595d69', '#ddd');
   const [harvestRewards, harvestingRewards] = useHarvestRewards();useColorModeValue('#FFFFFF', '#404040')
 
   const { isOpen: isOpenUnstake, onOpen: onOpenUnstake, onClose:  onCloseUnstake } = useDisclosure();
@@ -78,7 +75,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
         borderColor={borderColor}
         rounded='xl'
         boxShadow='5px 5px 20px black'
-        backgroundColor={bgColor}
+        backgroundColor={getTheme(user.theme).colors.bgColor5}
         overflow='hidden'
         h='full'
 

@@ -40,7 +40,7 @@ import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 import {Card} from "@src/components-v2/foundation/card";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
-import {faCalculator, faExternalLinkAlt, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faBank, faCalculator, faExternalLinkAlt, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEnableFarm, useHarvestRewards} from "@dex/farms/hooks/farm-actions";
 import {DerivedFarm, FarmState} from "@dex/farms/constants/types";
@@ -53,6 +53,7 @@ import {round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
 import RoiCalculator from "@dex/farms/components/roi-calculator";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config =  appConfig();
 
@@ -370,7 +371,10 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
       return (
         <Box>
           <Box fontSize='xs' fontWeight='bold'>Daily Rewards</Box>
-          <Box>{info.getValue()}</Box>
+          <HStack>
+            <FortuneIcon boxSize={4} />
+            <Box>{info.getValue()}</Box>
+          </HStack>
         </Box>
       )
     }

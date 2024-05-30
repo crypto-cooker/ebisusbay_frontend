@@ -1,14 +1,20 @@
 import {ModalDialog} from "@src/components-v2/foundation/modal";
 import {
   Avatar,
-  Box, Button,
+  Box,
+  Button,
   Flex,
-  FormControl, FormErrorMessage,
+  FormControl,
+  FormErrorMessage,
   FormHelperText,
-  FormLabel, HStack,
-  ModalBody, ModalFooter,
+  FormLabel,
+  HStack,
+  ModalBody,
+  ModalFooter,
   NumberInput,
-  NumberInputField, Stack, Wrap
+  NumberInputField,
+  Stack,
+  Wrap
 } from "@chakra-ui/react";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import React, {useMemo, useState} from "react";
