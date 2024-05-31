@@ -15,7 +15,7 @@ import {
   VStack,
   Wrap
 } from "@chakra-ui/react";
-import React from "react";
+import React, {useMemo} from "react";
 import {DerivedFarm, FarmState} from "@dex/farms/constants/types";
 import {UserFarms, UserFarmState} from "@dex/farms/state/user";
 import {useColorModeValue} from "@chakra-ui/color-mode";
@@ -57,6 +57,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
   const { refetchBalances } = useUserFarmsRefetch();
   const borderColor = useColorModeValue('#bbb', '#ffffff33');
   const [harvestRewards, harvestingRewards] = useHarvestRewards();useColorModeValue('#FFFFFF', '#404040')
+  const text2Color = useColorModeValue('#1A202C', 'whiteAlpha.600');
 
   const { isOpen: isOpenUnstake, onOpen: onOpenUnstake, onClose:  onCloseUnstake } = useDisclosure();
   const { isOpen: isOpenStake, onOpen: onOpenStake, onClose:  onCloseStake } = useDisclosure();
@@ -67,6 +68,24 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
     await new Promise(r => setTimeout(r, 2000));
     refetchBalances();
   }
+
+  const stakedDollarValue = useMemo(() => {
+    if (!farm.data.pair || !userData?.stakedBalance) {
+      return 0;
+    }
+
+    return commify((Number(farm.data.pair.derivedUSD) * Number(ethers.utils.formatEther(userData.stakedBalance))).toFixed(2));
+  }, [farm, userData]);
+
+  const earnedDollarValue = useMemo(() => {
+    if (!farm.data.frtnPerMonth || !farm.data.frtnPerMonthInUSD || !userData?.earnings) {
+      return 0;
+    }
+
+    const usdRate = farm.data.frtnPerMonthInUSD / parseFloat(ethers.utils.formatEther(farm.data.frtnPerMonth));
+
+    return commify((usdRate * Number(ethers.utils.formatEther(userData.earnings))).toFixed(2));
+  }, [farm, userData]);
 
   return (
     <Box h='full' data-group>
@@ -112,11 +131,13 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
           <Box mt={4}>
             <Box fontSize='sm' fontWeight='bold'>EARNED REWARDS</Box>
             <Wrap justify='space-between' align='center'>
-              <Box
-                fontSize='xl'
-                fontWeight='bold'
-              >
-                FRTN {commify(round(ethers.utils.formatEther(userData?.earnings ?? 0), 2))}
+              <Box>
+                <Box fontSize='xl' fontWeight='bold'>
+                  FRTN {commify(round(ethers.utils.formatEther(userData?.earnings ?? 0), 2))}
+                </Box>
+                <Box fontSize='xs' color={text2Color}>
+                  ~ ${earnedDollarValue}
+                </Box>
               </Box>
               <PrimaryButton
                 isDisabled={harvestingRewards || userData?.earnings === 0n || !userData?.approved || !user.address}
@@ -130,11 +151,13 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
               <Box fontSize='sm' fontWeight='bold' mb={2}>{farm.derived.name} STAKED</Box>
               {userData?.approved ? (
                 <Wrap justify='space-between' align='center'>
-                  <Box
-                    fontSize='xl'
-                    fontWeight='bold'
-                  >
-                    {round(ethers.utils.formatEther(userData.stakedBalance), 8)}
+                  <Box>
+                    <Box fontSize='xl' fontWeight='bold'>
+                      {round(ethers.utils.formatEther(userData.stakedBalance), 8)}
+                    </Box>
+                    <Box fontSize='xs' color={text2Color}>
+                      ~ ${stakedDollarValue}
+                    </Box>
                   </Box>
                   {(farm.derived.state !== FarmState.FINISHED || round(ethers.utils.formatEther(userData.stakedBalance), 8) > 0) && (
                     <HStack w='104px'>
