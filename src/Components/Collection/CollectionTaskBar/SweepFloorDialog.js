@@ -88,10 +88,10 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (collection && user.wallet.isConnected) {
+    if (collection) {
       asyncFunc();
     }
-  }, [collection, user.wallet.isConnected]);
+  }, [collection]);
 
   useEffect(() => {
     const isMobileSize = minWidth < BREAKPOINTS.sm;
@@ -338,22 +338,32 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
                       <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
                     )}
                     <div className="d-flex">
-                      <Button type="legacy-outlined"
-                              onClick={() => {
-                                setShowConfirmButton(false)
-                                setConfirmationCost(0)
-                              }}
-                              disabled={executingSweepFloor}
-                              className="me-2 flex-fill">
-                        Go Back
-                      </Button>
-                      <Button type="legacy"
-                              onClick={handleSweepFloor}
-                              isLoading={executingSweepFloor}
-                              disabled={executingSweepFloor}
-                              className="flex-fill">
-                        Confirm Sweep
-                      </Button>
+                      {user.address ? (
+                        <>
+                          <Button type="legacy-outlined"
+                                  onClick={() => {
+                                    setShowConfirmButton(false)
+                                    setConfirmationCost(0)
+                                  }}
+                                  disabled={executingSweepFloor}
+                                  className="me-2 flex-fill">
+                            Go Back
+                          </Button>
+                          <Button type="legacy"
+                                  onClick={handleSweepFloor}
+                                  isLoading={executingSweepFloor}
+                                  disabled={executingSweepFloor}
+                                  className="flex-fill">
+                            Confirm Sweep
+                          </Button>
+                        </>
+                      ) : (
+                        <Button type="legacy"
+                                onClick={user.connect}
+                                className="flex-fill">
+                          Confirm Sweep
+                        </Button>
+                      )}
                     </div>
                   </>
                 ) : (

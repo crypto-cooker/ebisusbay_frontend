@@ -1,15 +1,13 @@
 options:
   docker: true
-  size: 2x
+  size: 2x # 8GB steps by default
   # maximum amount of minutes a step can execute at a global level or at a step level
   max-time: 15
 
 definitions:
   services:
     docker:
-      # default memory is 1024MB
-      # The total memory for services on each pipeline step must not exceed the remaining memory, which is 3072/7128 MB for 1x/2x steps respectively.
-      memory: 6144
+      memory: 10240 # default memory is 1024MB
       image: public.ecr.aws/docker/library/docker:dind
 
   install_tools: &install_tools
@@ -42,6 +40,7 @@ pipelines:
             - step:
                 name: Build & deploy
                 image: public.ecr.aws/docker/library/node:20
+                size: 4x # 16GB step
                 runs-on:
                   - 'self.hosted'
                   - 'linux.arm64'
@@ -91,6 +90,7 @@ pipelines:
             - step:
                 name: Build & deploy
                 image: public.ecr.aws/docker/library/node:20
+                size: 4x # 16GB step
                 runs-on:
                   - 'self.hosted'
                   - 'linux.arm64'
@@ -140,6 +140,7 @@ pipelines:
             - step:
                 name: Build & deploy
                 image: public.ecr.aws/docker/library/node:20
+                size: 4x # 16GB step
                 runs-on:
                   - 'self.hosted'
                   - 'linux.arm64'
@@ -190,6 +191,7 @@ pipelines:
             - step:
                 name: Build & deploy
                 image: public.ecr.aws/docker/library/node:20
+                size: 4x # 16GB step
                 runs-on:
                   - 'self.hosted'
                   - 'linux.arm64'
@@ -239,6 +241,7 @@ pipelines:
             - step:
                 name: Build & deploy
                 image: public.ecr.aws/docker/library/node:20
+                size: 4x # 16GB step
                 runs-on:
                   - 'self.hosted'
                   - 'linux.arm64'

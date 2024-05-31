@@ -10,6 +10,7 @@ import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/l
 import {MarketplacePageContext, MarketplacePageContextProps} from "@src/components-v2/feature/marketplace/context";
 import {CollectionFilter} from "@src/components-v2/shared/filter-container/filters/collection-filter";
 import {ciEquals} from "@market/helpers/utils";
+import useCurrencyBroker from '@market/hooks/use-currency-broker';
 
 const config = appConfig();
 
@@ -31,10 +32,7 @@ interface MarketplaceFilterContainerProps {
 const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, totalCount, children}: MarketplaceFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
   const { queryParams, setQueryParams  } = useContext(MarketplacePageContext) as MarketplacePageContextProps;
-
-  const currencies = Object.entries(config.tokens)
-    .filter(([key, token]: [string, any]) => config.listings.currencies.available.includes(key))
-    .map(token => token[1]) as {name: string, symbol: string, address: string}[] ?? [];
+  const { listingCurrencies } = useCurrencyBroker();
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
     const params = queryParams;
@@ -152,13 +150,9 @@ const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, on
       />
       <RadioFilter
         title='Currency'
-        items={
-        [
-          {label: 'CRO', key: 'currency-cro', isSelected: filteredItems.some((fi) => fi.key === 'currency-cro')},
-          ...currencies.map((c) => (
-            {label: c.symbol, key: `currency-${c.symbol.toLowerCase()}`, isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)}
-          )),
-        ]}
+        items={listingCurrencies.map((c) => (
+          {icon: c.image, label: c.symbol, key: `currency-${c.symbol.toLowerCase()}`, isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)}
+        ))}
         onSelect={handleCurrencyFilter}
       />
       <RangeFilter

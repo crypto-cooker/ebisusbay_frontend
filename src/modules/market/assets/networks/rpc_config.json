@@ -25596,14 +25596,16 @@
       "name": "Pixel Ebisu",
       "slug": "pixel-ebisu",
       "multiToken": false,
-      "address": "",
+      "address": "0xceb43B91fF882e3cA8B5B0bddC2570194C46f51D",
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "",
+        "description": "Pixel art paying homage to the #1 Marketplace on the Cronos chain. “Ebisusbay” Created by Shadowbright",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/pixel-ebisu/avatar.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/pixel-ebisu/banner.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/pixel-ebisu/card.webp",
+        "website": "https://dripcro.com",
+        "twitter": "https://x.com/drip_official_",
         "discord": "https://discord.gg/dripcro-com-1003477871664320525",
         "categories": []
       },
@@ -26453,7 +26455,7 @@
         "description": "$Cartel Insider Pass NFT is an initiative to reward people who participated in the first 6 months of the $Cartel project on the new Cronos CRC-20 Inscription Protocol. / There are future plans to airdrop 500k $Cartel Crypto Coin for each $Cartel Insider Pass NFT in your wallet and to have all our airdrop/whitelist collaborations with Cronos partners to go through this membership pass. / It's also your Whitelist pass for our upcoming $Cartel Mink Collection and future initial launches. / Join the Cronos $Cartel Discord with your Insider Pass to access all the exclusive channels like the weekly Rumble Giveaways and Engage to Earn Program.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-cartel-insider-pass/avatar.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-cartel-insider-pass/card.webp",
-        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-cartel-insider-pass/banner.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-cartel-insider-pass/banner3.webp",
         "twitter": "https://twitter.com/CronosCartel",
         "discord": "https://discord.gg/U7gNxSvTE2",
         "categories": []
@@ -26720,7 +26722,7 @@
       "name": "Mistery on Cro",
       "slug": "mistery-on-cro",
       "multiToken": false,
-      "address": "",
+      "address": "0x561ffeca612917ccb8900993e9637a9e4a047e76",
       "onChain": false,
       "listable": true,
       "metadata": {
@@ -26741,6 +26743,184 @@
         "verified": true,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "Time Machine 103s",
+      "slug": "time-machine-103",
+      "multiToken": false,
+      "address": "0x3A87FED3F2Af08B18E566BC9Dd497Ff8861b5669",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Time Machine 103s is a free NFT collection used to decrease the amount of gas required to claim royalties and revenue from 101s/102s. Also to increase the payout weekly per nft. by decreasing the supply from 15,000 NFTs to 2700 or less.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-103/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-103/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-103/banner.webp",
+        "website": "https://time-sniper.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/Tfc2Y8Kjyq",
+        "medium": "https://time-machine-nfts.gitbook.io/time-machine-nfts/",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Baby Ryoshi OG",
+      "slug": "baby-ryoshi-og",
+      "multiToken": false,
+      "address": "0x3cb2E346C6cca184B59c4c0D69e60C95Dd3c138F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Yoshi has invaded the Cronos landscape. Come be a part of the journey and fun",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-og/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-og/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-og/banner.webp",
+        "website": "https://croarmy.app/#/Ryoshi",
+        "twitter": "https://twitter.com/RyoshiBaby",
+        "discord": "https://discord.gg/seEQjGArXU",
+        "categories": [
+          "utility",
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "OKPUSS",
+      "slug": "okpuss",
+      "multiToken": false,
+      "address": "0x62BF1CA81657151e396AD0901B75D9cC760357f4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the world of OKPUSS NFTs, where we're on a mission to bridge two extraordinary realms – like the dynamic duo of Octopuss and Puss!\n\nOur vibrant community unites the realms of Cronos and Base, bringing together the best of both worlds in a thrilling fusion. Rooted in the meme culture of the OKPUSS world, our NFT drop serves as a launchpad for all community members, ensuring a fair and inclusive onboarding experience from the very beginning.\n\nEach holder of the 8,888 OKPUSS collectibles will unlock access to the OKPUSS DAO, empowering them to shape the future of our evolving ecosystem. Curious about the utility and redemption process? Dive deeper into the details on our OKPUSS website and X page, where you'll find information and guidelines to enrich your journey in the OKPUSS universe.\n\nJoin us as we embark on this exciting adventure, where creativity knows no bounds and possibilities are limitless. Welcome to OKPUSS – where the extraordinary awaits! Don't Trip!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/okpuss/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/okpuss/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/okpuss/banner.webp",
+        "website": "https://www.okpuss.com/",
+        "twitter": "https://twitter.com/octopuss_meme",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CROMAN Club Pass",
+      "slug": "croman-club-pass",
+      "multiToken": false,
+      "address": "0x05e90D9687A9a3a5abf5D527baa3D635951fb52f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CROMAN Club Pass is a collection of 500 NFTs created to celebrate the lunch of $CROMAN",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/croman-club-pass/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/croman-club-pass/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/croman-club-pass/banner.webp",
+        "website": "https://linktr.ee/cro_magnon",
+        "twitter": "https://twitter.com/Cro_Mangnon",
+        "discord": "https://discord.gg/JzVExjrkhP",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Neko Gang NFT",
+      "slug": "neko-gang-nft",
+      "multiToken": false,
+      "address": "0x507A40a2398b4508f294835E6173Ddf5624692C3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Neko (猫): A symbol of luck and protection in Japanese culture. The Neko Gang will commence with the Genesis Launch of 2,200 hand-drawn collectible PFP NFTs. Each one is completely unique and serves as your key to the Neko ecosystem and our first planned expansion, the robust Dao, alongside the hold-to-earn and passive income features. Powered by $NeKoin",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/neko-gang-nft/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/neko-gang-nft/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/neko-gang-nft/banner.webp",
+        "website": "https://medium.com/@nekogang34",
+        "twitter": "https://twitter.com/nekogangnft",
+        "discord": "https://discord.gg/cKGh5xb58n",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cronos Poultry Society VIP",
+      "slug": "cronos-poultry-society-vip",
+      "multiToken": false,
+      "address": "0x731d2a2977ab0a2164a042a4d69c1d4361c1da7a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Cronos Poultry Society VIP is an exclusive membership for our most loyal Cronos Chickens and $EGG holders as well as contributors to our Ryoshi Dynasties faction.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-poultry-society-vip/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-poultry-society-vip/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-poultry-society-vip/card.webp",
+        "website": "https://cronos-chickens.netlify.app/",
+        "twitter": "https://twitter.com/CROChickens",
+        "discord": "https://discord.gg/KcHNVhDtqs",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "AristoWolves",
+      "slug": "aristowolves",
+      "multiToken": false,
+      "address": "0xb397424D0FEFAD95DB05a0f750222ADcC54fF267",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "AristoWolves isn't merely another addition to the AristoDogs ecosystem; it represents a resurgence. Beyond its remarkable hand-drawn artwork, these Wolves can generate extra income for you through our staking system and will serve as the gateway to unlock exceptional utilities.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/aristowolves/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/aristowolves/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/aristowolves/banner.webp",
+        "website": "https://safeswaps.app/",
+        "twitter": "https://twitter.com/AristoDogNFT",
+        "discord": "https://discord.gg/KzaE6Jqhdh",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "verified": false
       }
     }
   ],
@@ -34311,18 +34491,19 @@
       "description": "Pixel art paying homage to the #1 Marketplace on the Cronos chain. “Ebisusbay” Created by Shadowbright",
       "author": {
         "name": "Aces777wild / ShadowBright collaboration",
+        "website": "https://dripcro.com",
+        "twitter": "https://x.com/drip_official_",
         "discord": "https://discord.gg/dripcro-com-1003477871664320525"
       },
-      "address": "",
+      "address": "0xceb43B91fF882e3cA8B5B0bddC2570194C46f51D",
       "maxMintPerTx": 1,
-      "maxMintPerAddress": 1,
+      "maxMintPerAddress": 100,
       "totalSupply": 420,
-      "erc20Cost": "500",
-      "erc20MemberCost": "450",
+      "erc20Cost": "1000",
       "erc20Token": "frtn",
       "erc20Only": true,
-      "memberMitama": 1000,
       "foundersOnly": false,
+      "abi": "pixel-ebisu.json",
       "start": 1716494400000,
       "end": null,
       "referral": false,

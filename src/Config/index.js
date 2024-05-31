@@ -39,7 +39,8 @@ export const configData = {
         ryoshiDynasties: 'ryoshi-dynasties-meeple',
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners-2',
-        staking: 'staking'
+        staking: 'staking',
+        farms: 'farms-v2'
       }
     },
     rpc: {
@@ -70,7 +71,8 @@ export const configData = {
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
       townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
       vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F',
-      ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C'
+      ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
+      farms: '0x62eAEe24A848bEB06B8112D5A37587b3CF21F44D'
     },
     tokens: {
       mad: {
@@ -186,6 +188,12 @@ export const configData = {
         symbol: 'FFTB',
         address: '0x8ebb879557db19d36e69b53b99f0ab938a703bef',
         decimals: 18
+      },
+      mery: {
+        name: 'Mistery',
+        symbol: 'MERY',
+        address: '0x3b41B27E74Dd366CE27cB389dc7877D4e1516d4d',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -226,7 +234,8 @@ export const configData = {
           'ttt',
           'icy',
           'coom',
-          'fftb'
+          'fftb',
+          'mery'
         ],
         global: ['cro', 'frtn'],
         nft: {
@@ -288,7 +297,7 @@ export const configData = {
           '0xc5B294B557402f8706aED487e155773756A9c400': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Window
           '0x4AA9F792b51954A8903967375e854Ed7EE4bCBf0': ['cro', 'frtn', 'scratch'], // Boomer Squad - Room Components: Cosmetics
           '0xccE7B3067765FfbA74744C8dB4C1Cd58Bf8D77e7': ['cro', 'frtn', 'scratch'], // Zoomer Squad - Playground Game Tokens: Season 2
-          '0x1220b4E081c04f345C572536EA531Ed2AdE691BD': ['cro', 'frtn', 'bcro'], // AxOl Elites
+          '0x1220b4E081c04f345C572536EA531Ed2AdE691BD': ['cro', 'frtn', 'bcro', 'fftb'], // AxOl Elites
           '0x1368a855545724B165F8c3e466ec30e1fB2A3683': ['cro', 'frtn', 'bcro'], // Football Squares S2
           '0x5c18d5eb211203eb80b591aa71a269b1e16e9eba': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // Ballies: The Gear v2
           '0xE1049178296ce004996AFb16B0816c5A95aC8482': ['cro', 'frtn', 'candy'], // Bored Candy
@@ -354,6 +363,31 @@ export const configData = {
           '0x8333624EEb54E0c9FF6C96D41645d60463CE9b22': ['cro', 'frtn', 'fftb'], // Baby Wyverns
           '0x776BeF0d43Acdc2b49c6885C6d15F9A5308252b2': ['cro', 'frtn', 'fftb'], // Baby Monsters
           '0x13Eb301c0AC03D777dE915423B34195D56C14a21': ['cro', 'frtn', 'fftb'], // The Wyverns
+          '0xb242399f3f52fcfa8b09d7d6e4C3DBe84D0644fc': ['cro', 'frtn', 'fftb'], // Tough Lions
+          '0x63dF2BB08bcc9807c0ef5BD0C169FF3b4b289543': ['cro', 'frtn', 'fftb'], // Evolution Hogs
+          '0xF257E02D8c5c9a405589F99859f8b28b0Ccc5474': ['cro', 'frtn', 'fftb'], // Hype Hogs
+          '0xfa8cdd2925a21c78716dFcD20122A57B8eBBECF9': ['cro', 'frtn', 'fftb'], // ChiVerse Online
+          '0xC5Fe01a64e63EDefC40d620A5716B90c52D444f9': ['cro', 'frtn', 'fftb'], // BOB Spaceships
+          '0x257f30fbD890840FA00c2e0f043cF5Ad9A631546': ['cro', 'frtn', 'fftb'], // Alpha Invitations
+          '0xaE843862c98968847273848D4947b312E93D660C': ['cro', 'frtn', 'fftb'], // BSD/LSD
+          '0x50a6aA29b9E99c9B8b81069a12EeFeDAC85919B7': ['cro', 'frtn', 'fftb'], // Cronos Apes
+          '0x688c9c95a7fF91cF1559cdaf098b3038Bc538BE1': ['cro', 'frtn', 'fftb'], // Cronos Baby Apes
+          '0x7D89dCC2f35403cFD9B07475826F9a14a340d06A': ['cro', 'frtn', 'fftb'], // Cronos Mutant Apes
+          '0x33e0b91c773D500FB4De87957740f5D200Be7371': ['cro', 'frtn', 'fftb'], // Cronos Mutant Apes - Serums
+          '0xeFc73c41EF829C0B87E3245aCF033b867cCD0F84': ['cro', 'frtn', 'fftb'], // D.G.Pals Genesis I
+          '0x86aabe05e885108a8797314e817488c26f0601a1': ['cro', 'frtn', 'fftb'], // D.G.P. Unlimited
+          '0xa072bB6F648a4271ba9CbaF1319Fc373eF907f29': ['cro', 'frtn', 'fftb'], // D.G.Pals Limited and Special Edition
+          '0x500cdf7a96a612BEb9e018035a3E89180a6732fE': ['cro', 'frtn', 'fftb'], // D.G.Pals Limited Edition
+          '0x70D3ee9b000f9210C1Ce1bD2A80cBAEBe209aeb7': ['cro', 'frtn', 'fftb'], // D.G.Pals Equipment
+          '0x8fb4483d92c045336974c4f8c96ad9b1fae8ac64': ['cro', 'frtn', 'fftb'], // D.G.Pals Special Edition
+          '0x0B3A229aBf88abd08C2fA1f2B6c1bB815bEaf5d5': ['cro', 'frtn', 'fftb'], // The Cronos Eagles
+          '0x561ffeca612917ccb8900993e9637a9e4a047e76': ['cro', 'frtn', 'mery'], // Mistery on CRO
+          '0x903B9a9d58742d0699fbd5b0AC7C9C4000B7ce43': ['cro', 'frtn', 'fftb'], // Monkey Of Anarkey
+          '0x8de18EB0bD2C6A6B66bf58e669aD010544937757': ['cro', 'frtn', 'fftb'], // Monkey Of Anarkey License NFT
+          '0xA348E80d3943E097d373b0aC712EFeB700191FE6': ['cro', 'frtn', 'fftb'], // MoA Motorcycles
+          '0xd4E29bdba77c948b04C3ACd67C1dAC17264d2983': ['cro', 'frtn', 'fftb'], // Degen Royale: Guns on Cronos
+          '0x0521217B36a1482E6798692687f836c68c7F3837': ['cro', 'frtn', 'fftb'], // Sp00kies
+          '0x7C144DBF04cf991d932bf6DC404C8B37c8807946': ['cro', 'frtn', 'fftb'], // Elf Citizens
         }
       }
     },
@@ -407,7 +441,8 @@ export const configData = {
         ryoshiDynasties: 'ryoshi-dynasties-meeple',
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners-2',
-        staking: 'staking'
+        staking: 'staking',
+        farms: 'farms-v2'
       }
     },
     rpc: {
@@ -438,7 +473,8 @@ export const configData = {
       seasonUnlocks: '0xF72A5D62B0a8Aac8eE2e4c57b35BD775637d52af',
       townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
       vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F',
-      ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C'
+      ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
+      farms: '0x62eAEe24A848bEB06B8112D5A37587b3CF21F44D'
     },
     tokens: {
       mad: {
@@ -681,7 +717,8 @@ export const configData = {
         ryoshiDynasties: 'ryoshi-dynasties',
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners',
-        staking: 'staking'
+        staking: 'staking',
+        farms: 'farms-v2'
       }
     },
     rpc: {
@@ -712,7 +749,8 @@ export const configData = {
       seasonUnlocks: '0x107ca22a421b24b0986150E51ce03b772b56440f',
       townHall: '0xEe68452B79653298Af5109Dae5cD4ABA3c4E1934',
       vaultNft: '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74',
-      ryoshiWithKnife: '0x149F2017b1C4a206d0F8684563C2F9aa519e3f64'
+      ryoshiWithKnife: '0x149F2017b1C4a206d0F8684563C2F9aa519e3f64',
+      farms: '0xef5E16A3849E76eF44012EEdfDF40fFeFffcdC68'
     },
     tokens: {
       mad: {

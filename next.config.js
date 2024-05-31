@@ -36,12 +36,15 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     config.externals.push(
         "pino-pretty",
         "lokijs",
         "encoding"
     );
+    if (!isServer) {
+      config.resolve.alias.fs = false;
+    }
     return config;
   },
   async redirects() {
@@ -235,6 +238,20 @@ const nextConfig = {
       },
       {
         source: '/swap',
+        destination:
+          'https://swap.ebisusbay.com/#/swap',
+        permanent: false,
+        basePath: false,
+      },
+      {
+        source: '/#/swap',
+        destination:
+          'https://swap.ebisusbay.com/#/swap',
+        permanent: false,
+        basePath: false,
+      },
+      {
+        source: '/dex/swap',
         destination:
           'https://swap.ebisusbay.com/#/swap',
         permanent: false,

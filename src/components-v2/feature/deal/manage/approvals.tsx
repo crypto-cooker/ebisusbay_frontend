@@ -20,6 +20,8 @@ const ApprovalsView = ({deal}: {deal: Deal}) => {
   const isToken = (type: number) => [ItemType.NATIVE, ItemType.ERC20].includes(type);
   const isNft = (type: number) => [ItemType.ERC721, ItemType.ERC1155].includes(type);
   const isDealOpen = deal.state === OrderState.ACTIVE;
+  const targetUser = ciEquals(user.address, deal.taker) ? 'taker' : 'maker';
+  const targetItems = deal[targetUser + '_items' as 'maker_items' | 'taker_items'];
 
   useEffect(() => {
     if (!!user.address && isDealOpen && ciEquals(user.address, deal.taker)) {
@@ -42,7 +44,7 @@ const ApprovalsView = ({deal}: {deal: Deal}) => {
             mt={4}
             gap={2}
           >
-            {deal.taker_items.filter((item: any) => isNft(item.item_type) && !approvals?.[item.token.toLowerCase()]).map((nft: any) => (
+            {targetItems.filter((item: any) => isNft(item.item_type) && !approvals?.[item.token.toLowerCase()]).map((nft: any) => (
               <GridItem key={nft.token}>
                 <NftApprovalButton
                   nft={{
@@ -53,7 +55,7 @@ const ApprovalsView = ({deal}: {deal: Deal}) => {
                 />
               </GridItem>
             ))}
-            {deal.taker_items.filter((item: any) => isToken(item.item_type) && !approvals?.[item.token.toLowerCase()]).map((token: any) => (
+            {targetItems.filter((item: any) => isToken(item.item_type) && !approvals?.[item.token.toLowerCase()]).map((token: any) => (
               <GridItem key={token.address}>
                 <Erc20ApprovalButton
                   token={{
