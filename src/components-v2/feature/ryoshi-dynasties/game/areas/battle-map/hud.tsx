@@ -246,7 +246,7 @@ const BattleDrawer = ({isOpen, onClose}: BattleDrawerProps) => {
 
   const getKobanBalance = async () => {
     let nfts = await NextApiService.getWallet(user!.address!, {
-      collection: config.contracts.resources,
+      collection: [config.contracts.resources],
     });
     let kobanBalance = 0;
     if (nfts.data.length > 0) {

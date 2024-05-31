@@ -55,6 +55,7 @@ import {useAppSelector} from "@market/state/redux/store/hooks";
 import ImageService from "@src/core/services/image";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {useUser} from "@src/components-v2/useUser";
+import useCurrencyBroker from "@market/hooks/use-currency-broker";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -131,6 +132,7 @@ interface ListingDrawerItemProps {
 export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, onAddCollection, disabled, isBundling = false }: ListingDrawerItemProps) => {
   const dispatch = useDispatch();
   const user = useUser();
+  const {getByCollection:  currenciesByCollection} = useCurrencyBroker();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
@@ -271,19 +273,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
 
         newExtras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId);
         newExtras.canList = item.nft.listable && !item.nft.isStaked && (!isBundling || !isKoban(item.nft.nftAddress, item.nft.nftId));
-
-        type CurrencyEntry = {
-          [key: string]: string[];
-        }
-        const availableCurrencySymbols: CurrencyEntry | undefined = Object.entries(config.listings.currencies.nft)
-          .find(([key]) => ciEquals(key, item.nft.nftAddress)) as CurrencyEntry | undefined;
-        newExtras.availableCurrencies = currencyOptions.filter(({symbol}: { symbol: string }) => {
-          if (availableCurrencySymbols) {
-            return availableCurrencySymbols[1].includes(symbol.toLowerCase());
-          } else {
-            return config.listings.currencies.global.includes(symbol.toLowerCase())
-          }
-        });
+        newExtras.availableCurrencies = currenciesByCollection(item.nft.nftAddress);
 
         setCurrency(newExtras.availableCurrencies[0].symbol);
         dispatch(setExtras(newExtras));

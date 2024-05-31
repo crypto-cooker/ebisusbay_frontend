@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {specialImageTransform} from "@market/helpers/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {Contract, ContractReceipt, ethers} from "ethers";
@@ -6,20 +6,20 @@ import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {
-  caseInsensitiveCompare,
+  caseInsensitiveCompare, ciEquals,
   isBundle,
   isEbVipCollection,
   isErc20Token,
   isGaslessListing,
   knownErc20Token,
   round
-} from "@market/helpers/utils";
+} from '@market/helpers/utils';
 import {getTheme} from "@src/global/theme/theme";
 import {
   Box,
   Button as ChakraButton,
   Flex,
-  HStack,
+  HStack, Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -29,7 +29,7 @@ import {
   ModalOverlay,
   SimpleGrid,
   Spacer,
-  Spinner,
+  Spinner, Stack,
   Text,
   VStack
 } from "@chakra-ui/react";
@@ -50,6 +50,20 @@ import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image
 import Link from "next/link";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
+import {Transak, TransakConfig} from "@transak/transak-sdk";
+import Pusher from "pusher-js";
+import {Listing} from "@src/core/models/listing";
+import {getServerSignature} from "@src/core/cms/endpoints/gaslessListing";
+import {shipABI} from "@src/global/contracts/types";
+import { is1155 } from '@market/helpers/chain';
+import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
+import {useSearchParams} from "next/navigation";
+
+let pusher = new Pusher("1d9ffac87de599c61283", { cluster: "ap2" });
+
+export const DEFAULT_SLIPPAGE = 0.5;
+
+export const ESTIMATED_GAS_FEE_OFFSET = 0.0001;
 
 const config = appConfig();
 
@@ -68,6 +82,14 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const [isComplete, setIsComplete] = useState(false);
   const [tx, setTx] = useState<ContractReceipt>();
   const [finalCostValues, setFinalCostValues] = useState<[{ value: string, currency: string }, { value: string }]>();
+
+  const [showTransakButton, setShowTransakButton] = useState(false);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const transak = searchParams?.get('transak');
+    setShowTransakButton(transak === 'true')
+  }, [searchParams]);
 
   const getInitialProps = async () => {
     const listingsResponse = await NextApiService.getListingsByIds(listingId);
@@ -142,9 +164,9 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       let amt = numericPrice;
 
       let fee =  numericPrice * (user.fee / 100);
-      const erc20UsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, listing.currency));
+      const erc20UsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, listing.currency));
       if (!!erc20UsdRate && erc20UsdRate.currency !== ethers.constants.AddressZero) {
-        const croUsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, ethers.constants.AddressZero) && rate.chain === 25);
+        const croUsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, ethers.constants.AddressZero) && rate.chain.toString() === config.chain.id.toString());
         fee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice) * (user.fee / 100);
       }
       amt += listing.currency === ethers.constants.AddressZero ? fee : 0;
@@ -170,7 +192,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   return isComplete ? (
     <PurchaseSuccessDialog onClose={onClose} isOpen={isOpen} listing={listing} tx={tx} />
   ) : (
-    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
+    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered trapFocus={false}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
@@ -261,7 +283,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       <Box className="card form_icon_button shadow active" alignItems="start !important" p={2}>
                         <DotIcon icon={faCheck} />
                         {knownErc20Token(listing.currency) ? (
-                          <CurrencyOption currency={knownErc20Token(listing.currency)} />
+                          <CurrencyOption currency={knownErc20Token(listing.currency)!} />
                         ) : (
                           <>
                             <Flex align="center">
@@ -336,15 +358,21 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                     <small>Please check your wallet for confirmation</small>
                   </div>
                 )}
-                <div className="d-flex">
-                  <Button type="legacy"
-                          onClick={handleExecutePurchase}
-                          isLoading={executingPurchase}
-                          disabled={executingPurchase}
-                          className="flex-fill">
+                <Stack direction='row'>
+                  {showTransakButton && (
+                    <TransakOption
+                      listing={listing}
+                    />
+                  )}
+                  <PrimaryButton
+                    onClick={handleExecutePurchase}
+                    isLoading={executingPurchase}
+                    disabled={executingPurchase}
+                    className="flex-fill"
+                  >
                     Confirm purchase
-                  </Button>
-                </div>
+                  </PrimaryButton>
+                </Stack>
               </div>
             </ModalFooter>
           </>
@@ -354,7 +382,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   );
 }
 
-const CurrencyOption = ({currency}: {currency: {address: string, symbol: string, name: string}}) => {
+const CurrencyOption = ({currency}: {currency: {address: string, symbol: string, name: string, decimals: number}}) => {
   const user = useUser();
   const contractService = useContractService();
 
@@ -384,3 +412,150 @@ const CurrencyOption = ({currency}: {currency: {address: string, symbol: string,
     </>
   )
 }
+
+const TransakOption = ({listing}: {listing: Listing}) => {
+  const user = useUser();
+  const [transak, setTransak] = useState<Transak | null>(null);
+  const [channel, setChannel] = useState<any>(null);
+
+  const handleOrderCreated = (orderData: any) => {
+    console.log('callback transak order created', orderData);
+    const eventData = orderData;
+    const orderId = eventData.status?.id;
+
+    if (!orderId) {
+      return;
+    }
+
+    subscribeToWebsockets(orderId);
+  };
+
+  const subscribeToWebsockets = (orderId: string) => {
+    const newChannel = pusher.subscribe(orderId);
+    setChannel(newChannel);
+
+    // Receive updates of all events
+    pusher.bind_global((eventId: any, orderData: any) => {
+      console.log(`websocket Event: ${eventId} with order data:`, orderData);
+    });
+
+    // Receive updates of specific events
+    newChannel.bind('ORDER_COMPLETED', (orderData: any) => {
+      console.log('ORDER COMPLETED websocket event', orderData);
+    });
+
+    newChannel.bind('ORDER_FAILED', async (orderData: any) => {
+      console.log('ORDER FAILED websocket event', orderData);
+    });
+  };
+
+  const handlePurchase = async () => {
+    // console.log('SERVER SIG REQUEST', rawCallData);
+    const { data: serverSig } = await getServerSignature(
+      user.address,
+      [listing.listingId],
+      '0xcb9bd5acd627e8fccf9eb8d4ba72aeb1cd8ff5ef'
+    );
+    const { signature, orderData, ...sigData } = serverSig;
+    console.log('SERVER SIG RESPONSE', serverSig);
+
+    let iface = new ethers.utils.Interface(shipABI);
+    console.log('generate rawCallData', 'fillOrders', [
+      orderData,
+      sigData,
+      signature
+    ]);
+    const rawCallData = iface.encodeFunctionData('fillOrders', [
+      orderData,
+      sigData,
+      signature
+    ]);
+console.log('rawCallData', rawCallData);
+    const is1155Type = await is1155(listing.nftAddress);
+
+    const newTransak = new Transak({
+      ...defaultTransakConfig,
+      walletAddress: user.address,
+      calldata: rawCallData,
+      nftData: [
+        {
+          imageURL: listing.nft.image,
+          nftName: listing.nft.name,
+          collectionAddress: listing.nft.nftAddress,
+          tokenID: [listing.nft.nftId],
+          price: [Number(listing.price)],
+          quantity: Number(listing.amount),
+          nftType: is1155Type ? 'ERC1155' : 'ERC721',
+        },
+      ]
+    });
+    console.log('CONFIG', JSON.stringify({
+      ...defaultTransakConfig,
+      walletAddress: user.address,
+      calldata: rawCallData,
+      nftData: [
+        {
+          imageURL: listing.nft.image,
+          nftName: listing.nft.name,
+          collectionAddress: listing.nft.nftAddress,
+          tokenID: [listing.nft.nftId],
+          price: [Number(listing.price)],
+          quantity: Number(listing.amount),
+          nftType: is1155Type ? 'ERC1155' : 'ERC721',
+        },
+      ]
+    }))
+    setTransak(newTransak);
+    newTransak.init();
+
+    Transak.on(Transak.EVENTS.TRANSAK_ORDER_CREATED, handleOrderCreated);
+    Transak.on(Transak.EVENTS.TRANSAK_WIDGET_CLOSE, cleanup);
+  };
+
+  const cleanup = () => {
+    if (transak) {
+      transak.close();
+      setTransak(null);
+    }
+
+    if (channel) {
+      channel.unbind_all();
+      pusher.unsubscribe(channel.name);
+      setChannel(null);
+    }
+
+    // Transak.off(Transak.EVENTS.TRANSAK_ORDER_CREATED, handleOrderCreated);
+    // Transak.off(Transak.EVENTS.TRANSAK_WIDGET_CLOSE, cleanup);
+  };
+
+  useEffect(() => {
+    return () => {
+      cleanup();
+    };
+  }, []);
+
+  return (
+    <SecondaryButton onClick={handlePurchase} w='200px'>
+      <HStack justify='center'>
+        <Box>Pay with</Box>
+        <Image src='https://assets.transak.com/images/website/transak-logo.svg' />
+      </HStack>
+    </SecondaryButton>
+  )
+}
+
+type TransakConfigEnv = typeof Transak['ENVIRONMENTS']['STAGING'] | typeof Transak['ENVIRONMENTS']['PRODUCTION'];
+
+const defaultTransakConfig: TransakConfig = {
+  apiKey: config.vendors.transak.apiKey,
+  environment: config.vendors.transak.env as TransakConfigEnv,
+  themeColor: '000000',
+  defaultPaymentMethod: 'credit_debit_card',
+  exchangeScreenTitle: 'Buy NFT',
+  disableWalletAddressForm: true,
+  estimatedGasLimit: 70_000,
+  network: 'cronos',
+  cryptoCurrencyCode: 'CRO',
+  isNFT: true,
+  contractId: config.vendors.transak.contractId,
+};

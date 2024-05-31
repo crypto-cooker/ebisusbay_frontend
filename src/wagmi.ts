@@ -20,10 +20,10 @@ const primaryNetwork = (isTestnet() ? cronosTestnet : cronos);
 
 const rpcUrls = {
   default: {
-    http: [appConfig.rpc.read, primaryNetwork.rpcUrls.default.http]
+    http: [appConfig.rpc.read].concat(primaryNetwork.rpcUrls.default.http)
   },
   public: {
-    http: [appConfig.rpc.read, primaryNetwork.rpcUrls.public.http]
+    http: [appConfig.rpc.read].concat(primaryNetwork.rpcUrls.public.http)
   }
 }
 
