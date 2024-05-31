@@ -8,7 +8,7 @@ import {
   SortingState,
   useReactTable
 } from "@tanstack/react-table";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {
   Avatar,
   Box,
@@ -40,7 +40,7 @@ import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 import {Card} from "@src/components-v2/foundation/card";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
-import {faBank, faCalculator, faExternalLinkAlt, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faCalculator, faExternalLinkAlt, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEnableFarm, useHarvestRewards} from "@dex/farms/hooks/farm-actions";
 import {DerivedFarm, FarmState} from "@dex/farms/constants/types";
@@ -52,7 +52,6 @@ import {ethers} from "ethers";
 import {round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
-import RoiCalculator from "@dex/farms/components/roi-calculator";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 
 const config =  appConfig();
@@ -121,6 +120,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
   const { refetchBalances } = useUserFarmsRefetch();
   const [harvestRewards, harvestingRewards] = useHarvestRewards();useColorModeValue('#FFFFFF', '#404040')
   const hoverBackground = useColorModeValue('gray.100', '#424242');
+  const text2Color = useColorModeValue('#1A202C', 'whiteAlpha.600');
 
   const [rowFocused, setRowFocused] = useState(false);
   const { isOpen: isOpenUnstake, onOpen: onOpenUnstake, onClose:  onCloseUnstake } = useDisclosure();
@@ -132,6 +132,24 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
     await new Promise(r => setTimeout(r, 2000));
     refetchBalances();
   }
+
+  const stakedDollarValue = useMemo(() => {
+    if (!row.original.data.pair || !userData?.stakedBalance) {
+      return 0;
+    }
+
+    return commify((Number(row.original.data.pair.derivedUSD) * Number(ethers.utils.formatEther(userData.stakedBalance))).toFixed(2));
+  }, [row, userData]);
+
+  const earnedDollarValue = useMemo(() => {
+    if (!row.original.data.frtnPerMonth || !row.original.data.frtnPerMonthInUSD || !userData?.earnings) {
+      return 0;
+    }
+
+    const usdRate = row.original.data.frtnPerMonthInUSD / parseFloat(ethers.utils.formatEther(row.original.data.frtnPerMonth));
+
+    return commify((usdRate * Number(ethers.utils.formatEther(userData.earnings))).toFixed(2));
+  }, [row, userData]);
 
   return (
     <React.Fragment>
@@ -248,11 +266,15 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                 <Card flex={1}>
                   <Box fontSize='sm' fontWeight='bold' mb={2}>EARNED REWARDS</Box>
                   <Wrap justify='space-between' align='center'>
-                    <Box
-                      fontSize='xl'
-                      fontWeight='bold'
-                    >
-                      FRTN {commify(round(ethers.utils.formatEther(userData?.earnings ?? 0), 2))}
+                    <Box>
+                      <Box fontSize='xl' fontWeight='bold'>
+                        FRTN {commify(round(ethers.utils.formatEther(userData?.earnings ?? 0), 2))}
+                      </Box>
+                      {!!earnedDollarValue && (
+                        <Box fontSize='xs' color={text2Color}>
+                          ~ ${earnedDollarValue}
+                        </Box>
+                      )}
                     </Box>
                     <PrimaryButton
                       isDisabled={harvestingRewards || userData?.earnings === 0n || !userData?.approved || !user.address}
@@ -267,11 +289,15 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                   <Card flex={1}>
                     <Box fontSize='sm' fontWeight='bold' mb={2}>{row.original.derived.name} STAKED</Box>
                     <Wrap justify='space-between' align='center'>
-                      <Box
-                        fontSize='xl'
-                        fontWeight='bold'
-                      >
-                        {round(ethers.utils.formatEther(userData.stakedBalance), 8)}
+                      <Box>
+                        <Box fontSize='xl' fontWeight='bold'>
+                          {round(ethers.utils.formatEther(userData.stakedBalance), 8)}
+                        </Box>
+                        {!!stakedDollarValue && (
+                          <Box fontSize='xs' color={text2Color}>
+                            ~ ${stakedDollarValue}
+                          </Box>
+                        )}
                       </Box>
                       {(row.original.derived.state !== FarmState.FINISHED || round(ethers.utils.formatEther(userData.stakedBalance), 8) > 0) && (
                         <HStack w='104px' justify='end'>
