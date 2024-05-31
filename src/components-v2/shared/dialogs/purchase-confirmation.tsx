@@ -19,7 +19,7 @@ import {
   Box,
   Button as ChakraButton,
   Flex,
-  HStack,
+  HStack, Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -29,7 +29,7 @@ import {
   ModalOverlay,
   SimpleGrid,
   Spacer,
-  Spinner,
+  Spinner, Stack,
   Text,
   VStack
 } from "@chakra-ui/react";
@@ -56,6 +56,8 @@ import {Listing} from "@src/core/models/listing";
 import {getServerSignature} from "@src/core/cms/endpoints/gaslessListing";
 import {shipABI} from "@src/global/contracts/types";
 import { is1155 } from '@market/helpers/chain';
+import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
+import {useSearchParams} from "next/navigation";
 
 let pusher = new Pusher("1d9ffac87de599c61283", { cluster: "ap2" });
 
@@ -80,6 +82,14 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const [isComplete, setIsComplete] = useState(false);
   const [tx, setTx] = useState<ContractReceipt>();
   const [finalCostValues, setFinalCostValues] = useState<[{ value: string, currency: string }, { value: string }]>();
+
+  const [showTransakButton, setShowTransakButton] = useState(false);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const transak = searchParams?.get('transak');
+    setShowTransakButton(transak === 'true')
+  }, [searchParams]);
 
   const getInitialProps = async () => {
     const listingsResponse = await NextApiService.getListingsByIds(listingId);
@@ -348,19 +358,22 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                     <small>Please check your wallet for confirmation</small>
                   </div>
                 )}
-                <div className="d-flex">
-                  <Button type="legacy"
-                          onClick={handleExecutePurchase}
-                          isLoading={executingPurchase}
-                          disabled={executingPurchase}
-                          className="flex-fill">
+                <Stack direction='row'>
+                  {showTransakButton && (
+                    <TransakOption
+                      listing={listing}
+                    />
+                  )}
+                  <PrimaryButton
+                    onClick={handleExecutePurchase}
+                    isLoading={executingPurchase}
+                    disabled={executingPurchase}
+                    className="flex-fill"
+                  >
                     Confirm purchase
-                  </Button>
-                </div>
+                  </PrimaryButton>
+                </Stack>
               </div>
-              <TransakOption
-                listing={listing}
-              />
             </ModalFooter>
           </>
         )}
@@ -522,9 +535,12 @@ console.log('rawCallData', rawCallData);
   }, []);
 
   return (
-    <Button onClick={handlePurchase}>
-      Transak
-    </Button>
+    <SecondaryButton onClick={handlePurchase} w='200px'>
+      <HStack justify='center'>
+        <Box>Pay with</Box>
+        <Image src='https://assets.transak.com/images/website/transak-logo.svg' />
+      </HStack>
+    </SecondaryButton>
   )
 }
 
