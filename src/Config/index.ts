@@ -2,17 +2,22 @@ import rpcConfig from '../modules/market/assets/networks/rpc_config.json';
 import rpcConfigDev from '../modules/market/assets/networks/rpc_config_dev.json';
 import rpcConfigTestnet from '../modules/market/assets/networks/rpc_config_testnet.json';
 import Constants from '../constants';
+import {Transak} from "@transak/transak-sdk";
 const { Features } = Constants;
 
-export const environments = {
-  production: 'production',
-  testnet: 'testnet',
-  development: 'development',
-  local: 'local'
+enum AppEnvironment {
+  PRODUCTION = 'production',
+  TESTNET = 'testnet',
+  DEVELOPMENT = 'development',
+  LOCAL = 'local'
+}
+
+type AppConfigMap = {
+  [K in AppEnvironment]: PartialAppConfig;
 };
 
-export const configData = {
-  [environments.production]: {
+const configData: AppConfigMap = {
+  [AppEnvironment.PRODUCTION]: {
     chain: {
       name: 'Cronos Mainnet Beta',
       id: '25',
@@ -198,10 +203,13 @@ export const configData = {
     },
     collections: rpcConfig.known_contracts,
     drops: rpcConfig.drops,
-    auctions: rpcConfig.auctions,
+    auctions: [],
     vendors: {
       transak: {
-        url: 'https://global.transak.com?apiKey=c5d03d27-59a6-49dd-9de3-5dad9471d105&isAutoFillUserData=true'
+        apiKey: 'c5d03d27-59a6-49dd-9de3-5dad9471d105',
+        contractId: '665802a1f597abb8f3d8bdc0',
+        url: 'https://global.transak.com?apiKey=c5d03d27-59a6-49dd-9de3-5dad9471d105&isAutoFillUserData=true',
+        env: 'PRODUCTION'
       }
     },
     tokenSale: {
@@ -414,7 +422,7 @@ export const configData = {
       ]
     }
   },
-  [environments.development]: {
+  [AppEnvironment.DEVELOPMENT]: {
     chain: {
       name: 'Cronos Mainnet Beta',
       id: '25',
@@ -540,10 +548,13 @@ export const configData = {
     },
     collections: rpcConfigDev.known_contracts,
     drops: rpcConfigDev.drops,
-    auctions: rpcConfigDev.auctions,
+    auctions: [],
     vendors: {
       transak: {
-        url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&isAutoFillUserData=true'
+        apiKey: 'c5d03d27-59a6-49dd-9de3-5dad9471d105',
+        contractId: '665802a1f597abb8f3d8bdc0',
+        url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&isAutoFillUserData=true',
+        env: 'PRODUCTION'
       }
     },
     tokenSale: {
@@ -688,7 +699,7 @@ export const configData = {
       currencies: ['cro', 'wcro', 'frtn']
     }
   },
-  [environments.testnet]: {
+  [AppEnvironment.TESTNET]: {
     chain: {
       name: 'Cronos Testnet',
       id: '338',
@@ -804,10 +815,13 @@ export const configData = {
     },
     collections: rpcConfigTestnet.known_contracts,
     drops: rpcConfigTestnet.drops,
-    auctions: rpcConfigTestnet.auctions,
+    auctions: [],
     vendors: {
       transak: {
-        url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&isAutoFillUserData=true'
+        apiKey: '6bdef2f9-cfab-4d58-bb79-82794642a67e',
+        contractId: '65f8577a2460fe929493ee7f',
+        url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&isAutoFillUserData=true',
+        env: 'STAGING'
       }
     },
     tokenSale: {
@@ -847,8 +861,8 @@ export const configData = {
       currencies: ['wcro', 'frtn', 'candy']
     }
   },
-  [environments.local]: {
-    inherits: environments.testnet,
+  [AppEnvironment.LOCAL]: {
+    inherits: AppEnvironment.TESTNET,
     urls: {
       app: 'http://localhost:3000/',
       // cms: 'https://cms.ebisusbay.com/api/',
@@ -858,6 +872,10 @@ export const configData = {
     }
   }
 };
+
+const inheritableConfigData = {
+
+}
 
 export const imageDomains = [
   'ipfs.io',
@@ -873,6 +891,9 @@ export const imageDomains = [
   'cdn.ebisusbay.biz',
 ];
 
+export function appConfig(): AppConfig;
+export function appConfig(key: string): any;
+
 /**
  * Retrieve a config value using "dot" notation.
  * Passing no key will return the entire config.
@@ -881,9 +902,9 @@ export const imageDomains = [
  * @param key
  * @returns {null|*}
  */
-export const appConfig = (key = '') => {
-  const env = environments[currentEnv()];
-  const fallbackEnv = environments.production;
+export function appConfig(key = ''): any {
+  const env = currentEnv();
+  const fallbackEnv = AppEnvironment.PRODUCTION;
   if (!env) return configData[fallbackEnv];
 
   let config = configData[env];
@@ -899,36 +920,47 @@ export const appConfig = (key = '') => {
 
   const keys = key.split('.');
 
-  return keys.reduce((o, i) => o[i], env ? config : configData[fallbackEnv]);
+  return keys.reduce((o, i) => (o as any)[i], config);
 }
 
-function deepMerge(target, source) {
+function deepMerge<T extends object, U extends object>(target: T, source: U): T & U {
   // Iterate over source properties
   for (const key in source) {
     if (source.hasOwnProperty(key)) {
       // If the value is an object, recurse.
       if (source[key] instanceof Object && !(source[key] instanceof Array)) {
-        if (!target[key]) target[key] = {};
-        deepMerge(target[key], source[key]);
+        if (!(key in target)) {
+          (target as any)[key] = {};
+        }
+        deepMerge((target as any)[key], source[key] as any);
       } else {
         // Otherwise, just set the value.
-        target[key] = source[key];
+        (target as any)[key] = source[key];
       }
     }
   }
-  return target;
+  return target as T & U;
 }
 
-export const currentEnv = () => {
-  return process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV ?? environments.production;
-}
+
+export const currentEnv = (): AppEnvironment => {
+  const env = process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV ?? AppEnvironment.PRODUCTION;
+
+  // Type assertion to ensure env is of type AppEnvironment
+  if (Object.values(AppEnvironment).includes(env as AppEnvironment)) {
+    return env as AppEnvironment;
+  }
+
+  // Fallback to PRODUCTION if the value is not a valid AppEnvironment
+  return AppEnvironment.PRODUCTION;
+};
 
 export const isLocalEnv = () => {
-  return currentEnv() === environments.local;
+  return currentEnv() === AppEnvironment.LOCAL;
 }
 
 export const isTestnet = () => {
-  return currentEnv() === environments.testnet || configData[currentEnv()]?.inherits === environments.testnet;
+  return currentEnv() === AppEnvironment.TESTNET || configData[currentEnv()]?.inherits === AppEnvironment.TESTNET;
 }
 
 export const featureFlags = {
@@ -939,3 +971,105 @@ export const featureFlags = {
   [Features.UNVERIFIED_WARNING]: false,            // Warning when buying from unverified collection
   [Features.REPORT_COLLECTION]: false,             // Report button on collection page
 }
+
+export interface AppConfig {
+  inherits?: AppEnvironment,
+  chain: {
+    name: string,
+    id: string,
+    symbol: string
+  },
+  urls: {
+    api: string,
+    app: string,
+    cms: string,
+    cmsSocket: string,
+    explorer: string,
+    cdn: {
+      bunnykit: string,
+      ipfs: string,
+      arweave: string,
+      proxy: string,
+      storage: string,
+      files: string,
+      apng: string,
+      app: string
+    },
+    subgraph: {
+      root: string,
+      ryoshiDynasties: string,
+      ryoshiPresale: string,
+      stakedOwners: string,
+      staking: string,
+      farms: string
+    }
+  },
+  rpc: {
+    read: string,
+    write: string
+  },
+  contracts: {
+    membership: string,
+    auction: string,
+    market: string,
+    stake: string,
+    offer: string,
+    madAuction: string,
+    slothtyRugsurance: string,
+    bundle: string,
+    gaslessListing: string,
+    gdc: string,
+    usdc: string,
+    purchaseFortune: string,
+    allianceCenter: string,
+    battleField: string,
+    resources: string,
+    bank: string,
+    barracks: string,
+    fortune: string,
+    rewards: string,
+    presaleVaults: string,
+    seasonUnlocks: string,
+    townHall: string,
+    vaultNft: string,
+    ryoshiWithKnife: string,
+    farms: string
+  },
+  tokens: {[key: string] : {
+    name: string,
+    symbol: string,
+    address: string,
+    decimals: number
+  }}
+  collections: any[],
+  drops: any[],
+  auctions: any[],
+  vendors: {
+    transak: {
+      apiKey: string,
+      contractId: string,
+      url: string,
+      env: 'PRODUCTION' | 'STAGING'
+    }
+  },
+  tokenSale: {
+    vipStart: number,
+    publicStart: number,
+    publicEnd: number,
+    memberCollections: string[]
+  },
+  listings: {
+    currencies: {
+      available: string[],
+      global: string[],
+      nft: {[key: string]: string[]}
+    }
+  },
+  deals: {
+    currencies: string[]
+  }
+}
+
+type PartialAppConfig = {
+  [P in keyof AppConfig]?: AppConfig[P] extends object ? Partial<AppConfig[P]> : AppConfig[P];
+};

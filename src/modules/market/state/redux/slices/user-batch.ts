@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {caseInsensitiveCompare, round} from "@market/helpers/utils";
 import WalletNft from "@src/core/models/wallet-nft";
+import {BrokerCurrency} from "@market/hooks/use-currency-broker";
 
 export interface UserBatchItem {
   nft: WalletNft;
@@ -18,7 +19,7 @@ export interface UserBatchExtras {
   canList?: boolean;
   royalty?: number;
   floorPrice?: number;
-  availableCurrencies?: { symbol: string, label: string }[];
+  availableCurrencies?: BrokerCurrency[];
 }
 
 interface UserBatchState {

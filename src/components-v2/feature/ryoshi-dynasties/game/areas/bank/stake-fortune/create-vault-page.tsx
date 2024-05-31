@@ -362,7 +362,7 @@ const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
     queryFn: async () => {
       const nfts = await ApiService.withoutKey().getWallet(user.address!, {
         wallet: user.address!,
-        collection: config.contracts.vaultNft
+        collection: [config.contracts.vaultNft]
       });
 
       return nfts.data.map((nft) => {
