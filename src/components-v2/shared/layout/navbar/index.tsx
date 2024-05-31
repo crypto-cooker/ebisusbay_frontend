@@ -74,7 +74,7 @@ const Header = function () {
   );
   const [shouldHideTitle] = useMediaQuery('(max-width: 1080px)');
   const [shouldHideFrtn] = useMediaQuery('(max-width: 410px)');
-  const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, config.chain.id);
+  const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, Number(config.chain.id));
   const [currentFrtnPrice, setCurrentFrtnPrice] = useState(0);
 
   const ref: RefObject<HTMLDivElement> = React.useRef(null)

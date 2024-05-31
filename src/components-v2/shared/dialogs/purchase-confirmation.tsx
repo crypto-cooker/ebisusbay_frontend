@@ -273,7 +273,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       <Box className="card form_icon_button shadow active" alignItems="start !important" p={2}>
                         <DotIcon icon={faCheck} />
                         {knownErc20Token(listing.currency) ? (
-                          <CurrencyOption currency={knownErc20Token(listing.currency)} />
+                          <CurrencyOption currency={knownErc20Token(listing.currency)!} />
                         ) : (
                           <>
                             <Flex align="center">
@@ -369,7 +369,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   );
 }
 
-const CurrencyOption = ({currency}: {currency: {address: string, symbol: string, name: string}}) => {
+const CurrencyOption = ({currency}: {currency: {address: string, symbol: string, name: string, decimals: number}}) => {
   const user = useUser();
   const contractService = useContractService();
 
@@ -531,8 +531,8 @@ console.log('rawCallData', rawCallData);
 type TransakConfigEnv = typeof Transak['ENVIRONMENTS']['STAGING'] | typeof Transak['ENVIRONMENTS']['PRODUCTION'];
 
 const defaultTransakConfig: TransakConfig = {
-  apiKey: '6bdef2f9-cfab-4d58-bb79-82794642a67e',
-  environment: process.env.NEXT_PUBLIC_TRANSAK_ENV as TransakConfigEnv,
+  apiKey: config.vendors.transak.apiKey,
+  environment: config.vendors.transak.env as TransakConfigEnv,
   themeColor: '000000',
   defaultPaymentMethod: 'credit_debit_card',
   exchangeScreenTitle: 'Buy NFT',
@@ -541,5 +541,5 @@ const defaultTransakConfig: TransakConfig = {
   network: 'cronos',
   cryptoCurrencyCode: 'CRO',
   isNFT: true,
-  contractId: '65f8577a2460fe929493ee7f',
+  contractId: config.vendors.transak.contractId,
 };

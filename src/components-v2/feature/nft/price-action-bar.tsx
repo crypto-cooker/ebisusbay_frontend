@@ -37,7 +37,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
   const [isPurchaseDialogOpen, setIsPurchaseDialogOpen] = useState(false);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
-  const { tokenToUsdValue, tokenToCroValue } = useTokenExchangeRate(listing?.currency, config.chain.id);
+  const { tokenToUsdValue, tokenToCroValue } = useTokenExchangeRate(listing?.currency, Number(config.chain.id));
 
   const handlePurchaseSelected = async () => {
     await runAuthedFunction(() => setIsPurchaseDialogOpen(true));
