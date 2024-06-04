@@ -289,6 +289,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                         alignItems="start !important"
                         p={2}
                         onClick={() => setPaymentType(PaymentType.CRYPTO)}
+                        style={{marginBottom:0}}
                       >
                         {paymentType === PaymentType.CRYPTO && (
                           <DotIcon icon={faCheck} />
@@ -319,7 +320,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                           )}
                           <VStack w='full'>
                             <Icon as={FontAwesomeIcon} icon={faCreditCardAlt} boxSize={6}/>
-                            <Box fontWeight='bold' fontSize='sm'>CREDIT CARD</Box>
+                            <Box fontWeight='bold' fontSize='xs' textAlign='center'>CREDIT / DEBIT CARD</Box>
                           </VStack>
                         </Box>
                       )}
