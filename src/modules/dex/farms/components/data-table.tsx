@@ -175,6 +175,8 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                 isNumeric={meta?.isNumeric}
                 borderBottom='inherit'
                 colSpan={isSmallScreen && isFirstColumn ? row.getVisibleCells().length + 1 : 1}
+                pb={isSmallScreen && isFirstColumn ? 0 : 4}
+                ps={4}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </Td>
@@ -288,7 +290,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                 {userData?.approved ? (
                   <Card flex={1}>
                     <Box fontSize='sm' fontWeight='bold' mb={2}>{row.original.derived.name} STAKED</Box>
-                    <Wrap justify='space-between' align='center'>
+                    <Wrap justify='space-between' align='center' overflow='hidden'>
                       <Box>
                         <Box fontSize='xl' fontWeight='bold'>
                           {round(ethers.utils.formatEther(userData.stakedBalance), 8)}
