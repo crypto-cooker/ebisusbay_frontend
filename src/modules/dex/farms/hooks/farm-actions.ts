@@ -9,7 +9,6 @@ import LpAbi from "@src/global/contracts/LP.json";
 import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
 
 const config = appConfig()
-const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 export function useEnableFarm() {
   const user = useUser();

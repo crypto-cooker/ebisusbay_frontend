@@ -19,7 +19,7 @@ import {
   Box,
   Button as ChakraButton,
   Flex,
-  HStack, Image,
+  HStack, Icon, Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -39,7 +39,7 @@ import {useQuery} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
 import useBuyGaslessListings from "@market/hooks/useBuyGaslessListings";
 import DotIcon from "@src/Components/components/DotIcon";
-import {faCheck} from "@fortawesome/free-solid-svg-icons";
+import {faCheck, faCreditCardAlt} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 import PurchaseSuccessDialog from './purchase-success';
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
@@ -58,14 +58,17 @@ import {shipABI} from "@src/global/contracts/types";
 import { is1155 } from '@market/helpers/chain';
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {useSearchParams} from "next/navigation";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCreditCard} from "@fortawesome/free-regular-svg-icons";
 
 let pusher = new Pusher("1d9ffac87de599c61283", { cluster: "ap2" });
 
-export const DEFAULT_SLIPPAGE = 0.5;
-
-export const ESTIMATED_GAS_FEE_OFFSET = 0.0001;
-
 const config = appConfig();
+
+enum PaymentType {
+  CRYPTO = 'CRYPTO',
+  CARD = 'CARD'
+}
 
 type PurchaseConfirmationDialogProps = {
   onClose: () => void;
@@ -82,6 +85,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const [isComplete, setIsComplete] = useState(false);
   const [tx, setTx] = useState<ContractReceipt>();
   const [finalCostValues, setFinalCostValues] = useState<[{ value: string, currency: string }, { value: string }]>();
+  const [paymentType, setPaymentType] = useState(PaymentType.CRYPTO);
 
   const [showTransakButton, setShowTransakButton] = useState(false);
   const searchParams = useSearchParams();
@@ -279,9 +283,16 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       )}
                     </div>
                     <Text fontSize={18} fontWeight="bold">Pay with</Text>
-                    <SimpleGrid columns={{base: 1, sm: 2}}>
-                      <Box className="card form_icon_button shadow active" alignItems="start !important" p={2}>
-                        <DotIcon icon={faCheck} />
+                    <SimpleGrid columns={{base: 1, sm: 2}}  spacing={2}>
+                      <Box
+                        className={`card form_icon_button shadow ${paymentType === PaymentType.CRYPTO ? 'active' : ''}`}
+                        alignItems="start !important"
+                        p={2}
+                        onClick={() => setPaymentType(PaymentType.CRYPTO)}
+                      >
+                        {paymentType === PaymentType.CRYPTO && (
+                          <DotIcon icon={faCheck} />
+                        )}
                         {knownErc20Token(listing.currency) ? (
                           <CurrencyOption currency={knownErc20Token(listing.currency)!} />
                         ) : (
@@ -296,6 +307,22 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                           </>
                         )}
                       </Box>
+                      {showTransakButton && (
+                        <Box
+                          className={`card form_icon_button shadow ${paymentType === PaymentType.CARD ? 'active' : ''}`}
+                          alignItems="start !important"
+                          p={2}
+                          onClick={() => setPaymentType(PaymentType.CARD)}
+                        >
+                          {paymentType === PaymentType.CARD && (
+                            <DotIcon icon={faCheck} />
+                          )}
+                          <VStack w='full'>
+                            <Icon as={FontAwesomeIcon} icon={faCreditCardAlt} boxSize={6}/>
+                            <Box fontWeight='bold' fontSize='sm'>CREDIT CARD</Box>
+                          </VStack>
+                        </Box>
+                      )}
                     </SimpleGrid>
                     <Spacer />
 
@@ -359,19 +386,20 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                   </div>
                 )}
                 <Stack direction='row'>
-                  {showTransakButton && (
+                  {showTransakButton && paymentType === PaymentType.CARD ? (
                     <TransakOption
                       listing={listing}
                     />
+                  ) : (
+                    <PrimaryButton
+                      onClick={handleExecutePurchase}
+                      isLoading={executingPurchase}
+                      disabled={executingPurchase}
+                      className="flex-fill"
+                    >
+                      Confirm purchase
+                    </PrimaryButton>
                   )}
-                  <PrimaryButton
-                    onClick={handleExecutePurchase}
-                    isLoading={executingPurchase}
-                    disabled={executingPurchase}
-                    className="flex-fill"
-                  >
-                    Confirm purchase
-                  </PrimaryButton>
                 </Stack>
               </div>
             </ModalFooter>
@@ -454,7 +482,7 @@ const TransakOption = ({listing}: {listing: Listing}) => {
     const { data: serverSig } = await getServerSignature(
       user.address,
       [listing.listingId],
-      '0xcb9bd5acd627e8fccf9eb8d4ba72aeb1cd8ff5ef'
+      config.vendors.transak.filler
     );
     const { signature, orderData, ...sigData } = serverSig;
     console.log('SERVER SIG RESPONSE', serverSig);
@@ -535,12 +563,12 @@ console.log('rawCallData', rawCallData);
   }, []);
 
   return (
-    <SecondaryButton onClick={handlePurchase} w='200px'>
-      <HStack justify='center'>
-        <Box>Pay with</Box>
-        <Image src='https://assets.transak.com/images/website/transak-logo.svg' />
-      </HStack>
-    </SecondaryButton>
+    <PrimaryButton
+      onClick={handlePurchase}
+      className="flex-fill"
+    >
+      Confirm purchase
+    </PrimaryButton>
   )
 }
 

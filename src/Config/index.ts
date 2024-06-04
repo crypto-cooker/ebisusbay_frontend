@@ -209,7 +209,8 @@ const configData: AppConfigMap = {
         apiKey: 'c5d03d27-59a6-49dd-9de3-5dad9471d105',
         contractId: '665802a1f597abb8f3d8bdc0',
         url: 'https://global.transak.com?apiKey=c5d03d27-59a6-49dd-9de3-5dad9471d105&isAutoFillUserData=true',
-        env: 'PRODUCTION'
+        env: 'PRODUCTION',
+        filler: '0xAb88cd272863b197B48762EA283f24a13f6586Dd'
       }
     },
     tokenSale: {
@@ -554,7 +555,8 @@ const configData: AppConfigMap = {
         apiKey: 'c5d03d27-59a6-49dd-9de3-5dad9471d105',
         contractId: '665802a1f597abb8f3d8bdc0',
         url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&isAutoFillUserData=true',
-        env: 'PRODUCTION'
+        env: 'PRODUCTION',
+        filler: '0xAb88cd272863b197B48762EA283f24a13f6586Dd'
       }
     },
     tokenSale: {
@@ -821,7 +823,8 @@ const configData: AppConfigMap = {
         apiKey: '6bdef2f9-cfab-4d58-bb79-82794642a67e',
         contractId: '65f8577a2460fe929493ee7f',
         url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&isAutoFillUserData=true',
-        env: 'STAGING'
+        env: 'STAGING',
+        filler: '0xcb9bd5acd627e8fccf9eb8d4ba72aeb1cd8ff5ef'
       }
     },
     tokenSale: {
@@ -1049,7 +1052,8 @@ export interface AppConfig {
       apiKey: string,
       contractId: string,
       url: string,
-      env: 'PRODUCTION' | 'STAGING'
+      env: 'PRODUCTION' | 'STAGING',
+      filler: string
     }
   },
   tokenSale: {
