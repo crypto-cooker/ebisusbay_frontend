@@ -12810,7 +12810,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": true
+        "kyc": false
       }
     },
     {
@@ -16981,7 +16981,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": true
+        "kyc": false
       }
     },
     {
@@ -19501,7 +19501,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": true
+        "kyc": false
       }
     },
     {
@@ -20739,7 +20739,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": true
+        "kyc": false
       }
     },
     {
