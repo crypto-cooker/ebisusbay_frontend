@@ -482,7 +482,7 @@ const TransakOption = ({listing}: {listing: Listing}) => {
     const { data: serverSig } = await getServerSignature(
       user.address,
       [listing.listingId],
-      '0xcb9bd5acd627e8fccf9eb8d4ba72aeb1cd8ff5ef'
+      config.vendors.transak.filler
     );
     const { signature, orderData, ...sigData } = serverSig;
     console.log('SERVER SIG RESPONSE', serverSig);
