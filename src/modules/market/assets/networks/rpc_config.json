@@ -26922,6 +26922,84 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "$CROFAM VIP-Pass",
+      "slug": "crofam-vip-pass",
+      "multiToken": false,
+      "address": "0x6350ceDdDC6F28B199BE6983F2505Dd7Ffb72342",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CROFam is more than just a token; it is a beacon of unity, symbolizing the strength and potential of collective effort. We believe in growing together, reaching new heights not as individuals, but as a united family bound by shared values and goals. The NFT will serve as an access pass to exclusive perks for holders.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crofam-vip-pass/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/crofam-vip-pass/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/crofam-vip-pass/card.webp",
+        "website": "https://crofam-token.com/",
+        "twitter": "https://twitter.com/HQCroFam",
+        "discord": "https://discord.gg/gNb5t9CBjV",
+        "categories": [
+          "meme",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Robin NFT",
+      "slug": "robin-nft",
+      "multiToken": false,
+      "address": "0x1dBA58B1bdcaA3B0488065cCEFa057c52a963280",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection of 2,500 pixelated Robin NFTs. Minting an NFT unlocks exclusive membership benefits, making it a key asset in the $ROBIN space for receiving airdrops, staking rewards, and more!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/card.webp",
+        "website": "https://robincronos.com/",
+        "twitter": "https://twitter.com/RobinCronos",
+        "discord": "https://discord.gg/HSDJPQTeDX",
+        "categories": [
+          "meme",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croc_with_knife",
+      "slug": "croc-with-knife",
+      "multiToken": false,
+      "address": "0x534ef04cc5ce179cfcd27641605917e1779d4d57",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "We are proud to introduce our first NFT collection! \uD83C\uDF89 It beautifully captures our journey so far, showcasing the experiences we've encountered along the way. We’re confident you'll find it intriguing and inspiring. \uD83D\uDE80✨ https://x.com/croc_with_knife",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/croc-with-knife/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/croc-with-knife/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/croc-with-knife/card.webp",
+        "website": "https://crocwithknife.com/",
+        "twitter": "https://twitter.com/croc_with_knife",
+        "discord": "https://discord.gg/ywtA4yRR2y",
+        "categories": [
+          "meme",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
