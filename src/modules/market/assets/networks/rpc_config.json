@@ -27051,6 +27051,30 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "CronosEyez Gen 3",
+      "slug": "cronoseyez-gen3",
+      "multiToken": false,
+      "address": "0xb754ef2931df1cfd1be92c011dcc163509203e3a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Third generation of CronosEyezNFT",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronoseyez-gen3/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronoseyez-gen3/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cronoseyez-gen3/card.webp",
+        "twitter": "https://twitter.com/CronosEyezNFT",
+        "discord": "https://discord.gg/jFX4RNrFGu",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
