@@ -27000,6 +27000,57 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Fomo Punks",
+      "slug": "fomo-punks",
+      "multiToken": false,
+      "address": "0xC7403a63844A3219155d98eF191386698c90054B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Explore a set of 777 unique NFTs and become part of the exclusive Fomo Punks community.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fomo-punks/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/fomo-punks/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/fomo-punks/card.webp",
+        "website": "https://fomo-punks.gitbook.io/",
+        "twitter": "https://twitter.com/fomop_cro",
+        "discord": "https://discord.gg/CHFaaeTQtN",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "KitCoin OG",
+      "slug": "kitcoin-og",
+      "multiToken": false,
+      "address": "0x36E67224A879e765Bf37532AeeA09682dB99c008",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "KitCoin is MEME token with MORE on the Cronos Chain. KitCoin will be also providing NFTs, Staking, Lottery plus much more! $KITTY is a token with No Buy Tax or Sell Tax, LP Burnt, Ownership Renounced & 20% of total supply burnt with more to burn! Let’s Meow!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/kitcoin-og/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/kitcoin-og/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/kitcoin-og/card.webp",
+        "website": "https://www.kitcoin.io/",
+        "twitter": "https://twitter.com/KitCoinX",
+        "discord": "https://discord.gg/kitcoin",
+        "categories": [
+          "meme",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
