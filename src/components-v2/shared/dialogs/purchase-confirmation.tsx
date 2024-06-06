@@ -60,8 +60,8 @@ import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/butt
 import {useSearchParams} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCreditCard} from "@fortawesome/free-regular-svg-icons";
+import useTransak from "@market/hooks/use-transak";
 
-let pusher = new Pusher("1d9ffac87de599c61283", { cluster: "ap2" });
 
 const config = appConfig();
 
@@ -443,148 +443,20 @@ const CurrencyOption = ({currency}: {currency: {address: string, symbol: string,
 }
 
 const TransakOption = ({listing}: {listing: Listing}) => {
-  const user = useUser();
-  const [transak, setTransak] = useState<Transak | null>(null);
-  const [channel, setChannel] = useState<any>(null);
-
-  const handleOrderCreated = (orderData: any) => {
-    console.log('callback transak order created', orderData);
-    const eventData = orderData;
-    const orderId = eventData.status?.id;
-
-    if (!orderId) {
-      return;
-    }
-
-    subscribeToWebsockets(orderId);
-  };
-
-  const subscribeToWebsockets = (orderId: string) => {
-    const newChannel = pusher.subscribe(orderId);
-    setChannel(newChannel);
-
-    // Receive updates of all events
-    pusher.bind_global((eventId: any, orderData: any) => {
-      console.log(`websocket Event: ${eventId} with order data:`, orderData);
-    });
-
-    // Receive updates of specific events
-    newChannel.bind('ORDER_COMPLETED', (orderData: any) => {
-      console.log('ORDER COMPLETED websocket event', orderData);
-    });
-
-    newChannel.bind('ORDER_FAILED', async (orderData: any) => {
-      console.log('ORDER FAILED websocket event', orderData);
-    });
-  };
+  const [purchaseTransak, isLoading] = useTransak();
 
   const handlePurchase = async () => {
-    // console.log('SERVER SIG REQUEST', rawCallData);
-    const { data: serverSig } = await getServerSignature(
-      user.address,
-      [listing.listingId],
-      config.vendors.transak.filler
-    );
-    const { signature, orderData, ...sigData } = serverSig;
-    console.log('SERVER SIG RESPONSE', serverSig);
-
-    let iface = new ethers.utils.Interface(shipABI);
-    console.log('generate rawCallData', 'fillOrders', [
-      orderData,
-      sigData,
-      signature
-    ]);
-    const rawCallData = iface.encodeFunctionData('fillOrders', [
-      orderData,
-      sigData,
-      signature
-    ]);
-console.log('rawCallData', rawCallData);
-    const is1155Type = await is1155(listing.nftAddress);
-
-    const newTransak = new Transak({
-      ...defaultTransakConfig,
-      walletAddress: user.address,
-      calldata: rawCallData,
-      nftData: [
-        {
-          imageURL: listing.nft.image,
-          nftName: listing.nft.name,
-          collectionAddress: listing.nft.nftAddress,
-          tokenID: [listing.nft.nftId],
-          price: [Number(listing.price)],
-          quantity: Number(listing.amount),
-          nftType: is1155Type ? 'ERC1155' : 'ERC721',
-        },
-      ]
-    });
-    console.log('CONFIG', JSON.stringify({
-      ...defaultTransakConfig,
-      walletAddress: user.address,
-      calldata: rawCallData,
-      nftData: [
-        {
-          imageURL: listing.nft.image,
-          nftName: listing.nft.name,
-          collectionAddress: listing.nft.nftAddress,
-          tokenID: [listing.nft.nftId],
-          price: [Number(listing.price)],
-          quantity: Number(listing.amount),
-          nftType: is1155Type ? 'ERC1155' : 'ERC721',
-        },
-      ]
-    }))
-    setTransak(newTransak);
-    newTransak.init();
-
-    Transak.on(Transak.EVENTS.TRANSAK_ORDER_CREATED, handleOrderCreated);
-    Transak.on(Transak.EVENTS.TRANSAK_WIDGET_CLOSE, cleanup);
+    await purchaseTransak([listing]);
   };
-
-  const cleanup = () => {
-    if (transak) {
-      transak.close();
-      setTransak(null);
-    }
-
-    if (channel) {
-      channel.unbind_all();
-      pusher.unsubscribe(channel.name);
-      setChannel(null);
-    }
-
-    // Transak.off(Transak.EVENTS.TRANSAK_ORDER_CREATED, handleOrderCreated);
-    // Transak.off(Transak.EVENTS.TRANSAK_WIDGET_CLOSE, cleanup);
-  };
-
-  useEffect(() => {
-    return () => {
-      cleanup();
-    };
-  }, []);
 
   return (
     <PrimaryButton
       onClick={handlePurchase}
       className="flex-fill"
+      isLoading={isLoading}
+      isDisabled={isLoading}
     >
       Confirm purchase
     </PrimaryButton>
   )
 }
-
-type TransakConfigEnv = typeof Transak['ENVIRONMENTS']['STAGING'] | typeof Transak['ENVIRONMENTS']['PRODUCTION'];
-
-const defaultTransakConfig: TransakConfig = {
-  apiKey: config.vendors.transak.apiKey,
-  environment: config.vendors.transak.env as TransakConfigEnv,
-  themeColor: '000000',
-  defaultPaymentMethod: 'credit_debit_card',
-  exchangeScreenTitle: 'Buy NFT',
-  disableWalletAddressForm: true,
-  estimatedGasLimit: 70_000,
-  network: 'cronos',
-  cryptoCurrencyCode: 'CRO',
-  isNFT: true,
-  contractId: config.vendors.transak.contractId,
-};
