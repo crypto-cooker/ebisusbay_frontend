@@ -20,27 +20,27 @@ export default function ImoPage() {
           />
           <Heading size='md' ps={2}>A-maize-ing Laughs, Corn-tinuously Popping!</Heading>
           <Wrap>
-            <Link href='https://cornhub.finance' isExternal>
+            <Link href='https://cornhub.video/' isExternal>
               <IconButton
-                aria-label={'twitter'}
+                aria-label='Website'
                 icon={<Icon as={FontAwesomeIcon} icon={faGlobe} />}
               />
             </Link>
-            <Link href='https://cornhub.finance' isExternal>
+            <Link href='https://x.com/Cornhubcro/' isExternal>
               <IconButton
-                aria-label={'twitter'}
+                aria-label='X'
                 icon={<Icon as={FontAwesomeIcon} icon={faXTwitter} />}
               />
             </Link>
-            <Link href='https://cornhub.finance' isExternal>
+            <Link href='https://discord.gg/VQEmnUzDKV' isExternal>
               <IconButton
-                aria-label={'twitter'}
+                aria-label='Discord'
                 icon={<Icon as={FontAwesomeIcon} icon={faDiscord} />}
               />
             </Link>
-            <Link href='https://cornhub.finance' isExternal>
+            <Link href='https://t.me/+tWDMIwqW0zthNTYx' isExternal>
               <IconButton
-                aria-label={'twitter'}
+                aria-label='Telegram'
                 icon={<Icon as={FontAwesomeIcon} icon={faTelegram} />}
               />
             </Link>
