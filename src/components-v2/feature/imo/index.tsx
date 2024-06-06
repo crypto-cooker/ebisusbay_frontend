@@ -139,7 +139,7 @@ export default function ImoPage() {
                 <Box>Offering starts</Box>
                 <Box textAlign='end' fontWeight='bold'>Friday, June 7, 2024 12:15:00 PM UTC</Box>
                 <Box>Offering ends</Box>
-                <Box textAlign='end' fontWeight='bold'Monday, June 10, 2024 1:00:00 PM UTC</Box>
+                <Box textAlign='end' fontWeight='bold'>Monday, June 10, 2024 1:00:00 PM UTC</Box>
               </SimpleGrid>
               <VStack textAlign='center' fontSize='xs' mt={6}>
                 <Box>
