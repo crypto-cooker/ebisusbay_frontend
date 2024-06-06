@@ -50,7 +50,7 @@ export default function ImoPage() {
         <Box position='relative'>
           <ReactPlayer
             controls
-            url='https://youtu.be/B2qlE5zwjdo?si=3RlAux3L4Hj4u9rR'
+            url='https://www.youtube.com/watch?v=N3o1ILB6Br4'
             config={{
               file: {
                 attributes: {
