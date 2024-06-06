@@ -3,7 +3,7 @@ import {ApiService} from "@src/core/services/api-service";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import PageHeader from "@src/components-v2/shared/layout/page-header";
 import React from "react";
-import {DefaultContainer} from "@src/components-v2/shared/default-container";
+import {DefaultContainer} from "@src/components-v2/shared/containers";
 import ManageDealView from "@src/components-v2/feature/deal/manage";
 import {Deal} from "@src/core/services/api-service/mapi/types";
 import ImageService from "@src/core/services/image";

@@ -21,7 +21,7 @@ import {Step2ChooseItems} from "@src/components-v2/feature/deal/create/step-2-ma
 import {useUser} from "@src/components-v2/useUser";
 import {ciEquals} from "@market/helpers/utils";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {DefaultContainer} from "@src/components-v2/shared/default-container";
+import {DefaultContainer} from "@src/components-v2/shared/containers";
 import {Step3ReviewDetails} from "@src/components-v2/feature/deal/create/step-3-review-details";
 import useCreateDeal from "@src/components-v2/feature/deal/use-create-deal";
 import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
