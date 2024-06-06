@@ -7,3 +7,11 @@ export const DefaultContainer = ({children, ...props}: ContainerProps) => {
     </Container>
   )
 }
+
+export const StandardContainer = ({children, ...props}: ContainerProps) => {
+  return (
+    <Container maxW='container.lg' {...props}>
+      {children}
+    </Container>
+  )
+}

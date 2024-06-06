@@ -17,7 +17,7 @@ import {
   useBreakpointValue
 } from "@chakra-ui/react";
 import useDebounce from "@src/core/hooks/useDebounce";
-import {DefaultContainer} from "@src/components-v2/shared/default-container";
+import {DefaultContainer} from "@src/components-v2/shared/containers";
 
 
 const Collections = () => {
