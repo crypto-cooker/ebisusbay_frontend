@@ -53,12 +53,12 @@ export default function ImoPage() {
   const renderer = ({ days, hours, minutes, seconds, completed }: { days:number, hours:number, minutes:number, seconds: number, completed:boolean}) => {
     if (completed) {
       return (
-        <Box>Starting...</Box>
+        <Box>Complete...</Box>
       );
     } else {
       let timeStr = `${zeroPad(hours)}:${zeroPad(minutes)}:${zeroPad(seconds)}`;
       if (days > 0) timeStr = `${zeroPad(days)}:${timeStr}`;
-      return <Box fontSize='lg' fontWeight='bold'>{timeStr}</Box>;
+      return <Box fontSize='xs' textAlign='center'>Ends in: {timeStr}</Box>;
     }
   };
 
@@ -199,22 +199,52 @@ export default function ImoPage() {
               </Box>
 
               {status === ImoStatus.LIVE ? (
-                <Flex
-                  justify='space-between'
+                <Box
                   p={4}
                   mx={-4}
                   mt={2}
                   bg={getTheme(user.theme).colors.bgColor5}
-                  direction={{base: 'column', md: 'row'}}
                 >
-                  <Box>
-                    <Box fontSize='xs'>SEND FUNDS TO</Box>
-                    <Box fontWeight='bold'>{contractAddress}</Box>
+                  <Flex
+                    justify='space-between'
+                    direction={{base: 'column', md: 'row'}}
+                  >
+                    <Box>
+                      <Box fontSize='xs'>SEND FUNDS TO</Box>
+                      <Box fontWeight='bold'>{contractAddress}</Box>
+                    </Box>
+                    <PrimaryButton onClick={onCopy} alignSelf='end'>
+                      {hasCopied ? 'Copied!' : 'Copy'}
+                    </PrimaryButton>
+                  </Flex>
+                  <Box mt={2}>
+                    <Countdown
+                      date={endDate}
+                      renderer={renderer}
+                      onComplete={handleTimerComplete}
+                    />
                   </Box>
-                  <PrimaryButton onClick={onCopy} alignSelf='end'>
-                    {hasCopied ? 'Copied!' : 'Copy'}
-                  </PrimaryButton>
-                </Flex>
+                </Box>
+              ) : status === ImoStatus.ENDED ? (
+                <Box
+                  p={4}
+                  mx={-4}
+                  mt={2}
+                  bg={getTheme(user.theme).colors.bgColor5}
+                >
+                  <Flex
+                    justify='space-between'
+                    direction={{base: 'column', md: 'row'}}
+                    align='center'
+                  >
+                    <Box>
+                      <Box fontSize='xs'>PRESALE ADDRESS</Box>
+                      <Box fontWeight='bold'>{contractAddress}</Box>
+                      <Box fontSize='xs'>DO NOT SEND ANYMORE FUNDS TO THE ABOVE ADDRESS</Box>
+                    </Box>
+                    <Box textAlign='center' fontWeight='bold'>ENDED</Box>
+                  </Flex>
+                </Box>
               ) : (
                 <Box
                   p={4}
