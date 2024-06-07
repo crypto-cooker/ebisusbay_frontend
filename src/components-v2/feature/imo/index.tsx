@@ -1,14 +1,79 @@
-import {Box, Flex, Heading, Icon, IconButton, Image, Link, SimpleGrid, Spacer, VStack, Wrap} from "@chakra-ui/react";
-import React from "react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Icon,
+  IconButton,
+  Image,
+  Link,
+  SimpleGrid,
+  Spacer,
+  useClipboard,
+  VStack,
+  Wrap
+} from "@chakra-ui/react";
+import React, {useEffect, useState} from "react";
 import dynamic from "next/dynamic";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faGlobe} from "@fortawesome/free-solid-svg-icons";
 import {faDiscord, faTelegram, faXTwitter} from "@fortawesome/free-brands-svg-icons";
 import {StandardContainer} from "@src/components-v2/shared/containers";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {useUser} from "@src/components-v2/useUser";
+import {getTheme} from "@src/global/theme/theme";
+import Countdown, {zeroPad} from "react-countdown";
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
+enum ImoStatus {
+  UPCOMING,
+  LIVE,
+  ENDED
+}
+
+const startDate = 1717762500000;
+const endDate = 1718024400000;
+const contractAddress = '0x14597d4bc5e4d9b8ce40086bb054121cb992d4b8';
+
+const getStatus = (): ImoStatus => {
+  const now = Date.now();
+  if (now < startDate) {
+    return ImoStatus.UPCOMING;
+  } else if (now >= startDate && now <= endDate) {
+    return ImoStatus.LIVE;
+  } else {
+    return ImoStatus.ENDED;
+  }
+};
 
 export default function ImoPage() {
+  const user = useUser();
+  const [status, setStatus] = useState<ImoStatus>(ImoStatus.UPCOMING);
+  const { onCopy, hasCopied } = useClipboard(contractAddress);
+
+  const renderer = ({ days, hours, minutes, seconds, completed }: { days:number, hours:number, minutes:number, seconds: number, completed:boolean}) => {
+    if (completed) {
+      return (
+        <Box>Starting...</Box>
+      );
+    } else {
+      let timeStr = `${zeroPad(hours)}:${zeroPad(minutes)}:${zeroPad(seconds)}`;
+      if (days > 0) timeStr = `${zeroPad(days)}:${timeStr}`;
+      return <Box fontSize='lg' fontWeight='bold'>{timeStr}</Box>;
+    }
+  };
+
+  const handleTimerComplete = () => {
+    setStatus(ImoStatus.LIVE);
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStatus(getStatus());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <StandardContainer mt={4}>
       <Flex w='full' align='space-between' mb={4} direction={{base: 'column', md: 'row'}}>
@@ -85,7 +150,7 @@ export default function ImoPage() {
               />
             </Flex>
             <Box w='full' p={4}>
-              <Box>
+              <Box mt={4}>
                 <Box fontSize='xs'>TOKEN NAME</Box>
                 <Box fontWeight='bold'>CORNHUB</Box>
               </Box>
@@ -106,7 +171,7 @@ export default function ImoPage() {
                   <Box textAlign='end' fontWeight='bold'>CRO</Box>
                 </SimpleGrid>
                 <Box fontWeight='bold' mt={2}>
-                  <Box>66.666% paired with 35% LP, remainder to be used for Operations</Box>
+                  <Box>76.66% paired with 35% LP, remainder to be used for Operations</Box>
                 </Box>
               </Box>
               <Box mt={4}>
@@ -132,14 +197,48 @@ export default function ImoPage() {
                 <Box>MAXIMUM PARTICIPATION AMOUNT</Box>
                 <Box fontSize='lg'>5000 CRO</Box>
               </Box>
+
+              {status === ImoStatus.LIVE ? (
+                <Flex
+                  justify='space-between'
+                  p={4}
+                  mx={-4}
+                  mt={2}
+                  bg={getTheme(user.theme).colors.bgColor5}
+                  direction={{base: 'column', md: 'row'}}
+                >
+                  <Box>
+                    <Box fontSize='xs'>SEND FUNDS TO</Box>
+                    <Box fontWeight='bold'>{contractAddress}</Box>
+                  </Box>
+                  <PrimaryButton onClick={onCopy} alignSelf='end'>
+                    {hasCopied ? 'Copied!' : 'Copy'}
+                  </PrimaryButton>
+                </Flex>
+              ) : (
+                <Box
+                  p={4}
+                  mx={-4}
+                  mt={2}
+                  bg={getTheme(user.theme).colors.bgColor5}
+                  textAlign='center'
+                >
+                  <Box fontSize='xs'>STARTS IN</Box>
+                  <Countdown
+                    date={startDate}
+                    renderer={renderer}
+                    onComplete={handleTimerComplete}
+                  />
+                </Box>
+              )}
               <Box mt={4}>
                 <hr/>
               </Box>
               <SimpleGrid columns={2} mt={4}>
                 <Box>Offering starts</Box>
-                <Box textAlign='end' fontWeight='bold'>Friday, June 7, 2024 12:15:00 PM UTC</Box>
+                <Box textAlign='end' fontWeight='bold'>{formatDate(startDate)}</Box>
                 <Box>Offering ends</Box>
-                <Box textAlign='end' fontWeight='bold'>Monday, June 10, 2024 1:00:00 PM UTC</Box>
+                <Box textAlign='end' fontWeight='bold'>{formatDate(endDate)}</Box>
               </SimpleGrid>
               <VStack textAlign='center' fontSize='xs' mt={6}>
                 <Box>
@@ -157,3 +256,19 @@ export default function ImoPage() {
     </StandardContainer>
   )
 }
+
+const formatDate = (timestamp: number): string => {
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+    timeZone: 'UTC',
+    timeZoneName: 'short',
+  };
+  return new Intl.DateTimeFormat('en-US', options).format(new Date(timestamp)).replace('GMT', 'UTC');
+};

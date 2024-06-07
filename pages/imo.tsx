@@ -8,7 +8,7 @@ export default function Page() {
   const background = useColorModeValue('white', 'black');
 
   return (
-    <Box bg={background}>
+    <Box bg={background} pb={6}>
       <PageHead
         title="Initial Meme Offering"
         description="Take part in the latest meme token offerings on Ebisu's Bay"
