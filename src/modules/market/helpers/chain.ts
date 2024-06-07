@@ -4,6 +4,9 @@ import {JsonRpcProvider} from "@ethersproject/providers";
 import {appConfig} from "@src/Config";
 import Constants from '@src/constants';
 import {ciEquals} from "@market/helpers/utils";
+import {ContractFunctionConfig} from "viem";
+import {Address, erc20ABI} from "wagmi";
+import {multicall} from "@wagmi/core";
 
 const config = appConfig();
 const { ItemType } = Constants;
@@ -23,4 +26,30 @@ export async function getItemType(nftAddress: string) {
 
 export async function is1155(nftAddress: string) {
   return await getItemType(nftAddress) === ItemType.ERC1155
+}
+
+export async function is1155Many(nftAddresses: string[]) {
+  const ERC1155InterfaceId = "0xd9b67a26";
+  const ERC721InterfaceId = "0x80ac58cd";
+
+  const tokenContracts: ContractFunctionConfig[] = nftAddresses.map(address => {
+    return {
+      address: address.toLowerCase() as Address,
+      abi: ERC165 as any,
+      functionName: 'supportsInterface',
+      args: [ERC1155InterfaceId],
+    };
+  });
+
+  const data = await multicall({
+    contracts: tokenContracts,
+  });
+
+  return nftAddresses.reduce((acc, address, i) => {
+    const contractResponse = data[i];
+    if (contractResponse?.status === 'success') {
+      acc[address.toLowerCase()] = contractResponse.result ? ItemType.ERC1155 : ItemType.ERC721;
+    }
+    return acc;
+  }, {} as {[key: string]: number});
 }

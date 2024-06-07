@@ -26,6 +26,7 @@ import {Web3Modal} from "@src/components-v2/web3modal";
 import {UserProvider} from "@src/components-v2/shared/contexts/user";
 import {DM_Sans} from "next/font/google";
 import GoogleAnalytics from '@src/components-v2/shared/third-party/google-analytics';
+import {ErrorLoggerProvider} from "@market/hooks/use-error-logger";
 
 Site24x7LoggingService.init();
 const queryClient = new QueryClient()
@@ -56,16 +57,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <main className={dmSans.className}>
       <Provider store={store}>
         <Sentry.ErrorBoundary fallback={() => <ErrorPage />}>
-          <QueryClientProvider client={queryClient}>
-            <ChakraProvider theme={customTheme}>
-              <Web3Modal>
-                <UserProvider>
-                  <App Component={Component} {...pageProps} />
-                  <GoogleAnalytics  />
-                </UserProvider>
-              </Web3Modal>
-            </ChakraProvider>
-          </QueryClientProvider>
+          <ErrorLoggerProvider>
+            <QueryClientProvider client={queryClient}>
+              <ChakraProvider theme={customTheme}>
+                <Web3Modal>
+                  <UserProvider>
+                    <App Component={Component} {...pageProps} />
+                    <GoogleAnalytics  />
+                  </UserProvider>
+                </Web3Modal>
+              </ChakraProvider>
+            </QueryClientProvider>
+          </ErrorLoggerProvider>
         </Sentry.ErrorBoundary>
       </Provider>
     </main>
