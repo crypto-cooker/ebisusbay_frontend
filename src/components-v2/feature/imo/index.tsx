@@ -115,7 +115,7 @@ export default function ImoPage() {
         <Box position='relative'>
           <ReactPlayer
             controls
-            url='https://www.youtube.com/watch?v=N3o1ILB6Br4'
+            url='https://youtu.be/B2qlE5zwjdo'
             config={{
               file: {
                 attributes: {
