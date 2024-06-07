@@ -86,39 +86,44 @@ export default function useTransak() {
       //     nftType: is1155[listing.nft.nftAddress.toLowerCase()] === ItemType.ERC1155 ? 'ERC1155' : 'ERC721',
       //   }
       // }));
+
+      const nftData = listings.map((listing, i) => {
+        const priceMap = mapPrice(listing);
+        return {
+          imageURL: listing.nft.image,
+          nftName: listing.nft.name,
+          collectionAddress: listing.nft.nftAddress,
+          tokenID: priceMap.map(p => p.tokenID),
+          price: priceMap.map(p => p.price),
+          quantity: Number(listing.amount),
+          nftType: is1155[listing.nft.nftAddress.toLowerCase()] === ItemType.ERC1155 ? 'ERC1155' : 'ERC721',
+        }
+      });
+
+      const rawResponse = await fetch('https://api-stg.transak.com/cryptocoverage/api/v1/public/one-click-protocol/nft-transaction-id', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          calldata: rawCallData,
+          cryptoCurrencyCode: defaultTransakConfig.cryptoCurrencyCode,
+          nftData,
+          estimatedGasLimit: defaultTransakConfig.estimatedGasLimit,
+          contractId: defaultTransakConfig.contractId
+        })
+      });
+      const content = await rawResponse.json();
+      const nftTransactionId = content.id;
+
       const newTransak = new Transak({
         ...defaultTransakConfig,
         walletAddress: user.address,
         calldata: rawCallData,
-        nftData: listings.map((listing, i) => {
-          const priceMap = mapPrice(listing);
-          return {
-            imageURL: listing.nft.image,
-            nftName: listing.nft.name,
-            collectionAddress: listing.nft.nftAddress,
-            tokenID: priceMap.map(p => p.tokenID),
-            price: priceMap.map(p => p.price),
-            quantity: Number(listing.amount),
-            nftType: is1155[listing.nft.nftAddress.toLowerCase()] === ItemType.ERC1155 ? 'ERC1155' : 'ERC721',
-          }
-        })
-      });
-      // console.log('CONFIG', JSON.stringify({
-      //   ...defaultTransakConfig,
-      //   walletAddress: user.address,
-      //   calldata: rawCallData,
-      //   nftData: [
-      //     {
-      //       imageURL: listing.nft.image,
-      //       nftName: listing.nft.name,
-      //       collectionAddress: listing.nft.nftAddress,
-      //       tokenID: [listing.nft.nftId],
-      //       price: [Number(listing.price)],
-      //       quantity: Number(listing.amount),
-      //       nftType: is1155Type ? 'ERC1155' : 'ERC721',
-      //     },
-      //   ]
-      // }))
+        nftTransactionId
+      } as any);
+
       setTransak(newTransak);
       newTransak.init();
 
