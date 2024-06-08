@@ -47,7 +47,7 @@ const getStatus = (): ImoStatus => {
 
 export default function ImoPage() {
   const user = useUser();
-  const [status, setStatus] = useState<ImoStatus>(ImoStatus.UPCOMING);
+  const [status, setStatus] = useState<ImoStatus>(ImoStatus.ENDED);
   const { onCopy, hasCopied } = useClipboard(contractAddress);
 
   const renderer = ({ days, hours, minutes, seconds, completed }: { days:number, hours:number, minutes:number, seconds: number, completed:boolean}) => {
@@ -62,17 +62,17 @@ export default function ImoPage() {
     }
   };
 
-  const handleTimerComplete = () => {
-    setStatus(ImoStatus.LIVE);
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStatus(getStatus());
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+  // const handleTimerComplete = () => {
+  //   setStatus(ImoStatus.LIVE);
+  // }
+  //
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setStatus(getStatus());
+  //   }, 1000);
+  //
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <StandardContainer mt={4}>
