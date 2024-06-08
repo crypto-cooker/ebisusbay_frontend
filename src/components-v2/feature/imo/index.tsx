@@ -62,9 +62,9 @@ export default function ImoPage() {
     }
   };
 
-  // const handleTimerComplete = () => {
-  //   setStatus(ImoStatus.LIVE);
-  // }
+  const handleTimerComplete = () => {
+    // setStatus(ImoStatus.LIVE);
+  }
   //
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -233,15 +233,15 @@ export default function ImoPage() {
                   bg={getTheme(user.theme).colors.bgColor5}
                 >
                   <Flex
-                    justify='space-between'
+                    justify='center'
                     direction={{base: 'column', md: 'row'}}
                     align='center'
                   >
-                    <Box>
-                      <Box fontSize='xs'>PRESALE ADDRESS</Box>
-                      <Box fontWeight='bold'>{contractAddress}</Box>
-                      <Box fontSize='xs'>DO NOT SEND ANYMORE FUNDS TO THE ABOVE ADDRESS</Box>
-                    </Box>
+                    {/*<Box>*/}
+                      {/*<Box fontSize='xs'>PRESALE ADDRESS</Box>*/}
+                      {/*<Box fontWeight='bold'>{contractAddress}</Box>*/}
+                      {/*<Box fontSize='xs'>DO NOT SEND ANYMORE FUNDS TO THE ABOVE ADDRESS</Box>*/}
+                    {/*</Box>*/}
                     <Box textAlign='center' fontWeight='bold'>ENDED</Box>
                   </Flex>
                 </Box>
