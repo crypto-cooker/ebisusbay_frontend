@@ -26955,7 +26955,7 @@
       "multiToken": false,
       "address": "0x1dBA58B1bdcaA3B0488065cCEFa057c52a963280",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection of 2,500 pixelated Robin NFTs. Minting an NFT unlocks exclusive membership benefits, making it a key asset in the $ROBIN space for receiving airdrops, staking rewards, and more!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/avatar.webp",
