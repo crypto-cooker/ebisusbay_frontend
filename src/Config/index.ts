@@ -210,7 +210,8 @@ const configData: AppConfigMap = {
         contractId: '665802a1f597abb8f3d8bdc0',
         url: 'https://global.transak.com?apiKey=c5d03d27-59a6-49dd-9de3-5dad9471d105&isAutoFillUserData=true',
         env: 'PRODUCTION',
-        filler: '0xAb88cd272863b197B48762EA283f24a13f6586Dd'
+        filler: '0xAb88cd272863b197B48762EA283f24a13f6586Dd',
+        postUrl: 'https://api.transak.com/cryptocoverage/api/v1/public/one-click-protocol/nft-transaction-id'
       }
     },
     tokenSale: {
@@ -556,7 +557,8 @@ const configData: AppConfigMap = {
         contractId: '665802a1f597abb8f3d8bdc0',
         url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&isAutoFillUserData=true',
         env: 'PRODUCTION',
-        filler: '0xAb88cd272863b197B48762EA283f24a13f6586Dd'
+        filler: '0xAb88cd272863b197B48762EA283f24a13f6586Dd',
+        postUrl: 'https://api-stg.transak.com/cryptocoverage/api/v1/public/one-click-protocol/nft-transaction-id'
       }
     },
     tokenSale: {
@@ -824,7 +826,8 @@ const configData: AppConfigMap = {
         contractId: '65f8577a2460fe929493ee7f',
         url: 'https://global-stg.transak.com?apiKey=6bdef2f9-cfab-4d58-bb79-82794642a67e&isAutoFillUserData=true',
         env: 'STAGING',
-        filler: '0xcb9bd5acd627e8fccf9eb8d4ba72aeb1cd8ff5ef'
+        filler: '0xcb9bd5acd627e8fccf9eb8d4ba72aeb1cd8ff5ef',
+        postUrl: 'https://api-stg.transak.com/cryptocoverage/api/v1/public/one-click-protocol/nft-transaction-id'
       }
     },
     tokenSale: {
@@ -1053,7 +1056,8 @@ export interface AppConfig {
       contractId: string,
       url: string,
       env: 'PRODUCTION' | 'STAGING',
-      filler: string
+      filler: string,
+      postUrl: string
     }
   },
   tokenSale: {

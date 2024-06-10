@@ -1,5 +1,5 @@
 import {useUser} from "@src/components-v2/useUser";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {Transak, TransakConfig} from "@transak/transak-sdk";
 import {getServerSignature} from "@src/core/cms/endpoints/gaslessListing";
 import {ethers} from "ethers";
@@ -7,10 +7,9 @@ import {shipABI} from "@src/global/contracts/types";
 import {is1155, is1155Many} from "@market/helpers/chain";
 import Pusher from "pusher-js";
 import {appConfig} from "@src/Config";
-import * as Sentry from "@sentry/nextjs";
-import {toast} from "react-toastify";
 import Constants from "@src/constants";
 import {useErrorLogger} from "@market/hooks/use-error-logger";
+import {isNativeCro} from "@market/helpers/utils";
 
 const { ItemType } = Constants;
 let pusher = new Pusher("1d9ffac87de599c61283", { cluster: "ap2" });
@@ -72,7 +71,7 @@ export default function useTransak() {
         signature
       ]);
 
-      const is1155 = await is1155Many(listings.map(listing => listing.nft.nftAddress));
+      const is1155 = await is1155Many(listings.map(listing => listing.nftAddress));
 
       // console.log('INPUT', listings, is1155, listings.map((listing, i) => {
       //   const priceMap = mapPrice(listing);
@@ -90,17 +89,17 @@ export default function useTransak() {
       const nftData = listings.map((listing, i) => {
         const priceMap = mapPrice(listing);
         return {
-          imageURL: listing.nft.image,
-          nftName: listing.nft.name,
-          collectionAddress: listing.nft.nftAddress,
+          imageURL: listing.image,
+          nftName: listing.name,
+          collectionAddress: listing.nftAddress,
           tokenID: priceMap.map(p => p.tokenID),
           price: priceMap.map(p => p.price),
           quantity: Number(listing.amount),
-          nftType: is1155[listing.nft.nftAddress.toLowerCase()] === ItemType.ERC1155 ? 'ERC1155' : 'ERC721',
+          nftType: is1155[listing.nftAddress.toLowerCase()] === ItemType.ERC1155 ? 'ERC1155' : 'ERC721',
         }
       });
 
-      const rawResponse = await fetch('https://api-stg.transak.com/cryptocoverage/api/v1/public/one-click-protocol/nft-transaction-id', {
+      const rawResponse = await fetch(config.vendors.transak.postUrl, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -163,11 +162,28 @@ export default function useTransak() {
         price += remainder;
       }
       return {
-        tokenID: listing.nft.nftId,
+        tokenID: listing.nftId,
         price: price,
       };
     });
   };
+
+  const isEligible = async (listing: AdaptedTransakListing) => {
+    const is1155Token = await is1155(listing.nftAddress);
+    const isCro = isNativeCro(listing.currency);
+
+    return !is1155Token && isCro;
+  }
+
+  const purchaseToken = (walletAddress: string, symbol: 'CRO' | 'USDC') => {
+    const url = new URL(config.vendors.transak.url);
+    if (user.address) {
+      url.searchParams.append('cryptoCurrencyCode', symbol);
+      url.searchParams.append('walletAddress', walletAddress);
+    }
+
+    window.open(url, '_blank');
+  }
 
   useEffect(() => {
     return () => {
@@ -175,7 +191,12 @@ export default function useTransak() {
     };
   }, []);
 
-  return [handlePurchase, executing] as const;
+  return {
+    purchase: handlePurchase,
+    isLoading: executing,
+    isEligible,
+    purchaseToken
+  }
 }
 
 
@@ -199,10 +220,9 @@ interface AdaptedTransakListing {
   listingId: string,
   price: string | number,
   amount: string | number,
-  nft: {
-    image: string,
-    name: string,
-    nftAddress: string,
-    nftId: string,
-  }
+  currency: string,
+  nftAddress: string;
+  nftId: string;
+  name: string;
+  image: string;
 }
