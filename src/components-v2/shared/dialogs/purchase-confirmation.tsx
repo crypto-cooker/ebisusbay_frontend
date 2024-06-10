@@ -1,12 +1,12 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {specialImageTransform} from "@market/helpers/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {Contract, ContractReceipt, ethers} from "ethers";
+import {ContractReceipt, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {
-  caseInsensitiveCompare, ciEquals,
+  ciEquals,
   isBundle,
   isEbVipCollection,
   isErc20Token,
@@ -19,7 +19,8 @@ import {
   Box,
   Button as ChakraButton,
   Flex,
-  HStack, Icon, Image,
+  HStack,
+  Icon,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -29,7 +30,8 @@ import {
   ModalOverlay,
   SimpleGrid,
   Spacer,
-  Spinner, Stack,
+  Spinner,
+  Stack,
   Text,
   VStack
 } from "@chakra-ui/react";
@@ -50,17 +52,12 @@ import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image
 import Link from "next/link";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
-import {Transak, TransakConfig} from "@transak/transak-sdk";
-import Pusher from "pusher-js";
 import {Listing} from "@src/core/models/listing";
-import {getServerSignature} from "@src/core/cms/endpoints/gaslessListing";
-import {shipABI} from "@src/global/contracts/types";
-import { is1155 } from '@market/helpers/chain';
-import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useSearchParams} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCreditCard} from "@fortawesome/free-regular-svg-icons";
 import useTransak from "@market/hooks/use-transak";
+import {is1155} from "@market/helpers/chain";
 
 
 const config = appConfig();
@@ -89,11 +86,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
 
   const [showTransakButton, setShowTransakButton] = useState(false);
   const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const transak = searchParams?.get('transak');
-    setShowTransakButton(transak === 'true')
-  }, [searchParams]);
+  const {isEligible} = useTransak();
 
   const getInitialProps = async () => {
     const listingsResponse = await NextApiService.getListingsByIds(listingId);
@@ -192,6 +185,15 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   }, [listing]);
 
   const [hasAcceptedVipCondition, setHasAcceptedVipCondition] = useState(false);
+
+  useEffect(() => {
+    async function checkEligibility() {
+      // const isTransakEnabled = searchParams?.get('transak') === 'true';
+      const canUseTransak = await isEligible(listing);
+      setShowTransakButton(canUseTransak)
+    }
+    if (listing) checkEligibility();
+  }, [listing]);
 
   return isComplete ? (
     <PurchaseSuccessDialog onClose={onClose} isOpen={isOpen} listing={listing} tx={tx} />
@@ -443,10 +445,19 @@ const CurrencyOption = ({currency}: {currency: {address: string, symbol: string,
 }
 
 const TransakOption = ({listing}: {listing: Listing}) => {
-  const [purchaseTransak, isLoading] = useTransak();
+  const {purchase, isLoading} = useTransak();
 
   const handlePurchase = async () => {
-    await purchaseTransak([listing]);
+    await purchase([{
+      listingId: listing.listingId,
+      price: parseInt(listing.price),
+      amount: listing.amount,
+      currency: listing.currency,
+      nftAddress: listing.nftAddress,
+      nftId: listing.nftId,
+      name: listing.nft.name,
+      image: listing.nft.image
+    }]);
   };
 
   return (
