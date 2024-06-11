@@ -223,9 +223,9 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                   </PrimaryButton>
                 )}
               </ButtonGroup>
-            ) : (
+            ) : canBuy && (
               <ButtonGroup w='full'>
-                {showSmallOfferButton ? (
+                {showSmallOfferButton && isActiveListing ? (
                   <IconButton
                     variant='outline'
                     aria-label={`${offerType === OFFER_TYPE.update ? 'Update' : 'Make'} Offer`}
@@ -239,11 +239,9 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                 )}
                 {isActiveListing && (
                   <>
-                    {canBuy && (
-                      <PrimaryButton w='full' onClick={handlePurchaseSelected}>
-                        Buy Now
-                      </PrimaryButton>
-                    )}
+                    <PrimaryButton w='full' onClick={handlePurchaseSelected}>
+                      Buy Now
+                    </PrimaryButton>
                     <IconButton
                       variant='primary'
                       aria-label='Add to cart'
