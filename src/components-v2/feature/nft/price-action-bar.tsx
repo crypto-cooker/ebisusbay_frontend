@@ -1,12 +1,31 @@
 import React, {useEffect, useState} from 'react';
 
 import {ethers} from 'ethers';
-import {isNftBlacklisted, isUserBlacklisted, round, timeSince, usdFormat} from '@market/helpers/utils';
+import {
+  createSuccessfulAddCartContent,
+  isNftBlacklisted,
+  isUserBlacklisted,
+  round,
+  timeSince,
+  usdFormat
+} from '@market/helpers/utils';
 import {listingState} from '@src/core/api/enums';
 import {OFFER_TYPE} from "@src/Components/Offer/MadeOffers/MadeOffersRow";
 import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listing";
 
-import {Box, Card, CardBody, Flex, Heading, Stack, Text,} from '@chakra-ui/react';
+import {
+  Box,
+  ButtonGroup,
+  Card,
+  CardBody,
+  Flex,
+  Heading,
+  Icon,
+  IconButton,
+  Stack,
+  Text,
+  useBreakpointValue
+} from '@chakra-ui/react';
 import PurchaseConfirmationDialog from "@src/components-v2/shared/dialogs/purchase-confirmation";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useAppSelector} from "@market/state/redux/store/hooks";
@@ -16,6 +35,10 @@ import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon
 import {commify} from "ethers/lib/utils";
 import {ResponsiveCancelListingDialog} from "@src/components-v2/shared/dialogs/cancel-listing";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
+import {toast} from "react-toastify";
+import useCart from "@market/hooks/use-cart";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBagShopping, faHand} from "@fortawesome/free-solid-svg-icons";
 
 const config = appConfig();
 
@@ -31,6 +54,7 @@ interface PriceActionBarProps {
 
 const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }: PriceActionBarProps) => {
   const [runAuthedFunction] = useAuthedFunction();
+  const cart = useCart();
 
   const { currentListing: listing, nft } = useAppSelector((state) => state.nft);
   const [canBuy, setCanBuy] = useState(false);
@@ -38,6 +62,10 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
   const [isPurchaseDialogOpen, setIsPurchaseDialogOpen] = useState(false);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
   const { tokenToUsdValue, tokenToCroValue } = useTokenExchangeRate(listing?.currency, Number(config.chain.id));
+  const showSmallOfferButton = useBreakpointValue(
+    {base: true, sm: false},
+    {fallback: 'sm'},
+  );
 
   const handlePurchaseSelected = async () => {
     await runAuthedFunction(() => setIsPurchaseDialogOpen(true));
@@ -55,6 +83,31 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     setIsCancelDialogOpen(true);
   }
 
+  const handleCartToggle = () => {
+    if (!listing) {
+      toast.error('No listing found for NFT');
+      return;
+    }
+
+    if (cart.isItemInCart(listing.id)) {
+      cart.removeItem(listing.id);
+      toast.success('Removed from cart');
+    } else {
+      cart.addItem({
+        listingId: listing.id,
+        name: nft.name,
+        image: nft.image,
+        price: listing.price,
+        address: nft.address,
+        id: nft.id,
+        rank: nft.rank,
+        amount: listing.amount ?? 1,
+        currency: listing.currency
+      });
+      toast.success(createSuccessfulAddCartContent(cart.openCart));
+    }
+  };
+
   useEffect(() => {
     setCanBuy(
       listing &&
@@ -63,6 +116,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     );
   }, [listing?.nftAddress, listing?.nftId, listing?.seller]);
 
+  const isActiveListing = listing && listing.state === listingState.ACTIVE;
 
   // const ModalBody = () => {
   //   return (
@@ -150,48 +204,57 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
             </Flex>
           </Box>
 
-          <div className="d-flex">
+          <Flex w='full'>
             {isOwner ? (
-              <>
-                {listing && listing.state === listingState.ACTIVE ? (
+              <ButtonGroup w='full'>
+                {isActiveListing ? (
                   <>
-                    <div className="flex-fill mx-1">
-                      <SecondaryButton w='full' onClick={handleCancelSelected}>
-                        Cancel Listing
-                      </SecondaryButton>
-                    </div>
+                    <SecondaryButton w='full' onClick={handleCancelSelected}>
+                      Cancel
+                    </SecondaryButton>
 
-                    <div className="flex-fill mx-1">
-                      <PrimaryButton w='full' onClick={handleUpdateSelected}>
-                        Update Listing
-                      </PrimaryButton>
-                    </div>
+                    <PrimaryButton w='full' onClick={handleUpdateSelected}>
+                      Update
+                    </PrimaryButton>
                   </>
                 ) : (
                   <PrimaryButton w='full' onClick={handleSellSelected}>
                     Sell this NFT
                   </PrimaryButton>
                 )}
-              </>
+              </ButtonGroup>
             ) : (
-              <>
-                {canBuy && (
-                  <div className="flex-fill mx-1">
-                    {listing.state === listingState.ACTIVE && (
+              <ButtonGroup w='full'>
+                {showSmallOfferButton ? (
+                  <IconButton
+                    variant='outline'
+                    aria-label={`${offerType === OFFER_TYPE.update ? 'Update' : 'Make'} Offer`}
+                    icon={<Icon as={FontAwesomeIcon} icon={faHand} />}
+                    onClick={onOfferSelected}
+                  />
+                ) : (
+                  <SecondaryButton w='full' onClick={onOfferSelected}>
+                    {offerType === OFFER_TYPE.update ? 'Update' : 'Make'} Offer
+                  </SecondaryButton>
+                )}
+                {isActiveListing && (
+                  <>
+                    {canBuy && (
                       <PrimaryButton w='full' onClick={handlePurchaseSelected}>
                         Buy Now
                       </PrimaryButton>
                     )}
-                  </div>
+                    <IconButton
+                      variant='primary'
+                      aria-label='Add to cart'
+                      icon={<Icon as={FontAwesomeIcon} icon={faBagShopping} />}
+                      onClick={handleCartToggle}
+                    />
+                  </>
                 )}
-                <div className="flex-fill mx-1">
-                  <SecondaryButton w='full' onClick={onOfferSelected}>
-                    {offerType === OFFER_TYPE.update ? 'Update' : 'Make'} Offer
-                  </SecondaryButton>
-                </div>
-              </>
+              </ButtonGroup>
             )}
-          </div>
+          </Flex>
         </CardBody>
       </Card>
       {isSellDialogOpen && (
