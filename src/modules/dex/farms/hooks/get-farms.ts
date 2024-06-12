@@ -31,14 +31,10 @@ export function getFarmsUsingChain() {
       )),
     });
 
-    console.log('DEBUG==+DATA', poolInfo);
-
     const lpAddresses = poolInfo.slice(1).map((pool: any) => {
       const [lpToken] = pool.result;
       return lpToken
     });
-
-    console.log('DEBUG==+lpAddresses', lpAddresses);
 
     const lpTokenInfo = await multicall({
       contracts: lpAddresses.reduce((acc: ContractFunctionConfig[], address: string) => {
@@ -56,8 +52,6 @@ export function getFarmsUsingChain() {
       }, []),
     });
 
-    console.log('DEBUG==+LPINFO', lpTokenInfo);
-
     const uniqueTokenAddresses = Array.from(new Set(lpTokenInfo.map((info: any) => info.result)));
 
     const tokenInfo = await multicall({
@@ -68,14 +62,11 @@ export function getFarmsUsingChain() {
       })),
     });
 
-
     // map token address to symbol with address as key
     const tokenInfoMap = tokenInfo.reduce((acc: any, info: any, i: number) => {
       acc[uniqueTokenAddresses[i]] = info.result;
       return acc;
     }, {});
-
-    console.log('DEBUG==+TOKENINFO', tokenInfo, tokenInfoMap);
 
     const data = poolInfo.slice(1).map((pool: any, i: number) => {
       const token0Address = lpTokenInfo[i * 2].result as string;
