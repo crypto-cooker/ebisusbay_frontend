@@ -53,6 +53,7 @@ import {round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import useCurrencyBroker from "@market/hooks/use-currency-broker";
 
 const config =  appConfig();
 
@@ -116,9 +117,10 @@ export default function DataTable({ data, userData }: DataTableProps) {
 
 function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row<DerivedFarm>, isSmallScreen: boolean, showLiquidityColumn: boolean, userData?: UserFarmState}) {
   const user = useUser();
+  const {getByAddress} = useCurrencyBroker();
   const [enableFarm, enablingFarm] = useEnableFarm();
   const { refetchBalances } = useUserFarmsRefetch();
-  const [harvestRewards, harvestingRewards] = useHarvestRewards();useColorModeValue('#FFFFFF', '#404040')
+  const [harvestRewards, harvestingRewards] = useHarvestRewards();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const text2Color = useColorModeValue('#1A202C', 'whiteAlpha.600');
 
@@ -148,8 +150,12 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
 
     const usdRate = row.original.data.frtnPerMonthInUSD / parseFloat(ethers.utils.formatEther(row.original.data.frtnPerMonth));
 
-    return commify((usdRate * Number(ethers.utils.formatEther(userData.earnings))).toFixed(2));
+    const earnings = userData.earnings[0]?.amount ?? 0;
+
+    return commify((usdRate * Number(ethers.utils.formatEther(earnings))).toFixed(2));
   }, [row, userData]);
+
+  const totalEarned = userData?.earnings.reduce((acc, earning) =>  acc + earning.amount, 0n) ?? 0n;
 
   return (
     <React.Fragment>
@@ -268,18 +274,25 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                 <Card flex={1}>
                   <Box fontSize='sm' fontWeight='bold' mb={2}>EARNED REWARDS</Box>
                   <Wrap justify='space-between' align='center'>
-                    <Box>
-                      <Box fontSize='xl' fontWeight='bold'>
-                        FRTN {commify(round(ethers.utils.formatEther(userData?.earnings ?? 0), 2))}
-                      </Box>
-                      {!!earnedDollarValue && (
-                        <Box fontSize='xs' color={text2Color}>
-                          ~ ${earnedDollarValue}
-                        </Box>
-                      )}
-                    </Box>
+                    {userData?.earnings.map((earning, i) => {
+                      const token = getByAddress(earning.address);
+                      return !!token ? (
+                        <Stack key={i}>
+                          <Box>
+                            <Box fontSize='xl' fontWeight='bold'>
+                              {token.symbol} {commify(round(ethers.utils.formatUnits(earning.amount ?? 0, token.decimals), 2))}
+                            </Box>
+                            {!!earnedDollarValue && token.symbol !== 'USDC' && (
+                              <Box fontSize='xs' color={text2Color}>
+                                ~ ${earnedDollarValue}
+                              </Box>
+                            )}
+                          </Box>
+                        </Stack>
+                      ) : <></>
+                    })}
                     <PrimaryButton
-                      isDisabled={harvestingRewards || userData?.earnings === 0n || !userData?.approved || !user.address}
+                      isDisabled={harvestingRewards || totalEarned === 0n || !userData?.approved || !user.address}
                       isLoading={harvestingRewards}
                       onClick={() => harvestRewards(row.original.data.pid)}
                     >

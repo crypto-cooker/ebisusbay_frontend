@@ -91,9 +91,9 @@ export const fetchBalances = async (userAddress: string) => {
 
   let balances = lpBalances.reduce((acc: any, approval: any, i: number) => {
     acc[lpAddresses[i].toLowerCase()] = {
-      available: approval.status === 'success' ? approval.result : 0,
-      balance: 0,
-      harvestable: 0
+      tokenBalance: approval.status === 'success' ? approval.result : 0,
+      stakedBalance: 0,
+      earnings: 0
     }
     return acc;
   }, {});
@@ -105,7 +105,7 @@ export const fetchBalances = async (userAddress: string) => {
       {
         address: config.contracts.farms as Address,
         abi: FarmsAbi as any,
-        functionName: 'pendingFRTN',
+        functionName: 'pendingTokens',
         args: [pid, userAddress],
       }
     )),
@@ -113,14 +113,18 @@ export const fetchBalances = async (userAddress: string) => {
 
   poolInfo.forEach((pool, i) => {
     if (i === 0) return;
-    balances[pool.result![0].toLowerCase()].harvestable = harvestableBalances[i].result;
+    const tokens = harvestableBalances[i].result?.[0] as string[];
+    const amounts = harvestableBalances[i].result?.[1] as bigint[];
+    balances[pool.result![0].toLowerCase()].earnings = tokens.map((token) => ({
+      address: token,
+      amount: amounts[tokens.indexOf(token)]
+    }));
   });
 
   const farmsUser = await ApiService.withoutKey().getFarmsUser(userAddress);
   farmsUser.forEach((user, i) => {
-    balances[user.pool.pair.toLowerCase()].balance = BigInt(user.amount);
+    balances[user.pool.pair.toLowerCase()].stakedBalance = BigInt(user.amount);
   });
-
   return balances;
 };
 

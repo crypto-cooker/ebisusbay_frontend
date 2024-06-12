@@ -546,6 +546,12 @@ const configData: AppConfigMap = {
         symbol: 'WCRO',
         address: '0x6a3173618859c7cd40faf6921b5e9eb6a76f1fd4',
         decimals: 18
+      },
+      usdc: {
+        name: 'USD Coin',
+        symbol: 'USDC',
+        address: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
+        decimals: 6
       }
     },
     collections: rpcConfigDev.known_contracts,
@@ -815,6 +821,12 @@ const configData: AppConfigMap = {
         symbol: 'WCRO',
         address: '0x467604E174c87042fcc4412c5BC70AaBc8733016',
         decimals: 18
+      },
+      usdc: {
+        name: 'USD Coin',
+        symbol: 'USDC',
+        address: '0x1E1d0765439d0d53ee40CC4fB454C2343c84342b',
+        decimals: 6
       }
     },
     collections: rpcConfigTestnet.known_contracts,
