@@ -45,7 +45,8 @@ const configData: AppConfigMap = {
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners-2',
         staking: 'staking',
-        farms: 'farms-v2'
+        farms: 'farms-v2',
+        dex: 'exchange-v2'
       }
     },
     rpc: {
@@ -452,7 +453,8 @@ const configData: AppConfigMap = {
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners-2',
         staking: 'staking',
-        farms: 'farms-v2'
+        farms: 'farms-v2',
+        dex: 'exchange-v2'
       }
     },
     rpc: {
@@ -733,7 +735,8 @@ const configData: AppConfigMap = {
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners',
         staking: 'staking',
-        farms: 'farms-v2'
+        farms: 'farms-v2',
+        dex: 'exchange-v2'
       }
     },
     rpc: {
@@ -1007,7 +1010,8 @@ export interface AppConfig {
       ryoshiPresale: string,
       stakedOwners: string,
       staking: string,
-      farms: string
+      farms: string,
+      dex: string
     }
   },
   rpc: {
