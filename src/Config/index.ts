@@ -123,10 +123,10 @@ const configData: AppConfigMap = {
         address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977',
         decimals: 18
       },
-      ttt: {
-        name: 'Tatas Twisted Time',
-        symbol: 'TTT',
-        address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6',
+      emit: {
+        name: 'EMIT',
+        symbol: 'EMIT',
+        address: '0x9fa6552c1e9df51070a3b456355b5d76cbd59b5a',
         decimals: 18
       },
       icy: {
