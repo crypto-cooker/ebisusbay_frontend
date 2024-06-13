@@ -27075,6 +27075,57 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "SERIOUS Genesis Collection",
+      "slug": "serious-genesis-collection",
+      "multiToken": false,
+      "address": "0x4dd46C54E2344e8D9Ee9A054b2E13F2CEB1F7125",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A SERIOUS token of appreciation to our early supporters",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/serious-genesis-collection/robin-nft/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/serious-genesis-collection/robin-nft/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/serious-genesis-collection/robin-nft/card.webp",
+        "website": "https://seriouscoin.xyz/",
+        "twitter": "https://twitter.com/realseriouscoin",
+        "discord": "https://discord.gg/8gzry5nnkn",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ARY KNIFE",
+      "slug": "ary-knife",
+      "multiToken": false,
+      "address": "0x18ebaF381e0582DD502f1e9f17BDE6da369eBf6C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "$ARY THE RYOSHI'S ENLIGHTENED GUIDE SHARES HIS KNIFE",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/card.webp",
+        "website": "https://www.aryioshin.com/",
+        "twitter": "https://twitter.com/CronosAry",
+        "discord": "https://discord.gg/zH9PeHv4bC",
+        "telegram": "https://t.me/ARY_FAM",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
