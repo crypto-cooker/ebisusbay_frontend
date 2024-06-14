@@ -27079,15 +27079,26 @@
     {
       "name": "SERIOUS Genesis Collection",
       "slug": "serious-genesis-collection",
-      "multiToken": false,
+      "multiToken": true,
       "address": "0x4dd46C54E2344e8D9Ee9A054b2E13F2CEB1F7125",
       "onChain": false,
       "listable": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        }
+      ],
       "metadata": {
         "description": "A SERIOUS token of appreciation to our early supporters",
-        "avatar": "https://cdn-prod.ebisusbay.com/files/serious-genesis-collection/robin-nft/avatar.webp",
-        "banner": "https://cdn-prod.ebisusbay.com/files/serious-genesis-collection/robin-nft/banner.webp",
-        "card": "https://cdn-prod.ebisusbay.com/files/serious-genesis-collection/robin-nft/card.webp",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/serious-genesis-collection/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/serious-genesis-collection/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/serious-genesis-collection/card.webp",
         "website": "https://seriouscoin.xyz/",
         "twitter": "https://twitter.com/realseriouscoin",
         "discord": "https://discord.gg/8gzry5nnkn",
@@ -27110,9 +27121,9 @@
       "listable": true,
       "metadata": {
         "description": "$ARY THE RYOSHI'S ENLIGHTENED GUIDE SHARES HIS KNIFE",
-        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/avatar.webp",
-        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/banner.webp",
-        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/card.webp",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ary-knife/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ary-knife/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/ary-knife/card.webp",
         "website": "https://www.aryioshin.com/",
         "twitter": "https://twitter.com/CronosAry",
         "discord": "https://discord.gg/zH9PeHv4bC",
