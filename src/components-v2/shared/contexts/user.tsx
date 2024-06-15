@@ -53,46 +53,46 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
   })
 
-  const listenToAccount = watchAccount(wagmiConfig as any, {
-    onChange(data) {
-      console.log('Account changed!', data)
-      Sentry.captureEvent({ message: 'Account changed!', extra: data});
-    },
-  });
-
-  const listenToChainId = watchChainId(wagmiConfig as any, {
-    onChange(chainId) {
-      console.log('Chain ID changed!', chainId)
-      Sentry.captureEvent({ message: 'Chain ID changed!', extra: chainId});
-    },
-  })
-
-  const listenToClient = watchClient(wagmiConfig as any, {
-    onChange(client) {
-      console.log('Client changed!', client)
-      Sentry.captureEvent({ message: 'Client changed!', extra: client});
-    },
-  })
-  const listenToConnections = watchConnections(wagmiConfig as any, {
-    onChange(data) {
-      console.log('Connections changed!', data)
-      Sentry.captureEvent({ message: 'Connections changed!', extra: {data}});
-    },
-  })
-  const listenToConnectors = watchConnectors(wagmiConfig as any, {
-    onChange(connectors) {
-      console.log('Connectors changed!', connectors)
-      Sentry.captureEvent({ message: 'Connectors changed!', extra: { connectors }});
-    },
-  })
-
-  useEffect(() => {
-    listenToAccount();
-    listenToChainId();
-    listenToClient();
-    listenToConnections();
-    listenToConnectors();
-  }, []);
+  // const listenToAccount = watchAccount(wagmiConfig as any, {
+  //   onChange(data) {
+  //     console.log('Account changed!', data)
+  //     Sentry.captureEvent({ message: 'Account changed!', extra: data});
+  //   },
+  // });
+  //
+  // const listenToChainId = watchChainId(wagmiConfig as any, {
+  //   onChange(chainId) {
+  //     console.log('Chain ID changed!', chainId)
+  //     Sentry.captureEvent({ message: 'Chain ID changed!', extra: chainId});
+  //   },
+  // })
+  //
+  // const listenToClient = watchClient(wagmiConfig as any, {
+  //   onChange(client) {
+  //     console.log('Client changed!', client)
+  //     Sentry.captureEvent({ message: 'Client changed!', extra: client});
+  //   },
+  // })
+  // const listenToConnections = watchConnections(wagmiConfig as any, {
+  //   onChange(data) {
+  //     console.log('Connections changed!', data)
+  //     Sentry.captureEvent({ message: 'Connections changed!', extra: {data}});
+  //   },
+  // })
+  // const listenToConnectors = watchConnectors(wagmiConfig as any, {
+  //   onChange(connectors) {
+  //     console.log('Connectors changed!', connectors)
+  //     Sentry.captureEvent({ message: 'Connectors changed!', extra: { connectors }});
+  //   },
+  // })
+  //
+  // useEffect(() => {
+  //   listenToAccount();
+  //   listenToChainId();
+  //   listenToClient();
+  //   listenToConnections();
+  //   listenToConnectors();
+  // }, []);
 
   const { disconnectAsync: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
