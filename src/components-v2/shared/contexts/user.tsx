@@ -1,9 +1,9 @@
-import {Address, useAccount, useAccountEffect, useBalance, useDisconnect, useNetwork} from "wagmi";
+import {useAccount, useAccountEffect, useBalance, useDisconnect} from "wagmi";
 import {createContext, ReactNode, useEffect} from "react";
 import {appConfig} from "@src/Config";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {useQuery} from "@tanstack/react-query";
-import { multicall, watchAccount, watchChainId, watchClient, watchConnections, watchConnectors } from '@wagmi/core';
+import { multicall, watchAccount, watchChainId, watchClient, watchConnections, watchConnectors, type MulticallParameters } from '@wagmi/core';
 import {portAbi, stakeAbi} from "@src/global/contracts/types";
 import {ethers} from "ethers";
 import {JotaiUser, UserActionType, userAtom} from "@market/state/jotai/atoms/user";
@@ -96,7 +96,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const { disconnectAsync: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
-  const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address as Address });
+  const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address });
   const { setColorMode: setChakraTheme } = useColorMode();
   const { setThemeMode: setWeb3ModalTheme } = useWeb3ModalTheme();
 
@@ -119,35 +119,35 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const data = await multicall(wagmiConfig as any, {
         contracts: [
           {
-            address: config.contracts.market as Address,
+            address: config.contracts.market,
             abi: portAbi,
             functionName: 'isMember',
             args: [address],
           },
           {
-            address: config.contracts.market as Address,
+            address: config.contracts.market,
             abi: portAbi,
             functionName: 'useEscrow',
             args: [address],
           },
           {
-            address: config.contracts.market as Address,
+            address: config.contracts.market,
             abi: portAbi,
             functionName: 'payments',
             args: [address],
           },
           {
-            address: config.contracts.market as Address,
+            address: config.contracts.market,
             abi: portAbi,
             functionName: 'fee',
             args: [address],
           },
           {
-            address: config.contracts.stake as Address,
+            address: config.contracts.stake,
             abi: portAbi,
             functionName: 'getReward',
             args: [address],
-          },
+          } as any // only way to fix error "Type instantiation is excessively deep and possibly infinite."
         ],
       });
 
@@ -159,7 +159,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
             balance: parseInt(ethers.utils.formatEther(data[2].result ?? 0)),
           },
           balances: {
-            staking: parseInt(ethers.utils.formatEther(data[4].result ?? 0)),
+            staking: parseInt(ethers.utils.formatEther(data[4].result as any ?? 0)),
           },
           fee: data[3].result ? (Number(data[3].result) / 10000) * 100 : 3,
           isMember: data[0].result ?? false

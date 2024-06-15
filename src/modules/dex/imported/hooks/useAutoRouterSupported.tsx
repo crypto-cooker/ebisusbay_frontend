@@ -1,7 +1,7 @@
 import { isSupportedChain } from '@dex/imported/constants/chains'
-import {useNetwork} from "wagmi";
+import {useAccount} from "wagmi";
 
 export default function useAutoRouterSupported(): boolean {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   return isSupportedChain(chain?.id)
 }
