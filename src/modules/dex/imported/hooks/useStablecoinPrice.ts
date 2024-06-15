@@ -22,7 +22,7 @@ import {
   USDC_SEPOLIA,
   USDT_BSC,
 } from '../constants/tokens'
-import {useNetwork} from "wagmi";
+import {useAccount} from "wagmi";
 
 // Stablecoin amounts used when calculating spot price for a given currency.
 // The amount is large enough to filter low liquidity pairs.
@@ -110,7 +110,7 @@ export function useStablecoinValue(currencyAmount: CurrencyAmount<Currency> | un
  * @returns CurrencyAmount where currency is stablecoin on active chain
  */
 export function useStablecoinAmountFromFiatValue(fiatValue: number | null | undefined) {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const supportedChainId = asSupportedChain(chain?.id)
   const stablecoin = supportedChainId ? STABLECOIN_AMOUNT_OUT[supportedChainId].currency : undefined
 

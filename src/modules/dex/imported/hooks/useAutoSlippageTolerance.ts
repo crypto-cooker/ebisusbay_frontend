@@ -7,7 +7,7 @@ import { useMemo } from 'react'
 import { useUSDPrice } from './useUSDPrice'
 import {ClassicTrade} from "@dex/imported/state/routing/types";
 import {L2_CHAIN_IDS, SUPPORTED_GAS_ESTIMATE_CHAIN_IDS} from "@dex/imported/constants/chains";
-import {useNetwork} from "wagmi";
+import {useAccount} from "wagmi";
 import {useStablecoinAmountFromFiatValue} from "@dex/imported/hooks/useStablecoinPrice";
 import useGasPrice from "@dex/imported/hooks/useGasPrice";
 
@@ -72,7 +72,7 @@ const MAX_AUTO_SLIPPAGE_TOLERANCE = new Percent(5, 100) // 5%
  * Auto slippage is only relevant for Classic swaps because UniswapX slippage is determined by the backend service
  */
 export default function useClassicAutoSlippageTolerance(trade?: ClassicTrade): Percent {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const onL2 = chain?.id && L2_CHAIN_IDS.includes(chain.id)
   const outputUSD = useUSDPrice(trade?.outputAmount)
   const outputDollarValue = useStablecoinAmountFromFiatValue(outputUSD.data)
