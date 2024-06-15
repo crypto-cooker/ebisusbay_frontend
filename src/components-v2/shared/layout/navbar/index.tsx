@@ -2,7 +2,14 @@ import React, {RefObject, useEffect, useState} from 'react';
 import Link from 'next/link';
 import {createGlobalStyle} from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faMoon, faSun} from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowsLeftRightToLine,
+  faArrowsUpDown,
+  faCoins,
+  faMoon,
+  faSackDollar,
+  faSun
+} from '@fortawesome/free-solid-svg-icons';
 
 import AccountMenu from './account-menu';
 import NotificationMenu from './notification-menu';
@@ -67,7 +74,7 @@ const Header = function () {
   );
   const [shouldHideTitle] = useMediaQuery('(max-width: 1080px)');
   const [shouldHideFrtn] = useMediaQuery('(max-width: 410px)');
-  const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, config.chain.id);
+  const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, Number(config.chain.id));
   const [currentFrtnPrice, setCurrentFrtnPrice] = useState(0);
 
   const ref: RefObject<HTMLDivElement> = React.useRef(null)
@@ -151,7 +158,15 @@ const Header = function () {
                 display={{base: 'none', md: 'flex'}}
                 me={4}
               >
-                <NavLink name={'DEX'} to={'https://swap.ebisusbay.com'} />
+                <Menu placement='bottom-end'>
+                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
+                    DEX
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem as={Link} href='https://swap.ebisusbay.com' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
+                    <MenuItem as={Link} href='/dex/farms' _hover={{color: 'inherit'}} justifyContent='end'>Farms</MenuItem>
+                  </MenuList>
+                </Menu>
                 <Menu placement='bottom-end'>
                   <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
                     Marketplace
@@ -162,7 +177,8 @@ const Header = function () {
                     <MenuItem as={Link} href='/deal' _hover={{color: 'inherit'}} justifyContent='end'>Deals</MenuItem>
                     <MenuItem as={Link} href='/brands' _hover={{color: 'inherit'}} justifyContent='end'>Brands</MenuItem>
                     <MenuItem as={Link} href='/drops' _hover={{color: 'inherit'}} justifyContent='end'>Drops</MenuItem>
-                    <MenuItem as={Link} href='/apply' _hover={{color: 'inherit'}} justifyContent='end'>Become a Creator</MenuItem>
+                    <MenuItem as={Link} href='/imo' _hover={{color: 'inherit'}} justifyContent='end'>IMO</MenuItem>
+                    <MenuItem as={Link} href='/apply' _hover={{color: 'inherit'}} justifyContent='end'>Listing Requests</MenuItem>
                     {/*<MenuItem as='a' href='/stats'>Stats</MenuItem>*/}
                     {/*<MenuItem as='a' href='/auctions'>Auction</MenuItem>*/}
                   </MenuList>
@@ -214,7 +230,8 @@ const Header = function () {
                     <NavLink name='Deals' to='/deal' onClick={onClose} />
                     <NavLink name='Brands' to='/brands' onClick={onClose} />
                     <NavLink name='Drops' to='/drops' onClick={onClose} />
-                    <NavLink name='Become a Creator' to='/apply' onClick={onClose} />
+                    <NavLink name='IMO' to='/imo' onClick={onClose} />
+                    <NavLink name='Listing Requests' to='/apply' onClick={onClose} />
                   </VStack>
                 </Box>
                 <Box>
@@ -232,19 +249,36 @@ const Header = function () {
                 </Box>
               </SimpleGrid>
               <Stack spacing={2} justify='stretch' maxW='375px' mx='auto'>
-                <Link href='https://swap.ebisusbay.com'>
-                  <Button
-                    variant='outline'
-                    onClick={onClose}
-                    size='sm'
-                    color='white'
-                    fontWeight='bold'
-                    w='full'
-                    colorScheme='none'
-                  >
-                    DEX
-                  </Button>
-                </Link>
+                <SimpleGrid columns={2} spacing={2}>
+                  <Link href='https://swap.ebisusbay.com'>
+                    <Button
+                      variant='outline'
+                      onClick={onClose}
+                      size='sm'
+                      color='white'
+                      fontWeight='bold'
+                      w='full'
+                      colorScheme='none'
+                      leftIcon={<Icon as={FontAwesomeIcon} icon={faCoins} />}
+                    >
+                      Swap
+                    </Button>
+                  </Link>
+                  <Link href='/dex/farms'>
+                    <Button
+                      variant='outline'
+                      onClick={onClose}
+                      size='sm'
+                      color='white'
+                      fontWeight='bold'
+                      w='full'
+                      colorScheme='none'
+                      leftIcon={<Icon as={FontAwesomeIcon} icon={faSackDollar} />}
+                    >
+                      Farms
+                    </Button>
+                  </Link>
+                </SimpleGrid>
                 <Button
                   variant='outline'
                   size='sm'

@@ -34,7 +34,7 @@ type InstantSellDialogProps = {
 }
 
 export const ResponsiveInstantSellDialog = ({ isOpen, onClose, collection, ...props }: InstantSellDialogProps & BoxProps) => {
-  const { DialogComponent, DialogBody, DialogFooter } = useResponsiveDialog();
+  const { DialogComponent, DialogHeader, DialogBody, DialogFooter } = useResponsiveDialog();
 
   return (
     <DialogComponent isOpen={isOpen} onClose={onClose} title='Sell Instantly' {...props}>
@@ -42,6 +42,7 @@ export const ResponsiveInstantSellDialog = ({ isOpen, onClose, collection, ...pr
         isOpen={isOpen}
         onClose={onClose}
         collection={collection}
+        DialogHeader={DialogHeader}
         DialogBody={DialogBody}
         DialogFooter={DialogFooter}
         {...props}

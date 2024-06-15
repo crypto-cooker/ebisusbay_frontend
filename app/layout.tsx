@@ -19,6 +19,7 @@ import "swiper/css/pagination";
 
 import '../src/global/assets/styles/style.scss';
 import '../src/global/assets/styles/override.scss';
+import GoogleAnalytics from '@src/components-v2/shared/third-party/google-analytics';
 
 const dmSans = DM_Sans({
   weight: ['200', '300', '400', '500', '600', '700', '800'],
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html lang="en">
+      <GoogleAnalytics  />
       <Head>
         <Script type="module"
                 src="https://js-wc.site24x7static.com/site24x7/client/statusiq_status_widget/statusiq-status-widget.esm.js?12_2024"
@@ -75,14 +77,14 @@ export const metadata: Metadata = {
     url: 'https://app.ebisusbay.com',
     title: 'Ebisu\'s Bay | GameFi - NFT Market - DEX',
     description: 'A dynamic platform that combines NFT and DEX trading with GameFi, enabling users to battle for market dominance.',
-    images: 'https://app.ebisusbay.com/img/background/banner-ryoshi-light.webp'
+    images: 'https://app.ebisusbay.com/img/background/banner-default.webp'
   },
   twitter: {
     site: '@EbisusBay',
     card: 'summary_large_image',
     title: 'Ebisu\'s Bay | GameFi - NFT Market - DEX',
     description: 'A dynamic platform that combines NFT and DEX trading with GameFi, enabling users to battle for market dominance.',
-    images: 'https://app.ebisusbay.com/img/background/banner-ryoshi-light.webp'
+    images: 'https://app.ebisusbay.com/img/background/banner-default.webp'
   },
   manifest: '/manifest.json?v=1',
   icons: {

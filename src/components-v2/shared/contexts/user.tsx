@@ -1,4 +1,4 @@
-import {useAccount, useAccountEffect, useBalance, useDisconnect} from "wagmi";
+import {Address, useAccount, useAccountEffect, useBalance, useDisconnect, useNetwork} from "wagmi";
 import {createContext, ReactNode, useEffect} from "react";
 import {appConfig} from "@src/Config";
 import {getProfile} from "@src/core/cms/endpoints/profile";
@@ -96,7 +96,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const { disconnectAsync: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
-  const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address });
+  const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address as Address });
   const { setColorMode: setChakraTheme } = useColorMode();
   const { setThemeMode: setWeb3ModalTheme } = useWeb3ModalTheme();
 
@@ -119,32 +119,32 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const data = await multicall(wagmiConfig as any, {
         contracts: [
           {
-            address: config.contracts.market,
+            address: config.contracts.market as Address,
             abi: portAbi,
             functionName: 'isMember',
             args: [address],
           },
           {
-            address: config.contracts.market,
+            address: config.contracts.market as Address,
             abi: portAbi,
             functionName: 'useEscrow',
             args: [address],
           },
           {
-            address: config.contracts.market,
+            address: config.contracts.market as Address,
             abi: portAbi,
             functionName: 'payments',
             args: [address],
           },
           {
-            address: config.contracts.market,
+            address: config.contracts.market as Address,
             abi: portAbi,
             functionName: 'fee',
             args: [address],
           },
           {
-            address: config.contracts.stake,
-            abi: stakeAbi,
+            address: config.contracts.stake as Address,
+            abi: portAbi,
             functionName: 'getReward',
             args: [address],
           },

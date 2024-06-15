@@ -25,10 +25,10 @@ const rpcUrls: {
   default: ChainRpcUrls;
 } = {
   default: {
-    http: [appConfig.rpc.read, primaryNetwork.rpcUrls.default.http]
+    http: [appConfig.rpc.read].concat(primaryNetwork.rpcUrls.default.http)
   },
   public: {
-    http: [appConfig.rpc.read, primaryNetwork.rpcUrls.default.http]
+    http: [appConfig.rpc.read].concat(primaryNetwork.rpcUrls.default.http)
   }
 }
 

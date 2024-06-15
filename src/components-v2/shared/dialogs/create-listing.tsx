@@ -1,23 +1,23 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {specialImageTransform} from "@market/helpers/hacks";
-import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {Contract, ethers} from "ethers";
-import {getCollectionMetadata} from "@src/core/api";
-import {toast} from "react-toastify";
-import EmptyData from "@src/Components/Offer/EmptyData";
-import {ERC721} from "@src/global/contracts/Abis";
+import React, { useCallback, useEffect, useState } from 'react';
+import { specialImageTransform } from '@market/helpers/hacks';
+import { AnyMedia } from '@src/components-v2/shared/media/any-media';
+import { Contract } from 'ethers';
+import { getCollectionMetadata } from '@src/core/api';
+import { toast } from 'react-toastify';
+import EmptyData from '@src/Components/Offer/EmptyData';
+import { ERC721 } from '@src/global/contracts/Abis';
 import {
-  ciEquals,
   createSuccessfulTransactionToastContent,
   isBundle,
   isGaslessListing,
+  isNativeCro,
   isRyoshiResourceToken,
   round,
   usdFormat
-} from "@market/helpers/utils";
-import {appConfig} from "@src/Config";
-import {useWindowSize} from "@market/hooks/useWindowSize";
-import {collectionRoyaltyPercent} from "@src/core/chain";
+} from '@market/helpers/utils';
+import { appConfig } from '@src/Config';
+import { useWindowSize } from '@market/hooks/useWindowSize';
+import { collectionRoyaltyPercent } from '@src/core/chain';
 import {
   Box,
   Button as ChakraButton,
@@ -51,19 +51,19 @@ import {
   Tag,
   Text,
   useNumberInput
-} from "@chakra-ui/react";
-import {getTheme} from "@src/global/theme/theme";
-import ImagesContainer from "@src/Components/Bundle/ImagesContainer";
-import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
-import {parseErrorMessage} from "@src/helpers/validator";
-import {useExchangeRate, useTokenExchangeRate} from "@market/hooks/useGlobalPrices";
-import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
-import ReactSelect from "react-select";
-import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
-import {useUser} from "@src/components-v2/useUser";
-import * as Sentry from "@sentry/nextjs";
-import {QuestionOutlineIcon} from "@chakra-ui/icons";
+} from '@chakra-ui/react';
+import { getTheme } from '@src/global/theme/theme';
+import ImagesContainer from '@src/Components/Bundle/ImagesContainer';
+import useUpsertGaslessListings from '@src/Components/Account/Settings/hooks/useUpsertGaslessListings';
+import { parseErrorMessage } from '@src/helpers/validator';
+import { useExchangeRate, useTokenExchangeRate } from '@market/hooks/useGlobalPrices';
+import { PrimaryButton, SecondaryButton } from '@src/components-v2/foundation/button';
+import ReactSelect, { SingleValue } from 'react-select';
+import { DynamicNftImage } from '@src/components-v2/shared/media/dynamic-nft-image';
+import { useUser } from '@src/components-v2/useUser';
+import * as Sentry from '@sentry/nextjs';
+import { QuestionOutlineIcon } from '@chakra-ui/icons';
+import useCurrencyBroker, { BrokerCurrency } from '@market/hooks/use-currency-broker';
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -111,23 +111,6 @@ const expirationDatesValues = [
   },
 ]
 
-const currencyOptions = [
-  {
-    name: 'CRO',
-    symbol: 'cro',
-    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
-  },
-  ...config.listings.currencies.available
-    .filter((symbol: string) => !!config.tokens[symbol.toLowerCase()])
-    .map((symbol: string) => {
-      const token = config.tokens[symbol.toLowerCase()];
-      return {
-        ...token,
-        image: <DynamicCurrencyIcon address={token.address} boxSize={6} />
-      }
-    }),
-];
-
 interface MakeGaslessListingDialogProps {
   isOpen: boolean;
   nft: any;
@@ -136,6 +119,8 @@ interface MakeGaslessListingDialogProps {
 }
 
 export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing }: MakeGaslessListingDialogProps) {
+  const { nativeCurrency, getByCollection } = useCurrencyBroker();
+
   // Input states
   const [salePrice, setSalePrice] = useState<number>();
   const [expirationDate, setExpirationDate] = useState({ type: 'dropdown', value: new Date().getTime() + 2592000000 });
@@ -156,8 +141,8 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
 
   const [showConfirmButton, setShowConfirmButton] = useState(false);
-  const [allowedCurrencies, setAllowedCurrencies] = useState<string[]>([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<any>();
+  const [allowedCurrencies, setAllowedCurrencies] = useState<BrokerCurrency[]>([]);
+  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(nativeCurrency);
   const [secureCancel, setSecureCancel] = useState(false);
   const [isRyoshiToken, setIsRyoshiToken] = useState(false);
 
@@ -165,7 +150,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
 
   const user = useUser();
   const [upsertGaslessListings, responseUpsert] = useUpsertGaslessListings();
-  const { tokenToUsdValue, tokenToCroValue, croToTokenValue } = useTokenExchangeRate(selectedCurrency?.address);
+  const { tokenToUsdValue, tokenToCroValue, croToTokenValue } = useTokenExchangeRate(selectedCurrency.address);
   const { usdValueForToken, croValueForToken } = useExchangeRate();
 
   const isBelowFloorPrice = (price: number) => {
@@ -244,21 +229,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         setIsTransferApproved(false);
       }
 
-
-      type CurrencyEntry = {
-        [key: string]: string[];
-      }
-
-      const availableCurrencySymbols: CurrencyEntry | undefined = Object.entries(config.listings.currencies.nft)
-        .find(([key]) => ciEquals(key, nftAddress)) as CurrencyEntry | undefined;
-
-      const allowed = currencyOptions.filter(({symbol}: { symbol: string }) => {
-        if (availableCurrencySymbols) {
-          return availableCurrencySymbols[1].includes(symbol.toLowerCase());
-        } else {
-          return config.listings.currencies.global.includes(symbol.toLowerCase())
-        }
-      });
+      const allowed = getByCollection(nftAddress);
       setAllowedCurrencies(allowed);
       setSelectedCurrency(allowed[0]);
 
@@ -305,7 +276,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         amount: Number(quantity),
         expirationDate: expirationDate.value,
         is1155: nft.multiToken,
-        currencySymbol: selectedCurrency.symbol,
+        currencySymbol: selectedCurrency!.symbol,
         listingId: listing?.listingId,
       }, secureCancel);
       toast.success("Listing Successful");
@@ -343,6 +314,9 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     if (salePrice.toString().length > 18) {
       setPriceError('Value must not exceed 18 digits');
       return false;
+    }
+    if (!selectedCurrency) {
+      setPriceError('No currency selected');
     }
 
     setQuantityError(null);
@@ -402,7 +376,9 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     }),
   };
 
-  const handleCurrencyChange = useCallback((currency: { symbol: string }) => {
+  const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
+    if (!currency) return;
+
     setSelectedCurrency(currency);
   }, [selectedCurrency]);
 
@@ -517,10 +493,10 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                               menuPortalTarget={document.body} menuPosition={'fixed'}
                               styles={customStyles}
                               options={allowedCurrencies}
-                              formatOptionLabel={({ name, image }) => (
+                              formatOptionLabel={({ symbol, image }) => (
                                 <HStack>
                                   {image}
-                                  <span>{name}</span>
+                                  <span>{symbol}</span>
                                 </HStack>
                               )}
                               value={selectedCurrency}
@@ -533,7 +509,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                         <FormErrorMessage fontSize='xs' mt={1}>{priceError}</FormErrorMessage>
                       </FormControl>
                       <Box fontSize='sm' fontWeight='bold' className='text-muted'>
-                        {selectedCurrency.symbol !== 'cro' && (
+                        {!isNativeCro(selectedCurrency.address) && (
                           <Text as='span'>{round(tokenToCroValue(salePrice ?? 0), 2)} CRO / </Text>
                         )}
                         <Text as='span'>{usdFormat(tokenToUsdValue(salePrice ?? 0))} USD</Text>
@@ -603,12 +579,12 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <Flex justify='space-between'>
                         <Box as='span'>Total Listing Price: </Box>
                         <Box as='span'>
-                          <Box fontWeight='bold'>{totalPrice} {selectedCurrency.name}</Box>
+                          <Box fontWeight='bold'>{totalPrice} {selectedCurrency.symbol}</Box>
                         </Box>
                       </Flex>
                       <Flex justify='end' style={{marginBottom:0}}>
                         <Box fontSize='sm' className='text-muted'>
-                          {selectedCurrency.symbol !== 'cro' && (
+                          {!isNativeCro(selectedCurrency.address) && (
                             <Text as='span' fontSize='sm' className='text-muted'>{round(tokenToCroValue(totalPrice))} CRO / </Text>
                           )}
                           <Text as='span' fontSize='sm' className='text-muted'>{usdFormat(tokenToUsdValue(totalPrice))} USD</Text>
@@ -622,8 +598,8 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       </Flex>
                       <Flex justify='end' style={{marginBottom:0}}>
                         <Box fontSize='sm' className='text-muted'>
-                          {selectedCurrency.symbol !== 'cro' && (
-                            <Text as='span' fontSize='sm' className='text-muted'>{round(croValueForToken(floorPrice, selectedCurrency?.address))} {selectedCurrency?.name} / </Text>
+                          {!isNativeCro(selectedCurrency.address) && (
+                            <Text as='span' fontSize='sm' className='text-muted'>{round(croValueForToken(floorPrice, selectedCurrency.address))} {selectedCurrency?.name} / </Text>
                           )}
                           <Text as='span' fontSize='sm' className='text-muted'>{usdFormat(usdValueForToken(floorPrice))} USD</Text>
                         </Box>
@@ -635,12 +611,12 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <Flex justify='space-between' style={{marginBottom:0}}>
                         <Box as='span' className='label' fontWeight='bold'>You receive: </Box>
                         <Box as='span'>
-                          <Box fontWeight='bold'>{getYouReceiveViewValue()} {selectedCurrency.name}</Box>
+                          <Box fontWeight='bold'>{getYouReceiveViewValue()} {selectedCurrency.symbol}</Box>
                         </Box>
                       </Flex>
                       <Flex justify='end' style={{marginBottom:0}}>
                         <Box fontSize='sm' className='text-muted'>
-                          {selectedCurrency.symbol !== 'cro' && (
+                          {!isNativeCro(selectedCurrency.address) && (
                             <Text as='span' fontWeight='bold' fontSize='sm' className='text-muted'>{round(tokenToCroValue(getYouReceiveViewValue()))} CRO / </Text>
                           )}
                           <Text as='span' fontWeight='bold' fontSize='sm' className='text-muted'>{usdFormat(tokenToUsdValue(getYouReceiveViewValue()))} USD</Text>

@@ -11,7 +11,7 @@ import PageHeader from "@src/components-v2/shared/layout/page-header";
 import {pushQueryString} from "@src/helpers/query";
 import {useQuery} from "@tanstack/react-query";
 import {getMarketMetadata} from "@src/core/api";
-import {DefaultContainer} from "@src/components-v2/shared/default-container";
+import {DefaultContainer} from "@src/components-v2/shared/containers";
 
 
 const tabs = {

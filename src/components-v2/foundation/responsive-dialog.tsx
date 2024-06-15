@@ -13,25 +13,24 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
+  ModalOverlay, ModalProps,
   useBreakpointValue
 } from "@chakra-ui/react";
 import React, {ComponentType, ReactNode} from "react";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
+import {ResponsiveValue} from "@chakra-ui/system";
+import {DrawerDialog, ModalDialog} from "@src/components-v2/foundation/modal";
 
 export type ResponsiveDialogComponents = {
+  DialogHeader: ComponentType<BoxProps & { children: ReactNode }>;
   DialogBody: ComponentType<BoxProps & { children: ReactNode }>;
   DialogFooter: ComponentType<BoxProps & { children: ReactNode }>;
 }
 
-type DialogProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
-}
-
 export const useResponsiveDialog = () => {
+  const user = useUser();
+
   const shouldUseDrawer = useBreakpointValue({ base: true, sm: false }, { fallback: 'sm' });
   if (shouldUseDrawer) {
     return {
@@ -39,6 +38,7 @@ export const useResponsiveDialog = () => {
       DialogHeader: DrawerHeader,
       DialogBody: DrawerBody,
       DialogFooter: DrawerFooter,
+      DialogCloseButton: () => <DrawerCloseButton color={getTheme(user.theme).colors.textColor4} />
     };
   } else {
     return {
@@ -46,45 +46,7 @@ export const useResponsiveDialog = () => {
       DialogHeader: ModalHeader,
       DialogBody: ModalBody,
       DialogFooter: ModalFooter,
+      DialogCloseButton: () => <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
     };
   }
 };
-
-const ModalDialog = ({isOpen, onClose, title, children}: DialogProps & {children: ReactNode}) => {
-  const user = useUser();
-
-  return (
-    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader className="text-center">
-          {title}
-        </ModalHeader>
-        <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
-        {children}
-      </ModalContent>
-    </Modal>
-  )
-}
-
-const DrawerDialog = ({isOpen, onClose, title, children}: DialogProps & {children: ReactNode}) => {
-  const user = useUser();
-
-  return (
-    <Drawer
-      isOpen={isOpen}
-      onClose={onClose}
-      size="sm"
-      placement='bottom'
-    >
-      <DrawerOverlay />
-      <DrawerContent>
-        <DrawerHeader>
-          {title}
-        </DrawerHeader>
-        <DrawerCloseButton color={getTheme(user.theme).colors.textColor4} />
-        {children}
-      </DrawerContent>
-    </Drawer>
-  )
-}

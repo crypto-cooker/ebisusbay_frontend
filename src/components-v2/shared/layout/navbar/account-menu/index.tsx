@@ -50,6 +50,8 @@ import {
   Text,
   useBreakpointValue,
   useClipboard,
+  useDisclosure,
+  VStack,
   Wrap
 } from "@chakra-ui/react";
 import CronosIconFlat from "@src/components-v2/shared/icons/cronos";
@@ -69,6 +71,7 @@ const Index = function () {
   const user = useUser();
   const { open: openWeb3Modal, close: closeWeb3Modal } = useWeb3Modal();
   const contractService = useContractService();
+  const { isOpen: isLoginWizardOpen, onOpen: onLoginWizardOpen, onClose: onLoginWizardClose } = useDisclosure()
 
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -82,6 +85,7 @@ const Index = function () {
     },
   );
   const [showWrongChainModal, setShowWrongChainModal] = useState(false);
+  const isMobile = useBreakpointValue({ base: true, sm: false });
 
   const { setValue:setClipboardValue, onCopy } = useClipboard(user.wallet.address ?? '');
 
@@ -208,10 +212,23 @@ const Index = function () {
     </svg>
   );
 
+  const handleOpenLoginWizard = () => {
+    if (isMobile) {
+      onLoginWizardOpen();
+    } else {
+      openWeb3Modal();
+    }
+  }
+
+  const handleLoginWizardComplete = () => {
+    onLoginWizardClose();
+    openWeb3Modal();
+  }
+
   return (
     <div>
-      {!user.wallet.isConnected && (
-        <div className="de-menu-notification" onClick={() => openWeb3Modal()} style={{background: '#218cff', marginLeft:'5px'}}>
+      {!user.address && (
+        <div className="de-menu-notification" onClick={handleOpenLoginWizard} style={{background: '#218cff', marginLeft:'5px'}}>
           <FontAwesomeIcon icon={faWallet} color="white" />
         </div>
       )}
@@ -257,6 +274,32 @@ const Index = function () {
                 Switch
               </PrimaryButton>
             </ButtonGroup>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal onClose={onLoginWizardClose} isOpen={isLoginWizardOpen} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader className="text-center">
+            Mobile Pro Tip:
+          </ModalHeader>
+          <ModalCloseButton color={getTheme(user.theme)!.colors.textColor4} />
+          <ModalBody >
+            <VStack spacing={4}>
+              <Text align='center'>
+                If you are having trouble connecting with DeFi Wallet or MetaMask, click <strong>"Browser Wallet"</strong> for better success.
+              </Text>
+              <Image
+                src={ImageService.translate('/img/login-wizard.webp').convert()}
+                maxW={400}
+              />
+            </VStack>
+          </ModalBody>
+          <ModalFooter>
+            <PrimaryButton w='full' onClick={handleLoginWizardComplete}>
+              Ok, Got it
+            </PrimaryButton>
           </ModalFooter>
         </ModalContent>
       </Modal>

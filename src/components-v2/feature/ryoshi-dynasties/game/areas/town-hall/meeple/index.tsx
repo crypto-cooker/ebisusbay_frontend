@@ -98,7 +98,7 @@ const Meeple = ({isOpen, onClose}: MeepleProps) => {
       const wallet = await NextApiService.getWallet(user.address!, {
         page: 1,
         pageSize: 100,
-        collection: collectionAddress
+        collection: [collectionAddress]
       });
       const nftInfo = splitWalletData(wallet.data);
 

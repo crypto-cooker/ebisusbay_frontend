@@ -61,7 +61,7 @@ const useApprovalStatus = () => {
       } else if (isToken) {
         const approvedAmount = BigNumber.from(approval.result);
         const requiredAmount = BigNumber.from(item.start_amount);
-        acc[key.toLowerCase()] = approvedAmount >= requiredAmount;
+        acc[key.toLowerCase()] = approvedAmount.gte(requiredAmount);
       }
 
       return acc;

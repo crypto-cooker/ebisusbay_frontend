@@ -21,7 +21,7 @@ const boldFont = fetch(
 //   new URL('/public/img/logos/cronos_white.png', import.meta.url))
 // .then((res) => res.arrayBuffer());
 
-const defaultBanner = `${appConfig('urls').app}img/background/banner-ryoshi-light.webp`;
+const defaultBanner = `${appConfig('urls').app}img/background/banner-default.webp`;
 
 const collections = appConfig('collections');
 

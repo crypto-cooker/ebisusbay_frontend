@@ -246,7 +246,7 @@ const BattleDrawer = ({isOpen, onClose}: BattleDrawerProps) => {
 
   const getKobanBalance = async () => {
     let nfts = await NextApiService.getWallet(user!.address!, {
-      collection: config.contracts.resources,
+      collection: [config.contracts.resources],
     });
     let kobanBalance = 0;
     if (nfts.data.length > 0) {
@@ -505,7 +505,7 @@ const LeaderboardDrawer = ({isOpen, onClose}: LeaderboardDrawerProps) => {
                 <Table size='sm'>
                   <Thead>
                     <Tr>
-                      <Th textAlign='left'>Rank</Th>
+                      <Th textAlign='left'>#</Th>
                       <Th textAlign='left'>Faction</Th>
                       <Th textAlign='left' isNumeric>Points</Th>
                     </Tr>

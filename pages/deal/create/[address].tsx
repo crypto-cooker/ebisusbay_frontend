@@ -9,7 +9,7 @@ import {getProfile} from "@src/core/cms/endpoints/profile";
 import {caseInsensitiveCompare, ciEquals, shortAddress} from "@market/helpers/utils";
 import {isAddress} from "ethers/lib/utils";
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import {DefaultContainer} from "@src/components-v2/shared/default-container";
+import {DefaultContainer} from "@src/components-v2/shared/containers";
 import {Alert, AlertDescription, AlertIcon, Icon, Link} from "@chakra-ui/react";
 import NextLink from "next/link";
 import {ApiService} from "@src/core/services/api-service";

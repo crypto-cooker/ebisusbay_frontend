@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import styled, {createGlobalStyle} from 'styled-components';
 import Reveal from 'react-awesome-reveal';
 import {keyframes} from '@emotion/react';
-import dynamic from 'next/dynamic';
 import {faLightbulb, faTags} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useRouter} from "next/router";
@@ -72,8 +71,8 @@ const StyledForm = styled.div`
 `;
 
 const choice = {
-  listing: 'listing',
-  launchpad: 'launchpad'
+  marketplace: 'marketplace',
+  dex: 'dex'
 };
 
 const Application = ({type}: { type: string }) => {
@@ -101,22 +100,22 @@ const Application = ({type}: { type: string }) => {
 
   return (
     <div>
-      {type === choice.listing ? (
+      {type === choice.marketplace ? (
         <PageHead
-          title="Listing Application"
-          description="Get your project listed on Ebisu's Bay Marketplace"
-          url="/apply?type=listing"
+          title="NFT Listing Application"
+          description="Get your NFT project listed on Ebisu's Bay Marketplace"
+          url="/apply?type=marketplace"
         />
-      ) : type === choice.launchpad ? (
+      ) : type === choice.dex ? (
         <PageHead
-          title="Launchpad Application"
-          description="Get your project launched on Ebisu's Bay Launchpad"
-          url="/apply?type=launchpad"
+          title="DEX Listing Application"
+          description="Get your project whitelisted on Ebisu's Bay DEX"
+          url="/apply?type=dex"
         />
       ) : (
         <PageHead
-          title="Listing & Launchpad Application"
-          description="Get your project to market on Ebisu's Bay Marketplace"
+          title="Listing Applications"
+          description="Get your project to market on the Ebisu's Bay Platform"
           url="/apply"
         />
       )}
@@ -130,19 +129,19 @@ const Application = ({type}: { type: string }) => {
         <div className="row justify-content-center mt-2">
           <div className="col-xl-4 col-sm-6 d-flex justify-content-center mb-2 mb-sm-0">
             <ChoiceBox
-              className={`tab feature-box f-boxed style-3 ${openTab === choice.listing ? 'active' : ''}`}
+              className={`tab feature-box f-boxed style-3 ${openTab === choice.marketplace ? 'active' : ''}`}
               style={{ cursor: 'pointer' }}
-              onClick={handleBtnClick(choice.listing)}
+              onClick={handleBtnClick(choice.marketplace)}
             >
               <Reveal className="onStep mb-3" keyframes={fadeInUp} delay={0} duration={600} triggerOnce>
                 <FontAwesomeIcon className="bg-color-2" icon={faTags} />
               </Reveal>
               <div className="text">
                 <Reveal className="onStep" keyframes={fadeInUp} delay={100} duration={600} triggerOnce>
-                  <Heading as="h4" size="md">Listing Request</Heading>
+                  <Heading as="h4" size="md">NFT Listing Request</Heading>
                 </Reveal>
                 <Reveal className="onStep" keyframes={fadeInUp} delay={200} duration={600} triggerOnce>
-                  <p className="">For established projects that would like to be added to the marketplace.</p>
+                  <p className="">For established NFT projects that would like to be added to the marketplace.</p>
                 </Reveal>
               </div>
             </ChoiceBox>
@@ -150,19 +149,19 @@ const Application = ({type}: { type: string }) => {
 
           <div className="col-xl-4 col-sm-6 d-flex justify-content-center">
             <ChoiceBox
-              className={`tab feature-box f-boxed style-3 ${openTab === choice.launchpad ? 'active' : ''}`}
+              className={`tab feature-box f-boxed style-3 ${openTab === choice.dex ? 'active' : ''}`}
               style={{ cursor: 'pointer' }}
-              onClick={handleBtnClick(choice.launchpad)}
+              onClick={handleBtnClick(choice.dex)}
             >
               <Reveal className="onStep mb-3" keyframes={fadeInUp} delay={0} duration={600} triggerOnce>
                 <FontAwesomeIcon className="bg-color-2" icon={faLightbulb} />
               </Reveal>
               <div className="text">
                 <Reveal className="onStep" keyframes={fadeInUp} delay={100} duration={600} triggerOnce>
-                  <Heading as="h4" size="md">Launchpad Request</Heading>
+                  <Heading as="h4" size="md">DEX Listing Request</Heading>
                 </Reveal>
                 <Reveal className="onStep" keyframes={fadeInUp} delay={200} duration={600} triggerOnce>
-                  <p className="">For projects that would like to launch on the Ebisu's Bay launchpad</p>
+                  <p className="">For projects that would like to be whitelisted on our DEX.</p>
                 </Reveal>
               </div>
             </ChoiceBox>
@@ -171,9 +170,9 @@ const Application = ({type}: { type: string }) => {
         <div id="form" className="row">
           <div className="col">
             <div className="col-lg-12 mt-4">
-              {openTab === choice.listing && (
+              {openTab === choice.marketplace && (
                 <>
-                  <Heading as="h3" size="md" className="text-center">Listing Request</Heading>
+                  <Heading as="h3" size="md" className="text-center">NFT Listing Request</Heading>
                   <iframe
                     height="1660px"
                     src="https://noteforms.com/forms/listing-requests-silnni"
@@ -182,12 +181,12 @@ const Application = ({type}: { type: string }) => {
                   </iframe>
                 </>
               )}
-              {openTab === choice.launchpad && (
+              {openTab === choice.dex && (
                 <>
-                  <Heading as="h3" size="md" className="text-center">Launchpad Request</Heading>
+                  <Heading as="h3" size="md" className="text-center">DEX Listing Request</Heading>
                   <iframe
                     height="1660px"
-                    src="https://noteforms.com/forms/launchpad-applications-orrort"
+                    src="https://noteforms.com/forms/whitelist-requests-ow549o"
                     style={{width: '100%', border:'none'}}
                   >
                   </iframe>

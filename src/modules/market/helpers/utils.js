@@ -3,7 +3,7 @@ import blacklist from '../../../core/configs/blacklist.json';
 import attributes from '../../../core/configs/attributes.json';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
 import {appConfig} from '../../../Config';
-import {commify} from "ethers/lib/utils";
+import {commify, getAddress} from "ethers/lib/utils";
 import brands from '../../../core/data/brands.json';
 import ImageService from "@src/core/services/image";
 import {ethers} from "ethers";
@@ -706,8 +706,17 @@ export const getAddressFromSlug = (slug) => {
 };
 
 // can use web3.utils.isAddress tho
-export const isAddress = (address) => {
-  return /^(0x){1}[0-9a-fA-F]{40}$/i.test(address);
+export const isAddress = (value) => {
+  if (!value) {
+    return false
+  }
+  try {
+    // Alphabetical letters must be made lowercase for getAddress to work.
+    // See documentation here: https://docs.ethers.io/v5/api/utils/address/
+    return getAddress(value.toLowerCase())
+  } catch {
+    return false
+  }
 };
 
 export const isEmptyObj = (obj) => {

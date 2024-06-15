@@ -317,7 +317,7 @@ const MultiDrop = () => {
       <>
         <HeroSection
           className={`jumbotron h-vh tint`}
-          style={{ backgroundImage: `url(${drop.images.banner ? drop.images.banner : '/img/background/banner-ryoshi-light.webp'})` }}
+          style={{ backgroundImage: `url(${drop.images.banner ? drop.images.banner : '/img/background/banner-default.webp'})` }}
         >
           <div className="container">
             <div className="row align-items-center">

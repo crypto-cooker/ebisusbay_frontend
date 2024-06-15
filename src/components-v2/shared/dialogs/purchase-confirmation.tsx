@@ -1,25 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {specialImageTransform} from "@market/helpers/hacks";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {Contract, ContractReceipt, ethers} from "ethers";
+import {ContractReceipt, ethers} from "ethers";
 import Button from "@src/Components/components/Button";
 import {toast} from "react-toastify";
 import EmptyData from "@src/Components/Offer/EmptyData";
 import {
-  caseInsensitiveCompare,
+  ciEquals,
   isBundle,
   isEbVipCollection,
   isErc20Token,
   isGaslessListing,
   knownErc20Token,
   round
-} from "@market/helpers/utils";
+} from '@market/helpers/utils';
 import {getTheme} from "@src/global/theme/theme";
 import {
   Box,
   Button as ChakraButton,
   Flex,
   HStack,
+  Icon,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -30,6 +31,7 @@ import {
   SimpleGrid,
   Spacer,
   Spinner,
+  Stack,
   Text,
   VStack
 } from "@chakra-ui/react";
@@ -39,7 +41,7 @@ import {useQuery} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
 import useBuyGaslessListings from "@market/hooks/useBuyGaslessListings";
 import DotIcon from "@src/Components/components/DotIcon";
-import {faCheck} from "@fortawesome/free-solid-svg-icons";
+import {faCheck, faCreditCardAlt} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 import PurchaseSuccessDialog from './purchase-success';
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
@@ -50,8 +52,20 @@ import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image
 import Link from "next/link";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
+import {Listing} from "@src/core/models/listing";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {useSearchParams} from "next/navigation";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import useTransak from "@market/hooks/use-transak";
+import {is1155} from "@market/helpers/chain";
+
 
 const config = appConfig();
+
+enum PaymentType {
+  CRYPTO = 'CRYPTO',
+  CARD = 'CARD'
+}
 
 type PurchaseConfirmationDialogProps = {
   onClose: () => void;
@@ -68,6 +82,11 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const [isComplete, setIsComplete] = useState(false);
   const [tx, setTx] = useState<ContractReceipt>();
   const [finalCostValues, setFinalCostValues] = useState<[{ value: string, currency: string }, { value: string }]>();
+  const [paymentType, setPaymentType] = useState(PaymentType.CRYPTO);
+
+  const [showTransakButton, setShowTransakButton] = useState(false);
+  const searchParams = useSearchParams();
+  const {isEligible} = useTransak();
 
   const getInitialProps = async () => {
     const listingsResponse = await NextApiService.getListingsByIds(listingId);
@@ -142,9 +161,9 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       let amt = numericPrice;
 
       let fee =  numericPrice * (user.fee / 100);
-      const erc20UsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, listing.currency));
+      const erc20UsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, listing.currency));
       if (!!erc20UsdRate && erc20UsdRate.currency !== ethers.constants.AddressZero) {
-        const croUsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, ethers.constants.AddressZero) && rate.chain === 25);
+        const croUsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, ethers.constants.AddressZero) && rate.chain.toString() === config.chain.id.toString());
         fee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice) * (user.fee / 100);
       }
       amt += listing.currency === ethers.constants.AddressZero ? fee : 0;
@@ -167,10 +186,19 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
 
   const [hasAcceptedVipCondition, setHasAcceptedVipCondition] = useState(false);
 
+  useEffect(() => {
+    async function checkEligibility() {
+      // const isTransakEnabled = searchParams?.get('transak') === 'true';
+      const canUseTransak = await isEligible(listing);
+      setShowTransakButton(canUseTransak)
+    }
+    if (listing) checkEligibility();
+  }, [listing]);
+
   return isComplete ? (
     <PurchaseSuccessDialog onClose={onClose} isOpen={isOpen} listing={listing} tx={tx} />
   ) : (
-    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered>
+    <Modal onClose={onClose} isOpen={isOpen} size="2xl" isCentered trapFocus={false}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
@@ -257,11 +285,19 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       )}
                     </div>
                     <Text fontSize={18} fontWeight="bold">Pay with</Text>
-                    <SimpleGrid columns={{base: 1, sm: 2}}>
-                      <Box className="card form_icon_button shadow active" alignItems="start !important" p={2}>
-                        <DotIcon icon={faCheck} />
+                    <SimpleGrid columns={{base: 1, sm: 2}}  spacing={2}>
+                      <Box
+                        className={`card form_icon_button shadow ${paymentType === PaymentType.CRYPTO ? 'active' : ''}`}
+                        alignItems="start !important"
+                        p={2}
+                        onClick={() => setPaymentType(PaymentType.CRYPTO)}
+                        style={{marginBottom:0}}
+                      >
+                        {paymentType === PaymentType.CRYPTO && (
+                          <DotIcon icon={faCheck} />
+                        )}
                         {knownErc20Token(listing.currency) ? (
-                          <CurrencyOption currency={knownErc20Token(listing.currency)} />
+                          <CurrencyOption currency={knownErc20Token(listing.currency)!} />
                         ) : (
                           <>
                             <Flex align="center">
@@ -274,6 +310,22 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                           </>
                         )}
                       </Box>
+                      {showTransakButton && (
+                        <Box
+                          className={`card form_icon_button shadow ${paymentType === PaymentType.CARD ? 'active' : ''}`}
+                          alignItems="start !important"
+                          p={2}
+                          onClick={() => setPaymentType(PaymentType.CARD)}
+                        >
+                          {paymentType === PaymentType.CARD && (
+                            <DotIcon icon={faCheck} />
+                          )}
+                          <VStack w='full'>
+                            <Icon as={FontAwesomeIcon} icon={faCreditCardAlt} boxSize={6}/>
+                            <Box fontWeight='bold' fontSize='xs' textAlign='center'>CREDIT / DEBIT CARD</Box>
+                          </VStack>
+                        </Box>
+                      )}
                     </SimpleGrid>
                     <Spacer />
 
@@ -336,15 +388,22 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                     <small>Please check your wallet for confirmation</small>
                   </div>
                 )}
-                <div className="d-flex">
-                  <Button type="legacy"
-                          onClick={handleExecutePurchase}
-                          isLoading={executingPurchase}
-                          disabled={executingPurchase}
-                          className="flex-fill">
-                    Confirm purchase
-                  </Button>
-                </div>
+                <Stack direction='row'>
+                  {showTransakButton && paymentType === PaymentType.CARD ? (
+                    <TransakOption
+                      listing={listing}
+                    />
+                  ) : (
+                    <PrimaryButton
+                      onClick={handleExecutePurchase}
+                      isLoading={executingPurchase}
+                      disabled={executingPurchase}
+                      className="flex-fill"
+                    >
+                      Confirm purchase
+                    </PrimaryButton>
+                  )}
+                </Stack>
               </div>
             </ModalFooter>
           </>
@@ -354,7 +413,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   );
 }
 
-const CurrencyOption = ({currency}: {currency: {address: string, symbol: string, name: string}}) => {
+const CurrencyOption = ({currency}: {currency: {address: string, symbol: string, name: string, decimals: number}}) => {
   const user = useUser();
   const contractService = useContractService();
 
@@ -382,5 +441,33 @@ const CurrencyOption = ({currency}: {currency: {address: string, symbol: string,
         </HStack>
       </Flex>
     </>
+  )
+}
+
+const TransakOption = ({listing}: {listing: Listing}) => {
+  const {purchase, isLoading} = useTransak();
+
+  const handlePurchase = async () => {
+    await purchase([{
+      listingId: listing.listingId,
+      price: parseInt(listing.price),
+      amount: listing.amount,
+      currency: listing.currency,
+      nftAddress: listing.nftAddress,
+      nftId: listing.nftId,
+      name: listing.nft.name,
+      image: listing.nft.image
+    }]);
+  };
+
+  return (
+    <PrimaryButton
+      onClick={handlePurchase}
+      className="flex-fill"
+      isLoading={isLoading}
+      isDisabled={isLoading}
+    >
+      Confirm purchase
+    </PrimaryButton>
   )
 }
