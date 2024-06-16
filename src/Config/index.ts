@@ -338,6 +338,7 @@ const configData: AppConfigMap = {
           '0x975238Ce3c593060a9b549e1654dC992f0Bc11aC': ['cro', 'frtn', 'emit'], // Power Tonics
           '0x87e04f1d64619994a5320450E19C184a2dDE09c7': ['cro', 'frtn', 'emit'], // CroTops
           '0x35B832bE9546fCad67526Be2801228194250378A': ['cro', 'frtn', 'emit'], // Time Base
+          '0x127b2ac798F961D0EbA3B10DD7B550cAa9a8E773': ['cro', 'frtn', 'emit'], // Time Base
           '0xF87A517A5CaecaA03d7cCa770789BdB61e09e05F': ['cro'], // CroSkill Brand Start
           '0xbf4E430cD0ce8b93d4760958fe4ae66cDaCDB6c6': ['cro'],
           '0x14e9ef197C0bfaf7C1328ebed7151f53616Af3C5': ['cro'],
