@@ -1,10 +1,10 @@
-import {Address, useAccount, useBalance, useDisconnect, useNetwork} from "wagmi";
+import {useAccount, useAccountEffect, useBalance, useDisconnect} from "wagmi";
 import {createContext, ReactNode, useEffect} from "react";
 import {appConfig} from "@src/Config";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {useQuery} from "@tanstack/react-query";
-import {multicall} from "@wagmi/core";
-import {portABI, stakeABI} from "@src/global/contracts/types";
+import { multicall, watchAccount, watchChainId, watchClient, watchConnections, watchConnectors, type MulticallParameters } from '@wagmi/core';
+import {portAbi, stakeAbi} from "@src/global/contracts/types";
 import {ethers} from "ethers";
 import {JotaiUser, UserActionType, userAtom} from "@market/state/jotai/atoms/user";
 import {useAtom} from "jotai";
@@ -44,16 +44,59 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   // isConnected - true when explicitly connecting to wallet from dialog
   // isReconnecting - true when wallet is auto connecting after page refresh
-  const {address, isConnecting, isConnected, isReconnecting, status,connector} = useAccount({
+  const {address, isConnecting, isConnected, isReconnecting, status,connector, chain} = useAccount();
+
+  useAccountEffect({
     onDisconnect() {
+      Sentry.captureMessage('disconnected captured from useAccountEffect')
       clearUser();
     }
-  });
+  })
 
-  const { chain } = useNetwork();
-  const { disconnect: disconnectWallet } = useDisconnect();
+  // const listenToAccount = watchAccount(wagmiConfig as any, {
+  //   onChange(data) {
+  //     console.log('Account changed!', data)
+  //     Sentry.captureEvent({ message: 'Account changed!', extra: data});
+  //   },
+  // });
+  //
+  // const listenToChainId = watchChainId(wagmiConfig as any, {
+  //   onChange(chainId) {
+  //     console.log('Chain ID changed!', chainId)
+  //     Sentry.captureEvent({ message: 'Chain ID changed!', extra: chainId});
+  //   },
+  // })
+  //
+  // const listenToClient = watchClient(wagmiConfig as any, {
+  //   onChange(client) {
+  //     console.log('Client changed!', client)
+  //     Sentry.captureEvent({ message: 'Client changed!', extra: client});
+  //   },
+  // })
+  // const listenToConnections = watchConnections(wagmiConfig as any, {
+  //   onChange(data) {
+  //     console.log('Connections changed!', data)
+  //     Sentry.captureEvent({ message: 'Connections changed!', extra: {data}});
+  //   },
+  // })
+  // const listenToConnectors = watchConnectors(wagmiConfig as any, {
+  //   onChange(connectors) {
+  //     console.log('Connectors changed!', connectors)
+  //     Sentry.captureEvent({ message: 'Connectors changed!', extra: { connectors }});
+  //   },
+  // })
+  //
+  // useEffect(() => {
+  //   listenToAccount();
+  //   listenToChainId();
+  //   listenToClient();
+  //   listenToConnections();
+  //   listenToConnectors();
+  // }, []);
+
+  const { disconnectAsync: disconnectWallet } = useDisconnect();
   const croBalance = useBalance({ address: address });
-  const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address as Address });
+  const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address });
   const { setColorMode: setChakraTheme } = useColorMode();
   const { setThemeMode: setWeb3ModalTheme } = useWeb3ModalTheme();
 
@@ -73,38 +116,38 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         throw {err: 'Unable to connect'};
       }
 
-      const data = await multicall({
+      const data = await multicall(wagmiConfig as any, {
         contracts: [
           {
-            address: config.contracts.market as Address,
-            abi: portABI,
+            address: config.contracts.market,
+            abi: portAbi,
             functionName: 'isMember',
             args: [address],
           },
           {
-            address: config.contracts.market as Address,
-            abi: portABI,
+            address: config.contracts.market,
+            abi: portAbi,
             functionName: 'useEscrow',
             args: [address],
           },
           {
-            address: config.contracts.market as Address,
-            abi: portABI,
+            address: config.contracts.market,
+            abi: portAbi,
             functionName: 'payments',
             args: [address],
           },
           {
-            address: config.contracts.market as Address,
-            abi: portABI,
+            address: config.contracts.market,
+            abi: portAbi,
             functionName: 'fee',
             args: [address],
           },
           {
-            address: config.contracts.stake as Address,
-            abi: stakeABI,
+            address: config.contracts.stake,
+            abi: portAbi,
             functionName: 'getReward',
             args: [address],
-          },
+          } as any // only way to fix error "Type instantiation is excessively deep and possibly infinite."
         ],
       });
 
@@ -116,7 +159,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
             balance: parseInt(ethers.utils.formatEther(data[2].result ?? 0)),
           },
           balances: {
-            staking: parseInt(ethers.utils.formatEther(data[4].result ?? 0)),
+            staking: parseInt(ethers.utils.formatEther(data[4].result as any ?? 0)),
           },
           fee: data[3].result ? (Number(data[3].result) / 10000) * 100 : 3,
           isMember: data[0].result ?? false
@@ -134,8 +177,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
-  const disconnect = () => {
-    disconnectWallet();
+  const disconnect = async () => {
+    Sentry.captureMessage('Calling disconnect...');
+    await disconnectWallet();
+    Sentry.captureMessage('Disconnect called. Clearing user...');
+    clearUser();
+    Sentry.captureMessage('clearUser complete');
   }
 
   const clearUser = () => {

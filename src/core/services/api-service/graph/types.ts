@@ -4590,7 +4590,7 @@ export type Pool = {
   masterChef: MasterChef;
   pair: Scalars['Bytes']['output'];
   rewarderCount: Scalars['BigInt']['output'];
-  rewarders?: Maybe<Array<Rewarder>>;
+  rewarderPools?: Maybe<Array<RewarderPool>>;
   timestamp: Scalars['BigInt']['output'];
   totalUsersCount: Scalars['BigInt']['output'];
   userCount: Scalars['BigInt']['output'];
@@ -4598,12 +4598,12 @@ export type Pool = {
 };
 
 
-export type PoolRewardersArgs = {
+export type PoolRewarderPoolsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Rewarder_OrderBy>;
+  orderBy?: InputMaybe<RewarderPool_OrderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<Rewarder_Filter>;
+  where?: InputMaybe<RewarderPool_Filter>;
 };
 
 
@@ -4707,7 +4707,7 @@ export type Pool_Filter = {
   rewarderCount_lte?: InputMaybe<Scalars['BigInt']['input']>;
   rewarderCount_not?: InputMaybe<Scalars['BigInt']['input']>;
   rewarderCount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  rewarders_?: InputMaybe<Rewarder_Filter>;
+  rewarderPools_?: InputMaybe<RewarderPool_Filter>;
   timestamp?: InputMaybe<Scalars['BigInt']['input']>;
   timestamp_gt?: InputMaybe<Scalars['BigInt']['input']>;
   timestamp_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -4755,7 +4755,7 @@ export enum Pool_OrderBy {
   MasterChefTotalRegularAllocPoint = 'masterChef__totalRegularAllocPoint',
   Pair = 'pair',
   RewarderCount = 'rewarderCount',
-  Rewarders = 'rewarders',
+  RewarderPools = 'rewarderPools',
   Timestamp = 'timestamp',
   TotalUsersCount = 'totalUsersCount',
   UserCount = 'userCount',
@@ -5050,6 +5050,8 @@ export type Query = {
   registeredSeason?: Maybe<RegisteredSeason>;
   registeredSeasons: Array<RegisteredSeason>;
   rewarder?: Maybe<Rewarder>;
+  rewarderPool?: Maybe<RewarderPool>;
+  rewarderPools: Array<RewarderPool>;
   rewarders: Array<Rewarder>;
   role?: Maybe<Role>;
   roleAdminChanged?: Maybe<RoleAdminChanged>;
@@ -5764,6 +5766,24 @@ export type QueryRewarderArgs = {
 };
 
 
+export type QueryRewarderPoolArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryRewarderPoolsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<RewarderPool_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<RewarderPool_Filter>;
+};
+
+
 export type QueryRewardersArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -6175,13 +6195,60 @@ export enum RegisteredSeason_OrderBy {
 export type Rewarder = {
   __typename?: 'Rewarder';
   id: Scalars['ID']['output'];
-  pool: Pool;
+  poolCount: Scalars['BigInt']['output'];
+  pools?: Maybe<Array<RewarderPool>>;
+  rewardEnd: Scalars['BigInt']['output'];
+  rewardPerSecond: Scalars['BigInt']['output'];
+  rewardStart: Scalars['BigInt']['output'];
+  token: Scalars['Bytes']['output'];
+  totalRegularAllocPoint: Scalars['BigInt']['output'];
 };
 
-export type Rewarder_Filter = {
+
+export type RewarderPoolsArgs = {
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<RewarderPool_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RewarderPool_Filter>;
+};
+
+export type RewarderPool = {
+  __typename?: 'RewarderPool';
+  accRewardPerShare: Scalars['BigInt']['output'];
+  allocPoint: Scalars['BigInt']['output'];
+  attached: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
+  lastRewardBlock: Scalars['BigInt']['output'];
+  lpBalance: Scalars['BigInt']['output'];
+  pool: Pool;
+  rewarder: Rewarder;
+};
+
+export type RewarderPool_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Rewarder_Filter>>>;
+  accRewardPerShare?: InputMaybe<Scalars['BigInt']['input']>;
+  accRewardPerShare_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  accRewardPerShare_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  accRewardPerShare_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  accRewardPerShare_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  accRewardPerShare_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  accRewardPerShare_not?: InputMaybe<Scalars['BigInt']['input']>;
+  accRewardPerShare_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  allocPoint?: InputMaybe<Scalars['BigInt']['input']>;
+  allocPoint_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  allocPoint_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  allocPoint_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  allocPoint_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  allocPoint_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  allocPoint_not?: InputMaybe<Scalars['BigInt']['input']>;
+  allocPoint_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  and?: InputMaybe<Array<InputMaybe<RewarderPool_Filter>>>;
+  attached?: InputMaybe<Scalars['Boolean']['input']>;
+  attached_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+  attached_not?: InputMaybe<Scalars['Boolean']['input']>;
+  attached_not_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
   id?: InputMaybe<Scalars['ID']['input']>;
   id_gt?: InputMaybe<Scalars['ID']['input']>;
   id_gte?: InputMaybe<Scalars['ID']['input']>;
@@ -6190,7 +6257,23 @@ export type Rewarder_Filter = {
   id_lte?: InputMaybe<Scalars['ID']['input']>;
   id_not?: InputMaybe<Scalars['ID']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
-  or?: InputMaybe<Array<InputMaybe<Rewarder_Filter>>>;
+  lastRewardBlock?: InputMaybe<Scalars['BigInt']['input']>;
+  lastRewardBlock_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  lastRewardBlock_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  lastRewardBlock_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  lastRewardBlock_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  lastRewardBlock_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  lastRewardBlock_not?: InputMaybe<Scalars['BigInt']['input']>;
+  lastRewardBlock_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  lpBalance?: InputMaybe<Scalars['BigInt']['input']>;
+  lpBalance_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  lpBalance_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  lpBalance_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  lpBalance_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  lpBalance_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  lpBalance_not?: InputMaybe<Scalars['BigInt']['input']>;
+  lpBalance_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<RewarderPool_Filter>>>;
   pool?: InputMaybe<Scalars['String']['input']>;
   pool_?: InputMaybe<Pool_Filter>;
   pool_contains?: InputMaybe<Scalars['String']['input']>;
@@ -6212,10 +6295,36 @@ export type Rewarder_Filter = {
   pool_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   pool_starts_with?: InputMaybe<Scalars['String']['input']>;
   pool_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  rewarder?: InputMaybe<Scalars['String']['input']>;
+  rewarder_?: InputMaybe<Rewarder_Filter>;
+  rewarder_contains?: InputMaybe<Scalars['String']['input']>;
+  rewarder_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  rewarder_ends_with?: InputMaybe<Scalars['String']['input']>;
+  rewarder_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  rewarder_gt?: InputMaybe<Scalars['String']['input']>;
+  rewarder_gte?: InputMaybe<Scalars['String']['input']>;
+  rewarder_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  rewarder_lt?: InputMaybe<Scalars['String']['input']>;
+  rewarder_lte?: InputMaybe<Scalars['String']['input']>;
+  rewarder_not?: InputMaybe<Scalars['String']['input']>;
+  rewarder_not_contains?: InputMaybe<Scalars['String']['input']>;
+  rewarder_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  rewarder_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  rewarder_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  rewarder_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  rewarder_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  rewarder_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  rewarder_starts_with?: InputMaybe<Scalars['String']['input']>;
+  rewarder_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
 };
 
-export enum Rewarder_OrderBy {
+export enum RewarderPool_OrderBy {
+  AccRewardPerShare = 'accRewardPerShare',
+  AllocPoint = 'allocPoint',
+  Attached = 'attached',
   Id = 'id',
+  LastRewardBlock = 'lastRewardBlock',
+  LpBalance = 'lpBalance',
   Pool = 'pool',
   PoolAccFrtnPerShare = 'pool__accFRTNPerShare',
   PoolAllocPoint = 'pool__allocPoint',
@@ -6227,7 +6336,92 @@ export enum Rewarder_OrderBy {
   PoolRewarderCount = 'pool__rewarderCount',
   PoolTimestamp = 'pool__timestamp',
   PoolTotalUsersCount = 'pool__totalUsersCount',
-  PoolUserCount = 'pool__userCount'
+  PoolUserCount = 'pool__userCount',
+  Rewarder = 'rewarder',
+  RewarderId = 'rewarder__id',
+  RewarderPoolCount = 'rewarder__poolCount',
+  RewarderRewardEnd = 'rewarder__rewardEnd',
+  RewarderRewardPerSecond = 'rewarder__rewardPerSecond',
+  RewarderRewardStart = 'rewarder__rewardStart',
+  RewarderToken = 'rewarder__token',
+  RewarderTotalRegularAllocPoint = 'rewarder__totalRegularAllocPoint'
+}
+
+export type Rewarder_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<Rewarder_Filter>>>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  id_gt?: InputMaybe<Scalars['ID']['input']>;
+  id_gte?: InputMaybe<Scalars['ID']['input']>;
+  id_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  id_lt?: InputMaybe<Scalars['ID']['input']>;
+  id_lte?: InputMaybe<Scalars['ID']['input']>;
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<Rewarder_Filter>>>;
+  poolCount?: InputMaybe<Scalars['BigInt']['input']>;
+  poolCount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  poolCount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  poolCount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  poolCount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  poolCount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  poolCount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  poolCount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  pools_?: InputMaybe<RewarderPool_Filter>;
+  rewardEnd?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardEnd_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardEnd_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardEnd_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  rewardEnd_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardEnd_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardEnd_not?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardEnd_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  rewardPerSecond?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardPerSecond_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardPerSecond_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardPerSecond_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  rewardPerSecond_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardPerSecond_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardPerSecond_not?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardPerSecond_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  rewardStart?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardStart_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardStart_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardStart_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  rewardStart_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardStart_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardStart_not?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardStart_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  token?: InputMaybe<Scalars['Bytes']['input']>;
+  token_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  token_gt?: InputMaybe<Scalars['Bytes']['input']>;
+  token_gte?: InputMaybe<Scalars['Bytes']['input']>;
+  token_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  token_lt?: InputMaybe<Scalars['Bytes']['input']>;
+  token_lte?: InputMaybe<Scalars['Bytes']['input']>;
+  token_not?: InputMaybe<Scalars['Bytes']['input']>;
+  token_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  token_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  totalRegularAllocPoint?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRegularAllocPoint_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRegularAllocPoint_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRegularAllocPoint_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalRegularAllocPoint_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRegularAllocPoint_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRegularAllocPoint_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRegularAllocPoint_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+};
+
+export enum Rewarder_OrderBy {
+  Id = 'id',
+  PoolCount = 'poolCount',
+  Pools = 'pools',
+  RewardEnd = 'rewardEnd',
+  RewardPerSecond = 'rewardPerSecond',
+  RewardStart = 'rewardStart',
+  Token = 'token',
+  TotalRegularAllocPoint = 'totalRegularAllocPoint'
 }
 
 export type Role = {
@@ -7342,6 +7536,8 @@ export type Subscription = {
   registeredSeason?: Maybe<RegisteredSeason>;
   registeredSeasons: Array<RegisteredSeason>;
   rewarder?: Maybe<Rewarder>;
+  rewarderPool?: Maybe<RewarderPool>;
+  rewarderPools: Array<RewarderPool>;
   rewarders: Array<Rewarder>;
   role?: Maybe<Role>;
   roleAdminChanged?: Maybe<RoleAdminChanged>;
@@ -8053,6 +8249,24 @@ export type SubscriptionRewarderArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionRewarderPoolArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionRewarderPoolsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<RewarderPool_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<RewarderPool_Filter>;
 };
 
 

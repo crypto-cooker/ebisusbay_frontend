@@ -27137,6 +27137,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Time Reavers",
+      "slug": "time-reavers",
+      "multiToken": false,
+      "address": "0x127b2ac798F961D0EbA3B10DD7B550cAa9a8E773",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Time Reavers is the next installment in the Time Machine ecosystem. Time Reavers will benefit users to give damage boost in battle against specific biomes. This collection contains 4 Mythics and 36 legendries, 9 from each biome.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/time-reavers/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/time-reavers/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/time-reavers/banner.webp",
+        "website": "https://timemachine101.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/timemachinenfts",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [

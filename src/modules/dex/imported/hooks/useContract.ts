@@ -37,7 +37,7 @@ import {
 // import { V3Migrator } from '@dex/packages/uniswap/src/abis/types/v3/V3Migrator'
 import WETH_ABI from '@dex/imported/packages/uniswap/src/abis/weth.json'
 import { getContract } from '@dex/imported/utils/getContract'
-import {useNetwork} from "wagmi";
+import {useAccount} from "wagmi";
 import {useUser} from "@src/components-v2/useUser";
 
 const { abi: IUniswapV2PairABI } = IUniswapV2PairJson
@@ -53,7 +53,7 @@ export function useContract<T extends Contract = Contract>(
   withSignerIfPossible = true
 ): T | null {
   const { address: account, provider } = useUser()
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
 
   return useMemo(() => {
     if (!addressOrAddressMap || !ABI || !provider || !chain?.id) return null
@@ -71,7 +71,7 @@ export function useContract<T extends Contract = Contract>(
 }
 
 function useMainnetContract<T extends Contract = Contract>(address: string | undefined, ABI: any): T | null {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const isMainnet = chain?.id === ChainId.MAINNET
   const contract = useContract(isMainnet ? address : undefined, ABI, false)
 
@@ -97,7 +97,7 @@ export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: b
 }
 
 export function useWETHContract(withSignerIfPossible?: boolean) {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   return useContract<Weth>(
     chain?.id ? WRAPPED_NATIVE_CURRENCY[chain.id]?.address : undefined,
     WETH_ABI,
@@ -138,7 +138,7 @@ export function usePairContract(pairAddress?: string, withSignerIfPossible?: boo
 }
 
 export function useV2RouterContract(): Contract | null {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   return useContract(chain?.id ? V2_ROUTER_ADDRESSES[chain.id] : undefined, IUniswapV2Router02ABI, true)
 }
 
@@ -155,7 +155,7 @@ export function useMainnetInterfaceMulticall() {
 //
 // export function useV3NFTPositionManagerContract(withSignerIfPossible?: boolean): NonfungiblePositionManager | null {
 //   const { address: account } = useUser()
-//   const { chain } = useNetwork()
+//   const { chain } = useAccount()
 //   const contract = useContract<NonfungiblePositionManager>(
 //     NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
 //     NFTPositionManagerABI,

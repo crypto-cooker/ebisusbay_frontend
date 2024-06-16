@@ -1,13 +1,14 @@
 import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 import {useUser} from "@src/components-v2/useUser";
 import {multicall} from "@wagmi/core";
-import {ContractFunctionConfig} from "viem";
-import {Address, erc20ABI, useBlockNumber} from "wagmi";
+import {Address, ContractFunctionParameters, erc20Abi} from "viem";
+import {useBlockNumber} from "wagmi";
 import {useEffect, useMemo, useState} from "react";
 import {CurrencyAmount, Token} from "@uniswap/sdk-core";
 import {isAddress} from "@market/helpers/utils";
 import JSBI from "jsbi";
 import {useQuery} from "@tanstack/react-query";
+import {wagmiConfig} from "@src/wagmi";
 
 export function useAllTokenBalances(): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
   const user = useUser();
@@ -49,10 +50,10 @@ export function useTokenBalances(address?: string, tokens?: Token[]): { [tokenAd
     [tokens]
   );
 
-  const contracts: ContractFunctionConfig[] = tokens.map((token: any) => {
+  const contracts: ContractFunctionParameters[] = tokens.map((token: any) => {
     return {
       address: token.address as Address,
-      abi: erc20ABI,
+      abi: erc20Abi,
       functionName: 'balanceOf',
       args: [address],
     };
@@ -77,7 +78,7 @@ export function useTokenBalances(address?: string, tokens?: Token[]): { [tokenAd
 
   const {data, isLoading} = useQuery({
     queryKey: ['useTokenBalances'],
-    queryFn: async () => multicall({
+    queryFn: async () => multicall(wagmiConfig as any, {
       contracts
     }),
     enabled: !!contracts
