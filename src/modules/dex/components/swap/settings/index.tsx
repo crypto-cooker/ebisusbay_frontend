@@ -10,7 +10,7 @@ import {
   Switch,
   VStack, Wrap
 } from "@chakra-ui/react";
-import {ModalState} from "@dex/types/types";
+import {ModalState} from "@dex/swap/types";
 import React, {ChangeEvent, useState} from "react";
 import {ModalDialog} from "@src/components-v2/foundation/modal";
 import {useUserAllowMultihop, useUserExpertMode, useUserSlippageTolerance} from "@dex/state/user/hooks";

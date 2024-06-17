@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import React, {ChangeEvent, ComponentType, ReactNode, useEffect, useRef, useState} from "react";
 import {useWindowSize} from "@market/hooks/useWindowSize";
-import {DexToken} from "@dex/types/types";
 import Row from "@dex/components/swap/select-token/row";
 import {Currency} from "@uniswap/sdk-core";
 import {useAllTokenBalances} from "@dex/hooks/use-token-balances";
@@ -58,7 +57,7 @@ export default function SelectToken({commonBases, tokens, onCurrencySelect}: Sel
     const foundSymbol = token?.currency.symbol?.toLowerCase().includes(searchTerms) ?? false;
     const foundAddress = token?.currency.address?.toLowerCase().includes(searchTerms) ?? false;
     return foundName || foundSymbol || foundAddress;
-  }) : tokenBalances;
+  }) : Object.values(tokenBalances);
 
   return (
     <>
