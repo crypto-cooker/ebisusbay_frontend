@@ -18,6 +18,7 @@ import {initializeApp} from "firebase/app";
 import firebaseConfig from "@src/third-party/firebase";
 import ClientLayoutState from "./client-layout-state";
 import dynamic from "next/dynamic";
+import {State} from "wagmi";
 
 Site24x7LoggingService.init();
 
@@ -29,10 +30,11 @@ const ColorModeScript = dynamic(
 );
 
 type ClientLayout = {
-  children: ReactNode
+  children: ReactNode,
+  initialState: State | undefined,
 }
 
-export default function ClientLayout({children}: ClientLayout) {
+export default function ClientLayout({children, initialState}: ClientLayout) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -52,9 +54,9 @@ export default function ClientLayout({children}: ClientLayout) {
       <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
       <Provider store={store}>
         <Sentry.ErrorBoundary>
-          <QueryClientProvider client={queryClient}>
-            <ChakraProvider theme={customTheme}>
-              <Web3Modal>
+          <ChakraProvider theme={customTheme}>
+            <Web3Modal initialState={initialState}>
+              <QueryClientProvider client={queryClient} >
                 <UserProvider>
                   <ClientLayoutState>
                     <DefaultHead />
@@ -71,9 +73,9 @@ export default function ClientLayout({children}: ClientLayout) {
                     </div>
                   </ClientLayoutState>
                 </UserProvider>
-              </Web3Modal>
-            </ChakraProvider>
-          </QueryClientProvider>
+              </QueryClientProvider>
+            </Web3Modal>
+          </ChakraProvider>
         </Sentry.ErrorBoundary>
       </Provider>
     </>

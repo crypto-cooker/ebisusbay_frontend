@@ -4,9 +4,10 @@ import JSBI from 'jsbi'
 import { useMemo } from 'react'
 
 import { nativeOnChain } from '@dex/imported/constants/tokens'
-import {erc20ABI, useNetwork} from "wagmi";
+import {useAccount} from "wagmi";
 import {isAddress} from "@market/helpers/utils";
 import {useMultipleContractSingleData} from "@dex/imported/hooks/multicall";
+import {erc20Abi} from "viem";
 
 /**
  * Returns a map of the given addresses to their eventually consistent ETH balances.
@@ -14,7 +15,7 @@ import {useMultipleContractSingleData} from "@dex/imported/hooks/multicall";
 export function useNativeCurrencyBalances(uncheckedAddresses?: (string | undefined)[]): {
   [address: string]: CurrencyAmount<Currency> | undefined
 } {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   // const multicallContract = useInterfaceMulticall()
 
   const validAddressInputs: [string][] = useMemo(
@@ -44,7 +45,7 @@ export function useNativeCurrencyBalances(uncheckedAddresses?: (string | undefin
   )
 }
 
-const ERC20Interface = new Interface(erc20ABI)
+const ERC20Interface = new Interface(erc20Abi)
 const tokenBalancesGasRequirement = { gasRequired: 185_000 }
 
 /**
@@ -54,7 +55,7 @@ export function useTokenBalancesWithLoadingIndicator(
   address?: string,
   tokens?: (Token | undefined)[]
 ): [{ [tokenAddress: string]: CurrencyAmount<Token> | undefined }, boolean] {
-  const { chain } = useNetwork() // we cannot fetch balances cross-chain
+  const { chain } = useAccount() // we cannot fetch balances cross-chain
   const validatedTokens: Token[] = useMemo(
     () => tokens?.filter((t?: Token): t is Token => isAddress(t?.address) !== false && t?.chainId === chain?.id) ?? [],
     [chain?.id, tokens]
@@ -119,7 +120,7 @@ export function useCurrencyBalances(
     [currencies]
   )
 
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const tokenBalances = useTokenBalances(account, tokens)
   const containsETH: boolean = useMemo(() => currencies?.some((currency) => currency?.isNative) ?? false, [currencies])
   const ethBalance = useNativeCurrencyBalances(useMemo(() => (containsETH ? [account] : []), [containsETH, account]))

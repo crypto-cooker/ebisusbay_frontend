@@ -45,7 +45,8 @@ const configData: AppConfigMap = {
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners-2',
         staking: 'staking',
-        farms: 'farms-v2'
+        farms: 'farms-v2',
+        dex: 'exchange-v2'
       }
     },
     rpc: {
@@ -122,10 +123,10 @@ const configData: AppConfigMap = {
         address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977',
         decimals: 18
       },
-      ttt: {
-        name: 'Tatas Twisted Time',
-        symbol: 'TTT',
-        address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6',
+      emit: {
+        name: 'EMIT',
+        symbol: 'EMIT',
+        address: '0x9fa6552c1e9df51070a3b456355b5d76cbd59b5a',
         decimals: 18
       },
       icy: {
@@ -241,7 +242,7 @@ const configData: AppConfigMap = {
           'vrse',
           'scratch',
           'candy',
-          'ttt',
+          'emit',
           'icy',
           'coom',
           'fftb',
@@ -319,24 +320,25 @@ const configData: AppConfigMap = {
           '0xd33CFeF82377fef83703B9D84151a477B08Ab3b8': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW Airdrops
           '0xccc777777ac85999fc9fe355f25cd908060ec9ea': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // CRO CROW Customs
           '0x3d7777ff1908B54b57038A2556d6904f71468e2D': ['cro', 'frtn', 'bcro', 'mad', 'vrse', 'scratch'], // 3D CROW
-          '0x9b72f7d5aecee857cc3d1a1a3357aff0e342d0a8': ['cro', 'frtn', 'ttt'], // Time Machine 101
-          '0x146cf0ee7b6b986769782ea832e8327f9dff55e7': ['cro', 'frtn', 'ttt'], // Tata's Guardians
-          '0x482eBe3063ED2d2281AAfec31941705787432A1A': ['cro', 'frtn', 'ttt'], // Time Machine 102: The Travellers
-          '0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35': ['cro', 'frtn', 'ttt'], // Time Ship Blueprints
-          '0x55c8f67e6D3f037297Daf94AD2bCC67CC477BEa9': ['cro', 'frtn', 'ttt'], // Time Troops
-          '0x1c4924f36Fe60374DB6ac206894D82F03d522933': ['cro', 'frtn', 'ttt'], // Time Creatures Class A
-          '0x15Af2503a934D211A1936684fEd986E7E3f417db': ['cro', 'frtn', 'ttt'], // Time Creatures Class B
-          '0x6cC790CAE45EC057f9637784279A475CC91cf517': ['cro', 'frtn', 'ttt'], // Animated Time Gods
-          '0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645': ['cro', 'frtn', 'ttt'], // Time Commanders
-          '0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475': ['cro', 'frtn', 'ttt'], // Time Creature Ships
-          '0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F': ['cro', 'frtn', 'ttt'], // Time Cronos Planets
-          '0xfF567a62d7BF2CF984F02175C8bd485E3C4E2c0e': ['cro', 'frtn', 'ttt'], // Time Ship Components
-          '0x739b5380156Fa14C7956145048d52dF27EDedfCE': ['cro', 'frtn', 'ttt'], // Tata's Twisted Tonics
-          '0xb76415D33268391bfaE2E671f45CeDAD9bC99dc9': ['cro', 'frtn', 'ttt'], // Animated Guardians
-          '0xCF926cB69b860Da8c33a2a601217856536ed0bcA': ['cro', 'frtn', 'ttt'], // Animated Time Machine 102s
-          '0x975238Ce3c593060a9b549e1654dC992f0Bc11aC': ['cro', 'frtn', 'ttt'], // Power Tonics
-          '0x87e04f1d64619994a5320450E19C184a2dDE09c7': ['cro', 'frtn', 'ttt'], // CroTops
-          '0x35B832bE9546fCad67526Be2801228194250378A': ['cro', 'frtn', 'ttt'], // Time Base
+          '0x9b72f7d5aecee857cc3d1a1a3357aff0e342d0a8': ['cro', 'frtn', 'emit'], // Time Machine 101
+          '0x146cf0ee7b6b986769782ea832e8327f9dff55e7': ['cro', 'frtn', 'emit'], // Tata's Guardians
+          '0x482eBe3063ED2d2281AAfec31941705787432A1A': ['cro', 'frtn', 'emit'], // Time Machine 102: The Travellers
+          '0x13C2803c4e0d0e727a6b1820EcC814550a9D7A35': ['cro', 'frtn', 'emit'], // Time Ship Blueprints
+          '0x55c8f67e6D3f037297Daf94AD2bCC67CC477BEa9': ['cro', 'frtn', 'emit'], // Time Troops
+          '0x1c4924f36Fe60374DB6ac206894D82F03d522933': ['cro', 'frtn', 'emit'], // Time Creatures Class A
+          '0x15Af2503a934D211A1936684fEd986E7E3f417db': ['cro', 'frtn', 'emit'], // Time Creatures Class B
+          '0x6cC790CAE45EC057f9637784279A475CC91cf517': ['cro', 'frtn', 'emit'], // Animated Time Gods
+          '0xD0761503c7675Ab7f34aA06126F6DBDBe0b42645': ['cro', 'frtn', 'emit'], // Time Commanders
+          '0x4025Ce5e92F2BA3E8aA7B46eE0A1b99F51F3C475': ['cro', 'frtn', 'emit'], // Time Creature Ships
+          '0xB049eDd7E9580C0BBE708c1A3374C74066FF9E7F': ['cro', 'frtn', 'emit'], // Time Cronos Planets
+          '0xfF567a62d7BF2CF984F02175C8bd485E3C4E2c0e': ['cro', 'frtn', 'emit'], // Time Ship Components
+          '0x739b5380156Fa14C7956145048d52dF27EDedfCE': ['cro', 'frtn', 'emit'], // Tata's Twisted Tonics
+          '0xb76415D33268391bfaE2E671f45CeDAD9bC99dc9': ['cro', 'frtn', 'emit'], // Animated Guardians
+          '0xCF926cB69b860Da8c33a2a601217856536ed0bcA': ['cro', 'frtn', 'emit'], // Animated Time Machine 102s
+          '0x975238Ce3c593060a9b549e1654dC992f0Bc11aC': ['cro', 'frtn', 'emit'], // Power Tonics
+          '0x87e04f1d64619994a5320450E19C184a2dDE09c7': ['cro', 'frtn', 'emit'], // CroTops
+          '0x35B832bE9546fCad67526Be2801228194250378A': ['cro', 'frtn', 'emit'], // Time Base
+          '0x127b2ac798F961D0EbA3B10DD7B550cAa9a8E773': ['cro', 'frtn', 'emit'], // Time Base
           '0xF87A517A5CaecaA03d7cCa770789BdB61e09e05F': ['cro'], // CroSkill Brand Start
           '0xbf4E430cD0ce8b93d4760958fe4ae66cDaCDB6c6': ['cro'],
           '0x14e9ef197C0bfaf7C1328ebed7151f53616Af3C5': ['cro'],
@@ -411,7 +413,7 @@ const configData: AppConfigMap = {
         'vrse',
         'scratch',
         'candy',
-        'ttt',
+        'emit',
         'icy',
         'caw',
         'usdc',
@@ -452,7 +454,8 @@ const configData: AppConfigMap = {
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners-2',
         staking: 'staking',
-        farms: 'farms-v2'
+        farms: 'farms-v2',
+        dex: 'exchange-v2'
       }
     },
     rpc: {
@@ -739,7 +742,8 @@ const configData: AppConfigMap = {
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners',
         staking: 'staking',
-        farms: 'farms-v2'
+        farms: 'farms-v2',
+        dex: 'exchange-v2'
       }
     },
     rpc: {
@@ -860,18 +864,18 @@ const configData: AppConfigMap = {
         available: ['cro', 'wcro', 'frtn', 'vrse'],
         global: ['cro', 'frtn'],
         nft: {
-          '0xCF7aedEbC5223c4C620625A560300582B77D8719': ['cro', 'frtn'], // Ryoshi VIP
-          '0xe51377a260043381b8B525D33B9fFBC601A1469b': ['frtn', 'vrse'],
-          '0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad': ['frtn'],
-          '0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5': ['frtn'],
-          '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad': ['frtn'],
-          '0x3F1590A5984C89e6d5831bFB76788F3517Cdf034': ['frtn'],
-          '0x04Bd856E96127f3ef3C45864BeAEe26F5Df5066a': ['frtn'],
-          '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0': ['frtn'],
-          '0xa937e814A2c5e99E9e86c4F34162c4F012F75a52': ['cro', 'frtn'],
-          '0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9': ['cro', 'frtn'],
-          '0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f': ['cro', 'frtn'],
-          '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74': ['cro']
+          // '0xCF7aedEbC5223c4C620625A560300582B77D8719': ['cro', 'frtn'], // Ryoshi VIP
+          // '0xe51377a260043381b8B525D33B9fFBC601A1469b': ['frtn', 'vrse'],
+          // '0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad': ['frtn'],
+          // '0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5': ['frtn'],
+          // '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad': ['frtn'],
+          // '0x3F1590A5984C89e6d5831bFB76788F3517Cdf034': ['frtn'],
+          // '0x04Bd856E96127f3ef3C45864BeAEe26F5Df5066a': ['frtn'],
+          // '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0': ['frtn'],
+          // '0xa937e814A2c5e99E9e86c4F34162c4F012F75a52': ['cro', 'frtn'],
+          // '0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9': ['cro', 'frtn'],
+          // '0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f': ['cro', 'frtn'],
+          // '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74': ['cro']
         }
       }
     },
@@ -1019,7 +1023,8 @@ export interface AppConfig {
       ryoshiPresale: string,
       stakedOwners: string,
       staking: string,
-      farms: string
+      farms: string,
+      dex: string
     }
   },
   rpc: {
@@ -1027,36 +1032,36 @@ export interface AppConfig {
     write: string
   },
   contracts: {
-    membership: string,
-    auction: string,
-    market: string,
-    stake: string,
-    offer: string,
-    madAuction: string,
-    slothtyRugsurance: string,
-    bundle: string,
-    gaslessListing: string,
-    gdc: string,
-    usdc: string,
-    purchaseFortune: string,
-    allianceCenter: string,
-    battleField: string,
-    resources: string,
-    bank: string,
-    barracks: string,
-    fortune: string,
-    rewards: string,
-    presaleVaults: string,
-    seasonUnlocks: string,
-    townHall: string,
-    vaultNft: string,
-    ryoshiWithKnife: string,
-    farms: string
+    membership: HexString,
+    auction: HexString,
+    market: HexString,
+    stake: HexString,
+    offer: HexString,
+    madAuction: HexString,
+    slothtyRugsurance: HexString,
+    bundle: HexString,
+    gaslessListing: HexString,
+    gdc: HexString,
+    usdc: HexString,
+    purchaseFortune: HexString,
+    allianceCenter: HexString,
+    battleField: HexString,
+    resources: HexString,
+    bank: HexString,
+    barracks: HexString,
+    fortune: HexString,
+    rewards: HexString,
+    presaleVaults: HexString,
+    seasonUnlocks: HexString,
+    townHall: HexString,
+    vaultNft: HexString,
+    ryoshiWithKnife: HexString,
+    farms: HexString
   },
   tokens: {[key: string] : {
     name: string,
     symbol: string,
-    address: string,
+    address: HexString,
     decimals: number
   }}
   collections: any[],
@@ -1093,3 +1098,8 @@ export interface AppConfig {
 type PartialAppConfig = {
   [P in keyof AppConfig]?: AppConfig[P] extends object ? Partial<AppConfig[P]> : AppConfig[P];
 };
+
+type HexString = `0x${string}` & string;
+
+// Wrapper type that ensures HexString is also recognized as string
+type WrappedHexString = HexString & string;

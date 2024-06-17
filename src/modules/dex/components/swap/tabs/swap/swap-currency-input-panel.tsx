@@ -4,19 +4,8 @@ import {Box, Button, Flex, HStack, Image, NumberInput, NumberInputField, useDisc
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import {ResponsiveChooseTokenDialog} from "@dex/components/swap/responsive-choose-token-dialog";
 import tokenConfig from "@dex/configs/tokens.json";
-import {DexToken} from "@dex/types/types";
 import {useCallback} from "react";
-
-const supportedTokens = tokenConfig.tokens.map(token => {
-  return new Token(
-    token.chainId,
-    token.address,
-    token.decimals,
-    token.symbol,
-    token.name
-  )
-}) as Token[];
-const commonBases = supportedTokens.filter(token => tokenConfig.commonBases.map(symbol =>  symbol.toLowerCase()).includes(token.symbol!.toLowerCase()));
+import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 
 interface SwapCurrencyInputPanelProps {
   value: string;
@@ -29,6 +18,8 @@ interface SwapCurrencyInputPanelProps {
 
 export default function SwapCurrencyInputPanel({ value, onUserInput, label, onCurrencySelect, currency, otherCurrency }: SwapCurrencyInputPanelProps) {
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
+  const { supportedTokens } = useSupportedTokens();
+  const commonBases = supportedTokens.filter(token => tokenConfig.commonBases.map(symbol =>  symbol.toLowerCase()).includes(token.symbol!.toLowerCase()));
 
   const handleSelectedCurrency = useCallback((currency: Currency) => {
     onModalClose();

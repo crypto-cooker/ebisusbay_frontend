@@ -25,7 +25,7 @@ import NextApiService from "@src/core/services/api-service/next";
 import {commify} from "ethers/lib/utils";
 import {ethers} from "ethers";
 import {toast} from "react-toastify";
-import {caseInsensitiveCompare, isBundle, knownErc20Token, round} from "@market/helpers/utils";
+import {ciEquals, isBundle, knownErc20Token, round} from "@market/helpers/utils";
 import Button from "@src/Components/components/common/Button";
 import {listingState} from "@src/core/api/enums";
 import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
@@ -39,6 +39,9 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import useCart from "@market/hooks/use-cart";
+import {appConfig} from "@src/Config";
+
+const config = appConfig();
 
 const Cart = function () {
   const user = useUser();
@@ -159,10 +162,14 @@ const Cart = function () {
         let amt = numericPrice;
 
         let fee =  numericPrice * (user.fee / 100);
-        const erc20UsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, nft.currency));
+        const erc20UsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, nft.currency));
         if (!!erc20UsdRate && erc20UsdRate.currency !== ethers.constants.AddressZero) {
-          const croUsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, ethers.constants.AddressZero) && rate.chain === 25);
-          fee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice) * (user.fee / 100);
+          const croUsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, ethers.constants.AddressZero) && rate.chain.toString() === config.chain.id);
+          const newFee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice) * (user.fee / 100);
+
+          if (croUsdRate && !isNaN(newFee)) {
+            fee = newFee;
+          }
         }
         fees += fee;
         amt += nft.currency === ethers.constants.AddressZero ? fee : 0;

@@ -121,7 +121,7 @@ export default function FarmsPage() {
     }
 
     return data;
-  }, [status, farms, stakedOnly, localQueryParams]);
+  }, [status, farms, stakedOnly, localQueryParams, userFarms]);
 
   const content = useMemo(() => {
     return farmsStatus === 'pending' ? (
