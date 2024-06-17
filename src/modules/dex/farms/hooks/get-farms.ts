@@ -118,7 +118,7 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
             name: pairFarm.pair.name,
             dailyRewards: `${commify(round(ethers.utils.formatEther(pairFarm.frtnPerDay)))} FRTN`,
             stakedLiquidity: `$${commify(round(stakedLiquidity))}`,
-            apr: `${pairFarm.apr === 'Infinity' ? '-' : `${commify(round(pairFarm.apr, 2))}%`}`,
+            apr: `${['Infinity', 'NaN'].includes(pairFarm.apr) ? '-' : `${commify(round(pairFarm.apr, 2))}%`}`,
             state: farmState
           }
         }
