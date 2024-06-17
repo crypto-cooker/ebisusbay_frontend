@@ -1,7 +1,7 @@
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import React, {useEffect, useMemo, useState} from "react";
 import PageHeader from "@src/components-v2/shared/layout/page-header";
-import SwapPage from "@dex/components/swap";
+import SwapPage from "@dex/swap/components";
 import {asSupportedChain} from "@dex/imported/constants/chains";
 import {useAccount} from "wagmi";
 import {ChainId} from "@uniswap/sdk-core";
