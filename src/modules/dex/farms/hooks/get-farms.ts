@@ -114,7 +114,8 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
         const derivedUSDBigNumber = ethers.utils.parseUnits(derivedUSD, 18);
         const totalDollarValue = lpBalance.mul(derivedUSDBigNumber).div(ethers.constants.WeiPerEther);
         const stakedLiquidity = ethers.utils.formatUnits(totalDollarValue, 18);
-        const farmState = farm.allocPoint > 0 ? FarmState.ACTIVE : FarmState.FINISHED;
+        const totalAllocPoints = pairFarm.rewarders.reduce((acc, rewarder) => acc + rewarder.allocPoint, 0);
+        const farmState = totalAllocPoints > 0 ? FarmState.ACTIVE : FarmState.FINISHED;
 
         const dailyRewards = await Promise.all(
           pairFarm.rewarders.map(async (rewarder) => {

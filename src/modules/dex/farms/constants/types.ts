@@ -2,16 +2,19 @@ import {BrokerCurrency} from "@market/hooks/use-currency-broker";
 
 export interface MapiFarm {
   pid: number;
-  lpBalance: string;
   pair: MapiPair | null;
-  accFRTNPerShare: string;
-  allocPoint: number;
-  lastRewardBlock: number;
+  lpBalance: string;
   rewarderCount: number;
   totalUsersCount: number;
   userCount: number;
-  apr: string;
   rewarders: MapiFarmRewarder[];
+  lpBalanceInUSD: number;
+  apr: string;
+  rewardPerBlockInUSD: number;
+  rewardPerDayInUSD: number;
+  rewardPerMonthInUSD: number;
+  rewardPerLPPerBlockInUSD: number;
+  rewardPerLPPerDayInUSD: number;
 }
 
 export interface MapiPairFarm extends MapiFarm {
