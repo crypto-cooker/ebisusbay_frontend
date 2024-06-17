@@ -9,7 +9,13 @@ import {
   Flex,
   HStack,
   Icon,
+  IconButton,
   Link,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
   SimpleGrid,
   Stack,
   useDisclosure,
@@ -21,12 +27,12 @@ import {DerivedFarm, FarmState} from "@dex/farms/constants/types";
 import {UserFarms, UserFarmState} from "@dex/farms/state/user";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {commify} from "ethers/lib/utils";
-import {round} from "@market/helpers/utils";
+import {millisecondTimestamp, round} from "@market/helpers/utils";
 import {ethers} from "ethers";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {useEnableFarm, useHarvestRewards} from "@dex/farms/hooks/farm-actions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExternalLinkAlt, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faExternalLinkAlt, faMinus, faPlus, faStopwatch} from "@fortawesome/free-solid-svg-icons";
 import StakeLpTokensDialog from "@dex/farms/components/stake-lp-tokens";
 import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialog";
 import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
@@ -34,6 +40,7 @@ import {appConfig} from "@src/Config";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
 import useCurrencyBroker from "@market/hooks/use-currency-broker";
+import {useExchangeRate} from "@market/hooks/useGlobalPrices";
 
 const config =  appConfig();
 
@@ -57,6 +64,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
   const user = useUser();
   const {getByAddress} = useCurrencyBroker();
   const [enableFarm, enablingFarm] = useEnableFarm();
+  const {usdValueForToken} = useExchangeRate();
   const { refetchBalances } = useUserFarmsRefetch();
   const borderColor = useColorModeValue('#bbb', '#ffffff33');
   const [harvestRewards, harvestingRewards] = useHarvestRewards();
@@ -80,17 +88,17 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
     return commify((Number(farm.data.pair.derivedUSD) * Number(ethers.utils.formatEther(userData.stakedBalance))).toFixed(2));
   }, [farm, userData]);
 
-  const earnedDollarValue = useMemo(() => {
-    if (!farm.data.frtnPerMonth || !farm.data.frtnPerMonthInUSD || !userData?.earnings) {
-      return 0;
-    }
-
-    const usdRate = farm.data.frtnPerMonthInUSD / parseFloat(ethers.utils.formatEther(farm.data.frtnPerMonth));
-
-    const earnings = userData.earnings[0]?.amount ?? 0;
-
-    return commify((usdRate * Number(ethers.utils.formatEther(earnings))).toFixed(2));
-  }, [farm, userData]);
+  // const earnedDollarValue = useMemo(() => {
+  //   if (!farm.data.frtnPerMonth || !farm.data.frtnPerMonthInUSD || !userData?.earnings) {
+  //     return 0;
+  //   }
+  //
+  //   const usdRate = farm.data.frtnPerMonthInUSD / parseFloat(ethers.utils.formatEther(farm.data.frtnPerMonth));
+  //
+  //   const earnings = userData.earnings[0]?.amount ?? 0;
+  //
+  //   return commify((usdRate * Number(ethers.utils.formatEther(earnings))).toFixed(2));
+  // }, [farm, userData]);
 
   const totalEarned = userData?.earnings.reduce((acc, earning) =>  acc + earning.amount, 0n) ?? 0n;
 
@@ -133,7 +141,25 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
             <Box fontWeight='bold'>APR</Box>
             <Box fontWeight='bold' textAlign='end'>{farm.derived.apr}</Box>
             <Box fontWeight='bold'>Rewards / Day</Box>
-            <Box fontWeight='bold' textAlign='end'>{farm.derived.dailyRewards}</Box>
+            <SimpleGrid columns={2}>
+              {farm.derived.dailyRewards.map((reward, i) => (
+                <React.Fragment key={i}>
+                  <HStack spacing={0} justify='end'>
+                    <Box fontWeight='bold'>{reward.amount}</Box>
+                    <Popover>
+                      <PopoverTrigger>
+                        <IconButton aria-label='Reward End Date' icon={<Icon as={FontAwesomeIcon} icon={faStopwatch} />} variant='unstyled' h='24px' minW='24px'/>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverBody>Approximately ends at {new Date(millisecondTimestamp(reward.endsAt)).toLocaleString()}</PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                  </HStack>
+                  <Box textAlign='end' fontWeight='bold'>{reward.token.symbol}</Box>
+                </React.Fragment>
+              ))}
+            </SimpleGrid>
           </SimpleGrid>
           <Box mt={4}>
             <Box fontSize='sm' fontWeight='bold'>EARNED REWARDS</Box>
@@ -146,11 +172,11 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                       <Box fontSize='xl' fontWeight='bold'>
                         {token.symbol} {commify(round(ethers.utils.formatUnits(earning.amount ?? 0, token.decimals), 2))}
                       </Box>
-                      {!!earnedDollarValue && token.symbol !== 'USDC' && (
+                      {/*{!!earnedDollarValue && token.symbol !== 'USDC' && (*/}
                         <Box fontSize='xs' color={text2Color}>
-                          ~ ${earnedDollarValue}
+                          ~ ${usdValueForToken(Number(ethers.utils.formatUnits(earning.amount ?? 0, token.decimals)), token.address)}
                         </Box>
-                      )}
+                      {/*)}*/}
                     </Box>
                   </Stack>
                 ) : <></>

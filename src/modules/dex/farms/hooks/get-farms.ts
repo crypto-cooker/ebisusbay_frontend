@@ -11,6 +11,8 @@ import {ApiService} from "@src/core/services/api-service";
 import {round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {wagmiConfig} from "@src/wagmi";
+import useCurrencyBroker from "@market/hooks/use-currency-broker";
+import {Block} from "@ethersproject/abstract-provider";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -96,13 +98,15 @@ export function getFarmsUsingChain() {
 }
 
 export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
+  const { getByAddress } = useCurrencyBroker();
 
   const query = async () => {
     const data = await ApiService.withoutKey().getFarms(queryParams);
+    let retrievedBlocks: Block[] = [];
 
-    return data
+    return await Promise.all(data
       .filter((farm: MapiFarm) => farm.pid !== 0 || (farm.pair !== undefined && farm.pair !== null))
-      .map((farm: MapiFarm): DerivedFarm => {
+      .map(async (farm: MapiFarm): Promise<DerivedFarm> => {
         const pairFarm: MapiPairFarm = farm as MapiPairFarm;
 
         const lpBalance = BigNumber.from(pairFarm.lpBalance);
@@ -112,17 +116,39 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
         const stakedLiquidity = ethers.utils.formatUnits(totalDollarValue, 18);
         const farmState = farm.allocPoint > 0 ? FarmState.ACTIVE : FarmState.FINISHED;
 
+        const dailyRewards = await Promise.all(
+          pairFarm.rewarders.map(async (rewarder) => {
+            const token = getByAddress(rewarder.token);
+            if (!token) {
+              throw new Error(`Token not found for rewarder address: ${rewarder.token}`);
+            }
+            const amount = commify(round(ethers.utils.formatUnits(rewarder.rewardPerDay, token.decimals)));
+
+            let block = retrievedBlocks[rewarder.lastRewardBlock];
+            if (!block) {
+              block = await readProvider.getBlock(rewarder.lastRewardBlock);
+              retrievedBlocks[rewarder.lastRewardBlock] = block;
+            }
+
+            return {
+              token,
+              amount,
+              endsAt: block.timestamp
+            };
+          })
+        );
+
         return {
           data: pairFarm,
           derived: {
             name: pairFarm.pair.name,
-            dailyRewards: `${commify(round(ethers.utils.formatEther(pairFarm.frtnPerDay)))} FRTN`,
+            dailyRewards: dailyRewards,
             stakedLiquidity: `$${commify(round(stakedLiquidity))}`,
             apr: `${pairFarm.apr === 'Infinity' ? '-' : `${commify(round(pairFarm.apr, 2))}%`}`,
             state: farmState
           }
         }
-    });
+    }));
   }
 
   return useQuery({
