@@ -302,7 +302,7 @@ const FortunePurchaseForm = () => {
           <>
             <Box>
               <HStack>
-                <Image src='/img/battle-bay/bankinterior/usdc.svg' alt="walletIcon" boxSize={6}/>
+                <Image src={ImageService.translate('/img/battle-bay/bankinterior/usdc.svg').convert()} alt="walletIcon" boxSize={6}/>
                 <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? 'USDC ' : ''}${user.balances.cro}</Text>
               </HStack>
               <Button fontSize={{base: 'xs', md: 'sm'}} variant='unstyled' fontWeight='normal' textDecoration='underline' onClick={handleBuyUsdc}>Purchase USDC <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Button>
@@ -433,7 +433,7 @@ const FortunePurchaseProgress = () => {
             },
           }}
         />
-        <Image position='absolute' src='/img/battle-bay/bankinterior/progress_bar_spark.png'
+        <Image position='absolute' src={ImageService.translate('/img/battle-bay/bankinterior/progress_bar_spark.png').convert()}
         top={0}
         h='30px'
         left={barSpot}

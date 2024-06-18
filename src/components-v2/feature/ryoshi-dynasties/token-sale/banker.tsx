@@ -15,6 +15,7 @@ import {appConfig} from "@src/Config";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {useUser} from "@src/components-v2/useUser";
+import ImageService from "@src/core/services/image";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -94,7 +95,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
       <Box>
         <AspectRatio ratio={1920/1080} overflow='visible'>
           <Image
-            src='/img/battle-bay/bankinterior/bank_interior_background_desktop_animated.png'
+            src={ImageService.translate('/img/battle-bay/bankinterior/bank_interior_background_desktop_animated.png').convert()}
             minH='calc(100vh - 74px)'
           />
         </AspectRatio>

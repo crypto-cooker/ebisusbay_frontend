@@ -1,6 +1,7 @@
 import {BoxProps, Grid, GridItem, Image} from "@chakra-ui/react";
 import React from "react";
 import Typewriter from 'typewriter-effect';
+import ImageService from "@src/core/services/image";
 
 const BankerBubbleBox = (props: BoxProps) => {
   return (
@@ -17,24 +18,24 @@ const BankerBubbleBox = (props: BoxProps) => {
     >
       <GridItem area={'tlc'}>
         <Image
-          src='/img/ryoshi/bubble/cb_top_left.png'
+          src={ImageService.translate('/img/ryoshi/bubble/cb_top_left.png').convert()}
         />
       </GridItem>
       <GridItem area={'top'}>
         <Image
-          src='/img/ryoshi/bubble/cb_top.png'
+          src={ImageService.translate('/img/ryoshi/bubble/cb_top.png').convert()}
           w='full'
           h='50px'
         />
       </GridItem>
       <GridItem area={'trc'}>
         <Image
-          src='/img/ryoshi/bubble/cb_top_right.png'
+          src={ImageService.translate('/img/ryoshi/bubble/cb_top_right.png').convert()}
         />
       </GridItem>
       <GridItem area={'left'}>
         <Image
-          src='/img/ryoshi/bubble/cb_left.png'
+          src={ImageService.translate('/img/ryoshi/bubble/cb_left.png').convert()}
           w='50px'
           h='full'
         />
@@ -44,26 +45,26 @@ const BankerBubbleBox = (props: BoxProps) => {
       </GridItem>
       <GridItem area={'right'}>
         <Image
-          src='/img/ryoshi/bubble/cb_right.png'
+          src={ImageService.translate('/img/ryoshi/bubble/cb_right.png').convert()}
           w='50px'
           h='full'
         />
       </GridItem>
       <GridItem area={'blc'}>
         <Image
-          src='/img/ryoshi/bubble/cb_bottom_left.png'
+          src={ImageService.translate('/img/ryoshi/bubble/cb_bottom_left.png').convert()}
         />
       </GridItem>
       <GridItem area={'bottom'}>
         <Image
-          src='/img/ryoshi/bubble/cb_bottom.png'
+          src={ImageService.translate('/img/ryoshi/bubble/cb_bottom.png').convert()}
           w='full'
           h='50px'
         />
       </GridItem>
       <GridItem area={'brc'}>
         <Image
-          src='/img/ryoshi/bubble/cb_bottom_right.png'
+          src={ImageService.translate('/img/ryoshi/bubble/cb_bottom_right.png').convert()}
         />
       </GridItem>
     </Grid>

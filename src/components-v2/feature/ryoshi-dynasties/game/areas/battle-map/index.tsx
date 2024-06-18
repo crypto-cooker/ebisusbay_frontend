@@ -106,7 +106,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     setExplosion(
       <Image
         position="relative"
-        src='/img/battle-bay/explosion.png' 
+        src={ImageService.translate('/img/battle-bay/explosion.png').convert()}
         width={250*5}
         height={207*5}
         left={left-(250*2.5)}
@@ -119,7 +119,7 @@ const BattleMap = ({onChange, showFullBattlePage: showActiveGame, mapProps, heig
     setExplosion(
       <Image
        position="relative"
-        src='/img/battle-bay/bld0.png' 
+        src={ImageService.translate('/img/battle-bay/bld0.png').convert()}
         width={0}
         height={0}
         left={0}
