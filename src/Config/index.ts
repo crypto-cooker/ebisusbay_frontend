@@ -200,6 +200,12 @@ const configData: AppConfigMap = {
         symbol: 'MERY',
         address: '0x3b41B27E74Dd366CE27cB389dc7877D4e1516d4d',
         decimals: 18
+      },
+      lwv: {
+        name: 'Lightwave',
+        symbol: 'LWV',
+        address: '0xc8324619A829efc3af5fF3206F136Ba8d26f071E',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -608,6 +614,12 @@ const configData: AppConfigMap = {
         name: 'Mistery',
         symbol: 'MERY',
         address: '0x3b41B27E74Dd366CE27cB389dc7877D4e1516d4d',
+        decimals: 18
+      },
+      lwv: {
+        name: 'Lightwave',
+        symbol: 'LWV',
+        address: '0xc8324619A829efc3af5fF3206F136Ba8d26f071E',
         decimals: 18
       }
     },
