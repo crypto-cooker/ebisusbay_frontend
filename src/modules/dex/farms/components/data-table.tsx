@@ -43,7 +43,7 @@ import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/butt
 import {faCalculator, faExternalLinkAlt, faMinus, faPlus, faStopwatch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEnableFarm, useHarvestRewards} from "@dex/farms/hooks/farm-actions";
-import {DerivedFarm, FarmState} from "@dex/farms/constants/types";
+import {DerivedFarm, FarmState, MapiFarmRewarder} from "@dex/farms/constants/types";
 import {appConfig} from "@src/Config";
 import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialog";
 import StakeLpTokensDialog from "@dex/farms/components/stake-lp-tokens";
@@ -418,23 +418,25 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
         <VStack align='start'>
           <Box fontSize='xs' fontWeight='bold'>Daily Rewards</Box>
           <SimpleGrid columns={2} gap={1}>
-            {info.getValue().map((reward: { token: BrokerCurrency, amount: string, endsAt: string }, i: number) => (
+            {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string }, i: number) => (
               <React.Fragment key={i}>
                 <HStack key={i} fontWeight='bold'>
                   <Box>{reward.token.image}</Box>
                   <Box>{reward.amount}</Box>
                 </HStack>
-                <Box textAlign='start'>
-                  <Popover>
-                    <PopoverTrigger>
-                      <IconButton onClick={handleClick} aria-label='Reward End Date' icon={<Icon as={FontAwesomeIcon} icon={faStopwatch} />} variant='unstyled' h='24px' minW='24px'/>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <PopoverArrow />
-                      <PopoverBody>Approximately ends at {new Date(millisecondTimestamp(reward.endsAt)).toLocaleString()}</PopoverBody>
-                    </PopoverContent>
-                  </Popover>
-                </Box>
+                {!reward.rewarder.isMain && !!reward.rewarder.rewardEnd && (
+                  <Box textAlign='start'>
+                    <Popover>
+                      <PopoverTrigger>
+                        <IconButton onClick={handleClick} aria-label='Reward End Date' icon={<Icon as={FontAwesomeIcon} icon={faStopwatch} />} variant='unstyled' h='24px' minW='24px'/>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverBody>Approximately ends at {new Date(millisecondTimestamp(reward.rewarder.rewardEnd)).toLocaleString()}</PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                  </Box>
+                )}
               </React.Fragment>
             ))}
           </SimpleGrid>

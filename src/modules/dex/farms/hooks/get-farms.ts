@@ -118,25 +118,27 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
         const farmState = totalAllocPoints > 0 ? FarmState.ACTIVE : FarmState.FINISHED;
 
         const dailyRewards = await Promise.all(
-          pairFarm.rewarders.map(async (rewarder) => {
-            const token = getByAddress(rewarder.token);
-            if (!token) {
-              throw new Error(`Token not found for rewarder address: ${rewarder.token}`);
-            }
-            const amount = commify(round(ethers.utils.formatUnits(rewarder.rewardPerDay, token.decimals)));
+          pairFarm.rewarders
+            .filter((rewarder) => pairFarm.rewarders.length === 1 || (!rewarder.isMain || rewarder.allocPoint > 0))
+            .map(async (rewarder) => {
+              const token = getByAddress(rewarder.token);
+              if (!token) {
+                throw new Error(`Token not found for rewarder address: ${rewarder.token}`);
+              }
+              const amount = commify(round(ethers.utils.formatUnits(rewarder.rewardPerDay, token.decimals)));
 
-            let block = retrievedBlocks[rewarder.lastRewardBlock];
-            if (!block) {
-              block = await readProvider.getBlock(rewarder.lastRewardBlock);
-              retrievedBlocks[rewarder.lastRewardBlock] = block;
-            }
+              let block = retrievedBlocks[rewarder.lastRewardBlock];
+              if (!block) {
+                block = await readProvider.getBlock(rewarder.lastRewardBlock);
+                retrievedBlocks[rewarder.lastRewardBlock] = block;
+              }
 
-            return {
-              token,
-              amount,
-              endsAt: block.timestamp
-            };
-          })
+              return {
+                rewarder,
+                token,
+                amount
+              };
+            })
         );
 
         return {

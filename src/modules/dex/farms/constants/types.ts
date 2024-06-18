@@ -52,6 +52,10 @@ export interface MapiFarmRewarder {
   accRewardPerShare: string;
   allocPoint: number;
   lastRewardBlock: number;
+  poolCount?: number;
+  rewardStart?: number;
+  rewardEnd?: number;
+  rewardPerSecond?: number;
   isMain: boolean;
   tokenDecimals: number;
   rewardPerBlock: string;
@@ -73,7 +77,7 @@ export interface DerivedFarm {
 
 export interface FarmRow {
   name: string;
-  dailyRewards: Array<{token: BrokerCurrency, amount: string, endsAt: number}>;
+  dailyRewards: Array<{rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string}>;
   stakedLiquidity: string;
   apr: string;
   state: FarmState;

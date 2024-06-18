@@ -146,15 +146,17 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                 <React.Fragment key={i}>
                   <HStack spacing={0} justify='end'>
                     <Box fontWeight='bold'>{reward.amount}</Box>
-                    <Popover>
-                      <PopoverTrigger>
-                        <IconButton aria-label='Reward End Date' icon={<Icon as={FontAwesomeIcon} icon={faStopwatch} />} variant='unstyled' h='24px' minW='24px'/>
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <PopoverArrow />
-                        <PopoverBody>Approximately ends at {new Date(millisecondTimestamp(reward.endsAt)).toLocaleString()}</PopoverBody>
-                      </PopoverContent>
-                    </Popover>
+                    {!reward.rewarder.isMain && !!reward.rewarder.rewardEnd && (
+                      <Popover>
+                        <PopoverTrigger>
+                          <IconButton aria-label='Reward End Date' icon={<Icon as={FontAwesomeIcon} icon={faStopwatch} />} variant='unstyled' h='24px' minW='24px'/>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <PopoverArrow />
+                          <PopoverBody>Approximately ends at {new Date(millisecondTimestamp(reward.rewarder.rewardEnd)).toLocaleString()}</PopoverBody>
+                        </PopoverContent>
+                      </Popover>
+                    )}
                   </HStack>
                   <Box textAlign='end' fontWeight='bold'>{reward.token.symbol}</Box>
                 </React.Fragment>
