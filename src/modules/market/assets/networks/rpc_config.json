@@ -27162,6 +27162,28 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "Banditz Orc Nation",
+      "slug": "banditz-orc-nation",
+      "multiToken": false,
+      "address": "0x17a4fcfe0cae9e8614d195d69195bad6a4de5c0c",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Blockchain Banditz Orc Nation, a previous rugg brought back to life.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/banditz-orc-nation/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/banditz-orc-nation/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/banditz-orc-nation/card.webp",
+        "twitter": "https://twitter.com/Blockchnbanditz",
+        "discord": "https://discord.gg/yZqgNGuMHM",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [

@@ -1,7 +1,9 @@
 import {defaultWagmiConfig} from '@web3modal/wagmi/react/config';
-import {cookieStorage, createStorage} from 'wagmi'
-import {cronos, cronosTestnet} from 'viem/chains'
+import {cookieStorage, createConfig, createStorage, http} from 'wagmi'
+import {cronos, cronosTestnet} from 'wagmi/chains'
 import {appConfig as applicationConfig, isTestnet} from "@src/Config";
+import {walletConnect} from "@wagmi/connectors";
+
 type ChainRpcUrls = {
   http: readonly string[]
   webSocket?: readonly string[] | undefined
@@ -26,21 +28,18 @@ const rpcUrls: {
 } = {
   default: {
     http: [appConfig.rpc.read].concat(primaryNetwork.rpcUrls.default.http)
-  },
-  public: {
-    http: [appConfig.rpc.read].concat(primaryNetwork.rpcUrls.default.http)
   }
 }
 
-const ethersChains = [
-  {
-    rpcUrl: appConfig.rpc.read,
-    explorerUrl: appConfig.urls.explorer,
-    currency: 'CRO',
-    name: 'Cronos Mainnet',
-    chainId: 25,
-  }
-];
+// const ethersChains = [
+//   {
+//     rpcUrl: appConfig.rpc.read,
+//     explorerUrl: appConfig.urls.explorer,
+//     currency: 'CRO',
+//     name: 'Cronos Mainnet',
+//     chainId: 25,
+//   }
+// ];
 
 function setupDefaultConfig() {
   const wagmiChains = [{...primaryNetwork, rpcUrls}];
@@ -56,31 +55,29 @@ function setupDefaultConfig() {
   })
 
   return config;
-
-  // return { config, chains: wagmiChains };
 }
 
 // // All this setup just to get the autoConnect parameter...
-// function setupCustomConfig(connectors: Array<Connector>) {
-//   const { chains, publicClient } = configureChains(
-//     [primaryNetwork],
-//     [walletConnectProvider({ projectId: projectId! }), jsonRpcProvider({
-//       rpc: (chain) => ({
-//         http: appConfig.rpc.read,
-//         websocket: 'wss://ws-rpc.ebisusbay.com'
-//       })
-//     })]
-//   )
-//
+// function setupCustomConfig() {
 //   const config = createConfig({
-//     connectors,
-//     autoConnect: true,
-//     publicClient,
+//     chains: [{...primaryNetwork, rpcUrls}],
+//     transports: {
+//       [cronos.id]: http(),
+//       [cronosTestnet.id]: http()
+//     },
+//     connectors: [
+//       walletConnect({ projectId: projectId!, metadata, showQrModal: false }), // showQrModal must be false.
+//       // Other connectors...
+//     ],
+//     ssr: true,
+//     storage: createStorage({
+//       storage: cookieStorage
+//     })
 //   });
 //
-//   return { config, chains };
+//   return config;
 // }
 
 const defaultConfig = setupDefaultConfig();
-// const customConfig = setupCustomConfig(defaultConfig.config.connectors);
+// const customConfig = setupCustomConfig();
 export const wagmiConfig = defaultConfig;
