@@ -27,7 +27,7 @@ import {DerivedFarm, FarmState} from "@dex/farms/constants/types";
 import {UserFarms, UserFarmState} from "@dex/farms/state/user";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {commify} from "ethers/lib/utils";
-import {millisecondTimestamp, round} from "@market/helpers/utils";
+import {ciEquals, millisecondTimestamp, round} from "@market/helpers/utils";
 import {ethers} from "ethers";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import {useEnableFarm, useHarvestRewards} from "@dex/farms/hooks/farm-actions";
@@ -168,6 +168,8 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
             <Wrap justify='space-between' align='center'>
               {userData?.earnings.map((earning, i) => {
                 const token = getByAddress(earning.address);
+                const rewarder = farm.data.rewarders.find(r =>ciEquals(r.token, earning.address));
+
                 return !!token ? (
                   <Stack key={i}>
                     <Box>

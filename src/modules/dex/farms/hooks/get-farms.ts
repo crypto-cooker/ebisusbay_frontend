@@ -102,7 +102,6 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
 
   const query = async () => {
     const data = await ApiService.withoutKey().getFarms(queryParams);
-    let retrievedBlocks: Block[] = [];
 
     return await Promise.all(data
       .filter((farm: MapiFarm) => farm.pid !== 0 || (farm.pair !== undefined && farm.pair !== null))
@@ -125,13 +124,9 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
               if (!token) {
                 throw new Error(`Token not found for rewarder address: ${rewarder.token}`);
               }
-              const amount = commify(round(ethers.utils.formatUnits(rewarder.rewardPerDay, token.decimals)));
 
-              let block = retrievedBlocks[rewarder.lastRewardBlock];
-              if (!block) {
-                block = await readProvider.getBlock(rewarder.lastRewardBlock);
-                retrievedBlocks[rewarder.lastRewardBlock] = block;
-              }
+              const rewardPerDay = !isNaN(parseInt(rewarder.rewardPerDay)) ? rewarder.rewardPerDay : '0';
+              const amount = commify(round(ethers.utils.formatUnits(rewardPerDay, token.decimals)));
 
               return {
                 rewarder,

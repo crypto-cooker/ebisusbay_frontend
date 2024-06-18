@@ -47,7 +47,7 @@ export interface MapiPairToken {
 }
 
 export interface MapiFarmRewarder {
-  id: number;
+  id: number | string;
   token: string;
   accRewardPerShare: string;
   allocPoint: number;
