@@ -180,7 +180,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                       </Box>
                       {/*{!!earnedDollarValue && token.symbol !== 'USDC' && (*/}
                         <Box fontSize='xs' color={text2Color}>
-                          ~ ${usdValueForToken(Number(ethers.utils.formatUnits(earning.amount ?? 0, token.decimals)), token.address)}
+                          ~ ${round(usdValueForToken(Number(ethers.utils.formatUnits(earning.amount ?? 0, token.decimals)), token.address), 2)}
                         </Box>
                       {/*)}*/}
                     </Box>

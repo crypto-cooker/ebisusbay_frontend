@@ -120,9 +120,16 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
           pairFarm.rewarders
             .filter((rewarder) => pairFarm.rewarders.length === 1 || (!rewarder.isMain || rewarder.allocPoint > 0))
             .map(async (rewarder) => {
-              const token = getByAddress(rewarder.token);
+              let token = getByAddress(rewarder.token);
               if (!token) {
-                throw new Error(`Token not found for rewarder address: ${rewarder.token}`);
+                token = {
+                  address: rewarder.token,
+                  symbol: '?',
+                  name: '?',
+                  decimals: 18,
+                  image: null
+                }
+                // throw new Error(`Token not found for rewarder address: ${rewarder.token}`);
               }
 
               const rewardPerDay = !isNaN(parseInt(rewarder.rewardPerDay)) ? rewarder.rewardPerDay : '0';
