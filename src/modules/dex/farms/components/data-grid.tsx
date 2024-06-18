@@ -168,9 +168,11 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
             <Wrap justify='space-between' align='center'>
               {userData?.earnings.map((earning, i) => {
                 const token = getByAddress(earning.address);
-                const rewarder = farm.data.rewarders.find(r =>ciEquals(r.token, earning.address));
+                const rewarder = farm.data.rewarders.find(r => ciEquals(r.token, earning.address));
+                const isMultiYield = rewarder && farm.data.rewarders.length > 1;
+                const isActiveNativeYield = rewarder && rewarder.isMain && rewarder.allocPoint > 0;
 
-                return !!token ? (
+                return (!!token && (earning.amount > 0 || !isMultiYield || isActiveNativeYield || rewarder.allocPoint > 0)) ? (
                   <Stack key={i}>
                     <Box>
                       <Box fontSize='xl' fontWeight='bold'>
