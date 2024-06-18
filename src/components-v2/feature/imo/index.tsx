@@ -22,6 +22,7 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
 import Countdown, {zeroPad} from "react-countdown";
+import ImageService from "@src/core/services/image";
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 enum ImoStatus {
@@ -79,7 +80,7 @@ export default function ImoPage() {
       <Flex w='full' align='space-between' mb={4} direction={{base: 'column', md: 'row'}}>
         <VStack align='start'>
           <Image
-            src='/img/imo/cornhub/logo.webp'
+            src={ImageService.translate('/img/imo/cornhub/logo.webp').convert()}
             alt='cornhub'
             objectFit='contain'
           />
@@ -143,7 +144,7 @@ export default function ImoPage() {
               pt={2}
             >
               <Image
-                src='/img/imo/cornhub/corn.webp'
+                src={ImageService.translate('/img/imo/cornhub/corn.webp').convert()}
                 alt='cornhub'
                 h={{base: '200px', md: 'auto'}}
                 objectFit='contain'

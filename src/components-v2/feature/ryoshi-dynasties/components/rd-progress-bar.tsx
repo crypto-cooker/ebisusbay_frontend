@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useWindowSize} from "@market/hooks/useWindowSize";
 import {Box, Image, Progress, SimpleGrid} from "@chakra-ui/react";
+import ImageService from "@src/core/services/image";
 
 interface RdProgressBarProps {
   current: number;
@@ -57,7 +58,7 @@ const RdProgressBar = ({current, max, potential, useGrid = true, segments = 8, f
         />
 
         {!fillColor && !!barSpot && (
-          <Image position='absolute' src='/img/battle-bay/bankinterior/progress_bar_spark.png'
+          <Image position='absolute' src={ImageService.translate('/img/battle-bay/bankinterior/progress_bar_spark.png').convert()}
                  top={0}
                  h='30px'
                  left={barSpot}

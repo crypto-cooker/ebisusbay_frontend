@@ -4,6 +4,7 @@ import {caseInsensitiveCompare} from "@market/helpers/utils";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {Box, ChakraProps, Image} from "@chakra-ui/react";
+import ImageService from "@src/core/services/image";
 
 const knownTokens = appConfig('tokens');
 
@@ -11,25 +12,25 @@ const iconMapping: Record<string, (props: ChakraProps) => ReactElement> = {
   'frtn': (props) => <FortuneIcon {...props} />,
   'cro': (props) => <CronosIconBlue {...props} />,
   'wcro': (props) => <CronosIconBlue {...props} />,
-  'bcro': (props) => <IconImage src='/img/icons/tokens/bcro-outline.webp' symbol='bcro' {...props} />,
-  'mad': (props) => <IconImage src='/img/icons/tokens/mad.webp' symbol='mad' {...props} />,
-  'vrse': (props) => <IconImage src='/img/icons/tokens/vrse.webp' symbol='vrse' {...props} />,
-  'scratch': (props) => <IconImage src='/img/icons/tokens/scratch.webp' symbol='scratch' {...props} />,
-  'candy': (props) => <IconImage src='/img/icons/tokens/candy.webp' symbol='candy' {...props} />,
-  'ttt': (props) => <IconImage src='/img/icons/tokens/ttt.webp' symbol='ttt' {...props} />,
-  'icy': (props) => <IconImage src='/img/icons/tokens/icy.webp' symbol='icy' {...props} />,
-  'caw': (props) => <IconImage src='/img/icons/tokens/caw.webp' symbol='caw' {...props} />,
-  'ryoshi': (props) => <IconImage src='/img/icons/tokens/ryoshi.webp' symbol='ryoshi' {...props} />,
-  'trpz': (props) => <IconImage src='/img/icons/tokens/trpz.webp' symbol='trpz' {...props} />,
-  'usdc': (props) => <IconImage src='/img/icons/tokens/usdc.webp' symbol='usdc' {...props} />,
-  'lcro': (props) => <IconImage src='/img/icons/tokens/lcro.webp' symbol='lcro' {...props} />,
-  'grve': (props) => <IconImage src='/img/icons/tokens/grve.webp' symbol='grve' {...props} />,
-  'fish': (props) => <IconImage src='/img/icons/tokens/fish.webp' symbol='fish' {...props} />,
-  'aiko': (props) => <IconImage src='/img/icons/tokens/aiko.webp' symbol='aiko' {...props} />,
-  'coom': (props) => <IconImage src='/img/icons/tokens/coom.webp' symbol='coom' {...props} />,
-  'fftb': (props) => <IconImage src='/img/icons/tokens/fftb.webp' symbol='fftb' {...props} />,
-  'mery': (props) => <IconImage src='/img/icons/tokens/mery.webp' symbol='mery' {...props} />,
-  'emit': (props) => <IconImage src='/img/icons/tokens/emit.webp' symbol='emit' {...props} />,
+  'bcro': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/bcro-outline.webp').convert()} symbol='bcro' {...props} />,
+  'mad': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/mad.webp').convert()} symbol='mad' {...props} />,
+  'vrse': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/vrse.webp').convert()} symbol='vrse' {...props} />,
+  'scratch': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/scratch.webp').convert()} symbol='scratch' {...props} />,
+  'candy': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/candy.webp').convert()} symbol='candy' {...props} />,
+  'ttt': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/ttt.webp').convert()} symbol='ttt' {...props} />,
+  'icy': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/icy.webp').convert()} symbol='icy' {...props} />,
+  'caw': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/caw.webp').convert()} symbol='caw' {...props} />,
+  'ryoshi': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/ryoshi.webp').convert()} symbol='ryoshi' {...props} />,
+  'trpz': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/trpz.webp').convert()} symbol='trpz' {...props} />,
+  'usdc': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/usdc.webp').convert()} symbol='usdc' {...props} />,
+  'lcro': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/lcro.webp').convert()} symbol='lcro' {...props} />,
+  'grve': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/grve.webp').convert()} symbol='grve' {...props} />,
+  'fish': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/fish.webp').convert()} symbol='fish' {...props} />,
+  'aiko': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/aiko.webp').convert()} symbol='aiko' {...props} />,
+  'coom': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/coom.webp').convert()} symbol='coom' {...props} />,
+  'fftb': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/fftb.webp').convert()} symbol='fftb' {...props} />,
+  'mery': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/mery.webp').convert()} symbol='mery' {...props} />,
+  'emit': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/emit.webp').convert()} symbol='emit' {...props} />,
 };
 
 const IconImage = ({ src, symbol, ...props }: ChakraProps & { src: string; symbol: string }) => (

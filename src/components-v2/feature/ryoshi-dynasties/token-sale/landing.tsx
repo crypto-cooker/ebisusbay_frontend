@@ -5,6 +5,7 @@ import {Fade} from "react-awesome-reveal";
 import NextLink from "next/link";
 import NextImage from "next/image";
 import {useWindowSize} from "@market/hooks/useWindowSize";
+import ImageService from "@src/core/services/image";
 
 interface LandingSceneProps {
   onEnterTokenSale: () => void;
@@ -36,7 +37,7 @@ const LandingScene = ({onEnterTokenSale}: LandingSceneProps) => {
             filter: 'brightness(0.7) blur(5px)',
           }}
         >
-          <source src='/img/ryoshi/fortune-token-sale-bg.mp4' type="video/mp4" />
+          <source src={ImageService.translate('/img/ryoshi/fortune-token-sale-bg.mp4').convert()} type="video/mp4" />
         </video>
       </AspectRatio>
       <Box
@@ -50,7 +51,7 @@ const LandingScene = ({onEnterTokenSale}: LandingSceneProps) => {
         <Flex direction='column' align='center'>
           <Fade cascade>
             <Heading>
-              <Image src='/img/ryoshi/rd-logo.png' w='800px' />
+              <Image src={ImageService.translate('/img/ryoshi/rd-logo.png').convert()} w='800px' />
             </Heading>
             <VStack mt={!!windowSize.height && windowSize.height < 700 ? 4 : 8}>
               <RdButton w='250px' fontSize={{base: 'xl', sm: '2xl'}} onClick={onEnterTokenSale}>Token Sale</RdButton>

@@ -6,6 +6,7 @@ import {
   Image,
 } from '@chakra-ui/react';
 import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
+import ImageService from "@src/core/services/image";
 
 interface AcademySceneProps {
   onBack: () => void;
@@ -21,12 +22,12 @@ const Academy = ({onBack}:AcademySceneProps) => {
 
       <GridItem w='100%' h='100%'>
         <Flex alignContent={'center'} justifyContent={'center'}>
-          <Image src='img/battle-bay/alliancecenter_day.png'/>
+          <Image src={ImageService.translate('img/battle-bay/alliancecenter_day.png').convert()}/>
         </Flex>
       </GridItem>
       <GridItem w='100%' h='100%'>
         <Flex alignContent={'center'} justifyContent={'center'}>
-          <Image src='img/battle-bay/townhall_day.png'/>
+          <Image src={ImageService.translate('img/battle-bay/townhall_day.png').convert()}/>
         </Flex>
       </GridItem>
 
@@ -46,12 +47,12 @@ const Academy = ({onBack}:AcademySceneProps) => {
 
         <GridItem w='100%' h='100%'>
         <Flex alignContent={'center'} justifyContent={'center'}>
-          <Image src='img/battle-bay/academy_day.png'/>
+          <Image src={ImageService.translate('img/battle-bay/academy_day.png').convert()}/>
         </Flex>
       </GridItem>
       <GridItem w='100%' h='100%'>
         <Flex alignContent={'center'} justifyContent={'center'}>
-          <Image src='img/battle-bay/academy_day.png'/>
+          <Image src={ImageService.translate('img/battle-bay/academy_day.png').convert()}/>
         </Flex>
       </GridItem>
 
@@ -72,12 +73,12 @@ const Academy = ({onBack}:AcademySceneProps) => {
 
         <GridItem w='100%' h='100%'>
         <Flex alignContent={'center'} justifyContent={'center'}>
-          <Image src='img/battle-bay/bank_day.png'/>
+          <Image src={ImageService.translate('img/battle-bay/bank_day.png').convert()}/>
         </Flex>
       </GridItem>
       <GridItem w='100%' h='100%'>
         <Flex alignContent={'center'} justifyContent={'center'}>
-          <Image src='img/battle-bay/fishmarket_day.png'/>
+          <Image src={ImageService.translate('img/battle-bay/fishmarket_day.png').convert()}/>
         </Flex>
       </GridItem>
 
@@ -96,12 +97,12 @@ const Academy = ({onBack}:AcademySceneProps) => {
 
       <GridItem w='100%' h='100%'>
         <Flex alignContent={'center'} justifyContent={'center'}>
-          <Image src='img/battle-bay/tavern_day.png'/>
+          <Image src={ImageService.translate('img/battle-bay/tavern_day.png').convert()}/>
         </Flex>
       </GridItem>
       <GridItem w='100%' h='100%'>
         <Flex alignContent={'center'} justifyContent={'center'}>
-          <Image src='img/battle-bay/barracks_day.png'/>
+          <Image src={ImageService.translate('img/battle-bay/barracks_day.png').convert()}/>
         </Flex>
       </GridItem>
 
