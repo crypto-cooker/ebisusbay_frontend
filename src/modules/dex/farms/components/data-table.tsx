@@ -40,19 +40,20 @@ import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 import {Card} from "@src/components-v2/foundation/card";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
-import {faCalculator, faExternalLinkAlt, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faCalculator, faExternalLinkAlt, faMinus, faPlus, faStopwatch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEnableFarm, useHarvestRewards} from "@dex/farms/hooks/farm-actions";
-import {DerivedFarm, FarmState} from "@dex/farms/constants/types";
+import {DerivedFarm, FarmState, MapiFarmRewarder} from "@dex/farms/constants/types";
 import {appConfig} from "@src/Config";
 import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialog";
 import StakeLpTokensDialog from "@dex/farms/components/stake-lp-tokens";
 import {UserFarms, UserFarmState} from "@dex/farms/state/user";
 import {ethers} from "ethers";
-import {round} from "@market/helpers/utils";
+import {millisecondTimestamp, round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
-import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import useCurrencyBroker, {BrokerCurrency} from "@market/hooks/use-currency-broker";
+import {useExchangeRate} from "@market/hooks/useGlobalPrices";
 
 const config =  appConfig();
 
@@ -116,9 +117,11 @@ export default function DataTable({ data, userData }: DataTableProps) {
 
 function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row<DerivedFarm>, isSmallScreen: boolean, showLiquidityColumn: boolean, userData?: UserFarmState}) {
   const user = useUser();
+  const {getByAddress} = useCurrencyBroker();
   const [enableFarm, enablingFarm] = useEnableFarm();
+  const {usdValueForToken} = useExchangeRate();
   const { refetchBalances } = useUserFarmsRefetch();
-  const [harvestRewards, harvestingRewards] = useHarvestRewards();useColorModeValue('#FFFFFF', '#404040')
+  const [harvestRewards, harvestingRewards] = useHarvestRewards();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const text2Color = useColorModeValue('#1A202C', 'whiteAlpha.600');
 
@@ -141,15 +144,19 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
     return commify((Number(row.original.data.pair.derivedUSD) * Number(ethers.utils.formatEther(userData.stakedBalance))).toFixed(2));
   }, [row, userData]);
 
-  const earnedDollarValue = useMemo(() => {
-    if (!row.original.data.frtnPerMonth || !row.original.data.frtnPerMonthInUSD || !userData?.earnings) {
-      return 0;
-    }
+  // const earnedDollarValue = useMemo(() => {
+  //   if (!row.original.data.frtnPerMonth || !row.original.data.frtnPerMonthInUSD || !userData?.earnings) {
+  //     return 0;
+  //   }
+  //
+  //   const usdRate = row.original.data.frtnPerMonthInUSD / parseFloat(ethers.utils.formatEther(row.original.data.frtnPerMonth));
+  //
+  //   const earnings = userData.earnings[0]?.amount ?? 0;
+  //
+  //   return commify((usdRate * Number(ethers.utils.formatEther(earnings))).toFixed(2));
+  // }, [row, userData]);
 
-    const usdRate = row.original.data.frtnPerMonthInUSD / parseFloat(ethers.utils.formatEther(row.original.data.frtnPerMonth));
-
-    return commify((usdRate * Number(ethers.utils.formatEther(userData.earnings))).toFixed(2));
-  }, [row, userData]);
+  const totalEarned = userData?.earnings.reduce((acc, earning) =>  acc + earning.amount, 0n) ?? 0n;
 
   return (
     <React.Fragment>
@@ -268,18 +275,25 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                 <Card flex={1}>
                   <Box fontSize='sm' fontWeight='bold' mb={2}>EARNED REWARDS</Box>
                   <Wrap justify='space-between' align='center'>
-                    <Box>
-                      <Box fontSize='xl' fontWeight='bold'>
-                        FRTN {commify(round(ethers.utils.formatEther(userData?.earnings ?? 0), 2))}
-                      </Box>
-                      {!!earnedDollarValue && (
-                        <Box fontSize='xs' color={text2Color}>
-                          ~ ${earnedDollarValue}
-                        </Box>
-                      )}
-                    </Box>
+                    {userData?.earnings.map((earning, i) => {
+                      const token = getByAddress(earning.address);
+                      return !!token ? (
+                        <Stack key={i}>
+                          <Box>
+                            <Box fontSize='xl' fontWeight='bold'>
+                              {token.symbol} {commify(round(ethers.utils.formatUnits(earning.amount ?? 0, token.decimals), 2))}
+                            </Box>
+                            {/*{!!earnedDollarValue && token.symbol !== 'USDC' && (*/}
+                              <Box fontSize='xs' color={text2Color}>
+                                ~ ${usdValueForToken(Number(ethers.utils.formatUnits(earning.amount ?? 0, token.decimals)), token.address)}
+                              </Box>
+                            {/*)}*/}
+                          </Box>
+                        </Stack>
+                      ) : <></>
+                    })}
                     <PrimaryButton
-                      isDisabled={harvestingRewards || userData?.earnings === 0n || !userData?.approved || !user.address}
+                      isDisabled={harvestingRewards || totalEarned === 0n || !userData?.approved || !user.address}
                       isLoading={harvestingRewards}
                       onClick={() => harvestRewards(row.original.data.pid)}
                     >
@@ -396,14 +410,37 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
   }),
   columnHelper.accessor("derived.dailyRewards", {
     cell: (info) => {
+      const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+      };
+
       return (
-        <Box>
+        <VStack align='start'>
           <Box fontSize='xs' fontWeight='bold'>Daily Rewards</Box>
-          <HStack>
-            <FortuneIcon boxSize={4} />
-            <Box>{info.getValue()}</Box>
-          </HStack>
-        </Box>
+          <SimpleGrid columns={2} gap={1}>
+            {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string }, i: number) => (
+              <React.Fragment key={i}>
+                <HStack key={i} fontWeight='bold'>
+                  <Box>{reward.token.image}</Box>
+                  <Box>{reward.amount}</Box>
+                </HStack>
+                {!reward.rewarder.isMain && !!reward.rewarder.rewardEnd && (
+                  <Box textAlign='start'>
+                    <Popover>
+                      <PopoverTrigger>
+                        <IconButton onClick={handleClick} aria-label='Reward End Date' icon={<Icon as={FontAwesomeIcon} icon={faStopwatch} />} variant='unstyled' h='24px' minW='24px'/>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverBody>Approximately ends at {new Date(millisecondTimestamp(reward.rewarder.rewardEnd)).toLocaleString()}</PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                  </Box>
+                )}
+              </React.Fragment>
+            ))}
+          </SimpleGrid>
+        </VStack>
       )
     }
   }),

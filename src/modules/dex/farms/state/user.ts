@@ -1,12 +1,27 @@
-import {atom, useSetAtom} from "jotai";
+import {atom} from "jotai";
 import {atomWithReset} from "jotai/utils";
 
 export interface UserFarmState {
   address: string;
   approved: boolean;
   stakedBalance: bigint;
-  earnings: bigint;
+  earnings: FarmEmissionToken[];
   tokenBalance: bigint;
+}
+
+export interface UserFarmBalances {
+  stakedBalance: bigint;
+  earnings: FarmEmissionToken[];
+  tokenBalance: bigint;
+}
+
+export interface MappedUserFarmBalances {
+  [address: string]: UserFarmBalances;
+}
+
+export interface FarmEmissionToken {
+  address: string;
+  amount: bigint;
 }
 
 export interface UserFarms {
@@ -15,11 +30,11 @@ export interface UserFarms {
 
 // Initial states
 const initialApprovals: { [address: string]: boolean } = {};
-const initialBalances: { [address: string]: { balance: number; harvestable: number; available: number } } = {};
+const initialBalances: MappedUserFarmBalances = {};
 
 // Atoms for individual data pieces
 export const approvalsAtom = atomWithReset<{ [address: string]: boolean }>(initialApprovals);
-export const balancesAtom = atomWithReset<{ [address: string]: { balance: number; harvestable: number; available: number } }>(initialBalances);
+export const balancesAtom = atomWithReset<MappedUserFarmBalances>(initialBalances);
 
 // Refetch trigger atoms
 export const refetchApprovalsAtom = atomWithReset<number>(0);
@@ -35,9 +50,9 @@ export const userFarmsAtom = atom((get) => {
     userFarms[address] = {
       address,
       approved: approvals[address],
-      stakedBalance: BigInt(balances[address]?.balance || 0),
-      earnings: BigInt(balances[address]?.harvestable || 0),
-      tokenBalance: BigInt(balances[address]?.available || 0),
+      stakedBalance: BigInt(balances[address]?.stakedBalance || 0),
+      earnings: balances[address]?.earnings.map(earning => ({...earning, amount: BigInt(earning.amount)})) ?? [],
+      tokenBalance: BigInt(balances[address]?.tokenBalance || 0),
     };
   });
 
