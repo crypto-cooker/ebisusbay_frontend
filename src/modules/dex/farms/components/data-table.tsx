@@ -49,7 +49,7 @@ import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialo
 import StakeLpTokensDialog from "@dex/farms/components/stake-lp-tokens";
 import {UserFarms, UserFarmState} from "@dex/farms/state/user";
 import {ethers} from "ethers";
-import {millisecondTimestamp, round} from "@market/helpers/utils";
+import {ciEquals, millisecondTimestamp, round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
 import useCurrencyBroker, {BrokerCurrency} from "@market/hooks/use-currency-broker";
@@ -277,7 +277,11 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                   <Wrap justify='space-between' align='center'>
                     {userData?.earnings.map((earning, i) => {
                       const token = getByAddress(earning.address);
-                      return !!token ? (
+                      const rewarder = row.original.data.rewarders.find(r => ciEquals(r.token, earning.address));
+                      const isMultiYield = rewarder && row.original.data.rewarders.length > 1;
+                      const isActiveNativeYield = rewarder && rewarder.isMain && rewarder.allocPoint > 0;
+
+                      return (!!token && (earning.amount > 0 || !isMultiYield || isActiveNativeYield || rewarder.allocPoint > 0)) ? (
                         <Stack key={i}>
                           <Box>
                             <Box fontSize='xl' fontWeight='bold'>
