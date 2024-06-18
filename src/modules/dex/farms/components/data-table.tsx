@@ -289,7 +289,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                             </Box>
                             {/*{!!earnedDollarValue && token.symbol !== 'USDC' && (*/}
                               <Box fontSize='xs' color={text2Color}>
-                                ~ ${usdValueForToken(Number(ethers.utils.formatUnits(earning.amount ?? 0, token.decimals)), token.address)}
+                                ~ ${round(usdValueForToken(Number(ethers.utils.formatUnits(earning.amount ?? 0, token.decimals)), token.address), 2)}
                               </Box>
                             {/*)}*/}
                           </Box>
@@ -425,7 +425,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
             {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string }, i: number) => (
               <React.Fragment key={i}>
                 <HStack key={i} fontWeight='bold'>
-                  <Box>{reward.token.image}</Box>
+                  <Box>{reward.token.image ?? reward.token.symbol}</Box>
                   <Box>{reward.amount}</Box>
                 </HStack>
                 {!reward.rewarder.isMain && !!reward.rewarder.rewardEnd && (
