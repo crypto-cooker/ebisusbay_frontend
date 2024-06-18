@@ -11,6 +11,8 @@ import {ApiService} from "@src/core/services/api-service";
 import {round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {wagmiConfig} from "@src/wagmi";
+import useCurrencyBroker from "@market/hooks/use-currency-broker";
+import {Block} from "@ethersproject/abstract-provider";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -96,13 +98,14 @@ export function getFarmsUsingChain() {
 }
 
 export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
+  const { getByAddress } = useCurrencyBroker();
 
   const query = async () => {
     const data = await ApiService.withoutKey().getFarms(queryParams);
 
-    return data
+    return await Promise.all(data
       .filter((farm: MapiFarm) => farm.pid !== 0 || (farm.pair !== undefined && farm.pair !== null))
-      .map((farm: MapiFarm): DerivedFarm => {
+      .map(async (farm: MapiFarm): Promise<DerivedFarm> => {
         const pairFarm: MapiPairFarm = farm as MapiPairFarm;
 
         const lpBalance = BigNumber.from(pairFarm.lpBalance);
@@ -110,19 +113,40 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
         const derivedUSDBigNumber = ethers.utils.parseUnits(derivedUSD, 18);
         const totalDollarValue = lpBalance.mul(derivedUSDBigNumber).div(ethers.constants.WeiPerEther);
         const stakedLiquidity = ethers.utils.formatUnits(totalDollarValue, 18);
-        const farmState = farm.allocPoint > 0 ? FarmState.ACTIVE : FarmState.FINISHED;
+        const totalAllocPoints = pairFarm.rewarders.reduce((acc, rewarder) => acc + rewarder.allocPoint, 0);
+        const farmState = totalAllocPoints > 0 ? FarmState.ACTIVE : FarmState.FINISHED;
+
+        const dailyRewards = await Promise.all(
+          pairFarm.rewarders
+            .filter((rewarder) => pairFarm.rewarders.length === 1 || (!rewarder.isMain || rewarder.allocPoint > 0))
+            .map(async (rewarder) => {
+              const token = getByAddress(rewarder.token);
+              if (!token) {
+                throw new Error(`Token not found for rewarder address: ${rewarder.token}`);
+              }
+
+              const rewardPerDay = !isNaN(parseInt(rewarder.rewardPerDay)) ? rewarder.rewardPerDay : '0';
+              const amount = commify(round(ethers.utils.formatUnits(rewardPerDay, token.decimals)));
+
+              return {
+                rewarder,
+                token,
+                amount
+              };
+            })
+        );
 
         return {
           data: pairFarm,
           derived: {
             name: pairFarm.pair.name,
-            dailyRewards: `${commify(round(ethers.utils.formatEther(pairFarm.frtnPerDay)))} FRTN`,
+            dailyRewards: dailyRewards,
             stakedLiquidity: `$${commify(round(stakedLiquidity))}`,
             apr: `${['Infinity', 'NaN'].includes(pairFarm.apr) ? '-' : `${commify(round(pairFarm.apr, 2))}%`}`,
             state: farmState
           }
         }
-    });
+    }));
   }
 
   return useQuery({

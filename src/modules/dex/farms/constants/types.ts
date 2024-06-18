@@ -1,51 +1,28 @@
+import {BrokerCurrency} from "@market/hooks/use-currency-broker";
+
 export interface MapiFarm {
   pid: number;
-  lpBalance: string;
   pair: MapiPair | null;
-  accFRTNPerShare: string;
-  allocPoint: number;
-  lastRewardBlock: number;
+  lpBalance: string;
   rewarderCount: number;
   totalUsersCount: number;
   userCount: number;
+  rewarders: MapiFarmRewarder[];
+  lpBalanceInUSD: number;
   apr: string;
-  frtnPerBlockInUSD: number | null;
-  frtnPerBlock: string | null;
-  frtnPerDay: string | null;
-  frtnPerDayInUSD: number | null;
-  frtnPerMonth: string | null;
-  frtnPerMonthInUSD: number | null;
-  frtnPerLPPerBlock: string | null;
-  frtnPerLPPerBlockInUSD: number | null;
-  frtnPerLPPerDay: string | null;
-  frtnPerLPPerDayInUSD: number | null;
+  rewardPerBlockInUSD: number;
+  rewardPerDayInUSD: number;
+  rewardPerMonthInUSD: number;
+  rewardPerLPPerBlockInUSD: number;
+  rewardPerLPPerDayInUSD: number;
 }
+
 export interface MapiPairFarm extends MapiFarm {
   pair: MapiPair;
-  frtnPerBlockInUSD: number;
-  frtnPerBlock: string;
-  frtnPerDay: string;
-  frtnPerDayInUSD: number;
-  frtnPerMonth: string;
-  frtnPerMonthInUSD: number;
-  frtnPerLPPerBlock: string;
-  frtnPerLPPerBlockInUSD: number;
-  frtnPerLPPerDay: string;
-  frtnPerLPPerDayInUSD: number;
 }
 
 interface MapiFrtnFarm extends MapiFarm {
   pair: null;
-  frtnPerBlockInUSD: null;
-  frtnPerBlock: null;
-  frtnPerDay: null;
-  frtnPerDayInUSD: null;
-  frtnPerMonth: null;
-  frtnPerMonthInUSD: null;
-  frtnPerLPPerBlock: null;
-  frtnPerLPPerBlockInUSD: null;
-  frtnPerLPPerDay: null;
-  frtnPerLPPerDayInUSD: null;
 }
 
 export interface MapiPair {
@@ -69,6 +46,30 @@ export interface MapiPairToken {
   }
 }
 
+export interface MapiFarmRewarder {
+  id: number | string;
+  token: string;
+  accRewardPerShare: string;
+  allocPoint: number;
+  lastRewardBlock: number;
+  poolCount?: number;
+  rewardStart?: number;
+  rewardEnd?: number;
+  rewardPerSecond?: number;
+  isMain: boolean;
+  tokenDecimals: number;
+  rewardPerBlock: string;
+  rewardPerBlockInUSD: number;
+  rewardPerDay: string;
+  rewardPerDayInUSD: number;
+  rewardPerMonth: string;
+  rewardPerMonthInUSD: number;
+  rewardPerLPPerBlock: string;
+  rewardPerLPPerBlockInUSD: number;
+  rewardPerLPPerDay: string;
+  rewardPerLPPerDayInUSD: number;
+}
+
 export interface DerivedFarm {
   derived: FarmRow;
   data: MapiPairFarm;
@@ -76,7 +77,7 @@ export interface DerivedFarm {
 
 export interface FarmRow {
   name: string;
-  dailyRewards: string;
+  dailyRewards: Array<{rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string}>;
   stakedLiquidity: string;
   apr: string;
   state: FarmState;

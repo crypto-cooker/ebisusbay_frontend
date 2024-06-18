@@ -491,7 +491,7 @@ const configData: AppConfigMap = {
     },
     tokens: {
       mad: {
-        name: 'MAD',
+        name: 'MAD Bucks',
         symbol: 'MAD',
         address: '0x212331e1435a8df230715db4c02b2a3a0abf8c61',
         decimals: 18
@@ -509,13 +509,13 @@ const configData: AppConfigMap = {
         decimals: 18
       },
       frtn: {
-        name: 'FRTN',
+        name: 'Fortune',
         symbol: 'FRTN',
         address: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
         decimals: 18
       },
       bcro: {
-        name: 'bCRO',
+        name: 'Bonded CRO',
         symbol: 'bCRO',
         address: '0xebaceb7f193955b946cc5dd8f8724a80671a1f2f',
         decimals: 18
@@ -532,10 +532,10 @@ const configData: AppConfigMap = {
         address: '0x06C04B0AD236e7Ca3B3189b1d049FE80109C7977',
         decimals: 18
       },
-      ttt: {
-        name: 'TTT',
-        symbol: 'TTT',
-        address: '0x16A6b79fE8DBE95fA9518c0E16672F37238a6Cc6',
+      emit: {
+        name: 'EMIT',
+        symbol: 'EMIT',
+        address: '0x9fa6552c1e9df51070a3b456355b5d76cbd59b5a',
         decimals: 18
       },
       icy: {
@@ -545,9 +545,69 @@ const configData: AppConfigMap = {
         decimals: 18
       },
       wcro: {
-        name: 'WCRO',
+        name: 'Wrapped CRO',
         symbol: 'WCRO',
-        address: '0x6a3173618859c7cd40faf6921b5e9eb6a76f1fd4',
+        address: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23',
+        decimals: 18
+      },
+      ryoshi: {
+        name: 'ryoshi with knife',
+        symbol: 'RYOSHI',
+        address: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
+        decimals: 18
+      },
+      caw: {
+        name: 'crow with knife',
+        symbol: 'CAW',
+        address: '0xcCcCcCcCdbEC186DC426F8B5628AF94737dF0E60',
+        decimals: 18
+      },
+      grve: {
+        name: 'Grave',
+        symbol: 'GRVE',
+        address: '0x9885488cD6864DF90eeBa6C5d07B35f08CEb05e9',
+        decimals: 18
+      },
+      lcro: {
+        name: 'Liquid CRO',
+        symbol: 'LCRO',
+        address: '0x9Fae23A2700FEeCd5b93e43fDBc03c76AA7C08A6',
+        decimals: 18
+      },
+      usdc: {
+        name: 'USD Coin',
+        symbol: 'USDC',
+        address: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
+        decimals: 6
+      },
+      fish: {
+        name: 'FISH',
+        symbol: 'FISH',
+        address: '0xba69b94c2e2c961226d25Cc3d0255e5845Fd34E7',
+        decimals: 18
+      },
+      aiko: {
+        name: 'Aiko Token',
+        symbol: 'AIKO',
+        address: '0x5674B21cC1FBB73E7fccC5120853c3d61A0e2d1E',
+        decimals: 18
+      },
+      coom: {
+        name: 'Coom',
+        symbol: 'Coom',
+        address: '0xdcbE80cbf8A5327f32bD8EE45beaaD4cD85660cC',
+        decimals: 18
+      },
+      fftb: {
+        name: 'FFTheBozos',
+        symbol: 'FFTB',
+        address: '0x8ebb879557db19d36e69b53b99f0ab938a703bef',
+        decimals: 18
+      },
+      mery: {
+        name: 'Mistery',
+        symbol: 'MERY',
+        address: '0x3b41B27E74Dd366CE27cB389dc7877D4e1516d4d',
         decimals: 18
       }
     },
@@ -819,6 +879,12 @@ const configData: AppConfigMap = {
         symbol: 'WCRO',
         address: '0x467604E174c87042fcc4412c5BC70AaBc8733016',
         decimals: 18
+      },
+      usdc: {
+        name: 'USD Coin',
+        symbol: 'USDC',
+        address: '0x1E1d0765439d0d53ee40CC4fB454C2343c84342b',
+        decimals: 6
       }
     },
     collections: rpcConfigTestnet.known_contracts,
