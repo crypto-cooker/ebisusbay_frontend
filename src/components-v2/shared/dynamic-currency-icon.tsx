@@ -31,6 +31,7 @@ const iconMapping: Record<string, (props: ChakraProps) => ReactElement> = {
   'fftb': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/fftb.webp').convert()} symbol='fftb' {...props} />,
   'mery': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/mery.webp').convert()} symbol='mery' {...props} />,
   'emit': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/emit.webp').convert()} symbol='emit' {...props} />,
+  'lwv': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/lwv.webp').convert()} symbol='lwv' {...props} />,
 };
 
 const IconImage = ({ src, symbol, ...props }: ChakraProps & { src: string; symbol: string }) => (
