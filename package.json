@@ -117,7 +117,7 @@
     "typewriter-effect": "^2.21.0",
     "use-breakpoint": "^4.0.1",
     "uuid-int": "^3.1.0",
-    "viem": "^2.14.0",
+    "viem": "^2.15.1",
     "wagmi": "^2.10.2",
     "web-vitals": "^2.1.0",
     "yup": "^0.32.11",
