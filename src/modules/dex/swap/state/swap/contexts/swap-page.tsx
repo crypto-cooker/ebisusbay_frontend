@@ -1,6 +1,6 @@
 import {PropsWithChildren, useEffect} from "react";
 import {ChainId, Currency} from "@uniswap/sdk-core";
-import {useSwapPageState} from "@dex/state/swap/hooks";
+import {useSwapPageState} from "@dex/swap/state/swap/hooks";
 
 interface SwapPageContextProps {
   chainId?: ChainId

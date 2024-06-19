@@ -1,7 +1,7 @@
 // Custom hook for userExpertMode
 import {useAtom} from "jotai";
-import {dexUserStateAtom} from "@dex/state/user/atom";
-import {SlippageTolerance} from "@dex/state/user/types";
+import {dexUserStateAtom} from "@dex/swap/state/user/atom";
+import {SlippageTolerance} from "@dex/swap/state/user/types";
 import {Percent} from "@uniswap/sdk-core";
 import JSBI from "jsbi";
 import {RouterPreference} from "@dex/imported/state/routing/types";

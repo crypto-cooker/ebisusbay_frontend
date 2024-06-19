@@ -3,10 +3,7 @@ import ClientLayout from "./client-layout";
 import Script from "next/script";
 import {DM_Sans} from 'next/font/google';
 import Head from "next/head";
-import {headers} from "next/headers";
-import {cookieToInitialState} from "wagmi";
 import {ReactNode} from "react";
-import {wagmiConfig} from "@src/wagmi";
 
 import {config} from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -32,11 +29,6 @@ const dmSans = DM_Sans({
 config.autoAddCss = false;
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const initialState = cookieToInitialState(
-    wagmiConfig,
-    headers().get('cookie')
-  )
-
   return (
     <html lang="en">
       <GoogleAnalytics  />
@@ -58,7 +50,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </Script>
       </Head>
       <body className={dmSans.className}>
-        <ClientLayout initialState={initialState}>
+        <ClientLayout>
           {children}
         </ClientLayout>
         <statusiq-status-widget src="https://status.ebisusbay.com" widget-type="sticky" widget-position="bottom-left"></statusiq-status-widget>

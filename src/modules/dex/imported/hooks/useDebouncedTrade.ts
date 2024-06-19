@@ -4,10 +4,10 @@ import {ClassicTrade, InterfaceTrade, QuoteMethod, RouterPreference, TradeState}
 import useDebounce from "@src/core/hooks/useDebounce";
 import {WRAPPED_NATIVE_CURRENCY} from "@dex/imported/constants/tokens";
 import useAutoRouterSupported from "@dex/imported/hooks/useAutoRouterSupported";
-import {useAccount} from "wagmi";
+import {useNetwork} from "wagmi";
 import {useRoutingAPITrade} from "@dex/imported/state/routing/useRoutingAPITrade";
 import {usePreviewTrade} from "@dex/imported/state/routing/usePreviewTrade";
-import {useRouterPreference} from "@dex/state/user/hooks";
+import {useRouterPreference} from "@dex/swap/state/user/hooks";
 
 // Prevents excessive quote requests between keystrokes.
 const DEBOUNCE_TIME = 350
@@ -65,7 +65,7 @@ export function useDebouncedTrade(
   method?: QuoteMethod
   swapQuoteLatency?: number
 } {
-  const { chain } = useAccount()
+  const { chain } = useNetwork()
   const autoRouterSupported = useAutoRouterSupported()
 
   const inputs = useMemo<[CurrencyAmount<Currency> | undefined, Currency | undefined]>(

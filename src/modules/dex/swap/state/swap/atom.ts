@@ -3,7 +3,7 @@ import {ChainId, Currency, CurrencyAmount, Percent} from "@uniswap/sdk-core";
 import {ReactNode} from "react";
 import {InterfaceTrade, TradeState} from "@dex/imported/state/routing/types";
 import {atom} from "jotai/index";
-import {useDerivedSwapInfo} from "@dex/state/swap/hooks";
+import {useDerivedSwapInfo} from "@dex/swap/state/swap/hooks";
 
 export interface SwapPageState {
   currencyState: CurrencyState

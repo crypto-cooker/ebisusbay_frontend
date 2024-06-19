@@ -1,11 +1,11 @@
 'use client';
 
-import {createWeb3Modal} from '@web3modal/wagmi/react'
-import {State, WagmiProvider} from 'wagmi'
+import {createWeb3Modal} from '@web3modal/wagmi/react';
 import {appConfig as applicationConfig} from "@src/Config";
 import ImageService from "@src/core/services/image";
 import {ReactNode} from "react";
 import {wagmiConfig} from "@src/wagmi";
+import {WagmiConfig} from "wagmi";
 
 const appConfig = applicationConfig();
 
@@ -15,9 +15,9 @@ if (!projectId) throw 'Web3Modal API Key not defined';
 
 createWeb3Modal({
   // ethersConfig: defaultConfig({ metadata }),
-  wagmiConfig: wagmiConfig,
+  wagmiConfig: wagmiConfig.config,
   projectId,
-  // chains: wagmiConfig.config.chains,
+  chains: wagmiConfig.config.chains,
   tokens: {
     [appConfig.chain.id]: {
       address: appConfig.tokens.frtn.address,
@@ -37,10 +37,10 @@ createWeb3Modal({
 //   return <WagmiConfig config={customConfig.config}>{children}</WagmiConfig>;
 // }
 
-export function Web3Modal({children, initialState}: { children: ReactNode, initialState?: State }) {
+export function Web3Modal({children}: { children: ReactNode }) {
   return (
-    <WagmiProvider config={wagmiConfig} initialState={initialState}>
+    <WagmiConfig config={wagmiConfig.config}>
       {children}
-    </WagmiProvider>
+    </WagmiConfig>
   )
 }

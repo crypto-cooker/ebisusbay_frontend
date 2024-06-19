@@ -1,4 +1,5 @@
-import { Address, erc721Abi, erc20Abi } from 'viem';
+import {ContractFunctionConfig} from "viem";
+import {Address, erc20ABI, erc721ABI} from "wagmi";
 import {ciEquals} from "@market/helpers/utils";
 import {BigNumber, ethers} from "ethers";
 import {multicall} from "@wagmi/core";
@@ -7,8 +8,6 @@ import {ItemType} from "@market/hooks/use-create-order-signer";
 import {useState} from "react";
 import {BarterState} from "@market/state/jotai/atoms/deal";
 import {Deal} from "@src/core/services/api-service/mapi/types";
-import { wagmiConfig } from '@src/wagmi';
-import { ContractFunctionParameters } from 'viem/types/contract';
 
 const config = appConfig();
 
@@ -19,14 +18,14 @@ const useApprovalStatus = () => {
     const items = side === 'maker' ? deal.maker_items : deal.taker_items;
     const targetAddress = side === 'maker' ? deal.maker : deal.taker;
 
-    const contracts: ContractFunctionParameters[] = items.map((item: any) => {
+    const contracts: ContractFunctionConfig[] = items.map((item: any) => {
       const isToken = [ItemType.NATIVE, ItemType.ERC20].includes(item.item_type);
       const isNft = [ItemType.ERC721, ItemType.ERC1155].includes(item.item_type);
 
       if (isNft) {
         return {
           address: item.token as Address,
-          abi: erc721Abi,
+          abi: erc721ABI,
           functionName: 'isApprovedForAll',
           args: [targetAddress, config.contracts.market],
         };
@@ -37,14 +36,14 @@ const useApprovalStatus = () => {
         }
         return {
           address: tokenAddress as Address,
-          abi: erc20Abi,
+          abi: erc20ABI,
           functionName: 'allowance',
           args: [targetAddress, config.contracts.market],
         };
       }
     });
 
-    const contractResults = await multicall(wagmiConfig as any, {
+    const contractResults = await multicall({
       contracts: contracts,
     });
 
@@ -87,14 +86,14 @@ const useApprovalStatus = () => {
 
   const checkApprovalStatusesFromCreate = async (barterState: BarterState, address: string) => {
 
-    const nftContracts: ContractFunctionParameters[] = barterState.maker.nfts.map(nft => ({
+    const nftContracts: ContractFunctionConfig[] = barterState.maker.nfts.map(nft => ({
       address: nft.nftAddress.toLowerCase() as Address,
-      abi: erc721Abi,
+      abi: erc721ABI,
       functionName: 'isApprovedForAll',
       args: [address, config.contracts.market],
     }));
 
-    const tokenContracts: ContractFunctionParameters[] = barterState.maker.erc20.map(token => {
+    const tokenContracts: ContractFunctionConfig[] = barterState.maker.erc20.map(token => {
       let tokenAddress = token.address;
       if (ciEquals(address, ethers.constants.AddressZero)) {
         tokenAddress = config.tokens.wcro.address;
@@ -102,13 +101,13 @@ const useApprovalStatus = () => {
 
       return {
         address: tokenAddress.toLowerCase() as Address,
-        abi: erc20Abi,
+        abi: erc20ABI,
         functionName: 'allowance',
         args: [address, config.contracts.market],
       };
     });
 
-    const data = await multicall(wagmiConfig as any, {
+    const data = await multicall({
       contracts: nftContracts.concat(tokenContracts),
     });
 

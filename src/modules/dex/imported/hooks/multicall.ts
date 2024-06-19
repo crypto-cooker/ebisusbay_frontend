@@ -2,7 +2,7 @@ import { ChainId } from '@uniswap/sdk-core'
 import useBlockNumber, { useMainnetBlockNumber } from '@dex/imported/lib/hooks/useBlockNumber'
 import multicall from '@dex/imported/lib/state/multicall'
 import { SkipFirst } from '@dex/imported/types/tuple'
-import {useAccount} from "wagmi";
+import {useNetwork} from "wagmi";
 
 export { NEVER_RELOAD } from '@uniswap/redux-multicall' // re-export for convenience
 export type { CallStateResult } from '@uniswap/redux-multicall' // re-export for convenience
@@ -36,7 +36,7 @@ export function useSingleContractMultipleData(
 }
 
 function useCallContext() {
-  const { chain } = useAccount()
+  const { chain } = useNetwork()
   const latestBlock = useBlockNumber()
   return { chainId: chain?.id, latestBlock }
 }

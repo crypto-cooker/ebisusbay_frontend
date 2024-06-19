@@ -21,9 +21,9 @@ import {TOKEN_SHORTHANDS} from "@dex/imported/constants/tokens";
 import {useUSDPrice} from "@dex/imported/hooks/useUSDPrice";
 import tryParseCurrencyAmount from "@dex/imported/utils/tryParseCurrencyAmount";
 import {isClassicTrade, isSubmittableTrade, isUniswapXTrade} from "@dex/imported/state/routing/utils";
-import {useUserSlippageToleranceWithDefault} from "@dex/state/user/hooks";
+import {useUserSlippageToleranceWithDefault} from "@dex/swap/state/user/hooks";
 import {useUser} from "@src/components-v2/useUser";
-import {useSwapPageState, useSwapPageStateRead} from "@dex/state/swap/hooks";
+import {useSwapPageState, useSwapPageStateRead} from "@dex/swap/state/swap/hooks";
 
 export function useSwapContext() {
   return useContext(SwapContext)

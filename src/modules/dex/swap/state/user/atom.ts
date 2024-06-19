@@ -1,10 +1,13 @@
 import { atomWithStorage } from 'jotai/utils';
-import {SlippageTolerance} from "@dex/state/user/types";
+import {SlippageTolerance} from "@dex/swap/state/user/types";
 import {RouterPreference} from "@dex/imported/state/routing/types";
 
-interface SerializedToken {
-  symbol: string;
-  decimals: number;
+export interface SerializedToken {
+  chainId: number
+  address: string
+  decimals: number
+  symbol?: string
+  name?: string
 }
 
 interface SerializedPair {

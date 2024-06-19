@@ -13,7 +13,7 @@ import {
 import {ModalState} from "@dex/swap/types";
 import React, {ChangeEvent, useState} from "react";
 import {ModalDialog} from "@src/components-v2/foundation/modal";
-import {useUserAllowMultihop, useUserExpertMode, useUserSlippageTolerance} from "@dex/state/user/hooks";
+import {useUserAllowMultihop, useUserExpertMode, useUserSlippageTolerance} from "@dex/swap/state/user/hooks";
 import {Button as ChakraButton} from "@chakra-ui/button/dist/button";
 import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
