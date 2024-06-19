@@ -99,8 +99,8 @@ const Nft = ({ slug, id, nft, collection }: NftProps) => {
 };
 
 export const getServerSideProps = async ({ params }: GetServerSidePropsContext) => {
-  const slug = params?.slug;
-  const tokenId = params?.id;
+  const slug = params?.slug as string;
+  const tokenId = params?.id as string;
   let collection;
 
   // @todo fix in autolistings

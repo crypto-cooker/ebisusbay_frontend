@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {ciEquals, debounce} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import Blockies from "react-blockies";
 import {
   AccordionButton,
@@ -51,11 +51,11 @@ export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyP
     return key;
   };
 
-  const onTextFilterChange = debounce((event: any) => {
+  const onTextFilterChange = (event: any) => {
     const { value } = event.target;
     const list = value ? collections.filter((c: any) => c.name.toLowerCase().includes(value.toLowerCase())) : collections;
     setVisibleCollections(list);
-  }, 300);
+  }
 
   useEffect(() => {
     setVisibleCollections(collections);

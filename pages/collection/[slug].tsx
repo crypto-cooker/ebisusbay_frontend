@@ -76,7 +76,7 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }: CollectionPr
 };
 
 export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
-  const slug = params?.slug;
+  const slug = params?.slug as string;
 
   // @todo fix with autolistings
   // const queryKey = isAddress(slug) ? 'address' : 'slug';

@@ -1,9 +1,9 @@
-import React, {memo, useCallback, useEffect} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchListings, filterListings, init, searchListings, sortListings} from '@market/state/redux/slices/marketplaceSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {SortOption} from '../Models/sort-option.model';
-import {debounce, isBundle, knownErc20Token, shortAddress, timeSince} from '@market/helpers/utils';
+import {isBundle, knownErc20Token, shortAddress, timeSince} from '@market/helpers/utils';
 import Link from 'next/link';
 import {ethers} from 'ethers';
 import TopFilterBar from './TopFilterBar';
@@ -12,6 +12,7 @@ import {sortOptions} from './constants/sort-options';
 import {MarketFilters} from "../Models/market-filters.model";
 import ImageService from "@src/core/services/image";
 import {Center, Spinner, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
+import useDebounce from "@src/core/hooks/useDebounce";
 
 const SalesCollection = ({
   showLoadMore = true,
@@ -21,6 +22,8 @@ const SalesCollection = ({
   cacheName = '',
 }) => {
   const dispatch = useDispatch();
+  const [searchTerms, setSearchTerms] = useState('');
+  const debouncedSearch = useDebounce(searchTerms, 500);
 
   // const mobileListBreakpoint = 768;
   // const [tableMobileView, setTableMobileView] = useState(window.innerWidth > mobileListBreakpoint);
@@ -119,10 +122,14 @@ const SalesCollection = ({
     [dispatch]
   );
 
-  const onSearch = debounce((event) => {
+  const onSearch = (event) => {
     const { value } = event.target;
-    dispatch(searchListings(value, cacheName, true));
-  }, 300);
+    setSearchTerms(value);
+  }
+
+  useEffect(() => {
+    dispatch(searchListings(debouncedSearch, cacheName, true));
+  }, [debouncedSearch]);
 
   return (
     <>

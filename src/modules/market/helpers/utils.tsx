@@ -7,6 +7,7 @@ import {commify, getAddress} from "ethers/lib/utils";
 import brands from '../../../core/data/brands.json';
 import ImageService from "@src/core/services/image";
 import {ethers} from "ethers";
+import {MouseEventHandler} from "react";
 
 const config = appConfig();
 const drops = config.drops;
@@ -14,109 +15,22 @@ const collections = config.collections;
 
 const gateway = config.urls.cdn.ipfs;
 
-export function debounce(func, wait, immediate) {
-  var timeout;
-  return function () {
-    var context = this,
-      args = arguments;
-    clearTimeout(timeout);
-    timeout = setTimeout(function () {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    }, wait);
-    if (immediate && !timeout) func.apply(context, args);
-  };
-}
-
-export function isMobile() {
-  if (typeof window !== 'undefined') {
-    return window.matchMedia(`(max-width: 767px)`).matches;
-  }
-  return false;
-}
-
-export function isMdScreen() {
-  if (typeof window !== 'undefined') {
-    return window.matchMedia(`(max-width: 1199px)`).matches;
-  }
-  return false;
-}
-
-function currentYPosition() {
-  if (typeof window === 'undefined') {
-    return;
-  }
-  // Firefox, Chrome, Opera, Safari
-  if (window.pageYOffset) return window.pageYOffset;
-  // Internet Explorer 6 - standards mode
-  if (document.documentElement && document.documentElement.scrollTop) return document.documentElement.scrollTop;
-  // Internet Explorer 6, 7 and 8
-  if (document.body.scrollTop) return document.body.scrollTop;
-  return 0;
-}
-
-function elmYPosition(elm) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-  var y = elm.offsetTop;
-  var node = elm;
-  while (node.offsetParent && node.offsetParent !== document.body) {
-    node = node.offsetParent;
-    y += node.offsetTop;
-  }
-  return y;
-}
-
-export function getTimeDifference(date) {
-  let difference = moment(new Date(), 'DD/MM/YYYY HH:mm:ss').diff(moment(date, 'DD/MM/YYYY HH:mm:ss')) / 1000;
-
-  return getLengthOfTime(difference);
-}
-
-export function getLengthOfTime(duration) {
+export function getLengthOfTime(duration: number) {
   const timeUnits = [
-    { unit: 'year', threshold: 86400 * 30 * 12, roundFunc: val => (val / 86400 / 30 / 12).toFixed(1) },
-    { unit: 'month', threshold: 86400 * 30, roundFunc: val => Math.floor(val / 86400 / 30) },
-    { unit: 'day', threshold: 86400, roundFunc: val => Math.floor(val / 86400) },
-    { unit: 'hour', threshold: 3600, roundFunc: val => Math.floor(val / 3600) },
-    { unit: 'minute', threshold: 60, roundFunc: val => Math.floor(val / 60) },
-    { unit: 'second', threshold: 1, roundFunc: val => Math.floor(val) }
+    { unit: 'year', threshold: 86400 * 30 * 12, roundFunc: (val: number) => (val / 86400 / 30 / 12).toFixed(1) },
+    { unit: 'month', threshold: 86400 * 30, roundFunc: (val: number) => Math.floor(val / 86400 / 30) },
+    { unit: 'day', threshold: 86400, roundFunc: (val: number) => Math.floor(val / 86400) },
+    { unit: 'hour', threshold: 3600, roundFunc: (val: number) => Math.floor(val / 3600) },
+    { unit: 'minute', threshold: 60, roundFunc: (val: number) => Math.floor(val / 60) },
+    { unit: 'second', threshold: 1, roundFunc: (val: number) => Math.floor(val) }
   ];
 
   for (const { unit, threshold, roundFunc } of timeUnits) {
     if (duration >= threshold) {
       const value = roundFunc(duration);
-      return `${value} ${pluralize(value, unit)}`;
+      return `${value} ${pluralize(Number(value), unit)}`;
     }
   }
-}
-
-export function generateRandomId() {
-  let tempId = Math.random().toString();
-  let uid = tempId.substr(2, tempId.length - 1);
-  return uid;
-}
-
-export function getQueryParam(prop) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-  var params = {};
-  var search = decodeURIComponent(window.location.href.slice(window.location.href.indexOf('?') + 1));
-  var definitions = search.split('&');
-  definitions.forEach(function (val, key) {
-    var parts = val.split('=', 2);
-    params[parts[0]] = parts[1];
-  });
-  return prop && prop in params ? params[prop] : params;
-}
-
-export function classList(classes) {
-  return Object.entries(classes)
-    .filter((entry) => entry[1])
-    .map((entry) => entry[0])
-    .join(' ');
 }
 
 /**
@@ -127,7 +41,7 @@ export function classList(classes) {
  * @returns {string}
  * @deprecated Use humanizeAdvanced instead
  */
-export function humanize(str) {
+export function humanize(str?: string) {
   if (str === null || str === undefined) return '';
   if (!str) return str;
 
@@ -148,7 +62,7 @@ export function humanize(str) {
   return frags.join(' ');
 }
 
-export function humanizeAdvanced(s) {
+export function humanizeAdvanced(s?: string | number) {
   if (s === null || s === undefined) return '';
   if (!s) return s;
   if (typeof s !== 'string') s = s.toString();
@@ -165,7 +79,7 @@ export function humanizeAdvanced(s) {
   return formattedWords.join(' ').trim();
 }
 
-export const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+export const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
 
 /**
@@ -177,8 +91,8 @@ export const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.
  * @param makeHuman
  * @returns {string|*}
  */
-export function mapAttributeString(str, address, category, makeHuman = false) {
-  const mappings = attributes[address];
+export function mapAttributeString(str: string, address?: string, category?: string, makeHuman?: boolean) {
+  const mappings: {[key: string]: string | object} = attributes[address as keyof typeof attributes]
   let newStr = str?.toString() ?? '';
 
   if (mappings) {
@@ -186,10 +100,13 @@ export function mapAttributeString(str, address, category, makeHuman = false) {
       return mappings[str]
     }
 
-    if (Object.keys(mappings).includes(category) &&
-      typeof mappings[category] === 'object' &&
-      Object.keys(mappings[category]).includes(str.toString())) {
-      return mappings[category][str];
+    if (category) {
+      const potentialObj = mappings[category];
+      if (Object.keys(mappings).includes(category) &&
+        typeof potentialObj === 'object' &&
+        Object.keys(mappings[category]).includes(str.toString())) {
+        return potentialObj[str as keyof typeof potentialObj];
+      }
     }
   }
 
@@ -203,7 +120,7 @@ export function mapAttributeString(str, address, category, makeHuman = false) {
  * @param exclude
  * @returns {string|number}
  */
-export function siPrefixedNumber(num, exclude = 5) {
+export function siPrefixedNumber(num?: number | string, exclude = 5) {
   if (!num) return 0;
 
   const wholeNumbers = Math.round(Number(num)).toString().length;
@@ -224,18 +141,20 @@ export function siPrefixedNumber(num, exclude = 5) {
       : commify(Number(Math.abs(Number(num))));
 }
 
-export function shortAddress(address) {
+export function shortAddress(address?: string | null) {
   return shortString(address, 4, 3);
 }
 
-export function shortString(str, leftChars = 3, rightChars = 3) {
+export function shortString(str?: string | null, leftChars = 3, rightChars = 3) {
   if (!str) return '';
   if (str.length <= leftChars + rightChars) return str;
 
   return `${str.substring(0, leftChars)}...${str.substring(str.length - rightChars, str.length)}`;
 }
 
-export function username(identifier) {
+export function username(identifier?: string) {
+  if (!identifier) return '';
+
   try {
     if (identifier.startsWith('0x') && !identifier.endsWith('.cro')) {
       return shortAddress(ethers.utils.getAddress(identifier));
@@ -246,11 +165,11 @@ export function username(identifier) {
   }
 }
 
-export function timeSince(timestamp) {
+export function timeSince(timestamp?: Date | number) {
   if (!timestamp) return timestamp;
 
   timestamp = millisecondTimestamp(timestamp);
-  const seconds = Math.floor(Math.abs((new Date() - timestamp) / 1000));
+  const seconds = Math.floor(Math.abs((Date.now() - timestamp) / 1000));
   let interval = Math.floor(seconds / 31536000);
 
   if (interval > 1) {
@@ -277,7 +196,7 @@ export function timeSince(timestamp) {
   return `${interval} ${pluralize(interval, 'second')}`;
 }
 
-export function secondsToDhms(totalSeconds, abbreviated = false) {
+export function secondsToDhms(totalSeconds: number, abbreviated = false) {
   const days = Math.floor(totalSeconds / (3600 * 24));
   const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -310,7 +229,7 @@ export function openWithCronosExplorer(transactionHash = '') {
   window.open(`https://cronoscan.com/tx/${transactionHash}`, '_blank');
 }
 
-export function createSuccessfulTransactionToastContent(transactionHash) {
+export function createSuccessfulTransactionToastContent(transactionHash: string) {
   return (
     <span>
       Success!
@@ -325,7 +244,7 @@ export function createSuccessfulTransactionToastContent(transactionHash) {
   );
 }
 
-export function createSuccessfulAddCartContent(onClickView) {
+export function createSuccessfulAddCartContent(onClickView: MouseEventHandler<HTMLSpanElement>) {
   return (
     <span>
       Added to cart
@@ -348,33 +267,33 @@ export function createSuccessfulAddCartContent(onClickView) {
  * @param str2
  * @returns {boolean}
  */
-export function ciEquals(str1, str2) {
+export function ciEquals(str1?: string, str2?: string) {
   return str1?.toLowerCase() === str2?.toLowerCase();
 }
 
-export function ciIncludes(array, str) {
-  if (!array) return false;
+export function ciIncludes(array?: string[], str?: string) {
+  if (!array || !str) return false;
   return array.map((item) => item.toLowerCase()).includes(str.toLowerCase());
 }
 
-export function newlineText(text) {
+export function newlineText(text: string) {
   return text.split('\n').map((str, i) => <p key={i} className="mb-3">{str}</p>);
 }
 
-export const isFounderDrop = (address) => {
+export const isFounderDrop = (address: string) => {
   return isDrop(address, 'founding-member');
 };
 
-export const isCmbDrop = (address) => {
+export const isCmbDrop = (address: string) => {
   return isDrop(address, 'cronos-gorilla-business');
 };
 
-export const isDrop = (address, slug) => {
+export const isDrop = (address: string, slug: string) => {
   const drop = drops.find((d) => d.slug === slug);
   return drop && ciEquals(drop.address, address);
 };
 
-export const isCollection = (address, matchesSlug, matchesAddress) => {
+export const isCollection = (address: string, matchesSlug: string[] | string, matchesAddress: string[] | string) => {
   const slugs = Array.isArray(matchesSlug) ? matchesSlug : [matchesSlug];
   const addresses = Array.isArray(matchesAddress) ? matchesAddress : [matchesAddress];
   return (
@@ -383,56 +302,56 @@ export const isCollection = (address, matchesSlug, matchesAddress) => {
   );
 };
 
-export const isBrandCollection = (slug, matchesAddress) => {
+export const isBrandCollection = (slug: string, matchesAddress: string) => {
   const brand = brands.find((b) => b.slug === slug);
   return brand && brand.collections.some((address) => ciEquals(address, matchesAddress));
 };
 
-export const isCroCrowCollection = (address) => {
+export const isCroCrowCollection = (address: string) => {
   return isCollection(address, 'cro-crow', '0xe4ab77ed89528d90e6bcf0e1ac99c58da24e79d5');
 };
 
-export const isCrognomidesCollection = (address) => {
+export const isCrognomidesCollection = (address: string) => {
   return isCollection(address, 'crognomides', '0x9AE196176b528680B75C7aea2FBd72456FDFAE17');
 };
 
-export const isMetapixelsCollection = (address) => {
+export const isMetapixelsCollection = (address: string) => {
   return isCollection(address, 'metapixels', '0x19e1f891002240fbea77ccc2adb6e73b93b3b97a');
 };
 
-export const isSouthSideAntsCollection = (address) => {
+export const isSouthSideAntsCollection = (address: string) => {
   return isCollection(address, 'south-side-ants', '0x5219cA4b335bA51aB717E474F31D803381D09d24');
 };
 
-export const isAntMintPassCollection = (address) => {
+export const isAntMintPassCollection = (address: string) => {
   return isCollection(address, 'ant-mint-pass', '0x844DaCD5A52DB9368E6C606f739599598031da84');
 };
 
-export const isCrosmocraftsPartsCollection = (address) => {
+export const isCrosmocraftsPartsCollection = (address: string) => {
   return isCollection(address, 'crosmocrafts-parts', '0xf49C94E09E506aCcbe553b673FEe4F44efb06D55');
 };
 
-export const isCrosmocraftsCollection = (address) => {
+export const isCrosmocraftsCollection = (address: string) => {
   return isCollection(address, 'crosmocrafts', '0xC6373d6F369A9FfE7D93B21F2A5b0E16291d996D');
 };
 
-export const isWeirdApesCollection = (address) => {
+export const isWeirdApesCollection = (address: string) => {
   return isCollection(address, 'weird-apes-club', '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44');
 };
 
-export const isBabyWeirdApesCollection = (address) => {
+export const isBabyWeirdApesCollection = (address: string) => {
   return isCollection(address, 'baby-weird-apes', '0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9');
 };
 
-export const isLadyWeirdApesCollection = (address) => {
+export const isLadyWeirdApesCollection = (address: string) => {
   return isCollection(address, 'lady-weird-apes', '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1');
 };
 
-export const isVoxelWeirdApesCollection = (address) => {
+export const isVoxelWeirdApesCollection = (address: string) => {
   return isCollection(address, 'voxel-weird-apes', '0xe02A74813053e96C5C98F817C0949E0B00728Ef6');
 };
 
-export const isAnyWeirdApesCollection = (address) => {
+export const isAnyWeirdApesCollection = (address: string) => {
   return isCollection(
     address,
     [
@@ -450,66 +369,66 @@ export const isAnyWeirdApesCollection = (address) => {
   );
 };
 
-export const isCronosVerseCollection = (address) => {
+export const isCronosVerseCollection = (address: string) => {
   return isCollection(address, 'cronosverse', '0x0aCDA31Cf1F301a7Eb8f988D47F708FbA058F8f5');
 };
 
-export const isEvoSkullCollection = (address) => {
+export const isEvoSkullCollection = (address: string) => {
   return isCollection(address, 'evo-skull', '0xbf4E430cD0ce8b93d4760958fe4ae66cDaCDB6c6');
 };
 
-export const isCroSkullPetsCollection = (address) => {
+export const isCroSkullPetsCollection = (address: string) => {
   return isCollection(address, 'croskull-pets', '0xB77959DC7a12F7549ACC084Af01259Fc48813c89')||
     isCollection(address, 'croskull-pets-s2', '0x54655D5468f072D5bcE1577c4a46F701C28a41A7') ||
     isCollection(address, 'croskull-pets-s3', '0x31B378ac025a341839CD81C4D29A8457324D3EbC');
 };
 
-export const isCroniesCollection = (address) => {
+export const isCroniesCollection = (address: string) => {
   return isCollection(address, 'cronies', '0xD961956B319A10CBdF89409C0aE7059788A4DaBb');
 };
 
-export const isLazyHorseCollection = (address) => {
+export const isLazyHorseCollection = (address: string) => {
   return isCollection(address, 'lazy-horse', '0xD504ed871d33dbD4f56f523A37dceC86Ee918cb6');
 };
 
-export const isLazyHorsePonyCollection = (address) => {
+export const isLazyHorsePonyCollection = (address: string) => {
   return isCollection(address, 'lazy-horse-pony', '0x7d0259070B5f513CA543afb6a906d42af5884B1B');
 };
 
-export const isCroskullSbtCollection = (address) => {
+export const isCroskullSbtCollection = (address: string) => {
   return isCollection(address, 'croskull-soulbound-token', '0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8');
 };
 
-export const isArgonautsBrandCollection = (address) => {
+export const isArgonautsBrandCollection = (address: string) => {
   return isBrandCollection('argonauts', address);
 };
 
-export const isEbVipCollection = (address, id) => {
+export const isEbVipCollection = (address: string, id?: string | number) => {
   const collection = collections.find((c) => c.slug === 'founding-member');
   return collection &&
     ciEquals(collection.address, address) &&
     id?.toString() === '2';
 };
 
-export const isFoundingMemberCollection = (address, id) => {
+export const isFoundingMemberCollection = (address: string) => {
   const collection = collections.find((c) => c.slug === 'founding-member');
   return collection &&
     ciEquals(collection.address, address);
 };
 
-export const isCronosGorillaBusinessCollection = (address) => {
+export const isCronosGorillaBusinessCollection = (address: string) => {
   return isCollection(address, 'cronos-gorilla-business', '0xc843f18d5605654391e7eDBEa250f6838C3e8936');
 };
 
-export const isCroSwapQuartermastersCollection = (address) => {
+export const isCroSwapQuartermastersCollection = (address: string) => {
   return isCollection(address, 'croswap-quartermasters', '0x333580e4B59E74243451c531c29121c02F8E3102');
 };
 
-export const isRyoshiResourceToken = (address, id) => {
+export const isRyoshiResourceToken = (address: string, id: string) => {
   return isCollection(address, 'ryoshi-resources', config.contracts.resources) && parseInt(id) === 2;
 };
 
-export const isDynamicNftImageCollection = (address) => {
+export const isDynamicNftImageCollection = (address: string) => {
   if(!address) return false;
   if (isLandDeedsCollection(address)) return true;
   if (isHeroesCollection(address)) return true;
@@ -517,14 +436,14 @@ export const isDynamicNftImageCollection = (address) => {
   return false;
 };
 
-export const isLandDeedsCollection = (address) => {
+export const isLandDeedsCollection = (address: string) => {
   return isCollection(
     address,
     'izanamis-cradle-land-deeds',
     ['0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3', '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad']
   );
 };
-export const isHeroesCollection = (address) => {
+export const isHeroesCollection = (address: string) => {
   return isCollection(
     address,
     'ryoshi-heroes',
@@ -532,32 +451,32 @@ export const isHeroesCollection = (address) => {
   );
 }
 
-export const isVaultCollection = (address) => {
+export const isVaultCollection = (address: string) => {
   return ciEquals(address, config.contracts.vaultNft);
 }
 
-export const isPlayingCardsCollection = (address) => {
+export const isPlayingCardsCollection = (address: string) => {
   return isCollection(address, 'ryoshi-playing-cards', '0xd87838a982a401510255ec27e603b0f5fea98d24');
 }
 
-export const isRyoshiTalesCollection = (address) => {
+export const isRyoshiTalesCollection = (address: string) => {
   return isCollection(address, 'ryoshi-tales', ['0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04', '0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4']);
 }
 
-export const isKoban = (address, nftId) => {
+export const isKoban = (address: string, nftId?: string | number) => {
   return isCollection(address, 'ryoshi-resources', '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d') && nftId?.toString() === '1';
 }
 
-export const isBundle = (addressOrSlug) => {
+export const isBundle = (addressOrSlug: string) => {
   return ciEquals(addressOrSlug, config.contracts.bundle) || addressOrSlug === 'nft-bundles';
 }
 
-export const percentage = (partialValue, totalValue) => {
+export const percentage = (partialValue: number | string, totalValue: number | string) => {
   if (!totalValue || totalValue === 0) return 0;
-  return Math.floor((100 * partialValue) / totalValue);
+  return Math.floor((100 * Number(partialValue)) / Number(totalValue));
 };
 
-export const relativePrecision = (num, minDecimals = 1) => {
+export const relativePrecision = (num: number, minDecimals = 1) => {
   if (num < 0.001) {
     return Math.round(num * 10000) / 100;
   } else if (num < 0.01) {
@@ -568,15 +487,6 @@ export const relativePrecision = (num, minDecimals = 1) => {
   return Math.round(num * 100 * multiplier) /  multiplier;
 };
 
-export const sliceIntoChunks = (arr, chunkSize) => {
-  const res = [];
-  for (let i = 0; i < arr.length; i += chunkSize) {
-    const chunk = arr.slice(i, i + chunkSize);
-    res.push(chunk);
-  }
-  return res;
-};
-
 /**
  * Lookup a collection by address instead of slug
  *
@@ -584,13 +494,13 @@ export const sliceIntoChunks = (arr, chunkSize) => {
  * @param tokenId
  * @returns {*}
  */
-export const findCollectionByAddress = (address, tokenId) => {
+export const findCollectionByAddress = (address: string, tokenId?: string) => {
   return collections.find((c) => {
     const matchesAddress = ciEquals(c.address, address);
     if (!tokenId) return matchesAddress;
 
     if (c.multiToken && c.slug !== 'ryoshi-resources') {
-      const ids = c.tokens?.map((t) => t.id) ?? [c.id];
+      const ids = c.tokens?.map((t: any) => t.id) ?? [c.id];
       const matchesToken = ids.includes(parseInt(tokenId));
       return matchesAddress && matchesToken;
     }
@@ -599,28 +509,16 @@ export const findCollectionByAddress = (address, tokenId) => {
   });
 };
 
-export const findCollectionFloor = (knownContract, collectionsStats) => {
-  const collectionStats = collectionsStats.find((o) => {
-    const address = o.address ?? o.address;
-    if (knownContract.multiToken && address.indexOf('-') !== -1) {
-      let parts = o.address.split('-');
-      return ciEquals(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
-    } else {
-      return ciEquals(knownContract.address, o.address);
-    }
-  });
-
-  return collectionStats ? collectionStats.stats.total.floorPrice : null;
-};
-
-export const round = (num, decimals) => {
+export const round = (num?: number | string, decimals?: number) => {
+  if (!num) return 0;
+  if (typeof num === 'string') num = parseFloat(num);
   if (!decimals) return Math.round(num);
 
   const pow = Math.pow(10, decimals);
   return Math.round(num * pow) / pow;
 };
 
-export const convertIpfsResource = (resource, tooltip) => {
+export const convertIpfsResource = (resource: string, tooltip?: string) => {
   if (!resource) return;
 
   let gatewayTools = new IPFSGatewayTools();
@@ -647,12 +545,12 @@ export const convertIpfsResource = (resource, tooltip) => {
   return linkedResource;
 };
 
-export const isUserBlacklisted = (address) => {
+export const isUserBlacklisted = (address: string) => {
   const users = blacklist.flatMap((record) => record.users);
   return users.some((bAddress) => ciEquals(address, bAddress));
 };
 
-export const isNftBlacklisted = (address, id) => {
+export const isNftBlacklisted = (address: string, id: string) => {
   const collections = blacklist.flatMap((record) => record.tokens);
   return collections.some((collection) => {
     const matchesAddress = ciEquals(collection.address, address);
@@ -663,7 +561,7 @@ export const isNftBlacklisted = (address, id) => {
   });
 };
 
-export const devLog = (...params) => {
+export const devLog = (...params: any[]) => {
   if (process.env.NODE_ENV === 'development') {
     console.log(params);
   }
@@ -677,7 +575,7 @@ export const devLog = (...params) => {
  * @param timestamp
  * @returns {number}
  */
-export const millisecondTimestamp = (timestamp) => {
+export const millisecondTimestamp = (timestamp: Date | number) => {
   if (timestamp.toString().length < 13) {
     return Number(`${timestamp}000`);
   }
@@ -685,24 +583,14 @@ export const millisecondTimestamp = (timestamp) => {
   return Number(timestamp);
 };
 
-export const isEventValidNumber = (e) => {
+export const isEventValidNumber = (e: any) => {
   const re = /^[0-9\b]+$/;
   const validKeys = ['Backspace', 'Delete'];
   return e.key === '' || re.test(e.key) || validKeys.includes(e.key);
 };
 
-export const getSlugFromAddress = (address) => {
-  const collection = collections.find((c) => c.address.toLowerCase() === address.toLowerCase());
-  return collection?.slug;
-};
-
-export const getAddressFromSlug = (slug) => {
-  const collection = collections.find((c) => c.slug.toLowerCase() === slug.toLowerCase());
-  return collection?.address;
-};
-
 // can use web3.utils.isAddress tho
-export const isAddress = (value) => {
+export const isAddress = (value?: string) => {
   if (!value) {
     return false
   }
@@ -715,11 +603,11 @@ export const isAddress = (value) => {
   }
 };
 
-export const isEmptyObj = (obj) => {
+export const isEmptyObj = (obj?: {} | null) => {
   return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
 };
 
-export const rankingsLogoForCollection = (collection) => {
+export const rankingsLogoForCollection = (collection: any) => {
   let logo = '/img/logos/ebisu-technicolor.svg';
   if (!collection) ImageService.translate(logo).avatar();
 
@@ -728,7 +616,7 @@ export const rankingsLogoForCollection = (collection) => {
 
   return ImageService.translate(logo).avatar();
 };
-export const rankingsTitleForCollection = (collection) => {
+export const rankingsTitleForCollection = (collection: any) => {
   let title = `Ranking provided by Ebisu's Bay`;
   if (!collection) return title;
 
@@ -737,7 +625,7 @@ export const rankingsTitleForCollection = (collection) => {
 
   return title;
 };
-export const rankingsLinkForCollection = (collection, id) => {
+export const rankingsLinkForCollection = (collection: any, id?: string | number) => {
   let link = null;
   if (!collection) return link;
 
@@ -749,31 +637,31 @@ export const rankingsLinkForCollection = (collection, id) => {
   return link;
 };
 
-export const buildTwitterUrl = (username) => {
+export const buildTwitterUrl = (username?: string) => {
   if (!username || username.startsWith('http')) return username;
 
   return `https://twitter.com/${username}`;
 }
 
-export const buildInstagramUrl = (username) => {
+export const buildInstagramUrl = (username?: string) => {
   if (!username || username.startsWith('http')) return username;
 
   return `https://instagram.com/${username}`;
 }
 
-export const isNumeric = (str) => {
+export const isNumeric = (str: number | string) => {
   if (typeof str != 'string') return false; // we only process strings!
   return (
-    !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+    !isNaN(str as any) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
     !isNaN(parseFloat(str))
   ); // ...and ensure strings of whitespace fail
 }
 
-export const stripSpaces = (str) => {
+export const stripSpaces = (str: string) => {
   return str.replace(/\W/g, '');
 }
 
-export const appUrl = (path) => {
+export const appUrl = (path: string | URL) => {
   return new URL(path, appConfig('urls.app'));
 }
 
@@ -782,7 +670,7 @@ export const appUrl = (path) => {
  *
  * @param url
  */
-export function cleanUrl(url) {
+export function cleanUrl(url: string) {
   return url.replace(/([^:])(\/\/+)/g, '$1/');
 }
 
@@ -791,22 +679,20 @@ export function cleanUrl(url) {
  *
  * @param components
  */
-export function urlify(...components) {
+export function urlify(...components: any[]) {
   return cleanUrl(components.join('/'));
 }
 
-export const pluralize = (val, word, plural = word + 's') => {
-  const _pluralize = (num, word, plural = word + 's') =>
-    [1, -1].includes(Number(num)) ? word : plural;
-  if (typeof val === 'object') return (num, word) => _pluralize(num, word, val[word]);
-  return _pluralize(val, word, plural);
+export const pluralize = (val: number, word: string, plural: string = word + 's'): string => {
+  return [1, -1].includes(Number(val)) ? word : plural;
 };
 
-export const isGaslessListing = (listingId) => {
+
+export const isGaslessListing = (listingId: string) => {
   return listingId && listingId.toString().startsWith('0x')
 }
 
-export const usdFormat = (num) => {
+export const usdFormat = (num: number | string) => {
   if (typeof num === 'string') num = Number(num);
 
   const formatter = new Intl.NumberFormat('en-US', {
@@ -822,7 +708,7 @@ export const cacheBustingKey = (minutes = 5, date = Date.now()) => {
   return Math.round(date / coeff) * coeff;
 }
 
-export const findNextLowestNumber = (array, value) => {
+export const findNextLowestNumber = (array: string[] | number[], value: string | number) => {
   array = array.map(Number); // coerce all elements to numbers
   value = +value; // coerce value to a number
 
@@ -846,7 +732,7 @@ export const findNextLowestNumber = (array, value) => {
  * @param str
  * @returns {*}
  */
-export const titleCase = (str) => {
+export const titleCase = (str: string) => {
   const splitStr = str.toLowerCase().split(' ');
   for (let i = 0; i < splitStr.length; i++) {
     splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
@@ -855,28 +741,28 @@ export const titleCase = (str) => {
   return splitStr.join(' ');
 }
 
-export const knownErc20Token = (address) => {
+export const knownErc20Token = (address: string) => {
   const value = Object.entries(config.tokens).find(([key, value]) => ciEquals(value.address, address));
   return value ? value[1] : null;
 }
 
-export const isFortuneToken = (address) => {
+export const isFortuneToken = (address: string) => {
   return ciEquals(address, config.tokens.frtn.address);
 }
 
-export const isErc20Token = (address) => {
+export const isErc20Token = (address: string) => {
   return !!knownErc20Token(address);
 }
 
-export const isNativeCro = (address) => {
+export const isNativeCro = (address: string) => {
   return ciEquals(address, ethers.constants.AddressZero);
 }
 
-export const isWrappedeCro = (address) => {
+export const isWrappedeCro = (address: string) => {
   return ciEquals(address, config.tokens.wcro.address);
 }
 
-export const uniqueNftId = (nft) => {
+export const uniqueNftId = (nft: any) => {
   if (!nft) return null;
   return `${nft.nftAddress ?? nft.address}${nft.nftId ?? nft.id}`;
 }

@@ -20,7 +20,7 @@ const Account: NextPage<PageProps> = ({ address, profile, query }: PageProps) =>
 export default Account;
 
 export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
-  const addressOrUsername = params?.address;
+  const addressOrUsername = params?.address as string;
 
   let user;
   try {

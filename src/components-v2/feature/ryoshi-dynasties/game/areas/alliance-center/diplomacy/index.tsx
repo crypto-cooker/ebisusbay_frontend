@@ -146,7 +146,7 @@ const Diplomacy = ({isOpen, onClose}: DiplomacyProps) => {
                       return reputation.sendingUser.username;
                     }}
                     extractSecondaryValue={(reputation) => {
-                      if (!reputation.sendingFaction) return undefined;
+                      if (!reputation.sendingFaction) return '';
                       if (isAddress(reputation.sendingUser.username)) return shortAddress(reputation.sendingUser.username);
                       return reputation.sendingUser.username;
                     }}
