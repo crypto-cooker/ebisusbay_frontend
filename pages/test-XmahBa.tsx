@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {Contract} from "ethers";
-import { Box, Button, Text, VStack, Wrap } from '@chakra-ui/react';
+import {Box, Button, Text, VStack} from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {GetServerSidePropsContext} from "next";
 import * as process from "process";
@@ -9,8 +9,6 @@ import {ERC721} from "@src/global/contracts/Abis";
 import {JsonRpcProvider} from "@ethersproject/providers";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";
-import { useDisconnect } from 'wagmi';
-import * as Sentry from "@sentry/nextjs";
 
 const readProvider = new JsonRpcProvider(appConfig().rpc.read);
 
@@ -30,32 +28,18 @@ export default Test;
 const WalletDebug = () => {
   const user = useUser();
   const [isExecuting, setIsExecuting] = useState(false);
-  const [value, setValue] = useState<any>();
-  const { connectors, disconnect } = useDisconnect();
+  const [value, setValue] = useState<string | number>();
 
   const handleGetMetadata = async () => {
     user.requestTelemetry();
     toast.success('Telemetry requested')
   }
 
-  const renderData = async ()  => {
-    const _value = {
-      connectors,
-    }
-    // setValue({ _value });
-    Sentry.captureEvent({ message: 'requestTelemetry--UI', extra: _value});
-  };
-
   return (
     <Box>
-      <Wrap spacing={2}>
-        <Button isLoading={isExecuting} isDisabled={isExecuting} onClick={handleGetMetadata}>
-          Request Telemetry
-        </Button>
-        <Button isLoading={isExecuting} isDisabled={isExecuting} onClick={renderData}>
-          Render Telemetry
-        </Button>
-      </Wrap>
+      <Button isLoading={isExecuting} isDisabled={isExecuting} onClick={handleGetMetadata}>
+        Request Telemetry
+      </Button>
       <Box>
         <Text>{value}</Text>
       </Box>

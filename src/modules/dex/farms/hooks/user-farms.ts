@@ -4,13 +4,12 @@ import {useContext} from "react";
 import {Contract, ethers} from "ethers";
 import FarmsAbi from "@src/global/contracts/Farms.json";
 import {multicall} from "@wagmi/core";
+import {Address} from "wagmi";
 import LpAbi from "@src/global/contracts/LP.json";
 import {appConfig} from "@src/Config";
 import {useUser} from "@src/components-v2/useUser";
 import {ApiService} from "@src/core/services/api-service";
 import {UserFarmsRefetchContext} from "@dex/farms/components/provider";
-import {wagmiConfig} from "@src/wagmi";
-import {Address} from "viem";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -25,10 +24,10 @@ export const fetchApprovals = async (userAddress: string) => {
   const readContract = new Contract(config.contracts.farms, FarmsAbi, readProvider);
   const poolLength = await readContract.poolLength();
 
-  const poolInfo = await multicall(wagmiConfig as any, {
+  const poolInfo = await multicall({
     contracts: [...Array(parseInt(poolLength)).fill(0)].map((_, i) => (
       {
-        address: config.contracts.farms,
+        address: config.contracts.farms as Address,
         abi: FarmsAbi as any,
         functionName: 'poolInfo',
         args: [i],
@@ -41,10 +40,10 @@ export const fetchApprovals = async (userAddress: string) => {
     return lpToken
   });
 
-  const approvalInfo = await multicall(wagmiConfig as any, {
+  const approvalInfo = await multicall({
     contracts: lpAddresses.map((address, i) => (
       {
-        address: address,
+        address: address as Address,
         abi: LpAbi as any,
         functionName: 'allowance',
         args: [userAddress, config.contracts.farms],
@@ -63,7 +62,7 @@ export const fetchBalances = async (userAddress: string) => {
   const readContract = new Contract(config.contracts.farms, FarmsAbi, readProvider);
   const poolLength = await readContract.poolLength();
 
-  const poolInfo = await multicall(wagmiConfig as any, {
+  const poolInfo = await multicall({
     contracts: [...Array(parseInt(poolLength)).fill(0)].map((_, i) => (
       {
         address: config.contracts.farms as Address,
@@ -79,7 +78,7 @@ export const fetchBalances = async (userAddress: string) => {
     return lpToken
   });
 
-  const lpBalances = await multicall(wagmiConfig as any, {
+  const lpBalances = await multicall({
     contracts: lpAddresses.map((address, i) => (
       {
         address: address as Address,
@@ -101,7 +100,7 @@ export const fetchBalances = async (userAddress: string) => {
 
 
 
-  const harvestableBalances = await multicall(wagmiConfig as any, {
+  const harvestableBalances = await multicall({
     contracts: poolInfo.map((pool: any, pid: number) => (
       {
         address: config.contracts.farms as Address,

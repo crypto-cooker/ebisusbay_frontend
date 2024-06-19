@@ -8,8 +8,7 @@ import {
 import {useAtom, useAtomValue, useSetAtom} from "jotai";
 import {SwapState} from "@dex/imported/state/swap/types";
 import {Currency, CurrencyAmount, Token} from "@uniswap/sdk-core";
-import {useAccount} from "wagmi";
-import {Address, erc20Abi} from "viem";
+import {Address, erc20ABI, useNetwork} from "wagmi";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import {isAddress} from "@market/helpers/utils";
 import {multicall} from "@wagmi/core";
@@ -17,7 +16,6 @@ import JSBI from "jsbi";
 import {nativeOnChain} from "@dex/imported/constants/tokens";
 import {useUser} from "@src/components-v2/useUser";
 import {Field} from "@dex/constants";
-import {wagmiConfig} from "@src/wagmi";
 
 export function useSwapPageState() {
   return useAtom(swapPageStateAtom);
@@ -176,7 +174,7 @@ export function useCurrencyBalances(
     () => currencies?.filter((currency): currency is Token => currency?.isToken ?? false) ?? [],
     [currencies]
   )
-  const { chain } = useAccount()
+  const { chain } = useNetwork()
   const tokenBalances = useTokenBalances(account, tokens)
   const containsETH: boolean = useMemo(() => currencies?.some((currency) => currency?.isNative) ?? false, [currencies])
 
@@ -209,7 +207,7 @@ export function useTokenBalancesWithLoadingIndicator(
   address?: string,
   tokens?: (Token | undefined)[]
 ): [{ [tokenAddress: string]: CurrencyAmount<Token> | undefined }, boolean] {
-  const { chain } = useAccount() // we cannot fetch balances cross-chain
+  const { chain } = useNetwork() // we cannot fetch balances cross-chain
   const [balances, setBalances] = useState<{ [tokenAddress: string]: CurrencyAmount<Token> | undefined }>({});
   const [isLoading, setLoading] = useState(false);
 
@@ -229,11 +227,11 @@ export function useTokenBalancesWithLoadingIndicator(
         const calls = tokenAddresses.map(address => ({
           address: address as Address,
           functionName: 'balanceOf',
-          abi: erc20Abi,
+          abi: erc20ABI,
           params: [address]
         }));
 
-        const results = await multicall(wagmiConfig as any, {
+        const results = await multicall({
           contracts: calls
         });
         const newBalances = tokenAddresses.reduce((acc, address, index) => {
@@ -265,7 +263,7 @@ export function useNativeCurrencyBalances(uncheckedAddresses?: (string | undefin
   balances: { [address: string]: CurrencyAmount<Currency> | undefined },
   isLoading: boolean
 } {
-  const { chain } = useAccount()
+  const { chain } = useNetwork();
   const [balances, setBalances] = useState<{ [address: string]: CurrencyAmount<Currency> | undefined }>({});
   const [isLoading, setLoading] = useState(true);
 
@@ -283,12 +281,12 @@ export function useNativeCurrencyBalances(uncheckedAddresses?: (string | undefin
       try {
         const calls = addresses.map(address => ({
           address: address as Address,
-          abi: erc20Abi,
+          abi: erc20ABI,
           functionName: 'getEthBalance',
           params: [address]
         }));
 
-        const results = await multicall(wagmiConfig as any, {contracts: calls});
+        const results = await multicall({contracts: calls});
         const newBalances = addresses.reduce((acc, address, index) => {
           const result = results[index];
           const value = result ? JSBI.BigInt(result.toString()) : undefined;

@@ -4,10 +4,9 @@ import {JsonRpcProvider} from "@ethersproject/providers";
 import {appConfig} from "@src/Config";
 import Constants from '@src/constants';
 import {ciEquals} from "@market/helpers/utils";
-import {Address, erc20Abi} from "viem";
+import {ContractFunctionConfig} from "viem";
+import {Address, erc20ABI} from "wagmi";
 import {multicall} from "@wagmi/core";
-import {wagmiConfig} from "@src/wagmi";
-import {ContractFunctionParameters} from "viem/types/contract";
 
 const config = appConfig();
 const { ItemType } = Constants;
@@ -33,7 +32,7 @@ export async function is1155Many(nftAddresses: string[]) {
   const ERC1155InterfaceId = "0xd9b67a26";
   const ERC721InterfaceId = "0x80ac58cd";
 
-  const tokenContracts: ContractFunctionParameters[] = nftAddresses.map(address => {
+  const tokenContracts: ContractFunctionConfig[] = nftAddresses.map(address => {
     return {
       address: address.toLowerCase() as Address,
       abi: ERC165 as any,
@@ -42,7 +41,7 @@ export async function is1155Many(nftAddresses: string[]) {
     };
   });
 
-  const data = await multicall(wagmiConfig as any, {
+  const data = await multicall({
     contracts: tokenContracts,
   });
 

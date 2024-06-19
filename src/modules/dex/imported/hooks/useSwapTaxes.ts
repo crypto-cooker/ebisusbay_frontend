@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import {useUser} from "@src/components-v2/useUser";
 import {BIPS_BASE} from "@dex/imported/constants/misc";
 import {ZERO_PERCENT} from "@uniswap/router-sdk";
-import {useAccount} from "wagmi";
+import {useNetwork} from "wagmi";
 import {useContract} from "@dex/imported/hooks/useContract";
 const FEE_ON_TRANSFER_DETECTOR_ADDRESS = '0x19C97dc2a25845C7f9d1d519c8C2d4809c58b43f'
 import { WETH_ADDRESS as getWethAddress } from '@uniswap/universal-router-sdk'
@@ -72,7 +72,7 @@ async function getSwapTaxes(
 export function useSwapTaxes(inputTokenAddress?: string, outputTokenAddress?: string) {
   const fotDetector = useFeeOnTransferDetectorContract()
   const [{ inputTax, outputTax }, setTaxes] = useState({ inputTax: ZERO_PERCENT, outputTax: ZERO_PERCENT })
-  const { chain } = useAccount()
+  const { chain } = useNetwork()
 
   useEffect(() => {
     if (!fotDetector || chain?.id !== ChainId.MAINNET) return

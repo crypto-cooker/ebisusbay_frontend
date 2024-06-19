@@ -3,7 +3,7 @@ import { RPC_PROVIDERS } from '@dex/imported/constants/providers'
 import useIsWindowVisible from '@dex/imported/hooks/useIsWindowVisible'
 import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {useUser} from "@src/components-v2/useUser";
-import {useAccount} from "wagmi";
+import {useNetwork} from "wagmi";
 
 const MISSING_PROVIDER = Symbol()
 export const BlockNumberContext = createContext<
@@ -37,7 +37,7 @@ export function useMainnetBlockNumber(): number | undefined {
 }
 
 export function BlockNumberProvider({ children }: PropsWithChildren) {
-  const { chain } = useAccount()
+  const { chain } = useNetwork()
   const { provider } = useUser();
   const activeChainId = chain?.id;
   const [{ chainId, block, mainnetBlock }, setChainBlock] = useState<{

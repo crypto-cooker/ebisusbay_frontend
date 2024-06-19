@@ -1,10 +1,6 @@
 import { defineConfig } from '@wagmi/cli'
 import {blockExplorer, react} from '@wagmi/cli/plugins'
 import * as process from "process";
-import * as dotenv from 'dotenv';
-
-// Load environment variables from .env file
-dotenv.config();
 
 export default defineConfig({
     out: 'src/global/contracts/types.ts',

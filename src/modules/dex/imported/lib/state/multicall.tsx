@@ -4,7 +4,7 @@ import { getBlocksPerMainnetEpochForChainId } from '@dex/imported/constants/chai
 import { useInterfaceMulticall, useMainnetInterfaceMulticall } from '@dex/imported/hooks/useContract'
 import useBlockNumber, { useMainnetBlockNumber } from '@dex/imported/lib/hooks/useBlockNumber'
 import { useMemo } from 'react'
-import {useAccount} from "wagmi";
+import {useNetwork} from "wagmi";
 
 const multicall = createMulticall()
 
@@ -13,7 +13,7 @@ export default multicall
 const MAINNET_LISTENER_OPTIONS = { blocksPerFetch: 1 }
 
 export function MulticallUpdater() {
-  const { chain } = useAccount()
+  const { chain } = useNetwork()
   const latestBlockNumber = useBlockNumber()
   const contract = useInterfaceMulticall()
   const listenerOptions: ListenerOptions = useMemo(
