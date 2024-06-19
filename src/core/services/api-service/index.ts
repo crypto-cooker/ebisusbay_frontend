@@ -17,7 +17,7 @@ import {WalletsQueryParams} from "./mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
 import Graph from "@src/core/services/api-service/graph";
 import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 import {getOwners} from "@src/core/subgraph"
 import {Player, RankPlayers, RankPlayersByWorst} from "@src/core/poker-rank-players"
@@ -187,11 +187,11 @@ export class ApiService implements Api {
         address: collection.address,
         avatar: collection.metadata.avatar,
         type: 'COLLECTION',
-        frtnPerCollection: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, collection.address))?.frtnPerCollection,
-        eligibleListings: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, collection.address))?.eligibleListings,
-        frtnPerListing: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, collection.address))?.frtnPerListing,
+        frtnPerCollection: pointsByAddress.find(entry => ciEquals(entry.address, collection.address))?.frtnPerCollection,
+        eligibleListings: pointsByAddress.find(entry => ciEquals(entry.address, collection.address))?.eligibleListings,
+        frtnPerListing: pointsByAddress.find(entry => ciEquals(entry.address, collection.address))?.frtnPerListing,
         points: pointsByAddress
-          .filter(entry => caseInsensitiveCompare(entry.address, collection.address))
+          .filter(entry => ciEquals(entry.address, collection.address))
           .reduce((prev, next) => {
             return prev + next.points;
           }, 0)
@@ -207,11 +207,11 @@ export class ApiService implements Api {
         address: address,
         avatar: null,
         type: 'WALLET',
-        frtnPerCollection: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, address))?.frtnPerCollection,
-        eligibleListings: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, address))?.eligibleListings,
-        frtnPerListing: pointsByAddress.find(entry => caseInsensitiveCompare(entry.address, address))?.frtnPerListing,
+        frtnPerCollection: pointsByAddress.find(entry => ciEquals(entry.address, address))?.frtnPerCollection,
+        eligibleListings: pointsByAddress.find(entry => ciEquals(entry.address, address))?.eligibleListings,
+        frtnPerListing: pointsByAddress.find(entry => ciEquals(entry.address, address))?.frtnPerListing,
         points: pointsByAddress
-          .filter(entry => caseInsensitiveCompare(entry.address, address))
+          .filter(entry => ciEquals(entry.address, address))
           .reduce((prev, next) => {
             return prev + next.points;
           }, 0)

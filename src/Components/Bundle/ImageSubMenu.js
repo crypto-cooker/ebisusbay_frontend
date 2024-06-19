@@ -43,7 +43,7 @@ const ImageSubMenu = ({navigator, address, id}) => {
 
   const isFavorite = () => {
     if (!user.profile?.favorites) return false;
-    return user.profile.favorites.find((f) => caseInsensitiveCompare(address, f.tokenAddress) && id === f.tokenId);
+    return user.profile.favorites.find((f) => ciEquals(address, f.tokenAddress) && id === f.tokenId);
   }
 
   const options = [

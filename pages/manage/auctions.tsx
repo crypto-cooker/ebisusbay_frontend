@@ -6,7 +6,7 @@ import React from 'react';
 // import { createSuccessfulTransactionToastContent } from '../../utils';
 import CreateAuction from '../../src/Components/Auctions/CreateAuction';
 import ManageAuctionList from '../../src/Components/Auctions/ManageAuctionList';
-// import {caseInsensitiveCompare} from "../../src/utils";
+// import {ciEquals} from "../../src/utils";
 // import AuctionContract from '../../global/contracts/Auction.json';
 
 const ManageAuctions = () => {

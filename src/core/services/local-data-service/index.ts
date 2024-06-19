@@ -1,6 +1,6 @@
 import {appConfig} from "@src/Config";
 import {Drop, mapDrop} from "@src/core/models/drop";
-import {caseInsensitiveCompare, millisecondTimestamp} from "@market/helpers/utils";
+import {ciEquals, millisecondTimestamp} from "@market/helpers/utils";
 import ads from "@src/core/data/ads2.json";
 import {AdPlacement, DropsAdDetails, RdAdDetails} from "@src/core/services/local-data-service/types";
 
@@ -8,7 +8,7 @@ const drops = appConfig('drops');
 
 class LocalDataService {
   getDrop(slug: string): Drop | null {
-    const drop = drops.find((drop: any) => caseInsensitiveCompare(drop.slug, slug));
+    const drop = drops.find((drop: any) => ciEquals(drop.slug, slug));
     return !!drop ? mapDrop(drop) : null;
   }
 

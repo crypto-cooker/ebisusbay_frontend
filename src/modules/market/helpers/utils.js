@@ -348,12 +348,8 @@ export function createSuccessfulAddCartContent(onClickView) {
  * @param str2
  * @returns {boolean}
  */
-export function caseInsensitiveCompare(str1, str2) {
-  return str1?.toLowerCase() === str2?.toLowerCase();
-}
-
 export function ciEquals(str1, str2) {
-  return caseInsensitiveCompare(str1, str2);
+  return str1?.toLowerCase() === str2?.toLowerCase();
 }
 
 export function ciIncludes(array, str) {
@@ -375,21 +371,21 @@ export const isCmbDrop = (address) => {
 
 export const isDrop = (address, slug) => {
   const drop = drops.find((d) => d.slug === slug);
-  return drop && caseInsensitiveCompare(drop.address, address);
+  return drop && ciEquals(drop.address, address);
 };
 
 export const isCollection = (address, matchesSlug, matchesAddress) => {
   const slugs = Array.isArray(matchesSlug) ? matchesSlug : [matchesSlug];
   const addresses = Array.isArray(matchesAddress) ? matchesAddress : [matchesAddress];
   return (
-    slugs.some((s) => caseInsensitiveCompare(s, address)) ||
-    addresses.some((a) => caseInsensitiveCompare(a, address))
+    slugs.some((s) => ciEquals(s, address)) ||
+    addresses.some((a) => ciEquals(a, address))
   );
 };
 
 export const isBrandCollection = (slug, matchesAddress) => {
   const brand = brands.find((b) => b.slug === slug);
-  return brand && brand.collections.some((address) => caseInsensitiveCompare(address, matchesAddress));
+  return brand && brand.collections.some((address) => ciEquals(address, matchesAddress));
 };
 
 export const isCroCrowCollection = (address) => {
@@ -491,14 +487,14 @@ export const isArgonautsBrandCollection = (address) => {
 export const isEbVipCollection = (address, id) => {
   const collection = collections.find((c) => c.slug === 'founding-member');
   return collection &&
-    caseInsensitiveCompare(collection.address, address) &&
+    ciEquals(collection.address, address) &&
     id?.toString() === '2';
 };
 
 export const isFoundingMemberCollection = (address, id) => {
   const collection = collections.find((c) => c.slug === 'founding-member');
   return collection &&
-    caseInsensitiveCompare(collection.address, address);
+    ciEquals(collection.address, address);
 };
 
 export const isCronosGorillaBusinessCollection = (address) => {
@@ -553,7 +549,7 @@ export const isKoban = (address, nftId) => {
 }
 
 export const isBundle = (addressOrSlug) => {
-  return caseInsensitiveCompare(addressOrSlug, config.contracts.bundle) || addressOrSlug === 'nft-bundles';
+  return ciEquals(addressOrSlug, config.contracts.bundle) || addressOrSlug === 'nft-bundles';
 }
 
 export const percentage = (partialValue, totalValue) => {
@@ -590,7 +586,7 @@ export const sliceIntoChunks = (arr, chunkSize) => {
  */
 export const findCollectionByAddress = (address, tokenId) => {
   return collections.find((c) => {
-    const matchesAddress = caseInsensitiveCompare(c.address, address);
+    const matchesAddress = ciEquals(c.address, address);
     if (!tokenId) return matchesAddress;
 
     if (c.multiToken && c.slug !== 'ryoshi-resources') {
@@ -608,9 +604,9 @@ export const findCollectionFloor = (knownContract, collectionsStats) => {
     const address = o.address ?? o.address;
     if (knownContract.multiToken && address.indexOf('-') !== -1) {
       let parts = o.address.split('-');
-      return caseInsensitiveCompare(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
+      return ciEquals(knownContract.address, parts[0]) && knownContract.id === parseInt(parts[1]);
     } else {
-      return caseInsensitiveCompare(knownContract.address, o.address);
+      return ciEquals(knownContract.address, o.address);
     }
   });
 
@@ -653,13 +649,13 @@ export const convertIpfsResource = (resource, tooltip) => {
 
 export const isUserBlacklisted = (address) => {
   const users = blacklist.flatMap((record) => record.users);
-  return users.some((bAddress) => caseInsensitiveCompare(address, bAddress));
+  return users.some((bAddress) => ciEquals(address, bAddress));
 };
 
 export const isNftBlacklisted = (address, id) => {
   const collections = blacklist.flatMap((record) => record.tokens);
   return collections.some((collection) => {
-    const matchesAddress = caseInsensitiveCompare(collection.address, address);
+    const matchesAddress = ciEquals(collection.address, address);
     const matchesSlug = collection.slug === address;
     const includesId = collection.ids.includes(parseInt(id));
 
@@ -860,12 +856,12 @@ export const titleCase = (str) => {
 }
 
 export const knownErc20Token = (address) => {
-  const value = Object.entries(config.tokens).find(([key, value]) => caseInsensitiveCompare(value.address, address));
+  const value = Object.entries(config.tokens).find(([key, value]) => ciEquals(value.address, address));
   return value ? value[1] : null;
 }
 
 export const isFortuneToken = (address) => {
-  return caseInsensitiveCompare(address, config.tokens.frtn.address);
+  return ciEquals(address, config.tokens.frtn.address);
 }
 
 export const isErc20Token = (address) => {

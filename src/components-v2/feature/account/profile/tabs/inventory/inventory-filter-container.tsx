@@ -5,7 +5,7 @@ import {CollectionFilter} from "@src/components-v2/feature/account/profile/tabs/
 import React, {ReactNode, useCallback, useMemo, useState} from "react";
 import DesktopFilterContainer, {FilteredItem} from "@src/components-v2/shared/filter-container";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-filters";
 import { appConfig } from '@src/Config';
 import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container/filters/radio-filter";
@@ -43,7 +43,7 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
       if (item.key.startsWith('collection')) {
         if (params.collection && params.collection.length > 1) {
           const address = item.key.split('-')[1];
-          params.collection = params.collection.filter((a) => !caseInsensitiveCompare(a, address));
+          params.collection = params.collection.filter((a) => !ciEquals(a, address));
         } else {
           delete params.collection;
         }

@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server";
 import {ImageResponse} from "next/og";
-import {caseInsensitiveCompare, isAddress, round, siPrefixedNumber, urlify} from "@market/helpers/utils";
+import {ciEquals, isAddress, round, siPrefixedNumber, urlify} from "@market/helpers/utils";
 import {appConfig} from "@src/Config";
 import imageSize from "image-size";
 
@@ -59,9 +59,9 @@ export default async function handler(req: NextRequest) {
 
   let collection;
   if (isAddress(slug)) {
-    collection = collections.find((c: any) => caseInsensitiveCompare(c.address, slug));
+    collection = collections.find((c: any) => ciEquals(c.address, slug));
   } else {
-    collection = collections.find((c: any) => caseInsensitiveCompare(c.slug, slug));
+    collection = collections.find((c: any) => ciEquals(c.slug, slug));
   }
 
   if (!collection) {

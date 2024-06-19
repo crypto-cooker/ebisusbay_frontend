@@ -3,7 +3,7 @@ import {useRouter} from 'next/router';
 import Collection1155 from '@src/components-v2/feature/collection/collection-1155';
 // import Collection721 from '@src/components-v2/feature/collection/collection721';
 import Collection721 from '@src/components-v2/feature/collection/collection-721';
-import {appUrl, cacheBustingKey, caseInsensitiveCompare} from '@market/helpers/utils';
+import {appUrl, cacheBustingKey, ciEquals} from '@market/helpers/utils';
 import {appConfig} from "@src/Config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {CollectionPageContext} from "@src/components-v2/feature/collection/context";
@@ -92,11 +92,11 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
   // if (!collection) {
   //   console.log('collection not found for slug', slug);
   //   collection = appConfig('collections')
-  //     .find((c) => caseInsensitiveCompare(c.slug, slug) || caseInsensitiveCompare(c.address, slug));
+  //     .find((c) => ciEquals(c.slug, slug) || ciEquals(c.address, slug));
   // }
 
   const collection = appConfig('collections')
-    .find((c: any) => caseInsensitiveCompare(c.slug, slug) || caseInsensitiveCompare(c.address, slug));
+    .find((c: any) => ciEquals(c.slug, slug) || ciEquals(c.address, slug));
 
   if (!collection) {
     return {
@@ -104,7 +104,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
     }
   }
 
-  // if (!caseInsensitiveCompare(collection.slug, slug)) {
+  // if (!ciEquals(collection.slug, slug)) {
   //   return {
   //     redirect: {
   //       destination: `/collection/${collection.slug}`,
@@ -124,7 +124,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
   if (collection.slug === 'beta-mascots') collection.mergedAddresses = ['0x19317B3fc2F1Add6b7E17a0A03A5a269Ed5ce48b'];
 
   const activeDrop = appConfig('drops')
-    .find((drop: any) => !!collection.address && caseInsensitiveCompare(collection.address, drop.address) && !drop.complete);
+    .find((drop: any) => !!collection.address && ciEquals(collection.address, drop.address) && !drop.complete);
 
   return {
     props: {
@@ -132,7 +132,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
       ssrCollection: collection,
       activeDrop: activeDrop ?? null,
       query: query,
-      redirect: !caseInsensitiveCompare(collection.slug, slug),
+      redirect: !ciEquals(collection.slug, slug),
     },
   };
 };

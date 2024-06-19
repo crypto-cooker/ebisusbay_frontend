@@ -24,7 +24,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import React, {useContext} from "react";
-import {caseInsensitiveCompare, isBundle, timeSince} from "@market/helpers/utils";
+import {ciEquals, isBundle, timeSince} from "@market/helpers/utils";
 import {ListingState} from "@src/core/services/api-service/types";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
@@ -62,9 +62,9 @@ const ResponsiveListingsTable = ({data, onUpdate, onCancel, onSort, breakpointVa
   const handleCheck = (targetListing: Listing, checked?: boolean) => {
     if (!shouldUseAccordion && isMobileEnabled) return;
 
-    const alreadyChecked = selected.some((listing) => caseInsensitiveCompare(listing.listingId, targetListing.listingId));
+    const alreadyChecked = selected.some((listing) => ciEquals(listing.listingId, targetListing.listingId));
     if ((checked !== undefined && !checked) || alreadyChecked) {
-      setSelected(selected.filter((listing: Listing) => !caseInsensitiveCompare(listing.listingId, targetListing.listingId)));
+      setSelected(selected.filter((listing: Listing) => !ciEquals(listing.listingId, targetListing.listingId)));
     } else if (checked || !alreadyChecked) {
       setSelected([...selected, targetListing]);
     }
@@ -124,7 +124,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
                 <Tr key={listing.listingId} _hover={{bg: hoverBackground}}>
                   <Td w='20px'>
                     <Checkbox
-                      isChecked={selected.some((selectedListing: Listing) => caseInsensitiveCompare(selectedListing.listingId, listing.listingId))}
+                      isChecked={selected.some((selectedListing: Listing) => ciEquals(selectedListing.listingId, listing.listingId))}
                       size='lg'
                       onChange={(e) => onCheck(listing, e.target.checked)}
                     />
@@ -259,7 +259,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}:
                     <HStack>
                       {multiSelectMode && (
                         <Checkbox
-                          isChecked={selected.some((selectedListing: Listing) => caseInsensitiveCompare(selectedListing.listingId, listing.listingId))}
+                          isChecked={selected.some((selectedListing: Listing) => ciEquals(selectedListing.listingId, listing.listingId))}
                           onChange={(e) => onCheck(listing, e.target.checked)}
                         />
                       )}

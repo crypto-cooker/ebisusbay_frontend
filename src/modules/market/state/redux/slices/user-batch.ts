@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {caseInsensitiveCompare, round} from "@market/helpers/utils";
+import {ciEquals, round} from "@market/helpers/utils";
 import WalletNft from "@src/core/models/wallet-nft";
 import {BrokerCurrency} from "@market/hooks/use-currency-broker";
 
@@ -42,7 +42,7 @@ const batchListingSlice = createSlice({
   reducers: {
     addToBatchListingCart: (state, action) => {
       const nftToAdd = action.payload;
-      if (!state.items.some((o) => caseInsensitiveCompare(o.nft.nftAddress, nftToAdd.nftAddress) && o.nft.nftId === nftToAdd.nftId)) {
+      if (!state.items.some((o) => ciEquals(o.nft.nftAddress, nftToAdd.nftAddress) && o.nft.nftId === nftToAdd.nftId)) {
         state.items.push({nft: nftToAdd, price: undefined, quantity: 1, expiration: 2592000000, currency: 'cro', priceType: 'each'});
       }
 
@@ -52,9 +52,9 @@ const batchListingSlice = createSlice({
     },
     removeFromBatchListingCart: (state, action) => {
       const nftToRemove = action.payload;
-      state.items = state.items.filter((o) => !(caseInsensitiveCompare(o.nft.nftAddress, nftToRemove.nftAddress) && o.nft.nftId === nftToRemove.nftId));
+      state.items = state.items.filter((o) => !(ciEquals(o.nft.nftAddress, nftToRemove.nftAddress) && o.nft.nftId === nftToRemove.nftId));
 
-      if (!state.items.some((o) => caseInsensitiveCompare(o.nft.nftAddress, nftToRemove.nftAddress))) {
+      if (!state.items.some((o) => ciEquals(o.nft.nftAddress, nftToRemove.nftAddress))) {
         const extras = state.extras;
         delete extras[nftToRemove.nftAddress.toLowerCase()];
         state.extras = extras;
@@ -83,7 +83,7 @@ const batchListingSlice = createSlice({
     updatePrice: (state, action) => {
       const itemToModify = action.payload.nft;
       const price = action.payload.price;
-      const foundIndex = state.items.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
+      const foundIndex = state.items.findIndex((o) => ciEquals(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
       if (foundIndex >= 0) {
         const nft = state.items[foundIndex]
         nft.price = price;
@@ -93,7 +93,7 @@ const batchListingSlice = createSlice({
     updateExpiration: (state, action) => {
       const itemToModify = action.payload.nft;
       const expiration = action.payload.expiration;
-      const foundIndex = state.items.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
+      const foundIndex = state.items.findIndex((o) => ciEquals(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
       if (foundIndex >= 0) {
         const nft = state.items[foundIndex]
         nft.expiration = expiration;
@@ -103,7 +103,7 @@ const batchListingSlice = createSlice({
     update1155Quantity: (state, action) => {
       const itemToModify = action.payload.nft;
       const quantity = action.payload.quantity;
-      const foundIndex = state.items.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
+      const foundIndex = state.items.findIndex((o) => ciEquals(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
       if (foundIndex >= 0 && itemToModify.multiToken) {
         const nft = state.items[foundIndex]
         nft.quantity = quantity;
@@ -113,7 +113,7 @@ const batchListingSlice = createSlice({
     updateCurrency: (state, action) => {
       const itemToModify = action.payload.nft;
       const currency = action.payload.currency;
-      const foundIndex = state.items.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
+      const foundIndex = state.items.findIndex((o) => ciEquals(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
       if (foundIndex >= 0) {
         const nft = state.items[foundIndex]
         nft.currency = currency;
@@ -123,7 +123,7 @@ const batchListingSlice = createSlice({
     updatePriceType: (state, action) => {
       const itemToModify = action.payload.nft;
       const priceType = action.payload.priceType;
-      const foundIndex = state.items.findIndex((o) => caseInsensitiveCompare(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
+      const foundIndex = state.items.findIndex((o) => ciEquals(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
       if (foundIndex >= 0) {
         const nft = state.items[foundIndex]
         nft.priceType = priceType;
@@ -137,7 +137,7 @@ const batchListingSlice = createSlice({
       const step = Number(action.payload.step ?? 1);
       let startingIndex: number | null = null;
       state.items = state.items.map((o, index) => {
-        const isStartingItem = caseInsensitiveCompare(o.nft.nftAddress, startingItem.nft.nftAddress) && o.nft.nftId === startingItem.nft.nftId;
+        const isStartingItem = ciEquals(o.nft.nftAddress, startingItem.nft.nftAddress) && o.nft.nftId === startingItem.nft.nftId;
 
         if (isStartingItem) startingIndex = index;
         else if (startingIndex === null) return o;
@@ -159,7 +159,7 @@ const batchListingSlice = createSlice({
       const step = Number(action.payload.step ?? 1);
       let startingIndex: number | null = null;
       state.items = state.items.map((o, index) => {
-        const isStartingItem = caseInsensitiveCompare(o.nft.nftAddress, startingItem.nft.nftAddress) && o.nft.nftId === startingItem.nft.nftId;
+        const isStartingItem = ciEquals(o.nft.nftAddress, startingItem.nft.nftAddress) && o.nft.nftId === startingItem.nft.nftId;
 
         if (isStartingItem) startingIndex = index;
         else if (startingIndex === null) return o;
@@ -241,7 +241,7 @@ const batchListingSlice = createSlice({
       state.extras[action.payload.address.toLowerCase()] = action.payload;
       if (!!action.payload.availableCurrencies && action.payload.availableCurrencies.length > 0) {
         state.items
-          .filter((o) => caseInsensitiveCompare(o.nft.nftAddress, action.payload.address))
+          .filter((o) => ciEquals(o.nft.nftAddress, action.payload.address))
           .forEach((o) => o.currency = action.payload.availableCurrencies[0].symbol);
       }
     },

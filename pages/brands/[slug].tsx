@@ -15,7 +15,7 @@ import {
   useBreakpointValue
 } from "@chakra-ui/react";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
-import {caseInsensitiveCompare, ciIncludes, siPrefixedNumber} from "@market/helpers/utils";
+import {ciEquals, ciIncludes, siPrefixedNumber} from "@market/helpers/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";
@@ -181,7 +181,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
   let sortedCollections = collections.data
     .filter((c: any) => !!c.metadata && Object.keys(c.metadata).length > 0)
     .map((c: any) => {
-      c.position = brandKeyedAddresses.find((o) => caseInsensitiveCompare(o.address, c.address))?.position;
+      c.position = brandKeyedAddresses.find((o) => ciEquals(o.address, c.address))?.position;
       const drop = drops.find((d: any) => d.slug === c.slug);
       c.drop = drop ?? null;
       c.hidden = brand.hidden ? ciIncludes(brand.hidden, c.address) : false;
@@ -222,8 +222,8 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
   sortedCollections.map((c: any) => {
     const weirdApes = '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44'
     const weirdApesV1 = '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'
-    if (caseInsensitiveCompare(c.address, weirdApes)) {
-      const v1Collection = collections.data.find((v1c: any) => caseInsensitiveCompare(v1c.address, weirdApesV1));
+    if (ciEquals(c.address, weirdApes)) {
+      const v1Collection = collections.data.find((v1c: any) => ciEquals(v1c.address, weirdApesV1));
       if (v1Collection) {
         c.stats.total.active = Number(c.stats.total.active) + Number(v1Collection.stats.total.active)
         c.stats.total.complete = Number(c.stats.total.complete) + Number(v1Collection.stats.total.complete)

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {caseInsensitiveCompare, debounce} from "@market/helpers/utils";
+import {ciEquals, debounce} from "@market/helpers/utils";
 import Blockies from "react-blockies";
 import {
   AccordionButton,
@@ -35,7 +35,7 @@ export const CollectionFilter = ({collections, filteredAddresses, onFilter, keyP
     if (checked && !tmpSelectedCollections.map((c: any) => c.address).includes(collection.address)) {
       tmpSelectedCollections.push(collection);
     } else if (!checked) {
-      tmpSelectedCollections = tmpSelectedCollections.filter((c: any) => !caseInsensitiveCompare(c.address, collection.address));
+      tmpSelectedCollections = tmpSelectedCollections.filter((c: any) => !ciEquals(c.address, collection.address));
     }
     onFilter(tmpSelectedCollections);
   };

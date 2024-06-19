@@ -13,7 +13,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import {
   appUrl,
-  caseInsensitiveCompare,
+  ciEquals,
   isEbVipCollection,
   isEmptyObj,
   rankingsLinkForCollection,
@@ -253,7 +253,7 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
 
   const isFavorite = () => {
     if (!user.profile?.favorites) return false;
-    return user.profile.favorites.find((f: any) => caseInsensitiveCompare(address, f.tokenAddress) && id === f.tokenId);
+    return user.profile.favorites.find((f: any) => ciEquals(address, f.tokenAddress) && id === f.tokenId);
   }
 
   return (

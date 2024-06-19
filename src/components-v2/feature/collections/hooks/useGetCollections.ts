@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import {appConfig} from "@src/Config";
 import mergedCollections from "@src/core/data/merged-collections.json";
-import {caseInsensitiveCompare, isWeirdApesCollection} from "@market/helpers/utils";
+import {ciEquals, isWeirdApesCollection} from "@market/helpers/utils";
 
 const config = appConfig();
 const api = axios.create({
@@ -33,7 +33,7 @@ const useGetCollections = () => {
 
     return collections
       .filter((collection: any) => {
-        return !skippableCollections.some((c) => caseInsensitiveCompare(c, collection.address));
+        return !skippableCollections.some((c) => ciEquals(c, collection.address));
       })
       .map((collection: any) => {
         let totalVolume = collection.stats?.total?.volume;
