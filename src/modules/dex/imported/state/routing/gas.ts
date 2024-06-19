@@ -4,7 +4,7 @@ import { ChainId, Currency } from '@uniswap/sdk-core'
 import { ApproveInfo, WrapInfo } from './types'
 import {SupportedInterfaceChain} from "@dex/imported/constants/chains";
 import {getContract} from "@dex/imported/utils/getContract";
-import {erc20ABI} from "wagmi";
+import {erc20Abi} from "viem";
 import {RPC_PROVIDERS} from "@dex/imported/constants/providers";
 import {WRAPPED_NATIVE_CURRENCY} from "@dex/imported/constants/tokens";
 import WETH_ABI from '@dex/imported/packages/uniswap/src/abis/weth.json'
@@ -33,7 +33,7 @@ export async function getApproveInfo(
   }
 
   const provider = RPC_PROVIDERS[currency.chainId as SupportedInterfaceChain]
-  const tokenContract = getContract(currency.address, erc20ABI, provider)
+  const tokenContract = getContract(currency.address, erc20Abi, provider)
 
   let approveGasUseEstimate
   try {

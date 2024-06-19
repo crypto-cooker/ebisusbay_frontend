@@ -1098,36 +1098,36 @@ export interface AppConfig {
     write: string
   },
   contracts: {
-    membership: string,
-    auction: string,
-    market: string,
-    stake: string,
-    offer: string,
-    madAuction: string,
-    slothtyRugsurance: string,
-    bundle: string,
-    gaslessListing: string,
-    gdc: string,
-    usdc: string,
-    purchaseFortune: string,
-    allianceCenter: string,
-    battleField: string,
-    resources: string,
-    bank: string,
-    barracks: string,
-    fortune: string,
-    rewards: string,
-    presaleVaults: string,
-    seasonUnlocks: string,
-    townHall: string,
-    vaultNft: string,
-    ryoshiWithKnife: string,
-    farms: string
+    membership: HexString,
+    auction: HexString,
+    market: HexString,
+    stake: HexString,
+    offer: HexString,
+    madAuction: HexString,
+    slothtyRugsurance: HexString,
+    bundle: HexString,
+    gaslessListing: HexString,
+    gdc: HexString,
+    usdc: HexString,
+    purchaseFortune: HexString,
+    allianceCenter: HexString,
+    battleField: HexString,
+    resources: HexString,
+    bank: HexString,
+    barracks: HexString,
+    fortune: HexString,
+    rewards: HexString,
+    presaleVaults: HexString,
+    seasonUnlocks: HexString,
+    townHall: HexString,
+    vaultNft: HexString,
+    ryoshiWithKnife: HexString,
+    farms: HexString
   },
   tokens: {[key: string] : {
     name: string,
     symbol: string,
-    address: string,
+    address: HexString,
     decimals: number
   }}
   collections: any[],
@@ -1164,3 +1164,8 @@ export interface AppConfig {
 type PartialAppConfig = {
   [P in keyof AppConfig]?: AppConfig[P] extends object ? Partial<AppConfig[P]> : AppConfig[P];
 };
+
+type HexString = `0x${string}` & string;
+
+// Wrapper type that ensures HexString is also recognized as string
+type WrappedHexString = HexString & string;

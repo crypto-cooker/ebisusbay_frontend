@@ -1,7 +1,7 @@
 import {ChainId, Currency} from '@uniswap/sdk-core'
 import {PropsWithChildren, useEffect} from 'react'
 
-import {useNetwork} from "wagmi";
+import {useAccount} from "wagmi";
 import usePrevious from "@dex/imported/hooks/usePrevious";
 import {useDerivedSwapInfo, useSwapFormDerivedState, useSwapFormState, useSwapPageState} from "@dex/swap/state/swap/hooks";
 
@@ -44,7 +44,7 @@ export function SwapFormContext({ children }: { children: React.ReactNode }) {
 
   const derivedSwapInfo = useDerivedSwapInfo(swapFormState)
 
-  const { chain: connectedChainId } = useNetwork()
+  const { chain: connectedChainId } = useAccount()
   const previousConnectedChainId = usePrevious(connectedChainId)
 
   useEffect(() => {
