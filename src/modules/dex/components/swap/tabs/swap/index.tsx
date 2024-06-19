@@ -7,7 +7,7 @@ import AuthenticationGuard from "@src/components-v2/shared/authentication-guard"
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import Settings from "@dex/components/swap/settings";
 import React, {useCallback, useMemo} from "react";
-import {useSwapActionHandlers, useSwapFormDerivedState, useSwapFormState} from "@dex/state/swap/hooks";
+import {useSwapActionHandlers, useSwapFormDerivedState, useSwapFormState} from "@dex/swap/state/swap/hooks";
 import SwapCurrencyInputPanel from "@dex/components/swap/tabs/swap/swap-currency-input-panel";
 import {NumberType, useFormatter} from "@dex/imported/utils/formatNumbers";
 import {Currency} from "@uniswap/sdk-core";

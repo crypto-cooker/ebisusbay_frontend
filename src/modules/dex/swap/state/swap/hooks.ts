@@ -4,7 +4,7 @@ import {
   swapFormDerivedStateAtom,
   swapFormStateAtom,
   swapPageStateAtom
-} from "@dex/state/swap/atom";
+} from "@dex/swap/state/swap/atom";
 import {useAtom, useAtomValue, useSetAtom} from "jotai";
 import {SwapState} from "@dex/imported/state/swap/types";
 import {Currency, CurrencyAmount, Token} from "@uniswap/sdk-core";

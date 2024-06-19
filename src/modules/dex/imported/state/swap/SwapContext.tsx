@@ -3,7 +3,7 @@ import {PropsWithChildren, useEffect} from 'react'
 
 import {useAccount} from "wagmi";
 import usePrevious from "@dex/imported/hooks/usePrevious";
-import {useDerivedSwapInfo, useSwapFormDerivedState, useSwapFormState, useSwapPageState} from "@dex/state/swap/hooks";
+import {useDerivedSwapInfo, useSwapFormDerivedState, useSwapFormState, useSwapPageState} from "@dex/swap/state/swap/hooks";
 
 export function SwapPageContext({
   children,

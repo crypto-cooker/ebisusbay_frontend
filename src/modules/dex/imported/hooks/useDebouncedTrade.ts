@@ -7,7 +7,7 @@ import useAutoRouterSupported from "@dex/imported/hooks/useAutoRouterSupported";
 import {useAccount} from "wagmi";
 import {useRoutingAPITrade} from "@dex/imported/state/routing/useRoutingAPITrade";
 import {usePreviewTrade} from "@dex/imported/state/routing/usePreviewTrade";
-import {useRouterPreference} from "@dex/state/user/hooks";
+import {useRouterPreference} from "@dex/swap/state/user/hooks";
 
 // Prevents excessive quote requests between keystrokes.
 const DEBOUNCE_TIME = 350

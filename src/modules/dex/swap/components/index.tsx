@@ -1,9 +1,9 @@
 import React from "react";
 import {Currency} from "@uniswap/sdk-core";
 import SwapHeader from "@dex/components/swap/header";
-import {useSwapPageState} from "@dex/state/swap/hooks";
-import {SwapPageContext} from "@dex/state/swap/contexts/swap-page";
-import {SwapFormContext} from "@dex/state/swap/contexts/swap-form";
+import {useSwapPageState} from "@dex/swap/state/swap/hooks";
+import {SwapPageContext} from "@dex/swap/state/swap/contexts/swap-page";
+import {SwapFormContext} from "@dex/swap/state/swap/contexts/swap-form";
 import SwapForm from "@dex/components/swap/tabs/swap";
 
 interface SwapPageProps {

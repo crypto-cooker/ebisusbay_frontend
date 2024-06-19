@@ -1,4 +1,4 @@
-import {useDerivedSwapInfo, useSwapFormDerivedState, useSwapFormState, useSwapPageState} from "@dex/state/swap/hooks";
+import {useDerivedSwapInfo, useSwapFormDerivedState, useSwapFormState, useSwapPageState} from "@dex/swap/state/swap/hooks";
 import {useAccount} from "wagmi";
 import usePrevious from "@dex/imported/hooks/usePrevious";
 import {useEffect} from "react";
