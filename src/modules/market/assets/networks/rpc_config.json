@@ -27184,6 +27184,85 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "Cro Clothes MoonfloW",
+      "slug": "cro-clothes-moonflow",
+      "multiToken": false,
+      "address": "0x2063f837b5481f8B0b72f20De167254b94393666",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cro Clothes MoonfloW is a partnership collection of 350 exclusive NFTs. The collection will be distributed via airdrop among the Cro Clothes and MoonfloW communities. In the future, occupy the space allocated for Minted in Crypto Fan Wear.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-moonflow/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-moonflow/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-moonflow/banner.webp",
+        "website": "https://cro-clothes.gitbook.io/roadmap",
+        "twitter": "https://www.twitter.com/Cro_Clothes",
+        "discord": "https://discord.gg/QRQb9rkPXK",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cat Wif Gat",
+      "slug": "cat-wif-gat",
+      "multiToken": false,
+      "address": "0x4FCC767F7bd840695F2Af59a8e92aED4A16090E4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cat Wif Gat is a 5000 piece collection of cyborg cats that are determined to carry out their invasion of Cronos",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cat-wif-gat/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cat-wif-gat/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cat-wif-gat/banner.webp",
+        "website": "https://www.catgat.xyz/",
+        "twitter": "https://www.twitter.com/CatWifGat_CRO",
+        "discord": "https://discord.gg/ZEFyWfhhsV",
+        "telegram": "https://t.me/catwifgatcro",
+        "categories": [
+          "collectibles",
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroHounds",
+      "slug": "crohounds",
+      "multiToken": false,
+      "address": "0x32659aF8C200Fe5E7BE52BC575a4A1212a26B077",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Crohounds is a unique NFT collection featuring 2,000 digitally generated hounds, each with over 55 distinct traits. These one-of-a-kind hounds offer a rich variety of characteristics, making every piece special. Owners can earn $cro in the project's Discord , combining the excitement of digital collectibles with cryptocurrency rewards. Join the Crohounds community to collect, trade, and earn while enjoying exclusive benefits and engaging with fellow enthusiasts.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crohounds/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/crohounds/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/crohounds/banner.webp",
+        "website": "https://www.cro-launchpad.com/crohounds",
+        "twitter": "https://www.twitter.com/Cro_Hellhounds",
+        "discord": "https://discord.gg/FXke7Fn9xm",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
