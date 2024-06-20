@@ -1,6 +1,6 @@
 import {appConfig} from "@src/Config";
 import {ReactElement, useEffect, useState} from "react";
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {Box, ChakraProps, Image} from "@chakra-ui/react";
@@ -32,6 +32,8 @@ const iconMapping: Record<string, (props: ChakraProps) => ReactElement> = {
   'mery': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/mery.webp').convert()} symbol='mery' {...props} />,
   'emit': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/emit.webp').convert()} symbol='emit' {...props} />,
   'lwv': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/lwv.webp').convert()} symbol='lwv' {...props} />,
+  'btcronos': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/btcronos.webp').convert()} symbol='btcronos' {...props} />,
+  'robin': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/robin.webp').convert()} symbol='robin' {...props} />,
 };
 
 const IconImage = ({ src, symbol, ...props }: ChakraProps & { src: string; symbol: string }) => (
@@ -49,7 +51,7 @@ const DynamicCurrencyIcon = ({address, ...props}: CurrencyIconMapperProps) => {
 
   useEffect(() => {
     const value = Object.entries(knownTokens).find(
-      ([_, tokenValue]: [string, any]) => caseInsensitiveCompare(tokenValue.address, address)
+      ([_, tokenValue]: [string, any]) => ciEquals(tokenValue.address, address)
     );
 
     setIconKey(value?.[0] || 'cro');

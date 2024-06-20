@@ -7,7 +7,7 @@ import {ethers} from 'ethers';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {
   appUrl,
-  caseInsensitiveCompare,
+  ciEquals,
   createSuccessfulAddCartContent,
   isNftBlacklisted,
   round,
@@ -161,7 +161,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
     toast.success('Link copied!');
   };
 
-  const menuOptions = caseInsensitiveCompare(user.address, nft.address ?? nft.nftAddress) ?
+  const menuOptions = ciEquals(user.address, nft.address ?? nft.nftAddress) ?
     ownerMenuOptions({
       onRefresh: handleRefresh,
       onOpenLink: handleOpenOriginal,

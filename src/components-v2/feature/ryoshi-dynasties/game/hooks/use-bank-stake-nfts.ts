@@ -4,7 +4,7 @@ import {Contract} from "ethers";
 import Bank from "@src/global/contracts/Bank.json";
 import {appConfig} from "@src/Config";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
 
@@ -42,7 +42,7 @@ const useBankStakeNfts = () => {
       // i.e. multiple entries for the same nft in pendingNfts will consolidate into one entry in stakedNfts with an amount
       let withdrawNfts = [];
       for (const stakedNft of stakedNfts) {
-        const pendingAmount = pendingNfts.filter((nft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId).length;
+        const pendingAmount = pendingNfts.filter((nft) => ciEquals(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId).length;
         if (Number(stakedNft.amount) > pendingAmount) {
           const amountToWithdraw = Number(stakedNft.amount) - pendingAmount;
           withdrawNfts.push({...stakedNft, amount: amountToWithdraw});

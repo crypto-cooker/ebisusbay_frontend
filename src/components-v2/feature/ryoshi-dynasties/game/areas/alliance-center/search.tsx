@@ -17,7 +17,7 @@ import React, {ChangeEvent, RefObject, useCallback, useEffect, useState} from "r
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import {useRouter} from "next/router";
 import {ChevronDownIcon, SearchIcon} from "@chakra-ui/icons";
 import useDebounce from "@src/core/hooks/useDebounce";
@@ -71,7 +71,7 @@ const searchRegex = /^\w+([\s-_]\w+)*$/;
       select: (d) => {
         return d.data.collections
           .filter((collection: any) =>{
-            const knownContract = knownContracts.find((c: any) => caseInsensitiveCompare(c.address, collection.address));
+            const knownContract = knownContracts.find((c: any) => ciEquals(c.address, collection.address));
             if (!knownContract) return false;
             return !knownContract.mergedWith;
           })

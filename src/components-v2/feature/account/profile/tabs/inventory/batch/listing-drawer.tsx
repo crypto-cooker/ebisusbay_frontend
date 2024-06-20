@@ -47,7 +47,6 @@ import {
 import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
 import {
-  caseInsensitiveCompare,
   ciEquals,
   createSuccessfulTransactionToastContent,
   isBundle,
@@ -312,7 +311,7 @@ export const ListingDrawer = () => {
       });
       let floorWarning = false;
       const nftPrices = batchListingCart.items.map((o) => {
-        const floorPriceObj = nftFloorPrices.find((fp) => caseInsensitiveCompare(fp.address, o.nft.nftAddress));
+        const floorPriceObj = nftFloorPrices.find((fp) => ciEquals(fp.address, o.nft.nftAddress));
         const perUnitPrice = o.priceType === 'each' ? Number(o.price) : Number(o.price) / o.quantity;
         const croPrice = tokenToCroValue(perUnitPrice, config.tokens[o.currency?.toLowerCase() ?? 'cro']?.address);
         const isBelowFloor = !!floorPriceObj?.floorPrice && (floorPriceObj.floorPrice !== 0 && ((Number(floorPriceObj.floorPrice) - croPrice) / Number(floorPriceObj.floorPrice)) * 100 > floorThreshold);

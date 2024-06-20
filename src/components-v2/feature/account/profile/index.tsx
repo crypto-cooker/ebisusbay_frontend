@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from '
 import {useRouter} from 'next/router';
 import styles from './profile.module.scss';
 import {hostedImage} from "@src/helpers/image";
-import {appUrl, caseInsensitiveCompare, isUserBlacklisted, username} from "@market/helpers/utils";
+import {appUrl, ciEquals, isUserBlacklisted, username} from "@market/helpers/utils";
 import Inventory from "@src/components-v2/feature/account/profile/tabs/inventory";
 import Collections from "@src/Components/Account/Profile/Collections";
 import Listings from "@src/components-v2/feature/account/profile/tabs/listings";
@@ -136,7 +136,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
 
   const [isProfileOwner, setIsProfileOwner] = useState(false);
   useEffect(() => {
-    setIsProfileOwner(user && caseInsensitiveCompare(address, user.address));
+    setIsProfileOwner(user && ciEquals(address, user.address));
   }, [user.wallet.address, address])
 
   const profilePicture = profile.profilePicture ?

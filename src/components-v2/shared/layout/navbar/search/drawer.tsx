@@ -22,7 +22,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {CloseIcon, SearchIcon} from "@chakra-ui/icons";
 import {appConfig} from "@src/Config";
@@ -62,7 +62,7 @@ const MobileSearchDrawer = () => {
           // if (collection.tokens) {
           //   validTokenCount = collection.tokens.filter((t) => Object.keys(t).length > 1).length > 0;
           // }
-          return knownContracts.find((c: any) => caseInsensitiveCompare(c.address, collection.address)) && validTokenCount;
+          return knownContracts.find((c: any) => ciEquals(c.address, collection.address)) && validTokenCount;
         })
     }
   });

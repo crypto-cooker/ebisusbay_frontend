@@ -25,7 +25,7 @@ import NextApiService from "@src/core/services/api-service/next";
 import {commify} from "ethers/lib/utils";
 import {ethers} from "ethers";
 import {toast} from "react-toastify";
-import {caseInsensitiveCompare, isBundle, knownErc20Token, round} from "@market/helpers/utils";
+import {ciEquals, isBundle, knownErc20Token, round} from "@market/helpers/utils";
 import Button from "@src/Components/components/common/Button";
 import {listingState} from "@src/core/api/enums";
 import {AnyMedia, MultimediaImage} from "@src/components-v2/shared/media/any-media";
@@ -159,9 +159,9 @@ const Cart = function () {
         let amt = numericPrice;
 
         let fee =  numericPrice * (user.fee / 100);
-        const erc20UsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, nft.currency));
+        const erc20UsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, nft.currency));
         if (!!erc20UsdRate && erc20UsdRate.currency !== ethers.constants.AddressZero) {
-          const croUsdRate = exchangeRates.find((rate) => caseInsensitiveCompare(rate.currency, ethers.constants.AddressZero) && rate.chain === 25);
+          const croUsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, ethers.constants.AddressZero) && rate.chain === 25);
           fee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice) * (user.fee / 100);
         }
         fees += fee;

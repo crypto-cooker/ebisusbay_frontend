@@ -220,7 +220,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
               as={'b'}
               color='white'
             >
-              {username()}
+              {user.displayName()}
             </Text>
             <Text 
               fontSize={{base: '12', sm: '14'}} 

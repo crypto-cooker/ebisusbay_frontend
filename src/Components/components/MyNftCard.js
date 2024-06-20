@@ -32,7 +32,7 @@ import {
   useBreakpointValue,
   useClipboard
 } from "@chakra-ui/react";
-import {appUrl, caseInsensitiveCompare, isLandDeedsCollection, round, siPrefixedNumber, timeSince} from "@market/helpers/utils";
+import {appUrl, ciEquals, isLandDeedsCollection, round, siPrefixedNumber, timeSince} from "@market/helpers/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/global/theme/theme";
 import {useSelector} from "react-redux";
@@ -150,7 +150,7 @@ const MyNftCard = ({
   };
 
   const isInBatchListingCart = () => {
-    return batchListingCart.items.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
+    return batchListingCart.items.some((o) => o.nft.nftId === nft.nftId && ciEquals(o.nft.nftAddress, nft.nftAddress));
   };
   const izanamiImageSize = useBreakpointValue(
     {base: 250, sm: 368, lg: 456},

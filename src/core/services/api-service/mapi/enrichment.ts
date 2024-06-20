@@ -1,5 +1,5 @@
 import {
-  caseInsensitiveCompare,
+  ciEquals,
   convertIpfsResource,
   findCollectionByAddress,
   isAntMintPassCollection,
@@ -117,7 +117,7 @@ export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
  * @param walletNfts
  */
 export function enrichOwnerListing(listing: Listing, walletNfts: WalletNft[]): OwnerListing {
-  const isInWallet = !!walletNfts.find((walletNft) => caseInsensitiveCompare(walletNft.nftAddress, listing.nftAddress) && walletNft.nftId == listing.nftId);
+  const isInWallet = !!walletNfts.find((walletNft) => ciEquals(walletNft.nftAddress, listing.nftAddress) && walletNft.nftId == listing.nftId);
 
   return {
     ...listing,

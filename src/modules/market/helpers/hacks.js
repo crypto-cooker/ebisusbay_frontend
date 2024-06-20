@@ -1,10 +1,10 @@
 import {hostedImage} from "../../../helpers/image";
-import { caseInsensitiveCompare } from './utils';
+import { ciEquals } from './utils';
 import { imageDomains } from '../../../Config';
 import ImageService from "@src/core/services/image";
 
 export function isCroSkullRedPotion(address) {
-  return caseInsensitiveCompare(address, '0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9');
+  return ciEquals(address, '0x508378E99F5527Acb6eB4f0fc22f954c5783e5F9');
 }
 
 export function croSkullRedPotionImage() {

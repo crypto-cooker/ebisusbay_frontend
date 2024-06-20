@@ -1,5 +1,5 @@
 import {useContext, useEffect, useMemo, useState} from "react";
-import {providers} from "ethers";
+import {ethers, providers} from "ethers";
 import UserContractService from "@src/core/contractService";
 import ContractService from "@src/core/contractService";
 import {UserContext} from "@src/components-v2/shared/contexts/user";
@@ -7,6 +7,7 @@ import {useWalletClient, WalletClient} from "wagmi";
 import {useWeb3Modal} from "@web3modal/wagmi/react";
 import {useQueryClient} from "@tanstack/react-query";
 import * as Sentry from "@sentry/nextjs";
+import {shortAddress} from "@market/helpers/utils";
 
 export const useUser = () => {
   const context = useContext(UserContext);
@@ -32,6 +33,23 @@ export const useUser = () => {
     context.requestTelemetry();
   }
 
+  const displayName = () => {
+    let username: string = shortAddress(context.user.wallet.address);
+    if (user.profile?.username) {
+      try {
+        if (user.profile.username.startsWith('0x')) {
+          username = shortAddress(ethers.utils.getAddress(user.profile.username));
+        } else {
+          username = user.profile.username;
+        }
+      } catch (e) {
+        username = user.profile.username;
+      }
+    }
+
+    return username;
+  }
+
   return {
     ...user,
 
@@ -44,6 +62,7 @@ export const useUser = () => {
     onStakingHarvested,
     refreshProfile,
     requestTelemetry,
+    displayName,
 
     // Legacy
     address: context.user.wallet.address,

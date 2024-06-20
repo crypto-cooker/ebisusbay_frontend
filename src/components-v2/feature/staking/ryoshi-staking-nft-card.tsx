@@ -8,7 +8,7 @@ import {MenuPopup} from '@src/Components/components/chakra-components';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {nftCardUrl} from "@src/helpers/image";
 import {Badge, Box, Center, Flex, Heading, Spacer, Text, useClipboard} from "@chakra-ui/react";
-import {appUrl, caseInsensitiveCompare, round} from "@market/helpers/utils";
+import {appUrl, ciEquals, round} from "@market/helpers/utils";
 import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/global/theme/theme";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
@@ -90,7 +90,7 @@ const RyoshiStakingNftCard = ({
   };
 
   const isInCart = () => {
-    return ryoshiStakingCart.nfts.some((o) => o.nft.nftId === nft.nftId && caseInsensitiveCompare(o.nft.nftAddress, nft.nftAddress));
+    return ryoshiStakingCart.nfts.some((o) => o.nft.nftId === nft.nftId && ciEquals(o.nft.nftAddress, nft.nftAddress));
   };
 
   return (

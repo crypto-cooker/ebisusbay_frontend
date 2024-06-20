@@ -2,7 +2,7 @@ import React, {memo} from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {appConfig} from "@src/Config";
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import {Center, Spinner, Text} from "@chakra-ui/react";
 import ListingBundleCard from "@src/Components/components/ListingBundleCard";
 import NextApiService from "@src/core/services/api-service/next";
@@ -20,7 +20,7 @@ const CollectionBundlesGroup = ({collection}) => {
     });
 
     return listings.data.filter((listing) => {
-      return !!listing.nft.nfts && listing.nft.nfts.some((nft) => caseInsensitiveCompare(nft.address, collection.address));
+      return !!listing.nft.nfts && listing.nft.nfts.some((nft) => ciEquals(nft.address, collection.address));
     });
   };
 

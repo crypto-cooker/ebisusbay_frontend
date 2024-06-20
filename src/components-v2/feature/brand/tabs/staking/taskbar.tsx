@@ -21,7 +21,7 @@ import React, {useState} from "react";
 import {sortOptions} from "@src/Components/components/constants/sort-options";
 import Button from "@src/Components/components/Button";
 import {Staker, StakingStatusFilters} from "@src/components-v2/feature/brand/tabs/staking/types";
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import Filters from "@src/components-v2/feature/brand/tabs/staking/filters";
 
 type TaskbarProps = {
@@ -87,8 +87,8 @@ const MobileFilter = ({staker, collections, isOpen, onClose, onCollectionFilter,
 
         <DrawerBody>
           <Filters
-              collections={collections.filter((c: any) => staker?.collections.some((sc: string) => caseInsensitiveCompare(sc, c.address)))}
-              boosterCollections={!!staker?.booster ? collections.filter((c: any) => staker.booster!.collections.some((sc: string) => caseInsensitiveCompare(sc, c.address))) : []}
+              collections={collections.filter((c: any) => staker?.collections.some((sc: string) => ciEquals(sc, c.address)))}
+              boosterCollections={!!staker?.booster ? collections.filter((c: any) => staker.booster!.collections.some((sc: string) => ciEquals(sc, c.address))) : []}
               initialCollection={staker.collections[0]}
               initialStatus={StakingStatusFilters.ALL}
               onChangeCollection={onCollectionFilter}

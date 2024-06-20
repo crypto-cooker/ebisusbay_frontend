@@ -11,7 +11,7 @@ import SocialsBar from "@src/Components/Collection/SocialsBar";
 import {useRouter} from "next/router";
 import CollectionInfoBar from "@src/Components/components/CollectionInfoBar";
 import {
-  caseInsensitiveCompare,
+  ciEquals,
   isBundle,
   isCronosGorillaBusinessCollection,
   isCronosVerseCollection,
@@ -407,7 +407,7 @@ export const getStats = async (collection: any, id = null, extraAddresses = null
  * @returns {*}
  */
 const combineStats = (collectionStats: any, anchor: string) => {
-  const anchoredStats = collectionStats.find((c: any) => caseInsensitiveCompare(c.collection, anchor));
+  const anchoredStats = collectionStats.find((c: any) => ciEquals(c.collection, anchor));
   if (collectionStats.length === 0) return anchoredStats;
 
   const combined = collectionStats.reduce((a: any, b: any) => {

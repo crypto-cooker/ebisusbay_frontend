@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import React, {useCallback, useEffect, useState} from "react";
-import {caseInsensitiveCompare, round} from "@market/helpers/utils";
+import {ciEquals, round} from "@market/helpers/utils";
 import {motion} from "framer-motion";
 import {useQuery} from "@tanstack/react-query";
 import {
@@ -129,8 +129,8 @@ const StakingTab = ({ brand, collections }: StakingTabProps) => {
                     >
                         <GridItem overflow='hidden'>
                             <Filters
-                                collections={collections.filter((c: any) => staker?.collections.some((sc: string) => caseInsensitiveCompare(sc, c.address)))}
-                                boosterCollections={!!staker?.booster ? collections.filter((c: any) => staker.booster!.collections.some((sc: string) => caseInsensitiveCompare(sc, c.address))) : []}
+                                collections={collections.filter((c: any) => staker?.collections.some((sc: string) => ciEquals(sc, c.address)))}
+                                boosterCollections={!!staker?.booster ? collections.filter((c: any) => staker.booster!.collections.some((sc: string) => ciEquals(sc, c.address))) : []}
                                 initialCollection={staker.collections[0]}
                                 initialStatus={StakingStatusFilters.ALL}
                                 onChangeCollection={handleCollectionFilter}

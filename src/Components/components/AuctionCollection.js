@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import AuctionCard from './AuctionCard';
 import {fetchListings, init} from '@market/state/redux/slices/auctionsSlice';
 import {auctionState} from '@src/core/api/enums';
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import {Center, Spinner} from "@chakra-ui/react";
 // import ListingCard from './ListingCard';
 // import Clock from './Clock';
@@ -24,7 +24,7 @@ const AuctionCollection = ({ showLoadMore = true, collectionId = null, sellerId 
     state.auctions.auctions.filter((a) =>
       typeof a.nft != 'undefined' &&
       [auctionState.ACTIVE, auctionState.NOT_STARTED].includes(a.state) &&
-      caseInsensitiveCompare(a.nftAddress, degenAddress) &&
+      ciEquals(a.nftAddress, degenAddress) &&
       !testAuctions.includes(a.id)
     )
   );
@@ -32,7 +32,7 @@ const AuctionCollection = ({ showLoadMore = true, collectionId = null, sellerId 
     state.auctions.auctions.filter((a) =>
       typeof a.nft != 'undefined' &&
       [auctionState.SOLD, auctionState.CANCELLED].includes(a.state) &&
-      caseInsensitiveCompare(a.nftAddress, degenAddress) &&
+      ciEquals(a.nftAddress, degenAddress) &&
       !testAuctions.includes(a.id)
     )
       .sort((a, b) => a.endAt < b.endAt ? 1 : -1)
