@@ -206,6 +206,18 @@ const configData: AppConfigMap = {
         symbol: 'LWV',
         address: '0xc8324619A829efc3af5fF3206F136Ba8d26f071E',
         decimals: 18
+      },
+      btcronos: {
+        name: 'Bitcoin CRO',
+        symbol: 'BTCRONOS',
+        address: '0xEfE15a7232b9F0aA890FF97Aaf53afe87D00F8BE',
+        decimals: 18
+      },
+      robin: {
+        name: 'Robin',
+        symbol: 'ROBIN',
+        address: '0x664E4b17EA045fE92868821F3eE0a76a5dB38166',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
