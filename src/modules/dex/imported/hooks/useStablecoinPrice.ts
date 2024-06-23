@@ -1,5 +1,5 @@
 import { ChainId, Currency, CurrencyAmount, Price, Token, TradeType } from '@uniswap/sdk-core'
-import tryParseCurrencyAmount from '@dex/imported/utils/tryParseCurrencyAmount'
+import tryParseCurrencyAmount from '@dex/swap/utils/tryParseCurrencyAmount'
 import { useMemo, useRef } from 'react'
 import { ClassicTrade, INTERNAL_ROUTER_PREFERENCE_PRICE } from '@dex/imported/state/routing/types'
 import { useRoutingAPITrade } from '@dex/imported/state/routing/useRoutingAPITrade'

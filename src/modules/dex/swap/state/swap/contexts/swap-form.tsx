@@ -9,8 +9,9 @@ export function SwapFormContext({ children }: { children: React.ReactNode }) {
   const [swapFormDerivedState, setSwapFormDerivedState] = useSwapFormDerivedState();
   const [swapPageState, setSwapPageState] = useSwapPageState();
 
-  const derivedSwapInfo = useDerivedSwapInfo(swapFormState)
+  const derivedSwapInfo = useDerivedSwapInfo(swapFormState);
 
+  console.log('===TRADE OUT===', derivedSwapInfo.trade);
   const { chain: connectedChainId } = useNetwork()
   const previousConnectedChainId = usePrevious(connectedChainId)
 

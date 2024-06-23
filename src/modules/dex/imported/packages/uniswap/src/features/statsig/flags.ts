@@ -117,7 +117,7 @@ export function getFeatureFlagName(flag: FeatureFlags, client?: FeatureFlagClien
   const name = names.get(flag)
   if (!name) {
     const err = new Error(
-      `Feature ${FeatureFlags[flag]} does not have a name mapped for this application`
+      `Feature ${FeatureFlags[flag]} dojes not have a name mapped for this application`
     )
 
     throw err

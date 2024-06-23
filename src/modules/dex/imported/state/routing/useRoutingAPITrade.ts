@@ -100,7 +100,7 @@ export function useRoutingAPITrade<TTradeType extends TradeType>(
   })
 
   const isFetching = currentData !== tradeResult || !currentData
-
+console.log('===TRADE isFETCHING', isFetching);
   return useMemo(() => {
     if (amountSpecified && otherCurrency && queryArgs === skipToken) {
       return {

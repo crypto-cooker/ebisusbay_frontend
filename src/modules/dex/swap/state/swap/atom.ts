@@ -1,9 +1,8 @@
-import {Field, SwapTab} from "@dex/constants";
+import {Field, SwapTab} from "src/modules/dex/swap/constants";
 import {ChainId, Currency, CurrencyAmount, Percent} from "@uniswap/sdk-core";
 import {ReactNode} from "react";
 import {InterfaceTrade, TradeState} from "@dex/imported/state/routing/types";
 import {atom} from "jotai/index";
-import {useDerivedSwapInfo} from "@dex/swap/state/swap/hooks";
 
 export interface SwapPageState {
   currencyState: CurrencyState
@@ -23,13 +22,13 @@ export interface CurrencyState {
   outputCurrency?: Currency
 }
 
-export interface SwapFocusedFieldState {
+export interface SwapFormState {
   readonly independentField: Field
   readonly typedValue: string
 }
 
-// type SwapFormState = {
-//   focusedFieldState: SwapFocusedFieldState
+// type SwapFormContext = {
+//   swapFormState: SwapFormState
 //   derivedSwapInfo: DerivedSwapInfo
 // }
 
@@ -66,7 +65,7 @@ const initialSwapPageState: SwapPageState = {
 
 export const swapPageStateAtom = atom<SwapPageState>(initialSwapPageState);
 
-const initialFocusedFieldState: SwapFocusedFieldState = {
+const initialSwapFormState: SwapFormState = {
   independentField: Field.INPUT,
   typedValue: '',
 }
@@ -81,7 +80,7 @@ const initialSwapDerivedData: DerivedSwapInfo = Object.freeze({
     state: TradeState.LOADING,
   },
 })
-export const swapFormStateAtom = atom<SwapFocusedFieldState>(initialFocusedFieldState);
+export const swapFormStateAtom = atom<SwapFormState>(initialSwapFormState);
 export const swapFormDerivedStateAtom = atom<DerivedSwapInfo>(initialSwapDerivedData);
 
 // export const updateSwapFormStateAtom = atom(
