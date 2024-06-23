@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 
 export interface BatchExtras {
   address: string;
@@ -26,7 +26,7 @@ const ryoshiStakingCartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const nftToAdd = action.payload;
-      if (!state.nfts.some((o) => caseInsensitiveCompare(o.nft.nftAddress, nftToAdd.nftAddress) && o.nft.nftId === nftToAdd.nftId)) {
+      if (!state.nfts.some((o) => ciEquals(o.nft.nftAddress, nftToAdd.nftAddress) && o.nft.nftId === nftToAdd.nftId)) {
         state.nfts.push({nft: nftToAdd, price: null});
       }
 
@@ -36,9 +36,9 @@ const ryoshiStakingCartSlice = createSlice({
     },
     removeFromCart: (state, action) => {
       const nftToRemove = action.payload;
-      state.nfts = state.nfts.filter((o) => !(caseInsensitiveCompare(o.nft.nftAddress, nftToRemove.nftAddress) && o.nft.nftId === nftToRemove.nftId));
+      state.nfts = state.nfts.filter((o) => !(ciEquals(o.nft.nftAddress, nftToRemove.nftAddress) && o.nft.nftId === nftToRemove.nftId));
 
-      if (!state.nfts.some((o) => caseInsensitiveCompare(o.nft.nftAddress, nftToRemove.nftAddress))) {
+      if (!state.nfts.some((o) => ciEquals(o.nft.nftAddress, nftToRemove.nftAddress))) {
         const extras = state.extras;
         delete extras[nftToRemove.nftAddress.toLowerCase()];
         state.extras = extras;

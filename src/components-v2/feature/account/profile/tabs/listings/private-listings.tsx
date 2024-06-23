@@ -30,7 +30,7 @@ import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/l
 import nextApiService from "@src/core/services/api-service/next";
 import {InvalidState} from "@src/core/services/api-service/types";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
-import {caseInsensitiveCompare, findCollectionByAddress} from "@market/helpers/utils";
+import {ciEquals, findCollectionByAddress} from "@market/helpers/utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faCheckDouble, faFilter} from "@fortawesome/free-solid-svg-icons";
 import useDebounce from "@src/core/hooks/useDebounce";
@@ -125,9 +125,9 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
   }, []);
 
   const handleSelected = useCallback((selectedListing: any, checked?: boolean) => {
-    const alreadyChecked = !!selected.find((listing: any) => caseInsensitiveCompare(listing.listingId, selectedListing.listingId));
+    const alreadyChecked = !!selected.find((listing: any) => ciEquals(listing.listingId, selectedListing.listingId));
     if ((checked !== undefined && !checked) || alreadyChecked) {
-      setSelected(selected.filter((listing: any) => !caseInsensitiveCompare(listing.listingId, selectedListing.listingId)));
+      setSelected(selected.filter((listing: any) => !ciEquals(listing.listingId, selectedListing.listingId)));
     } else if (checked || !alreadyChecked) {
       setSelected([...selected, selectedListing]);
     }
@@ -144,7 +144,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
         .reduce((arr: any, item: any) => {
           const coll = findCollectionByAddress(item.nftAddress, item.nftId);
           if (!coll) return arr;
-          const existingIndex = arr.findIndex((c: any) => caseInsensitiveCompare(coll.address, c.address));
+          const existingIndex = arr.findIndex((c: any) => ciEquals(coll.address, c.address));
           if (existingIndex >= 0) {
             arr[existingIndex].balance += Number(item.balance);
           } else {
@@ -266,7 +266,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
               <ResponsiveListingsTable
                 data={data}
                 onUpdate={(listing) => {
-                  const collection = collections.find((c: any) => caseInsensitiveCompare(c.address, listing.nftAddress));
+                  const collection = collections.find((c: any) => ciEquals(c.address, listing.nftAddress));
                   let nft = listing.nft;
                   if (!!collection) {
                     nft = {...listing.nft, multiToken: collection.multiToken};

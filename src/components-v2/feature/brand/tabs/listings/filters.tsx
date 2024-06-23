@@ -14,7 +14,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import React, {useState} from "react";
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import NextLink from 'next/link'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
@@ -40,7 +40,7 @@ const Filters = ({collections, onChange}: FiltersProps) => {
     const exists = selectedCollections.includes(address.toLowerCase());
     let newList = [...selectedCollections];
     if (exists) {
-      newList = newList.filter((a) => !caseInsensitiveCompare(a, address));
+      newList = newList.filter((a) => !ciEquals(a, address));
     } else {
       newList.push(address);
     }

@@ -67,7 +67,6 @@ export function useDebouncedTrade(
 } {
   const { chain } = useAccount()
   const autoRouterSupported = useAutoRouterSupported()
-
   const inputs = useMemo<[CurrencyAmount<Currency> | undefined, Currency | undefined]>(
     () => [amountSpecified, otherCurrency],
     [amountSpecified, otherCurrency]
@@ -110,7 +109,7 @@ export function useDebouncedTrade(
     inputTax,
     outputTax
   )
-
+console.log('===TRADEX', previewTradeResult)
   return previewTradeResult.currentTrade && !routingApiTradeResult.currentTrade
     ? previewTradeResult
     : routingApiTradeResult

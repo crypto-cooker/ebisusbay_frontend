@@ -4,7 +4,7 @@ import {Contract} from "ethers";
 import Barracks from "@src/global/contracts/Barracks.json";
 import {appConfig} from "@src/Config";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import Constants from "@src/constants";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
@@ -44,7 +44,7 @@ const useBarracksStakeNfts = () => {
       // i.e. multiple entries for the same nft in pendingNfts will consolidate into one entry in stakedNfts with an amount
       let withdrawNfts = [];
       for (const stakedNft of stakedNfts) {
-        const pendingAmount = pendingNfts.filter((nft) => caseInsensitiveCompare(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId).length;
+        const pendingAmount = pendingNfts.filter((nft) => ciEquals(nft.nftAddress, stakedNft.contractAddress) && nft.nftId === stakedNft.tokenId).length;
         if (Number(stakedNft.amount) > pendingAmount) {
           const amountToWithdraw = Number(stakedNft.amount) - pendingAmount;
           withdrawNfts.push({...stakedNft, amount: amountToWithdraw});

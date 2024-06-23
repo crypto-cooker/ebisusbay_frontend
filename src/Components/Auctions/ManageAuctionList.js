@@ -7,7 +7,7 @@ import {auctionState} from '@src/core/api/enums';
 import {Auction} from '@src/core/models/auction';
 import {commify} from 'ethers/lib/utils';
 import {
-  caseInsensitiveCompare,
+  ciEquals,
   createSuccessfulTransactionToastContent,
   isEventValidNumber,
   secondsToDhms
@@ -82,12 +82,12 @@ const ManageAuctionList = () => {
       const otherAuctions = response.auctions
         .filter((a) => {
           const isCompleted = ![auctionState.NOT_STARTED, auctionState.ACTIVE].includes(a.state);
-          const hasUnwithdrawn = a.bidHistory.some(b => !b.withdrawn && !caseInsensitiveCompare(b.bidder, a.highestBidder));
+          const hasUnwithdrawn = a.bidHistory.some(b => !b.withdrawn && !ciEquals(b.bidder, a.highestBidder));
           const afterTestAuctions = a.timeStarted > 1653891957;
           return isCompleted && hasUnwithdrawn && afterTestAuctions;
         })
         .map((o) => {
-          o.unwithdrawnCount = o.bidHistory.filter(b => !b.withdrawn && !caseInsensitiveCompare(b.bidder, o.highestBidder)).length;
+          o.unwithdrawnCount = o.bidHistory.filter(b => !b.withdrawn && !ciEquals(b.bidder, o.highestBidder)).length;
           return new Auction(o)
         })
         .sort((a, b) => a.endAt < b.endAt ? 1 : -1);

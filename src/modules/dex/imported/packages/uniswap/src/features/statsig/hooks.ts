@@ -15,15 +15,15 @@ import {
 } from '@dex/imported/packages/uniswap/src/features/statsig/sdk/statsig'
 
 export function useFeatureFlag(flag: FeatureFlags): boolean {
-  const name = getFeatureFlagName(flag)
-  const { value } = useGate(name)
-  return value
+  // const name = getFeatureFlagName(flag)
+  // const { value } = useGate(name)
+  return true
 }
 
 export function useFeatureFlagWithExposureLoggingDisabled(flag: FeatureFlags): boolean {
-  const name = getFeatureFlagName(flag)
-  const { value } = useGateWithExposureLoggingDisabled(name)
-  return value
+  // const name = getFeatureFlagName(flag)
+  // const { value } = useGateWithExposureLoggingDisabled(name)
+  return true
 }
 
 export function useExperimentEnabled(

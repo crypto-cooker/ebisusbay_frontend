@@ -5,7 +5,7 @@ import {toast} from 'react-toastify';
 import Countdown from 'react-countdown';
 
 import AuctionContract from '../../global/contracts/DegenAuction.json';
-import {caseInsensitiveCompare, createSuccessfulTransactionToastContent, devLog, isEventValidNumber} from '@market/helpers/utils';
+import {ciEquals, createSuccessfulTransactionToastContent, devLog, isEventValidNumber} from '@market/helpers/utils';
 import {auctionState} from '@src/core/api/enums';
 import {getAuctionDetails, updateAuctionFromBidEvent} from '@market/state/redux/slices/auctionSlice';
 import {ERC20} from "@src/global/contracts/Abis";
@@ -42,7 +42,7 @@ const BuyerActionBar = () => {
   const minBid = useSelector((state) => state.auction.minBid);
 
   const isHighestBidder = useSelector((state) => {
-    return listing.getHighestBidder && caseInsensitiveCompare(user.address, listing.getHighestBidder);
+    return listing.getHighestBidder && ciEquals(user.address, listing.getHighestBidder);
   });
   const [openBidDialog, setOpenBidDialog] = useState(false);
   const [openRebidDialog, setOpenRebidDialog] = useState(false);
@@ -177,7 +177,7 @@ const BuyerActionBar = () => {
   useEffect(() => {
     setAwaitingAcceptance(listing.state === auctionState.ACTIVE && listing.getEndAt < Date.now());
     setIsComplete(listing.state === auctionState.SOLD || listing.state === auctionState.CANCELLED);
-    setIsAuctionOwner(caseInsensitiveCompare(listing.seller, user.address));
+    setIsAuctionOwner(ciEquals(listing.seller, user.address));
   }, [listing, user.address]);
 
   useEffect(() => {
@@ -196,7 +196,7 @@ const BuyerActionBar = () => {
     readContract.on('Bid', async (auctionHash, auctionIndex, bidIndex, sender, amount) => {
       devLog('checking', listing.getAuctionIndex, auctionIndex);
       if (
-        caseInsensitiveCompare(listing.getAuctionHash, auctionHash) &&
+        ciEquals(listing.getAuctionHash, auctionHash) &&
         auctionIndex.toString() === listing.getAuctionIndex.toString()
       ) {
         devLog(`[AUCTIONS] Caught Bid event for Auction:     ${auctionHash}-${auctionIndex}`, bidIndex, sender, amount);
@@ -212,7 +212,7 @@ const BuyerActionBar = () => {
   }, []);
 
   const myBid = () => {
-    return bidHistory.find((b) => caseInsensitiveCompare(b.bidder, user.address))?.price ?? 0;
+    return bidHistory.find((b) => ciEquals(b.bidder, user.address))?.price ?? 0;
   };
 
   const handleChangeBidAmount = (event) => {

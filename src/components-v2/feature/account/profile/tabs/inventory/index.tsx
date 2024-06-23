@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import MyNftCard from "@src/Components/components/MyNftCard";
 import {
-  caseInsensitiveCompare,
+  ciEquals,
   findCollectionByAddress,
   isBundle,
   isNftBlacklisted,
@@ -114,7 +114,7 @@ export default function Inventory({ address }: InventoryProps) {
         .reduce((arr: any, item: any) => {
           const coll = findCollectionByAddress(item.nftAddress, item.nftId);
           if (!coll) return arr;
-          const existingIndex = arr.findIndex((c: any) => caseInsensitiveCompare(coll.address, c.address));
+          const existingIndex = arr.findIndex((c: any) => ciEquals(coll.address, c.address));
           if (existingIndex >= 0) {
             arr[existingIndex].balance += Number(item.balance);
           } else {
@@ -173,7 +173,7 @@ export default function Inventory({ address }: InventoryProps) {
                 if(isBundle(nft.nftAddress)){
                   return (
                     <div key={`${nft.nftAddress}-${nft.nftId}-${index}`}>
-                      {caseInsensitiveCompare(address, user.address) ? (
+                      {ciEquals(address, user.address) ? (
                         <MyBundleCard
                           nft={nft}
                           canTransfer={nft.canTransfer}
@@ -200,7 +200,7 @@ export default function Inventory({ address }: InventoryProps) {
                 else{
                   return (
                     <div key={`${nft.nftAddress}-${nft.nftId}-${nft.listed}-${index}`}>
-                      {caseInsensitiveCompare(address, user.address) ? (
+                      {ciEquals(address, user.address) ? (
                         <MyNftCard
                           nft={nft}
                           canTransfer={nft.canTransfer}

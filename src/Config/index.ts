@@ -206,6 +206,18 @@ const configData: AppConfigMap = {
         symbol: 'LWV',
         address: '0xc8324619A829efc3af5fF3206F136Ba8d26f071E',
         decimals: 18
+      },
+      btcronos: {
+        name: 'Bitcoin CRO',
+        symbol: 'BTCRONOS',
+        address: '0xEfE15a7232b9F0aA890FF97Aaf53afe87D00F8BE',
+        decimals: 18
+      },
+      robin: {
+        name: 'Robin',
+        symbol: 'ROBIN',
+        address: '0x664E4b17EA045fE92868821F3eE0a76a5dB38166',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -406,6 +418,10 @@ const configData: AppConfigMap = {
           '0xd4E29bdba77c948b04C3ACd67C1dAC17264d2983': ['cro', 'frtn', 'fftb'], // Degen Royale: Guns on Cronos
           '0x0521217B36a1482E6798692687f836c68c7F3837': ['cro', 'frtn', 'fftb'], // Sp00kies
           '0x7C144DBF04cf991d932bf6DC404C8B37c8807946': ['cro', 'frtn', 'fftb'], // Elf Citizens
+          '0x7aEBFd662494299CE53feb533BFE80a749e656BC': ['cro', 'frtn', 'lwv'], // Degen Ape Cronos Club
+          '0x25ea0f16e3a52db95e31f8514917a0610270e7cd': ['cro', 'frtn', 'lwv'], // TeenDACC
+          '0x3fe29ffa527d712a5b202ddaeff714c12cb6aff5': ['cro', 'frtn', 'lwv'], // Snap!
+          '0x4Ffca5C2790ef342c1EF25d48D1FFc8a2B4b1D9A': ['cro', 'frtn', 'lwv'], // Lightwave Booster
         }
       }
     },

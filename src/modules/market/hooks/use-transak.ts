@@ -114,10 +114,10 @@ export default function useTransak() {
   };
 
   const isEligible = async (listing: AdaptedTransakListing) => {
-    const is1155Token = await is1155(listing.nftAddress);
+    // const is1155Token = await is1155(listing.nftAddress);
     const isCro = isNativeCro(listing.currency);
 
-    return !is1155Token && isCro;
+    return isCro;
   }
 
   const purchaseToken = (walletAddress: string, symbol: 'CRO' | 'USDC') => {

@@ -2,7 +2,7 @@ import {Box, Button, Container, Flex, IconButton, useDisclosure, VStack, Wrap} f
 import {Card} from "@src/components-v2/foundation/card";
 import {ArrowDownIcon, SettingsIcon} from "@chakra-ui/icons";
 // import InputBox from "@dex/components/swap/input-box";
-import {Field} from "@dex/constants";
+import {Field} from "src/modules/dex/swap/constants";
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import Settings from "@dex/components/swap/settings";
@@ -21,7 +21,7 @@ export default function SwapForm() {
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
   // const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
   const showWrap = false;
-
+console.log('onUserInput2', swapFormState);
   const {
     trade: { state: tradeState, trade, swapQuoteLatency },
     allowedSlippage,

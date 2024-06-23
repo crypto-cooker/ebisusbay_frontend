@@ -7,8 +7,8 @@ import {
 } from "@dex/swap/state/swap/atom";
 import {useAtom, useAtomValue, useSetAtom} from "jotai";
 import {SwapState} from "@dex/imported/state/swap/types";
-import {Currency, CurrencyAmount, Token} from "@uniswap/sdk-core";
-import {useAccount} from "wagmi";
+import {Currency, CurrencyAmount, Token, TradeType} from "@uniswap/sdk-core";
+import {Address, erc20ABI, useAccount} from "wagmi";
 import {Address, erc20Abi} from "viem";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import {isAddress} from "@market/helpers/utils";
@@ -16,7 +16,10 @@ import {multicall} from "@wagmi/core";
 import JSBI from "jsbi";
 import {nativeOnChain} from "@dex/imported/constants/tokens";
 import {useUser} from "@src/components-v2/useUser";
-import {Field} from "@dex/constants";
+import {Field} from "src/modules/dex/swap/constants";
+import tryParseCurrencyAmount from "@dex/swap/utils/tryParseCurrencyAmount";
+import {useDebouncedTrade} from "@dex/swap/utils/useDebouncedTrade";
+import {RouterPreference} from "@dex/imported/state/routing/types";
 import {wagmiConfig} from "@src/wagmi";
 
 export function useSwapPageState() {
@@ -50,7 +53,7 @@ export function useSwapActionHandlers(): {
       const otherCurrency = swapPageState.currencyState[otherCurrencyKey]
       // the case where we have to swap the order
 
-      console.log('onCurrencySelection', otherCurrency, currency);
+      console.log('useSwapActionHandlers', 'onCurrencySelection', otherCurrency, currency);
       if (otherCurrency && currency.equals(otherCurrency)) {
         setSwapPageState((prev) => ({
           ...prev,
@@ -59,12 +62,13 @@ export function useSwapActionHandlers(): {
             [otherCurrencyKey]: prev.currencyState[currentCurrencyKey],
           }
         }));
+        console.log('useSwapActionHandlers', 'SET SWAP FORM STATE', {[currentCurrencyKey]: currency})
         setSwapFormState((prev) => ({
           ...prev,
           independentField: prev.independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT,
         }))
       } else {
-        console.log('SET SWAP PAGE STATE', {[currentCurrencyKey]: currency})
+        console.log('useSwapActionHandlers', 'SET SWAP PAGE STATE', {[currentCurrencyKey]: currency})
         setSwapPageState((prev) => ({
           ...prev,
           currencyState: {
@@ -111,12 +115,11 @@ export function useSwapActionHandlers(): {
 
   const onUserInput = useCallback(
     (field: Field, typedValue: string) => {
+      console.log('onUserInput', field, typedValue);
       setSwapFormState((prev) => ({
         ...prev,
-        focusedFieldState: {
-          independentField: field,
-          typedValue,
-        },
+        independentField: field,
+        typedValue,
       }))
     },
     [setSwapFormState]
@@ -134,12 +137,35 @@ export function useDerivedSwapInfo(state: SwapState): DerivedSwapInfo {
   const {
     currencyState: { inputCurrency, outputCurrency },
   } = useSwapPageStateRead()
+  const { independentField, typedValue } = state
 
   const relevantTokenBalances = useCurrencyBalances(
     user.address,
     useMemo(() => [inputCurrency ?? undefined, outputCurrency ?? undefined], [inputCurrency, outputCurrency])
   );
 console.log('HI', inputCurrency, outputCurrency)
+
+  const isExactIn: boolean = independentField === Field.INPUT
+  const parsedAmount = useMemo(
+    () => tryParseCurrencyAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined),
+    [inputCurrency, isExactIn, outputCurrency, typedValue]
+  )
+
+  console.log('===TRADE IN===', isExactIn, parsedAmount, outputCurrency, inputCurrency, user.address);
+  console.log('===TRADE PARMS===',
+    isExactIn ? TradeType.EXACT_INPUT : TradeType.EXACT_OUTPUT,
+    parsedAmount,
+    (isExactIn ? outputCurrency : inputCurrency) ?? undefined,
+    RouterPreference.API,
+    user.address);
+
+  const trade = useDebouncedTrade(
+    isExactIn ? TradeType.EXACT_INPUT : TradeType.EXACT_OUTPUT,
+    parsedAmount,
+    (isExactIn ? outputCurrency : inputCurrency) ?? undefined,
+    RouterPreference.API,
+    user.address
+  )
 
   const currencyBalances = useMemo(
     () => ({
@@ -157,10 +183,19 @@ console.log('HI', inputCurrency, outputCurrency)
     [inputCurrency, outputCurrency]
   )
 
+  console.log('DERIVEDSTATE', {
+    currencies,
+    currencyBalances,
+    parsedAmount,
+    trade
+  });
+
   return useMemo(() => ({
     currencies,
     currencyBalances,
-  }) as any, [currencies, currencyBalances]);
+    parsedAmount,
+    trade
+  }) as any, [currencies, currencyBalances, parsedAmount, trade]);
 }
 
 

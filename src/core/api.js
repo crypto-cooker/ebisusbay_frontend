@@ -4,7 +4,7 @@ import * as Sentry from '@sentry/react';
 import {ERC1155, ERC721, MetaPixelsAbi} from '../global/contracts/Abis';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
 import {
-  caseInsensitiveCompare,
+  ciEquals,
   convertIpfsResource,
   isAntMintPassCollection,
   isCroniesCollection,
@@ -183,7 +183,7 @@ export async function getNftFromFile(collectionId, nftId) {
       };
     } else {
       const isMultiToken =
-        knownContracts.findIndex((x) => caseInsensitiveCompare(x.address, collectionId) && x.multiToken) > -1;
+        knownContracts.findIndex((x) => ciEquals(x.address, collectionId) && x.multiToken) > -1;
 
       let uri;
       var contract;
@@ -226,8 +226,8 @@ export async function getNftFromFile(collectionId, nftId) {
       const video = convertIpfsResource(json.animation_url, json.tooltip);
 
       let isStaked = false;
-      if (caseInsensitiveCompare(collectionId, '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44') ||
-        caseInsensitiveCompare(collectionId, '0x490A0b87191f678af7926043c59f040D4968033c')) {
+      if (ciEquals(collectionId, '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44') ||
+        ciEquals(collectionId, '0x490A0b87191f678af7926043c59f040D4968033c')) {
         if (await contract.stakedApes(nftId)) {
           canTransfer = false;
           canSell = false;

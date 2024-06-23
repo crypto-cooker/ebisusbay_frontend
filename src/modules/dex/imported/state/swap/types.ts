@@ -1,4 +1,4 @@
-import {Field, SwapTab} from "@dex/constants";
+import {Field, SwapTab} from "src/modules/dex/swap/constants";
 import {ChainId, Currency, CurrencyAmount, Percent} from "@uniswap/sdk-core";
 import {createContext, Dispatch, ReactNode, SetStateAction} from "react";
 import {InterfaceTrade, TradeState} from "@dex/imported/state/routing/types";

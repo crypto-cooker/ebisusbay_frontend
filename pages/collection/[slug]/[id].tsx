@@ -2,7 +2,7 @@ import React, {memo, useEffect, useState} from 'react';
 import {
   appUrl,
   cacheBustingKey,
-  caseInsensitiveCompare,
+  ciEquals,
   humanizeAdvanced,
   isAddress,
   isBundle,
@@ -99,19 +99,19 @@ const Nft = ({ slug, id, nft, collection }: NftProps) => {
 };
 
 export const getServerSideProps = async ({ params }: GetServerSidePropsContext) => {
-  const slug = params?.slug;
-  const tokenId = params?.id;
+  const slug = params?.slug as string;
+  const tokenId = params?.id as string;
   let collection;
 
   // @todo fix in autolistings
   if (isAddress(slug)) {
-    collection = appConfig('collections').find((c: any) => caseInsensitiveCompare(c.address, slug));
+    collection = appConfig('collections').find((c: any) => ciEquals(c.address, slug));
 
     // const res = await fetch(`${config.urls.api}collectioninfo?address=${slug}`);
     // const json = await res.json();
     // collection = json.collections[0]
   } else {
-    collection = appConfig('collections').find((c: any) => caseInsensitiveCompare(c.slug, slug));
+    collection = appConfig('collections').find((c: any) => ciEquals(c.slug, slug));
 
     // const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`);
     // const json = await res.json();

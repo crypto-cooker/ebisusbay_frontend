@@ -7,7 +7,7 @@ import {
 import {appConfig} from "@src/Config";
 import {getNfts} from "@src/core/api/endpoints/nft";
 import abi from "@market/assets/abis/cro-crow-forest.json";
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import NextApiService from "@src/core/services/api-service/next";
 
 const config = appConfig();
@@ -49,7 +49,7 @@ export class CroCrowBoosterStaker implements BoosterStaker {
         const readContract = new Contract(this.address, abi, readProvider);
         const stakedObjs = await readContract.boostersOfOwner(userAddress);
         const stakedIds = stakedObjs
-            .filter((obj: { id: BigNumber, adr: string }) => caseInsensitiveCompare(obj.adr, collectionAddress))
+            .filter((obj: { id: BigNumber, adr: string }) => ciEquals(obj.adr, collectionAddress))
             .map((obj: { id: BigNumber, adr: string }) => obj.id);
 
         if (stakedIds.length < 1) return [];
@@ -93,7 +93,7 @@ export class CroCrowBoosterStaker implements BoosterStaker {
         return stakedObjs.map((obj: any, index: number) => {
             return {
                 slot: index,
-                nft: fullNfts.find((nft: any) => caseInsensitiveCompare(nft.nftAddress, obj.adr) && nft.nftId.toString() === obj.id.toString())
+                nft: fullNfts.find((nft: any) => ciEquals(nft.nftAddress, obj.adr) && nft.nftId.toString() === obj.id.toString())
             }
         });
     }

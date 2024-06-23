@@ -21,7 +21,7 @@ import NftProfilePreview from '@src/components-v2/feature/nft/profile-preview'
 
 import {
   appUrl,
-  caseInsensitiveCompare,
+  ciEquals,
   findNextLowestNumber,
   isAnyWeirdApesCollection,
   isArgonautsBrandCollection,
@@ -693,7 +693,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
 
   const isFavorite = () => {
     if (!(user.profile as any)?.favorites) return false;
-    return (user.profile as any).favorites.find((f: any) => caseInsensitiveCompare(address, f.tokenAddress) && id === f.tokenId);
+    return (user.profile as any).favorites.find((f: any) => ciEquals(address, f.tokenAddress) && id === f.tokenId);
   }
 
   return (
@@ -860,7 +860,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                       collectionName={collectionName}
                       isVerified={collection.verification?.verified}
                       onOfferSelected={() => handleMakeOffer()}
-                      isOwner={caseInsensitiveCompare(user.address, nft.owner)}
+                      isOwner={ciEquals(user.address, nft.owner)}
                     />
                   )}
 

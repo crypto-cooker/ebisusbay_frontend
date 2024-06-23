@@ -1,5 +1,5 @@
 import Profile from '@src/components-v2/feature/account/profile';
-import {caseInsensitiveCompare} from "@market/helpers/utils";
+import {ciEquals} from "@market/helpers/utils";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {GetServerSidePropsContext, NextPage} from "next";
 
@@ -20,7 +20,7 @@ const Account: NextPage<PageProps> = ({ address, profile, query }: PageProps) =>
 export default Account;
 
 export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
-  const addressOrUsername = params?.address;
+  const addressOrUsername = params?.address as string;
 
   let user;
   try {
@@ -30,8 +30,8 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
   }
 
   if (user?.data &&
-    caseInsensitiveCompare(addressOrUsername, user.data.walletAddress) &&
-    !caseInsensitiveCompare(addressOrUsername, user.data.username)) {
+    ciEquals(addressOrUsername, user.data.walletAddress) &&
+    !ciEquals(addressOrUsername, user.data.username)) {
     return {
       redirect: {
         destination: `/account/${user.data.username}${query?.tab? `?tab=${query?.tab}` : ''}`,
