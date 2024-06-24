@@ -5,6 +5,7 @@ import {useSwapPageState} from "@dex/swap/state/swap/hooks";
 import {SwapPageContext} from "@dex/swap/state/swap/contexts/swap-page";
 import {SwapFormContext} from "@dex/swap/state/swap/contexts/swap-form";
 import SwapForm from "@dex/components/swap/tabs/swap";
+import {SwapTab} from "@dex/swap/constants";
 
 interface SwapPageProps {
   initialInputCurrency?: Currency;
@@ -22,10 +23,14 @@ export default function SwapPage({ initialInputCurrency, initialOutputCurrency, 
       initialOutputCurrency={initialOutputCurrency}
     >
       <SwapFormContext>
-        <SwapHeader compact={false} syncTabToUrl={syncTabToUrl} />
-        <>herp {swapPageState.currentTab}</>
-        <br />
-        <SwapForm />
+        <SwapHeader compact={false} />
+        {swapPageState.currentTab === SwapTab.Swap ? (
+          <SwapForm />
+        ) : swapPageState.currentTab === SwapTab.Limit ? (
+          <>herp {swapPageState.currentTab}</>
+        ) : swapPageState.currentTab === SwapTab.Send && (
+          <>herp {swapPageState.currentTab}</>
+        )}
       </SwapFormContext>
       {/*<SwapAndLimitContext.Consumer>*/}
       {/*  {({ currentTab }) => (*/}

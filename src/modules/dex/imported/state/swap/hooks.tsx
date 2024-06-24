@@ -10,16 +10,16 @@ import {
   SwapState,
   parseIndependentFieldURLParameter,
 } from './types'
-import {Field} from "@dex/constants";
+import {Field} from "src/modules/dex/swap/constants";
 import {useAccount} from "wagmi";
 import {useSwapTaxes} from "@dex/imported/hooks/useSwapTaxes";
 import {useCurrencyBalances} from "@dex/imported/hooks/useCurrencyBalance";
 import useAutoSlippageTolerance from '@dex/imported/hooks/useAutoSlippageTolerance';
-import { useDebouncedTrade } from '@dex/imported/hooks/useDebouncedTrade';
+import { useDebouncedTrade } from '@dex/swap/utils/useDebouncedTrade';
 import {isAddress} from "@market/helpers/utils";
 import {TOKEN_SHORTHANDS} from "@dex/imported/constants/tokens";
 import {useUSDPrice} from "@dex/imported/hooks/useUSDPrice";
-import tryParseCurrencyAmount from "@dex/imported/utils/tryParseCurrencyAmount";
+import tryParseCurrencyAmount from "@dex/swap/utils/tryParseCurrencyAmount";
 import {isClassicTrade, isSubmittableTrade, isUniswapXTrade} from "@dex/imported/state/routing/utils";
 import {useUserSlippageToleranceWithDefault} from "@dex/swap/state/user/hooks";
 import {useUser} from "@src/components-v2/useUser";
