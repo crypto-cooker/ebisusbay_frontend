@@ -264,7 +264,8 @@ const configData: AppConfigMap = {
           'icy',
           'coom',
           'fftb',
-          'mery'
+          'mery',
+          'lwv'
         ],
         global: ['cro', 'frtn'],
         nft: {
