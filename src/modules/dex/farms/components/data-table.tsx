@@ -428,7 +428,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
                   <Box>{reward.token.image ?? reward.token.symbol}</Box>
                   <Box>{reward.amount}</Box>
                 </HStack>
-                {!reward.rewarder.isMain && !!reward.rewarder.rewardEnd && (
+                {!reward.rewarder.isMain && !!reward.rewarder.rewardEnd ? (
                   <Box textAlign='start'>
                     <Popover>
                       <PopoverTrigger>
@@ -440,7 +440,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
                       </PopoverContent>
                     </Popover>
                   </Box>
-                )}
+                ) : <Box></Box>}
               </React.Fragment>
             ))}
           </SimpleGrid>
