@@ -7,10 +7,11 @@ import {
   Row,
   SortingState,
   useReactTable
-} from "@tanstack/react-table";
-import React, {useEffect, useMemo, useState} from "react";
+} from '@tanstack/react-table';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Avatar,
+  AvatarGroup,
   Box,
   Collapse,
   Flex,
@@ -34,26 +35,26 @@ import {
   useDisclosure,
   VStack,
   Wrap
-} from "@chakra-ui/react";
-import {ChevronDownIcon, ChevronUpIcon, QuestionOutlineIcon} from "@chakra-ui/icons";
-import {getTheme} from "@src/global/theme/theme";
-import {useUser} from "@src/components-v2/useUser";
-import {Card} from "@src/components-v2/foundation/card";
-import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
-import {faCalculator, faExternalLinkAlt, faMinus, faPlus, faStopwatch} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useEnableFarm, useHarvestRewards} from "@dex/farms/hooks/farm-actions";
-import {DerivedFarm, FarmState, MapiFarmRewarder} from "@dex/farms/constants/types";
-import {appConfig} from "@src/Config";
-import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialog";
-import StakeLpTokensDialog from "@dex/farms/components/stake-lp-tokens";
-import {UserFarms, UserFarmState} from "@dex/farms/state/user";
-import {ethers} from "ethers";
-import {ciEquals, millisecondTimestamp, round} from "@market/helpers/utils";
-import {commify} from "ethers/lib/utils";
-import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
-import useCurrencyBroker, {BrokerCurrency} from "@market/hooks/use-currency-broker";
-import {useExchangeRate} from "@market/hooks/useGlobalPrices";
+} from '@chakra-ui/react';
+import { ChevronDownIcon, ChevronUpIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
+import { getTheme } from '@src/global/theme/theme';
+import { useUser } from '@src/components-v2/useUser';
+import { Card } from '@src/components-v2/foundation/card';
+import { PrimaryButton, SecondaryButton } from '@src/components-v2/foundation/button';
+import { faCalculator, faExternalLinkAlt, faMinus, faPlus, faStopwatch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEnableFarm, useHarvestRewards } from '@dex/farms/hooks/farm-actions';
+import { DerivedFarm, FarmState, MapiFarmRewarder } from '@dex/farms/constants/types';
+import { appConfig } from '@src/Config';
+import UnstakeLpTokensDialog from '@dex/farms/components/unstake-lp-tokens-dialog';
+import StakeLpTokensDialog from '@dex/farms/components/stake-lp-tokens';
+import { UserFarms, UserFarmState } from '@dex/farms/state/user';
+import { ethers } from 'ethers';
+import { ciEquals, millisecondTimestamp, round } from '@market/helpers/utils';
+import { commify } from 'ethers/lib/utils';
+import { useUserFarmsRefetch } from '@dex/farms/hooks/user-farms';
+import useCurrencyBroker, { BrokerCurrency } from '@market/hooks/use-currency-broker';
+import { useExchangeRate } from '@market/hooks/useGlobalPrices';
 
 const config =  appConfig();
 
@@ -414,36 +415,78 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
   }),
   columnHelper.accessor("derived.dailyRewards", {
     cell: (info) => {
-      const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      const handleClick = (event: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
         event.stopPropagation();
       };
 
       return (
         <VStack align='start'>
           <Box fontSize='xs' fontWeight='bold'>Daily Rewards</Box>
-          <SimpleGrid columns={2} gap={1}>
-            {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string }, i: number) => (
-              <React.Fragment key={i}>
-                <HStack key={i} fontWeight='bold'>
-                  <Box>{reward.token.image ?? reward.token.symbol}</Box>
-                  <Box>{reward.amount}</Box>
-                </HStack>
-                {!reward.rewarder.isMain && !!reward.rewarder.rewardEnd ? (
-                  <Box textAlign='start'>
-                    <Popover>
-                      <PopoverTrigger>
-                        <IconButton onClick={handleClick} aria-label='Reward End Date' icon={<Icon as={FontAwesomeIcon} icon={faStopwatch} />} variant='unstyled' h='24px' minW='24px'/>
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <PopoverArrow />
-                        <PopoverBody>Approximately ends at {new Date(millisecondTimestamp(reward.rewarder.rewardEnd)).toLocaleString()}</PopoverBody>
-                      </PopoverContent>
-                    </Popover>
-                  </Box>
-                ) : <Box></Box>}
-              </React.Fragment>
-            ))}
-          </SimpleGrid>
+            {info.getValue().length > 1 ? (
+              <Popover>
+                <PopoverTrigger>
+                  <AvatarGroup size='md' max={3} spacing={-2} onClick={handleClick}>
+                    {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string }, i: number) => (
+                      <Avatar border='none' boxSize={6} key={i} src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${reward.token.symbol.toLowerCase()}.webp`} />
+                    ))}
+                  </AvatarGroup>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverBody>
+                    <VStack align='start'>
+                      <Flex justify='space-between' w='full' fontSize='sm' fontWeight='bold'>
+                        <Box>{info.getValue().map((reward: { token: BrokerCurrency }) => reward.token.symbol).join('/')}</Box>
+                        <HStack>
+                          <Icon as={FontAwesomeIcon} icon={faStopwatch} />
+                          <Box>End Date</Box>
+                        </HStack>
+                      </Flex>
+                      {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string }, i: number) => (
+                        <Flex key={i} justify='space-between' w='full'>
+                          <HStack key={i} fontWeight='bold'>
+                            <Box>{reward.token.image ?? reward.token.symbol}</Box>
+                            <Box>{reward.amount}</Box>
+                          </HStack>
+                          {!reward.rewarder.isMain && !!reward.rewarder.rewardEnd ? (
+                            <Box textAlign='end'>
+                              {new Date(millisecondTimestamp(reward.rewarder.rewardEnd)).toLocaleString()}
+                            </Box>
+                          ) : <Box></Box>}
+                        </Flex>
+                      ))}
+                    </VStack>
+                    <Box fontSize='xs' textAlign='center' mt={2}>
+                      End dates are approximate
+                    </Box>
+                  </PopoverBody>
+                </PopoverContent>
+              </Popover>
+            ) : (
+              <SimpleGrid columns={2} gap={1}>
+                {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string }, i: number) => (
+                  <React.Fragment key={i}>
+                    <HStack key={i} fontWeight='bold'>
+                      <Box>{reward.token.image ?? reward.token.symbol}</Box>
+                      <Box>{reward.amount}</Box>
+                    </HStack>
+                    {!reward.rewarder.isMain && !!reward.rewarder.rewardEnd ? (
+                      <Box textAlign='start'>
+                        <Popover>
+                          <PopoverTrigger>
+                            <IconButton onClick={handleClick} aria-label='Reward End Date' icon={<Icon as={FontAwesomeIcon} icon={faStopwatch} />} variant='unstyled' h='24px' minW='24px'/>
+                          </PopoverTrigger>
+                          <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverBody>Approximately ends at {new Date(millisecondTimestamp(reward.rewarder.rewardEnd)).toLocaleString()}</PopoverBody>
+                          </PopoverContent>
+                        </Popover>
+                      </Box>
+                    ) : <Box></Box>}
+                  </React.Fragment>
+                ))}
+              </SimpleGrid>
+            )}
         </VStack>
       )
     }
