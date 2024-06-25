@@ -116,11 +116,11 @@ export function useUnsupportedTokens(): { [address: string]: ERC20Token } {
   return useMemo(() => mapWithoutUrls(unsupportedTokensMap, chainId), [unsupportedTokensMap, chainId])
 }
 
-// export function useWarningTokens(): { [address: string]: ERC20Token } {
-//   const warningTokensMap = useWarningTokenList()
-//   const { chainId } = useActiveChainId()
-//   return useMemo(() => mapWithoutUrls(warningTokensMap, chainId), [warningTokensMap, chainId])
-// }
+export function useWarningTokens(): { [address: string]: ERC20Token } {
+  const warningTokensMap = useWarningTokenList()
+  const { chainId } = useActiveChainId()
+  return useMemo(() => mapWithoutUrls(warningTokensMap, chainId), [warningTokensMap, chainId])
+}
 //
 // export function useIsTokenActive(token: ERC20Token | undefined | null): boolean {
 //   const activeTokens = useAllTokens()

@@ -20,7 +20,7 @@ interface SerializedPair {
 interface UserState {
   lastUpdateVersionTimestamp?: number;
   userExpertMode: boolean;
-  userMultihop: boolean;
+  userSingleHopOnly: boolean;
   userSlippageTolerance: SlippageTolerance.Auto | number;
   userDeadline: number;
   tokens: { [chainId: number]: { [address: string]: SerializedToken } };
@@ -33,7 +33,7 @@ interface UserState {
 // Default values for the entire state
 const defaultUserState: UserState = {
   userExpertMode: false,
-  userMultihop: false,
+  userSingleHopOnly: false,
   userSlippageTolerance: 50,
   userDeadline: 20,
   tokens: {},

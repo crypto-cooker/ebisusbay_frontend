@@ -109,7 +109,7 @@ export function useDebouncedTrade(
     inputTax,
     outputTax
   )
-console.log('===TRADEX', previewTradeResult)
+console.log('===TRADEX', previewTradeResult, routingApiTradeResult)
   return previewTradeResult.currentTrade && !routingApiTradeResult.currentTrade
     ? previewTradeResult
     : routingApiTradeResult

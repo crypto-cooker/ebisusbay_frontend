@@ -8,7 +8,7 @@ import {
 import {useAtom, useAtomValue, useSetAtom} from "jotai";
 import {SwapState} from "@dex/imported/state/swap/types";
 import {Currency, CurrencyAmount, Token, TradeType} from "@uniswap/sdk-core";
-import {Address, erc20ABI, useAccount} from "wagmi";
+import {useAccount} from "wagmi";
 import {Address, erc20Abi} from "viem";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import {isAddress} from "@market/helpers/utils";
@@ -21,6 +21,7 @@ import tryParseCurrencyAmount from "@dex/swap/utils/tryParseCurrencyAmount";
 import {useDebouncedTrade} from "@dex/swap/utils/useDebouncedTrade";
 import {RouterPreference} from "@dex/imported/state/routing/types";
 import {wagmiConfig} from "@src/wagmi";
+import {useTradeExactIn, useTradeExactOut} from "pancakeswap/hooks/trades";
 
 export function useSwapPageState() {
   return useAtom(swapPageStateAtom);
@@ -166,6 +167,15 @@ console.log('HI', inputCurrency, outputCurrency)
     RouterPreference.API,
     user.address
   )
+
+  const bestTradeExactIn = useTradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined)
+  const bestTradeExactOut = useTradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined)
+
+  const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut
+
+  console.log('bestTradeExactIn', bestTradeExactIn);
+  console.log('bestTradeExactOut', bestTradeExactOut);
+  console.log('bestTradeResult', v2Trade);
 
   const currencyBalances = useMemo(
     () => ({

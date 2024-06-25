@@ -56,17 +56,17 @@ export function useUserSlippageToleranceWithDefault(defaultSlippageTolerance: Pe
 }
 
 
-export function useUserAllowMultihop() {
+export function useUserSingleHopOnly() {
   const [state, setState] = useAtom(dexUserStateAtom);
 
-  const setUserAllowMultihops = (newMultihop: boolean) => {
+  const setUserSingleHopOnly = (newSingleHop: boolean) => {
     setState({
       ...state,
-      userMultihop: newMultihop
+      userSingleHopOnly: newSingleHop
     });
   };
 
-  return [state.userMultihop, setUserAllowMultihops] as const;
+  return [state.userSingleHopOnly, setUserSingleHopOnly] as const;
 }
 
 export function useRouterPreference(): [RouterPreference, (routerPreference: RouterPreference) => void] {

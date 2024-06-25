@@ -13,7 +13,7 @@ import {
 import {ModalState} from "@dex/swap/types";
 import React, {ChangeEvent, useState} from "react";
 import {ModalDialog} from "@src/components-v2/foundation/modal";
-import {useUserAllowMultihop, useUserExpertMode, useUserSlippageTolerance} from "@dex/swap/state/user/hooks";
+import {useUserSingleHopOnly, useUserExpertMode, useUserSlippageTolerance} from "@dex/swap/state/user/hooks";
 import {Button as ChakraButton} from "@chakra-ui/button/dist/button";
 import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
@@ -23,7 +23,7 @@ import {Percent} from "@uniswap/sdk-core";
 
 export default function Settings({isOpen, onClose}: ModalState) {
   const [userExpertMode, setUserExpertMode ] = useUserExpertMode();
-  const [userMultihop, setUserMultihop ] = useUserAllowMultihop();
+  const [userSingleHopOnly, setUserSingleHopOnly ] = useUserSingleHopOnly();
 
   const handleSlippageChange = (value: number) => {
 
@@ -64,7 +64,7 @@ export default function Settings({isOpen, onClose}: ModalState) {
           <FormControl>
             <Flex justify='space-between'>
               <FormLabel>Allow Multihops</FormLabel>
-              <Switch isChecked={userMultihop} onChange={() => setUserMultihop(!userMultihop)} />
+              <Switch isChecked={!userSingleHopOnly} onChange={() => setUserSingleHopOnly(userSingleHopOnly)} />
             </Flex>
           </FormControl>
         </VStack>

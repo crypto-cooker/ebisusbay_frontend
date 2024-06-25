@@ -47,6 +47,8 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@next/third-parties": "^14.2.3",
+    "@pancakeswap/multicall": "^3.5.7",
+    "@pancakeswap/smart-router": "^6.0.13",
     "@pancakeswap/swap-sdk-core": "^1.1.0",
     "@pancakeswap/swap-sdk-evm": "^1.0.4",
     "@pancakeswap/v2-sdk": "^1.0.4",
