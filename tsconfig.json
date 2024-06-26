@@ -31,7 +31,16 @@
       "@gamefi/*": ["src/modules/gamefi/*"],
       "@dex/*": ["src/modules/dex/*"],
       "uniswap/*": ["src/modules/dex/packages/uniswap/*"],
-      "pancakeswap/*": ["src/modules/dex/swap/imported/pancakeswap/*"],
+//      "pancakeswap/*": ["src/modules/dex/swap/imported/pancakeswap/*"],
+//      "@eb-pancakeswap": ["src/modules/dex/swap/packages"],
+      "@eb-pancakeswap-web/*": ["src/modules/dex/swap/imported/pancakeswap/web/*"],
+      "@eb-pancakeswap/sdk": ["src/modules/dex/swap/packages/sdk"],
+      "@eb-pancakeswap/chains": ["src/modules/dex/swap/packages/chains"],
+      "@eb-pancakeswap/v2-sdk": ["src/modules/dex/swap/packages/v2-sdk"],
+      "@eb-pancakeswap/swap-sdk-core": ["src/modules/dex/swap/packages/swap-sdk-core"],
+      "@eb-pancakeswap/swap-sdk-evm": ["src/modules/dex/swap/packages/swap-sdk-evm"],
+      "@eb-pancakeswap/tokens": ["src/modules/dex/swap/packages/tokens"],
+      "@eb-pancakeswap/utils/*": ["src/modules/dex/swap/packages/utils/*"],
     }, /* Specify a set of entries that re-map imports to additional lookup locations. */ // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
     // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */

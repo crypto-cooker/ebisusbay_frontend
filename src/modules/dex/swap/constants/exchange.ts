@@ -1,7 +1,9 @@
-import {Percent, Token, WNATIVE} from 'pancakeswap/sdk'
-import {bscTestnetTokens, bscTokens, USDC, USDT, WBTC_ETH,} from '@pancakeswap/tokens'
+import {Percent, Token, WNATIVE} from '@eb-pancakeswap/sdk'
+import {USDC, USDT,} from '@eb-pancakeswap/tokens'
 import {ChainTokenList} from './types'
-import {ChainId} from "@dex/swap/constants/chainId";
+import {cronosTokens} from "@dex/swap/packages/tokens/constants/cronos";
+import {cronosTestnetTokens} from "@dex/swap/packages/tokens/constants/cronosTestnet";
+import {ChainId} from "@pancakeswap/chains";
 
 export {
   ADDITIONAL_BASES,
@@ -18,22 +20,21 @@ export const CHAIN_REFRESH_TIME = {
 
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
-  [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM], WBTC_ETH],
-  [ChainId.CRONOS]: [bscTokens.usdt, bscTokens.cake, bscTokens.btcb],
-  [ChainId.CRONOS_TESTNET]: [bscTestnetTokens.wbnb, bscTestnetTokens.cake, bscTestnetTokens.busd],
+  [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM]],
+  [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],
+  [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.usdc, cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
-  [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM], WBTC_ETH],
-  [ChainId.CRONOS]: [bscTokens.wbnb, bscTokens.dai, bscTokens.busd, bscTokens.usdt, bscTokens.cake],
-  [ChainId.CRONOS_TESTNET]: [bscTestnetTokens.wbnb, bscTestnetTokens.cake, bscTestnetTokens.busd],
+  [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM]],
+  [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],
+  [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.usdc, cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
 }
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
   [ChainId.ETHEREUM]: [
     [WNATIVE[ChainId.ETHEREUM], USDC[ChainId.ETHEREUM]],
-    [WBTC_ETH, WNATIVE[ChainId.ETHEREUM]],
     [WNATIVE[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM]],
   ],
   [ChainId.CRONOS]: [],

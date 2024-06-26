@@ -21,7 +21,7 @@ import tryParseCurrencyAmount from "@dex/swap/utils/tryParseCurrencyAmount";
 import {useDebouncedTrade} from "@dex/swap/utils/useDebouncedTrade";
 import {RouterPreference} from "@dex/imported/state/routing/types";
 import {wagmiConfig} from "@src/wagmi";
-import {useTradeExactIn, useTradeExactOut} from "pancakeswap/hooks/trades";
+import {useTradeExactIn, useTradeExactOut} from "@eb-pancakeswap-web/hooks/trades";
 
 export function useSwapPageState() {
   return useAtom(swapPageStateAtom);
