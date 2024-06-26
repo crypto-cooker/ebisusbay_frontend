@@ -27419,6 +27419,31 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "MystBear",
+      "slug": "mystbear",
+      "multiToken": false,
+      "address": "0x0fEAfE0dCA4278c9a255691a3228ea5C8B92ADB5",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Since centuries, in a mystical world where nature and magic coexist harmoniously, there have been nine clans of bears endowed with extraordinary powers. These clans live in vast and diverse territories, each having developed unique skills adapted to their environment. The MystBear stood out for their wisdom, their mastery of the mystical arts, and their deep connection with the energies of nature.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/mystbear/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/mystbear/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/mystbear/banner.webp",
+        "website": "https://www.ninjafu.ca/",
+        "twitter": "https://x.com/Ninja_fu_",
+        "discord": "https://discord.gg/N5YXhNDJyz",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
