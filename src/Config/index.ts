@@ -218,6 +218,12 @@ const configData: AppConfigMap = {
         symbol: 'ROBIN',
         address: '0x664E4b17EA045fE92868821F3eE0a76a5dB38166',
         decimals: 18
+      },
+      sumo: {
+        name: 'SUMO',
+        symbol: 'SUMO',
+        address: '0x29bfaBFce6835E21dc69b728De73dD78235B8d25',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
