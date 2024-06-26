@@ -27263,6 +27263,187 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Radiant Residences - Tower 2",
+      "slug": "radiant-residences-tower-2",
+      "multiToken": false,
+      "address": "0xB4B898Ee60185fACC247aadb8D061661590f167f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Radiant Residences, Tower 2, is set to redefine luxury living with its impressive stature and unparalleled amenities. Towering above its predecessor, Tower 1, this residential skyscraper takes opulence to new heights. Designed for those with a penchant for grandeur, Tower 2 features an even greater number of lavish and spacious penthouses, each offering expansive views that stretch out to the ocean beyond. The tower boasts an improved design that maximizes the scenic vistas, ensuring residents wake up to the serene blue of the ocean every day. With 2,002 apartments, penthouses, and office spaces, Tower 2 is not just a residential building but a self-contained oasis of luxury. The inclusion of high-end restaurants within the tower adds a layer of convenience and elegance, allowing residents to dine in style without leaving the comfort of their home. The parking facilities have been meticulously planned to accommodate the needs of all residents, ensuring that the luxury experience begins the moment you arrive. Tower 2 doesn't just offer homes; it offers a lifestyle. Every aspect, from the breathtaking ocean views to the state-of-the-art amenities, has been carefully curated to provide an unparalleled living experience. Whether you're looking for a sophisticated penthouse or a sleek office space, Radiant Residences, Tower 2, is poised to become the epitome of luxury living.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/radiant-residences-tower-2/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/radiant-residences-tower-2/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/radiant-residences-tower-2/banner.webp",
+        "website": "https://www.rainbowland.org/",
+        "twitter": "https://twitter.com/TheRainbowland",
+        "discord": "https://discord.gg/KR2ZWVH4Vu",
+        "medium": "https://medium.com/@the-rainbowland-metaverse/",
+        "telegram": "https://t.me/newsrainbowland",
+        "categories": [
+          "metaverse",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Cro Clothes Inventorbots",
+      "slug": "cro-clothes-inventorbots",
+      "multiToken": false,
+      "address": "0xb7e9f5c9CDE3534aE50c34579dF16aFCAFC6d305",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cro Clothes Inventorbots is a partnership collection of 600 exclusive NFTs. The collection will be distributed via airdrop among the Cro Clothes and Inventorbots communities. In the future, occupy the space allocated for Minted in Crypto Fan Wear.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-inventorbots/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-inventorbots/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-inventorbots/banner.webp",
+        "website": "https://cro-clothes.gitbook.io/roadmap",
+        "twitter": "https://www.twitter.com/Cro_Clothes",
+        "discord": "https://discord.gg/QRQb9rkPXK",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Noodles Club VIP",
+      "slug": "noodles-club-vip",
+      "multiToken": false,
+      "address": "0x6572D5281F96770D345c20FcFe0684914B282035",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Only elite members of the Noodles Club community can own this exclusive pass.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club-vip/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club-vip/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club-vip/banner.webp",
+        "website": "https://app.noodlesclub.com/",
+        "twitter": "https://twitter.com/noodlesclubnft",
+        "discord": "https://discord.gg/86P5hHtkFe",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Noodles Club Restaurant",
+      "slug": "noodles-club-restaurant",
+      "multiToken": false,
+      "address": "0xea0BB6c33a8DA84DD09E3Af4911a6905462b6D6b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "An exclusive place where only the most collaborative Noodles Club members can eat and rest.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club-restaurant/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club-restaurant/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club-restaurant/banner.webp",
+        "website": "https://app.noodlesclub.com/",
+        "twitter": "https://twitter.com/noodlesclubnft",
+        "discord": "https://discord.gg/86P5hHtkFe",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "OG Murder Members",
+      "slug": "og-murder-members",
+      "multiToken": false,
+      "address": "0x4390DacBeDfc582dA1F953ffc76DEE8DA944856A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "OG Status",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/og-murder-members/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/og-murder-members/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/og-murder-members/banner.webp",
+        "website": "https://mrdr.me/",
+        "twitter": "https://twitter.com/MrdrCoin",
+        "discord": "https://discord.gg/8NSFXzxAXZ",
+        "telegram": "https://t.me/mrdrcro",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Bella Genesis Collection",
+      "slug": "bella-genesis-collection",
+      "multiToken": false,
+      "address": "0xF6A5c9792232F3D5287BdF9EC9D544C6A88d3E16",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "First NFT Collection distributed to the Mew Sisters ($MS) community. $MS holders who meet the monthly claim conditions will receive NFT airdrops of Mew Sisters characters every month.  Bella is a cat-girl who dreams of becoming a fashion model. She is the third of seven Mew sisters. She loves the color black and tries to keep her clothes, hair, and generally black. She loves cats very much, and although she has a bit of a picky personality, hidden inside her is a deep caring heart for her family and cats. The story of the Mew Sisters begins with Bella.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/bella-genesis-collection/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/bella-genesis-collection/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/bella-genesis-collection/banner.webp",
+        "website": "https://mewsisters.com/",
+        "twitter": "https://x.com/mewsisters",
+        "discord": "https://discord.gg/nkUpeT4S5W",
+        "categories": [
+          "utility",
+          "meme"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "MystBear",
+      "slug": "mystbear",
+      "multiToken": false,
+      "address": "0x0fEAfE0dCA4278c9a255691a3228ea5C8B92ADB5",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Since centuries, in a mystical world where nature and magic coexist harmoniously, there have been nine clans of bears endowed with extraordinary powers. These clans live in vast and diverse territories, each having developed unique skills adapted to their environment. The MystBear stood out for their wisdom, their mastery of the mystical arts, and their deep connection with the energies of nature.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/mystbear/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/mystbear/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/mystbear/banner.webp",
+        "website": "https://www.ninjafu.ca/",
+        "twitter": "https://x.com/Ninja_fu_",
+        "discord": "https://discord.gg/N5YXhNDJyz",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
     }
   ],
   "drops": [
