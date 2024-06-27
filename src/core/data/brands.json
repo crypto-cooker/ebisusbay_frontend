@@ -749,6 +749,31 @@
     "style": {}
   },
   {
+    "slug": "cr00ts-club",
+    "name": "Cr00ts Club",
+    "description": "Welcome in the growing ecosystem of the Cr00ts, we are here to takeover the Cronos chain \uD83D\uDE0E",
+    "images": {
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/cr00ts-club/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/cr00ts-club/preview.webp"
+    },
+    "collections": [
+      "0xf8c82cc093D22f6dC782F0D781f4770E17266C23",
+      "0xca00aba7689e3c0f9f74e1f8d82e61c04c787734",
+      "0x08FB1f6625d034019f2F6a3E70bab2FaA55CA068",
+      "0xd4E29bdba77c948b04C3ACd67C1dAC17264d2983",
+      "0x0521217B36a1482E6798692687f836c68c7F3837",
+      "0x0f41Ad1a8A98Cf0Be5880253d6479b5Af9071071"
+    ],
+    "socials": {
+      "website": "https://cr00tsnft.ca/",
+      "twitter": "https://twitter.com/cr00tsnft",
+      "discord": "https://discord.gg/Xb5xv84mS2"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "moon-crew",
     "name": "Moon Crew",
     "description": "Moon Crew project is a community driven project that focus on group investing, passive income and holders events. Currently we have 2 Collection, 7000 Moon Crew Apes and 3500 Moon Crew Pandas. Holding atleast 1 will give you acess to our exclusive channesl, Raffle option, trading option, voting power, royalties and much more.",
@@ -886,25 +911,23 @@
     "style": {}
   },
   {
-    "slug": "cr00ts-club",
-    "name": "Cr00ts Club",
-    "description": "Welcome in the growing ecosystem of the Cr00ts, we are here to takeover the Cronos chain \uD83D\uDE0E",
+    "slug": "degen-crypto-consortium",
+    "name": "Degen Crypto Consortium",
+    "description": "The Degen Crypto Consortium started as a single NFT project that minted out in 2022, and was then rugged, but the community refused to surrender. Community members took over the original project, and since then we have grown to a total of 5 strong NFT projects, each with their own use and utility, as well as a crypto currency called Lightwave. We do regular payouts to NFT holders from our investments, we earn listing rewards by playing Ryoshi Dynasties, and we have a liquidity farm for Lightwave. We're doing new stuff all the time as we continue to grow and thrive. Come join us.",
     "images": {
-      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/cr00ts-club/banner.webp",
-      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/cr00ts-club/preview.webp"
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/degen-crypto-consortium/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/degen-crypto-consortium/preview.webp"
     },
     "collections": [
-      "0xf8c82cc093D22f6dC782F0D781f4770E17266C23",
-      "0xca00aba7689e3c0f9f74e1f8d82e61c04c787734",
-      "0x08FB1f6625d034019f2F6a3E70bab2FaA55CA068",
-      "0xd4E29bdba77c948b04C3ACd67C1dAC17264d2983",
-      "0x0521217B36a1482E6798692687f836c68c7F3837",
-      "0x0f41Ad1a8A98Cf0Be5880253d6479b5Af9071071"
+      "0x7aEBFd662494299CE53feb533BFE80a749e656BC",
+      "0x25ea0f16e3a52db95e31f8514917a0610270e7cd",
+      "0x3fe29ffa527d712a5b202ddaeff714c12cb6aff5",
+      "0x4Ffca5C2790ef342c1EF25d48D1FFc8a2B4b1D9A"
     ],
     "socials": {
-      "website": "https://cr00tsnft.ca/",
-      "twitter": "https://twitter.com/cr00tsnft",
-      "discord": "https://discord.gg/Xb5xv84mS2"
+      "website": "https://buy-lwv.com/",
+      "twitter": "https://twitter.com/DegenConsortium",
+      "discord": "https://discord.gg/m3DmGkWwJK"
     },
     "featured": true,
     "categories": [],
