@@ -1,16 +1,12 @@
-import {Box, Button, Container, Flex, IconButton, useDisclosure, VStack, Wrap} from "@chakra-ui/react";
+import {Box, Container, Flex, IconButton, useDisclosure, VStack} from "@chakra-ui/react";
 import {Card} from "@src/components-v2/foundation/card";
 import {ArrowDownIcon, SettingsIcon} from "@chakra-ui/icons";
 // import InputBox from "@dex/components/swap/input-box";
 import {Field} from "src/modules/dex/swap/constants";
-import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
-import {PrimaryButton} from "@src/components-v2/foundation/button";
-import Settings from "@dex/components/swap/settings";
 import React, {useCallback, useMemo} from "react";
 import {useSwapActionHandlers, useSwapFormDerivedState, useSwapFormState} from "@dex/swap/state/swap/hooks";
 import SwapCurrencyInputPanel from "@dex/components/swap/tabs/swap/swap-currency-input-panel";
-import {NumberType, useFormatter} from "@dex/imported/utils/formatNumbers";
-import {Currency} from "@uniswap/sdk-core";
+import {Currency} from "@eb-pancakeswap/sdk";
 
 export default function SwapForm() {
   const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers();
@@ -48,19 +44,14 @@ console.log('DERIVED', swapFormDerivedState)
     [independentField, parsedAmount, showWrap, trade]
   )
 
-  const { formatCurrencyAmount } = useFormatter();
   const formattedAmounts = useMemo(
     () => ({
       [independentField]: typedValue,
       [dependentField]: showWrap
         ? parsedAmounts[independentField]?.toExact() ?? ''
-        : formatCurrencyAmount({
-          amount: parsedAmounts[dependentField],
-          type: NumberType.SwapTradeAmount,
-          placeholder: '',
-        }),
+        : 1000,
     }),
-    [dependentField, formatCurrencyAmount, independentField, parsedAmounts, showWrap, typedValue]
+    [dependentField, independentField, parsedAmounts, showWrap, typedValue]
   )
 
   console.log('FORMATTED', formattedAmounts)

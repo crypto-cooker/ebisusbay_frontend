@@ -1,5 +1,3 @@
-import {Currency} from "@uniswap/sdk-core";
-
 // export interface DexToken {
 //   name: string;
 //   address: string;

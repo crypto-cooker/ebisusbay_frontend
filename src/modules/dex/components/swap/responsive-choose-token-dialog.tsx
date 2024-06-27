@@ -2,7 +2,6 @@ import {Box, BoxProps, Button, Flex, IconButton, ModalProps} from "@chakra-ui/re
 import {ResponsiveDialogComponents, useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import React, {useState} from "react";
 import SelectToken from "@dex/components/swap/select-token";
-import {Currency} from "@uniswap/sdk-core";
 import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
 
 type ResponsiveChooseTokenDialogProps = {

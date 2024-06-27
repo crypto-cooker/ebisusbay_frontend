@@ -1,7 +1,7 @@
 import {useDerivedSwapInfo, useSwapFormDerivedState, useSwapFormState, useSwapPageState} from "@dex/swap/state/swap/hooks";
 import {useAccount} from "wagmi";
-import usePrevious from "@dex/imported/hooks/usePrevious";
 import {useEffect} from "react";
+import {usePrevious} from "@chakra-ui/hooks";
 
 export function SwapFormContext({ children }: { children: React.ReactNode }) {
   console.log('===debug: SwapFormContext')

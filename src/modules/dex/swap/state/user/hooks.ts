@@ -2,9 +2,7 @@
 import {useAtom} from "jotai";
 import {dexUserStateAtom} from "@dex/swap/state/user/atom";
 import {SlippageTolerance} from "@dex/swap/state/user/types";
-import {Percent} from "@uniswap/sdk-core";
-import JSBI from "jsbi";
-import {RouterPreference} from "@dex/imported/state/routing/types";
+import {Percent} from "@eb-pancakeswap/sdk";
 
 export function useUserExpertMode() {
   const [state, setState] = useAtom(dexUserStateAtom);
@@ -32,7 +30,7 @@ export function useUserSlippageTolerance() {
       value =
         newTolerance === SlippageTolerance.Auto
           ? SlippageTolerance.Auto
-          : JSBI.toNumber(newTolerance.multiply(10_000).quotient)
+          : Number(newTolerance.multiply(10_000).quotient)
     } catch (error) {
       value = SlippageTolerance.Auto
     }
@@ -69,15 +67,15 @@ export function useUserSingleHopOnly() {
   return [state.userSingleHopOnly, setUserSingleHopOnly] as const;
 }
 
-export function useRouterPreference(): [RouterPreference, (routerPreference: RouterPreference) => void] {
-  const [state, setState] = useAtom(dexUserStateAtom);
-
-  const setRouterPreference = (routerPreference: RouterPreference) => {
-    setState({
-      ...state,
-      routerPreference: routerPreference
-    });
-  };
-
-  return [state.routerPreference, setRouterPreference]
-}
+// export function useRouterPreference(): [RouterPreference, (routerPreference: RouterPreference) => void] {
+//   const [state, setState] = useAtom(dexUserStateAtom);
+//
+//   const setRouterPreference = (routerPreference: RouterPreference) => {
+//     setState({
+//       ...state,
+//       routerPreference: routerPreference
+//     });
+//   };
+//
+//   return [state.routerPreference, setRouterPreference]
+// }

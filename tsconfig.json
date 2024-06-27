@@ -30,7 +30,7 @@
       "@market/*": ["src/modules/market/*"],
       "@gamefi/*": ["src/modules/gamefi/*"],
       "@dex/*": ["src/modules/dex/*"],
-      "uniswap/*": ["src/modules/dex/packages/uniswap/*"],
+//      "uniswap/*": ["src/modules/dex/packages/uniswap/*"],
 //      "pancakeswap/*": ["src/modules/dex/swap/imported/pancakeswap/*"],
 //      "@eb-pancakeswap": ["src/modules/dex/swap/packages"],
       "@eb-pancakeswap-web/*": ["src/modules/dex/swap/imported/pancakeswap/web/*"],

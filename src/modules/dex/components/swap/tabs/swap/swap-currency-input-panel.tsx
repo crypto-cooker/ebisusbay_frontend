@@ -1,4 +1,3 @@
-import {Currency, Token} from "@uniswap/sdk-core";
 import {Card} from "@src/components-v2/foundation/card";
 import {Box, Button, Flex, HStack, Image, NumberInput, NumberInputField, useDisclosure} from "@chakra-ui/react";
 import {ChevronDownIcon} from "@chakra-ui/icons";

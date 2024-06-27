@@ -1,4 +1,3 @@
-import {Currency, Token} from "@uniswap/sdk-core";
 import {WrappedTokenInfo} from "@dex/hooks/use-supported-tokens";
 import {Image} from "@chakra-ui/react";
 import React, {useMemo, useState} from "react";

@@ -4,11 +4,10 @@ import {multicall} from "@wagmi/core";
 import {Address, ContractFunctionParameters, erc20Abi} from "viem";
 import {useBlockNumber} from "wagmi";
 import {useEffect, useMemo, useState} from "react";
-import {CurrencyAmount, Token} from "@uniswap/sdk-core";
 import {isAddress} from "@market/helpers/utils";
-import JSBI from "jsbi";
 import {useQuery} from "@tanstack/react-query";
 import {wagmiConfig} from "@src/wagmi";
+import {CurrencyAmount, Token} from "@eb-pancakeswap/sdk";
 
 export function useAllTokenBalances(): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
   const user = useUser();
@@ -89,7 +88,7 @@ export function useTokenBalances(address?: string, tokens?: Token[]): { [tokenAd
       address && validatedTokens.length > 0
         ? validatedTokens.reduce<{ [tokenAddress: string]: CurrencyAmount<Token> | undefined }>((memo, token, i) => {
           const value = data?.[i]?.result as any;
-          const amount = value ? JSBI.BigInt(value.toString()) : undefined;
+          const amount = value ? BigInt(value.toString()) : undefined;
           if (amount) {
             memo[token.address] = CurrencyAmount.fromRawAmount(token, amount);
           }

@@ -17,9 +17,6 @@ import {useUserSingleHopOnly, useUserExpertMode, useUserSlippageTolerance} from 
 import {Button as ChakraButton} from "@chakra-ui/button/dist/button";
 import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
-import {CheckIcon, PhoneIcon, WarningIcon} from "@chakra-ui/icons";
-import {round} from "@market/helpers/utils";
-import {Percent} from "@uniswap/sdk-core";
 
 export default function Settings({isOpen, onClose}: ModalState) {
   const [userExpertMode, setUserExpertMode ] = useUserExpertMode();

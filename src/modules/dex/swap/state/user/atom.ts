@@ -1,6 +1,5 @@
 import { atomWithStorage } from 'jotai/utils';
 import {SlippageTolerance} from "@dex/swap/state/user/types";
-import {RouterPreference} from "@dex/imported/state/routing/types";
 
 export interface SerializedToken {
   chainId: number
@@ -27,7 +26,7 @@ interface UserState {
   pairs: { [chainId: number]: { [key: string]: SerializedPair } };
   timestamp: number;
   URLWarningVisible: boolean;
-  routerPreference: RouterPreference;
+  routerPreference: any;
 }
 
 // Default values for the entire state
@@ -40,7 +39,7 @@ const defaultUserState: UserState = {
   pairs: {},
   timestamp: Date.now(),
   URLWarningVisible: false,
-  routerPreference: RouterPreference.API
+  routerPreference: 'api'
 };
 
 export const dexUserStateAtom = atomWithStorage<UserState>('eb.dex.user', defaultUserState);

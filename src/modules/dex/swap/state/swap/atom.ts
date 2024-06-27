@@ -1,8 +1,8 @@
 import {Field, SwapTab} from "src/modules/dex/swap/constants";
-import {ChainId, Currency, CurrencyAmount, Percent} from "@uniswap/sdk-core";
 import {ReactNode} from "react";
-import {InterfaceTrade, TradeState} from "@dex/imported/state/routing/types";
 import {atom} from "jotai/index";
+import {ChainId, Currency, CurrencyAmount, Percent} from "@eb-pancakeswap/sdk";
+import {TradeState} from "@eb-pancakeswap-web/state/swap/types";
 
 export interface SwapPageState {
   currencyState: CurrencyState
@@ -41,7 +41,7 @@ export type DerivedSwapInfo = {
   parsedAmount?: CurrencyAmount<Currency>
   inputError?: ReactNode
   trade: {
-    trade?: InterfaceTrade
+    trade?: any
     state: TradeState
     uniswapXGasUseEstimateUSD?: number
     error?: any
@@ -59,7 +59,7 @@ const initialSwapPageState: SwapPageState = {
     inputCurrency: undefined,
     outputCurrency: undefined,
   },
-  chainId: ChainId.MAINNET,
+  chainId: ChainId.CRONOS,
   currentTab: SwapTab.Swap,
 }
 

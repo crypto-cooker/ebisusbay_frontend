@@ -6,22 +6,18 @@ import {
   swapPageStateAtom
 } from "@dex/swap/state/swap/atom";
 import {useAtom, useAtomValue, useSetAtom} from "jotai";
-import {SwapState} from "@dex/imported/state/swap/types";
-import {Currency, CurrencyAmount, Token, TradeType} from "@uniswap/sdk-core";
 import {useAccount} from "wagmi";
 import {Address, erc20Abi} from "viem";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import {isAddress} from "@market/helpers/utils";
 import {multicall} from "@wagmi/core";
-import JSBI from "jsbi";
-import {nativeOnChain} from "@dex/imported/constants/tokens";
 import {useUser} from "@src/components-v2/useUser";
 import {Field} from "src/modules/dex/swap/constants";
 import tryParseCurrencyAmount from "@dex/swap/utils/tryParseCurrencyAmount";
-import {useDebouncedTrade} from "@dex/swap/utils/useDebouncedTrade";
-import {RouterPreference} from "@dex/imported/state/routing/types";
 import {wagmiConfig} from "@src/wagmi";
 import {useTradeExactIn, useTradeExactOut} from "@eb-pancakeswap-web/hooks/trades";
+import {ChainId, Currency, CurrencyAmount, Token, WNATIVE} from "@eb-pancakeswap/sdk";
+import {SwapState} from "@eb-pancakeswap-web/state/swap/reducer";
 
 export function useSwapPageState() {
   return useAtom(swapPageStateAtom);
@@ -153,20 +149,20 @@ console.log('HI', inputCurrency, outputCurrency)
   )
 
   console.log('===TRADE IN===', isExactIn, parsedAmount, outputCurrency, inputCurrency, user.address);
-  console.log('===TRADE PARMS===',
-    isExactIn ? TradeType.EXACT_INPUT : TradeType.EXACT_OUTPUT,
-    parsedAmount,
-    (isExactIn ? outputCurrency : inputCurrency) ?? undefined,
-    RouterPreference.API,
-    user.address);
-
-  const trade = useDebouncedTrade(
-    isExactIn ? TradeType.EXACT_INPUT : TradeType.EXACT_OUTPUT,
-    parsedAmount,
-    (isExactIn ? outputCurrency : inputCurrency) ?? undefined,
-    RouterPreference.API,
-    user.address
-  )
+  // console.log('===TRADE PARMS===',
+  //   isExactIn ? TradeType.EXACT_INPUT : TradeType.EXACT_OUTPUT,
+  //   parsedAmount,
+  //   (isExactIn ? outputCurrency : inputCurrency) ?? undefined,
+  //   RouterPreference.API,
+  //   user.address);
+  //
+  // const trade = useDebouncedTrade(
+  //   isExactIn ? TradeType.EXACT_INPUT : TradeType.EXACT_OUTPUT,
+  //   parsedAmount,
+  //   (isExactIn ? outputCurrency : inputCurrency) ?? undefined,
+  //   RouterPreference.API,
+  //   user.address
+  // )
 
   const bestTradeExactIn = useTradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined)
   const bestTradeExactOut = useTradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined)
@@ -196,16 +192,14 @@ console.log('HI', inputCurrency, outputCurrency)
   console.log('DERIVEDSTATE', {
     currencies,
     currencyBalances,
-    parsedAmount,
-    trade
+    parsedAmount
   });
 
   return useMemo(() => ({
     currencies,
     currencyBalances,
     parsedAmount,
-    trade
-  }) as any, [currencies, currencyBalances, parsedAmount, trade]);
+  }) as any, [currencies, currencyBalances, parsedAmount]);
 }
 
 
@@ -283,7 +277,7 @@ export function useTokenBalancesWithLoadingIndicator(
         });
         const newBalances = tokenAddresses.reduce((acc, address, index) => {
           const value = results[index];
-          const amount = value ? JSBI.BigInt(value.toString()) : undefined;
+          const amount = value ? BigInt(value.toString()) : undefined;
           if (amount) {
             acc[address] = CurrencyAmount.fromRawAmount(tokens[index]!, amount);
           }
@@ -336,9 +330,9 @@ export function useNativeCurrencyBalances(uncheckedAddresses?: (string | undefin
         const results = await multicall(wagmiConfig as any, {contracts: calls});
         const newBalances = addresses.reduce((acc, address, index) => {
           const result = results[index];
-          const value = result ? JSBI.BigInt(result.toString()) : undefined;
+          const value = result ? BigInt(result.toString()) : undefined;
           if (value && chain?.id) {
-            acc[address!] = CurrencyAmount.fromRawAmount(nativeOnChain(chain.id), value);
+            acc[address!] = CurrencyAmount.fromRawAmount(WNATIVE[chain.id as ChainId], value);
           }
           return acc;
         }, {} as {[key: string]: CurrencyAmount<Currency> | undefined});

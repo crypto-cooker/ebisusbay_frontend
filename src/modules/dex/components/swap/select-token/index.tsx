@@ -13,7 +13,6 @@ import {
 import React, {ChangeEvent, ComponentType, ReactNode, useEffect, useRef, useState} from "react";
 import {useWindowSize} from "@market/hooks/useWindowSize";
 import Row from "@dex/components/swap/select-token/row";
-import {Currency} from "@uniswap/sdk-core";
 import {useAllTokenBalances} from "@dex/hooks/use-token-balances";
 
 interface SelectTokenProps {
