@@ -27444,6 +27444,29 @@
         "kyc": false,
         "verified": false
       }
+    },
+    {
+      "name": "Golden Tree of Fortune",
+      "slug": "golden-tree-of-fortune",
+      "multiToken": false,
+      "address": "0x61f0423365fa9009e378cd5a7af56cdd4f6a3f54",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "",
+        "website": "https://earn.network/",
+        "twitter": "https://x.com/itsearnnetwork",
+        "discord": "https://discord.gg/zAxVTGr648",
+        "telegram": "https://t.me/itsearnnetwork",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
