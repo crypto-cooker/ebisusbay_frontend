@@ -1,16 +1,5 @@
 [
   {
-    "users": ["0x3e4a0aa3eac43a2a7b42cb5cd7389faa7ffe47fd"],
-    "tokens": [
-      {
-        "slug": "nft-bundles",
-        "address": "0x40874F18922267cc2Ca7933828594aB5078C1065",
-        "ids": [3516]
-      }
-    ],
-    "reason": "Misleading bundle contents"
-  },
-  {
     "users": [
       "0x708d93Ac77262D8B911174447b919076AB6Ce08a",
       "0x358758277CE0785104eA72aCADC1De7e7af7AEcD",
