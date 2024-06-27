@@ -224,6 +224,12 @@ const configData: AppConfigMap = {
         symbol: 'SUMO',
         address: '0x29bfaBFce6835E21dc69b728De73dD78235B8d25',
         decimals: 18
+      },
+      yoshi: {
+        name: 'Baby Ryoshi',
+        symbol: 'YOSHI',
+        address: '0x4594104d43cEC6F5c8C6631294d5582D0d67EdE7',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
