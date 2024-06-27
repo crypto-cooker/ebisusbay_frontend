@@ -463,7 +463,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
                 </PopoverContent>
               </Popover>
             ) : (
-              <SimpleGrid columns={2} gap={1}>
+              <Wrap>
                 {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string }, i: number) => (
                   <React.Fragment key={i}>
                     <HStack key={i} fontWeight='bold'>
@@ -485,7 +485,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
                     ) : <Box></Box>}
                   </React.Fragment>
                 ))}
-              </SimpleGrid>
+              </Wrap>
             )}
         </VStack>
       )

@@ -141,7 +141,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
             <Box fontWeight='bold'>APR</Box>
             <Box fontWeight='bold' textAlign='end'>{farm.derived.apr}</Box>
             <Box fontWeight='bold'>Rewards / Day</Box>
-            <SimpleGrid columns={2}>
+            <Wrap spacing={2} justify='end'>
               {farm.derived.dailyRewards.map((reward, i) => (
                 <React.Fragment key={i}>
                   <HStack spacing={0} justify='end'>
@@ -161,7 +161,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                   <Box textAlign='end' fontWeight='bold'>{reward.token.symbol}</Box>
                 </React.Fragment>
               ))}
-            </SimpleGrid>
+            </Wrap>
           </SimpleGrid>
           <Box mt={4}>
             <Box fontSize='sm' fontWeight='bold'>EARNED REWARDS</Box>
