@@ -27453,11 +27453,15 @@
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "",
+        "description": "The Golden Tree NFT is a digital asset that provides holders with a share of 0.9% of fees from prediction markets, priority access to resolve markets 15 minutes before others, and a 50% increase in earnings for market validators.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/golden-tree-of-fortune/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/golden-tree-of-fortune/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/golden-tree-of-fortune/banner.webp",
         "website": "https://earn.network/",
         "twitter": "https://x.com/itsearnnetwork",
         "discord": "https://discord.gg/zAxVTGr648",
         "telegram": "https://t.me/itsearnnetwork",
+        "documentation": "https://blog.earn.network/",
         "categories": [
           "collectibles"
         ]
@@ -27466,6 +27470,85 @@
         "doxx": false,
         "kyc": false,
         "verified": true
+      }
+    },
+    {
+      "name": "Oracle of Wisdom",
+      "slug": "oracle-of-wisdom",
+      "multiToken": false,
+      "address": "0x88c45317726075369A24fE8a339Cd8A4345Ee9c4",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The Oracle of Wisdom NFT is a digital asset that provides holders with a share of 6.2% of fees from prediction markets, a 2% shared bonus on every bet placed, and a significant role in decision-making as part of the quorum of final resolvers.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/oracle-of-wisdom/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/oracle-of-wisdom/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/oracle-of-wisdom/banner.webp",
+        "website": "https://earn.network/",
+        "twitter": "https://x.com/itsearnnetwork",
+        "discord": "https://discord.gg/zAxVTGr648",
+        "telegram": "https://t.me/itsearnnetwork",
+        "documentation": "https://blog.earn.network/",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Baby Ryoshi Yoshi",
+      "slug": "baby-ryoshi-yoshi",
+      "multiToken": false,
+      "address": "0x3911011d44d87E7477d44e61227DA4B5a393806D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Yoshi has invaded the Cronos landscape. Come be a part of the journey and fun",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-yoshi/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-yoshi/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-yoshi/banner.webp",
+        "website": "https://croarmy.app/#/Ryoshi",
+        "twitter": "https://twitter.com/RyoshiBaby",
+        "discord": "https://discord.gg/seEQjGArXU",
+        "categories": [
+          "utility",
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Blockchain Operative Tech (BOT)",
+      "slug": "blockchain-operative-tech-bot",
+      "multiToken": false,
+      "address": "0x4441d549d35170ae1abe3d7a91e849ced5cdcaf6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Blockchain Operative Tech (BOT) is a 1150 piece AI collection. We are ready to revolutionize the future. Join us on this exciting journey! There will be various investment pools. All BOT holders will have access to game assets. Top holders will get access to asset development and more",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/blockchain-operative-tech-bot/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/blockchain-operative-tech-bot/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-blockchain-operative-tech-bot/banner.webp",
+        "website": "https://blockchain-bot.netlify.app/",
+        "twitter": "https://twitter.com/BCOperativeTech",
+        "discord": "https://discord.gg/CuuegwMntG",
+        "categories": [
+          "utility",
+          "ai"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
       }
     }
   ],
