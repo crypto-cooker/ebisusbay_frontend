@@ -230,6 +230,12 @@ const configData: AppConfigMap = {
         symbol: 'YOSHI',
         address: '0x4594104d43cEC6F5c8C6631294d5582D0d67EdE7',
         decimals: 18
+      },
+      kitty: {
+        name: 'KitCoin',
+        symbol: 'KITTY',
+        address: '0x4d7c922D6C12CfbF5BC85F56c9ccB1F61f49bf61',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
