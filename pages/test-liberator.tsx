@@ -13,7 +13,7 @@ import { PrimaryButton } from '@src/components-v2/foundation/button';
 const readProvider = new JsonRpcProvider(appConfig().rpc.read);
 const LiberatorAbi = [{"inputs":[{"internalType":"address","name":"_wcro","type":"address"},{"internalType":"address","name":"_usdc","type":"address"},{"internalType":"address","name":"_frtn","type":"address"},{"internalType":"address","name":"_vvsRouter","type":"address"},{"internalType":"address","name":"_mmfRouter","type":"address"},{"internalType":"address","name":"_ryoshiRouter","type":"address"},{"internalType":"address","name":"_vvsLp","type":"address"},{"internalType":"address","name":"_mmfLp","type":"address"},{"internalType":"address","name":"_ryoshiLP","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"uint256","name":"depositAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"newBalance","type":"uint256"}],"name":"Liberation","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amountLP","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amountFRTN","type":"uint256"}],"name":"Withdraw","type":"event"},{"inputs":[],"name":"emergencyWithdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"from","type":"address"}],"name":"migrate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"rewardsFor","outputs":[{"internalType":"uint256","name":"userReward","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"time","type":"uint256"}],"name":"setEndTime","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"rate","type":"uint256"}],"name":"setRewardRate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"totalRewards","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userInfo","outputs":[{"internalType":"uint256","name":"croDeposited","type":"uint256"},{"internalType":"uint256","name":"usdcDeposited","type":"uint256"},{"internalType":"uint256","name":"lpDebt","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
 const MMF_LP = '0xa68466208F1A3Eb21650320D2520ee8eBA5ba623';
-const VVS_LP = '0xa68466208F1A3Eb21650320D2520ee8eBA5ba623';
+const VVS_LP = '0xe61Db569E231B3f5530168Aa2C9D50246525b6d6';
 const LIBERATOR_ADDRESS = '0x9C3F1168004f42a2616053035D20c80f8d362Eda';
 
 function Test() {
@@ -52,9 +52,10 @@ const Liberator = () => {
         vvsBalance: ethers.utils.formatEther(vvsBalance)
       };
     },
-    enabled: !!contract && !!user.address
+    enabled: !!contract?.address && !!user.address
   });
-  console.log('asd', data, error);
+
+  console.log('Read Data:', data);
 
   const handleChangeLpAddress = (e: ChangeEvent<HTMLSelectElement>) => {
     setLpAddress(e.target.value);
@@ -75,9 +76,17 @@ const Liberator = () => {
       return;
     }
 
+    if (!amount) {
+      toast.error('Enter an amount');
+      return;
+    }
+
     try {
       setIsExecuting(true);
-      console.log('executing...', contract.address, ethers.utils.parseEther(amount).toString(), lpAddress);
+      console.log('executing...');
+      console.log('CA:', contract.address);
+      console.log('Amount:', ethers.utils.parseEther(amount).toString());
+      console.log('LP:', lpAddress);
       const tx = await contract.migrate(ethers.utils.parseEther(amount), lpAddress);
       await tx.wait();
       toast.success('Transaction successful');
