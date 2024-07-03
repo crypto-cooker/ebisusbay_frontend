@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Contract, ethers } from 'ethers';
-import { Box, Input, Select, VStack } from '@chakra-ui/react';
+import { Box, GridItem, Input, Select, SimpleGrid, VStack } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 import { appConfig } from '@src/Config';
 import { ERC20 } from '@src/global/contracts/Abis';
@@ -114,34 +114,37 @@ const Liberator = () => {
   }, [user.provider.signer, liberatorAddress]);
 
   return (
-    <Box>
+    <SimpleGrid columns={2} gap={2}>
       {!!data && (
         <>
-          <Box>Rewards: {data.rewards}</Box>
-          <Box cursor='pointer' onClick={() => setAmount(data.mmfBalance)}>MMF Balance: {data.mmfBalance}</Box>
-          <Box cursor='pointer' onClick={() => setAmount(data.vvsBalance)}>VVS Balance: {data.vvsBalance}</Box>
+          <Box>Rewards</Box>
+          <Box textAlign='end'>{data.rewards}</Box>
+          <Box>MMF Balance</Box>
+          <Box textAlign='end' cursor='pointer' onClick={() => setAmount(data.mmfBalance)}>{data.mmfBalance}</Box>
+          <Box>VVS Balance</Box>
+          <Box textAlign='end' cursor='pointer' onClick={() => setAmount(data.vvsBalance)}>{data.vvsBalance}</Box>
         </>
       )}
-      <Box>Liberator CA:</Box>
+      <Box my='auto'>Liberator CA:</Box>
       <Input
-        mt={4}
         placeholder='Contract Address'
         value={liberatorAddress}
         onChange={handleChangeLiberator}
+        w={{base: 'auto', lg: '430px'}}
       />
-      <VStack align='start'>
-        <Input
-          mt={4}
-          placeholder='Enter amount'
-          value={amount}
-          onChange={handleChangeAmount}
-        />
-        <Select onChange={handleChangeLpAddress}>
-          <option value={MMF_LP}>MMF</option>
-          <option value={VVS_LP}>VVS</option>
-        </Select>
+      <Box my='auto'>LP Amount:</Box>
+      <Input
+        placeholder='Enter amount'
+        value={amount}
+        onChange={handleChangeAmount}
+      />
+      <Box my='auto'>DEX:</Box>
+      <Select onChange={handleChangeLpAddress}>
+        <option value={MMF_LP}>MMF</option>
+        <option value={VVS_LP}>VVS</option>
+      </Select>
+      <GridItem colSpan={2}>
         <PrimaryButton
-          mt={4}
           isLoading={isExecuting}
           isDisabled={isExecuting}
           onClick={handleGenerateCallData}
@@ -149,7 +152,7 @@ const Liberator = () => {
         >
           Migrate
         </PrimaryButton>
-      </VStack>
-    </Box>
+      </GridItem>
+    </SimpleGrid>
   )
 }
