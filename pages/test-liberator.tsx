@@ -39,7 +39,8 @@ const Liberator = () => {
   const {data, error} = useQuery({
     queryKey: ['Liberator', user.address, contract?.address],
     queryFn: async () => {
-      const rewards = await contract!.rewardsFor(user.address);
+      const totalRewards = await contract!.totalRewards();
+      const userRewards = await contract!.rewardsFor(user.address);
 
       const mmfContract = new Contract(MMF_LP, ERC20, readProvider);
       const mmfBalance = await mmfContract.balanceOf(user.address);
@@ -48,7 +49,8 @@ const Liberator = () => {
       const vvsBalance = await vvsContract.balanceOf(user.address);
 
       return {
-        rewards: ethers.utils.formatEther(rewards),
+        totalRewards: ethers.utils.formatEther(totalRewards),
+        userRewards: ethers.utils.formatEther(userRewards),
         mmfBalance: ethers.utils.formatEther(mmfBalance),
         vvsBalance: ethers.utils.formatEther(vvsBalance)
       };
@@ -68,6 +70,11 @@ const Liberator = () => {
 
   const handleChangeLiberator = (e: ChangeEvent<HTMLInputElement>) => {
     setLiberatorAddress(e.target.value);
+  }
+
+  const handleSelectAmount = (amount: string, address: string) => {
+    setLpAddress(address);
+    setAmount(amount);
   }
 
   const handleGenerateCallData = async () => {
@@ -117,12 +124,15 @@ const Liberator = () => {
     <SimpleGrid columns={2} gap={2}>
       {!!data && (
         <>
-          <Box>Rewards</Box>
-          <Box textAlign='end'>{data.rewards}</Box>
-          <Box>MMF Balance</Box>
-          <Box textAlign='end' cursor='pointer' onClick={() => setAmount(data.mmfBalance)}>{data.mmfBalance}</Box>
+          <Box>Total Rewards</Box>
+          <Box textAlign='end'>{data.totalRewards}</Box>
+          <Box>User Rewards</Box>
+          <Box textAlign='end'>{data.userRewards}</Box>
+          <GridItem colSpan={2}><hr /></GridItem>
           <Box>VVS Balance</Box>
-          <Box textAlign='end' cursor='pointer' onClick={() => setAmount(data.vvsBalance)}>{data.vvsBalance}</Box>
+          <Box textAlign='end' cursor='pointer' onClick={() => handleSelectAmount(data.vvsBalance, VVS_LP)}>{data.vvsBalance}</Box>
+          <Box>MMF Balance</Box>
+          <Box textAlign='end' cursor='pointer' onClick={() => handleSelectAmount(data.mmfBalance, MMF_LP)}>{data.mmfBalance}</Box>
         </>
       )}
       <Box my='auto'>Liberator CA:</Box>
@@ -139,9 +149,9 @@ const Liberator = () => {
         onChange={handleChangeAmount}
       />
       <Box my='auto'>DEX:</Box>
-      <Select onChange={handleChangeLpAddress}>
-        <option value={MMF_LP}>MMF</option>
+      <Select onChange={handleChangeLpAddress} value={lpAddress}>
         <option value={VVS_LP}>VVS</option>
+        <option value={MMF_LP}>MMF</option>
       </Select>
       <GridItem colSpan={2}>
         <PrimaryButton
