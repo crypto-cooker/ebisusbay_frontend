@@ -34,6 +34,7 @@ const Liberator = () => {
   const [amount, setAmount] = useState('');
   const [lpAddress, setLpAddress] = useState(MMF_LP);
   const [contract, setContract] = useState<Contract>();
+  const [liberatorAddress, setLiberatorAddress] = useState<string>(LIBERATOR_ADDRESS);
 
   const {data, error} = useQuery({
     queryKey: ['Liberator', user.address, contract?.address],
@@ -63,6 +64,10 @@ const Liberator = () => {
 
   const handleChangeAmount = (e: ChangeEvent<HTMLInputElement>) => {
     setAmount(e.target.value);
+  }
+
+  const handleChangeLiberator = (e: ChangeEvent<HTMLInputElement>) => {
+    setLiberatorAddress(e.target.value);
   }
 
   const handleGenerateCallData = async () => {
@@ -101,41 +106,50 @@ const Liberator = () => {
   useEffect(() => {
     if (user.provider.signer) {
       setContract(new Contract(
-        LIBERATOR_ADDRESS,
+        liberatorAddress,
         LiberatorAbi,
         user.provider.signer
       ));
     }
-  }, [user.provider.signer]);
+  }, [user.provider.signer, liberatorAddress]);
 
   return (
     <Box>
       {!!data && (
         <>
           <Box>Rewards: {data.rewards}</Box>
-          <Box>MMF Balance: {data.mmfBalance}</Box>
-          <Box>VVS Balance: {data.vvsBalance}</Box>
+          <Box cursor='pointer' onClick={() => setAmount(data.mmfBalance)}>MMF Balance: {data.mmfBalance}</Box>
+          <Box cursor='pointer' onClick={() => setAmount(data.vvsBalance)}>VVS Balance: {data.vvsBalance}</Box>
         </>
       )}
+      <Box>Liberator CA:</Box>
       <Input
         mt={4}
-        placeholder='Enter amount'
-        value={amount}
-        onChange={handleChangeAmount}
+        placeholder='Contract Address'
+        value={liberatorAddress}
+        onChange={handleChangeLiberator}
       />
-      <Select onChange={handleChangeLpAddress}>
-        <option value={MMF_LP}>MMF</option>
-        <option value={VVS_LP}>VVS</option>
-      </Select>
-      <PrimaryButton
-        mt={4}
-        isLoading={isExecuting}
-        isDisabled={isExecuting}
-        onClick={handleGenerateCallData}
-        loadingText='Generating...'
-      >
-        Migrate
-      </PrimaryButton>
+      <VStack align='start'>
+        <Input
+          mt={4}
+          placeholder='Enter amount'
+          value={amount}
+          onChange={handleChangeAmount}
+        />
+        <Select onChange={handleChangeLpAddress}>
+          <option value={MMF_LP}>MMF</option>
+          <option value={VVS_LP}>VVS</option>
+        </Select>
+        <PrimaryButton
+          mt={4}
+          isLoading={isExecuting}
+          isDisabled={isExecuting}
+          onClick={handleGenerateCallData}
+          loadingText='Generating...'
+        >
+          Migrate
+        </PrimaryButton>
+      </VStack>
     </Box>
   )
 }
