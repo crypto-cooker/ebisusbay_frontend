@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { constants, Contract, ethers } from 'ethers';
 import {
   Box,
@@ -9,7 +9,11 @@ import {
   HStack,
   IconButton,
   Image,
-  Input,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -45,6 +49,7 @@ enum LiberatedDexKey {
 }
 
 interface LiberatedDex {
+  key: LiberatedDexKey;
   name: string;
   address: string;
   logo: string;
@@ -53,12 +58,14 @@ interface LiberatedDex {
 
 const MappedLiberatedDexes: {[key in LiberatedDexKey]: LiberatedDex} = {
   [LiberatedDexKey.VVS]: {
+    key: LiberatedDexKey.VVS,
     name: 'VVS',
     address: '0xe61Db569E231B3f5530168Aa2C9D50246525b6d6',
     logo: ImageService.translate('/img/icons/tokens/vvs.webp').convert(),
     lp: 'WCRO/USDC'
   },
   [LiberatedDexKey.MMF]: {
+    key: LiberatedDexKey.MMF,
     name: 'MMF',
     address: '0xa68466208F1A3Eb21650320D2520ee8eBA5ba623',
     logo: ImageService.translate('/img/icons/tokens/mad.webp').convert(),
@@ -71,14 +78,14 @@ export default function Page() {
   const [isExecuting, setIsExecuting] = useState(false);
   const [isExecutingApproval, setIsExecutingApproval] = useState(false);
   const [amount, setAmount] = useState('');
-  const [dexKey, setDexKey] = useState<LiberatedDexKey>(LiberatedDexKey.VVS);
+  const [selectedDexKey, setSelectedDexKey] = useState<LiberatedDexKey>(LiberatedDexKey.VVS);
   const [contract, setContract] = useState<Contract>();
   const [liberatorAddress, setLiberatorAddress] = useState<string>(LIBERATOR_ADDRESS);
   const queryClient = useQueryClient();
-  const dex = MappedLiberatedDexes[dexKey];
+  const selectedDex = MappedLiberatedDexes[selectedDexKey];
   const [withdrawing, setWithdrawing] = useState(false);
 
-  const {data: globalData} = useQuery({
+  const {data: globalData, refetch: refetchGlobal} = useQuery({
     queryKey: ['LiberatorGlobal', contract?.address],
     queryFn: async () => {
       const data = await multicall({
@@ -98,7 +105,6 @@ export default function Page() {
         ],
       });
 
-      console.log('help', data[1])
       return {
         totalRewards: data[0].status === 'success' ? ethers.utils.formatEther(data[0].result) : '0',
         endTime: data[1].status === 'success' ? Number(data[1].result) : 0
@@ -107,7 +113,7 @@ export default function Page() {
     enabled: !!contract?.address
   });
 
-  const {data: userData, refetch} = useQuery({
+  const {data: userData, refetch: refetchUser} = useQuery({
     queryKey: ['LiberatorUser', user.address],
     queryFn: async () => {
       const data = await multicall({
@@ -165,26 +171,24 @@ export default function Page() {
     enabled: !!user.address
   });
 
-  console.log('Read Data:', globalData, userData);
-
   const handleChangeDex = (dex: LiberatedDexKey) => {
-    setDexKey(dex);
+    setSelectedDexKey(dex);
   }
 
-  const handleChangeAmount = (e: ChangeEvent<HTMLInputElement>) => {
-    setAmount(e.target.value);
+  const handleChangeAmount = (value: string) => {
+    setAmount(value);
   }
 
   const handleMaxLp = () => {
-    if (dex.address === MappedLiberatedDexes.mmf.address) {
+    if (selectedDex.address === MappedLiberatedDexes.mmf.address) {
       setAmount(userData?.mmfBalance || '');
-    } else if (dex.address === MappedLiberatedDexes.vvs.address) {
+    } else if (selectedDex.address === MappedLiberatedDexes.vvs.address) {
       setAmount(userData?.vvsBalance || '');
     }
   }
 
   const handleSelectAmount = (amount: string, dex: LiberatedDexKey) => {
-    setDexKey(dex);
+    setSelectedDexKey(dex);
     setAmount(amount);
   }
 
@@ -225,21 +229,24 @@ export default function Page() {
       return;
     }
 
-    if (!dexKey) {
+    if (isNaN(Number(amount)) || !(Number(amount) > 0)) {
+      toast.error('Enter a valid amount');
+      return;
+    }
+
+    if (!selectedDexKey || !selectedDex) {
       toast.error('Select a DEX');
       return;
     }
 
     try {
       setIsExecuting(true);
-      console.log('executing...');
-      console.log('CA:', contract.address);
-      console.log('Amount:', ethers.utils.parseEther(amount).toString());
-      console.log('LP:', dexKey);
-      const tx = await contract.migrate(ethers.utils.parseEther(amount), dexKey);
+      const tx = await contract.migrate(ethers.utils.parseEther(amount), selectedDex.address);
       await tx.wait();
       toast.success('Transaction successful');
-      refetch();
+      setAmount('');
+      refetchUser();
+      refetchGlobal();
     } catch (e: any) {
       console.log(e);
       toast.error(parseErrorMessage(e));
@@ -254,7 +261,7 @@ export default function Page() {
       const tx = await contract?.withdraw();
       await tx?.wait();
       toast.success('Rewards withdrawn');
-      refetch();
+      refetchUser();
     } catch (e) {
       console.log(e);
       toast.error(parseErrorMessage(e));
@@ -273,8 +280,8 @@ export default function Page() {
     }
   }, [user.provider.signer, liberatorAddress]);
 
-  const selectedMmf = dexKey === 'mmf';
-  const selectedVvs = dexKey === 'vvs';
+  const selectedMmf = selectedDexKey === LiberatedDexKey.MMF;
+  const selectedVvs = selectedDexKey === LiberatedDexKey.VVS;
   const isInApprovedState = (selectedMmf && userData?.mmfApproved) || (selectedVvs && userData?.vvsApproved);
 
   const renderer = ({ days, hours, minutes, seconds, completed }: { days:number, hours:number, minutes:number, seconds: number, completed:boolean}) => {
@@ -306,16 +313,25 @@ export default function Page() {
     return date.toLocaleDateString('en-GB', options).replace('UTC', 'UTC');
   }
 
+  const maxAmountInput = () => {
+    if (selectedDex.address === MappedLiberatedDexes.mmf.address) return Number(userData?.mmfBalance || 0);
+    else if (selectedDex.address === MappedLiberatedDexes.vvs.address) return Number(userData?.vvsBalance || 0);
+    return 0;
+  }
+
   return (
     <>
       <PageHead
         title="Liberate Your LP"
         description="Liberate your VVS and MMF tokens and move them to Ebisu's Bay DEX"
         url="/liberator"
-        image={ImageService.translate('/img/promos/liberator.webp').convert()}
+        image={ImageService.translate('/img/promos/liberator/liberator-banner.webp').convert()}
       />
       <StandardContainer>
-        <Image src={ImageService.translate('/img/promos/liberator.webp').convert()} />
+        <Image src={ImageService.translate('/img/promos/liberator/liberator-header.webp').convert()} />
+        <Card mt={2}>
+          Starting July 4th, users have the opportunity to migrate their VVS and MMF LP tokens to Ebisu's Bay DEX! The Liberator will migrate <strong>WCRO/USDC</strong> LP tokens and will also earn FRTN rewards based on the amount of LP tokens migrated.
+        </Card>
         <SimpleGrid columns={{ base: 1, md: 2 }} gap={2} mt={2}>
           <Card flex={1}>
             <Box fontWeight='bold' fontSize='sm' mb={2}>Rewards Pool</Box>
@@ -371,7 +387,10 @@ export default function Page() {
             <Box fontWeight='bold' fontSize='sm' mb={2}>Your LP Balances</Box>
             {!!userData ? (
               <SimpleGrid columns={2} gap={2}>
-                <Box>VVS</Box>
+                <HStack>
+                  <Image src={MappedLiberatedDexes.vvs.logo} w='30px'/>
+                  <Box>VVS</Box>
+                </HStack>
                 <Box
                   textAlign='end'
                   cursor='pointer'
@@ -381,7 +400,10 @@ export default function Page() {
                   {userData.vvsBalance}
                 </Box>
 
-                <Box>MMF</Box>
+                <HStack>
+                  <Image src={MappedLiberatedDexes.mmf.logo} w='30px'/>
+                  <Box>MMF</Box>
+                </HStack>
                 <Box
                   textAlign='end'
                   cursor='pointer'
@@ -407,11 +429,11 @@ export default function Page() {
                   {Object.entries(MappedLiberatedDexes).map(([key, tab]) => (
                     <Button
                       key={tab.address}
-                      isActive={dex.address === tab.address}
+                      isActive={selectedDex.address === tab.address}
                       onClick={() => handleChangeDex(key as LiberatedDexKey)}
                       rounded='3px'
                       variant='tab'
-                      color={dex.address === tab.address ? 'white' : getTheme(user.theme).colors.textColor3}
+                      color={selectedDex.address === tab.address ? 'white' : getTheme(user.theme).colors.textColor3}
                       leftIcon={<Image src={tab.logo} w='30px'/>}
                     >
                       {tab.name}
@@ -422,11 +444,19 @@ export default function Page() {
                   <FormControl>
                     <FormLabel fontWeight='bold' fontSize='sm'>LP Amount:</FormLabel>
                     <Stack direction='row'>
-                      <Input
-                        placeholder='Enter amount'
+                      <NumberInput
+                        min={1}
+                        max={maxAmountInput()}
                         value={amount}
                         onChange={handleChangeAmount}
-                      />
+                        flex={1}
+                      >
+                        <NumberInputField />
+                        <NumberInputStepper>
+                          <NumberIncrementStepper />
+                          <NumberDecrementStepper />
+                        </NumberInputStepper>
+                      </NumberInput>
                       <Button onClick={handleMaxLp}>
                         Max
                       </Button>
@@ -441,9 +471,9 @@ export default function Page() {
                       <Stack justify='space-between' align='center' direction={{base: 'column', sm: 'row'}}>
                         <Box>
                           <HStack justify='end'>
-                            <Image src={dex.logo} w='30px'/>
+                            <Image src={selectedDex.logo} w='30px'/>
                             <Box ms={2} fontWeight='bold' fontSize='lg'>
-                              Migrating LP from {dex.name}
+                              Migrating LP from {selectedDex.name}
                             </Box>
                           </HStack>
                         </Box>
@@ -453,6 +483,7 @@ export default function Page() {
                           onClick={handleMigration}
                           loadingText='Migrating...'
                           w={{base: 'full', sm: 'auto'}}
+                          size='lg'
                         >
                           Migrate
                         </PrimaryButton>
