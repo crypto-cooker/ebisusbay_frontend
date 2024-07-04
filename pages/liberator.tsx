@@ -157,12 +157,6 @@ export default function Page() {
             functionName: 'userInfo',
             args: [user.address as Address],
           },
-          {
-            address: EB_WCROUSDC_ADDRESS as Address,
-            abi: erc20ABI,
-            functionName: 'balanceOf',
-            args: [user.address as Address],
-          },
         ],
       });
 
@@ -179,7 +173,6 @@ export default function Page() {
           usdcDeposited: ethers.utils.formatUnits(data[5].result[1], 6),
           lpDebt: ethers.utils.formatEther(data[5].result[2])
         } : {croDeposited: 0, usdcDeposited: 0, lpDebt: 0},
-        ebBalance: data[6].status === 'success' ? ethers.utils.formatEther(data[6].result) : '0',
       };
     },
     enabled: !!user.address
