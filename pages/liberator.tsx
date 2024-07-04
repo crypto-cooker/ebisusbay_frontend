@@ -42,9 +42,9 @@ import Countdown from 'react-countdown';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { abbreviateDecimal, round } from '@market/helpers/utils';
 
-const ENABLED = false;
+const ENABLED = true;
 const LiberatorAbi = [{"inputs":[{"internalType":"address","name":"_wcro","type":"address"},{"internalType":"address","name":"_usdc","type":"address"},{"internalType":"address","name":"_frtn","type":"address"},{"internalType":"address","name":"_vvsRouter","type":"address"},{"internalType":"address","name":"_mmfRouter","type":"address"},{"internalType":"address","name":"_ryoshiRouter","type":"address"},{"internalType":"address","name":"_vvsLp","type":"address"},{"internalType":"address","name":"_mmfLp","type":"address"},{"internalType":"address","name":"_ryoshiLP","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"uint256","name":"depositAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"newBalance","type":"uint256"}],"name":"Liberation","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amountLP","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amountFRTN","type":"uint256"}],"name":"Withdraw","type":"event"},{"inputs":[],"name":"emergencyWithdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"endTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"from","type":"address"}],"name":"migrate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mmfRouter","outputs":[{"internalType":"contract IRyoshiRouter01","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"rewardsFor","outputs":[{"internalType":"uint256","name":"userReward","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"ryoshiRouter","outputs":[{"internalType":"contract IRyoshiRouter01","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"time","type":"uint256"}],"name":"setEndTime","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"rate","type":"uint256"}],"name":"setRewardRate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"totalRewards","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"usdc","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userInfo","outputs":[{"internalType":"uint256","name":"croDeposited","type":"uint256"},{"internalType":"uint256","name":"usdcDeposited","type":"uint256"},{"internalType":"uint256","name":"lpDebt","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"vvsRouter","outputs":[{"internalType":"contract IRyoshiRouter01","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"wcro","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
-const LIBERATOR_ADDRESS = '0x52f1663D8BbcC259470923d0d3B4d1EC0c89C912';
+const LIBERATOR_ADDRESS = '0xF08c8212C5065F653EFd191f075C9De0c5E70618';
 const EB_WCROUSDC_ADDRESS = '0xaf1a4a7dce423a3ee04a8868dc1997bcece9b560';
 
 enum LiberatedDexKey {
@@ -157,6 +157,12 @@ export default function Page() {
             functionName: 'userInfo',
             args: [user.address as Address],
           },
+          {
+            address: EB_WCROUSDC_ADDRESS as Address,
+            abi: erc20ABI,
+            functionName: 'balanceOf',
+            args: [user.address as Address],
+          }
         ],
       });
 
@@ -173,6 +179,7 @@ export default function Page() {
           usdcDeposited: ethers.utils.formatUnits(data[5].result[1], 6),
           lpDebt: ethers.utils.formatEther(data[5].result[2])
         } : {croDeposited: 0, usdcDeposited: 0, lpDebt: 0},
+        ebBalance: data[6].status === 'success' ? ethers.utils.formatEther(data[6].result) : '0',
       };
     },
     enabled: !!user.address
@@ -338,7 +345,7 @@ export default function Page() {
                       </HStack>
                     </>
                   )}
-                  <HStack spacing={0}>
+                  <HStack spacing={0} h='24px' mt={{base: 2, sm: 0}}>
                     <>Your Rewards</>
                     <Popover>
                       <PopoverTrigger>
@@ -364,7 +371,21 @@ export default function Page() {
                       {!!userData?.userRewards && <FortuneIcon boxSize={6} />}
                     </HStack>
                   </Box>
-                  <GridItem colSpan={2}>
+
+                  <Box mt={{base: 2, sm: 0}}>Pending LP</Box>
+                  <Flex justify={{ base: 'start', sm: 'end' }} fontWeight='bold'>
+                    {!!userData ? abbreviateDecimal(userData.userInfo.lpDebt) : '-'}
+                  </Flex>
+                  {!!userData?.userInfo && (
+
+                    <>
+                      <Box fontSize='xs'>Total Deposited</Box>
+                      <Flex fontSize='xs' justify={{ base: 'start', sm: 'end' }}>
+                        {round(userData?.userInfo.croDeposited ?? 0, 4)} CRO + {round(userData?.userInfo.usdcDeposited ?? 0, 4)} USDC
+                      </Flex>
+                    </>
+                  )}
+                  <GridItem colSpan={{ base: 1, sm: 2 }}>
                     <Flex justify='end'>
                       {!!globalData?.endTime && (
                         <Countdown
@@ -405,19 +426,13 @@ export default function Page() {
                     {!!userData ? abbreviateDecimal(userData.mmfBalance) : '-'}
                   </Box>
 
-
                   <HStack>
                     <Image src={ImageService.translate('/img/logo-dark.svg').convert()} w='30px'/>
                     <Box>Ebisu's Bay</Box>
                   </HStack>
                   <Box textAlign='end' fontWeight='bold'>
-                    {!!userData ? abbreviateDecimal(userData.userInfo.lpDebt) : '-'}
+                    {!!userData ? abbreviateDecimal(userData.ebBalance) : '-'}
                   </Box>
-                  <GridItem colSpan={2}>
-                    <Box fontSize='xs' textAlign='end'>
-                      {round(userData?.userInfo.croDeposited ?? 0, 4)} CRO + {round(userData?.userInfo.usdcDeposited ?? 0, 4)} USDC
-                    </Box>
-                  </GridItem>
                 </SimpleGrid>
               </Card>
             </SimpleGrid>
@@ -511,7 +526,7 @@ export default function Page() {
                       </>
                     )}
                     <Box fontSize='xs' mt={2} textAlign='center'>
-                      Migrated LP will be added as liquidity to the WCRO/USDC pair on Ebisu's Bay DEX. FRTN rewards earned are proportional to the amount of LP tokens migrated and can  be withdrawn after {globalData?.endTime ? formatTimestamp(globalData.endTime) : 'TBA' }.
+                      Migrated LP will be held until {globalData?.endTime ? formatTimestamp(globalData.endTime) : 'TBA' }. After this date, withdrawing will reward FRTN and add liquidity to the WCRO/USDC pair on Ebisu's Bay. Amount received is proportional to the amount migrated.
                     </Box>
                   </Box>
                 </>
