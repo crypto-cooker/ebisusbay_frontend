@@ -86,7 +86,7 @@ export default function Page() {
   const [withdrawing, setWithdrawing] = useState(false);
 
   const {data: globalData, refetch: refetchGlobal} = useQuery({
-    queryKey: ['LiberatorGlobal', contract?.address],
+    queryKey: ['LiberatorGlobal'],
     queryFn: async () => {
       const data = await multicall({
         contracts: [
@@ -109,8 +109,7 @@ export default function Page() {
         totalRewards: data[0].status === 'success' ? ethers.utils.formatEther(data[0].result) : '0',
         endTime: data[1].status === 'success' ? Number(data[1].result) : 0
       };
-    },
-    enabled: !!contract?.address
+    }
   });
 
   const {data: userData, refetch: refetchUser} = useQuery({
