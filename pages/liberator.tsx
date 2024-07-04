@@ -305,8 +305,8 @@ export default function Page() {
   return (
     <>
       <PageHead
-        title="Liberate Your LP"
-        description="Liberate your VVS and MMF tokens and move them to Ebisu's Bay DEX"
+        title="Liberate Your LP | Ebisu's Bay Marketplace"
+        description="Liberate your VVS and MMF LP tokens towards Ebisu's Bay DEX"
         url="/liberator"
         image={ImageService.translate('/img/promos/liberator/liberator-banner.webp').convert()}
       />
