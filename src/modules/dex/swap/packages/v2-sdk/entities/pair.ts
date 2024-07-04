@@ -179,14 +179,13 @@ export class Pair {
 
   public getOutputAmount(inputAmount: CurrencyAmount<ERC20Token>): [CurrencyAmount<ERC20Token>, Pair] {
     invariant(this.involvesToken(inputAmount.currency), 'TOKEN')
-    console.log('===debug===1', this.reserve0.quotient, this.reserve1.quotient)
+
     if (this.reserve0.quotient === ZERO || this.reserve1.quotient === ZERO) {
       throw new InsufficientReservesError()
     }
-    console.log('===debug===2')
+
     const inputReserve = this.reserveOf(inputAmount.currency)
     const outputReserve = this.reserveOf(inputAmount.currency.equals(this.token0) ? this.token1 : this.token0)
-    console.log('===debug===3', inputAmount.quotient)
     const inputAmountWithFee = inputAmount.quotient * _9975
     const numerator = inputAmountWithFee * outputReserve.quotient
 

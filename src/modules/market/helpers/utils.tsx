@@ -597,7 +597,7 @@ export const isAddress = (value?: string) => {
   try {
     // Alphabetical letters must be made lowercase for getAddress to work.
     // See documentation here: https://docs.ethers.io/v5/api/utils/address/
-    return getAddress(value.toLowerCase())
+    return !!getAddress(value.toLowerCase())
   } catch {
     return false
   }

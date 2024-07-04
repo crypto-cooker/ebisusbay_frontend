@@ -257,8 +257,6 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
       let amountOut: CurrencyAmount<Token>
       try {
         // eslint-disable-next-line @typescript-eslint/no-extra-semi
-
-        console.log('===debug===0', amountIn, nextAmountIn)
         ;[amountOut] = pair.getOutputAmount(amountIn)
       } catch (error) {
         // input too low

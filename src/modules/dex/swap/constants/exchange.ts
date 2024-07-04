@@ -3,7 +3,7 @@ import {USDC, USDT,} from '@eb-pancakeswap/tokens'
 import {ChainTokenList} from './types'
 import {cronosTokens} from "@dex/swap/packages/tokens/constants/cronos";
 import {cronosTestnetTokens} from "@dex/swap/packages/tokens/constants/cronosTestnet";
-import {ChainId} from "@pancakeswap/chains";
+import {ChainId} from "@eb-pancakeswap/chains";
 
 export {
   ADDITIONAL_BASES,
@@ -22,14 +22,14 @@ export const CHAIN_REFRESH_TIME = {
 export const SUGGESTED_BASES: ChainTokenList = {
   [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM]],
   [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],
-  [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.usdc, cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
+  [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM]],
   [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],
-  [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.usdc, cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
+  [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
 }
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
@@ -57,7 +57,7 @@ export const PRICE_IMPACT_WITHOUT_FEE_CONFIRM_MIN: Percent = new Percent(1000n, 
 export const BLOCKED_PRICE_IMPACT_NON_EXPERT: Percent = new Percent(1500n, BIPS_BASE) // 15%
 
 // used to ensure the user doesn't send so much BNB so they end up with <.01
-export const MIN_BNB: bigint = BIG_INT_TEN ** 15n // .001 BNB
+export const MIN_CRO: bigint = BIG_INT_TEN ** 15n // .001 BNB
 export const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(50n, BIPS_BASE)
 
 export const ZERO_PERCENT = new Percent('0')
@@ -67,7 +67,7 @@ export const BASE_FEE = new Percent(25n, BIPS_BASE)
 export const INPUT_FRACTION_AFTER_FEE = ONE_HUNDRED_PERCENT.subtract(BASE_FEE)
 
 // BNB
-export const DEFAULT_INPUT_CURRENCY = 'BNB'
+export const DEFAULT_INPUT_CURRENCY = 'CRO'
 // CAKE
 export const DEFAULT_OUTPUT_CURRENCY = '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82'
 

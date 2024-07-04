@@ -3,22 +3,26 @@ import { ChainId } from '@eb-pancakeswap/chains'
 import { Currency, ERC20Token, NativeCurrency } from '@eb-pancakeswap/sdk'
 
 import { TokenAddressMap } from '@pancakeswap/token-lists'
-import { GELATO_NATIVE } from 'config/constants'
-import { UnsafeCurrency } from 'config/constants/types'
 import { useAtomValue } from 'jotai'
 import { useMemo } from 'react'
+// import {
+//   combinedCurrenciesMapFromActiveUrlsAtom,
+//   combinedTokenMapFromActiveUrlsAtom,
+//   combinedTokenMapFromOfficialsUrlsAtom,
+//   useUnsupportedTokenList,
+//   useWarningTokenList,
+// } from 'state/lists/hooks'
+import { safeGetAddress } from '@eb-pancakeswap-web/utils'
+import { useToken as useToken_ } from 'wagmi'
+import { useActiveChainId } from './useActiveChainId'
+import useNativeCurrency from './useNativeCurrency'
 import {
   combinedCurrenciesMapFromActiveUrlsAtom,
   combinedTokenMapFromActiveUrlsAtom,
-  combinedTokenMapFromOfficialsUrlsAtom,
   useUnsupportedTokenList,
-  useWarningTokenList,
-} from 'state/lists/hooks'
-import { safeGetAddress } from '@eb-pancakeswap-web/utils'
-import { useToken as useToken_ } from 'wagmi'
-import useUserAddedTokens from '../state/user/hooks/useUserAddedTokens'
-import { useActiveChainId } from './useActiveChainId'
-import useNativeCurrency from './useNativeCurrency'
+  useWarningTokenList
+} from "@eb-pancakeswap-web/state/lists/hooks";
+import useUserAddedTokens from "@eb-pancakeswap-web/state/user/hooks/useUserAddedTokens";
 
 const mapWithoutUrls = (tokenMap?: TokenAddressMap<ChainId>, chainId?: number) => {
   if (!tokenMap || !chainId) return {}
@@ -197,8 +201,7 @@ export function useToken(tokenAddress?: string): ERC20Token | undefined | null {
 
 export function useCurrency(currencyId: string | undefined): UnsafeCurrency {
   const native: NativeCurrency = useNativeCurrency()
-  const isNative =
-    currencyId?.toUpperCase() === native.symbol?.toUpperCase() || currencyId?.toLowerCase() === GELATO_NATIVE
+  const isNative = currencyId?.toUpperCase() === native.symbol?.toUpperCase()
 
   const token = useToken(isNative ? undefined : currencyId)
   return isNative ? native : token

@@ -12,6 +12,8 @@ import { appInitializeStateReducer } from '@market/state/redux/slices/InitSlice'
 import leaderBoardReducer from '@market/state/redux/slices/leaderBoardSlice';
 import batchListingReducer from '@market/state/redux/slices/user-batch';
 import ryoshiStakingReducer from '@market/state/redux/slices/ryoshi-staking-cart-slice';
+import pancakeUser from '@eb-pancakeswap-web/state/user/reducer'
+import pancakeGlobal from '@eb-pancakeswap-web/state/global/reducer'
 
 const rootReducer = combineReducers({
   memberships: memberships,
@@ -24,6 +26,8 @@ const rootReducer = combineReducers({
   leaderBoard: leaderBoardReducer,
   batchListing: batchListingReducer,
   ryoshiStakingCart: ryoshiStakingReducer,
+  pancakeUser: pancakeUser,
+  pancakeGlobal: pancakeGlobal
 });
 
 const reduxDevToolsComposeEnhancers =

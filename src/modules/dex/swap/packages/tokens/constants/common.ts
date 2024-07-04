@@ -1,6 +1,24 @@
 import { ChainId } from '@eb-pancakeswap/chains'
 import { ERC20Token } from '@eb-pancakeswap/sdk'
 
+export const FRTN_MAINNET = new ERC20Token(
+  ChainId.CRONOS,
+  '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
+  18,
+  'FRTN',
+  'Fortune',
+  'https://ebisusbay.com/',
+)
+
+export const FRTN_TESTNET = new ERC20Token(
+  ChainId.CRONOS_TESTNET,
+  '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
+  18,
+  'FRTN',
+  'Fortune',
+  'https://ebisusbay.com/',
+)
+
 export const USDC_ETH = new ERC20Token(
   ChainId.ETHEREUM,
   '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
@@ -52,6 +70,12 @@ export const USDC = {
 export const USDT = {
   [ChainId.ETHEREUM]: USDT_ETH,
   [ChainId.CRONOS]: USDT_CRONOS,
+}
+
+export const FRTN = {
+  [ChainId.ETHEREUM]: USDT_ETH,
+  [ChainId.CRONOS]: FRTN_MAINNET,
+  [ChainId.CRONOS_TESTNET]: FRTN_TESTNET
 }
 
 export const WBTC_CRONOS = new ERC20Token(
