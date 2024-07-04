@@ -28,7 +28,7 @@ import { toast } from 'react-toastify';
 import { ERC20 } from '@src/global/contracts/Abis';
 import { parseErrorMessage } from '@src/helpers/validator';
 import { useUser } from '@src/components-v2/useUser';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { PrimaryButton } from '@src/components-v2/foundation/button';
 import { multicall } from '@wagmi/core';
 import { Address, erc20ABI } from 'wagmi';
@@ -80,14 +80,12 @@ const MappedLiberatedDexes: {[key in LiberatedDexKey]: LiberatedDex} = {
 export default function Page() {
   const user = useUser();
   const [isExecuting, setIsExecuting] = useState(false);
-  const [isExecutingApproval, setIsExecutingApproval] = useState(false);
   const [amount, setAmount] = useState('');
   const [selectedDexKey, setSelectedDexKey] = useState<LiberatedDexKey>(LiberatedDexKey.VVS);
   const [contract, setContract] = useState<Contract>();
   const [liberatorAddress, setLiberatorAddress] = useState<string>(LIBERATOR_ADDRESS);
-  const queryClient = useQueryClient();
   const selectedDex = MappedLiberatedDexes[selectedDexKey];
-  const [withdrawing, setWithdrawing] = useState(false);
+  const [claiming, setClaiming] = useState(false);
 
   const {data: globalData, refetch: refetchGlobal} = useQuery({
     queryKey: ['LiberatorGlobal'],
@@ -252,18 +250,18 @@ export default function Page() {
     }
   }
 
-  const handleWithdrawRewards = async () => {
+  const handleClaimRewards = async () => {
     try {
-      setWithdrawing(true);
+      setClaiming(true);
       const tx = await contract?.withdraw();
       await tx?.wait();
-      toast.success('Rewards withdrawn');
+      toast.success('Rewards claimed!');
       refetchUser();
     } catch (e) {
       console.log(e);
       toast.error(parseErrorMessage(e));
     } finally {
-      setWithdrawing(false);
+      setClaiming(false);
     }
   }
 
@@ -280,17 +278,18 @@ export default function Page() {
   const selectedMmf = selectedDexKey === LiberatedDexKey.MMF;
   const selectedVvs = selectedDexKey === LiberatedDexKey.VVS;
   const isInApprovedState = (selectedMmf && userData?.mmfApproved) || (selectedVvs && userData?.vvsApproved);
+  const canClaim = !!userData && Number(userData.userRewards) > 0 && !!globalData?.endTime && Date.now() / 1000 > globalData.endTime;
 
-  const renderer = ({ days, hours, minutes, seconds, completed }: { days:number, hours:number, minutes:number, seconds: number, completed:boolean}) => {
-    return completed && !!userData && Number(userData.userRewards) > 0 ? (
+  const renderer = ({ completed }: { completed:boolean }) => {
+    return completed && canClaim ? (
       <PrimaryButton
-        onClick={handleWithdrawRewards}
-        isLoading={withdrawing}
-        isDisabled={withdrawing}
-        loadingText='Withdrawing...'
+        onClick={handleClaimRewards}
+        isLoading={claiming}
+        isDisabled={claiming}
+        loadingText='Claim'
         size='sm'
       >
-        Withdraw
+        Claim
       </PrimaryButton>
     ) : <></>;
   };
@@ -345,6 +344,7 @@ export default function Page() {
                       </HStack>
                     </>
                   )}
+
                   <HStack spacing={0} h='24px' mt={{base: 2, sm: 0}}>
                     <>Your Rewards</>
                     <Popover>
@@ -354,7 +354,7 @@ export default function Page() {
                       <PopoverContent>
                         <PopoverArrow />
                         <PopoverBody>
-                          <Box>Amount of FRTN earned from migrated LP tokens. Can be withdrawn after {globalData?.endTime ? formatTimestamp(globalData.endTime) : 'TBA' }</Box>
+                          <Box>Amount of FRTN earned from migrated LP tokens. Can be claimed after {globalData?.endTime ? formatTimestamp(globalData.endTime) : 'TBA' }</Box>
                           {!!globalData?.endTime && (
                             <Countdown
                               date={globalData.endTime * 1000}
@@ -372,12 +372,30 @@ export default function Page() {
                     </HStack>
                   </Box>
 
-                  <Box mt={{base: 2, sm: 0}}>Pending LP</Box>
+                  <HStack spacing={0} h='24px' mt={{base: 2, sm: 0}}>
+                    <>Pending LP</>
+                    <Popover>
+                      <PopoverTrigger>
+                        <IconButton aria-label='User Rewards Info' icon={<QuestionOutlineIcon />} variant='unstyled'/>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverBody>
+                          <Box>Amount of WCRO/USDC liquidity added to Ebisu's Bay DEX once rewards have been claimed after {globalData?.endTime ? formatTimestamp(globalData.endTime) : 'TBA' }</Box>
+                          {!!globalData?.endTime && (
+                            <Countdown
+                              date={globalData.endTime * 1000}
+                              renderer={renderer}
+                            />
+                          )}
+                        </PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                  </HStack>
                   <Flex justify={{ base: 'start', sm: 'end' }} fontWeight='bold'>
                     {!!userData ? abbreviateDecimal(userData.userInfo.lpDebt) : '-'}
                   </Flex>
                   {!!userData?.userInfo && (
-
                     <>
                       <Box fontSize='xs'>Total Deposited</Box>
                       <Flex fontSize='xs' justify={{ base: 'start', sm: 'end' }}>
@@ -385,16 +403,17 @@ export default function Page() {
                       </Flex>
                     </>
                   )}
-                  <GridItem colSpan={{ base: 1, sm: 2 }}>
-                    <Flex justify='end'>
-                      {!!globalData?.endTime && (
+
+                  {canClaim && (
+                    <GridItem colSpan={{ base: 1, sm: 2 }}>
+                      <Flex justify='end'>
                         <Countdown
                           date={globalData.endTime * 1000}
                           renderer={renderer}
                         />
-                      )}
-                    </Flex>
-                  </GridItem>
+                      </Flex>
+                    </GridItem>
+                  )}
                 </SimpleGrid>
               </Card>
               <Card flex={1}>
@@ -526,7 +545,7 @@ export default function Page() {
                       </>
                     )}
                     <Box fontSize='xs' mt={2} textAlign='center'>
-                      Migrated LP will be held until {globalData?.endTime ? formatTimestamp(globalData.endTime) : 'TBA' }. After this date, withdrawing will reward FRTN and add liquidity to the WCRO/USDC pair on Ebisu's Bay. Amount received is proportional to the amount migrated.
+                      Migrated LP will be held until {globalData?.endTime ? formatTimestamp(globalData.endTime) : 'TBA' }. After this date, claiming will reward FRTN and add liquidity to the WCRO/USDC pair on Ebisu's Bay. Amount received is proportional to the amount migrated.
                     </Box>
                   </Box>
                 </>
