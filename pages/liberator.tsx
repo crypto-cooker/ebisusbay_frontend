@@ -324,7 +324,7 @@ export default function Page() {
         url="/liberator"
         image={ImageService.translate('/img/promos/liberator/liberator-banner.webp').convert()}
       />
-      <StandardContainer>
+      <StandardContainer mt={{ base: 4, sm: 6 }}>
         <Image src={ImageService.translate('/img/promos/liberator/liberator-header.webp').convert()} />
         <Card mt={2}>
           Starting July 4th, users have the opportunity to migrate their VVS and MMF LP tokens to Ebisu's Bay DEX! The Liberator will migrate <strong>WCRO/USDC</strong> LP tokens and will also earn FRTN rewards based on the amount of LP tokens migrated.
@@ -338,10 +338,10 @@ export default function Page() {
                   {!!globalData && (
                     <>
                       <Box>Total Rewards</Box>
-                      <HStack justify={{ base: 'start', sm: 'end' }}>
+                      <Stack justify={{ base: 'start', sm: 'end' }} direction={{ base: 'row-reverse', sm: 'row' }}>
                         <Box ms={{ base: 0, sm: 2 }} fontWeight='bold' fontSize='lg'>{globalData.totalRewards}</Box>
                         <FortuneIcon boxSize={6} />
-                      </HStack>
+                      </Stack>
                     </>
                   )}
 
@@ -366,10 +366,10 @@ export default function Page() {
                     </Popover>
                   </HStack>
                   <Box textAlign='end' my='auto'>
-                    <HStack justify={{ base: 'start', sm: 'end' }}>
+                    <Stack justify={{ base: 'start', sm: 'end' }} direction={{ base: 'row-reverse', sm: 'row' }}>
                       <Box ms={{ base: 0, sm: 2 }} fontWeight='bold' fontSize='lg'>{userData?.userRewards || '-'}</Box>
                       {!!userData?.userRewards && <FortuneIcon boxSize={6} />}
-                    </HStack>
+                    </Stack>
                   </Box>
 
                   <HStack spacing={0} h='24px' mt={{base: 2, sm: 0}}>
@@ -397,8 +397,8 @@ export default function Page() {
                   </Flex>
                   {!!userData?.userInfo && (
                     <>
-                      <Box fontSize='xs'>Total Deposited</Box>
-                      <Flex fontSize='xs' justify={{ base: 'start', sm: 'end' }}>
+                      <Box fontSize='xs' className='text-muted'>Total Deposited</Box>
+                      <Flex fontSize='xs' justify={{ base: 'start', sm: 'end' }} className='text-muted'>
                         {round(userData?.userInfo.croDeposited ?? 0, 4)} CRO + {round(userData?.userInfo.usdcDeposited ?? 0, 4)} USDC
                       </Flex>
                     </>
@@ -544,7 +544,7 @@ export default function Page() {
                         )}
                       </>
                     )}
-                    <Box fontSize='xs' mt={2} textAlign='center'>
+                    <Box fontSize='xs' mt={2} textAlign='center' className='text-muted'>
                       Migrated LP will be held until {globalData?.endTime ? formatTimestamp(globalData.endTime) : 'TBA' }. After this date, claiming will reward FRTN and add liquidity to the WCRO/USDC pair on Ebisu's Bay. Amount received is proportional to the amount migrated.
                     </Box>
                   </Box>
