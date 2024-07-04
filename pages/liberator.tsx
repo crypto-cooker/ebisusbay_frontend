@@ -192,25 +192,8 @@ export default function Page() {
     setAmount(amount);
   }
 
-  const handleApprovalSuccess = (dex: LiberatedDex) => {
-    let fields = {};
-    if (dex.address === MappedLiberatedDexes.mmf.address) {
-      fields = {
-        mmfApproved: true,
-        mmfAllowance: constants.MaxUint256
-      };
-    } else if (dex.address === MappedLiberatedDexes.vvs.address) {
-      fields = {
-        vvsApproved: true,
-        vvsAllowance: constants.MaxUint256
-      };
-    } else {
-      return;
-    }
-    queryClient.setQueryData(['Liberator', user.address, contract?.address], (old: any) => ({
-      ...old,
-      fields,
-    }));
+  const handleApprovalSuccess = (approvedDex: LiberatedDex) => {
+    refetchUser();
   }
 
   const handleMigration = async () => {
@@ -479,7 +462,7 @@ export default function Page() {
                         </Box>
                         <PrimaryButton
                           isLoading={isExecuting}
-                          isDisabled={isExecuting}
+                          isDisabled={isExecuting || isNaN(Number(amount)) || Number(amount) <= 0}
                           onClick={handleMigration}
                           loadingText='Migrating...'
                           w={{base: 'full', sm: 'auto'}}
