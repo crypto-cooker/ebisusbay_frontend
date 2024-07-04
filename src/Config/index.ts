@@ -236,6 +236,12 @@ const configData: AppConfigMap = {
         symbol: 'KITTY',
         address: '0x4d7c922D6C12CfbF5BC85F56c9ccB1F61f49bf61',
         decimals: 18
+      },
+      moon: {
+        name: 'Moonflow',
+        symbol: 'MOON',
+        address: '0x46E2B5423F6ff46A8A35861EC9DAfF26af77AB9A',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
