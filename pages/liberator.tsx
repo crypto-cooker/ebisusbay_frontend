@@ -328,79 +328,69 @@ export default function Page() {
                   </HStack>
                 </>
               )}
-              {!!userData && (
-                <>
-                  <HStack spacing={0}>
-                    <>Your Rewards</>
-                    <Popover>
-                      <PopoverTrigger>
-                        <IconButton aria-label='User Rewards Info' icon={<QuestionOutlineIcon />} variant='unstyled'/>
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <PopoverArrow />
-                        <PopoverBody>
-                          <Box>Amount of FRTN earned from migrated LP tokens. Can be withdrawn after {globalData?.endTime ? formatTimestamp(globalData.endTime) : 'TBA' }</Box>
-                          {!!globalData?.endTime && (
-                            <Countdown
-                              date={globalData.endTime * 1000}
-                              renderer={renderer}
-                            />
-                          )}
-                        </PopoverBody>
-                      </PopoverContent>
-                    </Popover>
-                  </HStack>
-                  <Box textAlign='end' my='auto'>
-                    <HStack justify={{ base: 'start', sm: 'end' }}>
-                      <Box ms={{ base: 0, sm: 2 }} fontWeight='bold' fontSize='lg'>{userData.userRewards}</Box>
-                      <FortuneIcon boxSize={6} />
-                    </HStack>
-                    {!!globalData?.endTime && (
-                      <Countdown
-                        date={globalData.endTime * 1000}
-                        renderer={renderer}
-                      />
-                    )}
-                  </Box>
-                </>
-              )}
+              <HStack spacing={0}>
+                <>Your Rewards</>
+                <Popover>
+                  <PopoverTrigger>
+                    <IconButton aria-label='User Rewards Info' icon={<QuestionOutlineIcon />} variant='unstyled'/>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverBody>
+                      <Box>Amount of FRTN earned from migrated LP tokens. Can be withdrawn after {globalData?.endTime ? formatTimestamp(globalData.endTime) : 'TBA' }</Box>
+                      {!!globalData?.endTime && (
+                        <Countdown
+                          date={globalData.endTime * 1000}
+                          renderer={renderer}
+                        />
+                      )}
+                    </PopoverBody>
+                  </PopoverContent>
+                </Popover>
+              </HStack>
+              <Box textAlign='end' my='auto'>
+                <HStack justify={{ base: 'start', sm: 'end' }}>
+                  <Box ms={{ base: 0, sm: 2 }} fontWeight='bold' fontSize='lg'>{userData?.userRewards || '-'}</Box>
+                  {!!userData?.userRewards && <FortuneIcon boxSize={6} />}
+                </HStack>
+                {!!globalData?.endTime && (
+                  <Countdown
+                    date={globalData.endTime * 1000}
+                    renderer={renderer}
+                  />
+                )}
+              </Box>
             </SimpleGrid>
           </Card>
           <Card flex={1}>
             <Box fontWeight='bold' fontSize='sm' mb={2}>Your LP Balances</Box>
-            {!!userData ? (
-              <SimpleGrid columns={2} gap={2}>
-                <HStack>
-                  <Image src={MappedLiberatedDexes.vvs.logo} w='30px'/>
-                  <Box>VVS</Box>
-                </HStack>
-                <Box
-                  textAlign='end'
-                  cursor='pointer'
-                  onClick={() => handleSelectAmount(userData.vvsBalance, LiberatedDexKey.VVS)}
-                  fontWeight='bold'
-                >
-                  {userData.vvsBalance}
-                </Box>
+            <SimpleGrid columns={2} gap={2}>
+              <HStack>
+                <Image src={MappedLiberatedDexes.vvs.logo} w='30px'/>
+                <Box>VVS</Box>
+              </HStack>
+              <Box
+                textAlign='end'
+                cursor='pointer'
+                onClick={() => handleSelectAmount(userData?.vvsBalance ?? '0', LiberatedDexKey.VVS)}
+                fontWeight='bold'
+              >
+                {userData?.vvsBalance ?? '-'}
+              </Box>
 
-                <HStack>
-                  <Image src={MappedLiberatedDexes.mmf.logo} w='30px'/>
-                  <Box>MMF</Box>
-                </HStack>
-                <Box
-                  textAlign='end'
-                  cursor='pointer'
-                  onClick={() => handleSelectAmount(userData.mmfBalance, LiberatedDexKey.MMF)}
-                  fontWeight='bold'
-                >
-                  {userData.mmfBalance}
-                </Box>
-              </SimpleGrid>
-            ) : !user.address && (
-              <PrimaryButton onClick={() => user.connect()}>
-                Connect wallet
-              </PrimaryButton>
-            )}
+              <HStack>
+                <Image src={MappedLiberatedDexes.mmf.logo} w='30px'/>
+                <Box>MMF</Box>
+              </HStack>
+              <Box
+                textAlign='end'
+                cursor='pointer'
+                onClick={() => handleSelectAmount(userData?.mmfBalance ?? '0', LiberatedDexKey.MMF)}
+                fontWeight='bold'
+              >
+                {userData?.mmfBalance ?? '-'}
+              </Box>
+            </SimpleGrid>
           </Card>
         </SimpleGrid>
         <Card mt={2}>
@@ -493,14 +483,14 @@ export default function Page() {
                   </>
                 )}
                 <Box fontSize='xs' mt={2} textAlign='center'>
-                  Migrated LP will be added as liquidity to the WCRO/USDC pair on Ebisu's Bay DEX. Rewards are held until {globalData?.endTime ? formatTimestamp(globalData.endTime) : 'TBA' }. During this time, you will earn FRTN rewards based on the amount of LP migrated.
+                  Migrated LP will be added as liquidity to the WCRO/USDC pair on Ebisu's Bay DEX. FRTN rewards earned are proportional to the amount of LP tokens migrated and can  be withdrawn after {globalData?.endTime ? formatTimestamp(globalData.endTime) : 'TBA' }.
                 </Box>
               </Box>
             </>
           ) : (
             <Flex justify='center' direction='column'>
               <Box textAlign='center'>Connect wallet to start migrating your VVS and MMF LP to Ebisu's Bay DEX</Box>
-              <PrimaryButton onClick={() => user.connect()}>
+              <PrimaryButton onClick={() => user.connect()} mt={2}>
                 Connect wallet
               </PrimaryButton>
             </Flex>
