@@ -165,6 +165,7 @@ const Header = function () {
                   <MenuList>
                     <MenuItem as={Link} href='https://swap.ebisusbay.com' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
                     <MenuItem as={Link} href='/dex/farms' _hover={{color: 'inherit'}} justifyContent='end'>Farms</MenuItem>
+                    <MenuItem as={Link} href='/liberator' _hover={{color: 'inherit'}} justifyContent='end'>Liberator</MenuItem>
                   </MenuList>
                 </Menu>
                 <Menu placement='bottom-end'>
