@@ -8,6 +8,7 @@ import brands from '../../../core/data/brands.json';
 import ImageService from "@src/core/services/image";
 import {ethers} from "ethers";
 import {MouseEventHandler} from "react";
+import Decimal from 'decimal.js-light';
 
 const config = appConfig();
 const drops = config.drops;
@@ -765,4 +766,37 @@ export const isWrappedeCro = (address: string) => {
 export const uniqueNftId = (nft: any) => {
   if (!nft) return null;
   return `${nft.nftAddress ?? nft.address}${nft.nftId ?? nft.id}`;
+}
+
+export function abbreviateDecimal(decimalStr: string | number, zeroThreshold: number = 5, maxDigitsWithSubscript: number = 4, maxDigitsWithoutSubscript: number = 8): string {
+  if (typeof decimalStr !== 'string') decimalStr = `${decimalStr}`;
+
+  // Handle special cases for zero input
+  if (new Decimal(decimalStr).isZero()) {
+    return "0";
+  }
+
+  if (new Decimal(decimalStr).gte(1)) {
+    return new Decimal(decimalStr).toFixed(2);
+  }
+
+  // Find the first non-zero digit after the decimal
+  const firstNonZeroIndex = decimalStr.indexOf('.') + 1 + decimalStr.slice(decimalStr.indexOf('.') + 1).search(/[^0]/);
+
+  // Calculate the number of zeros following the decimal point
+  const zeroCount = firstNonZeroIndex - decimalStr.indexOf('.') - 1;
+
+  if (zeroCount >= zeroThreshold) {
+    // Use subscript notation
+    const subscriptNumbers = ['₀', '₁', '₂', '₃', '₄', '₅', '₆', '₇', '₈', '₉'];
+    const subscript = zeroCount.toString().split('').map(num => subscriptNumbers[parseInt(num)]).join('');
+    const significantDigits = decimalStr.slice(firstNonZeroIndex, firstNonZeroIndex + maxDigitsWithSubscript);
+    return `0.0${subscript}${significantDigits}`;
+  } else {
+    // Regular formatting, just truncate to the max digits without subscript
+    const start = decimalStr.indexOf('.') + 1;
+    // const end = start + zeroCount + maxDigitsWithoutSubscript;
+    const regularDigits = decimalStr.slice(start, maxDigitsWithoutSubscript);
+    return `0.${regularDigits}`;
+  }
 }
