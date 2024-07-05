@@ -1,15 +1,8 @@
-import React, {RefObject, useEffect, useState} from 'react';
+import React, { RefObject, useEffect, useState } from 'react';
 import Link from 'next/link';
-import {createGlobalStyle} from 'styled-components';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {
-  faArrowsLeftRightToLine,
-  faArrowsUpDown,
-  faCoins,
-  faMoon,
-  faSackDollar,
-  faSun
-} from '@fortawesome/free-solid-svg-icons';
+import { createGlobalStyle } from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoins, faMoon, faSackDollar, faSun, faWater } from '@fortawesome/free-solid-svg-icons';
 
 import AccountMenu from './account-menu';
 import NotificationMenu from './notification-menu';
@@ -17,9 +10,10 @@ import {
   Box,
   Button,
   Divider,
-  Flex, Grid,
+  Flex,
   Heading,
-  HStack, Icon,
+  HStack,
+  Icon,
   IconButton,
   Image,
   Menu,
@@ -35,17 +29,17 @@ import {
   useMediaQuery,
   useOutsideClick,
   VStack
-} from "@chakra-ui/react";
-import Cart from "./cart";
-import {ChevronDownIcon, CloseIcon, HamburgerIcon} from "@chakra-ui/icons";
-import Search from "@src/components-v2/shared/layout/navbar/search";
-import MobileSearchDrawer from "@src/components-v2/shared/layout/navbar/search/drawer";
-import {useTokenExchangeRate} from "@market/hooks/useGlobalPrices";
-import {appConfig} from "@src/Config";
-import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import {round} from "@market/helpers/utils";
-import ImageService from "@src/core/services/image";
-import {useUser} from "@src/components-v2/useUser";
+} from '@chakra-ui/react';
+import Cart from './cart';
+import { ChevronDownIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
+import Search from '@src/components-v2/shared/layout/navbar/search';
+import MobileSearchDrawer from '@src/components-v2/shared/layout/navbar/search/drawer';
+import { useTokenExchangeRate } from '@market/hooks/useGlobalPrices';
+import { appConfig } from '@src/Config';
+import FortuneIcon from '@src/components-v2/shared/icons/fortune';
+import { round } from '@market/helpers/utils';
+import ImageService from '@src/core/services/image';
+import { useUser } from '@src/components-v2/useUser';
 
 const config = appConfig();
 
@@ -165,6 +159,7 @@ const Header = function () {
                   <MenuList>
                     <MenuItem as={Link} href='https://swap.ebisusbay.com' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
                     <MenuItem as={Link} href='/dex/farms' _hover={{color: 'inherit'}} justifyContent='end'>Farms</MenuItem>
+                    <MenuItem as={Link} href='/liberator' _hover={{color: 'inherit'}} justifyContent='end'>Liberator</MenuItem>
                   </MenuList>
                 </Menu>
                 <Menu placement='bottom-end'>
@@ -278,19 +273,33 @@ const Header = function () {
                       Farms
                     </Button>
                   </Link>
+                  <Link href='/dex/farms'>
+                    <Button
+                      variant='outline'
+                      onClick={onClose}
+                      size='sm'
+                      color='white'
+                      fontWeight='bold'
+                      w='full'
+                      colorScheme='none'
+                      leftIcon={<Icon as={FontAwesomeIcon} icon={faWater} />}
+                    >
+                      Liberator
+                    </Button>
+                  </Link>
+                  <Button
+                    variant='outline'
+                    size='sm'
+                    color='white'
+                    fontWeight='bold'
+                    w='full'
+                    leftIcon={<Icon as={FontAwesomeIcon} icon={theme === 'dark' ? faMoon : faSun} />}
+                    colorScheme='none'
+                    onClick={handleToggleTheme}
+                  >
+                    Dark mode
+                  </Button>
                 </SimpleGrid>
-                <Button
-                  variant='outline'
-                  size='sm'
-                  color='white'
-                  fontWeight='bold'
-                  w='full'
-                  leftIcon={<Icon as={FontAwesomeIcon} icon={theme === 'dark' ? faMoon : faSun} />}
-                  colorScheme='none'
-                  onClick={handleToggleTheme}
-                >
-                  Dark mode
-                </Button>
               </Stack>
             </Box>
           ) : null}

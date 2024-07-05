@@ -218,6 +218,30 @@ const configData: AppConfigMap = {
         symbol: 'ROBIN',
         address: '0x664E4b17EA045fE92868821F3eE0a76a5dB38166',
         decimals: 18
+      },
+      sumo: {
+        name: 'SUMO',
+        symbol: 'SUMO',
+        address: '0x29bfaBFce6835E21dc69b728De73dD78235B8d25',
+        decimals: 18
+      },
+      yoshi: {
+        name: 'Baby Ryoshi',
+        symbol: 'YOSHI',
+        address: '0x4594104d43cEC6F5c8C6631294d5582D0d67EdE7',
+        decimals: 18
+      },
+      kitty: {
+        name: 'KitCoin',
+        symbol: 'KITTY',
+        address: '0x4d7c922D6C12CfbF5BC85F56c9ccB1F61f49bf61',
+        decimals: 18
+      },
+      moon: {
+        name: 'Moonflow',
+        symbol: 'MOON',
+        address: '0x46E2B5423F6ff46A8A35861EC9DAfF26af77AB9A',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -264,7 +288,8 @@ const configData: AppConfigMap = {
           'icy',
           'coom',
           'fftb',
-          'mery'
+          'mery',
+          'lwv'
         ],
         global: ['cro', 'frtn'],
         nft: {

@@ -34,6 +34,7 @@ const iconMapping: Record<string, (props: ChakraProps) => ReactElement> = {
   'lwv': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/lwv.webp').convert()} symbol='lwv' {...props} />,
   'btcronos': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/btcronos.webp').convert()} symbol='btcronos' {...props} />,
   'robin': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/robin.webp').convert()} symbol='robin' {...props} />,
+  'sumo': (props) => <IconImage src={ImageService.translate('/img/icons/tokens/sumo.webp').convert()} symbol='sumo' {...props} />,
 };
 
 const IconImage = ({ src, symbol, ...props }: ChakraProps & { src: string; symbol: string }) => (
@@ -58,7 +59,8 @@ const DynamicCurrencyIcon = ({address, ...props}: CurrencyIconMapperProps) => {
   }, [address]);
 
   const IconComponent = iconMapping[iconKey];
-  return IconComponent ? IconComponent(props) : null;
+  const FallbackComponent = <IconImage src={ImageService.translate(`/files/dex/images/tokens/${iconKey}.webp`).convert()} symbol={iconKey} {...props} />
+  return IconComponent ? IconComponent(props) : FallbackComponent;
 }
 
 export default DynamicCurrencyIcon;

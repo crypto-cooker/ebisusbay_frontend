@@ -1,5 +1,20 @@
 [
   {
+    "name": "Earn Network NFT Collection",
+    "start": 1719482400,
+    "end": 1720087200,
+    "placement": "rd-board",
+    "details": {
+      "weight": 2,
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/earn-network-nft-collection2-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/earn-network-nft-collection2-sm.webp",
+      "link": {
+        "url": "https://earn.network/prediction-markets-nft",
+        "external": true
+      }
+    }
+  },
+  {
     "name": "Bounty CRO Hunters",
     "start": 1716768012,
     "end": 1717286400,
