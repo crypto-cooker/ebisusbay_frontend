@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "dev-https": "next dev --experimental-https",
-    "build": "next build",
+    "build": "NODE_OPTIONS=--max-old-space-size=8192 next build",
     "predev": "pnpm run sync-updates",
     "start": "next start",
     "start-web": "NODE_OPTIONS=\"--max_old_space_size=1408\" next start",
@@ -81,6 +81,7 @@
     "big.js": "^6.2.1",
     "bootstrap": "5.2.3",
     "classnames": "^2.3.1",
+    "decimal.js-light": "^2.5.1",
     "dompurify": "^2.4.0",
     "dotenv": "^10.0.0",
     "ethers": "^5.7.2",

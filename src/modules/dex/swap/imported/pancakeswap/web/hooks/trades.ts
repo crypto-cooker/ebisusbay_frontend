@@ -3,12 +3,6 @@ import { Currency, CurrencyAmount, Token, TradeType } from '@pancakeswap/swap-sd
 import {isTradeBetter, Pair, Trade} from '@pancakeswap/sdk'
 import flatMap from 'lodash/flatMap'
 import { useMemo } from 'react'
-
-import {
-  ADDITIONAL_BASES,
-  BASES_TO_CHECK_TRADES_AGAINST,
-  CUSTOM_BASES,
-} from '@dex/swap/constants/evm'
 import {BETTER_TRADE_LESS_HOPS_THRESHOLD} from '@dex/swap/constants/exchange'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 import { PairState, useV2Pairs } from './usePairs'
@@ -17,6 +11,11 @@ import { PairState, useV2Pairs } from './usePairs'
 import { useActiveChainId } from './useActiveChainId'
 import {useUserSingleHopOnly} from "@dex/swap/state/user/hooks";
 import {ChainId} from "@pancakeswap/sdk";
+import {
+  ADDITIONAL_BASES,
+  BASES_TO_CHECK_TRADES_AGAINST,
+  CUSTOM_BASES
+} from "@pancakeswap/smart-router";
 // import {ChainId} from "@dex/swap/constants/chainId";
 // import {Pair} from "@dex/swap/overrides/pancakeswap/pair";
 
