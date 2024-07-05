@@ -2,7 +2,7 @@
 import {useAtom} from "jotai";
 import {dexUserStateAtom} from "@dex/swap/state/user/atom";
 import {SlippageTolerance} from "@dex/swap/state/user/types";
-import {Percent} from "@eb-pancakeswap/sdk";
+import {Percent} from "@pancakeswap/sdk";
 
 export function useUserExpertMode() {
   const [state, setState] = useAtom(dexUserStateAtom);

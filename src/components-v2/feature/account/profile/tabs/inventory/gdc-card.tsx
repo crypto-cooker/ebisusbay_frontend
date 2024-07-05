@@ -57,7 +57,7 @@ const GdcCard = ({nft, onClaim}: GdcCardProps) => {
             </Box>
           </div>
           <Flex direction='column' justify='space-between' px={2} py={1}>
-            <div className="card-title mt-auto">
+            <div className="mt-auto">
               <span onClick={() => navigateTo(nftUrl.toString())} style={{ cursor: 'pointer' }}>
                 <Heading as="h6" size="sm">{nft.name}</Heading>
               </span>

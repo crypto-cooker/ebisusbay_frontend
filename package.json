@@ -6,12 +6,12 @@
   "scripts": {
     "dev": "next dev",
     "dev-https": "next dev --experimental-https",
-    "build": "NODE_OPTIONS=--max-old-space-size=8192 next build",
-    "codegen": "graphql-codegen --config dev/codegen.ts",
-    "predev": "npm run codegen",
+    "build": "next build",
+    "predev": "pnpm run sync-updates",
     "start": "next start",
     "start-web": "NODE_OPTIONS=\"--max_old_space_size=1408\" next start",
-    "format": "prettier --write \"**/*.+(js|jsx|json|md|mdx|css|scss)\""
+    "format": "prettier --write \"**/*.+(js|jsx|json|md|mdx|css|scss)\"",
+    "sync-updates": "node sync-pancakeswap.js"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,md,mdx}": [
@@ -20,14 +20,18 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "chrome >= 67",
+      "edge >= 79",
+      "firefox >= 68",
+      "opera >= 54",
+      "safari >= 14"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      ">0.2%",
+      "not ie <= 99",
+      "not android <= 4.4.4",
+      "not dead",
+      "not op_mini all"
     ]
   },
   "dependencies": {
@@ -45,9 +49,15 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@next/third-parties": "^14.2.3",
-    "@pancakeswap/multicall": "^3.5.7",
-    "@pancakeswap/price-api-sdk": "^1.2.15",
-    "@pancakeswap/smart-router": "^6.0.13",
+    "@pancakeswap/chains": "workspace:../eb-pancake-frontend/packages/chains",
+    "@pancakeswap/multicall": "workspace:../eb-pancake-frontend/packages/multicall",
+    "@pancakeswap/sdk": "workspace:../eb-pancake-frontend/packages/swap-sdk",
+    "@pancakeswap/smart-router": "workspace:../eb-pancake-frontend/packages/smart-router",
+    "@pancakeswap/swap-sdk-core": "workspace:../eb-pancake-frontend/packages/swap-sdk-core",
+    "@pancakeswap/swap-sdk-evm": "workspace:../eb-pancake-frontend/packages/swap-sdk-evm",
+    "@pancakeswap/token-lists": "workspace:../eb-pancake-frontend/packages/token-lists",
+    "@pancakeswap/tokens": "workspace:../eb-pancake-frontend/packages/tokens",
+    "@pancakeswap/utils": "workspace:../eb-pancake-frontend/packages/utils",
     "@pinata/ipfs-gateway-tools": "^1.1.6",
     "@reduxjs/toolkit": "^1.9.1",
     "@sentry/nextjs": "^7.106.1",
@@ -69,7 +79,7 @@
     "axios": "^1.6.2",
     "bad-words": "^3.0.4",
     "big.js": "^6.2.1",
-    "bootstrap": "^5.2.3",
+    "bootstrap": "5.2.3",
     "classnames": "^2.3.1",
     "dompurify": "^2.4.0",
     "dotenv": "^10.0.0",
@@ -137,6 +147,7 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "msw": "^2.2.3",
-    "prettier": "^3.2.5"
+    "prettier": "^3.2.5",
+    "ts-loader": "^9.5.1"
   }
 }

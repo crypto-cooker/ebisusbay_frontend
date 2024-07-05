@@ -7,7 +7,7 @@ import {useEffect, useMemo, useState} from "react";
 import {isAddress} from "@market/helpers/utils";
 import {useQuery} from "@tanstack/react-query";
 import {wagmiConfig} from "@src/wagmi";
-import {CurrencyAmount, Token} from "@eb-pancakeswap/sdk";
+import {CurrencyAmount, Token} from "@pancakeswap/sdk";
 
 export function useAllTokenBalances(): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
   const user = useUser();

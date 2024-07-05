@@ -153,7 +153,7 @@ const StakingNftCard = ({
             </Box>
           </div>
           <Flex p={2} pb={1}>
-            <Box mt='auto' className="card-title">
+            <Box mt='auto'>
               <Box onClick={handleSelect} style={{ cursor: 'pointer' }} fontSize='sm' fontWeight='bold'>
                 {nft.name}
               </Box>

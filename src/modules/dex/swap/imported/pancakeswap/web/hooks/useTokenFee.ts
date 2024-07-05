@@ -1,4 +1,4 @@
-import { ERC20Token, WNATIVE } from '@eb-pancakeswap/sdk'
+import { ERC20Token, WNATIVE } from '@pancakeswap/sdk'
 import { feeOnTransferDetectorAddresses, fetchTokenFeeOnTransfer } from '@pancakeswap/smart-router'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { usePublicClient } from 'wagmi'

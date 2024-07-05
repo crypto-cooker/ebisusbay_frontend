@@ -1,4 +1,4 @@
-import {Currency, CurrencyAmount, Pair, pancakePairV2ABI} from '@eb-pancakeswap/sdk'
+import {Currency, CurrencyAmount, Pair, pancakePairV2ABI} from '@pancakeswap/sdk'
 import { useMemo } from 'react'
 
 import { wrappedCurrency } from '@eb-pancakeswap-web/utils/wrappedCurrency'

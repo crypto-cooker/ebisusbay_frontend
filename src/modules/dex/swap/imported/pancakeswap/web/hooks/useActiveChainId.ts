@@ -5,7 +5,7 @@ import { useDeferredValue, useMemo } from 'react'
 import { isChainSupported } from '../utils/wagmi'
 import { useAccount } from 'wagmi'
 import { useSessionChainId } from './useSessionChainId'
-import {ChainId} from "@eb-pancakeswap/sdk";
+import {ChainId} from "@pancakeswap/sdk";
 
 const queryChainIdAtom = atom(-1) // -1 unload, 0 no chainId on query
 

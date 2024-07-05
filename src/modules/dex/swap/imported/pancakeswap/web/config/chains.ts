@@ -1,4 +1,4 @@
-import { ChainId, chainNames } from '@eb-pancakeswap/chains'
+import { ChainId, chainNames } from '@pancakeswap/chains'
 import memoize from 'lodash/memoize'
 import {
   Chain,

@@ -8,12 +8,12 @@ import {
   Token,
   TradeType,
   ZERO,
-} from '@eb-pancakeswap/sdk'
+} from '@pancakeswap/sdk'
 import { Route, SmartRouter, SmartRouterTrade } from '@pancakeswap/smart-router'
 import { FeeAmount } from '@pancakeswap/v3-sdk'
 import {Field} from "@eb-pancakeswap-web/state/swap/actions";
 import {BIPS_BASE, INPUT_FRACTION_AFTER_FEE} from "@dex/swap/constants/exchange";
-import {formatPrice, parseNumberToFraction} from "@eb-pancakeswap/utils/formatFractions";
+import {formatPrice, parseNumberToFraction} from "@pancakeswap/utils/formatFractions";
 import {basisPointsToPercent} from "@eb-pancakeswap-web/utils/exchange";
 
 export type SlippageAdjustedAmounts = {

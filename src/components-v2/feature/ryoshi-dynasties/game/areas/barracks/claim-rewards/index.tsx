@@ -170,8 +170,8 @@ const ClaimRewards = ({isOpen, onClose}: StakeNftsProps) => {
                               maxW={'100%'}
                               justifyContent='space-between'
                             >
-                              <Heading isTruncated width={140} as="h6" size="sm" className="card-title mt-auto mb-1">{GetTokenName(battleReward.tokenId)}</Heading>
-                              <Heading  as="h6" size="sm" className="card-title mt-auto mb-1">x{battleReward.amount}</Heading>
+                              <Heading isTruncated width={140} as="h6" size="sm" className="mt-auto mb-1">{GetTokenName(battleReward.tokenId)}</Heading>
+                              <Heading  as="h6" size="sm" className="mt-auto mb-1">x{battleReward.amount}</Heading>
                             </Box>
                           </Box>
                         </Flex>

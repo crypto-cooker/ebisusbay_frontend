@@ -135,7 +135,7 @@ const Tabs = ({ nft }) => {
                         {nft.collectionName && (
                           <Link href={`/collection/${nft.address}`}>
                             <h6
-                              className="card-title mt-auto fw-normal mb-0"
+                              className="mt-auto fw-normal mb-0"
                               style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
                             >
                               {nft.name}

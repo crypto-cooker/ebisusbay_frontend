@@ -1,4 +1,4 @@
-import { ChainId } from '@eb-pancakeswap/chains'
+import { ChainId } from '@pancakeswap/chains'
 import { useActiveChainId } from './useActiveChainId'
 import { useMemo } from 'react'
 import { useEnsAddress } from 'wagmi'

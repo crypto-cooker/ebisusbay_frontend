@@ -381,7 +381,7 @@ const HeroNft = ({nft}: {nft: WalletNft}) => {
             <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>
           )}
           <div className="d-flex flex-column p-2 pb-1">
-            <div className="card-title mt-auto">
+            <div className="mt-auto">
               <span style={{ cursor: 'pointer' }}>
                 {nft.balance && nft.balance > 1 ? (
                   <Heading as="h6" size="sm">

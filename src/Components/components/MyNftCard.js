@@ -234,7 +234,7 @@ const MyNftCard = ({
           </div>
           {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
           <Flex direction='column' justify='space-between' px={2} py={1}>
-            <div className="card-title mt-auto">
+            <div className="mt-auto">
               <span onClick={() => navigateTo(nftUrl)} style={{ cursor: 'pointer' }}>
                 {nft.balance && nft.balance > 1 ? (
                   <Heading as="h6" size="sm">

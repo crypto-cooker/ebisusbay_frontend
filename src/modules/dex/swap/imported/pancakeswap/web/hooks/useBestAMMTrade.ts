@@ -1,4 +1,4 @@
-// import { ChainId } from '@eb-pancakeswap/chains'
+// import { ChainId } from '@pancakeswap/chains'
 // import { getPoolTypeKey, getRequestBody, parseAMMPriceResponse, parseQuoteResponse } from '@pancakeswap/price-api-sdk'
 // import { Currency, CurrencyAmount, TradeType } from '@pancakeswap/sdk'
 // import { zeroAddress } from 'viem'
@@ -11,8 +11,8 @@
 //   SmartRouterTrade,
 //   V4Router,
 // } from '@pancakeswap/smart-router'
-// import { BigintIsh } from '@eb-pancakeswap/swap-sdk-core'
-// import { AbortControl } from '@eb-pancakeswap/utils/abortControl'
+// import { BigintIsh } from '@pancakeswap/swap-sdk-core'
+// import { AbortControl } from '@pancakeswap/utils/abortControl'
 // import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query'
 // import { useAccount } from 'wagmi'
 // import qs from 'qs'

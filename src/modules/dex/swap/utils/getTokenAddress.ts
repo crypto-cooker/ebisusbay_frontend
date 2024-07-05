@@ -1,4 +1,4 @@
-import {ChainId, NATIVE, WNATIVE} from "@eb-pancakeswap/sdk";
+import {ChainId, NATIVE, WNATIVE} from "@pancakeswap/sdk";
 
 export const getTokenAddress = (chainId: number | undefined, tokenAddress: string | undefined) => {
   if (!tokenAddress || !chainId) {

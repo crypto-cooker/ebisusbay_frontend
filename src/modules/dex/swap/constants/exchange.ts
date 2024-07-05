@@ -1,9 +1,7 @@
-import {Percent, Token, WNATIVE} from '@eb-pancakeswap/sdk'
-import {USDC, USDT,} from '@eb-pancakeswap/tokens'
+import {Percent, Token, WNATIVE} from '@pancakeswap/sdk'
+import {cronosTestnetTokens, cronosTokens, USDC, USDT,} from '@pancakeswap/tokens'
 import {ChainTokenList} from './types'
-import {cronosTokens} from "@dex/swap/packages/tokens/constants/cronos";
-import {cronosTestnetTokens} from "@dex/swap/packages/tokens/constants/cronosTestnet";
-import {ChainId} from "@eb-pancakeswap/chains";
+import {ChainId} from "@pancakeswap/chains";
 
 export {
   ADDITIONAL_BASES,

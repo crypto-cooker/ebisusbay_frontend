@@ -176,7 +176,7 @@ const ManageAuctionList = () => {
                     )}
                   </div>
                   <div className="card-body d-flex flex-column">
-                    <h6 className="card-title mt-auto">{auction.nft.metadata.name}</h6>
+                    <h6 className="mt-auto">{auction.nft.metadata.name}</h6>
                     <p className="card-text">
                       {commify(auction.getHighestBid)} MAD <br />
                       State: {mapStateToHumanReadable(auction)}
@@ -206,7 +206,7 @@ const ManageAuctionList = () => {
               <div className="card eb-nft__card h-100 shadow">
                 <img src={auction.nft.image} className={`card-img-top marketplace`} alt={auction.nft.name} />
                 <div className="card-body d-flex flex-column">
-                  <h6 className="card-title mt-auto">{auction.nft.name}</h6>
+                  <h6 className="mt-auto">{auction.nft.name}</h6>
                   <p className="card-text">
                     {commify(auction.getHighestBid)} MAD <br />
                     State: {mapStateToHumanReadable(auction)}

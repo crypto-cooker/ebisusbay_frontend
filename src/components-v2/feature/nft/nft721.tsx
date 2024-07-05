@@ -1119,7 +1119,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
                                   {nft.collectionName && (
                                     <Link href={`/collection/${nft.collectionSlug ?? nft.address}`}>
                                       <h6
-                                        className="card-title mt-auto fw-normal mb-0"
+                                        className="mt-auto fw-normal mb-0"
                                         style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
                                       >
                                         {nft.collectionName}

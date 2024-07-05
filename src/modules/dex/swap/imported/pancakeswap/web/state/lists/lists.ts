@@ -1,4 +1,4 @@
-import { createListsAtom, createTokenListReducer, NEW_LIST_STATE } from '@eb-pancakeswap/token-lists/react'
+import { createListsAtom, createTokenListReducer, NEW_LIST_STATE } from '@pancakeswap/token-lists/react'
 import { DEFAULT_ACTIVE_LIST_URLS, DEFAULT_LIST_OF_LISTS, UNSUPPORTED_LIST_URLS } from '@eb-pancakeswap-web/config/constants/lists'
 
 export const initialState = {

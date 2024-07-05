@@ -1,4 +1,4 @@
-import { ChainId } from '@eb-pancakeswap/chains'
+import { ChainId } from '@pancakeswap/chains'
 
 export default {
   multiCall: {

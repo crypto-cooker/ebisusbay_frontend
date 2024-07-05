@@ -51,7 +51,7 @@ const BoostSlotCard = ({slot, onUnstake, onSelect, isSelected}: BoostSlotCardPro
             </div>
             {slot.nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{slot.nft.rank}</div>}
             <div className="d-flex flex-column p-2 pb-1">
-              <div className="card-title mt-auto">
+              <div className="mt-auto">
                 {slot.nft.count && slot.nft.count > 0 ? (
                     <Heading as="h6" size="sm">
                       {slot.nft.name} (x{slot.nft.count})

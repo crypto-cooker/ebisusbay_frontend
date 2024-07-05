@@ -322,7 +322,7 @@ const Rugsurance = () => {
                               {nft.reason.toUpperCase()}
                             </span>
                           )}
-                          <h6 className="card-title mt-auto">{nft.name}</h6>
+                          <h6 className="mt-auto">{nft.name}</h6>
                           {nft.isEligible ? (
                             <div className="nft__item_action">
                               <span style={{ cursor: 'pointer' }} onClick={() => selectNft(nft)}>
@@ -376,7 +376,7 @@ const Rugsurance = () => {
                           <span className="fw-bold" style={{ color: 'red', fontSize: '0.7rem' }}>
                             {nft.reason.toUpperCase()}
                           </span>
-                          <h6 className="card-title mt-auto">{nft.name}</h6>
+                          <h6 className="mt-auto">{nft.name}</h6>
                         </div>
                       </div>
                     </div>

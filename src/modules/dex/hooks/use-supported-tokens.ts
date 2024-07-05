@@ -1,7 +1,7 @@
 import {appConfig} from "@src/Config";
 import tokens from '@dex/configs/tokens.json';
 import {useMemo} from "react";
-import {Token} from "@eb-pancakeswap/sdk";
+import {Token} from "@pancakeswap/sdk";
 import {Address} from "viem";
 
 const config = appConfig();

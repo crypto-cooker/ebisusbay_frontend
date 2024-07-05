@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-import { Currency, CurrencyAmount, Token, TradeType } from '@eb-pancakeswap/swap-sdk-core'
-import {isTradeBetter, Pair, Trade} from '@eb-pancakeswap/v2-sdk'
+import { Currency, CurrencyAmount, Token, TradeType } from '@pancakeswap/swap-sdk-core'
+import {isTradeBetter, Pair, Trade} from '@pancakeswap/sdk'
 import flatMap from 'lodash/flatMap'
 import { useMemo } from 'react'
 
@@ -16,7 +16,7 @@ import { PairState, useV2Pairs } from './usePairs'
 // import { useUnsupportedTokens, useWarningTokens } from './tokens'
 import { useActiveChainId } from './useActiveChainId'
 import {useUserSingleHopOnly} from "@dex/swap/state/user/hooks";
-import {ChainId} from "@eb-pancakeswap/sdk";
+import {ChainId} from "@pancakeswap/sdk";
 // import {ChainId} from "@dex/swap/constants/chainId";
 // import {Pair} from "@dex/swap/overrides/pancakeswap/pair";
 

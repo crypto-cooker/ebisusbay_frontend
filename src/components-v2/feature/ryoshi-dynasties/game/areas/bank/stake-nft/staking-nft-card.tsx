@@ -187,7 +187,7 @@ const StakingNftCard = ({
             <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>
           )}
           <div className="d-flex flex-column p-2 pb-1">
-            <div className="card-title mt-auto">
+            <div className="mt-auto">
               <span onClick={handleSelect} style={{ cursor: 'pointer' }}>
                 {nft.count && nft.count > 0 ? (
                   <Heading as="h6" size="sm">

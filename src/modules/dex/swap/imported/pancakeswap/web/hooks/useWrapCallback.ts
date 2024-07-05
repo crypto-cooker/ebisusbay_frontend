@@ -1,6 +1,6 @@
-import { Currency, WNATIVE } from '@eb-pancakeswap/sdk'
+import { Currency, WNATIVE } from '@pancakeswap/sdk'
 import { useMemo } from 'react'
-import tryParseAmount from '@eb-pancakeswap/utils/tryParseAmount'
+import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import useAccountActiveChain from '@eb-pancakeswap-web/hooks/useAccountActiveChain'

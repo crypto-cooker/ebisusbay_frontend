@@ -11,7 +11,7 @@ import {useAtom} from "jotai";
 import {RESET} from "jotai/utils";
 import {isUserBlacklisted} from "@market/helpers/utils";
 import {useColorMode} from "@chakra-ui/react";
-import {useWeb3ModalTheme} from "@web3modal/scaffold-react";
+import {useWeb3ModalTheme} from "@web3modal/wagmi/react";
 import {storageSignerAtom} from "@market/state/jotai/atoms/storage";
 import * as Sentry from "@sentry/react";
 import {themeAtom} from "@market/state/jotai/atoms/theme";

@@ -1,7 +1,7 @@
 import {Field, SwapTab} from "src/modules/dex/swap/constants";
 import {ReactNode} from "react";
 import {atom} from "jotai/index";
-import {ChainId, Currency, CurrencyAmount, Percent} from "@eb-pancakeswap/sdk";
+import {ChainId, Currency, CurrencyAmount, Percent} from "@pancakeswap/sdk";
 import {TradeState} from "@eb-pancakeswap-web/state/swap/types";
 
 export interface SwapPageState {

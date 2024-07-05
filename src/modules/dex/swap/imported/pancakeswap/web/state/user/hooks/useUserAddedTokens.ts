@@ -1,5 +1,5 @@
 import { Token } from '@pancakeswap/sdk'
-import { deserializeToken } from '@eb-pancakeswap/token-lists'
+import { deserializeToken } from '@pancakeswap/token-lists'
 import { createSelector } from '@reduxjs/toolkit'
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId'
 import { useMemo } from 'react'

@@ -227,7 +227,7 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
             {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
             <Flex direction='column' justify='space-between' px={2} py={1}>
               <Link href={nftUrl}>
-                <Heading as="h6" size="sm" className="card-title mt-auto">{nft.name}</Heading>
+                <Heading as="h6" size="sm" className="mt-auto">{nft.name}</Heading>
               </Link>
               {getIsNftListed() && (
                 <Tooltip label="Listing Price" placement='top-start'>

@@ -1,6 +1,6 @@
 // import { TradeType } from '@pancakeswap/sdk'
-// import tryParseAmount from '@eb-pancakeswap/utils/tryParseAmount'
-// import { useUserSingleHopOnly } from '@eb-pancakeswap/utils/user'
+// import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
+// import { useUserSingleHopOnly } from '@pancakeswap/utils/user'
 //
 // import { useCurrency } from '@eb-pancakeswap-web/hooks/tokens'
 // import { useDeferredValue, useMemo } from 'react'

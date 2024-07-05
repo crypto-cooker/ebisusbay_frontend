@@ -1,14 +1,6 @@
-// import {ChainId} from "@dex/swap/constants/chainId";
-import {ERC20Token} from "@pancakeswap/swap-sdk-evm";
 import {ChainMap, ChainTokenList} from "@dex/swap/constants/types";
-// import {USDC} from "@dex/swap/constants/tokens/common";
-import {USDT, WBTC_ETH} from "@pancakeswap/tokens";
-import {Token} from "@pancakeswap/sdk";
-import {cronosTokens} from "@dex/swap/packages/tokens/constants/cronos";
-// import {WNATIVE} from "@dex/swap/constants/tokens/native";
-import {Address, Hash} from "viem";
-import {ChainId, WNATIVE} from "@eb-pancakeswap/sdk";
-import {USDC} from "@eb-pancakeswap/tokens";
+import {cronosTokens, USDC, USDT} from "@pancakeswap/tokens";
+import {ChainId, Token, WNATIVE} from "@pancakeswap/sdk";
 
 export const SMART_ROUTER_ADDRESSES = {
   [ChainId.ETHEREUM]: '',
@@ -30,7 +22,7 @@ export const STABLE_SWAP_INFO_ADDRESS: ChainMap<string> = {
 
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
-  [ChainId.ETHEREUM]: [WNATIVE[ChainId.ETHEREUM], USDC[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM], WBTC_ETH],
+  [ChainId.ETHEREUM]: [WNATIVE[ChainId.ETHEREUM], USDC[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM]],
   [ChainId.CRONOS]: [
     WNATIVE[ChainId.CRONOS],
     USDC[ChainId.CRONOS],

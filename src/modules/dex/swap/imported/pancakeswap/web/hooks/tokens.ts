@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-import { ChainId } from '@eb-pancakeswap/chains'
-import { Currency, ERC20Token, NativeCurrency } from '@eb-pancakeswap/sdk'
+import { ChainId } from '@pancakeswap/chains'
+import { Currency, ERC20Token, NativeCurrency } from '@pancakeswap/sdk'
 
 import { TokenAddressMap } from '@pancakeswap/token-lists'
 import { useAtomValue } from 'jotai'

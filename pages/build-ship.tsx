@@ -273,7 +273,7 @@ const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected }:
               />
             )}
             <div className="card-body">
-              <h5 className="card-title">Engine</h5>
+              <h5>Engine</h5>
               <p className="card-text">Parts Collected: {quantityCollected[0]}</p>
             </div>
           </div>
@@ -288,7 +288,7 @@ const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected }:
               />
             )}
             <div className="card-body">
-              <h5 className="card-title">Booster</h5>
+              <h5>Booster</h5>
               <p className="card-text">Parts Collected: {quantityCollected[1]}</p>
             </div>
           </div>
@@ -303,14 +303,14 @@ const ShipBuilderCard = ({ type, shipAddress, mintCallback, quantityCollected }:
               />
             )}
             <div className="card-body">
-              <h5 className="card-title">Space Deck</h5>
+              <h5>Space Deck</h5>
               <p className="card-text">Parts Collected: {quantityCollected[2]}</p>
             </div>
           </div>
           <div className="border-0">
             <div className="card-body d-flex justify-content-center">
               <div className="align-self-center">
-                <h5 className="card-title d-flex text-center">Build {humanizeAdvanced(type)} Ship</h5>
+                <h5 className="d-flex text-center">Build {humanizeAdvanced(type)} Ship</h5>
                 <div className="row row-cols-1 g-3 mt-2 d-block">
                   {quantityCollected[0] > 0 && quantityCollected[1] > 0 && quantityCollected[2] > 0 ? (
                     <>

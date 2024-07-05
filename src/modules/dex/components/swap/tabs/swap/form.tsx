@@ -4,15 +4,15 @@ import {ArrowDownIcon, SettingsIcon} from "@chakra-ui/icons";
 import {Field} from "src/modules/dex/swap/constants";
 import React, {ReactNode, useCallback, useMemo} from "react";
 import SwapCurrencyInputPanel from "@dex/components/swap/tabs/swap/swap-currency-input-panel";
-import {Currency, CurrencyAmount, Percent} from "@eb-pancakeswap/sdk";
+import {Currency, CurrencyAmount, Percent} from "@pancakeswap/sdk";
 import {useCurrency} from "@eb-pancakeswap-web/hooks/tokens";
 // import {useIsWrapping} from "@eb-pancakeswap-web/hooks/useIsWrapping";
-import replaceBrowserHistory from "@eb-pancakeswap/utils/replaceBrowserHistory";
+import replaceBrowserHistory from "@pancakeswap/utils/replaceBrowserHistory";
 import {useUser} from "@src/components-v2/useUser";
 import {maxAmountSpend} from "@eb-pancakeswap-web/utils/maxAmountSpend";
 import {useDefaultsFromURLSearch, useDerivedSwapInfo, useSwapState} from "@eb-pancakeswap-web/state/swap/hooks";
 import currencyId from "@eb-pancakeswap-web/utils/currencyId";
-import {formatAmount} from "@eb-pancakeswap/utils/formatFractions";
+import {formatAmount} from "@pancakeswap/utils/formatFractions";
 import {useSwapActionHandlers} from "@eb-pancakeswap-web/state/swap/useSwapActionHandlers";
 import {useCurrencyBalances} from "@eb-pancakeswap-web/state/wallet/hooks";
 

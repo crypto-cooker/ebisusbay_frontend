@@ -238,7 +238,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
               {listing.collection && (
                 <Link href={`/collection/${listing.collection.slug}`}>
                   <h6
-                    className="card-title mt-auto fw-normal"
+                    className="mt-auto fw-normal"
                     style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
                   >
                     {listing.collection.name}
@@ -246,7 +246,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                 </Link>
               )}
               <Link href={`/collection/${listing.collection.slug}/${listing.nftId}`}>
-                <Heading as="h6" size="sm" className="card-title mt-auto mb-1">{listing.nft.name}{listing.amount > 1 ? ` (x${listing.amount})` : ''}</Heading>
+                <Heading as="h6" size="sm" className="mt-auto mb-1">{listing.nft.name}{listing.amount > 1 ? ` (x${listing.amount})` : ''}</Heading>
               </Link>
 
               <Tooltip label="Listing Price" placement='top-start'>

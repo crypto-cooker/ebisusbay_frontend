@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Fraction, Percent, Trade, TradeType } from '@eb-pancakeswap/sdk'
+import { Currency, CurrencyAmount, Fraction, Percent, Trade, TradeType } from '@pancakeswap/sdk'
 import { pancakeRouter02ABI } from '@eb-pancakeswap-web/config/abi/IPancakeRouter02'
 import {
   ALLOWED_PRICE_IMPACT_HIGH,

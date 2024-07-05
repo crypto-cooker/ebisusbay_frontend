@@ -1,4 +1,5 @@
 const { withSentryConfig } = require("@sentry/nextjs");
+const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -36,7 +37,10 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
-  webpack: (config, { isServer }) => {
+  transpilePackages: [
+    '@pancakeswap/utils',
+  ],
+  webpack: (config, { isServer, defaultLoaders }) => {
     config.externals.push(
         "pino-pretty",
         "lokijs",
@@ -45,6 +49,26 @@ const nextConfig = {
     if (!isServer) {
       config.resolve.alias.fs = false;
     }
+
+    config.module.rules.push({
+      test: /\.tsx?$/,
+      use: [
+        defaultLoaders.babel,
+        {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+          },
+        },
+      ],
+      include: [
+        path.resolve(__dirname, '../eb-pancake-frontend/packages'),
+      ],
+      exclude: /node_modules/,
+    });
+
+    config.resolve.alias['jotai'] = path.resolve(__dirname, 'node_modules/jotai');
+
     return config;
   },
   async redirects() {
@@ -250,13 +274,13 @@ const nextConfig = {
         permanent: false,
         basePath: false,
       },
-      {
-        source: '/dex/swap',
-        destination:
-          'https://swap.ebisusbay.com/#/swap',
-        permanent: false,
-        basePath: false,
-      }
+      // {
+      //   source: '/dex/swap',
+      //   destination:
+      //     'https://swap.ebisusbay.com/#/swap',
+      //   permanent: false,
+      //   basePath: false,
+      // }
     ];
   }
 };
