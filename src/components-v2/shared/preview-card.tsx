@@ -4,9 +4,8 @@ import {faCheck, faCircle, faExternalLink} from '@fortawesome/free-solid-svg-ico
 import styled from 'styled-components';
 
 import LayeredIcon from '../../Components/components/LayeredIcon';
-import {Box, Heading, Icon, Text} from "@chakra-ui/react";
+import {Box, Heading, Icon, Text, useColorModeValue} from "@chakra-ui/react";
 import {useRouter} from "next/router";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import ImageService from "@src/core/services/image";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 

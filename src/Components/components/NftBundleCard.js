@@ -8,7 +8,7 @@ import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {appUrl, createSuccessfulAddCartContent, isNftBlacklisted, round, siPrefixedNumber, timeSince} from '@market/helpers/utils';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
-import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
+import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard, useColorModeValue} from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faBoltLightning,
@@ -18,7 +18,6 @@ import {
   faShoppingBag,
   faSync,
 } from "@fortawesome/free-solid-svg-icons";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/global/theme/theme";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {toast} from "react-toastify";

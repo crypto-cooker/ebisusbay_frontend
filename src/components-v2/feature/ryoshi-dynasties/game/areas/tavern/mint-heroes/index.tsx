@@ -14,6 +14,7 @@ import {
   SimpleGrid,
   Spinner,
   Text,
+  useColorModeValue,
   useNumberInput,
   VStack
 } from "@chakra-ui/react";
@@ -29,7 +30,6 @@ import {ERC1155} from "@src/global/contracts/Abis";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";

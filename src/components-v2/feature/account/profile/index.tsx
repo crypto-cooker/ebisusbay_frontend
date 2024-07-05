@@ -34,6 +34,7 @@ import {
   Text,
   useBreakpointValue,
   useClipboard,
+  useColorModeValue,
   useMediaQuery,
   Wrap
 } from "@chakra-ui/react";
@@ -48,7 +49,6 @@ import {ChevronDownIcon} from "@chakra-ui/icons";
 import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
 import Link from "next/link";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {toast} from "react-toastify";
 

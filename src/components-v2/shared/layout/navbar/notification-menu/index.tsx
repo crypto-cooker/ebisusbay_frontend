@@ -22,9 +22,9 @@ import {
   Flex,
   Image,
   Spinner,
-  Text
+  Text,
+  useColorModeValue
 } from "@chakra-ui/react";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
 import Markdown from "react-markdown";

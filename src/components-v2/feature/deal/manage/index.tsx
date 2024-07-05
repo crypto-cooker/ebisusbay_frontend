@@ -34,6 +34,7 @@ import {
   Text,
   useBreakpointValue,
   useClipboard,
+  useColorModeValue,
   useDisclosure,
   VStack
 } from "@chakra-ui/react";
@@ -44,7 +45,6 @@ import useGetProfilePreview from "@market/hooks/useGetUsername";
 import {Card} from "@src/components-v2/foundation/card";
 import {GetDealItemPreview} from "@src/components-v2/feature/deal/manage/preview-item";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import {appUrl, ciEquals, getLengthOfTime, round} from "@market/helpers/utils";
 import {ApiService} from "@src/core/services/api-service";

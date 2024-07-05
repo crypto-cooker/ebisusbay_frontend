@@ -9,12 +9,12 @@ import {
   InputRightElement,
   Spinner,
   Text,
+  useColorModeValue,
   useDisclosure,
   useOutsideClick,
   VStack
 } from "@chakra-ui/react";
 import React, {ChangeEvent, RefObject, useCallback, useEffect, useState} from "react";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useRouter} from "next/router";
 import {ChevronDownIcon, SearchIcon} from "@chakra-ui/icons";
 import useDebounce from "@src/core/hooks/useDebounce";

@@ -1,7 +1,6 @@
 import {isBundle} from "@market/helpers/utils";
 
 
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import React, {ReactNode, useState} from "react";
 import {
   Box,
@@ -15,7 +14,8 @@ import {
   Tag,
   TagLabel,
   TagLeftIcon,
-  Text
+  Text,
+  useColorModeValue
 } from "@chakra-ui/react";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";

@@ -30,10 +30,10 @@ import {
   Text,
   Tooltip,
   useBreakpointValue,
-  useClipboard
+  useClipboard,
+  useColorModeValue
 } from "@chakra-ui/react";
 import {appUrl, ciEquals, isLandDeedsCollection, round, siPrefixedNumber, timeSince} from "@market/helpers/utils";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/global/theme/theme";
 import {useSelector} from "react-redux";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";

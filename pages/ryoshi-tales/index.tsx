@@ -1,7 +1,6 @@
-import { Heading, Text, Box, Image, Center, Link } from "@chakra-ui/react";
+import { Heading, Text, Box, Image, Center, Link, useColorModeValue } from "@chakra-ui/react";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {hostedImage} from "@src/helpers/image";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import ImageService from "@src/core/services/image";
 
 

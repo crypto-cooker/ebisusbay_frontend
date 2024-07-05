@@ -29,11 +29,11 @@ import {
   Tooltip,
   useBreakpointValue,
   useClipboard,
+  useColorModeValue,
   useDisclosure
 } from "@chakra-ui/react";
 import Image from "next/image";
 import {appUrl, ciEquals, round, siPrefixedNumber, timeSince} from "@market/helpers/utils";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/global/theme/theme";
 import {useSelector} from "react-redux";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";

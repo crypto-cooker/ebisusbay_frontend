@@ -12,11 +12,11 @@ import {
   StatLabel,
   StatNumber,
   Text,
-  useBreakpointValue
+  useBreakpointValue,
+  useColorModeValue
 } from "@chakra-ui/react";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import {ciEquals, ciIncludes, siPrefixedNumber} from "@market/helpers/utils";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";
 import CollectionsTab from "@src/components-v2/feature/brand/tabs/collections";

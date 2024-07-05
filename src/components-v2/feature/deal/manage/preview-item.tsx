@@ -1,5 +1,4 @@
 import React, {useMemo} from "react";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {
   AccordionButton,
   AccordionIcon,
@@ -13,6 +12,7 @@ import {
   Stat,
   StatLabel,
   StatNumber,
+  useColorModeValue,
   VStack,
   Wrap
 } from "@chakra-ui/react";

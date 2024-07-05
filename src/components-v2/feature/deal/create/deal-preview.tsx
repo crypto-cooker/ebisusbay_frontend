@@ -23,10 +23,10 @@ import {
   Slide,
   Stack,
   VStack,
-  Wrap
+  Wrap,
+  useColorModeValue
 } from "@chakra-ui/react";
 import {uniqueNftId} from "@market/helpers/utils";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import ImageService from "@src/core/services/image";

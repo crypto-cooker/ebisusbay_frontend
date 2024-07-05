@@ -1,8 +1,7 @@
 import React, {memo} from 'react';
 import {nftCardUrl} from "@src/helpers/image";
-import {Box, Flex, Heading, Spacer, useClipboard} from "@chakra-ui/react";
+import {Box, Flex, Heading, Spacer, useClipboard, useColorModeValue} from "@chakra-ui/react";
 import {appUrl} from "@market/helpers/utils";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import Button from "@src/Components/components/Button";
 

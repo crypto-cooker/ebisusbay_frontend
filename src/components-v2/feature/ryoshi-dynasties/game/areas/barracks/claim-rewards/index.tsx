@@ -1,4 +1,4 @@
-import {Box, Center, Flex, Heading, Image, SimpleGrid, Spacer, Spinner, Text} from "@chakra-ui/react"
+import {Box, Center, Flex, Heading, Image, SimpleGrid, Spacer, Spinner, Text, useColorModeValue} from "@chakra-ui/react"
 
 import React, {useState} from 'react';
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
@@ -8,7 +8,6 @@ import Resources from "@src/global/contracts/Resources.json";
 import {Contract} from "ethers";
 import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import {ApiService} from "@src/core/services/api-service";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {darkTheme, lightTheme} from "@src/global/theme/theme";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";

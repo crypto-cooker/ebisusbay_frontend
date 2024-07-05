@@ -2,7 +2,7 @@
 // import { useMemo } from 'react'
 // import { CommitButton } from './containers/CommitButton'
 // import { useCheckInsufficientError } from './hooks/useCheckSufficient'
-import FormMain from "@dex/components/swap/tabs/swap/form";
+import FormMain from "@dex/swap/components/tabs/swap/form";
 // import {SmartRouter} from "@pancakeswap/smart-router";
 // import {useCheckInsufficientError} from "@eb-pancakeswap-web/views/Swap/V3Swap/hooks/useCheckSufficient";
 // import {useAllTypeBestTrade} from "@eb-pancakeswap-web/hooks/useAllTypeBestTrade";

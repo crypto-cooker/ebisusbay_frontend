@@ -1,9 +1,7 @@
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import React, {useCallback} from "react";
-import {Box, CloseButton, Flex, Image, Text, VStack} from "@chakra-ui/react";
+import {Box, CloseButton, Flex, Image, Text, useColorModeValue, VStack} from "@chakra-ui/react";
 import {commify} from "ethers/lib/utils";
 import {pluralize, round} from "@market/helpers/utils";
-import NextImage from "next/image";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 

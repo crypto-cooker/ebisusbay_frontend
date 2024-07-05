@@ -1,20 +1,27 @@
 import {
-  Box, Button,
-  Flex, FormControl, FormErrorMessage, FormLabel, GridItem, Input, InputGroup, InputLeftElement, InputRightElement,
-  Modal,
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  GridItem,
+  Input,
+  InputGroup,
+  InputRightElement,
   ModalBody,
-  ModalContent,
-  ModalOverlay, NumberDecrementStepper, NumberIncrementStepper,
-  NumberInput, NumberInputField, NumberInputStepper,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   SimpleGrid,
   Switch,
-  VStack, Wrap
+  VStack
 } from "@chakra-ui/react";
 import {ModalState} from "@dex/swap/types";
 import React, {ChangeEvent, useState} from "react";
 import {ModalDialog} from "@src/components-v2/foundation/modal";
-import {useUserSingleHopOnly, useUserExpertMode, useUserSlippageTolerance} from "@dex/swap/state/user/hooks";
-import {Button as ChakraButton} from "@chakra-ui/button/dist/button";
+import {useUserExpertMode, useUserSingleHopOnly, useUserSlippageTolerance} from "@dex/swap/state/user/hooks";
 import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 

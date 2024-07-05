@@ -1,6 +1,5 @@
-import {Box, Flex, Heading, Text} from "@chakra-ui/react";
+import {Box, Flex, Heading, Text, useColorModeValue} from "@chakra-ui/react";
 import React from "react";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {DefaultContainer} from "@src/components-v2/shared/containers";
 
 interface HeaderProps {

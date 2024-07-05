@@ -1,7 +1,6 @@
-import {Button, HStack, Text} from "@chakra-ui/react";
+import {Button, HStack, Text, useColorModeValue} from "@chakra-ui/react";
 import {SunIcon} from "@chakra-ui/icons";
 import React from "react";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 
 const MintingButton = ({onClick}) => {
   const pulseColorClass = useColorModeValue(

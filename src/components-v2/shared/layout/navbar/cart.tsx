@@ -325,8 +325,8 @@ const Cart = function () {
                     <Text>Subtotal</Text>
                   </Box>
                   <Box>
-                    {totals.map((total) => (
-                      <Text align='end'>{commify(total.subtotal)} {total.symbol}</Text>
+                    {totals.map((total, i) => (
+                      <Text key={i} align='end'>{commify(total.subtotal)} {total.symbol}</Text>
                     ))}
                   </Box>
                 </Flex>
@@ -347,8 +347,8 @@ const Cart = function () {
                     <Text fontWeight="bold">Total Price</Text>
                   </Box>
                   <Box>
-                    {totals.map((total) => (
-                      <Text fontWeight="bold" align='end'>{commify(round(total.finalTotal, 2))} {total.symbol}</Text>
+                    {totals.map((total, i) => (
+                      <Text key={i} fontWeight="bold" align='end'>{commify(round(total.finalTotal, 2))} {total.symbol}</Text>
                     ))}
                   </Box>
                 </Flex>

@@ -8,13 +8,12 @@ import {
   InputLeftElement,
   InputRightElement,
   Spinner,
-  Text,
+  Text, useColorModeValue,
   useDisclosure,
   useOutsideClick,
   VStack
 } from "@chakra-ui/react";
 import React, {ChangeEvent, RefObject, useCallback, useEffect, useState} from "react";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
 import {ciEquals} from "@market/helpers/utils";

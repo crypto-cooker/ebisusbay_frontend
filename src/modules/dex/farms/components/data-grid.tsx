@@ -18,6 +18,7 @@ import {
   PopoverTrigger,
   SimpleGrid,
   Stack,
+  useColorModeValue,
   useDisclosure,
   VStack,
   Wrap
@@ -25,7 +26,6 @@ import {
 import React, {useMemo} from "react";
 import {DerivedFarm, FarmState} from "@dex/farms/constants/types";
 import {UserFarms, UserFarmState} from "@dex/farms/state/user";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import {commify} from "ethers/lib/utils";
 import {ciEquals, millisecondTimestamp, round} from "@market/helpers/utils";
 import {ethers} from "ethers";

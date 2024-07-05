@@ -9,8 +9,7 @@ import {darkTheme, getTheme, lightTheme} from '@src/global/theme/theme';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {appUrl, createSuccessfulAddCartContent, round, siPrefixedNumber, timeSince} from '@market/helpers/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
-import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard} from "@chakra-ui/react";
-import {useColorModeValue} from "@chakra-ui/color-mode";
+import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard, useColorModeValue} from "@chakra-ui/react";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {

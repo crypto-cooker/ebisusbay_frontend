@@ -14,6 +14,7 @@ import {
   InputRightElement,
   Spinner,
   Text,
+  useColorModeValue,
   useDisclosure,
   VStack
 } from "@chakra-ui/react";
@@ -27,7 +28,6 @@ import useDebounce from "@src/core/hooks/useDebounce";
 import {CloseIcon, SearchIcon} from "@chakra-ui/icons";
 import {appConfig} from "@src/Config";
 import {useRouter} from "next/router";
-import {useColorModeValue} from "@chakra-ui/color-mode";
 import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
 import {useUser} from "@src/components-v2/useUser";
 import useSearch from "@market/hooks/use-search";
