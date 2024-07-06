@@ -7,6 +7,7 @@
     "dev": "next dev",
     "dev-https": "next dev --experimental-https",
     "build": "NODE_OPTIONS=--max-old-space-size=8192 next build",
+    "build-local": "next build",
     "predev": "pnpm run sync-updates",
     "start": "next start",
     "start-web": "NODE_OPTIONS=\"--max_old_space_size=1408\" next start",

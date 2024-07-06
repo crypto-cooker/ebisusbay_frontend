@@ -32,7 +32,7 @@ export default function Page() {
       <SwapPage
         // initialInputCurrency={''}
         // initialOutputCurrency={''}
-        syncTabToUrl={true}
+        // syncTabToUrl={true}
 
       />
     </>
