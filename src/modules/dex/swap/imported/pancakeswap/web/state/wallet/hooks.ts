@@ -1,14 +1,14 @@
-import { Currency, CurrencyAmount, Native, Token } from '@pancakeswap/sdk'
-import { multicallABI } from '@eb-pancakeswap-web/config/abi/Multicall'
+import {Currency, CurrencyAmount, Native, Token} from '@pancakeswap/sdk'
+import {multicallABI} from '@eb-pancakeswap-web/config/abi/Multicall'
 import {useAllTokens} from "@eb-pancakeswap-web/hooks/tokens";
 import useNativeCurrency from "@eb-pancakeswap-web/hooks/useNativeCurrency";
 import orderBy from 'lodash/orderBy'
-import { useMemo } from 'react'
+import {useMemo} from 'react'
 import {safeGetAddress} from "@eb-pancakeswap-web/utils";
-import { getMulticallAddress } from '@eb-pancakeswap-web/utils/addressHelpers'
-import { Address, erc20Abi, getAddress, isAddress } from 'viem'
-import { useAccount } from 'wagmi'
-import { useMultipleContractSingleData, useSingleContractMultipleData } from '../multicall/hooks'
+import {getMulticallAddress} from '@eb-pancakeswap-web/utils/addressHelpers'
+import {Address, ContractFunctionParameters, erc20Abi, getAddress, isAddress} from 'viem'
+import {useAccount, useBlockNumber, useContractReads} from 'wagmi'
+import {useSingleContractMultipleData} from '../multicall/hooks'
 
 /**
  * Returns a map of the given addresses to their eventually consistent BNB balances.
@@ -60,35 +60,57 @@ export function useTokenBalancesWithLoadingIndicator(
     () => tokens?.filter((t?: Token): t is Token => isAddress(t?.address || '')) ?? [],
     [tokens],
   )
+  const { data: blockNumber } = useBlockNumber();
 
   const validatedTokenAddresses = useMemo(() => validatedTokens.map((vt) => vt.address), [validatedTokens])
 
-  const balances = useMultipleContractSingleData({
-    abi: erc20Abi,
-    addresses: validatedTokenAddresses,
-    functionName: 'balanceOf',
-    args: useMemo(() => [address as Address] as const, [address]),
-    options: {
-      enabled: Boolean(address && validatedTokenAddresses.length > 0),
-    },
-  })
+  // const balances = useMultipleContractSingleData({
+  //   abi: erc20Abi,
+  //   addresses: validatedTokenAddresses,
+  //   functionName: 'balanceOf',
+  //   args: useMemo(() => [address as Address] as const, [address]),
+  //   options: {
+  //     enabled: Boolean(address && validatedTokenAddresses.length > 0),
+  //   },
+  // })
 
-  const anyLoading: boolean = useMemo(() => balances.some((callState) => callState.loading), [balances])
+  const contracts: ContractFunctionParameters[] = validatedTokenAddresses.map((tokenAddress) => {
+    return {
+      address: tokenAddress as Address,
+      abi: erc20Abi,
+      functionName: 'balanceOf',
+      args: [address],
+    };
+  });
+
+  const { data, isLoading: anyLoading, error } = useContractReads({
+    contracts
+  });
+
+  // const {data, isLoading} = useQuery({
+  //   queryKey: ['useTokenBalancesWithLoadingIndicator', validatedTokenAddresses, blockNumber?.toString()],
+  //   queryFn: async () => multicall(wagmiConfig as any, {
+  //     contracts
+  //   }),
+  //   enabled: !!contracts
+  // });
+
+  // const anyLoading: boolean = useMemo(() => balances.some((callState) => callState.loading), [balances])
 
   return [
     useMemo(
       () =>
         address && validatedTokens.length > 0
           ? validatedTokens.reduce<{ [tokenAddress: string]: CurrencyAmount<Token> | undefined }>((memo, token, i) => {
-              const value = balances?.[i]?.result
-              const amount = typeof value !== 'undefined' ? BigInt(value.toString()) : undefined
+              const value = data?.[i]?.result
+              const amount = typeof value !== 'undefined' ? BigInt(value?.toString() ?? 0) : undefined
               if (typeof amount !== 'undefined') {
                 memo[token.address] = CurrencyAmount.fromRawAmount(token, amount)
               }
               return memo
             }, {})
           : {},
-      [address, validatedTokens, balances],
+      [address, validatedTokens, data],
     ),
     anyLoading,
   ]

@@ -1,9 +1,9 @@
-import {Box, Container, Flex, IconButton, useDisclosure, VStack} from "@chakra-ui/react";
+import {Box, Button, Container, Flex, IconButton, useDisclosure, VStack, Wrap} from "@chakra-ui/react";
 import {Card} from "@src/components-v2/foundation/card";
 import {ArrowDownIcon, SettingsIcon} from "@chakra-ui/icons";
 import {Field} from "src/modules/dex/swap/constants";
 import React, {ReactNode, useCallback, useMemo} from "react";
-import SwapCurrencyInputPanel from "@dex/components/swap/tabs/swap/swap-currency-input-panel";
+import SwapCurrencyInputPanel from "@dex/swap/components/tabs/swap/swap-currency-input-panel";
 import {Currency, CurrencyAmount, Percent} from "@pancakeswap/sdk";
 import {useCurrency} from "@eb-pancakeswap-web/hooks/tokens";
 // import {useIsWrapping} from "@eb-pancakeswap-web/hooks/useIsWrapping";
@@ -25,7 +25,6 @@ import {useCurrencyBalances} from "@eb-pancakeswap-web/state/wallet/hooks";
 // }
 
 export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmount, tradeLoading, swapCommitButton }: Props*/) {
-  // const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers();
   // const [swapFormState, setSwapFormState] = useSwapFormState();
   // const [swapFormDerivedState] = useSwapFormDerivedState();
   const {isOpen, onOpen, onClose} = useDisclosure();
@@ -44,7 +43,7 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
   // const isWrapping = useIsWrapping()
   const inputCurrency = useCurrency(inputCurrencyId)
   const outputCurrency = useCurrency(outputCurrencyId)
-  const { onCurrencySelection, onUserInput } = useSwapActionHandlers()
+  const { onCurrencySelection, onSwitchTokens, onUserInput } = useSwapActionHandlers()
   const [inputBalance] = useCurrencyBalances(account, [inputCurrency, outputCurrency])
   const maxAmountInput = useMemo(() => maxAmountSpend(inputBalance), [inputBalance])
   const loadedUrlParams = useDefaultsFromURLSearch()
@@ -89,29 +88,6 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
     // [onCurrencySelection, warningSwapHandler],
     [onCurrencySelection],
   )
-  // const handleInputSelect = useCallback(
-  //   (newCurrency: Currency) =>
-  //     handleCurrencySelect(newCurrency, Field.INPUT, inputCurrencyId || '', outputCurrencyId || ''),
-  //   [handleCurrencySelect, inputCurrencyId, outputCurrencyId],
-  // )
-  // const handleOutputSelect = useCallback(
-  //   (newCurrency: Currency) =>
-  //     handleCurrencySelect(newCurrency, Field.OUTPUT, inputCurrencyId || '', outputCurrencyId || ''),
-  //   [handleCurrencySelect, inputCurrencyId, outputCurrencyId],
-  // )
-  //
-  // const isTypingInput = independentField === Field.INPUT
-  // const inputValue = useMemo(
-  //   () => typedValue && (isTypingInput ? typedValue : formatAmount(inputAmount) || ''),
-  //   [typedValue, isTypingInput, inputAmount],
-  // )
-  // const outputValue = useMemo(
-  //   () => typedValue && (isTypingInput ? formatAmount(outputAmount) || '' : typedValue),
-  //   [typedValue, isTypingInput, outputAmount],
-  // )
-  // const inputLoading = typedValue ? !isTypingInput && tradeLoading : false
-  // const outputLoading = typedValue ? isTypingInput && tradeLoading : false
-
 
   const showWrap = false;
 
@@ -142,23 +118,23 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
       [independentField]: typedValue,
       [dependentField]: showWrap
         ? parsedAmounts[independentField]?.toExact() ?? ''
-        : '1000',
+        : parsedAmounts[dependentField]?.toExact() ?? '',
     }),
     [dependentField, independentField, parsedAmounts, showWrap, typedValue]
   )
 
   const handleInputSelect = useCallback(
     (inputCurrency: Currency) => {
-      onCurrencySelection(Field.INPUT, inputCurrency);
+      handleCurrencySelect(inputCurrency, Field.INPUT, inputCurrencyId || '', outputCurrencyId || '')
     },
-    [onCurrencySelection]
+    [handleCurrencySelect, inputCurrency, outputCurrency]
   )
 
   const handleOutputSelect = useCallback(
     (outputCurrency: Currency) => {
-      onCurrencySelection(Field.OUTPUT, outputCurrency);
+      handleCurrencySelect(outputCurrency, Field.OUTPUT, inputCurrencyId || '', outputCurrencyId || '')
     },
-    [onCurrencySelection]
+    [handleCurrencySelect, inputCurrency, outputCurrency]
   )
 
   const handleTypeInput = useCallback(
@@ -197,6 +173,7 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
               value={formattedAmounts[Field.INPUT]}
               onCurrencySelect={handleInputSelect}
               onUserInput={handleTypeInput}
+              onMax={handleMaxInput}
             />
             {/*<Wrap justify='center'>*/}
             {/*  <Button onClick={() => handleQuickChange(25)}>25%</Button>*/}
@@ -204,8 +181,14 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
             {/*  <Button onClick={() => handleQuickChange(75)}>75%</Button>*/}
             {/*  <Button onClick={() => handleQuickChange(100)}>Max</Button>*/}
             {/*</Wrap>*/}
+            <Wrap justify='center'>
+              <Button onClick={() => handlePercentInput(25)}>25%</Button>
+              <Button onClick={() => handlePercentInput(50)}>50%</Button>
+              <Button onClick={() => handlePercentInput(75)}>75%</Button>
+              <Button onClick={handleMaxInput}>MAX</Button>
+            </Wrap>
             <Box textAlign='center'>
-              <IconButton aria-label='Swap to' icon={<ArrowDownIcon />} w='40px' />
+              <IconButton aria-label='Swap to' icon={<ArrowDownIcon />} w='40px' onClick={onSwitchTokens}/>
             </Box>
             <SwapCurrencyInputPanel
               label='You receive'

@@ -12,8 +12,9 @@ import {
 } from "@chakra-ui/react";
 import React, {ChangeEvent, ComponentType, ReactNode, useEffect, useRef, useState} from "react";
 import {useWindowSize} from "@market/hooks/useWindowSize";
-import Row from "@dex/components/swap/select-token/row";
+import Row from "@dex/swap/components/tabs/swap/select-token/row";
 import {useAllTokenBalances} from "@dex/hooks/use-token-balances";
+import {Currency} from "@pancakeswap/swap-sdk-core";
 
 interface SelectTokenProps {
   commonBases: Currency[];
@@ -29,7 +30,7 @@ export default function SelectToken({commonBases, tokens, onCurrencySelect}: Sel
   // const tokenBalances = useAtomValue(userTokenBalancesAtom);
   const tokenBalances = useAllTokenBalances();
 
-  console.log('===token balances2', Object.values(tokenBalances).map(token => ({name:token?.currency.symbol, value:token?.toExact()})));
+  console.log('===token balances2', tokenBalances);
   const checkForScrollbar = () => {
     if (ref.current) {
       const hasScrollbar = ref.current.scrollHeight > ref.current.clientHeight;

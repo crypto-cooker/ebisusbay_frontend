@@ -1,12 +1,9 @@
 import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 import {useUser} from "@src/components-v2/useUser";
-import {multicall} from "@wagmi/core";
 import {Address, ContractFunctionParameters, erc20Abi} from "viem";
-import {useBlockNumber} from "wagmi";
-import {useEffect, useMemo, useState} from "react";
+import {useBlockNumber, useContractReads} from "wagmi";
+import {useMemo} from "react";
 import {isAddress} from "@market/helpers/utils";
-import {useQuery} from "@tanstack/react-query";
-import {wagmiConfig} from "@src/wagmi";
 import {CurrencyAmount, Token} from "@pancakeswap/sdk";
 
 export function useAllTokenBalances(): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
@@ -75,12 +72,16 @@ export function useTokenBalances(address?: string, tokens?: Token[]): { [tokenAd
   //   [address, validatedTokens, data]
   // );
 
-  const {data, isLoading} = useQuery({
-    queryKey: ['useTokenBalances'],
-    queryFn: async () => multicall(wagmiConfig as any, {
-      contracts
-    }),
-    enabled: !!contracts
+  // const {data, isLoading} = useQuery({
+  //   queryKey: ['useTokenBalances'],
+  //   queryFn: async () => multicall(wagmiConfig as any, {
+  //     contracts
+  //   }),
+  //   enabled: !!contracts
+  // });
+
+  const { data, isLoading: anyLoading, error } = useContractReads({
+    contracts
   });
 
   return useMemo(

@@ -1,6 +1,7 @@
 import {Box, Flex, HStack, Image, useColorModeValue, VStack} from "@chakra-ui/react";
 import React from "react";
 import {WrappedTokenInfo} from "@dex/hooks/use-supported-tokens";
+import {Currency, CurrencyAmount} from "@pancakeswap/sdk";
 
 interface RowProps {
   token: CurrencyAmount<Currency>;
