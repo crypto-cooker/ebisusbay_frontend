@@ -1,4 +1,5 @@
 export interface RyoshiConfig {
+  platform: RyoshiConfigPlatform;
   bank: RyoshiConfigBank;
   barracks: RyoshiConfigBarracks;
   townHall: RyoshiConfigTownHall;
@@ -8,6 +9,16 @@ export interface RyoshiConfig {
   armies: RyoshiConfigArmies;
   reputations: RyoshiConfigReputation;
   experience: RyoshiConfigExperience;
+  bonusPoints: RyoshiConfigBonusPoints;
+  controlPointDecay: RyoshiConfigControlPointDecay;
+}
+
+export interface RyoshiConfigControlPointDecay {
+  [key: string]: number;
+}
+
+interface RyoshiConfigBonusPoints {
+  [key: string]: number[];
 }
 
 interface RyoshiConfigReputation {
@@ -24,6 +35,16 @@ interface RyoshiConfigReputationPoints {
   delegated: number;
   recall: number;
 }
+
+interface RyoshiConfigPlatform {
+  staking: {
+    troops: {
+      values: RyoshiConfigStakingMultiplier[];
+      bonus: Array<{value: number, traits: RyoshiConfigTraitEligibility[]}>;
+    }
+  };
+}
+
 
 interface RyoshiConfigBank {
   staking: RyoshiConfigBankStaking;

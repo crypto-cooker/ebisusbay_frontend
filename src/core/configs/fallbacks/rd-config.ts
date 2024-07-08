@@ -44,6 +44,89 @@ const collections: RyoshiConfigCollections[] = [
 ];
 
 export const ryoshiConfig: RyoshiConfig = {
+  platform: {
+    staking: {
+      troops: {
+        values: [
+          { percentile: 5, value: 100 },
+          { percentile: 10, value: 50 },
+          { percentile: 20, value: 35 },
+          { percentile: 100, value: 20 },
+        ],
+        bonus: [
+          {
+            value: 1000,
+            traits: [
+              {
+                inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                type: 'miscellaneous',
+                values: [
+                  'red snapper'
+                ]
+              }
+            ]
+          },
+          {
+            value: 500,
+            traits: [
+              {
+                inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                type: 'clothing',
+                values: [
+                  'diving suit'
+                ]
+              }
+            ]
+          },
+          {
+            value: 50,
+            traits: [
+              {
+                inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                type: 'tools',
+                values: [
+                  'fishcane',
+                  'fishing rod'
+                ]
+              }
+            ]
+          },
+          {
+            value: 20,
+            traits: [
+              {
+                inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                type: 'miscellaneous',
+                values: [
+                  'barnacles',
+                  'snorkel'
+                ]
+              }
+            ]
+          },
+          {
+            value: 10,
+            traits: [
+              {
+                inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                type: 'mouth',
+                values: [
+                  'fish hook',
+                ]
+              },
+              {
+                inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                type: 'miscellaneous',
+                values: [
+                  'seaweed',
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
   bank: {
     staking: {
       fortune: {
@@ -53,12 +136,12 @@ export const ryoshiConfig: RyoshiConfig = {
         mitamaTroopsRatio: 20,
         startingDebt: 100,
         apr: {
-          1: 0.12,
-          2: 0.17,
-          3: 0.2,
-          4: 0.3,
-          8: 0.85,
-          12: 1.35,
+          1: 0.06,
+          2: 0.1,
+          3: 0.12,
+          4: 0.15,
+          8: 0.24,
+          12: 0.5,
         }
       },
       nft: {
@@ -414,10 +497,10 @@ export const ryoshiConfig: RyoshiConfig = {
             traits: [],
             multipliers: [],
             ids: [
-              { id: 2, bonus: 100 },
-              { id: 3, bonus: 200 },
-              { id: 4, bonus: 300 },
-              { id: 5, bonus: 400 },
+              { id: 2, bonus: 0 },
+              { id: 3, bonus: 0 },
+              { id: 4, bonus: 0 },
+              { id: 5, bonus: 0 },
             ],
             bonus: []
           },
@@ -496,6 +579,13 @@ export const ryoshiConfig: RyoshiConfig = {
                   'none'
                 ]
               },
+              {
+                type: 'accessory',
+                inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                values: [
+                  'nightfall scepter of premonition'
+                ]
+              }
             ],
             multipliers: [
               { percentile: 5, value: 50 },
@@ -547,10 +637,10 @@ export const ryoshiConfig: RyoshiConfig = {
       }
     },
     ryoshi: {
+      restockCutoff: 3000,
       upkeepDecay: 0.1,
       upkeepActiveDays: 7,
-      restockCutoff: 3000,
-      upkeepCosts:[
+      upkeepCosts: [
         { threshold: 0, multiplier: 0 },
         { threshold: 201, multiplier: 1 },
         { threshold: 1000, multiplier: 2 },
@@ -621,14 +711,14 @@ export const ryoshiConfig: RyoshiConfig = {
           159: 10,
           1001: 25,
           1002: 50,
-          1003: 100,
+          1003: 100
         }
       }
     }
   },
   factions: {
     registration: {
-      fortuneCost: 1500,
+      fortuneCost: 0,
       mitamaCost: 1500,
       forbiddenAddresses: [
         '0xE49709A3B59d708f50AA3712F2E5a84b7707664C', // Ryoshi VIP
@@ -644,7 +734,10 @@ export const ryoshiConfig: RyoshiConfig = {
         '0x013f83434356c0a20698605eBAb337aab966AF88', // Fortune Guards
         '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d', // Ryoshi Resources
         '0xd87838a982a401510255ec27e603b0f5fea98d24', // Ryoshi Playing Cards
-        '0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3'  // Land Deeds
+        '0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3', // Land Deeds
+        '0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04', // Ryoshi Tales,
+        '0xF098C2aD290f32c8666ace27222d3E65cECE43b9', // Ryoshi Heroes
+        '0xb2925FFC01907170493F94c1efb2Fac107a83b9F'  // Ryoshi Vaults
       ]
     },
     editableDays: 4,
@@ -679,7 +772,7 @@ export const ryoshiConfig: RyoshiConfig = {
       3600,
       10800
     ],
-    recallTax: 0.1
+    recallTax: 0.01
   },
   reputations: {
     points: {
@@ -744,7 +837,37 @@ export const ryoshiConfig: RyoshiConfig = {
     VERIFY_EMAIL: {
       points: 20,
       coolDown: 0,
-    }
+    },
+  },
+  bonusPoints: {
+    "The Iron Bastion": [3, 2, 1, 0.5],
+    "The Conflagration": [3, 2, 1, 0.5],
+    "Volcanic Reach": [3, 2, 1, 0.5],
+    "Seashrine": [4, 3, 1, 0.5],
+    "Mitamic Fissure": [3, 2, 1, 0.5],
+    "Classy Keep": [3, 2, 1, 0.5],
+    "Dragons Roost": [4, 2, 1, 0.5],
+    "N'yar Spire": [3, 2, 1, 0.5],
+    "Ancestors Final Rest": [3, 2, 1, 0.5],
+    "Ebisus Bay": [2, 1.5, 1, 0.5],
+    "Felisgarde": [4, 2, 1, 0.5],
+    "Verdant Forest": [3, 2, 1, 0.5],
+    "Buccaneer Beach": [2, 1.5, 1, 0.5],
+    "Omoikanes Athenaeum": [4, 2, 1, 0.5],
+    "Mitagi Retreat": [3, 2, 1, 0.5],
+    "Ice Shrine": [3, 2, 1, 0.5],
+    "Clutch Of Fukurokujo": [3, 2, 1, 0.5],
+    "Orcunheim": [3, 2, 1, 0.5],
+    "The Infinite Nexus": [2, 1.5, 1, 0.5],
+    "Venoms Descent": [2, 1.5, 1, 0.5],
+  },
+  controlPointDecay: {
+    "The Iron Bastion": 0.01,
+    "The Conflagration": 0.01,
+    "Volcanic Reach": 0.01,
+    "Ice Shrine": 0.01,
+    "Clutch Of Fukurokujo": 0.01,
+    "Orcunheim": 0.01,
   }
 }
 
