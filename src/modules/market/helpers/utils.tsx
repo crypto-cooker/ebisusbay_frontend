@@ -800,3 +800,9 @@ export function abbreviateDecimal(decimalStr: string | number, zeroThreshold: nu
     return `0.${regularDigits}`;
   }
 }
+
+export const chunkArray = <T,>(array: T[], size: number): T[][] => {
+  return Array.from({ length: Math.ceil(array.length / size) }, (_, index) => {
+    return array.slice(index * size, index * size + size);
+  });
+};
