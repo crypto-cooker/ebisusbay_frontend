@@ -15,6 +15,7 @@ import currencyId from "@eb-pancakeswap-web/utils/currencyId";
 import {formatAmount} from "@pancakeswap/utils/formatFractions";
 import {useSwapActionHandlers} from "@eb-pancakeswap-web/state/swap/useSwapActionHandlers";
 import {useCurrencyBalances} from "@eb-pancakeswap-web/state/wallet/hooks";
+import {AdvancedSwapDetails} from "@dex/swap/components/tabs/swap/swap-details";
 
 // interface Props {
 //   inputAmount?: CurrencyAmount<Currency>
@@ -228,6 +229,12 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
             {/*</AuthenticationGuard>*/}
           </VStack>
         </Card>
+
+        {derivedSwapInfo.v2Trade && (
+          <Card mt={2}>
+            <AdvancedSwapDetails trade={derivedSwapInfo.v2Trade} />
+          </Card>
+        )}
       </Container>
       {/*<Settings*/}
       {/*  isOpen={isOpen}*/}
