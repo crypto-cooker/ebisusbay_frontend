@@ -148,14 +148,15 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         const traitType = attr.trait_type.toLowerCase();
         const value = attr.value.toString().toLowerCase();
 
+        let sum = 0;
         for (let bonusRule of stakeConfig!.bonus) {
           for (let traitRule of bonusRule.traits) {
             if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
-              return bonusRule.value;
+              sum += bonusRule.value;
             }
           }
         }
-        return acc;
+        return sum + acc;
       }, 0);
 
       setPendingNfts([...pendingNfts, {
@@ -250,14 +251,15 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
             const traitType = attr.trait_type.toLowerCase();
             const value = attr.value.toString().toLowerCase();
 
+            let sum = 0;
             for (let bonusRule of stakeConfig!.bonus) {
               for (let traitRule of bonusRule.traits) {
                 if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
-                  return bonusRule.value;
+                  sum += bonusRule.value;
                 }
               }
             }
-            return acc;
+            return sum + acc;
           }, 0);
 
           for (let i = 0; i < Number(token.amount); i++) {
