@@ -1,4 +1,4 @@
-import {Box, Button, Container, Flex, IconButton, useDisclosure, VStack, Wrap} from "@chakra-ui/react";
+import {Box, Button, Container, Flex, IconButton, Skeleton, Text, useDisclosure, VStack, Wrap} from "@chakra-ui/react";
 import {Card} from "@src/components-v2/foundation/card";
 import {ArrowDownIcon, SettingsIcon} from "@chakra-ui/icons";
 import {Field} from "src/modules/dex/swap/constants";
@@ -16,6 +16,9 @@ import {formatAmount} from "@pancakeswap/utils/formatFractions";
 import {useSwapActionHandlers} from "@eb-pancakeswap-web/state/swap/useSwapActionHandlers";
 import {useCurrencyBalances} from "@eb-pancakeswap-web/state/wallet/hooks";
 import {AdvancedSwapDetails} from "@dex/swap/components/tabs/swap/swap-details";
+import {useUserSlippage} from "@pancakeswap/utils/user";
+import {TradePrice} from "@dex/swap/components/tabs/swap/trade-price";
+import {SwapInfo} from "@dex/swap/components/tabs/swap/swap-info";
 
 // interface Props {
 //   inputAmount?: CurrencyAmount<Currency>
@@ -124,6 +127,8 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
     [dependentField, independentField, parsedAmounts, showWrap, typedValue]
   )
 
+  const [allowedSlippage] = useUserSlippage()
+
   const handleInputSelect = useCallback(
     (inputCurrency: Currency) => {
       handleCurrencySelect(inputCurrency, Field.INPUT, inputCurrencyId || '', outputCurrencyId || '')
@@ -228,6 +233,19 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
             {/*  )}*/}
             {/*</AuthenticationGuard>*/}
           </VStack>
+
+          <SwapInfo
+            price={
+              derivedSwapInfo.v2Trade?.executionPrice?.greaterThan(0) ? (
+                <Flex justify='space-between' align='center' fontSize='sm' fontWeight='bold'>
+                  <Text>Price</Text>
+                  {!derivedSwapInfo.v2Trade ? <Skeleton ml="8px" height="24px" /> : <TradePrice price={derivedSwapInfo.v2Trade?.executionPrice} />}
+                </Flex>
+              ) : null
+            }
+            allowedSlippage={allowedSlippage}
+            onSlippageClick={() => console.log('plz implement')}
+          />
         </Card>
 
         {derivedSwapInfo.v2Trade && (
