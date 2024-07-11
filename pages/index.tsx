@@ -164,12 +164,9 @@ const Home = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
     history.push(link);
   };
 
-  useEffect(
-    function () {
-      dispatch(getMarketData());
-    },
-    [dispatch]
-  );
+  useEffect(() => {
+    getMarketData();
+  }, []);
 
   const JumbotronData = () => {
     return (

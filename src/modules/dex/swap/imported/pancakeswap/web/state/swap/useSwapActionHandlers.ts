@@ -1,16 +1,26 @@
 import { useCallback } from 'react'
 import { Currency } from '@pancakeswap/sdk'
-import { useAtom } from 'jotai'
-import { swapReducerAtom } from './reducer'
+import {useSetAtom, WritableAtom} from 'jotai'
+import {swapReducerAtom, SwapState} from './reducer'
 import { Field, selectCurrency, switchCurrencies, typeInput, setRecipient } from './actions'
+import { AnyAction } from '@reduxjs/toolkit'
+
+type SwapActions =
+  | ReturnType<typeof selectCurrency>
+  | ReturnType<typeof switchCurrencies>
+  | ReturnType<typeof typeInput>
+  | ReturnType<typeof setRecipient>
+
+type SwapReducerAtomType = WritableAtom<SwapState, [SwapActions], void>;
 
 export function useSwapActionHandlers(): {
   onCurrencySelection: (field: Field, currency: Currency) => void
   onSwitchTokens: () => void
   onUserInput: (field: Field, typedValue: string) => void
   onChangeRecipient: (recipient: string | null) => void
+  dispatch: (action: SwapActions) => void;
 } {
-  const [, dispatch] = useAtom(swapReducerAtom)
+  const dispatch = useSetAtom(swapReducerAtom as SwapReducerAtomType);
 
   const onSwitchTokens = useCallback(() => {
     dispatch(switchCurrencies())
@@ -42,5 +52,6 @@ export function useSwapActionHandlers(): {
     onCurrencySelection,
     onUserInput,
     onChangeRecipient,
+    dispatch
   }
 }

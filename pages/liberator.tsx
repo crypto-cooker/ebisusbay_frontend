@@ -30,8 +30,6 @@ import { parseErrorMessage } from '@src/helpers/validator';
 import { useUser } from '@src/components-v2/useUser';
 import { useQuery } from '@tanstack/react-query';
 import { PrimaryButton } from '@src/components-v2/foundation/button';
-import { multicall } from '@wagmi/core';
-import { Address, erc20ABI } from 'wagmi';
 import { StandardContainer } from '@src/components-v2/shared/containers';
 import { Card } from '@src/components-v2/foundation/card';
 import FortuneIcon from '@src/components-v2/shared/icons/fortune';
@@ -41,6 +39,9 @@ import { getTheme } from '@src/global/theme/theme';
 import Countdown from 'react-countdown';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { abbreviateDecimal, round } from '@market/helpers/utils';
+import {wagmiConfig} from "@src/wagmi";
+import { Address, erc20Abi } from 'viem';
+import {multicall} from "viem/actions";
 
 const ENABLED = true;
 const LiberatorAbi = [{"inputs":[{"internalType":"address","name":"_wcro","type":"address"},{"internalType":"address","name":"_usdc","type":"address"},{"internalType":"address","name":"_frtn","type":"address"},{"internalType":"address","name":"_vvsRouter","type":"address"},{"internalType":"address","name":"_mmfRouter","type":"address"},{"internalType":"address","name":"_ryoshiRouter","type":"address"},{"internalType":"address","name":"_vvsLp","type":"address"},{"internalType":"address","name":"_mmfLp","type":"address"},{"internalType":"address","name":"_ryoshiLP","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"uint256","name":"depositAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"newBalance","type":"uint256"}],"name":"Liberation","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amountLP","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amountFRTN","type":"uint256"}],"name":"Withdraw","type":"event"},{"inputs":[],"name":"emergencyWithdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"endTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"from","type":"address"}],"name":"migrate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mmfRouter","outputs":[{"internalType":"contract IRyoshiRouter01","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"rewardsFor","outputs":[{"internalType":"uint256","name":"userReward","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"ryoshiRouter","outputs":[{"internalType":"contract IRyoshiRouter01","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"time","type":"uint256"}],"name":"setEndTime","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"rate","type":"uint256"}],"name":"setRewardRate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"totalRewards","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"usdc","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userInfo","outputs":[{"internalType":"uint256","name":"croDeposited","type":"uint256"},{"internalType":"uint256","name":"usdcDeposited","type":"uint256"},{"internalType":"uint256","name":"lpDebt","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"vvsRouter","outputs":[{"internalType":"contract IRyoshiRouter01","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"wcro","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
@@ -90,7 +91,7 @@ export default function Page() {
   const {data: globalData, refetch: refetchGlobal} = useQuery({
     queryKey: ['LiberatorGlobal'],
     queryFn: async () => {
-      const data = await multicall({
+      const data = await multicall(wagmiConfig as any, {
         contracts: [
           {
             address: LIBERATOR_ADDRESS as Address,
@@ -107,9 +108,12 @@ export default function Page() {
         ],
       });
 
+      const totalRewards = data[0].status === 'success' ? data[0].result as bigint : 0;
+      const endTime = data[1].status === 'success' ? data[1].result as number : 0;
+
       return {
-        totalRewards: data[0].status === 'success' ? ethers.utils.formatEther(data[0].result) : '0',
-        endTime: data[1].status === 'success' ? Number(data[1].result) : 0
+        totalRewards: ethers.utils.formatEther(totalRewards),
+        endTime
       };
     }
   });
@@ -117,35 +121,35 @@ export default function Page() {
   const {data: userData, refetch: refetchUser} = useQuery({
     queryKey: ['LiberatorUser', user.address],
     queryFn: async () => {
-      const data = await multicall({
+      const data = await multicall(wagmiConfig as any,{
         contracts: [
           {
             address: LIBERATOR_ADDRESS as Address,
             abi: LiberatorAbi as any,
             functionName: 'rewardsFor',
-            args: [user.address],
+            args: [user.address as Address],
           },
           {
             address: MappedLiberatedDexes.mmf.address as Address,
-            abi: erc20ABI,
+            abi: erc20Abi,
             functionName: 'balanceOf',
             args: [user.address as Address],
           },
           {
             address: MappedLiberatedDexes.mmf.address as Address,
-            abi: erc20ABI,
+            abi: erc20Abi,
             functionName: 'allowance',
             args: [user.address as Address, LIBERATOR_ADDRESS],
           },
           {
             address: MappedLiberatedDexes.vvs.address as Address,
-            abi: erc20ABI,
+            abi: erc20Abi,
             functionName: 'balanceOf',
             args: [user.address as Address],
           },
           {
             address: MappedLiberatedDexes.vvs.address as Address,
-            abi: erc20ABI,
+            abi: erc20Abi,
             functionName: 'allowance',
             args: [user.address as Address, LIBERATOR_ADDRESS],
           },
@@ -157,15 +161,16 @@ export default function Page() {
           },
           {
             address: EB_WCROUSDC_ADDRESS as Address,
-            abi: erc20ABI,
+            abi: erc20Abi,
             functionName: 'balanceOf',
             args: [user.address as Address],
           }
         ],
       });
 
+      const userInfo = data[5].result as [number, number, number];
       return {
-        userRewards: data[0].status === 'success' ? ethers.utils.formatEther(data[0].result) : '0',
+        userRewards: data[0].status === 'success' ? ethers.utils.formatEther(data[0].result as number) : '0',
         mmfBalance: data[1].status === 'success' ? ethers.utils.formatEther(data[1].result) : '0',
         mmfAllowance: data[2].status === 'success' ? data[2].result : 0,
         mmfApproved: data[2].status === 'success' ? data[2].result > 0 : false,
@@ -173,9 +178,9 @@ export default function Page() {
         vvsAllowance: data[4].status === 'success' ? data[4].result : 0,
         vvsApproved: data[4].status === 'success' ? data[4].result > 0 : false,
         userInfo: data[5].status === 'success' ? {
-          croDeposited: ethers.utils.formatEther(data[5].result[0]),
-          usdcDeposited: ethers.utils.formatUnits(data[5].result[1], 6),
-          lpDebt: ethers.utils.formatEther(data[5].result[2])
+          croDeposited: ethers.utils.formatEther(userInfo[0]),
+          usdcDeposited: ethers.utils.formatUnits(userInfo[1], 6),
+          lpDebt: ethers.utils.formatEther(userInfo[2])
         } : {croDeposited: 0, usdcDeposited: 0, lpDebt: 0},
         ebBalance: data[6].status === 'success' ? ethers.utils.formatEther(data[6].result) : '0',
       };

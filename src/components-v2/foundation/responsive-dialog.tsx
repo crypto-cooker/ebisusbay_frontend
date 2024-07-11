@@ -1,31 +1,27 @@
 import {
+  Box,
   BoxProps,
-  Drawer,
   DrawerBody,
   DrawerCloseButton,
-  DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerOverlay,
-  Modal,
+  Flex,
   ModalBody,
   ModalCloseButton,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, ModalProps,
   useBreakpointValue
 } from "@chakra-ui/react";
 import React, {ComponentType, ReactNode} from "react";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
-import {ResponsiveValue} from "@chakra-ui/system";
 import {DrawerDialog, ModalDialog} from "@src/components-v2/foundation/modal";
 
 export type ResponsiveDialogComponents = {
   DialogHeader: ComponentType<BoxProps & { children: ReactNode }>;
   DialogBody: ComponentType<BoxProps & { children: ReactNode }>;
   DialogFooter: ComponentType<BoxProps & { children: ReactNode }>;
+  DialogBasicHeader: ComponentType<BoxProps & { children: ReactNode }>;
 }
 
 export const useResponsiveDialog = () => {
@@ -33,20 +29,39 @@ export const useResponsiveDialog = () => {
 
   const shouldUseDrawer = useBreakpointValue({ base: true, sm: false }, { fallback: 'sm' });
   if (shouldUseDrawer) {
+    const closeButton = <DrawerCloseButton color={getTheme(user.theme).colors.textColor4} />;
     return {
       DialogComponent: DrawerDialog,
       DialogHeader: DrawerHeader,
       DialogBody: DrawerBody,
       DialogFooter: DrawerFooter,
-      DialogCloseButton: () => <DrawerCloseButton color={getTheme(user.theme).colors.textColor4} />
+      DialogCloseButton: closeButton,
+      DialogBasicHeader: ({title}: {title: string}) => (
+        <DrawerHeader>
+          <Flex justify='space-between' w='full'>
+            <Box>{title}</Box>
+            {closeButton}
+          </Flex>
+        </DrawerHeader>
+      )
     };
   } else {
+    const closeButton = <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />;
+
     return {
       DialogComponent: ModalDialog,
       DialogHeader: ModalHeader,
       DialogBody: ModalBody,
       DialogFooter: ModalFooter,
-      DialogCloseButton: () => <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
+      DialogCloseButton: closeButton,
+      DialogBasicHeader: ({title}: {title: string}) => (
+        <ModalHeader>
+          <Flex justify='space-between' w='full'>
+            <Box>{title}</Box>
+            {closeButton}
+          </Flex>
+        </ModalHeader>
+      )
     };
   }
 };

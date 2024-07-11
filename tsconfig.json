@@ -43,7 +43,8 @@
       "@pancakeswap/swap-sdk-evm": ["../eb-pancake-frontend/packages/swap-sdk-evm/src"],
       "@pancakeswap/token-lists": ["../eb-pancake-frontend/packages/token-lists/src"],
       "@pancakeswap/tokens": ["../eb-pancake-frontend/packages/tokens/src"],
-      "@pancakeswap/utils/*": ["../eb-pancake-frontend/packages/utils/*"]
+      "@pancakeswap/utils/*": ["../eb-pancake-frontend/packages/utils/*"],
+      "@pancakeswap/wagmi": ["src/modules/dex/swap/imported/pancakeswap/wagmi"]
     }, /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */

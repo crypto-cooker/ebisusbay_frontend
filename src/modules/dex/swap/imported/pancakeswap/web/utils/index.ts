@@ -12,3 +12,7 @@ export const safeGetAddress = memoize((value: any): Address | undefined => {
     return undefined
   }
 })
+
+export function calculateGasMargin(value: bigint, margin = 1000n): bigint {
+  return (value * (10000n + margin)) / 10000n
+}

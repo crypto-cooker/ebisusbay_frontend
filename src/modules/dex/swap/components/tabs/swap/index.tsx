@@ -1,10 +1,10 @@
 import {Box, Button, Container, Flex, IconButton, Skeleton, Text, useDisclosure, VStack, Wrap} from "@chakra-ui/react";
 import {Card} from "@src/components-v2/foundation/card";
 import {ArrowDownIcon, SettingsIcon} from "@chakra-ui/icons";
-import {Field} from "src/modules/dex/swap/constants";
-import React, {ReactNode, useCallback, useMemo} from "react";
+import {Field, INITIAL_ALLOWED_SLIPPAGE} from "src/modules/dex/swap/constants";
+import React, {useCallback, useMemo, useState} from "react";
 import SwapCurrencyInputPanel from "@dex/swap/components/tabs/swap/swap-currency-input-panel";
-import {Currency, CurrencyAmount, Percent} from "@pancakeswap/sdk";
+import {Currency, Percent, Router, Trade, TradeType} from "@pancakeswap/sdk";
 import {useCurrency} from "@eb-pancakeswap-web/hooks/tokens";
 // import {useIsWrapping} from "@eb-pancakeswap-web/hooks/useIsWrapping";
 import replaceBrowserHistory from "@pancakeswap/utils/replaceBrowserHistory";
@@ -12,13 +12,27 @@ import {useUser} from "@src/components-v2/useUser";
 import {maxAmountSpend} from "@eb-pancakeswap-web/utils/maxAmountSpend";
 import {useDefaultsFromURLSearch, useDerivedSwapInfo, useSwapState} from "@eb-pancakeswap-web/state/swap/hooks";
 import currencyId from "@eb-pancakeswap-web/utils/currencyId";
-import {formatAmount} from "@pancakeswap/utils/formatFractions";
 import {useSwapActionHandlers} from "@eb-pancakeswap-web/state/swap/useSwapActionHandlers";
-import {useCurrencyBalances} from "@eb-pancakeswap-web/state/wallet/hooks";
+import {useCurrencyBalance, useCurrencyBalances} from "@eb-pancakeswap-web/state/wallet/hooks";
 import {AdvancedSwapDetails} from "@dex/swap/components/tabs/swap/swap-details";
-import {useUserSlippage} from "@pancakeswap/utils/user";
+import {useIsExpertMode, useUserSlippage} from "@pancakeswap/utils/user";
 import {TradePrice} from "@dex/swap/components/tabs/swap/trade-price";
 import {SwapInfo} from "@dex/swap/components/tabs/swap/swap-info";
+import {CommitButton} from "@dex/swap/components/tabs/swap/commit-button";
+import {
+  basisPointsToPercent,
+  computeSlippageAdjustedAmounts,
+  computeTradePriceBreakdown,
+  warningSeverity
+} from "@eb-pancakeswap-web/utils/exchange";
+import {ConfirmSwapModal} from "@dex/swap/components/tabs/swap/swap-modal/confirm-swap-modal";
+import {typeInput} from "@eb-pancakeswap-web/state/swap/actions";
+import {BIPS_BASE} from "@dex/swap/constants/exchange";
+import useSimulationAndSendTransaction from "@eb-pancakeswap-web/hooks/useSimulationAndSendTransaction";
+import {UserRejectedRequestError} from "viem";
+import {useSendTransaction} from "wagmi";
+import {useSwapCallback} from "@eb-pancakeswap-web/hooks/useSwapCallback";
+import {useSwapCallArguments} from "@eb-pancakeswap-web/hooks/useSwapCallArguments";
 
 // interface Props {
 //   inputAmount?: CurrencyAmount<Currency>
@@ -31,7 +45,6 @@ import {SwapInfo} from "@dex/swap/components/tabs/swap/swap-info";
 export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmount, tradeLoading, swapCommitButton }: Props*/) {
   // const [swapFormState, setSwapFormState] = useSwapFormState();
   // const [swapFormDerivedState] = useSwapFormDerivedState();
-  const {isOpen, onOpen, onClose} = useDisclosure();
 
   // const { typedValue, independentField } = swapFormState;
   // const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
@@ -47,12 +60,44 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
   // const isWrapping = useIsWrapping()
   const inputCurrency = useCurrency(inputCurrencyId)
   const outputCurrency = useCurrency(outputCurrencyId)
-  const { onCurrencySelection, onSwitchTokens, onUserInput } = useSwapActionHandlers()
+  const { onCurrencySelection, onSwitchTokens, onUserInput, dispatch } = useSwapActionHandlers()
   const [inputBalance] = useCurrencyBalances(account, [inputCurrency, outputCurrency])
   const maxAmountInput = useMemo(() => maxAmountSpend(inputBalance), [inputBalance])
   const loadedUrlParams = useDefaultsFromURLSearch()
-  // const handleTypeInput = useCallback((value: string) => onUserInput(Field.INPUT, value), [onUserInput])
-  // const handleTypeOutput = useCallback((value: string) => onUserInput(Field.OUTPUT, value), [onUserInput])
+  const isExpertMode = useIsExpertMode()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const {v2Trade: trade, ...derivedSwapInfo} = useDerivedSwapInfo(
+    independentField,
+    typedValue,
+    inputCurrency,
+    outputCurrency,
+    account ?? ''
+  );
+
+  const [{ tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<{
+    tradeToConfirm: Trade<Currency, Currency, TradeType> | undefined
+    attemptingTxn: boolean
+    swapErrorMessage: string | undefined
+    txHash: string | undefined
+  }>({
+    tradeToConfirm: undefined,
+    attemptingTxn: false,
+    swapErrorMessage: undefined,
+    txHash: undefined,
+  })
+
+  const handleAcceptChanges = useCallback(() => {
+    setSwapState({ tradeToConfirm: trade ?? undefined, swapErrorMessage, txHash, attemptingTxn })
+  }, [attemptingTxn, swapErrorMessage, trade, txHash, setSwapState])
+
+  const handleConfirmDismiss = useCallback(() => {
+    setSwapState({ tradeToConfirm, attemptingTxn, swapErrorMessage, txHash })
+    // if there was a tx hash, we want to clear the input
+    if (txHash) {
+      dispatch(typeInput({ field: Field.INPUT, typedValue: '' }))
+    }
+  }, [tradeToConfirm, attemptingTxn, swapErrorMessage, txHash, dispatch])
 
   const handlePercentInput = useCallback(
     (percent: number) => {
@@ -95,14 +140,6 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
 
   const showWrap = false;
 
-  const derivedSwapInfo = useDerivedSwapInfo(
-    independentField,
-    typedValue,
-    inputCurrency,
-    outputCurrency,
-    account ?? ''
-  );
-
   const parsedAmounts = useMemo(
     () =>
       showWrap
@@ -111,10 +148,10 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
           [Field.OUTPUT]: derivedSwapInfo.parsedAmount,
         }
         : {
-          [Field.INPUT]: independentField === Field.INPUT ? derivedSwapInfo.parsedAmount : derivedSwapInfo.v2Trade?.inputAmount,
-          [Field.OUTPUT]: independentField === Field.OUTPUT ? derivedSwapInfo.parsedAmount : derivedSwapInfo.v2Trade?.outputAmount,
+          [Field.INPUT]: independentField === Field.INPUT ? derivedSwapInfo.parsedAmount : trade?.inputAmount,
+          [Field.OUTPUT]: independentField === Field.OUTPUT ? derivedSwapInfo.parsedAmount : trade?.outputAmount,
         },
-    [independentField, derivedSwapInfo.parsedAmount, showWrap, derivedSwapInfo.v2Trade]
+    [independentField, derivedSwapInfo.parsedAmount, showWrap, trade]
   )
 
   const formattedAmounts = useMemo(
@@ -127,7 +164,45 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
     [dependentField, independentField, parsedAmounts, showWrap, typedValue]
   )
 
-  const [allowedSlippage] = useUserSlippage()
+  const recipient = account ?? null;
+  const currencyBalances = {
+    [Field.INPUT]: useCurrencyBalance(account, inputCurrency),
+    [Field.OUTPUT]: useCurrencyBalance(account, outputCurrency),
+  }
+
+  const [userAllowedSlippage] = useUserSlippage()
+
+  const { priceImpactWithoutFee } = computeTradePriceBreakdown(trade)
+  const priceImpactSeverity = warningSeverity(priceImpactWithoutFee)
+  // const confirmPriceImpactWithoutFee = useAsyncConfirmPriceImpactWithoutFee(
+  //   priceImpactWithoutFee,
+  //   PRICE_IMPACT_WITHOUT_FEE_CONFIRM_MIN,
+  //   ALLOWED_PRICE_IMPACT_HIGH,
+  // )
+  const swapCalls = useSwapCallArguments(trade, INITIAL_ALLOWED_SLIPPAGE, null)
+  const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(trade, userAllowedSlippage, recipient, swapCalls);
+
+  const handleSwap = useCallback(() => {
+    // if (priceImpactWithoutFee && !confirmPriceImpactWithoutFee(priceImpactWithoutFee)) {
+    //   return;
+    // }
+    if (!swapCallback) {
+      return;
+    }
+    setSwapState({ attemptingTxn: true, tradeToConfirm, swapErrorMessage: undefined, txHash: undefined });
+    swapCallback()
+      .then((hash) => {
+        setSwapState({ attemptingTxn: false, tradeToConfirm, swapErrorMessage: undefined, txHash: hash });
+      })
+      .catch((error) => {
+        setSwapState({
+          attemptingTxn: false,
+          tradeToConfirm,
+          swapErrorMessage: error.message,
+          txHash: undefined,
+        });
+      });
+  }, [priceImpactWithoutFee, swapCallback, tradeToConfirm]);
 
   const handleInputSelect = useCallback(
     (inputCurrency: Currency) => {
@@ -155,6 +230,30 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
     },
     [onUserInput]
   )
+
+  let inputError: string | undefined
+  if (!derivedSwapInfo.parsedAmount) {
+    inputError = inputError ?? 'Enter an amount'
+  }
+
+  const slippageAdjustedAmounts = trade && userAllowedSlippage && computeSlippageAdjustedAmounts(trade, userAllowedSlippage)
+
+  // compare input balance to max input based on version
+  const [balanceIn, amountIn] = [
+    currencyBalances[Field.INPUT],
+    slippageAdjustedAmounts ? slippageAdjustedAmounts[Field.INPUT] : null,
+  ]
+
+  // NOTE: balanceIn is undefined mean no balance in Aptos
+  if (amountIn && (!balanceIn || balanceIn.lessThan(amountIn))) {
+    inputError = `Insufficient ${ amountIn.currency.symbol } balance`
+  }
+
+  if (!inputCurrency || !outputCurrency) {
+    inputError = inputError ?? 'Select a token'
+  }
+
+  const isValid = !inputError
 
   return (
     <>
@@ -236,21 +335,47 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
 
           <SwapInfo
             price={
-              derivedSwapInfo.v2Trade?.executionPrice?.greaterThan(0) ? (
+              trade?.executionPrice?.greaterThan(0) ? (
                 <Flex justify='space-between' align='center' fontSize='sm' fontWeight='bold'>
                   <Text>Price</Text>
-                  {!derivedSwapInfo.v2Trade ? <Skeleton ml="8px" height="24px" /> : <TradePrice price={derivedSwapInfo.v2Trade?.executionPrice} />}
+                  {!trade ? <Skeleton ml="8px" height="24px" /> : <TradePrice price={trade?.executionPrice} />}
                 </Flex>
               ) : null
             }
-            allowedSlippage={allowedSlippage}
+            allowedSlippage={userAllowedSlippage}
             onSlippageClick={() => console.log('plz implement')}
           />
+
+
+          <CommitButton
+            width="100%"
+            colorScheme={!inputError && priceImpactSeverity > 2 ? 'red' : undefined}
+            variant={!inputError && priceImpactSeverity > 2 ? 'solid' : 'primary'}
+            isDisabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode)}
+            onClick={() => {
+              if (trade) {
+                setSwapState({
+                  tradeToConfirm: trade,
+                  attemptingTxn: false,
+                  swapErrorMessage: undefined,
+                  txHash: undefined,
+                })
+              }
+              onOpen();
+            }}
+          >
+            {inputError ||
+              (priceImpactSeverity > 3 && !isExpertMode
+                ? 'Price Impact High'
+                : priceImpactSeverity > 2
+                  ? 'Swap Anyway'
+                  : 'Swap')}
+          </CommitButton>
         </Card>
 
-        {derivedSwapInfo.v2Trade && (
+        {trade && (
           <Card mt={2}>
-            <AdvancedSwapDetails trade={derivedSwapInfo.v2Trade} />
+            <AdvancedSwapDetails trade={trade} />
           </Card>
         )}
       </Container>
@@ -258,6 +383,22 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
       {/*  isOpen={isOpen}*/}
       {/*  onClose={onClose}*/}
       {/*/>*/}
+      <ConfirmSwapModal
+        isOpen={isOpen}
+        onClose={onClose}
+        trade={trade}
+        originalTrade={tradeToConfirm}
+        currencyBalances={currencyBalances}
+        onAcceptChanges={handleAcceptChanges}
+        attemptingTxn={attemptingTxn}
+        txHash={txHash}
+        recipient={recipient}
+        allowedSlippage={userAllowedSlippage}
+        onConfirm={handleSwap}
+        swapErrorMessage={swapErrorMessage}
+        customOnDismiss={handleConfirmDismiss}
+        openSettingModal={() => console.log('plz implement')}
+      />
     </>
   )
 }

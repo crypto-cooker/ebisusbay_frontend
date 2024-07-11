@@ -15,6 +15,8 @@ import { StableTrade } from '@eb-pancakeswap-web/config/constants/types'
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId'
 // import { useContract } from 'hooks/useContract'
 import { Field } from '../state/swap/actions'
+import {useContract} from "@eb-pancakeswap-web/hooks/useContract";
+import {Address} from "wagmi";
 
 // converts a basis points value to a sdk percent
 export function basisPointsToPercent(num: number): Percent {
@@ -31,10 +33,10 @@ export function calculateSlippageAmount(value: CurrencyAmount<Currency>, slippag
   ]
 }
 
-// export function useRouterContract() {
-//   const { chainId } = useActiveChainId()
-//   return useContract(chainId && V2_ROUTER_ADDRESS[chainId], pancakeRouter02ABI)
-// }
+export function useRouterContract() {
+  const { chainId } = useActiveChainId()
+  return useContract(chainId && (V2_ROUTER_ADDRESS[chainId] as Address), pancakeRouter02ABI)
+}
 
 // computes price breakdown for the trade
 export function computeTradePriceBreakdown(trade?: Trade<Currency, Currency, TradeType> | null): {
