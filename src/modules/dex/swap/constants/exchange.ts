@@ -1,5 +1,5 @@
 import {Percent, Token, WNATIVE} from '@pancakeswap/sdk'
-import {cronosTestnetTokens, cronosTokens, USDC, USDT,} from '@pancakeswap/tokens'
+import {cronosTestnetTokens, cronosTokens, cronosZkEvmTestnetTokens, USDC, USDT,} from '@pancakeswap/tokens'
 import {ChainTokenList} from './types'
 import {ChainId} from "@pancakeswap/chains";
 
@@ -14,6 +14,7 @@ export const CHAIN_REFRESH_TIME = {
   [ChainId.ETHEREUM]: 12_000,
   [ChainId.CRONOS]: 6_000,
   [ChainId.CRONOS_TESTNET]: 6_000,
+  [ChainId.CRONOS_ZKEVM_TESTNET]: 6_000,
 } as const satisfies Record<ChainId, number>
 
 // used for display in the default list when adding liquidity
@@ -21,6 +22,7 @@ export const SUGGESTED_BASES: ChainTokenList = {
   [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM]],
   [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],
   [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
+  [ChainId.CRONOS_ZKEVM_TESTNET]: [cronosZkEvmTestnetTokens.wcro, cronosZkEvmTestnetTokens.usdc],
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
@@ -28,6 +30,7 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM]],
   [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],
   [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
+  [ChainId.CRONOS_ZKEVM_TESTNET]: [cronosZkEvmTestnetTokens.wcro, cronosZkEvmTestnetTokens.usdc],
 }
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {

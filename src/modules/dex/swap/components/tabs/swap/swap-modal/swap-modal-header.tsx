@@ -6,7 +6,7 @@ import {basisPointsToPercent, computeTradePriceBreakdown, warningSeverity} from 
 import {Button, Center, Flex, SimpleGrid, Text, VStack, Wrap} from "@chakra-ui/react";
 import {ArrowDownIcon, WarningIcon} from "@chakra-ui/icons";
 import formatAmountDisplay from "@dex/swap/utils/formatAmountDisplay";
-import {CurrencyLogo} from "@dex/farms/components/shared/logo";
+import {CurrencyLogo} from "@dex/components/logo";
 import {SwapShowAcceptChanges, TruncatedText} from "@dex/swap/components/tabs/swap/styleds";
 import {formatAmount} from "@pancakeswap/utils/formatFractions";
 import {DEX_COLORS} from "@dex/swap/constants/style";

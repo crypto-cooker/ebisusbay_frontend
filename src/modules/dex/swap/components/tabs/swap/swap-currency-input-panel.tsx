@@ -2,7 +2,7 @@ import {Card} from "@src/components-v2/foundation/card";
 import {Box, Button, Flex, HStack, Image, NumberInput, NumberInputField, useDisclosure} from "@chakra-ui/react";
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import {ResponsiveChooseTokenDialog} from "@dex/swap/components/tabs/swap/responsive-choose-token-dialog";
-import tokenConfig from "@dex/configs/tokens.json";
+import tokenConfig from "@dex/config/tokens.json";
 import {useCallback} from "react";
 import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 import {Currency} from "@pancakeswap/sdk";

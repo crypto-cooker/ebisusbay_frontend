@@ -3,7 +3,7 @@ import { atomWithStorage } from 'jotai/utils'
 import { useMemo } from 'react'
 
 import { useActiveChainId } from './useActiveChainId'
-import {L2_CHAIN_IDS} from "@eb-pancakeswap-web/config/chains";
+import {L2_CHAIN_IDS} from "@src/Config/chains";
 import {DEFAULT_DEADLINE_FROM_NOW, L2_DEADLINE_FROM_NOW} from "@dex/swap/constants";
 import {useCurrentBlockTimestamp} from "@eb-pancakeswap-web/state/block/hooks";
 

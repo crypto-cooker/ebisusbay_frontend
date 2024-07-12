@@ -2,7 +2,7 @@ import { ChainId } from '@pancakeswap/chains'
 import { useActiveChainId } from './useActiveChainId'
 import { useMemo } from 'react'
 import { useEnsAddress } from 'wagmi'
-import {CHAINS} from "@eb-pancakeswap-web/config/chains";
+import {CHAINS} from "@src/Config/chains";
 
 const ENS_SUPPORT_CHAIN_IDS = CHAINS.filter((c) => c?.contracts && c.contracts?.ensUniversalResolver).map((c) => c.id)
 

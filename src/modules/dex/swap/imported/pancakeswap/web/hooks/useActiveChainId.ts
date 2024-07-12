@@ -1,8 +1,8 @@
-import { getChainId } from '../config/chains'
+import { getChainId } from '../../../../../../../Config/chains'
 import { atom, useAtomValue } from 'jotai'
 import { useRouter } from 'next/router'
 import { useDeferredValue, useMemo } from 'react'
-import { isChainSupported } from '../utils/wagmi'
+import { isChainSupported } from '@src/wagmi'
 import { useAccount } from 'wagmi'
 import { useSessionChainId } from './useSessionChainId'
 import {ChainId} from "@pancakeswap/sdk";

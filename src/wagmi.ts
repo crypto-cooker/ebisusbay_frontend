@@ -3,6 +3,12 @@ import {cookieStorage, createConfig, createStorage, http} from 'wagmi'
 import {cronos, cronosTestnet} from 'wagmi/chains'
 import {appConfig as applicationConfig, isTestnet} from "@src/Config";
 import {walletConnect} from "@wagmi/connectors";
+import {CHAINS} from "@src/Config/chains";
+import memoize from "lodash/memoize";
+
+export const chains = CHAINS
+export const CHAIN_IDS = chains.map((c) => c.id)
+export const isChainSupported = memoize((chainId: number) => (CHAIN_IDS as number[]).includes(chainId))
 
 type ChainRpcUrls = {
   http: readonly string[]
@@ -20,16 +26,6 @@ const metadata = {
   icons: ['https://cdn-prod.ebisusbay.com/img/logo-dark.svg']
 }
 
-const primaryNetwork = (isTestnet() ? cronosTestnet : cronos);
-
-const rpcUrls: {
-  [key: string]: ChainRpcUrls;
-  default: ChainRpcUrls;
-} = {
-  default: {
-    http: [appConfig.rpc.read].concat(primaryNetwork.rpcUrls.default.http)
-  }
-}
 
 // const ethersChains = [
 //   {
@@ -42,16 +38,16 @@ const rpcUrls: {
 // ];
 
 function setupDefaultConfig() {
-  const wagmiChains = [{...primaryNetwork, rpcUrls}];
 
   const config = defaultWagmiConfig({
-    chains: [{...primaryNetwork, rpcUrls}],
+    chains,
     projectId: projectId!,
     metadata,
     ssr: true,
     storage: createStorage({
       storage: cookieStorage
-    })
+    }),
+    syncConnectedChain: true,
   })
 
   return config;

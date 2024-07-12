@@ -1,7 +1,13 @@
 import {WrappedTokenInfo} from "@dex/hooks/use-supported-tokens";
 import {Image} from "@chakra-ui/react";
-import React, {useMemo, useState} from "react";
+import React, {memo, useMemo, useState} from "react";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
+import {isChainSupported} from "@src/wagmi";
+import {appConfig} from "@src/Config";
+import {Currency} from "@pancakeswap/sdk";
+import ImageService from "@src/core/services/image";
+
+const config = appConfig();
 
 const getTokenLogoURL = (address: string) => {
   return `https://dd.dexscreener.com/ds-data/tokens/cronos/${address}.png?size=sm`;
@@ -63,3 +69,22 @@ export function PairLogo({ pair }: { pair: Token[] }) {
 
   return <Logo src={srcs[0]} alt='Pair logo' />;
 }
+
+export const ChainLogo = memo(
+  ({ chainId, width = 24, height = 24 }: { chainId?: number; width?: number; height?: number }) => {
+    if (chainId && isChainSupported(chainId)) {
+      return (
+        <Image
+          alt={`chain-${chainId}`}
+          style={{ maxHeight: `${height}px` }}
+          src={ImageService.translate(`/files/dex/images/chains/${chainId}.webp`).convert()}
+          width={`${width}px`}
+          height={`${height}px`}
+          rounded='full'
+        />
+      )
+    }
+
+    return <QuestionOutlineIcon width={width} height={height} />
+  },
+)

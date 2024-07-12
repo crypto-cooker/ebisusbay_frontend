@@ -1,5 +1,5 @@
 import {appConfig} from "@src/Config";
-import tokens from '@dex/configs/tokens.json';
+import tokens from '@dex/config/tokens.json';
 import {useMemo} from "react";
 import {Token} from "@pancakeswap/sdk";
 import {Address} from "viem";

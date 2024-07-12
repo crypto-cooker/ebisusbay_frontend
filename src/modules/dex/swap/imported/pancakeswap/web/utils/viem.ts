@@ -2,7 +2,7 @@ import { ChainId } from '@pancakeswap/chains'
 import first from 'lodash/first'
 import { PublicClient, createPublicClient, fallback, http } from 'viem'
 import { mainnet } from 'viem/chains'
-import {CHAINS} from "@eb-pancakeswap-web/config/chains";
+import {CHAINS} from "@src/Config/chains";
 import {PUBLIC_NODES} from "@eb-pancakeswap-web/config/nodes";
 
 export type CreatePublicClientParams = {

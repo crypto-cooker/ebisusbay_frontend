@@ -33,6 +33,9 @@ export const SERVER_NODES = {
     'https://evm-t3.cronos.org',
     'https://rpc.ebisusbay.biz',
   ],
+  [ChainId.CRONOS_ZKEVM_TESTNET]: [
+    'https://testnet.zkevm.cronos.org',
+  ],
   [ChainId.BSC]: [
     process.env.NEXT_PUBLIC_NODE_PRODUCTION || '',
     'https://bsc.publicnode.com',
@@ -94,6 +97,9 @@ export const PUBLIC_NODES: Record<ChainId, string[] | readonly string[]> = {
   [ChainId.CRONOS_TESTNET]: [
     'https://evm-t3.cronos.org',
     'https://rpc.ebisusbay.biz',
+  ],
+  [ChainId.CRONOS_ZKEVM_TESTNET]: [
+    'https://testnet.zkevm.cronos.org',
   ],
   [ChainId.BSC]: [
     process.env.NEXT_PUBLIC_NODE_PRODUCTION || '',
