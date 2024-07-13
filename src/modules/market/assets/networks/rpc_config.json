@@ -27550,6 +27550,57 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "PAPACRO_NFT",
+      "slug": "papacro-nft",
+      "multiToken": false,
+      "address": "0x492FC7075876eDcB5fb564ec0ad6501b6a9B03ae",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Part of meme coin $PAPACRO project with staking opportunity",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/papacro-nft/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/papacro-nft/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/papacro-nft/banner.webp",
+        "website": "https://www.papacro.com/",
+        "twitter": "https://twitter.com/PAPACRO_",
+        "discord": "https://discord.gg/hEjJsMgF8H",
+        "telegram": "https://t.me/+vBPd0xIa1ZNlZmQ0",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "PLUUSHDABUTTON",
+      "slug": "pluushdabutton",
+      "multiToken": false,
+      "address": "0xdE456f460fef8852D4963c503473F6c2665Ea6D0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "JUST PLUUSH DA BUTTON",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/pluushdabutton/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/pluushdabutton/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/pluushdabutton/banner.webp",
+        "website": "https://pluush.gitbook.io/dabutton/",
+        "twitter": "https://twitter.com/PLUUSHDABUTTON",
+        "discord": "https://discord.gg/uN7agJcJ",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
