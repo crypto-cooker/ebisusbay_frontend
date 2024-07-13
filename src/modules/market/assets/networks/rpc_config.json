@@ -27531,7 +27531,7 @@
       "multiToken": false,
       "address": "0x4441d549d35170ae1abe3d7a91e849ced5cdcaf6",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Blockchain Operative Tech (BOT) is a 1150 piece AI collection. We are ready to revolutionize the future. Join us on this exciting journey! There will be various investment pools. All BOT holders will have access to game assets. Top holders will get access to asset development and more",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/blockchain-operative-tech-bot/avatar.webp",
