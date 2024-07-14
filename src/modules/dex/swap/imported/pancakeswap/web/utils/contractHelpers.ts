@@ -9,7 +9,7 @@ import {viemClients} from "@eb-pancakeswap-web/utils/viem";
 export const getContract = <TAbi extends Abi | readonly unknown[], TWalletClient extends WalletClient>({
   abi,
   address,
-  chainId = ChainId.BSC,
+  chainId = ChainId.CRONOS,
   publicClient,
   signer,
 }: {

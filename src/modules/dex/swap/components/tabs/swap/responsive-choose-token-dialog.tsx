@@ -43,7 +43,7 @@ function DialogContent({isOpen, onClose, commonBases, tokens, onCurrencySelect}:
     DialogHeader,
     DialogBody,
     DialogFooter ,
-    DialogCloseButton
+    DialogBasicHeader
   } = useResponsiveDialog();
 
   const [page, setPage] = useState(Pages.SELECT);
@@ -52,10 +52,7 @@ function DialogContent({isOpen, onClose, commonBases, tokens, onCurrencySelect}:
     <>
       {page === Pages.SELECT ? (
         <>
-          <DialogHeader>
-            Select a token
-          </DialogHeader>
-          <DialogCloseButton />
+          <DialogBasicHeader title='Select a token' />
           <DialogBody p={0}>
             <SelectToken
               commonBases={commonBases}

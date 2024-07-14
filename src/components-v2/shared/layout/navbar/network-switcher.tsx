@@ -1,34 +1,29 @@
-import { ChainId } from '@pancakeswap/chains'
-import { NATIVE } from '@pancakeswap/sdk'
+import {ChainId} from '@pancakeswap/chains'
+import {NATIVE} from '@pancakeswap/sdk'
 import {
   Box,
-  Button,
   Flex,
   HStack,
-  IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   Popover,
-  PopoverArrow, PopoverBody,
+  PopoverArrow,
+  PopoverBody,
   PopoverCloseButton,
   PopoverContent,
   PopoverTrigger,
   Text,
   useDisclosure,
-  useTooltip,
 } from '@chakra-ui/react'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import React, {useEffect, useMemo} from 'react'
-import { useAccount } from 'wagmi'
+import {useAccount} from 'wagmi'
 import {useActiveChainId, useLocalNetworkChain} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 import {chains} from "@src/wagmi";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBell} from "@fortawesome/free-solid-svg-icons";
-import {ArrowDownIcon, ArrowUpIcon, HamburgerIcon, InfoIcon} from "@chakra-ui/icons";
+import {ArrowDownIcon, InfoIcon} from "@chakra-ui/icons";
 import {useUserShowTestnet} from "@eb-pancakeswap-web/state/user/hooks/useUserShowTestnet";
 import {ChainLogo} from "@dex/components/logo";
 import {useSessionChainId} from "@eb-pancakeswap-web/hooks/useSessionChainId";
@@ -36,6 +31,7 @@ import {toast} from "react-toastify";
 import {useUser} from "@src/components-v2/useUser";
 import {chainNameConverter} from "@eb-pancakeswap-web/utils/chainNameConverter";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {useNetworkConnectorUpdater} from "@eb-pancakeswap-web/hooks/useActiveWeb3React";
 
 const NetworkSelect = ({ switchNetwork, chainId, isWrongNetwork }) => {
   const [showTestnet] = useUserShowTestnet()
@@ -161,7 +157,7 @@ export const NetworkSwitcher = () => {
   const router = useRouter()
   const {isOpen, onOpen, onClose} = useDisclosure();
 
-  // useNetworkConnectorUpdater()
+  useNetworkConnectorUpdater()
 
   const foundChain = useMemo(() => chains.find((c) => c.id === chainId), [chainId])
   const symbol =

@@ -83,7 +83,6 @@ const Index = function () {
       fallback: 'md',
     },
   );
-  const [showWrongChainModal, setShowWrongChainModal] = useState(false);
   const isMobile = useBreakpointValue({ base: true, sm: false });
 
   const { setValue:setClipboardValue, onCopy } = useClipboard(user.wallet.address ?? '');
@@ -203,7 +202,7 @@ const Index = function () {
           <FontAwesomeIcon icon={faWallet} color="white" />
         </div>
       )}
-      {user.wallet.isConnected && !user.wallet.correctChain && !showWrongChainModal && (
+      {user.wallet.isConnected && !user.wallet.correctChain && (
         <div className="de-menu-notification" onClick={() => openWeb3Modal({view: 'Networks'})} style={{background: '#218cff', marginLeft:'5px'}}>
           <FontAwesomeIcon icon={faArrowRightArrowLeft} color="white" />
         </div>

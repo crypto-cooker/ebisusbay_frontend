@@ -77,7 +77,7 @@ export const ChainLogo = memo(
         <Image
           alt={`chain-${chainId}`}
           style={{ maxHeight: `${height}px` }}
-          src={ImageService.translate(`/files/dex/images/chains/${chainId}.webp`).convert()}
+          src={ImageService.translate(`/files/dex/images/chains/${chainId}.webp`).fixedWidth(width, height)}
           width={`${width}px`}
           height={`${height}px`}
           rounded='full'

@@ -35,7 +35,7 @@ export const useResponsiveDialog = () => {
       DialogHeader: DrawerHeader,
       DialogBody: DrawerBody,
       DialogFooter: DrawerFooter,
-      DialogCloseButton: closeButton,
+      DialogCloseButton: () => closeButton,
       DialogBasicHeader: ({title}: {title: string}) => (
         <DrawerHeader>
           <Flex justify='space-between' w='full'>
@@ -53,7 +53,7 @@ export const useResponsiveDialog = () => {
       DialogHeader: ModalHeader,
       DialogBody: ModalBody,
       DialogFooter: ModalFooter,
-      DialogCloseButton: closeButton,
+      DialogCloseButton: () => closeButton,
       DialogBasicHeader: ({title}: {title: string}) => (
         <ModalHeader>
           <Flex justify='space-between' w='full'>
