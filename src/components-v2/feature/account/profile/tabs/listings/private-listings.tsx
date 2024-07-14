@@ -1,5 +1,4 @@
 import React, {ChangeEvent, memo, useCallback, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CreateListingDialog from "@src/components-v2/shared/dialogs/create-listing";
 import {useInfiniteQuery} from "@tanstack/react-query";
@@ -44,8 +43,6 @@ interface UserPrivateListingsProps {
 }
 
 const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
-  const dispatch = useDispatch();
-
   const [collections, setCollections] = useState<any[]>([]);
   const [searchTerms, setSearchTerms] = useState<string>();
   const debouncedSearch = useDebounce(searchTerms, 500);

@@ -1,6 +1,5 @@
 import React, {memo, useEffect, useState} from 'react';
 import Blockies from 'react-blockies';
-import {useDispatch} from 'react-redux';
 import NextLink from 'next/link';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
@@ -72,7 +71,6 @@ const Index = function () {
   const contractService = useContractService();
   const { isOpen: isLoginWizardOpen, onOpen: onLoginWizardOpen, onClose: onLoginWizardClose } = useDisclosure()
 
-  const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const slideDirection = useBreakpointValue<'bottom' | 'right'>(
     {

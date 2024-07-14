@@ -1,5 +1,4 @@
 import React, {memo, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {Box, Center, Heading, Spinner, Text, VStack} from "@chakra-ui/react";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {appConfig} from "@src/Config";
@@ -14,6 +13,7 @@ import nextApiService from "@src/core/services/api-service/next";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {ApiService} from "@src/core/services/api-service";
 import {useUser} from "@src/components-v2/useUser";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const ryoshiCollectionAddress = appConfig('collections').find((c: any) => c.slug === 'ryoshi-tales-vip').address;
 const displayTypes = {
@@ -22,7 +22,7 @@ const displayTypes = {
 };
 
 const RyoshiStaking = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUser();
   const [displayType, setDisplayType] = useState(displayTypes.staked)
 

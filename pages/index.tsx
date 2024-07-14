@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {useRouter} from 'next/router';
 import Link from 'next/link';
 import {keyframes} from '@emotion/react';
@@ -17,12 +16,11 @@ import {getTheme, theme} from '@src/global/theme/theme';
 import {limitSizeOptions} from '@src/Components/components/constants/filter-options';
 import LegacyButton from '../src/Components/components/Button';
 import {hostedImage} from "@src/helpers/image";
-import {appConfig} from "@src/Config";
 import Head from "next/head";
 import {Center, Heading, SimpleGrid} from "@chakra-ui/react";
 import ads from "@src/core/data/ads.json";
 import ImageService from "@src/core/services/image";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import RyoshiDynasties from "@src/components-v2/feature/ryoshi-dynasties/game";
 import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
@@ -135,7 +133,7 @@ const featuredAd = ads
 
 const Home = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
   const history = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [mobile, setMobile] = useState(typeof window !== 'undefined' && window.innerWidth < theme.breakpointsNum.md);
 
@@ -165,8 +163,8 @@ const Home = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
   };
 
   useEffect(() => {
-    getMarketData();
-  }, []);
+    dispatch(getMarketData());
+  }, [dispatch])
 
   const JumbotronData = () => {
     return (

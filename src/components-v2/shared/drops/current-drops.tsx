@@ -1,5 +1,4 @@
 import React, {memo, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import PreviewCard from '@src/components-v2/shared/preview-card';
@@ -8,11 +7,12 @@ import Slider from '@src/Components/components/Slider';
 import LocalDataService from "@src/core/services/local-data-service";
 import {millisecondTimestamp} from "@market/helpers/utils";
 import {Drop} from "@src/core/models/drop";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const drops = appConfig('drops');
 
 const CurrentDrops = ({ useCarousel = true }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const threePerRowSize = typeof window !== 'undefined' && window.innerWidth < 992;
 
   const [currentDrops, setCurrentDrops] = useState([]);

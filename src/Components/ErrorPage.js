@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {createGlobalStyle, default as styled} from 'styled-components';
 import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
@@ -8,6 +7,7 @@ import {getMarketData} from '@market/state/redux/slices/marketplaceSlice';
 import {theme} from '../global/theme/theme';
 import {hostedImage} from "../helpers/image";
 import {useUser} from "@src/components-v2/useUser";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const fadeInUp = keyframes`
   0% {
@@ -96,7 +96,7 @@ const Jumbotron = {
 };
 
 export const ErrorPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {theme: userTheme} = useUser();
 

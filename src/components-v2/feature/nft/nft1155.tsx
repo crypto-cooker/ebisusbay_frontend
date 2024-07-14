@@ -1,5 +1,4 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {
   faBullhorn,
   faCopy,
@@ -33,6 +32,7 @@ import {collectionRoyaltyPercent} from "@src/core/chain";
 import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
 import {
   Box,
+  Button as ChakraButton,
   ButtonGroup,
   Center,
   Heading,
@@ -49,9 +49,8 @@ import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
 import {Menu} from '@src/Components/components/chakra-components';
 import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-svg-icons';
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
-import {Button as ChakraButton} from "@chakra-ui/button";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferState, OfferType} from "@src/core/services/api-service/types";
 import ImageService from "@src/core/services/image";
@@ -78,7 +77,7 @@ interface Nft721Props {
 }
 
 const Nft1155 = ({ address, id, collection }: Nft721Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`).toString());
   const [runAuthedFunction] = useAuthedFunction();
 

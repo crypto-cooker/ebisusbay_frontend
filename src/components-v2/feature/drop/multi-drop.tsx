@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import Countdown from 'react-countdown';
@@ -62,7 +61,6 @@ const MultiDrop = () => {
   const { slug } = router.query;
 
   const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-  const dispatch = useDispatch();
 
   // const [loading, setLoading] = useState(true);
   // const [minting, setMinting] = useState(false);

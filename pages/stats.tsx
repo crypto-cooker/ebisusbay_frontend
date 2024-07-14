@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {utils} from 'ethers';
 import Card from '../src/Components/Leaderboard/Card';
 import Table from '../src/Components/Leaderboard/Table';
@@ -12,7 +11,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import {Heading, Link, Tag} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {hostedImage} from "@src/helpers/image";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import {GetServerSidePropsContext} from "next";
 
 const headers = {
@@ -29,7 +28,7 @@ interface StatsProps {
 
 export default function Stats({pageHead, initialTimeframe}: StatsProps) {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [timeframe, setTimeframe] = useState(initialTimeframe);
   const [type, setType] = useState('totalVolume');
   const [showDialog, setShowDialog] = useState(false);

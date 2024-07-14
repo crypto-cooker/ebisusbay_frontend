@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {createGlobalStyle, ThemeProvider} from 'styled-components';
 import {toast, ToastContainer} from 'react-toastify';
 import {initializeApp} from 'firebase/app';
@@ -51,7 +50,6 @@ const firebase = initializeApp(firebaseConfig);
 
 function App({ Component, ...pageProps }: AppProps) {
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
   const { colorMode } = useColorMode()
   const exchangePrices = useGlobalPrices();
   const {theme: userTheme} = useUser();

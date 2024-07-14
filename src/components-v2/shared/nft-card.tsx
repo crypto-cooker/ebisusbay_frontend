@@ -1,5 +1,4 @@
 import React, {useCallback, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import Link from 'next/link';
 import {ethers} from 'ethers';
@@ -45,6 +44,7 @@ import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image
 import {useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import useCart from "@market/hooks/use-cart";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
@@ -73,7 +73,7 @@ type BaseNftCardProps = {
 }
 const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, canBuy = true }: BaseNftCardProps) => {
   const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUser();
   const cart = useCart();
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
