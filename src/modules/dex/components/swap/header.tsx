@@ -21,18 +21,21 @@ export default function SwapHeader({ compact }: { compact: boolean }) {
       <Button
         onClick={() => handleChangeTab(SwapTab.Swap)}
         isActive={swapPageState.currentTab === SwapTab.Swap}
+        variant='tab'
       >
         Swap
       </Button>
       <Button
         onClick={() => handleChangeTab(SwapTab.Limit)}
         isActive={swapPageState.currentTab === SwapTab.Limit}
+        variant='tab'
       >
         Limit
       </Button>
       <Button
         onClick={() => handleChangeTab(SwapTab.Send)}
         isActive={swapPageState.currentTab === SwapTab.Send}
+        variant='tab'
       >
         Buy
       </Button>

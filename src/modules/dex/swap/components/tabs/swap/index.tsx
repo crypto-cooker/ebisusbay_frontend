@@ -33,6 +33,7 @@ import {UserRejectedRequestError} from "viem";
 import {useSendTransaction} from "wagmi";
 import {useSwapCallback} from "@eb-pancakeswap-web/hooks/useSwapCallback";
 import {useSwapCallArguments} from "@eb-pancakeswap-web/hooks/useSwapCallArguments";
+import Settings from "@dex/components/swap/settings";
 
 // interface Props {
 //   inputAmount?: CurrencyAmount<Currency>
@@ -65,7 +66,8 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
   const maxAmountInput = useMemo(() => maxAmountSpend(inputBalance), [inputBalance])
   const loadedUrlParams = useDefaultsFromURLSearch()
   const isExpertMode = useIsExpertMode()
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isOpenConfirmSwap, onOpen: onOpenConfirmSwap, onClose: onCloseConfirmSwap } = useDisclosure();
+  const { isOpen: isOpenSettings, onOpen: onOpenSettings, onClose: onCloseSettings } = useDisclosure();
 
   const {v2Trade: trade, ...derivedSwapInfo} = useDerivedSwapInfo(
     independentField,
@@ -266,7 +268,7 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
                 aria-label='Settings'
                 variant='ghost'
                 icon={<SettingsIcon />}
-                onClick={onOpen}
+                onClick={onOpenSettings}
               />
             </Box>
           </Flex>
@@ -361,7 +363,7 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
                   txHash: undefined,
                 })
               }
-              onOpen();
+              onOpenConfirmSwap();
             }}
           >
             {inputError ||
@@ -379,13 +381,13 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
           </Card>
         )}
       </Container>
-      {/*<Settings*/}
-      {/*  isOpen={isOpen}*/}
-      {/*  onClose={onClose}*/}
-      {/*/>*/}
+      <Settings
+        isOpen={isOpenSettings}
+        onClose={onCloseSettings}
+      />
       <ConfirmSwapModal
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenConfirmSwap}
+        onClose={onCloseConfirmSwap}
         trade={trade}
         originalTrade={tradeToConfirm}
         currencyBalances={currencyBalances}
