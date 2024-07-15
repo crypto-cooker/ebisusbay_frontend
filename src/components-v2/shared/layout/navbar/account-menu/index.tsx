@@ -169,11 +169,11 @@ const Index = function () {
     user.toggleTheme(themeInStorage ?? 'dark');
   }, []);
 
-  useEffect(() => {
-    if (user.wallet.correctChain) {
-      closeWeb3Modal()
-    }
-  }, [user.wallet.correctChain]);
+  // useEffect(() => {
+  //   if (user.wallet.correctChain) {
+  //     closeWeb3Modal()
+  //   }
+  // }, [user.wallet.correctChain]);
 
   const toggleTheme = () => {
     const newTheme = user.theme === 'light' ? 'dark' : 'light';
@@ -200,12 +200,12 @@ const Index = function () {
           <FontAwesomeIcon icon={faWallet} color="white" />
         </div>
       )}
-      {user.wallet.isConnected && !user.wallet.correctChain && (
-        <div className="de-menu-notification" onClick={() => openWeb3Modal({view: 'Networks'})} style={{background: '#218cff', marginLeft:'5px'}}>
-          <FontAwesomeIcon icon={faArrowRightArrowLeft} color="white" />
-        </div>
-      )}
-      {user.wallet.isConnected && user.wallet.correctChain && (
+      {/*{user.wallet.isConnected && !user.wallet.correctChain && (*/}
+      {/*  <div className="de-menu-notification" onClick={() => openWeb3Modal({view: 'Networks'})} style={{background: '#218cff', marginLeft:'5px'}}>*/}
+      {/*    <FontAwesomeIcon icon={faArrowRightArrowLeft} color="white" />*/}
+      {/*  </div>*/}
+      {/*)}*/}
+      {user.wallet.isConnected && (
         <Box className="de-menu-profile" onClick={() => setShowMenu(!showMenu)}>
           {!!user.profile?.profilePicture ? (
             <Image
@@ -248,7 +248,7 @@ const Index = function () {
         </ModalContent>
       </Modal>
 
-      {user.wallet.isConnected && user.wallet.correctChain && (
+      {user.wallet.isConnected && (
         <Drawer
           isOpen={showMenu}
           onClose={closeMenu}

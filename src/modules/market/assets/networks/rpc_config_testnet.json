@@ -3922,6 +3922,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Cronies ZK",
+      "slug": "cronies-zk",
+      "chainId": 282,
+      "multiToken": false,
+      "address": "0x1A695B3aC30D41F9A1D856A27DD0D9DdaaCe750d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "/img/avatar.png",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/ebisu/card.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ynrBrSkAFG",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": true
+      }
     }
   ],
   "drops": [

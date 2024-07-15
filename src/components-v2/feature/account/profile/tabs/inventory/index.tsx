@@ -58,6 +58,7 @@ import InventoryFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/inventory/inventory-filter-container";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {useUser} from "@src/components-v2/useUser";
+import {ApiService} from "@src/core/services/api-service";
 
 interface InventoryProps {
   address: string;
@@ -89,7 +90,7 @@ export default function Inventory({ address }: InventoryProps) {
       page: pageParam,
       ...queryParams
     }
-    return nextApiService.getWallet(address, params);
+    return ApiService.withoutKey().getWallet(address, params);
   };
 
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery({

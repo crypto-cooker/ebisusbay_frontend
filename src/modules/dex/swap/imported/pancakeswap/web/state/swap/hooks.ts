@@ -1,25 +1,23 @@
-import {ChainId, Currency, CurrencyAmount, Price, Trade, TradeType} from '@pancakeswap/sdk'
+import {Currency, CurrencyAmount, Trade, TradeType} from '@pancakeswap/sdk'
 import {FRTN, STABLE_COIN, USDC, USDT} from '@pancakeswap/tokens'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
-import { useUserSlippage } from '@pancakeswap/utils/user'
-import { useQuery } from '@tanstack/react-query'
-import { DEFAULT_INPUT_CURRENCY } from '@dex/swap/constants/exchange'
-import dayjs from 'dayjs'
-import { useTradeExactIn, useTradeExactOut } from '@eb-pancakeswap-web/hooks/trades'
-import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId'
+import {useUserSlippage} from '@pancakeswap/utils/user'
+import {DEFAULT_INPUT_CURRENCY} from '@dex/swap/constants/exchange'
+import {useTradeExactIn, useTradeExactOut} from '@eb-pancakeswap-web/hooks/trades'
+import {useActiveChainId} from '@eb-pancakeswap-web/hooks/useActiveChainId'
 import useNativeCurrency from '@eb-pancakeswap-web/hooks/useNativeCurrency'
-import { useAtom, useAtomValue } from 'jotai'
-import { useRouter } from 'next/router'
-import { ParsedUrlQuery } from 'querystring'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { safeGetAddress } from '@eb-pancakeswap-web/utils'
-import { useAccount } from 'wagmi'
-import { useCurrencyBalances } from '../wallet/hooks'
-import { Field, replaceSwapState } from './actions'
-import { SwapState, swapReducerAtom } from './reducer'
-import {getTokenAddress} from "@dex/swap/utils/getTokenAddress";
+import {useAtom, useAtomValue} from 'jotai'
+import {useRouter} from 'next/router'
+import {ParsedUrlQuery} from 'querystring'
+import {useEffect, useMemo, useState} from 'react'
+import {safeGetAddress} from '@eb-pancakeswap-web/utils'
+import {useAccount} from 'wagmi'
+import {useCurrencyBalances} from '../wallet/hooks'
+import {Field, replaceSwapState} from './actions'
+import {swapReducerAtom, SwapState} from './reducer'
 import {useGetENSAddressByName} from "@eb-pancakeswap-web/hooks/useGetENSAddressByName";
 import {computeSlippageAdjustedAmounts} from "@eb-pancakeswap-web/utils/exchange";
+
 // import {useBestAMMTrade} from "@eb-pancakeswap-web/hooks/useBestAMMTrade";
 
 export function useSwapState() {
@@ -260,7 +258,9 @@ export function useDefaultsFromURLSearch():
     const parsed = queryParametersToSwapState(
       query,
       native.symbol,
-      FRTN[chainId]?.address ?? STABLE_COIN[chainId]?.address ?? USDC[chainId]?.address ?? USDT[chainId]?.address,
+      FRTN[chainId as keyof typeof FRTN]?.address ??
+      STABLE_COIN[chainId]?.address ?? USDC[chainId as keyof typeof USDC]?.address ??
+      USDT[chainId as keyof typeof USDT]?.address,
     )
 
     dispatch(
@@ -278,84 +278,84 @@ export function useDefaultsFromURLSearch():
   return result
 }
 
-type useFetchPairPricesParams = {
-  token0Address: string
-  token1Address: string
-  timeWindow: PairDataTimeWindowEnum
-  currentSwapPrice: {
-    [key: string]: number
-  }
-}
-
-const timeWindowToPeriod = (timeWindow: PairDataTimeWindowEnum): ChartPeriod => {
-  switch (timeWindow) {
-    case PairDataTimeWindowEnum.HOUR:
-      return '1H'
-    case PairDataTimeWindowEnum.DAY:
-      return '1D'
-    case PairDataTimeWindowEnum.WEEK:
-      return '1W'
-    case PairDataTimeWindowEnum.MONTH:
-      return '1M'
-    case PairDataTimeWindowEnum.YEAR:
-      return '1Y'
-    default:
-      throw new Error('Invalid time window')
-  }
-}
-
-export const usePairRate = ({
-  token0Address,
-  token1Address,
-  timeWindow,
-  currentSwapPrice,
-}: useFetchPairPricesParams) => {
-  const { chainId } = useActiveChainId()
-
-  const chainName = chainIdToExplorerInfoChainName[chainId]
-
-  return useQuery({
-    queryKey: ['pair-rate', { token0Address, token1Address, chainId, timeWindow }],
-    enabled: Boolean(token0Address && token1Address && chainId && chainName),
-    queryFn: async ({ signal }) => {
-      return explorerApiClient
-        .GET('/cached/tokens/chart/{chainName}/rate', {
-          signal,
-          params: {
-            path: {
-              chainName,
-            },
-
-            query: {
-              period: timeWindowToPeriod(timeWindow),
-              tokenA: token0Address,
-              tokenB: token1Address,
-            },
-          },
-        })
-        .then((res) => res.data)
-    },
-    select: useCallback(
-      (data_) => {
-        if (!data_) {
-          throw new Error('No data')
-        }
-        const hasSwapPrice = currentSwapPrice && currentSwapPrice[token0Address] > 0
-
-        const formatted = data_.map((d) => ({
-          time: dayjs(d.bucket as string).toDate(),
-          open: d.open ? +d.open : 0,
-          close: d.close ? +d.close : 0,
-          low: d.low ? +d.low : 0,
-          high: d.high ? +d.high : 0,
-          value: d.close ? +d.close : 0,
-        }))
-        if (hasSwapPrice) {
-          return [...formatted, { time: new Date(), value: currentSwapPrice[token0Address] }]
-        }
-        return formatted
-      },
-      [currentSwapPrice, token0Address],
-    ),
-  })
-}
+// type useFetchPairPricesParams = {
+//   token0Address: string
+//   token1Address: string
+//   timeWindow: PairDataTimeWindowEnum
+//   currentSwapPrice: {
+//     [key: string]: number
+//   }
+// }
+//
+// const timeWindowToPeriod = (timeWindow: PairDataTimeWindowEnum): ChartPeriod => {
+//   switch (timeWindow) {
+//     case PairDataTimeWindowEnum.HOUR:
+//       return '1H'
+//     case PairDataTimeWindowEnum.DAY:
+//       return '1D'
+//     case PairDataTimeWindowEnum.WEEK:
+//       return '1W'
+//     case PairDataTimeWindowEnum.MONTH:
+//       return '1M'
+//     case PairDataTimeWindowEnum.YEAR:
+//       return '1Y'
+//     default:
+//       throw new Error('Invalid time window')
+//   }
+// }
+//
+// export const usePairRate = ({
+//   token0Address,
+//   token1Address,
+//   timeWindow,
+//   currentSwapPrice,
+// }: useFetchPairPricesParams) => {
+//   const { chainId } = useActiveChainId()
+//
+//   const chainName = chainIdToExplorerInfoChainName[chainId]
+//
+//   return useQuery({
+//     queryKey: ['pair-rate', { token0Address, token1Address, chainId, timeWindow }],
+//     enabled: Boolean(token0Address && token1Address && chainId && chainName),
+//     queryFn: async ({ signal }) => {
+//       return explorerApiClient
+//         .GET('/cached/tokens/chart/{chainName}/rate', {
+//           signal,
+//           params: {
+//             path: {
+//               chainName,
+//             },
+//
+//             query: {
+//               period: timeWindowToPeriod(timeWindow),
+//               tokenA: token0Address,
+//               tokenB: token1Address,
+//             },
+//           },
+//         })
+//         .then((res) => res.data)
+//     },
+//     select: useCallback(
+//       (data_) => {
+//         if (!data_) {
+//           throw new Error('No data')
+//         }
+//         const hasSwapPrice = currentSwapPrice && currentSwapPrice[token0Address] > 0
+//
+//         const formatted = data_.map((d) => ({
+//           time: dayjs(d.bucket as string).toDate(),
+//           open: d.open ? +d.open : 0,
+//           close: d.close ? +d.close : 0,
+//           low: d.low ? +d.low : 0,
+//           high: d.high ? +d.high : 0,
+//           value: d.close ? +d.close : 0,
+//         }))
+//         if (hasSwapPrice) {
+//           return [...formatted, { time: new Date(), value: currentSwapPrice[token0Address] }]
+//         }
+//         return formatted
+//       },
+//       [currentSwapPrice, token0Address],
+//     ),
+//   })
+// }

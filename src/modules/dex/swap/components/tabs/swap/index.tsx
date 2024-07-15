@@ -399,7 +399,7 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
         onConfirm={handleSwap}
         swapErrorMessage={swapErrorMessage}
         customOnDismiss={handleConfirmDismiss}
-        openSettingModal={() => console.log('plz implement')}
+        openSettingModal={onOpenSettings}
       />
     </>
   )

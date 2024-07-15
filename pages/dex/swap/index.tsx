@@ -12,20 +12,6 @@ function GlobalHooks() {
 }
 
 export default function Page() {
-  const { chain } = useAccount()
-  const [parsedQs, setParsedQs] = useState({});
-
-  // const parsedCurrencyState = useMemo(() => {
-  //   return queryParametersToCurrencyState(parsedQs)
-  // }, [parsedQs])
-
-  // const initialInputCurrency = useCurrency(parsedCurrencyState.inputCurrencyId, chainId)
-  // const initialOutputCurrency = useCurrency(parsedCurrencyState.outputCurrencyId, chainId)
-
-  // useEffect(() => {
-  //   setParsedQs(useParsedQueryString()); // Call the hook inside useEffect
-  // }, []);
-
   return (
     <>
       <PageHead
@@ -37,12 +23,7 @@ export default function Page() {
         subtitle='Trade tokens instantly with low fees'
       />
       <GlobalHooks />
-      <SwapPage
-        // initialInputCurrency={''}
-        // initialOutputCurrency={''}
-        // syncTabToUrl={true}
-
-      />
+      <SwapPage />
     </>
   )
 }
