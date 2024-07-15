@@ -29,7 +29,7 @@ import {faLink} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFacebook, faTelegram, faTwitter} from "@fortawesome/free-brands-svg-icons";
 import {CheckCircleIcon} from "@chakra-ui/icons";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {ContractReceipt} from "ethers";
 import {useAppSelector} from "@market/state/redux/store/hooks";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";

@@ -11,7 +11,7 @@ import {useWindowSize} from "@market/hooks/useWindowSize";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {Contract, ethers} from "ethers";
 import FortunePresale from "@src/global/contracts/FortunePresale.json";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {useUser} from "@src/components-v2/useUser";

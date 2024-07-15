@@ -26,7 +26,7 @@ import {search} from "@src/core/api/next/search";
 import {ciEquals} from "@market/helpers/utils";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {CloseIcon, SearchIcon} from "@chakra-ui/icons";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useRouter} from "next/router";
 import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
 import {useUser} from "@src/components-v2/useUser";

@@ -11,7 +11,7 @@ import {
 } from '@market/helpers/utils';
 import Nft1155 from '@src/components-v2/feature/nft/nft1155';
 import Nft721 from '@src/components-v2/feature/nft/nft721';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {GetServerSidePropsContext} from "next";

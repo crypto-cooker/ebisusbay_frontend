@@ -3,7 +3,7 @@ import {Box, Center, Flex, HStack, Spinner, Text, useMediaQuery, VStack} from "@
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import HelpPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/help";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import RdLand from "@src/components-v2/feature/ryoshi-dynasties/components/rd-land";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";

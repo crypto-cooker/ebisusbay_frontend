@@ -1,6 +1,6 @@
 import {Contract, ethers} from "ethers";
 import Market from "@src/global/contracts/Marketplace.json";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);

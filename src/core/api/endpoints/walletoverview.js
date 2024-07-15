@@ -1,4 +1,4 @@
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 
 const config = appConfig();
 const api = {

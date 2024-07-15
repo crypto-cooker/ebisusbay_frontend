@@ -1,4 +1,4 @@
-import { getChainId } from '../../../../../../../Config/chains'
+import { getChainId } from '@src/config/chains'
 import { atom, useAtomValue } from 'jotai'
 import { useRouter } from 'next/router'
 import { useDeferredValue, useMemo } from 'react'

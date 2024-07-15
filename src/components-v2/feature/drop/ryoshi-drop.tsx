@@ -15,7 +15,7 @@ import {ERC1155} from '@src/global/contracts/Abis';
 import {getTheme} from '@src/global/theme/theme';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import {formatEther, parseUnits} from "ethers/lib/utils";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {hostedImage} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {

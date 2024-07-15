@@ -4,7 +4,7 @@ import {
     BoosterStaker,
     BoosterUnstakePayload
 } from "@src/components-v2/feature/brand/tabs/staking/types";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {getNfts} from "@src/core/api/endpoints/nft";
 import abi from "@market/assets/abis/cro-crow-forest.json";
 import {ciEquals} from "@market/helpers/utils";

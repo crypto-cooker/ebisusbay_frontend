@@ -54,7 +54,7 @@ import {
   pluralize
 } from "@market/helpers/utils";
 import * as Sentry from "@sentry/react";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {ListingDrawerItem} from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-drawer-item";
 import Bundle from "@src/global/contracts/Bundle.json";
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";

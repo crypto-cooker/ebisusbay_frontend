@@ -38,7 +38,7 @@ import {
 } from "@market/state/redux/slices/user-batch";
 import {Contract} from "ethers";
 import {ERC721} from "@src/global/contracts/Abis";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {createSuccessfulTransactionToastContent, isBundle, isKoban} from "@market/helpers/utils";
 import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@market/helpers/hacks";

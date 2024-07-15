@@ -1,4 +1,4 @@
-import {appConfig, isLocalEnv} from "@src/Config";
+import {appConfig, isLocalEnv} from "@src/config";
 import BunnyCdnProvider from "@src/core/services/image/bunny";
 import {CdnProvider} from "@src/core/services/image/index";
 import BunnyKitProvider from "@src/core/services/image/bunnykit";

@@ -1,4 +1,4 @@
-import { featureFlags } from '../../../Config';
+import { featureFlags } from '../../../config';
 
 const useFeatureFlag = (feature: string) => {
   const isEnabled = featureFlags[feature];

@@ -20,7 +20,7 @@ import {commify, parseUnits} from "ethers/lib/utils";
 import {toast} from "react-toastify";
 import {getAnalytics, logEvent} from "@firebase/analytics";
 import * as Sentry from "@sentry/react";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {Drop} from "@src/core/models/drop";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";

@@ -2,7 +2,7 @@ import {limitSizeOptions} from "../../../Components/components/constants/filter-
 import {ListingsQuery} from "../queries/listings";
 import {SortOption} from "../../../Components/Models/sort-option.model";
 import {CollectionSortOption} from "../../../Components/Models/collection-sort-option.model";
-import {appConfig} from "../../../Config";
+import {appConfig} from "../../../config";
 import {Axios} from "@src/core/http/axios";
 import {listingState} from "@src/core/api/enums";
 

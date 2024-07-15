@@ -7,7 +7,7 @@ import {faCheck, faCircle, faExternalLinkAlt} from '@fortawesome/free-solid-svg-
 import Clock from '@src/Components/components/Clock';
 import LayeredIcon from '@src/Components/components/LayeredIcon';
 import {DropState} from '@src/core/api/enums';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {hostedImage} from "@src/helpers/image";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper/modules";

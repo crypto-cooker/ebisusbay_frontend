@@ -6,7 +6,7 @@ import {dutchAuctionDataAtom} from "@src/components-v2/feature/drop/types/dutch/
 import {Contract, ethers} from "ethers";
 import * as Sentry from "@sentry/react";
 import {DropState as statuses} from "@src/core/api/enums";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import AuctionBox from "@src/components-v2/feature/drop/types/dutch/auction-box";
 import ImageService from "@src/core/services/image";
 import {hostedImage} from "@src/helpers/image";

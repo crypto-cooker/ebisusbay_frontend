@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import {createSuccessfulTransactionToastContent, humanizeAdvanced, percentage} from '@market/helpers/utils';
 import ShipABI from '../src/global/contracts/Ship.json';
 import ShipItemABI from '../src/global/contracts/ShipItem.json';
-import {appConfig} from '@src/Config';
+import {appConfig} from '@src/config';
 import {hostedImage} from '@src/helpers/image';
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {Center, FormLabel, Heading, Input, Progress, Spinner} from "@chakra-ui/react";

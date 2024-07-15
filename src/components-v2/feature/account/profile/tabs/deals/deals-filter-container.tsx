@@ -2,7 +2,7 @@ import {Accordion} from "@chakra-ui/react";
 import React, {ReactNode, useCallback, useMemo, useState} from "react";
 import DesktopFilterContainer, {FilteredItem} from "@src/components-v2/shared/filter-container";
 import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-filters";
-import {appConfig} from '@src/Config';
+import {appConfig} from '@src/config';
 import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
 import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container/filters/radio-filter";
 import {OfferState, OrderState} from "@src/core/services/api-service/types";

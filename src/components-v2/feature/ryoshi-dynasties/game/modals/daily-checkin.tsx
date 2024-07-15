@@ -4,7 +4,7 @@ import {Box, HStack, Image, Link, SimpleGrid, Text} from "@chakra-ui/react";
 import {pluralize} from "@market/helpers/utils";
 import {useContext, useEffect, useMemo, useState} from "react";
 import {toast} from "react-toastify";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import moment from "moment";
 import ImageService from "@src/core/services/image";
 import {

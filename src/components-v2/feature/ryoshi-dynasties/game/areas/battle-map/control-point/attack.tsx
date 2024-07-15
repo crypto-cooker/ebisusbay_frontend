@@ -30,7 +30,7 @@ import BattleConclusion
 
 //contracts
 import {BigNumber, Contract, ethers} from "ethers";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {toast} from "react-toastify";
 import Battlefield from "@src/global/contracts/Battlefield.json";
 import Resources from "@src/global/contracts/Resources.json";

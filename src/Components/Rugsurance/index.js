@@ -6,7 +6,7 @@ import styles from './rugsurance.module.scss';
 import {getCRC721NftsFromIds, getCRC721NftsFromWallet} from "@src/core/api/chain";
 import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import {ERC721} from "@src/global/contracts/Abis";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {
   Center,

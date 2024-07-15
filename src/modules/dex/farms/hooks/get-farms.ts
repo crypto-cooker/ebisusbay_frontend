@@ -1,6 +1,6 @@
 import {useQuery} from "@tanstack/react-query";
 import {BigNumber, Contract, ethers} from "ethers";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import FarmsAbi from "@src/global/contracts/Farms.json";
 import LpAbi from "@src/global/contracts/LP.json";
 import {Address, ContractFunctionParameters, erc20Abi} from "viem";

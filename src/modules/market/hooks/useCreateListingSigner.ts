@@ -1,5 +1,5 @@
 import {useCallback, useState} from 'react';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {BigNumber, ethers} from "ethers";
 import {useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";

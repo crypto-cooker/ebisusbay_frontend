@@ -12,7 +12,7 @@ import {
   faBolt,
 } from '@fortawesome/free-solid-svg-icons';
 import {Box, Center, FormLabel, Heading, HStack, Input, Link, Spinner, Tag, Text} from "@chakra-ui/react";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import ImageService from "@src/core/services/image";

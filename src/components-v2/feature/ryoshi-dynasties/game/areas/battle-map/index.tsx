@@ -10,7 +10,7 @@ import {BattleMapHUD} from "@src/components-v2/feature/ryoshi-dynasties/game/are
 import {io} from "socket.io-client";
 
 import {BigNumber, Contract, ethers} from "ethers";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import Battlefield from "@src/global/contracts/Battlefield.json";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 import styles from "./style.module.css";

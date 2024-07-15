@@ -1,4 +1,4 @@
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {isMetapixelsCollection} from "@market/helpers/utils";
 import {Contract, ethers} from "ethers";
 import {MetaPixelsAbi} from "@src/global/contracts/Abis";

@@ -4,7 +4,7 @@ import RangeFilter from "@src/components-v2/shared/filter-container/filters/rang
 import React, {ReactNode, useCallback, useContext, useEffect, useMemo, useState} from "react";
 import DesktopFilterContainer, {FilteredItem} from "@src/components-v2/shared/filter-container";
 import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-filters";
-import {appConfig} from '@src/Config';
+import {appConfig} from '@src/config';
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import AttributeFilter from "@src/components-v2/shared/filter-container/filters/attribute-filter";
 import {stripSpaces} from "@market/helpers/utils";

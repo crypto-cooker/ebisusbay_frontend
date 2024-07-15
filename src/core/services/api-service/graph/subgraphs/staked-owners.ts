@@ -1,5 +1,5 @@
 import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {urlify} from "@market/helpers/utils";
 
 const config = appConfig();

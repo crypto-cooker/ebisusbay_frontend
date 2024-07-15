@@ -4,7 +4,7 @@ import { Contract, ethers } from 'ethers';
 import { Auction } from '../../../../../core/models/auction';
 import AuctionContract from '../../../../../global/contracts/DegenAuction.json';
 import { devLog } from '../../../helpers/utils';
-import {appConfig} from "../../../../../Config";
+import {appConfig} from "../../../../../config";
 import {getNft} from "@src/core/api/endpoints/nft";
 
 const config = appConfig();

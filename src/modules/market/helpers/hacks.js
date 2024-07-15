@@ -1,6 +1,6 @@
 import {hostedImage} from "../../../helpers/image";
 import { ciEquals } from './utils';
-import { imageDomains } from '../../../Config';
+import { imageDomains } from '../../../config';
 import ImageService from "@src/core/services/image";
 
 export function isCroSkullRedPotion(address) {

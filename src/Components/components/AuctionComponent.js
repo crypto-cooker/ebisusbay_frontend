@@ -11,7 +11,7 @@ import { getAuctionDetails } from '@market/state/redux/slices/auctionSlice';
 import { ciEquals, humanize, newlineText, shortAddress, timeSince } from '@market/helpers/utils';
 import BuyerActionBar from '../Auctions/BuyerActionBar';
 import NftPropertyLabel from '../../components-v2/feature/nft/property-label';
-import { appConfig } from '@src/Config';
+import { appConfig } from '@src/config';
 import { hostedImage } from '../../helpers/image';
 import {Center, Heading, Spinner} from "@chakra-ui/react";
 import {useQuery} from "@tanstack/react-query";

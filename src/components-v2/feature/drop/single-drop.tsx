@@ -11,7 +11,7 @@ import {isFounderDrop, newlineText,} from '@market/helpers/utils';
 import {DropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi, ERC20} from '@src/global/contracts/Abis';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {hostedImage} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {Box, Heading, Text, VStack} from "@chakra-ui/react";

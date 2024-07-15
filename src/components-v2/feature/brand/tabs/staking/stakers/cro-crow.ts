@@ -1,6 +1,6 @@
 import {BigNumber, Contract, ContractTransaction, ethers} from "ethers";
 import {StakePayload, StakerWithRewards, UnstakePayload} from "@src/components-v2/feature/brand/tabs/staking/types";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {getNfts} from "@src/core/api/endpoints/nft";
 import CroCrowBoosterStaker from "@src/components-v2/feature/brand/tabs/staking/stakers/cro-crow-booster";
 import NextApiService from "@src/core/services/api-service/next";

@@ -1,7 +1,7 @@
 import {ApiService} from "@src/core/services/api-service";
 import {Contract} from "ethers";
 import TownHall from "@src/global/contracts/Barracks.json"; // intentional
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
 import {ERC721} from "@src/global/contracts/Abis";

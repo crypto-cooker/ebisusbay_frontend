@@ -39,7 +39,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import useCart from "@market/hooks/use-cart";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 
 const config = appConfig();
 

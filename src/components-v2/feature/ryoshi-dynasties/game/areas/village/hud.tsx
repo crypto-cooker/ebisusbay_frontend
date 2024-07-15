@@ -18,7 +18,7 @@ import {ApiService} from "@src/core/services/api-service";
 import {Contract, ethers} from "ethers";
 import {round, siPrefixedNumber, username} from "@market/helpers/utils";
 import ImageService from "@src/core/services/image";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps

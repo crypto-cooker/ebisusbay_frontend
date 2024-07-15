@@ -15,7 +15,7 @@ import {
   round,
   usdFormat
 } from '@market/helpers/utils';
-import { appConfig } from '@src/Config';
+import { appConfig } from '@src/config';
 import { useWindowSize } from '@market/hooks/useWindowSize';
 import { collectionRoyaltyPercent } from '@src/core/chain';
 import {

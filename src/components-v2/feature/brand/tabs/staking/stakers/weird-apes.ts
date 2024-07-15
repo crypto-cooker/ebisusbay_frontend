@@ -1,7 +1,7 @@
 import {Contract, ContractTransaction, ethers} from "ethers";
 import {BoosterStaker, StakePayload, StakerWithRewards} from "@src/components-v2/feature/brand/tabs/staking/types";
 import {ERC721} from "@src/global/contracts/Abis";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import NextApiService from "@src/core/services/api-service/next";
 
 const config = appConfig();

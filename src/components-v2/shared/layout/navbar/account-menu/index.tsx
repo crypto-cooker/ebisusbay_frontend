@@ -22,7 +22,7 @@ import {ethers} from 'ethers';
 import {createSuccessfulTransactionToastContent, round, shortAddress, username} from '@market/helpers/utils';
 import styles from './accountmenu.module.scss';
 import {useWeb3Modal} from '@web3modal/wagmi/react'
-import {appConfig} from '@src/Config';
+import {appConfig} from '@src/config';
 import classnames from "classnames";
 import Button from "@src/Components/components/Button";
 import {

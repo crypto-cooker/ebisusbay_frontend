@@ -30,7 +30,7 @@ import PurchaseConfirmationDialog from "@src/components-v2/shared/dialogs/purcha
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useAppSelector} from "@market/state/redux/store/hooks";
 import {useTokenExchangeRate} from "@market/hooks/useGlobalPrices";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {commify} from "ethers/lib/utils";
 import {ResponsiveCancelListingDialog} from "@src/components-v2/shared/dialogs/cancel-listing";

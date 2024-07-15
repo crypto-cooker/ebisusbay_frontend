@@ -20,7 +20,7 @@ import {ciEquals} from "@market/helpers/utils";
 import {useRouter} from "next/navigation";
 import {ChevronDownIcon, SearchIcon} from "@chakra-ui/icons";
 import useDebounce from "@src/core/hooks/useDebounce";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
 import Scrollbars from "react-custom-scrollbars-2";
 import useSearch from "@market/hooks/use-search";

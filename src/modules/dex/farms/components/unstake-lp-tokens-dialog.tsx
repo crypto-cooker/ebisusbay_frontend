@@ -26,7 +26,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";
 import {DerivedFarm} from "@dex/farms/constants/types";
 import {UserFarmState} from "@dex/farms/state/user";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 
 const config = appConfig();
 

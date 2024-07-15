@@ -2,7 +2,7 @@ import React, {memo, useEffect, useState} from 'react';
 import Slider from '@src/Components/components/Slider';
 
 import PreviewCard from '@src/components-v2/shared/preview-card';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const drops = appConfig('drops');

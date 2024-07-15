@@ -17,7 +17,7 @@ import {
 import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import ResponsiveXPLeaderboardTable from "@src/components-v2/shared/responsive-table/responsive-xp-leaderboard-table";
 import ImageService from "@src/core/services/image";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import axios from "axios";
 import {XPProfile} from "@src/core/services/api-service/types";
 import Blockies from "react-blockies";

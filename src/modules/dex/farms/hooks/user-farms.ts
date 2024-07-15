@@ -4,7 +4,7 @@ import {useContext} from "react";
 import {Contract, ethers} from "ethers";
 import FarmsAbi from "@src/global/contracts/Farms.json";
 import LpAbi from "@src/global/contracts/LP.json";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useUser} from "@src/components-v2/useUser";
 import {ApiService} from "@src/core/services/api-service";
 import {UserFarmsRefetchContext} from "@dex/farms/components/provider";

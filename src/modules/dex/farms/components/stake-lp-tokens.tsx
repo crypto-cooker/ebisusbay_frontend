@@ -24,7 +24,7 @@ import {BigNumber, Contract, ethers} from "ethers";
 import {commify} from "ethers/lib/utils";
 import FarmsAbi from "@src/global/contracts/Farms.json";
 import {useUser} from "@src/components-v2/useUser";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 

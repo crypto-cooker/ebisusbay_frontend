@@ -2,7 +2,7 @@ import {Box, Stack, Text} from "@chakra-ui/react"
 import React, {useContext, useState} from "react";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
 import {Contract} from "ethers";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {toast} from "react-toastify";
 import Bank from "@src/global/contracts/Bank.json";
 import {createSuccessfulTransactionToastContent} from '@market/helpers/utils';

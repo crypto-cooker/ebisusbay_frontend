@@ -42,7 +42,7 @@ import NextApiService from "@src/core/services/api-service/next";
 import useBuyGaslessListings from "@market/hooks/useBuyGaslessListings";
 import DotIcon from "@src/Components/components/DotIcon";
 import {faCheck, faCreditCardAlt} from "@fortawesome/free-solid-svg-icons";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import PurchaseSuccessDialog from './purchase-success';
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";

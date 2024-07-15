@@ -27,7 +27,7 @@ import Fortune from "@src/global/contracts/Fortune.json";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, findNextLowestNumber, pluralize, round} from "@market/helpers/utils";
 import Bank from "@src/global/contracts/Bank.json";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
 import {commify} from "ethers/lib/utils";
 import moment from "moment/moment";

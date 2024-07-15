@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import {appConfig} from "../../../Config";
+import {appConfig} from "../../../config";
 import CROID, { getCroidAddress } from '@cronosid/croidjs'
 
 const config = appConfig()

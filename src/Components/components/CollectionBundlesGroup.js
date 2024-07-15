@@ -1,7 +1,7 @@
 import React, {memo} from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useInfiniteQuery} from "@tanstack/react-query";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {ciEquals} from "@market/helpers/utils";
 import {Center, Spinner, Text} from "@chakra-ui/react";
 import ListingBundleCard from "@src/Components/components/ListingBundleCard";

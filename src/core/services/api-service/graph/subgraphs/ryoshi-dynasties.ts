@@ -1,4 +1,4 @@
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {ApolloClient, gql, InMemoryCache} from '@apollo/client';
 import {urlify} from "@market/helpers/utils";
 import {StakedTokenType} from "@src/core/services/api-service/types";

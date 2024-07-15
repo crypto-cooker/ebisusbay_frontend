@@ -45,7 +45,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {ApiService} from "@src/core/services/api-service";
 import RdButton from "../../../../components/rd-button";
 import DelegateTroopsForm

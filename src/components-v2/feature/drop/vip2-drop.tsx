@@ -16,7 +16,7 @@ import {
 import {useInterval} from "@market/hooks/use-interval";
 import {DropState, DropState as statuses} from '@src/core/api/enums';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {hostedImage} from "@src/helpers/image";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
 import {

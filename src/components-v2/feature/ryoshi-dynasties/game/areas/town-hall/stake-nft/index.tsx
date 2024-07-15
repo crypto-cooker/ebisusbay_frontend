@@ -6,7 +6,7 @@ import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/faq-page";
 import {Box, Button, Flex, Image, Spinner, Stack, Text} from "@chakra-ui/react";
 import RdTabButton, {RdTabGroup} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {ciEquals} from "@market/helpers/utils";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import ImageService from "@src/core/services/image";

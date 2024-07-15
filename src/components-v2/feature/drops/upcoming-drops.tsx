@@ -2,7 +2,7 @@ import React, {memo, useEffect, useState} from 'react';
 
 import Slider from '@src/Components/components/Slider';
 import PreviewCard from '@src/components-v2/shared/preview-card';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import LocalDataService from "@src/core/services/local-data-service";
 import {millisecondTimestamp} from "@market/helpers/utils";
 import {Drop} from "@src/core/models/drop";

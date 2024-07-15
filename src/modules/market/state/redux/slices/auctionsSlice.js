@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getCollectionMetadata, getMarketMetadata, sortAndFetchAuctions } from '../../../../../core/api';
 import {Auction} from "../../../../../core/models/auction";
-import {appConfig} from "../../../../../Config";
+import {appConfig} from "../../../../../config";
 
 const auctionsSlice = createSlice({
   name: 'auctions',

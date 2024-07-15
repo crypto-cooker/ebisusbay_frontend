@@ -1,4 +1,4 @@
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import CmsRepository from "@src/core/services/api-service/cms/repositories/index";
 
 class ProfilesRepository extends CmsRepository {

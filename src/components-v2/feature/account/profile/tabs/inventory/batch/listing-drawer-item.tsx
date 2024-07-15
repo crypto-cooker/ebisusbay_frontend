@@ -47,7 +47,7 @@ import {collectionRoyaltyPercent} from "@src/core/chain";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@market/helpers/hacks";
 import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";

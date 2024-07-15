@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Contract, ethers } from 'ethers';
 import Membership from '../../../../../global/contracts/EbisusBayMembership.json';
-import {appConfig} from "../../../../../Config";
+import {appConfig} from "../../../../../config";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);

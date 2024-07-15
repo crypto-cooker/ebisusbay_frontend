@@ -51,7 +51,7 @@ import {ERC721} from '@src/global/contracts/Abis';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import {commify} from 'ethers/lib/utils';
-import {appConfig} from '@src/Config';
+import {appConfig} from '@src/config';
 import Link from 'next/link';
 import axios from "axios";
 import Button from "@src/Components/components/common/Button";

@@ -60,7 +60,7 @@ import {useRouter} from "next/router";
 import {faFacebook, faTelegram, faTwitter} from "@fortawesome/free-brands-svg-icons";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
 import {ContractReceipt, ethers} from "ethers";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import NextLink from "next/link";
 import {commify} from "ethers/lib/utils";
 import {ItemType} from "@market/hooks/use-create-order-signer";

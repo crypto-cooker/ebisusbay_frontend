@@ -15,7 +15,7 @@ import {rwkDataAtom} from "@src/components-v2/feature/drop/types/ryoshi-with-kni
 import MintBox from "@src/components-v2/feature/drop/types/ryoshi-with-knife/mint-box";
 import ClaimBox from "@src/components-v2/feature/drop/types/ryoshi-with-knife/claim-box";
 import Fortune from "@src/global/contracts/Fortune.json";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 

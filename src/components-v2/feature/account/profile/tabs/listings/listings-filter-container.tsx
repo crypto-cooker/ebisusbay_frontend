@@ -6,7 +6,7 @@ import React, {ReactNode, useCallback, useMemo, useState} from "react";
 import DesktopFilterContainer, {FilteredItem} from "@src/components-v2/shared/filter-container";
 import {ciEquals} from "@market/helpers/utils";
 import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-filters";
-import {appConfig} from '@src/Config';
+import {appConfig} from '@src/config';
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 
 const config = appConfig();

@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import useGetCollections from './hooks/useGetCollections';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import ResponsiveCollectionsTable, {
   SortKeys
 } from "@src/components-v2/shared/responsive-table/responsive-collections-table";

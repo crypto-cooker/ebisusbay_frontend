@@ -1,6 +1,6 @@
 import {useAccount, useAccountEffect, useBalance, useDisconnect} from "wagmi";
 import {createContext, ReactNode, useEffect} from "react";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {useQuery} from "@tanstack/react-query";
 import {portAbi} from "@src/global/contracts/types";

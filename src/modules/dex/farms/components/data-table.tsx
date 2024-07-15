@@ -45,7 +45,7 @@ import { faCalculator, faExternalLinkAlt, faMinus, faPlus, faStopwatch } from '@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEnableFarm, useHarvestRewards } from '@dex/farms/hooks/farm-actions';
 import { DerivedFarm, FarmState, MapiFarmRewarder } from '@dex/farms/constants/types';
-import { appConfig } from '@src/Config';
+import { appConfig } from '@src/config';
 import UnstakeLpTokensDialog from '@dex/farms/components/unstake-lp-tokens-dialog';
 import StakeLpTokensDialog from '@dex/farms/components/stake-lp-tokens';
 import { UserFarms, UserFarmState } from '@dex/farms/state/user';

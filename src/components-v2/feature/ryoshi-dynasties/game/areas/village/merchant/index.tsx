@@ -35,7 +35,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {constants, Contract} from "ethers";
 import Resources from "@src/global/contracts/Resources.json";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import Fortune from "@src/global/contracts/Fortune.json";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";

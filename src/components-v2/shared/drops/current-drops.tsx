@@ -2,7 +2,7 @@ import React, {memo, useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import PreviewCard from '@src/components-v2/shared/preview-card';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import Slider from '@src/Components/components/Slider';
 import LocalDataService from "@src/core/services/local-data-service";
 import {millisecondTimestamp} from "@market/helpers/utils";

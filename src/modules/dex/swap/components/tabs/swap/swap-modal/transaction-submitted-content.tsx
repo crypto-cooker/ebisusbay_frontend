@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import {Box, Button, Center, Flex, HStack, Link, Text, VStack} from "@chakra-ui/react";
 import {ArrowUpIcon} from "@chakra-ui/icons";
 import CronosIcon from "@src/components-v2/shared/icons/cronos";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {DEX_COLORS} from "@dex/swap/constants/style";
 import {PrimaryButton} from "@src/components-v2/foundation/button";

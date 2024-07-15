@@ -11,7 +11,7 @@ import {parseUnits} from "ethers/lib/utils";
 import {Box, Button, HStack, Input, Stack, useNumberInput} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useAtom} from "jotai/index";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useUser} from "@src/components-v2/useUser";
 import {rwkDataAtom} from "@src/components-v2/feature/drop/types/ryoshi-with-knife/atom";
 

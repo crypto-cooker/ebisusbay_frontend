@@ -1,4 +1,4 @@
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {Axios} from "@src/core/http/axios";
 
 const config = appConfig();

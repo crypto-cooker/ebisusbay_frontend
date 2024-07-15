@@ -2,7 +2,7 @@ import {useMemo, useState} from "react";
 import {Contract, ethers} from "ethers";
 import {Box, Button, HStack, Input, SimpleGrid, Stack, Text, Textarea, useClipboard, VStack} from "@chakra-ui/react";
 import {toast} from "react-toastify";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {ERC721} from "@src/global/contracts/Abis";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";

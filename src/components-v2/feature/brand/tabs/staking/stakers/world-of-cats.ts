@@ -5,7 +5,7 @@ import {
     StakerWithRewards,
     UnstakePayload
 } from "@src/components-v2/feature/brand/tabs/staking/types";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {getNfts} from "@src/core/api/endpoints/nft";
 import NextApiService from "@src/core/services/api-service/next";
 

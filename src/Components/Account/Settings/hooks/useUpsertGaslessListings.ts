@@ -6,7 +6,7 @@ import UUID from "uuid-int";
 import {ciEquals, isGaslessListing} from "@market/helpers/utils";
 import NextApiService from "@src/core/services/api-service/next";
 import {getItemType} from "@market/helpers/chain";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 

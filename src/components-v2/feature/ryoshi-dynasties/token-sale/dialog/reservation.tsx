@@ -29,7 +29,7 @@ import {BigNumber, Contract, ethers} from "ethers";
 import {ERC20} from "@src/global/contracts/Abis";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, round, timeSince} from "@market/helpers/utils";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import FortunePresale from "@src/global/contracts/FortunePresale.json";
 import {commify} from "ethers/lib/utils";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";

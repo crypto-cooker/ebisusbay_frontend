@@ -1,6 +1,6 @@
 import {Contract, ethers} from "ethers";
 import {ERC165} from "@src/global/contracts/Abis";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import Constants from '@src/constants';
 import {ciEquals} from "@market/helpers/utils";
 import {Address, erc20Abi} from "viem";

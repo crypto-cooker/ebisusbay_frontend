@@ -2,7 +2,7 @@
 
 import {createWeb3Modal} from '@web3modal/wagmi/react'
 import {State, WagmiProvider} from 'wagmi'
-import {appConfig as applicationConfig} from "@src/Config";
+import {appConfig as applicationConfig} from "@src/config";
 import ImageService from "@src/core/services/image";
 import {ReactNode} from "react";
 import {wagmiConfig} from "@src/wagmi";

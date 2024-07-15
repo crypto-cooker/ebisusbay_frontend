@@ -3,7 +3,7 @@ import ImageService from "@src/core/services/image";
 import React, {useEffect, useState} from "react";
 import {Contract, ethers} from "ethers";
 import {useUser} from "@src/components-v2/useUser";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import rwkAbi from "@market/assets/abis/ryoshi-with-knife.json";
 import {DropState as statuses} from "@src/core/api/enums";
 import Fortune from "@src/global/contracts/Fortune.json";

@@ -3,7 +3,7 @@ import {useRouter} from 'next/router';
 
 import MultiDrop from '@src/components-v2/feature/drop/multi-drop';
 import SingleDrop from '@src/components-v2/feature/drop/single-drop';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {hostedImage} from "@src/helpers/image";
 import RyoshiDrop from "@src/components-v2/feature/drop/ryoshi-drop";

@@ -2,7 +2,7 @@ import {Box, Center, Flex, Heading, Image, SimpleGrid, Spacer, Spinner, Text, us
 
 import React, {useState} from 'react';
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {toast} from "react-toastify";
 import Resources from "@src/global/contracts/Resources.json";
 import {Contract} from "ethers";

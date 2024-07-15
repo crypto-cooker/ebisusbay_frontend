@@ -13,7 +13,7 @@ import styled from 'styled-components';
 import {createSuccessfulTransactionToastContent, isCmbDrop, newlineText, percentage} from '@market/helpers/utils';
 import {DropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi} from '@src/global/contracts/Abis';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useAppSelector} from "@market/state/redux/store/hooks";
 import {formatEther} from "ethers/lib/utils";
 import {FormLabel, Progress, Spinner} from "@chakra-ui/react";

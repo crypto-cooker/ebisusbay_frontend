@@ -3,7 +3,7 @@ import RangeFilter from "@src/components-v2/shared/filter-container/filters/rang
 import React, {ReactNode, useCallback, useContext, useEffect, useMemo, useState} from "react";
 import DesktopFilterContainer, {FilteredItem} from "@src/components-v2/shared/filter-container";
 import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inventory/mobile-filters";
-import {appConfig} from '@src/Config';
+import {appConfig} from '@src/config';
 import {ethers} from "ethers";
 import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container/filters/radio-filter";
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";

@@ -9,7 +9,7 @@ import {useAppSelector} from "@market/state/redux/store/hooks";
 import MapFrame from "@src/components-v2/feature/ryoshi-dynasties/components/map-frame";
 import LandModal from './land-modal';
 import NextApiService from "@src/core/services/api-service/next";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useQuery} from "@tanstack/react-query";
 import {TriangleUpIcon} from '@chakra-ui/icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

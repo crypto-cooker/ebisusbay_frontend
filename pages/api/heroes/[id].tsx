@@ -1,7 +1,7 @@
 import {NextRequest} from "next/server";
 import {ImageResponse} from "next/og";
 import {urlify} from "@market/helpers/utils";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import heroesMetadata from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/heroes-metadata.json";
 
 export const config = {

@@ -4,7 +4,7 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 
 //contracts
 import {Contract, ethers} from "ethers";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {toast} from "react-toastify";
 import Bank from "@src/global/contracts/Bank.json";
 import {createSuccessfulTransactionToastContent} from '@market/helpers/utils';

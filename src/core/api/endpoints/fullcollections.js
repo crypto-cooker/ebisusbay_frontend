@@ -1,6 +1,6 @@
 import {FullCollectionsQuery} from "../queries/fullcollections";
 import {CollectionSortOption} from "../../../Components/Models/collection-sort-option.model";
-import {appConfig} from "../../../Config";
+import {appConfig} from "../../../config";
 import {burnState, excludeBurnState} from "@src/core/api/enums";
 
 const config = appConfig();

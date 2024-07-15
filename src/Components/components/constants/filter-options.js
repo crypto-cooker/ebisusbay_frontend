@@ -1,4 +1,4 @@
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {MarketFilterCollection} from "@src/Components/Models/market-filters.model";
 
 export const limitSizeOptions = {

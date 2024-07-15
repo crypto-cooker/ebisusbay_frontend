@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { constants, Contract, ethers } from 'ethers';
 import { Box, GridItem, HStack, Input, Select, SimpleGrid, VStack } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
-import { appConfig } from '@src/Config';
+import { appConfig } from '@src/config';
 import { ERC20 } from '@src/global/contracts/Abis';
 import { parseErrorMessage } from '@src/helpers/validator';
 import { useUser } from '@src/components-v2/useUser';

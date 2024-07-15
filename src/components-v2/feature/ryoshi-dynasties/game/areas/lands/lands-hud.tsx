@@ -17,7 +17,7 @@ import {
 import {useAppSelector} from "@market/state/redux/store/hooks";
 import React, {useEffect, useState} from "react";
 import ReturnToVillageButton from "@src/components-v2/feature/ryoshi-dynasties/components/return-button";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {RdButton} from "../../../components";
 import {useUser} from "@src/components-v2/useUser";
 

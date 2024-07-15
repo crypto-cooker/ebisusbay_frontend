@@ -1,4 +1,4 @@
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import {PresaleVault, VaultContract} from "@src/core/services/api-service/graph/types";
 import {urlify} from "@market/helpers/utils";

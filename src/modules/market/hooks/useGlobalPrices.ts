@@ -1,6 +1,6 @@
 import {useQuery} from "@tanstack/react-query";
 import {getPrice, getPrices, PriceProps} from "@src/core/api/endpoints/prices";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useContext, useEffect, useState} from "react";
 import {ciEquals} from "@market/helpers/utils";
 import {ExchangePricesContext, ExchangePricesContextProps} from "@src/components-v2/shared/contexts/exchange-prices";

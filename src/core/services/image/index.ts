@@ -1,7 +1,7 @@
 import ImageKitProvider from "@src/core/services/image/imagekit";
 import BunnyCdnProvider from "@src/core/services/image/bunny";
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import BunnyKitProvider from "@src/core/services/image/bunnykit";
 import ImageTranslator from "@src/core/services/image/translator";
 

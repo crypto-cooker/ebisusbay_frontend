@@ -1,7 +1,7 @@
 import { Address, erc721Abi, erc20Abi } from 'viem';
 import {ciEquals} from "@market/helpers/utils";
 import {BigNumber, ethers} from "ethers";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {ItemType} from "@market/hooks/use-create-order-signer";
 import {useState} from "react";
 import {BarterState} from "@market/state/jotai/atoms/deal";

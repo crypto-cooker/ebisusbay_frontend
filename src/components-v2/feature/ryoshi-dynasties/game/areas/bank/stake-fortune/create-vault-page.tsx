@@ -34,7 +34,7 @@ import {toast} from "react-toastify";
 import {BigNumber, Contract, ethers} from "ethers";
 import Fortune from "@src/global/contracts/Fortune.json";
 import Bank from "@src/global/contracts/Bank.json";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import ImageService from "@src/core/services/image";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {parseErrorMessage} from "@src/helpers/validator";

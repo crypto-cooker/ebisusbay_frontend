@@ -25,7 +25,7 @@ import moment from 'moment';
 
 //contracts
 import {Contract, ethers} from "ethers";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {toast} from "react-toastify";
 import Bank from "@src/global/contracts/Bank.json";
 import {createSuccessfulTransactionToastContent, findNextLowestNumber, round} from '@market/helpers/utils';

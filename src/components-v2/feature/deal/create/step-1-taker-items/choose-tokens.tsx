@@ -22,7 +22,7 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {CustomTokenPicker} from "@src/components-v2/feature/deal/create/custom-token-picker";
 import {BarterToken} from "@market/state/jotai/atoms/deal";
 import {ciEquals} from "@market/helpers/utils";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {Contract, ethers} from "ethers";
 import {ERC20, ERC721} from "@src/global/contracts/Abis";
 import {useQuery} from "@tanstack/react-query";

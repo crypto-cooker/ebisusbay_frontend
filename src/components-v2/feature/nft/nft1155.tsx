@@ -27,7 +27,7 @@ import ListingsTab from '@src/components-v2/feature/nft/tabs/listings';
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
 import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
 import {

@@ -1,6 +1,6 @@
 import {Contract, ethers, Signer} from "ethers";
 import Market from "@src/global/contracts/Marketplace.json";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import Auction from "@src/global/contracts/DegenAuction.json";
 import Offer from "@src/global/contracts/Offer.json";
 import StakeABI from "@src/global/contracts/Stake.json";

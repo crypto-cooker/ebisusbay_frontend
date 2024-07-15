@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {Contract} from "ethers";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import Bundle from "@src/global/contracts/Bundle.json";
 import {useUser} from "@src/components-v2/useUser";
 

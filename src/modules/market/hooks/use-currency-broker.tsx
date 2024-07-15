@@ -1,4 +1,4 @@
-import { appConfig } from '@src/Config';
+import { appConfig } from '@src/config';
 import DynamicCurrencyIcon from '@src/components-v2/shared/dynamic-currency-icon';
 import { ethers } from 'ethers';
 import { ciEquals, ciIncludes, isNativeCro } from '@market/helpers/utils';

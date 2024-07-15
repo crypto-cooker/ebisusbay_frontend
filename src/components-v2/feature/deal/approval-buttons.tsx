@@ -6,7 +6,7 @@ import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {Box, Flex} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 
 const config = appConfig();
 

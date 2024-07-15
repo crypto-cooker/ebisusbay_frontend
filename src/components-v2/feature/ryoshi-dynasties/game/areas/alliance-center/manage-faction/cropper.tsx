@@ -26,7 +26,7 @@ import {
 import {toast} from 'react-toastify';
 import {useAppSelector} from "@market/state/redux/store/hooks";
 import axios from "axios";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";

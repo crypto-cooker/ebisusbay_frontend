@@ -10,7 +10,7 @@
 
 import {Flex, FormLabel, Grid, GridItem, Text, useMediaQuery, VStack,} from "@chakra-ui/react";
 import {useContext, useEffect, useState} from "react";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {getAllFactionsSeasonId} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {
   RyoshiDynastiesContext,

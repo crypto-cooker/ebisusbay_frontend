@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import mergedCollections from "@src/core/data/merged-collections.json";
 import {ciEquals, isWeirdApesCollection} from "@market/helpers/utils";
 

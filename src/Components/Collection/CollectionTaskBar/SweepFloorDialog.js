@@ -45,7 +45,7 @@ import {
 import {getTheme} from "@src/global/theme/theme";
 import useBuyGaslessListings from "@market/hooks/useBuyGaslessListings";
 import ImageService from "@src/core/services/image";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";
 

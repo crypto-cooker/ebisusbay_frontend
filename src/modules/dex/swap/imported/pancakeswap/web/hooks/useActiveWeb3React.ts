@@ -7,7 +7,7 @@ import {Chain} from "viem";
 import {Connector, useAccount} from "wagmi";
 import {isChainSupported} from "@src/wagmi";
 import {EXCHANGE_PAGE_PATHS} from "@dex/swap/constants/exchange";
-import {CHAIN_QUERY_NAME, getChainId} from "@src/Config/chains";
+import {CHAIN_QUERY_NAME, getChainId} from "@src/config/chains";
 import {getHashFromRouter} from "@eb-pancakeswap-web/utils/getHashFromRouter";
 
 export function useNetworkConnectorUpdater() {

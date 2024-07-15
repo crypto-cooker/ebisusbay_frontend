@@ -33,7 +33,7 @@ import {
 } from "@chakra-ui/react"
 import React, {memo, useContext, useEffect, useMemo, useState} from 'react';
 import {RdButton, RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps

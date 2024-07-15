@@ -1,4 +1,4 @@
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import tokens from '@dex/config/tokens.json';
 import {useMemo} from "react";
 import {Token} from "@pancakeswap/sdk";

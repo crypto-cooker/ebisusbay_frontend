@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import {useQuery} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {ciEquals, createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import WalletNft from "@src/core/models/wallet-nft";

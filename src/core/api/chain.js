@@ -1,7 +1,7 @@
 import { BigNumber, Contract, ethers } from 'ethers';
 import { ERC721 } from '@src/global/contracts/Abis';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(appConfig('rpc.read'));

@@ -4,7 +4,7 @@ import Collection1155 from '@src/components-v2/feature/collection/collection-115
 // import Collection721 from '@src/components-v2/feature/collection/collection721';
 import Collection721 from '@src/components-v2/feature/collection/collection-721';
 import {appUrl, cacheBustingKey, ciEquals} from '@market/helpers/utils';
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {CollectionPageContext} from "@src/components-v2/feature/collection/context";
 import {GetServerSidePropsContext} from "next";

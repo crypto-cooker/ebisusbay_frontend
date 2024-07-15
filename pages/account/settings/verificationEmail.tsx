@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import { useRouter } from 'next/router';
-import { appConfig } from "@src/Config";
+import { appConfig } from "@src/config";
 import axios from 'axios';
 import {Center, Spinner} from "@chakra-ui/react";
 

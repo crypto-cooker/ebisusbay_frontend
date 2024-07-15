@@ -31,7 +31,7 @@ import {commify} from "ethers/lib/utils";
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import Cropper from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-faction/cropper";
 import Search from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/search";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useFormik} from "formik";
 import {ApiService} from "@src/core/services/api-service";
 

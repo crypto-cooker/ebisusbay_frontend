@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 
 const config = appConfig();
 

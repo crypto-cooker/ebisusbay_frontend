@@ -2,7 +2,7 @@ import {useState} from "react";
 import {Box, Button, Text, VStack, Wrap} from '@chakra-ui/react';
 import {toast} from "react-toastify";
 import {GetServerSidePropsContext} from "next";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useUser} from "@src/components-v2/useUser";
 import {useDisconnect} from 'wagmi';
 import * as Sentry from "@sentry/nextjs";

@@ -16,7 +16,7 @@ import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import ImageService from "@src/core/services/image";
 import RdButton from "../../../../components/rd-button";
 import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-announcement-modal";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 
 const config = appConfig();
 

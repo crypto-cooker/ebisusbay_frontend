@@ -1,4 +1,4 @@
-import {appConfig, isLocalEnv} from "../Config";
+import {appConfig, isLocalEnv} from "../config";
 import {croSkullRedPotionImage, isCroSkullRedPotion, specialImageTransform} from "@market/helpers/hacks";
 import ImageService from "@src/core/services/image";
 

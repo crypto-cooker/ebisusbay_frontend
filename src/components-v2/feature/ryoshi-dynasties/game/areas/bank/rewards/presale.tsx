@@ -20,7 +20,7 @@ import {commify} from "ethers/lib/utils";
 import RdProgressBar from "@src/components-v2/feature/ryoshi-dynasties/components/rd-progress-bar";
 import moment from "moment";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useContractService, useUser} from "@src/components-v2/useUser";

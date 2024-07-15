@@ -5,7 +5,7 @@ import {Contract, ethers} from "ethers";
 import {toast} from "react-toastify";
 import {ERC721} from "@src/global/contracts/Abis";
 import {createSuccessfulTransactionToastContent, isBundle, isNftBlacklisted} from "@market/helpers/utils";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import Select, {SingleValue} from "react-select";
 import {getTheme} from "@src/global/theme/theme";
 import {collectionRoyaltyPercent} from "@src/core/chain";

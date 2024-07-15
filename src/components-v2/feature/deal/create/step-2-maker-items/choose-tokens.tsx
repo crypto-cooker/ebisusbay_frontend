@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 import {Card, TitledCard} from "@src/components-v2/foundation/card";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {BarterToken} from "@market/state/jotai/atoms/deal";
 import {CustomTokenPicker} from "@src/components-v2/feature/deal/create/custom-token-picker";
 import {commify} from "ethers/lib/utils";

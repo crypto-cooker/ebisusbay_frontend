@@ -8,7 +8,7 @@ import {faBullhorn} from "@fortawesome/free-solid-svg-icons";
 import Countdown from "react-countdown";
 import Link from "next/link";
 import ImageService from "@src/core/services/image";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 
 const config = appConfig();
 

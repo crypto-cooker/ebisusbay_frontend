@@ -28,7 +28,7 @@ import {
 } from "@market/state/redux/slices/ryoshi-staking-cart-slice";
 import {Contract} from "ethers";
 import {ERC721} from "@src/global/contracts/Abis";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {createSuccessfulTransactionToastContent, pluralize} from "@market/helpers/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";

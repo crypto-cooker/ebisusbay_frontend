@@ -5,7 +5,7 @@ import {createSuccessfulTransactionToastContent, round, siPrefixedNumber} from "
 import {useInterval} from "@market/hooks/use-interval";
 import {getTheme} from "@src/global/theme/theme";
 import StakeABI from "@src/global/contracts/Stake.json";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {Box, Center, Link, SimpleGrid, Spinner, Text} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useUser} from "@src/components-v2/useUser";

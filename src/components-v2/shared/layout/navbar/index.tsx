@@ -35,7 +35,7 @@ import { ChevronDownIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import Search from '@src/components-v2/shared/layout/navbar/search';
 import MobileSearchDrawer from '@src/components-v2/shared/layout/navbar/search/drawer';
 import { useTokenExchangeRate } from '@market/hooks/useGlobalPrices';
-import { appConfig } from '@src/Config';
+import { appConfig } from '@src/config';
 import FortuneIcon from '@src/components-v2/shared/icons/fortune';
 import { round } from '@market/helpers/utils';
 import ImageService from '@src/core/services/image';

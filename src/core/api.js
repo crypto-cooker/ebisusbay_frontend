@@ -11,7 +11,7 @@ import {
   isCroskullSbtCollection,
   isMetapixelsCollection,
 } from '@market/helpers/utils';
-import {appConfig} from "../Config";
+import {appConfig} from "../config";
 import {getCollections} from "@src/core/api/next/collectioninfo";
 import {ApiService} from "@src/core/services/api-service";
 import NextApiService from "@src/core/services/api-service/next";

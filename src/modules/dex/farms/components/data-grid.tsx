@@ -36,7 +36,7 @@ import {faExternalLinkAlt, faMinus, faPlus, faStopwatch} from "@fortawesome/free
 import StakeLpTokensDialog from "@dex/farms/components/stake-lp-tokens";
 import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialog";
 import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
 import useCurrencyBroker from "@market/hooks/use-currency-broker";

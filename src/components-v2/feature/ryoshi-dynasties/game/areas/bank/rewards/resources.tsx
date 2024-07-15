@@ -24,7 +24,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
 import RdButton from "../../../../components/rd-button";
 import {ApiService} from "@src/core/services/api-service";

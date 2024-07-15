@@ -4,7 +4,7 @@ import { useCallback, useMemo } from 'react'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { useSessionChainId } from './useSessionChainId'
 import {useAppDispatch} from "@market/state/redux/store/hooks";
-import {CHAIN_QUERY_NAME} from "@src/Config/chains";
+import {CHAIN_QUERY_NAME} from "@src/config/chains";
 import {toast} from "react-toastify";
 import {clearUserStates} from "@eb-pancakeswap-web/utils/clearUserStates";
 import {useSwitchNetworkLoading} from "@eb-pancakeswap-web/hooks/useSwitchNetworkLoading";

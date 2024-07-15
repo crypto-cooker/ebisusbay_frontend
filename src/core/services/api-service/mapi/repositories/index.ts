@@ -1,5 +1,5 @@
 import axios, {AxiosInstance} from "axios";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 
 const config = appConfig();
 

@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {toast} from "react-toastify";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {Contract, ethers} from "ethers";
 import {useUser} from "@src/components-v2/useUser";
 import FarmsAbi from "@src/global/contracts/Farms.json";

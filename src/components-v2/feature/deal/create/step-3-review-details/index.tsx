@@ -15,7 +15,7 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import {TitledCard} from "@src/components-v2/foundation/card";
 import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import {useUser} from "@src/components-v2/useUser";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {ciEquals} from "@market/helpers/utils";
 import {Contract, ethers} from "ethers";
 import {Erc20ApprovalButton, NftApprovalButton} from "@src/components-v2/feature/deal/approval-buttons";

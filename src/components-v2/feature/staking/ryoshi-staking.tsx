@@ -1,7 +1,7 @@
 import React, {memo, useEffect, useState} from 'react';
 import {Box, Center, Heading, Spinner, Text, VStack} from "@chakra-ui/react";
 import {useInfiniteQuery} from "@tanstack/react-query";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import InfiniteScroll from "react-infinite-scroll-component";
 import RyoshiStakingNftCard from "@src/components-v2/feature/staking/ryoshi-staking-nft-card";
 import {addToCart, clearCart, removeFromCart, setCartContext} from "@market/state/redux/slices/ryoshi-staking-cart-slice";

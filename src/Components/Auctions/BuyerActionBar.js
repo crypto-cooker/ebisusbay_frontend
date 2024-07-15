@@ -10,7 +10,7 @@ import {auctionState} from '@src/core/api/enums';
 import {getAuctionDetails, updateAuctionFromBidEvent} from '@market/state/redux/slices/auctionSlice';
 import {ERC20} from "@src/global/contracts/Abis";
 import Button from "../components/Button";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {Card, CardBody, CardFooter, Input, Spinner} from "@chakra-ui/react";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";

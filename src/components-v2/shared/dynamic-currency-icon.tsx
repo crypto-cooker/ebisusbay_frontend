@@ -1,4 +1,4 @@
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {ReactElement, useEffect, useState} from "react";
 import {ciEquals} from "@market/helpers/utils";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";

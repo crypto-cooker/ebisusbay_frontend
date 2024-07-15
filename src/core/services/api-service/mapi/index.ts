@@ -3,7 +3,7 @@ import {ListingsQuery, ListingsQueryParams} from "@src/core/services/api-service
 import {PagedList} from "@src/core/services/api-service/paginated-list";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
 import axios from "axios";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {Listing, ListingMapper, OwnerListing} from "@src/core/models/listing";
 import OffersQuery, {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
 import OffersRepository from "@src/core/services/api-service/mapi/repositories/offers";
