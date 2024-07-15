@@ -1,5 +1,4 @@
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
-import {useDispatch} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import MyNftCard from "@src/Components/components/MyNftCard";
 import {
@@ -49,7 +48,7 @@ import {
 import MyBundleCard from '@src/Components/Account/Profile/Inventory/components/MyBundleCard';
 import {NftCard} from "@src/components-v2/shared/nft-card";
 import nextApiService from "@src/core/services/api-service/next";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import Select from "react-select";
 import {getTheme} from "@src/global/theme/theme";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
@@ -65,7 +64,7 @@ interface InventoryProps {
 }
 
 export default function Inventory({ address }: InventoryProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const user = useUser();
   const batchListingCart = useAppSelector((state) => state.batchListing);

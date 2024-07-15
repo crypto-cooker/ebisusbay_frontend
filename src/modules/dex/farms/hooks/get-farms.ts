@@ -1,4 +1,3 @@
-import {multicall} from "@wagmi/core";
 import {useQuery} from "@tanstack/react-query";
 import {BigNumber, Contract, ethers} from "ethers";
 import {appConfig} from "@src/Config";
@@ -12,7 +11,7 @@ import {round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {wagmiConfig} from "@src/wagmi";
 import useCurrencyBroker from "@market/hooks/use-currency-broker";
-import {Block} from "@ethersproject/abstract-provider";
+import {multicall} from "viem/actions";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);

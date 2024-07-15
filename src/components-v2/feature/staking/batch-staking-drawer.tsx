@@ -18,7 +18,6 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
-import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
 import {
   BatchExtras,
@@ -34,7 +33,7 @@ import {createSuccessfulTransactionToastContent, pluralize} from "@market/helper
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {parseUnits} from "ethers/lib/utils";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import ImageService from "@src/core/services/image";
 import {useContractService, useUser} from "@src/components-v2/useUser";
@@ -48,7 +47,7 @@ interface BatchStakingDrawer {
 }
 
 export const BatchStakingDrawer = ({onClose, ...gridProps}: BatchStakingDrawer & GridProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
   const user = useUser();
   const contractService = useContractService();
@@ -167,7 +166,7 @@ interface BatchStakingDrawerItemProps {
 }
 
 const BatchStakingDrawerItem = ({item, disabled}: BatchStakingDrawerItemProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUser();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 

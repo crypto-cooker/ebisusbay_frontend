@@ -1,13 +1,12 @@
 import {Contract, ethers} from "ethers";
 import {ERC165} from "@src/global/contracts/Abis";
-import {JsonRpcProvider} from "@ethersproject/providers";
 import {appConfig} from "@src/Config";
 import Constants from '@src/constants';
 import {ciEquals} from "@market/helpers/utils";
 import {Address, erc20Abi} from "viem";
-import {multicall} from "@wagmi/core";
 import {wagmiConfig} from "@src/wagmi";
 import {ContractFunctionParameters} from "viem/types/contract";
+import {multicall} from "viem/actions";
 
 const config = appConfig();
 const { ItemType } = Constants;
@@ -15,7 +14,7 @@ const { ItemType } = Constants;
 export async function getItemType(nftAddress: string) {
   if (ciEquals(nftAddress, ethers.constants.AddressZero)) return ItemType.NATIVE;
 
-  const readProvider = new JsonRpcProvider(config.rpc.read);
+  const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
   const ERC1155InterfaceId = "0xd9b67a26";
   const ERC721InterfaceId = "0x80ac58cd";

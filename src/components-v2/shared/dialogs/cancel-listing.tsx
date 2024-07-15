@@ -57,7 +57,7 @@ export const ResponsiveCancelListingDialog = ({ isOpen, listing, listingId, onCl
   );
 };
 
-const DialogContent = ({isOpen, onClose, listing, listingId, DialogBody, DialogFooter}: ResponsiveDialogComponents & CancelListingDialogProps) => {
+const DialogContent = ({isOpen, onClose, listing, listingId, DialogBody, DialogFooter}: Pick<ResponsiveDialogComponents, 'DialogHeader' | 'DialogBody' | 'DialogFooter'> & CancelListingDialogProps) => {
   const contractService = useContractService();
   const [cancelGaslessListing, response] = useCancelGaslessListing();
   const user = useUser();

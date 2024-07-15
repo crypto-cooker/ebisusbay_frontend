@@ -51,7 +51,7 @@ export const ResponsiveInstantSellDialog = ({ isOpen, onClose, collection, ...pr
   );
 };
 
-const DialogContent = ({isOpen, onClose, collection, DialogBody, DialogFooter}: ResponsiveDialogComponents & InstantSellDialogProps) => {
+const DialogContent = ({isOpen, onClose, collection, DialogBody, DialogFooter}: Pick<ResponsiveDialogComponents, 'DialogHeader' | 'DialogBody' | 'DialogFooter'> & InstantSellDialogProps) => {
 
   const [error, setError] = useState<string>();
   const [offer, setOffer] = useState<Offer>();

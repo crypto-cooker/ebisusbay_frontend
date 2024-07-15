@@ -1,7 +1,6 @@
-import {Flex, Image} from "@chakra-ui/react";
+import {Flex, Image, ResponsiveValue} from "@chakra-ui/react";
 import React, {memo, useEffect, useRef, useState} from "react";
 import landsMetadata from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands/lands-metadata.json";
-import {ResponsiveValue} from "@chakra-ui/styled-system";
 import * as CSS from "csstype";
 
 interface NFTMetaData{

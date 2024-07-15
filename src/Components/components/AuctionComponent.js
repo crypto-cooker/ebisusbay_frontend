@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ethers } from 'ethers';
@@ -18,13 +18,14 @@ import {useQuery} from "@tanstack/react-query";
 import { getCollections } from "@src/core/api/next/collectioninfo";
 import ImageService from "@src/core/services/image";
 import NftProfilePreview from "@src/components-v2/feature/nft/profile-preview";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const config = appConfig();
 
 const AuctionComponent = (props) => {
   const router = useRouter();
   const { id } = props;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const listing = useSelector((state) => state.auction.auction);
   const bidHistory = useSelector((state) => state.auction.bidHistory);

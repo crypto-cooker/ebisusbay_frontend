@@ -1,4 +1,4 @@
-import { SmartRouterTrade, V4Router } from '@pancakeswap/smart-router'
+// import { SmartRouterTrade, V4Router } from '@pancakeswap/smart-router'
 // import { TradeType } from '@pancakeswap/swap-sdk-core'
 // import { useThrottleFn } from './useThrottleFn'
 // import { useCallback, useMemo, useRef, useState } from 'react'
@@ -52,4 +52,4 @@ import { SmartRouterTrade, V4Router } from '@pancakeswap/smart-router'
 //     pauseQuoting,
 //     resumeQuoting,
 //   }
-}
+// }

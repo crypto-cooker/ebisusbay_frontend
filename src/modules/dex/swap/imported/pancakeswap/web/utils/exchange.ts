@@ -16,7 +16,7 @@ import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId'
 // import { useContract } from 'hooks/useContract'
 import { Field } from '../state/swap/actions'
 import {useContract} from "@eb-pancakeswap-web/hooks/useContract";
-import {Address} from "wagmi";
+import {Address} from "viem";
 
 // converts a basis points value to a sdk percent
 export function basisPointsToPercent(num: number): Percent {

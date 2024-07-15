@@ -2,7 +2,6 @@ import {Button, Wrap} from "@chakra-ui/react";
 import React, {useCallback} from "react";
 import {SwapTab} from "src/modules/dex/swap/constants";
 import {useRouter} from "next/router";
-import {useSwapAndLimitContext} from "@dex/imported/state/swap/hooks";
 import {useSwapPageState} from "@dex/swap/state/swap/hooks";
 
 export default function SwapHeader({ compact }: { compact: boolean }) {

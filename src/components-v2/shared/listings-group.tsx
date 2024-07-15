@@ -5,10 +5,9 @@ import ListingCard from '@src/Components/components/ListingCard';
 import {isMetapixelsCollection} from '@market/helpers/utils';
 import ListingBundleCard from '@src/Components/components/ListingBundleCard';
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
-import {Box, Center, SimpleGrid, Spinner} from "@chakra-ui/react";
+import {Box, Center, ResponsiveValue, SimpleGrid, Spinner} from "@chakra-ui/react";
 import nextApiService from "@src/core/services/api-service/next";
 import {useInfiniteQuery} from "@tanstack/react-query";
-import {ResponsiveValue} from "@chakra-ui/system";
 
 interface ListingsGroupProps {
   limitSize?: number;

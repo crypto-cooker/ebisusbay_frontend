@@ -10,12 +10,11 @@ import {
   useColorModeValue
 } from "@chakra-ui/react";
 import React, {ChangeEvent} from "react";
-import {useDispatch} from "react-redux";
 import {ListingDrawer} from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-drawer";
 import TransferDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/transfer-drawer";
 import BundleDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/bundle-drawer";
 import {setBatchType} from "@market/state/redux/slices/user-batch";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 
@@ -32,7 +31,7 @@ interface BatchDrawerProps {
 }
 
 const BatchDrawer = ({ onClose, ...gridProps }: BatchDrawerProps & GridProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const {theme: userTheme} = useUser();
   const batchListingBorderColor = useColorModeValue('#000', '#FFF');

@@ -25,13 +25,12 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {appConfig} from "@src/Config";
 import {BarterToken} from "@market/state/jotai/atoms/deal";
 import {CustomTokenPicker} from "@src/components-v2/feature/deal/create/custom-token-picker";
-import {JsonRpcProvider} from "@ethersproject/providers";
 import {commify} from "ethers/lib/utils";
 import {useQuery} from "@tanstack/react-query";
 import {ERC20} from "@src/global/contracts/Abis";
 
 const config = appConfig();
-const readProvider = new JsonRpcProvider(config.rpc.read);
+const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 export const ChooseTokensTab = ({address}: {address: string}) => {
   const { toggleOfferERC20 } = useBarterDeal();

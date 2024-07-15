@@ -2,13 +2,12 @@ import React, {useState} from "react";
 import {Box, Drawer, DrawerContent, DrawerOverlay, Flex, HStack, Slide, Text, useColorModeValue} from "@chakra-ui/react";
 import {closeBatchListingCart, openBatchListingCart} from "@market/state/redux/slices/user-batch";
 import BatchDrawer from "@src/components-v2/feature/account/profile/tabs/inventory/batch/batch-drawer";
-import {useDispatch} from "react-redux";
 import Button from "@src/Components/components/Button";
 import {pluralize} from "@market/helpers/utils";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 
 export const MobileBatchPreview = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [showBatchListingDrawer, setShowBatchListingDrawer] = useState(false);
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const sliderBackground = useColorModeValue('gray.50', 'gray.700')

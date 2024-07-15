@@ -1,15 +1,15 @@
 import React, { memo, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Slider from '../components/Slider';
 
 import PreviewCard from '../../components-v2/shared/preview-card';
 import { appConfig } from "@src/Config";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const drops = appConfig('drops');
 const defaultCardImage = 'https://cdn-prod.ebisusbay.com/files/collection-images/default/card.jpg';
 
 const PastDrops = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [pastDrops, setPastDrops] = useState([]);
 

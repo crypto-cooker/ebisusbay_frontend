@@ -1,14 +1,13 @@
 import React, {useState} from "react";
 import {Box, Drawer, DrawerContent, DrawerOverlay, Flex, HStack, Slide, Text, useColorModeValue} from "@chakra-ui/react";
 import {closeCart, openCart} from "@market/state/redux/slices/ryoshi-staking-cart-slice";
-import {useDispatch} from "react-redux";
 import {pluralize} from "@market/helpers/utils";
 import {BatchStakingDrawer} from "@src/components-v2/feature/staking/batch-staking-drawer";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
 
 export const MobileBatchStaking = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [showBatchStakingDrawer, setShowBatchStakingDrawer] = useState(false);
   const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
   const sliderBackground = useColorModeValue('gray.50', 'gray.700')

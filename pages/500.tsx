@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { createGlobalStyle, default as styled } from 'styled-components';
 import { keyframes } from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
@@ -7,6 +6,7 @@ import Reveal from 'react-awesome-reveal';
 import { theme } from '@src/global/theme/theme';
 import {hostedImage} from "../src/helpers/image";
 import {useUser} from "@src/components-v2/useUser";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const fadeInUp = keyframes`
   0% {
@@ -101,7 +101,7 @@ const Jumbotron = {
 };
 
 const Custom500 = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {theme: userTheme} = useUser();
 

@@ -2,7 +2,6 @@ import {Box, Center, Flex, GridItem, Spacer, Text,} from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import React, {useRef, useState} from "react";
 
-import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
 import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts,} from "@market/state/redux/slices/user-batch";
 
@@ -13,7 +12,7 @@ import {isBundle} from "@market/helpers/utils";
 import BundleDrawerForm, {
   BundleDrawerFormHandle
 } from "@src/components-v2/feature/account/profile/tabs/inventory/batch/bundle-drawer-form";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import nextApiService from "@src/core/services/api-service/next";
 import {useUser} from "@src/components-v2/useUser";
 
@@ -21,7 +20,7 @@ const MAX_NFTS_IN_BUNDLE = 40;
 const MIN_NFTS_IN_BUNDLE = 2;
 
 export const BundleDrawer = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const user = useUser();
   const [showConfirmButton, setShowConfirmButton] = useState(false);

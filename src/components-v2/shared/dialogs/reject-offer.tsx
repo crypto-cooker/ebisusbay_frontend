@@ -44,7 +44,7 @@ export const ResponsiveRejectOfferDialog = ({ isOpen, collection, isCollectionOf
   );
 };
 
-const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, DialogBody, DialogFooter}: ResponsiveDialogComponents & RejectOfferDialogProps) => {
+const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, DialogBody, DialogFooter}: Pick<ResponsiveDialogComponents, 'DialogHeader' | 'DialogBody' | 'DialogFooter'> & RejectOfferDialogProps) => {
   const contractService = useContractService();
   const [executingRejectOffer, setExecutingRejectOffer] = useState(false);
   const user = useUser();

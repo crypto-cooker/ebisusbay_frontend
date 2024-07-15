@@ -27,7 +27,6 @@ import React, {useCallback, useEffect, useState} from "react";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
 import {
   removeFromBatchListingCart,
@@ -43,7 +42,7 @@ import {appConfig} from "@src/Config";
 import {createSuccessfulTransactionToastContent, isBundle, isKoban} from "@market/helpers/utils";
 import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@market/helpers/hacks";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
 
@@ -57,7 +56,7 @@ interface BundleDrawerItemProps {
 }
 
 const BundleDrawerItem = ({ item, disabled, onAddCollection }: BundleDrawerItemProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUser();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);

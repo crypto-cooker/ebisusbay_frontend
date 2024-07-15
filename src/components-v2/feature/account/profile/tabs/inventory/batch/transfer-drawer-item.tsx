@@ -1,7 +1,7 @@
-import {useDispatch} from "react-redux";
 import {
   Badge,
   Box,
+  Button as ChakraButton,
   Flex,
   FormControl,
   Image,
@@ -34,13 +34,12 @@ import {ERC721} from "@src/global/contracts/Abis";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, isBundle} from "@market/helpers/utils";
 import Link from "next/link";
-import {Button as ChakraButton} from "@chakra-ui/button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@market/helpers/hacks";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
 
@@ -53,7 +52,7 @@ interface TransferDrawerItemProps {
 }
 
 const TransferDrawerItem = ({ item, onAddCollection }: TransferDrawerItemProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUser();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 

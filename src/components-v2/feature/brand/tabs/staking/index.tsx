@@ -30,7 +30,6 @@ import Taskbar from "@src/components-v2/feature/brand/tabs/staking/taskbar";
 import BoostSlotCard from "@src/components-v2/feature/brand/tabs/staking/boost-slot-card";
 import {Contract, ethers} from "ethers";
 import {ERC721} from "@src/global/contracts/Abis";
-import {JsonRpcProvider} from "@ethersproject/providers";
 import {useUser} from "@src/components-v2/useUser";
 
 const MotionGrid = motion(Grid);

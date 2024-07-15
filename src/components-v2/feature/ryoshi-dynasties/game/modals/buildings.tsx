@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 
 import {ReactElement, useContext, useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps

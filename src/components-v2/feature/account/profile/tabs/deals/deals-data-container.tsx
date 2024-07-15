@@ -1,8 +1,7 @@
 import React, {memo, useCallback, useMemo} from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {Box, Center, Spinner, Text} from "@chakra-ui/react";
+import {Box, Center, ResponsiveValue, Spinner, Text} from "@chakra-ui/react";
 import {useInfiniteQuery} from "@tanstack/react-query";
-import {ResponsiveValue} from "@chakra-ui/system";
 import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
 import {ApiService} from "@src/core/services/api-service";
 import ResponsiveDealsTable from "@src/components-v2/shared/responsive-table/responsive-deals-table";

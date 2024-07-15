@@ -25,12 +25,11 @@ import {ciEquals} from "@market/helpers/utils";
 import {appConfig} from "@src/Config";
 import {Contract, ethers} from "ethers";
 import {ERC20, ERC721} from "@src/global/contracts/Abis";
-import {JsonRpcProvider} from "@ethersproject/providers";
 import {useQuery} from "@tanstack/react-query";
 import {commify} from "ethers/lib/utils";
 
 const config = appConfig();
-const readProvider = new JsonRpcProvider(config.rpc.read);
+const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 export const ChooseTokensTab = ({address}: {address: string}) => {
   const { toggleSelectionERC20 } = useBarterDeal();

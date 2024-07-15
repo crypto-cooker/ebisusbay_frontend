@@ -1,7 +1,20 @@
-import {Flex, GridItem, HStack, Image, SimpleGrid,Text, VStack,Box, Grid, Progress, useBreakpointValue, Button} from "@chakra-ui/react";
+import {
+  Flex,
+  GridItem,
+  HStack,
+  Image,
+  SimpleGrid,
+  Text,
+  VStack,
+  Box,
+  Grid,
+  Progress,
+  useBreakpointValue,
+  Button,
+  ResponsiveValue
+} from "@chakra-ui/react";
 import React, {memo, useEffect, useRef, useState} from "react";
 import RdHero from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/rd-hero";
-import {ResponsiveValue} from "@chakra-ui/styled-system";
 import * as CSS from "csstype";
 import heroesMetadata from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/heroes-metadata.json";
 

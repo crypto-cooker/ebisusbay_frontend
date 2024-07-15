@@ -53,7 +53,7 @@ export const ResponsiveTransferNftDialog = ({ isOpen, onClose, nft, ...props }: 
   );
 };
 
-const DialogContent = ({isOpen, onClose, nft, DialogBody, DialogFooter}: ResponsiveDialogComponents & TransferNftDialogProps) => {
+const DialogContent = ({isOpen, onClose, nft, DialogBody, DialogFooter}: Pick<ResponsiveDialogComponents, 'DialogHeader' | 'DialogBody' | 'DialogFooter'> & TransferNftDialogProps) => {
   const [recipientAddress, setRecipientAddress] = useState<string>();
   const [fieldError, setFieldError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);

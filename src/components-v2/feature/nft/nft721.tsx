@@ -1,6 +1,6 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {Contract, ethers} from 'ethers';
+import {useSelector} from 'react-redux';
+import {Contract, ContractInterface, ethers} from 'ethers';
 import {faHeart as faHeartOutline} from '@fortawesome/free-regular-svg-icons';
 import {
   faCopy,
@@ -80,8 +80,7 @@ import {ImageContainer} from "@src/Components/Bundle";
 import {getTheme} from "@src/global/theme/theme";
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
-import {useAppSelector} from "@market/state/redux/store/hooks";
-import {ContractInterface} from "@ethersproject/contracts";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import ImageService from "@src/core/services/image";
 import OffersTab from "@src/components-v2/feature/nft/tabs/offers";
 import {OfferState, OfferType} from "@src/core/services/api-service/types";
@@ -112,7 +111,7 @@ interface Nft721Props {
 }
 
 const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUser();
   const { refreshing, favorites, loading:isLoading } = useAppSelector((state) => state.nft);
   const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`).toString());

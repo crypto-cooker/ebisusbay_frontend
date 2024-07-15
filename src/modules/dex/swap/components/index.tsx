@@ -1,7 +1,6 @@
 import React from "react";
 import SwapHeader from "@dex/components/swap/header";
 import {useSwapPageState} from "@dex/swap/state/swap/hooks";
-import {SwapFormContext} from "@dex/swap/state/swap/contexts/swap-form";
 import {SwapTab} from "@dex/swap/constants";
 import SwapForm from "@dex/swap/components/tabs/swap";
 import {Box} from "@chakra-ui/react";

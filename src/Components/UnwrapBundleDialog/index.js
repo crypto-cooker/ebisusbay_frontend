@@ -11,19 +11,19 @@ import {
 import React, {useState} from 'react';
 import Button from "@src/Components/components/Button";
 import {getTheme} from "@src/global/theme/theme";
-import {useDispatch, useSelector} from "react-redux";
 import useUnwrapBundle from "../Account/Settings/hooks/useUnwrapBundle";
 import {toast} from 'react-toastify';
 import {setRefetchNfts,} from "@market/state/redux/slices/user-batch";
 import ImageContainer from "../Bundle/ImagesContainer";
 import {useUser} from "@src/components-v2/useUser";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 
 const UnwrapBundleDialog = ({ isOpen, onClose, nftBundle }) => {
   const user = useUser();
   const [unwrapBundle, value] = useUnwrapBundle();
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const unwrapNftEvent = async () => {
     setIsLoading(true)

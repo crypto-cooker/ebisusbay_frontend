@@ -61,7 +61,7 @@ export const ResponsiveAcceptOfferDialog = ({ isOpen, collection, isCollectionOf
   );
 };
 
-const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, DialogBody, DialogFooter}: ResponsiveDialogComponents & AcceptOfferDialogProps) => {
+const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, DialogBody, DialogFooter}: Pick<ResponsiveDialogComponents, 'DialogHeader' | 'DialogBody' | 'DialogFooter'> & AcceptOfferDialogProps) => {
 
   const [salePrice, setSalePrice] = useState<number>();
   const [floorPrice, setFloorPrice] = useState(0);

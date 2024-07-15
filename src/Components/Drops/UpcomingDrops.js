@@ -1,14 +1,14 @@
 import React, { memo, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import Slider from '../components/Slider';
 import PreviewCard from '../../components-v2/shared/preview-card';
 import { appConfig } from "@src/Config";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const drops = appConfig('drops');
 
 const UpcomingDrops = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [upcomingDrops, setUpcomingDrops] = useState([]);
 

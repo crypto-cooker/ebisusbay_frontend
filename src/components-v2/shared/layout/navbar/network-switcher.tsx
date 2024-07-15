@@ -33,7 +33,13 @@ import {chainNameConverter} from "@eb-pancakeswap-web/utils/chainNameConverter";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useNetworkConnectorUpdater} from "@eb-pancakeswap-web/hooks/useActiveWeb3React";
 
-const NetworkSelect = ({ switchNetwork, chainId, isWrongNetwork }) => {
+interface NetworkSelectProps {
+  switchNetwork: (chainId: ChainId) => void;
+  chainId: ChainId;
+  isWrongNetwork: boolean;
+}
+
+const NetworkSelect = ({ switchNetwork, chainId, isWrongNetwork }: NetworkSelectProps) => {
   const [showTestnet] = useUserShowTestnet()
 
   return (
@@ -73,7 +79,12 @@ const NetworkSelect = ({ switchNetwork, chainId, isWrongNetwork }) => {
   )
 }
 
-const WrongNetworkSelect = ({ switchNetwork, chainId }) => {
+interface WrongNetworkSelectProps {
+  switchNetwork: (chainId: ChainId) => void;
+  chainId: ChainId;
+}
+
+const WrongNetworkSelect = ({ switchNetwork, chainId }: WrongNetworkSelectProps) => {
   const { chain } = useAccount()
   const localChainId = useLocalNetworkChain() || ChainId.CRONOS
   const [, setSessionChainId] = useSessionChainId()
@@ -161,7 +172,7 @@ export const NetworkSwitcher = () => {
 
   const foundChain = useMemo(() => chains.find((c) => c.id === chainId), [chainId])
   const symbol =
-    (foundChain?.id ? SHORT_SYMBOL[foundChain.id] ?? NATIVE[foundChain.id]?.symbol : undefined) ??
+    (foundChain?.id ? SHORT_SYMBOL[foundChain.id as ChainId] ?? NATIVE[foundChain.id as ChainId]?.symbol : undefined) ??
     foundChain?.nativeCurrency?.symbol
 
   const cannotChangeNetwork = !canSwitch

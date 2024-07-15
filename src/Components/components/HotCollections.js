@@ -1,12 +1,13 @@
 import React, { memo, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Slider from '../components/Slider';
 
 import PreviewCard from '../../components-v2/shared/preview-card';
 import { getAllCollections } from '@market/state/redux/slices/collectionsSlice';
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const HotCollections = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const hotCollections = useSelector((state) => {
     return state.collections.collections

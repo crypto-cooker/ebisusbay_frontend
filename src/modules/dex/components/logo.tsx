@@ -33,7 +33,7 @@ export default function useHttpLocations(uri: string | undefined): string[] {
 
 export function CurrencyLogo({
                                currency,
-                               size = "24px",
+                               size = '30px',
                                style,
                                useTrustWalletUrl,
                                ...props
@@ -61,7 +61,6 @@ export function CurrencyLogo({
     return [];
   }, [currency, uriLocations, useTrustWalletUrl]);
 
-  console.log('=CCC', currency, srcs);
   if (currency?.isNative) {
     return (
       <TokenLogo
@@ -81,9 +80,10 @@ export function CurrencyLogo({
 export interface TokenLogoProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   srcs: string[];
   useFilledIcon?: boolean;
+  size: string;
 }
 
-const TokenLogo: React.FC<React.PropsWithChildren<TokenLogoProps>> = ({ srcs, useFilledIcon, alt, ...rest }) => {
+const TokenLogo: React.FC<React.PropsWithChildren<TokenLogoProps>> = ({ srcs, useFilledIcon, size, alt, ...rest }) => {
   const [, refresh] = useState<number>(0);
 
   const src: string | undefined = srcs.find((s) => !BAD_SRCS[s]);
@@ -91,7 +91,7 @@ const TokenLogo: React.FC<React.PropsWithChildren<TokenLogoProps>> = ({ srcs, us
   if (src) {
     return (
       <Image
-        w='30px'
+        w={size}
         {...rest}
         alt={alt}
         src={src}
@@ -104,21 +104,21 @@ const TokenLogo: React.FC<React.PropsWithChildren<TokenLogoProps>> = ({ srcs, us
     );
   }
 
-  return useFilledIcon ? <QuestionOutlineIcon {...rest} /> : <QuestionOutlineIcon {...rest} />;
+  return <QuestionOutlineIcon />;
 };
 
 const BAD_SRCS: { [tokenAddress: string]: true } = {};
 
-export function PairLogo({ pair }: { pair: Token[] }) {
-  const [srcs, setSrcs] = useState<string[]>([]);
-
-  useMemo(() => {
-    const newSrcs = pair.map((token) => getTokenLogoURL(token.address));
-    setSrcs(newSrcs);
-  }, [pair]);
-
-  return <Logo src={srcs[0]} alt='Pair logo' />;
-}
+// export function PairLogo({ pair }: { pair: Token[] }) {
+//   const [srcs, setSrcs] = useState<string[]>([]);
+//
+//   useMemo(() => {
+//     const newSrcs = pair.map((token) => getTokenLogoURL(token.address));
+//     setSrcs(newSrcs);
+//   }, [pair]);
+//
+//   return <Logo src={srcs[0]} alt='Pair logo' />;
+// }
 
 export const ChainLogo = memo(
   ({ chainId, width = 24, height = 24 }: { chainId?: number; width?: number; height?: number }) => {
@@ -168,18 +168,18 @@ const commonCurrencySymbols = [
   bscTokens.usdv,
   ethereumTokens.wbtc,
   ethereumTokens.weth,
-  NATIVE[ChainId.BSC],
+  NATIVE[ChainId.CRONOS],
   bscTokens.busd,
   ethereumTokens.dai,
   cronosTokens.usdc,
   cronosTokens.frtn,
 ].map(({ symbol }) => symbol);
 
-export const getTokenListTokenUrl = (token: Pick<Token, 'chainId' | 'address' | 'symbol'>) =>
+export const getTokenListTokenUrl = (token: Pick<Token, 'chainId' | 'address'>) =>
   Object.keys(chainName).includes(String(token.chainId))
     ? `https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${
       token.chainId === ChainId.CRONOS ? '' : `${chainName[token.chainId]}/`
-    }${token.symbol.toLowerCase()}.webp`
+    }${token.address.toLowerCase()}.webp`
     : null;
 
 export const getTokenLogoURLByAddress = memoize(

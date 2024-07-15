@@ -1,5 +1,5 @@
 import React, {memo, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import ListingCard from './ListingCard';
@@ -10,6 +10,7 @@ import {isMetapixelsCollection} from '@market/helpers/utils';
 import {MarketFilters} from "../Models/market-filters.model";
 import ListingBundleCard from './ListingBundleCard';
 import {Center, Spinner} from "@chakra-ui/react";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const ListingCollection = ({
   limitSize = 0,
@@ -18,7 +19,7 @@ const ListingCollection = ({
   sellerId = '',
   cacheName = '',
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const listings = useSelector((state) => state.marketplace.listings);
 
   const canLoadMore = useSelector((state) => {

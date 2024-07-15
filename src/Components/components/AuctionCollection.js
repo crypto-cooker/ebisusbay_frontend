@@ -1,11 +1,12 @@
 import React, {memo, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 // import InfiniteScroll from 'react-infinite-scroll-component';
 import AuctionCard from './AuctionCard';
 import {fetchListings, init} from '@market/state/redux/slices/auctionsSlice';
 import {auctionState} from '@src/core/api/enums';
 import {ciEquals} from "@market/helpers/utils";
 import {Center, Spinner} from "@chakra-ui/react";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 // import ListingCard from './ListingCard';
 // import Clock from './Clock';
 // import auction from '../pages/auction';
@@ -19,7 +20,7 @@ const testAuctions = [
 const degenAddress = '0xA19bFcE9BaF34b92923b71D487db9D0D051a88F8';
 
 const AuctionCollection = ({ showLoadMore = true, collectionId = null, sellerId = null, cacheName = null }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const activeAuctions = useSelector((state) =>
     state.auctions.auctions.filter((a) =>
       typeof a.nft != 'undefined' &&

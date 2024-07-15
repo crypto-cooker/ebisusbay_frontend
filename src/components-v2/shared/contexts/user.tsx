@@ -3,8 +3,7 @@ import {createContext, ReactNode, useEffect} from "react";
 import {appConfig} from "@src/Config";
 import {getProfile} from "@src/core/cms/endpoints/profile";
 import {useQuery} from "@tanstack/react-query";
-import { multicall, watchAccount, watchChainId, watchClient, watchConnections, watchConnectors, type MulticallParameters } from '@wagmi/core';
-import {portAbi, stakeAbi} from "@src/global/contracts/types";
+import {portAbi} from "@src/global/contracts/types";
 import {ethers} from "ethers";
 import {JotaiUser, UserActionType, userAtom} from "@market/state/jotai/atoms/user";
 import {useAtom} from "jotai";
@@ -16,6 +15,7 @@ import {storageSignerAtom} from "@market/state/jotai/atoms/storage";
 import * as Sentry from "@sentry/react";
 import {themeAtom} from "@market/state/jotai/atoms/theme";
 import {wagmiConfig} from "@src/wagmi";
+import {multicall} from "viem/actions";
 
 const config = appConfig();
 

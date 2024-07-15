@@ -1,7 +1,7 @@
-import {useDispatch} from "react-redux";
 import {
   Badge,
   Box,
+  Button as ChakraButton,
   Collapse,
   Flex,
   FormControl,
@@ -44,14 +44,13 @@ import {toast} from "react-toastify";
 import {ciEquals, createSuccessfulTransactionToastContent, isBundle, isKoban, round} from "@market/helpers/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
-import {Button as ChakraButton} from "@chakra-ui/button";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisH, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {appConfig} from "@src/Config";
 import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@market/helpers/hacks";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import ImageService from "@src/core/services/image";
 import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {useUser} from "@src/components-v2/useUser";
@@ -130,7 +129,7 @@ interface ListingDrawerItemProps {
 }
 
 export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, onAddCollection, disabled, isBundling = false }: ListingDrawerItemProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUser();
   const {getByCollection:  currenciesByCollection} = useCurrencyBroker();
   const hoverBackground = useColorModeValue('gray.100', '#424242');

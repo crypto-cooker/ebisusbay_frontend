@@ -1,7 +1,6 @@
 import {Alert, AlertDescription, AlertIcon, Box, Center, Flex, GridItem, Spacer, Text} from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
 import React, {useState} from "react";
-import {useDispatch} from "react-redux";
 import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts} from "@market/state/redux/slices/user-batch";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, pluralize, shortAddress} from "@market/helpers/utils";
@@ -9,7 +8,7 @@ import TransferDrawerItem from "@src/components-v2/feature/account/profile/tabs/
 import {FormControl as FormControlCK} from "@src/Components/components/chakra-components";
 import * as Yup from "yup";
 import {useFormik} from "formik";
-import {useAppSelector} from "@market/state/redux/store/hooks";
+import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import nextApiService from "@src/core/services/api-service/next";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {parseErrorMessage} from "@src/helpers/validator";
@@ -19,7 +18,7 @@ import {useContractService, useUser} from "@src/components-v2/useUser";
 const MAX_NFTS_IN_CART = 100;
 
 const TransferDrawer = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUser();
   const contractService = useContractService();
   const batchListingCart = useAppSelector((state) => state.batchListing);

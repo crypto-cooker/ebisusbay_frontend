@@ -3,7 +3,6 @@ import {approvalsAtom, balancesAtom, userFarmsAtom} from "@dex/farms/state/user"
 import {useContext} from "react";
 import {Contract, ethers} from "ethers";
 import FarmsAbi from "@src/global/contracts/Farms.json";
-import {multicall} from "@wagmi/core";
 import LpAbi from "@src/global/contracts/LP.json";
 import {appConfig} from "@src/Config";
 import {useUser} from "@src/components-v2/useUser";
@@ -11,6 +10,7 @@ import {ApiService} from "@src/core/services/api-service";
 import {UserFarmsRefetchContext} from "@dex/farms/components/provider";
 import {wagmiConfig} from "@src/wagmi";
 import {Address} from "viem";
+import {multicall} from "viem/actions";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);

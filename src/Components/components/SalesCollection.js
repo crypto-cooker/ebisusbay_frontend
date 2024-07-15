@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {fetchListings, filterListings, init, searchListings, sortListings} from '@market/state/redux/slices/marketplaceSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {SortOption} from '../Models/sort-option.model';
@@ -13,6 +13,7 @@ import {MarketFilters} from "../Models/market-filters.model";
 import ImageService from "@src/core/services/image";
 import {Center, Spinner, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
 import useDebounce from "@src/core/hooks/useDebounce";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const SalesCollection = ({
   showLoadMore = true,
@@ -21,7 +22,7 @@ const SalesCollection = ({
   sellerId = null,
   cacheName = '',
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [searchTerms, setSearchTerms] = useState('');
   const debouncedSearch = useDebounce(searchTerms, 500);
 

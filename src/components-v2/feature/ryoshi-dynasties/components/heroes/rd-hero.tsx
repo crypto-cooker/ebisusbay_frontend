@@ -1,7 +1,6 @@
-import {Flex, GridItem, HStack, Image, Text, SimpleGrid, Button} from "@chakra-ui/react";
+import {Flex, GridItem, HStack, Image, Text, SimpleGrid, Button, ResponsiveValue} from "@chakra-ui/react";
 import React, {useEffect, useRef, useState} from "react";
 import heroesMetadata from "@src/components-v2/feature/ryoshi-dynasties/components/heroes/heroes-metadata.json";
-import {ResponsiveValue} from "@chakra-ui/styled-system";
 import * as CSS from "csstype";
 import ImageService from "@src/core/services/image";
 

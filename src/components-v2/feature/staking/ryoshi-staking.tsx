@@ -91,7 +91,7 @@ const RyoshiStaking = () => {
 export default memo(RyoshiStaking);
 
 const UnstakedRyoshiNftList = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUser();
 
   const fetcher = async ({ pageParam = 1 }) => {
@@ -177,7 +177,7 @@ const UnstakedRyoshiNftList = () => {
 }
 
 const StakedRyoshiList = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUser();
 
   const fetcher = async ({ pageParam = 1 }) => {

@@ -19,7 +19,7 @@ export function useSwitchNetworkLocal() {
   }, [])
 
   return useCallback(
-    (chainId: number) => {
+    (chainId: ChainId) => {
       replaceBrowserHistory('chain', chainId === ChainId.CRONOS ? null : CHAIN_QUERY_NAME[chainId])
       setSessionChainId(chainId)
       // Blocto in-app browser throws change event when no account change which causes user state reset therefore

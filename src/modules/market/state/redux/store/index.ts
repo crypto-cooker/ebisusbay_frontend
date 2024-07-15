@@ -1,4 +1,4 @@
-import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
+import { applyMiddleware, compose, combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import thunk from 'redux-thunk';
 
@@ -42,7 +42,46 @@ const reduxDevToolsEnhancedMiddlewares = enableDevTools
   ? reduxDevToolsComposeEnhancers(sentryEnhancedMiddlewares)
   : sentryEnhancedMiddlewares;
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+let store: ReturnType<typeof makeStore>;
+
+export function makeStore(preloadedState = undefined) {
+  return configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        thunk: true
+      }),
+    devTools: process.env.NODE_ENV === 'development',
+    preloadedState,
+  })
+}
+
+export const initializeStore = (preloadedState: any = undefined) => {
+  let _store = store ?? makeStore(preloadedState)
+
+  // After navigating to a page with an initial Redux state, merge that state
+  // with the current state in the store, and create a new store
+  if (preloadedState && store) {
+    _store = makeStore({
+      ...store.getState(),
+      ...preloadedState,
+    })
+    // Reset the current store
+    store = undefined as any
+  }
+
+  // For SSG and SSR always create a new store
+  if (typeof window === 'undefined') return _store
+
+  // Create the store once in the client
+  if (!store) {
+    store = _store
+  }
+
+  return _store
+}
+
+store = initializeStore()
 
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

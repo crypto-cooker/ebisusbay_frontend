@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {constants, Contract, ethers} from 'ethers';
 import {toast} from 'react-toastify';
 import Countdown from 'react-countdown';
@@ -14,11 +14,12 @@ import {appConfig} from "@src/Config";
 import {Card, CardBody, CardFooter, Input, Spinner} from "@chakra-ui/react";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
+import {useAppDispatch} from "@market/state/redux/store/hooks";
 
 const config = appConfig();
 
 const BuyerActionBar = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUser();
   const contractService = useContractService();
   const [runAuthedFunction] = useAuthedFunction();

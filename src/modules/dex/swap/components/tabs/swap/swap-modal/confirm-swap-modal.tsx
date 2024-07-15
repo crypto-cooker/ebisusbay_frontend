@@ -1,5 +1,5 @@
 import {Box, BoxProps, Button, Flex, IconButton, ModalProps} from "@chakra-ui/react";
-import {ResponsiveDialogComponents, useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
+import {useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import React, {useCallback, useMemo, useState} from "react";
 import SelectToken from "@dex/swap/components/tabs/swap/select-token";
 import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";

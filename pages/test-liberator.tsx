@@ -4,15 +4,15 @@ import { Box, GridItem, HStack, Input, Select, SimpleGrid, VStack } from '@chakr
 import { toast } from 'react-toastify';
 import { appConfig } from '@src/Config';
 import { ERC20 } from '@src/global/contracts/Abis';
-import { JsonRpcProvider } from '@ethersproject/providers';
 import { parseErrorMessage } from '@src/helpers/validator';
 import { useUser } from '@src/components-v2/useUser';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { PrimaryButton, SecondaryButton } from '@src/components-v2/foundation/button';
-import { multicall } from '@wagmi/core';
-import { Address, erc20ABI } from 'wagmi';
+import {Address, erc20Abi} from "viem";
+import {multicall} from "viem/actions";
+import {wagmiConfig} from "@src/wagmi";
 
-const readProvider = new JsonRpcProvider(appConfig().rpc.read);
+const readProvider = new ethers.providers.JsonRpcProvider(appConfig().rpc.read);
 const LiberatorAbi = [{"inputs":[{"internalType":"address","name":"_wcro","type":"address"},{"internalType":"address","name":"_usdc","type":"address"},{"internalType":"address","name":"_frtn","type":"address"},{"internalType":"address","name":"_vvsRouter","type":"address"},{"internalType":"address","name":"_mmfRouter","type":"address"},{"internalType":"address","name":"_ryoshiRouter","type":"address"},{"internalType":"address","name":"_vvsLp","type":"address"},{"internalType":"address","name":"_mmfLp","type":"address"},{"internalType":"address","name":"_ryoshiLP","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"uint256","name":"depositAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"newBalance","type":"uint256"}],"name":"Liberation","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amountLP","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amountFRTN","type":"uint256"}],"name":"Withdraw","type":"event"},{"inputs":[],"name":"emergencyWithdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"from","type":"address"}],"name":"migrate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"rewardsFor","outputs":[{"internalType":"uint256","name":"userReward","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"time","type":"uint256"}],"name":"setEndTime","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"rate","type":"uint256"}],"name":"setRewardRate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"totalRewards","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userInfo","outputs":[{"internalType":"uint256","name":"croDeposited","type":"uint256"},{"internalType":"uint256","name":"usdcDeposited","type":"uint256"},{"internalType":"uint256","name":"lpDebt","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
 const MMF_LP = '0xa68466208F1A3Eb21650320D2520ee8eBA5ba623';
 const VVS_LP = '0xe61Db569E231B3f5530168Aa2C9D50246525b6d6';
@@ -43,7 +43,7 @@ const Liberator = () => {
   const {data, error, refetch} = useQuery({
     queryKey: ['Liberator', user.address, contract?.address],
     queryFn: async () => {
-      const data = await multicall({
+      const data = await multicall(wagmiConfig as any, {
         contracts: [
           {
             address: LIBERATOR_ADDRESS as Address,
@@ -55,39 +55,38 @@ const Liberator = () => {
             address: LIBERATOR_ADDRESS as Address,
             abi: LiberatorAbi as any,
             functionName: 'rewardsFor',
-            args: [user.address],
+            args: [user.address as string],
           },
           {
             address: MMF_LP as Address,
-            abi: erc20ABI,
+            abi: erc20Abi,
             functionName: 'balanceOf',
             args: [user.address as Address],
           },
           {
             address: MMF_LP as Address,
-            abi: erc20ABI,
+            abi: erc20Abi,
             functionName: 'allowance',
             args: [user.address as Address, LIBERATOR_ADDRESS],
           },
           {
             address: VVS_LP as Address,
-            abi: erc20ABI,
+            abi: erc20Abi,
             functionName: 'balanceOf',
             args: [user.address as Address],
           },
           {
             address: VVS_LP as Address,
-            abi: erc20ABI,
+            abi: erc20Abi,
             functionName: 'allowance',
             args: [user.address as Address, LIBERATOR_ADDRESS],
           },
         ],
       });
 
-      console.log('DATA', data);
       return {
-        totalRewards: data[0].status === 'success' ? ethers.utils.formatEther(data[0].result) : '0',
-        userRewards: data[1].status === 'success' ? ethers.utils.formatEther(data[1].result) : '0',
+        totalRewards: data[0].status === 'success' ? ethers.utils.formatEther(data[0].result as number) : '0',
+        userRewards: data[1].status === 'success' ? ethers.utils.formatEther(data[1].result as number) : '0',
         mmfBalance: data[2].status === 'success' ? ethers.utils.formatEther(data[2].result) : '0',
         mmfAllowance: data[3].status === 'success' ? data[3].result : 0,
         mmfApproved: data[3].status === 'success' ? data[3].result > 0 : false,

@@ -1,4 +1,4 @@
-import {Contract, Signer} from "ethers";
+import {Contract, ethers, Signer} from "ethers";
 import Market from "@src/global/contracts/Marketplace.json";
 import {appConfig} from "@src/Config";
 import Auction from "@src/global/contracts/DegenAuction.json";
@@ -10,7 +10,6 @@ import gdcAbi from "@src/global/contracts/GDC.json";
 import PlatformRewards from "@src/global/contracts/PlatformRewards.json";
 import PresaleVaults from "@src/global/contracts/PresaleVaults.json";
 import {ERC20} from "@src/global/contracts/Abis";
-import {JsonRpcSigner} from "@ethersproject/providers";
 
 const config = appConfig();
 
@@ -29,7 +28,7 @@ class UserContractService {
   private _ryoshiPresaleVaults?: Contract;
   private _custom: { [key: string]: Contract } = {};
 
-  constructor(signer: Signer | JsonRpcSigner) {
+  constructor(signer: Signer | ethers.providers.JsonRpcSigner) {
     this.signer = signer;
   }
 
