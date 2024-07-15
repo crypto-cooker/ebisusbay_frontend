@@ -24,6 +24,8 @@ import Scrollbars from "react-custom-scrollbars-2";
 import {getMultipleCollections} from "@src/core/api/next/collectioninfo";
 import useSearch from "@market/hooks/use-search";
 import {SearchHistoryItem} from "@market/state/jotai/atoms/search";
+import { chunkArray } from '@market/helpers/utils';
+import { useQuery } from '@tanstack/react-query';
 
 const searchRegex = /^\w+([\s-_]\w+)*$/;
   const minChars = 3;
@@ -52,8 +54,7 @@ const searchRegex = /^\w+([\s-_]\w+)*$/;
   
     const [maxResults, setMaxResults] = useState(defaultMaxVisible);
     const [searchVisits, setSearchVisits] = useState<SearchHistoryItem[]>([]);
-    const [collectionAddresses, setCollectionAddresses] = useState<CollectionAddress[]>([]);
-  
+
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [value, setValue] = useState('');
     const ref: RefObject<HTMLDivElement> = React.useRef(null);
@@ -65,7 +66,7 @@ const searchRegex = /^\w+([\s-_]\w+)*$/;
     const [cursor, setCursor] = useState(-1);
     const [data, setData] = useState<any[]>([]);
     const [filteredFactions, setFilteredFactions] = useState<any[]>([]);
-    
+
     const searchForFactions = () => {
       let filteredFactions_: any[] = [];
       //check if their names match the value
@@ -85,7 +86,7 @@ const searchRegex = /^\w+([\s-_]\w+)*$/;
       allFactions.filter((faction) => {
         if(faction.addresses.length > 0){
           for(let i = 0; i < faction.addresses.length; i++){
-            const collection = collectionAddresses.find((f) => f.address === faction.addresses[i]);
+            const collection = collectionAddresses?.find((f) => f.address === faction.addresses[i]);
             if(collection && collection.collectionName?.toLowerCase().includes(value.toLowerCase())){
               if(!filteredFactions_.find((f) => f.address === faction.address))
                 filteredFactions_.push(faction);
@@ -100,35 +101,51 @@ const searchRegex = /^\w+([\s-_]\w+)*$/;
       collectionName?: string;
     }
 
-    const getCollectionAddresses = async () => {
-      let newAddresses: CollectionAddress[] = [];
+    const searchableCollections: CollectionAddress[] = allFactions.reduce((acc, faction) => {
+      if (faction.type === 'COLLECTION' && faction.addresses.length > 0) {
+        faction.addresses.forEach((address: string) => {
+          acc.push({ address, factionName: faction.name });
+        });
+      }
+      return acc;
+    }, [] as CollectionAddress[]);
 
-      allFactions.filter(async (faction) => {
-        if(faction.type === "COLLECTION" && faction.addresses.length > 0){
-          for(let i = 0; i < faction.addresses.length; i++){
-          newAddresses.push({address: faction.addresses[i], factionName: faction.name});}
-      }})
+    const { data: collectionAddresses } = useQuery({
+      queryKey: ['SearchFactions', searchableCollections.map((a) => a.address)],
+      queryFn: async () => getCollectionAddresses(),
+      enabled: !!searchableCollections && !!allFactions,
+      staleTime: Infinity,
+      refetchOnWindowFocus: false
+    });
+
+    const getCollectionAddresses = async () => {
 
       //get all addresses in new addresses
-      const collections = await getMultipleCollections(newAddresses.map((a) => a.address).toString());
-      // console.log("collections", collections);
+      const addresses = searchableCollections.map((a) => a.address);
+      const addressChunks = chunkArray(addresses, 150);
+      const collections: any[] = [];
+      for (const chunk of addressChunks) {
+        const chunkCollections = await getMultipleCollections(chunk.toString());
+        if (chunkCollections) collections.push(...chunkCollections);
+      }
 
-      if(!collections) return;
+      if(!collections) return [];
 
       //add collection names to new addresses
-      for(let i = 0; i < newAddresses.length; i++){
-        const collection = collections.find((c:any) => c.address.toLowerCase() === newAddresses[i].address.toLowerCase());
+      let previewableCollections = searchableCollections.slice();
+      for(let i = 0; i < previewableCollections.length; i++){
+        const collection = collections.find((c:any) => c.address.toLowerCase() === previewableCollections[i].address.toLowerCase());
         if(collection){
-          newAddresses[i].collectionName = collection.name;
+          previewableCollections[i].collectionName = collection.name;
         }
       }
 
-      // console.log(newAddresses);
-      setCollectionAddresses(newAddresses);
+      return previewableCollections;
     }
+
     const GetCollectionNames = (addresses:any) => {
-      if(!addresses) return;
-      if(!collectionAddresses) return;
+      if(!addresses) return []
+      if(!collectionAddresses) return [];
 
       let names: string[] = [];
       for(let i = 0; i < addresses.length; i++){
@@ -140,12 +157,12 @@ const searchRegex = /^\w+([\s-_]\w+)*$/;
       return names;
     }
 
-    useEffect(() => {
-      if(!allFactions) return;
-      
-      getCollectionAddresses();
-    }
-    , [allFactions]);
+    // useEffect(() => {
+    //   if(!allFactions) return;
+    //
+    //   getCollectionAddresses();
+    // }
+    // , [allFactions]);
   
     const hasDisplayableContent = searchVisits.length > 0 || (data && data.length > 0);
   

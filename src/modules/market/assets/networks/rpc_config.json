@@ -15310,13 +15310,13 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "A DripCro.com brand NFT. Associated with the $TENDIES cronos coin.",
+        "description": "The Colonel brings his bags of $TENDIES everywhere he goes. Filling the bellies of all crofam. Holding a Colonel NFT will give you OG status, future 1:1 NFT airdrop and whitelist on every future $TENDIE project. 50% of all Colonel Tendies mint proceeds will go to $tendie LP.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/colonel-tendies/avatar.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/colonel-tendies/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/colonel-tendies/banner.webp",
-        "website": "https://dripderivatives.com/",
-        "twitter": "https://x.com/drip_official_",
-        "discord": "https://discord.gg/ttaPM95WcR",
+        "website": "https://www.tendiescro.xyz/",
+        "twitter": "https://twitter.com/tendiescro",
+        "discord": "https://discord.gg/5MbjpuFv4P",
         "categories": []
       },
       "verification": {
@@ -27531,7 +27531,7 @@
       "multiToken": false,
       "address": "0x4441d549d35170ae1abe3d7a91e849ced5cdcaf6",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Blockchain Operative Tech (BOT) is a 1150 piece AI collection. We are ready to revolutionize the future. Join us on this exciting journey! There will be various investment pools. All BOT holders will have access to game assets. Top holders will get access to asset development and more",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/blockchain-operative-tech-bot/avatar.webp",
@@ -27543,6 +27543,57 @@
         "categories": [
           "utility",
           "ai"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "PAPACRO_NFT",
+      "slug": "papacro-nft",
+      "multiToken": false,
+      "address": "0x492FC7075876eDcB5fb564ec0ad6501b6a9B03ae",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Part of meme coin $PAPACRO project with staking opportunity",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/papacro-nft/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/papacro-nft/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/papacro-nft/banner.webp",
+        "website": "https://www.papacro.com/",
+        "twitter": "https://twitter.com/PAPACRO_",
+        "discord": "https://discord.gg/hEjJsMgF8H",
+        "telegram": "https://t.me/+vBPd0xIa1ZNlZmQ0",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "PLUUSHDABUTTON",
+      "slug": "pluushdabutton",
+      "multiToken": false,
+      "address": "0xdE456f460fef8852D4963c503473F6c2665Ea6D0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "JUST PLUUSH DA BUTTON",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/pluushdabutton/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/pluushdabutton/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/pluushdabutton/banner.webp",
+        "website": "https://pluush.gitbook.io/dabutton/",
+        "twitter": "https://twitter.com/PLUUSHDABUTTON",
+        "discord": "https://discord.gg/uN7agJcJ",
+        "categories": [
+          "meme"
         ]
       },
       "verification": {

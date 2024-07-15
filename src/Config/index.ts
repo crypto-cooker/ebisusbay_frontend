@@ -242,6 +242,12 @@ const configData: AppConfigMap = {
         symbol: 'MOON',
         address: '0x46E2B5423F6ff46A8A35861EC9DAfF26af77AB9A',
         decimals: 18
+      },
+      tfc: {
+        name: 'The Fat Clown',
+        symbol: 'TFC',
+        address: '0x22811A01B665872cd48dC9303CDA2ca3188F1553',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
