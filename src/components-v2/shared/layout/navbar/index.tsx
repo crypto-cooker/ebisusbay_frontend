@@ -159,7 +159,6 @@ const Header = function () {
                   <MenuList>
                     <MenuItem as={Link} href='https://swap.ebisusbay.com' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
                     <MenuItem as={Link} href='/dex/farms' _hover={{color: 'inherit'}} justifyContent='end'>Farms</MenuItem>
-                    <MenuItem as={Link} href='/liberator' _hover={{color: 'inherit'}} justifyContent='end'>Liberator</MenuItem>
                   </MenuList>
                 </Menu>
                 <Menu placement='bottom-end'>
@@ -271,20 +270,6 @@ const Header = function () {
                       leftIcon={<Icon as={FontAwesomeIcon} icon={faSackDollar} />}
                     >
                       Farms
-                    </Button>
-                  </Link>
-                  <Link href='/dex/farms'>
-                    <Button
-                      variant='outline'
-                      onClick={onClose}
-                      size='sm'
-                      color='white'
-                      fontWeight='bold'
-                      w='full'
-                      colorScheme='none'
-                      leftIcon={<Icon as={FontAwesomeIcon} icon={faWater} />}
-                    >
-                      Liberator
                     </Button>
                   </Link>
                   <Button
