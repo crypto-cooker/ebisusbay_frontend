@@ -27601,6 +27601,83 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Cro Clothes Mistery",
+      "slug": "cro-clothes-mistery",
+      "multiToken": false,
+      "address": "0x49F32900f5646EE23b5375D05D82b9d1BCD02434",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cro Clothes Mistery on Cro is a partnership collection of 300 exclusive NFTs. The collection will be distributed via airdrop among the Cro Clothes and Mistery on Cro communities. In the future, occupy the space allocated for Minted in Crypto Fan Wear.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-mistery/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-mistery/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-mistery/banner.webp",
+        "website": "https://cro-clothes.gitbook.io/roadmap",
+        "twitter": "https://www.twitter.com/Cro_Clothes",
+        "discord": "https://discord.gg/QRQb9rkPXK",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Honorary ArgoPetz",
+      "slug": "honorary-argopetz",
+      "multiToken": false,
+      "address": "0xedf0cea9305d1d631c10364df89f8e0d07be2f77",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Honorary ArgoPetz are part of the wider ArgoPetz collection.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/honorary-argopetz/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/honorary-argopetz/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/honorary-argopetz/banner.webp",
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium": "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "DIP’nFlip",
+      "slug": "dip-n-flip",
+      "multiToken": false,
+      "address": "0x88d29942f47374da60b666949a7644e0f2ad960f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "DIP'nFlip is the first collaborative NFT project that DIP, a fun meme project built on Cronos Chain, to be launched on CorgiAI Cre8r. This NFT collection consists of a collection of 2,000 limited edition NFTs. DIP'nFlip is generated based on the prompts that provided by the NFT buyers. It offers a huge flexibility and unlimited possibilities for the buyers to create the perfect DIP'nFlip NFTs.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/dip-n-flip/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/dip-n-flip/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/dip-n-flip/banner.webp",
+        "twitter": "https://www.twitter.com/SenorDip",
+        "telegram": "https://t.me/buythedipcro",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
