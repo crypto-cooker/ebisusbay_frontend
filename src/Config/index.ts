@@ -248,6 +248,12 @@ const configData: AppConfigMap = {
         symbol: 'TFC',
         address: '0x22811A01B665872cd48dC9303CDA2ca3188F1553',
         decimals: 18
+      },
+      sith: {
+        name: 'SITH',
+        symbol: 'SITH',
+        address: '0xFe469aE7B22B90e54763Fcb8d4F253e747C816f1',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
