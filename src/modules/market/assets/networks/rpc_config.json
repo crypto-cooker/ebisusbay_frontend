@@ -27676,6 +27676,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Croginal Cats",
+      "slug": "croginal-cats",
+      "multiToken": false,
+      "address": "0x5C3cF1a5F303bAC6B32F92EF441F4f812AFd642d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Croginal Cats NFT project is an initiative to build community on the Cronos blockchain. Our 1500 unique pixelated cats are instantly recognizable and full of personality. True to our mission, we feed our family: holders of our NFTs will receive a %5 royalty on secondary market sales.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/croginal-cats/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/croginal-cats/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/croginal-cats/banner.webp",
+        "website": "https://www.croginalcats.xyz/",
+        "twitter": "https://www.twitter.com/Croginal",
+        "discord": "https://discord.gg/bB7Z2DaUCP",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
