@@ -27701,6 +27701,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Dirty Sockers",
+      "slug": "dirty-sockers",
+      "multiToken": false,
+      "address": "0xFA46EeE0e74e7b05225F497FeEeA3cF48Ab1ae8B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ever wondered where all those Socks are going after washing? They seem to vanish out of thin air. Those Socks chose to leave home to live life on their own terms. Meet the Dirty Sockers - the most degen Socks on the blockchain.  Dirty Sockers is a community first family project on the Cronos-blockchain.  Project roadmap: https://dirtysockers.xyz/  Dirty Sockers is a 10k collection of unique, generated NFTs with a varierty of traits of differing rarity, made by the designer behind Dirty Sockers, Saad Minhaas.  Project whitepaper: https://medium.com/@Dirty_Sockers/dirty-sockers-nft-whitepaper-68f234bf31fc  Dirty Sockers is the pilot project of W3 consulting - an NFT consultancy agency, bridging the gap between web 2 and web 3.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/dirty-sockers/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/dirty-sockers/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/dirty-sockers/banner.webp",
+        "website": "https://dirtysockers.xyz/",
+        "twitter": "https://www.twitter.com/dirty_sockers",
+        "discord": "https://discord.gg/dirty-sockers-universe-963855988878868491",
+        "medium": "https://medium.com/@Dirty_Sockers",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
