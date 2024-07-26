@@ -27389,7 +27389,7 @@
         ]
       },
       "verification": {
-        "doxx": true,
+        "doxx": false,
         "kyc": false,
         "verified": false
       }
@@ -27467,7 +27467,7 @@
         ]
       },
       "verification": {
-        "doxx": true,
+        "doxx": false,
         "kyc": false,
         "verified": true
       }
