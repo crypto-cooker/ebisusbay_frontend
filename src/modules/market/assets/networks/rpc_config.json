@@ -27520,7 +27520,7 @@
         ]
       },
       "verification": {
-        "verified": false,
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
@@ -27724,6 +27724,31 @@
       },
       "verification": {
         "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Saber",
+      "slug": "saber",
+      "multiToken": false,
+      "address": "0x33428b32518a58ebcdc46046dce95d2dba27d6a1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "\"An elegant weapon for a more civilized age.\" Saber is a collection of hand drawn, randomly generated, pixel-art weapons used to defend and protect. But there have been whispers that dark forces lurk among the blades.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/saber/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/saber/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/saber/banner.webp",
+        "website": "http://jedioncronos.com/",
+        "twitter": "https://www.twitter.com/JEDIonCronos",
+        "discord": "https://discord.gg/K6RzmqB8fX",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": true,
         "doxx": false,
         "kyc": false
       }
