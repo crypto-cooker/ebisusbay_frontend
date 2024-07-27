@@ -18,6 +18,8 @@ import {useUser} from "@src/components-v2/useUser";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBullhorn} from "@fortawesome/free-solid-svg-icons";
 import * as Sentry from "@sentry/nextjs";
+import {usePollBlockNumber} from "@eb-pancakeswap-web/state/block/hooks";
+import {useAccountEventListener} from "@eb-pancakeswap-web/hooks/useAccountEventListener";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -48,6 +50,11 @@ const GlobalStyles = createGlobalStyle`
 
 const firebase = initializeApp(firebaseConfig);
 
+function GlobalHooks() {
+  useAccountEventListener()
+  return null
+}
+
 function App({ Component, ...pageProps }: AppProps) {
   const [loading, setLoading] = useState(true);
   const { colorMode } = useColorMode()
@@ -76,6 +83,7 @@ function App({ Component, ...pageProps }: AppProps) {
   return (
     <ThemeProvider theme={getTheme(userTheme)}>
       <ExchangePricesContext.Provider value={{prices: exchangePrices.data ?? []}}>
+        <GlobalHooks />
         <DefaultHead />
         <div className="wraper">
           <GlobalStyles isDark={userTheme === 'dark'} />

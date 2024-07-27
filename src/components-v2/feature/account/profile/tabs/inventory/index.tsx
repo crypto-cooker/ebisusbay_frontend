@@ -59,6 +59,7 @@ import InventoryFilterContainer
 import useDebounce from "@src/core/hooks/useDebounce";
 import {useUser} from "@src/components-v2/useUser";
 import {ApiService} from "@src/core/services/api-service";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 
 interface InventoryProps {
   address: string;

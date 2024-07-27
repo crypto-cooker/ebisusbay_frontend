@@ -97,14 +97,14 @@ export const useTokenExchangeRate = (token: string, chainId: number = 25) => {
   useEffect(() => {
     const safeToken = token || ethers.constants.AddressZero;
     const price = globalPrices.prices.find((p) => ciEquals(p.currency, safeToken) && Number(p.chain) === Number(chainId));
-    const croPrice = globalPrices.prices.find((p) => ciEquals(p.currency, ethers.constants.AddressZero) && Number(p.chain) === 25);
+    const nativePrice = globalPrices.prices.find((p) => ciEquals(p.currency, ethers.constants.AddressZero) && Number(p.chain) === Number(chainId));
 
     if (price) {
       setTokenPrice(price);
       setTokenUsdRate(Number(price.usdPrice));
-      if (croPrice) {
-        setTokenToCroRate(Number(price.usdPrice) / Number(croPrice.usdPrice));
-        setCroToTokenRate(Number(croPrice.usdPrice) / Number(price.usdPrice));
+      if (nativePrice) {
+        setTokenToCroRate(Number(price.usdPrice) / Number(nativePrice.usdPrice));
+        setCroToTokenRate(Number(nativePrice.usdPrice) / Number(price.usdPrice));
       }
     } else {
       setTokenPrice({usdPrice: '0', chain: chainId, currency: safeToken});

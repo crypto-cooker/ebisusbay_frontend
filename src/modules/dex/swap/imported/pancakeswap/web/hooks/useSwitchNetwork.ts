@@ -1,14 +1,14 @@
 import { ChainId } from '@pancakeswap/chains'
 import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
 import { useCallback, useMemo } from 'react'
-import { useAccount, useSwitchChain } from 'wagmi'
+import {SwitchChainNotSupportedError, useAccount, useSwitchChain} from 'wagmi'
 import { useSessionChainId } from './useSessionChainId'
 import {useAppDispatch} from "@market/state/redux/store/hooks";
 import {CHAIN_QUERY_NAME} from "@src/config/chains";
 import {toast} from "react-toastify";
 import {clearUserStates} from "@eb-pancakeswap-web/utils/clearUserStates";
 import {useSwitchNetworkLoading} from "@eb-pancakeswap-web/hooks/useSwitchNetworkLoading";
-import {ExtendEthereum} from "@root/types/global";
+import {ExtendEthereum} from "@root/types/extend-ethereum";
 
 export function useSwitchNetworkLocal() {
   const [, setSessionChainId] = useSessionChainId()
@@ -65,8 +65,12 @@ export function useSwitchNetwork() {
             return c
           })
           .catch((e) => {
-            // TODO: review the error
-            toast.error('Error connecting, please retry and confirm in wallet!')
+            if (e instanceof SwitchChainNotSupportedError) {
+              toast.error('Error connecting, please try switching network in wallet app')
+            } else {
+              console.log(e);
+              toast.error('Error connecting, please retry and confirm in wallet!')
+            }
           })
           .finally(() => setLoading(false))
       }

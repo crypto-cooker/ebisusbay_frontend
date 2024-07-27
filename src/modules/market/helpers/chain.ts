@@ -7,6 +7,7 @@ import {Address, erc20Abi} from "viem";
 import {wagmiConfig} from "@src/wagmi";
 import {ContractFunctionParameters} from "viem/types/contract";
 import {multicall} from "viem/actions";
+import {readContract} from "@wagmi/core";
 
 const config = appConfig();
 const { ItemType } = Constants;
@@ -18,8 +19,14 @@ export async function getItemType(nftAddress: string) {
 
   const ERC1155InterfaceId = "0xd9b67a26";
   const ERC721InterfaceId = "0x80ac58cd";
-  const checkContract = new Contract(nftAddress, ERC165, readProvider);
-  const is1155 = await checkContract.supportsInterface(ERC1155InterfaceId);
+  const is1155 = await readContract(wagmiConfig as any, {
+    abi: ERC165,
+    address: nftAddress as Address,
+    functionName: 'supportsInterface',
+    args: [ERC1155InterfaceId],
+  })
+  // const checkContract = new Contract(nftAddress, ERC165, readProvider);
+  // const is1155 = await checkContract.supportsInterface(ERC1155InterfaceId);
 
   return is1155 ? ItemType.ERC1155 : ItemType.ERC721;
 }

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { specialImageTransform } from '@market/helpers/hacks';
 import { AnyMedia } from '@src/components-v2/shared/media/any-media';
-import { Contract } from 'ethers';
+import {Contract, ethers} from 'ethers';
 import { getCollectionMetadata } from '@src/core/api';
 import { toast } from 'react-toastify';
 import EmptyData from '@src/Components/Offer/EmptyData';
@@ -64,8 +64,22 @@ import { useUser } from '@src/components-v2/useUser';
 import * as Sentry from '@sentry/nextjs';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import useCurrencyBroker, { BrokerCurrency } from '@market/hooks/use-currency-broker';
+import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import {ChainLogo, CurrencyLogo} from "@dex/components/logo";
+import {useContract} from "@eb-pancakeswap-web/hooks/useContract";
+import {V2_ROUTER_ADDRESS} from "../../../../../eb-pancake-frontend/packages/smart-router/evm/constants";
+import {Address, erc721Abi} from "viem";
+import {pancakeRouter02ABI} from "@eb-pancakeswap-web/config/abi/IPancakeRouter02";
+import {useConfig, useReadContract} from "wagmi";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
+import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
+import {useAppChainConfig} from "@src/config/hooks";
+import {readContract} from "@wagmi/core";
+import {wagmiConfig} from "@src/wagmi";
+import useMultichainCurrencyBroker, {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
+import {Currency, SerializedToken} from "@pancakeswap/swap-sdk-core";
 
-const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 5;
 const expirationDatesValues = [
@@ -119,7 +133,7 @@ interface MakeGaslessListingDialogProps {
 }
 
 export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing }: MakeGaslessListingDialogProps) {
-  const { nativeCurrency, getByCollection } = useCurrencyBroker();
+  const { nativeCurrency, getByCollection } = useMultichainCurrencyBroker(nft.chain);
 
   // Input states
   const [salePrice, setSalePrice] = useState<number>();
@@ -141,16 +155,22 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
 
   const [showConfirmButton, setShowConfirmButton] = useState(false);
-  const [allowedCurrencies, setAllowedCurrencies] = useState<BrokerCurrency[]>([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(nativeCurrency);
+  const [allowedCurrencies, setAllowedCurrencies] = useState<MultichainBrokerCurrency[]>([]);
+  const [selectedCurrency, setSelectedCurrency] = useState<MultichainBrokerCurrency>(nativeCurrency);
   const [secureCancel, setSecureCancel] = useState(false);
   const [isRyoshiToken, setIsRyoshiToken] = useState(false);
+  const nftContract = useContract(nft.nftAddress, erc721Abi, { chainId: nft.chain });
+  const { chainId, isWrongNetwork } = useActiveChainId()
+  const { isLoading: isNetworkSwitching, canSwitch, switchNetworkAsync } = useSwitchNetwork();
+  const { callWithGasPrice } = useCallWithGasPrice()
+  const { config: appChainConfig } = useAppChainConfig(nft.chain);
+  const wagConfig = useConfig();
 
   const windowSize = useWindowSize();
 
   const user = useUser();
-  const [upsertGaslessListings, responseUpsert] = useUpsertGaslessListings();
-  const { tokenToUsdValue, tokenToCroValue, croToTokenValue } = useTokenExchangeRate(selectedCurrency.address);
+  const [upsertGaslessListings, responseUpsert] = useUpsertGaslessListings(nft.chain);
+  const { tokenToUsdValue, tokenToCroValue, croToTokenValue } = useTokenExchangeRate(selectedCurrency.address, nft.chain);
   const { usdValueForToken, croValueForToken } = useExchangeRate();
 
   const isBelowFloorPrice = (price: number) => {
@@ -195,10 +215,10 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && user.wallet.address) {
+    if (nft && user.wallet.address && appChainConfig) {
       asyncFunc();
     }
-  }, [nft, user.wallet.address]);
+  }, [nft, user.wallet.address, appChainConfig]);
 
   const getInitialProps = async () => {
     try {
@@ -206,7 +226,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       setPriceError(null);
       const nftAddress = nft.address ?? nft.nftAddress;
       const nftId = nft.id ?? nft.nftId;
-      const marketContractAddress = config.contracts.market;
+      const marketContractAddress = appChainConfig.contracts.market;
       setSalePrice(listing && listing.price ? Math.round(listing.price) : undefined)
       setIsRyoshiToken(isRyoshiResourceToken(nftAddress, nftId));
 
@@ -220,18 +240,41 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       const royalties = await collectionRoyaltyPercent(nftAddress, nftId);
       setRoyalty(royalties);
 
-      const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
-      const transferEnabled = await contract.isApprovedForAll(user.address, marketContractAddress);
+      console.log('CHECK1', nft, wagConfig);
+      // const transferEnabled = await readContract(wagConfig as any, {
+      //   abi: erc721Abi,
+      //   address: nft.nftAddress,
+      //   functionName: 'isApprovedForAll',
+      //   args: [user.address! as Address, marketContractAddress],
+      //   chainId: nft.chain
+      // })
+      // const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
+      const transferEnabled = await nftContract?.read.isApprovedForAll([user.address! as Address, marketContractAddress]);
 
+      console.log('CHECK2', transferEnabled);
       if (transferEnabled) {
         setIsTransferApproved(true);
       } else {
         setIsTransferApproved(false);
       }
 
-      const allowed = getByCollection(nftAddress);
-      setAllowedCurrencies(allowed);
-      setSelectedCurrency(allowed[0]);
+      // if (nft.chain === 282) {
+      //   const allowed = [
+      //     {
+      //       name: 'zkCRO',
+      //       symbol: 'zkCRO',
+      //       address: ethers.constants.AddressZero,
+      //       image: <ChainLogo chainId={282} />,
+      //       decimals: 18
+      //     }
+      //   ]
+      //   setAllowedCurrencies(allowed);
+      //   setSelectedCurrency(allowed[0]);
+      // } else {
+        const allowed = getByCollection(nftAddress);
+        setAllowedCurrencies(allowed);
+        setSelectedCurrency(allowed[0]);
+      // }
 
       setIsLoading(false);
     } catch (error: any) {
@@ -243,13 +286,20 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const handleApproval = async () => {
     try {
       const nftAddress = nft.address ?? nft.nftAddress;
-      const marketContractAddress = config.contracts.market;
-      const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
+      const marketContractAddress = appChainConfig.contracts.market;
+      // const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
       setExecutingApproval(true);
 
-      const tx = await contract.setApprovalForAll(marketContractAddress, true);
-      let receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      // const tx = await contract.setApprovalForAll(marketContractAddress, true);
+      // const tx = await nftContract?.write.setApprovalForAll([marketContractAddress, true], {
+      //   account: user.wallet.address as `0x${string}`,
+      // });
+
+      // let receipt = await tx.wait();
+
+      // console.log('APPROVE', nftAddress, 'setApprovalForAll', [marketContractAddress, true])
+      const tx = await callWithGasPrice(nftContract, 'setApprovalForAll', [marketContractAddress, true]);
+      toast.success(createSuccessfulTransactionToastContent(tx.hash));
       setIsTransferApproved(true);
 
     } catch (error) {
@@ -278,6 +328,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         is1155: nft.multiToken,
         currencySymbol: selectedCurrency!.symbol,
         listingId: listing?.listingId,
+        chainId: nft.chain,
       }, secureCancel);
       toast.success("Listing Successful");
 
@@ -371,12 +422,12 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       background: getTheme(userTheme).colors.bgColor2,
       color: getTheme(userTheme).colors.textColor3,
       padding: 1,
-      minWidth: '132px',
+      minWidth: '142px',
       borderColor: 'none'
     }),
   };
 
-  const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
+  const handleCurrencyChange = useCallback((currency: SingleValue<MultichainBrokerCurrency>) => {
     if (!currency) return;
 
     setSelectedCurrency(currency);
@@ -493,10 +544,10 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                               menuPortalTarget={document.body} menuPosition={'fixed'}
                               styles={customStyles}
                               options={allowedCurrencies}
-                              formatOptionLabel={({ symbol, image }) => (
+                              formatOptionLabel={(currency) => (
                                 <HStack>
-                                  {image}
-                                  <span>{symbol}</span>
+                                  <CurrencyLogo currency={currency} />
+                                  <span>{currency.symbol}</span>
                                 </HStack>
                               )}
                               value={selectedCurrency}
@@ -629,52 +680,73 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
             </ModalBody>
             <ModalFooter className="border-0">
               <Box w='full'>
-                {isTransferApproved ? (
+                {chainId === nft.chain ? (
                   <>
-                    {isRyoshiToken && (
-                      <div className="alert alert-warning my-auto mb-2 fw-bold text-center">
-                        Note that listing validity is subject to your Ryoshi's current upkeep status. <Link href='https://www.notion.so/ebisusbay/Ryoshi-9284eb03b01e4162bcd3169d9baf4b41?pvs=4#5579dceb311a4806ba59e8481eddf920' target='_blank' color='#0078CB'>Learn More</Link>
-                      </div>
-                    )}
-                    {showConfirmButton ? (
+                    {isTransferApproved ? (
                       <>
-                        <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
-                          The desired price is {(100 - ((tokenToCroValue(salePrice ?? 0)) * 100 / floorPrice)).toFixed(1)}% below the current floor price of {floorPrice} CRO. Are you sure?
-                        </div>
-                        {executingCreateListing && (
-                          <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
+                        {isRyoshiToken && (
+                          <div className="alert alert-warning my-auto mb-2 fw-bold text-center">
+                            Note that listing validity is subject to your Ryoshi's current upkeep status. <Link href='https://www.notion.so/ebisusbay/Ryoshi-9284eb03b01e4162bcd3169d9baf4b41?pvs=4#5579dceb311a4806ba59e8481eddf920' target='_blank' color='#0078CB'>Learn More</Link>
+                          </div>
                         )}
-                        <div className="d-flex">
-                          <PrimaryButton
-                            onClick={() => setShowConfirmButton(false)}
-                            className="me-2 flex-fill"
-                          >
-                            Go Back
-                          </PrimaryButton>
-                          <SecondaryButton
-                            onClick={handleCreateListing}
-                            className="flex-fill"
-                          >
-                            I understand, continue
-                          </SecondaryButton>
-                        </div>
+                        {showConfirmButton ? (
+                          <>
+                            <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
+                              The desired price is {(100 - ((tokenToCroValue(salePrice ?? 0)) * 100 / floorPrice)).toFixed(1)}% below the current floor price of {floorPrice} CRO. Are you sure?
+                            </div>
+                            {executingCreateListing && (
+                              <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>
+                            )}
+                            <div className="d-flex">
+                              <PrimaryButton
+                                onClick={() => setShowConfirmButton(false)}
+                                className="me-2 flex-fill"
+                              >
+                                Go Back
+                              </PrimaryButton>
+                              <SecondaryButton
+                                onClick={handleCreateListing}
+                                className="flex-fill"
+                              >
+                                I understand, continue
+                              </SecondaryButton>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            {executingCreateListing && (
+                              <div className="mb-2 text-center fst-italic">
+                                <small>Please check your wallet for confirmation</small>
+                              </div>
+                            )}
+                            <div className="d-flex">
+                              <PrimaryButton
+                                onClick={processCreateListingRequest}
+                                isLoading={executingCreateListing}
+                                isDisabled={executingCreateListing}
+                                loadingText='Confirming'
+                                className="flex-fill"
+                              >
+                                {(listing || nft.listed) && !nft.multiToken ? 'Update Listing' : 'Confirm Listing'}
+                              </PrimaryButton>
+                            </div>
+                          </>
+                        )}
                       </>
                     ) : (
                       <>
-                        {executingCreateListing && (
-                          <div className="mb-2 text-center fst-italic">
-                            <small>Please check your wallet for confirmation</small>
-                          </div>
-                        )}
-                        <div className="d-flex">
+                        <div className="mb-2 text-center fst-italic">
+                          <small>Ebisu's Bay needs approval to transfer this NFT on your behalf once sold</small>
+                        </div>
+                        <div className="d-flex justify-content-end">
                           <PrimaryButton
-                            onClick={processCreateListingRequest}
-                            isLoading={executingCreateListing}
-                            isDisabled={executingCreateListing}
-                            loadingText='Confirming'
+                            onClick={handleApproval}
+                            isLoading={executingApproval}
+                            isDisabled={executingApproval}
+                            loadingText='Approving'
                             className="flex-fill"
                           >
-                            {(listing || nft.listed) && !nft.multiToken ? 'Update Listing' : 'Confirm Listing'}
+                            Approve
                           </PrimaryButton>
                         </div>
                       </>
@@ -683,17 +755,17 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                 ) : (
                   <>
                     <div className="mb-2 text-center fst-italic">
-                      <small>Ebisu's Bay needs approval to transfer this NFT on your behalf once sold</small>
+                      <small>Please switch chains to continue</small>
                     </div>
                     <div className="d-flex justify-content-end">
                       <PrimaryButton
-                        onClick={handleApproval}
+                        onClick={() => switchNetworkAsync(nft.chain)}
                         isLoading={executingApproval}
                         isDisabled={executingApproval}
                         loadingText='Approving'
                         className="flex-fill"
                       >
-                        Approve
+                        Switch Network
                       </PrimaryButton>
                     </div>
                   </>

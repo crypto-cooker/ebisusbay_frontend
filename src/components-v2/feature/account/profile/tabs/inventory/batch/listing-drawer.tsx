@@ -73,6 +73,7 @@ import {useExchangeRate} from "@market/hooks/useGlobalPrices";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useContractService, useUser} from "@src/components-v2/useUser";
+import {ChainId} from "@pancakeswap/chains";
 
 const config = appConfig();
 const MAX_NFTS_IN_GAS_CART = 100;
@@ -264,6 +265,7 @@ export const ListingDrawer = () => {
       expirationDate: new Date().getTime() + item.expiration!,
       is1155: item.nft.multiToken,
       currencySymbol: item.currency,
+      chainId: ChainId.CRONOS
     })))
     toast.success("Listings Successful");
   }

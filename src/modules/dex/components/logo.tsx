@@ -12,10 +12,6 @@ import {Address, getAddress} from "viem";
 import {bscTokens, cronosTokens, ethereumTokens} from "@pancakeswap/tokens";
 import {NATIVE} from "@pancakeswap/swap-sdk-evm";
 
-const getTokenLogoURL = (address: string) => {
-  return `https://dd.dexscreener.com/ds-data/tokens/cronos/${address}.png?size=sm`;
-}
-
 export type CurrencyInfo = {
   address?: Address;
   symbol?: string;
@@ -65,7 +61,7 @@ export function CurrencyLogo({
     return (
       <TokenLogo
         size={size}
-        srcs={[`https://assets.pancakeswap.finance/web/native/${currency.chainId}.png`]}
+        srcs={[ImageService.translate(`files/dex/images/native/${currency.chainId}.webp`).convert()]}
         width={size}
         style={style}
         {...props}

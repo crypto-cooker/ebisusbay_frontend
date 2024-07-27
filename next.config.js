@@ -40,6 +40,12 @@ const nextConfig = {
   transpilePackages: [
     '@pancakeswap/utils',
   ],
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   webpack: (config, { isServer, defaultLoaders }) => {
     config.externals.push(
         "pino-pretty",

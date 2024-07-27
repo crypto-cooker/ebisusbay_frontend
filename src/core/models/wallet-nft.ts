@@ -32,6 +32,7 @@ class WalletNft {
   listable?: boolean = false;
   listed?: boolean = false;
   listingId?: string;
+  chain: string;
 
   constructor(props: WalletNft) {
     this.attributes = props.attributes;
@@ -52,6 +53,7 @@ class WalletNft {
     this.owner = props.owner;
     this.rank = props.rank;
     this.tokenUri = props.tokenUri;
+    this.chain = props.chain;
   }
 
   static fromMapi(props: any) {
@@ -73,7 +75,8 @@ class WalletNft {
       originalImage: props.originalImage,
       owner: props.owner,
       rank: props.rank,
-      tokenUri: props.token_uri
+      tokenUri: props.token_uri,
+      chain: props.chain
     });
 
     if (!!props.nfts) nft.nfts = props.nfts;

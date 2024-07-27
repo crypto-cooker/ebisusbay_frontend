@@ -3,6 +3,9 @@ import {appConfig} from "@src/config";
 import {BigNumber, ethers} from "ethers";
 import {useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
+import {useSignTypedData} from "wagmi";
+import {useAppChainConfig} from "@src/config/hooks";
+import {ChainId} from "../../../../../eb-pancake-frontend/packages/chains";
 
 export interface ListingSignerProps {
   price: string;
@@ -65,25 +68,26 @@ export type Order = {
 export type OfferItem = {
   itemType: ItemType,
   token: string,
-  identifierOrCriteria: BigNumber | number,
-  startAmount: BigNumber | number,
-  endAmount: BigNumber | number
+  identifierOrCriteria: bigint | number,
+  startAmount: bigint | number,
+  endAmount: bigint | number
 }
 
-const useSignature = () => {
+
+const useSignature = (chainId?: number) => {
   const user = useUser();
-  const config = appConfig();
+  const {config} = useAppChainConfig(chainId);
+  const { signTypedDataAsync } = useSignTypedData();
 
   const [isLoading, setIsLoading] = useState(false);
 
   const domain = {
     name: 'EB TradeShip',
     version: '1.0',
-    chainId: config.chain.id,
+    chainId: chainId ?? ChainId.CRONOS,
     verifyingContract: config.contracts.gaslessListing
   };
 
-  // The named list of all type definitions
   const typeOrder = {
     OfferItem: [
       { name: 'itemType', type: 'uint8' },
@@ -103,13 +107,33 @@ const useSignature = () => {
     ]
   }
 
+  function stringed(v: any) {
+    return JSON.stringify(v, (key, value) =>
+      typeof value === 'bigint'
+        ? value.toString()
+        : value // return everything else unchanged
+    );
+  }
+
   const signMessage = useCallback(async (value: Order) => {
     if (!user.wallet.isConnected) throw new Error();
     try {
       const signer = user.provider.signer;
 
+      console.log('sign1', stringed({
+        domain,
+        types: typeOrder,
+        primaryType: 'Order',
+        message: value
+      }))
       const objectHash = ethers.utils._TypedDataEncoder.hash(domain, typeOrder, value);
-      const objectSignature = await signer!._signTypedData(domain, typeOrder, value);
+      const objectSignature = await signTypedDataAsync({
+        domain,
+        types: typeOrder,
+        primaryType: 'Order',
+        message: value
+      });
+      console.log('sign2', objectSignature)
 
       return { objectSignature, objectHash }
     } catch (err: any) {
@@ -121,11 +145,11 @@ const useSignature = () => {
 
   const createSigner = useCallback(async (signatureValues: ListingSignerProps) => {
     setIsLoading(true);
-    const considerationPrice= ethers.utils.parseEther(`${signatureValues.price}`);
+    const considerationPrice= ethers.utils.parseEther(`${signatureValues.price}`).toBigInt();
     const offerItem = {
       itemType: signatureValues.itemType,
       token: signatureValues.collectionAddress.toLowerCase(),
-      identifierOrCriteria: BigNumber.from(signatureValues.tokenId),
+      identifierOrCriteria: BigInt(signatureValues.tokenId),
       startAmount: signatureValues.amount ?? 1,
       endAmount: signatureValues.amount ?? 1
     };
@@ -133,7 +157,7 @@ const useSignature = () => {
     const considerationItem = {
       itemType: signatureValues.currency ? ItemType.ERC20 : ItemType.NATIVE,
       token: signatureValues.currency ?? ethers.constants.AddressZero,
-      identifierOrCriteria: 0,
+      identifierOrCriteria: BigInt(0),
       startAmount: considerationPrice,
       endAmount: considerationPrice
     };

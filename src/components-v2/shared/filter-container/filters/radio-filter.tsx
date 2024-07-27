@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ReactNode} from "react";
 import {
   AccordionButton,
   AccordionIcon,
@@ -14,7 +14,7 @@ export interface RadioItem {
   label: string;
   key: string;
   isSelected: boolean;
-  icon?: string;
+  icon?: string | ReactNode;
 }
 
 interface RadioFilterProps {

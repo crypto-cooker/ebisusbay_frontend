@@ -8,7 +8,7 @@ import ResponsiveRewardsCollectionsTable
   from "@src/components-v2/shared/responsive-table/responsive-rewards-collections-table";
 import {round} from "@market/helpers/utils";
 import {useFortunePrice} from "@market/hooks/useGlobalPrices";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {useUser} from "@src/components-v2/useUser";
 

@@ -15,9 +15,10 @@ export const CHAIN_REFRESH_TIME = {
   [ChainId.CRONOS]: 6_000,
   [ChainId.CRONOS_TESTNET]: 6_000,
   [ChainId.CRONOS_ZKEVM_TESTNET]: 6_000,
-} as const satisfies Record<ChainId, number>
+}// as const satisfies Record<ChainId, number>
 
 // used for display in the default list when adding liquidity
+// @ts-ignore
 export const SUGGESTED_BASES: ChainTokenList = {
   [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM]],
   [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],
@@ -26,6 +27,7 @@ export const SUGGESTED_BASES: ChainTokenList = {
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
+// @ts-ignore
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM]],
   [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],

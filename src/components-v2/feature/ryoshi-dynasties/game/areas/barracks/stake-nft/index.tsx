@@ -34,7 +34,7 @@ import nextApiService from "@src/core/services/api-service/next";
 import {ApiService} from "@src/core/services/api-service";
 import InfiniteScroll from "react-infinite-scroll-component";
 import StakingNftCard from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/staking-nft-card";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {ciEquals} from "@market/helpers/utils";
 import WalletNft from "@src/core/models/wallet-nft";
 import ImageService from "@src/core/services/image";

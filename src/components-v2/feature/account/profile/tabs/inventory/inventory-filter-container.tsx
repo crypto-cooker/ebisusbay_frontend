@@ -10,6 +10,9 @@ import {MobileFilters} from "@src/components-v2/feature/account/profile/tabs/inv
 import { appConfig } from '@src/config';
 import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container/filters/radio-filter";
 import {ethers} from "ethers";
+import {chains} from "@src/wagmi";
+import {useUserShowTestnet} from "@eb-pancakeswap-web/state/user/hooks/useUserShowTestnet";
+import {ChainLogo} from "@dex/components/logo";
 
 const config = appConfig();
 
@@ -25,6 +28,7 @@ interface InventoryFilterContainerProps {
 
 const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, children}: InventoryFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
+  const [showTestnet] = useUserShowTestnet()
 
   const currencies = Object.entries(config.tokens)
     .filter(([key, token]: [string, any]) => config.listings.currencies.available.includes(key))
@@ -40,6 +44,7 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
       if (item.key === 'range-min-price') delete params.minPrice;
       if (item.key === 'range-max-price') delete params.maxPrice;
       if (item.key.startsWith('currency')) delete params.currency;
+      if (item.key.startsWith('chain')) delete params.chain;
       if (item.key.startsWith('collection')) {
         if (params.collection && params.collection.length > 1) {
           const address = item.key.split('-')[1];
@@ -132,6 +137,21 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
 
   }, [queryParams, filteredItems]);
 
+  const handleChainFilter = useCallback((item: RadioItem) => {
+    const chainId = item.key.split('-')[1];
+
+    onFilter({...queryParams, chain: +chainId});
+
+    const i = filteredItems.findIndex((fi) => fi.key === item.key);
+    if (i === -1) {
+      setFilteredItems([
+        ...filteredItems.filter((fi) => !fi.key.startsWith('chain')),
+        {label: item.label, key: item.key}
+      ])
+    }
+
+  }, [queryParams, filteredItems]);
+
   const FilterAccordion = useMemo(() => (
     <Accordion defaultIndex={[0]} allowMultiple>
       <CollectionFilter
@@ -167,6 +187,28 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
         currentMin={queryParams.minPrice}
         currentMax={queryParams.maxPrice}
         onChange={handlePriceFilter}
+      />
+      <RadioFilter
+        title='Chain'
+        items={
+          [
+            ...chains
+              .filter((chain) => {
+                if ('testnet' in chain && chain.testnet) {
+                  return showTestnet
+                }
+                return true
+              })
+              .map((c) => (
+                {
+                  label: c.name,
+                  key: `chain-${c.id}`,
+                  icon: <ChainLogo chainId={c.id} />,
+                  isSelected: filteredItems.some((fi) => fi.key === `chain-${c.id}`)
+                }
+            )),
+          ]}
+        onSelect={handleChainFilter}
       />
       <RadioFilter
         title='Currency'

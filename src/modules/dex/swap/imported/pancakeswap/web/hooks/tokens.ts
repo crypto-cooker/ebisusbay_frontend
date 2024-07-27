@@ -23,8 +23,9 @@ import {
   useWarningTokenList
 } from "@eb-pancakeswap-web/state/lists/hooks";
 import useUserAddedTokens from "@eb-pancakeswap-web/state/user/hooks/useUserAddedTokens";
+import {UnsafeCurrency} from "@eb-pancakeswap-web/config/constants/types";
 
-const mapWithoutUrls = (tokenMap?: TokenAddressMap<ChainId>, chainId?: number) => {
+const mapWithoutUrls = (tokenMap?: TokenAddressMap<ChainId>, chainId?: ChainId) => {
   if (!tokenMap || !chainId) return {}
   return Object.keys(tokenMap[chainId] || {}).reduce<{ [address: string]: ERC20Token }>((newMap, address) => {
     const checksumAddress = safeGetAddress(address)
@@ -37,7 +38,7 @@ const mapWithoutUrls = (tokenMap?: TokenAddressMap<ChainId>, chainId?: number) =
   }, {})
 }
 
-const mapWithoutUrlsBySymbol = (tokenMap?: TokenAddressMap<ChainId>, chainId?: number) => {
+const mapWithoutUrlsBySymbol = (tokenMap?: TokenAddressMap<ChainId>, chainId?: ChainId) => {
   if (!tokenMap || !chainId) return {}
   return Object.keys(tokenMap[chainId] || {}).reduce<{ [symbol: string]: ERC20Token }>((newMap, symbol) => {
     newMap[symbol] = tokenMap[chainId][symbol].token

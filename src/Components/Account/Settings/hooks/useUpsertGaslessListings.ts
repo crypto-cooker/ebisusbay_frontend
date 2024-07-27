@@ -22,6 +22,7 @@ export interface PendingListing {
   is1155: boolean;
   currencySymbol?: string;
   listingId?: string;
+  chainId: number;
 }
 
 type ResponseProps = {
@@ -29,13 +30,13 @@ type ResponseProps = {
   error?: any;
 };
 
-const useUpsertGaslessListings = () => {
+const useUpsertGaslessListings = (chainId?: number) => {
   const [response, setResponse] = useState<ResponseProps>({
     loading: false,
     error: null,
   });
 
-  const [_, createListingSigner] = useCreateListingSigner();
+  const [_, createListingSigner] = useCreateListingSigner(chainId);
   const { requestSignature } = useEnforceSignature();
 
   const user = useUser();
@@ -94,7 +95,9 @@ const useUpsertGaslessListings = () => {
       let itemTypes: {[key: string]: number} = {};
       for (const pendingListing of pendingListings) {
         if (itemTypes[pendingListing.collectionAddress] === undefined) {
+          console.log('CHECK ITEM TYOPE1', pendingListing.collectionAddress)
           itemTypes[pendingListing.collectionAddress] = await getItemType(pendingListing.collectionAddress);
+          console.log('CHECK ITEM TYOPE2', itemTypes[pendingListing.collectionAddress])
         }
 
         const currencyAddress = pendingListing.currencySymbol ? config.tokens[pendingListing.currencySymbol.toLowerCase()]?.address : undefined;
@@ -108,17 +111,27 @@ const useUpsertGaslessListings = () => {
           expirationDate: Math.round(pendingListing.expirationDate / 1000),
           salt: generator.uuid(),
           amount: pendingListing.amount,
-          currency: currencyAddress,
+          currency: currencyAddress
         };
 
+        console.log('sign', listingSignerProps)
         const {objectSignature, objectHash} = await createListingSigner(listingSignerProps);
 
+        console.log('UPSERT', {
+          ...listingSignerProps,
+          sellerSignature: objectSignature,
+          seller: user.address!.toLowerCase(),
+          digest: objectHash,
+          currency: currencyAddress,
+          chainId: pendingListing.chainId
+        })
         const res = await upsertListing({
           ...listingSignerProps,
           sellerSignature: objectSignature,
           seller: user.address!.toLowerCase(),
           digest: objectHash,
           currency: currencyAddress,
+          chainId: pendingListing.chainId
         });
       }
 
@@ -130,6 +143,7 @@ const useUpsertGaslessListings = () => {
 
       return true;
     } catch (error) {
+      console.log(error);
       setResponse({
         ...response,
         loading: false,

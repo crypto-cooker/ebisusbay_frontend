@@ -19,7 +19,8 @@ export const walletsQuerySchema: Yup.SchemaOf<WalletsQueryParams> = Yup.object()
   minListingTime: Yup.number().optional(),
   maxListingTime: Yup.number().optional(),
   search: Yup.string().optional(),
-  currency: Yup.string().optional()
+  currency: Yup.string().optional(),
+  chain: Yup.number().optional()
 }).noUnknown();
 
 export interface WalletsQueryParams {
@@ -40,6 +41,7 @@ export interface WalletsQueryParams {
   maxListingTime?: number;
   search?: string;
   currency?: string;
+  chain?: number;
 }
 
 class WalletsQuery extends Query<WalletsQueryParams> {
@@ -54,6 +56,7 @@ class WalletsQuery extends Query<WalletsQueryParams> {
   }
 
   toQuery() {
+
     if (!this.params) throw 'Invalid params';
 
     const obj: any = {
@@ -76,6 +79,7 @@ class WalletsQuery extends Query<WalletsQueryParams> {
     if (!!this.params.minListingTime) obj.minListingTime = this.params.minListingTime;
     if (!!this.params.maxListingTime) obj.maxListingTime = this.params.maxListingTime;
     if (!!this.params.currency) obj.currency = this.params.currency;
+    if (!!this.params.chain) obj.chain = this.params.chain;
 
     return Object.fromEntries(Object.entries(obj).filter(([k, v]) => {
       return v !== undefined && !isEmptyObj(v)

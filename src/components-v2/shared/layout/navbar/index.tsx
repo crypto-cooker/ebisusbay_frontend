@@ -158,7 +158,7 @@ const Header = function () {
                     DEX
                   </MenuButton>
                   <MenuList>
-                    <MenuItem as={Link} href='https://swap.ebisusbay.com' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
+                    <MenuItem as={Link} href='/dex/swap' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
                     <MenuItem as={Link} href='/dex/farms' _hover={{color: 'inherit'}} justifyContent='end'>Farms</MenuItem>
                     <MenuItem as={Link} href='/liberator' _hover={{color: 'inherit'}} justifyContent='end'>Liberator</MenuItem>
                   </MenuList>
@@ -247,7 +247,7 @@ const Header = function () {
               </SimpleGrid>
               <Stack spacing={2} justify='stretch' maxW='375px' mx='auto'>
                 <SimpleGrid columns={2} spacing={2}>
-                  <Link href='https://swap.ebisusbay.com'>
+                  <Link href='/dex/swap'>
                     <Button
                       variant='outline'
                       onClick={onClose}

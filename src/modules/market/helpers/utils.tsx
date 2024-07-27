@@ -2,7 +2,7 @@ import moment from 'moment';
 import blacklist from '../../../core/configs/blacklist.json';
 import attributes from '../../../core/configs/attributes.json';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
-import {appConfig} from '../../../Config';
+import {appConfig} from '@src/config';
 import {commify, getAddress} from "ethers/lib/utils";
 import brands from '../../../core/data/brands.json';
 import ImageService from "@src/core/services/image";

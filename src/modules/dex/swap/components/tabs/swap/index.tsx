@@ -4,7 +4,7 @@ import {ArrowDownIcon, SettingsIcon} from "@chakra-ui/icons";
 import {Field, INITIAL_ALLOWED_SLIPPAGE} from "src/modules/dex/swap/constants";
 import React, {useCallback, useMemo, useState} from "react";
 import SwapCurrencyInputPanel from "@dex/swap/components/tabs/swap/swap-currency-input-panel";
-import {Currency, Percent, Router, Trade, TradeType} from "@pancakeswap/sdk";
+import {Currency, Percent, Trade, TradeType} from "@pancakeswap/sdk";
 import {useCurrency} from "@eb-pancakeswap-web/hooks/tokens";
 // import {useIsWrapping} from "@eb-pancakeswap-web/hooks/useIsWrapping";
 import replaceBrowserHistory from "@pancakeswap/utils/replaceBrowserHistory";
@@ -20,17 +20,12 @@ import {TradePrice} from "@dex/swap/components/tabs/swap/trade-price";
 import {SwapInfo} from "@dex/swap/components/tabs/swap/swap-info";
 import {CommitButton} from "@dex/swap/components/tabs/swap/commit-button";
 import {
-  basisPointsToPercent,
   computeSlippageAdjustedAmounts,
   computeTradePriceBreakdown,
   warningSeverity
 } from "@eb-pancakeswap-web/utils/exchange";
 import {ConfirmSwapModal} from "@dex/swap/components/tabs/swap/swap-modal/confirm-swap-modal";
 import {typeInput} from "@eb-pancakeswap-web/state/swap/actions";
-import {BIPS_BASE} from "@dex/swap/constants/exchange";
-import useSimulationAndSendTransaction from "@eb-pancakeswap-web/hooks/useSimulationAndSendTransaction";
-import {UserRejectedRequestError} from "viem";
-import {useSendTransaction} from "wagmi";
 import {useSwapCallback} from "@eb-pancakeswap-web/hooks/useSwapCallback";
 import {useSwapCallArguments} from "@eb-pancakeswap-web/hooks/useSwapCallArguments";
 import Settings from "@dex/components/swap/settings";
@@ -72,8 +67,8 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
   const {v2Trade: trade, ...derivedSwapInfo} = useDerivedSwapInfo(
     independentField,
     typedValue,
-    inputCurrency,
-    outputCurrency,
+    inputCurrency!,
+    outputCurrency!,
     account ?? ''
   );
 

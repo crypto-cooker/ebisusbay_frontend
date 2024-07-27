@@ -18,7 +18,7 @@ import React, {ChangeEvent, RefObject, useCallback, useEffect, useState} from "r
 import {useRouter} from "next/router";
 import {ChevronDownIcon, SearchIcon} from "@chakra-ui/icons";
 import useDebounce from "@src/core/hooks/useDebounce";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import ResultFaction from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map/control-point/factionRow";
 import Scrollbars from "react-custom-scrollbars-2";
 import {getMultipleCollections} from "@src/core/api/next/collectioninfo";
