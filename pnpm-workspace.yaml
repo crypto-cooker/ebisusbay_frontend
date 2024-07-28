@@ -1,0 +1,3 @@
+packages:
+  - 'apps/*'
+  - 'submodules/eb-pancake-frontend/packages/*'

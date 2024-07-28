@@ -5,7 +5,7 @@ import {useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
 import {useSignTypedData} from "wagmi";
 import {useAppChainConfig} from "@src/config/hooks";
-import {ChainId} from "../../../../../eb-pancake-frontend/packages/chains";
+import {ChainId} from "@pancakeswap/chains";
 
 export interface ListingSignerProps {
   price: string;

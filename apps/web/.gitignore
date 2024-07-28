@@ -24,10 +24,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# next.js
-.next/
-out/
-.idea/
+# IDE
+/.idea
+
+# next
+.next
 
 .env
 
@@ -40,13 +41,11 @@ next-env.d.ts
 .vscode/settings.json
 src/components-v2/feature/ryoshi-dynasties/game/areas/lands/indv-meta/
 
-# Sentry Config File
-.sentryclirc
 
 # Sentry Config File
 .sentryclirc
 
-# turbo
-.turbo
+# Sentry Config File
+.sentryclirc
 
 certificates
