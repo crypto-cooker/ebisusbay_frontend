@@ -15,10 +15,12 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 RUN --mount=type=cache,target=/var/cache/apt apt-get update
 
 RUN npm install -g npm@latest
+RUN npm install -g pnpm@latest
 
 # Print Node.js & npm versions
 RUN node --version
 RUN npm --version
+RUN pnpm --version
 
 # Install the dependencies
 WORKDIR /usr/src/app
@@ -41,10 +43,12 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 RUN --mount=type=cache,target=/var/cache/apt apt-get update
 
 RUN npm install -g npm@latest
+RUN npm install -g pnpm@latest
 
 # Print Node.js & npm versions
 RUN node --version
 RUN npm --version
+RUN pnpm --version
 
 # Install the dependencies
 WORKDIR /usr/src/app
