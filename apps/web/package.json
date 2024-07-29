@@ -60,7 +60,6 @@
     "@pancakeswap/token-lists": "workspace:*",
     "@pancakeswap/tokens": "workspace:*",
     "@pancakeswap/utils": "workspace:*",
-    "@pancakeswap/wagmi": "workspace:*",
     "@pinata/ipfs-gateway-tools": "^1.1.6",
     "@reduxjs/toolkit": "^1.9.1",
     "@sentry/nextjs": "^7.106.1",

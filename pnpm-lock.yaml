@@ -95,9 +95,6 @@ importers:
       '@pancakeswap/utils':
         specifier: workspace:*
         version: link:../../submodules/eb-pancake-frontend/packages/utils
-      '@pancakeswap/wagmi':
-        specifier: workspace:*
-        version: link:../../submodules/eb-pancake-frontend/packages/wagmi
       '@pinata/ipfs-gateway-tools':
         specifier: ^1.1.6
         version: 1.3.0(node-fetch@2.7.0(encoding@0.1.13))
