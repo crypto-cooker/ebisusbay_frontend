@@ -20,7 +20,7 @@ const TokenSale: NextPage = () => {
     <>
       <PageHead
         title="Fortune Token Sale"
-        description="Participate in the $Fortune Token Sale and benefit from instant access to troops, exclusive #NFTs, beta testing and free registration for season 1 of Ryoshi Dynasties!"
+        description="Be the first to access $FRTN on Cronos zkEVM"
         url="/ryoshi-dynasties/token-sale"
         image={hostedImage('/img/ryoshi/fortune-token-sale-banner.webp')}
       />

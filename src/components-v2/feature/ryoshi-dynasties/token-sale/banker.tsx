@@ -10,7 +10,8 @@ import {faArrowRightFromBracket, faCircleInfo, faDollarSign} from "@fortawesome/
 import {useWindowSize} from "@market/hooks/useWindowSize";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {Contract, ethers} from "ethers";
-import FortunePresale from "@src/global/contracts/FortunePresale.json";
+// import FortunePresale from "@src/global/contracts/FortunePresale.json";
+import LiquidityBoost from "@src/global/contracts/LiquidityBoost.json";
 import {appConfig} from "@src/Config";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
@@ -58,24 +59,25 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
   const { data: tokenSaleContractValues } = useQuery<TokenSaleContextProps>({
     queryKey: ['TokenSale', user.address],
     queryFn: async () => {
-      const fortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, readProvider);
+      console.log('loading data');
+      const fortuneContract = new Contract(config.contracts.purchaseFortune, LiquidityBoost, readProvider);
       const paused = await fortuneContract.paused();
-      const exchangeRate = await fortuneContract.TOKEN_PRICE_USDC();
-      const maxAllocation = await fortuneContract.MAX_PURCHASE();
-      // const userMaxPurchaseAmount =
-      // const userFortunePurchased = !!user.address ? await fortuneContract.purchases(user.address) : 0;
-      // const totalFortunePurchased = await fortuneContract.totalPurchased();
+      const exchangeRate = 6;//await fortuneContract.TOKEN_PRICE_USDC();
+      const maxAllocation = await fortuneContract.MAX_CONTRIBUTIONS();
+      const userMinPurchaseAmount = await fortuneContract.MIN_CONTRIBUTION();
+      const userCroContributed = !!user.address ? await fortuneContract.contributions(user.address) : 0;
+      const totalCroContributed = await fortuneContract.totalContributions();
 
-      const apiService = new ApiService();
-      const totalFortunePurchased = await apiService.ryoshiDynasties.globalTotalPurchased();
-      const userFortunePurchased = !!user.address ? await apiService.ryoshiDynasties.userTotalPurchased(user.address) : 0;
-
+      // const apiService = new ApiService();
+      // const totalFortunePurchased = await apiService.ryoshiDynasties.globalTotalPurchased();
+      // const userFortunePurchased = !!user.address ? await apiService.ryoshiDynasties.userTotalPurchased(user.address) : 0;
+      console.log('userCroContributed', ethers.utils.formatEther(userCroContributed));
       return {
         paused,
-        userFortunePurchased: Number(userFortunePurchased),
-        totalFortunePurchased: Number(totalFortunePurchased),
+        userCroContributed: userCroContributed,
+        totalCroContributed: totalCroContributed,
         exchangeRate: Number(exchangeRate),
-        maxAllocation: Number(maxAllocation)
+        maxAllocation: maxAllocation//Number(maxAllocation)
       } as TokenSaleContextProps;
     },
     enabled: isVisible,
@@ -83,10 +85,10 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
     refetchInterval: 10000,
     initialData: () => ({
       paused: false,
-      userFortunePurchased: 0,
-      totalFortunePurchased: 0,
-      exchangeRate: 30000,
-      maxAllocation: 10000000
+      userCroContributed: 0,
+      totalCroContributed: 0,
+      exchangeRate: 6,
+      maxAllocation: 4000000
     })
   });
 
@@ -119,14 +121,14 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
             {isVisible && (
               <TypewriterText
                 text={[
-                  'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, our world has gone through quite an evolution.<br /><br />',
+                  'Welcome, traveler. It has been a long time since we have met.<br /><br />',
                   Date.now() > config.tokenSale.publicEnd ?
-                    'The $Fortune token presale is now closed! Thank you to everyone who participated and welcome to Ryoshi Dynasties!' :
+                    'The $FRTN token sale is now closed! Thank you to everyone who participated and let Fortune Favor the Bay!' :
                   Date.now() > config.tokenSale.publicStart ?
-                    `The $Fortune token presale is now open! Hold any Ebisu brand NFT and press the ${!!windowSize.height && windowSize.height < 600 ? '"$"' : '"Buy $Fortune"'} button to participate. Presale ends May 8th at 9pm UTC` :
+                    `The $FRTN token sale is now open! Press the ${!!windowSize.height && windowSize.height < 600 ? '"$"' : '"Buy $FRTN"'} button to participate. Sale ends Aug 7th at 11pm UTC` :
                   Date.now() > config.tokenSale.vipStart ?
-                    'The $Fortune token presale is now open to VIPs! Press the "Buy $Fortune" button to get started.' :
-                    'The $Fortune token presale will be held here on May 1st at 11pm UTC. VIPs will have exclusive access for one hour, followed by the member sale.'
+                    '' :
+                    ''
                 ]}
                 onComplete={() => setBankerImage(bankerImages.idle)}
               />

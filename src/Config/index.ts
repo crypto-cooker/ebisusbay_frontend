@@ -837,6 +837,7 @@ const configData: AppConfigMap = {
       id: '338',
       symbol: 'tCRO',
     },
+    
     urls: {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
@@ -881,7 +882,7 @@ const configData: AppConfigMap = {
       gaslessListing: '0xBbe0D0715AbCadb8A0Db41C0Bb7f272570907C45',
       gdc: '0xd464f36885163e124e3a15e31c0e581ba3f648ab',
       usdc: '0x1E1d0765439d0d53ee40CC4fB454C2343c84342b',
-      purchaseFortune: '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0',
+      purchaseFortune: '0x24526d3177dd0CEB213fEB532EA73B8aD8CC4a54',
       allianceCenter: '0xD75beC9C8320D81D5B7cD0866B7F7DbC886ffeE9',
       battleField: '0x4EeDb8c80bEFB5d672F869a1bdc29Cc2f665Bb3b',
       resources: '0xDa72eE0B52A5a6d5C989f0e817c9e2AF72e572B5',
@@ -966,16 +967,11 @@ const configData: AppConfigMap = {
       }
     },
     tokenSale: {
-      vipStart: 1682963727000,
-      publicStart: 1682963727000,
-      publicEnd: 1683586800000,
+      vipStart: 1722309311,
+      publicStart: 1722309311,
+      publicEnd: 1723168800000,
       memberCollections: [
-        '0x3F1590A5984C89e6d5831bFB76788F3517Cdf034', // FM
-        '0xe51377a260043381b8B525D33B9fFBC601A1469b', // Ryoshi Halloween
-        '0xCF7aedEbC5223c4C620625A560300582B77D8719', // Ryoshi VIP
-        '0xa937e814A2c5e99E9e86c4F34162c4F012F75a52', // Legacy VIP
-        '0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9', // SeaShrine VIP
-        '0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad', // Ryoshi Christmas
+
       ]
     },
     listings: {
@@ -1010,6 +1006,13 @@ const configData: AppConfigMap = {
       cms: 'http://localhost:4000/api/',
       // cmsSocket: 'wss://cms.ebisusbay.com/socket/',
       cmsSocket: 'ws://localhost:4000/socket/',
+    },
+    tokenSale: {
+      vipStart: 17223093110000,
+      publicStart: 17223093110000,
+      publicEnd: 17231688000000,
+      memberCollections: [
+      ]
     }
   }
 };

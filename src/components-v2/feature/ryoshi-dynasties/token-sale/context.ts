@@ -3,8 +3,8 @@ import {createContext} from "react";
 
 export interface TokenSaleContextProps {
   paused: boolean;
-  userFortunePurchased?: number;
-  totalFortunePurchased: number;
+  userCroContributed?: number;
+  totalCroContributed: number;
   exchangeRate: number;
   maxAllocation: number;
 };
