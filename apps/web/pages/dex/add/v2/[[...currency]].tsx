@@ -55,8 +55,9 @@ export default function Page() {
             <HStack>
               <NextLink href='/dex/liquidity'>
                 <IconButton
+                  aria-label='Back'
                   icon={<ArrowBackIcon />}
-                  variant='ghost'
+                  variant='unstyled'
                 />
               </NextLink>
               <Box>Add Liquidity</Box>

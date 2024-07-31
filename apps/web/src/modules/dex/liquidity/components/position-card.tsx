@@ -4,7 +4,18 @@ import {unwrappedToken} from "@pancakeswap/tokens";
 import useActiveWeb3React from "@eb-pancakeswap-web/hooks/useActiveWeb3React";
 import useTotalSupply from "@eb-pancakeswap-web/hooks/useTotalSupply";
 import {useTokenBalance} from "@eb-pancakeswap-web/state/wallet/hooks";
-import {Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, HStack, Text} from '@chakra-ui/react';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Flex,
+  HStack,
+  Spinner,
+  Text
+} from '@chakra-ui/react';
 import {CurrencyLogo, DoubleCurrencyLogo} from "@dex/components/logo";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import NextLink from "next/link";
@@ -50,7 +61,6 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
       ]
       : [undefined, undefined];
 
-console.log('STALED', token0Deposited, token1Deposited, totalPoolTokens, userPoolBalance);
   return (
     <Accordion allowToggle>
       <AccordionItem>
@@ -60,12 +70,12 @@ console.log('STALED', token0Deposited, token1Deposited, totalPoolTokens, userPoo
               <HStack gap="8px">
                 <DoubleCurrencyLogo currency0={currency0} currency1={currency1} size={20} />
                 <Text fontWeight={500} fontSize={20}>
-                  {!currency0 || !currency1 ? <Dots>Loading</Dots> : `${currency0.symbol}/${currency1.symbol}`}
+                  {!currency0 || !currency1 ? <Spinner size='sm' /> : `${currency0.symbol}/${currency1.symbol}`}
                 </Text>
               </HStack>
             </Box>
             <HStack>
-              Manage
+              {/*<>Manage</>*/}
               <AccordionIcon />
             </HStack>
           </AccordionButton>
@@ -89,36 +99,40 @@ console.log('STALED', token0Deposited, token1Deposited, totalPoolTokens, userPoo
               </Text>
             </Flex>
           )}
-          <Flex justify='space-between'>
-            <Text fontSize={16} fontWeight={500}>
-              Pooled {currency0.symbol}:
-            </Text>
-            {token0Deposited ? (
-              <Flex>
-                <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
-                  {token0Deposited?.toSignificant(6)}
-                </Text>
-                <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={currency0} />
-              </Flex>
-            ) : (
-              '-'
-            )}
-          </Flex>
-          <Flex justify='space-between'>
-            <Text fontSize={16} fontWeight={500}>
-              Pooled {currency1.symbol}:
-            </Text>
-            {token1Deposited ? (
-              <Flex>
-                <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
-                  {token1Deposited?.toSignificant(6)}
-                </Text>
-                <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={currency1} />
-              </Flex>
-            ) : (
-              '-'
-            )}
-          </Flex>
+          {!!currency0 && (
+            <Flex justify='space-between'>
+              <Text fontSize={16} fontWeight={500}>
+                Pooled {currency0.symbol}:
+              </Text>
+              {token0Deposited ? (
+                <HStack ms={2}>
+                  <Text fontSize={16} fontWeight={500}>
+                    {token0Deposited?.toSignificant(6)}
+                  </Text>
+                  <CurrencyLogo size="20px" currency={currency0} />
+                </HStack>
+              ) : (
+                '-'
+              )}
+            </Flex>
+          )}
+          {!!currency1 && (
+            <Flex justify='space-between'>
+              <Text fontSize={16} fontWeight={500}>
+                Pooled {currency1.symbol}:
+              </Text>
+              {token1Deposited ? (
+                <HStack ms={2}>
+                  <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
+                    {token1Deposited?.toSignificant(6)}
+                  </Text>
+                  <CurrencyLogo size="20px" currency={currency1} />
+                </HStack>
+              ) : (
+                '-'
+              )}
+            </Flex>
+          )}
           <Flex justify='space-between'>
             <Text fontSize={16} fontWeight={500}>
               Your pool share:
@@ -129,7 +143,7 @@ console.log('STALED', token0Deposited, token1Deposited, totalPoolTokens, userPoo
                 : '-'}
             </Text>
           </Flex>
-          <HStack maxW='400px' mx='auto'>
+          <HStack maxW='400px' mx='auto' my={4}>
             {userDefaultPoolBalance && userDefaultPoolBalance.quotient > BIG_INT_ZERO && (
               <>
                 <Box w='full'>
