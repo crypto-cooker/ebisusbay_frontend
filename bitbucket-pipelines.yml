@@ -59,7 +59,7 @@ pipelines:
                   # # Initialize, fetch and checkout any nested submodules
                   - *fetch_git_submodules
                   # RPC config
-                  - cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_testnet.json ./src/modules/market/assets/networks/rpc_config.json
+                  - cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_testnet.json ./apps/web/src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
