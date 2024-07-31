@@ -26,7 +26,7 @@ RUN sed -i='' -e "s|CONFFILE=/etc/amplify-agent/agent.conf|CONFFILE=/etc/amplify
 # The script honors AMPLIFY_API_KEY and AMPLIFY_IMAGENAME environment
 # variables, and updates /etc/amplify-agent/agent.conf accordingly.
 
-COPY ./entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
