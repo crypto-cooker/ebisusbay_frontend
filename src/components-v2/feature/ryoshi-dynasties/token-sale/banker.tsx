@@ -59,8 +59,8 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
   const { data: tokenSaleContractValues } = useQuery<TokenSaleContextProps>({
     queryKey: ['TokenSale', user.address],
     queryFn: async () => {
-      console.log('loading data');
-      const fortuneContract = new Contract(config.contracts.purchaseFortune, LiquidityBoost, readProvider);
+      // console.log('loading data');
+      const fortuneContract = new Contract(config.contracts.zkLB, LiquidityBoost, readProvider);
       const paused = await fortuneContract.paused();
       const exchangeRate = 6;//await fortuneContract.TOKEN_PRICE_USDC();
       const maxAllocation = await fortuneContract.MAX_CONTRIBUTIONS();
@@ -71,7 +71,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
       // const apiService = new ApiService();
       // const totalFortunePurchased = await apiService.ryoshiDynasties.globalTotalPurchased();
       // const userFortunePurchased = !!user.address ? await apiService.ryoshiDynasties.userTotalPurchased(user.address) : 0;
-      console.log('userCroContributed', ethers.utils.formatEther(userCroContributed));
+      // console.log('userCroContributed', ethers.utils.formatEther(userCroContributed));
       return {
         paused,
         userCroContributed: userCroContributed,
@@ -125,7 +125,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
                   Date.now() > config.tokenSale.publicEnd ?
                     'The $FRTN token sale is now closed! Thank you to everyone who participated and let Fortune Favor the Bay!' :
                   Date.now() > config.tokenSale.publicStart ?
-                    `The $FRTN token sale is now open! Press the ${!!windowSize.height && windowSize.height < 600 ? '"$"' : '"Buy $FRTN"'} button to participate. Sale ends Aug 8th at 0 UTC` :
+                    `The $FRTN token sale is now open! Press the ${!!windowSize.height && windowSize.height < 600 ? '"$"' : '"Buy $FRTN"'} button to participate. Sale ends Aug 16th` :
                   Date.now() > config.tokenSale.vipStart ?
                     '' :
                     ''
@@ -147,7 +147,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
                 {abbreviateButtonText ? (
                   <Icon as={FontAwesomeIcon} icon={faDollarSign} />
                 ) : (
-                  <>Buy $Fortune</>
+                  <>Buy $FRTN</>
                 )}
               </RdButton>
             )}

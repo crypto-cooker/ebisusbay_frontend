@@ -78,7 +78,8 @@ const configData: AppConfigMap = {
       townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
       vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F',
       ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
-      farms: '0x62eAEe24A848bEB06B8112D5A37587b3CF21F44D'
+      farms: '0x62eAEe24A848bEB06B8112D5A37587b3CF21F44D',
+      zkLB: '0x87dabCc9F16A13E1Cc130f0184d7A86F0E5fd35d'
     },
     tokens: {
       mad: {
@@ -272,7 +273,7 @@ const configData: AppConfigMap = {
     tokenSale: {
       vipStart: 1682971200000,
       publicStart: 1682974800000,
-      publicEnd: 1683586800000,
+      publicEnd: 1723852800000,
       memberCollections: [
         '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5', // FM
         '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29', // Valentine
@@ -1178,7 +1179,8 @@ export interface AppConfig {
     townHall: string,
     vaultNft: string,
     ryoshiWithKnife: string,
-    farms: string
+    farms: string,
+    zkLB: string
   },
   tokens: {[key: string] : {
     name: string,

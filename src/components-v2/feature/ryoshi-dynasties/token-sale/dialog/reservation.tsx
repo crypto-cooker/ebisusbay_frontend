@@ -256,7 +256,8 @@ const FortunePurchaseForm = () => {
       // }
 
       setExecutingLabel('Committing');
-      const purchaseFortuneContract = new Contract(config.contracts.purchaseFortune, LiquidityBoost, user.provider.getSigner());
+      console.log(config.contracts.zkLB);
+      const purchaseFortuneContract = new Contract(config.contracts.zkLB, LiquidityBoost, user.provider.getSigner());
       const tx = await purchaseFortuneContract.contribute({ value: desiredCroToCommit });
       const receipt = await tx.wait();
 
@@ -315,7 +316,7 @@ const FortunePurchaseForm = () => {
             </Box>
             <HStack align='start'>
               <CronosIconBlue boxSize={6} />
-              <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Contributed ' : ''}{commify(ethers.utils.formatEther(tokenSaleContext.userCroContributed ?? "0"))}</Text>
+              <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? 'Contributed ' : ''}{commify(ethers.utils.formatEther(tokenSaleContext.userCroContributed ?? "0"))}</Text>
             </HStack>
           </>
         ) : (
@@ -376,7 +377,7 @@ const FortunePurchaseForm = () => {
                 disabled={isExecuting}
               >
                 {user.address ? (
-                  <>{isExecuting ? executingLabel : 'Buy $Fortune'}</>
+                  <>{isExecuting ? executingLabel : 'Buy $FRTN'}</>
                 ) : (
                   <>Connect</>
                 )}
@@ -402,9 +403,7 @@ const FortunePurchaseProgress = () => {
   const windowSize = useWindowSize();
 
   const getProgress = async () => {
-    console.log('getProgress', ethers.utils.formatEther(tokenSaleContext.totalCroContributed), ethers.utils.formatEther(tokenSaleContext.maxAllocation));
     const value = (tokenSaleContext.totalCroContributed / tokenSaleContext.maxAllocation) * 100;
-    console.log('value', value);
     setProgressValue(value);
     const offsetWidth = progressRef.current?.offsetWidth ?? 0;
     setBarSpot((((value > 0 ? value : 1) / 100) * offsetWidth) - 5);
