@@ -315,7 +315,7 @@ const FortunePurchaseForm = () => {
             </Box>
             <HStack align='start'>
               <CronosIconBlue boxSize={6} />
-              <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Contributed ' : ''}{commify(tokenSaleContext.userCroContributed ? "0" : tokenSaleContext.userCroContributed!!)}</Text>
+              <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Contributed ' : ''}{commify(ethers.utils.formatEther(tokenSaleContext.userCroContributed ?? "0"))}</Text>
             </HStack>
           </>
         ) : (
@@ -402,7 +402,9 @@ const FortunePurchaseProgress = () => {
   const windowSize = useWindowSize();
 
   const getProgress = async () => {
+    console.log('getProgress', ethers.utils.formatEther(tokenSaleContext.totalCroContributed), ethers.utils.formatEther(tokenSaleContext.maxAllocation));
     const value = (tokenSaleContext.totalCroContributed / tokenSaleContext.maxAllocation) * 100;
+    console.log('value', value);
     setProgressValue(value);
     const offsetWidth = progressRef.current?.offsetWidth ?? 0;
     setBarSpot((((value > 0 ? value : 1) / 100) * offsetWidth) - 5);
@@ -484,7 +486,7 @@ const FortunePurchaseProgress = () => {
         </SimpleGrid>
       </Box>
       <Box textAlign='center' mt={1}>
-        <Box>{progressValue ? round(progressValue, 1) : ''}% of $Fortune purchased by all users</Box>
+        <Box>{progressValue ? round(progressValue, 1) : ''}% of $FRTN reserved</Box>
       </Box>
     </>
   )

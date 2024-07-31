@@ -76,7 +76,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
         paused,
         userCroContributed: userCroContributed,
         totalCroContributed: totalCroContributed,
-        exchangeRate: Number(exchangeRate),
+        exchangeRate: exchangeRate,
         maxAllocation: maxAllocation//Number(maxAllocation)
       } as TokenSaleContextProps;
     },
@@ -125,7 +125,7 @@ const BankerScene = ({onExit, isVisible}: BankerSceneProps) => {
                   Date.now() > config.tokenSale.publicEnd ?
                     'The $FRTN token sale is now closed! Thank you to everyone who participated and let Fortune Favor the Bay!' :
                   Date.now() > config.tokenSale.publicStart ?
-                    `The $FRTN token sale is now open! Press the ${!!windowSize.height && windowSize.height < 600 ? '"$"' : '"Buy $FRTN"'} button to participate. Sale ends Aug 7th at 11pm UTC` :
+                    `The $FRTN token sale is now open! Press the ${!!windowSize.height && windowSize.height < 600 ? '"$"' : '"Buy $FRTN"'} button to participate. Sale ends Aug 8th at 0 UTC` :
                   Date.now() > config.tokenSale.vipStart ?
                     '' :
                     ''
