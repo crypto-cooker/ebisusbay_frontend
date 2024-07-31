@@ -50,6 +50,10 @@ export function useContract<TAbi extends Abi>(
   }, [addressOrAddressMap, abi, chainId, walletClient])
 }
 
+export function useTokenContract(tokenAddress?: Address) {
+  return useContract(tokenAddress, erc20Abi)
+}
+
 export function useWNativeContract() {
   const { chainId } = useActiveChainId()
   return useContract(chainId ? WNATIVE[chainId]?.address : undefined, wethABI)

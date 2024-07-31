@@ -19,6 +19,7 @@ import useNativeCurrency from './useNativeCurrency'
 import {
   combinedCurrenciesMapFromActiveUrlsAtom,
   combinedTokenMapFromActiveUrlsAtom,
+  combinedTokenMapFromOfficialsUrlsAtom,
   useUnsupportedTokenList,
   useWarningTokenList
 } from "@eb-pancakeswap-web/state/lists/hooks";
@@ -83,36 +84,36 @@ export function useAllOnRampTokens(): { [address: string]: Currency } {
     return mapWithoutUrlsBySymbol(tokenMap, chainId)
   }, [tokenMap, chainId])
 }
-//
-// /**
-//  * Returns all tokens that are from officials token list and user added tokens
-//  */
-// export function useOfficialsAndUserAddedTokens(): { [address: string]: ERC20Token } {
-//   const { chainId } = useActiveChainId()
-//   const tokenMap = useAtomValue(combinedTokenMapFromOfficialsUrlsAtom)
-//
-//   const userAddedTokens = useUserAddedTokens()
-//   return useMemo(() => {
-//     return (
-//       userAddedTokens
-//         // reduce into all ALL_TOKENS filtered by the current chain
-//         .reduce<{ [address: string]: ERC20Token }>(
-//           (tokenMap_, token) => {
-//             const checksumAddress = safeGetAddress(token.address)
-//
-//             if (checksumAddress) {
-//               tokenMap_[checksumAddress] = token
-//             }
-//
-//             return tokenMap_
-//           },
-//           // must make a copy because reduce modifies the map, and we do not
-//           // want to make a copy in every iteration
-//           mapWithoutUrls(tokenMap, chainId),
-//         )
-//     )
-//   }, [userAddedTokens, tokenMap, chainId])
-// }
+
+/**
+ * Returns all tokens that are from officials token list and user added tokens
+ */
+export function useOfficialsAndUserAddedTokens(): { [address: string]: ERC20Token } {
+  const { chainId } = useActiveChainId()
+  const tokenMap = useAtomValue(combinedTokenMapFromOfficialsUrlsAtom)
+
+  const userAddedTokens = useUserAddedTokens()
+  return useMemo(() => {
+    return (
+      userAddedTokens
+        // reduce into all ALL_TOKENS filtered by the current chain
+        .reduce<{ [address: string]: ERC20Token }>(
+          (tokenMap_, token) => {
+            const checksumAddress = safeGetAddress(token.address)
+
+            if (checksumAddress) {
+              tokenMap_[checksumAddress] = token
+            }
+
+            return tokenMap_
+          },
+          // must make a copy because reduce modifies the map, and we do not
+          // want to make a copy in every iteration
+          mapWithoutUrls(tokenMap, chainId),
+        )
+    )
+  }, [userAddedTokens, tokenMap, chainId])
+}
 
 export function useUnsupportedTokens(): { [address: string]: ERC20Token } {
   const { chainId } = useActiveChainId()

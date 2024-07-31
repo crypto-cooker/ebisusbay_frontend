@@ -1,5 +1,5 @@
 import {WrappedTokenInfo} from "@dex/hooks/use-supported-tokens";
-import {Image, SpaceProps} from "@chakra-ui/react";
+import {Image, Flex, SpaceProps} from "@chakra-ui/react";
 import React, {memo, useMemo, useState} from "react";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
 import {isChainSupported} from "@src/wagmi";
@@ -63,6 +63,7 @@ export function CurrencyLogo({
         size={size}
         srcs={[ImageService.translate(`files/dex/images/native/${currency.chainId}.webp`).convert()]}
         width={size}
+        height={size}
         style={style}
         {...props}
       />
@@ -217,3 +218,19 @@ export const getCurrencyLogoUrlsByInfo = memoize(
   (currency, options) =>
     `logoUrls#${currency?.chainId}#${currency?.symbol}#${currency?.address}#${options ? JSON.stringify(options) : ""}`
 );
+
+interface DoubleCurrencyLogoProps {
+  margin?: boolean
+  size?: number
+  currency0?: Currency
+  currency1?: Currency
+}
+
+export function DoubleCurrencyLogo({ currency0, currency1, size = 20, margin = false }: DoubleCurrencyLogoProps) {
+  return (
+    <Flex direction='row' me={2} margin={margin}>
+      {currency0 && <CurrencyLogo currency={currency0} size={`${size.toString()}px`} style={{ marginRight: '4px' }} />}
+      {currency1 && <CurrencyLogo currency={currency1} size={`${size.toString()}px`} />}
+    </Flex>
+  )
+}

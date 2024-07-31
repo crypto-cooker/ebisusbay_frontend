@@ -3,7 +3,6 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import {hostedImage} from "@src/helpers/image";
 import ImageService from "@src/core/services/image";
 
-
 const ryoshiTalesInfo = [
   {
     title: 'Overview',

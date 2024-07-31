@@ -1,5 +1,5 @@
-import {Percent, Token, WNATIVE} from '@pancakeswap/sdk'
-import {cronosTestnetTokens, cronosTokens, cronosZkEvmTestnetTokens, USDC, USDT,} from '@pancakeswap/tokens'
+import {Percent, Token, WNATIVE, WCRO} from '@pancakeswap/sdk'
+import {cronosTestnetTokens, cronosTokens, cronosZkEvmTestnetTokens, FRTN, USDC, USDT} from '@pancakeswap/tokens'
 import {ChainTokenList} from './types'
 import {ChainId} from "@pancakeswap/chains";
 
@@ -40,7 +40,11 @@ export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } 
     [WNATIVE[ChainId.ETHEREUM], USDC[ChainId.ETHEREUM]],
     [WNATIVE[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM]],
   ],
-  [ChainId.CRONOS]: [],
+  [ChainId.CRONOS]: [
+    [FRTN[ChainId.CRONOS], USDC[ChainId.CRONOS]],
+    [FRTN[ChainId.CRONOS], WCRO[ChainId.CRONOS]],
+    [USDC[ChainId.CRONOS], WCRO[ChainId.CRONOS]],
+  ],
   [ChainId.CRONOS_TESTNET]: [],
 }
 

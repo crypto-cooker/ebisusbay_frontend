@@ -91,6 +91,7 @@
     "formik": "^2.4.5",
     "framer-motion": "^10.16.16",
     "graphql-codegen": "^0.4.0",
+    "graphql-request": "5.0.0",
     "image-size": "^1.0.2",
     "jotai": "^2.8.0",
     "lodash": "^4.17.21",

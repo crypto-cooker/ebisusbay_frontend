@@ -2,14 +2,14 @@ import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
 import {appConfig} from "@src/config";
 import {urlify} from "@market/helpers/utils";
 import {Address} from "viem";
-
-const config = appConfig();
+import chainConfigs, {SupportedChainId} from "@src/config/chains";
 
 class Exchange {
 
   private apollo;
 
-  constructor() {
+  constructor(chainId: SupportedChainId) {
+    const config = chainConfigs[chainId];
     this.apollo = new ApolloClient({
       uri: urlify(config.urls.subgraph.root, config.urls.subgraph.dex),
       cache: new InMemoryCache()

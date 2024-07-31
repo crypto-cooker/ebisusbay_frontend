@@ -280,6 +280,11 @@ const nextConfig = {
         permanent: false,
         basePath: false,
       },
+      {
+        source: '/dex/add',
+        destination: '/dex/add/v2',
+        permanent: false,
+      },
       // {
       //   source: '/dex/swap',
       //   destination:
