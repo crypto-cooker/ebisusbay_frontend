@@ -1,34 +1,6 @@
 # syntax=docker/dockerfile:1.4
 
 ###################
-### Deps stage ###
-###################
-
-FROM node:20 AS deps-stage
-
-# Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
-RUN set -e
-
-# Allow to cache package downloads (BuildKit cache mount)
-RUN rm -f /etc/apt/apt.conf.d/docker-clean
-# Update/install packages
-RUN --mount=type=cache,target=/var/cache/apt apt-get update
-
-RUN npm install -g npm@latest
-RUN npm install -g pnpm@latest
-
-# Print Node.js & npm versions
-RUN node --version
-RUN npm --version
-RUN pnpm --version
-
-# Install the dependencies
-WORKDIR /usr/src/app
-
-COPY --link package*.json ./
-RUN --mount=type=cache,target=/root/.npm npm ci --omit dev
-
-###################
 ### Build stage ###
 ###################
 
@@ -42,8 +14,13 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
 RUN --mount=type=cache,target=/var/cache/apt apt-get update
 
-RUN npm install -g npm@latest
-RUN npm install -g pnpm@latest
+RUN npm i -g npm@latest; \
+    npm i -g pnpm@latest; \
+    SHELL=bash pnpm setup; \
+    mkdir -p /usr/local/share/pnpm &&\
+    export PNPM_HOME="/usr/local/share/pnpm" &&\
+    export PATH="$PNPM_HOME:$PATH"; \
+    pnpm bin -g
 
 # Print Node.js & npm versions
 RUN node --version
@@ -53,20 +30,21 @@ RUN pnpm --version
 # Install the dependencies
 WORKDIR /usr/src/app
 
-COPY --from=deps-stage --link /usr/src/app/node_modules ./node_modules
-COPY --link package.json ./
-COPY --link .husky ./.husky
-COPY --link app ./app
-COPY --link pages ./pages
-COPY --link public ./public
-COPY --link src ./src
-COPY --link types ./types
-COPY --link next.config.js ./
-COPY --link jsconfig.json ./
-COPY --link tsconfig.json ./
-COPY --link sentry.client.config.ts ./
-COPY --link sentry.edge.config.ts ./
-COPY --link sentry.server.config.ts ./
+COPY --link .git ./.git
+
+COPY --link package*.json ./
+COPY --link pnpm*.yaml ./
+COPY --link turbo.json ./
+
+COPY --link ./apps ./apps
+COPY --link ./submodules ./submodules
+
+RUN git config --global --add safe.directory /usr/src/app
+RUN --mount=type=cache,target=/usr/local/share/pnpm pnpm install
+
+# eb-pancake-frontend submodule
+WORKDIR /usr/src/app/submodules/eb-pancake-frontend
+RUN --mount=type=cache,target=/usr/local/share/pnpm pnpm install
 
 # Define build env. variables based on arguments
 ARG NEXT_PUBLIC_ENV
@@ -87,8 +65,12 @@ ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 ARG NEXT_PUBLIC_WEB3MODAL_API_KEY
 ENV NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY
 
+ARG NEXT_FORCE_EDGE_IMAGES
+ENV NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES
+
 # Build the project
-RUN --mount=type=cache,target=/usr/src/app/.next/cache NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY npm run build
+WORKDIR /usr/src/app
+RUN --mount=type=cache,target=/usr/src/app/.turbo/cache --mount=type=cache,target=/usr/src/app/apps/web/.next/cache NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES pnpm run build
 
 #####################
 ### Runtime stage ###
@@ -104,7 +86,7 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
 RUN --mount=type=cache,target=/var/cache/apt apt-get update && apt-get --no-install-recommends install -y git curl procps htop net-tools dnsutils dumb-init
 
-RUN npm install -g npm@latest
+RUN npm i -g npm@latest
 
 # Print Node.js & npm versions
 RUN node --version
@@ -113,16 +95,7 @@ RUN npm --version
 # Copy the required files from the build step
 WORKDIR /usr/src/app
 
-COPY --from=build-stage --link /usr/src/app/.husky ./.husky
-COPY --from=build-stage --link /usr/src/app/app ./app
-COPY --from=build-stage --link /usr/src/app/pages ./pages
-COPY --from=build-stage --link /usr/src/app/public ./public
-COPY --from=build-stage --link /usr/src/app/src ./src
-COPY --from=build-stage --link /usr/src/app/types ./types
-COPY --from=build-stage --link /usr/src/app/next.config.js ./
-
-COPY --from=build-stage --link /usr/src/app/package*.json ./
-COPY --from=build-stage --link /usr/src/app/.next ./.next
+COPY --from=build-stage --link /usr/src/app/apps/web ./apps/web
 COPY --from=build-stage --link /usr/src/app/node_modules ./node_modules
 
 # Enable APM Insight Node.js Agent
@@ -138,7 +111,7 @@ RUN chmod +x harden.sh && \
     rm -f harden.sh
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["/bin/bash", "-c", "exec npm run start-web >> /var/log/nodejs/nodejs.log 2>&1"]
+CMD ["/bin/bash", "-c", "exec npm run --prefix /usr/src/app/apps/web start-web >> /var/log/nodejs/nodejs.log 2>&1"]
 
 # Force container to run as a non-root user
 USER node

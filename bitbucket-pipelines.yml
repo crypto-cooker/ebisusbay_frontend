@@ -20,13 +20,15 @@ definitions:
     aws --version
   aws_ecr_login: &aws_ecr_login
     aws ecr get-login-password | docker login --password-stdin --username AWS "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+  fetch_git_submodules: &fetch_git_submodules
+    git submodule update --init --recursive
 
   # Docker BuildKit version
   # https://support.atlassian.com/bitbucket-cloud/docs/run-docker-commands-in-bitbucket-pipelines/#Docker-BuildKit-restrictions
   proxy_container_build: &proxy_container_build
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/web.conf &&
     sed -i='' -e "s|<SERVER_NAME>|${SERVER_NAME_WEB}|" proxy/conf.d/default.conf &&
-    docker build --build-arg BUILDKIT_INLINE_CACHE=1 --platform linux/arm64 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} -f proxy/Dockerfile ./proxy &&
+    docker build --build-arg BUILDKIT_INLINE_CACHE=1 --platform linux/arm64 --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} -f proxy/Dockerfile ./apps/web/proxy &&
     docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER} &&
     docker push --all-tags ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${PROXY_REPOSITORY}
 
@@ -54,6 +56,8 @@ pipelines:
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
+                  # # Initialize, fetch and checkout any nested submodules
+                  - *fetch_git_submodules
                   # RPC config
                   - cp -p ./src/modules/market/assets/networks/rpc_config_testnet.json ./src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
