@@ -108,18 +108,20 @@ pipelines:
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
+                  # # Initialize, fetch and checkout any nested submodules
+                  - *fetch_git_submodules
                   # RPC config
-                  - cp -p ./src/modules/market/assets/networks/rpc_config_dev.json ./src/modules/market/assets/networks/rpc_config.json
+                  - cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_dev.json ./apps/web/src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
-                  - aws s3 cp ./src/modules/market/assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
+                  - aws s3 cp ./apps/web/src/modules/market/assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
                   - |
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
                       docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
                       RETURN_CODE=$?
 
@@ -158,18 +160,20 @@ pipelines:
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
+                  # # Initialize, fetch and checkout any nested submodules
+                  - *fetch_git_submodules
                   # RPC config
-                  # - cp -p ./src/modules/market/assets/networks/rpc_config_dev.json ./src/modules/market/assets/networks/rpc_config.json
+                  # - cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_dev.json ./apps/web/src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
-                  - aws s3 cp ./src/modules/market/assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
+                  - aws s3 cp ./apps/web/src/modules/market/assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
                   - |
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
                       docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
                       RETURN_CODE=$?
 
@@ -209,18 +213,20 @@ pipelines:
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
+                  # # Initialize, fetch and checkout any nested submodules
+                  - *fetch_git_submodules
                   # RPC config
-                  - cp -p ./src/modules/market/assets/networks/rpc_config_dev.json ./src/modules/market/assets/networks/rpc_config.json
+                  - cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_dev.json ./apps/web/src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
-                  - aws s3 cp ./src/modules/market/assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
+                  - aws s3 cp ./apps/web/src/modules/market/assets/networks/rpc_config_dev.json s3://dev-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
                   - |
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
                       docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
                       RETURN_CODE=$?
 
@@ -259,18 +265,20 @@ pipelines:
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
+                  # # Initialize, fetch and checkout any nested submodules
+                  - *fetch_git_submodules
                   # RPC config
-                  # - cp -p ./src/modules/market/assets/networks/rpc_config_dev.json ./src/modules/market/assets/networks/rpc_config.json
+                  # cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_dev.json ./apps/web/src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
-                  - aws s3 cp ./src/modules/market/assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
+                  - aws s3 cp ./apps/web/src/modules/market/assets/networks/rpc_config.json s3://prod-ebisusbay-admin-storage/rpc_config.json
                   # Build application container
                   - |
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f Dockerfile .
+                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
                       docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
                       RETURN_CODE=$?
 
