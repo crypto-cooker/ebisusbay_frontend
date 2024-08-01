@@ -1,10 +1,46 @@
 # syntax=docker/dockerfile:1.4
 
-###################
-### Build stage ###
-###################
+FROM node:20 AS base
 
-FROM node:20 AS build-stage
+###############
+### Builder ###
+###############
+
+FROM base AS builder
+
+# Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
+RUN set -e
+
+# Allow to cache package downloads (BuildKit cache mount)
+RUN rm -f /etc/apt/apt.conf.d/docker-clean
+# Update/install packages
+RUN --mount=type=cache,target=/var/cache/apt apt-get update
+
+# Set working directory
+WORKDIR /usr/src/app
+
+RUN npm i -g npm@latest; \
+    npm i -g turbo@latest;
+
+# Print versions
+RUN node --version
+RUN npm --version
+
+COPY . .
+
+# Fetch submodule(s)
+RUN git submodule update --init --recursive
+ 
+# Generate a partial monorepo with a pruned lockfile for a target workspace.
+RUN turbo prune eb-frontend --docker
+RUN find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
+
+#################
+### Installer ###
+#################
+
+# Add lockfile and package.json's of isolated subworkspace
+FROM base AS installer
 
 # Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
 RUN set -e
@@ -15,36 +51,32 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 RUN --mount=type=cache,target=/var/cache/apt apt-get update
 
 RUN npm i -g npm@latest; \
-    npm i -g pnpm@latest; \
-    SHELL=bash pnpm setup; \
-    mkdir -p /usr/local/share/pnpm &&\
-    export PNPM_HOME="/usr/local/share/pnpm" &&\
-    export PATH="$PNPM_HOME:$PATH"; \
-    pnpm bin -g
+    npm i -g pnpm@latest;
 
-# Print Node.js & npm versions
+# Print versions
 RUN node --version
 RUN npm --version
 RUN pnpm --version
 
-# Install the dependencies
+# Set working directory
 WORKDIR /usr/src/app
-
-COPY --link .git ./.git
-
-COPY --link package*.json ./
-COPY --link pnpm*.yaml ./
-COPY --link turbo.json ./
-
-COPY --link ./apps ./apps
-COPY --link ./submodules ./submodules
-
-RUN git config --global --add safe.directory /usr/src/app
-RUN --mount=type=cache,target=/usr/local/share/pnpm pnpm install
-
+ 
+# First install the dependencies (as they change less often)
+COPY .gitignore .gitignore
+COPY --from=builder /usr/src/app/out/json/ .
+COPY --from=builder /usr/src/app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=builder /usr/src/app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
+RUN rm -rf ./submodules
+COPY ./submodules ./submodules
+# eb-web
+RUN pnpm install
 # eb-pancake-frontend submodule
 WORKDIR /usr/src/app/submodules/eb-pancake-frontend
-RUN --mount=type=cache,target=/usr/local/share/pnpm pnpm install
+RUN pnpm install
+ 
+# Build the project
+WORKDIR /usr/src/app
+COPY --from=builder /usr/src/app/out/full/ .
 
 # Define build env. variables based on arguments
 ARG NEXT_PUBLIC_ENV
@@ -68,15 +100,13 @@ ENV NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY
 ARG NEXT_FORCE_EDGE_IMAGES
 ENV NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES
 
-# Build the project
-WORKDIR /usr/src/app
-RUN --mount=type=cache,target=/usr/src/app/.turbo-docker-cache --mount=type=cache,target=/usr/src/app/apps/web/.next/cache NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES pnpm run build-docker
+RUN NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES pnpm run build-docker
 
-#####################
-### Runtime stage ###
-#####################
+##############
+### Runner ###
+##############
 
-FROM node:20-slim AS runtime-stage
+FROM base AS runner
 
 # Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
 RUN set -e
@@ -88,15 +118,15 @@ RUN --mount=type=cache,target=/var/cache/apt apt-get update && apt-get --no-inst
 
 RUN npm i -g npm@latest
 
-# Print Node.js & npm versions
+# Print versions
 RUN node --version
 RUN npm --version
 
 # Copy the required files from the build step
 WORKDIR /usr/src/app
 
-COPY --from=build-stage --link /usr/src/app/apps/web ./apps/web
-COPY --from=build-stage --link /usr/src/app/node_modules ./node_modules
+COPY --from=installer /usr/src/app/apps/web ./apps/web
+COPY --from=installer /usr/src/app/node_modules ./node_modules
 
 # Enable APM Insight Node.js Agent
 RUN mkdir -p /usr/src/app/apminsightdata && chown -R node:node /usr/src/app/apminsightdata
@@ -105,7 +135,7 @@ RUN mkdir -p /usr/src/app/apminsightdata && chown -R node:node /usr/src/app/apmi
 RUN mkdir -p /var/log/nodejs && touch /var/log/nodejs/nodejs.log && chown -R node:node /var/log/nodejs
 
 # Harden Image
-COPY --link ./harden.sh .
+COPY ./harden.sh .
 RUN chmod +x harden.sh && \
     sh harden.sh && \
     rm -f harden.sh
