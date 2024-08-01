@@ -1,16 +1,12 @@
 # syntax=docker/dockerfile:1.4
 
-FROM node:20 AS base
+ARG NODE_VERSION=20
 
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+############
+### Base ###
+############
 
-###############
-### Builder ###
-###############
-
-FROM base AS builder
+FROM node:${NODE_VERSION} AS base
 
 # Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
 RUN set -e
@@ -20,15 +16,23 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
 RUN --mount=type=cache,id=apt,target=/var/cache/apt apt-get update
 
-# Set working directory
-WORKDIR /usr/src/app
-
-RUN npm i -g npm@latest; \
-    npm i -g turbo@latest;
+# Setup pnpm and turbo on the base
+RUN npm install npm pnpm turbo --global
+RUN pnpm config set store-dir ~/.pnpm-store
 
 # Print versions
 RUN node --version
 RUN npm --version
+RUN pnpm --version
+
+###############
+### Pruner ###
+###############
+
+FROM base AS pruner
+
+# Set working directory
+WORKDIR /usr/src/app
 
 COPY . .
 COPY --link .git ./.git
@@ -39,46 +43,31 @@ RUN git submodule update --init --recursive
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
 RUN turbo prune eb-frontend --docker
 
-#################
-### Installer ###
-#################
+###############
+### Builder ###
+###############
 
-# Add lockfile and package.json's of isolated subworkspace
-FROM base AS installer
-
-# Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
-RUN set -e
-
-# Allow to cache package downloads (BuildKit cache mount)
-RUN rm -f /etc/apt/apt.conf.d/docker-clean
-# Update/install packages
-RUN --mount=type=cache,id=apt,target=/var/cache/apt apt-get update
-
-RUN npm i -g npm@latest
-
-# Print versions
-RUN node --version
-RUN npm --version
-RUN pnpm --version
+FROM base AS builder
 
 # Set working directory
 WORKDIR /usr/src/app
  
-# First install the dependencies (as they change less often)
-COPY --from=builder /usr/src/app/out/json/ .
-COPY --from=builder /usr/src/app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY --from=builder /usr/src/app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
+# Copy lockfile and package.json's of isolated subworkspace
+COPY --from=pruner /usr/src/app/out/json/ .
+COPY --from=pruner /usr/src/app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=pruner /usr/src/app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 RUN rm -rf ./submodules
 COPY ./submodules ./submodules
 # eb-web
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
+RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
 # eb-pancake-frontend submodule
 WORKDIR /usr/src/app/submodules/eb-pancake-frontend
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
+RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
  
 # Build the project
 WORKDIR /usr/src/app
-COPY --from=builder /usr/src/app/out/full/ .
+# Copy source code of isolated subworkspace
+COPY --from=pruner /usr/src/app/out/full/ .
 
 # Define build env. variables based on arguments
 ARG NEXT_PUBLIC_ENV
@@ -94,7 +83,7 @@ RUN --mount=type=cache,id=turbo,target=/usr/src/app/.turbo/cache --mount=type=ca
 ### Runner ###
 ##############
 
-FROM base AS runner
+FROM node:${NODE_VERSION}-slim AS runner
 
 # Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
 RUN set -e
@@ -106,15 +95,11 @@ RUN --mount=type=cache,id=apt,target=/var/cache/apt apt-get update && apt-get --
 
 RUN npm i -g npm@latest
 
-# Print versions
-RUN node --version
-RUN npm --version
-
 # Copy the required files from the build step
 WORKDIR /usr/src/app
 
-COPY --from=installer /usr/src/app/apps/web ./apps/web
-COPY --from=installer /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/apps/web ./apps/web
+COPY --from=builder /usr/src/app/node_modules ./node_modules
 
 # Enable APM Insight Node.js Agent
 RUN mkdir -p /usr/src/app/apminsightdata && chown -R node:node /usr/src/app/apminsightdata
