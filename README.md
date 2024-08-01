@@ -1,17 +1,8 @@
 # Ebisu's Bay Web
 
-## Run locally
-### Step 1: Clone pancakeswap repo
-Put in the same directory as this app
-```
-git clone https://github.com/zillarelli/eb-pancake-frontend.git
+## Run locally (Windows)
 
-or
-
-git clone git@github.com:zillarelli/eb-pancake-frontend.git
-```
-
-### Step 2: Install dependencies
+### Step 1: Install dependencies
 If previously using `npm`, you will likely need to delete node_modules
 
 #### On Windows:
@@ -24,9 +15,9 @@ pnpm i
 ```
 To set env vars, please refer to .env.example
 
-### Step 3: Run
+### Step 2: Run
 ```
-pnpm run dev
+pnpm dev
 ```
 
 

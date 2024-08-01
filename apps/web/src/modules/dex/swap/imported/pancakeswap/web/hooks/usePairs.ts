@@ -47,8 +47,8 @@ export function useV2Pairs(currencies: [Currency | undefined, Currency | undefin
 
   console.log('useV2Pairs0', tokens, pairAddresses);
 
-  const { loading, error, data: results } = useGetPairs(pairAddresses);
-  console.log('useV2Pairs1', results);
+  const { isLoading, data: results } = useGetPairs(pairAddresses);
+  console.log('useV2Pairs2', isLoading, results, results?.length);
   // const results = useMultipleContractSingleData({
   //   addresses: pairAddresses,
   //   abi: PairAbi,
@@ -57,20 +57,17 @@ export function useV2Pairs(currencies: [Currency | undefined, Currency | undefin
   // console.log('useV2Pairs2', data);
 
   return useMemo(() => {
-    return results.map((result, i) => {
+    if (!isLoading && (!results || results.length === 0)) return tokens.map(t => [PairState.INVALID, null]);
+
+    return !isLoading ? results.map((result: any, i: any) => {
       const tokenA = tokens.flatMap(token => token).find(token => token?.address.toLowerCase() === result.token0.id.toLowerCase());
       const tokenB = tokens.flatMap(token => token).find(token => token?.address.toLowerCase() === result.token1.id.toLowerCase());
 
-      if (loading) return [PairState.LOADING, null]
+      if (isLoading) return [PairState.LOADING, null]
       if (!tokenA || !tokenB || tokenA.equals(tokenB)) return [PairState.INVALID, null]
       const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
       if (!result.reserve0 || !result.reserve1) return [PairState.NOT_EXISTS, null]
-      console.log('useV2Pairs2',
-        token0.symbol,
-        parseUnits(result.reserve0, token0.decimals).toString(),
-        token1.symbol,
-        parseUnits(result.reserve1, token1.decimals).toString()
-      );
+
       return [
         PairState.EXISTS,
         new Pair(
@@ -78,8 +75,8 @@ export function useV2Pairs(currencies: [Currency | undefined, Currency | undefin
           CurrencyAmount.fromRawAmount(token1, parseUnits(result.reserve1, token1.decimals).toString()),
         ),
       ]
-    })
-  }, [results, tokens])
+    }) : [[PairState.LOADING, null]];
+  }, [results, tokens, isLoading])
 }
 
 export function useV2Pair(tokenA?: Currency, tokenB?: Currency): [PairState, Pair | null] {

@@ -10,43 +10,13 @@ import useActiveWeb3React from "@eb-pancakeswap-web/hooks/useActiveWeb3React";
 import {useV2Pairs} from "@eb-pancakeswap-web/hooks/usePairs";
 import {Pair} from "@pancakeswap/sdk";
 import FullPositionCard from "@dex/liquidity/components/position-card";
+import useV2PairsByAccount from "@eb-pancakeswap-web/hooks/useV2Pairs";
+import {useUser} from "@src/components-v2/useUser";
 
 export default function LiquidityPage() {
-  const { account } = useActiveWeb3React();
+  const { address: account } = useUser();
 
-  const trackedTokenPairs = useTrackedTokenPairs();
-  const tokenPairsWithLiquidityTokens = useMemo(
-    () => trackedTokenPairs.map((tokens) => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
-    [trackedTokenPairs]
-  );
-  const liquidityTokens = useMemo(
-    () => tokenPairsWithLiquidityTokens.map((tpwlt) => tpwlt.liquidityToken),
-    [tokenPairsWithLiquidityTokens]
-  );
-  const [v2PairsBalances, fetchingV2PairBalances] = useTokenBalancesWithLoadingIndicator(
-    account ?? undefined,
-    liquidityTokens
-  );
-
-  // fetch the reserves for all V2 pools in which the user has a balance
-  const liquidityTokensWithBalances = useMemo(
-    () =>
-      tokenPairsWithLiquidityTokens.filter(({ liquidityToken }) =>
-        v2PairsBalances[liquidityToken.address]?.greaterThan('0')
-      ),
-    [tokenPairsWithLiquidityTokens, v2PairsBalances]
-  );
-
-  console.log('v2IsLoading1', liquidityTokensWithBalances);
-  const v2Pairs = useV2Pairs(liquidityTokensWithBalances.map(({ tokens }) => tokens));
-  console.log('v2IsLoading2', v2Pairs);
-  const v2IsLoading =
-    fetchingV2PairBalances ||
-    v2Pairs?.length < liquidityTokensWithBalances.length ||
-    v2Pairs?.some((V2Pair) => !V2Pair);
-  const allV2PairsWithLiquidity = v2Pairs.map(([, pair]) => pair).filter((v2Pair): v2Pair is Pair => Boolean(v2Pair));
-  console.log('v2IsLoading3', allV2PairsWithLiquidity?.length > 0);
-  // console.log('v2IsLoading', !account, v2IsLoading, v2Pairs.length, v2Pairs, allV2PairsWithLiquidity?.length > 0, !account || v2IsLoading || allV2PairsWithLiquidity?.length > 0);
+  const { data: allV2PairsWithLiquidity, loading: v2IsLoading} = useV2PairsByAccount(account);
 
   return (
     <Box>
