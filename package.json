@@ -7,7 +7,7 @@
   ],
   "packageManager": "pnpm@9.6.0",
   "scripts": {
-    "preinstall": "git submodule update --init --recursive",
+    "init-submodules": "git submodule update --init --recursive",
     "dev": "turbo run dev --filter=eb-frontend...",
     "build": "turbo run build --filter=eb-frontend...",
     "build-docker": "turbo run build --cache-dir=.turbo-docker-cache --filter=eb-frontend...",
