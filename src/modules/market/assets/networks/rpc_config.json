@@ -27778,6 +27778,30 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "DaCheese",
+      "slug": "dacheese",
+      "multiToken": false,
+      "address": "0x60B2D353041Bda23136b11873bEcd2Aa74318589",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dacheese is a unique and exclusive collection of custom-made NFTs, marking the start of the Dacheese Token launch. In this project, the community is the essence of its operation. Join the Dacheese community with this NFT collection, featuring 7 exceptional legendary items. Don’t miss this fun and groundbreaking opportunity!!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/dacheese/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/dacheese/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/dacheese/banner.webp",
+        "twitter": "https://www.twitter.com/Topsidecheese",
+        "discord": "https://discord.gg/V6c8yGF3QA",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
