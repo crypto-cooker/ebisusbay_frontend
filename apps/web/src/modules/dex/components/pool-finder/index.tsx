@@ -13,6 +13,7 @@ import {useUser} from "@src/components-v2/useUser";
 import {BIG_INT_ZERO} from "@dex/swap/constants/exchange";
 import {useTokenBalance} from "@eb-pancakeswap-web/state/wallet/hooks";
 import currencyId from "@eb-pancakeswap-web/utils/currencyId"
+import {CurrencySearchModal} from "@dex/components/search-modal";
 
 enum Fields {
   TOKEN0,
@@ -24,6 +25,7 @@ export default function PoolFinder() {
 
   const native = useNativeCurrency()
 
+  const [showSearch, setShowSearch] = useState<boolean>(false);
   const [activeField, setActiveField] = useState<number>(Fields.TOKEN1);
   const [currency0, setCurrency0] = useState<Currency | null>(native);
   const [currency1, setCurrency1] = useState<Currency | null>(null);
@@ -54,129 +56,148 @@ export default function PoolFinder() {
   )
 
   return (
-    <Card>
-      <Heading size='md' mb={2}>
-        <HStack justify=''>
-          <NextLink href='/dex/liquidity'>
-            <IconButton
-              aria-label='Back'
-              icon={<ArrowBackIcon />}
-              variant='unstyled'
-            />
-          </NextLink>
-          <Box>Import V2 Pool</Box>
-        </HStack>
-      </Heading>
-      <Box>
-        <Alert status='info'>
-          <AlertIcon />
-          Use this tool to find pairs that don't automatically appear in the interface.
-        </Alert>
-        <VStack mt={4} spacing={4} align='stretch'>
-          <Button
-            rightIcon={<ChevronDownIcon />}
-            variant='outline'
-            size='lg'
-          >
-            <HStack>
-              {!!currency0 ? (
-                <>
-                  <CurrencyLogo currency={currency0} />
-                  <Box>
-                    {currency0.symbol}
-                  </Box>
-                </>
-              ) : (
-                <span>Select a token</span>
-              )}
-            </HStack>
-          </Button>
-          <Box className='text-muted' mx='auto'>
-            <AddIcon />
-          </Box>
-          <Button
-            rightIcon={<ChevronDownIcon />}
-            variant='outline'
-            size='lg'
-          >
-            <HStack>
-              {!!currency1 ? (
-                <>
-                  <CurrencyLogo currency={currency1} />
-                  <Box>
-                    {currency1.symbol}
-                  </Box>
-                </>
-              ) : (
-                <span>Select a token</span>
-              )}
-            </HStack>
-          </Button>
+    <>
+      <Card>
+        <Heading size='md' mb={2}>
+          <HStack justify=''>
+            <NextLink href='/dex/liquidity'>
+              <IconButton
+                aria-label='Back'
+                icon={<ArrowBackIcon />}
+                variant='unstyled'
+              />
+            </NextLink>
+            <Box>Import V2 Pool</Box>
+          </HStack>
+        </Heading>
+        <Box>
+          <Alert status='info'>
+            <AlertIcon />
+            Use this tool to find pairs that don't automatically appear in the interface.
+          </Alert>
+          <VStack mt={4} spacing={4} align='stretch'>
+            <Button
+              rightIcon={<ChevronDownIcon />}
+              variant='outline'
+              size='lg'
+              onClick={() => {
+                setShowSearch(true);
+                setActiveField(Fields.TOKEN0);
+              }}
+            >
+              <HStack>
+                {!!currency0 ? (
+                  <>
+                    <CurrencyLogo currency={currency0} />
+                    <Box>
+                      {currency0.symbol}
+                    </Box>
+                  </>
+                ) : (
+                  <span>Select a token</span>
+                )}
+              </HStack>
+            </Button>
+            <Box className='text-muted' mx='auto'>
+              <AddIcon />
+            </Box>
+            <Button
+              rightIcon={<ChevronDownIcon />}
+              variant='outline'
+              size='lg'
+              onClick={() => {
+                setShowSearch(true);
+                setActiveField(Fields.TOKEN1);
+              }}
+            >
+              <HStack>
+                {!!currency1 ? (
+                  <>
+                    <CurrencyLogo currency={currency1} />
+                    <Box>
+                      {currency1.symbol}
+                    </Box>
+                  </>
+                ) : (
+                  <span>Select a token</span>
+                )}
+              </HStack>
+            </Button>
 
-          {currency0 && currency1 ? (
-            pairState === PairState.EXISTS ? (
-              hasPosition && pair ? (
-                <>
-                  <MinimalPositionCard pair={pair} />
-                  <Button
-                    as={NextLinkFromReactRouter}
-                    to={`/v2/pair/${pair.token0.address}/${pair.token1.address}`}
-                    variant="secondary"
-                    width="100%"
-                  >
-                    Manage this pair
-                  </Button>
-                </>
-              ) : (
+            {currency0 && currency1 ? (
+              pairState === PairState.EXISTS ? (
+                hasPosition && pair ? (
+                  <>
+                    <MinimalPositionCard pair={pair} />
+                    <Button
+                      as={NextLinkFromReactRouter}
+                      to={`/v2/pair/${pair.token0.address}/${pair.token1.address}`}
+                      variant="secondary"
+                      width="100%"
+                    >
+                      Manage this pair
+                    </Button>
+                  </>
+                ) : (
+                  <Card padding="45px 10px">
+                    <Stack gap="sm" justify="center">
+                      <Text textAlign="center">You don’t have liquidity in this pair yet.</Text>
+                      <NextLink href={`/v2/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
+                        <Button>
+                          Add Liquidity
+                        </Button>
+                      </NextLink>
+                    </Stack>
+                  </Card>
+                )
+              ) : validPairNoLiquidity ? (
                 <Card padding="45px 10px">
                   <Stack gap="sm" justify="center">
-                    <Text textAlign="center">You don’t have liquidity in this pair yet.</Text>
+                    <Text textAlign="center">No pair found.</Text>
                     <NextLink href={`/v2/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
                       <Button>
-                        Add Liquidity
+                        Create pair
                       </Button>
                     </NextLink>
                   </Stack>
                 </Card>
-              )
-            ) : validPairNoLiquidity ? (
+              ) : pairState === PairState.INVALID ? (
+                <Card padding="45px 10px">
+                  <Stack gap="sm" justify="center">
+                    <Text textAlign="center" fontWeight={500}>
+                      Invalid pair
+                    </Text>
+                  </Stack>
+                </Card>
+              ) : pairState === PairState.LOADING ? (
+                <Card padding="45px 10px">
+                  <Stack gap="sm" justify="center">
+                    <Text textAlign="center">
+                      <Spinner size='sm' />
+                    </Text>
+                  </Stack>
+                </Card>
+              ) : null
+            ) : (
               <Card padding="45px 10px">
-                <Stack gap="sm" justify="center">
-                  <Text textAlign="center">No pair found.</Text>
-                  <NextLink href={`/v2/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
-                    <Button>
-                      Create pair
-                    </Button>
-                  </NextLink>
-                </Stack>
+                <Text textAlign="center">
+                  {!account ? 'Connect to a wallet to find pools' : 'Select a token to find your liquidity.'}
+                </Text>
               </Card>
-            ) : pairState === PairState.INVALID ? (
-              <Card padding="45px 10px">
-                <Stack gap="sm" justify="center">
-                  <Text textAlign="center" fontWeight={500}>
-                    Invalid pair
-                  </Text>
-                </Stack>
-              </Card>
-            ) : pairState === PairState.LOADING ? (
-              <Card padding="45px 10px">
-                <Stack gap="sm" justify="center">
-                  <Text textAlign="center">
-                    <Spinner size='sm' />
-                  </Text>
-                </Stack>
-              </Card>
-            ) : null
-          ) : (
-            <Card padding="45px 10px">
-              <Text textAlign="center">
-                {!account ? 'Connect to a wallet to find pools' : 'Select a token to find your liquidity.'}
-              </Text>
-            </Card>
-          )}
-        </VStack>
+            )}
+          </VStack>
 
-      </Box>
-    </Card>
+        </Box>
+      </Card>
+      {showSearch && (
+        <CurrencySearchModal
+          isOpen={showSearch}
+          onClose={() => setShowSearch(false)}
+          onCurrencySelect={handleCurrencySelect}
+          showCommonBases
+          selectedCurrency={(activeField === Fields.TOKEN0 ? currency1 : currency0) ?? undefined}
+        />
+      )}
+    </>
   )
 }
