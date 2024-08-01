@@ -27752,6 +27752,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "MemeCoin Club",
+      "slug": "memecoin-club",
+      "multiToken": false,
+      "address": "0xAa6240542D626393f7222E4A4997D24C69918D0d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The MemeCoin Club NFT Collection: a vibrant celebration of internet culture, cryptocurrency, and the art of the meme. This isn't just another memecoin; it's a revolution wrapped in humor and innovation. Each NFT in this collection is a testament to the spirit of $Meme—a coin that's as much a part of the meme world as it is a player in the crypto market.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/memecoin-club/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/memecoin-club/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/memecoin-club/banner.webp",
+        "website": "https://memecoinclub.link/",
+        "twitter": "https://www.twitter.com/meme_coin_club",
+        "discord": "https://discord.gg/UHR7gaFXbS",
+        "categories": [
+          "meme",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
