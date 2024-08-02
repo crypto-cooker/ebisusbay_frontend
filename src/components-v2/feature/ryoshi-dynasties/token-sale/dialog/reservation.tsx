@@ -291,7 +291,7 @@ const FortunePurchaseForm = () => {
     useNumberInput({
       step: 1000,
       defaultValue: croToCommit, // MIN_PURCHASE
-      min: 1000, // MIN_PURCHASE
+      min: 5000, // MIN_PURCHASE
       max: 4000000, // MAX_PURCHASE
       precision: 0,
       onChange(valueAsString, valueAsNumber) {
