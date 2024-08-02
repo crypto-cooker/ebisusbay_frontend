@@ -3,25 +3,29 @@ import {useResponsiveDialog} from "@src/components-v2/foundation/responsive-dial
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import SelectToken from "@dex/swap/components/tabs/swap/select-token";
 import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
-import {Currency} from "@pancakeswap/sdk";
+import {Currency, Token} from "@pancakeswap/sdk";
 import usePreviousValue from "@eb-pancakeswap-web/hooks/usePreviousValue";
 import { useAllLists } from '@eb-pancakeswap-web/state/lists/hooks';
 import { useListState } from '@eb-pancakeswap-web/state/lists/lists';
 import { enableList, removeList, useFetchListCallback } from '@pancakeswap/token-lists/react';
 import { CurrencyModalView } from './types'
+import CurrencySearch from './currency-search';
+import {TokenList} from "@pancakeswap/token-lists";
 
 type CurrencySearchModalProps = {
   isOpen: boolean;
   onClose: () => void;
   selectedCurrency?: Currency | null;
-  onCurrencySelect: (currency: Currency) => void;
   otherSelectedCurrency?: Currency | null;
-  commonBases: Currency[];
-  tokens: Currency[];
+  showCommonBases?: boolean;
+  commonBasesType?: string;
+  showSearchInput?: boolean;
+  tokensToShow?: Token[]
+  onCurrencySelect: (currency: Currency) => void;
   modalProps?: Pick<ModalProps, 'size' | 'isCentered'>;
 }
 
-export function CurrencySearchModal({ isOpen, onClose, selectedCurrency, onCurrencySelect, otherSelectedCurrency, commonBases, tokens, modalProps, ...props }: CurrencySearchModalProps & BoxProps) {
+export function CurrencySearchModal({ isOpen, onClose, selectedCurrency, otherSelectedCurrency, onCurrencySelect, showCommonBases = true, commonBasesType, showSearchInput, tokensToShow, modalProps, ...props }: CurrencySearchModalProps & BoxProps) {
   const ResponsiveDialog = useResponsiveDialog();
 
   return (
@@ -29,8 +33,12 @@ export function CurrencySearchModal({ isOpen, onClose, selectedCurrency, onCurre
       <DialogContent
         isOpen={isOpen}
         onClose={onClose}
-        commonBases={commonBases}
-        tokens={tokens}
+        selectedCurrency={selectedCurrency}
+        otherSelectedCurrency={otherSelectedCurrency}
+        showCommonBases={showCommonBases}
+        commonBasesType={commonBasesType}
+        showSearchInput={showSearchInput}
+        tokensToShow={tokensToShow}
         onCurrencySelect={onCurrencySelect}
         {...props}
       />
@@ -38,7 +46,7 @@ export function CurrencySearchModal({ isOpen, onClose, selectedCurrency, onCurre
   );
 }
 
-function DialogContent({isOpen, onClose, commonBases, tokens, onCurrencySelect}: ResponsiveChooseTokenDialogProps) {
+function DialogContent({isOpen, onClose, selectedCurrency, otherSelectedCurrency, showCommonBases, commonBasesType, showSearchInput, tokensToShow, onCurrencySelect}: CurrencySearchModalProps) {
   const {
     DialogHeader,
     DialogBody,
@@ -114,10 +122,17 @@ function DialogContent({isOpen, onClose, commonBases, tokens, onCurrencySelect}:
         <>
           <DialogBasicHeader title='Select a token' />
           <DialogBody p={0}>
-            <SelectToken
-              commonBases={commonBases}
-              tokens={tokens}
+            <CurrencySearch
               onCurrencySelect={handleCurrencySelect}
+              selectedCurrency={selectedCurrency}
+              otherSelectedCurrency={otherSelectedCurrency}
+              showCommonBases={showCommonBases}
+              commonBasesType={commonBasesType}
+              showSearchInput={showSearchInput}
+              showImportView={() => setModalView(CurrencyModalView.importToken)}
+              setImportToken={setImportToken}
+              height={height}
+              tokensToShow={tokensToShow}
             />
           </DialogBody>
           <DialogFooter>

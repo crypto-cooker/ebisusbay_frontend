@@ -126,29 +126,29 @@ export function useWarningTokens(): { [address: string]: ERC20Token } {
   const { chainId } = useActiveChainId()
   return useMemo(() => mapWithoutUrls(warningTokensMap, chainId), [warningTokensMap, chainId])
 }
-//
-// export function useIsTokenActive(token: ERC20Token | undefined | null): boolean {
-//   const activeTokens = useAllTokens()
-//
-//   if (!activeTokens || !token) {
-//     return false
-//   }
-//
-//   const tokenAddress = safeGetAddress(token.address)
-//
-//   return Boolean(tokenAddress && !!activeTokens[tokenAddress])
-// }
-//
+
+export function useIsTokenActive(token: ERC20Token | undefined | null): boolean {
+  const activeTokens = useAllTokens()
+
+  if (!activeTokens || !token) {
+    return false
+  }
+
+  const tokenAddress = safeGetAddress(token.address)
+
+  return Boolean(tokenAddress && !!activeTokens[tokenAddress])
+}
+
 // // Check if currency is included in custom list from user storage
-// export function useIsUserAddedToken(currency: Currency | undefined | null): boolean {
-//   const userAddedTokens = useUserAddedTokens()
-//
-//   if (!currency?.equals) {
-//     return false
-//   }
-//
-//   return !!userAddedTokens.find((token) => currency?.equals(token))
-// }
+export function useIsUserAddedToken(currency: Currency | undefined | null): boolean {
+  const userAddedTokens = useUserAddedTokens()
+
+  if (!currency?.equals) {
+    return false
+  }
+
+  return !!userAddedTokens.find((token) => currency?.equals(token))
+}
 
 // undefined if invalid or does not exist
 // null if loading

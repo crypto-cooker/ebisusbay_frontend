@@ -14,6 +14,8 @@ import {BIG_INT_ZERO} from "@dex/swap/constants/exchange";
 import {useTokenBalance} from "@eb-pancakeswap-web/state/wallet/hooks";
 import currencyId from "@eb-pancakeswap-web/utils/currencyId"
 import {CurrencySearchModal} from "@dex/components/search-modal";
+import {MinimalPositionCard} from '@dex/liquidity/components/position-card';
+import { PrimaryButton, SecondaryButton } from '@src/components-v2/foundation/button';
 
 enum Fields {
   TOKEN0,
@@ -129,25 +131,22 @@ export default function PoolFinder() {
                 hasPosition && pair ? (
                   <>
                     <MinimalPositionCard pair={pair} />
-                    <Button
-                      as={NextLinkFromReactRouter}
-                      to={`/v2/pair/${pair.token0.address}/${pair.token1.address}`}
-                      variant="secondary"
-                      width="100%"
-                    >
-                      Manage this pair
-                    </Button>
+                    <NextLink href={`/v2/pair/${pair.token0.address}/${pair.token1.address}`}>
+                      <Button variant='link' width='full'>
+                        Manage this pair
+                      </Button>
+                    </NextLink>
                   </>
                 ) : (
                   <Card padding="45px 10px">
-                    <Stack gap="sm" justify="center">
+                    <VStack gap="sm" justify="center">
                       <Text textAlign="center">You don’t have liquidity in this pair yet.</Text>
                       <NextLink href={`/v2/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
-                        <Button>
+                        <Button variant='link' width='full'>
                           Add Liquidity
                         </Button>
                       </NextLink>
-                    </Stack>
+                    </VStack>
                   </Card>
                 )
               ) : validPairNoLiquidity ? (

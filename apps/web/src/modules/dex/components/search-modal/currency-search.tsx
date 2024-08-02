@@ -1,28 +1,34 @@
-import { useDebounce, useSortedTokensByQuery } from '@pancakeswap/hooks'
-import { useTranslation } from '@pancakeswap/localization'
-import { UsdvWidget } from '@pancakeswap/widgets-internal'
+import useSortedTokensByQuery from '@eb-pancakeswap-web/hooks/useSortedTokensByQuery'
+import useDebounce from "@src/core/hooks/useDebounce";
 /* eslint-disable no-restricted-syntax */
 import { Currency, Token } from '@pancakeswap/sdk'
 import { WrappedTokenInfo, createFilterToken } from '@pancakeswap/token-lists'
-import { AutoColumn, Box, Column, Input, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useAudioPlay } from '@pancakeswap/utils/user'
-import { KeyboardEvent, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { FixedSizeList } from 'react-window'
+import React, {ChangeEvent, KeyboardEvent, RefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import { isAddress } from 'viem'
 
-import { useActiveChainId } from 'hooks/useActiveChainId'
-import useNativeCurrency from 'hooks/useNativeCurrency'
-import { useUsdvMintAvailable } from 'hooks/useUsdvMintAvailable'
-import { useAllLists, useInactiveListUrls } from 'state/lists/hooks'
-import { safeGetAddress } from 'utils'
+import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId'
+import useNativeCurrency from '@eb-pancakeswap-web/hooks/useNativeCurrency'
+import { useAllLists, useInactiveListUrls } from '@eb-pancakeswap-web/state/lists/hooks'
+import { safeGetAddress } from '@eb-pancakeswap-web/utils'
 
-import { useTokenComparator } from 'hooks/useTokenComparator'
-import { useAllTokens, useIsUserAddedToken, useToken } from '../../hooks/Tokens'
-import Row from '../Layout/Row'
-import CommonBases from './CommonBases'
-import CurrencyList from './CurrencyList'
-import ImportRow from './ImportRow'
-import { getSwapSound } from './swapSound'
+import { useTokenComparator } from '@eb-pancakeswap-web/hooks/useTokenComparator'
+import { useAllTokens, useIsUserAddedToken, useToken } from '@eb-pancakeswap-web/hooks/tokens'
+import CommonBases from './common-bases'
+import CurrencyList from './currency-list'
+import ImportRow from './import-row'
+import { FixedSizeList } from 'react-window'
+import {
+  Box,
+  Text,
+  VStack,
+  useBreakpointValue,
+  InputGroup,
+  Input,
+  InputRightElement,
+  CloseButton
+} from "@chakra-ui/react";
+import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 
 interface CurrencySearchProps {
   selectedCurrency?: Currency | null
@@ -81,18 +87,17 @@ function useSearchInactiveTokenLists(search: string | undefined, minResults = 10
 }
 
 function CurrencySearch({
-                          selectedCurrency,
-                          onCurrencySelect,
-                          otherSelectedCurrency,
-                          showCommonBases,
-                          commonBasesType,
-                          showSearchInput = true,
-                          showImportView,
-                          setImportToken,
-                          height,
-                          tokensToShow,
-                        }: CurrencySearchProps) {
-  const { t } = useTranslation()
+  selectedCurrency,
+  onCurrencySelect,
+  otherSelectedCurrency,
+  showCommonBases,
+  commonBasesType,
+  showSearchInput = true,
+  showImportView,
+  setImportToken,
+  height,
+  tokensToShow,
+}: CurrencySearchProps) {
   const { chainId } = useActiveChainId()
 
   // refs for fixed size lists
@@ -100,20 +105,17 @@ function CurrencySearch({
 
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedQuery = useDebounce(searchQuery, 200)
-  const usdvMintAvailable = useUsdvMintAvailable({
-    chainId,
-    tokenSymbol: debouncedQuery,
-  })
 
   const [invertSearchOrder] = useState<boolean>(false)
 
-  const allTokens = useAllTokens()
+  // const allTokens = useAllTokens()
+  const { supportedTokens: allTokens } = useSupportedTokens();
 
   // if they input an address, use it
   const searchToken = useToken(debouncedQuery)
   const searchTokenIsAdded = useIsUserAddedToken(searchToken)
 
-  const { isMobile } = useMatchBreakpoints()
+  const isMobile = useBreakpointValue({base: true, sm: false}, {fallback: 'sm'});
   const [audioPlay] = useAudioPlay()
 
   const native = useNativeCurrency()
@@ -141,7 +143,7 @@ function CurrencySearch({
     (currency: Currency) => {
       onCurrencySelect(currency)
       if (audioPlay) {
-        getSwapSound().play()
+        console.log('audio plz')
       }
     },
     [audioPlay, onCurrencySelect],
@@ -154,7 +156,7 @@ function CurrencySearch({
     if (!isMobile) inputRef.current?.focus()
   }, [isMobile])
 
-  const handleInput = useCallback((event) => {
+  const handleInput = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value
     const checksummedInput = safeGetAddress(input)
     setSearchQuery(checksummedInput || input)
@@ -180,6 +182,10 @@ function CurrencySearch({
     [debouncedQuery, filteredSortedTokens, handleCurrencySelect, native],
   )
 
+  const handleClearSearch = () => {
+    setSearchQuery('');
+  };
+
   // if no results on main list, show option to expand into inactive
   const filteredInactiveTokens = useSearchInactiveTokenLists(debouncedQuery)
 
@@ -188,14 +194,14 @@ function CurrencySearch({
   const getCurrencyListRows = useCallback(() => {
     if (searchToken && !searchTokenIsAdded && !hasFilteredInactiveTokens) {
       return (
-        <Column style={{ padding: '20px 0', height: '100%' }}>
+        <VStack style={{ padding: '20px 0', height: '100%' }}>
           <ImportRow
             onCurrencySelect={handleCurrencySelect}
             token={searchToken}
             showImportView={showImportView}
             setImportToken={setImportToken}
           />
-        </Column>
+        </VStack>
       )
     }
 
@@ -218,11 +224,11 @@ function CurrencySearch({
         />
       </Box>
     ) : (
-      <Column style={{ padding: '20px', height: '100%' }}>
+      <VStack style={{ padding: '20px', height: '100%' }}>
         <Text color="textSubtle" textAlign="center" mb="20px">
-          {t('No results found.')}
+          No results found.
         </Text>
-      </Column>
+      </VStack>
     )
   }, [
     filteredInactiveTokens,
@@ -236,7 +242,6 @@ function CurrencySearch({
     setImportToken,
     showNative,
     showImportView,
-    t,
     showCommonBases,
     isMobile,
     height,
@@ -244,20 +249,23 @@ function CurrencySearch({
 
   return (
     <>
-      <AutoColumn gap="16px">
+      <VStack align='start' w='full'>
         {showSearchInput && (
-          <Row>
+          <InputGroup px={4}>
             <Input
-              id="token-search-input"
-              placeholder={t('Search name or paste address')}
-              scale="lg"
-              autoComplete="off"
+              placeholder='Search name or paste address'
               value={searchQuery}
-              ref={inputRef as RefObject<HTMLInputElement>}
               onChange={handleInput}
               onKeyDown={handleEnter}
+              ref={inputRef as RefObject<HTMLInputElement>}
+              autoComplete='off'
             />
-          </Row>
+            {searchQuery?.length && (
+              <InputRightElement
+                children={<CloseButton onClick={handleClearSearch} />}
+              />
+            )}
+          </InputGroup>
         )}
         {showCommonBases && (
           <CommonBases
@@ -267,8 +275,7 @@ function CurrencySearch({
             commonBasesType={commonBasesType}
           />
         )}
-        {usdvMintAvailable ? <UsdvWidget.MintLink mt="0.625rem" /> : null}
-      </AutoColumn>
+      </VStack>
       {getCurrencyListRows()}
     </>
   )
