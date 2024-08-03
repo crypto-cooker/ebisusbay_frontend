@@ -17,7 +17,6 @@ import { useAllTokens, useIsUserAddedToken, useToken } from '@eb-pancakeswap-web
 import CommonBases from './common-bases'
 import CurrencyList from './currency-list'
 import ImportRow from './import-row'
-import { FixedSizeList } from 'react-window'
 import {
   Box,
   Text,
@@ -29,6 +28,7 @@ import {
   CloseButton
 } from "@chakra-ui/react";
 import useSupportedTokens from "@dex/hooks/use-supported-tokens";
+import {Virtuoso} from "react-virtuoso";
 
 interface CurrencySearchProps {
   selectedCurrency?: Currency | null
@@ -101,7 +101,7 @@ function CurrencySearch({
   const { chainId } = useActiveChainId()
 
   // refs for fixed size lists
-  const fixedList = useRef<FixedSizeList>()
+  const fixedList = useRef<Virtuoso>()
 
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedQuery = useDebounce(searchQuery, 200)

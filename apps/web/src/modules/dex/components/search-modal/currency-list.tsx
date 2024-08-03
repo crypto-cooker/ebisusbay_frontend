@@ -64,7 +64,7 @@ export default function CurrencyList({
   selectedCurrency?: Currency | null
   onCurrencySelect: (currency: Currency) => void
   otherCurrency?: Currency | null
-  fixedListRef?: MutableRefObject<FixedSizeList | undefined>
+  fixedListRef?: MutableRefObject<Virtuoso | undefined>
   showNative: boolean
   showImportView: () => void
   setImportToken: (token: Token) => void
@@ -149,6 +149,7 @@ export default function CurrencyList({
   return (
     <Box px={6}>
       <Virtuoso
+        ref={fixedListRef}
         style={{ height: height }}
         data={itemData}
         itemContent={Row}

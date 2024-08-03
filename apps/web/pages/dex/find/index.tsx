@@ -14,7 +14,7 @@ export default function Page() {
         title='Ryoshi Swap'
         subtitle='Trade tokens instantly with low fees'
       />
-      <StandardContainer mt={4} maxW='container.md'>
+      <StandardContainer mt={4} maxW='container.sm'>
         <PoolFinder />
       </StandardContainer>
     </>

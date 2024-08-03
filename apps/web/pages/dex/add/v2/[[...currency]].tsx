@@ -6,9 +6,10 @@ import {useCurrency} from "@eb-pancakeswap-web/hooks/tokens";
 import {useRouter} from "next/router";
 import {StandardContainer} from "@src/components-v2/shared/containers";
 import {Card} from "@src/components-v2/foundation/card";
-import {Box, Heading, HStack, IconButton} from "@chakra-ui/react";
+import {Alert, AlertIcon, Box, Heading, HStack, IconButton} from "@chakra-ui/react";
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import NextLink from "next/link";
+import AddLiquidity from "@dex/liquidity/add";
 
 export default function Page() {
   const router = useRouter();
@@ -49,24 +50,8 @@ export default function Page() {
         title='Ryoshi Swap'
         subtitle='Trade tokens instantly with low fees'
       />
-      <StandardContainer mt={4}>
-        <Card>
-          <Heading size='md' mb={2}>
-            <HStack>
-              <NextLink href='/dex/liquidity'>
-                <IconButton
-                  aria-label='Back'
-                  icon={<ArrowBackIcon />}
-                  variant='unstyled'
-                />
-              </NextLink>
-              <Box>Add Liquidity</Box>
-            </HStack>
-          </Heading>
-          <Box>
-            Add Liquidity here
-          </Box>
-        </Card>
+      <StandardContainer mt={4} maxW='container.sm'>
+        <AddLiquidity />
       </StandardContainer>
     </>
   )
