@@ -168,7 +168,7 @@ export const NetworkSwitcher = () => {
   const router = useRouter()
   const {isOpen, onOpen, onClose} = useDisclosure();
 
-  useNetworkConnectorUpdater()
+  // useNetworkConnectorUpdater()
 
   const foundChain = useMemo(() => chains.find((c) => c.id === chainId), [chainId])
   const symbol =
