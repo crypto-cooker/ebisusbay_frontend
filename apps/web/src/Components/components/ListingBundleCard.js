@@ -123,7 +123,8 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
         id: listing.nftId,
         rank: listing.nft.rank,
         isBundle: false,
-        currency: listing.currency
+        currency: listing.currency,
+        chain: listing.chain,
       });
     }
     else{
@@ -137,7 +138,8 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
         rank: listing.nft.rank,
         isBundle: true,
         slug: listing.nft.slug,
-        currency: listing.currency
+        currency: listing.currency,
+        chain: listing.chain
       });
     }
     

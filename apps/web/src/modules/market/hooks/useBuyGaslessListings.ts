@@ -25,6 +25,7 @@ const useBuyGaslessListings = () => {
   });
 
   const {address} = useUser();
+
   const contractService = useContractService();
 
   const buyGaslessListings = async (pendingPurchases: PendingGaslessPurchase[]) => {

@@ -37,9 +37,12 @@ import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon
 import {getPrices} from "@src/core/api/endpoints/prices";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";
-import useAuthedFunction from "@market/hooks/useAuthedFunction";
+import useAuthedFunctionWithChainID from '@market/hooks/useAuthedFunctionWithChainID';
+import {useActiveChainId} from "@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId";
 import useCart from "@market/hooks/use-cart";
 import {appConfig} from "@src/config";
+
+import Items from '@src/components-v2/feature/collection/tabs/items';
 
 const config = appConfig();
 
@@ -51,7 +54,10 @@ const Cart = function () {
   const [invalidItems, setInvalidItems] = useState<string[]>([]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [buyGaslessListings, response] = useBuyGaslessListings();
-  const [runAuthedFunction] = useAuthedFunction();
+  // const [runAuthedFunction] = useAuthedFunction();
+  const { chainId } = useActiveChainId()
+  // const [runAuthedFunction] = useAuthedFunctionWithChainID(chainId);
+
   const slideDirection = useBreakpointValue<'bottom' | 'right'>(
     {
       base: 'bottom',
@@ -92,24 +98,25 @@ const Cart = function () {
    cart.openCart();
   }, [cart]);
 
-  const executeBuy = async () => {
-    await buyGaslessListings(cart.items.map((nft) => ({
-      listingId: nft.listingId,
-      price: parseInt(nft.price.toString()),
-      currency: nft.currency ?? ethers.constants.AddressZero
-    })));
+  const executeBuy = async (listings : any) => {
+    await buyGaslessListings(listings);
     handleClose();
     handleClearCart();
   };
 
   const preparePurchase = async () => {
-    await runAuthedFunction(async () => {
+    if(cart.items.length === 0) return;
+    const cID = chainId;
+    const [runCheckout] = useAuthedFunctionWithChainID(cID);
+
+    await runCheckout(async () => {
       try {
         setExecutingBuy(true);
         const listingIds = cart.items.map((o) => o.listingId);
         const listings = await NextApiService.getListingsByIds(listingIds);
         const validListings = listings.data
           .filter((o) => o.state === listingState.ACTIVE)
+          .filter((o) => o.chain === cID)
           .map((o) => o.listingId);
 
         if (validListings.length < cart.items.length) {
@@ -121,7 +128,11 @@ const Cart = function () {
         }
         setSoldItems([]);
 
-        await executeBuy();
+        await executeBuy(cart.items.map((nft) => ({
+          listingId: nft.listingId,
+          price: parseInt(nft.price.toString()),
+          currency: nft.currency ?? ethers.constants.AddressZero
+        })));
       } catch (error: any) {
         console.log('ERROR:: ', error)
         toast.error(parseErrorMessage(error));

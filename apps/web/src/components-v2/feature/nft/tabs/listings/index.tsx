@@ -37,7 +37,8 @@ const ListingsTab = ({ nft }: ListingsProps) => {
       id: listing.nftId,
       rank: nft.rank,
       amount: listing.amount,
-      currency: listing.currency
+      currency: listing.currency,
+      chain: listing.chain
     });
     toast.success(createSuccessfulAddCartContent(cart.openCart));
   };
