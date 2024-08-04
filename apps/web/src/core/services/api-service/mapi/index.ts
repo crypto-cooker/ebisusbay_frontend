@@ -130,9 +130,10 @@ class Mapi {
   async getWallet(query?: WalletsQueryParams): Promise<PagedList<WalletNft>> {
     const response = await this.wallets.get(new WalletsQuery(query));
 
-    const filteredNfts = response.data.nfts.filter((nft: any) => {
-      return !!findCollectionByAddress(nft.nftAddress, nft.nftId);
-    });
+    const filteredNfts = response.data.nfts;
+    //.filter((nft: any) => {
+      // return !!findCollectionByAddress(nft.nftAddress, nft.nftId);
+    // });
 
     const nfts = await Promise.all(filteredNfts.map(async (nft: any): Promise<WalletNft> => {
       const walletNft = WalletNft.fromMapi(nft);

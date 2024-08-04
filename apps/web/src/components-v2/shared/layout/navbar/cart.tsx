@@ -54,9 +54,9 @@ const Cart = function () {
   const [invalidItems, setInvalidItems] = useState<string[]>([]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [buyGaslessListings, response] = useBuyGaslessListings();
-  // const [runAuthedFunction] = useAuthedFunction();
+
   const { chainId } = useActiveChainId()
-  // const [runAuthedFunction] = useAuthedFunctionWithChainID(chainId);
+  const [runAuthedFunction] = useAuthedFunctionWithChainID(chainId);
 
   const slideDirection = useBreakpointValue<'bottom' | 'right'>(
     {
@@ -106,17 +106,15 @@ const Cart = function () {
 
   const preparePurchase = async () => {
     if(cart.items.length === 0) return;
-    const cID = chainId;
-    const [runCheckout] = useAuthedFunctionWithChainID(cID);
 
-    await runCheckout(async () => {
+    await runAuthedFunction(async () => {
       try {
         setExecutingBuy(true);
         const listingIds = cart.items.map((o) => o.listingId);
         const listings = await NextApiService.getListingsByIds(listingIds);
         const validListings = listings.data
           .filter((o) => o.state === listingState.ACTIVE)
-          .filter((o) => o.chain === cID)
+          .filter((o) => o.chain === chainId)
           .map((o) => o.listingId);
 
         if (validListings.length < cart.items.length) {
