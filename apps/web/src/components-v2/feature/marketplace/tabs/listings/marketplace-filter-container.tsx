@@ -10,7 +10,10 @@ import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/l
 import {MarketplacePageContext, MarketplacePageContextProps} from "@src/components-v2/feature/marketplace/context";
 import {CollectionFilter} from "@src/components-v2/shared/filter-container/filters/collection-filter";
 import {ciEquals} from "@market/helpers/utils";
+import {chains} from "@src/wagmi";
+import {useUserShowTestnet} from "@eb-pancakeswap-web/state/user/hooks/useUserShowTestnet";
 import useCurrencyBroker from '@market/hooks/use-currency-broker';
+import {ChainLogo} from "@dex/components/logo";
 
 const config = appConfig();
 
@@ -33,6 +36,7 @@ const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, on
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
   const { queryParams, setQueryParams  } = useContext(MarketplacePageContext) as MarketplacePageContextProps;
   const { listingCurrencies } = useCurrencyBroker();
+  const [showTestnet] = useUserShowTestnet()
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
     const params = queryParams;
@@ -88,6 +92,21 @@ const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, on
     if (!!params.minRank) curFilters.push({label: `Min Rank ${min}`, key: 'range-min-rank'});
     if (!!params.maxRank) curFilters.push({label: `Max Rank ${max}`, key: 'range-max-rank'});
     setFilteredItems(curFilters);
+
+  }, [queryParams, filteredItems]);
+
+  const handleChainFilter = useCallback((item: RadioItem) => {
+    const chainId = item.key.split('-')[1];
+
+    onFilter({...queryParams, chain: +chainId});
+
+    const i = filteredItems.findIndex((fi) => fi.key === item.key);
+    if (i === -1) {
+      setFilteredItems([
+        ...filteredItems.filter((fi) => !fi.key.startsWith('chain')),
+        {label: item.label, key: item.key}
+      ])
+    }
 
   }, [queryParams, filteredItems]);
 
@@ -161,6 +180,28 @@ const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, on
         currentMin={queryParams.minPrice}
         currentMax={queryParams.maxPrice}
         onChange={handlePriceFilter}
+      />
+      <RadioFilter
+        title='Chain'
+        items={
+          [
+            ...chains
+              .filter((chain) => {
+                if ('testnet' in chain && chain.testnet) {
+                  return showTestnet
+                }
+                return true
+              })
+              .map((c) => (
+                {
+                  label: c.name,
+                  key: `chain-${c.id}`,
+                  icon: <ChainLogo chainId={c.id} />,
+                  isSelected: filteredItems.some((fi) => fi.key === `chain-${c.id}`)
+                }
+            )),
+          ]}
+        onSelect={handleChainFilter}
       />
     </Accordion>
   ), [queryParams, filteredItems, handleRankFilter, handlePriceFilter]);

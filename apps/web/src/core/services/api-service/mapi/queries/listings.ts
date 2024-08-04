@@ -26,6 +26,7 @@ export const listingsQuerySchema: Yup.SchemaOf<ListingsQueryParams> = Yup.object
     maxRank: Yup.number().optional(),
     verified: Yup.number().optional(),
     currency: Yup.string().optional(),
+    chain: Yup.number().optional()
 }).noUnknown();
 
 export interface ListingsQueryParams {
@@ -52,6 +53,7 @@ export interface ListingsQueryParams {
     maxRank?: number;
     verified?: number;
     currency?: string;
+    chain?: number;
 }
 
 export class ListingsQuery extends Query<ListingsQueryParams> {
