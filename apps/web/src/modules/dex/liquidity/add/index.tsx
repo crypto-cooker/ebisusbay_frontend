@@ -57,6 +57,7 @@ import {isUserRejected, logError} from '@eb-pancakeswap-web/utils/sentry';
 import {transactionErrorToUserReadableMessage} from '@src/helpers/validator';
 import { calculateGasMargin } from '@eb-pancakeswap-web/utils';
 import {useGasPrice} from "wagmi";
+import {CommitButton} from "@dex/swap/components/tabs/swap/commit-button";
 
 interface AddLiquidityProps {
   currencyIdA?: string
@@ -93,7 +94,8 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
     isOneWeiAttack,
   } = useDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
 
-  const isValid = !error;
+  const isValid = !error && !addError
+  const errorText = error ?? addError
 
   const { onFieldAInput, onFieldBInput } = useMintActionHandlers(noLiquidity)
 
@@ -233,7 +235,12 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
     currentAllowance: currentAllowanceB,
   } = useApproveCallback(parsedAmounts[Field.CURRENCY_B], chainId && V2_ROUTER_ADDRESS[chainId])
 
-  console.log('debugline1--approval', approvalA, approvalB, isValid);
+  const buttonDisabled = !isValid || approvalA !== ApprovalState.APPROVED || approvalB !== ApprovalState.APPROVED
+
+  const showFieldAApproval = approvalA === ApprovalState.NOT_APPROVED || approvalA === ApprovalState.PENDING
+  const showFieldBApproval = approvalB === ApprovalState.NOT_APPROVED || approvalB === ApprovalState.PENDING
+
+  const shouldShowApprovalGroup = (showFieldAApproval || showFieldBApproval) && isValid
 
   const routerContract = useRouterContract()
 
@@ -315,17 +322,17 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
           const amountA = parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)
           const symbolB = currencies[Field.CURRENCY_B]?.symbol
           const amountB = parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)
-          addTransaction(
-            {hash: response},
-            {
-              summary: `Add ${amountA} ${symbolA} and ${amountB} ${symbolB}`,
-              translatableSummary: {
-                text: 'Add %amountA% %symbolA% and %amountB% %symbolB%',
-                data: {amountA, symbolA, amountB, symbolB},
-              },
-              type: 'add-liquidity',
-            },
-          )
+          // addTransaction(
+          //   {hash: response},
+          //   {
+          //     summary: `Add ${amountA} ${symbolA} and ${amountB} ${symbolB}`,
+          //     translatableSummary: {
+          //       text: 'Add %amountA% %symbolA% and %amountB% %symbolB%',
+          //       data: {amountA, symbolA, amountB, symbolB},
+          //     },
+          //     type: 'add-liquidity',
+          //   },
+          // )
 
           if (pair) {
             addPair(pair)
@@ -468,15 +475,25 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
                       {/*    {error ?? 'Supply'}*/}
                       {/*  </Text>*/}
                       {/*</PrimaryButton>*/}
-                      <PrimaryButton
+                      {/*<PrimaryButton*/}
+                      {/*  onClick={() => {*/}
+                      {/*    expertMode ? onAdd() : setShowConfirm(true);*/}
+                      {/*  }}*/}
+                      {/*>*/}
+                      {/*  <Text fontSize={20} fontWeight={500}>*/}
+                      {/*    Supply*/}
+                      {/*  </Text>*/}
+                      {/*</PrimaryButton>*/}
+                      <CommitButton
+                        variant={buttonDisabled ? 'danger' : 'primary'}
                         onClick={() => {
-                          expertMode ? onAdd() : setShowConfirm(true);
+                          // eslint-disable-next-line no-unused-expressions
+                          expertMode ? onAdd() : onPresentAddLiquidityModal()
                         }}
+                        isDisabled={buttonDisabled}
                       >
-                        <Text fontSize={20} fontWeight={500}>
-                          Supply
-                        </Text>
-                      </PrimaryButton>
+                        {errorText || t('Add')}
+                      </CommitButton>
                     </VStack>
                   ) : (
                     <PrimaryButton onClick={connect}>Connect Wallet</PrimaryButton>

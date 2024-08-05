@@ -1,4 +1,4 @@
-import {Percent, Token, WNATIVE, WCRO} from '@pancakeswap/sdk'
+import {ERC20Token, Percent, Token, WNATIVE, WCRO} from '@pancakeswap/sdk'
 import {cronosTestnetTokens, cronosTokens, cronosZkEvmTestnetTokens, FRTN, USDC, USDT} from '@pancakeswap/tokens'
 import {ChainTokenList} from './types'
 import {ChainId} from "@pancakeswap/chains";
@@ -22,7 +22,12 @@ export const CHAIN_REFRESH_TIME = {
 export const SUGGESTED_BASES: ChainTokenList = {
   [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM]],
   [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],
-  [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
+  [ChainId.CRONOS_TESTNET]: [
+    cronosTestnetTokens.frtn,
+    cronosTestnetTokens.wcro,
+    cronosTestnetTokens.red,
+    cronosTestnetTokens.blue
+  ],
   [ChainId.CRONOS_ZKEVM_TESTNET]: [
     cronosZkEvmTestnetTokens.wcro,
     cronosZkEvmTestnetTokens.usdc,
