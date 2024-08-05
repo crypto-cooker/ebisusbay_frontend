@@ -70,7 +70,6 @@ pipelines:
                   - corepack enable
                   - corepack prepare pnpm@latest-9 --activate
                   - pnpm install
-                  - NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY TURBO_API=$TURBO_API TURBO_TEAM=$TURBO_TEAM TURBO_TOKEN=$TURBO_TOKEN pnpm run build-docker
                   # Build application container
                   - |
                       set +e # turn off error-trapping
