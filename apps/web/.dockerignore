@@ -1,3 +1,4 @@
 node_modules
 submodules
 npm-debug.log
+.git
