@@ -2,11 +2,11 @@
 
 ARG NODE_VERSION=20
 
-############
-### Base ###
-############
+################
+### Updates ###
+################
 
-FROM node:${NODE_VERSION} AS base
+FROM node:${NODE_VERSION} AS updates
 
 # Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
 RUN set -e
@@ -16,8 +16,14 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
 RUN --mount=type=cache,id=apt,target=/var/cache/apt apt-get update
 
+############
+### Base ###
+############
+
+FROM updates AS base
+
 # Setup pnpm and turbo on the base
-RUN npm install npm pnpm turbo --global
+RUN npm i npm pnpm turbo --global
 RUN pnpm config set store-dir ~/.pnpm-store
 
 # Print versions
@@ -35,10 +41,6 @@ FROM base AS pruner
 WORKDIR /usr/src/app
 
 COPY . .
-COPY --link .git ./.git
-
-# Fetch submodule(s)
-RUN git submodule update --init --recursive
  
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
 RUN turbo prune eb-frontend --docker
@@ -58,6 +60,7 @@ COPY --from=pruner /usr/src/app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=pruner /usr/src/app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 RUN rm -rf ./submodules
 COPY ./submodules ./submodules
+
 # eb-web
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
 # eb-pancake-frontend submodule
@@ -70,6 +73,16 @@ WORKDIR /usr/src/app
 COPY --from=pruner /usr/src/app/out/full/ .
 
 # Define build env. variables based on arguments
+
+ARG TURBO_API
+ENV TURBO_API=$TURBO_API
+
+ARG TURBO_TEAM
+ENV TURBO_TEAM=$TURBO_TEAM
+
+ARG TURBO_TOKEN
+ENV TURBO_TOKEN=$TURBO_TOKEN
+
 ARG NEXT_PUBLIC_ENV
 ENV NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV
 
@@ -91,7 +104,8 @@ ENV NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY
 ARG NEXT_FORCE_EDGE_IMAGES
 ENV NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES
 
-RUN --mount=type=cache,id=turbo,target=/usr/src/app/.turbo/cache --mount=type=cache,id=next,target=/usr/src/app/apps/web/.next/cache NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES pnpm run build-docker
+RUN NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES TURBO_API=$TURBO_API TURBO_TEAM=$TURBO_TEAM TURBO_TOKEN=$TURBO_TOKEN pnpm run build-docker
+RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
 
 ##############
 ### Runner ###
@@ -105,7 +119,7 @@ RUN set -e
 # Allow to cache package downloads (BuildKit cache mount)
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
-RUN --mount=type=cache,id=apt,target=/var/cache/apt apt-get update && apt-get --no-install-recommends install -y git curl procps htop net-tools dnsutils dumb-init
+RUN --mount=type=cache,id=apt,target=/var/cache/apt apt-get update && apt-get --no-install-recommends install -y git curl procps htop net-tools dnsutils dumb-init netcat-openbsd
 
 RUN npm i -g npm@latest
 
