@@ -23,7 +23,12 @@ export const SUGGESTED_BASES: ChainTokenList = {
   [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM]],
   [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],
   [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
-  [ChainId.CRONOS_ZKEVM_TESTNET]: [cronosZkEvmTestnetTokens.wcro, cronosZkEvmTestnetTokens.usdc],
+  [ChainId.CRONOS_ZKEVM_TESTNET]: [
+    cronosZkEvmTestnetTokens.wcro,
+    cronosZkEvmTestnetTokens.usdc,
+    cronosZkEvmTestnetTokens.red,
+    cronosZkEvmTestnetTokens.blue
+  ],
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
@@ -32,7 +37,12 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM]],
   [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],
   [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
-  [ChainId.CRONOS_ZKEVM_TESTNET]: [cronosZkEvmTestnetTokens.wcro, cronosZkEvmTestnetTokens.usdc],
+  [ChainId.CRONOS_ZKEVM_TESTNET]: [
+    cronosZkEvmTestnetTokens.wcro,
+    cronosZkEvmTestnetTokens.usdc,
+    cronosZkEvmTestnetTokens.red,
+    cronosZkEvmTestnetTokens.blue
+  ],
 }
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
@@ -45,7 +55,9 @@ export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } 
     [FRTN[ChainId.CRONOS], WCRO[ChainId.CRONOS]],
     [USDC[ChainId.CRONOS], WCRO[ChainId.CRONOS]],
   ],
-  [ChainId.CRONOS_TESTNET]: [],
+  [ChainId.CRONOS_TESTNET]: [
+    [cronosZkEvmTestnetTokens.wcro, cronosZkEvmTestnetTokens.usdc]
+  ],
 }
 
 export const BIG_INT_ZERO = 0n
@@ -70,7 +82,7 @@ export const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(50n, BIPS_BASE)
 export const ZERO_PERCENT = new Percent('0')
 export const ONE_HUNDRED_PERCENT = new Percent('1')
 
-export const BASE_FEE = new Percent(25n, BIPS_BASE)
+export const BASE_FEE = new Percent(30n, BIPS_BASE)
 export const INPUT_FRACTION_AFTER_FEE = ONE_HUNDRED_PERCENT.subtract(BASE_FEE)
 
 // BNB

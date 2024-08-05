@@ -87,7 +87,7 @@ export function useApproveCallback(
   const approve = useCallback(
     async (overrideAmountApprove?: bigint, alreadyApproved = approvalState !== ApprovalState.NOT_APPROVED) => {
       if (alreadyApproved && isUndefinedOrNull(overrideAmountApprove)) {
-        toast.error('Error', 'Approve was called unnecessarily')
+        toast.error('Error: Approve was called unnecessarily')
         console.error('approve was called unnecessarily')
         setIsPendingError(true)
         return undefined
@@ -99,21 +99,21 @@ export function useApproveCallback(
       }
 
       if (!tokenContract) {
-        toast.error('Error', `Cannot find contract of the token ${token?.address}`)
+        toast.error(`Error: Cannot find contract of the token ${token?.address}`);
         console.error('tokenContract is null')
         setIsPendingError(true)
         return undefined
       }
 
       if (!amountToApprove && isUndefinedOrNull(overrideAmountApprove)) {
-        toast.error('Error', 'Missing amount to approve')
+        toast.error('Error: Missing amount to approve')
         console.error('missing amount to approve')
         setIsPendingError(true)
         return undefined
       }
 
       if (!spender) {
-        toast.error('Error', 'No spender')
+        toast.error('Error: o spender')
         console.error('no spender')
         setIsPendingError(true)
         return undefined
@@ -143,7 +143,7 @@ export function useApproveCallback(
             )
             .catch((e) => {
               console.error('estimate gas failure', e)
-              toast.error('Error', 'Unexpected error. Could not estimate gas for the approve.')
+              toast.error('Error: Unexpected error. Could not estimate gas for the approve.')
               setIsPendingError(true)
               return null
             })
@@ -196,7 +196,7 @@ export function useApproveCallback(
         .catch((error: any) => {
           // logError(error)
           console.error('Failed to approve token', error)
-          toast.error('Error', getViemErrorMessage(error))
+          toast.error(`Error: ${getViemErrorMessage(error)}`)
           throw error
         })
     },
