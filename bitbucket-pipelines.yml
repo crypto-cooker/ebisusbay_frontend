@@ -9,6 +9,8 @@ definitions:
     docker:
       memory: 10240 # default memory is 1024MB
       image: public.ecr.aws/docker/library/docker:dind
+    caches:
+      pnpm: $BITBUCKET_CLONE_DIR/.pnpm-store
 
   install_tools: &install_tools
     apt-get update &&
@@ -64,6 +66,11 @@ pipelines:
                   - *aws_ecr_login
                   # Copy RPC config to Admin S3 Bucket
                   - aws s3 cp ./apps/web/src/modules/market/assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
+                  # Install dependencies
+                  - corepack enable
+                  - corepack prepare pnpm@latest-9 --activate
+                  - pnpm install
+                  - NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY TURBO_API=$TURBO_API TURBO_TEAM=$TURBO_TEAM TURBO_TOKEN=$TURBO_TOKEN pnpm run build-docker
                   # Build application container
                   - |
                       set +e # turn off error-trapping
@@ -86,6 +93,8 @@ pipelines:
                   - *proxy_container_build
                   # deploy test-ebisusbay-web-arm64-us-east-1 / testapp.ebisusbay.biz
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
+                caches:
+                  - pnpm
     deploy-to-sandbox:
       - stage:
           name: sandboxapp.ebisusbay.biz
