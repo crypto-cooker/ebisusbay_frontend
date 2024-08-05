@@ -152,6 +152,27 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
 
   }, [queryParams, filteredItems]);
 
+  const handleHiddenFilter = useCallback((item: CheckboxItem, checked: boolean) => {
+    const params = queryParams;
+    console.log('params', params);
+    console.log('item', item);
+    if (item.key === 'status-show-hidden') {
+      console.log('changing');
+      params.showHidden = checked ? 1 : 0;
+      console.log('params after', params);
+    }
+    console.log('here');
+    
+    onFilter({...queryParams, ...params});
+
+    const i = filteredItems.findIndex((fi) => fi.key === item.key)
+    console.log('i', i);
+    if (i !== -1) {
+      setFilteredItems(filteredItems.filter((fi) => fi.key !== item.key))
+    } else setFilteredItems([...filteredItems, item])
+
+  }, [queryParams, filteredItems]);
+
   const FilterAccordion = useMemo(() => (
     <Accordion defaultIndex={[0]} allowMultiple>
       <CollectionFilter
@@ -221,8 +242,15 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
           ]}
         onSelect={handleCurrencyFilter}
       />
+      <CheckboxFilter
+        title='Pro Settings'
+        items={[
+          {label: 'Show Hidden', key: 'status-show-hidden', isChecked: filteredItems.some((fi) => fi.key === 'status-show-hidden')}
+        ]}
+        onCheck={handleHiddenFilter}
+        />
     </Accordion>
-  ), [collections, queryParams, filteredItems, handleCollectionFilter, handleStatusFilter, handleRankFilter, handlePriceFilter]);
+  ), [collections, queryParams, filteredItems, handleCollectionFilter, handleStatusFilter, handleRankFilter, handlePriceFilter, handleHiddenFilter]);
 
   return (
     <>
