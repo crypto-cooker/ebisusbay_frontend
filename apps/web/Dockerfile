@@ -61,16 +61,18 @@ COPY --from=pruner /usr/src/app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 RUN rm -rf ./submodules
 COPY ./submodules ./submodules
 
-# eb-web
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
-# eb-pancake-frontend submodule
-WORKDIR /usr/src/app/submodules/eb-pancake-frontend
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
+# # eb-web
+# RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
+# # eb-pancake-frontend submodule
+# WORKDIR /usr/src/app/submodules/eb-pancake-frontend
+# RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
  
 # Build the project
 WORKDIR /usr/src/app
 # Copy source code of isolated subworkspace
 COPY --from=pruner /usr/src/app/out/full/ .
+COPY ./apps/web/node_modules ./apps/web/node_modules
+COPY ./submodules/eb-pancake-frontend/node_modules ./submodules/eb-pancake-frontend/node_modules
 
 # Define build env. variables based on arguments
 

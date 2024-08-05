@@ -68,8 +68,9 @@ pipelines:
                   - aws s3 cp ./apps/web/src/modules/market/assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
                   # Install dependencies
                   - corepack enable
-                  - corepack prepare pnpm@latest-9 --activate
+                  - corepack prepare pnpm@latest --activate
                   - pnpm install
+                  - cd ./submodules/eb-pancake-frontend && pnpm install
                   # Build application container
                   - |
                       set +e # turn off error-trapping
