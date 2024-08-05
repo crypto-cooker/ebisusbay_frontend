@@ -9,8 +9,8 @@ definitions:
     docker:
       memory: 10240 # default memory is 1024MB
       image: public.ecr.aws/docker/library/docker:dind
-    caches:
-      pnpm: $BITBUCKET_CLONE_DIR/.pnpm-store
+  caches:
+    pnpm: $BITBUCKET_CLONE_DIR/.pnpm-store
 
   install_tools: &install_tools
     apt-get update &&
