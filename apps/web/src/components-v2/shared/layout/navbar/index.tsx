@@ -41,6 +41,7 @@ import { round } from '@market/helpers/utils';
 import ImageService from '@src/core/services/image';
 import { useUser } from '@src/components-v2/useUser';
 import {NetworkSwitcher} from "@src/components-v2/shared/layout/navbar/network-switcher";
+import {useRouter} from "next/navigation";
 
 const config = appConfig();
 
@@ -71,6 +72,8 @@ const Header = function () {
   const [shouldHideFrtn] = useMediaQuery('(max-width: 410px)');
   const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, Number(config.chain.id));
   const [currentFrtnPrice, setCurrentFrtnPrice] = useState(0);
+  const router = useRouter();
+  const [isRouterReady, setIsRouterReady] = useState(false);
 
   const ref: RefObject<HTMLDivElement> = React.useRef(null)
   useOutsideClick({
@@ -92,6 +95,12 @@ const Header = function () {
       console.error('Error setting global FRTN price', e);
     }
   }, [tokenUsdRate]);
+
+  useEffect(() => {
+    if (router.isReady) {
+      setIsRouterReady(true);
+    }
+  }, [router.isReady]);
 
   return (
     <>
@@ -196,7 +205,7 @@ const Header = function () {
               {shouldUseMobileSearch && <MobileSearchDrawer />}
               <Cart />
               {profile && <NotificationMenu />}
-              <NetworkSwitcher />
+              {isRouterReady && <NetworkSwitcher />}
               <span className="my-auto">
                 <AccountMenu />
               </span>

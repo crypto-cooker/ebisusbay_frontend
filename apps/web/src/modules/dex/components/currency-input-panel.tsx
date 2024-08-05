@@ -3,13 +3,14 @@ import {Box, Button, Flex, HStack, Image, NumberInput, NumberInputField, useDisc
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import {ResponsiveChooseTokenDialog} from "@dex/swap/components/tabs/swap/responsive-choose-token-dialog";
 import tokenConfig from "@dex/config/tokens.json";
-import {useCallback} from "react";
+import React, {useCallback} from "react";
 import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 import {Currency} from "@pancakeswap/sdk";
 import {useCurrencyBalance} from "@eb-pancakeswap-web/state/wallet/hooks";
 import {useUser} from "@src/components-v2/useUser";
+import {CurrencySearchModal} from "@dex/components/search-modal";
 
-interface SwapCurrencyInputPanelProps {
+interface CurrencyInputPanelProps {
   value: string;
   onUserInput: (value: string) => void;
   label: string;
@@ -21,15 +22,15 @@ interface SwapCurrencyInputPanelProps {
 }
 
 export default function CurrencyInputPanel({
-                                                 value,
-                                                 onUserInput,
-                                                 label,
-                                                 onCurrencySelect,
-                                                 currency,
-                                                 otherCurrency,
-                                                 onMax,
-                                                 disabled,
-                                               }: SwapCurrencyInputPanelProps) {
+ value,
+ onUserInput,
+ label,
+ onCurrencySelect,
+ currency,
+ otherCurrency,
+ onMax,
+ disabled,
+}: CurrencyInputPanelProps) {
 
   const {address: account} = useUser();
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
@@ -84,15 +85,12 @@ export default function CurrencyInputPanel({
         </HStack>
       </Card>
       {!!onCurrencySelect && (
-        <ResponsiveChooseTokenDialog
+        <CurrencySearchModal
           isOpen={isModalOpen}
           onClose={onModalClose}
           onCurrencySelect={handleSelectedCurrency}
+          showCommonBases
           selectedCurrency={currency}
-          otherSelectedCurrency={otherCurrency}
-          commonBases={commonBases}
-          tokens={supportedTokens}
-          modalProps={{size: 'lg', isCentered: false}}
         />
       )}
     </>

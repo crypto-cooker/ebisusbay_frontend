@@ -16,9 +16,6 @@ export default function Page() {
 
   const { currencyIdA, currencyIdB } = useCurrencyParams()
 
-  const currencyA = useCurrency(currencyIdA)
-  const currencyB = useCurrency(currencyIdB)
-
   const handleRefresh = useCallback(() => {
     router.replace(
       {
@@ -38,7 +35,7 @@ export default function Page() {
 
   useEffect(() => {
     handleRefresh();
-  }, [router, currencyIdA, currencyIdB]);
+  }, [currencyIdA, currencyIdB]);
 
   return (
     <>
@@ -51,7 +48,10 @@ export default function Page() {
         subtitle='Trade tokens instantly with low fees'
       />
       <StandardContainer mt={4} maxW='container.sm'>
-        <AddLiquidity />
+        <AddLiquidity
+          currencyIdA={currencyIdA}
+          currencyIdB={currencyIdB}
+        />
       </StandardContainer>
     </>
   )
