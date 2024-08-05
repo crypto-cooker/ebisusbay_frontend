@@ -70,7 +70,7 @@ pipelines:
                   - corepack enable
                   - corepack prepare pnpm@latest --activate
                   - pnpm install
-                  - cd ./submodules/eb-pancake-frontend && pnpm install
+                  - cd ./submodules/eb-pancake-frontend && pnpm install && cd ../..
                   # Build application container
                   - |
                       set +e # turn off error-trapping
