@@ -5,6 +5,7 @@ const path = require('path');
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  swcMinify: false,
   compiler: {
     styledComponents: true,
   },
@@ -75,7 +76,8 @@ const nextConfig = {
     });
 
     config.resolve.alias['jotai'] = path.resolve(__dirname, 'node_modules/jotai');
-
+    config.optimization.minimize = false;
+    
     return config;
   },
   async redirects() {
