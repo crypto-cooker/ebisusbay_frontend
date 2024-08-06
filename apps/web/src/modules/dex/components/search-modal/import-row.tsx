@@ -5,13 +5,13 @@ import { useIsUserAddedToken, useIsTokenActive } from '@eb-pancakeswap-web/hooks
 import ImportTokenRow from './import-token-row'
 
 export default function ImportRow({
-                                    token,
-                                    style,
-                                    dim,
-                                    onCurrencySelect,
-                                    showImportView,
-                                    setImportToken,
-                                  }: {
+  token,
+  style,
+  dim,
+  onCurrencySelect,
+  showImportView,
+  setImportToken,
+}: {
   token: Token
   style?: CSSProperties
   dim?: boolean

@@ -40,24 +40,25 @@ import {QuestionHelper} from "@dex/swap/components/tabs/swap/question-helper";
 import { isTokenOnList } from '@eb-pancakeswap-web/utils'
 import { useIsUserAddedToken } from '@eb-pancakeswap-web/hooks/tokens'
 import {Virtuoso} from "react-virtuoso";
+import { wrappedCurrency } from '@eb-pancakeswap-web/utils/wrappedCurrency'
 
 function currencyKey(currency: Currency): string {
   return currency?.isToken ? currency.address : currency?.isNative ? currency.symbol : ''
 }
 
 export default function CurrencyList({
-                                       height,
-                                       currencies,
-                                       inactiveCurrencies,
-                                       selectedCurrency,
-                                       onCurrencySelect,
-                                       otherCurrency,
-                                       fixedListRef,
-                                       showNative,
-                                       showImportView,
-                                       setImportToken,
-                                       breakIndex,
-                                     }: {
+  height,
+  currencies,
+  inactiveCurrencies,
+  selectedCurrency,
+  onCurrencySelect,
+  otherCurrency,
+  fixedListRef,
+  showNative,
+  showImportView,
+  setImportToken,
+  breakIndex,
+}: {
   height: number | string
   currencies: Currency[]
   inactiveCurrencies: Currency[]
@@ -91,8 +92,8 @@ export default function CurrencyList({
       const otherSelected = Boolean(otherCurrency && currency && otherCurrency.equals(currency))
 
       const handleSelect = () => onCurrencySelect(currency)
-      // const token = wrappedCurrency(currency, chainId)
-      // const showImport = index > currencies.length
+      const token = wrappedCurrency(currency, chainId)
+      const showImport = index > currencies.length
 
       if (index === breakIndex || !currency) {
         return (
@@ -110,18 +111,18 @@ export default function CurrencyList({
         )
       }
 
-      // if (showImport && token) {
-      //   return (
-      //     <ImportRow
-      //       onCurrencySelect={handleSelect}
-      //       style={style}
-      //       token={token}
-      //       showImportView={showImportView}
-      //       setImportToken={setImportToken}
-      //       dim
-      //     />
-      //   )
-      // }
+      if (showImport && token) {
+        return (
+          <ImportRow
+            onCurrencySelect={handleSelect}
+            style={style}
+            token={token}
+            showImportView={showImportView}
+            setImportToken={setImportToken}
+            dim
+          />
+        )
+      }
       return (
         <CurrencyRow
           style={style}
@@ -170,12 +171,12 @@ export default function CurrencyList({
 }
 
 function CurrencyRow({
-                       currency,
-                       onSelect,
-                       isSelected,
-                       otherSelected,
-                       style,
-                     }: {
+   currency,
+   onSelect,
+   isSelected,
+   otherSelected,
+   style,
+}: {
   currency: Currency
   onSelect: () => void
   isSelected: boolean

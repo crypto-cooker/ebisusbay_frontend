@@ -464,26 +464,6 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
                             )}
                           </Stack>
                         )}
-                      {/*<PrimaryButton*/}
-                      {/*  onClick={() => {*/}
-                      {/*    expertMode ? onAdd() : setShowConfirm(true);*/}
-                      {/*  }}*/}
-                      {/*  isDisabled={!isValid || approvalA !== ApprovalState.APPROVED || approvalB !== ApprovalState.APPROVED}*/}
-                      {/*  isError={!isValid && !!parsedAmounts[Field.CURRENCY_A] && !!parsedAmounts[Field.CURRENCY_B]}*/}
-                      {/*>*/}
-                      {/*  <Text fontSize={20} fontWeight={500}>*/}
-                      {/*    {error ?? 'Supply'}*/}
-                      {/*  </Text>*/}
-                      {/*</PrimaryButton>*/}
-                      {/*<PrimaryButton*/}
-                      {/*  onClick={() => {*/}
-                      {/*    expertMode ? onAdd() : setShowConfirm(true);*/}
-                      {/*  }}*/}
-                      {/*>*/}
-                      {/*  <Text fontSize={20} fontWeight={500}>*/}
-                      {/*    Supply*/}
-                      {/*  </Text>*/}
-                      {/*</PrimaryButton>*/}
                       <CommitButton
                         variant={buttonDisabled ? 'danger' : 'primary'}
                         onClick={() => {
@@ -492,7 +472,7 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
                         }}
                         isDisabled={buttonDisabled}
                       >
-                        {errorText || t('Add')}
+                        {errorText || 'Add'}
                       </CommitButton>
                     </VStack>
                   ) : (
