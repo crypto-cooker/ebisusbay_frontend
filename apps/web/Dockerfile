@@ -26,9 +26,8 @@ FROM updates AS base
 RUN npm i npm turbo --global
 
 # Setup pnmp on the base
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
+RUN pnpm config set store-dir /root/.pnpm-store
 
 # Print versions
 RUN node --version
@@ -68,11 +67,11 @@ COPY --from=pruner /usr/src/app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 COPY --from=pruner /usr/src/app/submodules/ ./submodules
 
 # eb-web
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
+RUN --mount=type=cache,id=pnpm,target=/root/.pnpm-store pnpm install
 
 # eb-pancake-frontend submodule
 WORKDIR /usr/src/app/submodules/eb-pancake-frontend
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
+RUN --mount=type=cache,id=pnpm,target=/root/.pnpm-store pnpm install
  
 # Build the project
 WORKDIR /usr/src/app
