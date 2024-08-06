@@ -11,7 +11,7 @@ import {round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {wagmiConfig} from "@src/wagmi";
 import useCurrencyBroker from "@market/hooks/use-currency-broker";
-import {multicall} from "viem/actions";
+import {readContracts} from "@wagmi/core";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -21,7 +21,7 @@ export function getFarmsUsingChain() {
     const readContract = new Contract(config.contracts.farms, FarmsAbi, readProvider);
     const poolLength = await readContract.poolLength();
 
-    const poolInfo = await multicall(wagmiConfig as any, {
+    const poolInfo = await readContracts(wagmiConfig, {
       contracts: [...Array(parseInt(poolLength)).fill(0)].map((_, i) => (
         {
           address: config.contracts.farms,
@@ -37,7 +37,7 @@ export function getFarmsUsingChain() {
       return lpToken
     });
 
-    const lpTokenInfo = await multicall(wagmiConfig as any, {
+    const lpTokenInfo = await readContracts(wagmiConfig, {
       contracts: lpAddresses.reduce((acc: ContractFunctionParameters[], address: string) => {
         acc.push({
           address: address as Address,
@@ -55,7 +55,7 @@ export function getFarmsUsingChain() {
 
     const uniqueTokenAddresses = Array.from(new Set(lpTokenInfo.map((info: any) => info.result)));
 
-    const tokenInfo = await multicall(wagmiConfig as any, {
+    const tokenInfo = await readContracts(wagmiConfig, {
       contracts: uniqueTokenAddresses.map((address: string) => ({
         address: address as Address,
         abi: erc20Abi as any,

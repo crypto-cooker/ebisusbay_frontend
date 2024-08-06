@@ -1,13 +1,12 @@
-import {Contract, ethers} from "ethers";
+import {ethers} from "ethers";
 import {ERC165} from "@src/global/contracts/Abis";
 import {appConfig} from "@src/config";
 import Constants from '@src/constants';
 import {ciEquals} from "@market/helpers/utils";
-import {Address, erc20Abi} from "viem";
+import {Address} from "viem";
 import {wagmiConfig} from "@src/wagmi";
 import {ContractFunctionParameters} from "viem/types/contract";
-import {multicall} from "viem/actions";
-import {readContract} from "@wagmi/core";
+import {readContract, readContracts} from "@wagmi/core";
 
 const config = appConfig();
 const { ItemType } = Constants;
@@ -48,7 +47,7 @@ export async function is1155Many(nftAddresses: string[]) {
     };
   });
 
-  const data = await multicall(wagmiConfig as any, {
+  const data = await readContracts(wagmiConfig, {
     contracts: tokenContracts,
   });
 

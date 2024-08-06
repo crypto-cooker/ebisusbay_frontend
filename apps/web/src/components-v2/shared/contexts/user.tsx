@@ -15,7 +15,7 @@ import {storageSignerAtom} from "@market/state/jotai/atoms/storage";
 import * as Sentry from "@sentry/react";
 import {themeAtom} from "@market/state/jotai/atoms/theme";
 import {wagmiConfig} from "@src/wagmi";
-import {multicall} from "viem/actions";
+import { readContracts } from '@wagmi/core'
 
 const config = appConfig();
 
@@ -116,7 +116,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         throw {err: 'Unable to connect'};
       }
 
-      const data = await multicall(wagmiConfig as any, {
+      const data = await readContracts(wagmiConfig, {
         contracts: [
           {
             address: config.contracts.market,

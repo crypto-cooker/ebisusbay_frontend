@@ -8,7 +8,7 @@ import {BarterState} from "@market/state/jotai/atoms/deal";
 import {Deal} from "@src/core/services/api-service/mapi/types";
 import { wagmiConfig } from '@src/wagmi';
 import { ContractFunctionParameters } from 'viem/types/contract';
-import {multicall} from "viem/actions";
+import {readContracts} from "@wagmi/core";
 
 const config = appConfig();
 
@@ -44,7 +44,7 @@ const useApprovalStatus = () => {
       }
     });
 
-    const contractResults = await multicall(wagmiConfig as any, {
+    const contractResults = await readContracts(wagmiConfig, {
       contracts: contracts,
     });
 
@@ -108,7 +108,7 @@ const useApprovalStatus = () => {
       };
     });
 
-    const data = await multicall(wagmiConfig as any, {
+    const data = await readContracts(wagmiConfig, {
       contracts: nftContracts.concat(tokenContracts),
     });
 
