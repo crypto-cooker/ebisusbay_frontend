@@ -22,9 +22,13 @@ RUN --mount=type=cache,id=apt,target=/var/cache/apt apt-get update
 
 FROM updates AS base
 
-# Setup pnpm and turbo on the base
-RUN npm i npm pnpm turbo --global
-RUN pnpm config set store-dir ~/.pnpm-store
+# Setup npm and turbo on the base
+RUN npm i npm turbo --global
+
+# Setup pnmp on the base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 # Print versions
 RUN node --version
@@ -67,11 +71,11 @@ COPY --from=pruner /usr/src/app/submodules/ ./submodules
 RUN ls -la
 
 # eb-web
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 
 # eb-pancake-frontend submodule
 WORKDIR /usr/src/app/submodules/eb-pancake-frontend
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
  
 # Build the project
 WORKDIR /usr/src/app
