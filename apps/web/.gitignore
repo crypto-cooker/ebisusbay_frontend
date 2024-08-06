@@ -49,3 +49,5 @@ src/components-v2/feature/ryoshi-dynasties/game/areas/lands/indv-meta/
 .sentryclirc
 
 certificates
+# Sentry Config File
+.env.sentry-build-plugin
