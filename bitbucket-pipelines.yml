@@ -65,7 +65,23 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --build-arg TURBO_API=${TURBO_API} --build-arg TURBO_TEAM=${TURBO_TEAM} --build-arg TURBO_TOKEN=${TURBO_TOKEN} --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
+                      docker build --platform linux/arm64 \
+                        --build-arg BUILDKIT_INLINE_CACHE=1 \
+                        --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
+                        --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
+                        --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
+                        --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
+                        --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+                        --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg TURBO_API=${TURBO_API} \
+                        --build-arg TURBO_TEAM=${TURBO_TEAM} \
+                        --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+                        --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
+                        --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
+                        --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
+                        --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+                        --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
+                      
                       docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
                       RETURN_CODE=$?
 
@@ -115,7 +131,23 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --build-arg TURBO_API=${TURBO_API} --build-arg TURBO_TEAM=${TURBO_TEAM} --build-arg TURBO_TOKEN=${TURBO_TOKEN} --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
+                      docker build --platform linux/arm64 \
+                        --build-arg BUILDKIT_INLINE_CACHE=1 \
+                        --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
+                        --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
+                        --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
+                        --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
+                        --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+                        --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg TURBO_API=${TURBO_API} \
+                        --build-arg TURBO_TEAM=${TURBO_TEAM} \
+                        --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+                        --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
+                        --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
+                        --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
+                        --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+                        --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
+                      
                       docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
                       RETURN_CODE=$?
 
@@ -165,7 +197,23 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --build-arg TURBO_API=${TURBO_API} --build-arg TURBO_TEAM=${TURBO_TEAM} --build-arg TURBO_TOKEN=${TURBO_TOKEN} --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
+                      docker build --platform linux/arm64 \
+                        --build-arg BUILDKIT_INLINE_CACHE=1 \
+                        --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
+                        --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
+                        --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
+                        --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
+                        --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+                        --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg TURBO_API=${TURBO_API} \
+                        --build-arg TURBO_TEAM=${TURBO_TEAM} \
+                        --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+                        --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
+                        --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
+                        --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
+                        --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+                        --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
+                      
                       docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
                       RETURN_CODE=$?
 
@@ -216,7 +264,23 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --build-arg TURBO_API=${TURBO_API} --build-arg TURBO_TEAM=${TURBO_TEAM} --build-arg TURBO_TOKEN=${TURBO_TOKEN} --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
+                      docker build --platform linux/arm64 \
+                        --build-arg BUILDKIT_INLINE_CACHE=1 \
+                        --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
+                        --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
+                        --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
+                        --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
+                        --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+                        --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg TURBO_API=${TURBO_API} \
+                        --build-arg TURBO_TEAM=${TURBO_TEAM} \
+                        --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+                        --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
+                        --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
+                        --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
+                        --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+                        --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
+                      
                       docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
                       RETURN_CODE=$?
 
@@ -266,7 +330,23 @@ pipelines:
                       set +e # turn off error-trapping
 
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --build-arg TURBO_API=${TURBO_API} --build-arg TURBO_TEAM=${TURBO_TEAM} --build-arg TURBO_TOKEN=${TURBO_TOKEN} --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
+                      docker build --platform linux/arm64 \
+                        --build-arg BUILDKIT_INLINE_CACHE=1 \
+                        --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
+                        --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
+                        --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
+                        --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
+                        --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+                        --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg TURBO_API=${TURBO_API} \
+                        --build-arg TURBO_TEAM=${TURBO_TEAM} \
+                        --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+                        --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
+                        --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
+                        --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
+                        --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+                        --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
+                      
                       docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
                       RETURN_CODE=$?
 
