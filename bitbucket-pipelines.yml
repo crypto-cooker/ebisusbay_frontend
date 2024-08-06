@@ -139,25 +139,7 @@ pipelines:
                       docker version
                       docker buildx version
 
-                      # # Inline cache
-                      # docker buildx build --push --platform linux/arm64 -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}  \
-                      #   --build-arg BUILDKIT_INLINE_CACHE=1 \
-                      #   --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
-                      #   --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
-                      #   --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
-                      #   --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
-                      #   --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
-                      #   --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
-                      #   --build-arg TURBO_API=${TURBO_API} \
-                      #   --build-arg TURBO_TEAM=${TURBO_TEAM} \
-                      #   --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
-                      #   --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
-                      #   --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
-                      #   --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
-                      #   --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
-                      #   -f ./apps/web/Dockerfile .
-
-                      # Amazon S3 cache
+                      # Inline cache
                       docker buildx build --push --platform linux/arm64 -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}  \
                         --build-arg BUILDKIT_INLINE_CACHE=1 \
                         --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
@@ -172,10 +154,8 @@ pipelines:
                         --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
                         --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
                         --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
-                        --cache-to type=s3,region=us-east-1,bucket=ebisusbay-docker-cache,name=${APP_REPOSITORY}:${VERSION} \
-                        --cache-from type=s3,region=s-east-1,bucket=ebisusbay-docker-cache,name=${APP_REPOSITORY}:${VERSION} \
-                        -f ./apps/web/Dockerfile .
-
+                        --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
+                      
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
