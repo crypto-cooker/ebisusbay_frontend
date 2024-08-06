@@ -18,7 +18,9 @@ services:
         - TURBO_API=https://turborepo-remote-cache.ebisusbay.com # The address of a running turborepo-remote-cache server
         - TURBO_TEAM=eb-frontend-local # application/team
         - TURBO_TOKEN=VerySecret123 # Your secret key. This must be the same as the TURBO_TOKEN variable set on your turborepo-remote-cache server instance
-        # - TURBO_REMOTE_ONLY=true
+        - TURBO_REMOTE_ONLY=false
+        - TURBO_REMOTE_CACHE_TIMEOUT=120
+        - TURBO_RUN_SUMMARY=true
     environment:
       PORT: '3000'
       EB_API_KEY: s48kQNFcCmC79NKm9CzQ
