@@ -1,6 +1,12 @@
 const { withSentryConfig } = require("@sentry/nextjs");
 const path = require('path');
 
+const workerDeps = [
+  '/packages/smart-router/',
+  '/packages/swap-sdk/',
+  '/packages/token-lists/',
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -39,6 +45,7 @@ const nextConfig = {
     defaultLocale: "en",
   },
   transpilePackages: [
+    '@pancakeswap/token-lists',
     '@pancakeswap/utils',
     '@tanstack/query-core',
   ],
@@ -77,7 +84,28 @@ const nextConfig = {
 
     config.resolve.alias['jotai'] = path.resolve(__dirname, 'node_modules/jotai');
     config.optimization.minimize = false;
-    
+
+    webpackConfig.plugins.push(
+        new webpack.DefinePlugin({
+          __SENTRY_DEBUG__: false,
+          __SENTRY_TRACING__: false,
+        })
+    );
+
+    // Ensure proper handling of worker dependencies (only if relevant)
+    if (!isServer && webpackConfig.optimization.splitChunks) {
+      webpackConfig.optimization.splitChunks.cacheGroups.workerChunks = {
+        chunks: 'all',
+        test(module) {
+          const resource = module.nameForCondition?.() ?? '';
+          return resource ? workerDeps.some((d) => resource.includes(d)) : false;
+        },
+        priority: 31,
+        name: 'worker-chunks',
+        reuseExistingChunk: true,
+      };
+    }
+
     return config;
   },
   async redirects() {
