@@ -247,7 +247,7 @@ pipelines:
     #               - *proxy_container_build
     #               # deploy test-ebisusbay-web-arm64-us-east-1 / testapp.ebisusbay.biz
     #               - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
-    # deploy-to-sandbox:
+    deploy-to-sandbox:
       - stage:
           name: sandboxapp.ebisusbay.biz
           deployment: Sandbox
