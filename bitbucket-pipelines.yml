@@ -114,8 +114,6 @@ pipelines:
                 services:
                   - docker
                 script:
-                  # Enable Docker Buildkit
-                  - export DOCKER_BUILDKIT=1
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
