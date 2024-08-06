@@ -14,9 +14,9 @@ definitions:
     apt-get update &&
     apt-get install -y gettext
   install_aws_cli: &install_aws_cli
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip" &&
-    unzip awscliv2.zip &&
-    ./aws/install &&
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip" > /dev/null 2>&1 &&
+    unzip awscliv2.zip > /dev/null 2>&1 &&
+    ./aws/install > /dev/null 2>&1 &&
     aws --version
   aws_ecr_login: &aws_ecr_login
     aws ecr get-login-password | docker login --password-stdin --username AWS "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
@@ -143,6 +143,7 @@ pipelines:
 
                       # Inline cache
                       docker buildx build --push --platform linux/arm64 -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}  \
+                        --build-arg BUILDKIT_INLINE_CACHE=1 \
                         --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
                         --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
                         --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
@@ -155,7 +156,6 @@ pipelines:
                         --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
                         --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
                         --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
-                        --cache-to type=inline \
                         --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
                       
                       RETURN_CODE=$?
