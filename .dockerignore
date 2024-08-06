@@ -1,0 +1,23 @@
+# add git-ignore syntax here of things you don't want copied into docker image
+
+volumes
+# .git
+**/**/.next
+**/**/.turbo
+.turbo
+**/**/node_modules
+node_modules
+**/**/Dockerfile
+**/**/Dockerfile_local
+submodules
+out
+*.log
+**/**/.DS_Store
+.DS_Store
+bitbucket-pipelines.yml
+docker-compose.yml
+public
+README.md
+.nvmrc
+**/**/.env.example
+**/**/proxy

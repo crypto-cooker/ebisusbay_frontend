@@ -22,9 +22,13 @@ RUN --mount=type=cache,id=apt,target=/var/cache/apt apt-get update
 
 FROM updates AS base
 
-# Setup pnpm and turbo on the base
-RUN npm i npm pnpm turbo --global
-RUN pnpm config set store-dir ~/.pnpm-store
+# Setup npm and turbo on the base
+RUN npm i npm turbo --global
+
+# Setup pnmp on the base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 # Print versions
 RUN node --version
@@ -41,9 +45,12 @@ FROM base AS pruner
 WORKDIR /usr/src/app
 
 COPY . .
- 
+
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
 RUN turbo prune eb-frontend --docker
+
+# Fetch git submodules
+RUN git submodule update --init --recursive
 
 ###############
 ### Builder ###
@@ -58,14 +65,14 @@ WORKDIR /usr/src/app
 COPY --from=pruner /usr/src/app/out/json/ .
 COPY --from=pruner /usr/src/app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=pruner /usr/src/app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
-RUN rm -rf ./submodules
-COPY ./submodules ./submodules
+COPY --from=pruner /usr/src/app/submodules/ ./submodules
 
 # eb-web
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
+
 # eb-pancake-frontend submodule
 WORKDIR /usr/src/app/submodules/eb-pancake-frontend
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
  
 # Build the project
 WORKDIR /usr/src/app
@@ -74,19 +81,21 @@ COPY --from=pruner /usr/src/app/out/full/ .
 
 # Define build env. variables based on arguments
 
-ARG TURBO_API
-ARG TURBO_TEAM
-ARG TURBO_TOKEN
 ARG NEXT_PUBLIC_ENV
 ARG NEXT_PUBLIC_SITE24X7_KEY
 ARG NEXT_PUBLIC_SENTRY_DSN
 ARG NEXT_PUBLIC_SENTRY_ENVIRONMENT
 ARG SENTRY_AUTH_TOKEN
 ARG NEXT_PUBLIC_WEB3MODAL_API_KEY
-ARG NEXT_FORCE_EDGE_IMAGES
 
-RUN NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY TURBO_API=$TURBO_API TURBO_TEAM=$TURBO_TEAM TURBO_TOKEN=$TURBO_TOKEN pnpm run build-docker
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
+ARG TURBO_API
+ARG TURBO_TEAM
+ARG TURBO_TOKEN
+ARG TURBO_REMOTE_ONLY
+ARG TURBO_REMOTE_CACHE_TIMEOUT
+ARG TURBO_RUN_SUMMARY
+
+RUN NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY TURBO_API=$TURBO_API TURBO_TEAM=$TURBO_TEAM TURBO_TOKEN=$TURBO_TOKEN TURBO_REMOTE_ONLY=$TURBO_REMOTE_ONLY TURBO_REMOTE_CACHE_TIMEOUT=$TURBO_REMOTE_CACHE_TIMEOUT TURBO_RUN_SUMMARY=$TURBO_RUN_SUMMARY pnpm run build-docker
 
 ##############
 ### Runner ###
