@@ -45,6 +45,7 @@ export function computeTradePriceBreakdown(trade?: Trade<Currency, Currency, Tra
 } {
   // for each hop in our trade, take away the x*y=k price impact from 0.3% fees
   // e.g. for 3 tokens/2 hops: 1 - ((1 - .03) * (1-.03))
+  // TODO: add dynamic EB DEX fee feature
   const realizedLPFee = !trade
     ? undefined
     : ONE_HUNDRED_PERCENT.subtract(

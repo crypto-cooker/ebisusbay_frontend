@@ -35,7 +35,6 @@ export default function CurrencyInputPanel({
   const {address: account} = useUser();
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
   const { supportedTokens } = useSupportedTokens();
-  const commonBases = supportedTokens.filter(token => tokenConfig.commonBases.map(symbol =>  symbol.toLowerCase()).includes(token.symbol!.toLowerCase()));
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined);
 
   const handleSelectedCurrency = useCallback((currency: Currency) => {

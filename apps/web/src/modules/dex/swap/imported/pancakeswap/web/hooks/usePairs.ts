@@ -5,6 +5,7 @@ import { wrappedCurrency } from '@eb-pancakeswap-web/utils/wrappedCurrency'
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId'
 import {useGetPairs} from "@eb-pancakeswap-web/hooks/useGetPairs";
 import {parseUnits} from "ethers/lib/utils";
+import { useMultipleContractSingleData } from '@eb-pancakeswap-web/state/multicall/hooks'
 
 export enum PairState {
   LOADING,
@@ -49,13 +50,35 @@ export function useV2Pairs(currencies: [Currency | undefined, Currency | undefin
 
   const { isLoading, data: results } = useGetPairs(pairAddresses);
   console.log('useV2Pairs2', isLoading, results, results?.length);
-  // const results = useMultipleContractSingleData({
-  //   addresses: pairAddresses,
-  //   abi: PairAbi,
-  //   functionName: 'getReserves',
-  // })
-  // console.log('useV2Pairs2', data);
+//   const results = useMultipleContractSingleData({
+//     addresses: pairAddresses,
+//     abi: pancakePairV2ABI,
+//     functionName: 'getReserves',
+//   })
+//   console.log('useV2Pairs2', results);
+// return [[PairState.LOADING, null]];
+//   return useMemo(() => {
+//     return results?.map((result, i) => {
+//       const { result: reserves, loading } = result
+//       const tokenA = tokens[i][0]
+//       const tokenB = tokens[i][1]
+//
+//       if (loading) return [PairState.LOADING, null]
+//       if (!tokenA || !tokenB || tokenA.equals(tokenB)) return [PairState.INVALID, null]
+//       if (!reserves) return [PairState.NOT_EXISTS, null]
+//       const [reserve0, reserve1] = reserves
+//       const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
+//       return [
+//         PairState.EXISTS,
+//         new Pair(
+//           CurrencyAmount.fromRawAmount(token0, reserve0.toString()),
+//           CurrencyAmount.fromRawAmount(token1, reserve1.toString()),
+//         ),
+//       ]
+//     }) ?? [[PairState.LOADING, null]]
+//   }, [results, tokens])
 
+  console.log('debugline1--usePairs', tokens, results, results?.length);
   return useMemo(() => {
     if (!isLoading && (!results || results.length === 0)) return tokens.map(t => [PairState.INVALID, null]);
 

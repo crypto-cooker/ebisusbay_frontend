@@ -12,7 +12,7 @@
     "build": "turbo run build --filter=eb-frontend...",
     "build-docker": "turbo run build --filter=eb-frontend...",
     "build:basic": "turbo run build-local --filter=eb-frontend...",
-    "submodules:update": "git submodule update --remote && git add submodules/eb-pancake-frontend && git commit -m \"Update eb-pancake-frontend submodule to latest commit\" && pnpm install && pnpm dev"
+    "submodules:update": "git submodule update --remote && git add submodules/eb-pancake-frontend && git commit -m \"Update eb-pancake-frontend submodule to latest commit\" && pnpm install"
   },
   "devDependencies": {
     "turbo": "^2.0.9",

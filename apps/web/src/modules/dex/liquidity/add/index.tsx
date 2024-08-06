@@ -52,6 +52,12 @@ import {useRouterContract} from "@eb-pancakeswap-web/utils/exchange";
 import { useWalletClient } from 'wagmi'
 import {useTransactionDeadline} from "@eb-pancakeswap-web/hooks/useTransactionDeadline";
 import { useUserSlippage } from '@pancakeswap/utils/user';
+import {calculateSlippageAmount} from '@eb-pancakeswap-web/utils/exchange';
+import {isUserRejected, logError} from '@eb-pancakeswap-web/utils/sentry';
+import {transactionErrorToUserReadableMessage} from '@src/helpers/validator';
+import { calculateGasMargin } from '@eb-pancakeswap-web/utils';
+import {useGasPrice} from "wagmi";
+import {CommitButton} from "@dex/swap/components/tabs/swap/commit-button";
 
 interface AddLiquidityProps {
   currencyIdA?: string
@@ -67,6 +73,8 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
   const currencyB = useCurrency(currencyIdB)
 
   const expertMode = useIsExpertMode();
+
+  const gasPrice = useGasPrice();
 
   // mint state
   const { independentField, typedValue, otherTypedValue } = useAddLiquidityV2FormState()
@@ -86,9 +94,20 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
     isOneWeiAttack,
   } = useDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
 
-  const isValid = !error;
+  const isValid = !error && !addError
+  const errorText = error ?? addError
 
   const { onFieldAInput, onFieldBInput } = useMintActionHandlers(noLiquidity)
+
+  const [{ attemptingTxn, liquidityErrorMessage, txHash }, setLiquidityState] = useState<{
+    attemptingTxn: boolean
+    liquidityErrorMessage: string | undefined
+    txHash: string | undefined
+  }>({
+    attemptingTxn: false,
+    liquidityErrorMessage: undefined,
+    txHash: undefined,
+  })
 
   const formattedAmounts = useMemo(
     () => ({
@@ -216,12 +235,20 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
     currentAllowance: currentAllowanceB,
   } = useApproveCallback(parsedAmounts[Field.CURRENCY_B], chainId && V2_ROUTER_ADDRESS[chainId])
 
+  const buttonDisabled = !isValid || approvalA !== ApprovalState.APPROVED || approvalB !== ApprovalState.APPROVED
+
+  const showFieldAApproval = approvalA === ApprovalState.NOT_APPROVED || approvalA === ApprovalState.PENDING
+  const showFieldBApproval = approvalB === ApprovalState.NOT_APPROVED || approvalB === ApprovalState.PENDING
+
+  const shouldShowApprovalGroup = (showFieldAApproval || showFieldBApproval) && isValid
+
   const routerContract = useRouterContract()
 
   async function onAdd() {
     if (!chainId || !account || !routerContract || !walletClient) return
 
     const { [Field.CURRENCY_A]: parsedAmountA, [Field.CURRENCY_B]: parsedAmountB } = parsedAmounts
+
     if (!parsedAmountA || !parsedAmountB || !currencyA || !currencyB || !deadline) {
       return
     }
@@ -251,6 +278,7 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
         deadline,
       ]
       value = (tokenBIsNative ? parsedAmountB : parsedAmountA).quotient
+      console.log('debugline1--addLiquidityETH');
     } else {
       estimate = routerContract.estimateGas.addLiquidity
       method = routerContract.write.addLiquidity
@@ -265,45 +293,54 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
         deadline,
       ]
       value = null
+      console.log('debugline1--addLiquidity');
     }
 
     setLiquidityState({ attemptingTxn: true, liquidityErrorMessage: undefined, txHash: undefined })
+    console.log('debugline1--contract', routerContract)
+    console.log('debugline1--args', args)
+    console.log('debugline1--value', value
+      ? { value, account: routerContract.account, chain: routerContract.chain }
+      : { account: routerContract.account, chain: routerContract.chain })
     await estimate(
       args,
       value
         ? { value, account: routerContract.account, chain: routerContract.chain }
         : { account: routerContract.account, chain: routerContract.chain },
     )
-      .then((estimatedGasLimit: any) =>
-        method(args, {
-          ...(value ? { value } : {}),
-          gas: calculateGasMargin(estimatedGasLimit),
-          gasPrice,
+      .then((estimatedGasLimit: any) => {
+        console.log('debugline2', method)
+        return method(args, {
+          ...(value ? {value} : {}),
+          // gas: calculateGasMargin(estimatedGasLimit),
+          // gasPrice,
         }).then((response: Hash) => {
-          setLiquidityState({ attemptingTxn: false, liquidityErrorMessage: undefined, txHash: response })
+          console.log('debugline3')
+          setLiquidityState({attemptingTxn: false, liquidityErrorMessage: undefined, txHash: response})
 
           const symbolA = currencies[Field.CURRENCY_A]?.symbol
           const amountA = parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)
           const symbolB = currencies[Field.CURRENCY_B]?.symbol
           const amountB = parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)
-          addTransaction(
-            { hash: response },
-            {
-              summary: `Add ${amountA} ${symbolA} and ${amountB} ${symbolB}`,
-              translatableSummary: {
-                text: 'Add %amountA% %symbolA% and %amountB% %symbolB%',
-                data: { amountA, symbolA, amountB, symbolB },
-              },
-              type: 'add-liquidity',
-            },
-          )
+          // addTransaction(
+          //   {hash: response},
+          //   {
+          //     summary: `Add ${amountA} ${symbolA} and ${amountB} ${symbolB}`,
+          //     translatableSummary: {
+          //       text: 'Add %amountA% %symbolA% and %amountB% %symbolB%',
+          //       data: {amountA, symbolA, amountB, symbolB},
+          //     },
+          //     type: 'add-liquidity',
+          //   },
+          // )
 
           if (pair) {
             addPair(pair)
           }
-        }),
-      )
+        })
+      } )
       ?.catch((err: any) => {
+        console.log('debugline-e', err)
         if (err && !isUserRejected(err)) {
           logError(err)
           console.error(`Add Liquidity failed`, err, args, value)
@@ -312,7 +349,7 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
           attemptingTxn: false,
           liquidityErrorMessage:
             err && !isUserRejected(err)
-              ? t('Add liquidity failed: %message%', { message: transactionErrorToUserReadableMessage(err, t) })
+              ? `Add liquidity failed: ${transactionErrorToUserReadableMessage(err)}`
               : undefined,
           txHash: undefined,
         })
@@ -427,17 +464,36 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
                             )}
                           </Stack>
                         )}
-                      <PrimaryButton
+                      {/*<PrimaryButton*/}
+                      {/*  onClick={() => {*/}
+                      {/*    expertMode ? onAdd() : setShowConfirm(true);*/}
+                      {/*  }}*/}
+                      {/*  isDisabled={!isValid || approvalA !== ApprovalState.APPROVED || approvalB !== ApprovalState.APPROVED}*/}
+                      {/*  isError={!isValid && !!parsedAmounts[Field.CURRENCY_A] && !!parsedAmounts[Field.CURRENCY_B]}*/}
+                      {/*>*/}
+                      {/*  <Text fontSize={20} fontWeight={500}>*/}
+                      {/*    {error ?? 'Supply'}*/}
+                      {/*  </Text>*/}
+                      {/*</PrimaryButton>*/}
+                      {/*<PrimaryButton*/}
+                      {/*  onClick={() => {*/}
+                      {/*    expertMode ? onAdd() : setShowConfirm(true);*/}
+                      {/*  }}*/}
+                      {/*>*/}
+                      {/*  <Text fontSize={20} fontWeight={500}>*/}
+                      {/*    Supply*/}
+                      {/*  </Text>*/}
+                      {/*</PrimaryButton>*/}
+                      <CommitButton
+                        variant={buttonDisabled ? 'danger' : 'primary'}
                         onClick={() => {
-                          expertMode ? onAdd() : setShowConfirm(true);
+                          // eslint-disable-next-line no-unused-expressions
+                          expertMode ? onAdd() : onPresentAddLiquidityModal()
                         }}
-                        isDisabled={!isValid || approvalA !== ApprovalState.APPROVED || approvalB !== ApprovalState.APPROVED}
-                        isError={!isValid && !!parsedAmounts[Field.CURRENCY_A] && !!parsedAmounts[Field.CURRENCY_B]}
+                        isDisabled={buttonDisabled}
                       >
-                        <Text fontSize={20} fontWeight={500}>
-                          {error ?? 'Supply'}
-                        </Text>
-                      </PrimaryButton>
+                        {errorText || t('Add')}
+                      </CommitButton>
                     </VStack>
                   ) : (
                     <PrimaryButton onClick={connect}>Connect Wallet</PrimaryButton>

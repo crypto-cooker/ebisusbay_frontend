@@ -10,6 +10,12 @@ import {Alert, AlertIcon, Box, Heading, HStack, IconButton} from "@chakra-ui/rea
 import {ArrowBackIcon} from "@chakra-ui/icons";
 import NextLink from "next/link";
 import AddLiquidity from "@dex/liquidity/add";
+import {usePollBlockNumber} from "@eb-pancakeswap-web/state/block/hooks";
+
+function GlobalHooks() {
+  usePollBlockNumber()
+  return null
+}
 
 export default function Page() {
   const router = useRouter();
@@ -47,6 +53,7 @@ export default function Page() {
         title='Ryoshi Swap'
         subtitle='Trade tokens instantly with low fees'
       />
+      <GlobalHooks />
       <StandardContainer mt={4} maxW='container.sm'>
         <AddLiquidity
           currencyIdA={currencyIdA}
