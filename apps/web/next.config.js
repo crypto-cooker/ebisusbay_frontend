@@ -39,6 +39,7 @@ const nextConfig = {
   },
   transpilePackages: [
     '@pancakeswap/utils',
+    '@tanstack/query-core',
   ],
   eslint: {
     ignoreDuringBuilds: true,
@@ -301,7 +302,7 @@ const sentryWebpackPluginOptions = {
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
   // Suppresses source map uploading logs during build
-  silent: true,
+  silent: false,
   org: "ebisus-bay",
   project: "eb-web",
   // authToken: process.env.SENTRY_AUTH_TOKEN,
