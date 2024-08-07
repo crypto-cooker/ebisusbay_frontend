@@ -13,6 +13,13 @@ import {
   removeMulticallListeners,
   toCallKey,
 } from './actions'
+import {multicall} from "viem/actions";
+import {wagmiConfig} from "@src/wagmi";
+import { useContractReads } from 'wagmi';
+
+type ViemContractReadResult<T> =
+  | { data: T; status: 'success' }
+  | { error: string; status: 'reverted' };
 
 type AbiStateMutability = 'pure' | 'view' | 'nonpayable' | 'payable'
 
@@ -109,48 +116,34 @@ function toCallState<
   TFunctionName extends string = string,
   TAbiStateMutability extends AbiStateMutability = AbiStateMutability,
 >(
-  callResult: CallResult | undefined,
+  callResult: ViemContractReadResult<any> | undefined,
   abi: TAbi | undefined,
-  // FIXME: wagmiv2
   functionName: any,
   latestBlockNumber: number | undefined,
 ): CallState<any> {
   if (!callResult) return INVALID_CALL_STATE
-  const { valid, data, blockNumber } = callResult
-  if (!valid) return INVALID_CALL_STATE
-  if (valid && !blockNumber) return LOADING_CALL_STATE
+  const { status, error, result } = callResult
   if (!functionName || !abi || !latestBlockNumber) return LOADING_CALL_STATE
-  const success = data && data.length > 2
-  const syncing = (blockNumber ?? 0) < latestBlockNumber
-  let result
-  if (success && data) {
-    try {
-      // @ts-ignore FIXME: wagmiv2
-      result = decodeFunctionResult({
-        abi,
-        data,
-        functionName,
-      })
-    } catch (error) {
-      console.debug('Result data parsing failed', abi, data)
-      return {
-        valid: true,
-        loading: false,
-        error: true,
-        syncing,
-        result,
-        blockNumber,
-      }
+  const success = status === 'success';
+  if (success && !error) {
+    return {
+      valid: true,
+      loading: false,
+      syncing: false,
+      result,
+      error: !success,
+      blockNumber: latestBlockNumber,
     }
   }
 
+  console.debug('Result data parsing failed', abi, result)
   return {
     valid: true,
     loading: false,
-    syncing,
+    error: true,
+    syncing: false,
     result,
-    error: !success,
-    blockNumber,
+    blockNumber: latestBlockNumber,
   }
 }
 
@@ -179,34 +172,37 @@ export function useSingleContractMultipleData<TAbi extends Abi | readonly unknow
 SingleContractMultipleDataCallParameters<TAbi, TFunctionName>): CallState<any>[] {
   const { chainId } = useActiveChainId()
 
-  const calls = useMemo(
+  const contracts = useMemo(
     () =>
       contract && contract.abi && contract.address && args && args.length > 0
-        ? args.map((inputs) => {
-            if (!contract.address) return undefined
-            return {
-              address: contract.address,
-              callData: encodeFunctionData({
-                abi: contract.abi,
-                functionName,
-                args: inputs,
-              } as unknown as EncodeFunctionDataParameters),
-            }
-          })
+        ? args.map((inputs: any) => ({
+          address: contract.address,
+          abi: contract.abi,
+          functionName,
+          args: inputs,
+          chainId,
+        }))
         : [],
     [args, contract, functionName],
-  )
+  );
 
-  const results = useCallsData(calls, options)
+  // @ts-ignore
+  const { data, error } = useContractReads({
+    contracts,
+    ...options,
+  });
 
   const queryClient = useQueryClient()
 
   return useMemo(() => {
     const currentBlockNumber = queryClient.getQueryCache().find<number>({
       queryKey: ['blockNumber', chainId],
-    })?.state?.data
-    return results.map((result) => toCallState(result, contract.abi, functionName, currentBlockNumber))
-  }, [queryClient, chainId, results, contract.abi, functionName])
+    })?.state?.data;
+
+    return data
+      ? data.map((result) => toCallState(result, contract.abi, functionName, currentBlockNumber))
+      : contracts.map(() => toCallState(undefined, contract.abi, functionName, currentBlockNumber));
+  }, [data, queryClient, chainId, contracts, contract.abi, functionName]);
 }
 
 const DEFAULT_OPTIONS = {
@@ -235,46 +231,42 @@ export function useMultipleContractSingleData<TAbi extends Abi | readonly unknow
 }: // FIXME: wagmiv2
 // MultipleSameDataCallParameters<TAbi, TFunctionName>): CallState<ContractFunctionResult<TAbi, TFunctionName>>[] {
 MultipleSameDataCallParameters<TAbi, TFunctionName>): CallState<any>[] {
-
-  const { enabled, blocksPerFetch } = options ?? { enabled: true }
-  const callData: Hex | undefined = useMemo(
-    () =>
-      abi && enabled
-        ? encodeFunctionData({
-            abi,
-            functionName,
-            args,
-          } as unknown as EncodeFunctionDataParameters)
-        : undefined,
-    [abi, args, enabled, functionName],
-  )
-
-  const calls = useMemo(
-    () =>
-      addresses && addresses.length > 0 && callData
-        ? addresses.map((address) => {
-            return address && callData
-              ? {
-                  address,
-                  callData,
-                }
-              : undefined
-          })
-        : [],
-    [addresses, callData],
-  )
-
-  const results = useCallsData(calls, options?.blocksPerFetch ? { blocksPerFetch } : DEFAULT_OPTIONS)
   const { chainId } = useActiveChainId()
 
+
+  const { enabled, blocksPerFetch } = options ?? { enabled: true }
+
+  const contracts = useMemo(
+    () =>
+      abi && enabled && addresses && addresses.length > 0
+        ? addresses.map((address: Address) => ({
+          address,
+          abi,
+          functionName,
+          args,
+          chainId,
+        }))
+        : [],
+    [abi, addresses, functionName, args, enabled, chainId],
+  );
+
+  const { data, error, status } = useContractReads({
+    contracts,
+    watch: options?.blocksPerFetch || undefined,
+    enabled,
+  });
+  
   const queryClient = useQueryClient()
 
   return useMemo(() => {
     const currentBlockNumber = queryClient.getQueryCache().find<number>({
       queryKey: ['blockNumber', chainId],
-    })?.state?.data
-    return results.map((result) => toCallState(result, abi, functionName, currentBlockNumber))
-  }, [queryClient, chainId, results, abi, functionName])
+    })?.state?.data;
+
+    return data
+      ? data.map((result) => toCallState(result, abi, functionName, currentBlockNumber))
+      : contracts.map(() => toCallState(undefined, abi, functionName, currentBlockNumber, error?.message || 'Unknown error'));
+  }, [data, contracts, queryClient, chainId, abi, functionName, error]);
 }
 
 export type SingleCallParameters<

@@ -41,7 +41,7 @@ export function useTransactionAdder(): (
 export function useAllTransactions(): { [txHash: string]: TransactionDetails } {
   const { chainId } = useAccount();
 
-  const state = useSelector<AppState, AppState['transactions']>((state) => state.transactions);
+  const state = useSelector<AppState, AppState['pancakeTransactions']>((state) => state.pancakeTransactions);
 
   return chainId ? state[chainId] ?? {} : {};
 }

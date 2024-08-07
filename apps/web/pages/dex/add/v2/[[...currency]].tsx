@@ -2,22 +2,14 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import PageHeader from "@src/components-v2/shared/layout/page-header";
 import React, {useCallback, useEffect} from "react";
 import {useCurrencyParams} from "@eb-pancakeswap-web/hooks/useCurrencyParams";
-import {useCurrency} from "@eb-pancakeswap-web/hooks/tokens";
 import {useRouter} from "next/router";
 import {StandardContainer} from "@src/components-v2/shared/containers";
-import {Card} from "@src/components-v2/foundation/card";
-import {Alert, AlertIcon, Box, Heading, HStack, IconButton} from "@chakra-ui/react";
-import {ArrowBackIcon} from "@chakra-ui/icons";
-import NextLink from "next/link";
 import AddLiquidity from "@dex/liquidity/add";
 
 export default function Page() {
   const router = useRouter();
 
   const { currencyIdA, currencyIdB } = useCurrencyParams()
-
-  const currencyA = useCurrency(currencyIdA)
-  const currencyB = useCurrency(currencyIdB)
 
   const handleRefresh = useCallback(() => {
     router.replace(
@@ -38,7 +30,7 @@ export default function Page() {
 
   useEffect(() => {
     handleRefresh();
-  }, [router, currencyIdA, currencyIdB]);
+  }, [currencyIdA, currencyIdB]);
 
   return (
     <>
@@ -51,7 +43,10 @@ export default function Page() {
         subtitle='Trade tokens instantly with low fees'
       />
       <StandardContainer mt={4} maxW='container.sm'>
-        <AddLiquidity />
+        <AddLiquidity
+          currencyIdA={currencyIdA}
+          currencyIdB={currencyIdB}
+        />
       </StandardContainer>
     </>
   )

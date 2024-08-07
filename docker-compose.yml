@@ -12,9 +12,15 @@ services:
         - NEXT_PUBLIC_SITE24X7_KEY=73ac6244ca4b768bc456621704482f32
         - NEXT_PUBLIC_SENTRY_DSN=https://340f040489c3da89454eb43040d73925@o1128536.ingest.sentry.io/4506126203420672
         - NEXT_PUBLIC_SENTRY_ENVIRONMENT=local-docker-compose
-        - SENTRY_AUTH_TOKEN=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
+        - SENTRY_AUTH_TOKEN=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
         - NEXT_PUBLIC_WEB3MODAL_API_KEY=8002f872986e034df168060193915223
-        - NEXT_FORCE_EDGE_IMAGES=true        
+        - NEXT_FORCE_EDGE_IMAGES=true
+        - TURBO_API=https://turborepo-remote-cache.ebisusbay.com # The address of a running turborepo-remote-cache server
+        - TURBO_TEAM=eb-frontend-local # application/team
+        - TURBO_TOKEN=VerySecret123 # Your secret key. This must be the same as the TURBO_TOKEN variable set on your turborepo-remote-cache server instance
+        - TURBO_REMOTE_ONLY=false
+        - TURBO_REMOTE_CACHE_TIMEOUT=120
+        - TURBO_RUN_SUMMARY=true
     environment:
       PORT: '3000'
       EB_API_KEY: s48kQNFcCmC79NKm9CzQ
@@ -35,7 +41,7 @@ services:
       - /tmp:mode=770,uid=1000,gid=1000
     volumes:
       - ./volumes/ebisusbay-web_logs:/var/log/nodejs:rw
-      - ./volumes/ebisusbay-web_cache:/usr/src/app/.next/cache:rw
+      # - ./volumes/ebisusbay-web_cache:/usr/src/app/apps/web/.next/cache:rw
       # - ./volumes/ebisusbay-web_apminsight:/usr/src/app/apminsightdata:rw
     ports:
       - 3000:3000

@@ -31,7 +31,10 @@ cd /<pathtorepository>/eb_web
 #### Build and run
 
 ```
-docker compose -f docker-compose.yml up --build
+# Fetch submodule(s)
+git submodule update --init --recursive
+# Build & run project
+docker compose --progress=plain -f docker-compose.yml up --build
 ```
 
 Verify:

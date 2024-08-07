@@ -1,13 +1,13 @@
 import {Box, BoxProps, Button, Flex, IconButton, ModalProps, useBreakpointValue} from "@chakra-ui/react";
 import {useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import React, {useCallback, useEffect, useRef, useState} from "react";
-import SelectToken from "@dex/swap/components/tabs/swap/select-token";
+// import SelectToken from "@dex/swap/components/tabs/swap/select-token";
 import {ArrowBackIcon, CloseIcon} from "@chakra-ui/icons";
 import {Currency, Token} from "@pancakeswap/sdk";
 import usePreviousValue from "@eb-pancakeswap-web/hooks/usePreviousValue";
-import { useAllLists } from '@eb-pancakeswap-web/state/lists/hooks';
-import { useListState } from '@eb-pancakeswap-web/state/lists/lists';
-import { enableList, removeList, useFetchListCallback } from '@pancakeswap/token-lists/react';
+// import { useAllLists } from '@eb-pancakeswap-web/state/lists/hooks';
+// import { useListState } from '@eb-pancakeswap-web/state/lists/lists';
+// import { enableList, removeList, useFetchListCallback } from '@pancakeswap/token-lists/react';
 import { CurrencyModalView } from './types'
 import CurrencySearch from './currency-search';
 import {TokenList} from "@pancakeswap/token-lists";
@@ -74,27 +74,27 @@ function DialogContent({isOpen, onClose, selectedCurrency, otherSelectedCurrency
   const [importList, setImportList] = useState<TokenList | undefined>();
   const [listURL, setListUrl] = useState<string | undefined>();
 
-  const [, dispatch] = useListState()
-  const lists = useAllLists()
-  const adding = Boolean(listURL && lists[listURL]?.loadingRequestId)
-
-  const fetchList = useFetchListCallback(dispatch)
-
-  const [addError, setAddError] = useState<string | null>(null)
-
-  const handleAddList = useCallback(() => {
-    if (adding || !listURL) return
-    setAddError(null)
-    fetchList(listURL)
-      .then(() => {
-        dispatch(enableList(listURL))
-        setModalView(CurrencyModalView.manage)
-      })
-      .catch((error) => {
-        setAddError(error.message)
-        dispatch(removeList(listURL))
-      })
-  }, [adding, dispatch, fetchList, listURL])
+  // const [, dispatch] = useListState()
+  // const lists = useAllLists()
+  // const adding = Boolean(listURL && lists[listURL]?.loadingRequestId)
+  //
+  // const fetchList = useFetchListCallback(dispatch)
+  //
+  // const [addError, setAddError] = useState<string | null>(null)
+  //
+  // const handleAddList = useCallback(() => {
+  //   if (adding || !listURL) return
+  //   setAddError(null)
+  //   fetchList(listURL)
+  //     .then(() => {
+  //       dispatch(enableList(listURL))
+  //       setModalView(CurrencyModalView.manage)
+  //     })
+  //     .catch((error) => {
+  //       setAddError(error.message)
+  //       dispatch(removeList(listURL))
+  //     })
+  // }, [adding, dispatch, fetchList, listURL])
 
   const config = {
     [CurrencyModalView.search]: { title: 'Select a Token', onBack: undefined },

@@ -3,7 +3,7 @@ import {Card} from "@src/components-v2/foundation/card";
 import {ArrowDownIcon, SettingsIcon} from "@chakra-ui/icons";
 import {Field, INITIAL_ALLOWED_SLIPPAGE} from "src/modules/dex/swap/constants";
 import React, {useCallback, useMemo, useState} from "react";
-import SwapCurrencyInputPanel from "@dex/swap/components/tabs/swap/swap-currency-input-panel";
+import CurrencyInputPanel from "@dex/components/currency-input-panel";
 import {Currency, Percent, Trade, TradeType} from "@pancakeswap/sdk";
 import {useCurrency} from "@eb-pancakeswap-web/hooks/tokens";
 // import {useIsWrapping} from "@eb-pancakeswap-web/hooks/useIsWrapping";
@@ -268,7 +268,7 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
             </Box>
           </Flex>
           <VStack w='full' align='stretch'>
-            <SwapCurrencyInputPanel
+            <CurrencyInputPanel
               label='You pay'
               currency={derivedSwapInfo.currencies[Field.INPUT]}
               otherCurrency={derivedSwapInfo.currencies[Field.OUTPUT]}
@@ -292,7 +292,7 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
             <Box textAlign='center'>
               <IconButton aria-label='Swap to' icon={<ArrowDownIcon />} w='40px' onClick={onSwitchTokens}/>
             </Box>
-            <SwapCurrencyInputPanel
+            <CurrencyInputPanel
               label='You receive'
               currency={derivedSwapInfo.currencies[Field.OUTPUT]}
               otherCurrency={derivedSwapInfo.currencies[Field.INPUT]}
@@ -343,31 +343,32 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
             onSlippageClick={() => console.log('plz implement')}
           />
 
-
-          <CommitButton
-            width="100%"
-            colorScheme={!inputError && priceImpactSeverity > 2 ? 'red' : undefined}
-            variant={!inputError && priceImpactSeverity > 2 ? 'solid' : 'primary'}
-            isDisabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode)}
-            onClick={() => {
-              if (trade) {
-                setSwapState({
-                  tradeToConfirm: trade,
-                  attemptingTxn: false,
-                  swapErrorMessage: undefined,
-                  txHash: undefined,
-                })
-              }
-              onOpenConfirmSwap();
-            }}
-          >
-            {inputError ||
-              (priceImpactSeverity > 3 && !isExpertMode
-                ? 'Price Impact High'
-                : priceImpactSeverity > 2
-                  ? 'Swap Anyway'
-                  : 'Swap')}
-          </CommitButton>
+          <Flex align='stretch'>
+            <CommitButton
+              width="100%"
+              colorScheme={!inputError && priceImpactSeverity > 2 ? 'red' : undefined}
+              variant={!inputError && priceImpactSeverity > 2 ? 'solid' : 'primary'}
+              isDisabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode)}
+              onClick={() => {
+                if (trade) {
+                  setSwapState({
+                    tradeToConfirm: trade,
+                    attemptingTxn: false,
+                    swapErrorMessage: undefined,
+                    txHash: undefined,
+                  })
+                }
+                onOpenConfirmSwap();
+              }}
+            >
+              {inputError ||
+                (priceImpactSeverity > 3 && !isExpertMode
+                  ? 'Price Impact High'
+                  : priceImpactSeverity > 2
+                    ? 'Swap Anyway'
+                    : 'Swap')}
+            </CommitButton>
+          </Flex>
         </Card>
 
         {trade && (

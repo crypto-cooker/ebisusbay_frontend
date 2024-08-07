@@ -2,11 +2,11 @@
 
 ARG NODE_VERSION=20
 
-############
-### Base ###
-############
+################
+### Updates ###
+################
 
-FROM node:${NODE_VERSION} AS base
+FROM node:${NODE_VERSION} AS updates
 
 # Immediately stop execution if any of the commands return a non-zero exit code aka stop builds at first command failure
 RUN set -e
@@ -16,9 +16,18 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
 RUN --mount=type=cache,id=apt,target=/var/cache/apt apt-get update
 
-# Setup pnpm and turbo on the base
-RUN npm install npm pnpm turbo --global
-RUN pnpm config set store-dir ~/.pnpm-store
+############
+### Base ###
+############
+
+FROM updates AS base
+
+# Setup npm and turbo on the base
+RUN npm i npm turbo --global
+
+# Setup pnmp on the base
+RUN corepack enable
+RUN pnpm config set store-dir /root/.pnpm-store
 
 # Print versions
 RUN node --version
@@ -35,13 +44,12 @@ FROM base AS pruner
 WORKDIR /usr/src/app
 
 COPY . .
-COPY --link .git ./.git
 
-# Fetch submodule(s)
-RUN git submodule update --init --recursive
- 
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
 RUN turbo prune eb-frontend --docker
+
+# Fetch git submodules
+RUN git submodule update --init --recursive
 
 ###############
 ### Builder ###
@@ -56,13 +64,14 @@ WORKDIR /usr/src/app
 COPY --from=pruner /usr/src/app/out/json/ .
 COPY --from=pruner /usr/src/app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=pruner /usr/src/app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
-RUN rm -rf ./submodules
-COPY ./submodules ./submodules
+COPY --from=pruner /usr/src/app/submodules/ ./submodules
+
 # eb-web
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
+RUN --mount=type=cache,id=pnpm,target=/root/.pnpm-store pnpm install
+
 # eb-pancake-frontend submodule
 WORKDIR /usr/src/app/submodules/eb-pancake-frontend
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install
+RUN --mount=type=cache,id=pnpm,target=/root/.pnpm-store pnpm install
  
 # Build the project
 WORKDIR /usr/src/app
@@ -70,6 +79,7 @@ WORKDIR /usr/src/app
 COPY --from=pruner /usr/src/app/out/full/ .
 
 # Define build env. variables based on arguments
+
 ARG NEXT_PUBLIC_ENV
 ARG NEXT_PUBLIC_SITE24X7_KEY
 ARG NEXT_PUBLIC_SENTRY_DSN
@@ -77,7 +87,14 @@ ARG NEXT_PUBLIC_SENTRY_ENVIRONMENT
 ARG SENTRY_AUTH_TOKEN
 ARG NEXT_PUBLIC_WEB3MODAL_API_KEY
 
-RUN --mount=type=cache,id=turbo,target=/usr/src/app/.turbo/cache --mount=type=cache,id=next,target=/usr/src/app/apps/web/.next/cache NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY pnpm run build-docker
+ARG TURBO_API
+ARG TURBO_TEAM
+ARG TURBO_TOKEN
+ARG TURBO_REMOTE_ONLY
+ARG TURBO_REMOTE_CACHE_TIMEOUT
+ARG TURBO_RUN_SUMMARY
+
+RUN NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV NEXT_PUBLIC_SITE24X7_KEY=$NEXT_PUBLIC_SITE24X7_KEY NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN NEXT_PUBLIC_WEB3MODAL_API_KEY=$NEXT_PUBLIC_WEB3MODAL_API_KEY TURBO_API=$TURBO_API TURBO_TEAM=$TURBO_TEAM TURBO_TOKEN=$TURBO_TOKEN TURBO_REMOTE_ONLY=$TURBO_REMOTE_ONLY TURBO_REMOTE_CACHE_TIMEOUT=$TURBO_REMOTE_CACHE_TIMEOUT TURBO_RUN_SUMMARY=$TURBO_RUN_SUMMARY pnpm run build-docker
 
 ##############
 ### Runner ###
@@ -91,7 +108,7 @@ RUN set -e
 # Allow to cache package downloads (BuildKit cache mount)
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 # Update/install packages
-RUN --mount=type=cache,id=apt,target=/var/cache/apt apt-get update && apt-get --no-install-recommends install -y git curl procps htop net-tools dnsutils dumb-init
+RUN --mount=type=cache,id=apt,target=/var/cache/apt apt-get update && apt-get --no-install-recommends install -y git curl procps htop net-tools dnsutils dumb-init netcat-openbsd
 
 RUN npm i -g npm@latest
 

@@ -19,7 +19,7 @@ import {BarterToken} from "@market/state/jotai/atoms/deal";
 import useCurrencyBroker from "@market/hooks/use-currency-broker";
 import { wagmiConfig } from '@src/wagmi';
 import { Address, erc20Abi } from 'viem';
-import {multicall} from "viem/actions";
+import {readContracts} from "@wagmi/core";
 
 interface CustomTokenPickerProps {
   onAdd: (token: BarterToken) => void;
@@ -62,7 +62,7 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
         return;
       }
 
-      const tokenInfo = await multicall(wagmiConfig as any, {
+      const tokenInfo = await readContracts(wagmiConfig, {
         contracts: [
           {
             address: tokenAddress as Address,

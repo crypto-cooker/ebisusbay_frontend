@@ -14,14 +14,12 @@ definitions:
     apt-get update &&
     apt-get install -y gettext
   install_aws_cli: &install_aws_cli
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip" &&
-    unzip awscliv2.zip &&
-    ./aws/install &&
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip" > /dev/null 2>&1 &&
+    unzip awscliv2.zip > /dev/null 2>&1 &&
+    ./aws/install > /dev/null 2>&1 &&
     aws --version
   aws_ecr_login: &aws_ecr_login
     aws ecr get-login-password | docker login --password-stdin --username AWS "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
-  fetch_git_submodules: &fetch_git_submodules
-    git submodule update --init --recursive
 
   # Docker BuildKit version
   # https://support.atlassian.com/bitbucket-cloud/docs/run-docker-commands-in-bitbucket-pipelines/#Docker-BuildKit-restrictions
@@ -50,14 +48,10 @@ pipelines:
                 services:
                   - docker
                 script:
-                  # Enable Docker Buildkit
-                  - export DOCKER_BUILDKIT=1
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
-                  # # Initialize, fetch and checkout any nested submodules
-                  - *fetch_git_submodules
                   # RPC config
                   - cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_testnet.json ./apps/web/src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
@@ -68,9 +62,35 @@ pipelines:
                   - |
                       set +e # turn off error-trapping
 
+                      # Instal & configure buildx plugin
+                      export DOCKER_CLI_EXPERIMENTAL=enabled # Enable usage of buildx in Docker version < 23 # version used by pipelines is v20.x (as 1.8.2024)
+                      export BUILDX_VERSION=0.16.1
+                      curl -fsSLO https://github.com/docker/buildx/releases/download/v${BUILDX_VERSION}/buildx-v${BUILDX_VERSION}.linux-arm64
+                      mkdir -p $HOME/.docker/cli-plugins/ && mv buildx-v${BUILDX_VERSION}.linux-arm64 $HOME/.docker/cli-plugins/docker-buildx && chmod +x ~/.docker/cli-plugins/docker-buildx # download buildx and move it to the docker plugin folder
+                      docker run --rm --privileged multiarch/qemu-user-static --reset -p yes; docker buildx create --use # setup the QEMU emulation environment
+
+                      # Print versions
+                      docker version
+                      docker buildx version
+
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
-                      docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
+                      docker buildx build --push --platform linux/arm64 -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}  \
+                        --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
+                        --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
+                        --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
+                        --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
+                        --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+                        --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg TURBO_API=${TURBO_API} \
+                        --build-arg TURBO_TEAM=${TURBO_TEAM} \
+                        --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+                        --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
+                        --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
+                        --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
+                        --cache-to type=inline \
+                        --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+                        -f ./apps/web/Dockerfile .
+                      
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -86,6 +106,147 @@ pipelines:
                   - *proxy_container_build
                   # deploy test-ebisusbay-web-arm64-us-east-1 / testapp.ebisusbay.biz
                   - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
+    # deploy-to-testnet-legacy-builder:
+    #   - stage:
+    #       name: testapp.ebisusbay.biz
+    #       deployment: Testnet
+    #       steps:
+    #         - step:
+    #             name: Build & deploy
+    #             image: public.ecr.aws/docker/library/node:20
+    #             size: 4x # 16GB step
+    #             runs-on:
+    #               - 'self.hosted'
+    #               - 'linux.arm64'
+    #               - 'web'
+    #             services:
+    #               - docker
+    #             script:
+    #               # Enable Docker Buildkit
+    #               - export DOCKER_BUILDKIT=1
+    #               # Install required tools
+    #               - *install_tools
+    #               # Install AWS CLI
+    #               - *install_aws_cli
+    #               # RPC config
+    #               - cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_testnet.json ./apps/web/src/modules/market/assets/networks/rpc_config.json
+    #               # Login to ECR
+    #               - *aws_ecr_login
+    #               # Copy RPC config to Admin S3 Bucket
+    #               - aws s3 cp ./apps/web/src/modules/market/assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
+    #               # Build application container
+    #               - |
+    #                   set +e # turn off error-trapping
+
+    #                   # Inline cache
+    #                   docker build --platform linux/arm64 \
+    #                     --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
+    #                     --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
+    #                     --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
+    #                     --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
+    #                     --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+    #                     --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+    #                     --build-arg TURBO_API=${TURBO_API} \
+    #                     --build-arg TURBO_TEAM=${TURBO_TEAM} \
+    #                     --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+    #                     --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
+    #                     --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
+    #                     --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
+    #                     --cache-to type=inline \
+    #                     --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+    #                     --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+    #                     -f ./apps/web/Dockerfile .
+                      
+    #                   docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
+    #                   RETURN_CODE=$?
+
+    #                   if [ $RETURN_CODE -eq 0 ]; then
+    #                     echo ""************BUILD OK, pushing container image..."************"
+    #                     docker push --all-tags ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}
+    #                   else
+    #                     echo "************BUILD FAILED************"
+    #                     exit 1
+    #                   fi
+
+    #                   set -e # turn on error-trapping
+    #               # Build proxy container
+    #               - *proxy_container_build
+    #               # deploy test-ebisusbay-web-arm64-us-east-1 / testapp.ebisusbay.biz
+    #               - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
+    # deploy-to-testnet-buildx-builder:
+    #   - stage:
+    #       name: testapp.ebisusbay.biz
+    #       deployment: Testnet
+    #       steps:
+    #         - step:
+    #             name: Build & deploy
+    #             image: public.ecr.aws/docker/library/node:20
+    #             size: 4x # 16GB step
+    #             runs-on:
+    #               - 'self.hosted'
+    #               - 'linux.arm64'
+    #               - 'web'
+    #             services:
+    #               - docker
+    #             script:
+    #               # Install required tools
+    #               - *install_tools
+    #               # Install AWS CLI
+    #               - *install_aws_cli
+    #               # RPC config
+    #               - cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_testnet.json ./apps/web/src/modules/market/assets/networks/rpc_config.json
+    #               # Login to ECR
+    #               - *aws_ecr_login
+    #               # Copy RPC config to Admin S3 Bucket
+    #               - aws s3 cp ./apps/web/src/modules/market/assets/networks/rpc_config_testnet.json s3://test-ebisusbay-admin-storage/rpc_config.json
+    #               # Build application container
+    #               - |
+    #                   set +e # turn off error-trapping
+
+    #                   # Instal & configure buildx plugin
+    #                   export DOCKER_CLI_EXPERIMENTAL=enabled # Enable usage of buildx in Docker version < 23 # version used by pipelines is v20.x (as 1.8.2024)
+    #                   export BUILDX_VERSION=0.16.1
+    #                   curl -fsSLO https://github.com/docker/buildx/releases/download/v${BUILDX_VERSION}/buildx-v${BUILDX_VERSION}.linux-arm64
+    #                   mkdir -p $HOME/.docker/cli-plugins/ && mv buildx-v${BUILDX_VERSION}.linux-arm64 $HOME/.docker/cli-plugins/docker-buildx && chmod +x ~/.docker/cli-plugins/docker-buildx # download buildx and move it to the docker plugin folder
+    #                   docker run --rm --privileged multiarch/qemu-user-static --reset -p yes; docker buildx create --use # setup the QEMU emulation environment
+
+    #                   # Print versions
+    #                   docker version
+    #                   docker buildx version
+
+    #                   # Inline cache
+    #                   docker buildx build --push --platform linux/arm64 -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}  \
+    #                     --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
+    #                     --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
+    #                     --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
+    #                     --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
+    #                     --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+    #                     --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+    #                     --build-arg TURBO_API=${TURBO_API} \
+    #                     --build-arg TURBO_TEAM=${TURBO_TEAM} \
+    #                     --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+    #                     --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
+    #                     --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
+    #                     --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
+    #                     --cache-to type=inline \
+    #                     --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+    #                     -f ./apps/web/Dockerfile .
+                      
+    #                   RETURN_CODE=$?
+
+    #                   if [ $RETURN_CODE -eq 0 ]; then
+    #                     echo ""************BUILD OK, pushing container image..."************"
+    #                     docker push --all-tags ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}
+    #                   else
+    #                     echo "************BUILD FAILED************"
+    #                     exit 1
+    #                   fi
+
+    #                   set -e # turn on error-trapping
+    #               # Build proxy container
+    #               - *proxy_container_build
+    #               # deploy test-ebisusbay-web-arm64-us-east-1 / testapp.ebisusbay.biz
+    #               - 'curl -X POST -is -H "Authorization: Basic ${BITBUCKET_API_KEY}" -H "Content-Type: application/json" -d "{\"target\":{\"ref_type\":\"branch\",\"type\":\"pipeline_ref_target\",\"ref_name\":\"testnet\"}}" https://api.bitbucket.org/2.0/repositories/ebisusbay/eb_web_deploy/pipelines/'
     deploy-to-sandbox:
       - stage:
           name: sandboxapp.ebisusbay.biz
@@ -102,14 +263,10 @@ pipelines:
                 services:
                   - docker
                 script:
-                  # Enable Docker Buildkit
-                  - export DOCKER_BUILDKIT=1
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
-                  # # Initialize, fetch and checkout any nested submodules
-                  - *fetch_git_submodules
                   # RPC config
                   - cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_dev.json ./apps/web/src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
@@ -120,9 +277,35 @@ pipelines:
                   - |
                       set +e # turn off error-trapping
 
+                      # Instal & configure buildx plugin
+                      export DOCKER_CLI_EXPERIMENTAL=enabled # Enable usage of buildx in Docker version < 23 # version used by pipelines is v20.x (as 1.8.2024)
+                      export BUILDX_VERSION=0.16.1
+                      curl -fsSLO https://github.com/docker/buildx/releases/download/v${BUILDX_VERSION}/buildx-v${BUILDX_VERSION}.linux-arm64
+                      mkdir -p $HOME/.docker/cli-plugins/ && mv buildx-v${BUILDX_VERSION}.linux-arm64 $HOME/.docker/cli-plugins/docker-buildx && chmod +x ~/.docker/cli-plugins/docker-buildx # download buildx and move it to the docker plugin folder
+                      docker run --rm --privileged multiarch/qemu-user-static --reset -p yes; docker buildx create --use # setup the QEMU emulation environment
+
+                      # Print versions
+                      docker version
+                      docker buildx version
+
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
-                      docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
+                      docker buildx build --push --platform linux/arm64 -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}  \
+                        --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
+                        --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
+                        --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
+                        --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
+                        --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+                        --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg TURBO_API=${TURBO_API} \
+                        --build-arg TURBO_TEAM=${TURBO_TEAM} \
+                        --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+                        --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
+                        --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
+                        --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
+                        --cache-to type=inline \
+                        --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+                        -f ./apps/web/Dockerfile .
+                      
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -154,14 +337,10 @@ pipelines:
                 services:
                   - docker
                 script:
-                  # Enable Docker Buildkit
-                  - export DOCKER_BUILDKIT=1
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
-                  # # Initialize, fetch and checkout any nested submodules
-                  - *fetch_git_submodules
                   # RPC config
                   # - cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_dev.json ./apps/web/src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
@@ -172,9 +351,35 @@ pipelines:
                   - |
                       set +e # turn off error-trapping
 
+                      # Instal & configure buildx plugin
+                      export DOCKER_CLI_EXPERIMENTAL=enabled # Enable usage of buildx in Docker version < 23 # version used by pipelines is v20.x (as 1.8.2024)
+                      export BUILDX_VERSION=0.16.1
+                      curl -fsSLO https://github.com/docker/buildx/releases/download/v${BUILDX_VERSION}/buildx-v${BUILDX_VERSION}.linux-arm64
+                      mkdir -p $HOME/.docker/cli-plugins/ && mv buildx-v${BUILDX_VERSION}.linux-arm64 $HOME/.docker/cli-plugins/docker-buildx && chmod +x ~/.docker/cli-plugins/docker-buildx # download buildx and move it to the docker plugin folder
+                      docker run --rm --privileged multiarch/qemu-user-static --reset -p yes; docker buildx create --use # setup the QEMU emulation environment
+
+                      # Print versions
+                      docker version
+                      docker buildx version
+
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
-                      docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
+                      docker buildx build --push --platform linux/arm64 -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}  \
+                        --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
+                        --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
+                        --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
+                        --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
+                        --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+                        --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg TURBO_API=${TURBO_API} \
+                        --build-arg TURBO_TEAM=${TURBO_TEAM} \
+                        --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+                        --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
+                        --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
+                        --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
+                        --cache-to type=inline \
+                        --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+                        -f ./apps/web/Dockerfile .
+                      
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -207,14 +412,10 @@ pipelines:
                 services:
                   - docker
                 script:
-                  # Enable Docker Buildkit
-                  - export DOCKER_BUILDKIT=1
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
-                  # # Initialize, fetch and checkout any nested submodules
-                  - *fetch_git_submodules
                   # RPC config
                   - cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_dev.json ./apps/web/src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
@@ -225,9 +426,35 @@ pipelines:
                   - |
                       set +e # turn off error-trapping
 
+                      # Instal & configure buildx plugin
+                      export DOCKER_CLI_EXPERIMENTAL=enabled # Enable usage of buildx in Docker version < 23 # version used by pipelines is v20.x (as 1.8.2024)
+                      export BUILDX_VERSION=0.16.1
+                      curl -fsSLO https://github.com/docker/buildx/releases/download/v${BUILDX_VERSION}/buildx-v${BUILDX_VERSION}.linux-arm64
+                      mkdir -p $HOME/.docker/cli-plugins/ && mv buildx-v${BUILDX_VERSION}.linux-arm64 $HOME/.docker/cli-plugins/docker-buildx && chmod +x ~/.docker/cli-plugins/docker-buildx # download buildx and move it to the docker plugin folder
+                      docker run --rm --privileged multiarch/qemu-user-static --reset -p yes; docker buildx create --use # setup the QEMU emulation environment
+
+                      # Print versions
+                      docker version
+                      docker buildx version
+
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
-                      docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
+                      docker buildx build --push --platform linux/arm64 -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}  \
+                        --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
+                        --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
+                        --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
+                        --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
+                        --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+                        --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg TURBO_API=${TURBO_API} \
+                        --build-arg TURBO_TEAM=${TURBO_TEAM} \
+                        --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+                        --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
+                        --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
+                        --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
+                        --cache-to type=inline \
+                        --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+                        -f ./apps/web/Dockerfile .
+                      
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then
@@ -259,14 +486,10 @@ pipelines:
                 services:
                   - docker
                 script:
-                  # Enable Docker Buildkit
-                  - export DOCKER_BUILDKIT=1
                   # Install required tools
                   - *install_tools
                   # Install AWS CLI
                   - *install_aws_cli
-                  # # Initialize, fetch and checkout any nested submodules
-                  - *fetch_git_submodules
                   # RPC config
                   # cp -p ./apps/web/src/modules/market/assets/networks/rpc_config_dev.json ./apps/web/src/modules/market/assets/networks/rpc_config.json
                   # Login to ECR
@@ -277,9 +500,35 @@ pipelines:
                   - |
                       set +e # turn off error-trapping
 
+                      # Instal & configure buildx plugin
+                      export DOCKER_CLI_EXPERIMENTAL=enabled # Enable usage of buildx in Docker version < 23 # version used by pipelines is v20.x (as 1.8.2024)
+                      export BUILDX_VERSION=0.16.1
+                      curl -fsSLO https://github.com/docker/buildx/releases/download/v${BUILDX_VERSION}/buildx-v${BUILDX_VERSION}.linux-arm64
+                      mkdir -p $HOME/.docker/cli-plugins/ && mv buildx-v${BUILDX_VERSION}.linux-arm64 $HOME/.docker/cli-plugins/docker-buildx && chmod +x ~/.docker/cli-plugins/docker-buildx # download buildx and move it to the docker plugin folder
+                      docker run --rm --privileged multiarch/qemu-user-static --reset -p yes; docker buildx create --use # setup the QEMU emulation environment
+
+                      # Print versions
+                      docker version
+                      docker buildx version
+
                       # Inline cache
-                      docker build --platform linux/arm64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} --cache-from ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -f ./apps/web/Dockerfile .
-                      docker tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}
+                      docker buildx build --push --platform linux/arm64 -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION}-build-${BITBUCKET_BUILD_NUMBER}  \
+                        --build-arg NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV} \
+                        --build-arg NEXT_PUBLIC_SITE24X7_KEY=${NEXT_PUBLIC_SITE24X7_KEY} \
+                        --build-arg NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN} \
+                        --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
+                        --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+                        --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg TURBO_API=${TURBO_API} \
+                        --build-arg TURBO_TEAM=${TURBO_TEAM} \
+                        --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+                        --build-arg TURBO_REMOTE_ONLY=${TURBO_REMOTE_ONLY} \
+                        --build-arg TURBO_REMOTE_CACHE_TIMEOUT=${TURBO_REMOTE_CACHE_TIMEOUT} \
+                        --build-arg TURBO_RUN_SUMMARY=${TURBO_RUN_SUMMARY} \
+                        --cache-to type=inline \
+                        --cache-from type=registry,ref=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${APP_REPOSITORY}:${VERSION} \
+                        -f ./apps/web/Dockerfile .
+                      
                       RETURN_CODE=$?
 
                       if [ $RETURN_CODE -eq 0 ]; then

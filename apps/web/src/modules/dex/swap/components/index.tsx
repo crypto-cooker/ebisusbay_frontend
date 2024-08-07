@@ -11,14 +11,14 @@ export default function SwapPage(/*{ initialInputCurrency, initialOutputCurrency
   console.log('===debug: SwapPage', swapPageState)
   return (
     <Box mt={4}>
-      <SwapHeader compact={false} />
-      {swapPageState.currentTab === SwapTab.Swap ? (
+      {/*<SwapHeader compact={false} />*/}
+      {/*{swapPageState.currentTab === SwapTab.Swap ? (*/}
         <SwapForm />
-      ) : swapPageState.currentTab === SwapTab.Limit ? (
-        <>herp {swapPageState.currentTab}</>
-      ) : swapPageState.currentTab === SwapTab.Send && (
-        <>herp {swapPageState.currentTab}</>
-      )}
+      {/*// ) : swapPageState.currentTab === SwapTab.Limit ? (*/}
+      {/*//   <>herp {swapPageState.currentTab}</>*/}
+      {/*// ) : swapPageState.currentTab === SwapTab.Send && (*/}
+      {/*//   <>herp {swapPageState.currentTab}</>*/}
+      {/*// )}*/}
     </Box>
   )
 }
