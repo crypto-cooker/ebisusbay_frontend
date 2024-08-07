@@ -55,7 +55,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  webpack: (config, { isServer, defaultLoaders }) => {
+  webpack: (config, { webpack, isServer, defaultLoaders }) => {
     config.externals.push(
         "pino-pretty",
         "lokijs",
@@ -86,7 +86,7 @@ const nextConfig = {
     config.optimization.minimize = false;
 
     config.plugins.push(
-        new config.DefinePlugin({
+        new webpack.DefinePlugin({
           __SENTRY_DEBUG__: false,
           __SENTRY_TRACING__: false,
         })
