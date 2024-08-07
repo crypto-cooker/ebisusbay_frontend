@@ -12,7 +12,7 @@ services:
         - NEXT_PUBLIC_SITE24X7_KEY=73ac6244ca4b768bc456621704482f32
         - NEXT_PUBLIC_SENTRY_DSN=https://340f040489c3da89454eb43040d73925@o1128536.ingest.sentry.io/4506126203420672
         - NEXT_PUBLIC_SENTRY_ENVIRONMENT=local-docker-compose
-        - SENTRY_AUTH_TOKEN=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
+        - SENTRY_AUTH_TOKEN=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
         - NEXT_PUBLIC_WEB3MODAL_API_KEY=8002f872986e034df168060193915223
         - NEXT_FORCE_EDGE_IMAGES=true
         - TURBO_API=https://turborepo-remote-cache.ebisusbay.com # The address of a running turborepo-remote-cache server
