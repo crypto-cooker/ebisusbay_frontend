@@ -1,34 +1,13 @@
 import {Card} from "@src/components-v2/foundation/card";
-import {
-  Alert,
-  AlertIcon,
-  Button,
-  Box,
-  Heading,
-  HStack,
-  IconButton,
-  Spinner,
-  Stack,
-  Text,
-  VStack,
-  Center
-} from "@chakra-ui/react";
+import {Alert, AlertIcon, Box, Heading, HStack, IconButton, Stack, Text, useDisclosure, VStack} from "@chakra-ui/react";
 import NextLink from "next/link";
-import {AddIcon, ArrowBackIcon, ChevronDownIcon} from "@chakra-ui/icons";
-import React, {useCallback, useEffect, useMemo, useState} from "react";
-import useNativeCurrency from "@eb-pancakeswap-web/hooks/useNativeCurrency";
-import {useV2Pair, PairState} from "@eb-pancakeswap-web/hooks/usePairs";
-import {ChainLogo, CurrencyLogo} from "@dex/components/logo";
-import {Currency} from "@pancakeswap/sdk";
-import {FRTN, STABLE_COIN, USDC, USDT} from '@pancakeswap/tokens'
-import {ChainId} from "@pancakeswap/chains";
-import {useUser} from "@src/components-v2/useUser";
-import {BIG_INT_ZERO} from "@dex/swap/constants/exchange";
-import {useTokenBalance} from "@eb-pancakeswap-web/state/wallet/hooks";
+import {AddIcon, ArrowBackIcon} from "@chakra-ui/icons";
+import React, {useCallback, useMemo, useState} from "react";
+import {PairState} from "@eb-pancakeswap-web/hooks/usePairs";
+import {Currency, CurrencyAmount, NATIVE, Token, WNATIVE} from "@pancakeswap/sdk";
+import {V2_ROUTER_ADDRESS} from "@dex/swap/constants/exchange";
 import currencyId from "@eb-pancakeswap-web/utils/currencyId"
-import {CurrencySearchModal} from "@dex/components/search-modal";
-import {MinimalPositionCard} from '@dex/liquidity/components/position-card';
-import { PrimaryButton, SecondaryButton } from '@src/components-v2/foundation/button';
+import {PrimaryButton} from '@src/components-v2/foundation/button';
 import CurrencyInputPanel from "@dex/components/currency-input-panel";
 import {Field} from "@eb-pancakeswap-web/state/mint/actions";
 import {useAddLiquidityV2FormState} from "@eb-pancakeswap-web/state/mint/reducer";
@@ -36,28 +15,22 @@ import {useDerivedMintInfo, useMintActionHandlers} from "@eb-pancakeswap-web/sta
 import {useRouter} from "next/router";
 import {useCurrency} from "@eb-pancakeswap-web/hooks/tokens";
 import useAccountActiveChain from "@eb-pancakeswap-web/hooks/useAccountActiveChain";
-import { maxAmountSpend } from '@eb-pancakeswap-web/utils/maxAmountSpend'
-import { CommonBasesType } from '@dex/components/search-modal/types'
-import {CurrencyAmount, NATIVE, Token, WNATIVE} from "@pancakeswap/sdk";
-import { safeGetAddress } from "@dex/swap/imported/pancakeswap/web/utils";
-import { PoolPriceBar } from "./pool-price-bar";
-import { ApprovalState, useApproveCallback } from '@eb-pancakeswap-web/hooks/useApproveCallback'
-import {V2_ROUTER_ADDRESS} from "@dex/swap/constants/exchange";
+import {maxAmountSpend} from '@eb-pancakeswap-web/utils/maxAmountSpend'
+import {safeGetAddress} from "@dex/swap/imported/pancakeswap/web/utils";
+import {PoolPriceBar} from "./pool-price-bar";
+import {ApprovalState, useApproveCallback} from '@eb-pancakeswap-web/hooks/useApproveCallback'
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
-import {pluralize} from "@market/helpers/utils";
-import MintBox from "@src/components-v2/feature/drop/types/dutch/mint-box";
-import RefundBox from "@src/components-v2/feature/drop/types/dutch/refund-box";
-import { useIsExpertMode } from '@pancakeswap/utils/user/expertMode';
-import {useRouterContract} from "@eb-pancakeswap-web/utils/exchange";
-import { useWalletClient } from 'wagmi'
+import {useIsExpertMode} from '@pancakeswap/utils/user/expertMode';
+import {calculateSlippageAmount, useRouterContract} from "@eb-pancakeswap-web/utils/exchange";
+import {useGasPrice, useWalletClient} from 'wagmi'
 import {useTransactionDeadline} from "@eb-pancakeswap-web/hooks/useTransactionDeadline";
-import { useUserSlippage } from '@pancakeswap/utils/user';
-import {calculateSlippageAmount} from '@eb-pancakeswap-web/utils/exchange';
+import {useUserSlippage} from '@pancakeswap/utils/user';
 import {isUserRejected, logError} from '@eb-pancakeswap-web/utils/sentry';
 import {transactionErrorToUserReadableMessage} from '@src/helpers/validator';
-import { calculateGasMargin } from '@eb-pancakeswap-web/utils';
-import {useGasPrice} from "wagmi";
 import {CommitButton} from "@dex/swap/components/tabs/swap/commit-button";
+import ConfirmAddLiquidityModal from "@dex/liquidity/components/confirm-add-liquidity-modal";
+import {usePairAdder} from "@eb-pancakeswap-web/state/user/hooks";
+import { Address, Hash } from 'viem'
 
 interface AddLiquidityProps {
   currencyIdA?: string
@@ -68,6 +41,9 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
   const router = useRouter();
   const { account, chainId } = useAccountActiveChain();
   const { data: walletClient } = useWalletClient()
+  const { isOpen: isOpenConfirmAdd, onOpen: onOpenConfirmAdd, onClose: onCloseConfirmAdd } = useDisclosure();
+
+  const addPair = usePairAdder()
 
   const currencyA = useCurrency(currencyIdA)
   const currencyB = useCurrency(currencyIdB)
@@ -318,10 +294,10 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
           console.log('debugline3')
           setLiquidityState({attemptingTxn: false, liquidityErrorMessage: undefined, txHash: response})
 
-          const symbolA = currencies[Field.CURRENCY_A]?.symbol
-          const amountA = parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)
-          const symbolB = currencies[Field.CURRENCY_B]?.symbol
-          const amountB = parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)
+          // const symbolA = currencies[Field.CURRENCY_A]?.symbol
+          // const amountA = parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)
+          // const symbolB = currencies[Field.CURRENCY_B]?.symbol
+          // const amountB = parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)
           // addTransaction(
           //   {hash: response},
           //   {
@@ -355,6 +331,21 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
         })
       })
   }
+
+
+  const amountA = parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)
+  const symbolA = currencies[Field.CURRENCY_A]?.symbol ?? ''
+  const amountB = parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)
+  const symbolB = currencies[Field.CURRENCY_B]?.symbol ?? ''
+
+  const pendingText = `Supplying ${amountA} ${symbolA} and ${amountB} ${symbolB}`;
+
+  const handleDismissConfirmation = useCallback(() => {
+    // if there was a tx hash, we want to clear the input
+    if (txHash) {
+      onFieldAInput('')
+    }
+  }, [onFieldAInput, txHash])
 
   return (
     <>
@@ -468,7 +459,7 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
                         variant={buttonDisabled ? 'danger' : 'primary'}
                         onClick={() => {
                           // eslint-disable-next-line no-unused-expressions
-                          expertMode ? onAdd() : onPresentAddLiquidityModal()
+                          expertMode ? onAdd() : onOpenConfirmAdd()
                         }}
                         isDisabled={buttonDisabled}
                       >
@@ -484,6 +475,25 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
           </VStack>
         </Box>
       </Card>
+      <ConfirmAddLiquidityModal
+        isOpen={isOpenConfirmAdd}
+        onClose={onCloseConfirmAdd}
+        title={noLiquidity ? 'You are creating a trading pair' : 'You will receive'}
+        customOnDismiss={handleDismissConfirmation}
+        attemptingTxn={attemptingTxn}
+        hash={txHash}
+        pendingText={pendingText}
+        currencyToAdd={pair?.liquidityToken}
+        allowedSlippage={allowedSlippage}
+        onAdd={onAdd}
+        parsedAmounts={parsedAmounts}
+        currencies={currencies}
+        liquidityErrorMessage={liquidityErrorMessage}
+        price={price}
+        noLiquidity={noLiquidity}
+        poolTokenPercentage={poolTokenPercentage}
+        liquidityMinted={liquidityMinted}
+      />
     </>
   )
 }

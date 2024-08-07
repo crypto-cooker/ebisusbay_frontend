@@ -7,10 +7,11 @@ import {Currency, CurrencyAmount, Trade, TradeType} from "@pancakeswap/sdk";
 import {Field} from "@eb-pancakeswap-web/state/swap/actions";
 import formatAmountDisplay from "@dex/swap/utils/formatAmountDisplay";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
-import {ConfirmationPendingContent} from "@dex/swap/components/tabs/swap/swap-modal/confirmation-pending-content";
-import {TransactionSubmittedContent} from "@dex/swap/components/tabs/swap/swap-modal/transaction-submitted-content";
-import {TransactionErrorContent} from "@dex/swap/components/tabs/swap/swap-modal/transaction-error-content";
-import TransactionConfirmSwapContent from "@dex/swap/components/tabs/swap/swap-modal/transaction-confirm-swap-content";
+import {ConfirmationPendingContent} from "@dex/components/transaction-confirmation-modal/confirmation-pending-content";
+import {TransactionSubmittedContent} from "@dex/components/transaction-confirmation-modal/transaction-submitted-content";
+import {TransactionErrorContent} from "@dex/components/transaction-confirmation-modal/transaction-error-content";
+import TransactionConfirmSwapContent from "@dex/swap/components/tabs/swap/swap-modal/swap-modal-content";
+import TransactionConfirmationModal from "@dex/components/transaction-confirmation-modal";
 
 interface ConfirmSwapModalProps {
   isOpen: boolean;
@@ -31,58 +32,33 @@ interface ConfirmSwapModalProps {
   modalProps?: Pick<ModalProps, 'size' | 'isCentered'>;
 }
 
-export function ConfirmSwapModal(props: ConfirmSwapModalProps & BoxProps) {
-  const ResponsiveDialog = useResponsiveDialog();
-  const { isOpen, onClose, modalProps } = props;
-
-  return (
-    <ResponsiveDialog.DialogComponent modalProps={modalProps} {...props}>
-      <DialogContent{...props}/>
-    </ResponsiveDialog.DialogComponent>
-  );
-}
-
-enum Pages {
-  SELECT,
-  MANAGE
-}
-
-function DialogContent({
-   trade,
-   originalTrade,
-   currencyBalances,
-   onAcceptChanges,
-   allowedSlippage,
-   onConfirm,
-   onClose,
-   recipient,
-   swapErrorMessage,
-   attemptingTxn,
-   txHash,
-   openSettingModal,
-}: ConfirmSwapModalProps) {
-  const {
-    DialogBasicHeader,
-    DialogBody
-  } = useResponsiveDialog();
-
+export default function ConfirmSwapModal({
+  isOpen,
+  onClose,
+  trade,
+  originalTrade,
+  currencyBalances,
+  onAcceptChanges,
+  allowedSlippage,
+  onConfirm,
+  recipient,
+  swapErrorMessage,
+  attemptingTxn,
+  txHash,
+}: ConfirmSwapModalProps & BoxProps) {
   const {chainId} = useActiveChainId();
 
-  const confirmationContent = useCallback(
-    () =>
-      swapErrorMessage ? (
-        <TransactionErrorContent message={swapErrorMessage} onDismiss={onClose} />
-      ) : (
-        <TransactionConfirmSwapContent
-          trade={trade}
-          currencyBalances={currencyBalances}
-          originalTrade={originalTrade}
-          onAcceptChanges={onAcceptChanges}
-          allowedSlippage={allowedSlippage}
-          onConfirm={onConfirm}
-          recipient={recipient}
-        />
-      ),
+  const confirmationContent = useCallback(() => (
+      <TransactionConfirmSwapContent
+        trade={trade}
+        currencyBalances={currencyBalances}
+        originalTrade={originalTrade}
+        onAcceptChanges={onAcceptChanges}
+        allowedSlippage={allowedSlippage}
+        onConfirm={onConfirm}
+        recipient={recipient}
+      />
+    ),
     [
       trade,
       originalTrade,
@@ -90,9 +66,6 @@ function DialogContent({
       allowedSlippage,
       onConfirm,
       recipient,
-      swapErrorMessage,
-      onClose,
-      openSettingModal,
       currencyBalances,
     ],
   )
@@ -109,17 +82,16 @@ function DialogContent({
   if (!chainId || !trade) return null
 
   return (
-    <>
-      <DialogBasicHeader title='Confirm Swap' />
-      <DialogBody>
-        {attemptingTxn ? (
-          <ConfirmationPendingContent pendingText={pendingText} />
-        ) : txHash ? (
-          <TransactionSubmittedContent chainId={chainId} hash={txHash} onDismiss={onClose} />
-        ) : (
-          confirmationContent()
-        )}
-      </DialogBody>
-    </>
+    <TransactionConfirmationModal
+      isOpen={isOpen}
+      onClose={onClose}
+      title='Confirm Swap'
+      attemptingTxn={attemptingTxn}
+      currencyToAdd={trade?.inputAmount?.currency}
+      errorMessage={swapErrorMessage}
+      hash={txHash}
+      content={confirmationContent}
+      pendingText={pendingText}
+    />
   )
 }

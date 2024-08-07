@@ -24,7 +24,7 @@ import {
   computeTradePriceBreakdown,
   warningSeverity
 } from "@eb-pancakeswap-web/utils/exchange";
-import {ConfirmSwapModal} from "@dex/swap/components/tabs/swap/swap-modal/confirm-swap-modal";
+import ConfirmSwapModal from "@dex/swap/components/tabs/swap/swap-modal/confirm-swap-modal";
 import {typeInput} from "@eb-pancakeswap-web/state/swap/actions";
 import {useSwapCallback} from "@eb-pancakeswap-web/hooks/useSwapCallback";
 import {useSwapCallArguments} from "@eb-pancakeswap-web/hooks/useSwapCallArguments";
@@ -395,7 +395,6 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
         onConfirm={handleSwap}
         swapErrorMessage={swapErrorMessage}
         customOnDismiss={handleConfirmDismiss}
-        openSettingModal={onOpenSettings}
       />
     </>
   )

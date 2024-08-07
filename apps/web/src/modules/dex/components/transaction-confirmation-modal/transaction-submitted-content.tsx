@@ -1,6 +1,6 @@
 // TODO: aptos merge
-import { ChainId, Currency } from '@pancakeswap/sdk'
-import React, { useCallback } from 'react'
+import {ChainId, Currency, Token} from '@pancakeswap/sdk'
+import React, {useCallback, useMemo} from 'react'
 import styled from 'styled-components'
 import {Box, Button, Center, Flex, HStack, Link, Text, VStack} from "@chakra-ui/react";
 import {ArrowUpIcon} from "@chakra-ui/icons";
@@ -9,6 +9,8 @@ import {appConfig} from "@src/config";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {DEX_COLORS} from "@dex/swap/constants/style";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {wrappedCurrency} from "@eb-pancakeswap-web/utils/wrappedCurrency";
+import AddToWalletButton, { AddToWalletTextOptions } from "@dex/components/add-to-wallet-button";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -27,11 +29,21 @@ export function TransactionSubmittedContent({
   onDismiss,
   chainId,
   hash,
+  currencyToAdd
 }: {
   onDismiss: () => void
   hash: string | undefined
   chainId: ChainId
+  currencyToAdd?: Currency | undefined | null
 }) {
+  const token: Token | undefined = wrappedCurrency(currencyToAdd, chainId)
+
+  const showAddToWalletButton = useMemo(() => {
+    if (token && currencyToAdd) {
+      return !currencyToAdd.isNative
+    }
+    return false
+  }, [token, currencyToAdd])
 
   return (
     <Box w='full' p={6}>
@@ -47,6 +59,17 @@ export function TransactionSubmittedContent({
               <CronosIcon boxSize={5}/>
             </HStack>
           </Link>
+        )}
+        {showAddToWalletButton && (
+          <AddToWalletButton
+            mt="12px"
+            width="fit-content"
+            marginTextBetweenLogo="6px"
+            textOptions={AddToWalletTextOptions.TEXT_WITH_ASSET}
+            tokenAddress={token?.address}
+            tokenSymbol={currencyToAdd!.symbol}
+            tokenDecimals={token?.decimals}
+          />
         )}
         <PrimaryButton onClick={onDismiss} mt="20px">
           Close

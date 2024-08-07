@@ -11,7 +11,6 @@ const workerDeps = [
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  swcMinify: false,
   compiler: {
     styledComponents: true,
   },
@@ -83,7 +82,6 @@ const nextConfig = {
     });
 
     config.resolve.alias['jotai'] = path.resolve(__dirname, 'node_modules/jotai');
-    config.optimization.minimize = false;
 
     config.plugins.push(
         new webpack.DefinePlugin({
@@ -332,7 +330,7 @@ const sentryWebpackPluginOptions = {
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
   // Suppresses source map uploading logs during build
-  silent: false,
+  silent: true,
   org: "ebisus-bay",
   project: "eb-web",
   authToken: process.env.SENTRY_AUTH_TOKEN,

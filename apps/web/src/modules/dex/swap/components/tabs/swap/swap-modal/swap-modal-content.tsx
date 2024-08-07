@@ -7,7 +7,7 @@ import {ModalProps} from "@chakra-ui/react";
 import {useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import SwapModalHeader from "@dex/swap/components/tabs/swap/swap-modal/swap-modal-header";
 import SwapModalFooter from "@dex/swap/components/tabs/swap/swap-modal/swap-modal-footer";
-import {ConfirmationModalContent} from "@dex/swap/components/tabs/swap/swap-modal/confirmation-modal-content";
+import {ConfirmationModalContent} from "@dex/components/transaction-confirmation-modal/confirmation-modal-content";
 
 /**
  * Returns true if the trade requires a confirmation of details before we can submit it
