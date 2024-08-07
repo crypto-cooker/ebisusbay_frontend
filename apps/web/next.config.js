@@ -86,7 +86,7 @@ const nextConfig = {
     config.optimization.minimize = false;
 
     config.plugins.push(
-        new webpack.DefinePlugin({
+        new config.DefinePlugin({
           __SENTRY_DEBUG__: false,
           __SENTRY_TRACING__: false,
         })
