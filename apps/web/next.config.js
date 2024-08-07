@@ -85,7 +85,7 @@ const nextConfig = {
     config.resolve.alias['jotai'] = path.resolve(__dirname, 'node_modules/jotai');
     config.optimization.minimize = false;
 
-    webpackConfig.plugins.push(
+    config.plugins.push(
         new webpack.DefinePlugin({
           __SENTRY_DEBUG__: false,
           __SENTRY_TRACING__: false,
@@ -93,8 +93,8 @@ const nextConfig = {
     );
 
     // Ensure proper handling of worker dependencies (only if relevant)
-    if (!isServer && webpackConfig.optimization.splitChunks) {
-      webpackConfig.optimization.splitChunks.cacheGroups.workerChunks = {
+    if (!isServer && config.optimization.splitChunks) {
+      config.optimization.splitChunks.cacheGroups.workerChunks = {
         chunks: 'all',
         test(module) {
           const resource = module.nameForCondition?.() ?? '';
