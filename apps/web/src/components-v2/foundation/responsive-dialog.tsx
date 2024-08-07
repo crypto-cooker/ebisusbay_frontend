@@ -51,7 +51,11 @@ export const useResponsiveDialog = () => {
     return {
       DialogComponent: ModalDialog,
       DialogHeader: ModalHeader,
-      DialogBody: ModalBody,
+      DialogBody: ({ children, ...rest }: BoxProps) => (
+        <ModalBody pb={4} {...rest}>
+          {children}
+        </ModalBody>
+      ),
       DialogFooter: ModalFooter,
       DialogCloseButton: () => closeButton,
       DialogBasicHeader: ({title}: {title: string}) => (

@@ -7,9 +7,9 @@ import {Currency, CurrencyAmount, Trade, TradeType} from "@pancakeswap/sdk";
 import {Field} from "@eb-pancakeswap-web/state/swap/actions";
 import formatAmountDisplay from "@dex/swap/utils/formatAmountDisplay";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
-import {ConfirmationPendingContent} from "@dex/swap/components/tabs/swap/swap-modal/confirmation-pending-content";
-import {TransactionSubmittedContent} from "@dex/swap/components/tabs/swap/swap-modal/transaction-submitted-content";
-import {TransactionErrorContent} from "@dex/swap/components/tabs/swap/swap-modal/transaction-error-content";
+import {ConfirmationPendingContent} from "@dex/components/transaction-confirmation-modal/confirmation-pending-content";
+import {TransactionSubmittedContent} from "@dex/components/transaction-confirmation-modal/transaction-submitted-content";
+import {TransactionErrorContent} from "@dex/components/transaction-confirmation-modal/transaction-error-content";
 import TransactionConfirmSwapContent from "@dex/swap/components/tabs/swap/swap-modal/transaction-confirm-swap-content";
 
 interface ConfirmSwapModalProps {

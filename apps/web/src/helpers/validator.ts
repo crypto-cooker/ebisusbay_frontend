@@ -84,9 +84,8 @@ export class UserUnexpectedTxError extends BaseError {
  * This is hacking out the revert reason from the ethers provider thrown error however it can.
  * This object seems to be undocumented by ethers.
  * @param error an error from the ethers provider
- * @param t Translation function
  */
-export function transactionErrorToUserReadableMessage(error: any, t: TranslateFunction) {
+export function transactionErrorToUserReadableMessage(error: any) {
   let reason: string | undefined
   const parsedError = parseViemError(error)
   if (parsedError) {
