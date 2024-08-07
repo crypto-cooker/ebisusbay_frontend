@@ -332,7 +332,7 @@ const sentryWebpackPluginOptions = {
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
   // Suppresses source map uploading logs during build
-  silent: false,
+  silent: true,
   org: "ebisus-bay",
   project: "eb-web",
   authToken: process.env.SENTRY_AUTH_TOKEN,
