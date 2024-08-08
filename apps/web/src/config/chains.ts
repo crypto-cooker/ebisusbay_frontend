@@ -24,6 +24,10 @@ export const getChainId = memoize((chainName: string) => {
   return CHAIN_QUERY_NAME_TO_ID[chainName.toLowerCase()] ? +CHAIN_QUERY_NAME_TO_ID[chainName.toLowerCase()] : undefined
 })
 
+export function isSupportedChainId(value: number): value is SupportedChainId {
+  return (SUPPORTED_CHAIN_IDS as readonly number[]).includes(value);
+}
+
 const cronos = {
   ...cronos_,
   rpcUrls: {
@@ -88,11 +92,7 @@ export const L2_CHAIN_IDS: ChainId[] = [
   ChainId.CRONOS_ZKEVM_TESTNET
 ]
 
-export const CHAINS: [Chain, ...Chain[]] = [
-  cronos,
-  cronosTestnet,
-  cronosZkEVMTestnet,
-]
+
 
 type HexString = `0x${string}` & string;
 
@@ -275,5 +275,14 @@ const chainConfigs: Record<SupportedChainId, AppChainConfig> = {
   [ChainId.CRONOS_TESTNET]: cronosTestnetConfig,
   [ChainId.CRONOS_ZKEVM_TESTNET]: cronosZkEVMTestnetConfig
 }
+
+const wagmiChainConfigs = {
+  [ChainId.CRONOS]: cronos,
+  [ChainId.CRONOS_TESTNET]: cronosTestnet,
+  [ChainId.CRONOS_ZKEVM_TESTNET]: cronosZkEVMTestnet
+} as Record<SupportedChainId, Chain>;
+
+// This is currently used for various pancake configurations. Can consider refactoring
+export const CHAINS = Object.values(wagmiChainConfigs);
 
 export default chainConfigs;

@@ -40,6 +40,8 @@ const useCart = () => {
 
   const totalPrice = items.reduce((total, item) => total + parseInt(item.price.toString()) * item.amount, 0);
 
+  const itemsForChain = (chain: number) => items.filter((item) => item.chain === chain);
+
   return {
     isOpen,
     items,
@@ -50,6 +52,7 @@ const useCart = () => {
     clearCart,
     isItemInCart,
     totalPrice,
+    itemsForChain
   };
 };
 

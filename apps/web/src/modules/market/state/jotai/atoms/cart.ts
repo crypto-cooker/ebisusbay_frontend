@@ -12,6 +12,7 @@ export interface CartItem {
   amount: number;
   currency: string;
   isBundle?: boolean;
+  chain: number;
 }
 
 export const cartOpenAtom = atom<boolean>(false);

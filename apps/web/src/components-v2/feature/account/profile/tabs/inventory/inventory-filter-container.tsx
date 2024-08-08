@@ -39,6 +39,7 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
     for (const item of items) {
       if (item.key === 'status-buy-now') delete params.listed;
       if (item.key === 'status-has-offers') delete params.offered;
+      if (item.key === 'status-show-hidden') delete params.showHidden;
       if (item.key === 'range-min-rank') delete params.minRank;
       if (item.key === 'range-max-rank') delete params.maxRank;
       if (item.key === 'range-min-price') delete params.minPrice;
@@ -62,6 +63,7 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
     const params = queryParams;
     if (item.key === 'status-buy-now') params.listed = checked ? 1 : undefined;
     if (item.key === 'status-has-offers') params.offered = checked ? 1 : undefined;
+    if (item.key === 'status-show-hidden') params.showHidden = checked ? 1 : undefined;
     if (item.key === 'status-bundles') {
       if (checked) {
         handleCollectionFilter([{name: 'Bundles', address: config.contracts.bundle}]);
@@ -163,7 +165,8 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
         title='Status'
         items={[
           {label: 'Buy Now', key: 'status-buy-now', isChecked: filteredItems.some((fi) => fi.key === 'status-buy-now')},
-          {label: 'Has Offers', key: 'status-has-offers', isChecked: filteredItems.some((fi) => fi.key === 'status-has-offers')}
+          {label: 'Has Offers', key: 'status-has-offers', isChecked: filteredItems.some((fi) => fi.key === 'status-has-offers')},
+          {label: 'Show Hidden', key: 'status-show-hidden', isChecked: filteredItems.some((fi) => fi.key === 'status-show-hidden')}
         ]}
         onCheck={handleStatusFilter}
       />

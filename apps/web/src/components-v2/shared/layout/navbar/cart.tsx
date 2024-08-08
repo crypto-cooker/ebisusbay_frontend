@@ -37,11 +37,13 @@ import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon
 import {getPrices} from "@src/core/api/endpoints/prices";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";
-import useAuthedFunction from "@market/hooks/useAuthedFunction";
+import useAuthedFunctionWithChainID from '@market/hooks/useAuthedFunctionWithChainID';
 import useCart from "@market/hooks/use-cart";
-import {appConfig} from "@src/config";
-
-const config = appConfig();
+import {SupportedChainId} from "@src/config/chains";
+import {chains, isChainSupported} from "@src/wagmi";
+import {ChainLogo} from "@dex/components/logo";
+import {Tab, Tabs} from "@src/components-v2/foundation/tabs";
+import {Chain} from "wagmi/chains";
 
 const Cart = function () {
   const user = useUser();
@@ -51,7 +53,27 @@ const Cart = function () {
   const [invalidItems, setInvalidItems] = useState<string[]>([]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [buyGaslessListings, response] = useBuyGaslessListings();
-  const [runAuthedFunction] = useAuthedFunction();
+
+  const handleTabsChange = (index: number) => {
+    setSelectedChain(cartChains[index]);
+  }
+
+  const [runAuthedFunction] = useAuthedFunctionWithChainID();
+
+  const mappedItemsByChain = cart.items.reduce<Record<SupportedChainId, typeof cart.items>>((acc, nft) => {
+    if (nft.chain && isChainSupported(nft.chain)) {
+      const id = nft.chain as SupportedChainId;
+      if (!acc[id]) {
+        acc[id] = [];
+      }
+      acc[id].push(nft);
+    }
+    return acc;
+  }, {} as Record<SupportedChainId, typeof cart.items>);
+
+  const cartChains = chains.filter((chain) => !!mappedItemsByChain[chain.id as SupportedChainId]);
+  const [selectedChain, setSelectedChain] = useState<Chain>(cartChains[0])
+
   const slideDirection = useBreakpointValue<'bottom' | 'right'>(
     {
       base: 'bottom',
@@ -92,28 +114,27 @@ const Cart = function () {
    cart.openCart();
   }, [cart]);
 
-  const executeBuy = async () => {
-    await buyGaslessListings(cart.items.map((nft) => ({
-      listingId: nft.listingId,
-      price: parseInt(nft.price.toString()),
-      currency: nft.currency ?? ethers.constants.AddressZero
-    })));
+  const executeBuy = async (listings: any) => {
+    await buyGaslessListings(listings);
     handleClose();
     handleClearCart();
   };
 
   const preparePurchase = async () => {
+    if(cart.items.length === 0) return;
+
     await runAuthedFunction(async () => {
       try {
         setExecutingBuy(true);
-        const listingIds = cart.items.map((o) => o.listingId);
+        const chainListingIds = cart.items.filter((item) => item.chain === selectedChain.id);
+        const listingIds = chainListingIds.map((item) => item.listingId);
         const listings = await NextApiService.getListingsByIds(listingIds);
         const validListings = listings.data
           .filter((o) => o.state === listingState.ACTIVE)
           .map((o) => o.listingId);
 
-        if (validListings.length < cart.items.length) {
-          const invalidItems = cart.items
+        if (validListings.length < chainListingIds.length) {
+          const invalidItems = chainListingIds
             .filter((o) => !validListings.includes(o.listingId))
             .map((o) => o.listingId);
           setSoldItems(invalidItems);
@@ -121,14 +142,19 @@ const Cart = function () {
         }
         setSoldItems([]);
 
-        await executeBuy();
+        await executeBuy(chainListingIds.map((nft) => ({
+          listingId: nft.listingId,
+          price: parseInt(nft.price.toString()),
+          currency: nft.currency ?? ethers.constants.AddressZero,
+          chainId: nft.chain
+        })));
       } catch (error: any) {
         console.log('ERROR:: ', error)
         toast.error(parseErrorMessage(error));
       } finally {
         setExecutingBuy(false);
       }
-    });
+    }, selectedChain.id);
   }
 
   const NftLink = forwardRef<HTMLAnchorElement, any & {name: string}>(({ onClick, href, name }, ref) => {
@@ -150,10 +176,14 @@ const Cart = function () {
   const [serviceFees, setServiceFees] = useState(0);
   useEffect(() => {
     async function func() {
+      if (!selectedChain) return;
+
       let fees = 0;
       const exchangeRates = await getPrices();
 
-      const totals = cart.items.reduce((acc, nft) => {
+      const totals = cart.items
+        .filter((item) => item.chain === selectedChain.id)
+        .reduce((acc, nft) => {
         if (!nft.price) return acc;
 
         const currencyToken = knownErc20Token(nft.currency);
@@ -164,7 +194,7 @@ const Cart = function () {
         let fee =  numericPrice * (user.fee / 100);
         const erc20UsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, nft.currency));
         if (!!erc20UsdRate && erc20UsdRate.currency !== ethers.constants.AddressZero) {
-          const croUsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, ethers.constants.AddressZero) && rate.chain.toString() === config.chain.id);
+          const croUsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, ethers.constants.AddressZero) && rate.chain === selectedChain.id);
           const newFee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice) * (user.fee / 100);
 
           if (croUsdRate && !isNaN(newFee)) {
@@ -195,7 +225,13 @@ const Cart = function () {
       setServiceFees(fees);
     }
     func();
-  }, [cart.items, user.fee]);
+  }, [cart.items, user.fee, selectedChain]);
+
+  useEffect(() => {
+    if (!selectedChain && Object.values(mappedItemsByChain).length > 0) {
+      setSelectedChain(cartChains[0]);
+    }
+  }, [mappedItemsByChain]);
 
   return (
     <div>
@@ -225,89 +261,93 @@ const Cart = function () {
               <Text fontWeight="bold" onClick={handleClearCart} cursor="pointer">Clear all</Text>
             </Flex>
             {cart.items.length > 0 ? (
-              <>
-                {cart.items.map((nft, key) => (
-                  <Box
-                    key={nft.listingId}
-                    _hover={{background: hoverBackground}}
-                    p={2}
-                    rounded="lg"
-                  >
-                    <Flex>
+              <Tabs defaultIndex={0} onChange={handleTabsChange}>
+                {Object.entries(mappedItemsByChain).map(([chainId, items]) => (
+                  <Tab key={chainId} label={cartChains.find((chain) => chain.id.toString() === chainId)?.name ?? 'Cronos'}>
+                    {items.map((nft, key) => (
                       <Box
-                        width={100}
-                        height={100}
-                        style={{borderRadius: '20px'}}
+                        key={nft.listingId}
+                        _hover={{background: hoverBackground}}
+                        p={2}
+                        rounded="lg"
                       >
-                        {isBundle(nft.address) ? (
-                          <AnyMedia
-                            image={ImageService.translate('/img/logos/bundle.webp').fixedWidth(100, 100)}
-                            title={nft.name}
-                            usePlaceholder={false}
-                            className="img-rounded-8"
-                          />
-                        ) : (
-                          <MultimediaImage
-                            source={ImageService.translate(specialImageTransform(nft.address, nft.image)).fixedWidth(100, 100)}
-                            fallbackSource={ImageService.bunnykit(ImageService.bunnykit(nft.image).thumbnail()).fixedWidth(100, 100)}
-                            title={nft.name}
-                            className="img-rounded-8"
-                          />
-                        )}
-                      </Box>
-                      <Box flex='1' ms={2}>
-                        
-                        <VStack align="left" spacing={0}>
-                          {!nft.isBundle? (
-                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref legacyBehavior>
-                              <NftLink name={nft.name} />
-                            </Link>
-                          ) : (
-                            <Link href={`/collection/${nft.address}/${nft.id}`} passHref legacyBehavior>
-                              <NftLink name={nft.name} />
-                            </Link>
-                          )}
-                          {nft.amount && nft.amount > 1 && (
-                            <Text fontSize='sm'>Pack of {nft.amount}</Text>
-                          )}
-                          {nft.rank && (
-                            <Box>
-                              <Badge variant='solid' colorScheme='blue'>
-                                Rank: {nft.rank}
-                              </Badge>
-                            </Box>
-                          )}
-                          {nft.price && (
-                            <HStack>
-                              <DynamicCurrencyIcon address={nft.currency} boxSize={4} />
-                              <Box>{commify(round(nft.price, 2))}</Box>
-                            </HStack>
-                          )}
-                          <Wrap>
-                            {soldItems.includes(nft.listingId) && (
-                              <Box>
-                                <Badge variant='outline' colorScheme='red'>
-                                  Listing sold
-                                </Badge>
-                              </Box>
+                        <Flex>
+                          <Box
+                            width={100}
+                            height={100}
+                            style={{borderRadius: '20px'}}
+                          >
+                            {isBundle(nft.address) ? (
+                              <AnyMedia
+                                image={ImageService.translate('/img/logos/bundle.webp').fixedWidth(100, 100)}
+                                title={nft.name}
+                                usePlaceholder={false}
+                                className="img-rounded-8"
+                              />
+                            ) : (
+                              <MultimediaImage
+                                source={ImageService.translate(specialImageTransform(nft.address, nft.image)).fixedWidth(100, 100)}
+                                fallbackSource={ImageService.bunnykit(ImageService.bunnykit(nft.image).thumbnail()).fixedWidth(100, 100)}
+                                title={nft.name}
+                                className="img-rounded-8"
+                              />
                             )}
-                            {invalidItems.includes(nft.listingId) && (
-                              <Box>
-                                <Badge variant='outline' colorScheme='red'>
-                                  Listing invalid
-                                </Badge>
-                              </Box>
-                            )}
-                          </Wrap>
-                        </VStack>
+                          </Box>
+                          <Box flex='1' ms={2}>
+
+                            <VStack align="left" spacing={0}>
+                              {!nft.isBundle? (
+                                <Link href={`/collection/${nft.address}/${nft.id}`} passHref legacyBehavior>
+                                  <NftLink name={nft.name} />
+                                </Link>
+                              ) : (
+                                <Link href={`/collection/${nft.address}/${nft.id}`} passHref legacyBehavior>
+                                  <NftLink name={nft.name} />
+                                </Link>
+                              )}
+                              {nft.amount && nft.amount > 1 && (
+                                <Text fontSize='sm'>Pack of {nft.amount}</Text>
+                              )}
+                              {nft.rank && (
+                                <Box>
+                                  <Badge variant='solid' colorScheme='blue'>
+                                    Rank: {nft.rank}
+                                  </Badge>
+                                </Box>
+                              )}
+                              {nft.price && (
+                                <HStack>
+                                  <DynamicCurrencyIcon address={nft.currency} boxSize={4} />
+                                  <Box>{commify(round(nft.price, 2))}</Box>
+                                </HStack>
+                              )}
+                              <Wrap>
+                                {soldItems.includes(nft.listingId) && (
+                                  <Box>
+                                    <Badge variant='outline' colorScheme='red'>
+                                      Listing sold
+                                    </Badge>
+                                  </Box>
+                                )}
+                                {invalidItems.includes(nft.listingId) && (
+                                  <Box>
+                                    <Badge variant='outline' colorScheme='red'>
+                                      Listing invalid
+                                    </Badge>
+                                  </Box>
+                                )}
+                              </Wrap>
+                            </VStack>
+                          </Box>
+                          <Box ms={2} cursor="pointer" my="auto" onClick={() => handleRemoveItem(nft)}>
+                            <FontAwesomeIcon icon={faTrash}/>
+                          </Box>
+                        </Flex>
                       </Box>
-                      <Box ms={2} cursor="pointer" my="auto" onClick={() => handleRemoveItem(nft)}>
-                        <FontAwesomeIcon icon={faTrash}/>
-                      </Box>
-                    </Flex>
-                  </Box>
+                    ))}
+                  </Tab>
                 ))}
-              </>
+              </Tabs>
             ) : (
               <Box py={8}>
                 <Center>
@@ -353,6 +393,7 @@ const Cart = function () {
                   </Box>
                 </Flex>
               </Box>
+
               <Button
                 className="w-100"
                 title="Refresh Metadata"
@@ -360,7 +401,10 @@ const Cart = function () {
                 disabled={!(cart.items.length > 0) || executingBuy || invalidItems.length > 0 || soldItems.length > 0}
                 isLoading={executingBuy}
               >
-                Complete Purchase
+                <HStack>
+                  {!!selectedChain && <ChainLogo chainId={selectedChain.id} />}
+                  <Box>Complete Checkout</Box>
+                </HStack>
               </Button>
             </Flex>
           </DrawerFooter>

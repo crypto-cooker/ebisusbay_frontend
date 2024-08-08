@@ -126,7 +126,8 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
       listingTime:  listing.listingTime ?? null,
       is1155: listing.is1155,
       amount: listing.amount,
-      currency: listing.currency
+      currency: listing.currency,
+      chain: listing.chain
     });
     toast.success(createSuccessfulAddCartContent(cart.openCart));
   };

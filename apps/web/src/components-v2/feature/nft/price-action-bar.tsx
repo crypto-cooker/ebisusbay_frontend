@@ -102,7 +102,8 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
         id: nft.id,
         rank: nft.rank,
         amount: listing.amount ?? 1,
-        currency: listing.currency
+        currency: listing.currency,
+        chain: listing.chain
       });
       toast.success(createSuccessfulAddCartContent(cart.openCart));
     }

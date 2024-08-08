@@ -128,11 +128,20 @@ class Mapi {
   }
 
   async getWallet(query?: WalletsQueryParams): Promise<PagedList<WalletNft>> {
+    console.log('query', query);
     const response = await this.wallets.get(new WalletsQuery(query));
 
-    const filteredNfts = response.data.nfts.filter((nft: any) => {
-      return !!findCollectionByAddress(nft.nftAddress, nft.nftId);
-    });
+    let filteredNfts
+    if(!query?.showHidden){
+      filteredNfts = response.data.nfts.filter((nft: any) => {
+        return !!findCollectionByAddress(nft.nftAddress, nft.nftId);
+      });
+    } else {
+      filteredNfts = response.data.nfts;
+    }
+    //.filter((nft: any) => {
+      // return !!findCollectionByAddress(nft.nftAddress, nft.nftId);
+    // });
 
     const nfts = await Promise.all(filteredNfts.map(async (nft: any): Promise<WalletNft> => {
       const walletNft = WalletNft.fromMapi(nft);

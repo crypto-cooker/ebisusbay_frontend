@@ -1,9 +1,12 @@
 import {useState} from 'react';
-import {ContractReceipt, ethers} from "ethers";
+import {Contract, ContractReceipt, ethers} from "ethers";
 import {toast} from 'react-toastify';
 import {getServerSignature} from '@src/core/cms/endpoints/gaslessListing';
 import {pluralize} from "@market/helpers/utils";
 import {useContractService, useUser} from "@src/components-v2/useUser";
+import gaslessListingContract from "@src/global/contracts/GaslessListing.json";
+import chainConfigs, {SupportedChainId} from "@src/config/chains";
+import {useContractWrite} from "wagmi";
 
 type ResponseProps = {
   loading: boolean;
@@ -15,6 +18,7 @@ interface PendingGaslessPurchase {
   listingId: string;
   price: number;
   currency: string;
+  chainId: number;
 }
 
 const useBuyGaslessListings = () => {
@@ -24,7 +28,8 @@ const useBuyGaslessListings = () => {
     tx: undefined
   });
 
-  const {address} = useUser();
+  const {address, provider} = useUser();
+
   const contractService = useContractService();
 
   const buyGaslessListings = async (pendingPurchases: PendingGaslessPurchase[]) => {
@@ -36,7 +41,9 @@ const useBuyGaslessListings = () => {
     });
 
     try {
-      const buyContract = contractService!.ship;
+      const chainId = pendingPurchases[0].chainId as SupportedChainId
+      const chainConfig = chainConfigs[chainId];
+
       const croTotal = pendingPurchases
         .filter((purchase) => !purchase.currency || purchase.currency === ethers.constants.AddressZero)
         .reduce((acc, curr) => acc + Number(curr.price), 0);
@@ -69,6 +76,7 @@ const useBuyGaslessListings = () => {
       const { data: serverSig } = await getServerSignature((address! as string), pendingPurchases.map((purchase) => purchase.listingId));
       const { signature, orderData, ...sigData } = serverSig;
       const total = price.add(sigData.feeAmount);
+      const buyContract = new Contract(chainConfig.contracts.gaslessListing, gaslessListingContract.abi, provider.signer);
       const tx = await buyContract.fillOrders(orderData, sigData, signature, { value: total });
       const receipt = await tx.wait()
       toast.success(`${pluralize(pendingPurchases.length, 'NFT')} successfully purchased`);
