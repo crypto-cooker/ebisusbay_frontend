@@ -27802,6 +27802,30 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Kitty Cat NFT",
+      "slug": "kitty-cat-nft",
+      "multiToken": false,
+      "address": "0x5abc1bb2110ff51f94ab0fe5fe087ab05ea8a3bf",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A very sneaky $KITTY Cat NFT collection",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/kitty-cat-nft/avatar.webp",
+        "website": "https://kittycatcromeow.weebly.com/",
+        "twitter": "https://www.twitter.com/kittycatcromeow",
+        "discord": "https://discord.gg/J7yqRZ4EZG",
+        "telegram": "https://t.me/+ZuIo2jKsos01ODBl",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
