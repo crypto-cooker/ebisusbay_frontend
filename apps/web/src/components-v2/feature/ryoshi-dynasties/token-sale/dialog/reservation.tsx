@@ -31,6 +31,7 @@ import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, round, timeSince} from "@market/helpers/utils";
 import {appConfig} from "@src/config";
 import FortunePresale from "@src/global/contracts/FortunePresale.json";
+import LiquidityBoost from "@src/global/contracts/LiquidityBoost.json";
 import {commify} from "ethers/lib/utils";
 import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/feature/ryoshi-dynasties/token-sale/context";
 import {useQueryClient} from "@tanstack/react-query";
@@ -38,6 +39,7 @@ import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
 import {useWindowSize} from "@market/hooks/useWindowSize";
 import ImageService from "@src/core/services/image";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 
@@ -153,10 +155,10 @@ export default FortuneReservationPage;
 const FortunePurchaseForm = () => {
   const [runAuthedFunction] = useAuthedFunction();
   const contractService = useContractService();
-
+  const tokenSaleContext = useContext(TokenSaleContext) as TokenSaleContextProps;
   const queryClient = useQueryClient();
-  const [fortuneToPurchase, setFortuneToPurchase] = useState('5000');
-  const [fortunePrice, setFortunePrice] = useState(0.03);
+  const [croToCommit, setCroToCommit] = useState('5000');
+  const [fortunePrice, setFortunePrice] = useState(6);
   const fullText = useBreakpointValue<boolean>(
     {base: false, sm: true},
     {fallback: 'sm'},
@@ -171,39 +173,40 @@ const FortunePurchaseForm = () => {
   const [tosError, setTosError] = useState('');
 
   const validateInput = async () => {
-    if (!fortuneToPurchase || Number(fortuneToPurchase) <= 0) {
+    if (!croToCommit || Number(croToCommit) <= 0) {
       setInputError('Please enter a value');
       return false;
     }
+    console.log('validateInput', croToCommit);
     setInputError('');
 
-    if (!tosCheck) {
-      setTosError('Please accept the TOS');
-      return false;
-    }
-    setTosError('');
+    // if (!tosCheck) {
+    //   setTosError('Please accept the TOS');
+    //   return false;
+    // }
+    // setTosError('');
 
-    const memberCollections = config.tokenSale.memberCollections.map((c: any) => c.toLowerCase());
-    const walletCollections = await getWalletOverview(user.address);
-    const isMember = walletCollections.data.filter((col: any) => {
-      return memberCollections.includes(col.nftAddress.toLowerCase());
-    }).length > 0;
+    // const memberCollections = config.tokenSale.memberCollections.map((c: any) => c.toLowerCase());
+    // const walletCollections = await getWalletOverview(user.address);
+    // const isMember = walletCollections.data.filter((col: any) => {
+    //   return memberCollections.includes(col.nftAddress.toLowerCase());
+    // }).length > 0;
 
     // Still always check VIP because wallet doesn't detect staked Ryoshis
-    const isVip = await contractService!.market.isVIP(user.address);
+    // const isVip = await contractService!.market.isVIP(user.address);
 
-    if (Date.now() > config.tokenSale.publicStart) {
-      if (!isMember && !isVip) {
-        setError('Must have a VIP, Founding Member, or any Ebisu brand NFT to participate');
-        return false;
-      }
-    } else if (Date.now() > config.tokenSale.vipStart) {
-      if (!isVip) {
-        setError('Must have a Ryoshi VIP to participate');
-        return false;
-      }
-    }
-    setError('');
+    // if (Date.now() > config.tokenSale.publicStart) {
+    //   if (!isMember && !isVip) {
+    //     setError('Must have a VIP, Founding Member, or any Ebisu brand NFT to participate');
+    //     return false;
+    //   }
+    // } else if (Date.now() > config.tokenSale.vipStart) {
+    //   if (!isVip) {
+    //     setError('Must have a Ryoshi VIP to participate');
+    //     return false;
+    //   }
+    // }
+    // setError('');
 
     return true;
   }
@@ -223,38 +226,39 @@ const FortunePurchaseForm = () => {
   }
 
   const attemptPurchase = async () => {
-    const usdcAddress = config.contracts.usdc;
+    // const usdcAddress = config.contracts.usdc;
 
     try {
       setExecutingLabel('Validating');
       setIsExecuting(true);
 
       // Convert the desired amount of $Fortune to $USDC
-      const desiredFortuneAmount = BigNumber.from(fortuneToPurchase);
-      const usdcCost = desiredFortuneAmount.mul(30000).div(1000000);
+      const desiredCroToCommit = ethers.utils.parseEther(croToCommit);//BigNumber.from(croToCommit);
+      // const usdcCost = desiredCroToCommit.mul(30000).div(1000000);
 
       // Instantiate USDC contract
-      const usdcContract = new Contract(usdcAddress, ERC20, user.provider.getSigner());
+      // const usdcContract = new Contract(usdcAddress, ERC20, user.provider.getSigner());
 
       // Allow tx to continue in case there were issues retrieving USDC
-      const usdcBalance = await usdcContract.balanceOf(user.address);
-      if (usdcCost.mul(1000000).gt(usdcBalance)) {
-        setInputError('Amount might exceed USDC balance');
-      }
+      // const usdcBalance = await usdcContract.balanceOf(user.address);
+      // if (usdcCost.mul(1000000).gt(usdcBalance)) {
+      //   setInputError('Amount might exceed USDC balance');
+      // }
 
       // Check how much USDC the user has already approved
-      const allowance = await usdcContract.allowance(user.address, config.contracts.purchaseFortune);
+      // const allowance = await usdcContract.allowance(user.address, config.contracts.purchaseFortune);
 
       // If the user has not approved the token sale contract to spend enough of their USDC, approve it
-      const approvalAmount = ethers.utils.parseEther(usdcCost.toString()); // or constants.MaxUint256 is there are issues
-      if (allowance.lt(approvalAmount)) {
-        setExecutingLabel('Approving');
-        await usdcContract.approve(config.contracts.purchaseFortune, approvalAmount);
-      }
+      // const approvalAmount = ethers.utils.parseEther(usdcCost.toString()); // or constants.MaxUint256 is there are issues
+      // if (allowance.lt(approvalAmount)) {
+      //   setExecutingLabel('Approving');
+      //   await usdcContract.approve(config.contracts.purchaseFortune, approvalAmount);
+      // }
 
-      setExecutingLabel('Purchasing');
-      const purchaseFortuneContract = new Contract(config.contracts.purchaseFortune, FortunePresale, user.provider.getSigner());
-      const tx = await purchaseFortuneContract.purchase(desiredFortuneAmount)
+      setExecutingLabel('Committing');
+      console.log(config.contracts.zkLB);
+      const purchaseFortuneContract = new Contract(config.contracts.zkLB, LiquidityBoost, user.provider.getSigner());
+      const tx = await purchaseFortuneContract.contribute({ value: desiredCroToCommit });
       const receipt = await tx.wait();
 
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -275,7 +279,10 @@ const FortunePurchaseForm = () => {
 
   const handlePurchase = async () => {
     runAuthedFunction(async() => {
-      if (!await validateInput()) return;
+      if (!await validateInput()){
+        console.log('validation failed');
+        return;
+      } 
       await attemptPurchase();
     });
   }
@@ -283,12 +290,12 @@ const FortunePurchaseForm = () => {
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       step: 1000,
-      defaultValue: fortuneToPurchase, // MIN_PURCHASE
-      min: 1000, // MIN_PURCHASE
-      max: 10000000, // MAX_PURCHASE
+      defaultValue: croToCommit, // MIN_PURCHASE
+      min: 5000, // MIN_PURCHASE
+      max: 4000000, // MAX_PURCHASE
       precision: 0,
       onChange(valueAsString, valueAsNumber) {
-        setFortuneToPurchase(valueAsString);
+        setCroToCommit(valueAsString);
       }
     })
   const inc = getIncrementButtonProps()
@@ -301,15 +308,15 @@ const FortunePurchaseForm = () => {
         {user.address ? (
           <>
             <Box>
-              <HStack>
+              {/* <HStack>
                 <Image src={ImageService.translate('/img/battle-bay/bankinterior/usdc.svg').convert()} alt="walletIcon" boxSize={6}/>
                 <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? 'USDC ' : ''}${user.balances.cro}</Text>
               </HStack>
-              <Button fontSize={{base: 'xs', md: 'sm'}} variant='unstyled' fontWeight='normal' textDecoration='underline' onClick={handleBuyUsdc}>Purchase USDC <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Button>
+              <Button fontSize={{base: 'xs', md: 'sm'}} variant='unstyled' fontWeight='normal' textDecoration='underline' onClick={handleBuyUsdc}>Purchase USDC <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} ml={1} /></Button> */}
             </Box>
             <HStack align='start'>
-              <FortuneIcon boxSize={6} />
-              <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? '$Fortune ' : ''}{commify(user.balances.frtn)}</Text>
+              <CronosIconBlue boxSize={6} />
+              <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>{fullText ? 'Contributed ' : ''}{commify(ethers.utils.formatEther(tokenSaleContext.userCroContributed ?? "0"))}</Text>
             </HStack>
           </>
         ) : (
@@ -321,7 +328,7 @@ const FortunePurchaseForm = () => {
           <VStack mx={2}>
             <FormControl isInvalid={!!inputError}>
               <Flex justify='space-between' align='center' direction={{base: 'column', md: 'row'}}>
-                <FormLabel>Amount of $Fortune to reserve</FormLabel>
+                <FormLabel>Amount of $CRO to contribute</FormLabel>
                 <Box>
                   <Stack direction={{base:'column', lg:'row'}} spacing={2}>
                     <HStack>
@@ -335,16 +342,16 @@ const FortunePurchaseForm = () => {
               </Flex>
             </FormControl>
             <Flex justify='space-between' w='full'>
-              <Text>Current $Fortune price</Text>
-              <Text fontWeight='bold'>${fortunePrice}</Text>
+              <Text>$FRTN per $CRO</Text>
+              <Text fontWeight='bold'>{fortunePrice}</Text>
             </Flex>
             <Flex justify='space-between' w='full'>
-              <Text>Your total cost</Text>
-              <Text fontWeight='bold'>${commify(fortunePrice * Number(fortuneToPurchase))}</Text>
+              <Text>Your total $FRTN</Text>
+              <Text fontWeight='bold'>{commify(fortunePrice * Number(croToCommit))}</Text>
             </Flex>
           </VStack>
           <Box textAlign='center' mt={8} mb={2} mx={2}>
-            <Box mb={3}>
+            {/* <Box mb={3}>
               <FormControl isInvalid={!!tosError}>
                 <VStack spacing={0}>
                   <Checkbox colorScheme='blue' size='lg' onChange={handleTosCheck}>
@@ -358,7 +365,7 @@ const FortunePurchaseForm = () => {
                   </Center>
                 </VStack>
               </FormControl>
-            </Box>
+            </Box> */}
             <Box
               ps='20px'>
               <RdButton
@@ -370,7 +377,7 @@ const FortunePurchaseForm = () => {
                 disabled={isExecuting}
               >
                 {user.address ? (
-                  <>{isExecuting ? executingLabel : 'Buy $Fortune'}</>
+                  <>{isExecuting ? executingLabel : 'Buy $FRTN'}</>
                 ) : (
                   <>Connect</>
                 )}
@@ -396,7 +403,7 @@ const FortunePurchaseProgress = () => {
   const windowSize = useWindowSize();
 
   const getProgress = async () => {
-    const value = (tokenSaleContext.totalFortunePurchased / tokenSaleContext.maxAllocation) * 100;
+    const value = (tokenSaleContext.totalCroContributed / tokenSaleContext.maxAllocation) * 100;
     setProgressValue(value);
     const offsetWidth = progressRef.current?.offsetWidth ?? 0;
     setBarSpot((((value > 0 ? value : 1) / 100) * offsetWidth) - 5);
@@ -407,7 +414,7 @@ const FortunePurchaseProgress = () => {
       await getProgress();
     }
     func();
-  }, [tokenSaleContext.totalFortunePurchased, windowSize.width]);
+  }, [tokenSaleContext.totalCroContributed, windowSize.width]);
 
   return (
     <>
@@ -478,7 +485,7 @@ const FortunePurchaseProgress = () => {
         </SimpleGrid>
       </Box>
       <Box textAlign='center' mt={1}>
-        <Box>{progressValue ? round(progressValue, 1) : ''}% of $Fortune purchased by all users</Box>
+        <Box>{progressValue ? round(progressValue, 1) : ''}% of $FRTN reserved</Box>
       </Box>
     </>
   )

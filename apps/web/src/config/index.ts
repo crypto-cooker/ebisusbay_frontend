@@ -78,7 +78,8 @@ const configData: AppConfigMap = {
       townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
       vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F',
       ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
-      farms: '0x62eAEe24A848bEB06B8112D5A37587b3CF21F44D'
+      farms: '0x62eAEe24A848bEB06B8112D5A37587b3CF21F44D',
+      zkLB: '0x87dabCc9F16A13E1Cc130f0184d7A86F0E5fd35d'
     },
     tokens: {
       mad: {
@@ -248,6 +249,12 @@ const configData: AppConfigMap = {
         symbol: 'TFC',
         address: '0x22811A01B665872cd48dC9303CDA2ca3188F1553',
         decimals: 18
+      },
+      sith: {
+        name: 'SITH',
+        symbol: 'SITH',
+        address: '0xFe469aE7B22B90e54763Fcb8d4F253e747C816f1',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
@@ -266,7 +273,7 @@ const configData: AppConfigMap = {
     tokenSale: {
       vipStart: 1682971200000,
       publicStart: 1682974800000,
-      publicEnd: 1683586800000,
+      publicEnd: 1723852800000,
       memberCollections: [
         '0x8d9232Ebc4f06B7b8005CCff0ca401675ceb25F5', // FM
         '0x653DDF1Bb9995ecfcbDd411Dc3F9793127680B29', // Valentine
@@ -831,6 +838,7 @@ const configData: AppConfigMap = {
       id: '338',
       symbol: 'tCRO',
     },
+    
     urls: {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
@@ -875,7 +883,7 @@ const configData: AppConfigMap = {
       gaslessListing: '0xBbe0D0715AbCadb8A0Db41C0Bb7f272570907C45',
       gdc: '0xd464f36885163e124e3a15e31c0e581ba3f648ab',
       usdc: '0x1E1d0765439d0d53ee40CC4fB454C2343c84342b',
-      purchaseFortune: '0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0',
+      purchaseFortune: '0x24526d3177dd0CEB213fEB532EA73B8aD8CC4a54',
       allianceCenter: '0xD75beC9C8320D81D5B7cD0866B7F7DbC886ffeE9',
       battleField: '0x4EeDb8c80bEFB5d672F869a1bdc29Cc2f665Bb3b',
       resources: '0xDa72eE0B52A5a6d5C989f0e817c9e2AF72e572B5',
@@ -960,16 +968,11 @@ const configData: AppConfigMap = {
       }
     },
     tokenSale: {
-      vipStart: 1682963727000,
-      publicStart: 1682963727000,
-      publicEnd: 1683586800000,
+      vipStart: 1722309311,
+      publicStart: 1722309311,
+      publicEnd: 1723168800000,
       memberCollections: [
-        '0x3F1590A5984C89e6d5831bFB76788F3517Cdf034', // FM
-        '0xe51377a260043381b8B525D33B9fFBC601A1469b', // Ryoshi Halloween
-        '0xCF7aedEbC5223c4C620625A560300582B77D8719', // Ryoshi VIP
-        '0xa937e814A2c5e99E9e86c4F34162c4F012F75a52', // Legacy VIP
-        '0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9', // SeaShrine VIP
-        '0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad', // Ryoshi Christmas
+
       ]
     },
     listings: {
@@ -1004,6 +1007,13 @@ const configData: AppConfigMap = {
       cms: 'http://localhost:4000/api/',
       // cmsSocket: 'wss://cms.ebisusbay.com/socket/',
       cmsSocket: 'ws://localhost:4000/socket/',
+    },
+    tokenSale: {
+      vipStart: 17223093110000,
+      publicStart: 17223093110000,
+      publicEnd: 17231688000000,
+      memberCollections: [
+      ]
     }
   }
 };
