@@ -340,7 +340,7 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
               ) : null
             }
             allowedSlippage={userAllowedSlippage}
-            onSlippageClick={() => console.log('plz implement')}
+            onSlippageClick={onOpenSettings}
           />
 
           <Flex align='stretch'>

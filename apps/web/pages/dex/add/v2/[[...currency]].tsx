@@ -22,11 +22,7 @@ export default function Page() {
       undefined,
       { shallow: true },
     )
-  }, [router, currencyIdA, currencyIdB])
-
-  const handleBack = useCallback(() => {
-
-  }, []);
+  }, [router, currencyIdA, currencyIdB]);
 
   useEffect(() => {
     handleRefresh();
