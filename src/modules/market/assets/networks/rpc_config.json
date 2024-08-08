@@ -27826,6 +27826,31 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Fury Brawl + Bull Edition",
+      "slug": "fury-brawl-bulls",
+      "multiToken": false,
+      "address": "0x853d96817b9fc55dfc4d3488418f258f92c31530",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The deal is simple. Get a character, enter the arena and fight!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-brawl-bulls/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-brawl-bulls/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-brawl-bulls/banner.webp",
+        "website": "https://www.furybrawl.com/",
+        "twitter": "https://twitter.com/FuryBrawl",
+        "discord": "https://discord.gg/cdyH3s3ZGy",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
