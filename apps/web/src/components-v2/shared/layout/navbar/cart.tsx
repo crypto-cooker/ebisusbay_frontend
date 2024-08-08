@@ -44,6 +44,7 @@ import {chains, isChainSupported} from "@src/wagmi";
 import {ChainLogo} from "@dex/components/logo";
 import {Tab, Tabs} from "@src/components-v2/foundation/tabs";
 import {Chain} from "wagmi/chains";
+import {CartItem} from "@market/state/jotai/atoms/cart";
 
 const Cart = function () {
   const user = useUser();
@@ -72,7 +73,7 @@ const Cart = function () {
   }, {} as Record<SupportedChainId, typeof cart.items>);
 
   const cartChains = chains.filter((chain) => !!mappedItemsByChain[chain.id as SupportedChainId]);
-  const [selectedChain, setSelectedChain] = useState<Chain>(cartChains[0])
+  const [selectedChain, setSelectedChain] = useState<Chain>()
 
   const slideDirection = useBreakpointValue<'bottom' | 'right'>(
     {
@@ -102,8 +103,8 @@ const Cart = function () {
   const handleClose = () => {
     cart.closeCart();
   };
-  const handleClearCart = () => {
-    cart.clearCart()
+  const handleClearCart = (newItems?: CartItem[]) => {
+    cart.clearCart(newItems)
   };
   const handleRemoveItem = (nft: any) => {
     cart.removeItem(nft.listingId);
@@ -116,11 +117,15 @@ const Cart = function () {
 
   const executeBuy = async (listings: any) => {
     await buyGaslessListings(listings);
-    handleClose();
-    handleClearCart();
+    if (listings.length >= cart.items.length) {
+      handleClose();
+    }
+    handleClearCart(cart.items.filter((item) => !listings.some((nft) => nft.listingId === item.listingId)));
   };
 
   const preparePurchase = async () => {
+    if (!selectedChain) return;
+
     if(cart.items.length === 0) return;
 
     await runAuthedFunction(async () => {
