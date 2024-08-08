@@ -30,8 +30,8 @@ const useCart = () => {
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
-  const clearCart = () => {
-    setItems([]);
+  const clearCart = (newItems?: CartItem[]) => {
+    setItems(newItems ?? []);
   };
 
   const isItemInCart = (itemId: string) => {
