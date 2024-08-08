@@ -8,7 +8,6 @@ const useAuthedFunction = () => {
   const user = useUser();
 
   const runAuthedFunction = async (fn: Function) => {
-    console.log(user);
     if (user.wallet.isConnected && user.wallet.address && user.wallet.correctChain) {
       try {
         await fn();

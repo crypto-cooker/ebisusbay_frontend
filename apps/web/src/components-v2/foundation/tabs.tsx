@@ -12,9 +12,10 @@ interface TabsProps {
   children: ReactElement<TabProps>[] | ReactElement<TabProps>;
   tabListStyle?: object;
   defaultIndex?: number;
+  onChange?: (index: number) => void;
 }
 
-export const Tabs = ({ children, tabListStyle, defaultIndex = 0 }: TabsProps) => {
+export const Tabs = ({ children, tabListStyle, defaultIndex = 0, onChange }: TabsProps) => {
   // Convert children to an array to handle both single and multiple children scenarios
   const childrenArray = React.Children.toArray(children) as ReactElement<TabProps>[];
 
@@ -23,10 +24,12 @@ export const Tabs = ({ children, tabListStyle, defaultIndex = 0 }: TabsProps) =>
     ? defaultIndex
     : 0;
 
-  const initialActiveTab = childrenArray[validatedDefaultIndex].props.label;
-  const [activeTab, setActiveTab] = React.useState<string>(initialActiveTab);
+  const [activeIndex, setActiveIndex] = React.useState<number>(validatedDefaultIndex);
 
-  const handleTabClick = (label: string) => setActiveTab(label);
+  const handleTabClick = (index: number) => {
+    setActiveIndex(index);
+    onChange?.(index);
+  }
 
   return (
     <Box>
@@ -36,8 +39,8 @@ export const Tabs = ({ children, tabListStyle, defaultIndex = 0 }: TabsProps) =>
           return (
             <ListItem
               key={index} // Changed to index to ensure uniqueness
-              className={`tab ${activeTab === label ? 'active' : ''} my-1`}
-              onClick={() => handleTabClick(label)}
+              className={`tab ${activeIndex === index ? 'active' : ''} my-1`}
+              onClick={() => handleTabClick(index)}
             >
               <span>{label}</span>
             </ListItem>
@@ -45,8 +48,8 @@ export const Tabs = ({ children, tabListStyle, defaultIndex = 0 }: TabsProps) =>
         })}
       </UnorderedList>
       <Box mt={2}>
-        {childrenArray.map((child) => {
-          if (child.props.label !== activeTab) return null;
+        {childrenArray.map((child, index) => {
+          if (index !== activeIndex) return null;
           return child.props.children;
         })}
       </Box>

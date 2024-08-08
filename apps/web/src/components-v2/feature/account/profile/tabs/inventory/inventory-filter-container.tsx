@@ -39,6 +39,7 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
     for (const item of items) {
       if (item.key === 'status-buy-now') delete params.listed;
       if (item.key === 'status-has-offers') delete params.offered;
+      if (item.key === 'status-show-hidden') delete params.showHidden;
       if (item.key === 'range-min-rank') delete params.minRank;
       if (item.key === 'range-max-rank') delete params.maxRank;
       if (item.key === 'range-min-price') delete params.minPrice;
@@ -62,6 +63,7 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
     const params = queryParams;
     if (item.key === 'status-buy-now') params.listed = checked ? 1 : undefined;
     if (item.key === 'status-has-offers') params.offered = checked ? 1 : undefined;
+    if (item.key === 'status-show-hidden') params.showHidden = checked ? 1 : undefined;
     if (item.key === 'status-bundles') {
       if (checked) {
         handleCollectionFilter([{name: 'Bundles', address: config.contracts.bundle}]);
@@ -152,27 +154,6 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
 
   }, [queryParams, filteredItems]);
 
-  const handleHiddenFilter = useCallback((item: CheckboxItem, checked: boolean) => {
-    const params = queryParams;
-    console.log('params', params);
-    console.log('item', item);
-    if (item.key === 'status-show-hidden') {
-      console.log('changing');
-      params.showHidden = checked ? 1 : 0;
-      console.log('params after', params);
-    }
-    console.log('here');
-    
-    onFilter({...queryParams, ...params});
-
-    const i = filteredItems.findIndex((fi) => fi.key === item.key)
-    console.log('i', i);
-    if (i !== -1) {
-      setFilteredItems(filteredItems.filter((fi) => fi.key !== item.key))
-    } else setFilteredItems([...filteredItems, item])
-
-  }, [queryParams, filteredItems]);
-
   const FilterAccordion = useMemo(() => (
     <Accordion defaultIndex={[0]} allowMultiple>
       <CollectionFilter
@@ -184,7 +165,8 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
         title='Status'
         items={[
           {label: 'Buy Now', key: 'status-buy-now', isChecked: filteredItems.some((fi) => fi.key === 'status-buy-now')},
-          {label: 'Has Offers', key: 'status-has-offers', isChecked: filteredItems.some((fi) => fi.key === 'status-has-offers')}
+          {label: 'Has Offers', key: 'status-has-offers', isChecked: filteredItems.some((fi) => fi.key === 'status-has-offers')},
+          {label: 'Show Hidden', key: 'status-show-hidden', isChecked: filteredItems.some((fi) => fi.key === 'status-show-hidden')}
         ]}
         onCheck={handleStatusFilter}
       />
@@ -242,15 +224,8 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
           ]}
         onSelect={handleCurrencyFilter}
       />
-      <CheckboxFilter
-        title='Pro Settings'
-        items={[
-          {label: 'Show Hidden', key: 'status-show-hidden', isChecked: filteredItems.some((fi) => fi.key === 'status-show-hidden')}
-        ]}
-        onCheck={handleHiddenFilter}
-        />
     </Accordion>
-  ), [collections, queryParams, filteredItems, handleCollectionFilter, handleStatusFilter, handleRankFilter, handlePriceFilter, handleHiddenFilter]);
+  ), [collections, queryParams, filteredItems, handleCollectionFilter, handleStatusFilter, handleRankFilter, handlePriceFilter]);
 
   return (
     <>

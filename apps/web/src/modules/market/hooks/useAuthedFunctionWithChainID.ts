@@ -4,14 +4,14 @@ import {useUser} from "@src/components-v2/useUser";
 import {parseErrorMessage} from "@src/helpers/validator";
 import { useActiveChainId } from "@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId";
 
-const useAuthedFunctionWithChainID = (id : number) => {
+const useAuthedFunctionWithChainID = (id?: number) => {
   const { open } = useWeb3Modal();
   const user = useUser();
   const { chainId } = useActiveChainId()
 
-  const runAuthedFunction = async (fn: Function) => {
-    console.log(user);
-    if (user.wallet.isConnected && user.wallet.address && chainId === id) {
+  const runAuthedFunction = async (fn: Function, targetChainId?: number) => {
+    const primaryTargetChain = targetChainId ?? id;
+    if (user.wallet.isConnected && user.wallet.address && chainId === primaryTargetChain) {
       try {
         await fn();
       } catch (error: any) {
@@ -19,7 +19,7 @@ const useAuthedFunctionWithChainID = (id : number) => {
       }
     } else if (!user.wallet.isConnected || !user.wallet.address) {
       await open();
-    } else if (chainId !== id) {
+    } else if (chainId !== primaryTargetChain) {
       await open({view: 'Networks'});
     }
   };
