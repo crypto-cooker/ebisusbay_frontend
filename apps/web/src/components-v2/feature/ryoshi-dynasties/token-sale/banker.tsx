@@ -12,7 +12,7 @@ import {TokenSaleContext, TokenSaleContextProps} from "@src/components-v2/featur
 import {Contract, ethers} from "ethers";
 // import FortunePresale from "@src/global/contracts/FortunePresale.json";
 import LiquidityBoost from "@src/global/contracts/LiquidityBoost.json";
-import {appConfig} from "@src/Config";
+import {appConfig} from "@src/config";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {useUser} from "@src/components-v2/useUser";
