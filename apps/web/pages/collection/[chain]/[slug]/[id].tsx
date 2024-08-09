@@ -15,15 +15,18 @@ import {appConfig} from "@src/config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {GetServerSidePropsContext} from "next";
+import {getChainById, getChainBySlug} from "@src/helpers";
+import {AppChainConfig} from "@src/config/chains";
 
 interface NftProps {
   slug: string;
   id: string;
+  chain: number;
   nft: any;
   collection: any;
 }
 
-const Nft = ({ slug, id, nft, collection }: NftProps) => {
+const Nft = ({ slug, id, nft, collection, chain }: NftProps) => {
   const [type, setType] = useState('721');
   const [initialized, setInitialized] = useState(false);
 
@@ -86,11 +89,11 @@ const Nft = ({ slug, id, nft, collection }: NftProps) => {
       {initialized && collection && (
         <>
           {isBundle(collection.address) ? (
-            <Nft721 address={collection.address} slug={collection.slug} id={id} nft={nft} isBundle={true} />
+            <Nft721 address={collection.address} slug={collection.slug} id={id} nft={nft} isBundle={true} chain={chain} />
           ) : type === '1155' ? (
-            <Nft1155 address={collection.address} id={id} collection={collection} />
+            <Nft1155 address={collection.address} id={id} collection={collection} chain={chain} />
           ) : (
-            <Nft721 address={collection.address} slug={collection.slug} id={id} nft={nft} />
+            <Nft721 address={collection.address} slug={collection.slug} id={id} nft={nft} chain={chain} />
           )}
         </>
       )}
@@ -100,7 +103,29 @@ const Nft = ({ slug, id, nft, collection }: NftProps) => {
 
 export const getServerSideProps = async ({ params }: GetServerSidePropsContext) => {
   const slug = params?.slug as string;
+  const chainSlugOrId = params?.chain as string | undefined;
   const tokenId = params?.id as string;
+  if (!slug || !chainSlugOrId || Array.isArray(chainSlugOrId) || !tokenId) {
+    return {
+      notFound: true
+    }
+  }
+
+  let chainConfig: AppChainConfig | undefined;
+  let requiresChainRedirect = false;
+  if (!isNaN(Number(chainSlugOrId))) {
+    chainConfig = getChainById(chainSlugOrId);
+    if (chainConfig) requiresChainRedirect = true;
+  } else {
+    chainConfig = getChainBySlug(chainSlugOrId);
+  }
+
+  if (!chainConfig) {
+    return {
+      notFound: true
+    }
+  }
+
   let collection;
 
   // @todo fix in autolistings
@@ -120,7 +145,7 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
 
   let nft;
   if (collection?.address) {
-    const resp = await getNft(collection.address, tokenId);
+    const resp = await getNft(collection.address, tokenId, chainConfig.chain.id);
     nft = { ...resp.nft, address: collection.address, id: tokenId };
   }
 
@@ -134,15 +159,16 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
     appUrl(`api/heroes/${tokenId}/og?${cacheBustingKey()}`).toString() :
     nft.image;
 
-  if (isAddress(slug)) {
+  if (isAddress(slug) || requiresChainRedirect) {
     return {
       redirect: {
-        destination: `/collection/${collection.slug}/${tokenId}`,
+        destination: `/collection/${chainConfig.slug}/${collection.slug}/${tokenId}`,
         permanent: false,
       },
       props: {
         slug: collection?.slug,
         id: tokenId,
+        chain: chainConfig.chain.id,
         collection,
         nft,
         seoImage
@@ -154,6 +180,7 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
     props: {
       slug: collection?.slug,
       id: tokenId,
+      chain: chainConfig.chain.id,
       collection,
       nft,
     },

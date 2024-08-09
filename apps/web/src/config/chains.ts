@@ -10,6 +10,8 @@ import {supportedTokens} from "@src/config/tokens";
 
 export const CHAIN_QUERY_NAME = chainNames
 
+const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
+
 // Maps chain names to chain IDs
 const CHAIN_QUERY_NAME_TO_ID = Object.entries(CHAIN_QUERY_NAME).reduce((acc, [chainId, chainName]) => {
   return {
@@ -24,8 +26,8 @@ export const getChainId = memoize((chainName: string) => {
   return CHAIN_QUERY_NAME_TO_ID[chainName.toLowerCase()] ? +CHAIN_QUERY_NAME_TO_ID[chainName.toLowerCase()] : undefined
 })
 
-export function isSupportedChainId(value: number): value is SupportedChainId {
-  return (SUPPORTED_CHAIN_IDS as readonly number[]).includes(value);
+export function isSupportedChainId(value: number | string): value is SupportedChainId {
+  return (SUPPORTED_CHAIN_IDS as readonly number[]).includes(Number(value));
 }
 
 const cronos = {
@@ -96,7 +98,9 @@ export const L2_CHAIN_IDS: ChainId[] = [
 
 type HexString = `0x${string}` & string;
 
-type AppChainConfig = {
+export type AppChainConfig = {
+  slug: string;
+  chain: Chain;
   urls: {
     subgraph: {
       root: string;
@@ -138,6 +142,8 @@ type AppChainConfig = {
 }
 
 const cronosConfig: AppChainConfig = {
+  slug: 'cronos',
+  chain: cronos,
   urls: {
     subgraph: {
       root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
@@ -179,6 +185,8 @@ const cronosConfig: AppChainConfig = {
 }
 
 const cronosTestnetConfig: AppChainConfig = {
+  slug: 'cronos-testnet',
+  chain: cronosTestnet,
   urls: {
     subgraph: {
       root: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
@@ -220,6 +228,8 @@ const cronosTestnetConfig: AppChainConfig = {
 }
 
 const cronosZkEVMTestnetConfig: AppChainConfig = {
+  slug: 'cronos-zk-testnet',
+  chain: cronosZkEVMTestnet,
   urls: {
     subgraph: {
       root: 'https://testcronos-zkevm-graph.ebisusbay.biz:18000/subgraphs/name/ebisusbay/zkcro/',
@@ -233,30 +243,30 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
   },
   contracts: {
     membership: '0x6618061a81Eb76aD05C227EE5aD7061a80e8a043',
-    auction: '0x0000000000000000000000000000000000000000',
+    auction: ADDRESS_ZERO,
     market: '0x8a99DBE4B0B90ef6d5Dca57c04c837cA4793a217',
-    stake: '0x0000000000000000000000000000000000000000',
-    offer: '0x0000000000000000000000000000000000000000',
-    madAuction: '0x0000000000000000000000000000000000000000',
-    slothtyRugsurance: '0x0000000000000000000000000000000000000000',
-    bundle: '0x0000000000000000000000000000000000000000',
+    stake: ADDRESS_ZERO,
+    offer: ADDRESS_ZERO,
+    madAuction: ADDRESS_ZERO,
+    slothtyRugsurance: ADDRESS_ZERO,
+    bundle: ADDRESS_ZERO,
     gaslessListing: '0xaa7D74dfCa79B2b3266B876deB5Ff77673e104C5',
-    gdc: '0x0000000000000000000000000000000000000000',
-    usdc: '0x0000000000000000000000000000000000000000',
-    purchaseFortune: '0x0000000000000000000000000000000000000000',
-    allianceCenter: '0x0000000000000000000000000000000000000000',
-    battleField: '0x0000000000000000000000000000000000000000',
-    resources: '0x0000000000000000000000000000000000000000',
-    bank: '0x0000000000000000000000000000000000000000',
-    barracks: '0x0000000000000000000000000000000000000000',
-    fortune: '0x0000000000000000000000000000000000000000',
-    rewards: '0x0000000000000000000000000000000000000000',
-    presaleVaults: '0x0000000000000000000000000000000000000000',
-    seasonUnlocks: '0x0000000000000000000000000000000000000000',
-    townHall: '0x0000000000000000000000000000000000000000',
-    vaultNft: '0x0000000000000000000000000000000000000000',
-    ryoshiWithKnife: '0x0000000000000000000000000000000000000000',
-    farms: '0x0000000000000000000000000000000000000000'
+    gdc: ADDRESS_ZERO,
+    usdc: ADDRESS_ZERO,
+    purchaseFortune: ADDRESS_ZERO,
+    allianceCenter: ADDRESS_ZERO,
+    battleField: ADDRESS_ZERO,
+    resources: ADDRESS_ZERO,
+    bank: ADDRESS_ZERO,
+    barracks: ADDRESS_ZERO,
+    fortune: ADDRESS_ZERO,
+    rewards: ADDRESS_ZERO,
+    presaleVaults: ADDRESS_ZERO,
+    seasonUnlocks: ADDRESS_ZERO,
+    townHall: ADDRESS_ZERO,
+    vaultNft: ADDRESS_ZERO,
+    ryoshiWithKnife: ADDRESS_ZERO,
+    farms: ADDRESS_ZERO
   },
   // tokens: supportedTokens,
 }
@@ -276,13 +286,21 @@ const chainConfigs: Record<SupportedChainId, AppChainConfig> = {
   [ChainId.CRONOS_ZKEVM_TESTNET]: cronosZkEVMTestnetConfig
 }
 
-const wagmiChainConfigs = {
-  [ChainId.CRONOS]: cronos,
-  [ChainId.CRONOS_TESTNET]: cronosTestnet,
-  [ChainId.CRONOS_ZKEVM_TESTNET]: cronosZkEVMTestnet
-} as Record<SupportedChainId, Chain>;
+// const wagmiChainConfigs = {
+//   [ChainId.CRONOS]: cronos,
+//   [ChainId.CRONOS_TESTNET]: cronosTestnet,
+//   [ChainId.CRONOS_ZKEVM_TESTNET]: cronosZkEVMTestnet
+// } as Record<SupportedChainId, Chain>;
+//
+// const chainSlugs = {
+//   [ChainId.CRONOS]: 'cronos',
+//   [ChainId.CRONOS_TESTNET]: 'cronos-testnet',
+//   [ChainId.CRONOS_ZKEVM_TESTNET]: 'cronos-zk-testnet'
+// } as const
+
+export type ChainSlug = (typeof chainConfigs)[keyof typeof chainConfigs]['slug'];
 
 // This is currently used for various pancake configurations. Can consider refactoring
-export const CHAINS = Object.values(wagmiChainConfigs);
+export const CHAINS = Object.values(chainConfigs).map(({ chain }) => chain);
 
 export default chainConfigs;

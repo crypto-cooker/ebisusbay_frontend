@@ -10,11 +10,12 @@ const config = appConfig();
 const api = Axios.create(config.urls.api);
 const endpoint = 'nft';
 
-export async function getNft(collectionId, nftId) {
+export async function getNft(collectionId, nftId, chainId) {
   try {
     const queryString = {
       collection: collectionId.toLowerCase(),
       tokenId: nftId,
+      chain: chainId
     };
 
     const result = (await api.get(endpoint, {params: queryString}))?.data;

@@ -105,12 +105,13 @@ const tabs = {
 interface Nft721Props {
   address: string;
   id: string;
+  chain: number;
   slug?: string;
   nft: any;
   isBundle?: boolean;
 }
 
-const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
+const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props) => {
   const dispatch = useAppDispatch();
   const user = useUser();
   const { refreshing, favorites, loading:isLoading } = useAppSelector((state) => state.nft);
@@ -359,7 +360,7 @@ const Nft721 = ({ address, id, slug, nft, isBundle = false }: Nft721Props) => {
   }, []);
 
   useEffect(() => {
-    dispatch(getNftDetails(address, id));
+    dispatch(getNftDetails(address, id, chain));
   }, [dispatch, address, id]);
 
   useEffect(() => {

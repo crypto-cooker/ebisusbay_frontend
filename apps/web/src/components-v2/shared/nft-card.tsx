@@ -236,7 +236,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
             </div>
             {nft.rank && <div className="badge bg-rarity text-wrap mt-1 mx-1">Rank: #{nft.rank}</div>}
             <Flex direction='column' justify='space-between' px={2} py={1}>
-              <Link href={`/collection/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`}>
+              <Link href={`/collection/${nft.chain}/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`}>
                 <Heading as="h6" size="sm" className="mt-auto">{nft.name}</Heading>
               </Link>
               {getListing() && (

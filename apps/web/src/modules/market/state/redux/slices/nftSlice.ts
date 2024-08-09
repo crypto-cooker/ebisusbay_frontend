@@ -58,9 +58,9 @@ export const { nftLoading, nftReceived, nftRefreshing, nftRefreshingComplete, nf
 
 export default nftSlice.reducer;
 
-export const getNftDetails = (collectionAddress: string, nftId: string) => async (dispatch: Dispatch) => {
+export const getNftDetails = (collectionAddress: string, nftId: string, chainId: number) => async (dispatch: Dispatch) => {
   dispatch(nftLoading());
-  let response = await getNft(collectionAddress, nftId);
+  let response = await getNft(collectionAddress, nftId, chainId);
 
   const currentListing = response.listings ? response.listings
     .find((l: any) => l.state === listingState.ACTIVE) : null;

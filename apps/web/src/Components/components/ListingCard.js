@@ -207,7 +207,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                       image={nftCardUrl(listing.nftAddress, listing.nft.image)}
                       className={`card-img-top ${imgClass}`}
                       title={listing.nft.name}
-                      url={`/collection/${listing.nftAddress}/${listing.nftId}`}
+                      url={`/collection/${listing.chain}/${listing.nftAddress}/${listing.nftId}`}
                       height={440}
                       width={440}
                     />
@@ -218,7 +218,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                       image={nftCardUrl(listing.nftAddress, listing.nft.image)}
                       className={`card-img-top ${imgClass}`}
                       title={listing.nft.name}
-                      url={`/collection/${listing.nftAddress}/${listing.nftId}`}
+                      url={`/collection/${listing.chain}/${listing.nftAddress}/${listing.nftId}`}
                       height={440}
                       width={440}
                       video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
@@ -236,7 +236,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
             )}
             <Flex direction='column' justify='space-between' px={2} py={1}>
               {listing.collection && (
-                <Link href={`/collection/${listing.collection.slug}`}>
+                <Link href={`/collection/${listing.chain}/${listing.collection.slug}`}>
                   <h6
                     className="mt-auto fw-normal"
                     style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
@@ -245,7 +245,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                   </h6>
                 </Link>
               )}
-              <Link href={`/collection/${listing.collection.slug}/${listing.nftId}`}>
+              <Link href={`/collection/${listing.chain}/${listing.collection.slug}/${listing.nftId}`}>
                 <Heading as="h6" size="sm" className="mt-auto mb-1">{listing.nft.name}{listing.amount > 1 ? ` (x${listing.amount})` : ''}</Heading>
               </Link>
 

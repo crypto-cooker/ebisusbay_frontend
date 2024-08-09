@@ -9,6 +9,8 @@ import PageHead from "@src/components-v2/shared/layout/page-head";
 import {CollectionPageContext} from "@src/components-v2/feature/collection/context";
 import {GetServerSidePropsContext} from "next";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
+import {getChainById, getChainBySlug} from "@src/helpers";
+import {ChainSlug, SupportedChainId} from "@src/config/chains";
 
 const collectionTypes = {
   UNSET: -1,
@@ -77,6 +79,34 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }: CollectionPr
 
 export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
   const slug = params?.slug as string;
+  const chainSlugOrId = params?.chain as string | undefined;
+  if (!slug || !chainSlugOrId || Array.isArray(chainSlugOrId)) {
+    return {
+      notFound: true
+    }
+  }
+
+  let chain;
+  if (!isNaN(Number(chainSlugOrId))) {
+    chain = getChainById(chainSlugOrId);
+    if (chain) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: `/collection/${chain.slug}/${slug}`
+        }
+      }
+    }
+  } else {
+    chain = getChainBySlug(chainSlugOrId);
+  }
+
+
+  if (!chain) {
+    return {
+      notFound: true
+    }
+  }
 
   // @todo fix with autolistings
   // const queryKey = isAddress(slug) ? 'address' : 'slug';
