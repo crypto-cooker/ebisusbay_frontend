@@ -27833,7 +27833,7 @@
       "multiToken": false,
       "address": "0x853d96817b9fc55dfc4d3488418f258f92c31530",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "The deal is simple. Get a character, enter the arena and fight!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-brawl-bulls/avatar.webp",
