@@ -177,15 +177,15 @@ export const NetworkSwitcher = () => {
 
   const cannotChangeNetwork = !canSwitch
 
-  if (!chainId || !router.pathname.includes('/dex/')) {
-    return null
-  }
-
   useEffect(() => {
     if (cannotChangeNetwork) {
       toast.error('Unable to switch network. Please try it on your wallet')
     }
   }, []);
+
+  if (!chainId || !router.pathname.includes('/dex/')) {
+    return null
+  }
 
   return (
     <Box height="100%">
