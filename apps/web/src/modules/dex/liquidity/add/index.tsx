@@ -272,8 +272,6 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
 
     setLiquidityState({ attemptingTxn: true, liquidityErrorMessage: undefined, txHash: undefined })
 
-      ? { value, account: routerContract.account, chain: routerContract.chain }
-      : { account: routerContract.account, chain: routerContract.chain })
     await estimate(
       args,
       value
