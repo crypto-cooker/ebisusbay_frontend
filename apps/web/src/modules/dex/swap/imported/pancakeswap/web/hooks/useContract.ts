@@ -50,6 +50,10 @@ export function useContract<TAbi extends Abi>(
   }, [addressOrAddressMap, abi, chainId, walletClient])
 }
 
+export function usePairContract(pairAddress?: Address, options?: UseContractOptions) {
+  return useContract(pairAddress, pancakePairV2ABI, options)
+}
+
 export function useTokenContract(tokenAddress?: Address) {
   return useContract(tokenAddress, erc20Abi)
 }

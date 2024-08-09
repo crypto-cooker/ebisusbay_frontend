@@ -34,6 +34,15 @@ import AuthenticationGuard from "@src/components-v2/shared/authentication-guard"
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {CommitButton} from "@dex/swap/components/tabs/swap/commit-button";
 import {useUser} from "@src/components-v2/useUser";
+import {usePairContract} from "@eb-pancakeswap-web/hooks/useContract";
+import {useGasPrice, useSignTypedData} from "wagmi";
+import {toast} from "react-toastify";
+import {calculateSlippageAmount, useRouterContract} from "@eb-pancakeswap-web/utils/exchange";
+import {calculateGasMargin} from "@eb-pancakeswap-web/utils";
+import { Hash } from 'viem'
+import {isUserRejected, logError} from "@eb-pancakeswap-web/utils/sentry";
+import {transactionErrorToUserReadableMessage} from "@src/helpers/validator";
+import ConfirmRemoveLiquidityModal from "@dex/liquidity/components/confirm-remove-liquidity-modal";
 
 interface RemoveLiquidityProps {
   currencyA?: Currency;
@@ -46,9 +55,12 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   const native = useNativeCurrency()
   const {connect} = useUser();
   const { account, chainId, isWrongNetwork } = useActiveWeb3React()
+  const { signTypedDataAsync } = useSignTypedData()
   const [tokenA, tokenB] = useMemo(() => [currencyA?.wrapped, currencyB?.wrapped], [currencyA, currencyB])
   const { isOpen: isOpenSettings, onOpen: onOpenSettings, onClose: onCloseSettings } = useDisclosure();
   const { isOpen: isOpenConfirmRemove, onOpen: onOpenConfirmRemove, onClose: onCloseConfirmRemove } = useDisclosure();
+
+  const gasPrice = useGasPrice()
 
   //  burn state
   const { independentField, typedValue } = useRemoveLiquidityV2FormState()
@@ -93,7 +105,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   }
 
   // pair contract
-  // const pairContractRead = usePairContract(pair?.liquidityToken?.address)
+  const pairContractRead = usePairContract(pair?.liquidityToken?.address)
 
   // allowance handling
   const [signatureData, setSignatureData] = useState<{ v: number; r: string; s: string; deadline: number } | null>(null)
@@ -110,7 +122,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
       throw new Error('missing dependencies')
     const liquidityAmount = parsedAmounts[Field.LIQUIDITY]
     if (!liquidityAmount) {
-      toastError(t('Error'), t('Missing liquidity amount'))
+      toast.error('Error: Missing liquidity amount')
       throw new Error('missing liquidity amount')
     }
 
@@ -125,6 +137,176 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
     [_onUserInput],
   )
 
+  const routerContract = useRouterContract()
+
+  async function onRemove() {
+    if (!chainId || !account || !deadline || !routerContract) throw new Error('missing dependencies')
+    const { [Field.CURRENCY_A]: currencyAmountA, [Field.CURRENCY_B]: currencyAmountB } = parsedAmounts
+    if (!currencyAmountA || !currencyAmountB) {
+      toast.error('Error: Missing currency amounts')
+      throw new Error('missing currency amounts')
+    }
+
+    const amountsMin = {
+      [Field.CURRENCY_A]: calculateSlippageAmount(currencyAmountA, allowedSlippage)[0],
+      [Field.CURRENCY_B]: calculateSlippageAmount(currencyAmountB, allowedSlippage)[0],
+    }
+
+    if (!currencyA || !currencyB) {
+      toast.error('Error: Missing tokens')
+      throw new Error('missing tokens')
+    }
+    const liquidityAmount = parsedAmounts[Field.LIQUIDITY]
+    if (!liquidityAmount) {
+      toast.error('Error: Missing liquidity amount')
+      throw new Error('missing liquidity amount')
+    }
+
+    const currencyBIsNative = currencyB?.isNative
+    const oneCurrencyIsNative = currencyA?.isNative || currencyBIsNative
+
+    if (!tokenA || !tokenB) {
+      toast.error('Error: Could not wrap')
+      throw new Error('could not wrap')
+    }
+
+    let methodNames: string[]
+    let args: any
+    // we have approval, use normal remove liquidity
+    if (approvalState === ApprovalState.APPROVED) {
+      // removeLiquidityETH
+      if (oneCurrencyIsNative) {
+        methodNames = ['removeLiquidityETH', 'removeLiquidityETHSupportingFeeOnTransferTokens']
+        args = [
+          currencyBIsNative ? tokenA.address : tokenB.address,
+          liquidityAmount.quotient.toString(),
+          amountsMin[currencyBIsNative ? Field.CURRENCY_A : Field.CURRENCY_B].toString(),
+          amountsMin[currencyBIsNative ? Field.CURRENCY_B : Field.CURRENCY_A].toString(),
+          account,
+          deadline,
+        ]
+      }
+      // removeLiquidity
+      else {
+        methodNames = ['removeLiquidity']
+        args = [
+          tokenA.address,
+          tokenB.address,
+          liquidityAmount.quotient.toString(),
+          amountsMin[Field.CURRENCY_A].toString(),
+          amountsMin[Field.CURRENCY_B].toString(),
+          account,
+          deadline,
+        ]
+      }
+    }
+    // we have a signature, use permit versions of remove liquidity
+    else if (signatureData !== null) {
+      // removeLiquidityETHWithPermit
+      if (oneCurrencyIsNative) {
+        methodNames = ['removeLiquidityETHWithPermit', 'removeLiquidityETHWithPermitSupportingFeeOnTransferTokens']
+        args = [
+          currencyBIsNative ? tokenA.address : tokenB.address,
+          liquidityAmount.quotient.toString(),
+          amountsMin[currencyBIsNative ? Field.CURRENCY_A : Field.CURRENCY_B].toString(),
+          amountsMin[currencyBIsNative ? Field.CURRENCY_B : Field.CURRENCY_A].toString(),
+          account,
+          signatureData.deadline,
+          false,
+          signatureData.v,
+          signatureData.r,
+          signatureData.s,
+        ]
+      }
+      // removeLiquidityETHWithPermit
+      else {
+        methodNames = ['removeLiquidityWithPermit']
+        args = [
+          tokenA.address,
+          tokenB.address,
+          liquidityAmount.quotient.toString(),
+          amountsMin[Field.CURRENCY_A].toString(),
+          amountsMin[Field.CURRENCY_B].toString(),
+          account,
+          signatureData.deadline,
+          false,
+          signatureData.v,
+          signatureData.r,
+          signatureData.s,
+        ]
+      }
+    } else {
+      toast.error('Error: Attempting to confirm without approval or a signature')
+      throw new Error('Attempting to confirm without approval or a signature')
+    }
+
+    let methodSafeGasEstimate: { methodName: string; safeGasEstimate: bigint } | undefined
+    for (let i = 0; i < methodNames.length; i++) {
+      let safeGasEstimate: any
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        safeGasEstimate = calculateGasMargin(await routerContract.estimateGas[methodNames[i]](args, { account }))
+      } catch (e) {
+        console.error(`estimateGas failed`, methodNames[i], args, e)
+      }
+
+      if (typeof safeGasEstimate === 'bigint') {
+        methodSafeGasEstimate = { methodName: methodNames[i], safeGasEstimate }
+        break
+      }
+    }
+
+    // all estimations failed...
+    if (!methodSafeGasEstimate) {
+      toast.error('Error: This transaction would fail')
+    } else {
+      const { methodName, safeGasEstimate } = methodSafeGasEstimate
+
+      setLiquidityState({ attemptingTxn: true, liquidityErrorMessage: undefined, txHash: undefined })
+      await routerContract.write[methodName](args, {
+        // gas: safeGasEstimate,
+        // gasPrice,
+      })
+        .then((response: Hash) => {
+          setLiquidityState({ attemptingTxn: false, liquidityErrorMessage: undefined, txHash: response })
+          // const amountA = parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)
+          // const amountB = parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)
+          // addTransaction(
+          //   { hash: response },
+          //   {
+          //     summary: `Remove ${amountA} ${currencyA?.symbol} and ${amountB} ${currencyB?.symbol}`,
+          //     translatableSummary: {
+          //       text: 'Remove %amountA% %symbolA% and %amountB% %symbolB%',
+          //       data: { amountA, symbolA: currencyA?.symbol, amountB, symbolB: currencyB?.symbol },
+          //     },
+          //     type: 'remove-liquidity',
+          //   },
+          // )
+        })
+        .catch((err: any) => {
+          if (err && !isUserRejected(err)) {
+            logError(err)
+            console.error(`Remove Liquidity failed`, err, args)
+          }
+          setLiquidityState({
+            attemptingTxn: false,
+            liquidityErrorMessage:
+              err && !isUserRejected(err)
+                ? `Remove liquidity failed: ${transactionErrorToUserReadableMessage(err)}`
+                : undefined,
+            txHash: undefined,
+          })
+        })
+    }
+  }
+
+  const amountA = parsedAmounts[Field.CURRENCY_A]?.toSignificant(6) ?? ''
+  const symbolA = currencyA?.symbol ?? ''
+  const amountB = parsedAmounts[Field.CURRENCY_B]?.toSignificant(6) ?? ''
+  const symbolB = currencyB?.symbol ?? ''
+
+  const pendingText = `Removing ${amountA} ${symbolA} and ${amountB} ${symbolB}`;
+
   const liquidityPercentChangeCallback = useCallback(
     (value: number) => {
       onUserInput(Field.LIQUIDITY_PERCENT, value.toString())
@@ -137,6 +319,14 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
     chainId &&
     ((currencyA && WNATIVE[chainId]?.equals(currencyA)) || (currencyB && WNATIVE[chainId]?.equals(currencyB))),
   )
+
+  const handleDismissConfirmation = useCallback(() => {
+    setSignatureData(null) // important that we clear signature data to avoid bad sigs
+    // if there was a tx hash, we want to clear the input
+    if (txHash) {
+      onUserInput(Field.LIQUIDITY_PERCENT, '0')
+    }
+  }, [onUserInput, txHash])
 
   const [innerLiquidityPercentage, setInnerLiquidityPercentage] = useDebouncedChangeHandler(
     Number.parseInt(parsedAmounts[Field.LIQUIDITY_PERCENT].toFixed(0)),
@@ -325,7 +515,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
         </Box>
 
         {!account ? (
-          <PrimaryButton onClick={connect}>Connect Wallet</PrimaryButton>
+          <PrimaryButton onClick={() => connect()}>Connect Wallet</PrimaryButton>
         ) : isWrongNetwork ? (
           <CommitButton width="100%" />
         ) : (
@@ -333,11 +523,12 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
             <Button
               variant={approvalState === ApprovalState.APPROVED || signatureData !== null ? 'success' : 'primary'}
               onClick={onAttemptToApprove}
-              disabled={approvalState !== ApprovalState.NOT_APPROVED || signatureData !== null}
+              isDisabled={approvalState !== ApprovalState.NOT_APPROVED || signatureData !== null}
               width="100%"
               mr="0.5rem"
               isLoading={approvalState === ApprovalState.PENDING}
               loadingText='Enabling'
+              size='lg'
             >
               {approvalState === ApprovalState.APPROVED || signatureData !== null ? (
                 'Enabled'
@@ -360,7 +551,8 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                 onOpenConfirmRemove()
               }}
               width="100%"
-              disabled={!isValid || (signatureData === null && approvalState !== ApprovalState.APPROVED)}
+              isDisabled={!isValid || (signatureData === null && approvalState !== ApprovalState.APPROVED)}
+              size='lg'
             >
               {error || 'Remove'}
             </Button>
@@ -378,23 +570,25 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
         isOpen={isOpenSettings}
         onClose={onCloseSettings}
       />
-      {/*<ConfirmRemoveLiquidityModal*/}
-      {/*  title={t('You will receive')}*/}
-      {/*  customOnDismiss={handleDismissConfirmation}*/}
-      {/*  attemptingTxn={attemptingTxn}*/}
-      {/*  hash={txHash || ''}*/}
-      {/*  allowedSlippage={allowedSlippage}*/}
-      {/*  onRemove={onRemove}*/}
-      {/*  pendingText={pendingText}*/}
-      {/*  approval={approvalState}*/}
-      {/*  signatureData={signatureData}*/}
-      {/*  tokenA={tokenA}*/}
-      {/*  tokenB={tokenB}*/}
-      {/*  liquidityErrorMessage={liquidityErrorMessage}*/}
-      {/*  parsedAmounts={parsedAmounts}*/}
-      {/*  currencyA={currencyA}*/}
-      {/*  currencyB={currencyB}*/}
-      {/*/>*/}
+      <ConfirmRemoveLiquidityModal
+        isOpen={isOpenConfirmRemove}
+        onClose={onCloseConfirmRemove}
+        title='You will receive'
+        customOnDismiss={handleDismissConfirmation}
+        attemptingTxn={attemptingTxn}
+        hash={txHash || ''}
+        allowedSlippage={allowedSlippage}
+        onRemove={onRemove}
+        pendingText={pendingText}
+        approval={approvalState}
+        signatureData={signatureData}
+        tokenA={tokenA}
+        tokenB={tokenB}
+        liquidityErrorMessage={liquidityErrorMessage}
+        parsedAmounts={parsedAmounts}
+        currencyA={currencyA}
+        currencyB={currencyB}
+      />
     </>
   )
 }

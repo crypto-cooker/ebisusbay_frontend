@@ -254,7 +254,6 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
         deadline,
       ]
       value = (tokenBIsNative ? parsedAmountB : parsedAmountA).quotient
-      console.log('debugline1--addLiquidityETH');
     } else {
       estimate = routerContract.estimateGas.addLiquidity
       method = routerContract.write.addLiquidity
@@ -269,13 +268,10 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
         deadline,
       ]
       value = null
-      console.log('debugline1--addLiquidity');
     }
 
     setLiquidityState({ attemptingTxn: true, liquidityErrorMessage: undefined, txHash: undefined })
-    console.log('debugline1--contract', routerContract)
-    console.log('debugline1--args', args)
-    console.log('debugline1--value', value
+
       ? { value, account: routerContract.account, chain: routerContract.chain }
       : { account: routerContract.account, chain: routerContract.chain })
     await estimate(
@@ -285,13 +281,11 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
         : { account: routerContract.account, chain: routerContract.chain },
     )
       .then((estimatedGasLimit: any) => {
-        console.log('debugline2', method)
         return method(args, {
           ...(value ? {value} : {}),
           // gas: calculateGasMargin(estimatedGasLimit),
           // gasPrice,
         }).then((response: Hash) => {
-          console.log('debugline3')
           setLiquidityState({attemptingTxn: false, liquidityErrorMessage: undefined, txHash: response})
 
           // const symbolA = currencies[Field.CURRENCY_A]?.symbol
@@ -316,7 +310,6 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
         })
       } )
       ?.catch((err: any) => {
-        console.log('debugline-e', err)
         if (err && !isUserRejected(err)) {
           logError(err)
           console.error(`Add Liquidity failed`, err, args, value)
