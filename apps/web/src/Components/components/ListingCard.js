@@ -237,16 +237,16 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
             <Flex direction='column' justify='space-between' px={2} py={1}>
               {listing.collection && (
                 <Link href={`/collection/${listing.chain}/${listing.collection.slug}`}>
-                  <h6
-                    className="mt-auto fw-normal"
-                    style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
+                  <Box
+                    fontSize='xs'
+                    color={getTheme(user.theme).colors.textColor4}
                   >
                     {listing.collection.name}
-                  </h6>
+                  </Box>
                 </Link>
               )}
               <Link href={`/collection/${listing.chain}/${listing.collection.slug}/${listing.nftId}`}>
-                <Heading as="h6" size="sm" className="mt-auto mb-1">{listing.nft.name}{listing.amount > 1 ? ` (x${listing.amount})` : ''}</Heading>
+                <Box fontSize="sm" fontWeight='semibold' className="mt-auto mb-1">{listing.nft.name}{listing.amount > 1 ? ` (x${listing.amount})` : ''}</Box>
               </Link>
 
               <Tooltip label="Listing Price" placement='top-start'>

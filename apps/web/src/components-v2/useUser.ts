@@ -9,6 +9,7 @@ import {useQueryClient} from "@tanstack/react-query";
 import * as Sentry from "@sentry/nextjs";
 import {shortAddress} from "@market/helpers/utils";
 import {Account, Chain, Client, Transport} from "viem";
+import {getTheme} from "@src/global/theme/theme";
 
 export const useUser = () => {
   const context = useContext(UserContext);
@@ -131,4 +132,9 @@ export function useEthersSigner({ chainId }: { chainId?: number } = {}) {
     () => (walletClient?.chain ? walletClientToSigner(walletClient) : undefined),
     [walletClient]
   );
+}
+
+export function useUserTheme() {
+  const { theme, toggleTheme } = useUser();
+  return useMemo(() => getTheme(theme), [theme]);
 }
