@@ -32,7 +32,8 @@ export const SUGGESTED_BASES: ChainTokenList = {
     cronosZkEvmTestnetTokens.wcro,
     cronosZkEvmTestnetTokens.usdc,
     cronosZkEvmTestnetTokens.red,
-    cronosZkEvmTestnetTokens.blue
+    cronosZkEvmTestnetTokens.blue,
+    cronosZkEvmTestnetTokens.frtn,
   ],
 }
 
@@ -46,7 +47,8 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
     cronosZkEvmTestnetTokens.wcro,
     cronosZkEvmTestnetTokens.usdc,
     cronosZkEvmTestnetTokens.red,
-    cronosZkEvmTestnetTokens.blue
+    cronosZkEvmTestnetTokens.blue,
+    cronosZkEvmTestnetTokens.frtn,
   ],
 }
 
