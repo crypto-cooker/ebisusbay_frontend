@@ -255,6 +255,12 @@ const configData: AppConfigMap = {
         symbol: 'SITH',
         address: '0xFe469aE7B22B90e54763Fcb8d4F253e747C816f1',
         decimals: 18
+      },
+      unloaded: {
+        name: 'UNLOADED',
+        symbol: 'UNLOADED',
+        address: '0x457b85cA86EA1E1BeCf46f50d19ddAE61077c2d2',
+        decimals: 18
       }
     },
     collections: rpcConfig.known_contracts,
