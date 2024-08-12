@@ -45,6 +45,10 @@ export function useAppChainConfig(chainId?: SupportedChainId) {
   }
 }
 
+export function getAppChainConfig(chainId?: SupportedChainId) {
+  return appChainConfig[chainId ?? ChainId.CRONOS] ?? appChainConfig[ChainId.CRONOS]!;
+}
+
 function deepMerge<T extends object, U extends object>(target: T, source: U): T & U {
   // Iterate over source properties
   for (const key in source) {

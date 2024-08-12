@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBank, faList, faTableCellsLarge} from "@fortawesome/free-solid-svg-icons";
-import React, {ChangeEvent, useCallback, useMemo, useState} from "react";
+import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 import {getFarmsUsingMapi} from "@dex/farms/hooks/get-farms";
@@ -30,6 +30,8 @@ import {FarmState} from "@dex/farms/constants/types";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import Link from "next/link";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import { ChainId } from "@pancakeswap/chains";
 
 enum ViewType {
   GRID,
@@ -43,6 +45,7 @@ interface LocalQuery {
 
 export default function FarmsPage() {
   const user = useUser();
+  const {chainId} = useActiveChainId();
   const [stakedOnly, setStakedOnly] = useState(false);
   const [searchTerms, setSearchTerms] = useState<string>();
   const [queryParams, setQueryParams] = useState<FarmsQueryParams>({
@@ -147,9 +150,9 @@ export default function FarmsPage() {
     )
   }, [filteredData, farmsStatus, userFarms, viewType, localQueryParams]);
 
-  // useEffect(() => {
-  //   setQueryParams({...queryParams, search: debouncedSearch});
-  // }, [debouncedSearch]);
+  useEffect(() => {
+    setQueryParams({...queryParams, chain: chainId});
+  }, [chainId]);
 
   return (
     <UserFarmsProvider>
@@ -221,7 +224,7 @@ export default function FarmsPage() {
             </Box>
           </Stack>
         </Flex>
-        {status === FarmState.ACTIVE && (
+        {status === FarmState.ACTIVE && [ChainId.CRONOS, ChainId.CRONOS_TESTNET].includes(chainId) && (
           <Box
             border={`1px solid ${getTheme(user.theme).colors.borderColor2}`}
             bg={getTheme(user.theme).colors.bgColor5}

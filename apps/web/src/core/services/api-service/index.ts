@@ -25,7 +25,6 @@ import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/o
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
 import {PokerCollection} from "@src/core/services/api-service/types";
-import {Meeple, StakedToken} from "@src/core/services/api-service/graph/types";
 import {
   TownHallStakeRequest,
   TownHallUnstakeRequest
@@ -36,6 +35,7 @@ import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/querie
 import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
 import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
 import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
+import {ChainId} from "@pancakeswap/chains";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -44,10 +44,11 @@ export class ApiService implements Api {
 
   public ryoshiDynasties: RyoshiDynastiesApi;
 
-  constructor(apiKey?: string) {
+  constructor(apiKey?: string, chainId?: number) {
+    const chain = chainId ?? ChainId.CRONOS;
     this.mapi = new Mapi(apiKey);
     this.cms = new Cms(apiKey);
-    this.graph = new Graph(apiKey);
+    this.graph = new Graph(apiKey, chain);
     this.ryoshiDynasties = new RyoshiDynastiesGroup(apiKey);
   }
 
@@ -57,6 +58,10 @@ export class ApiService implements Api {
 
   static withoutKey() {
     return new ApiService();
+  }
+
+  static forChain(chainId: number) {
+    return new ApiService(undefined, chainId);
   }
 
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {

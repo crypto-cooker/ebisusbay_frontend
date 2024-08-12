@@ -11,9 +11,11 @@ import {UserFarmsRefetchContext} from "@dex/farms/components/provider";
 import {wagmiConfig} from "@src/wagmi";
 import {Address} from "viem";
 import {readContracts} from "@wagmi/core";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {getAppChainConfig} from "@src/config/hooks";
 
-const config = appConfig();
-const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+// const config = appConfig();
+// const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 
 export const useUserFarms = () => {
@@ -21,7 +23,9 @@ export const useUserFarms = () => {
   return userFarms;
 }
 
-export const fetchApprovals = async (userAddress: string) => {
+export const fetchApprovals = async (userAddress: string, chainId: number) => {
+  const config = getAppChainConfig(chainId);
+  const readProvider = new ethers.providers.JsonRpcProvider(config.chain.rpcUrls.default.http[0]);
   const readContract = new Contract(config.contracts.farms, FarmsAbi, readProvider);
   const poolLength = await readContract.poolLength();
 
@@ -59,7 +63,9 @@ export const fetchApprovals = async (userAddress: string) => {
 };
 
 // Fetch balances from the REST API
-export const fetchBalances = async (userAddress: string) => {
+export const fetchBalances = async (userAddress: string, chainId: number) => {
+  const config = getAppChainConfig(chainId);
+  const readProvider = new ethers.providers.JsonRpcProvider(config.chain.rpcUrls.default.http[0]);
   const readContract = new Contract(config.contracts.farms, FarmsAbi, readProvider);
   const poolLength = await readContract.poolLength();
 
@@ -125,7 +131,8 @@ export const fetchBalances = async (userAddress: string) => {
     }));
   });
 
-  const farmsUser = await ApiService.withoutKey().getFarmsUser(userAddress);
+
+  const farmsUser = await ApiService.forChain(chainId).getFarmsUser(userAddress);
   farmsUser.forEach((user, i) => {
     balances[user.pool.pair.toLowerCase()].stakedBalance = BigInt(user.amount);
   });
@@ -136,11 +143,12 @@ export const fetchBalances = async (userAddress: string) => {
 export const useFetchApprovals = () => {
   const user = useUser();
   const setApprovals = useSetAtom(approvalsAtom);
+  const {chainId} = useActiveChainId();
   // const [refetchCounter, setRefetchCounter] = useAtom(refetchApprovalsAtom);
 
   const fetchData = async () => {
     if (!user.address) return;
-    const approvals = await fetchApprovals(user.address);
+    const approvals = await fetchApprovals(user.address, chainId);
     setApprovals(approvals);
   };
 
@@ -166,11 +174,12 @@ export const useFetchApprovals = () => {
 export const useFetchBalances = () => {
   const user = useUser();
   const setBalances = useSetAtom(balancesAtom);
+  const {chainId} = useActiveChainId();
   // const [refetchCounter, setRefetchCounter] = useAtom(refetchBalancesAtom);
 
   const fetchData = async () => {
     if (!user.address) return;
-    const balances = await fetchBalances(user.address!);
+    const balances = await fetchBalances(user.address!, chainId);
     setBalances(balances);
   };
 

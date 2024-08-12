@@ -237,7 +237,7 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
       ryoshiPresale: '',
       stakedOwners: 'main',
       staking: '',
-      farms: '',
+      farms: 'farms',
       dex: ''
     }
   },
@@ -266,7 +266,7 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
     townHall: ADDRESS_ZERO,
     vaultNft: ADDRESS_ZERO,
     ryoshiWithKnife: ADDRESS_ZERO,
-    farms: ADDRESS_ZERO
+    farms: '0x1f76a013a77371aeed10c47a04acbf2e719926ed'
   },
   // tokens: supportedTokens,
 }

@@ -9,6 +9,7 @@ import {
 import {StakedTokenType} from "@src/core/services/api-service/types";
 import Staking from "@src/core/services/api-service/graph/subgraphs/staking";
 import Farms from "@src/core/services/api-service/graph/subgraphs/farms";
+import {ChainId} from "@pancakeswap/chains";
 
 class Graph {
   private ryoshiPresale;
@@ -16,11 +17,12 @@ class Graph {
   private staking;
   private farms;
 
-  constructor(apiKey?: string) {
+  constructor(apiKey?: string, chainId?: number) {
+    const chain = chainId ?? ChainId.CRONOS
     this.ryoshiPresale = new RyoshiPresale();
     this.ryoshiDynasties = new RyoshiDynasties();
     this.staking = new Staking();
-    this.farms = new Farms();
+    this.farms = new Farms(chain);
   }
 
   async globalTotalPurchased() {

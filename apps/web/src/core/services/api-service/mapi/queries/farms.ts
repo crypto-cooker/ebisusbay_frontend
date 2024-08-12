@@ -5,7 +5,8 @@ export const farmsQuerySchema: Yup.SchemaOf<FarmsQueryParams> = Yup.object().sha
   sortBy: Yup.mixed().oneOf(['totalusers', 'apr', 'stakedLiquidity', 'pid']),
   direction: Yup.mixed().oneOf(['asc', 'desc']),
   finished: Yup.number().optional(),
-  search: Yup.string().optional()
+  search: Yup.string().optional(),
+  chain: Yup.number().optional()
 }).noUnknown();
 
 export interface FarmsQueryParams {
@@ -13,6 +14,7 @@ export interface FarmsQueryParams {
   direction?: 'asc' | 'desc';
   finished?: number;
   search?: string;
+  chain?: number;
 }
 
 export class FarmsQuery extends Query<FarmsQueryParams> {

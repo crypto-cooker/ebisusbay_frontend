@@ -1,6 +1,7 @@
 import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
 import {appConfig} from "@src/config";
 import {urlify} from "@market/helpers/utils";
+import {getAppChainConfig} from "@src/config/hooks";
 
 const config = appConfig();
 
@@ -8,7 +9,8 @@ class Farms {
 
   private apollo;
 
-  constructor() {
+  constructor(chainId: number) {
+    const config = getAppChainConfig(chainId ?? ChainId.CRONOS);
     this.apollo = new ApolloClient({
       uri: urlify(config.urls.subgraph.root, config.urls.subgraph.farms),
       cache: new InMemoryCache()
