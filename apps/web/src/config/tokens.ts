@@ -28,6 +28,6 @@ type AppTokenList = AppTokenMap<Record<string, ERC20Token>>;
 export const supportedTokens: AppTokenList = {
   [ChainId.CRONOS]: cronosTokens,
   [ChainId.CRONOS_TESTNET]: cronosTestnetTokens,
-  [ChainId.CRONOS_ZKEVM]: cronosZkEvmTokens
+  [ChainId.CRONOS_ZKEVM]: cronosZkEvmTokens,
   [ChainId.CRONOS_ZKEVM_TESTNET]: cronosZkEvmTestnetTokens
 }
