@@ -54,7 +54,6 @@ import {commify} from 'ethers/lib/utils';
 import {useUserFarmsRefetch} from '@dex/farms/hooks/user-farms';
 import useCurrencyBroker, {BrokerCurrency} from '@market/hooks/use-currency-broker';
 import {useExchangeRate} from '@market/hooks/useGlobalPrices';
-import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useAppChainConfig} from "@src/config/hooks";
 import {getBlockExplorerLink} from "@dex/utils";
 

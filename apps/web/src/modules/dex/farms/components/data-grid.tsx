@@ -41,7 +41,6 @@ import {getTheme} from "@src/global/theme/theme";
 import useCurrencyBroker from "@market/hooks/use-currency-broker";
 import {useExchangeRate} from "@market/hooks/useGlobalPrices";
 import {useAppChainConfig} from "@src/config/hooks";
-import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {getBlockExplorerLink} from "@dex/utils";
 
 export type DataGridProps = {
