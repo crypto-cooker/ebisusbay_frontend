@@ -1,5 +1,7 @@
 import { CSSProperties } from 'react'
 import { Token, Currency } from '@pancakeswap/swap-sdk-core'
+import TokenRowWithCurrencyLogo from "@dex/components/token-row-with-currency-logo";
+import {TokenRowButton} from "@dex/components/token-row-button";
 // import { TokenRowButton } from '@pancakeswap/widgets-internal'
 // import TokenRowWithCurrencyLogo from './TokenRowWithCurrencyLogo'
 
@@ -27,23 +29,22 @@ const ImportTokenRow: React.FC<React.PropsWithChildren<ImportTokenRowProps>> = (
   showImportView,
 }) => {
   return (
-    <>asdfasd</>
-    // <TokenRowWithCurrencyLogo
-    //   style={style}
-    //   token={token}
-    //   dim={dim}
-    //   list={list}
-    //   onCurrencySelect={onCurrencySelect}
-    //   isActive={isActive}
-    // >
-    //   <TokenRowButton<Token>
-    //     token={token}
-    //     isActive={isActive}
-    //     isAdded={isAdded}
-    //     setImportToken={setImportToken}
-    //     showImportView={showImportView}
-    //   />
-    // </TokenRowWithCurrencyLogo>
+    <TokenRowWithCurrencyLogo
+      style={style}
+      token={token}
+      dim={dim}
+      list={list}
+      onCurrencySelect={onCurrencySelect}
+      isActive={isActive}
+    >
+      <TokenRowButton<Token>
+        token={token}
+        isActive={isActive}
+        isAdded={isAdded}
+        setImportToken={setImportToken}
+        showImportView={showImportView}
+      />
+    </TokenRowWithCurrencyLogo>
   )
 }
 

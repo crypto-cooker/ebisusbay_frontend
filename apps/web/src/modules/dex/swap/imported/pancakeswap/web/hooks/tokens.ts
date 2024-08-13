@@ -13,7 +13,7 @@ import { useMemo } from 'react'
 //   useWarningTokenList,
 // } from 'state/lists/hooks'
 import { safeGetAddress } from '@eb-pancakeswap-web/utils'
-import { useToken as useToken_ } from 'wagmi'
+import {useReadContracts, useToken as useToken_ } from 'wagmi'
 import { useActiveChainId } from './useActiveChainId'
 import useNativeCurrency from './useNativeCurrency'
 import {
@@ -25,6 +25,7 @@ import {
 } from "@eb-pancakeswap-web/state/lists/hooks";
 import useUserAddedTokens from "@eb-pancakeswap-web/state/user/hooks/useUserAddedTokens";
 import {UnsafeCurrency} from "@eb-pancakeswap-web/config/constants/types";
+import { erc20Abi } from 'viem'
 
 const mapWithoutUrls = (tokenMap?: TokenAddressMap<ChainId>, chainId?: ChainId) => {
   if (!tokenMap || !chainId) return {}
@@ -160,15 +161,34 @@ export function useToken(tokenAddress?: string): ERC20Token | undefined | null {
 
   const address = safeGetAddress(tokenAddress)
 
-  const token: ERC20Token | undefined = address ? tokens[address] : undefined
+  const token = address ? tokens[address] : undefined
 
-  const { data, isLoading } = useToken_({
-    address: address || undefined,
-    chainId,
+  const { data, isLoading } = useReadContracts({
+    allowFailure: false,
+    contracts: [
+      {
+        chainId,
+        address,
+        abi: erc20Abi,
+        functionName: 'decimals',
+      },
+      {
+        chainId,
+        address,
+        abi: erc20Abi,
+        functionName: 'symbol',
+      },
+      {
+        chainId,
+        address,
+        abi: erc20Abi,
+        functionName: 'name',
+      },
+    ],
     query: {
-      enabled: Boolean(!!address && !token),
+      enabled: Boolean(!token && address),
+      staleTime: Infinity,
     },
-    // consider longer stale time
   })
 
   return useMemo(() => {
@@ -177,13 +197,7 @@ export function useToken(tokenAddress?: string): ERC20Token | undefined | null {
     if (unsupportedTokens[address]) return undefined
     if (isLoading) return null
     if (data) {
-      return new ERC20Token(
-        chainId,
-        data.address,
-        data.decimals,
-        data.symbol ?? 'UNKNOWN',
-        data.name ?? 'Unknown Token',
-      )
+      return new ERC20Token(chainId, address, data[0], data[1] ?? 'UNKNOWN', data[2] ?? 'Unknown Token')
     }
     return undefined
   }, [token, chainId, address, isLoading, data, unsupportedTokens])

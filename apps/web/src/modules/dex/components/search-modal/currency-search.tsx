@@ -28,7 +28,7 @@ import {
   CloseButton
 } from "@chakra-ui/react";
 import useSupportedTokens from "@dex/hooks/use-supported-tokens";
-import {Virtuoso} from "react-virtuoso";
+import {Virtuoso, VirtuosoHandle} from "react-virtuoso";
 
 interface CurrencySearchProps {
   selectedCurrency?: Currency | null
@@ -101,7 +101,7 @@ function CurrencySearch({
   const { chainId } = useActiveChainId()
 
   // refs for fixed size lists
-  const fixedList = useRef<Virtuoso>()
+  const virtuoso = useRef<VirtuosoHandle | null>(null)
 
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedQuery = useDebounce(searchQuery, 200)
@@ -160,7 +160,7 @@ function CurrencySearch({
     const input = event.target.value
     const checksummedInput = safeGetAddress(input)
     setSearchQuery(checksummedInput || input)
-    fixedList.current?.scrollTo(0)
+    virtuoso.current?.scrollToIndex(0)
   }, [])
 
   const handleEnter = useCallback(
@@ -218,7 +218,7 @@ function CurrencySearch({
           onCurrencySelect={handleCurrencySelect}
           otherCurrency={otherSelectedCurrency}
           selectedCurrency={selectedCurrency}
-          fixedListRef={fixedList}
+          fixedListRef={virtuoso}
           showImportView={showImportView}
           setImportToken={setImportToken}
         />
@@ -249,23 +249,25 @@ function CurrencySearch({
 
   return (
     <>
-      <VStack align='start' w='full'>
+      <VStack align='stretch'>
         {showSearchInput && (
-          <InputGroup px={4}>
-            <Input
-              placeholder='Search name or paste address'
-              value={searchQuery}
-              onChange={handleInput}
-              onKeyDown={handleEnter}
-              ref={inputRef as RefObject<HTMLInputElement>}
-              autoComplete='off'
-            />
-            {searchQuery?.length && (
-              <InputRightElement
-                children={<CloseButton onClick={handleClearSearch} />}
+          <Box px={4}>
+            <InputGroup>
+              <Input
+                placeholder='Search name or paste address'
+                value={searchQuery}
+                onChange={handleInput}
+                onKeyDown={handleEnter}
+                ref={inputRef as RefObject<HTMLInputElement>}
+                autoComplete='off'
               />
-            )}
-          </InputGroup>
+              {searchQuery?.length && (
+                <InputRightElement
+                  children={<CloseButton onClick={handleClearSearch} />}
+                />
+              )}
+            </InputGroup>
+          </Box>
         )}
         {showCommonBases && (
           <CommonBases

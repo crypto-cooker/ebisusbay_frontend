@@ -16,7 +16,7 @@ import React, {
   ChangeEvent,
   ComponentType, CSSProperties,
   MutableRefObject,
-  ReactNode,
+  ReactNode, RefObject,
   useCallback,
   useEffect,
   useMemo,
@@ -39,8 +39,9 @@ import {QuestionHelper} from "@dex/swap/components/tabs/swap/question-helper";
 // import { FixedSizeList } from 'react-window'
 import { isTokenOnList } from '@eb-pancakeswap-web/utils'
 import { useIsUserAddedToken } from '@eb-pancakeswap-web/hooks/tokens'
-import {Virtuoso} from "react-virtuoso";
+import {Virtuoso, VirtuosoHandle} from "react-virtuoso";
 import { wrappedCurrency } from '@eb-pancakeswap-web/utils/wrappedCurrency'
+import ImportRow from "@dex/components/search-modal/import-row";
 
 function currencyKey(currency: Currency): string {
   return currency?.isToken ? currency.address : currency?.isNative ? currency.symbol : ''
@@ -65,7 +66,7 @@ export default function CurrencyList({
   selectedCurrency?: Currency | null
   onCurrencySelect: (currency: Currency) => void
   otherCurrency?: Currency | null
-  fixedListRef?: MutableRefObject<Virtuoso | undefined>
+  fixedListRef?: RefObject<VirtuosoHandle>
   showNative: boolean
   showImportView: () => void
   setImportToken: (token: Token) => void

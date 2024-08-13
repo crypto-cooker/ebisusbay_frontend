@@ -11,6 +11,8 @@ import usePreviousValue from "@eb-pancakeswap-web/hooks/usePreviousValue";
 import { CurrencyModalView } from './types'
 import CurrencySearch from './currency-search';
 import {TokenList} from "@pancakeswap/token-lists";
+import Manage from "@dex/components/search-modal/manage";;
+import ImportToken from "@dex/components/search-modal/import-token";
 
 type CurrencySearchModalProps = {
   isOpen: boolean;
@@ -118,9 +120,27 @@ function DialogContent({isOpen, onClose, selectedCurrency, otherSelectedCurrency
 
   return (
     <>
+      <DialogHeader>
+        <Flex justify='space-between' w='full' align='center'>
+          {config[modalView].onBack && (
+            <IconButton
+              aria-label='back'
+              icon={<ArrowBackIcon boxSize={8} />}
+              variant='ghost'
+              onClick={() => setModalView(CurrencyModalView.search)}
+            />
+          )}
+          <Box>{config[modalView].title}</Box>
+          <IconButton
+            aria-label='close'
+            icon={<CloseIcon />}
+            variant='ghost'
+            onClick={onClose}
+          />
+        </Flex>
+      </DialogHeader>
       {modalView === CurrencyModalView.search ? (
         <>
-          <DialogBasicHeader title='Select a token' />
           <DialogBody p={0}>
             <CurrencySearch
               onCurrencySelect={handleCurrencySelect}
@@ -141,29 +161,48 @@ function DialogContent({isOpen, onClose, selectedCurrency, otherSelectedCurrency
             </Box>
           </DialogFooter>
         </>
+      ) : modalView === CurrencyModalView.importToken && importToken ? (
+        <ImportToken tokens={[importToken]} handleCurrencySelect={handleCurrencySelect} />
+        // <ImportToken tokens={[importToken]} handleCurrencySelect={handleCurrencySelect} />
+      ) : modalView === CurrencyModalView.importList && importList && listURL ? (
+        <>import list</>
+        // <ImportList
+        //   onAddList={handleAddList}
+        //   addError={addError}
+        //   listURL={listURL}
+        //   listLogoURI={importList?.logoURI}
+        //   listName={importList?.name}
+        //   listTokenLength={importList?.tokens.length}
+        // />
       ) : modalView === CurrencyModalView.manage ? (
-        <>
-          <DialogHeader>
-            <Flex justify='space-between' w='full'>
-              <IconButton
-                aria-label='back'
-                icon={<ArrowBackIcon boxSize={8} />}
-                variant='ghost'
-                onClick={() => setModalView(CurrencyModalView.search)}
-              />
-              <Box>Manage</Box>
-              <IconButton
-                aria-label='close'
-                icon={<CloseIcon />}
-                variant='ghost'
-                onClick={onClose}
-              />
-            </Flex>
-          </DialogHeader>
-          <DialogBody>
-            Manage content here
-          </DialogBody>
-        </>
+        <Manage
+          setModalView={setModalView}
+          setImportToken={setImportToken}
+          setImportList={setImportList}
+          setListUrl={setListUrl}
+        />
+        // <>
+        //   <DialogHeader>
+        //     <Flex justify='space-between' w='full'>
+        //       <IconButton
+        //         aria-label='back'
+        //         icon={<ArrowBackIcon boxSize={8} />}
+        //         variant='ghost'
+        //         onClick={() => setModalView(CurrencyModalView.search)}
+        //       />
+        //       <Box>Manage</Box>
+        //       <IconButton
+        //         aria-label='close'
+        //         icon={<CloseIcon />}
+        //         variant='ghost'
+        //         onClick={onClose}
+        //       />
+        //     </Flex>
+        //   </DialogHeader>
+        //   <DialogBody>
+        //     Manage content here
+        //   </DialogBody>
+        // </>
       ) : (
         <>WAT</>
       )}

@@ -146,7 +146,6 @@ export function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): P
 
   const allPairs = useV2Pairs(allPairCombinations)
 
-  console.log('bestTrade allPairs', allPairCombinations, allPairs);
   // only pass along valid pairs, non-duplicated pairs
   return useMemo(
     () =>

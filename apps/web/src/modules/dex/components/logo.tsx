@@ -11,6 +11,7 @@ import {Token} from "@pancakeswap/swap-sdk-core";
 import {Address, getAddress} from "viem";
 import {bscTokens, cronosTokens, ethereumTokens} from "@pancakeswap/tokens";
 import {NATIVE} from "@pancakeswap/swap-sdk-evm";
+import styled from "styled-components";
 
 export type CurrencyInfo = {
   address?: Address;
@@ -135,6 +136,27 @@ export const ChainLogo = memo(
     return <QuestionOutlineIcon width={width} height={height} />
   },
 )
+
+const StyledListLogo = styled(TokenLogo)<{ size: string }>`
+  width: ${({ size }) => size};
+  height: ${({ size }) => size};
+`;
+
+export function ListLogo({
+  logoURI,
+  style,
+  size = "24px",
+  alt,
+}: {
+  logoURI: string;
+  size?: string;
+  style?: React.CSSProperties;
+  alt?: string;
+}) {
+  const srcs: string[] = useHttpLocations(logoURI);
+
+  return <StyledListLogo alt={alt} size={size} srcs={srcs} style={style} />;
+}
 
 const mapping: { [key: number]: string } = {
   [ChainId.BSC]: "smartchain",
