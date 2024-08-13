@@ -12,8 +12,8 @@ import {
   ModalHeader,
   useBreakpointValue
 } from "@chakra-ui/react";
-import React, {ComponentType, ReactNode} from "react";
-import {useUser} from "@src/components-v2/useUser";
+import React, {ComponentType, ReactNode, useMemo} from "react";
+import {useUser, useUserTheme} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
 import {DrawerDialog, ModalDialog} from "@src/components-v2/foundation/modal";
 
@@ -25,47 +25,50 @@ export type ResponsiveDialogComponents = {
 }
 
 export const useResponsiveDialog = () => {
-  const user = useUser();
+  const theme = useUserTheme();
 
   const shouldUseDrawer = useBreakpointValue({ base: true, sm: false }, { fallback: 'sm' });
-  if (shouldUseDrawer) {
-    const closeButton = <DrawerCloseButton color={getTheme(user.theme).colors.textColor4} />;
-    return {
-      DialogComponent: DrawerDialog,
-      DialogHeader: DrawerHeader,
-      DialogBody: DrawerBody,
-      DialogFooter: DrawerFooter,
-      DialogCloseButton: () => closeButton,
-      DialogBasicHeader: ({title}: {title: string}) => (
-        <DrawerHeader>
-          <Flex justify='space-between' w='full'>
-            <Box>{title}</Box>
-            {closeButton}
-          </Flex>
-        </DrawerHeader>
-      )
-    };
-  } else {
-    const closeButton = <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />;
 
-    return {
-      DialogComponent: ModalDialog,
-      DialogHeader: ModalHeader,
-      DialogBody: ({ children, ...rest }: BoxProps) => (
-        <ModalBody pb={4} {...rest}>
-          {children}
-        </ModalBody>
-      ),
-      DialogFooter: ModalFooter,
-      DialogCloseButton: () => closeButton,
-      DialogBasicHeader: ({title}: {title: string}) => (
-        <ModalHeader>
-          <Flex justify='space-between' w='full'>
-            <Box>{title}</Box>
-            {closeButton}
-          </Flex>
-        </ModalHeader>
-      )
-    };
-  }
+  return useMemo(() => {
+    if (shouldUseDrawer) {
+      const closeButton = <DrawerCloseButton color={theme.colors.textColor4} />;
+      return {
+        DialogComponent: DrawerDialog,
+        DialogHeader: DrawerHeader,
+        DialogBody: DrawerBody,
+        DialogFooter: DrawerFooter,
+        DialogCloseButton: () => closeButton,
+        DialogBasicHeader: ({title}: {title: string}) => (
+          <DrawerHeader>
+            <Flex justify='space-between' w='full'>
+              <Box>{title}</Box>
+              {closeButton}
+            </Flex>
+          </DrawerHeader>
+        )
+      };
+    } else {
+      const closeButton = <ModalCloseButton color={theme.colors.textColor4} />;
+
+      return {
+        DialogComponent: ModalDialog,
+        DialogHeader: ModalHeader,
+        DialogBody: ({ children, ...rest }: BoxProps) => (
+          <ModalBody pb={4} {...rest}>
+            {children}
+          </ModalBody>
+        ),
+        DialogFooter: ModalFooter,
+        DialogCloseButton: () => closeButton,
+        DialogBasicHeader: ({title}: {title: string}) => (
+          <ModalHeader>
+            <Flex justify='space-between' w='full'>
+              <Box>{title}</Box>
+              {closeButton}
+            </Flex>
+          </ModalHeader>
+        )
+      };
+    }
+  }, [shouldUseDrawer, theme]);
 };

@@ -56,13 +56,11 @@ export function useWatchBlock({ chainId, enabled }: Params) {
     }
   }, [chainId, initialBlock, queryClient])
 
-  console.log('onBlockwatch');
   useWatchBlocks({
     chainId,
     blockTag: 'latest',
     enabled: queryEnabled,
     onBlock: (data) => {
-      console.log('onBlock', data);
       const blockNumber = Number(data.number)
       const timestamp = Number(data.timestamp)
       queryClient.setQueryData(getBlockNumberQueryKey(chainId), blockNumber)

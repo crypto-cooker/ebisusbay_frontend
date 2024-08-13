@@ -110,9 +110,7 @@ export function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): P
     () => flatMap(bases, (base): [Token, Token][] => bases.map((otherBase) => [base, otherBase])),
     [bases],
   )
-console.log('bestTrade tokens', currencyA, tokenA, currencyB, tokenB);
-console.log('bestTrade useAllCommonPairs', bases, basePairs);
-console.log('bestTrade allPairCombinations', tokenA && tokenB);
+
   const allPairCombinations: [Token, Token][] = useMemo(
     () =>
       tokenA && tokenB
@@ -178,7 +176,7 @@ export function useTradeExactIn(
   const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
 
   const [singleHopOnly] = useUserSingleHopOnly()
-console.log('bestTrade useTradeExactIn', allowedPairs, singleHopOnly, currencyAmountIn, currencyAmountIn?.quotient);
+
   return useMemo(() => {
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
       if (singleHopOnly) {
