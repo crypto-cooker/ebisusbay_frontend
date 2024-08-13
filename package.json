@@ -15,7 +15,7 @@
     "submodules:update": "git submodule update --remote && git add submodules/eb-pancake-frontend && git commit -m \"Update eb-pancake-frontend submodule to latest commit\" && pnpm install"
   },
   "devDependencies": {
-    "turbo": "^2.0.9",
-    "@pancakeswap/tsconfig": "workspace:*"
+    "@pancakeswap/tsconfig": "workspace:*",
+    "turbo": "^2.0.12"
   }
 }
