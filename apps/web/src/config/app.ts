@@ -295,6 +295,14 @@ const appConfigs: AppConfigMap = {
         },
         deals: []
       },
+      [ChainId.CRONOS_ZKEVM]: {
+        global: [],
+        marketplace: {
+          available: [],
+          nft: {}
+        },
+        deals: []
+      },
       [ChainId.CRONOS_ZKEVM_TESTNET]: {
         global: [],
         marketplace: {
@@ -465,6 +473,14 @@ const appConfigs: AppConfigMap = {
         },
         deals: []
       },
+      [ChainId.CRONOS_ZKEVM]: {
+        global: [],
+        marketplace: {
+          available: [],
+          nft: {}
+        },
+        deals: []
+      },
       [ChainId.CRONOS_ZKEVM_TESTNET]: {
         global: [],
         marketplace: {
@@ -531,6 +547,14 @@ const appConfigs: AppConfigMap = {
         global: ['cro', 'frtn'],
         marketplace: {
           available: ['cro', 'wcro', 'frtn', 'vrse'],
+          nft: {}
+        },
+        deals: []
+      },
+      [ChainId.CRONOS_ZKEVM]: {
+        global: ['cro', 'usdc'],
+        marketplace: {
+          available: ['cro', 'usdc'],
           nft: {}
         },
         deals: []

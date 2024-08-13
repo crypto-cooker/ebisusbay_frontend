@@ -86,6 +86,37 @@ export const cronosZkEVMTestnet  = /*#__PURE__*/ defineChain({
   testnet: true,
 })
 
+export const cronosZkEVM  = /*#__PURE__*/ defineChain({
+  id: 388,
+  name: 'Cronos zkEVM',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'zkCRO',
+    symbol: 'zkCRO',
+  },
+  rpcUrls: {
+    default: {
+      http: [
+        'https://seed.zkevm.cronos.org',
+        'https://dapps.zkevm.cronos.org'
+      ]
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Cronos zkEVM (Testnet) Explorer',
+      url: 'https://explorer.zkevm.cronos.org/',
+    },
+  },
+  contracts: {
+    multicall3: {
+      address: '0x06f4487D7C4a5983d2660DB965Cc6d2565E4cfaA',
+      blockCreated: 1,
+    },
+  },
+  testnet: false,
+})
+
 /**
  * Controls some L2 specific behavior, e.g. slippage tolerance, special UI behavior.
  * The expectation is that all of these networks have immediate transaction confirmation.
@@ -271,10 +302,54 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
   // tokens: supportedTokens,
 }
 
+const cronosZkEVMConfig: AppChainConfig = {
+  slug: 'cronos-zk',
+  chain: cronosZkEVM,
+  urls: {
+    subgraph: {
+      root: 'https://cronos-zkevm-graph.ebisusbay.biz:18000/subgraphs/name/ebisusbay/zkcro/',
+      ryoshiDynasties: '',
+      ryoshiPresale: '',
+      stakedOwners: 'main',
+      staking: '',
+      farms: 'farms',
+      dex: ''
+    }
+  },
+  contracts: {
+    membership: '0x8a99DBE4B0B90ef6d5Dca57c04c837cA4793a217',
+    auction: ADDRESS_ZERO,
+    market: '0xaa7D74dfCa79B2b3266B876deB5Ff77673e104C5',
+    stake: ADDRESS_ZERO,
+    offer: ADDRESS_ZERO,
+    madAuction: ADDRESS_ZERO,
+    slothtyRugsurance: ADDRESS_ZERO,
+    bundle: ADDRESS_ZERO,
+    gaslessListing: '0x5817ebf93d826e2fb424a57B84a5bbC9B8E7a0C9',
+    gdc: ADDRESS_ZERO,
+    usdc: ADDRESS_ZERO,
+    purchaseFortune: ADDRESS_ZERO,
+    allianceCenter: ADDRESS_ZERO,
+    battleField: ADDRESS_ZERO,
+    resources: ADDRESS_ZERO,
+    bank: ADDRESS_ZERO,
+    barracks: ADDRESS_ZERO,
+    fortune: ADDRESS_ZERO,
+    rewards: ADDRESS_ZERO,
+    presaleVaults: ADDRESS_ZERO,
+    seasonUnlocks: ADDRESS_ZERO,
+    townHall: ADDRESS_ZERO,
+    vaultNft: ADDRESS_ZERO,
+    ryoshiWithKnife: ADDRESS_ZERO,
+    farms: ADDRESS_ZERO
+  },
+  // tokens: supportedTokens,
+}
 
 export const SUPPORTED_CHAIN_IDS = [
   ChainId.CRONOS,
   ChainId.CRONOS_TESTNET,
+  ChainId.CRONOS_ZKEVM,
   ChainId.CRONOS_ZKEVM_TESTNET
 ] as const
 
@@ -283,6 +358,7 @@ export type SupportedChainId = (typeof SUPPORTED_CHAIN_IDS)[number]
 const chainConfigs: Record<SupportedChainId, AppChainConfig> = {
   [ChainId.CRONOS]: cronosConfig,
   [ChainId.CRONOS_TESTNET]: cronosTestnetConfig,
+  [ChainId.CRONOS_ZKEVM]: cronosZkEVMConfig,
   [ChainId.CRONOS_ZKEVM_TESTNET]: cronosZkEVMTestnetConfig
 }
 

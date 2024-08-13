@@ -1,5 +1,5 @@
 import {ChainId} from "@pancakeswap/chains";
-import {cronosTestnetTokens, cronosTokens, cronosZkEvmTestnetTokens} from "@pancakeswap/tokens";
+import {cronosTestnetTokens, cronosTokens, cronosZkEvmTokens, cronosZkEvmTestnetTokens} from "@pancakeswap/tokens";
 import {SupportedChainId} from "@src/config/chains";
 import {ERC20Token} from "@pancakeswap/swap-sdk-evm";
 
@@ -28,5 +28,6 @@ type AppTokenList = AppTokenMap<Record<string, ERC20Token>>;
 export const supportedTokens: AppTokenList = {
   [ChainId.CRONOS]: cronosTokens,
   [ChainId.CRONOS_TESTNET]: cronosTestnetTokens,
+  [ChainId.CRONOS_ZKEVM]: cronosZkEvmTokens
   [ChainId.CRONOS_ZKEVM_TESTNET]: cronosZkEvmTestnetTokens
 }
