@@ -24,11 +24,9 @@ import {BigNumber, Contract, ethers} from "ethers";
 import {commify} from "ethers/lib/utils";
 import FarmsAbi from "@src/global/contracts/Farms.json";
 import {useUser} from "@src/components-v2/useUser";
-import {appConfig} from "@src/config";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
-
-const config = appConfig();
+import {useAppChainConfig} from "@src/config/hooks";
 
 interface StakeLpTokensDialogProps {
   isOpen: boolean;
@@ -40,6 +38,7 @@ interface StakeLpTokensDialogProps {
 
 export default function StakeLpTokensDialog({isOpen, onClose, farm, userData, onSuccess}: StakeLpTokensDialogProps) {
   const user = useUser();
+  const {config: appChainConfig} = useAppChainConfig();
   const [quantity, setQuantity] = useState<string>('');
   const [executing, setExecuting] = useState<boolean>(false);
 
@@ -62,7 +61,7 @@ export default function StakeLpTokensDialog({isOpen, onClose, farm, userData, on
   const handleConfirmStake = async () => {
     try {
       setExecuting(true);
-      const contract = new Contract(config.contracts.farms, FarmsAbi, user.provider.signer);
+      const contract = new Contract(appChainConfig.contracts.farms, FarmsAbi, user.provider.signer);
       const tx = await contract.deposit(farm.data.pid, ethers.utils.parseEther(quantity));
       await tx.wait();
       toast.success('Staked successfully');

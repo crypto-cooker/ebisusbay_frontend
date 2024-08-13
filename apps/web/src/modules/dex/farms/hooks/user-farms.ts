@@ -4,7 +4,6 @@ import {useContext} from "react";
 import {Contract, ethers} from "ethers";
 import FarmsAbi from "@src/global/contracts/Farms.json";
 import LpAbi from "@src/global/contracts/LP.json";
-import {appConfig} from "@src/config";
 import {useUser} from "@src/components-v2/useUser";
 import {ApiService} from "@src/core/services/api-service";
 import {UserFarmsRefetchContext} from "@dex/farms/components/provider";
@@ -13,10 +12,6 @@ import {Address} from "viem";
 import {readContracts} from "@wagmi/core";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {getAppChainConfig} from "@src/config/hooks";
-
-// const config = appConfig();
-// const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-
 
 export const useUserFarms = () => {
   const [userFarms] = useAtom(userFarmsAtom);

@@ -15,7 +15,7 @@ type CollectionCurrencies = {
   [key: string]: string[];
 }
 
-const UseMultichainCurrencyBroker = (chainId: SupportedChainId) => {
+const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
   const { config: appConfig } = useAppConfig();
 
   const nativeCurrency = useNativeCurrency(chainId);
@@ -81,4 +81,4 @@ const UseMultichainCurrencyBroker = (chainId: SupportedChainId) => {
   }
 }
 
-export default UseMultichainCurrencyBroker;
+export default useMultichainCurrencyBroker;

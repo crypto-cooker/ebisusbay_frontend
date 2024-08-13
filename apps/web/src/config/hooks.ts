@@ -1,7 +1,8 @@
 import config, {AppEnvironment} from './app';
-import appChainConfig, {SupportedChainId} from './chains';
+import appChainConfig, {isSupportedChainId, SupportedChainId} from './chains';
 import {useMemo} from "react";
 import {ChainId} from "@pancakeswap/chains";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 
 export function useAppConfig() {
   const currentEnv = useMemo(() => {
@@ -37,8 +38,17 @@ export function useAppConfig() {
   };
 }
 
-export function useAppChainConfig(chainId?: SupportedChainId) {
-  const config = useMemo(() => appChainConfig[chainId ?? ChainId.CRONOS] ?? appChainConfig[ChainId.CRONOS]!, [chainId]);
+export function useAppChainConfig(chainId?: ChainId) {
+  const {chainId: activeChainId} = useActiveChainId();
+
+  const config = useMemo(() => {
+    if (!chainId) chainId = activeChainId;
+
+    if (!chainId || !isSupportedChainId(chainId)) {
+      return appChainConfig[ChainId.CRONOS]!;
+    }
+    return appChainConfig[chainId] ?? appChainConfig[ChainId.CRONOS]!
+  }, [chainId, activeChainId]);
 
   return {
     config

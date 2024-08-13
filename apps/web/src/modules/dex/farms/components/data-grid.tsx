@@ -36,13 +36,13 @@ import {faExternalLinkAlt, faMinus, faPlus, faStopwatch} from "@fortawesome/free
 import StakeLpTokensDialog from "@dex/farms/components/stake-lp-tokens";
 import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialog";
 import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
-import {appConfig} from "@src/config";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
 import useCurrencyBroker from "@market/hooks/use-currency-broker";
 import {useExchangeRate} from "@market/hooks/useGlobalPrices";
-
-const config =  appConfig();
+import {useAppChainConfig} from "@src/config/hooks";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {getBlockExplorerLink} from "@dex/utils";
 
 export type DataGridProps = {
   data: DerivedFarm[];
@@ -62,6 +62,8 @@ export default function DataGrid({ data, userData }: DataGridProps)  {
 
 function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}) {
   const user = useUser();
+  const {config: appChainConfig} = useAppChainConfig();
+
   const {getByAddress} = useCurrencyBroker();
   const [enableFarm, enablingFarm] = useEnableFarm();
   const {usdValueForToken} = useExchangeRate();
@@ -251,13 +253,13 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                     <Box fontWeight='bold'>Liquidity</Box>
                     <Box fontWeight='bold'>{farm.derived.stakedLiquidity}</Box>
                   </Flex>
-                  <Link fontWeight='bold' href={`https://swap.ebisusbay.com/#/add/${farm.data.pair.token0.id}/${farm.data.pair.token1.id}`} color='#218cff'>
+                  <Link fontWeight='bold' href={`https://swap.ebisusbay.com/#/add/${farm.data.pair.token0.id}/${farm.data.pair.token1.id}`} color='#218cff' isExternal>
                     <HStack>
                       <>Get {farm.derived.name} LP</>
                       <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} boxSize={3} />
                     </HStack>
                   </Link>
-                  <Link fontWeight='bold' href={`${config.urls.explorer}address/${farm.data.pair.id}`} color='#218cff'>
+                  <Link fontWeight='bold' href={getBlockExplorerLink(farm.data.pair.id, 'address', appChainConfig.chain.id)} color='#218cff' isExternal>
                     <HStack>
                       <>View Contract</>
                       <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} boxSize={3} />

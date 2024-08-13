@@ -1,100 +1,11 @@
 import {useQuery} from "@tanstack/react-query";
-import {BigNumber, Contract, ethers} from "ethers";
-import {appConfig} from "@src/config";
-import FarmsAbi from "@src/global/contracts/Farms.json";
-import LpAbi from "@src/global/contracts/LP.json";
-import {Address, ContractFunctionParameters, erc20Abi} from "viem";
+import {BigNumber, ethers} from "ethers";
 import {DerivedFarm, FarmState, MapiFarm, MapiPairFarm} from "@dex/farms/constants/types";
 import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
 import {ApiService} from "@src/core/services/api-service";
 import {round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
-import {wagmiConfig} from "@src/wagmi";
 import useCurrencyBroker from "@market/hooks/use-currency-broker";
-import {readContracts} from "@wagmi/core";
-
-const config = appConfig();
-const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-
-export function getFarmsUsingChain() {
-  const query = async () => {
-    const readContract = new Contract(config.contracts.farms, FarmsAbi, readProvider);
-    const poolLength = await readContract.poolLength();
-
-    const poolInfo = await readContracts(wagmiConfig, {
-      contracts: [...Array(parseInt(poolLength)).fill(0)].map((_, i) => (
-        {
-          address: config.contracts.farms,
-          abi: FarmsAbi as any,
-          functionName: 'poolInfo',
-          args: [i],
-        }
-      )),
-    });
-
-    const lpAddresses = poolInfo.slice(1).map((pool: any) => {
-      const [lpToken] = pool.result;
-      return lpToken
-    });
-
-    const lpTokenInfo = await readContracts(wagmiConfig, {
-      contracts: lpAddresses.reduce((acc: ContractFunctionParameters[], address: string) => {
-        acc.push({
-          address: address as Address,
-          abi: LpAbi as any,
-          functionName: 'token0',
-        });
-        acc.push({
-          address: address as Address,
-          abi: LpAbi as any,
-          functionName: 'token1',
-        });
-        return acc;
-      }, []),
-    });
-
-    const uniqueTokenAddresses = Array.from(new Set(lpTokenInfo.map((info: any) => info.result)));
-
-    const tokenInfo = await readContracts(wagmiConfig, {
-      contracts: uniqueTokenAddresses.map((address: string) => ({
-        address: address as Address,
-        abi: erc20Abi as any,
-        functionName: 'symbol',
-      })),
-    });
-
-    // map token address to symbol with address as key
-    const tokenInfoMap = tokenInfo.reduce((acc: any, info: any, i: number) => {
-      acc[uniqueTokenAddresses[i]] = info.result;
-      return acc;
-    }, {});
-
-    const data = poolInfo.slice(1).map((pool: any, i: number) => {
-      const token0Address = lpTokenInfo[i * 2].result as string;
-      const token1Address = lpTokenInfo[i * 2 + 1].result as string;
-      return {
-        lpAddress: pool.result[0],
-        token0: {
-          address: token0Address,
-          name: tokenInfoMap[token0Address],
-        },
-        token1: {
-          address: token1Address,
-          name: tokenInfoMap[token1Address],
-        }
-      };
-    });
-
-    return mapToDataTableType(data);
-  }
-
-  const { data } = useQuery({
-    queryKey: ['getFarmsUsingChain'],
-    queryFn: query,
-  })
-
-  return data;
-}
 
 export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
   const { getByAddress } = useCurrencyBroker();

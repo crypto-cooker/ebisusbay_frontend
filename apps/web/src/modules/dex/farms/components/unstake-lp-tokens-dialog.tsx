@@ -26,9 +26,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";
 import {DerivedFarm} from "@dex/farms/constants/types";
 import {UserFarmState} from "@dex/farms/state/user";
-import {appConfig} from "@src/config";
-
-const config = appConfig();
+import {useAppChainConfig} from "@src/config/hooks";
 
 interface UnstakeLpTokensDialogProps {
   isOpen: boolean;
@@ -40,6 +38,7 @@ interface UnstakeLpTokensDialogProps {
 
 export default function UnstakeLpTokensDialog({isOpen, onClose, farm, userData, onSuccess}: UnstakeLpTokensDialogProps) {
   const user = useUser();
+  const {config: appChainConfig} = useAppChainConfig();
   const [quantity, setQuantity] = useState<string>('');
   const [executing, setExecuting] = useState<boolean>(false);
 
@@ -62,7 +61,7 @@ export default function UnstakeLpTokensDialog({isOpen, onClose, farm, userData, 
   const handleConfirmUnstake = async () => {
     try {
       setExecuting(true);
-      const contract = new Contract(config.contracts.farms, FarmsAbi, user.provider.signer);
+      const contract = new Contract(appChainConfig.contracts.farms, FarmsAbi, user.provider.signer);
       const tx = await contract.withdraw(farm.data.pid, ethers.utils.parseEther(quantity));
       await tx.wait();
       toast.success('Unstaked successfully');

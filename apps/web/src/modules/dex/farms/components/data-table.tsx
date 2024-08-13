@@ -8,7 +8,7 @@ import {
   SortingState,
   useReactTable
 } from '@tanstack/react-table';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
   Avatar,
   AvatarGroup,
@@ -36,27 +36,27 @@ import {
   VStack,
   Wrap
 } from '@chakra-ui/react';
-import { ChevronDownIcon, ChevronUpIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
-import { getTheme } from '@src/global/theme/theme';
-import { useUser } from '@src/components-v2/useUser';
-import { Card } from '@src/components-v2/foundation/card';
-import { PrimaryButton, SecondaryButton } from '@src/components-v2/foundation/button';
-import { faCalculator, faExternalLinkAlt, faMinus, faPlus, faStopwatch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEnableFarm, useHarvestRewards } from '@dex/farms/hooks/farm-actions';
-import { DerivedFarm, FarmState, MapiFarmRewarder } from '@dex/farms/constants/types';
-import { appConfig } from '@src/config';
+import {ChevronDownIcon, ChevronUpIcon, QuestionOutlineIcon} from '@chakra-ui/icons';
+import {getTheme} from '@src/global/theme/theme';
+import {useUser} from '@src/components-v2/useUser';
+import {Card} from '@src/components-v2/foundation/card';
+import {PrimaryButton, SecondaryButton} from '@src/components-v2/foundation/button';
+import {faCalculator, faExternalLinkAlt, faMinus, faPlus, faStopwatch} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {useEnableFarm, useHarvestRewards} from '@dex/farms/hooks/farm-actions';
+import {DerivedFarm, FarmState, MapiFarmRewarder} from '@dex/farms/constants/types';
 import UnstakeLpTokensDialog from '@dex/farms/components/unstake-lp-tokens-dialog';
 import StakeLpTokensDialog from '@dex/farms/components/stake-lp-tokens';
-import { UserFarms, UserFarmState } from '@dex/farms/state/user';
-import { ethers } from 'ethers';
-import { ciEquals, millisecondTimestamp, round } from '@market/helpers/utils';
-import { commify } from 'ethers/lib/utils';
-import { useUserFarmsRefetch } from '@dex/farms/hooks/user-farms';
-import useCurrencyBroker, { BrokerCurrency } from '@market/hooks/use-currency-broker';
-import { useExchangeRate } from '@market/hooks/useGlobalPrices';
-
-const config =  appConfig();
+import {UserFarms, UserFarmState} from '@dex/farms/state/user';
+import {ethers} from 'ethers';
+import {ciEquals, millisecondTimestamp, round} from '@market/helpers/utils';
+import {commify} from 'ethers/lib/utils';
+import {useUserFarmsRefetch} from '@dex/farms/hooks/user-farms';
+import useCurrencyBroker, {BrokerCurrency} from '@market/hooks/use-currency-broker';
+import {useExchangeRate} from '@market/hooks/useGlobalPrices';
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {useAppChainConfig} from "@src/config/hooks";
+import {getBlockExplorerLink} from "@dex/utils";
 
 export type DataTableProps = {
   data: DerivedFarm[];
@@ -118,6 +118,7 @@ export default function DataTable({ data, userData }: DataTableProps) {
 
 function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row<DerivedFarm>, isSmallScreen: boolean, showLiquidityColumn: boolean, userData?: UserFarmState}) {
   const user = useUser();
+  const {config: appChainConfig} = useAppChainConfig();
   const {getByAddress} = useCurrencyBroker();
   const [enableFarm, enablingFarm] = useEnableFarm();
   const {usdValueForToken} = useExchangeRate();
@@ -248,13 +249,13 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                     </Flex>
                   </>
                 )}
-                <Link fontWeight='bold' href={`https://swap.ebisusbay.com/#/add/${row.original.data.pair.token0.id}/${row.original.data.pair.token1.id}`} color='#218cff'>
+                <Link fontWeight='bold' href={`https://swap.ebisusbay.com/#/add/${row.original.data.pair.token0.id}/${row.original.data.pair.token1.id}`} color='#218cff' isExternal>
                   <HStack>
                     <>Get {row.original.derived.name} LP</>
                     <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} boxSize={3} />
                   </HStack>
                 </Link>
-                <Link fontWeight='bold' href={`${config.urls.explorer}address/${row.original.data.pair.id}`} color='#218cff'>
+                <Link fontWeight='bold' href={getBlockExplorerLink(row.original.data.pair.id, 'address', appChainConfig.chain.id)} color='#218cff' isExternal>
                   <HStack>
                     <>View Contract</>
                     <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} boxSize={3} />
