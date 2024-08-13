@@ -1,4 +1,4 @@
-import { ChainId, chainNames } from '@pancakeswap/chains'
+import {ChainId, chainNames, isTestnetChainId} from '@pancakeswap/chains'
 import memoize from 'lodash/memoize'
 import {
   Chain,
@@ -301,6 +301,11 @@ const chainConfigs: Record<SupportedChainId, AppChainConfig> = {
 export type ChainSlug = (typeof chainConfigs)[keyof typeof chainConfigs]['slug'];
 
 // This is currently used for various pancake configurations. Can consider refactoring
-export const CHAINS = Object.values(chainConfigs).map(({ chain }) => chain);
+export const CHAINS = Object.values(chainConfigs)
+  .filter(({chain}) => {
+      return (process.env.NEXT_PUBLIC_ENV === 'testnet' && isTestnetChainId(chain.id)) ||
+        (process.env.NEXT_PUBLIC_ENV !== 'testnet' && !isTestnetChainId(chain.id))
+  })
+  .map(({ chain }) => chain);
 
 export default chainConfigs;
