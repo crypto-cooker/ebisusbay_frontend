@@ -17,6 +17,7 @@ import {CollectionPageContext, CollectionPageContextProps} from "@src/components
 import {isFoundingMemberCollection} from "@market/helpers/utils";
 import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 import {sortOptions} from "@src/Components/components/constants/collection-sort-options";
+import {ApiService} from "@src/core/services/api-service";
 
 interface ItemsProps {
   collection: any;
@@ -77,8 +78,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
         address: collection.address,
         ...fixedQueryParams
       }
-
-      const data = await nextApiService.getCollectionItems(collection.address, params);
+      const data = await ApiService.withoutKey().getCollectionItems(params);
       setTotalCount(data.totalCount!);
 
       if (isFoundingMemberCollection(collection.address)) {

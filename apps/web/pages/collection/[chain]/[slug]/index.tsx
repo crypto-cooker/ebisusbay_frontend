@@ -41,12 +41,13 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }: CollectionPr
       if (remainingQuery) hackedQuery = { ...hackedQuery, ...remainingQuery };
 
       const queryString = new URLSearchParams(hackedQuery).toString();
-      const url = `/collection/${ssrCollection.slug}${queryString ? `?${queryString}` : ''}`;
+      const url = `/collection/${query.chain}/${ssrCollection.slug}${queryString ? `?${queryString}` : ''}`;
       router.push(url, undefined, { shallow: true });
     }
 
+    const { chain, ...sanitizedQuery} = remainingQuery as any;
     setType(ssrCollection.multiToken ? collectionTypes.ERC1155 : collectionTypes.ERC721);
-    setQueryParams(remainingQuery);
+    setQueryParams(sanitizedQuery);
     setInitialized(true);
   }, [slug]);
 
