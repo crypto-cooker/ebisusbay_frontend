@@ -57,10 +57,9 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useSearchParams} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import useTransak from "@market/hooks/use-transak";
-import {is1155} from "@market/helpers/chain";
-
-
-const config = appConfig();
+import {useAppConfig} from "@src/config/hooks";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 
 enum PaymentType {
   CRYPTO = 'CRYPTO',
@@ -76,6 +75,9 @@ type PurchaseConfirmationDialogProps = {
 export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}: PurchaseConfirmationDialogProps) {
   const [executingPurchase, setExecutingPurchase] = useState(false);
   const [buyGaslessListings, response] = useBuyGaslessListings();
+  const { config } = useAppConfig();
+  const { chainId } = useActiveChainId()
+  const { switchNetworkAsync } = useSwitchNetwork();
 
   const user = useUser();
 
@@ -104,6 +106,8 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const token = knownErc20Token(listing?.currency);
 
   const handleBuyCro = () => {
+    if (!config.vendors?.transak) return;
+
     const url = new URL(config.vendors.transak.url);
     if (user.address) {
       url.searchParams.append('cryptoCurrencyCode', 'CRO');
@@ -114,21 +118,12 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   }
 
   const handleBuyErc20 = (address: string) => {
-    if (token?.symbol === 'TTT') {
-      const url = new URL('https://app.cronaswap.org/swap');
-      if (user.address) {
-        url.searchParams.append('outputCurrency', address);
-        url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
-      }
-      window.open(url, '_blank');
-    } else {
-      const url = new URL('https://swap.ebisusbay.com/#/swap');
-      if (user.address) {
-        url.searchParams.append('outputCurrency', address);
-        url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
-      }
-      window.open(url, '_blank');
+    const url = new URL('https://swap.ebisusbay.com/#/swap');
+    if (user.address) {
+      url.searchParams.append('outputCurrency', address);
+      url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');
     }
+    window.open(url, '_blank');
   }
 
   const handleExecutePurchase = async () => {
@@ -137,7 +132,8 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       await buyGaslessListings([{
         listingId: listing.listingId,
         price: parseInt(listing.price),
-        currency: listing.currency
+        currency: listing.currency,
+        chainId: listing.chain
       }]);
       setIsComplete(true);
     } catch (error: any) {
@@ -163,7 +159,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
       let fee =  numericPrice * (user.fee / 100);
       const erc20UsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, listing.currency));
       if (!!erc20UsdRate && erc20UsdRate.currency !== ethers.constants.AddressZero) {
-        const croUsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, ethers.constants.AddressZero) && rate.chain.toString() === config.chain.id.toString());
+        const croUsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, ethers.constants.AddressZero) && rate.chain.toString() === listing.chain.toString());
         fee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice) * (user.fee / 100);
       }
       amt += listing.currency === ethers.constants.AddressZero ? fee : 0;
@@ -393,7 +389,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                     <TransakOption
                       listing={listing}
                     />
-                  ) : (
+                  ) : listing.chain === chainId ? (
                     <PrimaryButton
                       onClick={handleExecutePurchase}
                       isLoading={executingPurchase}
@@ -402,6 +398,20 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                     >
                       Confirm purchase
                     </PrimaryButton>
+                  ) : (
+                    <VStack align='stretch' gap={0} w='full'>
+                      <Box textAlign='center' as='i'>
+                        <small>Please switch chains to continue</small>
+                      </Box>
+                      <PrimaryButton
+                        onClick={() => switchNetworkAsync(listing.chain)}
+                        isLoading={executingPurchase}
+                        isDisabled={executingPurchase}
+                        loadingText='Switching'
+                      >
+                        Switch Network
+                      </PrimaryButton>
+                    </VStack>
                   )}
                 </Stack>
               </div>

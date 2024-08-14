@@ -73,10 +73,11 @@ const tabs = {
 interface Nft721Props {
   address: string;
   id: string;
+  chain: number;
   collection: any;
 }
 
-const Nft1155 = ({ address, id, collection }: Nft721Props) => {
+const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
   const dispatch = useAppDispatch();
   const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`).toString());
   const [runAuthedFunction] = useAuthedFunction();
@@ -99,7 +100,7 @@ const Nft1155 = ({ address, id, collection }: Nft721Props) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   useEffect(() => {
-    dispatch(getNftDetails(address, id));
+    dispatch(getNftDetails(address, id, chain));
   }, [dispatch, address, id]);
 
   const [royalty, setRoyalty] = useState<number | null>(null);

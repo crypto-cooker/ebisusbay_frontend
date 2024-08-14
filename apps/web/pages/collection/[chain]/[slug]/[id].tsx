@@ -126,17 +126,20 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
     }
   }
 
+  // default to cronos chain if collection has no chain
+  const chainMatchCondition = (chainId: number) => !chainId || chainId === chainConfig?.chain.id;
+
   let collection;
 
   // @todo fix in autolistings
   if (isAddress(slug)) {
-    collection = appConfig('collections').find((c: any) => ciEquals(c.address, slug));
+    collection = appConfig('collections').find((c: any) => ciEquals(c.address, slug) && chainMatchCondition(c.chainId));
 
     // const res = await fetch(`${config.urls.api}collectioninfo?address=${slug}`);
     // const json = await res.json();
     // collection = json.collections[0]
   } else {
-    collection = appConfig('collections').find((c: any) => ciEquals(c.slug, slug));
+    collection = appConfig('collections').find((c: any) => ciEquals(c.slug, slug) && chainMatchCondition(c.chainId));
 
     // const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`);
     // const json = await res.json();

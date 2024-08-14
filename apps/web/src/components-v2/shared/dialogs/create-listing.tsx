@@ -1,11 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { specialImageTransform } from '@market/helpers/hacks';
-import { AnyMedia } from '@src/components-v2/shared/media/any-media';
-import {Contract, ethers} from 'ethers';
-import { getCollectionMetadata } from '@src/core/api';
-import { toast } from 'react-toastify';
+import React, {useCallback, useEffect, useState} from 'react';
+import {specialImageTransform} from '@market/helpers/hacks';
+import {AnyMedia} from '@src/components-v2/shared/media/any-media';
+import {getCollectionMetadata} from '@src/core/api';
+import {toast} from 'react-toastify';
 import EmptyData from '@src/Components/Offer/EmptyData';
-import { ERC721 } from '@src/global/contracts/Abis';
 import {
   createSuccessfulTransactionToastContent,
   isBundle,
@@ -15,9 +13,8 @@ import {
   round,
   usdFormat
 } from '@market/helpers/utils';
-import { appConfig } from '@src/config';
-import { useWindowSize } from '@market/hooks/useWindowSize';
-import { collectionRoyaltyPercent } from '@src/core/chain';
+import {useWindowSize} from '@market/hooks/useWindowSize';
+import {collectionRoyaltyPercent} from '@src/core/chain';
 import {
   Box,
   Button as ChakraButton,
@@ -52,33 +49,26 @@ import {
   Text,
   useNumberInput
 } from '@chakra-ui/react';
-import { getTheme } from '@src/global/theme/theme';
+import {getTheme} from '@src/global/theme/theme';
 import ImagesContainer from '@src/Components/Bundle/ImagesContainer';
 import useUpsertGaslessListings from '@src/Components/Account/Settings/hooks/useUpsertGaslessListings';
-import { parseErrorMessage } from '@src/helpers/validator';
-import { useExchangeRate, useTokenExchangeRate } from '@market/hooks/useGlobalPrices';
-import { PrimaryButton, SecondaryButton } from '@src/components-v2/foundation/button';
-import ReactSelect, { SingleValue } from 'react-select';
-import { DynamicNftImage } from '@src/components-v2/shared/media/dynamic-nft-image';
-import { useUser } from '@src/components-v2/useUser';
+import {parseErrorMessage} from '@src/helpers/validator';
+import {useExchangeRate, useTokenExchangeRate} from '@market/hooks/useGlobalPrices';
+import {PrimaryButton, SecondaryButton} from '@src/components-v2/foundation/button';
+import ReactSelect, {SingleValue} from 'react-select';
+import {DynamicNftImage} from '@src/components-v2/shared/media/dynamic-nft-image';
+import {useUser} from '@src/components-v2/useUser';
 import * as Sentry from '@sentry/nextjs';
-import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import useCurrencyBroker, { BrokerCurrency } from '@market/hooks/use-currency-broker';
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
-import {ChainLogo, CurrencyLogo} from "@dex/components/logo";
+import {QuestionOutlineIcon} from '@chakra-ui/icons';
+import {CurrencyLogo} from "@dex/components/logo";
 import {useContract} from "@eb-pancakeswap-web/hooks/useContract";
-import {V2_ROUTER_ADDRESS} from "../../../../../eb-pancake-frontend/packages/smart-router/evm/constants";
 import {Address, erc721Abi} from "viem";
-import {pancakeRouter02ABI} from "@eb-pancakeswap-web/config/abi/IPancakeRouter02";
-import {useConfig, useReadContract} from "wagmi";
+import {useConfig} from "wagmi";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
 import {useAppChainConfig} from "@src/config/hooks";
-import {readContract} from "@wagmi/core";
-import {wagmiConfig} from "@src/wagmi";
 import useMultichainCurrencyBroker, {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
-import {Currency, SerializedToken} from "@pancakeswap/swap-sdk-core";
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 5;

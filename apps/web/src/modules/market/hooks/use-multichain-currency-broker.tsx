@@ -58,7 +58,6 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
     const availableCurrencySymbols = Object.entries(nftCurrencies)
       .find(([key]) => ciEquals(key, nftAddress)) as CollectionCurrencies | undefined;
 
-    console.log('GETBYCOLLECTION', listingCurrencies, chainCurrencies, availableCurrencySymbols, appConfig)
     return listingCurrencies.filter(({symbol}: { symbol: string }) => {
       if (availableCurrencySymbols) {
         return availableCurrencySymbols[1].includes(symbol.toLowerCase());
@@ -67,7 +66,6 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
       }
     });
   }
-
 
   return {
     knownCurrencies,
