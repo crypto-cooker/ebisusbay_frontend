@@ -124,6 +124,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/collection/:slug/:id',
+        destination: '/collection/cronos/:slug/:id',
+        permanent: true,
+      },
+      {
         source: '/sales_bot',
         destination:
           'https://discord.com/api/oauth2/authorize?client_id=976699886890254356&permissions=269503504&scope=bot%20applications.commands',
