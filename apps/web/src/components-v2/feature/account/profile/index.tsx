@@ -320,18 +320,18 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                     size={{base: 'sm', sm: 'md'}}
                     color={currentTab === key ? 'white' : getTheme(user.theme).colors.textColor3}
                   >
-                    {key === TabKey.deals && isProfileOwner && (
-                      <Box
-                        position='absolute'
-                        top={-1}
-                        right={-1}
-                        bg='#FD8800'
-                        rounded='full'
-                        w='10px'
-                        h='10px'
-                        animation={`${pulseColorClass} 1.5s infinite`}
-                      />
-                    )}
+                    {/*{key === TabKey.deals && isProfileOwner && (*/}
+                    {/*  <Box*/}
+                    {/*    position='absolute'*/}
+                    {/*    top={-1}*/}
+                    {/*    right={-1}*/}
+                    {/*    bg='#FD8800'*/}
+                    {/*    rounded='full'*/}
+                    {/*    w='10px'*/}
+                    {/*    h='10px'*/}
+                    {/*    animation={`${pulseColorClass} 1.5s infinite`}*/}
+                    {/*  />*/}
+                    {/*)}*/}
                     {tab.label}
                   </ChakraButton>
                 ))}
