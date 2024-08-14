@@ -341,7 +341,7 @@ const cronosZkEVMConfig: AppChainConfig = {
     townHall: ADDRESS_ZERO,
     vaultNft: ADDRESS_ZERO,
     ryoshiWithKnife: ADDRESS_ZERO,
-    farms: ADDRESS_ZERO
+    farms: '0xbcE43dabc90E475D3c203603782962B85aDC32d4'
   },
   // tokens: supportedTokens,
 }

@@ -119,18 +119,15 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
       })}
 
       <Grid gridTemplateRows="1fr 1fr" gridGap="4px">
-        <Flex alignItems="center" onClick={() => setConfirmed(!confirmed)}>
-          <Checkbox
-            scale="sm"
-            name="confirmed"
-            type="checkbox"
-            checked={confirmed}
-            onChange={() => setConfirmed(!confirmed)}
-          />
-          <Text ml="8px" style={{ userSelect: 'none' }}>
-            {hasRiskToken ? 'I acknowledge the risk' : 'I understand'}
-          </Text>
-        </Flex>
+        <Checkbox
+          scale="sm"
+          name="confirmed"
+          type="checkbox"
+          checked={confirmed}
+          onChange={() => setConfirmed(!confirmed)}
+        >
+          {hasRiskToken ? 'I acknowledge the risk' : 'I understand'}
+        </Checkbox>
         <PrimaryButton
           isDisabled={!confirmed}
           onClick={() => {
