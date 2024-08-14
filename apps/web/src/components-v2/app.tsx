@@ -21,6 +21,8 @@ import * as Sentry from "@sentry/nextjs";
 import {usePollBlockNumber} from "@eb-pancakeswap-web/state/block/hooks";
 import {useAccountEventListener} from "@eb-pancakeswap-web/hooks/useAccountEventListener";
 import {useRouter} from "next/router";
+import {NetworkModal} from "@dex/components/network-modal";
+import {CHAIN_IDS, chains} from "@src/wagmi";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -66,6 +68,7 @@ function App({ Component, ...pageProps }: AppProps) {
   const isDexRoute = router.pathname.startsWith('/dex');
 
   const GlobalDexHooks = isDexRoute ? GlobalHooks : React.Fragment;
+  const NetworkModalCheck = isDexRoute ? React.Fragment : React.Fragment;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -90,6 +93,9 @@ function App({ Component, ...pageProps }: AppProps) {
     <ThemeProvider theme={getTheme(userTheme)}>
       <ExchangePricesContext.Provider value={{prices: exchangePrices.data ?? []}}>
         <GlobalDexHooks />
+        <NetworkModal
+          pageSupportedChains={isDexRoute ? CHAIN_IDS : []}
+        />
         <DefaultHead />
         <div className="wraper">
           <GlobalStyles isDark={userTheme === 'dark'} />

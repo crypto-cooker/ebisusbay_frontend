@@ -4,6 +4,8 @@ import {useAccount} from "wagmi";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useUser} from "@src/components-v2/useUser";
+import {useSetAtom} from "jotai";
+import {hideWrongNetworkModalAtom} from "@dex/components/network-modal";
 
 const wrongNetworkProps: ButtonProps = {
   colorScheme: 'red',
@@ -16,12 +18,13 @@ export const CommitButton = (props: ButtonProps) => {
   const isMounted = useIsMounted()
   const { isConnected } = useAccount()
   const { connect } = useUser();
+  const setHideWrongNetwork = useSetAtom(hideWrongNetworkModalAtom)
 
   if (!isConnected && isMounted) {
     return (
       <PrimaryButton
         size='lg'
-        onClick={connect}
+        onClick={() => connect()}
         w='full'
       >
         Connect Wallet
@@ -34,7 +37,9 @@ export const CommitButton = (props: ButtonProps) => {
       size='lg'
       {...props}
       onClick={(e) => {
-        if (!isWrongNetwork) {
+        if (isWrongNetwork) {
+          setHideWrongNetwork(false)
+        } else {
           props.onClick?.(e)
         }
       }}
