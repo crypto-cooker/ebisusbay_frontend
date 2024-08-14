@@ -877,7 +877,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                       avatar={ImageService.translate(collectionMetadata?.avatar).avatar()}
                       address={address}
                       verified={collection.verification?.verified}
-                      to={`/collection/${address}`}
+                      to={`/collection/${chain}/${address}`}
                     />
 
                     {typeof nft.rank !== 'undefined' && nft.rank !== null && (
