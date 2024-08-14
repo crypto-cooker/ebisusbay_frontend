@@ -157,7 +157,7 @@ const Index = function () {
   }
 
   const handleBuyFortune = () => {
-    const url = new URL('https://swap.ebisusbay.com/#/swap')
+    const url = new URL('/dex/swap')
     url.searchParams.append('outputCurrency', config.contracts.fortune);
     url.searchParams.append('inputCurrency', config.contracts.usdc);
 

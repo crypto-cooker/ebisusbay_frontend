@@ -118,7 +118,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   }
 
   const handleBuyErc20 = (address: string) => {
-    const url = new URL('https://swap.ebisusbay.com/#/swap');
+    const url = new URL('/dex/swap');
     if (user.address) {
       url.searchParams.append('outputCurrency', address);
       url.searchParams.append('inputCurrency', '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59');

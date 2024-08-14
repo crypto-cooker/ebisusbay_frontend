@@ -248,7 +248,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                     </Flex>
                   </>
                 )}
-                <Link fontWeight='bold' href={`https://swap.ebisusbay.com/#/add/${row.original.data.pair.token0.id}/${row.original.data.pair.token1.id}`} color='#218cff' isExternal>
+                <Link fontWeight='bold' href={`/dex/add/${row.original.data.pair.token0.id}/${row.original.data.pair.token1.id}`} color='#218cff' isExternal>
                   <HStack>
                     <>Get {row.original.derived.name} LP</>
                     <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} boxSize={3} />
