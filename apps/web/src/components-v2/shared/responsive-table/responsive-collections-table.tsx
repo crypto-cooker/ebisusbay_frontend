@@ -134,7 +134,7 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
                     )}
                   </Td>
                   <Td fontWeight='bold'>
-                    <LinkOverlay href={`/collection/${collection.slug}`} _hover={{color:'inherit'}}>
+                    <LinkOverlay href={`/collection/${collection.chain}/${collection.slug}`} _hover={{color:'inherit'}}>
                       {collection?.name ?? 'Unknown'}
                     </LinkOverlay>
                     {collection.verification?.verified && (
@@ -259,7 +259,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                       </VerifiedIcon>
                     </Box>
                     <VStack align='start' spacing={0} flex='1' fontSize='sm'>
-                      <Link href={`/collection/${collection.slug}`}>
+                      <Link href={`/collection/${collection.chain}/${collection.slug}`}>
                         {collection.name}
                       </Link>
                       {collection.listable && collection.numberActive > 0 && !!collection.floorPrice && (

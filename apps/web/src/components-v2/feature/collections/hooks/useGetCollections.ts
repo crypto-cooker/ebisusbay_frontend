@@ -71,7 +71,8 @@ const useGetCollections = () => {
           volume1dIncrease: collection.stats?.total?.volume1d_increase,
           volume7dIncrease: collection.stats?.total?.volume7d_increase,
           multiToken: collection.multiToken,
-          verification: collection.verification
+          verification: collection.verification,
+          chain: collection.chain
         };
       }
     );

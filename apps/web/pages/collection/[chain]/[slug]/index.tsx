@@ -79,9 +79,9 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }: CollectionPr
 };
 
 export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
-  const slug = params?.slug as string;
+  const collectionSlug = params?.slug as string;
   const chainSlugOrId = params?.chain as string | undefined;
-  if (!slug || !chainSlugOrId || Array.isArray(chainSlugOrId)) {
+  if (!collectionSlug || !chainSlugOrId || Array.isArray(chainSlugOrId)) {
     return {
       notFound: true
     }
@@ -94,7 +94,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
       return {
         redirect: {
           permanent: false,
-          destination: `/collection/${chain.slug}/${slug}`
+          destination: `/collection/${chain.slug}/${collectionSlug}`
         }
       }
     }
@@ -127,7 +127,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
   // }
 
   const collection = appConfig('collections')
-    .find((c: any) => ciEquals(c.slug, slug) || ciEquals(c.address, slug));
+    .find((c: any) => ciEquals(c.slug, collectionSlug) || ciEquals(c.address, collectionSlug));
 
   if (!collection) {
     return {
@@ -163,7 +163,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
       ssrCollection: collection,
       activeDrop: activeDrop ?? null,
       query: query,
-      redirect: !ciEquals(collection.slug, slug),
+      redirect: !ciEquals(collection.slug, collectionSlug),
     },
   };
 };

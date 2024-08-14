@@ -50,7 +50,7 @@ const Watermarked = styled.div`
 `;
 
 const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
-  const nftUrl = appUrl(`/collection/${listing.nftAddress}/${listing.nftId}`);
+  const nftUrl = appUrl(`/collection/${listing.chain}/${listing.nftAddress}/${listing.nftId}`);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const dispatch = useAppDispatch();
   const user = useUser();
