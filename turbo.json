@@ -1,0 +1,23 @@
+{
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "env": ["SENTRY_AUTH_TOKEN"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "build-local": {
+      "dependsOn": ["^build-local"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "dev": {
+      "cache": false
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    }
+  }
+}

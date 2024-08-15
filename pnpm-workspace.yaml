@@ -1,0 +1,8 @@
+packages:
+  - 'apps/*'
+  - 'submodules/eb-pancake-frontend/packages/*'
+
+# keep in sync with submodule
+catalog:
+  viem: ^2.17.3
+  wagmi: ^2.10.10

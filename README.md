@@ -1,9 +1,25 @@
 # Ebisu's Bay Web
 
-## Run locally
+## Run locally (Windows)
+
+### Step 1: Install dependencies
+If previously using `npm`, you will likely need to delete node_modules
+
+#### On Windows:
 ```
-TODO
+rd /s /q node_modules
 ```
+Then install dependencies:
+```
+pnpm i
+```
+To set env vars, please refer to .env.example
+
+### Step 2: Run
+```
+pnpm dev
+```
+
 
 ## Run locally (docker compose)
 
@@ -15,7 +31,10 @@ cd /<pathtorepository>/eb_web
 #### Build and run
 
 ```
-docker compose -f docker-compose.yml up --build
+# Fetch submodule(s)
+git submodule update --init --recursive
+# Build & run project
+docker compose --progress=plain -f docker-compose.yml up --build
 ```
 
 Verify:
