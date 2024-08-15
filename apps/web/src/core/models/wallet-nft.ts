@@ -33,6 +33,7 @@ class WalletNft {
   listed?: boolean = false;
   listingId?: string;
   chain: string;
+  hidden?: boolean = false;
 
   constructor(props: WalletNft) {
     this.attributes = props.attributes;
@@ -82,6 +83,7 @@ class WalletNft {
     if (!!props.nfts) nft.nfts = props.nfts;
     if (!!props.balance) nft.balance = Number(props.balance);
     if (!!props.animation_url) nft.animationUrl = props.animation_url;
+    if (!!props.hidden) nft.hidden = props.hidden;
 
     return nft;
   }
