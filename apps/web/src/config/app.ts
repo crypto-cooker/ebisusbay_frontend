@@ -30,6 +30,7 @@ type AppCurrencies = {
 
 interface AppEnvironmentConfig {
   inherits?: AppEnvironment,
+  defaultChainId: SupportedChainId,
   urls: {
     api: string,
     app: string,
@@ -62,6 +63,7 @@ interface AppEnvironmentConfig {
 
 const appConfigs: AppConfigMap = {
   [AppEnvironment.PRODUCTION]: {
+    defaultChainId: ChainId.CRONOS,
     urls: {
       api: 'https://api.ebisusbay.com/',
       app: 'https://app.ebisusbay.com/',
@@ -314,6 +316,7 @@ const appConfigs: AppConfigMap = {
     }
   },
   [AppEnvironment.DEVELOPMENT]: {
+    defaultChainId: ChainId.CRONOS,
     urls: {
       api: 'https://api.ebisusbay.biz/',
       app: 'https://app.ebisusbay.biz/',
@@ -492,6 +495,7 @@ const appConfigs: AppConfigMap = {
     }
   },
   [AppEnvironment.TESTNET]: {
+    defaultChainId: ChainId.CRONOS_TESTNET,
     urls: {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',

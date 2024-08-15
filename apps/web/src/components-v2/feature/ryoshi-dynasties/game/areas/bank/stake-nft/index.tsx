@@ -62,6 +62,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import localFont from "next/font/local";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {useUser} from "@src/components-v2/useUser";
+import {useAppConfig} from "@src/config/hooks";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -84,6 +85,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const user = useUser();
   const queryClient = useQueryClient();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: appConfig } = useAppConfig();
 
   const [currentTab, setCurrentTab] = useState(tabs.ryoshiVip);
   const [currentCollection, setCurrentCollection] = useState<any>();
@@ -238,7 +240,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
       const nfts: PendingNft[] = [];
       for (const token of data) {
-        const nft = await getNft(token.contractAddress, token.tokenId);
+        const nft = await getNft(token.contractAddress, token.tokenId, appConfig.defaultChainId);
         if (nft) {
           const stakeConfigs = rdContext.config.bank.staking.nft.collections.filter((c) => ciEquals(c.address, nft.collection.address));
           const stakeConfig = stakeConfigs.length < 2

@@ -4,28 +4,48 @@ import {useMemo} from "react";
 import {ChainId} from "@pancakeswap/chains";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 
+function getCurrentEnv() {
+  const env = process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV ?? AppEnvironment.PRODUCTION;
+
+  // Type assertion to ensure env is of type AppEnvironment
+  if (Object.values(AppEnvironment).includes(env as AppEnvironment)) {
+    return env as AppEnvironment;
+  }
+
+  // Fallback to PRODUCTION if the value is not a valid AppEnvironment
+  return AppEnvironment.PRODUCTION;
+}
+
+function findAppConfig(env: AppEnvironment) {
+  const chosenConfig = config[env];
+  if (chosenConfig.inherits && config[chosenConfig.inherits]) {
+    const clonedConfig = deepMerge({}, config[chosenConfig.inherits]); // Clone and merge to avoid mutating the original
+    return deepMerge(clonedConfig, config[env]);
+  }
+
+  return chosenConfig;
+}
+
+export function getAppConfig() {
+  const currentEnv = getCurrentEnv()
+
+  const appConfig = findAppConfig(currentEnv)
+
+  const isLocalEnv = currentEnv === AppEnvironment.LOCAL;
+  const isTestnet = currentEnv === AppEnvironment.TESTNET || appConfig.inherits === AppEnvironment.TESTNET;
+
+  return {
+    config: appConfig,
+    currentEnv,
+    isLocalEnv,
+    isTestnet
+  };
+}
+
 export function useAppConfig() {
-  const currentEnv = useMemo(() => {
-    const env = process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV ?? AppEnvironment.PRODUCTION;
+  const currentEnv = useMemo(() => getCurrentEnv(), []);
 
-    // Type assertion to ensure env is of type AppEnvironment
-    if (Object.values(AppEnvironment).includes(env as AppEnvironment)) {
-      return env as AppEnvironment;
-    }
-
-    // Fallback to PRODUCTION if the value is not a valid AppEnvironment
-    return AppEnvironment.PRODUCTION;
-  }, []);
-
-  const appConfig = useMemo(() => {
-    const chosenConfig = config[currentEnv];
-    if (chosenConfig.inherits && config[chosenConfig.inherits]) {
-      const clonedConfig = deepMerge({}, config[chosenConfig.inherits]); // Clone and merge to avoid mutating the original
-      return deepMerge(clonedConfig, config[currentEnv]);
-    }
-
-    return chosenConfig;
-  }, [currentEnv]);
+  const appConfig = useMemo(() => findAppConfig(currentEnv), [currentEnv]);
 
   const isLocalEnv = currentEnv === AppEnvironment.LOCAL;
   const isTestnet = currentEnv === AppEnvironment.TESTNET || appConfig.inherits === AppEnvironment.TESTNET;
