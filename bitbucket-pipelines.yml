@@ -2,7 +2,7 @@ options:
   docker: true
   size: 2x # 8GB steps by default
   # maximum amount of minutes a step can execute at a global level or at a step level
-  max-time: 15
+  max-time: 20
 
 definitions:
   services:
