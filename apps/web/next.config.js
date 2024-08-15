@@ -161,10 +161,8 @@ const nextConfig = {
       },
       {
         source: '/#/swap',
-        destination:
-          'https://swap.ebisusbay.com/#/swap',
-        permanent: false,
-        basePath: false,
+        destination: '/dex/swap',
+        permanent: true,
       },
       {
         source: '/dex/add',
