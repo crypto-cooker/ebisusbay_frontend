@@ -10,6 +10,7 @@ import {useGasPrice} from "wagmi";
 import {basisPointsToPercent} from "@eb-pancakeswap-web/utils/exchange";
 import {transactionErrorToUserReadableMessage} from "@eb-pancakeswap-web/utils/transactionErrorToUserReadableMessage";
 import {calculateGasMargin} from "@eb-pancakeswap-web/utils";
+import {isUserRejected} from "@eb-pancakeswap-web/utils/sentry";
 
 
 export enum SwapCallbackState {
@@ -189,13 +190,13 @@ export function useSwapCallback(
           })
           .catch((error: any) => {
             // if the user rejected the tx, pass this along
-            // if (isUserRejected(error)) {
-            //   throw new Error('Transaction rejected.')
-            // } else {
+            if (isUserRejected(error)) {
+              throw new Error('Transaction rejected.')
+            } else {
               // otherwise, the error was unexpected and we need to convey that
               console.error(`Swap failed`, error, methodName, args, value)
               throw new Error(`Swap failed: ${transactionErrorToUserReadableMessage(error)}`)
-            // }
+            }
           })
       },
       error: null,
