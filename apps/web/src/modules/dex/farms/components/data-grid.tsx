@@ -159,7 +159,14 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                       </Popover>
                     )}
                   </HStack>
-                  <Box textAlign='end' fontWeight='bold'>{reward.token.symbol}</Box>
+                  <Box textAlign='end' fontWeight='bold'>
+                    {reward.token.symbol === '?' ? (
+                      <>FRTN</>
+                    ) : (
+                      <>{reward.token.symbol}</>
+                    )}
+
+                  </Box>
                 </React.Fragment>
               ))}
             </Wrap>

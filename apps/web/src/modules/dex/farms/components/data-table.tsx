@@ -415,6 +415,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
   }),
   columnHelper.accessor("derived.dailyRewards", {
     cell: (info) => {
+      console.log(info);
       const handleClick = (event: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
         event.stopPropagation();
       };
@@ -467,7 +468,11 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
                 {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string }, i: number) => (
                   <React.Fragment key={i}>
                     <HStack key={i} fontWeight='bold'>
-                      <Box>{reward.token.image ?? reward.token.symbol}</Box>
+                      {reward.token.symbol === '?' ? (
+                        <Box>FRTN</Box>
+                      ) : (
+                        <Box>{reward.token.image ?? reward.token.symbol}</Box>
+                      )}
                       <Box>{reward.amount}</Box>
                     </HStack>
                     {!reward.rewarder.isMain && !!reward.rewarder.rewardEnd ? (
