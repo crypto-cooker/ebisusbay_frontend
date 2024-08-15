@@ -194,7 +194,7 @@ function CurrencySearch({
   const getCurrencyListRows = useCallback(() => {
     if (searchToken && !searchTokenIsAdded && !hasFilteredInactiveTokens) {
       return (
-        <VStack style={{ padding: '20px 0', height: '100%' }}>
+        <VStack style={{ height: '100%' }} align='stretch' px={4} py={5}>
           <ImportRow
             onCurrencySelect={handleCurrencySelect}
             token={searchToken}

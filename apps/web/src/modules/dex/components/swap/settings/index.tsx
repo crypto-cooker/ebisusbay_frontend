@@ -121,7 +121,7 @@ export default function Settings({isOpen, onClose}: ModalState) {
                 </HStack>
               </FormLabel>
               <Switch
-                isChecked={singleHopOnly}
+                isChecked={!singleHopOnly}
                 onChange={() => {
                   setSingleHopOnly((s) => !s)
                 }}

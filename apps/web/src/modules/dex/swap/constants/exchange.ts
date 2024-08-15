@@ -32,6 +32,8 @@ export const SUGGESTED_BASES: ChainTokenList = {
   [ChainId.CRONOS_ZKEVM]: [
     cronosZkEvmTokens.wcro,
     cronosZkEvmTokens.usdc,
+    cronosZkEvmTokens.frtn,
+    cronosZkEvmTokens.weth,
   ],
   [ChainId.CRONOS_ZKEVM_TESTNET]: [
     cronosZkEvmTestnetTokens.wcro,
@@ -48,7 +50,12 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM]],
   [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],
   [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
-  [ChainId.CRONOS_ZKEVM]: [cronosZkEvmTokens.usdc, cronosZkEvmTokens.wcro],
+  [ChainId.CRONOS_ZKEVM]: [
+    cronosZkEvmTokens.usdc,
+    cronosZkEvmTokens.wcro,
+    cronosZkEvmTokens.frtn,
+    cronosZkEvmTokens.weth,
+  ],
   [ChainId.CRONOS_ZKEVM_TESTNET]: [
     cronosZkEvmTestnetTokens.wcro,
     cronosZkEvmTestnetTokens.usdc,
