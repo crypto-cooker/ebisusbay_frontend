@@ -46,8 +46,6 @@ export function useV2Pairs(currencies: [Currency | undefined, Currency | undefin
     [tokens],
   )
 
-  console.log('useV2Pairs0', tokens, pairAddresses);
-
   // const { isLoading, data: results } = useGetPairs(pairAddresses);
   // console.log('useV2Pairs2', isLoading, results, results?.length);
   const results = useMultipleContractSingleData({
@@ -55,7 +53,6 @@ export function useV2Pairs(currencies: [Currency | undefined, Currency | undefin
     abi: pancakePairV2ABI,
     functionName: 'getReserves',
   })
-  console.log('useV2Pairs2', tokens, results);
 
   return useMemo(() => {
     if (results.length !== tokens.length ) return [[PairState.LOADING, null]];
