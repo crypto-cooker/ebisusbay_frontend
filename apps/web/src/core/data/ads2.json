@@ -1,5 +1,20 @@
 [
   {
+    "name": "Liquidity Boost",
+    "start": 1723478367,
+    "end": 1724444294,
+    "placement": "rd-board",
+    "details": {
+      "weight": 2,
+      "imageLg": "https://cdn-prod.ebisusbay.com/files/ads/liquidity-boost-lg.webp",
+      "imageSm": "https://cdn-prod.ebisusbay.com/files/ads/liquidity-boost-sm.webp",
+      "link": {
+        "url": "https://app.ebisusbay.com/zkevm/token-sale",
+        "external": false
+      }
+    }
+  },
+  {
     "name": "Earn Network NFT Collection",
     "start": 1719482400,
     "end": 1720087200,
