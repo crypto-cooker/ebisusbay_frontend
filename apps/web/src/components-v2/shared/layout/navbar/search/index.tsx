@@ -98,7 +98,7 @@ const Search = () => {
     searchHistory.addItem(collection);
     onClose();
     setValue('');
-    router.push(`/collection/${collection.address}`);
+    router.push(`/collection/${collection}/${collection.address}`);
   }, [onClose, router, setValue]);
 
   const handleRemoveVisit = (collection: any) => {

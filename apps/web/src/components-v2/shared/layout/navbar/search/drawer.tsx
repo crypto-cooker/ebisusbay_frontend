@@ -80,7 +80,7 @@ const MobileSearchDrawer = () => {
     searchHistory.addItem(collection);
     onClose();
     setValue('');
-    router.push(`/collection/${collection.address}`);
+    router.push(`/collection/${collection.chain}/${collection.address}`);
   }, [onClose, router, setValue]);
 
   const handleRemoveVisit = (collection: any) => {

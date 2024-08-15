@@ -194,7 +194,7 @@ const Home = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
               <LegacyButton type="legacy-outlined">Become a Creator</LegacyButton>
             </Link>
 
-            <LegacyButton onClick={() => window.open(`/collection/founding-member`, '_self')} type="legacy-outlined">
+            <LegacyButton onClick={() => window.open(`/collection/cronos/founding-member`, '_self')} type="legacy-outlined">
               <FontAwesomeIcon icon={faFire} className="me-1" style={{ color: '#ff690e' }} />
               Become a Founding Member
             </LegacyButton>
