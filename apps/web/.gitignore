@@ -1,0 +1,53 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+.firebase/
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+/.idea
+
+# next
+.next
+
+.env
+
+# Docker Compose volumes
+volumes/
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+.vscode/settings.json
+src/components-v2/feature/ryoshi-dynasties/game/areas/lands/indv-meta/
+
+
+# Sentry Config File
+.sentryclirc
+
+# Sentry Config File
+.sentryclirc
+
+certificates
+# Sentry Config File
+.env.sentry-build-plugin
