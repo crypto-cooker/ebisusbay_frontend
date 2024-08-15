@@ -21,7 +21,7 @@ export const walletsQuerySchema: Yup.SchemaOf<WalletsQueryParams> = Yup.object()
   search: Yup.string().optional(),
   currency: Yup.string().optional(),
   chain: Yup.number().optional(),
-  showHidden: Yup.number().optional(),
+  blacklist: Yup.string().optional(),
 }).noUnknown();
 
 export interface WalletsQueryParams {
@@ -43,7 +43,7 @@ export interface WalletsQueryParams {
   search?: string;
   currency?: string;
   chain?: number;
-  showHidden?: number;
+  blacklist?: string;
 }
 
 class WalletsQuery extends Query<WalletsQueryParams> {
@@ -72,7 +72,7 @@ class WalletsQuery extends Query<WalletsQueryParams> {
       listed: this.params.listed,
       offered: this.params.offered,
       search: this.params.search,
-      showHidden: this.params.showHidden
+      blacklist: this.params.blacklist
     };
 
     if (!!this.params.minRank) obj.minRank = this.params.minRank;
@@ -83,7 +83,7 @@ class WalletsQuery extends Query<WalletsQueryParams> {
     if (!!this.params.maxListingTime) obj.maxListingTime = this.params.maxListingTime;
     if (!!this.params.currency) obj.currency = this.params.currency;
     if (!!this.params.chain) obj.chain = this.params.chain;
-    obj.showHidden = undefined;
+    if (!!this.params.blacklist) obj.blacklist = this.params.blacklist;
 
     return Object.fromEntries(Object.entries(obj).filter(([k, v]) => {
       return v !== undefined && !isEmptyObj(v)

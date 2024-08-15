@@ -39,7 +39,7 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
     for (const item of items) {
       if (item.key === 'status-buy-now') delete params.listed;
       if (item.key === 'status-has-offers') delete params.offered;
-      if (item.key === 'status-show-hidden') delete params.showHidden;
+      if (item.key === 'status-show-hidden') params.blacklist = '0,1';
       if (item.key === 'range-min-rank') delete params.minRank;
       if (item.key === 'range-max-rank') delete params.maxRank;
       if (item.key === 'range-min-price') delete params.minPrice;
@@ -63,7 +63,7 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
     const params = queryParams;
     if (item.key === 'status-buy-now') params.listed = checked ? 1 : undefined;
     if (item.key === 'status-has-offers') params.offered = checked ? 1 : undefined;
-    if (item.key === 'status-show-hidden') params.showHidden = checked ? 1 : undefined;
+    if (item.key === 'status-show-hidden') params.blacklist = checked ? '4' : undefined;
     if (item.key === 'status-bundles') {
       if (checked) {
         handleCollectionFilter([{name: 'Bundles', address: config.contracts.bundle}]);
