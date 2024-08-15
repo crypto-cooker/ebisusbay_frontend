@@ -290,61 +290,61 @@ const Index = function () {
             <DrawerBody>
 
               <SimpleGrid columns={2} gap={2} className={styles.navigation}>
-                <NextLink href={`/account/${user.wallet.address}`} onClick={closeMenu}>
-                  <div className={styles.col}>
+                <NextLink href={`/account/${user.wallet.address}`} passHref>
+                  <Box className={styles.col} onClick={closeMenu}>
                     <span>
                       <FontAwesomeIcon icon={faUser} />
                     </span>
                     <span className="ms-2">My Profile</span>
-                  </div>
+                  </Box>
                 </NextLink>
-                <NextLink href='/account/settings/profile' onClick={closeMenu}>
-                  <div className={styles.col}>
+                <NextLink href='/account/settings/profile' passHref>
+                  <Box className={styles.col} onClick={closeMenu}>
                     <span>
                       <FontAwesomeIcon icon={faEdit} />
                     </span>
                     <span className="ms-2">Edit Account</span>
-                  </div>
+                  </Box>
                 </NextLink>
-                <NextLink href={`/account/${user.wallet.address}?tab=offers`} onClick={closeMenu}>
-                  <div className={styles.col}>
+                <NextLink href={`/account/${user.wallet.address}?tab=offers`} passHref>
+                  <Box className={styles.col} onClick={closeMenu}>
                     <span>
                       <FontAwesomeIcon icon={faHand} />
                     </span>
                     <span className="ms-2">My Offers</span>
-                  </div>
+                  </Box>
                 </NextLink>
-                <NextLink href='/staking' onClick={closeMenu}>
-                  <div className={styles.col}>
+                <NextLink href='/staking' passHref>
+                  <Box className={styles.col} onClick={closeMenu}>
                     <span>
                       <FontAwesomeIcon icon={faBolt} />
                     </span>
                     <span className="ms-2">Staking</span>
-                  </div>
+                  </Box>
                 </NextLink>
-                <NextLink href={`/account/${user.wallet.address}?tab=listings`} onClick={closeMenu}>
-                  <div className={styles.col}>
+                <NextLink href={`/account/${user.wallet.address}?tab=listings`} passHref>
+                  <Box className={styles.col} onClick={closeMenu}>
                     <span>
                       <FontAwesomeIcon icon={faCoins} />
                     </span>
                     <span className="ms-2">Listings</span>
-                  </div>
+                  </Box>
                 </NextLink>
-                <NextLink href={`/account/${user.wallet.address}?tab=sales`} onClick={closeMenu}>
-                  <div className={styles.col}>
+                <NextLink href={`/account/${user.wallet.address}?tab=sales`} passHref>
+                  <Box className={styles.col} onClick={closeMenu}>
                     <span>
                       <FontAwesomeIcon icon={faDollarSign} />
                     </span>
                     <span className="ms-2">Sales</span>
-                  </div>
+                  </Box>
                 </NextLink>
-                <NextLink href={`/account/${user.wallet.address}?tab=favorites`} onClick={closeMenu}>
-                  <div className={styles.col}>
+                <NextLink href={`/account/${user.wallet.address}?tab=favorites`} passHref>
+                  <Box className={styles.col} onClick={closeMenu}>
                     <span>
                       <FontAwesomeIcon icon={faHeart} />
                     </span>
                     <span className="ms-2">Favorites</span>
-                  </div>
+                  </Box>
                 </NextLink>
                 <Box as='span' onClick={toggleTheme}>
                   <Box className={styles.col}>

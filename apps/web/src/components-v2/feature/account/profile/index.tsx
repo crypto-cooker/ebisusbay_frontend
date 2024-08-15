@@ -130,7 +130,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
 
   const [currentTab, setCurrentTab] = React.useState(tab ?? TabKey.inventory);
   const handleTabChange = useCallback((newTab: string) => {
-    pushQueryString(router, {address: profile.username ?? address, tab: newTab});
+    pushQueryString(router, {address: profile?.username ?? address, tab: newTab});
     setCurrentTab(newTab);
   }, [address]);
 
@@ -139,7 +139,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
     setIsProfileOwner(user && ciEquals(address, user.address));
   }, [user.wallet.address, address])
 
-  const profilePicture = profile.profilePicture ?
+  const profilePicture = profile?.profilePicture ?
     ImageService.translate(profile.profilePicture).custom({width: 200, height: 200}) :
     hostedImage('/img/profile-avatar.webp');
 
@@ -160,7 +160,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
     }, []);
   }
 
-  const identifier = profile.username ?? address;
+  const identifier = profile?.username ?? address;
 
   const [overflowTabKey, setOverflowTabKey] = useState<string>();
 
