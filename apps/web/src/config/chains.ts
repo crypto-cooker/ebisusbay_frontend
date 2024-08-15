@@ -97,8 +97,7 @@ export const cronosZkEVM  = /*#__PURE__*/ defineChain({
   rpcUrls: {
     default: {
       http: [
-        'https://seed.zkevm.cronos.org',
-        'https://dapps.zkevm.cronos.org'
+        'https://mainnet.zkevm.cronos.org/'
       ]
     },
   },

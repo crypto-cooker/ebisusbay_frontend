@@ -34,8 +34,7 @@ export const SERVER_NODES = {
     'https://rpc.ebisusbay.biz',
   ],
   [ChainId.CRONOS_ZKEVM]: [
-    'https://seed.zkevm.cronos.org',
-    'https://dapps.zkevm.cronos.org'
+    'https://mainnet.zkevm.cronos.org/'
   ],
   [ChainId.CRONOS_ZKEVM_TESTNET]: [
     'https://testnet.zkevm.cronos.org',
@@ -103,8 +102,7 @@ export const PUBLIC_NODES: Record<ChainId, string[] | readonly string[]> = {
     'https://rpc.ebisusbay.biz',
   ],
   [ChainId.CRONOS_ZKEVM]: [
-    'https://seed.zkevm.cronos.org',
-    'https://dapps.zkevm.cronos.org'
+    'https://mainnet.zkevm.cronos.org/'
   ],
   [ChainId.CRONOS_ZKEVM_TESTNET]: [
     'https://testnet.zkevm.cronos.org',
