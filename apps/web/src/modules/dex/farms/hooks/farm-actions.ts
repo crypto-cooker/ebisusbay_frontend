@@ -54,13 +54,14 @@ export function useEnableFarm() {
 
 export function useHarvestRewards() {
   const user = useUser();
+  const {config: appChainConfig} = useAppChainConfig();
   const { refetchBalances } = useUserFarmsRefetch();
   const [executing, setExecuting] = useState(false);
 
   const enable = async (pid: number) => {
     try {
       setExecuting(true);
-      const contract = new Contract(config.contracts.farms, FarmsAbi, user.provider.signer);
+      const contract = new Contract(appChainConfig.contracts.farms, FarmsAbi, user.provider.signer);
       const tx = await contract.withdraw(pid, 0);
       await tx.wait();
       refetchBalances();

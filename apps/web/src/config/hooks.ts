@@ -71,7 +71,8 @@ export function useAppChainConfig(chainId?: ChainId) {
   }, [chainId, activeChainId]);
 
   return {
-    config
+    config,
+    chainId: activeChainId
   }
 }
 
