@@ -1,4 +1,16 @@
-import {Box, Button, Container, Flex, IconButton, Skeleton, Text, useDisclosure, VStack, Wrap} from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  IconButton,
+  Skeleton,
+  Stack,
+  Text,
+  useDisclosure,
+  VStack,
+  Wrap
+} from "@chakra-ui/react";
 import {Card} from "@src/components-v2/foundation/card";
 import {ArrowDownIcon, SettingsIcon} from "@chakra-ui/icons";
 import {Field, INITIAL_ALLOWED_SLIPPAGE} from "src/modules/dex/swap/constants";
@@ -29,6 +41,11 @@ import {typeInput} from "@eb-pancakeswap-web/state/swap/actions";
 import {useSwapCallback} from "@eb-pancakeswap-web/hooks/useSwapCallback";
 import {useSwapCallArguments} from "@eb-pancakeswap-web/hooks/useSwapCallArguments";
 import Settings from "@dex/components/swap/settings";
+import {ApprovalState, useApproveCallback} from "@eb-pancakeswap-web/hooks/useApproveCallback";
+import { V2_ROUTER_ADDRESS } from "@pancakeswap/smart-router";
+import useAccountActiveChain from "@eb-pancakeswap-web/hooks/useAccountActiveChain";
+import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 // interface Props {
 //   inputAmount?: CurrencyAmount<Currency>
@@ -45,7 +62,7 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
   // const { typedValue, independentField } = swapFormState;
   // const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
 
-  const {address: account} = useUser();
+  const { account, chainId } = useAccountActiveChain();
   const {
     independentField,
     typedValue,
@@ -250,7 +267,14 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
     inputError = inputError ?? 'Select a token'
   }
 
-  const isValid = !inputError
+  const {
+    approvalState: approvalA,
+    approveCallback: approveACallback,
+    revokeCallback: revokeACallback,
+    currentAllowance: currentAllowanceA,
+  } = useApproveCallback(parsedAmounts[Field.INPUT], chainId ? V2_ROUTER_ADDRESS[chainId] : undefined)
+
+  const isValid = !inputError && approvalA === ApprovalState.APPROVED;
 
   return (
     <>
@@ -343,32 +367,53 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
             onSlippageClick={onOpenSettings}
           />
 
-          <Flex align='stretch'>
-            <CommitButton
-              width="100%"
-              colorScheme={!inputError && priceImpactSeverity > 2 ? 'red' : undefined}
-              variant={!inputError && priceImpactSeverity > 2 ? 'solid' : 'primary'}
-              isDisabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode)}
-              onClick={() => {
-                if (trade) {
-                  setSwapState({
-                    tradeToConfirm: trade,
-                    attemptingTxn: false,
-                    swapErrorMessage: undefined,
-                    txHash: undefined,
-                  })
-                }
-                onOpenConfirmSwap();
-              }}
-            >
-              {inputError ||
-                (priceImpactSeverity > 3 && !isExpertMode
-                  ? 'Price Impact High'
-                  : priceImpactSeverity > 2
-                    ? 'Swap Anyway'
-                    : 'Swap')}
-            </CommitButton>
-          </Flex>
+          <AuthenticationGuard>
+            {({isConnected, connect}) => (
+              <>
+                {isConnected ? (
+                  <VStack align='stretch'>
+                    {(approvalA === ApprovalState.NOT_APPROVED || approvalA === ApprovalState.PENDING) && (
+                      <PrimaryButton
+                        onClick={approveACallback}
+                        isDisabled={approvalA === ApprovalState.PENDING}
+                        w='full'
+                        loadingText={`Approving ${inputCurrency?.symbol}`}
+                        isLoading={approvalA === ApprovalState.PENDING}
+                      >
+                        Approve {inputCurrency?.symbol}
+                      </PrimaryButton>
+                    )}
+                    <CommitButton
+                      width="100%"
+                      colorScheme={!inputError && priceImpactSeverity > 2 ? 'red' : undefined}
+                      variant={!inputError && priceImpactSeverity > 2 ? 'solid' : 'primary'}
+                      isDisabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode)}
+                      onClick={() => {
+                        if (trade) {
+                          setSwapState({
+                            tradeToConfirm: trade,
+                            attemptingTxn: false,
+                            swapErrorMessage: undefined,
+                            txHash: undefined,
+                          })
+                        }
+                        onOpenConfirmSwap();
+                      }}
+                    >
+                      {inputError ||
+                        (priceImpactSeverity > 3 && !isExpertMode
+                          ? 'Price Impact High'
+                          : priceImpactSeverity > 2
+                            ? 'Swap Anyway'
+                            : 'Swap')}
+                    </CommitButton>
+                  </VStack>
+                ) : (
+                  <PrimaryButton onClick={connect}>Connect Wallet</PrimaryButton>
+                )}
+              </>
+            )}
+          </AuthenticationGuard>
         </Card>
 
         {trade && (
