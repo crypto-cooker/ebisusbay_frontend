@@ -11,6 +11,7 @@ import {DEX_COLORS} from "@dex/swap/constants/style";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {wrappedCurrency} from "@eb-pancakeswap-web/utils/wrappedCurrency";
 import AddToWalletButton, { AddToWalletTextOptions } from "@dex/components/add-to-wallet-button";
+import {getBlockExplorerLink} from "@dex/utils";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -53,7 +54,7 @@ export function TransactionSubmittedContent({
       <VStack spacing={3} justify='center' fontWeight='bold'>
         <Text fontSize='xl'>Transaction Submitted</Text>
         {chainId && hash && (
-          <Link href={`${config.urls.explorer}tx/${hash}`} isExternal>
+          <Link href={getBlockExplorerLink(hash, 'transaction', chainId)} isExternal>
             <HStack color={DEX_COLORS.primary}>
               <Text fontSize='sm'>View on Explorer</Text>
               <CronosIcon boxSize={5}/>
