@@ -30,7 +30,6 @@ export default function SelectToken({commonBases, tokens, onCurrencySelect}: Sel
   // const tokenBalances = useAtomValue(userTokenBalancesAtom);
   const tokenBalances = useAllTokenBalances();
 
-  console.log('===token balances2', tokenBalances);
   const checkForScrollbar = () => {
     if (ref.current) {
       const hasScrollbar = ref.current.scrollHeight > ref.current.clientHeight;

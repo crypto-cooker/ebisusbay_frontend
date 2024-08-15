@@ -27,10 +27,10 @@ export default function Manage({
   return (
     <DialogBody style={{ overflow: 'visible' }}>
       <Tabs>
-        <Tab label='Lists'>
-          <>asdf</>
-          {/*<ManageLists setModalView={setModalView} setImportList={setImportList} setListUrl={setListUrl} />*/}
-        </Tab>
+        {/*<Tab label='Lists'>*/}
+        {/*  <>asdf</>*/}
+        {/*  /!*<ManageLists setModalView={setModalView} setImportList={setImportList} setListUrl={setListUrl} />*!/*/}
+        {/*</Tab>*/}
         <Tab label='Tokens'>
           <ManageTokens setModalView={setModalView} setImportToken={setImportToken} />
         </Tab>

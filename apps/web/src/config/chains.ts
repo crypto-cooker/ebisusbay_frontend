@@ -104,7 +104,7 @@ export const cronosZkEVM  = /*#__PURE__*/ defineChain({
   },
   blockExplorers: {
     default: {
-      name: 'Cronos zkEVM (Testnet) Explorer',
+      name: 'Cronos zkEVM Explorer',
       url: 'https://explorer.zkevm.cronos.org/',
     },
   },

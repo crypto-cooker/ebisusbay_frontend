@@ -7,9 +7,9 @@ import ImageService from "@src/core/services/image";
 import {ChainId} from "@pancakeswap/chains";
 import uriToHttp from "@pancakeswap/utils/uriToHttp";
 import memoize from "lodash/memoize";
-import {Token} from "@pancakeswap/swap-sdk-core";
+import {Currency, Token} from "@pancakeswap/swap-sdk-core";
 import {Address, getAddress} from "viem";
-import {bscTokens, cronosTokens, ethereumTokens} from "@pancakeswap/tokens";
+import {bscTokens, cronosTokens, cronosZkEvmTokens, ethereumTokens} from "@pancakeswap/tokens";
 import {NATIVE} from "@pancakeswap/swap-sdk-evm";
 import styled from "styled-components";
 
@@ -162,6 +162,7 @@ const mapping: { [key: number]: string } = {
   [ChainId.BSC]: "smartchain",
   [ChainId.ETHEREUM]: "ethereum",
   [ChainId.POLYGON_ZKEVM]: "polygonzkevm",
+  [ChainId.CRONOS_ZKEVM]: "cronoszkevm",
   [ChainId.ARBITRUM_ONE]: "arbitrum",
   [ChainId.ZKSYNC]: "zksync",
   [ChainId.BASE]: "base",
@@ -173,6 +174,7 @@ export const chainName: { [key: number]: string } = {
   [ChainId.BSC]: "",
   [ChainId.ETHEREUM]: "eth",
   [ChainId.POLYGON_ZKEVM]: "polygon-zkevm",
+  [ChainId.CRONOS_ZKEVM]: "cronos-zkevm",
   [ChainId.ARBITRUM_ONE]: "arbitrum",
   [ChainId.ZKSYNC]: "zksync",
   [ChainId.LINEA]: "linea",
@@ -192,6 +194,8 @@ const commonCurrencySymbols = [
   ethereumTokens.dai,
   cronosTokens.usdc,
   cronosTokens.frtn,
+  cronosZkEvmTokens.wcro,
+  cronosZkEvmTokens.usdc
 ].map(({ symbol }) => symbol);
 
 export const getTokenListTokenUrl = (token: Pick<Token, 'chainId' | 'address'>) =>

@@ -29,7 +29,6 @@ export function useAllTokenBalances(): { [tokenAddress: string]: CurrencyAmount<
 
   // const allTokensArray = useMemo(() => Object.values(supportedTokens ?? {}), [supportedTokens]);
   const balances = useTokenBalances(user.address ?? undefined, supportedTokens);
-  console.log('===token balances1', balances);
   return balances ?? {};
 
   // return balances;

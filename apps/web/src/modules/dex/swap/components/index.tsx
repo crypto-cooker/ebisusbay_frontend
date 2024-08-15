@@ -8,7 +8,6 @@ import {Box} from "@chakra-ui/react";
 export default function SwapPage(/*{ initialInputCurrency, initialOutputCurrency, syncTabToUrl }: SwapPageProps*/) {
   const [swapPageState, setSwapPageState] = useSwapPageState();
 
-  console.log('===debug: SwapPage', swapPageState)
   return (
     <Box mt={4}>
       {/*<SwapHeader compact={false} />*/}

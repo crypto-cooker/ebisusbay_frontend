@@ -9,6 +9,7 @@ import {Currency} from "@pancakeswap/sdk";
 import {useCurrencyBalance} from "@eb-pancakeswap-web/state/wallet/hooks";
 import {useUser} from "@src/components-v2/useUser";
 import {CurrencySearchModal} from "@dex/components/search-modal";
+import {CurrencyLogo} from "@dex/components/logo";
 
 interface CurrencyInputPanelProps {
   value: string;
@@ -72,7 +73,7 @@ export default function CurrencyInputPanel({
             <HStack>
               {!!currency && (
                 <Box as='span' minW='30px'>
-                  <Image w='30px' src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${currency?.symbol.toLowerCase()}.webp`} />
+                  <CurrencyLogo currency={currency} />
                 </Box>
               )}
               <span>
