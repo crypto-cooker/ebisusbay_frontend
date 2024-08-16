@@ -6,7 +6,7 @@ import SwapForm from "@dex/swap/components/tabs/swap";
 import {Box} from "@chakra-ui/react";
 
 export default function SwapPage(/*{ initialInputCurrency, initialOutputCurrency, syncTabToUrl }: SwapPageProps*/) {
-  const [swapPageState, setSwapPageState] = useSwapPageState();
+  // const [swapPageState, setSwapPageState] = useSwapPageState();
 
   return (
     <Box mt={4}>
