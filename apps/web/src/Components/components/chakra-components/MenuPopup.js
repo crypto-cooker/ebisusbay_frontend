@@ -22,19 +22,19 @@ const MenuPopup = ({ options = [] }) => {
       />
       <MenuList color={getTheme(userTheme).colors.textColor3} zIndex={2}>
         {options.map(option => (
-          <>
+          <React.Fragment key={option.label}>
             {option.type === 'url' ? (
-              <MenuItem key={option.label} as='a' href={`${option.url}${window.location}`}>
+              <MenuItem as='a' href={`${option.url}${window.location}`}>
                 <Icon as={FontAwesomeIcon} icon={option.icon} />
                 <Text ms={2}>{option.label}</Text>
               </MenuItem>
             ) : (
-              <MenuItem key={option.label} as='a' onClick={option.handleClick}>
+              <MenuItem onClick={option.handleClick}>
                 <Icon as={FontAwesomeIcon} icon={option.icon} />
                 <Text ms={2}>{option.label}</Text>
               </MenuItem>
             )}
-          </>
+          </React.Fragment>
         ))}
       </MenuList>
     </Menu>
