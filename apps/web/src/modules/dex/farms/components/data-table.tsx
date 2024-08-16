@@ -415,7 +415,6 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
   }),
   columnHelper.accessor("derived.dailyRewards", {
     cell: (info) => {
-      console.log(info);
       const handleClick = (event: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
         event.stopPropagation();
       };
