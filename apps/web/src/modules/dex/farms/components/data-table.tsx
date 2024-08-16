@@ -52,10 +52,11 @@ import {ethers} from 'ethers';
 import {ciEquals, millisecondTimestamp, round} from '@market/helpers/utils';
 import {commify} from 'ethers/lib/utils';
 import {useUserFarmsRefetch} from '@dex/farms/hooks/user-farms';
-import useCurrencyBroker, {BrokerCurrency} from '@market/hooks/use-currency-broker';
 import {useExchangeRate} from '@market/hooks/useGlobalPrices';
 import {useAppChainConfig} from "@src/config/hooks";
 import {getBlockExplorerLink} from "@dex/utils";
+import {CurrencyLogo} from "@dex/components/logo";
+import useMultichainCurrencyBroker, {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
 
 export type DataTableProps = {
   data: DerivedFarm[];
@@ -118,7 +119,7 @@ export default function DataTable({ data, userData }: DataTableProps) {
 function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row<DerivedFarm>, isSmallScreen: boolean, showLiquidityColumn: boolean, userData?: UserFarmState}) {
   const user = useUser();
   const {config: appChainConfig} = useAppChainConfig();
-  const {getByAddress} = useCurrencyBroker();
+  const {getByAddress} = useMultichainCurrencyBroker(appChainConfig.chain.id);
   const [enableFarm, enablingFarm] = useEnableFarm();
   const {usdValueForToken} = useExchangeRate();
   const { refetchBalances } = useUserFarmsRefetch();
@@ -426,7 +427,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
               <Popover>
                 <PopoverTrigger>
                   <AvatarGroup size='md' max={3} spacing={-2} onClick={handleClick}>
-                    {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string }, i: number) => (
+                    {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: MultichainBrokerCurrency, amount: string }, i: number) => (
                       <Avatar border='none' boxSize={6} key={i} src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${reward.token.symbol.toLowerCase()}.webp`} />
                     ))}
                   </AvatarGroup>
@@ -436,16 +437,16 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
                   <PopoverBody>
                     <VStack align='start'>
                       <Flex justify='space-between' w='full' fontSize='sm' fontWeight='bold'>
-                        <Box>{info.getValue().map((reward: { token: BrokerCurrency }) => reward.token.symbol).join('/')}</Box>
+                        <Box>{info.getValue().map((reward: { token: MultichainBrokerCurrency }) => reward.token.symbol).join('/')}</Box>
                         <HStack>
                           <Icon as={FontAwesomeIcon} icon={faStopwatch} />
                           <Box>End Date</Box>
                         </HStack>
                       </Flex>
-                      {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string }, i: number) => (
+                      {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: MultichainBrokerCurrency, amount: string }, i: number) => (
                         <Flex key={i} justify='space-between' w='full'>
                           <HStack key={i} fontWeight='bold'>
-                            <Box>{reward.token.image ?? reward.token.symbol}</Box>
+                            <CurrencyLogo currency={reward.token} size={'24px'} />
                             <Box>{reward.amount}</Box>
                           </HStack>
                           {!reward.rewarder.isMain && !!reward.rewarder.rewardEnd ? (
@@ -464,14 +465,10 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
               </Popover>
             ) : (
               <Wrap>
-                {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string }, i: number) => (
+                {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: MultichainBrokerCurrency, amount: string }, i: number) => (
                   <React.Fragment key={i}>
                     <HStack key={i} fontWeight='bold'>
-                      {reward.token.symbol === '?' ? (
-                        <Box>FRTN</Box>
-                      ) : (
-                        <Box>{reward.token.image ?? reward.token.symbol}</Box>
-                      )}
+                      <CurrencyLogo currency={reward.token} size={'24px'} />
                       <Box>{reward.amount}</Box>
                     </HStack>
                     {!reward.rewarder.isMain && !!reward.rewarder.rewardEnd ? (

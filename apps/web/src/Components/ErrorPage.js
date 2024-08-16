@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {createGlobalStyle, default as styled} from 'styled-components';
-import {keyframes} from '@emotion/react';
+import { keyframes } from '@emotion/react';
+import { useEffect, useState } from 'react';
 import Reveal from 'react-awesome-reveal';
+import { createGlobalStyle, default as styled } from 'styled-components';
 
-import {getMarketData} from '@market/state/redux/slices/marketplaceSlice';
-import {theme} from '../global/theme/theme';
-import {hostedImage} from "../helpers/image";
-import {useUser} from "@src/components-v2/useUser";
-import {useAppDispatch} from "@market/state/redux/store/hooks";
+import { getMarketData } from '@market/state/redux/slices/marketplaceSlice';
+import { useAppDispatch } from "@market/state/redux/store/hooks";
+import { theme } from '../global/theme/theme';
+import { hostedImage } from "../helpers/image";
 
 const fadeInUp = keyframes`
   0% {
@@ -69,15 +68,15 @@ const Jumbotron = {
   Host: styled.div.attrs(({ theme }) => ({
     className: '',
   }))`
-    background-image: url(${({ isDark }) =>
-      hostedImage(isDark ? '/img/background/banner-ryoshi-dark.webp' : '/img/background/banner-ryoshi-light.webp')});
+    background-image: url(${() =>
+      hostedImage('/img/background/banner-ryoshi-dark.webp')});
     background-size: cover;
     height: max(100vh, 800px);
     display: flex;
     align-items: center;
 
-    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      max-width: ${({ theme }) => theme.breakpoints.md};
+    @media only screen and (max-width: 768px) {
+      max-width: 768px;
       height: 200px;
     }
   `,
@@ -90,15 +89,13 @@ const Jumbotron = {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    background: ${({ theme }) => theme.colors.bgColor2};
+    background: #212428dd;
     border-radius: 10px;
   `,
 };
 
 export const ErrorPage = () => {
   const dispatch = useAppDispatch();
-
-  const {theme: userTheme} = useUser();
 
   const [mobile, setMobile] = useState(typeof window !== 'undefined' && window.innerWidth < theme.breakpointsNum.md);
 
@@ -151,7 +148,7 @@ export const ErrorPage = () => {
   return (
     <div>
       <GlobalStyles />
-      <Jumbotron.Host isDark={userTheme === 'dark'}>
+      <Jumbotron.Host isDark={true}>
         {!mobile && <div className="container">{JumbotronData()}</div>}
       </Jumbotron.Host>
       {mobile && JumbotronData()}

@@ -90,6 +90,7 @@ const TokenLogo: React.FC<React.PropsWithChildren<TokenLogoProps>> = ({ srcs, us
     return (
       <Image
         w={size}
+        rounded='full'
         {...rest}
         alt={alt}
         src={src}
@@ -162,6 +163,7 @@ const mapping: { [key: number]: string } = {
   [ChainId.BSC]: "smartchain",
   [ChainId.ETHEREUM]: "ethereum",
   [ChainId.POLYGON_ZKEVM]: "polygonzkevm",
+  [ChainId.CRONOS]: "cronos",
   [ChainId.CRONOS_ZKEVM]: "cronoszkevm",
   [ChainId.ARBITRUM_ONE]: "arbitrum",
   [ChainId.ZKSYNC]: "zksync",
@@ -174,6 +176,7 @@ export const chainName: { [key: number]: string } = {
   [ChainId.BSC]: "",
   [ChainId.ETHEREUM]: "eth",
   [ChainId.POLYGON_ZKEVM]: "polygon-zkevm",
+  [ChainId.CRONOS]: "cronos",
   [ChainId.CRONOS_ZKEVM]: "cronos-zkevm",
   [ChainId.ARBITRUM_ONE]: "arbitrum",
   [ChainId.ZKSYNC]: "zksync",
@@ -200,11 +203,11 @@ const commonCurrencySymbols = [
   cronosZkEvmTokens.frtn,
 ].map(({ symbol }) => symbol);
 
-export const getTokenListTokenUrl = (token: Pick<Token, 'chainId' | 'address'>) =>
+export const getTokenListTokenUrl = (token: Pick<Token, 'chainId' | 'address' | 'symbol'>) =>
   Object.keys(chainName).includes(String(token.chainId))
     ? `https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${
       token.chainId === ChainId.CRONOS ? '' : `${chainName[token.chainId]}/`
-    }${token.address.toLowerCase()}.webp`
+    }${token.symbol.toLowerCase()}.webp`
     : null;
 
 export const getTokenLogoURLByAddress = memoize(
@@ -238,7 +241,7 @@ export const getCurrencyLogoUrlsByInfo = memoize(
     }
     const { chainId, address, symbol } = currency;
     const trustWalletLogo = getTokenLogoURLByAddress(address, chainId);
-    const logoUrl = chainId && address ? getTokenListTokenUrl({ chainId, address }) : null;
+    const logoUrl = chainId && address ? getTokenListTokenUrl({ chainId, address, symbol }) : null;
     return [getCommonCurrencyUrlBySymbol(symbol), useTrustWallet ? trustWalletLogo : undefined, logoUrl].filter(
       (url): url is string => !!url
     );

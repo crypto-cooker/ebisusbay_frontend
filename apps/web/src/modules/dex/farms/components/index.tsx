@@ -50,7 +50,8 @@ export default function FarmsPage() {
   const [searchTerms, setSearchTerms] = useState<string>();
   const [queryParams, setQueryParams] = useState<FarmsQueryParams>({
     sortBy: 'users',
-    direction: 'desc'
+    direction: 'desc',
+    chain: chainId
   });
   const [status, setStatus] = useState<FarmState>(FarmState.ACTIVE);
   const [viewType, setViewType] = useState<ViewType>(ViewType.TABLE);

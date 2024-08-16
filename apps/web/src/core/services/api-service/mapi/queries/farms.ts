@@ -14,7 +14,7 @@ export interface FarmsQueryParams {
   direction?: 'asc' | 'desc';
   finished?: number;
   search?: string;
-  chain?: number;
+  chain: number;
 }
 
 export class FarmsQuery extends Query<FarmsQueryParams> {

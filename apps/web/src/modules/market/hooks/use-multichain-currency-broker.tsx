@@ -1,10 +1,10 @@
 import {ciEquals, ciIncludes, isNativeCro} from '@market/helpers/utils';
-import {supportedTokens} from "@src/config/tokens";
 import {useAppConfig} from "@src/config/hooks";
 import useNativeCurrency from "@eb-pancakeswap-web/hooks/useNativeCurrency";
 import {SupportedChainId} from "@src/config/chains";
 import {ethers} from "ethers";
 import {SerializedToken} from "@pancakeswap/swap-sdk-core";
+import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 
 export type MultichainBrokerCurrency = SerializedToken & {
   isToken: boolean;
@@ -17,6 +17,7 @@ type CollectionCurrencies = {
 
 const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
   const { config: appConfig } = useAppConfig();
+  const {supportedTokens} = useSupportedTokens(chainId);
 
   const nativeCurrency = useNativeCurrency(chainId);
   const serializedNativeCurrency: MultichainBrokerCurrency = {
@@ -31,7 +32,7 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
 
   const knownCurrencies = [
     serializedNativeCurrency,
-    ...Object.values(supportedTokens[chainId]).map((token) => ({...token.serialize, isToken: true, isNative: false}))
+    ...supportedTokens.map((token) => ({...token.serialize, isToken: true, isNative: false}))
   ];
 
   const listingCurrencies = knownCurrencies.filter((currency) => ciIncludes(appConfig.currencies?.[chainId]?.marketplace.available, currency.symbol));
