@@ -178,7 +178,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
     <div className={styles.profile} >
       <PageHead
         title={username(identifier)}
-        description={profile.bio}
+        description={profile?.bio}
         image={profilePicture}
         url={`/account/${address}`}
       />
@@ -188,7 +188,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
         gridTemplateColumns="1fr 0px"
       >
         <GridItem>
-          {profile.banner ? (
+          {profile?.banner ? (
               <Image
                 h={{base: '100px', sm: '150px', md: '250px', lg: '300px', xl: '360px'}}
                 w='full'
@@ -234,7 +234,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                         <Tag size='sm' colorScheme='red' variant='solid'>Blacklisted</Tag>
                       </Flex>
                     )}
-                    <Text className={styles.bio}>{profile.bio}</Text>
+                    <Text className={styles.bio}>{profile?.bio}</Text>
                   </Flex>
                 )}
                 <HStack align='top' flex={useMobileLayout ? 1 : 0} mt={1}>
@@ -305,7 +305,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                       <Tag size='sm' colorScheme='red' variant='solid'>Blacklisted</Tag>
                     </Flex>
                   )}
-                  <Text className={styles.bio}>{profile.bio}</Text>
+                  <Text className={styles.bio}>{profile?.bio}</Text>
                 </Flex>
               )}
             </Box>
