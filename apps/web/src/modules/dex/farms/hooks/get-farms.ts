@@ -14,7 +14,7 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
 
   const query = async () => {
     let data = await ApiService.withoutKey().getFarms(queryParams);
-    if (queryParams.chain === ChainId.CRONOS_ZKEVM) data = [];
+    // if (queryParams.chain === ChainId.CRONOS_ZKEVM) data = [];
 
     return await Promise.all(data
       .filter((farm: MapiFarm) => farm.pid !== 0 || (farm.pair !== undefined && farm.pair !== null)) 
