@@ -93,6 +93,9 @@ const tabs: {[key: string]: {label: string, overflow?: string, private: boolean}
   }
 };
 
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
 interface ProfileProps {
   address: string;
   profile: any;
@@ -154,11 +157,11 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
     }
   }, [user.wallet.address]);
 
-  if (typeof window !== 'undefined') {
-    useLayoutEffect(() => {
-      dispatch(closeBatchListingCart());
-    }, []);
-  }
+  // useIsomorphicLayoutEffect(() => {
+  //   return () => {
+  //     dispatch(closeBatchListingCart());
+  //   };
+  // }, [dispatch]);
 
   const identifier = profile?.username ?? address;
 
