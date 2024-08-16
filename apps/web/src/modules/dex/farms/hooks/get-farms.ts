@@ -6,14 +6,14 @@ import {ApiService} from "@src/core/services/api-service";
 import {round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import useCurrencyBroker from "@market/hooks/use-currency-broker";
+import { ChainId } from "@pancakeswap/chains";
 
 export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
   const { getByAddress } = useCurrencyBroker();
 
   const query = async () => {
-    console.log('queryParams', queryParams);
     let data = await ApiService.withoutKey().getFarms(queryParams);
-    if(queryParams.chain === 388) data = [];
+    if (queryParams.chain === ChainId.CRONOS_ZKEVM) data = [];
 
     return await Promise.all(data
       .filter((farm: MapiFarm) => farm.pid !== 0 || (farm.pair !== undefined && farm.pair !== null)) 
