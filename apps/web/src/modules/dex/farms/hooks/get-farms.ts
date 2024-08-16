@@ -11,10 +11,12 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
   const { getByAddress } = useCurrencyBroker();
 
   const query = async () => {
-    const data = await ApiService.withoutKey().getFarms(queryParams);
+    console.log('queryParams', queryParams);
+    let data = await ApiService.withoutKey().getFarms(queryParams);
+    if(queryParams.chain === 388) data = [];
 
     return await Promise.all(data
-      .filter((farm: MapiFarm) => farm.pid !== 0 || (farm.pair !== undefined && farm.pair !== null))
+      .filter((farm: MapiFarm) => farm.pid !== 0 || (farm.pair !== undefined && farm.pair !== null)) 
       .map(async (farm: MapiFarm): Promise<DerivedFarm> => {
         const pairFarm: MapiPairFarm = farm as MapiPairFarm;
 
