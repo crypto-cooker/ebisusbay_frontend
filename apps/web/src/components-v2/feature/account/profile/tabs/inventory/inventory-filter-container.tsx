@@ -63,7 +63,7 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
     const params = queryParams;
     if (item.key === 'status-buy-now') params.listed = checked ? 1 : undefined;
     if (item.key === 'status-has-offers') params.offered = checked ? 1 : undefined;
-    if (item.key === 'status-show-hidden') params.blacklist = checked ? '4' : undefined;
+    if (item.key === 'status-show-hidden') params.blacklist = checked ? '4' : '0,1';
     if (item.key === 'status-bundles') {
       if (checked) {
         handleCollectionFilter([{name: 'Bundles', address: config.contracts.bundle}]);
