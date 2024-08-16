@@ -131,7 +131,7 @@ export default function PoolFinder() {
                 hasPosition && pair ? (
                   <>
                     <MinimalPositionCard pair={pair} />
-                    <NextLink href={`/v2/pair/${pair.token0.address}/${pair.token1.address}`}>
+                    <NextLink href={`/dex/add/${pair.token0.address}/${pair.token1.address}`}>
                       <Button variant='link' width='full'>
                         Manage this pair
                       </Button>
@@ -141,7 +141,7 @@ export default function PoolFinder() {
                   <Card padding="45px 10px">
                     <VStack gap="sm" justify="center">
                       <Text textAlign="center">You don’t have liquidity in this pair yet.</Text>
-                      <NextLink href={`/v2/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
+                      <NextLink href={`/dex/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
                         <Button variant='link' width='full'>
                           Add Liquidity
                         </Button>
@@ -153,7 +153,7 @@ export default function PoolFinder() {
                 <Card padding="45px 10px">
                   <Stack gap="sm" justify="center">
                     <Text textAlign="center">No pair found.</Text>
-                    <NextLink href={`/v2/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
+                    <NextLink href={`/dex/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
                       <Button>
                         Create pair
                       </Button>
