@@ -12,6 +12,7 @@ import {Address} from "viem";
 import {readContracts} from "@wagmi/core";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {getAppChainConfig} from "@src/config/hooks";
+import {ChainId} from "@pancakeswap/chains";
 
 export const useUserFarms = () => {
   const [userFarms] = useAtom(userFarmsAtom);
@@ -113,12 +114,17 @@ export const fetchBalances = async (userAddress: string, chainId: number) => {
     )),
   });
 
+
   poolInfo.forEach((pool, i) => {
     if (i === 0) return;
     // @ts-ignore
-    const tokens = harvestableBalances[i].result?.[0] as string[];
+    let tokens = harvestableBalances[i].result?.[0] as string[];
     // @ts-ignore
-    const amounts = harvestableBalances[i].result?.[1] as bigint[];
+    let amounts = harvestableBalances[i].result?.[1] as bigint[];
+    if (chainId === ChainId.CRONOS_ZKEVM) {
+      tokens = tokens.slice(1);
+      amounts = amounts.slice(1);
+    }
     // @ts-ignore
     balances[pool.result![0].toLowerCase()].earnings = tokens.map((token) => ({
       address: token,
