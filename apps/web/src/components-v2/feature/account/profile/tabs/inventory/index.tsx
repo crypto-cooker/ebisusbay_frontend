@@ -83,7 +83,8 @@ export default function Inventory({ address }: InventoryProps) {
   );
   const [queryParams, setQueryParams] = useState<WalletsQueryParams>({
     sortBy: 'receivedTimestamp',
-    direction: 'desc'
+    direction: 'desc',
+    blacklist: '0,1'
   });
 
   const fetcher = async ({ pageParam = 1 }) => {
