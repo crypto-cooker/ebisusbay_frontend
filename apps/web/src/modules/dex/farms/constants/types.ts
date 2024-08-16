@@ -1,4 +1,5 @@
 import {BrokerCurrency} from "@market/hooks/use-currency-broker";
+import {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
 
 export interface MapiFarm {
   pid: number;
@@ -77,7 +78,7 @@ export interface DerivedFarm {
 
 export interface FarmRow {
   name: string;
-  dailyRewards: Array<{rewarder: MapiFarmRewarder, token: BrokerCurrency, amount: string}>;
+  dailyRewards: Array<{rewarder: MapiFarmRewarder, token: MultichainBrokerCurrency, amount: string}>;
   stakedLiquidity: string;
   apr: string;
   state: FarmState;

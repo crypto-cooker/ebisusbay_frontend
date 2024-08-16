@@ -38,5 +38,5 @@ export default function useSupportedTokens(chainId?: number) {
       supportedTokens,
       commonBases
     };
-  }, [tokens.tokens]);
+  }, [tokens.tokens, chainId]);
 }

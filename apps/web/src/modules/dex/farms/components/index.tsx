@@ -125,7 +125,7 @@ export default function FarmsPage() {
     }
 
     return data;
-  }, [status, farms, stakedOnly, localQueryParams, userFarms]);
+  }, [status, farms, stakedOnly, localQueryParams, userFarms, chainId]);
 
   const content = useMemo(() => {
     return farmsStatus === 'pending' ? (
@@ -149,7 +149,7 @@ export default function FarmsPage() {
         No farms found
       </Box>
     )
-  }, [filteredData, farmsStatus, userFarms, viewType, localQueryParams]);
+  }, [filteredData, farmsStatus, userFarms, viewType, localQueryParams, chainId]);
 
   useEffect(() => {
     setQueryParams({...queryParams, chain: chainId});
