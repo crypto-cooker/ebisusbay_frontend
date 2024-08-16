@@ -135,7 +135,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
       rank: nft.rank,
       amount: listing.amount ?? 1,
       currency: listing.currency,
-      chain: listing.chain
+      chain: nft.chain
     });
     toast.success(createSuccessfulAddCartContent(cart.openCart));
   };
