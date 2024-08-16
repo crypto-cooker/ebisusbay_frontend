@@ -263,7 +263,7 @@ const Cart = function () {
             <Flex mb={2}>
               <Text fontWeight="bold">{cart.items.length} {cart.items.length === 1 ? 'Item' : 'Items'}</Text>
               <Spacer />
-              <Text fontWeight="bold" onClick={handleClearCart} cursor="pointer">Clear all</Text>
+              <Text fontWeight="bold" onClick={() => handleClearCart()} cursor="pointer">Clear all</Text>
             </Flex>
             {cart.items.length > 0 ? (
               <Tabs defaultIndex={0} onChange={handleTabsChange}>
