@@ -68,7 +68,6 @@ function App({ Component, ...pageProps }: AppProps) {
   const isDexRoute = router.pathname.startsWith('/dex');
 
   const GlobalDexHooks = isDexRoute ? GlobalHooks : React.Fragment;
-  const NetworkModalCheck = isDexRoute ? React.Fragment : React.Fragment;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
