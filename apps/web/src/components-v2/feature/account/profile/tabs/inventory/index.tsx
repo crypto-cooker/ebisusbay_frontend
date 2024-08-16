@@ -59,9 +59,9 @@ import InventoryFilterContainer
 import useDebounce from "@src/core/hooks/useDebounce";
 import {useUser} from "@src/components-v2/useUser";
 import {ApiService} from "@src/core/services/api-service";
-import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {toast} from "react-toastify";
 import {ChainId} from "@pancakeswap/chains";
+import {useAccount} from "wagmi";
 
 
 interface InventoryProps {
@@ -72,7 +72,7 @@ export default function Inventory({ address }: InventoryProps) {
   const dispatch = useAppDispatch();
 
   const user = useUser();
-  const {chainId} = useActiveChainId();
+  const { chain} = useAccount();
   const batchListingCart = useAppSelector((state) => state.batchListing);
 
   const [collections, setCollections] = useState([]);
@@ -137,8 +137,10 @@ export default function Inventory({ address }: InventoryProps) {
   }, [address]);
 
   useEffect(() => {
-    if (batchListingCart.refetchNfts) refetch()
-    dispatch(setRefetchNfts(false))
+    if (batchListingCart.refetchNfts && batchListingCart.items) {
+      refetch()
+      dispatch(setRefetchNfts(false))
+    }
   }, [batchListingCart.refetchNfts]);
 
   const toggleOpenBatchListingCart = () => {
@@ -161,8 +163,7 @@ export default function Inventory({ address }: InventoryProps) {
   const [createListingNft, setCreateListingNft] = useState<any>(null);
 
   const handleAddToBatch = (nft: any) => {
-    console.log("handleAdd", chainId, nft.chain)
-    if (![ChainId.CRONOS, ChainId.CRONOS_TESTNET].includes(chainId)) {
+    if (![ChainId.CRONOS, ChainId.CRONOS_TESTNET].includes(chain?.id)) {
       toast.error('Please switch to Cronos Mainnet');
       return;
     }
