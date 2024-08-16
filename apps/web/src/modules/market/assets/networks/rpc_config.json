@@ -27851,6 +27851,32 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "Gremlins Genesis",
+      "slug": "gremlins-genesis",
+      "multiToken": false,
+      "address": "0xbfe33e58deb543ceada4d7908042e3cb648357a6",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Feed The Gremlins Genesis ! Secure your future with exclusive airdrops and limited-edition items available only to 4K Graphics Genesis Gremlins NFT owners. Don't miss out on these rare opportunities to expand your collection! Royalties on our website. Revenue Shares / GameFi / IP Rights & More to come \uD83C\uDF55\uD83C\uDF55\uD83C\uDF55",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/gremlins-genesis/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/gremlins-genesis/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/gremlins-genesis/banner.webp",
+        "website": "https://gremlins-genesis.netlify.app/",
+        "twitter": "https://twitter.com/GRM_Gremlin",
+        "discord": "https://discord.gg/ndPWBPyxnh",
+        "telegram": "https://t.me/+REq6ArgSulZlYWZh",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
     }
   ],
   "drops": [
