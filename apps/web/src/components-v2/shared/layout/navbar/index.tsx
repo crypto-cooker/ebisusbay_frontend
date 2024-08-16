@@ -72,8 +72,7 @@ const Header = function () {
   const [shouldHideFrtn] = useMediaQuery('(max-width: 410px)');
   const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, Number(config.chain.id));
   const [currentFrtnPrice, setCurrentFrtnPrice] = useState(0);
-  const router = useRouter();
-  const [isRouterReady, setIsRouterReady] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const ref: RefObject<HTMLDivElement> = React.useRef(null)
   useOutsideClick({
@@ -97,10 +96,14 @@ const Header = function () {
   }, [tokenUsdRate]);
 
   useEffect(() => {
-    if (router.isReady) {
-      setIsRouterReady(true);
-    }
-  }, [router.isReady]);
+    setIsMounted(true);
+  }, []);
+
+  // useEffect(() => {
+  //   if (isMounted && router.isReady) {
+  //     setIsRouterReady(true);
+  //   }
+  // }, [isMounted, router.isReady]);
 
   return (
     <>
@@ -203,7 +206,7 @@ const Header = function () {
               {shouldUseMobileSearch && <MobileSearchDrawer />}
               <Cart />
               {profile && <NotificationMenu />}
-              {isRouterReady && <NetworkSwitcher />}
+              {isMounted && <NetworkSwitcher />}
               <span className="my-auto">
                 <AccountMenu />
               </span>
