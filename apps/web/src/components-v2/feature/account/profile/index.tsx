@@ -362,7 +362,7 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                     )}
                     <MenuList zIndex={10} fontSize={{base: 'sm', sm: 'md'}}>
                       {Object.entries(tabs).filter(([k, v]) => !!v.overflow).map(([key, value]) => (
-                        <MenuItem onClick={() => handleOverflowTabChange(key)}>{value.label}</MenuItem>
+                        <MenuItem key={key} onClick={() => handleOverflowTabChange(key)}>{value.label}</MenuItem>
                       ))}
                     </MenuList>
                   </Menu>
