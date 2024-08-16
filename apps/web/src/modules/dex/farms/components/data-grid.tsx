@@ -255,7 +255,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                     <Box fontWeight='bold'>Liquidity</Box>
                     <Box fontWeight='bold'>{farm.derived.stakedLiquidity}</Box>
                   </Flex>
-                  <Link fontWeight='bold' href={`/dex/add/${farm.data.pair.token0.id}/${farm.data.pair.token1.id}`} color='#218cff' isExternal>
+                  <Link fontWeight='bold' href={`/dex/add/v2/${farm.data.pair.token0.id}/${farm.data.pair.token1.id}`} color='#218cff' isExternal>
                     <HStack>
                       <>Get {farm.derived.name} LP</>
                       <Icon as={FontAwesomeIcon} icon={faExternalLinkAlt} boxSize={3} />
