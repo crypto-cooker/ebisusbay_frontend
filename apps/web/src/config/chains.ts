@@ -6,7 +6,6 @@ import {
   cronos as cronos_,
 } from 'wagmi/chains'
 import {defineChain} from "viem";
-import {supportedTokens} from "@src/config/tokens";
 
 export const CHAIN_QUERY_NAME = chainNames
 

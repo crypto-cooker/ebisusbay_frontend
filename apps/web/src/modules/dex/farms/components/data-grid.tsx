@@ -42,6 +42,7 @@ import useCurrencyBroker from "@market/hooks/use-currency-broker";
 import {useExchangeRate} from "@market/hooks/useGlobalPrices";
 import {useAppChainConfig} from "@src/config/hooks";
 import {getBlockExplorerLink} from "@dex/utils";
+import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
 
 export type DataGridProps = {
   data: DerivedFarm[];
@@ -63,7 +64,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
   const user = useUser();
   const {config: appChainConfig} = useAppChainConfig();
 
-  const {getByAddress} = useCurrencyBroker();
+  const {getByAddress} = useMultichainCurrencyBroker(appChainConfig.chain.id);
   const [enableFarm, enablingFarm] = useEnableFarm();
   const {usdValueForToken} = useExchangeRate();
   const { refetchBalances } = useUserFarmsRefetch();
@@ -160,12 +161,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                     )}
                   </HStack>
                   <Box textAlign='end' fontWeight='bold'>
-                    {reward.token.symbol === '?' ? (
-                      <>FRTN</>
-                    ) : (
-                      <>{reward.token.symbol}</>
-                    )}
-
+                    {reward.token.symbol}
                   </Box>
                 </React.Fragment>
               ))}

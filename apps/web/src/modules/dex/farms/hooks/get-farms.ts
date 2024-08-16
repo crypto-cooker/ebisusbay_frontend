@@ -5,11 +5,12 @@ import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farm
 import {ApiService} from "@src/core/services/api-service";
 import {round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
-import useCurrencyBroker from "@market/hooks/use-currency-broker";
+import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
+import {Address} from "viem";
 import { ChainId } from "@pancakeswap/chains";
 
 export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
-  const { getByAddress } = useCurrencyBroker();
+  const { getByAddress } = useMultichainCurrencyBroker(queryParams.chain);
 
   const query = async () => {
     let data = await ApiService.withoutKey().getFarms(queryParams);
@@ -35,11 +36,13 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
               let token = getByAddress(rewarder.token);
               if (!token) {
                 token = {
-                  address: rewarder.token,
+                  address: rewarder.token as Address,
                   symbol: '?',
                   name: '?',
                   decimals: 18,
-                  image: null
+                  chainId: queryParams.chain,
+                  isToken: true,
+                  isNative: false
                 }
                 // throw new Error(`Token not found for rewarder address: ${rewarder.token}`);
               }
