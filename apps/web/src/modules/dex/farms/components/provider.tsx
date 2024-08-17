@@ -3,6 +3,7 @@ import {useUser} from "@src/components-v2/useUser";
 import {useFetchApprovals, useFetchBalances} from "@dex/farms/hooks/user-farms";
 import {useResetAtom} from "jotai/utils";
 import {approvalsAtom, balancesAtom} from "@dex/farms/state/user";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 
 interface RefetchContextProps {
   refetchApprovals: () => void;
@@ -21,6 +22,7 @@ export const UserFarmsRefetchProvider = ({ children, refetchApprovals, refetchBa
 
 export default function UserFarmsProvider({ children }: { children: ReactNode }) {
   const user = useUser();
+  const {chainId} = useActiveChainId();
   const fetchApprovals = useFetchApprovals();
   const fetchBalances = useFetchBalances();
   const resetApprovals = useResetAtom(approvalsAtom);
@@ -34,7 +36,7 @@ export default function UserFarmsProvider({ children }: { children: ReactNode })
       resetApprovals();
       resetBalances();
     }
-  }, [user.address]);
+  }, [user.address, chainId]);
 
   return (
     <UserFarmsRefetchProvider refetchApprovals={fetchApprovals} refetchBalances={fetchBalances}>
