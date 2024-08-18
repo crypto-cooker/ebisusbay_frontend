@@ -7,7 +7,7 @@ import {buildInstagramUrl, buildTwitterUrl, isCrosmocraftsCollection, isCrosmocr
 import {useClipboard} from "@chakra-ui/react";
 
 const SocialsBar = ({ address, socials, showCopy = true }) => {
-  const { website, twitter, discord, telegram, instagram, medium, gitbook } = socials;
+  const { website, twitter, discord, telegram, instagram, medium, gitbook } = socials || {};
   const { onCopy } = useClipboard(address);
 
   const handleCopy = () => {
