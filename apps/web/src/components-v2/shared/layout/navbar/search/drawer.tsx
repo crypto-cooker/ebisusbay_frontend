@@ -27,7 +27,7 @@ import {ciEquals} from "@market/helpers/utils";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {CloseIcon, SearchIcon} from "@chakra-ui/icons";
 import {appConfig} from "@src/config";
-import {useRouter} from "next/router";
+import {useRouter} from "next/navigation";
 import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
 import {useUser} from "@src/components-v2/useUser";
 import useSearch from "@market/hooks/use-search";
