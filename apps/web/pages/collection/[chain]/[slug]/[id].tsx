@@ -17,11 +17,14 @@ import {getNft} from "@src/core/api/endpoints/nft";
 import {GetServerSidePropsContext} from "next";
 import {getChainById, getChainBySlug} from "@src/helpers";
 import {AppChainConfig} from "@src/config/chains";
+import {QueryClient} from "@tanstack/react-query";
+import {ApiService} from "@src/core/services/api-service";
 
 interface NftProps {
   slug: string;
   id: string;
   chain: number;
+  chainSlug: string;
   nft: any;
   collection: any;
 }
@@ -102,10 +105,10 @@ const Nft = ({ slug, id, nft, collection, chain }: NftProps) => {
 };
 
 export const getServerSideProps = async ({ params }: GetServerSidePropsContext) => {
-  const slug = params?.slug as string;
+  const collectionSlug = params?.slug as string;
   const chainSlugOrId = params?.chain as string | undefined;
   const tokenId = params?.id as string;
-  if (!slug || !chainSlugOrId || Array.isArray(chainSlugOrId) || !tokenId) {
+  if (!collectionSlug || !chainSlugOrId || Array.isArray(chainSlugOrId) || !tokenId) {
     return {
       notFound: true
     }
@@ -129,27 +132,30 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
   // default to cronos chain if collection has no chain
   const chainMatchCondition = (chainId: number) => !chainId || chainId === chainConfig?.chain.id;
 
-  let collection;
+  const queryClient = new QueryClient();
 
-  // @todo fix in autolistings
-  if (isAddress(slug)) {
-    collection = appConfig('collections').find((c: any) => ciEquals(c.address, slug) && chainMatchCondition(c.chainId));
+  let isDegen = false;
+  let collection = appConfig('collections').find((c: any) => {
+    return (isAddress(collectionSlug) && ciEquals(c.address, collectionSlug)) || ciEquals(c.slug, collectionSlug) && chainMatchCondition(c.chainId)
+  });
 
-    // const res = await fetch(`${config.urls.api}collectioninfo?address=${slug}`);
-    // const json = await res.json();
-    // collection = json.collections[0]
-  } else {
-    collection = appConfig('collections').find((c: any) => ciEquals(c.slug, slug) && chainMatchCondition(c.chainId));
-
-    // const res = await fetch(`${config.urls.api}collectioninfo?slug=${slug}`);
-    // const json = await res.json();
-    // collection = json.collections[0]
+  if (!collection) {
+    isDegen = true;
+    collection = await queryClient.fetchQuery({
+      queryKey: ['CollectionInfo', collectionSlug],
+      queryFn: () => fetchCollection(collectionSlug, chainConfig.chain.id),
+      staleTime: 1000 * 60 * 30, // 30 minutes
+    });
   }
 
   let nft;
   if (collection?.address) {
-    const resp = await getNft(collection.address, tokenId, chainConfig.chain.id);
-    nft = { ...resp.nft, address: collection.address, id: tokenId };
+    const nftData = await queryClient.fetchQuery({
+      queryKey: ['CollectionNft', collection.address, tokenId, chainConfig.chain.id],
+      queryFn: () => getNft(collection.address, tokenId, chainConfig.chain.id),
+      staleTime: 1000 * 60 * 30, // 30 minutes
+    });
+    nft = { ...nftData.nft, address: collection.address, id: tokenId };
   }
 
   if (!collection || !nft) {
@@ -162,16 +168,19 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
     appUrl(`api/heroes/${tokenId}/og?${cacheBustingKey()}`).toString() :
     nft.image;
 
-  if (isAddress(slug) || requiresChainRedirect) {
+  const shouldSlugRedirect = !isDegen && isAddress(collectionSlug);
+  if (shouldSlugRedirect || requiresChainRedirect) {
+    const collectionSlug = shouldSlugRedirect ? collection.slug : collection.address;
     return {
       redirect: {
-        destination: `/collection/${chainConfig.slug}/${collection.slug}/${tokenId}`,
+        destination: `/collection/${chainConfig.slug}/${collectionSlug}/${tokenId}`,
         permanent: false,
       },
       props: {
         slug: collection?.slug,
         id: tokenId,
         chain: chainConfig.chain.id,
+        chainSlug: chainConfig.slug,
         collection,
         nft,
         seoImage
@@ -191,3 +200,12 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
 };
 
 export default memo(Nft);
+
+
+const fetchCollection = async (address: string, chainId: number) => {
+  const response = await ApiService.withKey(process.env.EB_API_KEY as string).getCollections({
+    address: [address],
+    chain: chainId
+  });
+  return response.data[0] ?? null;
+};

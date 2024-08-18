@@ -198,9 +198,9 @@ const commonCurrencySymbols = [
   cronosTokens.usdc,
   cronosTokens.frtn,
   cronosZkEvmTokens.wcro,
-  cronosZkEvmTokens.usdc,
-  cronosZkEvmTokens.weth,
   cronosZkEvmTokens.frtn,
+  cronosZkEvmTokens.vusd,
+  cronosZkEvmTokens.veth,
 ].map(({ symbol }) => symbol);
 
 export const getTokenListTokenUrl = (token: Pick<Token, 'chainId' | 'address' | 'symbol'>) =>
