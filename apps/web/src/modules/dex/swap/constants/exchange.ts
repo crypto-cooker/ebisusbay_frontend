@@ -31,9 +31,9 @@ export const SUGGESTED_BASES: ChainTokenList = {
   ],
   [ChainId.CRONOS_ZKEVM]: [
     cronosZkEvmTokens.wcro,
-    cronosZkEvmTokens.usdc,
     cronosZkEvmTokens.frtn,
-    cronosZkEvmTokens.weth,
+    cronosZkEvmTokens.vusd,
+    cronosZkEvmTokens.veth,
   ],
   [ChainId.CRONOS_ZKEVM_TESTNET]: [
     cronosZkEvmTestnetTokens.wcro,
@@ -51,10 +51,10 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   [ChainId.CRONOS]: [cronosTokens.usdc, cronosTokens.frtn, cronosTokens.wcro],
   [ChainId.CRONOS_TESTNET]: [cronosTestnetTokens.frtn, cronosTestnetTokens.wcro],
   [ChainId.CRONOS_ZKEVM]: [
-    cronosZkEvmTokens.usdc,
-    cronosZkEvmTokens.wcro,
     cronosZkEvmTokens.frtn,
-    cronosZkEvmTokens.weth,
+    cronosZkEvmTokens.wcro,
+    cronosZkEvmTokens.vusd,
+    cronosZkEvmTokens.veth,
   ],
   [ChainId.CRONOS_ZKEVM_TESTNET]: [
     cronosZkEvmTestnetTokens.wcro,
