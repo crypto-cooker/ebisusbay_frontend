@@ -367,7 +367,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                     <NftPropertyLabel
                       label="Collection"
                       value={collectionName ?? 'View Collection'}
-                      avatar={ImageService.translate(collectionMetadata?.avatar).avatar()}
+                      avatar={collectionMetadata?.avatar ? ImageService.translate(collectionMetadata?.avatar).avatar() : null}
                       address={address}
                       verified={collection.verification?.verified}
                       to={`/collection/${chain}/${collectionSlug}`}

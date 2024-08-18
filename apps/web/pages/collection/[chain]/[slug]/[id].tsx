@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo} from 'react';
 import {
   appUrl,
   cacheBustingKey,
@@ -17,8 +17,9 @@ import {getNft} from "@src/core/api/endpoints/nft";
 import {GetServerSidePropsContext} from "next";
 import {getChainById, getChainBySlug} from "@src/helpers";
 import {AppChainConfig} from "@src/config/chains";
-import {QueryClient} from "@tanstack/react-query";
+import {QueryClient, useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
+import {useParams} from "next/navigation";
 
 interface NftProps {
   slug: string;
@@ -29,14 +30,23 @@ interface NftProps {
   collection: any;
 }
 
-const Nft = ({ slug, id, nft, collection, chain }: NftProps) => {
-  const [type, setType] = useState('721');
-  const [initialized, setInitialized] = useState(false);
+const Nft = ({ slug, id, nft: initialNft, collection: initialCollection, chain }: NftProps) => {
+  const params = useParams();
 
-  useEffect(() => {
-    setType(collection.multiToken ? '1155' : '721');
-    setInitialized(true);
-  }, [slug, id]);
+  const {data: collection} = useQuery({
+    queryKey: ['CollectionInfo', slug],
+    queryFn: () => fetchCollection(slug, chain),
+    initialData: initialCollection,
+  });
+
+  const {data: nftData} = useQuery({
+    queryKey: ['CollectionNft', collection.address, params!.id, chain],
+    queryFn: () => getNft(collection.address, params!.id, chain),
+    initialData: initialNft,
+    enabled: !!collection && !!params
+  });
+
+  const type = collection?.multiToken ? '1155' : '721';
 
   const getTraits = (anNFT: any) => {
     if (
@@ -84,19 +94,19 @@ const Nft = ({ slug, id, nft, collection, chain }: NftProps) => {
   return (
     <>
       <PageHead
-        title={nft.name}
-        description={getTraits(nft)}
-        url={`/collection/${collection?.slug}/${nft.id}`}
-        image={nft.image}
+        title={nftData.nft.name}
+        description={getTraits(nftData.nft)}
+        url={`/collection/${collection?.slug}/${nftData.nft.id}`}
+        image={nftData.nft.image}
       />
-      {initialized && collection && (
+      {!!collection && !!nftData.nft && (
         <>
           {isBundle(collection.address) ? (
-            <Nft721 address={collection.address} slug={collection.slug} id={id} nft={nft} isBundle={true} chain={chain} />
+            <Nft721 address={collection.address} slug={collection.slug} id={id} nft={nftData.nft} isBundle={true} chain={chain} />
           ) : type === '1155' ? (
             <Nft1155 address={collection.address} id={id} collection={collection} chain={chain} />
           ) : (
-            <Nft721 address={collection.address} slug={collection.slug} id={id} nft={nft} chain={chain} />
+            <Nft721 address={collection.address} slug={collection.slug} id={id} nft={nftData.nft} chain={chain} />
           )}
         </>
       )}
