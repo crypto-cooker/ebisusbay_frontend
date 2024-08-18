@@ -1,10 +1,8 @@
-import { useCallback, useMemo, memo } from 'react'
-import { Currency, CurrencyAmount, Trade, TradeType } from '@pancakeswap/sdk'
+import {memo, useCallback, useMemo} from 'react'
+import {Currency, CurrencyAmount, Trade, TradeType} from '@pancakeswap/sdk'
 import {computeSlippageAdjustedAmounts} from "@eb-pancakeswap-web/utils/exchange";
 import {Field} from "@eb-pancakeswap-web/state/swap/actions";
 import {maxAmountSpend} from "@eb-pancakeswap-web/utils/maxAmountSpend";
-import {ModalProps} from "@chakra-ui/react";
-import {useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import SwapModalHeader from "@dex/swap/components/tabs/swap/swap-modal/swap-modal-header";
 import SwapModalFooter from "@dex/swap/components/tabs/swap/swap-modal/swap-modal-footer";
 import {ConfirmationModalContent} from "@dex/components/transaction-confirmation-modal/confirmation-modal-content";
