@@ -27877,6 +27877,31 @@
         "kyc": false,
         "verified": true
       }
+    },
+    {
+      "name": "Crazy Plush Army",
+      "slug": "crazy-plush-army",
+      "multiToken": false,
+      "address": "0xe7Bd009aE121A5215EC827910aDc3F9654e41dBD",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection consisting of 2,500 NFT, 10 legends\uD83D\uDD25 The main purpose of this collection is to increase Ryoshi Troops for Plush Army and the FRTN vault.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crazy-plush-army/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/crazy-plush-army/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/crazy-plush-army/banner.webp",
+        "website": "https://www.cro-launchpad.com/crazyplush-mint",
+        "twitter": "https://twitter.com/yplushnft",
+        "discord": "https://discord.gg/79Uu3GGq82",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
