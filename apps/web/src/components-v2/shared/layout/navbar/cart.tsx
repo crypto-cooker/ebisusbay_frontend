@@ -120,7 +120,7 @@ const Cart = function () {
     if (listings.length >= cart.items.length) {
       handleClose();
     }
-    handleClearCart(cart.items.filter((item) => !listings.some((nft) => nft.listingId === item.listingId)));
+    handleClearCart(cart.items.filter((item) => !listings.some((listing: any) => listing.listingId === item.listingId)));
   };
 
   const preparePurchase = async () => {
