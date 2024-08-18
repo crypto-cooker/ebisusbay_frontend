@@ -10,7 +10,8 @@ import {CollectionPageContext} from "@src/components-v2/feature/collection/conte
 import {GetServerSidePropsContext} from "next";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {getChainById, getChainBySlug} from "@src/helpers";
-import {ChainSlug, SupportedChainId} from "@src/config/chains";
+import {ApiService} from "@src/core/services/api-service";
+import {QueryClient} from "@tanstack/react-query";
 
 const collectionTypes = {
   UNSET: -1,
@@ -102,36 +103,30 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
     chain = getChainBySlug(chainSlugOrId);
   }
 
-
   if (!chain) {
     return {
       notFound: true
     }
   }
 
-  // @todo fix with autolistings
-  // const queryKey = isAddress(slug) ? 'address' : 'slug';
-  // const res = await fetch(`${config.urls.api}collectioninfo?${queryKey}=${slug}`);
-  //
-  // let collection;
-  // if (res.ok) {
-  //   const json = await res.json();
-  //   collection = json.collections[0];
-  // }
-  //
-  // // might only be needed for vip collection
-  // if (!collection) {
-  //   console.log('collection not found for slug', slug);
-  //   collection = appConfig('collections')
-  //     .find((c) => ciEquals(c.slug, slug) || ciEquals(c.address, slug));
-  // }
-
-  const collection = appConfig('collections')
+  let isDegen = false;
+  let collection = appConfig('collections')
     .find((c: any) => ciEquals(c.slug, collectionSlug) || ciEquals(c.address, collectionSlug));
 
   if (!collection) {
-    return {
-      notFound: true
+    isDegen = true;
+
+    const queryClient = new QueryClient();
+    collection = await queryClient.fetchQuery({
+      queryKey: ['CollectionInfo', collectionSlug],
+      queryFn: () => fetchCollection(collectionSlug, chain.chain.id),
+      staleTime: 1000 * 60 * 30, // 30 minutes
+    });
+
+    if (!collection) {
+      return {
+        notFound: true
+      }
     }
   }
 
@@ -159,13 +154,21 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
 
   return {
     props: {
-      slug: collection?.slug,
+      slug: collection?.slug ??  null,
       ssrCollection: collection,
       activeDrop: activeDrop ?? null,
       query: query,
-      redirect: !ciEquals(collection.slug, collectionSlug),
+      redirect: !isDegen && !ciEquals(collection.slug, collectionSlug),
     },
   };
 };
 
 export default Collection;
+
+const fetchCollection = async (address: string, chainId: number) => {
+  const response = await ApiService.withKey(process.env.EB_API_KEY as string).getCollections({
+    address: [address],
+    chain: chainId
+  });
+  return response.data[0] ?? null;
+};

@@ -1,6 +1,6 @@
 import { getChainId } from '@src/config/chains'
 import { atom, useAtomValue } from 'jotai'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 import { useDeferredValue, useMemo } from 'react'
 import { isChainSupported } from '@src/wagmi'
 import { useAccount } from 'wagmi'
@@ -32,9 +32,9 @@ export function useLocalNetworkChain() {
   // useRouter is kind of slow, we only get this query chainId once
   const queryChainId = useAtomValue(queryChainIdAtom)
 
-  const { query } = useRouter()
+  const searchParams = useSearchParams()
 
-  const chainId = +(sessionChainId || getChainId(query.chain as string) || queryChainId)
+  const chainId = +(sessionChainId || getChainId(searchParams?.get('chain') as string) || queryChainId)
 
   if (isChainSupported(chainId)) {
     return chainId
