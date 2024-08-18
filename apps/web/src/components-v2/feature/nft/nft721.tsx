@@ -874,7 +874,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                     <NftPropertyLabel
                       label="Collection"
                       value={collectionName ?? 'View Collection'}
-                      avatar={ImageService.translate(collectionMetadata?.avatar).avatar()}
+                      avatar={collectionMetadata?.avatar ? ImageService.translate(collectionMetadata?.avatar).avatar() : null}
                       address={address}
                       verified={collection.verification?.verified}
                       to={`/collection/${chain}/${address}`}
