@@ -17,7 +17,6 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
-import {useRouter} from 'next/router'
 import React, {useEffect, useMemo} from 'react'
 import {useAccount} from 'wagmi'
 import {useActiveChainId, useLocalNetworkChain} from "@eb-pancakeswap-web/hooks/useActiveChainId";
@@ -32,6 +31,7 @@ import {useUser} from "@src/components-v2/useUser";
 import {chainNameConverter} from "@eb-pancakeswap-web/utils/chainNameConverter";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useNetworkConnectorUpdater} from "@eb-pancakeswap-web/hooks/useActiveWeb3React";
+import {usePathname} from "next/navigation";
 
 interface NetworkSelectProps {
   switchNetwork: (chainId: ChainId) => void;
@@ -166,7 +166,7 @@ export const NetworkSwitcher = () => {
   const { theme } = useUser();
   const { chainId, isWrongNetwork, isNotMatched } = useActiveChainId()
   const { isLoading, canSwitch, switchNetworkAsync } = useSwitchNetwork()
-  const router = useRouter()
+  const pathname = usePathname();
   const {isOpen, onOpen, onClose} = useDisclosure();
 
   // useNetworkConnectorUpdater()
@@ -184,7 +184,7 @@ export const NetworkSwitcher = () => {
     }
   }, []);
 
-  if (!chainId || !router.pathname.includes('/dex/')) {
+  if (!chainId || !pathname?.includes('/dex/')) {
     return null
   }
 

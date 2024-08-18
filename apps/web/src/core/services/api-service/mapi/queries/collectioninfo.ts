@@ -19,7 +19,8 @@ export const collectionInfoQuerySchema: Yup.SchemaOf<CollectionInfoQueryParams> 
   verified: Yup.number().optional(),
   owner: Yup.string().optional(),
   slug: Yup.string().optional(),
-  supported: Yup.number().optional()
+  supported: Yup.number().optional(),
+  chain: Yup.number().optional()
 }).noUnknown();
 
 export interface CollectionInfoQueryParams {
@@ -38,6 +39,7 @@ export interface CollectionInfoQueryParams {
   owner?: string;
   slug?: string;
   supported?: number;
+  chain?: number;
 }
 
 export class CollectionInfoQuery extends Query<CollectionInfoQueryParams> {
