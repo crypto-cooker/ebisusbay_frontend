@@ -40,7 +40,7 @@ const Nft = ({ slug, id, nft: initialNft, collection: initialCollection, chain }
   });
 
   const {data: nftData} = useQuery({
-    queryKey: ['CollectionNft', collection.address, params!.id, chain],
+    queryKey: collection ? ['CollectionNft', collection.address, params!.id, chain] : [],
     queryFn: () => getNft(collection.address, params!.id, chain),
     initialData: initialNft,
     enabled: !!collection && !!params
@@ -93,12 +93,14 @@ const Nft = ({ slug, id, nft: initialNft, collection: initialCollection, chain }
 
   return (
     <>
-      <PageHead
-        title={nftData.nft.name}
-        description={getTraits(nftData.nft)}
-        url={`/collection/${collection?.slug}/${nftData.nft.id}`}
-        image={nftData.nft.image}
-      />
+      {!!nftData.nft && (
+        <PageHead
+          title={nftData.nft.name}
+          description={getTraits(nftData.nft)}
+          url={`/collection/${collection?.slug}/${nftData.nft.id}`}
+          image={nftData.nft.image}
+        />
+      )}
       {!!collection && !!nftData.nft && (
         <>
           {isBundle(collection.address) ? (
