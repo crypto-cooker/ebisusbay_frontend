@@ -113,44 +113,51 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
   }, []);
 
   const copyLink = useCallback(() => {
-    onCopy();
-    toast.info(`Link copied!`);
-  }, [navigator, window.location])
-
-  const options = [
-    {
-      url: 'https://www.facebook.com/sharer/sharer.php?u=',
-      label: 'Share on facebook',
-      icon: faFacebook,
-      type: 'url'
-    },
-    {
-      url: 'https://twitter.com/intent/tweet?text=',
-      label: 'Share on twitter',
-      icon: faSquareTwitter,
-      type: 'url'
-    },
-    {
-      url: 'https://telegram.me/share/?url=',
-      label: 'Share on telegram',
-      icon: faTelegram,
-      type: 'url'
-    },
-    {
-      label: 'Copy Link',
-      icon: faCopy,
-      type: 'event',
-      handleClick: copyLink
+    if (typeof navigator !== 'undefined' && typeof window !== 'undefined') {
+      onCopy();
+      toast.info(`Link copied!`);
     }
+  }, [onCopy, toast]);
 
-  ];
+  const shareOptions = () => {
+    if (typeof navigator !== 'undefined' && typeof window !== 'undefined') {
+      const location = window.location;
+      return [
+        {
+          url: `https://www.facebook.com/sharer/sharer.php?u=${location}`,
+          label: 'Share on Facebook',
+          icon: faFacebook,
+          type: 'url'
+        },
+        {
+          url: `https://twitter.com/intent/tweet?text=${location}`,
+          label: 'Share on Twitter',
+          icon: faSquareTwitter,
+          type: 'url'
+        },
+        {
+          url: `https://telegram.me/share/?url=${location}`,
+          label: 'Share on Telegram',
+          icon: faTelegram,
+          type: 'url'
+        },
+        {
+          label: 'Copy Link',
+          icon: faCopy,
+          type: 'event',
+          handleClick: copyLink
+        }
+      ];
+    }
+    return [];
+  }
 
   const MenuItems = (
-    options.map(option => (
+    shareOptions().map(option => (
       option.type === 'url' ?
         (
           <div >
-            <a href={`${option.url}${window.location}`} target='_blank' >
+            <a href={option.url} target='_blank' >
               <div key={option.label} className='social_media_item'>
                 <div className='icon_container'>
                   <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
@@ -221,14 +228,14 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
   useEffect(() => {
     async function func() {
       const existingOffer = await ApiService.withoutKey().getMadeOffersByUser(user.address!, {
-        collection: [nft.address],
-        tokenId: nft.id,
+        collection: [nft.nftAddress],
+        tokenId: nft.nftId,
         state: OfferState.ACTIVE,
         pageSize: 1
       });
       setOfferType(existingOffer.data.length > 0 ? OFFER_TYPE.update : OFFER_TYPE.make);
     }
-    if (!offerType && user.address && nft && nft.address && nft.id) {
+    if (!offerType && user.address && nft && nft.nftAddress && nft.nftId) {
       func();
     }
 
@@ -367,7 +374,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                     <NftPropertyLabel
                       label="Collection"
                       value={collectionName ?? 'View Collection'}
-                      avatar={collectionMetadata?.avatar ? ImageService.translate(collectionMetadata?.avatar).avatar() : null}
+                      avatar={collectionMetadata?.avatar ? ImageService.translate(collectionMetadata?.avatar).avatar() : undefined}
                       address={address}
                       verified={collection.verification?.verified}
                       to={`/collection/${chain}/${collectionSlug}`}

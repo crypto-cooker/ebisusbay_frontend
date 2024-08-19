@@ -27,11 +27,11 @@ interface NftProps {
   initialSlug: string;
   initialId: string;
   initialChainId: number;
-  initialNft: any;
+  initialNftData: any;
   initialCollection: any;
 }
 
-const Nft = ({ initialSlug, initialId, initialNft, initialCollection, initialChainId }: NftProps) => {
+const Nft = ({ initialSlug, initialId, initialNftData, initialCollection, initialChainId }: NftProps) => {
   const params = useParams();
   const slug = initialSlug ?? params?.slug as string;
   const chainIdOrSlug = initialChainId ?? params?.chain as string;
@@ -47,7 +47,7 @@ const Nft = ({ initialSlug, initialId, initialNft, initialCollection, initialCha
   const {data: nftData} = useQuery({
     queryKey: ['CollectionNft', slug, id, chainIdOrSlug],
     queryFn: () => getNft(collection.address, id, chainConfig!.chain.id),
-    initialData: initialNft,
+    initialData: initialNftData,
     enabled: !!collection && !!id && !!chainConfig
   });
 
@@ -165,17 +165,16 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
     });
   }
 
-  let nft;
+  let nftData;
   if (collection?.address) {
-    const nftData = await queryClient.fetchQuery({
+    nftData = await queryClient.fetchQuery({
       queryKey: ['CollectionNft', collection.address, tokenId, chainConfig.chain.id],
       queryFn: () => getNft(collection.address, tokenId, chainConfig.chain.id),
       staleTime: 1000 * 60 * 30, // 30 minutes
     });
-    nft = { ...nftData.nft, address: collection.address, id: tokenId };
   }
 
-  if (!collection || !nft) {
+  if (!collection || !nftData) {
     return {
       notFound: true
     }
@@ -183,7 +182,7 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
 
   const seoImage = isHeroesCollection(collection.address) ?
     appUrl(`api/heroes/${tokenId}/og?${cacheBustingKey()}`).toString() :
-    nft.image;
+    nftData.nft.image;
 
   const shouldSlugRedirect = !isDegen && isAddress(collectionSlug);
   if (shouldSlugRedirect || requiresChainRedirect) {
@@ -198,7 +197,7 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
         initialId: tokenId,
         initialChain: chainConfig.chain.id,
         initialCollection: collection,
-        initialNft: nft,
+        initialNftData: nftData,
         seoImage
       },
     };
@@ -210,7 +209,7 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
       initialId: tokenId,
       initialChain: chainConfig.chain.id,
       initialCollection: collection,
-      initialNft: nft,
+      initialNftData: nftData,
     },
   };
 };
