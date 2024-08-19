@@ -18,7 +18,7 @@ export const SecondaryButton = (props: ButtonProps) => {
   return (
     <Button
       variant='outline'
-      fontSize='sm'
+      fontSize={props.fontSize ?? props.size ?? 'sm'}
       borderColor={borderColor}
       {...props}
     >
