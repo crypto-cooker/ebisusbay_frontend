@@ -161,7 +161,7 @@ const TransferDrawerItem = ({ item, onAddCollection }: TransferDrawerItemProps) 
         </Box>
         <Box flex='1' ms={2} fontSize="14px">
           <VStack align="left" spacing={0}>
-            <Link href={`/collection/${item.nft.nftAddress}/${item.nft.nftId}`}>
+            <Link href={`/collection/${item.nft.chain}/${item.nft.nftAddress}/${item.nft.nftId}`}>
               <Text fontWeight="bold" noOfLines={1} cursor="pointer">{item.nft.name}</Text>
             </Link>
             <Skeleton isLoaded={!initializing}>

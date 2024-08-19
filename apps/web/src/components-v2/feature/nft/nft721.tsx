@@ -115,7 +115,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
   const dispatch = useAppDispatch();
   const user = useUser();
   const { refreshing, favorites, loading:isLoading } = useAppSelector((state) => state.nft);
-  const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`).toString());
+  const { onCopy } = useClipboard(appUrl(`/collection/${chain}/${address}/${id}`).toString());
   const [runAuthedFunction] = useAuthedFunction();
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
@@ -1124,7 +1124,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                                 </Box>
                                 <Stack>
                                   {nft.collectionName && (
-                                    <Link href={`/collection/${nft.collectionSlug ?? nft.nftAddress}`}>
+                                    <Link href={`/collection/${chain}/${nft.collectionSlug ?? nft.nftAddress}`}>
                                       <h6
                                         className="mt-auto fw-normal mb-0"
                                         style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
@@ -1133,7 +1133,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                                       </h6>
                                     </Link>
                                   )}
-                                  <Link href={`/collection/${nft.nftAddress}/${nft.nftId}`}>
+                                  <Link href={`/collection/${chain}/${nft.nftAddress}/${nft.nftId}`}>
                                     <Text fontWeight='bold'>{nft.name}</Text>
                                   </Link>
                                 </Stack>

@@ -30,7 +30,7 @@ const RyoshiStakingNftCard = ({
    onRemoveFromCartButtonPressed,
  }: RyoshiStakingNftCardProps) => {
   const router = useRouter();
-  const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
+  const nftUrl = appUrl(`/collection/${nft.chain}/${nft.nftAddress}/${nft.nftId}`);
   const [isHovered, setIsHovered] = useState(false);
   const ryoshiStakingCart = useAppSelector((state) => state.ryoshiStakingCart);
   const { onCopy } = useClipboard(nftUrl.toString());

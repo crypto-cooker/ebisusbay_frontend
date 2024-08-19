@@ -188,7 +188,7 @@ const SalesCollection = ({
             {listings && listings.map((listing, index) => (
               <Tr key={index}>
                 <Td minW={{base: '75px', md: '105px'}}>
-                  <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
+                  <Link href={`/collection/${listing.chain}/${listing.nftAddress}/${listing.nftId}`}>
                     {isBundle(listing.nftAddress) ? (
                       <img
                         className="lazy rounded"
@@ -207,7 +207,7 @@ const SalesCollection = ({
                   </Link>
                 </Td>
                 <Td minW={{base: '100px', md: '115px'}}>
-                  <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
+                  <Link href={`/collection/${listing.chain}/${listing.nftAddress}/${listing.nftId}`}>
                     {listing.nft.name ?? 'Unknown'}
                   </Link>
                 </Td>

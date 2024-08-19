@@ -79,7 +79,7 @@ interface Nft721Props {
 
 const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
   const dispatch = useAppDispatch();
-  const { onCopy } = useClipboard(appUrl(`/collection/${address}/${id}`).toString());
+  const { onCopy } = useClipboard(appUrl(`/collection/${chain}/${address}/${id}`).toString());
   const [runAuthedFunction] = useAuthedFunction();
 
   const { nft, refreshing, favorites } = useAppSelector((state) => state.nft);

@@ -27,7 +27,7 @@ const StakingNftCard = ({
    onRemove,
  }: StakingNftCardProps) => {
   const router = useRouter();
-  const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
+  const nftUrl = appUrl(`/collection/${nft.chain}/${nft.nftAddress}/${nft.nftId}`);
   const { onCopy } = useClipboard(nftUrl.toString());
   const townHallStakeNftContext = useContext(TownHallStakeNftContext) as TownHallStakeNftContextProps;
   const isSelected = townHallStakeNftContext.selectedNfts.find((selectedNft) => selectedNft.nftAddress === nft.nftAddress && selectedNft.nftId === nft.nftId);

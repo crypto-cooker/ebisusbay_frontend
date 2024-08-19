@@ -46,7 +46,7 @@ type PurchaseSuccessDialogProps = {
 };
 
 export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}: PurchaseSuccessDialogProps) {
-  const { onCopy, setValue } = useClipboard(appUrl(`/collection/${listing.nftAddress}/${listing.nftId}`).toString());
+  const { onCopy, setValue } = useClipboard(appUrl(`/collection/${listing.chain}/${listing.nftAddress}/${listing.nftId}`).toString());
 
   const user = useUser();
 
@@ -80,7 +80,7 @@ export default function PurchaseSuccessDialog({ onClose, isOpen, listing, tx}: P
 
   useEffect(() => {
     if (listing) {
-      setValue(appUrl(`/collection/${listing.nftAddress}/${listing.nftId}`).toString());
+      setValue(appUrl(`/collection/${listing.chain}/${listing.nftAddress}/${listing.nftId}`).toString());
     }
   }, [listing]);
 

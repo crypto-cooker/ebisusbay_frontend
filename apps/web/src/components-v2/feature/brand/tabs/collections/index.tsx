@@ -63,7 +63,7 @@ const CollectionsTab = ({collections}: CollectionsTabProps) => {
               </Wrap>
             </Box>
           }
-          url={`/collection/${collection.slug ?? collection.address}`}
+          url={`/collection/${collection.chain}/${collection.slug ?? collection.address}`}
           verified={collection.verification?.verified}
         />
       ))}

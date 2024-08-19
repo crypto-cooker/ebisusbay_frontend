@@ -61,7 +61,7 @@ const MyNftCard = ({
   newTab = false,
 }) => {
   const history = useRouter();
-  const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
+  const nftUrl = appUrl(`/collection/${nft.chain}/${nft.nftAddress}/${nft.nftId}`);
   const [isHovered, setIsHovered] = useState(false);
   const batchListingCart = useSelector((state) => state.batchListing);
   const { onCopy } = useClipboard(nftUrl.toString());
