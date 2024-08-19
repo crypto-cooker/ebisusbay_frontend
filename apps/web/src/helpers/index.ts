@@ -1,4 +1,4 @@
-import chainConfigs, {ChainSlug, isSupportedChainId, SupportedChainId} from "@src/config/chains";
+import chainConfigs, {ChainSlug, isSupportedChainId} from "@src/config/chains";
 
 function isChainSlug(slug: string): slug is ChainSlug {
   return Object.values(chainConfigs).some(config => config.slug === slug);
@@ -18,4 +18,12 @@ export function getChainById(id: number | string) {
   }
 
   return chainConfigs[id];
+}
+
+export function getChainByIdOrSlug(idOrSlug: number | string) {
+  if (isNaN(Number(idOrSlug)) && isChainSlug(idOrSlug as string)) {
+    return getChainBySlug(idOrSlug as string);
+  }
+
+  return getChainById(idOrSlug);
 }
