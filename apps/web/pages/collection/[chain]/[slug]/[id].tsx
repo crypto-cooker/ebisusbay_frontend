@@ -194,11 +194,11 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
         permanent: false,
       },
       props: {
-        slug: collection?.slug,
-        id: tokenId,
-        chain: chainConfig.chain.id,
-        collection,
-        nft,
+        initialSlug: collection?.slug,
+        initialId: tokenId,
+        initialChain: chainConfig.chain.id,
+        initialCollection: collection,
+        initialNft: nft,
         seoImage
       },
     };
@@ -206,11 +206,11 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
 
   return {
     props: {
-      slug: collection?.slug,
-      id: tokenId,
-      chain: chainConfig.chain.id,
-      collection,
-      nft,
+      initialSlug: collection?.slug,
+      initialId: tokenId,
+      initialChain: chainConfig.chain.id,
+      initialCollection: collection,
+      initialNft: nft,
     },
   };
 };
