@@ -1,16 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  IconButton,
-  Skeleton,
-  Stack,
-  Text,
-  useDisclosure,
-  VStack,
-  Wrap
-} from "@chakra-ui/react";
+import {Box, Button, Container, Flex, IconButton, Skeleton, Text, useDisclosure, VStack, Wrap} from "@chakra-ui/react";
 import {Card} from "@src/components-v2/foundation/card";
 import {ArrowDownIcon, SettingsIcon} from "@chakra-ui/icons";
 import {Field, INITIAL_ALLOWED_SLIPPAGE} from "src/modules/dex/swap/constants";
@@ -20,7 +8,6 @@ import {Currency, Percent, Trade, TradeType} from "@pancakeswap/sdk";
 import {useCurrency} from "@eb-pancakeswap-web/hooks/tokens";
 // import {useIsWrapping} from "@eb-pancakeswap-web/hooks/useIsWrapping";
 import replaceBrowserHistory from "@pancakeswap/utils/replaceBrowserHistory";
-import {useUser} from "@src/components-v2/useUser";
 import {maxAmountSpend} from "@eb-pancakeswap-web/utils/maxAmountSpend";
 import {useDefaultsFromURLSearch, useDerivedSwapInfo, useSwapState} from "@eb-pancakeswap-web/state/swap/hooks";
 import currencyId from "@eb-pancakeswap-web/utils/currencyId";
@@ -42,10 +29,14 @@ import {useSwapCallback} from "@eb-pancakeswap-web/hooks/useSwapCallback";
 import {useSwapCallArguments} from "@eb-pancakeswap-web/hooks/useSwapCallArguments";
 import Settings from "@dex/components/swap/settings";
 import {ApprovalState, useApproveCallback} from "@eb-pancakeswap-web/hooks/useApproveCallback";
-import { V2_ROUTER_ADDRESS } from "@pancakeswap/smart-router";
+import {V2_ROUTER_ADDRESS} from "@pancakeswap/smart-router";
 import useAccountActiveChain from "@eb-pancakeswap-web/hooks/useAccountActiveChain";
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import useWrapCallback, {WrapType} from "@eb-pancakeswap-web/hooks/useWrapCallback";
+import {BIG_INT_ZERO} from "@dex/swap/constants/exchange";
+import {useUserSingleHopOnly} from "@dex/swap/state/user/hooks";
+import {useIsWrapping} from "@eb-pancakeswap-web/hooks/useIsWrapping";
 
 // interface Props {
 //   inputAmount?: CurrencyAmount<Currency>
@@ -81,13 +72,22 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
   const { isOpen: isOpenConfirmSwap, onOpen: onOpenConfirmSwap, onClose: onCloseConfirmSwap } = useDisclosure();
   const { isOpen: isOpenSettings, onOpen: onOpenSettings, onClose: onCloseSettings } = useDisclosure();
 
-  const {v2Trade: trade, ...derivedSwapInfo} = useDerivedSwapInfo(
+  const {v2Trade, ...derivedSwapInfo} = useDerivedSwapInfo(
     independentField,
     typedValue,
     inputCurrency!,
     outputCurrency!,
     account ?? ''
   );
+  const {
+    wrapType,
+    execute: onWrap,
+    inputError: wrapInputError,
+  } = useWrapCallback(derivedSwapInfo.currencies[Field.INPUT], derivedSwapInfo.currencies[Field.OUTPUT], typedValue);
+
+  const isWrapping = useIsWrapping()
+  const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE;
+  const trade = showWrap ? undefined : v2Trade;
 
   const [{ tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<{
     tradeToConfirm: Trade<Currency, Currency, TradeType> | undefined
@@ -152,8 +152,6 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
     [onCurrencySelection],
   )
 
-  const showWrap = false;
-
   const parsedAmounts = useMemo(
     () =>
       showWrap
@@ -178,6 +176,12 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
     [dependentField, independentField, parsedAmounts, showWrap, typedValue]
   )
 
+  const route = trade?.route;
+  const userHasSpecifiedInputOutput = Boolean(
+    derivedSwapInfo.currencies[Field.INPUT] && derivedSwapInfo.currencies[Field.OUTPUT] && parsedAmounts[independentField]?.quotient > BIG_INT_ZERO
+  );
+  const noRoute = !route;
+
   const recipient = account ?? null;
   const currencyBalances = {
     [Field.INPUT]: useCurrencyBalance(account, inputCurrency),
@@ -187,12 +191,14 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
   const [userAllowedSlippage] = useUserSlippage()
 
   const { priceImpactWithoutFee } = computeTradePriceBreakdown(trade)
+  const [singleHopOnly] = useUserSingleHopOnly();
   const priceImpactSeverity = warningSeverity(priceImpactWithoutFee)
   // const confirmPriceImpactWithoutFee = useAsyncConfirmPriceImpactWithoutFee(
   //   priceImpactWithoutFee,
   //   PRICE_IMPACT_WITHOUT_FEE_CONFIRM_MIN,
   //   ALLOWED_PRICE_IMPACT_HIGH,
   // )
+
   const swapCalls = useSwapCallArguments(trade, INITIAL_ALLOWED_SLIPPAGE, null)
   const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(trade, userAllowedSlippage, recipient, swapCalls);
 
@@ -275,6 +281,14 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
   } = useApproveCallback(parsedAmounts[Field.INPUT], chainId ? V2_ROUTER_ADDRESS[chainId] : undefined)
 
   const isValid = !inputError && approvalA === ApprovalState.APPROVED;
+
+  // show approve flow when: no error on inputs, not approved or pending, or approved in current session
+  // never show if price impact is above threshold in non expert mode
+  const showApproveFlow =
+    !derivedSwapInfo.inputError &&
+    (approvalA === ApprovalState.NOT_APPROVED ||
+      approvalA === ApprovalState.PENDING) &&
+    !(priceImpactSeverity > 3 && !isExpertMode);
 
   return (
     <>
@@ -370,9 +384,28 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
           <AuthenticationGuard>
             {({isConnected, connect}) => (
               <>
-                {isConnected ? (
+                {!isConnected ? (
+                  <PrimaryButton onClick={connect}>Connect Wallet</PrimaryButton>
+                ) : showWrap ? (
+                  <PrimaryButton
+                    size='lg'
+                    isDisabled={Boolean(wrapInputError)}
+                    onClick={onWrap}
+                    w='full'
+                  >
+                    {wrapInputError ??
+                      (wrapType === WrapType.WRAP ? 'Wrap' : wrapType === WrapType.UNWRAP ? 'Unwrap' : null)}
+                  </PrimaryButton>
+                ) : noRoute && userHasSpecifiedInputOutput ? (
+                  <Card padding="45px 10px">
+                    <VStack gap="sm" justify="center">
+                      <Text textAlign="center">Insufficient liquidity for this trade. {noRoute ? 'No route found.' : ''}</Text>
+                      {singleHopOnly && <Text textAlign="center">Try enabling multi-hop trades.</Text>}
+                    </VStack>
+                  </Card>
+                ) : (
                   <VStack align='stretch'>
-                    {(approvalA === ApprovalState.NOT_APPROVED || approvalA === ApprovalState.PENDING) && (
+                    {showApproveFlow && (
                       <PrimaryButton
                         onClick={approveACallback}
                         isDisabled={approvalA === ApprovalState.PENDING}
@@ -408,8 +441,6 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
                             : 'Swap')}
                     </CommitButton>
                   </VStack>
-                ) : (
-                  <PrimaryButton onClick={connect}>Connect Wallet</PrimaryButton>
                 )}
               </>
             )}

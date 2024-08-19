@@ -30,15 +30,6 @@ export function useCallWithGasPrice() {
       }
       const { gas: gas_, ...overrides_ } = overrides || {}
       let gas = gas_
-      console.log('APPROVE GAS', {
-        abi: contract.abi,
-        address: contract.address,
-        account: walletClient.account,
-        functionName: methodName,
-        args: methodArgs,
-        value: 0n,
-        ...overrides_,
-      })
       if (!gas) {
         gas = await publicClient({ chainId }).estimateContractGas({
           abi: contract.abi,
@@ -50,18 +41,6 @@ export function useCallWithGasPrice() {
           ...overrides_,
         } as unknown as EstimateContractGasParameters)
       }
-      console.log('APPROVE WRITE', {
-        abi: contract.abi,
-        address: contract.address,
-        account: walletClient.account,
-        functionName: methodName,
-        args: methodArgs,
-        gasPrice: gasPrice.data,
-        // for some reason gas price is insamely high when using maxuint approval, so commenting out for now
-        gas: calculateGasMargin(gas),
-        value: 0n,
-        ...overrides_,
-      })
 
       const res = await walletClient.writeContract({
         abi: contract.abi,
