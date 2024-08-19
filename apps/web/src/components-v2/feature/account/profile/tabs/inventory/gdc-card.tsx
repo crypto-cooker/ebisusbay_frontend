@@ -10,7 +10,7 @@ interface GdcCardProps {
   onClaim: (id: number) => void;
 }
 const GdcCard = ({nft, onClaim}: GdcCardProps) => {
-  const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
+  const nftUrl = appUrl(`/collection/cronos/${nft.nftAddress}/${nft.nftId}`);
   const { onCopy } = useClipboard(nftUrl.toString());
 
   const navigateTo = (link: string) => {

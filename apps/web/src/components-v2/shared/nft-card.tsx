@@ -72,7 +72,7 @@ type BaseNftCardProps = {
   canBuy: boolean;
 }
 const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false, canBuy = true }: BaseNftCardProps) => {
-  const nftUrl = appUrl(`/collection/${nft.address}/${nft.id}`);
+  const nftUrl = appUrl(`/collection/${nft.chain}/${nft.address}/${nft.id}`);
   const dispatch = useAppDispatch();
   const user = useUser();
   const cart = useCart();
@@ -210,7 +210,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                       image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}
                       className={`card-img-top ${imgClass}`}
                       title={nft.name}
-                      url={`/collection/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`}
+                      url={`/collection/${nft.chain}/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`}
                       width={440}
                       height={440}
                       video={nft.video ?? nft.animationUrl ?? nft.animation_url}
@@ -224,7 +224,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                     image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}
                     className={`card-img-top ${imgClass}`}
                     title={nft.name}
-                    url={`/collection/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`}
+                    url={`/collection/${nft.chain}/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`}
                     width={440}
                     height={440}
                     video={nft.video ?? nft.animationUrl ?? nft.animation_url}

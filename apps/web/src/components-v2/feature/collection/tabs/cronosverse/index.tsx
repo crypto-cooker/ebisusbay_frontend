@@ -44,7 +44,7 @@ const CollectionCronosverse = ({ collection }: {collection: any}) => {
     // if (listing.market?.id) {
     //   history.push(`/listing/${listing.market?.id}`);
     // } else {
-    router.push(`/collection/${listing.address}/${listing.id}`);
+    router.push(`/collection/cronos/${listing.address}/${listing.id}`);
     // }
   };
 

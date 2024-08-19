@@ -27,7 +27,7 @@ const StakingNftCard = ({
    onRemove,
  }: StakingNftCardProps) => {
   const router = useRouter();
-  const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
+  const nftUrl = appUrl(`/collection/${nft.chain}/${nft.nftAddress}/${nft.nftId}`);
   const { onCopy } = useClipboard(nftUrl.toString());
   const barracksStakeNftContext = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
 

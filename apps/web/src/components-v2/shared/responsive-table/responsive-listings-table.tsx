@@ -174,7 +174,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
                     </Box>
                   </Td>
                   <Td fontWeight='bold'>
-                    <Link href={`/collection/${listing.nft.nftAddress}/${listing.nft.nftId}`}>
+                    <Link href={`/collection/${listing.nft.chain}/${listing.nft.nftAddress}/${listing.nft.nftId}`}>
                       {listing.nft.name}
                     </Link>
                   </Td>
@@ -293,7 +293,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}:
                       </Box>
 
                       <Box flex='1' fontSize='sm'>
-                        <Link href={`/collection/${listing.nftAddress}/${listing.nftId}`}>
+                        <Link href={`/collection/${listing.chain}/${listing.nftAddress}/${listing.nftId}`}>
                           {listing.nft.name}
                         </Link>
                       </Box>

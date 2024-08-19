@@ -80,7 +80,7 @@ const Filters = ({collections, onChange}: FiltersProps) => {
                         size='sm'
                         variant='ghost'
                       >
-                        <Link as={NextLink} href={`/collection/${collection.slug}`}>
+                        <Link as={NextLink} href={`/collection/${collection.chain}/${collection.slug}`}>
                           <FontAwesomeIcon icon={faArrowRight}/>
                         </Link>
                       </Box>

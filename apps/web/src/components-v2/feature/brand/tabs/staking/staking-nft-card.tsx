@@ -24,7 +24,7 @@ const StakingNftCard = ({
   onUnstake
 }: StakingNftCardProps) => {
   const history = useRouter();
-  const nftUrl = appUrl(`/collection/${nft.nftAddress}/${nft.nftId}`);
+  const nftUrl = appUrl(`/collection/${nft.chain}/${nft.nftAddress}/${nft.nftId}`);
   const [executing, setExecuting] = useState(false);
 
   const navigateTo = (link: URL | string) => {

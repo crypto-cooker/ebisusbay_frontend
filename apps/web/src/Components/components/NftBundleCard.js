@@ -49,7 +49,7 @@ const Watermarked = styled.div`
 `;
 
 const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, canBuy = true }) => {
-  const nftUrl = appUrl(`/collection/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`);
+  const nftUrl = appUrl(`/collection/${nft.chain}/${nft.address ?? nft.nftAddress}/${nft.id ?? nft.nftId}`);
   const dispatch = useAppDispatch();
   const cart = useCart();
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);

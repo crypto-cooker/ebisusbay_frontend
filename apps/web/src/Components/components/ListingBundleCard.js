@@ -51,7 +51,7 @@ const Watermarked = styled.div`
 `;
 
 const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
-  const nftUrl = appUrl(`/collection/${listing.collection.slug}/${listing.nftId}`);
+  const nftUrl = appUrl(`/collection/${listing.chain}/${listing.collection.slug}/${listing.nftId}`);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const dispatch = useAppDispatch();
   const user = useUser();
@@ -252,7 +252,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
             )}
             <Flex direction='column' justify='space-between' px={2} py={1}>
               {listing.collection && (
-                <Link href={`/collection/${listing.collection.slug}`}>
+                <Link href={`/collection/${listing.chain}/${listing.collection.slug}`}>
                   <h6
                     className="mt-auto fw-normal"
                     style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}

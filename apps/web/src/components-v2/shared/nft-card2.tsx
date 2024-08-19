@@ -74,7 +74,7 @@ const BaseNftCard = ({nft, mode, selectability, linkTo, body, footer}: BaseNftCa
   const hoverBgColor = useColorModeValue('#FFFFFF', '#404040');
   const borderColor = useColorModeValue('#bbb', '#ffffff33');
   const hoverBorderColor = useColorModeValue('#595d69', '#ddd');
-  const url = `/collection/${nft.nftAddress}/${nft.nftId}`;
+  const url = `/collection/${nft.chain}/${nft.nftAddress}/${nft.nftId}`;
 
   const handleBodySelect = (e: any) => {
     if (mode !== NftCardMode.MULTISELECT) return;
@@ -394,7 +394,7 @@ export const LinkableNftCard = ({nft}: LinkableNftCardProps) => {
   return (
     <BaseNftCard
       nft={nft}
-      linkTo={`/collection/${nft.nftAddress}/${nft.nftId}`}
+      linkTo={`/collection/${nft.chain}/${nft.nftAddress}/${nft.nftId}`}
       mode={NftCardMode.LINKED}
       selectability={{
         canSelect: false,

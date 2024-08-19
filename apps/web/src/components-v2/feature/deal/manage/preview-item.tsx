@@ -56,7 +56,7 @@ export const GetDealItemPreview = ({item, invalid}: GetDealItemPreviewProps) => 
         amount: parseInt(item.start_amount),
         category: item.collection?.name,
         categoryUrl: `/collection/${item.token}`,
-        itemUrl: `/collection/${item.token}/${item.identifier_or_criteria}`,
+        itemUrl: `/collection/${item.chain}/${item.chain}/${item.token}/${item.identifier_or_criteria}`,
         custom: false
       }
     } else if (isToken) {
