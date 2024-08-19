@@ -1,8 +1,8 @@
 import { Currency, WNATIVE } from '@pancakeswap/sdk'
 import { useMemo } from 'react'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
-import { useTransactionAdder } from 'state/transactions/hooks'
-import { useCurrencyBalance } from 'state/wallet/hooks'
+import { useTransactionAdder } from '@eb-pancakeswap-web/state/transactions/hooks'
+import { useCurrencyBalance } from '@eb-pancakeswap-web/state/wallet/hooks'
 import useAccountActiveChain from '@eb-pancakeswap-web/hooks/useAccountActiveChain'
 import { useWNativeContract } from './useContract'
 import { useCallWithGasPrice } from './useCallWithGasPrice'
@@ -48,14 +48,14 @@ export default function useWrapCallback(
                   const txReceipt = await callWithGasPrice(wbnbContract, 'deposit', undefined, {
                     value: inputAmount.quotient,
                   })
-                  const amount = inputAmount.toSignificant(6)
-                  const native = inputCurrency.symbol
-                  const wrap = WNATIVE[chainId].symbol
-                  addTransaction(txReceipt, {
-                    summary: `Wrap ${amount} ${native} to ${wrap}`,
-                    translatableSummary: { text: 'Wrap %amount% %native% to %wrap%', data: { amount, native, wrap } },
-                    type: 'wrap',
-                  })
+                  // const amount = inputAmount.toSignificant(6)
+                  // const native = inputCurrency.symbol
+                  // const wrap = WNATIVE[chainId].symbol
+                  // addTransaction(txReceipt, {
+                  //   summary: `Wrap ${amount} ${native} to ${wrap}`,
+                  //   translatableSummary: { text: 'Wrap %amount% %native% to %wrap%', data: { amount, native, wrap } },
+                  //   type: 'wrap',
+                  // })
                 } catch (error) {
                   console.error('Could not deposit', error)
                 }
@@ -63,7 +63,7 @@ export default function useWrapCallback(
             : undefined,
         inputError: sufficientBalance
           ? undefined
-          : t('Insufficient %symbol% balance', { symbol: inputCurrency.symbol }),
+          : `Insufficient ${inputCurrency.symbol} balance`,
       }
     }
     if (WNATIVE[chainId]?.equals(inputCurrency) && outputCurrency?.isNative) {
@@ -74,13 +74,13 @@ export default function useWrapCallback(
             ? async () => {
                 try {
                   const txReceipt = await callWithGasPrice(wbnbContract, 'withdraw', [inputAmount.quotient])
-                  const amount = inputAmount.toSignificant(6)
-                  const wrap = WNATIVE[chainId].symbol
-                  const native = outputCurrency.symbol
-                  addTransaction(txReceipt, {
-                    summary: `Unwrap ${amount} ${wrap} to ${native}`,
-                    translatableSummary: { text: 'Unwrap %amount% %wrap% to %native%', data: { amount, wrap, native } },
-                  })
+                  // const amount = inputAmount.toSignificant(6)
+                  // const wrap = WNATIVE[chainId].symbol
+                  // const native = outputCurrency.symbol
+                  // addTransaction(txReceipt, {
+                  //   summary: `Unwrap ${amount} ${wrap} to ${native}`,
+                  //   translatableSummary: { text: 'Unwrap %amount% %wrap% to %native%', data: { amount, wrap, native } },
+                  // })
                 } catch (error) {
                   console.error('Could not withdraw', error)
                 }
@@ -88,11 +88,11 @@ export default function useWrapCallback(
             : undefined,
         inputError: sufficientBalance
           ? undefined
-          : t('Insufficient %symbol% balance', { symbol: inputCurrency.symbol }),
+          : `Insufficient ${inputCurrency.symbol} balance`,
       }
     }
     return NOT_APPLICABLE
-  }, [wbnbContract, chainId, inputCurrency, outputCurrency, t, inputAmount, balance, addTransaction, callWithGasPrice])
+  }, [wbnbContract, chainId, inputCurrency, outputCurrency, inputAmount, balance, addTransaction, callWithGasPrice])
 }
 
 export function useIsWrapping(
