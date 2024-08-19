@@ -261,44 +261,51 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
   const [{ isLoading: isFavoriting, response, error: errorTF }, toggleFavorite] = useToggleFavorite();
 
   const copyLink = useCallback(() => {
-    onCopy();
-    toast.info(`Link copied!`);
-  }, [navigator, window.location])
-
-  const options = [
-    {
-      url: 'https://www.facebook.com/sharer/sharer.php?u=',
-      label: 'Share on Facebook',
-      icon: faFacebook,
-      type: 'url'
-    },
-    {
-      url: 'https://twitter.com/intent/tweet?text=',
-      label: 'Share on Twitter',
-      icon: faSquareTwitter,
-      type: 'url'
-    },
-    {
-      url: 'https://telegram.me/share/?url=',
-      label: 'Share on Telegram',
-      icon: faTelegram,
-      type: 'url'
-    },
-    {
-      label: 'Copy Link',
-      icon: faCopy,
-      type: 'event',
-      handleClick: copyLink
+    if (typeof navigator !== 'undefined' && typeof window !== 'undefined') {
+      onCopy();
+      toast.info(`Link copied!`);
     }
+  }, [onCopy, toast]);
 
-  ];
+  const shareOptions = () => {
+    if (typeof navigator !== 'undefined' && typeof window !== 'undefined') {
+      const location = window.location;
+      return [
+        {
+          url: `https://www.facebook.com/sharer/sharer.php?u=${location}`,
+          label: 'Share on Facebook',
+          icon: faFacebook,
+          type: 'url'
+        },
+        {
+          url: `https://twitter.com/intent/tweet?text=${location}`,
+          label: 'Share on Twitter',
+          icon: faSquareTwitter,
+          type: 'url'
+        },
+        {
+          url: `https://telegram.me/share/?url=${location}`,
+          label: 'Share on Telegram',
+          icon: faTelegram,
+          type: 'url'
+        },
+        {
+          label: 'Copy Link',
+          icon: faCopy,
+          type: 'event',
+          handleClick: copyLink
+        }
+      ];
+    }
+    return [];
+  }
 
   const MenuItems = (
-    options.map(option => (
+    shareOptions().map(option => (
       option.type === 'url' ?
         (
           <div >
-            <a href={`${option.url}${window.location}`} target='_blank' >
+            <a href={option.url} target='_blank' >
               <div key={option.label} className='social_media_item'>
                 <div className='icon_container'>
                   <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
@@ -661,14 +668,14 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
   useEffect(() => {
     async function func() {
       const existingOffer = await ApiService.withoutKey().getMadeOffersByUser(user.address!, {
-        collection: [nft.address],
-        tokenId: nft.id,
+        collection: [nft.nftAddress],
+        tokenId: nft.nftId,
         state: OfferState.ACTIVE,
         pageSize: 1
       });
       setOfferType(existingOffer.data.length > 0 ? OFFER_TYPE.update : OFFER_TYPE.make);
     }
-    if (!offerType && user.address && nft && nft.address && nft.id) {
+    if (!offerType && user.address && nft && nft.nftAddress && nft.nftId) {
       func();
     }
 
@@ -715,7 +722,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                   <iframe width="100%" height="636" src={nft.iframeSource} title="nft" />
                 ) : (
                   <>
-                    <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId} showDetails={true}>
+                    <DynamicNftImage nft={nft} address={nft.nftAddress ?? nft.nftAddress} id={nft.nftId ?? nft.nftId} showDetails={true}>
                       <AnyMedia
                         image={ImageService.translate(specialImageTransform(address, nft.image)).convert()}
                         video={nft.video ?? nft.animation_url}
@@ -748,7 +755,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                       )}
                     </div>
                   </ChakraButton>
-                  {nft && nft.original_image && !isHeroesCollection(nft.address) && (
+                  {nft && nft.original_image && !isHeroesCollection(nft.nftAddress) && (
                     <ChakraButton title="View Full Image" onClick={() =>
                         typeof window !== 'undefined' &&
                         window.open(specialImageTransform(address, fullImage()), '_blank')
@@ -756,7 +763,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
                     </ChakraButton>
                   )}
-                  {isHeroesCollection(nft.address) && (
+                  {isHeroesCollection(nft.nftAddress) && (
                     <>
                       <ChakraButton
                           title="Download Image"
@@ -874,7 +881,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                     <NftPropertyLabel
                       label="Collection"
                       value={collectionName ?? 'View Collection'}
-                      avatar={collectionMetadata?.avatar ? ImageService.translate(collectionMetadata?.avatar).avatar() : null}
+                      avatar={collectionMetadata?.avatar ? ImageService.translate(collectionMetadata?.avatar).avatar() : undefined}
                       address={address}
                       verified={collection.verification?.verified}
                       to={`/collection/${chain}/${address}`}
@@ -886,14 +893,14 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                         value={nft.rank}
                         avatar={rankingsLogoForCollection(collection)}
                         hover={rankingsTitleForCollection(collection)}
-                        to={rankingsLinkForCollection(collection, nft.id)}
+                        to={rankingsLinkForCollection(collection, nft.nftId)}
                         pop={true}
                       />
                     )}
                   </div>
 
 
-                  {isArgonautsBrandCollection(nft.address) ? (
+                  {isArgonautsBrandCollection(nft.nftAddress) ? (
                     <Box my={6}>
                       <Button styleType="default-outlined" borderColor={getTheme(user.theme).colors.textColor4}>
                         <a href={`https://hub.argofinance.money/${nft.owner}`} target="_blank" className="fw-bold" style={{ fontSize: '0.8em' }}>
@@ -1109,7 +1116,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                               <Flex gap='15px'>
                                 <Box w='72px'>
                                   <MultimediaImage
-                                    source={ImageService.translate(specialImageTransform(nft.address, nft.image)).fixedWidth(100, 100)}
+                                    source={ImageService.translate(specialImageTransform(nft.nftAddress, nft.image)).fixedWidth(100, 100)}
                                     fallbackSource={ImageService.translate(ImageService.translate(nft.image).thumbnail()).fixedWidth(100, 100)}
                                     title={nft.name}
                                     className="img-fluid img-rounded mb-sm-30"
@@ -1117,7 +1124,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                                 </Box>
                                 <Stack>
                                   {nft.collectionName && (
-                                    <Link href={`/collection/${nft.collectionSlug ?? nft.address}`}>
+                                    <Link href={`/collection/${nft.collectionSlug ?? nft.nftAddress}`}>
                                       <h6
                                         className="mt-auto fw-normal mb-0"
                                         style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
@@ -1126,7 +1133,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                                       </h6>
                                     </Link>
                                   )}
-                                  <Link href={`/collection/${nft.address}/${nft.id}`}>
+                                  <Link href={`/collection/${nft.nftAddress}/${nft.nftId}`}>
                                     <Text fontWeight='bold'>{nft.name}</Text>
                                   </Link>
                                 </Stack>

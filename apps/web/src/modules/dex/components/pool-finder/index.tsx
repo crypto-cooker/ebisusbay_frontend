@@ -131,11 +131,22 @@ export default function PoolFinder() {
                 hasPosition && pair ? (
                   <>
                     <MinimalPositionCard pair={pair} />
-                    <NextLink href={`/dex/add/v2/${pair.token0.address}/${pair.token1.address}`}>
-                      <Button variant='link' width='full'>
-                        Manage this pair
-                      </Button>
-                    </NextLink>
+                    <VStack>
+                      <Box w='full'>
+                        <NextLink href={`/dex/remove/v2/${currencyId(currency0)}/${currencyId(currency1)}`}>
+                          <SecondaryButton w='full' size='md'>
+                            Remove
+                          </SecondaryButton>
+                        </NextLink>
+                      </Box>
+                      <Box w='full'>
+                        <NextLink href={`/dex/add/v2/${currencyId(currency0)}/${currencyId(currency1)}`}>
+                          <PrimaryButton w='full' size='md'>
+                            Add
+                          </PrimaryButton>
+                        </NextLink>
+                      </Box>
+                    </VStack>
                   </>
                 ) : (
                   <Card padding="45px 10px">
