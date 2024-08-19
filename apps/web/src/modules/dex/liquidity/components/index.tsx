@@ -1,14 +1,9 @@
-import {Box, Center, Heading, HStack, Spinner, Text, Stack, VStack} from "@chakra-ui/react";
+import {Box, Center, Heading, HStack, Spinner, Stack, Text, VStack} from "@chakra-ui/react";
 import {Card} from "@src/components-v2/foundation/card";
-import React, {useMemo} from "react";
+import React from "react";
 import NextLink from "next/link";
 import {AddIcon, DownloadIcon} from "@chakra-ui/icons";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {toV2LiquidityToken, useTrackedTokenPairs} from "@dex/swap/state/user/hooks";
-import {useTokenBalancesWithLoadingIndicator} from "@eb-pancakeswap-web/state/wallet/hooks";
-import useActiveWeb3React from "@eb-pancakeswap-web/hooks/useActiveWeb3React";
-import {useV2Pairs} from "@eb-pancakeswap-web/hooks/usePairs";
-import {Pair} from "@pancakeswap/sdk";
 import FullPositionCard from "@dex/liquidity/components/position-card";
 import useV2PairsByAccount from "@eb-pancakeswap-web/hooks/useV2Pairs";
 import {useUser} from "@src/components-v2/useUser";
@@ -47,7 +42,7 @@ export default function LiquidityPage() {
             </Center>
           ) : allV2PairsWithLiquidity?.length > 0 ? (
             <>
-              {allV2PairsWithLiquidity.map((v2Pair) => (
+              {allV2PairsWithLiquidity.filter((v2Pair) => !!v2Pair).map((v2Pair) => (
                 <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
               ))}
             </>
