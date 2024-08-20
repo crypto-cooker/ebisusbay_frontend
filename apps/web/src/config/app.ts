@@ -298,10 +298,12 @@ const appConfigs: AppConfigMap = {
         deals: []
       },
       [ChainId.CRONOS_ZKEVM]: {
-        global: [],
+        global: ['zkcro', 'frtn'],
         marketplace: {
-          available: [],
-          nft: {}
+          available: ['zkcro', 'frtn'],
+          nft: {
+            '0x46055078a40358c27f7850d81f29ec857342318f': ['frtn'] // Moggy Money Brokers
+          }
         },
         deals: []
       },
@@ -477,9 +479,9 @@ const appConfigs: AppConfigMap = {
         deals: []
       },
       [ChainId.CRONOS_ZKEVM]: {
-        global: ['cro', 'frtn'],
+        global: [],
         marketplace: {
-          available: ['cro', 'frtn'],
+          available: [],
           nft: {}
         },
         deals: []

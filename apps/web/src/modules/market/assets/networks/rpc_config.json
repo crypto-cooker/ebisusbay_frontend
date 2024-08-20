@@ -27902,6 +27902,48 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Moggy Money Brokers",
+      "slug": "moggy-money-brokers",
+      "multiToken": true,
+      "address": "0x46055078a40358c27f7850d81f29ec857342318f",
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        }
+      ],
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/moggy-money-brokers/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/moggy-money-brokers/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/moggy-money-brokers/banner.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": true
+      }
     }
   ],
   "drops": [

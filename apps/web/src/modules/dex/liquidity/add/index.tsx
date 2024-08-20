@@ -429,6 +429,7 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
                                 w='full'
                                 loadingText={`Approving ${currencies[Field.CURRENCY_A]?.symbol}`}
                                 isLoading={approvalA === ApprovalState.PENDING}
+                                size='lg'
                               >
                                 Approve {currencies[Field.CURRENCY_A]?.symbol}
                               </PrimaryButton>
@@ -440,6 +441,7 @@ export default function AddLiquidity({currencyIdA, currencyIdB}: AddLiquidityPro
                                 w='full'
                                 loadingText={`Approving ${currencies[Field.CURRENCY_B]?.symbol}`}
                                 isLoading={approvalB === ApprovalState.PENDING}
+                                size='lg'
                               >
                                 Approve {currencies[Field.CURRENCY_B]?.symbol}
                               </PrimaryButton>
