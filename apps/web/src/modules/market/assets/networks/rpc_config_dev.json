@@ -138,7 +138,7 @@
         },
         "website": "https://madmeerkat.io/",
         "twitter": "https://twitter.com/MadMeerkatNFT",
-        "discord": "https://discord.gg/madmeerkat",
+        "discord": "https://discord.gg/madmeerkatnft",
         "medium": "https://medium.com/@madmeerkat0",
         "categories": [
           "utility",
@@ -2893,7 +2893,7 @@
         },
         "website": "https://madmeerkat.io/",
         "twitter": "https://twitter.com/MadMeerkatNFT",
-        "discord": "http://discord.gg/madmeerkat",
+        "discord": "http://discord.gg/madmeerkatnft",
         "medium": " http://medium.com/@madmeerkat0",
         "categories": [
           "collectibles",
@@ -3411,6 +3411,7 @@
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/slothty/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/slothty/banner.webp",
         "website": "https://dripcro.com",
+        "twitter": "https://x.com/drip_official_",
         "discord": "https://discord.gg/ttaPM95WcR",
         "categories": [
           "uncollectible"
@@ -5583,7 +5584,7 @@
         },
         "website": "https://madmeerkat.io/",
         "twitter": "https://twitter.com/MadMeerkatNFT",
-        "discord": "https://discord.gg/madmeerkat",
+        "discord": "https://discord.gg/madmeerkatnft",
         "medium": "https://medium.com/@madmeerkat0",
         "categories": [
           "utility"
@@ -5609,7 +5610,7 @@
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/meerkats/madsacks/card.webp",
         "website": "https://madmeerkat.io/",
         "twitter": "https://twitter.com/MadMeerkatNFT",
-        "discord": "https://discord.gg/madmeerkat",
+        "discord": "https://discord.gg/madmeerkatnft",
         "medium": "https://medium.com/@madmeerkat0",
         "categories": [
           "gaming"
@@ -10379,6 +10380,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/dripcro/banner.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/dripcro/card.webp",
         "website": "https://dripcro.com",
+        "twitter": "https://x.com/drip_official_",
         "discord": "https://discord.gg/ttaPM95WcR",
         "categories": [
           "utility"
@@ -11947,7 +11949,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/killakatz/banner.webp",
         "website": "http://killakatznft.com/",
         "twitter": "https://twitter.com/KillaKatzNFT",
-        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "discord": "https://discord.gg/QCqUJjU6GC",
         "categories": [
           "collectibles"
         ]
@@ -12606,7 +12608,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/killakatz-riot/banner.webp",
         "website": "http://killakatznft.com/",
         "twitter": "https://twitter.com/KillaKatzNFT",
-        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "discord": "https://discord.gg/QCqUJjU6GC",
         "categories": []
       },
       "verification": {
@@ -12808,7 +12810,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": true
+        "kyc": false
       }
     },
     {
@@ -13048,12 +13050,12 @@
       "listable": true,
       "metadata": {
         "description": "Undead Pumpkin Head is a collectible NFT tailored around community, cryptocurrency, adventure, and supportive collaboration. Each Pumpkin Head resides on the Cronos blockchain as a one of a kind non-fungible token (NFT), containing a unique combination of 95 spooky hand drawn traits and horrifying attributes. Holding a Undead Pumpkin-Head NFT grants you access to secondary royalties, and a more passionate community that serves to build a more meaningful long-term connection, through co-creation, community, web3 fables, and dreaming.",
-        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/undead-pumpkin-heads/avatar.webp",
-        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/undead-pumpkin-heads/card.webp",
-        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/undead-pumpkin-heads/banner.webp",
-        "website": "https://undeadcommunity.com",
-        "twitter": "https://twitter.com/WeRtheUndead ",
-        "discord": "https://discord.gg/undeadcommunity",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/undead-pumpkin-heads/avatar2.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/undead-pumpkin-heads/card2.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/undead-pumpkin-heads/banner2.webp",
+        "website": "https://pumpcoincro.xyz/",
+        "twitter": "https://twitter.com/PumpCoin_Cro ",
+        "discord": "https://discord.gg/HraVzVN8mq",
         "categories": []
       },
       "verification": {
@@ -13774,13 +13776,13 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Rich Kids is a three part set of 7,500 boys, 7,500 girls, and 7,500 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst.",
+        "description": "Thank you for all of your support. Due to the original founder (Austin) leaving the project in an irreparable state, the community has voted to sunset The Rich Kids Ecosystem. Please join the discord to trade in your Rich Kids at a rate of two pairs (one boy and one girl per pair) for one HoundZ NFT.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/the-rich-kids/avatar.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/the-rich-kids/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/the-rich-kids/banner.webp",
         "website": "https://www.trknft.com/",
         "twitter": "https://twitter.com/TRK_CRO",
-        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "discord": "https://discord.gg/QCqUJjU6GC",
         "categories": []
       },
       "verification": {
@@ -15117,7 +15119,7 @@
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/nft-ringz-aperson-lyeque/avatar.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/nft-ringz-aperson-lyeque/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/nft-ringz-aperson-lyeque/banner.webp",
-        "website": "https://jlcustombentwoodrings.com/",
+        "website": "https://apersonlyeque.com/",
         "twitter": "https://twitter.com/ApersonLyeque",
         "discord": "https://discord.gg/Trooprz",
         "categories": []
@@ -15291,7 +15293,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cmm-membership-card/banner.webp",
         "website": "https://cryptomoneymakers.org/",
         "twitter": "https://twitter.com/CronosMoney",
-        "discord": "https://discord.gg/ruPMH9MnZk",
+        "discord": "https://discord.gg/SfEpRvmUZk",
         "categories": []
       },
       "verification": {
@@ -16491,6 +16493,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ddmc/banner.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/ddmc/card.webp",
         "website": "https://dripderivatives.com/",
+        "twitter": "https://x.com/drip_official_",
         "discord": "https://discord.gg/x487dqKCQA",
         "categories": []
       },
@@ -16978,7 +16981,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": true
+        "kyc": false
       }
     },
     {
@@ -18095,13 +18098,13 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Rich Kids is a three part set of 7,500 boys, 7,500 girls, and 7,500 jets. All building on each other to create a unique ecosystem exploring the debauchery of the upper class at their worst. The Girls compliment the Boys to pilot the jets.",
+        "description": "Thank you for all of your support. Due to the original founder (Austin) leaving the project in an irreparable state, the community has voted to sunset The Rich Kids Ecosystem. Please join the discord to trade in your Rich Kids at a rate of two pairs (one boy and one girl per pair) for one HoundZ NFT.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/the-rich-girls/avatar.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/the-rich-girls/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/the-rich-girls/banner.webp",
         "website": "https://www.trknft.com/",
         "twitter": "https://twitter.com/TRK_CRO",
-        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "discord": "https://discord.gg/QCqUJjU6GC",
         "categories": []
       },
       "verification": {
@@ -19498,7 +19501,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": true
+        "kyc": false
       }
     },
     {
@@ -20052,6 +20055,31 @@
       }
     },
     {
+      "name": "Keys2Clash",
+      "slug": "keys2clash",
+      "multiToken": false,
+      "address": "0xb49aa786B65Ba761B559940b5D8E05392228bf47",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Keys are required to access the server & game. The difference in the Tiers and the amount you hold will unlock different game areas, exchange rates, earning potential, and other benefits.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/keys2clash/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/keys2clash/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/keys2clash/banner.webp",
+        "website":"https://clashcity.xyz/",
+        "twitter": "https://twitter.com/ClashCityTV",
+        "discord": "https://discord.gg/clash-city-923262570540974110",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
       "name": "Skeleton Key",
       "slug": "skeleton-key",
       "multiToken": false,
@@ -20084,12 +20112,12 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "We Are The Real Ape Kingdom. Revived Stronger Than Ever. Join The Discord And Check Out The Fam",
+        "description": "The Real Ape Kingdom reborn and backed by B.I.C they are here to make a statement. Come and see what the rebuild is all about.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/the-real-ape-kingdom/avatar.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/the-real-ape-kingdom/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/the-real-ape-kingdom/banner.webp",
-        "twitter": "https://twitter.com/realapekingdom",
-        "discord": "https://discord.gg/rMquT5caJP",
+        "twitter": "https://twitter.com/Blockchnbanditz",
+        "discord": "https://discord.gg/GjyjuYzwp2",
         "categories": [
           "collectibles"
         ]
@@ -20455,7 +20483,7 @@
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/punk-weapon/card.webp",
         "website": "https://thecronosclub.com",
         "twitter": "https://twitter.com/the_cronos_club",
-        "discord": "https://discord.gg/rvtB8gYSGU",
+        "discord": "https://discord.gg/49y7edbqy5",
         "medium": "https://medium.com/@the_cronos_club",
         "telegram": "https://t.co/3IKF191DcQ",
         "categories": [
@@ -20711,7 +20739,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": true
+        "kyc": false
       }
     },
     {
@@ -20872,7 +20900,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cyberpunk-cronicles/banner.webp",
         "website": "https://thecronosclub.com/",
         "twitter": "https://twitter.com/The_Cronos_Club",
-        "discord": "https://discord.gg/rvtB8gYSGU",
+        "discord": "https://discord.gg/49y7edbqy5",
         "medium": "https://medium.com/@the_cronos_club",
         "telegram": "https://t.me/+8CcIuXpqLFYzN",
         "categories": []
@@ -21048,7 +21076,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -21459,7 +21487,7 @@
       "multiToken": false,
       "address": "0x96adF7839A133da31824113a23e223D02e97c53A",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Trophy Wives is the 2nd collection by Dead Beat Dads. These 3000 well-endowed ladies married far below their standards to satisfy their lifestyle. Trophy Wives must endure a torturous honeymoon with a Dead Beat Dad in order to earn a birth certificate. Birth certificates will allow one to mint our 3rd collection, Teenage Dirtbags. Our family is growing. Come be a part of it, even if it is dysfunctional.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/dbd-trophy-wives/avatar.webp",
@@ -22205,7 +22233,7 @@
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/zoodles/card2.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/zoodles/banner.webp",
         "twitter": "https://twitter.com/Secret__Jen",
-        "discord": "https://discord.gg/Zh69mDURNH",
+        "discord": "https://discord.gg/GUWaKaBzUv",
         "categories": []
       },
       "verification": {
@@ -22772,7 +22800,7 @@
         "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/avatar2.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/card.webp",
-        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/banner2.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/banner4.webp",
         "website": "https://coomcats.com/",
         "twitter": "https://twitter.com/CoomCatsNFT",
         "discord": "https://discord.gg/fDgERHyUzC",
@@ -22780,7 +22808,7 @@
       },
       "verification": {
         "verified": true,
-        "doxx": false,
+        "doxx": true,
         "kyc": true
       }
     },
@@ -22951,7 +22979,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -22974,7 +23002,7 @@
       "verification": {
         "verified": true,
         "doxx": false,
-        "kyc": false
+        "kyc": true
       }
     },
     {
@@ -23082,7 +23110,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/killakoinz/banner.webp",
         "website": "https://katznkidz.com/",
         "twitter": "https://twitter.com/KatZNKidZ",
-        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "discord": "https://discord.gg/QCqUJjU6GC",
         "categories": [
           "collectibles"
         ]
@@ -23556,7 +23584,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/origami-legends/banner.webp",
         "website": "https://thecronosclub.com/",
         "twitter": "https://twitter.com/The_Cronos_Club",
-        "discord": "https://discord.gg/rvtB8gYSGU",
+        "discord": "https://discord.gg/49y7edbqy5",
         "categories": []
       },
       "verification": {
@@ -23717,7 +23745,7 @@
       "onChain": false,
       "listable": true,
       "metadata": {
-        "description": "The Cronos Chickens are a collection of 5,555 fun-loving chickens that live on the Cronos blockchain.",
+        "description": "The Cronos Chickens are a collection of fun-loving chickens that live on the Cronos blockchain.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-chickens/avatar3.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-chickens/banner2.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-chickens/card.webp",
@@ -24228,7 +24256,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cmm-money-bag/banner.webp",
         "website": "https://cryptomoneymakers.org/",
         "twitter": "https://twitter.com/CronosMoney",
-        "discord": "https://discord.gg/bcjgNexUqz",
+        "discord": "https://discord.gg/SfEpRvmUZk",
         "categories": []
       },
       "verification": {
@@ -24575,7 +24603,7 @@
       "multiToken": false,
       "address": "0x26ba6Bd9436cf2BE636b32cCf40b1c3843c6ac13",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Genius Genies are the DAO token used to make decisions regarding ecosystem treasury funds. 1 Genie = 1 vote",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/genius-genies/avatar.webp",
@@ -25182,8 +25210,8 @@
       "metadata": {
         "description": "Step into the world of The CROjakians, a collective of 3000 eccentric and captivating townsfolk who call the sleepy town of CRONOS their home. CRONOS in 2021, a buzzing haven teeming with fintech trailblazers. Fast forward to today, the digital gold rush has waned, and our beloved township is left grappling with the aftermath of its past glory. But fear not! Our charismatic hero, CROjak, has a gleaming vision for the town's revival. With the rallying cry #makecronosgreatagain, he's determined to ignite the spirit of the townspeople and unleash the limitless possibilities that lie within CRONOS. Prepare to embark on an extraordinary journey as you join CROjak in this captivating collection. Together, we'll embark on a quest to inspire the townsfolk, reignite their dreams, and transform CRONOS into a vibrant metropolis bursting with life, joy, and endless excitement!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/the-crojakians/avatar.webp",
-        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/the-crojakians/card.webp",
-        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/the-crojakians/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/the-crojakians/card2.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/the-crojakians/banner2.webp",
         "website": "https://www.crojak.com/",
         "twitter": "https://twitter.com/CROjak_Token",
         "discord": "https://discord.gg/hQ7DetPFng",
@@ -25309,7 +25337,7 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/houndz/banner.webp",
         "website": "https://katznkidz.com/",
         "twitter": "https://twitter.com/KillaKatzNFT",
-        "discord": "https://discord.gg/C2nYz7Ajpp",
+        "discord": "https://discord.gg/QCqUJjU6GC",
         "categories": []
       },
       "verification": {
@@ -25426,6 +25454,7 @@
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/y-plush-nft/avatar.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/y-plush-nft/card.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/y-plush-nft/banner.webp",
+        "website": "https://time-launcher.com/drops/yplush",
         "twitter": "https://twitter.com/YplushNft",
         "discord": "https://discord.gg/SKQdGwgWwS",
         "categories": [
@@ -25567,14 +25596,16 @@
       "name": "Pixel Ebisu",
       "slug": "pixel-ebisu",
       "multiToken": false,
-      "address": "",
+      "address": "0xceb43B91fF882e3cA8B5B0bddC2570194C46f51D",
       "onChain": false,
       "listable": false,
       "metadata": {
-        "description": "",
+        "description": "Pixel art paying homage to the #1 Marketplace on the Cronos chain. “Ebisusbay” Created by Shadowbright",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/pixel-ebisu/avatar.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/pixel-ebisu/banner.webp",
         "card": "https://cdn-prod.ebisusbay.com/files/collection-images/pixel-ebisu/card.webp",
+        "website": "https://dripcro.com",
+        "twitter": "https://x.com/drip_official_",
         "discord": "https://discord.gg/dripcro-com-1003477871664320525",
         "categories": []
       },
@@ -25582,6 +25613,2336 @@
         "doxx": false,
         "kyc": false,
         "verified": true
+      }
+    },
+    {
+      "name": "Zoomer Squad - Playground Game Tokens: Season 3",
+      "slug": "zoomer-squad-playground-tokens-s3",
+      "multiToken": false,
+      "address": "0xcef21f5B89a7A25eac8E005cA25E2CCAecD4dD03",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Playground Season 3 Game Tokens for brought to you by Boomer Squad",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/zoomer-squad-playground-tokens-s1/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/zoomer-squad-playground-tokens-s1/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/zoomer-squad-playground-tokens-s1/card.webp",
+        "website": "https://www.boomersquad.io/",
+        "twitter": "https://twitter.com/BoomerSquadNFT1",
+        "discord": "https://discord.gg/boomer-squad-nft-939820143486320650",
+        "medium": "https://medium.com/@BoomerSquadNFT",
+        "categories": [
+          "collectibles",
+          "gaming"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Blockchain Banditz Cowboyz",
+      "slug": "blockchain-banditz-cowboyz",
+      "multiToken": false,
+      "address": "0xddea51dd8649e0605770348ceb417c64c1b350c7",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "5000 wild and unpredictable Cowboy Banditz have made their way onto the blockchain and ready to cauase some chaos. Although it isn't all bad these Cowboyz will come jam packed with utility.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/blockchain-banditz-cowboyz/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/blockchain-banditz-cowboyz/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/blockchain-banditz-cowboyz/card.webp",
+        "twitter": "https://twitter.com/Blockchnbanditz",
+        "discord": "https://discord.gg/Cm4ZGC7jCc",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "YUROSAKO",
+      "slug": "yurosako",
+      "multiToken": false,
+      "address": "0xa4cbC591c6D20a1B5CE35e52779191F4A35d62D1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the main YUROSAKO collection that includes 3,939 PFPs characters with over 300 traits. Some of\nthese characters are legendaries and very rare and high collectibles, among which includes only one\nYurosako without mask and unique.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/yurosako/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/yurosako/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/yurosako/banner.webp",
+        "website": "https://yurosako.com/",
+        "twitter": "https://twitter.com/yurosako",
+        "discord": "https://discord.gg/yurosako",
+        "instagram": "https://www.instagram.com/yurosako",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Gangverse Card",
+      "slug": "gangverse-card",
+      "multiToken": false,
+      "address": "0xC571A1f7fecbC0722eA3100E25fbAb2d05D291E8",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Gangverse Card is produced in a limited quantity and is the first type of card that enables you to benefit from various privileges on the Gangverse App Platform.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/gangverse-card/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/gangverse-card/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/gangverse-card/banner.webp",
+        "website": "https://gangverse.club/",
+        "twitter": "https://twitter.com/gangverse",
+        "discord": "https://discord.gg/u9NJ8GBPXA",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Blumies Gods",
+      "slug": "blumies-gods",
+      "multiToken": false,
+      "address": "0x345EeC864f28108b0e79554603035A14B9Fe7055",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The silent symphony of our future orchestrating within.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/blumies-gods/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/blumies-gods/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/blumies-gods/banner.webp",
+        "website": "https://www.blumiesofficial.com/",
+        "twitter": "https://twitter.com/BlumiesNFT",
+        "discord": "https://discord.gg/RXPzJSHaj3",
+        "medium": "https://blumies.gitbook.io/blumies-nft/",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Bad Time",
+      "slug": "bad-time",
+      "multiToken": false,
+      "address": "0x5bF534f095C3b21c4cE71099b33001A6C6662960",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Bad Time is a collection to save the B.A.D project via burning for the collection + Investment pools with the remaining of the mint, that will get disturbed to holders.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/bad-time/avatar.png",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/bad-time/card.png",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/bad-time/banner.png",
+        "website": "https://time-sniper.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/timemachinenfts",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Cyberpunk Warriors",
+      "slug": "cyberpunk-warriors",
+      "multiToken": false,
+      "address": "0x7239B5A029b0263A813cfA98A615Cc9C9a8C3828",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "In the aftermath of a cataclysmic conflict, the Cyberpunk Warriors emerge as the hardened survivors of the Fire Quest. Cyberunk CROnicles are still fighting to master their skills. Join the Fire Quest if you dare.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cyberpunk-warriors/avatar.png",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cyberpunk-warriors/card.jpg",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cyberpunk-warriors/banner.jpg",
+        "website": "https://thecronosclub.com/",
+        "twitter": "https://twitter.com/the_cronos_club",
+        "medium": "https://medium.com/@the_cronos_club",
+        "discord": "https://discord.gg/49y7edbqy5",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Elements",
+      "slug": "elements",
+      "multiToken": true,
+      "address": "0xb48D5083e29e8612A19FE9783466ad1F7C4CbeD5",
+      "onChain": false,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        },
+        {
+          "id": 6
+        },
+        {
+          "id": 7
+        },
+        {
+          "id": 8
+        },
+        {
+          "id": 9
+        },
+        {
+          "id": 10
+        },
+        {
+          "id": 11
+        },
+        {
+          "id": 12
+        }
+      ],
+      "listable": true,
+      "metadata": {
+        "description": "Discover the power of the elements. Each token embodies the force of nature inviting you to explore and harness the essence of elements in a digital realm.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/elements/avatar.jpg",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/elements/card.jpg",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/elements/banner.jpg",
+        "website": "https://thecronosclub.com/",
+        "twitter": "https://twitter.com/the_cronos_club",
+        "medium": "https://medium.com/@the_cronos_club",
+        "discord": "https://discord.gg/49y7edbqy5",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crokachu",
+      "slug": "crokachu",
+      "multiToken": false,
+      "address": "0x4f62423c8e3bea683e14477039f2b3438e9890cb",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crokachu is a 5k Cronos NFT collection of unique pixel-art PFPs. Each NFT is algorithmically created to be unique and guarantees its owner a return on subsequent mints and half of the market royalties!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crokachu/avatar.jpg",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/crokachu/card.png",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/crokachu/banner.png",
+        "website": "https://crokachu.vercel.app/",
+        "twitter": "https://twitter.com/crokachu_cro",
+        "discord": "https://discord.gg/BWP23gPAHV",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Lovestruck Hyenas",
+      "slug": "lovestruck-hyenas",
+      "multiToken": false,
+      "address": "0xcb024A5504F88D495B5A28EFE4Da5F093de6c141",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Inspired by the power of love and the strength of hyena packs, we proudly present a collection of unique NFTs crafted specifically for this special time of year. Each artwork tells a story of affection, connection, and the unwavering spirit of hyenas on Valentine's Day.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/lovestruck-hyenas/avatar.png",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/lovestruck-hyenas/card.png",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/lovestruck-hyenas/banner.png",
+        "website": "https://hyenahustlers.xyz/",
+        "twitter": "https://twitter.com/hyenahustlers",
+        "discord": "https://discord.gg/KcWaBQPuv9",
+        "medium": "https://medium.com/@hyenahustersnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Ballies: Legends Packs",
+      "slug": "ballies-legends-packs",
+      "multiToken": false,
+      "address": "0xDcfd2fef694F4b98d1180B7aFcf80b6Abe1028fC",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Step into the mystique of the Ballies universe with our Legends Drop – an exhilarating array of Mystery Boxes that await your discovery. Drawing inspiration from the electric energy of a packed arena, these boxes offer a shot at greatness, with the potential to unveil the coveted King Pack, the illustrious All Star Pack, or the legendary Hall of Fame Pack. Each pack is crafted to turbocharge your journey on the Meta-Court, granting not just a boost in your gameplay but a piece of the grand basketball legacy. With limited quantities and infinite possibilities, these NFTs are your gateway to a storied ascent in the Ballies metaverse. Become the KING of the Meta-Court! Do you have what it takes?",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ballies-legends-packs/avatar.png",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/ballies-legends-packs/card.png",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ballies-legends-packs/banner.png",
+        "website": "https://ballies.gg/",
+        "twitter": "https://www.twitter.com/Ballies_NFT",
+        "discord": "https://discord.gg/ballies-nft-903875114133753887",
+        "medium": "https://medium.com/@BalliesNFT",
+        "telegram": "https://t.me/balliesnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "FishTank Finance",
+      "slug": "fishtank-finance",
+      "multiToken": false,
+      "address": "0xe59176511CAb90873dF6eACF6E4c0d7C51411d23",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A new project coming to Cronos hoping to provide safe simple and secure passive income to its holders",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fishtank-finance/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/fishtank-finance/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/fishtank-finance/banner.webp",
+        "twitter": "https://www.twitter.com/Fishtankfinance",
+        "discord": "discord.gg/dHmDztX2X5",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Fury House",
+      "slug": "fury-house",
+      "multiToken": false,
+      "address": "0x79FCf35a146E2E61b04685988658883982Ca08Ba",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The FMG Fury House NFTs are the key to staking your FMG Mice and Quacks for our native token $FURY. You need a House to stake your Mouse. $FURY is currently exchangeable for CRO in our Fury Bank while we walk the path to liquidity and monetization.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-house/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-house/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-house/banner.webp",
+        "website": "https://furymousegang.com/",
+        "twitter": "https://twitter.com/FuryMouseGang",
+        "discord": "https://discord.gg/rTAd6qq9N8",
+        "medium": "https://medium.com/@furymousegang/fury-houses-and-fury-cdba285c044c",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Alien Apes",
+      "slug": "alien-apes",
+      "multiToken": false,
+      "address": "0x7f1decbb126bad83ee76c3547f4b1f7da1248f1e",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Crolon Mars Alien Apes you can use them to boost your crodex crolon mars staking. giving you a 3% boost ie max 9% by staking 3. Your nft will give you a plot of land in the metaverse EXCLUSIVE only to nft holders you will be part of \"your own city\" that no one can buy.... but you can sell.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/alien-apes/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/alien-apes/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/alien-apes/banner.webp",
+        "website": "https://www.crolonmars.com/",
+        "twitter": "https://twitter.com/CrolonMars",
+        "telegram": "https://t.me/xygU8V7M4b",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "DripFrtn",
+      "slug": "dripfrtn",
+      "multiToken": false,
+      "address": "0x1F627f548dE277D505eEC3eBF9E8B9BdD2E2e924",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A Liquid Fortune Drip NFT",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/dripfrtn/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/dripfrtn/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/dripfrtn/card.webp",
+        "website": "https://dripderivatives.com/drip-frtn",
+        "twitter": "https://x.com/drip_official_",
+        "discord": "https://discord.gg/dripcro-com-1003477871664320525",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "Kublai's Quest",
+      "slug": "kublais-quest",
+      "multiToken": false,
+      "address": "0xa3D499Cdbb8fE1FAa409749C511580D822000EbA",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Focusing on Kublai Kahn's ambition to conquer Japan! Come join our ranks in pillaging the bay for Fortune & Loot.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/kublais-quest/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/kublais-quest/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/kublais-quest/card.webp",
+        "website": "https://kublais-quest.netlify.app/",
+        "twitter": "https://x.com/SteppeHorde",
+        "discord": "https://discord.gg/xwUg7WsN",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "JAFC - GOATs",
+      "slug": "jafc-goats",
+      "multiToken": false,
+      "address": "0x74a9E162CB2b36fB9058D99a1799a5ed5a040c8E",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The GOAT - Greatest Of All Time",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/jafc-goats/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/jafc-goats/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/jafc-goats/banner.webp",
+        "website": "https://medium.com/@jungleanimalfc/",
+        "twitter": "https://twitter.com/JAFC_nft",
+        "discord": "https://discord.gg/W3HwbZUwfr",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Coolbeans Garden Death Squad",
+      "slug": "coolbeans-garden-death-squad",
+      "multiToken": false,
+      "address": "0xB504eA346dBE7Ad3688F36B27FB56a761495F1c7",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Coolbeans Death Squad are the defenders of coolbeans garden faction and friends with fortune rewards",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/coolbeans-garden-death-squad/avatar.webp",
+        "website": "https://coolbeansgarden.wixsite.com/my-site",
+        "twitter": "https://twitter.com/bscraver",
+        "discord": "https://discord.gg/SYx7wjhmQa",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Strategy Series Vol.1",
+      "slug": "strategy-series-v1",
+      "multiToken": false,
+      "address": "0x5dd80779025679D06C9A175a7090FEEe92eA70aa",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to where every NFT mint directly fuels our strategic endeavors. As a cornerstone of this series, with each token, you’re not just acquiring a piece of digital art; you’re gaining access to a realm of possibilities. Embrace the thrill of discovery as you delve into a world where art and chance intertwine. Join us as we embark on this journey of exploration and uncover the treasures that await within the collection. A journey where creativity meets purpose, as 100% of your minting contribution drives real-world execution. Together, we’re not just collecting, but catalyzing change. Explore our collection and be part of a movement where art meets action.  Every mint contributes its funds into the main vault. Half of these funds will be compounded to maximize returns, while the other half will be allocated to create vaults specifically designated for supplying staking opportunities. Join us in building a sustainable ecosystem where every contribution fuels growth and opportunity.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/strategy-series-v1/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/strategy-series-v1/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/strategy-series-v1/banner.webp",
+        "website": "https://linktr.ee/rysknft",
+        "twitter": "https://twitter.com/RYSKnft",
+        "discord": "https://discord.gg/ufgwUQcSmf",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Sou-Sou Bears Den",
+      "slug": "sou-sou-bears-den",
+      "multiToken": false,
+      "address": "0xa01D2269D4AC6531386C488C96732575efCE6990",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Discover charming NFTs from Den Defenders to Den Divulgers. Mint your favorites, stake for $HONI rewards, and unlock perks in Honey Rush Game!!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/sou-sou-bears-den/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/sou-sou-bears-den/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/sou-sou-bears-den/banner.webp",
+        "website": "https://linktr.ee/sousoubears",
+        "twitter": "https://twitter.com/sousoubears",
+        "discord": "https://discord.gg/aTN9pyfgya",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "FHZ OG",
+      "slug": "fhz-og",
+      "multiToken": false,
+      "address": "0x7b06743e17113D246093c3475254435f60C6740f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Mint up to 180 unique NFTs representing our beloved KREES MEMEs in different poses and rarities. Grants unique benefits to the holders.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fhz-og/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/fhz-og/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/fhz-og/banner.webp",
+        "website": "https://kreescoin.com",
+        "twitter": "https://twitter.com/kreescoin",
+        "telegram": "https://t.me/kreescoin",
+        "categories": [
+          "utility",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Crypto.com Expedition Gear: Tools of the Trade",
+      "slug": "cdc-expedition-gear-tott",
+      "multiToken": false,
+      "address": "0x2e826af64dd027ee7029b87490826b4b95d78dfc",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "It’s a big world out there and even the most seasoned explorers need more than a backpack for their travels! Take your explorations to the next level with an all-new set of Crypto.com Expedition Gear, boasting 50,000 ‘Elite’ tool NFTs and 50,000 ‘Core’ tool NFTs. These collectibles join the backpack NFTs from the inaugural ‘Crypto.com Expedition Gear’ collection, and they are equally invaluable.\n\nAs awesome as these rugged tools look, they aren’t just for show. Along with the backpacks, they’ll enhance your Loaded Lions: Mane City experience, turbocharging your progress in building your dream city and decking out your mansion.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cdc-expedition-gear-tott/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cdc-expedition-gear-tott/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cdc-expedition-gear-tott/banner.webp",
+        "website": "https://crypto.com/nft",
+        "twitter": "https://www.twitter.com/cryptocom",
+        "discord": "https://discord.gg/cryptocom",
+        "instagram": "https://instagram.com/cryptocomnft",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cro Clothes Base",
+      "slug": "cro-clothes-base",
+      "multiToken": false,
+      "address": "0x9e68db447cd44127f43f3c9546ea43d1323d1f99",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cro Clothes Base is the inaugural collection of 999 NFTs that provides its holders with bonuses, early access, and free minting for all future Cro Clothes collections.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-base/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-base/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-base/banner.webp",
+        "website": "https://croclothes.com/",
+        "twitter": "https://www.twitter.com/Cro_Clothes",
+        "discord": "https://discord.gg/QRQb9rkPXK",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CATWK NFT",
+      "slug": "catwk-nft",
+      "multiToken": false,
+      "address": "0xf5b202df734ad2930afacf6fcecd3c62d693f40b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cat With Knife - A Bullish Cat With Knife has arrived on Cronos! Check out our NFT collections!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/catwk-nft/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/catwk-nft/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/catwk-nft/banner.webp",
+        "website": "https://catwithknife.online/",
+        "twitter": "https://www.twitter.com/catwithknifecro",
+        "telegram": "https://t.me/catwithknifecro",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Degen Donkey V2",
+      "slug": "degen-donkey-v2",
+      "multiToken": false,
+      "address": "0xF2E6B36fdD55479531a65FA2BfC03Bcb27353320",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "holding our flagship Donkey NFT will allow the holder to the many perks which will be but not limited to raffles ,air drops",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/degen-donkey-v2/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/degen-donkey-v2/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/degen-donkey-v2/card.webp",
+        "website": "https://stake.timmy.finance/",
+        "twitter": "https://www.twitter.com/Donkey__Finance",
+        "discord": "https://discord.gg/AvDhW3vHxm",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Bounty CRO Hunters - Stage 2",
+      "slug": "bounty-cro-hunters-stage-2",
+      "multiToken": false,
+      "address": "0x0d772b7f198668a6735Bc3714194154520DBD0c9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "PLEASE CHECK SALES HISTORY BEFORE BUYING TO PREVENT ANY DISAPPOINTMENT WITH CLAIMING $BCH. Stage 2 is the door to the BCH meme coin. Owners will seek rewards when they sell or buy.  Each character has a bounty on its head and a set amount of lives. When a NFT is sold the buyer gets the bounty and the seller collects their Cro.  Just under 15% of the coin allocation is dedicated to this project alone.  There are only 318 exclusive characters. All very unique, with some seriously awesome traits. 15x supreme commanders have the largest bounty on their heads and more lives than the Grand Generals or Hunters. Once all lives are taken (NFT sold) the bounty is removed.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/bounty-cro-hunters-stage-2/avatar2.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/bounty-cro-hunters-stage-2/card2.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/bounty-cro-hunters-stage-2/banner2.webp",
+        "website": "https://bounty-hunters.netlify.app/",
+        "twitter": "https://www.twitter.com/DickyBird_NFT",
+        "discord": "https://discord.gg/exTAstwN",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Quest Masters",
+      "slug": "quest-masters",
+      "multiToken": true,
+      "address": "0x4c91F476ACC1490Cf854461B174602A7e46Fa209",
+      "onChain": false,
+      "listable": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        }
+      ],
+      "metadata": {
+        "description": "Quest Masters are the trainers who develop and mentor. Fostering the rise of new heroes in the Quest realm.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/quest-masters/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/quest-masters/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/quest-masters/banner.webp",
+        "website": "https://thecronosclub.com/",
+        "twitter": "https://twitter.com/The_Cronos_Club",
+        "discord": "https://discord.gg/49y7edbqy5",
+        "medium": "https://medium.com/@the_cronos_club",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Degen Poker",
+      "slug": "degen-poker",
+      "multiToken": false,
+      "address": "0xDBf7d21Cd9e5B9dd9933d02cb478c590B04CB1D1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Degen Poker is a true Degen memecoin Experiment, utilizing on-chain art and the exciting erc404 implementation.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/degen-poker/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/degen-poker/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/degen-poker/card.webp",
+        "website": "https://www.degencronosapes.com/DegenPoker",
+        "twitter": "https://twitter.com/DegenCronosApes",
+        "discord": "https://discord.gg/27fdbCmJbV",
+        "categories": []
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Argonauts Gears",
+      "slug": "argonauts-gears",
+      "multiToken": false,
+      "address": "0x65c6aa6CACC04B15100A5B41F5124ae1321c9085",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Argonauts Gears NFT collection, a crucial lever for dominance in Atlantis Trove V2.\n\nGear is essential to your team’s success in Atlantis V2 and will be a game changer for many. With each team able to equip 5 pieces of gear, it will be a race to see who can achieve the optimal team to win it all.\n\nEquip your teams, boost your points and turn the tide of competition. Gear up, strategize, and race to the top with the power of Argonauts Gears at your side.\n",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/argonauts-gears/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/argonauts-gears/card2.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/argonauts-gears/banner2.webp",
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium": "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Sonorc Warriors",
+      "slug": "sonorc-warriors",
+      "multiToken": false,
+      "address": "0x0d006dA3d15F98Cb5733c4fF062B6256c771E8F3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Sonorc Warriors is the NFT collection of the Sonorc meme token. It is meant to be a meme NFT collection. SOOOOOONOOOORCCCC!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/sonorc-warriors/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/sonorc-warriors/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/sonorc-warriors/banner.webp",
+        "website": "https://sonorc.xyz/",
+        "twitter": "https://twitter.com/sonorc_coin",
+        "telegram": "https://t.me/sonorc_coin",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Cross Chain Cannasseurs OG Buds",
+      "slug": "cross-chain-cannasseurs-og-buds",
+      "multiToken": false,
+      "address": "0x07973Fb481764F3c6414c3Af51486a01E3578513",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A Community of 4200 OG Buds Growing on the Blockchain. OG Cannasseur Buds will enjoy a range of benefits. This includes access to the Grow Room-DAO, allowing them to vote on project directions. There's a strong emphasis on not only giving back to the community thru the many different forms of giveaways but we also have a strong focus on providing and attending real-life events and uniting Buds for smoke circles all over the world!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cross-chain-cannasseurs-og-buds/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cross-chain-cannasseurs-og-buds/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cross-chain-cannasseurs-og-buds/banner.webp",
+        "website": "https://cannasseurs.club/",
+        "twitter": "https://twitter.com/CCCannasseurs",
+        "discord": "https://discord.gg/dGvUzvt6ts",
+        "medium": "https://medium.com/@crosschaincannasseurs/cross-chain-cannasseurs-rolling-paper-d3bc7a09e6fe",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Cronos $Cartel Insider Pass",
+      "slug": "cronos-cartel-insider-pass",
+      "multiToken": false,
+      "address": "0x7cF6Da412C70B37a53736efe459dba7b015a626A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "$Cartel Insider Pass NFT is an initiative to reward people who participated in the first 6 months of the $Cartel project on the new Cronos CRC-20 Inscription Protocol.\n\u200E(Dec 22, 2023 to June 22, 2024)\n\u200E\nAirdrop:\nThere are future plans to airdrop 500k $Cartel Crypto Coin for each $Cartel Insider Pass NFT in your wallet and to have all our airdrop/whitelist collaborations with Cronos partners to go through this membership pass.\n\u200E\nWhitelist:\nIt's also your Whitelist pass for our upcoming $Cartel Mint 5k PFP Collection and private sale round of the $Cartel Crypto Coin.\n\nDiscord Exclusive Channels:\nJoin the Cronos $Cartel Discord with your Insider Pass to access all the exclusive channels like the weekly Rumble Giveaways and Engage to Earn Program.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-cartel-insider-pass/avatar2.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-cartel-insider-pass/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-cartel-insider-pass/banner5.webp",
+        "twitter": "https://twitter.com/CronosCartel",
+        "discord": "https://discord.gg/U7gNxSvTE2",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Cro Clothes Base Bonus",
+      "slug": "cro-clothes-base-bonus",
+      "multiToken": false,
+      "address": "0xf1ff7b8C94d628b18191b3B8B1b7AF282d32d9b9",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CRO Clothes Base Bonus is a collection of 260 NFTs closely related to the Cro Clothes Base collection",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-base-bonus/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-base-bonus/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-base-bonus/banner.webp",
+        "website": "https://cro-clothes.gitbook.io/roadmap",
+        "twitter": "https://www.twitter.com/Cro_Clothes",
+        "discord": "https://discord.gg/QRQb9rkPXK",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "MoA Motorcycles",
+      "slug": "moa-motorcycles",
+      "multiToken": false,
+      "address": "0xA348E80d3943E097d373b0aC712EFeB700191FE6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ride with the MoA fam!!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/moa-motorcycles/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/moa-motorcycles/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/moa-motorcycles/banner.webp",
+        "website": "https://monkeyofanarkey.com/",
+        "twitter": "https://twitter.com/MonkeyOfAnarkey",
+        "discord": "https://discord.gg/wxYhYkVhNN",
+        "medium": "https://medium.com/@MonkeyOfAnarkey/moa-motorcycle-nft-collection-update-c58dc0608ad0",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": false
+      }
+    },
+    {
+      "name": "A Murder",
+      "slug": "a-murder",
+      "multiToken": false,
+      "address": "0xA1e61fc8Dec97615EbbB2179b583eD0940C5caa1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "...of crows. Cronos chain antics inspired by the OG - Cro-Crow. Project includes $MRDR, NFT staking, LP farming, memecoin games and profit sharing for holders, more...",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/a-murder/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/a-murder/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/a-murder/banner.webp",
+        "website": "https://mrdr.me/",
+        "twitter": "https://twitter.com/MrdrCoin",
+        "discord": "https://discord.gg/8NSFXzxAXZ",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Hellians",
+      "slug": "hellians",
+      "multiToken": false,
+      "address": "0x681FB4525eCe1b151481385cAaFE084A77ADD955",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Pocket Demons Official brings the next generation in digital art. Hellians sets the stage for your favorite Pocket Demons to breed with your favorite Fallen Angels.  A Collection of 3996 with over 180 traits is guaranteed to leave each holder or minter with a unique piece of art.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/hellians/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/hellians/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/hellians/banner.webp",
+        "website": "https://hellians.netlify.app/",
+        "twitter": "https://twitter.com/PDemon_Official",
+        "discord": "https://discord.gg/fBx4TtAVDc",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": true,
+        "verified": true
+      }
+    },
+    {
+      "name": "LIT Investments Santatoshi",
+      "slug": "lit-investments-santatoshi",
+      "multiToken": false,
+      "address": "0xF88c011Bf002aEc5aa0430229c3ac31340A58E01",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Airdrop farming all blockchains, staking and airdrop farming with christmas rewards shared to all holders! Christmas on the 25th all year long!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/lit-investments-santatoshi/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/lit-investments-santatoshi/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/lit-investments-santatoshi/banner.webp",
+        "website": "https://santatoshi.io/",
+        "twitter": "https://twitter.com/Santa_Toshi_",
+        "discord": "https://discord.gg/svGX3fnw",
+        "medium": "https://medium.com/@santatoshinft/l-i-t-investments-71bb609f6886",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Coom Cats VIP",
+      "slug": "coom-cats-vip",
+      "multiToken": false,
+      "address": "0x7577A788247c77569794dFCd86B47d38b9347E95",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A select collection for true #coomunity.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats-vip/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats-vip/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats-vip/banner.webp",
+        "website": "https://www.coomcatsnft.com",
+        "twitter": "https://twitter.com/CoomCatsNFT",
+        "discord": "https://discord.gg/7QdUYZWBsk",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Cr00ts-X",
+      "slug": "cr00ts-x",
+      "multiToken": false,
+      "address": "0x0f41Ad1a8A98Cf0Be5880253d6479b5Af9071071",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Their DNA have been altered, they are now ready for war \uD83D\uDC4A\uD83C\uDFFD\uD83D\uDCA5 Revenue shares / GameFi accesses / IP rights & more",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cr00ts-x/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cr00ts-x/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cr00ts-x/banner.webp",
+        "website": "https://cr00tsnft.ca/",
+        "twitter": "https://twitter.com/cr00tsnft",
+        "discord": "https://discord.gg/fWHnRTZwpC",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Cro Clothes DooNFT",
+      "slug": "cro-clothes-doonft",
+      "multiToken": false,
+      "address": "0x67091Db4567fCD703148bdb7dE6FA8cf966Ec9b0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cro Clothes DooNFT is a partnership collection of 400 exclusive NFTs. The collection will be distributed via airdrop among the Cro Clothes and DooNFT communities. In the future, occupy the space allocated for Minted in Crypto Fan Wear.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-doonft/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-doonft/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-doonft/banner.webp",
+        "website": "https://cro-clothes.gitbook.io/roadmap",
+        "twitter": "https://www.twitter.com/Cro_Clothes",
+        "discord": "https://discord.gg/QRQb9rkPXK",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "The Cronos Eagles",
+      "slug": "the-cronos-eagles",
+      "multiToken": false,
+      "address": "0x0B3A229aBf88abd08C2fA1f2B6c1bB815bEaf5d5",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Minting for 27 cro the Eagle's can be staked in non-custodial staking pools to earn crypto. Currently we are staking for $FFTB and $tendies. We also have regular discord giveaways for holders, rumbles for free Eagle's for non-holder, and, daily role check-ins and \"X\" raids to earn $Shinu token. If you like passive income, and you like to have some fun while earning passive income, then mint some Eagle's and come join us at The Eagle's Nest!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/the-cronos-eagles/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/the-cronos-eagles/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/the-cronos-eagles/banner.webp",
+        "twitter": "https://www.twitter.com/TheCronosEagles",
+        "discord": "https://discord.gg/h2THqyPn2w",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Raccroon Raiders",
+      "slug": "raccroon-raiders",
+      "multiToken": false,
+      "address": "0x56AFDc542172f6e5Af6225b835909D9f388e396B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "This unique collection features a diverse range of digital raccoon characters, 1000 NFTs in total, each meticulously designed to showcase unique traits and backgrounds.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/raccroon-raiders/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/raccroon-raiders/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/raccroon-raiders/banner.webp",
+        "website": "https://raccroon.xyz/nft/",
+        "twitter": "https://www.twitter.com/RacCROon_",
+        "discord": "https://discord.gg/M2bM45pt",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Mistery on Cro",
+      "slug": "mistery-on-cro",
+      "multiToken": false,
+      "address": "0x561ffeca612917ccb8900993e9637a9e4a047e76",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Mistery on Cro, which debuted in Sydney on the 27th of March, 2024 at 9 PM local time, is a novel memecoin token. It’s part of an evolving ecosystem designed to enhance community engagement through token-driven activities and an upcoming arcade gaming platform, MERY NFT. The MERY NFT community, centered around Profile Picture NFTs, aims to enrich the experience of $MERY token holders with exclusive benefits.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/mistery-on-cro/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/mistery-on-cro/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/mistery-on-cro/banner.webp",
+        "website": "https://www.misteryoncro.io/",
+        "twitter": "https://twitter.com/Misteryoncro",
+        "discord": "https://discord.gg/DCdVreukct",
+        "telegram": "https://t.me/misteryoncro",
+        "categories": [
+          "collectibles",
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Time Machine 103s",
+      "slug": "time-machine-103",
+      "multiToken": false,
+      "address": "0x3A87FED3F2Af08B18E566BC9Dd497Ff8861b5669",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Time Machine 103s is a free NFT collection used to decrease the amount of gas required to claim royalties and revenue from 101s/102s. Also to increase the payout weekly per nft. by decreasing the supply from 15,000 NFTs to 2700 or less.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-103/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-103/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/time-machine-103/banner.webp",
+        "website": "https://time-sniper.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/Tfc2Y8Kjyq",
+        "medium": "https://time-machine-nfts.gitbook.io/time-machine-nfts/",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Baby Ryoshi OG",
+      "slug": "baby-ryoshi-og",
+      "multiToken": false,
+      "address": "0x3cb2E346C6cca184B59c4c0D69e60C95Dd3c138F",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Yoshi has invaded the Cronos landscape. Come be a part of the journey and fun",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-og/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-og/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-og/banner.webp",
+        "website": "https://croarmy.app/#/Ryoshi",
+        "twitter": "https://twitter.com/RyoshiBaby",
+        "discord": "https://discord.gg/seEQjGArXU",
+        "categories": [
+          "utility",
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "OKPUSS",
+      "slug": "okpuss",
+      "multiToken": false,
+      "address": "0x62BF1CA81657151e396AD0901B75D9cC760357f4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Welcome to the world of OKPUSS NFTs, where we're on a mission to bridge two extraordinary realms – like the dynamic duo of Octopuss and Puss!\n\nOur vibrant community unites the realms of Cronos and Base, bringing together the best of both worlds in a thrilling fusion. Rooted in the meme culture of the OKPUSS world, our NFT drop serves as a launchpad for all community members, ensuring a fair and inclusive onboarding experience from the very beginning.\n\nEach holder of the 8,888 OKPUSS collectibles will unlock access to the OKPUSS DAO, empowering them to shape the future of our evolving ecosystem. Curious about the utility and redemption process? Dive deeper into the details on our OKPUSS website and X page, where you'll find information and guidelines to enrich your journey in the OKPUSS universe.\n\nJoin us as we embark on this exciting adventure, where creativity knows no bounds and possibilities are limitless. Welcome to OKPUSS – where the extraordinary awaits! Don't Trip!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/okpuss/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/okpuss/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/okpuss/banner.webp",
+        "website": "https://www.okpuss.com/",
+        "twitter": "https://twitter.com/octopuss_meme",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CROMAN Club Pass",
+      "slug": "croman-club-pass",
+      "multiToken": false,
+      "address": "0x05e90D9687A9a3a5abf5D527baa3D635951fb52f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CROMAN Club Pass is a collection of 500 NFTs created to celebrate the lunch of $CROMAN",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/croman-club-pass/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/croman-club-pass/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/croman-club-pass/banner.webp",
+        "website": "https://linktr.ee/cro_magnon",
+        "twitter": "https://twitter.com/Cro_Mangnon",
+        "discord": "https://discord.gg/JzVExjrkhP",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Neko Gang NFT",
+      "slug": "neko-gang-nft",
+      "multiToken": false,
+      "address": "0x507A40a2398b4508f294835E6173Ddf5624692C3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Neko (猫): A symbol of luck and protection in Japanese culture. The Neko Gang will commence with the Genesis Launch of 2,200 hand-drawn collectible PFP NFTs. Each one is completely unique and serves as your key to the Neko ecosystem and our first planned expansion, the robust Dao, alongside the hold-to-earn and passive income features. Powered by $NeKoin",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/neko-gang-nft/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/neko-gang-nft/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/neko-gang-nft/banner.webp",
+        "website": "https://medium.com/@nekogang34",
+        "twitter": "https://twitter.com/nekogangnft",
+        "discord": "https://discord.gg/cKGh5xb58n",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cronos Poultry Society VIP",
+      "slug": "cronos-poultry-society-vip",
+      "multiToken": false,
+      "address": "0x731d2a2977ab0a2164a042a4d69c1d4361c1da7a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Cronos Poultry Society VIP is an exclusive membership for our most loyal Cronos Chickens and $EGG holders as well as contributors to our Ryoshi Dynasties faction.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-poultry-society-vip/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-poultry-society-vip/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-poultry-society-vip/card.webp",
+        "website": "https://cronos-chickens.netlify.app/",
+        "twitter": "https://twitter.com/CROChickens",
+        "discord": "https://discord.gg/KcHNVhDtqs",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "AristoWolves",
+      "slug": "aristowolves",
+      "multiToken": false,
+      "address": "0xb397424D0FEFAD95DB05a0f750222ADcC54fF267",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "AristoWolves isn't merely another addition to the AristoDogs ecosystem; it represents a resurgence. Beyond its remarkable hand-drawn artwork, these Wolves can generate extra income for you through our staking system and will serve as the gateway to unlock exceptional utilities.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/aristowolves/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/aristowolves/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/aristowolves/banner.webp",
+        "website": "https://safeswaps.app/",
+        "twitter": "https://twitter.com/AristoDogNFT",
+        "discord": "https://discord.gg/KzaE6Jqhdh",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": "private",
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "$CROFAM VIP-Pass",
+      "slug": "crofam-vip-pass",
+      "multiToken": false,
+      "address": "0x6350ceDdDC6F28B199BE6983F2505Dd7Ffb72342",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "CROFam is more than just a token; it is a beacon of unity, symbolizing the strength and potential of collective effort. We believe in growing together, reaching new heights not as individuals, but as a united family bound by shared values and goals. The NFT will serve as an access pass to exclusive perks for holders.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crofam-vip-pass/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/crofam-vip-pass/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/crofam-vip-pass/card.webp",
+        "website": "https://crofam-token.com/",
+        "twitter": "https://twitter.com/HQCroFam",
+        "discord": "https://discord.gg/gNb5t9CBjV",
+        "categories": [
+          "meme",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Robin NFT",
+      "slug": "robin-nft",
+      "multiToken": false,
+      "address": "0x1dBA58B1bdcaA3B0488065cCEFa057c52a963280",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A collection of 2,500 pixelated Robin NFTs. Minting an NFT unlocks exclusive membership benefits, making it a key asset in the $ROBIN space for receiving airdrops, staking rewards, and more!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/avatar2.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/banner2.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/robin-nft/card2.webp",
+        "website": "https://robincronos.com/",
+        "twitter": "https://twitter.com/RobinCronos",
+        "discord": "https://discord.gg/HSDJPQTeDX",
+        "categories": [
+          "meme",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "croc_with_knife",
+      "slug": "croc-with-knife",
+      "multiToken": false,
+      "address": "0x534ef04cc5ce179cfcd27641605917e1779d4d57",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "We are proud to introduce our first NFT collection! \uD83C\uDF89 It beautifully captures our journey so far, showcasing the experiences we've encountered along the way. We’re confident you'll find it intriguing and inspiring. \uD83D\uDE80✨ https://x.com/croc_with_knife",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/croc-with-knife/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/croc-with-knife/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/croc-with-knife/card.webp",
+        "website": "https://crocwithknife.com/",
+        "twitter": "https://twitter.com/croc_with_knife",
+        "discord": "https://discord.gg/ywtA4yRR2y",
+        "categories": [
+          "meme",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Fomo Punks",
+      "slug": "fomo-punks",
+      "multiToken": false,
+      "address": "0xC7403a63844A3219155d98eF191386698c90054B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Explore a set of 777 unique NFTs and become part of the exclusive Fomo Punks community.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fomo-punks/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/fomo-punks/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/fomo-punks/card.webp",
+        "website": "https://fomo-punks.gitbook.io/",
+        "twitter": "https://twitter.com/fomop_cro",
+        "discord": "https://discord.gg/CHFaaeTQtN",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "KitCoin OG",
+      "slug": "kitcoin-og",
+      "multiToken": false,
+      "address": "0x36E67224A879e765Bf37532AeeA09682dB99c008",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "KitCoin is MEME token with MORE on the Cronos Chain. KitCoin will be also providing NFTs, Staking, Lottery plus much more! $KITTY is a token with No Buy Tax or Sell Tax, LP Burnt, Ownership Renounced & 20% of total supply burnt with more to burn! Let’s Meow!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/kitcoin-og/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/kitcoin-og/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/kitcoin-og/card.webp",
+        "website": "https://www.kitcoin.io/",
+        "twitter": "https://twitter.com/KitCoinX",
+        "discord": "https://discord.gg/kitcoin",
+        "categories": [
+          "meme",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CronosEyez Gen 3",
+      "slug": "cronoseyez-gen3",
+      "multiToken": false,
+      "address": "0xb754ef2931df1cfd1be92c011dcc163509203e3a",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Third generation of CronosEyezNFT",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronoseyez-gen3/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronoseyez-gen3/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cronoseyez-gen3/card.webp",
+        "twitter": "https://twitter.com/CronosEyezNFT",
+        "discord": "https://discord.gg/jFX4RNrFGu",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "SERIOUS Genesis Collection",
+      "slug": "serious-genesis-collection",
+      "multiToken": true,
+      "address": "0x4dd46C54E2344e8D9Ee9A054b2E13F2CEB1F7125",
+      "onChain": false,
+      "listable": true,
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        }
+      ],
+      "metadata": {
+        "description": "A SERIOUS token of appreciation to our early supporters",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/serious-genesis-collection/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/serious-genesis-collection/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/serious-genesis-collection/card.webp",
+        "website": "https://seriouscoin.xyz/",
+        "twitter": "https://twitter.com/realseriouscoin",
+        "discord": "https://discord.gg/8gzry5nnkn",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "ARY KNIFE",
+      "slug": "ary-knife",
+      "multiToken": false,
+      "address": "0x18ebaF381e0582DD502f1e9f17BDE6da369eBf6C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "$ARY THE RYOSHI'S ENLIGHTENED GUIDE SHARES HIS KNIFE",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ary-knife/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ary-knife/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/ary-knife/card.webp",
+        "website": "https://www.aryioshin.com/",
+        "twitter": "https://twitter.com/CronosAry",
+        "discord": "https://discord.gg/zH9PeHv4bC",
+        "telegram": "https://t.me/ARY_FAM",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Time Reavers",
+      "slug": "time-reavers",
+      "multiToken": false,
+      "address": "0x127b2ac798F961D0EbA3B10DD7B550cAa9a8E773",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Time Reavers is the next installment in the Time Machine ecosystem. Time Reavers will benefit users to give damage boost in battle against specific biomes. This collection contains 4 Mythics and 36 legendries, 9 from each biome.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/time-reavers/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/time-reavers/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/time-reavers/banner.webp",
+        "website": "https://timemachine101.com/",
+        "twitter": "https://twitter.com/TimeMachines101",
+        "discord": "https://discord.gg/timemachinenfts",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Banditz Orc Nation",
+      "slug": "banditz-orc-nation",
+      "multiToken": false,
+      "address": "0x17a4fcfe0cae9e8614d195d69195bad6a4de5c0c",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Blockchain Banditz Orc Nation, a previous rugg brought back to life.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/banditz-orc-nation/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/banditz-orc-nation/banner.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/banditz-orc-nation/card.webp",
+        "twitter": "https://twitter.com/Blockchnbanditz",
+        "discord": "https://discord.gg/yZqgNGuMHM",
+        "categories": []
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Cro Clothes MoonfloW",
+      "slug": "cro-clothes-moonflow",
+      "multiToken": false,
+      "address": "0x2063f837b5481f8B0b72f20De167254b94393666",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cro Clothes MoonfloW is a partnership collection of 350 exclusive NFTs. The collection will be distributed via airdrop among the Cro Clothes and MoonfloW communities. In the future, occupy the space allocated for Minted in Crypto Fan Wear.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-moonflow/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-moonflow/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-moonflow/banner.webp",
+        "website": "https://cro-clothes.gitbook.io/roadmap",
+        "twitter": "https://www.twitter.com/Cro_Clothes",
+        "discord": "https://discord.gg/QRQb9rkPXK",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cat Wif Gat",
+      "slug": "cat-wif-gat",
+      "multiToken": false,
+      "address": "0x4FCC767F7bd840695F2Af59a8e92aED4A16090E4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cat Wif Gat is a 5000 piece collection of cyborg cats that are determined to carry out their invasion of Cronos",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cat-wif-gat/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cat-wif-gat/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cat-wif-gat/banner.webp",
+        "website": "https://www.catgat.xyz/",
+        "twitter": "https://www.twitter.com/CatWifGat_CRO",
+        "discord": "https://discord.gg/ZEFyWfhhsV",
+        "telegram": "https://t.me/catwifgatcro",
+        "categories": [
+          "collectibles",
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "CroHounds",
+      "slug": "crohounds",
+      "multiToken": false,
+      "address": "0x32659aF8C200Fe5E7BE52BC575a4A1212a26B077",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Crohounds is a unique NFT collection featuring 2,000 digitally generated hounds, each with over 55 distinct traits. These one-of-a-kind hounds offer a rich variety of characteristics, making every piece special. Owners can earn $cro in the project's Discord , combining the excitement of digital collectibles with cryptocurrency rewards. Join the Crohounds community to collect, trade, and earn while enjoying exclusive benefits and engaging with fellow enthusiasts.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crohounds/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/crohounds/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/crohounds/banner.webp",
+        "website": "https://www.cro-launchpad.com/crohounds",
+        "twitter": "https://www.twitter.com/Cro_Hellhounds",
+        "discord": "https://discord.gg/FXke7Fn9xm",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Radiant Residences - Tower 2",
+      "slug": "radiant-residences-tower-2",
+      "multiToken": false,
+      "address": "0xB4B898Ee60185fACC247aadb8D061661590f167f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Radiant Residences, Tower 2, is set to redefine luxury living with its impressive stature and unparalleled amenities. Towering above its predecessor, Tower 1, this residential skyscraper takes opulence to new heights. Designed for those with a penchant for grandeur, Tower 2 features an even greater number of lavish and spacious penthouses, each offering expansive views that stretch out to the ocean beyond. The tower boasts an improved design that maximizes the scenic vistas, ensuring residents wake up to the serene blue of the ocean every day. With 2,002 apartments, penthouses, and office spaces, Tower 2 is not just a residential building but a self-contained oasis of luxury. The inclusion of high-end restaurants within the tower adds a layer of convenience and elegance, allowing residents to dine in style without leaving the comfort of their home. The parking facilities have been meticulously planned to accommodate the needs of all residents, ensuring that the luxury experience begins the moment you arrive. Tower 2 doesn't just offer homes; it offers a lifestyle. Every aspect, from the breathtaking ocean views to the state-of-the-art amenities, has been carefully curated to provide an unparalleled living experience. Whether you're looking for a sophisticated penthouse or a sleek office space, Radiant Residences, Tower 2, is poised to become the epitome of luxury living.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/radiant-residences-tower-2/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/radiant-residences-tower-2/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/radiant-residences-tower-2/banner.webp",
+        "website": "https://www.rainbowland.org/",
+        "twitter": "https://twitter.com/TheRainbowland",
+        "discord": "https://discord.gg/KR2ZWVH4Vu",
+        "medium": "https://medium.com/@the-rainbowland-metaverse/",
+        "telegram": "https://t.me/newsrainbowland",
+        "categories": [
+          "metaverse",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
+    },
+    {
+      "name": "Cro Clothes Inventorbots",
+      "slug": "cro-clothes-inventorbots",
+      "multiToken": false,
+      "address": "0xb7e9f5c9CDE3534aE50c34579dF16aFCAFC6d305",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cro Clothes Inventorbots is a partnership collection of 600 exclusive NFTs. The collection will be distributed via airdrop among the Cro Clothes and Inventorbots communities. In the future, occupy the space allocated for Minted in Crypto Fan Wear.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-inventorbots/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-inventorbots/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-inventorbots/banner.webp",
+        "website": "https://cro-clothes.gitbook.io/roadmap",
+        "twitter": "https://www.twitter.com/Cro_Clothes",
+        "discord": "https://discord.gg/QRQb9rkPXK",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Noodles Club VIP",
+      "slug": "noodles-club-vip",
+      "multiToken": false,
+      "address": "0x6572D5281F96770D345c20FcFe0684914B282035",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Only elite members of the Noodles Club community can own this exclusive pass.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club-vip/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club-vip/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club-vip/banner.webp",
+        "website": "https://app.noodlesclub.com/",
+        "twitter": "https://twitter.com/noodlesclubnft",
+        "discord": "https://discord.gg/86P5hHtkFe",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Noodles Club Restaurant",
+      "slug": "noodles-club-restaurant",
+      "multiToken": false,
+      "address": "0xea0BB6c33a8DA84DD09E3Af4911a6905462b6D6b",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "An exclusive place where only the most collaborative Noodles Club members can eat and rest.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club-restaurant/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club-restaurant/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club-restaurant/banner.webp",
+        "website": "https://app.noodlesclub.com/",
+        "twitter": "https://twitter.com/noodlesclubnft",
+        "discord": "https://discord.gg/86P5hHtkFe",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "OG Murder Members",
+      "slug": "og-murder-members",
+      "multiToken": false,
+      "address": "0x4390DacBeDfc582dA1F953ffc76DEE8DA944856A",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "OG Status",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/og-murder-members/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/og-murder-members/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/og-murder-members/banner.webp",
+        "website": "https://mrdr.me/",
+        "twitter": "https://twitter.com/MrdrCoin",
+        "discord": "https://discord.gg/8NSFXzxAXZ",
+        "telegram": "https://t.me/mrdrcro",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Bella Genesis Collection",
+      "slug": "bella-genesis-collection",
+      "multiToken": false,
+      "address": "0xF6A5c9792232F3D5287BdF9EC9D544C6A88d3E16",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "First NFT Collection distributed to the Mew Sisters ($MS) community. $MS holders who meet the monthly claim conditions will receive NFT airdrops of Mew Sisters characters every month.  Bella is a cat-girl who dreams of becoming a fashion model. She is the third of seven Mew sisters. She loves the color black and tries to keep her clothes, hair, and generally black. She loves cats very much, and although she has a bit of a picky personality, hidden inside her is a deep caring heart for her family and cats. The story of the Mew Sisters begins with Bella.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/bella-genesis-collection/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/bella-genesis-collection/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/bella-genesis-collection/banner.webp",
+        "website": "https://mewsisters.com/",
+        "twitter": "https://x.com/mewsisters",
+        "discord": "https://discord.gg/nkUpeT4S5W",
+        "categories": [
+          "utility",
+          "meme"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "MystBear",
+      "slug": "mystbear",
+      "multiToken": false,
+      "address": "0x0a7d9f19aee50e3bce3527055dd0c285287dba03",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Since centuries, in a mystical world where nature and magic coexist harmoniously, there have been nine clans of bears endowed with extraordinary powers. These clans live in vast and diverse territories, each having developed unique skills adapted to their environment. The MystBear stood out for their wisdom, their mastery of the mystical arts, and their deep connection with the energies of nature.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/mystbear/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/mystbear/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/mystbear/banner.webp",
+        "website": "https://www.ninjafu.ca/",
+        "twitter": "https://x.com/Ninja_fu_",
+        "discord": "https://discord.gg/N5YXhNDJyz",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": false
+      }
+    },
+    {
+      "name": "Golden Tree of Fortune",
+      "slug": "golden-tree-of-fortune",
+      "multiToken": false,
+      "address": "0x61f0423365fa9009e378cd5a7af56cdd4f6a3f54",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Golden Tree NFT is a digital asset that provides holders with a share of 0.9% of fees from prediction markets, priority access to resolve markets 15 minutes before others, and a 50% increase in earnings for market validators.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/golden-tree-of-fortune/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/golden-tree-of-fortune/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/golden-tree-of-fortune/banner.webp",
+        "website": "https://earn.network/",
+        "twitter": "https://x.com/itsearnnetwork",
+        "discord": "https://discord.gg/zAxVTGr648",
+        "telegram": "https://t.me/itsearnnetwork",
+        "documentation": "https://blog.earn.network/",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Oracle of Wisdom",
+      "slug": "oracle-of-wisdom",
+      "multiToken": false,
+      "address": "0x88c45317726075369A24fE8a339Cd8A4345Ee9c4",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Oracle of Wisdom NFT is a digital asset that provides holders with a share of 6.2% of fees from prediction markets, a 2% shared bonus on every bet placed, and a significant role in decision-making as part of the quorum of final resolvers.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/oracle-of-wisdom/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/oracle-of-wisdom/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/oracle-of-wisdom/banner.webp",
+        "website": "https://earn.network/",
+        "twitter": "https://x.com/itsearnnetwork",
+        "discord": "https://discord.gg/zAxVTGr648",
+        "telegram": "https://t.me/itsearnnetwork",
+        "documentation": "https://blog.earn.network/",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Baby Ryoshi Yoshi",
+      "slug": "baby-ryoshi-yoshi",
+      "multiToken": false,
+      "address": "0x3911011d44d87E7477d44e61227DA4B5a393806D",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Yoshi has invaded the Cronos landscape. Come be a part of the journey and fun",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-yoshi/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-yoshi/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-yoshi/banner.webp",
+        "website": "https://croarmy.app/#/Ryoshi",
+        "twitter": "https://twitter.com/RyoshiBaby",
+        "discord": "https://discord.gg/seEQjGArXU",
+        "categories": [
+          "utility",
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Blockchain Operative Tech (BOT)",
+      "slug": "blockchain-operative-tech-bot",
+      "multiToken": false,
+      "address": "0x4441d549d35170ae1abe3d7a91e849ced5cdcaf6",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Blockchain Operative Tech (BOT) is a 1150 piece AI collection. We are ready to revolutionize the future. Join us on this exciting journey! There will be various investment pools. All BOT holders will have access to game assets. Top holders will get access to asset development and more",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/blockchain-operative-tech-bot/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/blockchain-operative-tech-bot/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/baby-ryoshi-blockchain-operative-tech-bot/banner.webp",
+        "website": "https://blockchain-bot.netlify.app/",
+        "twitter": "https://twitter.com/BCOperativeTech",
+        "discord": "https://discord.gg/CuuegwMntG",
+        "categories": [
+          "utility",
+          "ai"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "PAPACRO_NFT",
+      "slug": "papacro-nft",
+      "multiToken": false,
+      "address": "0x492FC7075876eDcB5fb564ec0ad6501b6a9B03ae",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Part of meme coin $PAPACRO project with staking opportunity",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/papacro-nft/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/papacro-nft/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/papacro-nft/banner.webp",
+        "website": "https://www.papacro.com/",
+        "twitter": "https://twitter.com/PAPACRO_",
+        "discord": "https://discord.gg/hEjJsMgF8H",
+        "telegram": "https://t.me/+vBPd0xIa1ZNlZmQ0",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "PLUUSHDABUTTON",
+      "slug": "pluushdabutton",
+      "multiToken": false,
+      "address": "0xdE456f460fef8852D4963c503473F6c2665Ea6D0",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "JUST PLUUSH DA BUTTON",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/pluushdabutton/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/pluushdabutton/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/pluushdabutton/banner.webp",
+        "website": "https://pluush.gitbook.io/dabutton/",
+        "twitter": "https://twitter.com/PLUUSHDABUTTON",
+        "discord": "https://discord.gg/uN7agJcJ",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Cro Clothes Mistery",
+      "slug": "cro-clothes-mistery",
+      "multiToken": false,
+      "address": "0x49F32900f5646EE23b5375D05D82b9d1BCD02434",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Cro Clothes Mistery on Cro is a partnership collection of 300 exclusive NFTs. The collection will be distributed via airdrop among the Cro Clothes and Mistery on Cro communities. In the future, occupy the space allocated for Minted in Crypto Fan Wear.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-mistery/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-mistery/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-clothes-mistery/banner.webp",
+        "website": "https://cro-clothes.gitbook.io/roadmap",
+        "twitter": "https://www.twitter.com/Cro_Clothes",
+        "discord": "https://discord.gg/QRQb9rkPXK",
+        "categories": [
+          "collectibles",
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Honorary ArgoPetz",
+      "slug": "honorary-argopetz",
+      "multiToken": false,
+      "address": "0xedf0cea9305d1d631c10364df89f8e0d07be2f77",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Honorary ArgoPetz are part of the wider ArgoPetz collection.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/honorary-argopetz/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/honorary-argopetz/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/honorary-argopetz/banner.webp",
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium": "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "DIP’nFlip",
+      "slug": "dip-n-flip",
+      "multiToken": false,
+      "address": "0x88d29942f47374da60b666949a7644e0f2ad960f",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "DIP'nFlip is the first collaborative NFT project that DIP, a fun meme project built on Cronos Chain, to be launched on CorgiAI Cre8r. This NFT collection consists of a collection of 2,000 limited edition NFTs. DIP'nFlip is generated based on the prompts that provided by the NFT buyers. It offers a huge flexibility and unlimited possibilities for the buyers to create the perfect DIP'nFlip NFTs.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/dip-n-flip/avatar.webp",
+        "twitter": "https://www.twitter.com/SenorDip",
+        "telegram": "https://t.me/buythedipcro",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Croginal Cats",
+      "slug": "croginal-cats",
+      "multiToken": false,
+      "address": "0x5C3cF1a5F303bAC6B32F92EF441F4f812AFd642d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The Croginal Cats NFT project is an initiative to build community on the Cronos blockchain. Our 1500 unique pixelated cats are instantly recognizable and full of personality. True to our mission, we feed our family: holders of our NFTs will receive a 5% royalty on secondary market sales.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/croginal-cats/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/croginal-cats/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/croginal-cats/banner.webp",
+        "website": "https://www.croginalcats.xyz/",
+        "twitter": "https://www.twitter.com/Croginal",
+        "discord": "https://discord.gg/bB7Z2DaUCP",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Dirty Sockers",
+      "slug": "dirty-sockers",
+      "multiToken": false,
+      "address": "0xFA46EeE0e74e7b05225F497FeEeA3cF48Ab1ae8B",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Ever wondered where all those Socks are going after washing? They seem to vanish out of thin air. Those Socks chose to leave home to live life on their own terms. Meet the Dirty Sockers - the most degen Socks on the blockchain.  Dirty Sockers is a community first family project on the Cronos-blockchain.  Project roadmap: https://dirtysockers.xyz/  Dirty Sockers is a 10k collection of unique, generated NFTs with a varierty of traits of differing rarity, made by the designer behind Dirty Sockers, Saad Minhaas.  Project whitepaper: https://medium.com/@Dirty_Sockers/dirty-sockers-nft-whitepaper-68f234bf31fc  Dirty Sockers is the pilot project of W3 consulting - an NFT consultancy agency, bridging the gap between web 2 and web 3.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/dirty-sockers/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/dirty-sockers/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/dirty-sockers/banner.webp",
+        "website": "https://dirtysockers.xyz/",
+        "twitter": "https://www.twitter.com/dirty_sockers",
+        "discord": "https://discord.gg/dirty-sockers-universe-963855988878868491",
+        "medium": "https://medium.com/@Dirty_Sockers",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Saber",
+      "slug": "saber",
+      "multiToken": false,
+      "address": "0x33428b32518a58ebcdc46046dce95d2dba27d6a1",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "\"An elegant weapon for a more civilized age.\" Saber is a collection of hand drawn, randomly generated, pixel-art weapons used to defend and protect. But there have been whispers that dark forces lurk among the blades.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/saber/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/saber/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/saber/banner.webp",
+        "website": "http://jedioncronos.com/",
+        "twitter": "https://www.twitter.com/JEDIonCronos",
+        "discord": "https://discord.gg/K6RzmqB8fX",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "MemeCoin Club",
+      "slug": "memecoin-club",
+      "multiToken": false,
+      "address": "0xAa6240542D626393f7222E4A4997D24C69918D0d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The MemeCoin Club NFT Collection: a vibrant celebration of internet culture, cryptocurrency, and the art of the meme. This isn't just another memecoin; it's a revolution wrapped in humor and innovation. Each NFT in this collection is a testament to the spirit of $Meme—a coin that's as much a part of the meme world as it is a player in the crypto market.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/memecoin-club/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/memecoin-club/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/memecoin-club/banner.webp",
+        "website": "https://memecoinclub.link/",
+        "twitter": "https://www.twitter.com/meme_coin_club",
+        "discord": "https://discord.gg/UHR7gaFXbS",
+        "categories": [
+          "meme",
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "DaCheese",
+      "slug": "dacheese",
+      "multiToken": false,
+      "address": "0x60B2D353041Bda23136b11873bEcd2Aa74318589",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dacheese is a unique and exclusive collection of custom-made NFTs, marking the start of the Dacheese Token launch. In this project, the community is the essence of its operation. Join the Dacheese community with this NFT collection, featuring 7 exceptional legendary items. Don’t miss this fun and groundbreaking opportunity!!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/dacheese/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/dacheese/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/dacheese/banner.webp",
+        "twitter": "https://www.twitter.com/Topsidecheese",
+        "discord": "https://discord.gg/V6c8yGF3QA",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Kitty Cat NFT",
+      "slug": "kitty-cat-nft",
+      "multiToken": false,
+      "address": "0x5abc1bb2110ff51f94ab0fe5fe087ab05ea8a3bf",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A very sneaky $KITTY Cat NFT collection",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/kitty-cat-nft/avatar.webp",
+        "website": "https://kittycatcromeow.weebly.com/",
+        "twitter": "https://www.twitter.com/kittycatcromeow",
+        "discord": "https://discord.gg/J7yqRZ4EZG",
+        "telegram": "https://t.me/+ZuIo2jKsos01ODBl",
+        "categories": [
+          "meme"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Fury Brawl + Bull Edition",
+      "slug": "fury-brawl-bulls",
+      "multiToken": false,
+      "address": "0x853d96817b9fc55dfc4d3488418f258f92c31530",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "The deal is simple. Get a character, enter the arena and fight!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-brawl-bulls/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-brawl-bulls/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-brawl-bulls/banner.webp",
+        "website": "https://www.furybrawl.com/",
+        "twitter": "https://twitter.com/FuryBrawl",
+        "discord": "https://discord.gg/cdyH3s3ZGy",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Gremlins Genesis",
+      "slug": "gremlins-genesis",
+      "multiToken": false,
+      "address": "0xbfe33e58deb543ceada4d7908042e3cb648357a6",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "Feed The Gremlins Genesis ! Secure your future with exclusive airdrops and limited-edition items available only to 4K Graphics Genesis Gremlins NFT owners. Don't miss out on these rare opportunities to expand your collection! Royalties on our website. Revenue Shares / GameFi / IP Rights & More to come \uD83C\uDF55\uD83C\uDF55\uD83C\uDF55",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/gremlins-genesis/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/gremlins-genesis/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/gremlins-genesis/banner.webp",
+        "website": "https://gremlins-genesis.netlify.app/",
+        "twitter": "https://twitter.com/GRM_Gremlin",
+        "discord": "https://discord.gg/ndPWBPyxnh",
+        "telegram": "https://t.me/+REq6ArgSulZlYWZh",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "verified": true
+      }
+    },
+    {
+      "name": "Crazy Plush Army",
+      "slug": "crazy-plush-army",
+      "multiToken": false,
+      "address": "0xe7Bd009aE121A5215EC827910aDc3F9654e41dBD",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "A collection consisting of 2,500 NFT, 10 legends\uD83D\uDD25 The main purpose of this collection is to increase Ryoshi Troops for Plush Army and the FRTN vault.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crazy-plush-army/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/crazy-plush-army/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/crazy-plush-army/banner.webp",
+        "website": "https://www.cro-launchpad.com/crazyplush-mint",
+        "twitter": "https://twitter.com/yplushnft",
+        "discord": "https://discord.gg/79Uu3GGq82",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Moggy Money Brokers",
+      "slug": "moggy-money-brokers",
+      "multiToken": true,
+      "address": "0x46055078a40358c27f7850d81f29ec857342318f",
+      "tokens": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        }
+      ],
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/moggy-money-brokers/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/moggy-money-brokers/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/moggy-money-brokers/banner.webp",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": true
       }
     }
   ],
@@ -30027,7 +32388,7 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": false,
+      "complete": true,
       "featured": false,
       "redirect": "https://furyquackgang.com/",
       "images": {
@@ -30907,7 +33268,7 @@
       "referral": false,
       "is1155": false,
       "published": false,
-      "complete": true,
+      "complete": false,
       "images": {
         "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/piggy-bank-finance/drop.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/piggy-bank-finance/banner.webp",
@@ -33101,7 +35462,7 @@
       "collection": "ryoshi-tales",
       "title": "Ryoshi Tales: Wooden Wyrm Welcoming",
       "subtitle": "Get ready to be part of this extraordinary event. This is your chance to own a piece of digital artistry, celebrate the Year of the Wooden Dragon, and elevate your standing within the Ryoshi Dynasties. Whether you’re drawn to the beauty of the artwork, the unique benefits, or the thrill of the collectible, the Wooden Wyrm Welcoming is an unmissable occasion.",
-      "description": "As we usher in the 2024 Chinese New Year, Ebisu’s Bay is proud to present a remarkable event that blends tradition with the modernity of the digital era. The “Wooden Wyrm Welcoming” celebrates the Year of the Wooden Dragon, an emblem of strength, prosperity, and fortune. This exclusive NFT collection consists of 300 meticulously designed pieces, each embodying the spirit of this auspicious year. Mark your calendars for the launch on February 9th at 6 PM UTC, as this event promises to be a cornerstone in the world of digital collectibles.\n\n\n\n### **Collection Overview**\n- Total Pieces: 300 Unique NFTs\n- Theme: Celebrating the Year of the Wooden Dragon\n- Launch Date: February 9th at 6 PM UTC\n- Special Releases: Two 1:1 NFTs with exceptional benefits\n\n### **Exclusive Benefits and Pricing**\n- Standard Price: 1000 FRTN for general holders or when utilizing locked rewards.\n- Discounted Price: 700 FRTN for those holding 1000 or more Mitama, rewarding their significant contributions to our ecosystem.\n- Minting Policy: Each wallet may mint one NFT every 5 minutes, ensuring equitable access until the collection is sold out.\n\n### **1:1 Releases: Nightfall and Golden Dragon**\n- Nightfall Keeper: A rare NFT that grants the holder 500 troops when staked in the Barracks, significantly enhancing strategic capabilities in Ryoshi Dynasties.\n- Guardian of First Light: The pinnacle of rarity, offering +1% APR when staked in the Bank and an additional 50 troops, thereby augmenting both your earning potential and battle readiness.\n- Other common, uncommon and rare NFTs will grant standard rank based seasonal benefits.\n\n### **Why Participate?**\nThe Wooden Wyrm Welcoming transcends the conventional NFT drop. It is a fusion of cultural heritage and digital innovation. This collection exemplifies the creativity of our community and the vast possibilities within the Ebisu’s Bay ecosystem. Designed to offer both aesthetic appeal and tangible benefits within our platform, these NFTs represent a unique blend of art, utility, and gaming enhancement.\n\nAdditional details on the [Ebisu's Bay Blog](https://blog.ebisusbay.com/announcing-the-wooden-wyrm-welcoming-a-ryoshi-tales-exclusive-drop-2a4e3e83e11c)",
+      "description": "As we usher in the 2024 Chinese New Year, Ebisu’s Bay is proud to present a remarkable event that blends tradition with the modernity of the digital era. The “Wooden Wyrm Welcoming” celebrates the Year of the Wooden Dragon, an emblem of strength, prosperity, and fortune. This exclusive NFT collection consists of 300 meticulously designed pieces, each embodying the spirit of this auspicious year. Mark your calendars for the launch on February 9th at 6 PM UTC, as this event promises to be a cornerstone in the world of digital collectibles.\n\n\n\n### **Collection Overview**\n- Total Pieces: 300 Unique NFTs\n- Theme: Celebrating the Year of the Wooden Dragon\n- Launch Date: February 9th at 6 PM UTC\n- Special Releases: Two 1:1 NFTs with exceptional benefits\n\n### **Exclusive Benefits and Pricing**\n- Standard Price: 1000 FRTN for general holders or when utilizing locked rewards.\n- Discounted Price: 700 FRTN for those holding 1000 or more Mitama, rewarding their significant contributions to our ecosystem.\n- Minting Policy: Each wallet may mint one NFT every 5 minutes, ensuring equitable access until the collection is sold out.\n\n### **1:1 Releases: Nightfall Keeper and Guardian of First Light**\n- Nightfall Keeper: A rare NFT that grants the holder 500 troops when staked in the Barracks, significantly enhancing strategic capabilities in Ryoshi Dynasties.\n- Guardian of First Light: The pinnacle of rarity, offering +1% APR when staked in the Bank and an additional 50 troops, thereby augmenting both your earning potential and battle readiness.\n- Other common, uncommon and rare NFTs will grant standard rank based seasonal benefits.\n\n### **Why Participate?**\nThe Wooden Wyrm Welcoming transcends the conventional NFT drop. It is a fusion of cultural heritage and digital innovation. This collection exemplifies the creativity of our community and the vast possibilities within the Ebisu’s Bay ecosystem. Designed to offer both aesthetic appeal and tangible benefits within our platform, these NFTs represent a unique blend of art, utility, and gaming enhancement.\n\nAdditional details on the [Ebisu's Bay Blog](https://blog.ebisusbay.com/announcing-the-wooden-wyrm-welcoming-a-ryoshi-tales-exclusive-drop-2a4e3e83e11c)",
       "author": {
         "name": "Ebisu's Bay",
         "website": "https://app.ebisusbay.com/",
@@ -33111,7 +35472,7 @@
         "instagram": "https://www.instagram.com/ebisusbayofficial",
         "telegram": "https://t.me/ebisusbay"
       },
-      "address": "",
+      "address": "0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04",
       "maxMintPerTx": 25,
       "maxMintPerAddress": 40,
       "totalSupply": 300,
@@ -33129,7 +35490,7 @@
       "referral": false,
       "is1155": false,
       "published": true,
-      "complete": false,
+      "complete": true,
       "featured": true,
       "images": {
         "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/ryoshi-tales-wooden-wyrm-welcoming/drop.webp",
@@ -33148,28 +35509,28 @@
       "id": 192,
       "slug": "pixel-ebisu",
       "title": "Pixel Ebisu",
-      "subtitle": "",
-      "description": "",
+      "subtitle": "Pixel art paying homage to the #1 Marketplace on the Cronos chain. “Ebisusbay” Created by Shadowbright",
+      "description": "Pixel art paying homage to the #1 Marketplace on the Cronos chain. “Ebisusbay” Created by Shadowbright",
       "author": {
-        "name": "ShadowBright",
+        "name": "Aces777wild / ShadowBright collaboration",
+        "website": "https://dripcro.com",
+        "twitter": "https://x.com/drip_official_",
         "discord": "https://discord.gg/dripcro-com-1003477871664320525"
       },
-      "address": "",
+      "address": "0xceb43B91fF882e3cA8B5B0bddC2570194C46f51D",
       "maxMintPerTx": 1,
-      "maxMintPerAddress": 1,
+      "maxMintPerAddress": 100,
       "totalSupply": 420,
-      "erc20Cost": "100",
-      "erc20MemberCost": "50",
+      "erc20Cost": "1000",
       "erc20Token": "frtn",
       "erc20Only": true,
-      "memberMitama": 1000,
       "foundersOnly": false,
-      "abi": "mint-from-rewards.json",
-      "start": null,
+      "abi": "pixel-ebisu.json",
+      "start": 1716494400000,
       "end": null,
       "referral": false,
       "is1155": false,
-      "published": false,
+      "published": true,
       "complete": false,
       "featured": false,
       "images": {
@@ -33183,6 +35544,45 @@
         "doxx": false,
         "kyc": false,
         "escrow": false
+      }
+    },
+    {
+      "id": 193,
+      "slug": "argonauts-gears",
+      "title": "Argonauts Gears",
+      "subtitle": "The Argonauts Gears NFT collection, a crucial lever for dominance in Atlantis Trove V2.",
+      "description": "The Argonauts Gears NFT collection, a crucial lever for dominance in Atlantis Trove V2.\n\nGear is essential to your team’s success in Atlantis V2 and will be a game changer for many. With each team able to equip 5 pieces of gear, it will be a race to see who can achieve the optimal team to win it all.\n\nEquip your teams, boost your points and turn the tide of competition. Gear up, strategize, and race to the top with the power of Argonauts Gears at your side.",
+      "author": {
+        "name": "Argonauts",
+        "website": "https://www.argofinance.money/nft",
+        "twitter": "https://twitter.com/ArgoProtocol",
+        "discord": "https://discord.gg/argofinance",
+        "medium": "https://argofinance.medium.com",
+        "telegram": "https://t.me/Argo_Finance"
+      },
+      "address": "0x65c6aa6CACC04B15100A5B41F5124ae1321c9085",
+      "maxMintPerTx": 3,
+      "maxMintPerAddress": 3,
+      "totalSupply": 2200,
+      "cost": "149",
+      "foundersOnly": false,
+      "start": 1714485600000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/argonauts-gears/drop.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/drop-images/argonauts-gears/banner.webp",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/argonauts-gears/avatar.webp",
+        "preview": "https://cdn-prod.ebisusbay.com/files/drop-images/argonauts-gears/card.webp"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
       }
     }
   ]
