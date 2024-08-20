@@ -479,7 +479,7 @@ const appConfigs: AppConfigMap = {
       [ChainId.CRONOS_ZKEVM]: {
         global: ['cro', 'frtn'],
         marketplace: {
-          available: [],
+          available: ['cro', 'frtn'],
           nft: {}
         },
         deals: []
