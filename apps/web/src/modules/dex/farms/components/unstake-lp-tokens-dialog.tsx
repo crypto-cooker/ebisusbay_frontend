@@ -27,6 +27,7 @@ import {useUser} from "@src/components-v2/useUser";
 import {DerivedFarm} from "@dex/farms/constants/types";
 import {UserFarmState} from "@dex/farms/state/user";
 import {useAppChainConfig} from "@src/config/hooks";
+import {useErrorLogger} from "@market/hooks/use-error-logger";
 
 interface UnstakeLpTokensDialogProps {
   isOpen: boolean;
@@ -38,6 +39,7 @@ interface UnstakeLpTokensDialogProps {
 
 export default function UnstakeLpTokensDialog({isOpen, onClose, farm, userData, onSuccess}: UnstakeLpTokensDialogProps) {
   const user = useUser();
+  const logError = useErrorLogger();
   const {config: appChainConfig} = useAppChainConfig();
   const [quantity, setQuantity] = useState<string>('');
   const [executing, setExecuting] = useState<boolean>(false);
@@ -67,6 +69,7 @@ export default function UnstakeLpTokensDialog({isOpen, onClose, farm, userData, 
       toast.success('Unstaked successfully');
       onSuccess()
     } catch (e) {
+      logError({error: e});
       console.log(e);
       toast.error(parseErrorMessage(e));
     } finally {

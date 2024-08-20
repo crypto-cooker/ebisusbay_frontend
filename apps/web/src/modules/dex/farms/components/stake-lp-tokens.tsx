@@ -27,6 +27,7 @@ import {useUser} from "@src/components-v2/useUser";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useAppChainConfig} from "@src/config/hooks";
+import {useErrorLogger} from "@market/hooks/use-error-logger";
 
 interface StakeLpTokensDialogProps {
   isOpen: boolean;
@@ -38,6 +39,7 @@ interface StakeLpTokensDialogProps {
 
 export default function StakeLpTokensDialog({isOpen, onClose, farm, userData, onSuccess}: StakeLpTokensDialogProps) {
   const user = useUser();
+  const logError = useErrorLogger();
   const {config: appChainConfig} = useAppChainConfig();
   const [quantity, setQuantity] = useState<string>('');
   const [executing, setExecuting] = useState<boolean>(false);
@@ -67,6 +69,7 @@ export default function StakeLpTokensDialog({isOpen, onClose, farm, userData, on
       toast.success('Staked successfully');
       onSuccess();
     } catch (e) {
+      logError({error: e});
       console.log(e);
       toast.error(parseErrorMessage(e));
     } finally {
