@@ -218,8 +218,9 @@ export default memo(Nft);
 
 
 const fetchCollection = async (address: string, chainId: number) => {
+  const primaryField = address.startsWith('0x') ? 'address' : 'slug';
   const response = await ApiService.withKey(process.env.EB_API_KEY as string).getCollections({
-    address: [address],
+    [primaryField]: [address],
     chain: chainId
   });
   return response.data[0] ?? null;
