@@ -7,6 +7,7 @@ import {useContractService, useUser} from "@src/components-v2/useUser";
 import gaslessListingContract from "@src/global/contracts/GaslessListing.json";
 import chainConfigs, {SupportedChainId} from "@src/config/chains";
 import {useContractWrite} from "wagmi";
+import {erc20Abi} from "viem";
 
 type ResponseProps = {
   loading: boolean;
@@ -63,12 +64,12 @@ const useBuyGaslessListings = () => {
 
       // Approve the currencies
       for (const [currency, totalPrice] of currencyTotals) {
-        const tokenContract = contractService!.erc20(currency);
-        const allowance = await tokenContract.allowance(address!, contractService!.market.address);
+        const tokenContract = new Contract(currency, erc20Abi, provider.signer);
+        const allowance = await tokenContract.allowance(address!, chainConfig.contracts.market);
 
         if (allowance.lt(totalPrice)) {
           const approvalAmount = totalPrice.mul(10);
-          const tx = await tokenContract.approve(contractService!.market.address, approvalAmount);
+          const tx = await tokenContract.approve(chainConfig.contracts.market, approvalAmount);
           await tx.wait();
         }
       }
