@@ -2,6 +2,7 @@ import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
 import {appConfig} from "@src/config";
 import {urlify} from "@market/helpers/utils";
 import {getAppChainConfig} from "@src/config/hooks";
+import { ChainId } from "@pancakeswap/chains";
 
 const config = appConfig();
 
