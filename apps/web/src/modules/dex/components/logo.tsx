@@ -28,7 +28,7 @@ export default function useHttpLocations(uri: string | undefined): string[] {
   }, [uri])
 }
 
-export function CurrencyLogoByAddress({address, chainId, size, ...props}: {address: string, chainId: number, size: string} & SpaceProps) {
+export function CurrencyLogoByAddress({address, chainId, size, ...props}: {address: string, chainId: number, size?: string} & SpaceProps) {
 
   const currency: CurrencyInfo = useMemo(() => {
     return {

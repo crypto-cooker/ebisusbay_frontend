@@ -743,7 +743,9 @@ export const titleCase = (str: string) => {
   return splitStr.join(' ');
 }
 
-export const knownErc20Token = (address: string) => {
+export const knownErc20Token = (address?: string) => {
+  if (!address) return null;
+
   const value = knownTokens.tokens.find(token => ciEquals(token.address, address));
   return value ?? null;
 }
