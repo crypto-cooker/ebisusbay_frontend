@@ -27906,7 +27906,7 @@
     {
       "name": "Moggy Money Brokers",
       "slug": "moggy-money-brokers",
-      "multiToken": false,
+      "multiToken": true,
       "address": "0x46055078a40358c27f7850d81f29ec857342318f",
       "tokens": [
         {
@@ -27923,7 +27923,7 @@
         }
       ],
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/moggy-money-brokers/avatar.webp",
