@@ -89,7 +89,6 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const [paymentType, setPaymentType] = useState(PaymentType.CRYPTO);
 
   const [showTransakButton, setShowTransakButton] = useState(false);
-  const searchParams = useSearchParams();
   const {isEligible} = useTransak();
 
   const getInitialProps = async () => {
@@ -132,10 +131,10 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
     try {
       setExecutingPurchase(true);
       await buyGaslessListings([{
-        listingId: listing.listingId,
-        price: parseInt(listing.price),
-        currency: listing.currency,
-        chainId: listing.chain
+        listingId: listing!.listingId,
+        price: parseInt(listing!.price),
+        currency: listing!.currency,
+        chainId: listing!.chain
       }]);
       setIsComplete(true);
     } catch (error: any) {
@@ -155,21 +154,21 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   useEffect(() => {
     async function func() {
       const exchangeRates = await getPrices();
-      const numericPrice = parseInt(listing.price);
+      const numericPrice = parseInt(listing!.price);
       let amt = numericPrice;
 
       let fee =  numericPrice * (user.fee / 100);
-      const erc20UsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, listing.currency));
+      const erc20UsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, listing!.currency));
       if (!!erc20UsdRate && erc20UsdRate.currency !== ethers.constants.AddressZero) {
-        const croUsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, ethers.constants.AddressZero) && rate.chain.toString() === listing.chain.toString());
+        const croUsdRate = exchangeRates.find((rate) => ciEquals(rate.currency, ethers.constants.AddressZero) && rate.chain.toString() === listing!.chain.toString());
         fee = (numericPrice * Number(erc20UsdRate.usdPrice)) / Number(croUsdRate?.usdPrice) * (user.fee / 100);
       }
-      amt += listing.currency === ethers.constants.AddressZero ? fee : 0;
+      amt += listing!.currency === ethers.constants.AddressZero ? fee : 0;
 
       setFinalCostValues([
         {
           value: ethers.utils.commify(amt),
-          currency: listing.currency,
+          currency: listing!.currency,
         },
         {
           value: ethers.utils.commify(round(fee, 2))
@@ -187,7 +186,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   useEffect(() => {
     async function checkEligibility() {
       // const isTransakEnabled = searchParams?.get('transak') === 'true';
-      const canUseTransak = await isEligible(listing);
+      const canUseTransak = await isEligible(listing!);
       setShowTransakButton(canUseTransak)
     }
     if (listing) checkEligibility();
@@ -264,7 +263,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                       <Flex justify="space-between" fontSize="lg">
                         <Text>Listing Price</Text>
                         <Flex justify="space-between" align="center">
-                          <DynamicCurrencyIcon address={listing.currency} boxSize={6} />
+                          <CurrencyLogoByAddress address={listing.currency} chainId={listing.chain} size='24px' />
                           <Text as="span" ms={1}>
                             {commify(listing.price)}
                           </Text>
@@ -294,7 +293,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                         {paymentType === PaymentType.CRYPTO && (
                           <DotIcon icon={faCheck} />
                         )}
-                        <CurrencyLogoByAddress address={listing.currency} chainId={listing.chain} />
+
                         {knownErc20Token(listing.currency) ? (
                           <CurrencyOption currency={knownErc20Token(listing.currency)!} />
                         ) : (
@@ -334,7 +333,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                         {!!finalCostValues && (
                           <>
                             <Flex justify="end" align="center">
-                              <DynamicCurrencyIcon address={listing.currency} boxSize={6} />
+                              <CurrencyLogoByAddress address={listing.currency} chainId={listing.chain} size='24px' />
                               <Text as="span" ms={1} fontWeight="bold">
                                 {finalCostValues[0].value}
                               </Text>
@@ -426,7 +425,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   );
 }
 
-const CurrencyOption = ({currency}: {currency: {address: string, symbol: string, name: string, decimals: number}}) => {
+const CurrencyOption = ({currency}: {currency: {address: string, symbol: string, name: string, decimals: number, chainId: number}}) => {
   const user = useUser();
   const contractService = useContractService();
 
@@ -444,7 +443,7 @@ const CurrencyOption = ({currency}: {currency: {address: string, symbol: string,
   return (
     <>
       <Flex align="center">
-        <DynamicCurrencyIcon address={currency.address} boxSize={6} />
+        <CurrencyLogoByAddress address={currency.address} chainId={currency.chainId} size='24px' />
         <Text as="span" ms={1}>{currency.symbol}</Text>
       </Flex>
       <Flex mt={1}>

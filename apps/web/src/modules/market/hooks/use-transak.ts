@@ -113,7 +113,7 @@ export default function useTransak() {
     });
   };
 
-  const isEligible = async (listing: AdaptedTransakListing) => {
+  const isEligible = async (listing: { currency: string }) => {
     // const is1155Token = await is1155(listing.nftAddress);
     const isCro = isNativeCro(listing.currency);
 

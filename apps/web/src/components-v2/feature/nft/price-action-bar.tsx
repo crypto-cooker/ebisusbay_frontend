@@ -27,11 +27,8 @@ import {
   useBreakpointValue
 } from '@chakra-ui/react';
 import PurchaseConfirmationDialog from "@src/components-v2/shared/dialogs/purchase-confirmation";
-import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useAppSelector} from "@market/state/redux/store/hooks";
 import {useTokenExchangeRate} from "@market/hooks/useGlobalPrices";
-import {appConfig} from "@src/config";
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {commify} from "ethers/lib/utils";
 import {ResponsiveCancelListingDialog} from "@src/components-v2/shared/dialogs/cancel-listing";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
@@ -41,8 +38,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBagShopping, faHand} from "@fortawesome/free-solid-svg-icons";
 import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
 import {CurrencyLogoByAddress} from "@dex/components/logo";
-
-const config = appConfig();
 
 interface PriceActionBarProps {
   offerType: string;
@@ -62,7 +57,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
   const [isPurchaseDialogOpen, setIsPurchaseDialogOpen] = useState(false);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
-  const { tokenToUsdValue, tokenToCroValue } = useTokenExchangeRate(listing?.currency, Number(config.chain.id));
+  const { tokenToUsdValue, tokenToCroValue } = useTokenExchangeRate(listing?.currency, listing?.chain);
   const showSmallOfferButton = useBreakpointValue(
     {base: true, sm: false},
     {fallback: 'sm'},
