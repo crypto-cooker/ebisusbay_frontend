@@ -30,6 +30,7 @@ import {useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import useCart from "@market/hooks/use-cart";
 import {useAppDispatch} from "@market/state/redux/store/hooks";
+import {CurrencyLogoByAddress} from "@dex/components/logo";
 
 const Watermarked = styled.div`
   position: relative;
@@ -257,7 +258,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                     </Box>
                     <Box>
                       <Flex alignItems='center'>
-                        <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
+                        <CurrencyLogoByAddress address={listing.currency} chainId={listing.chain} size='16px' />
                         <Box as='span' ms={1}>
                           {getCorrectPrice(listing.price)}
                         </Box>

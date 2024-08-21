@@ -12,6 +12,7 @@ import {Address, getAddress} from "viem";
 import {bscTokens, cronosTokens, cronosZkEvmTokens, ethereumTokens} from "@pancakeswap/tokens";
 import {NATIVE} from "@pancakeswap/swap-sdk-evm";
 import styled from "styled-components";
+import {ethers} from "ethers";
 
 export type CurrencyInfo = {
   address?: Address;
@@ -27,14 +28,28 @@ export default function useHttpLocations(uri: string | undefined): string[] {
   }, [uri])
 }
 
+export function CurrencyLogoByAddress({address, chainId, ...props}: {address: Address, chainId: number}) {
+
+  const currency: CurrencyInfo = useMemo(() => {
+    return {
+      address,
+      chainId,
+      symbol: '',
+      isToken: address !== ethers.constants.AddressZero,
+      isNative: address === ethers.constants.AddressZero
+    }
+  }, [address]);
+
+  return <CurrencyLogo currency={currency} {...props} />
+}
 
 export function CurrencyLogo({
-                               currency,
-                               size = '30px',
-                               style,
-                               useTrustWalletUrl,
-                               ...props
-                             }: {
+  currency,
+  size = '30px',
+  style,
+  useTrustWalletUrl,
+  ...props
+}: {
   currency?: CurrencyInfo & {
     logoURI?: string | undefined;
   };
@@ -205,9 +220,7 @@ const commonCurrencySymbols = [
 
 export const getTokenListTokenUrl = (token: Pick<Token, 'chainId' | 'address' | 'symbol'>) =>
   Object.keys(chainName).includes(String(token.chainId))
-    ? `https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${
-      token.chainId === ChainId.CRONOS ? '' : `${chainName[token.chainId]}/`
-    }${token.symbol.toLowerCase()}.webp`
+    ? `https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${chainName[token.chainId]}/${token.address.toLowerCase()}.webp`
     : null;
 
 export const getTokenLogoURLByAddress = memoize(

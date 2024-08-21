@@ -91,7 +91,7 @@ const Marketplace = () => {
 
           <DefaultContainer>
             {openMenu === tabs.listings && (
-              <Listings/>
+              <Listings />
             )}
             {openMenu === tabs.activity && (
               <Box className="tab-2 onStep fadeIn">
