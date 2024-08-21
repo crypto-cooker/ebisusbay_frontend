@@ -38,13 +38,13 @@ import {refreshMetadata} from "@market/state/redux/slices/nftSlice";
 import {specialImageTransform} from "@market/helpers/hacks";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {useExchangeRate} from "@market/hooks/useGlobalPrices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import useCart from "@market/hooks/use-cart";
 import {useAppDispatch} from "@market/state/redux/store/hooks";
+import {CurrencyLogoByAddress} from "@dex/components/logo";
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
@@ -90,7 +90,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
         price: nft.market.price,
         usdPrice: usdPrice,
         expirationDate: nft.market.expirationDate,
-        currency: nft.market.currency
+        currency: nft.market.currency,
+        chainId: nft.chain
       };
     }
     if (nft.listed) {
@@ -100,7 +101,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
         price: nft.price,
         usdPrice: usdPrice,
         expirationDate: nft.expirationDate,
-        currency: nft.currency
+        currency: nft.currency,
+        chainId: nft.chain
       };
     }
 
@@ -249,7 +251,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                       </Box>
                       <Box>
                         <Flex alignItems='center'>
-                          <DynamicCurrencyIcon address={getListing().currency} boxSize={4} />
+                          <CurrencyLogoByAddress address={getListing().currency} chainId={getListing().chainId} size='16px' />
                           <Box as='span' ms={1}>
                             {getListing().price > 6 ? siPrefixedNumber(getListing().price) : ethers.utils.commify(round(getListing().price))}
                           </Box>
