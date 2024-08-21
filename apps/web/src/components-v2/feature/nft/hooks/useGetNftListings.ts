@@ -1,6 +1,7 @@
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 import NextApiService from "@src/core/services/api-service/next";
 import {useState} from "react";
+import {ApiService} from "@src/core/services/api-service";
 
 const useGetNftListings = (initialParams: ListingsQueryParams) => {
   const [filters, setFilters] = useState<ListingsQueryParams>({
@@ -18,7 +19,7 @@ const useGetNftListings = (initialParams: ListingsQueryParams) => {
       ...additionalParams
     };
 
-    return NextApiService.getListings(params);
+    return ApiService.withoutKey().getListings(params);
   }
 
   return [filters, getNftListings, changeFilters] as const

@@ -67,10 +67,10 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     {base: true, sm: false},
     {fallback: 'sm'},
   );
-  const [runAuthedFunction] = useAuthedFunctionWithChainID(listing.chain);
+  const [runAuthedFunction] = useAuthedFunctionWithChainID(nft.chain);
 
   const handlePurchaseSelected = async () => {
-    await runAuthedFunction(() => setIsPurchaseDialogOpen(true), listing.chain);
+    await runAuthedFunction(() => setIsPurchaseDialogOpen(true), nft.chain);
   };
 
   const handleSellSelected = () => {
