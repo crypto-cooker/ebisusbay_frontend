@@ -34,7 +34,7 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import moment from "moment/moment";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import {CurrencyLogoByAddress} from "@dex/components/logo";
 
 interface ResponsiveNftListingsTableProps {
   data: InfiniteData<IPaginatedList<any>>;
@@ -85,7 +85,7 @@ const DataTableLg = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTabl
                 <Tr key={entity.listingId} _hover={{bg: hoverBackground}}>
                   <Td>
                     <HStack>
-                      <DynamicCurrencyIcon address={entity.currency} boxSize={4} />
+                      <CurrencyLogoByAddress address={entity.currency} chainId={entity.chain} size='16px' />
                       <Box>{commify(round(entity.price, 2))}</Box>
                     </HStack>
                   </Td>
@@ -159,7 +159,7 @@ const DataTableSm = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTabl
                 <Tr key={entity.listingId} _hover={{bg: hoverBackground}}>
                   <Td>
                     <HStack>
-                      <DynamicCurrencyIcon address={entity.currency} boxSize={4} />
+                      <CurrencyLogoByAddress address={entity.currency} chainId={entity.chain} size='16px' />
                       <Box>{commify(round(entity.price, 2))}</Box>
                     </HStack>
                     <Box fontSize='sm'>
@@ -232,7 +232,7 @@ const DataAccordion = ({data, onAddToCart, primarySort}: Pick<ResponsiveNftListi
                   <Stat>
                     <StatNumber>
                       <HStack>
-                        <DynamicCurrencyIcon address={entity.currency} boxSize={4} />
+                        <CurrencyLogoByAddress address={entity.currency} chainId={entity.chain} size='16px' />
                         <Box fontWeight='bold'>{entity.price}</Box>
                       </HStack></StatNumber>
                     <StatHelpText>Qty: {entity.amount}</StatHelpText>
