@@ -27923,7 +27923,7 @@
         }
       ],
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/moggy-money-brokers/avatar.webp",
