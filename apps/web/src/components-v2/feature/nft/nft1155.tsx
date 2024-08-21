@@ -109,7 +109,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
   const [royalty, setRoyalty] = useState<number | null>(null);
   useEffect(() => {
     async function getRoyalty() {
-      const royalty = await collectionRoyaltyPercent(address, id);
+      const royalty = await collectionRoyaltyPercent(address, id, chain);
       setRoyalty(royalty);
     }
     getRoyalty();

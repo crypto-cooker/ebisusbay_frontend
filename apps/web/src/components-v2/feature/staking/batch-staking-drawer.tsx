@@ -220,7 +220,7 @@ const BatchStakingDrawerItem = ({item, disabled}: BatchStakingDrawerItemProps) =
           extras.floorPrice = metadata.collections[0].floorPrice;
         }
 
-        extras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId);
+        extras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId, item.nft.chain);
 
         dispatch(setExtras(extras));
       }
