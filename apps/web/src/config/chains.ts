@@ -305,7 +305,7 @@ const cronosZkEVMConfig: AppChainConfig = {
   chain: cronosZkEVM,
   urls: {
     subgraph: {
-      root: 'https://cronos-zkevm-graph.ebisusbay.biz:18000/subgraphs/name/ebisusbay/zkcro/',
+      root: 'https://cronos-zkevm-graph.ebisusbay.com:18000/subgraphs/name/ebisusbay/zkcro/',
       ryoshiDynasties: '',
       ryoshiPresale: '',
       stakedOwners: 'main',

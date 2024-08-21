@@ -29,24 +29,24 @@ import {OFFER_TYPE} from '@src/Components/Offer/MadeOffers/MadeOffersRow';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {appConfig} from "@src/config";
 import {collectionRoyaltyPercent} from "@src/core/chain";
-import Button, {LegacyOutlinedButton} from "@src/Components/components/common/Button";
 import {
   Box,
   Button as ChakraButton,
   ButtonGroup,
   Center,
   Heading,
-  HStack,
+  HStack, Icon,
   Link,
-  MenuButton as MenuButtonCK,
+  Menu,
+  MenuButton, MenuItem, MenuList,
   Spinner,
   Text,
   useClipboard,
-  VStack
+  VStack,
+  Button, useColorModeValue
 } from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {faHeart as faHeartOutline} from "@fortawesome/free-regular-svg-icons";
-import {Menu} from '@src/Components/components/chakra-components';
 import {faFacebook, faSquareTwitter, faTelegram} from '@fortawesome/free-brands-svg-icons';
 import useToggleFavorite from "@src/components-v2/feature/nft/hooks/useToggleFavorite";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
@@ -59,6 +59,7 @@ import HistoryTab from "@src/components-v2/feature/nft/tabs/history";
 import {ApiService} from "@src/core/services/api-service";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
+import {SecondaryButton} from "@src/components-v2/foundation/button";
 
 const config = appConfig();
 const tabs = {
@@ -81,6 +82,8 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
   const dispatch = useAppDispatch();
   const { onCopy } = useClipboard(appUrl(`/collection/${chain}/${address}/${id}`).toString());
   const [runAuthedFunction] = useAuthedFunction();
+  const borderColor = useColorModeValue('gray.300', 'white');
+  const [shareOptions, setShareOptions] = useState<any[]>([]);
 
   const { nft, refreshing, favorites } = useAppSelector((state) => state.nft);
 
@@ -119,81 +122,28 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
     }
   }, [onCopy, toast]);
 
-  const shareOptions = () => {
-    if (typeof navigator !== 'undefined' && typeof window !== 'undefined') {
-      const location = window.location;
-      return [
-        {
-          url: `https://www.facebook.com/sharer/sharer.php?u=${location}`,
-          label: 'Share on Facebook',
-          icon: faFacebook,
-          type: 'url'
-        },
-        {
-          url: `https://twitter.com/intent/tweet?text=${location}`,
-          label: 'Share on Twitter',
-          icon: faSquareTwitter,
-          type: 'url'
-        },
-        {
-          url: `https://telegram.me/share/?url=${location}`,
-          label: 'Share on Telegram',
-          icon: faTelegram,
-          type: 'url'
-        },
-        {
-          label: 'Copy Link',
-          icon: faCopy,
-          type: 'event',
-          handleClick: copyLink
-        }
-      ];
-    }
-    return [];
-  }
-
   const MenuItems = (
-    shareOptions().map(option => (
-      option.type === 'url' ?
-        (
-          <div >
-            <a href={option.url} target='_blank' >
-              <div key={option.label} className='social_media_item'>
-                <div className='icon_container'>
-                  <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
-                </div>
-                <div className='label_container'>
-                  <span>{option.label}</span>
-                </div>
-              </div>
-            </a>
-          </div>
-
-        )
-        :
-        (
-          <div className='social_media_item' onClick={option.handleClick} key={option.label}>
-            <div className='icon_container'>
-              <FontAwesomeIcon icon={option.icon} style={{ height: 28 }} />
-            </div>
-            <div className='label_container'>
-              <span>
-                {option.label}
-              </span>
-            </div>
-          </div>
-        )
-
-    )))
-
-  const MenuButton = () => {
-
-    return (
-      <MenuButtonCK as={LegacyOutlinedButton}>
-        <FontAwesomeIcon icon={faShareAlt} style={{ cursor: 'pointer' }} />
-      </MenuButtonCK>
-    )
-  }
+    shareOptions.map(option => (
+      <React.Fragment key={option.url}>
+        {option.type === 'url' ? (
+          <MenuItem>
+            <Link href={option.url} target='_blank' >
+              <HStack>
+                <FontAwesomeIcon icon={option.icon} />
+                <Box>{option.label}</Box>
+              </HStack>
+            </Link>
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={option.handleClick} key={option.label}>
+            <HStack>
+              <FontAwesomeIcon icon={option.icon} />
+              <Box>{option.label}</Box>
+            </HStack>
+          </MenuItem>
+        )}
+      </React.Fragment>
+    )));
 
   const fullImage = () => {
     if (nft.original_image.startsWith('ipfs://')) {
@@ -263,6 +213,43 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
     return user.profile.favorites.find((f: any) => ciEquals(address, f.tokenAddress) && id === f.tokenId);
   }
 
+  useEffect(() => {
+    const menuOptions = () => {
+      if (typeof navigator !== 'undefined' && typeof window !== 'undefined') {
+        const location = window.location.href;
+        return [
+          {
+            url: `https://www.facebook.com/sharer/sharer.php?u=${location}`,
+            label: 'Share on Facebook',
+            icon: faFacebook,
+            type: 'url'
+          },
+          {
+            url: `https://twitter.com/intent/tweet?text=${location}`,
+            label: 'Share on Twitter',
+            icon: faSquareTwitter,
+            type: 'url'
+          },
+          {
+            url: `https://telegram.me/share/?url=${location}`,
+            label: 'Share on Telegram',
+            icon: faTelegram,
+            type: 'url'
+          },
+          {
+            label: 'Copy Link',
+            icon: faCopy,
+            type: 'event',
+            handleClick: copyLink
+          }
+        ];
+      }
+      return [];
+    };
+
+    setShareOptions(menuOptions());
+  }, []);
+
   return (
     <div>
       {isEbVipCollection(address, id) && (
@@ -312,12 +299,11 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                 <></>
               )}
               <div className="mt-2" style={{ cursor: 'pointer' }}>
-                <ButtonGroup size='sm' isAttached variant='outline'>
-                  <Button styleType="default-outlined" title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
+                <ButtonGroup size='md' isAttached variant='outline'>
+                  <SecondaryButton title="Refresh Metadata" onClick={onRefreshMetadata} disabled={refreshing}>
                     <FontAwesomeIcon icon={faSync} spin={refreshing} />
-                  </Button>
-                  <Button
-                    styleType="default-outlined"
+                  </SecondaryButton>
+                  <SecondaryButton
                     title={isFavorite() ? 'This item is in your favorites list' : 'Click to add to your favorites list'}
                     onClick={onFavoriteClicked}
                   >
@@ -329,17 +315,28 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                         <FontAwesomeIcon icon={faHeartOutline} />
                       )}
                     </div>
-                  </Button>
+                  </SecondaryButton>
                   {nft && nft.original_image && (
-                    <Button styleType="default-outlined" title="View Full Image" onClick={() =>
+                    <SecondaryButton title="View Full Image" onClick={() =>
                       typeof window !== 'undefined' &&
                       window.open(specialImageTransform(address, fullImage()), '_blank')
                     }>
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
-                    </Button>
+                    </SecondaryButton>
                   )}
-                  <Menu MenuItems={MenuItems} MenuButton={MenuButton()} />
-
+                  {/*<Menu MenuItems={MenuItems} MenuButton={MenuButton()} />*/}
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      variant='outline'
+                      borderColor={borderColor}
+                    >
+                      <Icon as={FontAwesomeIcon} icon={faShareAlt} style={{ cursor: 'pointer' }} />
+                    </MenuButton>
+                    <MenuList>
+                      {MenuItems}
+                    </MenuList>
+                  </Menu>
                 </ButtonGroup>
               </div>
             </div>
