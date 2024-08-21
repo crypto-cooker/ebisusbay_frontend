@@ -34,7 +34,6 @@ import ImageService from "@src/core/services/image";
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
 import Blockies from "react-blockies";
 import {commify} from "ethers/lib/utils";
-import DynamicCurrencyIcon from "../dynamic-currency-icon";
 import FortuneIcon from "../icons/fortune";
 
 interface ResponsiveRewardsCollectionsTableProps {

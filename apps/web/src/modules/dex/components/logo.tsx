@@ -31,12 +31,15 @@ export default function useHttpLocations(uri: string | undefined): string[] {
 export function CurrencyLogoByAddress({address, chainId, size, ...props}: {address: string, chainId: number, size?: string} & SpaceProps) {
 
   const currency: CurrencyInfo = useMemo(() => {
+    const isNative = address === ethers.constants.AddressZero;
+    const nativeSymbol = NATIVE[chainId as ChainId]?.symbol ?? '';
+
     return {
       address: address as Address,
       chainId,
-      symbol: '',
-      isToken: address !== ethers.constants.AddressZero,
-      isNative: address === ethers.constants.AddressZero
+      symbol: isNative ? nativeSymbol : '',
+      isToken: !isNative,
+      isNative
     }
   }, [address]);
 

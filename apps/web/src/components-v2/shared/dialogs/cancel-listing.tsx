@@ -26,10 +26,10 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {createSuccessfulTransactionToastContent, isGaslessListing} from "@market/helpers/utils";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@market/helpers/hacks";
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {ethers} from "ethers";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
+import {CurrencyLogoByAddress} from "@dex/components/logo";
 
 type CancelListingDialogProps = {
   isOpen: boolean;
@@ -164,7 +164,7 @@ const DialogContent = ({isOpen, onClose, listing, listingId, DialogBody, DialogF
                   <Box className="text-muted">Price</Box>
                   <Box fontWeight='bold'>
                     <Stack direction='row' alignItems='center'>
-                      <DynamicCurrencyIcon address={targetListing.currency} boxSize={5} />
+                      <CurrencyLogoByAddress address={targetListing.currency} chainId={targetListing.chain} size='20px' />
                       <Text fontSize='md' fontWeight='bold'>
                         <span className="ms-1">{ethers.utils.commify(targetListing.price)}</span>
                       </Text>

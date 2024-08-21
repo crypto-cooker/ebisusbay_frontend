@@ -52,7 +52,6 @@ import {MultimediaImage} from "@src/components-v2/shared/media/any-media";
 import {specialImageTransform} from "@market/helpers/hacks";
 import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import ImageService from "@src/core/services/image";
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {useUser} from "@src/components-v2/useUser";
 import useCurrencyBroker from "@market/hooks/use-currency-broker";
 
@@ -102,22 +101,6 @@ const expirationDatesValues = [
 ];
 
 const defaultExpiry = 2592000000;
-const currencyOptions = [
-  {
-    name: 'CRO',
-    symbol: 'CRO',
-    image: <DynamicCurrencyIcon address={ethers.constants.AddressZero} boxSize={6} />
-  },
-  ...config.listings.currencies.available
-    .filter((symbol: string) => !!config.tokens[symbol.toLowerCase()])
-    .map((symbol: string) => {
-      const token = config.tokens[symbol.toLowerCase()];
-      return {
-        ...token,
-        image: <DynamicCurrencyIcon address={token.address} boxSize={6} />
-      }
-    })
-];
 
 interface ListingDrawerItemProps {
   item: UserBatchItem;

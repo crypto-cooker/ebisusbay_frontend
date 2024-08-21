@@ -5,9 +5,8 @@ import {toast} from 'react-toastify';
 import {
   faBank,
   faBoltLightning,
-  faEllipsisH,
-  faExchangeAlt, faFileImport,
-  faHand, faImage,
+  faExchangeAlt,
+  faHand,
   faLink,
   faPen,
   faPlusCircle,
@@ -33,15 +32,15 @@ import {
   useClipboard,
   useColorModeValue
 } from "@chakra-ui/react";
-import {appUrl, ciEquals, isLandDeedsCollection, round, siPrefixedNumber, timeSince} from "@market/helpers/utils";
+import {appUrl, ciEquals, round, siPrefixedNumber, timeSince} from "@market/helpers/utils";
 import {darkTheme, lightTheme} from "@src/global/theme/theme";
 import {useSelector} from "react-redux";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {useExchangeRate} from "@market/hooks/useGlobalPrices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
+import {CurrencyLogoByAddress} from "@dex/components/logo";
 
 const MyNftCard = ({
   nft,
@@ -254,7 +253,7 @@ const MyNftCard = ({
                     </Box>
                     <Box>
                       <Flex alignItems='center'>
-                        <DynamicCurrencyIcon address={nft.market.currency} boxSize={4} />
+                        <CurrencyLogoByAddress address={nft.market.currency} chainId={nft.chain} size='16px' />
                         <Box as='span' ms={1}>
                           {nft.market.price > 6 ? siPrefixedNumber(nft.market.price) : ethers.utils.commify(round(nft.market.price))}
                         </Box>

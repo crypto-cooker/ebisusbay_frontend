@@ -30,7 +30,7 @@ import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {commify} from "ethers/lib/utils";
 import Link from "next/link";
 import ImageService from "@src/core/services/image";
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import {CurrencyLogoByAddress} from "@dex/components/logo";
 
 interface ResponsiveTableProps {
   data: InfiniteData<AxiosResponse<IPaginatedList<any>>>;
@@ -99,7 +99,7 @@ const DataTable = ({data, onSort}: ResponsiveTableProps) => {
                   </Td>
                   <Td>
                     <HStack spacing={1}>
-                      <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
+                      <CurrencyLogoByAddress address={listing.currency} chainId={listing.chain} size='16px' />
                       <Box>{commify(listing.price)}</Box>
                     </HStack>
                   </Td>
@@ -174,7 +174,7 @@ const DataAccordion = ({data, onSort}: ResponsiveTableProps) => {
                     <VStack align='end' spacing={0} fontSize='sm'>
                       <Text>{getTimeSince(listing.saleTime)}</Text>
                       <HStack spacing={1} h="full">
-                        <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
+                        <CurrencyLogoByAddress address={listing.currency} chainId={listing.chain} size='16px' />
                         <Box>{commify(listing.price)}</Box>
                       </HStack>
                     </VStack>

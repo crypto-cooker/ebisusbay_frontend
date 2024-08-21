@@ -40,7 +40,7 @@ import {
 } from "@src/components-v2/feature/account/profile/tabs/listings/context";
 import {WarningIcon} from "@chakra-ui/icons";
 import {specialImageTransform} from "@market/helpers/hacks";
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
+import {CurrencyLogoByAddress} from "@dex/components/logo";
 
 interface ResponsiveListingsTableProps {
   data: InfiniteData<IPaginatedList<OwnerListing>>;
@@ -183,7 +183,7 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
                   </Td>
                   <Td>
                     <HStack spacing={1}>
-                      <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
+                      <CurrencyLogoByAddress address={listing.currency} chainId={listing.nft.chain} size='16px' />
                       <Box>{commify(listing.price)}</Box>
                     </HStack>
                   </Td>
@@ -301,7 +301,7 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}:
                   </Box>
                   <Box ms={2}>
                     <HStack spacing={1} h="full" fontSize='sm'>
-                      <DynamicCurrencyIcon address={listing.currency} boxSize={4} />
+                      <CurrencyLogoByAddress address={listing.currency} chainId={listing.nft.chain} size='16px' />
                       <Box>{commify(listing.price)}</Box>
                     </HStack>
                   </Box>
