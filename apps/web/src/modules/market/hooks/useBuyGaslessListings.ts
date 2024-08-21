@@ -77,6 +77,7 @@ const useBuyGaslessListings = () => {
       const { signature, orderData, ...sigData } = serverSig;
       const total = price.add(sigData.feeAmount);
       const buyContract = new Contract(chainConfig.contracts.gaslessListing, gaslessListingContract.abi, provider.signer);
+      const gasEstimate = await buyContract.estimateGas.fillOrders(orderData, sigData, signature, { value: total });
       const tx = await buyContract.fillOrders(orderData, sigData, signature, { value: total });
       const receipt = await tx.wait()
       toast.success(`${pluralize(pendingPurchases.length, 'NFT')} successfully purchased`);

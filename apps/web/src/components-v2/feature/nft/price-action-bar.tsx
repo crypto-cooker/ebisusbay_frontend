@@ -39,6 +39,7 @@ import {toast} from "react-toastify";
 import useCart from "@market/hooks/use-cart";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBagShopping, faHand} from "@fortawesome/free-solid-svg-icons";
+import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
 
 const config = appConfig();
 
@@ -53,8 +54,7 @@ interface PriceActionBarProps {
 }
 
 const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }: PriceActionBarProps) => {
-  const [runAuthedFunction] = useAuthedFunction();
-  const cart = useCart();
+   const cart = useCart();
 
   const { currentListing: listing, nft } = useAppSelector((state) => state.nft);
   const [canBuy, setCanBuy] = useState(false);
@@ -66,9 +66,10 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     {base: true, sm: false},
     {fallback: 'sm'},
   );
+  const [runAuthedFunction] = useAuthedFunctionWithChainID(listing.chain);
 
   const handlePurchaseSelected = async () => {
-    await runAuthedFunction(() => setIsPurchaseDialogOpen(true));
+    await runAuthedFunction(() => setIsPurchaseDialogOpen(true), listing.chain);
   };
 
   const handleSellSelected = () => {
