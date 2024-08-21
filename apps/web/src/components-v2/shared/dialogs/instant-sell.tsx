@@ -205,7 +205,7 @@ const DialogContent = ({isOpen, onClose, collection, DialogBody, DialogFooter}: 
 
   const chooseCollectionNft = async (nft: WalletNft) => {
     setChosenCollectionNft(nft);
-    const royalties = await collectionRoyaltyPercent(nft.nftAddress, nft.nftId);
+    const royalties = await collectionRoyaltyPercent(nft.nftAddress, nft.nftId, nft.chain);
     setRoyalty(royalties);
   }
 

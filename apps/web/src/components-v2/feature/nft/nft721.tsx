@@ -360,7 +360,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
   const [royalty, setRoyalty] = useState<number | null>(null);
   useEffect(() => {
     async function getRoyalty() {
-      const royalty = await collectionRoyaltyPercent(address, id);
+      const royalty = await collectionRoyaltyPercent(address, id, chain);
       setRoyalty(royalty);
     }
     getRoyalty();

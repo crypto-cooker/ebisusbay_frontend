@@ -253,7 +253,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
           newExtras.floorPrice = metadata.collections[0].stats.total.floorPrice;
         }
 
-        newExtras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId);
+        newExtras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId, item.nft.chain);
         newExtras.canList = item.nft.listable && !item.nft.isStaked && (!isBundling || !isKoban(item.nft.nftAddress, item.nft.nftId));
         newExtras.availableCurrencies = currenciesByCollection(item.nft.nftAddress);
 
