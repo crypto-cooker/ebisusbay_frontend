@@ -27906,7 +27906,7 @@
     {
       "name": "Moggy Money Brokers",
       "slug": "moggy-money-brokers",
-      "multiToken": true,
+      "multiToken": false,
       "address": "0x46055078a40358c27f7850d81f29ec857342318f",
       "tokens": [
         {

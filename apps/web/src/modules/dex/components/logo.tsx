@@ -28,11 +28,11 @@ export default function useHttpLocations(uri: string | undefined): string[] {
   }, [uri])
 }
 
-export function CurrencyLogoByAddress({address, chainId, ...props}: {address: Address, chainId: number}) {
+export function CurrencyLogoByAddress({address, chainId, ...props}: {address: string, chainId: number}) {
 
   const currency: CurrencyInfo = useMemo(() => {
     return {
-      address,
+      address: address as Address,
       chainId,
       symbol: '',
       isToken: address !== ethers.constants.AddressZero,

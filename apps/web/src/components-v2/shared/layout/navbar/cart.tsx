@@ -21,7 +21,6 @@ import {
   VStack,
   Wrap
 } from "@chakra-ui/react";
-import NextApiService from "@src/core/services/api-service/next";
 import {commify} from "ethers/lib/utils";
 import {ethers} from "ethers";
 import {toast} from "react-toastify";
@@ -33,7 +32,6 @@ import Link from "next/link";
 import useBuyGaslessListings from '@market/hooks/useBuyGaslessListings';
 import ImageService from "@src/core/services/image";
 import {specialImageTransform} from "@market/helpers/hacks";
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {getPrices} from "@src/core/api/endpoints/prices";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";
@@ -41,10 +39,11 @@ import useAuthedFunctionWithChainID from '@market/hooks/useAuthedFunctionWithCha
 import useCart from "@market/hooks/use-cart";
 import {SupportedChainId} from "@src/config/chains";
 import {chains, isChainSupported} from "@src/wagmi";
-import {ChainLogo} from "@dex/components/logo";
+import {ChainLogo, CurrencyLogoByAddress} from "@dex/components/logo";
 import {Tab, Tabs} from "@src/components-v2/foundation/tabs";
 import {Chain} from "wagmi/chains";
 import {CartItem} from "@market/state/jotai/atoms/cart";
+import {ApiService} from "@src/core/services/api-service";
 
 const Cart = function () {
   const user = useUser();
@@ -133,7 +132,7 @@ const Cart = function () {
         setExecutingBuy(true);
         const chainListingIds = cart.items.filter((item) => item.chain === selectedChain.id);
         const listingIds = chainListingIds.map((item) => item.listingId);
-        const listings = await NextApiService.getListingsByIds(listingIds);
+        const listings = await ApiService.withoutKey().getListings({listingId: listingIds});
         const validListings = listings.data
           .filter((o) => o.state === listingState.ACTIVE)
           .map((o) => o.listingId);
@@ -322,7 +321,7 @@ const Cart = function () {
                               )}
                               {nft.price && (
                                 <HStack>
-                                  <DynamicCurrencyIcon address={nft.currency} boxSize={4} />
+                                  <CurrencyLogoByAddress address={nft.currency} chainId={nft.chain} size='16px' />
                                   <Box>{commify(round(nft.price, 2))}</Box>
                                 </HStack>
                               )}
