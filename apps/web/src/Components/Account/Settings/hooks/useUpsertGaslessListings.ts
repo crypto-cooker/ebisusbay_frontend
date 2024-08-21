@@ -9,9 +9,10 @@ import {getItemType} from "@market/helpers/chain";
 import {appConfig} from "@src/config";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import tokens from '@dex/config/tokens.json';
 
 const generator = UUID(0);
-const config = appConfig();
+// const config = appConfig();
 
 export interface PendingListing {
   collectionAddress: string;
@@ -95,13 +96,10 @@ const useUpsertGaslessListings = (chainId?: number) => {
       let itemTypes: {[key: string]: number} = {};
       for (const pendingListing of pendingListings) {
         if (itemTypes[pendingListing.collectionAddress] === undefined) {
-          console.log('CHECK ITEM TYOPE1', pendingListing.collectionAddress)
           itemTypes[pendingListing.collectionAddress] = await getItemType(pendingListing.collectionAddress);
-          console.log('CHECK ITEM TYOPE2', itemTypes[pendingListing.collectionAddress])
         }
 
-        const currencyAddress = pendingListing.currencySymbol ? config.tokens[pendingListing.currencySymbol.toLowerCase()]?.address : undefined;
-        
+        const currencyAddress = pendingListing.currencySymbol ? tokens.tokens.find((token) => ciEquals(token.symbol, pendingListing.currencySymbol) && token.chainId === pendingListing.chainId)?.address : undefined;
         const listingSignerProps: ListingSignerProps = {
           price: pendingListing.price.toString(),
           itemType: itemTypes[pendingListing.collectionAddress],
@@ -114,17 +112,7 @@ const useUpsertGaslessListings = (chainId?: number) => {
           currency: currencyAddress
         };
 
-        console.log('sign', listingSignerProps)
         const {objectSignature, objectHash} = await createListingSigner(listingSignerProps);
-
-        console.log('UPSERT', {
-          ...listingSignerProps,
-          sellerSignature: objectSignature,
-          seller: user.address!.toLowerCase(),
-          digest: objectHash,
-          currency: currencyAddress,
-          chainId: pendingListing.chainId
-        })
         const res = await upsertListing({
           ...listingSignerProps,
           sellerSignature: objectSignature,
