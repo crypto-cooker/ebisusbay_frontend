@@ -40,6 +40,7 @@ import useCart from "@market/hooks/use-cart";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBagShopping, faHand} from "@fortawesome/free-solid-svg-icons";
 import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
+import {CurrencyLogoByAddress} from "@dex/components/logo";
 
 const config = appConfig();
 
@@ -182,7 +183,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                   <span>
                     {listing ? (
                       <Stack direction='row' alignItems='center'>
-                        <DynamicCurrencyIcon address={listing.currency} boxSize={6} />
+                        <CurrencyLogoByAddress address={listing.currency} chainId={listing.chain} size='24px' />
                         <Text fontSize={28} ms={1} fontWeight='bold'>
                           <span className="ms-1">{ethers.utils.commify(listing.price)}</span>
                         </Text>

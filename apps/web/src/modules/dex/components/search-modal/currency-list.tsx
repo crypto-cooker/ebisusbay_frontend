@@ -1,31 +1,5 @@
-import {
-  Box,
-  BoxProps,
-  Button,
-  CloseButton, Flex,
-  HStack,
-  Image,
-  Input,
-  InputGroup,
-  Menu, MenuItem, Spinner,
-  Text, useColorModeValue,
-  VStack,
-  Wrap
-} from "@chakra-ui/react";
-import React, {
-  ChangeEvent,
-  ComponentType, CSSProperties,
-  MutableRefObject,
-  ReactNode, RefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
-import {useWindowSize} from "@market/hooks/useWindowSize";
-import Row from "@dex/swap/components/tabs/swap/select-token/row";
-import {useAllTokenBalances} from "@dex/hooks/use-token-balances";
+import {Box, Flex, HStack, Spinner, Text, useColorModeValue, VStack} from "@chakra-ui/react";
+import React, {CSSProperties, RefObject, useCallback, useMemo} from "react";
 import {Currency, CurrencyAmount, Token} from "@pancakeswap/sdk";
 import {CurrencyLogo} from "@dex/components/logo";
 import {ArrowForwardIcon} from "@chakra-ui/icons";
@@ -37,10 +11,10 @@ import useNativeCurrency from "@eb-pancakeswap-web/hooks/useNativeCurrency";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {QuestionHelper} from "@dex/swap/components/tabs/swap/question-helper";
 // import { FixedSizeList } from 'react-window'
-import { isTokenOnList } from '@eb-pancakeswap-web/utils'
-import { useIsUserAddedToken } from '@eb-pancakeswap-web/hooks/tokens'
+import {isTokenOnList} from '@eb-pancakeswap-web/utils'
+import {useIsUserAddedToken} from '@eb-pancakeswap-web/hooks/tokens'
 import {Virtuoso, VirtuosoHandle} from "react-virtuoso";
-import { wrappedCurrency } from '@eb-pancakeswap-web/utils/wrappedCurrency'
+import {wrappedCurrency} from '@eb-pancakeswap-web/utils/wrappedCurrency'
 import ImportRow from "@dex/components/search-modal/import-row";
 
 function currencyKey(currency: Currency): string {
