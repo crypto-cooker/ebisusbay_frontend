@@ -8,7 +8,7 @@ import {darkTheme, getTheme, lightTheme} from '@src/global/theme/theme';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {appUrl, createSuccessfulAddCartContent, round, siPrefixedNumber, timeSince} from '@market/helpers/utils';
 import {convertGateway, nftCardUrl} from "@src/helpers/image";
-import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard, useColorModeValue} from "@chakra-ui/react";
+import {Box, Flex, HStack, Spacer, Text, Tooltip, useClipboard, useColorModeValue} from "@chakra-ui/react";
 import {MenuPopup} from "@src/Components/components/chakra-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
@@ -23,7 +23,6 @@ import {toast} from "react-toastify";
 import {refreshMetadata} from "@market/state/redux/slices/nftSlice";
 import {specialImageTransform} from "@market/helpers/hacks";
 import ImageService from "@src/core/services/image";
-import DynamicCurrencyIcon from "@src/components-v2/shared/dynamic-currency-icon";
 import {useTokenExchangeRate} from "@market/hooks/useGlobalPrices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useUser} from "@src/components-v2/useUser";
@@ -160,19 +159,6 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
     } catch (error) {
       return ethers.utils.commify(price);
     }
-  };
-
-  const convertListingData = (listingData) => {
-    const res = {
-      address: listingData.nftAddress,
-      id: listingData.nftId,
-      image: listingData.nft.image,
-      name: listingData.nft.name,
-      description: listingData.nft.description,
-      rank: listingData.rank,
-      royalty: listingData.royalty,
-    };
-    return res;
   };
 
   return (
